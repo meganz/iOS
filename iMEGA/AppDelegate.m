@@ -1464,6 +1464,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                     [self presentUpgradeViewControllerTitle:title detail:detail image:image];
                 }
             }
+            break;
         }
             
         case EventUserFlagsReady:
