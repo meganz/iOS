@@ -24,14 +24,16 @@
 #pragma mark - Public
 
 - (void)addItem:(ItemListModel *)item {
-    [self.collectionView performBatchUpdates:^{
-        [self.items addObject:item];
-        [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForRow:self.items.count-1 inSection:0]]];
-    } completion:^(BOOL finished) {
-        if (self.items.count) {
-            [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:self.items.count-1 inSection:0] atScrollPosition:UICollectionViewScrollPositionRight animated:YES];
-        }
-    }];
+    if ([self isNewItem:item]) {
+        [self.collectionView performBatchUpdates:^{
+            [self.items addObject:item];
+            [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForRow:self.items.count-1 inSection:0]]];
+        } completion:^(BOOL finished) {
+            if (self.items.count) {
+                [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:self.items.count-1 inSection:0] atScrollPosition:UICollectionViewScrollPositionRight animated:YES];
+            }
+        }];
+    }
 }
 
 - (void)removeItem:(ItemListModel *)item {
@@ -76,6 +78,15 @@
     }
 }
 
+- (BOOL)isNewItem:(ItemListModel *)item {
+    for (ItemListModel *itemInList in self.items) {
+        if ([item isEqual:itemInList]) {
+            return NO;
+        }
+    }
+    return YES;
+}
+
 #pragma mark - CollectionViewDataSource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
@@ -91,7 +102,7 @@
     if (item.isGroup) {
         itemCell.avatarImageView.image =  [UIImage imageForName:item.name.uppercaseString size:itemCell.avatarImageView.frame.size backgroundColor:[UIColor mnz_gray999999] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:(itemCell.avatarImageView.frame.size.width/2.0f)]];
     } else {
-        [itemCell.avatarImageView mnz_setImageForUserHandle:item.handle];
+        [itemCell.avatarImageView mnz_setImageForUserHandle:item.handle name:item.name];
     }
     
     return itemCell;
