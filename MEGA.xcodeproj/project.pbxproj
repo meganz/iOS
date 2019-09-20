@@ -629,7 +629,6 @@
 		A82E5BCB1F3465A3003C149C /* Spotlight_folder@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BC71F3465A3003C149C /* Spotlight_folder@3x.png */; };
 		A82E5BF41F3470B5003C149C /* Spotlight_file.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BF21F3470B5003C149C /* Spotlight_file.png */; };
 		A82E5BF51F3470B5003C149C /* Spotlight_folder.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BF31F3470B5003C149C /* Spotlight_folder.png */; };
-		A82F6F7D22FAF3B400051420 /* MainTabBarController+Business.swift in Sources */ = {isa = PBXBuildFile; fileRef = A82F6F7C22FAF3B400051420 /* MainTabBarController+Business.swift */; };
 		A82F8A3921C3E34F0045AF1D /* UIApplication+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = A815FCE91FE2AD080075AC29 /* UIApplication+MNZCategory.m */; };
 		A836581B21020FB9005E616F /* ItemListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 835223B32059588300A47438 /* ItemListViewController.m */; };
 		A836581C2102101C005E616F /* Contacts.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 415226731A692ECC00EC7BB6 /* Contacts.storyboard */; };
@@ -1782,7 +1781,6 @@
 		A82E5BC71F3465A3003C149C /* Spotlight_folder@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Spotlight_folder@3x.png"; path = "Spotlight/Spotlight_folder@3x.png"; sourceTree = "<group>"; };
 		A82E5BF21F3470B5003C149C /* Spotlight_file.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Spotlight_file.png; path = Spotlight/Spotlight_file.png; sourceTree = "<group>"; };
 		A82E5BF31F3470B5003C149C /* Spotlight_folder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Spotlight_folder.png; path = Spotlight/Spotlight_folder.png; sourceTree = "<group>"; };
-		A82F6F7C22FAF3B400051420 /* MainTabBarController+Business.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "MainTabBarController+Business.swift"; path = "MainTabBarController+Business.swift"; sourceTree = "<group>"; };
 		A83892411EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MEGAChatMessage+MNZCategory.h"; sourceTree = "<group>"; };
 		A83892421EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MEGAChatMessage+MNZCategory.m"; sourceTree = "<group>"; };
 		A841E63A20CAB460005E1D1B /* MEGAMessageCallManagementView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAMessageCallManagementView.h; sourceTree = "<group>"; };
@@ -2738,7 +2736,6 @@
 				4152267D1A692ECC00EC7BB6 /* MainTabBarController.m */,
 				B6D995F7222CA42000A98BEF /* MainTabBarController+CameraUpload.h */,
 				B6D995F8222CA42000A98BEF /* MainTabBarController+CameraUpload.m */,
-				A82F6F7C22FAF3B400051420 /* MainTabBarController+Business.swift */,
 				415226791A692ECC00EC7BB6 /* LoginViewController.h */,
 				4152267A1A692ECC00EC7BB6 /* LoginViewController.m */,
 				E8D4B88D1A69429200A3B2E2 /* CreateAccountViewController.h */,
@@ -5454,8 +5451,6 @@
 				A86B9F2E2316D6AB00F35E7A /* FLEXDictionaryExplorerViewController.m in Sources */,
 				4147C2D41B4EE9BA00A37044 /* MEGAStore.m in Sources */,
 				5B0C55AE1EE9575E0058CBE1 /* MEGARemoveContactRequestDelegate.m in Sources */,
-				A824AE07228B1D6800EDF27E /* FLEXNetworkSettingsTableViewController.m in Sources */,
-				E889C9E21B55657E00ECEFDF /* MyAccountViewController.m in Sources */,
 				5BD5CCDD1EB9DA4800175A25 /* ChangeNameViewController.m in Sources */,
 				832E102A202B0A3900BDD30F /* NodeActionHeaderCollectionReusableView.m in Sources */,
 				945E1F0C1FE10CE8000C5E21 /* MEGAInputToolbar.m in Sources */,
@@ -5494,11 +5489,6 @@
 				830EF9A420062F3800FAA947 /* DevicePermissionsHelper.m in Sources */,
 				831FBEA220EF697200AC1B91 /* MEGAArchiveChatRequestDelegate.m in Sources */,
 				77F1DBDC2056A9DF005D5F0E /* MEGAContactLinkCreateRequestDelegate.m in Sources */,
-				A824AE04228B1D6800EDF27E /* FLEXTableViewCell.m in Sources */,
-				A824AE39228B1D6900EDF27E /* FLEXMultiColumnTableView.m in Sources */,
-				A824AE47228B1D6900EDF27E /* FLEXHeapEnumerator.m in Sources */,
-				A824AE1D228B1D6800EDF27E /* FLEXArgumentInputStructView.m in Sources */,
-				5BDE180C1F500EE000CD9F82 /* MyAccountBaseViewController.m in Sources */,
 				41EAAE4D1D06B49400622FAF /* UICollectionView+CTAssetsPickerController.m in Sources */,
 				41D21E6F1D01AEC3002E6296 /* CTAssetsPickerNoAssetsView.m in Sources */,
 				A815FCEA1FE2AD080075AC29 /* UIApplication+MNZCategory.m in Sources */,
@@ -5569,7 +5559,6 @@
 				A86B9F812316D6AB00F35E7A /* FLEXHeapEnumerator.m in Sources */,
 				E8CA8AB11DF17F7500C205DE /* ContactDetailsViewController.m in Sources */,
 				5B8499091F13DBCE0034A36E /* MEGAAssetsPickerController.m in Sources */,
-				A82F6F7D22FAF3B400051420 /* MainTabBarController+Business.swift in Sources */,
 				B6BD011F21B62D8E00E97086 /* CameraUploadManager+Settings.m in Sources */,
 				A86B9F382316D6AB00F35E7A /* FLEXMultilineTableViewCell.m in Sources */,
 				77B32274209C6DE80037FA89 /* MEGARichPreviewMediaItem.m in Sources */,
