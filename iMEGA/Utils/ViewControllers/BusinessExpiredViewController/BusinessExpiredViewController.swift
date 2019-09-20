@@ -3,6 +3,8 @@ import UIKit
 
 class BusinessExpiredViewController: UIViewController {
     
+    var isFetchNodesDone = false
+    
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var detailLabel: UILabel!
@@ -22,7 +24,42 @@ class BusinessExpiredViewController: UIViewController {
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        MEGASdkManager.sharedMEGASdk().add(self)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        MEGASdkManager.sharedMEGASdk().remove(self)
+    }
+
     @IBAction func dismissTouchUpInside(_ sender: UIButton) {
-        self.dismiss(animated: true, completion: nil)
+        self.dismiss(animated: true) {
+            if self.isFetchNodesDone {
+                let rootViewController = UIApplication.mnz_presentingViewController()
+                if rootViewController.isMember(of: LaunchViewController.self) {
+                    guard let launchViewController = rootViewController as? LaunchViewController else {return}
+                    if launchViewController.delegate.responds(to: #selector(LaunchViewControllerDelegate.setupFinished)) {
+                        launchViewController.delegate.setupFinished()
+                    }
+                } else if rootViewController.isMember(of: InitialLaunchViewController.self) {
+                    guard let initialLaunchViewController = rootViewController as? InitialLaunchViewController else {return}
+                    DispatchQueue.main.async {
+                        initialLaunchViewController.performAnimation()
+                    }
+                }
+            }
+        }
+    }
+}
+
+extension BusinessExpiredViewController: MEGARequestDelegate {
+    func onRequestFinish(_ api: MEGASdk, request: MEGARequest, error: MEGAError) {
+        if error.type == .apiOk && request.type == .MEGARequestTypeFetchNodes {
+            isFetchNodesDone = true
+        }
     }
 }

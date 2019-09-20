@@ -8,6 +8,8 @@
 #import "DevicePermissionsHelper.h"
 #import "GradientView.h"
 #import "Helper.h"
+#import "InitialLaunchViewController.h"
+#import "LaunchViewController.h"
 #import "MainTabBarController.h"
 #import "MEGAImagePickerController.h"
 #import "MEGAReachabilityManager.h"

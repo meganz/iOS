@@ -1171,6 +1171,26 @@ void uncaughtExceptionHandler(NSException *exception) {
     }
 }
 
+- (void)presentBusinessExpiredViewIfNeeded {
+    if (MEGASdkManager.sharedMEGASdk.businessStatus == BusinessStatusGracePeriod) {
+        if (MEGASdkManager.sharedMEGASdk.isMasterBusinessAccount) {
+            CustomModalAlertViewController *customModalAlertVC = CustomModalAlertViewController.alloc.init;
+            customModalAlertVC.modalPresentationStyle = UIModalPresentationOverFullScreen;
+            customModalAlertVC.image = [UIImage imageNamed:@"paymentOverdue"];
+            customModalAlertVC.viewTitle = AMLocalizedString(@"Something went wrong", @"");
+            customModalAlertVC.detail = AMLocalizedString(@"There has been a problem with your last payment. Please access MEGA in a desktop browser for more information.", @"When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information");
+            customModalAlertVC.dismissButtonTitle = AMLocalizedString(@"dismiss", @"");
+            
+            [UIApplication.mnz_presentingViewController presentViewController:customModalAlertVC animated:YES completion:nil];
+        }
+    }
+    
+    if (MEGASdkManager.sharedMEGASdk.businessStatus == BusinessStatusExpired) {
+        BusinessExpiredViewController *businessStatusVC = BusinessExpiredViewController.alloc.init;
+        [UIApplication.mnz_presentingViewController presentViewController:businessStatusVC animated:YES completion:nil];
+    }
+}
+
 #pragma mark - LTHPasscodeViewControllerDelegate
 
 - (void)passcodeWasEnteredSuccessfully {
@@ -1483,10 +1503,11 @@ void uncaughtExceptionHandler(NSException *exception) {
                     [self presentUpgradeViewControllerTitle:title detail:detail image:image];
                 }
             }
+            break;
         }
             
         case EventBusinessStatus:
-            [self.mainTBC showBusinessAccountWarningIfNeeded];
+            [self presentBusinessExpiredViewIfNeeded];
             break;
             
         default:
