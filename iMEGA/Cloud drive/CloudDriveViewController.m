@@ -35,6 +35,7 @@
 #import "CloudDriveTableViewController.h"
 #import "CloudDriveCollectionViewController.h"
 #import "ContactsViewController.h"
+#import "CopyrightWarningViewController.h"
 #import "CustomActionViewController.h"
 #import "CustomModalAlertViewController.h"
 #import "MEGAAssetsPickerController.h"
@@ -2051,6 +2052,23 @@ static const NSTimeInterval kSearchTimeDelay = .5;
         }
             break;
             
+        case MegaNodeActionTypeShareFolder: {
+            MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsNavigationControllerID"];
+            ContactsViewController *contactsVC = navigationController.viewControllers.firstObject;
+            contactsVC.nodesArray = @[node];
+            contactsVC.contactsMode = ContactsModeShareFoldersWith;
+            [self presentViewController:navigationController animated:YES completion:nil];
+            break;
+        }
+            
+        case MegaNodeActionTypeManageShare: {
+            ContactsViewController *contactsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsViewControllerID"];
+            contactsVC.node = node;
+            contactsVC.contactsMode = ContactsModeFolderSharedWith;
+            [self.navigationController pushViewController:contactsVC animated:YES];
+            break;
+        }
+            
         case MegaNodeActionTypeFileInfo:
             [self showNodeInfo:node];
             break;
@@ -2059,8 +2077,18 @@ static const NSTimeInterval kSearchTimeDelay = .5;
             [node mnz_leaveSharingInViewController:self];
             break;
             
-        case MegaNodeActionTypeRemoveLink:
+        case MegaNodeActionTypeGetLink:
+        case MegaNodeActionTypeManageLink: {
+            if (MEGAReachabilityManager.isReachableHUDIfNot) {
+                [CopyrightWarningViewController presentGetLinkViewControllerForNodes:@[node] inViewController:UIApplication.mnz_presentingViewController];
+            }
             break;
+        }
+            
+        case MegaNodeActionTypeRemoveLink: {
+            [node mnz_removeLink];
+            break;
+        }
             
         case MegaNodeActionTypeMoveToRubbishBin:
             [node mnz_moveToTheRubbishBinInViewController:self];

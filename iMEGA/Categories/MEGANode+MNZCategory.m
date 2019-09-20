@@ -8,6 +8,7 @@
 
 #import "DevicePermissionsHelper.h"
 #import "Helper.h"
+#import "MEGAExportRequestDelegate.h"
 #import "MEGAMoveRequestDelegate.h"
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGALinkManager.h"
@@ -385,6 +386,14 @@
         moveRequestDelegate.restore = YES;
         [[MEGASdkManager sharedMEGASdk] moveNode:self newParent:restoreNode delegate:moveRequestDelegate];
     }
+}
+
+- (void)mnz_removeLink {
+    MEGAExportRequestDelegate *requestDelegate = [MEGAExportRequestDelegate.alloc initWithCompletion:^(MEGARequest *request) {
+        [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"linkRemoved", @"Message shown when the links to a file or folder has been removed")];
+    } multipleLinks:NO];
+    
+    [MEGASdkManager.sharedMEGASdk disableExportNode:self delegate:requestDelegate];
 }
 
 #pragma mark - File links
