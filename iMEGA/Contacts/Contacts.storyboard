@@ -359,9 +359,9 @@
                             <constraint firstItem="nEj-Ji-K4x" firstAttribute="top" secondItem="pPF-c3-Klm" secondAttribute="bottom" id="DdT-PW-qAq"/>
                             <constraint firstItem="iIe-3e-qN1" firstAttribute="trailing" secondItem="nEj-Ji-K4x" secondAttribute="trailing" id="GdB-Px-vJo"/>
                             <constraint firstItem="iIe-3e-qN1" firstAttribute="trailing" secondItem="pPF-c3-Klm" secondAttribute="trailing" id="RGu-R3-UNx"/>
+                            <constraint firstItem="pPF-c3-Klm" firstAttribute="top" secondItem="iIe-3e-qN1" secondAttribute="top" id="VTr-Y4-566"/>
                             <constraint firstItem="nKV-wF-xCm" firstAttribute="trailing" secondItem="iIe-3e-qN1" secondAttribute="trailing" id="bCe-5b-pLt"/>
                             <constraint firstItem="pPF-c3-Klm" firstAttribute="leading" secondItem="iIe-3e-qN1" secondAttribute="leading" id="bLA-f9-Drg"/>
-                            <constraint firstItem="pPF-c3-Klm" firstAttribute="top" secondItem="iIe-3e-qN1" secondAttribute="top" id="bLS-JT-93s"/>
                             <constraint firstItem="nEj-Ji-K4x" firstAttribute="leading" secondItem="iIe-3e-qN1" secondAttribute="leading" id="dd5-aN-TAn"/>
                             <constraint firstItem="nKV-wF-xCm" firstAttribute="top" secondItem="nEj-Ji-K4x" secondAttribute="bottom" id="xxg-ZM-dpF"/>
                             <constraint firstAttribute="bottom" secondItem="nKV-wF-xCm" secondAttribute="bottom" id="zxS-j1-oeF"/>
@@ -391,8 +391,6 @@
                         <outlet property="cancelBarButtonItem" destination="Zqr-qV-bMs" id="jRX-zv-vU1"/>
                         <outlet property="checkboxButton" destination="bMY-LC-cQ1" id="jVy-0s-kYz"/>
                         <outlet property="contactRequestsBarButtonItem" destination="GvZ-OT-HaA" id="wh8-yW-HiY"/>
-                        <outlet property="contactsHeaderView" destination="x2b-8m-1ll" id="d33-aF-cTo"/>
-                        <outlet property="contactsHeaderViewLabel" destination="Wgy-Fa-zRi" id="Axm-Vi-QSl"/>
                         <outlet property="createGroupBarButtonItem" destination="xiQ-pP-FgM" id="BrK-3Y-gaG"/>
                         <outlet property="deleteBarButtonItem" destination="wgy-rg-Fjg" id="idp-L0-R7m"/>
                         <outlet property="editBarButtonItem" destination="EF0-GJ-VNE" id="UsC-Ca-lDB"/>
@@ -599,7 +597,7 @@
                 </barButtonItem>
                 <barButtonItem title="Insert an email" style="plain" id="EYv-wx-auj" userLabel="Insert an email Bar Button Item">
                     <connections>
-                        <action selector="insertAnEmailAction:" destination="4jb-uN-Eto" id="DPD-nL-XlN"/>
+                        <action selector="addContact:" destination="4jb-uN-Eto" id="fFY-4A-7qZ"/>
                     </connections>
                 </barButtonItem>
                 <barButtonItem title="Share folder" style="plain" id="43b-TZ-Eh5" userLabel="Share folder with Bar Button Item">
@@ -627,44 +625,6 @@
                         </barButtonItem>
                     </items>
                 </toolbar>
-                <view contentMode="scaleToFill" id="x2b-8m-1ll" userLabel="CONTACTS Header View">
-                    <rect key="frame" x="0.0" y="0.0" width="240" height="23"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SHARED FOLDERS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wgy-Fa-zRi" userLabel="CONTACTS Header View Label">
-                            <rect key="frame" x="12" y="3" width="126" height="17"/>
-                            <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="14"/>
-                            <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="R2k-qb-Kfq">
-                            <rect key="frame" x="0.0" y="0.0" width="240" height="0.66666666666666663"/>
-                            <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="0.5" id="Ajn-gQ-nLh"/>
-                            </constraints>
-                        </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nDv-QW-Upt">
-                            <rect key="frame" x="0.0" y="22.666666666666668" width="240" height="0.33333333333333215"/>
-                            <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="0.5" id="Xqy-yP-FRD"/>
-                            </constraints>
-                        </view>
-                    </subviews>
-                    <color key="backgroundColor" red="0.9882352941176471" green="0.9882352941176471" blue="0.9882352941176471" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstItem="R2k-qb-Kfq" firstAttribute="top" secondItem="x2b-8m-1ll" secondAttribute="top" id="1q4-fg-PlE"/>
-                        <constraint firstItem="nDv-QW-Upt" firstAttribute="leading" secondItem="x2b-8m-1ll" secondAttribute="leading" id="5Xr-2c-oel"/>
-                        <constraint firstAttribute="bottom" secondItem="nDv-QW-Upt" secondAttribute="bottom" id="FIA-d1-m1a"/>
-                        <constraint firstItem="Wgy-Fa-zRi" firstAttribute="centerY" secondItem="x2b-8m-1ll" secondAttribute="centerY" id="SIj-3N-y1Z"/>
-                        <constraint firstItem="Wgy-Fa-zRi" firstAttribute="leading" secondItem="x2b-8m-1ll" secondAttribute="leading" constant="12" id="hdS-hq-hba"/>
-                        <constraint firstAttribute="trailing" secondItem="nDv-QW-Upt" secondAttribute="trailing" id="ukA-LV-15E"/>
-                        <constraint firstItem="R2k-qb-Kfq" firstAttribute="leading" secondItem="x2b-8m-1ll" secondAttribute="leading" id="vp5-wp-B3B"/>
-                        <constraint firstAttribute="trailing" secondItem="R2k-qb-Kfq" secondAttribute="trailing" id="wdD-zA-gsQ"/>
-                    </constraints>
-                    <viewLayoutGuide key="safeArea" id="ERs-1M-Pkt"/>
-                </view>
                 <view contentMode="scaleToFill" id="ZFf-iU-Kxb">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="347"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -722,6 +682,7 @@
                         </stackView>
                     </subviews>
                     <color key="backgroundColor" red="0.9882352941176471" green="0.9882352941176471" blue="0.9882352941176471" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <gestureRecognizers/>
                     <constraints>
                         <constraint firstItem="Mu1-He-uvl" firstAttribute="bottom" secondItem="3Ur-aW-bhx" secondAttribute="bottom" constant="10" id="2ty-HF-vnm"/>
                         <constraint firstItem="3Ur-aW-bhx" firstAttribute="leading" secondItem="Mu1-He-uvl" secondAttribute="leading" constant="10" id="O5m-1a-e7G"/>
@@ -731,7 +692,7 @@
                     <viewLayoutGuide key="safeArea" id="Mu1-He-uvl"/>
                 </view>
             </objects>
-            <point key="canvasLocation" x="2541.5999999999999" y="-1592.6536731634185"/>
+            <point key="canvasLocation" x="2540.579710144928" y="-1592.9347826086957"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="f3U-Vs-uPq">
@@ -2112,7 +2073,7 @@
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="pga-11-pde">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="110"/>
-                                <color key="backgroundColor" red="0.9882352941176471" green="0.9882352941176471" blue="0.9882352941176471" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="sqR-wc-ehy">
                                     <size key="itemSize" width="80" height="100"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
