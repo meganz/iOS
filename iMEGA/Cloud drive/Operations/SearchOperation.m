@@ -39,15 +39,16 @@
 #ifdef DEBUG
     MEGALogInfo(@"[Search] \"%@\" starts", self.text);
 #else
-    MEGALogInfo(@"[Search] starts", self.text);
+    MEGALogInfo(@"[Search] starts");
 #endif
     
-    MEGANodeList *nodeListFound = [MEGASdkManager.sharedMEGASdk nodeListSearchForNode:self.parentNode searchString:self.text cancelToken:self.cancelToken recursive:YES];
+    MEGASortOrderType sortOrderType = [[NSUserDefaults standardUserDefaults] integerForKey:@"SortOrderType"];
+    MEGANodeList *nodeListFound = [MEGASdkManager.sharedMEGASdk nodeListSearchForNode:self.parentNode searchString:self.text cancelToken:self.cancelToken recursive:YES order:sortOrderType];
     
 #ifdef DEBUG
     MEGALogInfo(@"[Search] \"%@\" finishes", self.text);
 #else
-    MEGALogInfo(@"[Search] finishes", self.text);
+    MEGALogInfo(@"[Search] finishes");
 #endif
     
     if (self.completion) {
