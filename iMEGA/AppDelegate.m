@@ -228,6 +228,9 @@
                 [[MEGASdkManager sharedMEGAChatSdk] logout];
                 [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
             }
+            
+            MEGAChatNotificationDelegate *chatNotificationDelegate = [MEGAChatNotificationDelegate new];
+            [[MEGASdkManager sharedMEGAChatSdk] addChatNotificationDelegate:chatNotificationDelegate];
         }
         
         MEGALoginRequestDelegate *loginRequestDelegate = [[MEGALoginRequestDelegate alloc] init];
@@ -1463,6 +1466,10 @@ void uncaughtExceptionHandler(NSException *exception) {
             }
         }
             
+        case EventUserFlagsReady:
+            MEGALogDebug(@"Apple VoIP push status: %d", [api appleVoipPushEnabled]);
+            [NSUserDefaults.standardUserDefaults setBool:[api appleVoipPushEnabled] forKey:@"VoIP_messages"];
+            
             break;
             
         default:
@@ -1676,9 +1683,6 @@ void uncaughtExceptionHandler(NSException *exception) {
             
             if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"] || isAccountFirstLogin) {
                 [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self.mainTBC];
-                                
-                MEGAChatNotificationDelegate *chatNotificationDelegate = [MEGAChatNotificationDelegate new];
-                [[MEGASdkManager sharedMEGAChatSdk] addChatNotificationDelegate:chatNotificationDelegate];
                 
                 if ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground) {
                     [[MEGASdkManager sharedMEGAChatSdk] connectInBackground];
@@ -1709,7 +1713,6 @@ void uncaughtExceptionHandler(NSException *exception) {
             
             [[MEGASdkManager sharedMEGASdk] getAccountDetails];
             [self copyDatabasesForExtensions];
-            [[NSUserDefaults standardUserDefaults] setBool:[api appleVoipPushEnabled] forKey:@"VoIP_messages"];
             
             break;
         }
