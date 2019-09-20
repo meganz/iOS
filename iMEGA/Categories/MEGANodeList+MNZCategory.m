@@ -113,7 +113,6 @@
             }
         }
         
-        [childNodesMutableDictionary removeAllObjects];
     }
     
     return shouldProcessOnNodesUpdate;
@@ -148,7 +147,6 @@
         }
     }
     
-    [sharedNodesMutableDictionary removeAllObjects];
     
     return shouldProcessOnNodesUpdate;
 }
