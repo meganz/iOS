@@ -1496,13 +1496,15 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     }];
     [sortByAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
     [moreAlertController addAction:sortByAlertAction];
-    
-    UIAlertAction *selectAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"select", @"Button that allows you to select a given folder") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        BOOL enableEditing = self.cdTableView ? !self.cdTableView.tableView.isEditing : !self.cdCollectionView.collectionView.allowsMultipleSelection;
-        [self setEditMode:enableEditing];
-    }];
-    [selectAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
-    [moreAlertController addAction:selectAlertAction];
+        
+    if (self.nodes.size.unsignedIntValue > 0) {
+        UIAlertAction *selectAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"select", @"Button that allows you to select a given folder") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            BOOL enableEditing = self.cdTableView ? !self.cdTableView.tableView.isEditing : !self.cdCollectionView.collectionView.allowsMultipleSelection;
+            [self setEditMode:enableEditing];
+        }];
+        [selectAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
+        [moreAlertController addAction:selectAlertAction];
+    }
     
     UIAlertAction *rubbishBinAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"rubbishBinLabel", @"Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin'") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
@@ -1536,12 +1538,14 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     [sortByAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
     [moreMinimizedAlertController addAction:sortByAlertAction];
     
-    UIAlertAction *selectAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"select", @"Button that allows you to select a given folder") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        BOOL enableEditing = self.cdTableView ? !self.cdTableView.tableView.isEditing : !self.cdCollectionView.collectionView.allowsMultipleSelection;
-        [self setEditMode:enableEditing];
-    }];
-    [selectAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
-    [moreMinimizedAlertController addAction:selectAlertAction];
+    if (self.nodes.size.unsignedIntValue > 0) {
+        UIAlertAction *selectAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"select", @"Button that allows you to select a given folder") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            BOOL enableEditing = self.cdTableView ? !self.cdTableView.tableView.isEditing : !self.cdCollectionView.collectionView.allowsMultipleSelection;
+            [self setEditMode:enableEditing];
+        }];
+        [selectAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
+        [moreMinimizedAlertController addAction:selectAlertAction];
+    }
     
     if (self.displayMode == DisplayModeRubbishBin) {
         UIAlertAction *clearRubbishBinAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"emptyRubbishBin", @"Section title where you can 'Empty Rubbish Bin' of your MEGA account") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
