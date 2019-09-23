@@ -61,7 +61,7 @@
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="Zostałeś wylogowany z innej lokalizacji";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="MEGA nie może zweryfikować SSL. Możliwe, że korzystasz z publicznego WiFi.";
+"sslUnverified_alertTitle"="MEGA nie może połączyć się bezpiecznie przez SSL. Być może korzystasz z publicznej sieci Wi-Fi z dodatkowymi wymaganiami.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="Treść, do której próbujesz uzyskać dostęp, nie jest dostępna dla tego konta. Spróbuj zalogować się przy użyciu tego samego konta, co w kliencie mobilnym.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
@@ -489,9 +489,9 @@
 /* Message shown while uploading files. Plural. */
 "cameraUploadsPendingFiles"="Trwa przesyłanie, oczekują %lu pliki";
 /* Message shown when camera upload paused because of no WiFi. Singular. */
-"Upload paused because of no WiFi, 1 file pending"="Przesyłanie zostało wstrzymane z powodu braku połączenia WiFi, oczekuje 1 plik";
+"Upload paused because of no WiFi, 1 file pending"="Przesyłanie zostało wstrzymane z powodu braku połączenia Wi-Fi, 1 plik w toku";
 /* Message shown when camera upload paused because of no WiFi. Plural. */
-"Upload paused because of no WiFi, %lu files pending"="Przesyłanie zostało wstrzymane z powodu braku połączenia WiFi, oczekujące pliki %lu";
+"Upload paused because of no WiFi, %lu files pending"="Przesyłanie zostało wstrzymane z powodu braku połączenia Wi-Fi, pliki %lu w toku";
 /* Message shown the pending video file when photos uploaded and video upload is not enabled. Singular. */
 "Photos uploaded, video uploads are off, 1 video not uploaded"="Przesłane zdjęcia, przesyłanie wideo jest wyłączone;  1 film nie został przesłany";
 /* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
@@ -671,7 +671,7 @@
 /* Footer for video uploads switch section when disabled */
 "When enabled, videos will be uploaded."="Po włączeniu filmy zostaną przesłane.";
 /* Title for new camera upload feature */
-"New Camera Upload!"="Nowe opcje przesyłania!";
+"New Camera Upload!"="Nowe opcje przesyłania z aparatu!";
 /* A messge for camera upload v2 migration */
 "Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="Teraz możesz przekonwertować zdjęcia i filmy HEIC / HEVC na bardziej kompatybilne formaty JPEG / H.264.";
 /* Title for an action to use most compatible formats */
@@ -802,6 +802,8 @@
 "filesFolderRemovedToRubbishBinMessage"="%d plików i 1 katalog usunięte z MEGA";
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
 "filesFoldersRemovedToRubbishBinMessage"="[A] plików i [B] katalogów usuniętych z MEGA";
+/* Hint text to suggest that the user have to write the new password on it */
+"newPassword"="Nowe hasło";
 /* Hint text where the user have to re-write the new password to confirm it */
 "confirmPassword"="Potwierdź hasło";
 /* Success message shown when the password has been changed */
@@ -1247,6 +1249,8 @@
 "dismiss"="Anuluj";
 /* Notification text body shown when you have received a new chat message */
 "newMessage"="Nowa wiadomość";
+/* Notification text body shown when you have received a contact request */
+"contactRequest"="Nowy kontakt";
 /* Notification text body shown when you have received a new shared folder */
 "newSharedFolder"="Nowy udostępniony katalog";
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
@@ -1932,3 +1936,31 @@
 "This folder has been the subject of a takedown notice."="Katalog został zgłoszony jako naruszenie praw autorskich.";
 /* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
 "Dispute Takedown"="Roztrzyganie sporów";
+/* Title of the "Links" Shared Items. */
+"Links"="Links";
+/* Title for empty state view of "Links" in Shared Items. */
+"No Public Links"="Brak linków publicznych";
+/* Text to indicate that the user will leave an incoming shared folder. */
+"Leave Share"="Leave Share";
+/* Text indicating to the user the action that will be executed on tap. */
+"Manage Share"="Manage Share";
+/* Title of the screen that shows the users with whom the user can share a folder */
+"Share with"="Udostępnij za pomocą";
+/* Chat Notifications DND: Option that does not deactivate DND automatically */
+"Until I Turn it On Again"="Until I Turn it On Again";
+/* Chat Notifications DND: Option that deactivates DND after 30 minutes */
+"30 minutes"="30 minutes";
+/* Chat Notifications DND: Option that deactivates DND after 1 hour */
+"1 hour"="1 godzina";
+/* Chat Notifications DND: Option that deactivates DND after 6 hours */
+"6 hours"="6 hours";
+/* Chat Notifications DND: Option that deactivates DND after 24 hours */
+"24 hours"="24 hours";
+/* Chat Notifications DND: Title bar message for the dnd activate options */
+"Mute chat Notifications for"="Mute chat Notifications for";
+/* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
+"Muted forever"="Muted forever";
+/* Chat Notifications DND: DND once activated with timing option, this message will appear below the DND on/off switch with the actual time left to deactivate DND replacing the placeholder below */
+"%@ left"="%@ left";
+/* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
+"Chat Notifications"="Chat Notifications";

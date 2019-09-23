@@ -489,9 +489,9 @@
 /* Message shown while uploading files. Plural. */
 "cameraUploadsPendingFiles"="กำลังอัปโหลด กำลังรอไฟล์ %lu ไฟล์";
 /* Message shown when camera upload paused because of no WiFi. Singular. */
-"Upload paused because of no WiFi, 1 file pending"="Upload paused due to no WiFi connection, 1 file pending";
+"Upload paused because of no WiFi, 1 file pending"="Upload paused due to no Wi-Fi connection, 1 file pending";
 /* Message shown when camera upload paused because of no WiFi. Plural. */
-"Upload paused because of no WiFi, %lu files pending"="Upload paused due to no WiFi connection, %lu files pending";
+"Upload paused because of no WiFi, %lu files pending"="Upload paused due to no Wi-Fi connection, %lu files pending";
 /* Message shown the pending video file when photos uploaded and video upload is not enabled. Singular. */
 "Photos uploaded, video uploads are off, 1 video not uploaded"="Photos uploaded, video uploads are off; 1 video not uploaded";
 /* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
@@ -802,6 +802,8 @@
 "filesFolderRemovedToRubbishBinMessage"="%d ไฟล์และ 1 โฟลเดอร์ถูกลบออกจาก MEGA";
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
 "filesFoldersRemovedToRubbishBinMessage"="[A] ไฟล์และ [B] โฟลเดอร์ถูกลบออกจาก MEGA";
+/* Hint text to suggest that the user have to write the new password on it */
+"newPassword"="รหัสผ่านใหม่";
 /* Hint text where the user have to re-write the new password to confirm it */
 "confirmPassword"="ยืนยันรหัสผ่าน";
 /* Success message shown when the password has been changed */
@@ -1247,6 +1249,8 @@
 "dismiss"="ละทิ้ง";
 /* Notification text body shown when you have received a new chat message */
 "newMessage"="ข้อความใหม่";
+/* Notification text body shown when you have received a contact request */
+"contactRequest"="คำขอติดต่อ";
 /* Notification text body shown when you have received a new shared folder */
 "newSharedFolder"="โฟลเดอร์ที่แชร์ใหม่";
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
@@ -1932,3 +1936,31 @@
 "This folder has been the subject of a takedown notice."="โฟลเดอร์นี้ถูกแจ้งว่าให้ลบเนื้อหา";
 /* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
 "Dispute Takedown"="ระงับข้อพิพาท";
+/* Title of the "Links" Shared Items. */
+"Links"="Links";
+/* Title for empty state view of "Links" in Shared Items. */
+"No Public Links"="ไม่มีลิงก์สาธารณะ";
+/* Text to indicate that the user will leave an incoming shared folder. */
+"Leave Share"="Leave Share";
+/* Text indicating to the user the action that will be executed on tap. */
+"Manage Share"="Manage Share";
+/* Title of the screen that shows the users with whom the user can share a folder */
+"Share with"="แชร์กับ";
+/* Chat Notifications DND: Option that does not deactivate DND automatically */
+"Until I Turn it On Again"="Until I Turn it On Again";
+/* Chat Notifications DND: Option that deactivates DND after 30 minutes */
+"30 minutes"="30 minutes";
+/* Chat Notifications DND: Option that deactivates DND after 1 hour */
+"1 hour"="1 ชั่วโมง";
+/* Chat Notifications DND: Option that deactivates DND after 6 hours */
+"6 hours"="6 hours";
+/* Chat Notifications DND: Option that deactivates DND after 24 hours */
+"24 hours"="24 hours";
+/* Chat Notifications DND: Title bar message for the dnd activate options */
+"Mute chat Notifications for"="Mute chat Notifications for";
+/* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
+"Muted forever"="Muted forever";
+/* Chat Notifications DND: DND once activated with timing option, this message will appear below the DND on/off switch with the actual time left to deactivate DND replacing the placeholder below */
+"%@ left"="%@ left";
+/* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
+"Chat Notifications"="Chat Notifications";
