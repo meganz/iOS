@@ -61,7 +61,7 @@
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="You have been logged out of this device from another location";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="MEGA is unable to connect securely through SSL. You might be on public WiFi with additional requirements.";
+"sslUnverified_alertTitle"="MEGA is unable to connect securely through SSL. You might be on public Wi-Fi with additional requirements.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Please try to login with same account as in the mobile web client.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
@@ -489,9 +489,9 @@
 /* Message shown while uploading files. Plural. */
 "cameraUploadsPendingFiles"="Upload in progress, %lu files pending";
 /* Message shown when camera upload paused because of no WiFi. Singular. */
-"Upload paused because of no WiFi, 1 file pending"="Upload paused due to no WiFi connection, 1 file pending";
+"Upload paused because of no WiFi, 1 file pending"="Upload paused due to no Wi-Fi connection, 1 file pending";
 /* Message shown when camera upload paused because of no WiFi. Plural. */
-"Upload paused because of no WiFi, %lu files pending"="Upload paused due to no WiFi connection, %lu files pending";
+"Upload paused because of no WiFi, %lu files pending"="Upload paused due to no Wi-Fi connection, %lu files pending";
 /* Message shown the pending video file when photos uploaded and video upload is not enabled. Singular. */
 "Photos uploaded, video uploads are off, 1 video not uploaded"="Photos uploaded, video uploads are off; 1 video not uploaded";
 /* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
@@ -802,6 +802,8 @@
 "filesFolderRemovedToRubbishBinMessage"="%d files and 1 folder removed from MEGA";
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
 "filesFoldersRemovedToRubbishBinMessage"="[A] files and [B] folders removed from MEGA";
+/* Hint text to suggest that the user have to write the new password on it */
+"newPassword"="New password";
 /* Hint text where the user have to re-write the new password to confirm it */
 "confirmPassword"="Confirm Password";
 /* Success message shown when the password has been changed */
@@ -1247,6 +1249,8 @@
 "dismiss"="Dismiss";
 /* Notification text body shown when you have received a new chat message */
 "newMessage"="New Message";
+/* Notification text body shown when you have received a contact request */
+"contactRequest"="Contact Request";
 /* Notification text body shown when you have received a new shared folder */
 "newSharedFolder"="New Shared Folder";
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
@@ -1932,3 +1936,31 @@
 "This folder has been the subject of a takedown notice."="This folder has been the subject of a takedown notice.";
 /* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
 "Dispute Takedown"="Dispute Takedown";
+/* Title of the "Links" Shared Items. */
+"Links"="Links";
+/* Title for empty state view of "Links" in Shared Items. */
+"No Public Links"="No Public Links";
+/* Text to indicate that the user will leave an incoming shared folder. */
+"Leave Share"="Leave Share";
+/* Text indicating to the user the action that will be executed on tap. */
+"Manage Share"="Manage Share";
+/* Title of the screen that shows the users with whom the user can share a folder */
+"Share with"="Share with";
+/* Chat Notifications DND: Option that does not deactivate DND automatically */
+"Until I Turn it On Again"="Until I Turn it On Again";
+/* Chat Notifications DND: Option that deactivates DND after 30 minutes */
+"30 minutes"="30 minutes";
+/* Chat Notifications DND: Option that deactivates DND after 1 hour */
+"1 hour"="1 hour";
+/* Chat Notifications DND: Option that deactivates DND after 6 hours */
+"6 hours"="6 hours";
+/* Chat Notifications DND: Option that deactivates DND after 24 hours */
+"24 hours"="24 hours";
+/* Chat Notifications DND: Title bar message for the dnd activate options */
+"Mute chat Notifications for"="Mute chat Notifications for";
+/* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
+"Muted forever"="Muted forever";
+/* Chat Notifications DND: DND once activated with timing option, this message will appear below the DND on/off switch with the actual time left to deactivate DND replacing the placeholder below */
+"%@ left"="%@ left";
+/* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
+"Chat Notifications"="Chat Notifications";
