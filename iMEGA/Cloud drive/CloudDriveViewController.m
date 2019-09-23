@@ -56,7 +56,7 @@
 
 static const NSTimeInterval kSearchTimeDelay = .5;
 
-@interface CloudDriveViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, CustomActionViewControllerDelegate, NodeInfoViewControllerDelegate, UITextFieldDelegate, UISearchControllerDelegate> {
+@interface CloudDriveViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, CustomActionViewControllerDelegate, NodeInfoViewControllerDelegate, UITextFieldDelegate, UISearchControllerDelegate, UIAdaptivePresentationControllerDelegate> {
     
     MEGAShareType lowShareType; //Control the actions allowed for node/nodes selected
 }
@@ -232,6 +232,12 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     [super traitCollectionDidChange:previousTraitCollection];
     
     [self configPreviewingRegistration];
+}
+
+//MARK: - UIAdaptivePresentationControllerDelegate
+
+- (void)presentationControllerDidDismiss:(UIPresentationController *)presentationController {
+    [self reloadUI];
 }
 
 #pragma mark - Layout
@@ -1035,6 +1041,9 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     SortByTableViewController *sortByTableViewController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"sortByTableViewControllerID"];
     sortByTableViewController.offline = NO;
     MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:sortByTableViewController];
+    if (@available(iOS 13.0, *)) {
+        navigationController.presentationController.delegate = self;
+    }
     
     [self presentViewController:navigationController animated:YES completion:nil];
 }
@@ -1778,23 +1787,6 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     browserVC.browserAction = BrowserActionCopy;
     
     self.selectedNodesArray = nil;
-}
-
-- (IBAction)sortByAction:(UIBarButtonItem *)sender {
-    [self presentSortByViewController];
-}
-
-- (IBAction)infoTouchUpInside:(UIButton *)sender {
-    if (self.cdTableView.tableView.isEditing) {
-        return;
-    }
-    
-    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.cdTableView.tableView];
-    NSIndexPath *indexPath = [self.cdTableView.tableView indexPathForRowAtPoint:buttonPosition];
-    
-    MEGANode *node = self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : [self.nodes nodeAtIndex:indexPath.row];
-    
-    [self showCustomActionsForNode:node sender:sender];
 }
 
 - (void)showCustomActionsForNode:(MEGANode *)node sender:(UIButton *)sender {
