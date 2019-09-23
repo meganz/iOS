@@ -5,7 +5,6 @@
     NSArray *sortByArray;
 }
 
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *saveBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
 
 @property (nonatomic) MEGASortOrderType sortType;
@@ -22,7 +21,6 @@
     self.title = AMLocalizedString(@"sortTitle", nil);
     
     [self.cancelBarButtonItem setTitle:AMLocalizedString(@"cancel", nil)];
-    [self.saveBarButtonItem setTitle:AMLocalizedString(@"save", @"Save")];
     
     if (!self.isOffline) {
         self.sortType = [[NSUserDefaults standardUserDefaults] integerForKey:@"SortOrderType"];
@@ -105,18 +103,7 @@
 
 #pragma mark - IBActions
 
-
 - (IBAction)cancelAction:(UIBarButtonItem *)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (IBAction)saveAction:(UIBarButtonItem *)sender {
-    if (!self.isOffline) {
-        [[NSUserDefaults standardUserDefaults] setInteger:self.sortType forKey:@"SortOrderType"];
-    } else {
-        [[NSUserDefaults standardUserDefaults] setInteger:self.sortType forKey:@"OfflineSortOrderType"];
-    }
-    [[NSUserDefaults standardUserDefaults] synchronize];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -147,10 +134,18 @@
 #pragma mark - UITableViewDelegate 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     self.sortType = [self orderTypeForRow:indexPath.row];
     
-    [self.tableView reloadData];
+    if (!self.isOffline) {
+        [[NSUserDefaults standardUserDefaults] setInteger:self.sortType forKey:@"SortOrderType"];
+    } else {
+        [[NSUserDefaults standardUserDefaults] setInteger:self.sortType forKey:@"OfflineSortOrderType"];
+    }
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    [self dismissViewControllerAnimated:YES completion:nil];
+    if (@available(iOS 13.0, *)) {
+        [self.navigationController.presentationController.delegate presentationControllerDidDismiss:self.navigationController.presentationController];
+    }
 }
 
 @end
