@@ -52,7 +52,6 @@
 #import "MEGACreateAccountRequestDelegate.h"
 #import "MEGAGetAttrUserRequestDelegate.h"
 #import "MEGAInviteContactRequestDelegate.h"
-#import "MEGALocalNotificationManager.h"
 #import "MEGALoginRequestDelegate.h"
 #import "MEGAShowPasswordReminderRequestDelegate.h"
 #import "CameraUploadManager+Settings.h"
@@ -1288,18 +1287,7 @@ void uncaughtExceptionHandler(NSException *exception) {
         NSString *silent = [[[payload dictionaryPayload] objectForKey:@"megadata"] objectForKey:@"silent"];
         if (chatIdB64 && msgIdB64) {
             uint64_t chatId = [MEGASdk handleForBase64UserHandle:chatIdB64];
-            uint64_t msgId = [MEGASdk handleForBase64UserHandle:msgIdB64];
-            MEGAChatMessage *message = [[MEGASdkManager sharedMEGAChatSdk] messageForChat:chatId messageId:msgId];
-            MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatId];
-            
             [[MEGASdkManager sharedMEGAChatSdk] pushReceivedWithBeep:YES chatId:chatId];
-                                    
-            if (chatRoom && message && [UIApplication sharedApplication].applicationState != UIApplicationStateActive) {
-                MEGALocalNotificationManager *localNotificationManager = [[MEGALocalNotificationManager alloc] initWithChatRoom:chatRoom message:message silent:NO];
-                [localNotificationManager proccessNotification];
-            } else {
-                [[MEGAStore shareInstance] insertMessage:msgId chatId:chatId];
-            }
         } else if (silent) {
             [[MEGASdkManager sharedMEGAChatSdk] pushReceivedWithBeep:NO chatId:~(uint64_t)0];
         }
