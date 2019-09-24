@@ -1950,12 +1950,12 @@
 "User management is only available in a desktop web browser."="User management is only available in a desktop web browser.";
 /* When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information */
 "There has been a problem with your last payment. Please access MEGA in a desktop browser for more information."="There has been a problem with your last payment. Please access MEGA in a desktop browser for more information.";
-/* Title shown when a Business account is expired, users should be notified on logging in that the Business account is expired */
-"Your Account is Expired"="Your Account is Expired";
+/* A dialog title shown to users when their business account is expired. */
+"Your business account is expired"="Your business account is expired";
 /* Details shown when a Business account is expired. Details for the administrator of the Business account */
 "There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser.";
-/* Details shown when a Business account is expired. Details for users of the Business account */
-"Your account has been suspended, please contact your organization administrator for more information.\n\nMEGA is limited to view only."="Your account has been suspended, please contact your organization administrator for more information.\n\nMEGA is limited to view only.";
+/* A dialog message which is shown to sub-users of expired business accounts. */
+"Your account is currently [B]suspended[/B]. You can only browse your data."="Your account is currently [B]suspended[/B]. You can only browse your data.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
 "While MEGA does not have access to your data, your organization administrators do have the ability to control and view your Camera Uploads in your user account"="While MEGA does not have access to your data, your organization administrators do have the ability to control and view your Camera Uploads in your user account";
 /* */
@@ -1972,3 +1972,5 @@
 "Manage Share"="Manage Share";
 /* Title of the screen that shows the users with whom the user can share a folder */
 "Share with"="Share with";
+/* A dialog message which is shown to sub-users of expired business accounts. */
+"Contact your business account administrator to resolve the issue and activate your account."="Contact your business account administrator to resolve the issue and activate your account.";

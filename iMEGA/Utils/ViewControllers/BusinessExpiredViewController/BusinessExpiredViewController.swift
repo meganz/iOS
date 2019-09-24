@@ -13,14 +13,14 @@ class BusinessExpiredViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        titleLabel.text = NSLocalizedString("Your Account is Expired", comment: "")
+        titleLabel.text = NSLocalizedString("Your business account is expired", comment: "A dialog title shown to users when their business account is expired.")
         dismissButton.titleLabel?.text = NSLocalizedString("dismiss", comment: "")
         if MEGASdkManager.sharedMEGASdk().isMasterBusinessAccount {
             imageView.image = UIImage(named: "accountExpiredAdmin")
             detailLabel.text = NSLocalizedString("There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser.", comment: "")
         } else {
             imageView.image = UIImage(named: "accountExpiredUser")
-            detailLabel.text = NSLocalizedString("Your account has been suspended, please contact your organization administrator for more information.\n\nMEGA is limited to view only.", comment: "Details shown when a Business account is expired. Details for users of the Business account")
+            detailLabel.text = NSLocalizedString("Your account is currently [B]suspended[/B]. You can only browse your data.", comment: "A dialog message which is shown to sub-users of expired business accounts.").replacingOccurrences(of: "[B]", with: "").replacingOccurrences(of: "[/B]", with: "") + "\n\n" + NSLocalizedString("Contact your business account administrator to resolve the issue and activate your account.", comment: "A dialog message which is shown to sub-users of expired business accounts.");
         }
     }
     
