@@ -1,6 +1,5 @@
 
 #import "MEGASdkManager.h"
-#import "MEGAConstants.h"
 
 @implementation MEGASdkManager
 

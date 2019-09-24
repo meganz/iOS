@@ -16,7 +16,6 @@
 
 #import "DevicePermissionsHelper.h"
 #import "Helper.h"
-#import "MEGAConstants.h"
 #import "MEGACreateFolderRequestDelegate.h"
 #import "MEGAMoveRequestDelegate.h"
 #import "MEGANode+MNZCategory.h"
@@ -36,6 +35,7 @@
 #import "CloudDriveTableViewController.h"
 #import "CloudDriveCollectionViewController.h"
 #import "ContactsViewController.h"
+#import "CopyrightWarningViewController.h"
 #import "CustomActionViewController.h"
 #import "CustomModalAlertViewController.h"
 #import "MEGAAssetsPickerController.h"
@@ -52,6 +52,7 @@
 #import "SortByTableViewController.h"
 #import "SharedItemsViewController.h"
 #import "UpgradeTableViewController.h"
+#import "UIViewController+MNZCategory.h"
 
 static const NSTimeInterval kSearchTimeDelay = .5;
 
@@ -86,8 +87,6 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 
 @property (nonatomic, strong) NSMutableArray *cloudImages;
 
-@property (nonatomic) id<UIViewControllerPreviewing> previewingContext;
-
 @property (nonatomic, strong) CloudDriveTableViewController *cdTableView;
 @property (nonatomic, strong) CloudDriveCollectionViewController *cdCollectionView;
 @property (nonatomic, strong) RecentsViewController *recentsVC;
@@ -95,6 +94,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 @property (nonatomic, assign) LayoutMode layoutView;
 @property (nonatomic, assign) BOOL shouldDetermineLayout;
 @property (strong, nonatomic) NSOperationQueue *searchQueue;
+@property (strong, nonatomic) MEGACancelToken *cancelToken;
 
 @end
 
@@ -161,6 +161,10 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     self.searchQueue.name = @"searchQueue";
     self.searchQueue.qualityOfService = NSQualityOfServiceUserInteractive;
     self.searchQueue.maxConcurrentOperationCount = 1;
+    
+    if (@available(iOS 13.0, *)) {
+        [self configPreviewingRegistration];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -227,16 +231,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
-    if ([self.traitCollection respondsToSelector:@selector(forceTouchCapability)]) {
-        if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) {
-            if (!self.previewingContext) {
-                self.previewingContext = [self registerForPreviewingWithDelegate:self sourceView:self.view];
-            }
-        } else {
-            [self unregisterForPreviewingWithContext:self.previewingContext];
-            self.previewingContext = nil;
-        }
-    }
+    [self configPreviewingRegistration];
 }
 
 #pragma mark - Layout
@@ -838,6 +833,8 @@ static const NSTimeInterval kSearchTimeDelay = .5;
             
             self.nodes = [[MEGASdkManager sharedMEGASdk] childrenForParent:self.parentNode];
 
+            self.moreMinimizedBarButtonItem.enabled = self.nodes.size.integerValue > 0;
+            
             break;
         }
             
@@ -1195,7 +1192,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
         static BOOL alreadyPresented = NO;
         if (!alreadyPresented && [[MEGASdkManager sharedMEGASdk] mnz_accountDetails] && [[MEGASdkManager sharedMEGASdk] mnz_isProAccount]) {
             alreadyPresented = YES;
-            NSUserDefaults *sharedUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"];
+            NSUserDefaults *sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];
             NSDate *rateUsDate = [sharedUserDefaults objectForKey:@"rateUsDate"];
             if (rateUsDate) {
                 NSInteger weeks = [[NSCalendar currentCalendar] components:NSCalendarUnitWeekOfYear
@@ -1291,16 +1288,25 @@ static const NSTimeInterval kSearchTimeDelay = .5;
         NSString *text = self.searchController.searchBar.text;
         [SVProgressHUD show];
         [self.searchNodesArray removeAllObjects];
-        SearchOperation *searchOperation = [SearchOperation.alloc initWithParentNode:self.parentNode text:text completion:^(NSArray <MEGANode *> *nodesFound) {
+        self.cancelToken = MEGACancelToken.alloc.init;
+        SearchOperation *searchOperation = [SearchOperation.alloc initWithParentNode:self.parentNode text:text cancelToken:self.cancelToken completion:^(NSArray <MEGANode *> *nodesFound) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 self.searchNodesArray = [NSMutableArray arrayWithArray:nodesFound];
                 [SVProgressHUD dismiss];
                 [self reloadData];
+                self.cancelToken = nil;
             });
         }];
         [self.searchQueue addOperation:searchOperation];
     } else {
         [self reloadData];
+    }
+}
+
+- (void)cancelSearchIfNeeded {
+    if (self.searchQueue.operationCount) {
+        [self.cancelToken cancelWithNewValue:YES];
+        [self.searchQueue cancelAllOperations];
     }
 }
 
@@ -1327,6 +1333,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 #pragma mark - IBActions
 
 - (IBAction)recentsTouchUpInside:(UIButton *)sender {
+    [self cancelSearchIfNeeded];
     if (sender.selected) {
         return;
     }
@@ -1854,9 +1861,13 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 #pragma mark - UISearchResultsUpdating
 
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
-    [self.searchQueue cancelAllOperations];
-    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(search) object:nil];
-    [self performSelector:@selector(search) withObject:nil afterDelay:kSearchTimeDelay];
+    if (self.searchController.searchBar.text.length >= kMinimumLettersToStartTheSearch) {
+        [self cancelSearchIfNeeded];
+        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(search) object:nil];
+        [self performSelector:@selector(search) withObject:nil afterDelay:kSearchTimeDelay];
+    } else {
+        [self reloadData];
+    }
 }
 
 #pragma mark - UIDocumentPickerDelegate
@@ -2041,6 +2052,23 @@ static const NSTimeInterval kSearchTimeDelay = .5;
         }
             break;
             
+        case MegaNodeActionTypeShareFolder: {
+            MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsNavigationControllerID"];
+            ContactsViewController *contactsVC = navigationController.viewControllers.firstObject;
+            contactsVC.nodesArray = @[node];
+            contactsVC.contactsMode = ContactsModeShareFoldersWith;
+            [self presentViewController:navigationController animated:YES completion:nil];
+            break;
+        }
+            
+        case MegaNodeActionTypeManageShare: {
+            ContactsViewController *contactsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsViewControllerID"];
+            contactsVC.node = node;
+            contactsVC.contactsMode = ContactsModeFolderSharedWith;
+            [self.navigationController pushViewController:contactsVC animated:YES];
+            break;
+        }
+            
         case MegaNodeActionTypeFileInfo:
             [self showNodeInfo:node];
             break;
@@ -2049,8 +2077,18 @@ static const NSTimeInterval kSearchTimeDelay = .5;
             [node mnz_leaveSharingInViewController:self];
             break;
             
-        case MegaNodeActionTypeRemoveLink:
+        case MegaNodeActionTypeGetLink:
+        case MegaNodeActionTypeManageLink: {
+            if (MEGAReachabilityManager.isReachableHUDIfNot) {
+                [CopyrightWarningViewController presentGetLinkViewControllerForNodes:@[node] inViewController:UIApplication.mnz_presentingViewController];
+            }
             break;
+        }
+            
+        case MegaNodeActionTypeRemoveLink: {
+            [node mnz_removeLink];
+            break;
+        }
             
         case MegaNodeActionTypeMoveToRubbishBin:
             [node mnz_moveToTheRubbishBinInViewController:self];

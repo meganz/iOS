@@ -28,8 +28,6 @@
 "attention"="注意";
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
 "cameraPermissions"="設定で、MEGAアプリがあなたのカメラにアクセスできるよう許可して下さい。";
-/* Alert message to notify that MEGA video calls needs the Camera permission and the call will end*/
-"cameraPermissionsInCall"="設定でMEGAアプリに、カメラにアクセスするための権限を与えてください。続行される場合、アプリが再起動されるため通話が終了します。";
 /* Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it */
 "microphonePermissions"="設定でMEGAアプリに、マイクにアクセスするための権限を与えてください。";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
@@ -63,7 +61,7 @@
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="別の場所から、この機器はログアウトされました。";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="MEGAはSSL経由では安全に接続できません。あなたは追加要件があるパブリックWiFi上にいるかもしれません。";
+"sslUnverified_alertTitle"="MEGAはSSL経由では安全に接続できません。あなたは追加要件を伴う公共のWi-Fiを使っているかもしれません。";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="アクセスしようとしているコンテンツは、このアカウントではご利用いただけません。モバイルウェブクライアントと同じアカウントでログインしてみてください。";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
@@ -292,34 +290,20 @@
 "uploadFrom"="インポート...";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
 "fileExistAlertController_Message"="[A]はもう[B]としてアップロードされました";
-/* Message shown when you try to upload one photo or video that is already uploaded in the current folder. “Already uploaded with name {File name} */
-"fileAlreadyExistMessage"="このファイルは %@としてアップロードされました。";
 /* Message shown when you try to upload some photos or/and videos that are already uploaded in the current folder */
 "filesAlreadyExistMessage"="選択されたファイル%d こは、既にこのフォルダにアップロードされています。";
 /* Message shown when a upload starts */
 "uploadStarted_Message"="アップロード開始";
-/* Alert title shown when you are seeing the details of a file and you moved it to the Rubbish Bin from another location */
-"fileMovedToTheRubbishBin_alertTitle"="このファイルはゴミ箱へ移されました。";
-/* Alert title shown when you are seeing the details of a folder and you moved it to the Rubbish Bin from another location */
-"folderMovedToTheRubbishBin_alertTitle"="このフォルダはゴミ箱に移されました。";
-/* Alert title shown when you are seeing the details of a file and you moved it from another location */
-"fileMoved_alertTitle"="このファイルは移動しました。";
-/* Alert title shown when you are seeing the details of a folder and you moved it from another location */
-"folderMoved_alertTitle"="このフォルダは移動しました。";
 /* Alert title shown when you are seeing the details of a file and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFile_alertTitle"="このファイルへは、もうアクセスできません。";
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFolder_alertTitle"="このフォルダへは、もうアクセスできません。";
 /* The text is shown as an option on the details of a file or folder */
 "saveForOffline"="オフラインで保存";
-/* List option shown on the details of a file or folder */
-"savedForOffline"="オフラインで保存";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
 "folderInboxError"="Inboxラベルは、アップル専用です。";
 /* Title shown under the action that allows you to save an image to your camera roll */
 "saveImage"="イメージを保存する";
-/* Title shown under the action that allows you to save several images to your camera roll */
-"saveImages"="イメージを保存";
 /* Title shown under the action that allows you to get a link to file or folder */
 "getLink"="リンクを取得";
 /* Title shown under the action that allows you to get several links to files and/or folders */
@@ -396,8 +380,6 @@
 "linksRemoved"="リンクを削除しました";
 /* Title show when a file is being downloaded */
 "downloading"="ダウンロード中";
-/* Message shown when you tap on the cancel button of an active transfer */
-"cancelDownloadAlertViewText"="ダウンロードをキャンセルしますか？";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
 "selectDestination"="宛先を選択";
 /* Text of the button for user to select files in MEGA. */
@@ -490,12 +472,6 @@
 "fileImported"="ファイルのインポート完了";
 /* Message shown when some files have been imported */
 "filesImported"="ファイルがインポートしました";
-/* Error message shown when you have used more MEGA storage than you can */
-"quotaExceeded"="ストレージ容量超過";
-/* Alert title shown when the user is overquota */
-"overquotaAlert_title"="クォータ超過！";
-/* Alert message shown when the user is overquota */
-"overquotaAlert_message"="その操作はできません。アカウントのストレージ制限を超えてしまいます。アカウントをアップグレードしますか？";
 /* Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos */
 "selectTitle"="アイテム選択";
 /* Button title that skips the current action */
@@ -513,9 +489,9 @@
 /* Message shown while uploading files. Plural. */
 "cameraUploadsPendingFiles"="アップロード中、%luファイル保留中";
 /* Message shown when camera upload paused because of no WiFi. Singular. */
-"Upload paused because of no WiFi, 1 file pending"="WiFi接続がないためアップロードを一時停止しました。1個のファイルを保留中";
+"Upload paused because of no WiFi, 1 file pending"="WiFi接続がないためアップロードが一時停止されました。1個のファイルが保留中";
 /* Message shown when camera upload paused because of no WiFi. Plural. */
-"Upload paused because of no WiFi, %lu files pending"="WiFi接続がないためアップロードを一時停止しました。%lu個のファイルを保留中";
+"Upload paused because of no WiFi, %lu files pending"="WiFi接続がないためアップロードが一時停止されました。%lu個のファイルが保留中";
 /* Message shown the pending video file when photos uploaded and video upload is not enabled. Singular. */
 "Photos uploaded, video uploads are off, 1 video not uploaded"="写真がアップロードされましたが、動画のアップロードはオフです。1本の動画がアップロードされていません";
 /* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
@@ -530,10 +506,6 @@
 "itemsSelected"="アイテム%luこ選択";
 /* Title shown when multiselection is enable in chat tabs, and the user has more than one item selected. */
 "xSelected"="%d件が選択されました";
-/* Alert title displayed when Camera Uploads will be disabled because of unexpected errors */
-"cameraUploadsWillBeDisabled"="カメラアップロードは無効にします";
-/* Message shown when you have Camera Uploads enabled and your device don't have enough space to make it work */
-"cameraUploadsDisabled_alertView_message"="あなたのデバイスには十分なスペースがないので、カメラアップロードは無効となりました。";
 /* Title of the Offline section */
 "offline"="オフライン";
 /* Title of the Contacts section */
@@ -552,8 +524,6 @@
 "incoming"="受信";
 /* Title of the "Outgoing" Shared Items. */
 "outgoing"="送信";
-/* Text shown to explain that you have shared a folder with one contact */
-"sharedWithOneContact"="1人の知り合いと共有しています";
 /* Text shown to explain with how many contacts you have shared a folder */
 "sharedWithXContacts"="%d人の知り合いと共有しました";
 /* Message shown when you have changed the permissions of a shared folder */
@@ -574,8 +544,6 @@
 "shareRemoved"="共有は解除されました。";
 /* Message shown when some shares have been removed */
 "sharesRemoved"="共有が削除しました";
-/* Text shown next to name of the "Owner" of the folder that is being shared */
-"owner"="所有者";
 /* Title of the view where you see with who you have shared a folder */
 "sharedWith"="と共有";
 /* Item menu option to add a contact through your device app Contacts */
@@ -586,8 +554,6 @@
 "contactEmail"="知り合いのメールアドレス";
 /* Button title to 'Add' the contact to your contacts list */
 "addContactButton"="追加";
-/* Success message shown when a contact has been invited */
-"requestSent"="リクエスト送信済み";
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="あなたのメールアドレスを加える必要はありません。";
 /* Add contacts and share dialog error message when user try to add already existing email address. */
@@ -596,8 +562,6 @@
 "theUserHasBeenInvited"="[X] が招待されています。あなたが認めれば、知り合いのリストに載ります。";
 /* Success message shown when some contacts have been invited */
 "theUsersHaveBeenInvited"="複数のユーザーが招待されています。あなたが認めれば、知り合いのリストに載ります。";
-/* Error message shown when it hasn't been posible to add a contact */
-"addContactError"="追加エラー";
 /* Alert title shown when you want to remove one or more contacts */
 "removeUserTitle"="知り合いを削除";
 /* Alert confirmation message shown when you want to remove one contact from your contacts list */
@@ -610,8 +574,6 @@
 "removedContact"="知り合い%@ 除外";
 /* Label shown when a contact request is pending */
 "pending"="ペンディング";
-/* Alert title shown when you add a contact from your device and the selected one doesn't have an email. */
-"contactWithoutEmail"="その知り合いにはアドレスがありません。";
 /* Button title of the action that allows to leave a shared folder */
 "leaveFolder"="出る";
 /* Alert message shown when the user tap on the leave share action for one inshare */
@@ -686,8 +648,6 @@
 "Compression quality when to transcode HEVC videos to H.264 format."="HEVC動画をH.264形式にトランスコードしたときの圧縮品質。";
 /* Option title to enable upload videos with Camera Uploads */
 "uploadVideosLabel"="動画をアップロード";
-/* Option title to enable Camera Uploads only when the device is charging */
-"onlyWhenChargingLabel"="チャージ中のみ";
 /* Footer text for Camera Upload switch section when camera upload is disabled */
 "When enabled, photos will be uploaded."="有効にすると、写真がアップロードされます。";
 /* Footer text for Camera Upload switch section when only photos upload is enabled */
@@ -711,7 +671,7 @@
 /* Footer for video uploads switch section when disabled */
 "When enabled, videos will be uploaded."="有効にすると、動画がアップロードされます。";
 /* Title for new camera upload feature */
-"New Camera Upload!"="新しいカメラアップロードオプション！";
+"New Camera Upload!"="新しいカメラアップロードオプション！　";
 /* A messge for camera upload v2 migration */
 "Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="HEIC/HEVC写真と動画を、より広く互換性があるJPEG/H.264形式に変換するように選択できるようになりました。";
 /* Title for an action to use most compatible formats */
@@ -740,6 +700,14 @@
 "Only the representative photos from your burst photo sequences will be uploaded."="あなたのバースト写真シーケンスのお気に入りの写真のみがアップロードされます。";
 /* Footer description when upload Hidden Album is enabled */
 "The Hidden Album is where you hide photos or videos in your device Photos app."="隠しアルバムは、あなたの端末の写真アプリで非表示にしている写真や動画の場所です。";
+/* Title of the switch to config whether to upload Shared Albums */
+"Upload Shared Albums"="共有アルバムをアップロード";
+/* Footer description for Upload Shared Albums title */
+"Shared Albums are where you share with other people and subscribe to other people's shares in your device's Photos app."="共有アルバムでは、他の人と共有したり、あなたの端末の写真アプリで他の人の共有を購読したりできます。";
+/* Title of the switch to config whether to upload synced albums */
+"Upload albums synced from iTunes"="iTunesから同期されたアルバムをアップロード";
+/* Footer description for upload synced albums title */
+"Synced albums are where you sync photos or videos to your device's Photos app from iTunes."="同期アルバムでは、写真または動画をiTunesからあなたの端末の写真アプリに同期できます。";
 /* App means “Application” */
 "App version"="アプリ用";
 /* Title of the label where the SDK version is shown */
@@ -758,10 +726,6 @@
 "exportMasterKeyFooter"="回復キーをエクスポートして安全な場所に保管すると、データを失うことなく新しいパスワードを設定できます。";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="どうしてリカバリーキーがいりますか";
-/* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
-"masterKey_firstParagraph"="あなたのデータは、マスター暗号化キー（回復キー）で始まる一連の復号操作でしか読み取れません。復元キーはあなたのパスワードで暗号化して保存しております。これは、パスワードを紛失した場合、あなたの回復キーを復号できなくなり、あなたのデータを復号できなくなることを意味します。";
-/*  */
-"masterKey_thirdParagraph"="外部攻撃者があなたの鍵を手に入れてもあなたのアカウントにはアクセスできません。パスワードをリセットするには親鍵とあなたのメールへのアクセスとの両方が必要です。";
 /* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
 "recoveryKeyCopiedToClipboard"="回復キーがクリップボードにコピーされました。安全な場所に保管してください。";
 /* Alert title shown when you have exported your MEGA Recovery Key */
@@ -838,8 +802,6 @@
 "filesFolderRemovedToRubbishBinMessage"="MEGAからファイル%dことフォルダ１こ、除去しました。";
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
 "filesFoldersRemovedToRubbishBinMessage"="MEGAからファイル[A]ことフォルダ[B]こ、除去しました。";
-/* Hint text to suggest that the user have to write his/her current password */
-"currentPassword"="現在のパスワード";
 /* Hint text to suggest that the user have to write the new password on it */
 "newPassword"="新しいパスワード";
 /* Hint text where the user have to re-write the new password to confirm it */
@@ -937,8 +899,6 @@
 "downloadInUppercaseTransfers"="ダウンロード中";
 /* Title of My Account section. There you can see your account details */
 "myAccount"="アカウント設定";
-/* Button title that shows the different MEGA PRO plans to which you can upgrade. (String as short as possible) */
-"buyPRO"="PROを購入";
 /* Caption of a button to upgrade the account to Pro status */
 "upgrade"="アップグレード";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
@@ -973,8 +933,6 @@
 "storageQuota"="ストレージ容量制限";
 /* The header/title of a block/section which contains information about the user's used/available transfer allowance for their account. */
 "transferQuota"="転送容量制限";
-/* The user's achieved base quota */
-"accountBaseQuota"="アカウントの原容量制限";
 /* achievement type */
 "registrationBonus"="登録実績";
 /* Message shown on the achievements dialog for achieved achievements, %1 is replaced with e.g. 20 GB */
@@ -1015,8 +973,6 @@
 "firstName"="名前";
 /* Hint text for the last name (Placeholder) */
 "lastName"="姓（苗字）";
-/* Button title that goes to the section Usage where you can see how your MEGA space is used */
-"usage"="ご利用内容";
 /* Title for "Local" used space. */
 "localLabel"="ローカル";
 /* Title for "Used" MEGA space. */
@@ -1031,8 +987,6 @@
 "expiresOn"="失効日%@";
 /* Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible). */
 "Renews on"="更新日";
-/* Button title for the section where you can see the 'Purchase history' related to your account */
-"purchaseHistory"="購入履歴";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="共有フォルダ受信";
 /* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
@@ -1045,8 +999,6 @@
 "upgradeAccount"="アカウントをアップグレードする";
 /*  */
 "chooseYourAccountType"="アカウントのタイプを選択して下さい。";
-/* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
-"youCanUpgradeLaterInMyAccount"="マイアカウントで後でアップグレードできます";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
 "cloudDriveIsAlmostFull"="[S]クラウドドライブはほぼいっぱいです。[/S]PROアカウントに[A]今すぐアップグレード[/A]し、[S]最大8TB（8192GB）[/S]のクラウドストレージスペースを取得してください。";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
@@ -1133,10 +1085,6 @@
 "chatIsDisabled"="チャット無効";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
 "enable"="オンにする";
-/* Text button shown when an option is enabled, to allow to disable it. String as sort as possible. */
-"disable"="オフにする";
-/* Conversations section */
-"conversations"="会話";
 /* A button on a dialog which invites a contact to join MEGA. */
 "invite"="招待";
 /* A log message in a chat to indicate that the message has been deleted by the user. */
@@ -1154,7 +1102,7 @@
 /* A log message in a chat to display that a participant's permission was changed and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the permission name (such as Moderator or Read-only) and [C] will be replaced with the person who did it. Please keep the [A], [B] and [C] placeholders, they will be replaced at runtime. For example: Alice Jones was changed to Moderator by John Smith. */
 "wasChangedToBy"="[A]は[C]さんによって[B]に変更されました。";
 /* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
-"changedGroupChatNameTo"="[A]はグループチャット名前を[B]に編集しました。";
+"changedGroupChatNameTo"="[A]さんがグループチャット名を「[B]」に変更しました";
 /* Button label. Allows to add contacts in current chat conversation. */
 "addParticipant"="参加者を追加...";
 /* Menu item to add participants to a chat */
@@ -1193,8 +1141,6 @@
 "away"="不在";
 /*  */
 "busy"="通信中";
-/* title of the contact properties screen */
-"contactInfo"="知り合いに関する情報";
 /*  */
 "notifications"="お知らせ";
 /* Title to perform the action of sending a message to a contact. */
@@ -1207,8 +1153,6 @@
 "clearTheFullMessageHistory"="この会話の完全なメッセージ履歴をクリアしてもよろしいですか？　";
 /* 'Next' button in a dialog */
 "continue"="続ける";
-/* Button title that allows the user to close a chat. */
-"closeChat"="チャットを 閉じる";
 /* Title of the incoming shared folders of a user. */
 "sharedFolders"="共有フォルダ";
 /* Label title above the fingerprint credentials of a user's contact. A credential in this case is a stored piece of information representing the identity of the contact */
@@ -1223,18 +1167,10 @@
 "approve"="許可する";
 /* start a chat/conversation */
 "startConversation"="チャットを開始";
-/* Title of a menu button which allows users to start a conversation creating a 'Group' chat. */
-"group"="グループチャット";
-/* Title of section where you can see the chat group information and the options that you can do with it. Like 'Notifications' or 'Leave Group' and also the participants of the group */
-"groupInfo"="グループ情報";
 /* Label title for a group chat */
 "groupChat"="グループチャット";
 /* The title of a menu button which allows users to rename a group chat. */
 "renameGroup"="グループ名前を変更";
-/* Title of the action that allows you to change the avatar of a group chat. */
-"changeGroupAvatar"="グループアバターを変更";
-/* Text used as hint to give the user information to write a name for the group chat. */
-"enterGroupName"="グループ名を入力";
 /* A button label. The button allows the user to leave the group conversation. */
 "leave"="出る";
 /* Top menu option which opens more menu options in a context menu. */
@@ -1247,8 +1183,6 @@
 "close"="閉じる";
 /* Alert text that explains what means confirming the action 'Leave' */
 "youWillNoLongerHaveAccessToThisConversation"="あなたはこの会話にアクセスできなくなります";
-/* A button label. The button allows the user to leave the conversation. */
-"leaveChat"="チャットから退出";
 /* Button title that allows the user to leave a group chat. */
 "leaveGroup"="グループから退出";
 /* Label to describe the section where you can see the participants of a group chat */
@@ -1257,10 +1191,6 @@
 "moderator"="モデレーター";
 /* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
 "standard"="標準";
-/* A button title which removes a participant from a chat. */
-"removeParticipant"="参加者を削除する";
-/* Chat conversation header with user %@. Please leave %@ as it is. */
-"conversationWith"="%@さんとの会話";
 /* Title show above the name of the persons with whom you're chatting */
 "chattingWith"="チャット相手";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
@@ -1287,16 +1217,12 @@
 "deleteMessage"="メッセージを削除";
 /*  */
 "fromCloudDrive"="クラウドドライブから";
-/*  */
-"fromDevice"="端末から";
 /* referring to a contact in the contact list of the user */
 "contact"="知り合い";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="知り合いを送信";
 /* */
 "done"="完了";
-/* Button label for sending file attachments through the chat to another user. */
-"sendFiles"="ファイルを送る";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "enableRichUrlPreviews"="リッチURLプレビューを有効にする";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
@@ -1502,8 +1428,6 @@
 "totalSize"="合計サイズ";
 /* Refers to the type of a file or folder. */
 "type"="タイプ";
-/* Title of the incoming shared folders of a user in singular */
-"sharedFolder"="フォルダ共有";
 /* Label for what a selection contains. For example: "Contains: 3 folders & 13 files". (no need to put the colon punctuation in the translation) */
 "contains"="内容";
 /* A label for any 'Modified' text or title. For example to show the modification date of a file/folder. */
@@ -1776,22 +1700,18 @@
 "To create a chat link you must name the group."="チャットリンクを作成するには、グループに名前を付ける必要があります。";
 /* Label shown in a cell where you can enable a switch to get a chat link */
 "Chat Link"="チャットリンク";
-/* Message shown when there is an active chat link that can be deleted */
-"Delete Chat Link"="チャットリンクを削除";
 /* Button text in public chat previews that allows the user to join the chat */
 "Join"="参加する";
 /* Text shown in a notification to let the user know that has joined a public chat room after login or account creation */
 "You have joined %@"="あなたは%@に参加しました";
 /* Users previewing a public chat */
 "Observers"="オブザーバー";
-/* Alert message shown while deleting a chat link, warning about the consequences */
-"This conversation will no longer be accessible through the link you are about to delete."="この会話は、チャットリンクを一度削除するとそこアクセスできなくなります。";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
 "%@ enabled Encrypted Key Rotation"="%@さんが暗号化キーローテーションを有効にしました。";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
-"%@ created a public link for the chat."="%@さんがチャット用のチャットリンクを作成しました。";
+"%@ created a public link for the chat."="%@さんがチャットリンクを作成しました";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
-"%@ removed a public link for the chat."="%@さんがチャット用のチャットリンクを削除しました。";
+"%@ removed a public link for the chat."="%@さんがチャットリンクを削除しました";
 /* Management message shown in a chat when the user %@ joined it from a public chat link */
 "%@ joined the group chat."="%@さんがグループチャットに参加しました。";
 /* Message show when a call cannot be established because there are too many participants in the group call */
@@ -1847,7 +1767,7 @@
 /* When somebody accepted your contact request */
 "Accepted your contact request"="知り合いリクエストが受け入れられました。";
 /* When somebody denied your contact request */
-"Denied your contact request"="知り合いリクエストは拒否されました。";
+"Denied your contact request"="コンタクト要求が拒否されました";
 /* notification text */
 "A user has left the shared folder {0}"="あるユーザーが共有フォルダ{0}から去りました";
 /* This is shown in the Notification dialog when the email address of a contact is not found and access to the share is lost for some reason (e.g. share removal or contact removal). */
@@ -1968,8 +1888,6 @@
 "%1 Images and 1 Video"="%1個の画像と1個の動画";
 /* Title for multiple images and multiple videos in recents section */
 "%1 Images and %2 Videos"="%1個の画像と%2個の動画";
-/* Tooltip message shown on recents section. Please see the attached image. */
-"Modified on %1 at %2"="%1日%2に変更されました";
 /* Title for a recent action shown in the webclient, see the attached image for context. */
 "%1 modified by %3"="%1は%3さんが変更しました";
 /* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
@@ -2009,12 +1927,40 @@
 /* Destination folder name of chat files */
 "My chat files"="私のチャットファイル";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
-"Require passcode"="Require passcode";
+"Require passcode"="パスコードが必要です";
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
-"Immediately"="Immediately";
+"Immediately"="即座に";
 /* Popup notification text on mouse-over of taken down file. */
 "This file has been the subject of a takedown notice."="このファイルは削除通知の対象となっています。";
 /* Popup notification text on mouse-over taken down folder. */
 "This folder has been the subject of a takedown notice."="このフォルダは削除通知の対象となっています。";
 /* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
 "Dispute Takedown"="異議申立による削除";
+/* Title of the "Links" Shared Items. */
+"Links"="Links";
+/* Title for empty state view of "Links" in Shared Items. */
+"No Public Links"="パブリックリンクはありません";
+/* Text to indicate that the user will leave an incoming shared folder. */
+"Leave Share"="Leave Share";
+/* Text indicating to the user the action that will be executed on tap. */
+"Manage Share"="Manage Share";
+/* Title of the screen that shows the users with whom the user can share a folder */
+"Share with"="共有先";
+/* Chat Notifications DND: Option that does not deactivate DND automatically */
+"Until I Turn it On Again"="Until I Turn it On Again";
+/* Chat Notifications DND: Option that deactivates DND after 30 minutes */
+"30 minutes"="30 minutes";
+/* Chat Notifications DND: Option that deactivates DND after 1 hour */
+"1 hour"="1時間";
+/* Chat Notifications DND: Option that deactivates DND after 6 hours */
+"6 hours"="6 hours";
+/* Chat Notifications DND: Option that deactivates DND after 24 hours */
+"24 hours"="24 hours";
+/* Chat Notifications DND: Title bar message for the dnd activate options */
+"Mute chat Notifications for"="Mute chat Notifications for";
+/* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
+"Muted forever"="Muted forever";
+/* Chat Notifications DND: DND once activated with timing option, this message will appear below the DND on/off switch with the actual time left to deactivate DND replacing the placeholder below */
+"%@ left"="%@ left";
+/* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
+"Chat Notifications"="Chat Notifications";

@@ -4,7 +4,6 @@
 #import "LivePhotoUploadOperation.h"
 #import "CameraUploadRecordManager.h"
 #import "SavedIdentifierParser.h"
-#import "MEGAConstants.h"
 #import "PHFetchOptions+CameraUpload.h"
 #import "NSError+CameraUpload.h"
 #import "CameraUploadManager+Settings.h"

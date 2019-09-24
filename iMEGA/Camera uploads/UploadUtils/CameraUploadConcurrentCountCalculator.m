@@ -1,6 +1,5 @@
 
 #import "CameraUploadConcurrentCountCalculator.h"
-#import "MEGAConstants.h"
 
 @interface CameraUploadConcurrentCountCalculator ()
 

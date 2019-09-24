@@ -45,6 +45,8 @@
     
     for (NSInteger i = 0; i < [defaultViewControllersMutableArray count]; i++) {
         UITabBarItem *tabBarItem = [[defaultViewControllersMutableArray objectAtIndex:i] tabBarItem];
+        tabBarItem.title = nil;
+        
         if (@available(iOS 10.0, *)) {
             tabBarItem.badgeColor = UIColor.clearColor;
             [tabBarItem setBadgeTextAttributes:@{ NSForegroundColorAttributeName: UIColor.mnz_redMain } forState:UIControlStateNormal];
@@ -119,6 +121,7 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(presentCallViewControllerIfThereIsAnIncomingCall) name:UIApplicationDidBecomeActiveNotification object:nil];
     }
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
+    [self.view setNeedsLayout];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

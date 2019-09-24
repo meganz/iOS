@@ -5,7 +5,6 @@
 #import "MEGASdkManager.h"
 #import "UploadOperationFactory.h"
 #import "AttributeUploadManager.h"
-#import "MEGAConstants.h"
 #import "CameraUploadManager+Settings.h"
 #import "UploadRecordsCollator.h"
 #import "BackgroundUploadMonitor.h"
@@ -22,7 +21,6 @@
 #import "CameraUploadConcurrentCountCalculator.h"
 #import "BackgroundUploadingTaskMonitor.h"
 #import "NSError+CameraUpload.h"
-#import "CameraUploadStore.h"
 
 static const NSTimeInterval MinimumBackgroundRefreshInterval = 3 * 3600;
 static const NSTimeInterval LoadMediaInfoTimeout = 60 * 15;
@@ -92,6 +90,10 @@ static const NSUInteger VideoUploadBatchCount = 1;
 #pragma mark - setup when app launches
 
 - (void)setupCameraUploadWhenApplicationLaunches {
+    if (CameraUploadManager.hasMigratedToCameraUploadsV2) {
+        [CameraUploadManager configDefaultSettingsForCameraUploadV2];
+    }
+    
     [AttributeUploadManager.shared collateLocalAttributes];
     
     if (CameraUploadManager.isCameraUploadEnabled) {
@@ -866,11 +868,6 @@ static const NSUInteger VideoUploadBatchCount = 1;
     _cameraUploadNode = nil;
     [AttributeUploadManager.shared cancelAllAttributesUpload];
     [CameraUploadRecordManager.shared resetDataContext];
-    NSError *error;
-    [CameraUploadStore.shared.storeStack deleteStoreWithError:&error];
-    if (error) {
-        MEGALogError(@"[Camera Upload] error when to delete camera upload store after logout %@", error);
-    }
     [NSFileManager.defaultManager mnz_removeItemAtPath:NSURL.mnz_cameraUploadURL.path];
 }
 

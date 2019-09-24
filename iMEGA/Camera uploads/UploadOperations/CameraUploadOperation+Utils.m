@@ -2,7 +2,6 @@
 #import "CameraUploadOperation+Utils.h"
 #import "CameraUploadRecordManager.h"
 #import "NSString+MNZCategory.h"
-#import "MEGAConstants.h"
 #import "MEGAReachabilityManager.h"
 #import "NSFileManager+MNZCategory.h"
 #import "NSDate+MNZCategory.h"
