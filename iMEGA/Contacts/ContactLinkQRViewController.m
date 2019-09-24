@@ -247,6 +247,10 @@
 #pragma mark - QR recognizing
 
 - (BOOL)startRecognizingCodes {
+    if (self.captureSession.isRunning) {
+        return YES;
+    }
+    
     NSError *error;
     AVCaptureDevice *captureDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
     AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:captureDevice error:&error];
