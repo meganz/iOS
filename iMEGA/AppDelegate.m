@@ -1183,6 +1183,14 @@ void uncaughtExceptionHandler(NSException *exception) {
             customModalAlertVC.viewTitle = AMLocalizedString(@"Something went wrong", @"");
             customModalAlertVC.detail = AMLocalizedString(@"There has been a problem with your last payment. Please access MEGA in a desktop browser for more information.", @"When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information");
             customModalAlertVC.dismissButtonTitle = AMLocalizedString(@"dismiss", @"");
+            __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;
+            customModalAlertVC.dismissCompletion = ^{
+                [weakCustom dismissViewControllerAnimated:YES completion:^{
+                    if (![self.window.rootViewController isKindOfClass:MainTabBarController.class] && ![self.window.rootViewController isKindOfClass:InitialLaunchViewController.class]) {
+                        [self showMainTabBar];
+                    }
+                }];
+            };
             
             [UIApplication.mnz_presentingViewController presentViewController:customModalAlertVC animated:YES completion:nil];
         }
@@ -1374,6 +1382,9 @@ void uncaughtExceptionHandler(NSException *exception) {
 #pragma mark - LaunchViewControllerDelegate
 
 - (void)setupFinished {
+    if (MEGASdkManager.sharedMEGASdk.businessStatus == BusinessStatusGracePeriod &&             [UIApplication.mnz_presentingViewController isKindOfClass:CustomModalAlertViewController.class]) {
+        return;
+    }
     [self showMainTabBar];
 }
 
