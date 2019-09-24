@@ -1,4 +1,9 @@
 #import "ContactTableViewCell.h"
+#import "MEGAPushNotificationSettings.h"
+#import "MEGA-Swift.h"
+
+@interface ContactTableViewCell () <ChatNotificationControlCellProtocol>
+@end
 
 @implementation ContactTableViewCell
 
@@ -38,6 +43,24 @@
     if (highlighted){
         self.onlineStatusView.backgroundColor = color;
     }
+}
+
+- (IBAction)notificationSwitchValueChanged:(UISwitch *)sender {
+    if ([self.delegate respondsToSelector:@selector(notificationSwitchValueChanged:)]) {
+        [self.delegate notificationSwitchValueChanged:sender];
+    }
+}
+
+- (void)prepareForReuse {
+    [super prepareForReuse];
+    self.delegate = nil;
+    [self.notificationsSwitch setOn:YES];
+}
+
+#pragma mark - ChatNotificationControlCellProtocol
+
+- (UIImageView *)iconImageView {
+    return self.avatarImageView;
 }
 
 @end

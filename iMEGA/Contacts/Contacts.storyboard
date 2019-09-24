@@ -1146,6 +1146,7 @@
                                                     <rect key="frame" x="351" y="6.3333333333333321" width="51" height="30.999999999999996"/>
                                                     <color key="onTintColor" red="0.0" green="0.74901960779999999" blue="0.64705882349999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <connections>
+                                                        <action selector="notificationSwitchValueChanged:" destination="kF4-hM-JWG" eventType="valueChanged" id="8Ao-Gm-r2c"/>
                                                         <action selector="notificationsSwitchValueChanged:" destination="GvV-J1-s0U" eventType="valueChanged" id="b4E-vM-wo8"/>
                                                     </connections>
                                                 </switch>

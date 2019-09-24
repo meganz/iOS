@@ -30,7 +30,9 @@
 #import "SharedItemsTableViewCell.h"
 #import "VerifyCredentialsViewController.h"
 
-@interface ContactDetailsViewController () <CustomActionViewControllerDelegate, MEGAChatDelegate, MEGAChatCallDelegate, MEGAGlobalDelegate>
+#import "MEGA-Swift.h"
+
+@interface ContactDetailsViewController () <CustomActionViewControllerDelegate, MEGAChatDelegate, MEGAChatCallDelegate, MEGAGlobalDelegate, ContactTableViewCellDelegate, ChatNotificationControlProtocol>
 
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *verifiedImageView;
@@ -56,6 +58,7 @@
 @property (strong, nonatomic) MEGAUser *user;
 @property (strong, nonatomic) MEGANodeList *incomingNodeListForUser;
 @property (strong, nonatomic) MEGAChatRoom *chatRoom; // The chat room of the contact. Used for send a message or make a call
+@property (strong, nonatomic) ChatNotificationControl *chatNotificationControl;
 
 @property (strong, nonatomic) UIPanGestureRecognizer *panAvatar;
 @property (assign, nonatomic) CGFloat avatarExpandedPosition;
@@ -71,7 +74,7 @@
     [super viewDidLoad];
     
     self.navigationItem.title = @"";
-
+    
     self.avatarExpandedPosition = self.view.frame.size.height * 0.5;
     self.avatarCollapsedPosition = self.view.frame.size.height * 0.3;
     self.avatarViewHeightConstraint.constant = self.avatarCollapsedPosition;
@@ -127,6 +130,8 @@
     if (@available(iOS 11.0, *)) {
         self.avatarImageView.accessibilityIgnoresInvertColors = YES;
     }
+    
+    self.chatNotificationControl = [ChatNotificationControl.alloc initWithDelegate:self];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -320,7 +325,7 @@
         NSNumber *value = [NSNumber numberWithInt:UIInterfaceOrientationPortrait];
         [[UIDevice currentDevice] setValue:value forKey:@"orientation"];
     }
-
+    
     CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
     callVC.chatRoom = self.chatRoom;
     callVC.videoCall = videoCall;
@@ -492,7 +497,7 @@
     if (self.contactDetailsMode == ContactDetailsModeDefault) {
         numberOfSections = 1;
     } else if (self.contactDetailsMode == ContactDetailsModeFromChat) {
-        numberOfSections = 2;
+        numberOfSections = 3;
     } else if (self.contactDetailsMode == ContactDetailsModeFromGroupChat) {
         numberOfSections = 3;
         MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:self.userEmail];
@@ -524,7 +529,7 @@
             numberOfRows = self.incomingNodeListForUser.size.integerValue;
         }
     } else if (self.contactDetailsMode == ContactDetailsModeFromChat) {
-        if (section == 2) {
+        if (section == 3) {
             numberOfRows = self.incomingNodeListForUser.size.integerValue;
         } else {
             numberOfRows = 1;
@@ -570,7 +575,15 @@
         
     } else if (self.contactDetailsMode == ContactDetailsModeFromChat) {
         switch (indexPath.section) {
-            case 0: //Clear Chat History
+            case 0:
+                cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsNotificationsTypeID"];
+                cell.nameLabel.font = [UIFont mnz_SFUIRegularWithSize:15.0f];
+                [self.chatNotificationControl configureWithCell:(id<ChatNotificationControlCellProtocol>)cell
+                                                         chatId:self.chatRoom.chatId];
+                cell.delegate = self;
+                break;
+                
+            case 1: //Clear Chat History
                 cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
                 cell.avatarImageView.image = [UIImage imageNamed:@"clearChatHistory"];
                 cell.nameLabel.text = AMLocalizedString(@"clearChatHistory", @"A button title to delete the history of a chat.");
@@ -578,7 +591,7 @@
                 cell.userInteractionEnabled = cell.avatarImageView.userInteractionEnabled = cell.nameLabel.enabled = self.user.visibility == MEGAUserVisibilityVisible && MEGAReachabilityManager.isReachable && [MEGASdkManager.sharedMEGAChatSdk chatConnectionState:self.chatRoom.chatId] == MEGAChatConnectionOnline;
                 break;
                 
-            case 1: { //Archive chat
+            case 2: { //Archive chat
                 cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
                 cell.avatarImageView.image = self.chatRoom.isArchived ? [UIImage imageNamed:@"unArchiveChat"] : [UIImage imageNamed:@"archiveChat_gray"];
                 cell.nameLabel.text = self.chatRoom.isArchived ? AMLocalizedString(@"unarchiveChat", @"The title of the dialog to unarchive an archived chat.") : AMLocalizedString(@"archiveChat", @"Title of button to archive chats.");
@@ -588,7 +601,7 @@
                 break;
             }
                 
-            case 2: //Shared folders
+            case 3: //Shared folders
                 cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsSharedFolderTypeID" forIndexPath:indexPath];
                 MEGANode *node = [self.incomingNodeListForUser nodeAtIndex:indexPath.row];
                 cell.avatarImageView.image = [Helper incomingFolderImage];
@@ -664,15 +677,32 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if (section == 0 || [self isSharedFolderSection:section]) {
         return 24;
+    } else if (self.contactDetailsMode == ContactDetailsModeFromChat && section == 1) {
+        NSString *timeRemainingString = [self.chatNotificationControl
+                                         timeRemainingForDNDDeactivationStringWithChatId:self.chatRoom.chatId];
+        if (timeRemainingString.length > 0) {
+            return 10.0f;
+        }
     }
     
-        return 0.01f;
+    return 0.01f;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
+    if (self.contactDetailsMode == ContactDetailsModeFromChat && section == 0) {
+        return [self.chatNotificationControl timeRemainingForDNDDeactivationStringWithChatId:self.chatRoom.chatId];
     }
     
+    return nil;
+}
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-        return 24.0f;
+    if (self.contactDetailsMode == ContactDetailsModeFromChat && section == 0) {
+        return UITableViewAutomaticDimension;
     }
     
+    return 24.0f;
+}
+
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -694,7 +724,7 @@
                 }
                 break;
             }
-        
+                
             case 1: {
                 [self openSharedFolderAtIndexPath:indexPath];
                 break;
@@ -702,15 +732,15 @@
         }
     } else if (self.contactDetailsMode == ContactDetailsModeFromChat) {
         switch (indexPath.section) {
-            case 0:
+            case 1:
                 [self showClearChatHistoryAlert];
                 break;
                 
-            case 1:
+            case 2:
                 [self showArchiveChatAlertAtIndexPath];
                 break;
                 
-            case 2: {
+            case 3: {
                 [self openSharedFolderAtIndexPath:indexPath];
                 break;
             }
@@ -885,6 +915,25 @@
     if (shouldReload) {
         self.incomingNodeListForUser = [[MEGASdkManager sharedMEGASdk] inSharesForUser:self.user];
         [self.tableView reloadData];
+    }
+}
+
+#pragma mark - ContactTableViewCellDelegate
+
+- (void)notificationSwitchValueChanged:(UISwitch *)sender {
+    if (sender.isOn) {
+        [self.chatNotificationControl turnOffDNDWithChatId:self.chatRoom.chatId];
+    } else {
+        [self.chatNotificationControl turnOnDNDWithChatId:self.chatRoom.chatId sender:sender];
+    }
+}
+
+#pragma mark - ChatNotificationControlProtocol
+
+- (void)pushNotificationSettingsLoaded {
+    ContactTableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+    if (cell.notificationsSwitch != nil) {
+        cell.notificationsSwitch.enabled = YES;
     }
 }
 

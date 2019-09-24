@@ -30,9 +30,8 @@
                 [localNotificationManager proccessNotification];
             }
         } else {
-            MOMessage *mMessage = [[MEGAStore shareInstance] fetchMessageWithChatId:chatId messageId:message.messageId];
             MEGAChatRoom *chatRoom = [api chatRoomForChatId:chatId];
-            MEGALocalNotificationManager *localNotificationManager = [[MEGALocalNotificationManager alloc] initWithChatRoom:chatRoom message:message silent:mMessage ? NO : YES];
+            MEGALocalNotificationManager *localNotificationManager = [[MEGALocalNotificationManager alloc] initWithChatRoom:chatRoom message:message silent:NO];
             [localNotificationManager proccessNotification];
         }
     }

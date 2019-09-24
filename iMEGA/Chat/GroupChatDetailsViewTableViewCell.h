@@ -1,5 +1,10 @@
 #import <UIKit/UIKit.h>
 
+@protocol GroupChatDetailsViewTableViewCellDelegate <NSObject>
+@optional
+- (void)notificationSwitchValueChanged:(UISwitch *)sender;
+@end
+
 @interface GroupChatDetailsViewTableViewCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UIImageView *leftImageView;
@@ -12,5 +17,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *enableLabel;
 
 @property (weak, nonatomic) IBOutlet UISwitch *notificationsSwitch;
+@property (weak, nonatomic) id<GroupChatDetailsViewTableViewCellDelegate> delegate;
+
 
 @end

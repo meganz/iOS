@@ -903,6 +903,8 @@
 		B6E19B3D2180126500882F74 /* CameraUploadCompletionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E19B3C2180126500882F74 /* CameraUploadCompletionManager.m */; };
 		B6E6EF9422485A0300653311 /* CameraUploadNodeLoadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E6EF9322485A0300653311 /* CameraUploadNodeLoadOperation.m */; };
 		BF0BBEFE230627BE001FD542 /* UIViewController+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0BBEFD230627BE001FD542 /* UIViewController+MNZCategory.m */; };
+		BF9FCC4E2339CA9C00174B2A /* ChatNotificationControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9FCC4D2339CA9C00174B2A /* ChatNotificationControl.swift */; };
+		BF9FCC4F2339DB1300174B2A /* ChatNotificationControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9FCC4D2339CA9C00174B2A /* ChatNotificationControl.swift */; };
 		BFE54778231F0F27007FB8F6 /* UIViewController+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0BBEFD230627BE001FD542 /* UIViewController+MNZCategory.m */; };
 		BFE54779231F0F29007FB8F6 /* UIViewController+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0BBEFD230627BE001FD542 /* UIViewController+MNZCategory.m */; };
 		E803CB641D5336F100F81A36 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E803CB661D5336F100F81A36 /* InfoPlist.strings */; };
@@ -2228,6 +2230,7 @@
 		B6E6EF9322485A0300653311 /* CameraUploadNodeLoadOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CameraUploadNodeLoadOperation.m; sourceTree = "<group>"; };
 		BF0BBEFC230627BE001FD542 /* UIViewController+MNZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+MNZCategory.h"; sourceTree = "<group>"; };
 		BF0BBEFD230627BE001FD542 /* UIViewController+MNZCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+MNZCategory.m"; sourceTree = "<group>"; };
+		BF9FCC4D2339CA9C00174B2A /* ChatNotificationControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatNotificationControl.swift; sourceTree = "<group>"; };
 		E803CB651D5336F100F81A36 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E803CB681D53374A00F81A36 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E80C760E1DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GroupChatDetailsViewTableViewCell.h; path = Chat/GroupChatDetailsViewTableViewCell.h; sourceTree = "<group>"; };
@@ -3449,6 +3452,7 @@
 				5B39DAA11EF916D900BC2319 /* ChatAttachedContactsViewController.m */,
 				E8B415041DE3237F00B9D206 /* GroupChatDetailsViewController.h */,
 				E8B415051DE3237F00B9D206 /* GroupChatDetailsViewController.m */,
+				BF9FCC4D2339CA9C00174B2A /* ChatNotificationControl.swift */,
 				E80C760E1DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.h */,
 				E80C760F1DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.m */,
 				A8C262A81FA0B8F9006172CE /* CallViewController.h */,
@@ -5509,6 +5513,7 @@
 				83113495223900CB00647AB4 /* GradientView.m in Sources */,
 				E8D4B8911A69429200A3B2E2 /* ConfirmAccountViewController.m in Sources */,
 				835223AD20568BB200A47438 /* MEGAGetFolderInfoRequestDelegate.m in Sources */,
+				BF9FCC4E2339CA9C00174B2A /* ChatNotificationControl.swift in Sources */,
 				5B5737D61EFBE6410027ECCD /* MEGANode+MNZCategory.m in Sources */,
 				A86B9F852316D6AB00F35E7A /* FLEXKeyboardShortcutManager.m in Sources */,
 				777AC33E21AD3CC500E987A4 /* MEGAChatAttachVoiceClipRequestDelegate.m in Sources */,
@@ -5908,6 +5913,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BF9FCC4F2339DB1300174B2A /* ChatNotificationControl.swift in Sources */,
 				77892E9E20E501DC0020A533 /* ContactTableViewCell.m in Sources */,
 				94892C921EFBEA3D00AEAC25 /* MEGASdkManager.m in Sources */,
 				8310488A21AECD860057400D /* DTConstants.m in Sources */,
@@ -6210,6 +6216,7 @@
 		137361B11A6664C400B740E8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = MEGA.entitlements;
@@ -6264,6 +6271,7 @@
 		137361B21A6664C400B740E8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = MEGA.entitlements;
@@ -6515,6 +6523,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAShare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "iMEGA/MEGA-Bridging-Header.h";
+				SWIFT_OBJC_INTERFACE_HEADER_NAME = "$(PROJECT_NAME)-Swift.h";
+				SWIFT_VERSION = 5.0;
 				USER_HEADER_SEARCH_PATHS = "iMEGA/Vendor/SDK/bindings/ios/** iMEGA/Vendor/Karere/bindings/Objective-C";
 			};
 			name = Debug;
@@ -6559,6 +6570,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAShare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "iMEGA/MEGA-Bridging-Header.h";
+				SWIFT_OBJC_INTERFACE_HEADER_NAME = "$(PROJECT_NAME)-Swift.h";
+				SWIFT_VERSION = 5.0;
 				USER_HEADER_SEARCH_PATHS = "iMEGA/Vendor/SDK/bindings/ios/** iMEGA/Vendor/Karere/bindings/Objective-C";
 			};
 			name = Release;
