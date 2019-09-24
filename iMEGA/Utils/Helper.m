@@ -27,11 +27,7 @@
 #import "NodeTableViewCell.h"
 #import "OpenInActivity.h"
 #import "PhotoCollectionViewCell.h"
-#import "RemoveLinkActivity.h"
-#import "RemoveSharingActivity.h"
-#import "ShareFolderActivity.h"
 #import "SendToChatActivity.h"
-#import "MEGAConstants.h"
 
 static MEGAIndexer *indexer;
 
@@ -431,9 +427,8 @@ static MEGAIndexer *indexer;
 }
 
 + (NSURL *)urlForSharedSandboxCacheDirectory:(NSString *)directory {
-    NSString *cacheDirectory = @"Library/Cache/";
-    NSURL *containerURL = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"];
-    NSURL *destinationURL = [[containerURL URLByAppendingPathComponent:cacheDirectory isDirectory:YES] URLByAppendingPathComponent:directory isDirectory:YES];
+    NSURL *containerURL = [NSFileManager.defaultManager containerURLForSecurityApplicationGroupIdentifier:MEGAGroupIdentifier];
+    NSURL *destinationURL = [[containerURL URLByAppendingPathComponent:MEGAExtensionCacheFolder isDirectory:YES] URLByAppendingPathComponent:directory isDirectory:YES];
     [[NSFileManager defaultManager] createDirectoryAtURL:destinationURL withIntermediateDirectories:YES attributes:nil error:nil];
     return destinationURL;
 }
@@ -669,23 +664,6 @@ static MEGAIndexer *indexer;
     });
     
     return [byteCountFormatter stringFromByteCount:byteCount];
-}
-
-+ (unsigned long long)sizeOfFolderAtPath:(NSString *)path {
-    unsigned long long folderSize = 0;
-    
-    NSArray *directoryContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:nil];
-    
-    for (NSString *item in directoryContents) {
-        NSDictionary *attributesDictionary = [[NSFileManager defaultManager] attributesOfItemAtPath:[path stringByAppendingPathComponent:item] error:nil];
-        if ([attributesDictionary objectForKey:NSFileType] == NSFileTypeDirectory) {
-            folderSize += [Helper sizeOfFolderAtPath:[path stringByAppendingPathComponent:item]];
-        } else {
-            folderSize += [[attributesDictionary objectForKey:NSFileSize] unsignedLongLongValue];
-        }
-    }
-    
-    return folderSize;
 }
 
 + (void)changeApiURL {
@@ -951,18 +929,12 @@ static MEGAIndexer *indexer;
     NSMutableArray *activitiesMutableArray = [[NSMutableArray alloc] init];
     
     NSMutableArray *excludedActivityTypesMutableArray = [[NSMutableArray alloc] initWithArray:@[UIActivityTypePrint, UIActivityTypeCopyToPasteboard, UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll, UIActivityTypeAddToReadingList, UIActivityTypeAirDrop]];
-    
-    GetLinkActivity *getLinkActivity = [[GetLinkActivity alloc] initWithNodes:nodesArray];
-    [activitiesMutableArray addObject:getLinkActivity];
-    
+        
     NodesAre nodesAre = [Helper checkPropertiesForSharingNodes:nodesArray];
     
     BOOL allNodesExistInOffline = NO;
     NSMutableArray *filesURLMutableArray;
-    if (NodesAreFolders == (nodesAre & NodesAreFolders)) {
-        ShareFolderActivity *shareFolderActivity = [[ShareFolderActivity alloc] initWithNodes:nodesArray];
-        [activitiesMutableArray addObject:shareFolderActivity];
-    } else if (NodesAreFiles == (nodesAre & NodesAreFiles)) {
+    if (NodesAreFiles == (nodesAre & NodesAreFiles)) {
         filesURLMutableArray = [[NSMutableArray alloc] initWithArray:[Helper checkIfAllOfTheseNodesExistInOffline:nodesArray]];
         if ([filesURLMutableArray count]) {
             allNodesExistInOffline = YES;
@@ -1004,16 +976,6 @@ static MEGAIndexer *indexer;
         if (nodesArray.count == 1) {
             [excludedActivityTypesMutableArray removeObject:UIActivityTypeAirDrop];
         }
-    }
-    
-    if (NodesAreExported == (nodesAre & NodesAreExported)) {
-        RemoveLinkActivity *removeLinkActivity = [[RemoveLinkActivity alloc] initWithNodes:nodesArray];
-        [activitiesMutableArray addObject:removeLinkActivity];
-    }
-    
-    if (NodesAreOutShares == (nodesAre & NodesAreOutShares)) {
-        RemoveSharingActivity *removeSharingActivity = [[RemoveSharingActivity alloc] initWithNodes:nodesArray];
-        [activitiesMutableArray addObject:removeSharingActivity];
     }
     
     UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:activityItemsMutableArray applicationActivities:activitiesMutableArray];
@@ -1329,7 +1291,7 @@ static MEGAIndexer *indexer;
     [MEGAStore.shareInstance.storeStack deleteStoreWithError:nil];
     
     // Delete files saved by extensions
-    NSString *extensionGroup = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"].path;
+    NSString *extensionGroup = [NSFileManager.defaultManager containerURLForSecurityApplicationGroupIdentifier:MEGAGroupIdentifier].path;
     [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:extensionGroup];
     
     // Delete Spotlight index
@@ -1366,7 +1328,7 @@ static MEGAIndexer *indexer;
     [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"OfflineSortOrderType"];
     [[NSUserDefaults standardUserDefaults] synchronize];
 
-    NSUserDefaults *sharedUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"];
+    NSUserDefaults *sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];
     [sharedUserDefaults removeObjectForKey:@"extensions"];
     [sharedUserDefaults removeObjectForKey:@"extensions-passcode"];
     [sharedUserDefaults removeObjectForKey:@"treeCompleted"];

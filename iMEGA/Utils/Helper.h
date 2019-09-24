@@ -70,8 +70,6 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 
 + (NSString *)memoryStyleStringFromByteCount:(long long)byteCount;
 
-+ (unsigned long long)sizeOfFolderAtPath:(NSString *)path;
-
 + (void)changeApiURL;
 
 + (void)cannotPlayContentDuringACallAlert;

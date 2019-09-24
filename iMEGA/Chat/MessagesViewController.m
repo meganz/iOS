@@ -71,6 +71,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 @property (nonatomic, strong) MEGALoadingMessagesHeaderView *loadingMessagesHeaderView;
 
 @property (strong, nonatomic) NSMutableArray <MEGAChatMessage *> *messages;
+@property (strong, nonatomic) NSMutableArray <MEGAChatMessage *> *loadingMessages;
 
 @property (strong, nonatomic) JSQMessagesBubbleImage *outgoingBubbleImageData;
 @property (strong, nonatomic) JSQMessagesBubbleImage *incomingBubbleImageData;
@@ -162,6 +163,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     [super viewDidLoad];
     
     _messages = NSMutableArray.new;
+    self.loadingMessages = NSMutableArray.new;
     
     self.isFirstLoad = YES;
     
@@ -2271,8 +2273,8 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     JSQMessagesCollectionViewCell *cell = (JSQMessagesCollectionViewCell *)[super collectionView:collectionView cellForItemAtIndexPath:indexPath];
     MEGAChatMessage *message = [self.messages objectAtIndex:indexPath.item];
     
-    if (message.containsMEGALink) {
-        if (![self.observedNodeMessages containsObject:message]) {
+    if (![self.observedNodeMessages containsObject:message]) {
+        if (message.containsMEGALink || (message.type == MEGAChatMessageTypeAttachment && !message.richNumber)) {
             [self.observedNodeMessages addObject:message];
             [message addObserver:self forKeyPath:@"richNumber" options:NSKeyValueObservingOptionNew context:nil];
         }
@@ -3009,7 +3011,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             case MEGAChatMessageTypePublicHandleDelete:
             case MEGAChatMessageTypeSetPrivateMode: {
                 if (!message.isDeleted) {
-                    [self.messages insertObject:message atIndex:0];
+                    [self.loadingMessages insertObject:message atIndex:0];
                 }
                 break;
             }
@@ -3041,6 +3043,12 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             [SVProgressHUD dismiss];
             self.loadingState = NO;
         }
+        
+        for (NSUInteger i = 0; i < self.loadingMessages.count; i++) {
+            [self.messages insertObject:self.loadingMessages[i] atIndex:i];
+        }
+        [self.loadingMessages removeAllObjects];
+        
         if (self.isFirstLoad) {
             if (self.unreadMessages < 0 && self.unreadMessages > -kMaxMessagesToLoad) {
                 if (self.chatRoom.unreadCount < 0) {
@@ -3113,8 +3121,13 @@ static NSMutableSet<NSString *> *tapForInfoSet;
                         [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
                     }
                     if (message.type == MEGAChatMessageTypeAttachment) {
-                        NSUInteger attachmentIndex = [self.attachmentMessages indexOfObject:oldMessage];
-                        [self.attachmentMessages replaceObjectAtIndex:attachmentIndex withObject:message];
+                        if (message.nodeList.size.unsignedIntegerValue == 1) {
+                            MEGANode *node = [message.nodeList nodeAtIndex:0];
+                            if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
+                                NSUInteger attachmentIndex = [self.attachmentMessages indexOfObject:oldMessage];
+                                [self.attachmentMessages replaceObjectAtIndex:attachmentIndex withObject:message];
+                            }
+                        }
                     }
                 } else {
                     message.chatId = self.chatRoom.chatId;

@@ -285,9 +285,26 @@
                     NSString *base64Handle = [detectedString stringByReplacingOccurrencesOfString:baseString withString:@""];
                     
                     MEGAContactLinkQueryRequestDelegate *delegate = [[MEGAContactLinkQueryRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
-                        [self feedbackWithSuccess:YES];
-                        NSString *fullName = [NSString stringWithFormat:@"%@ %@", request.name, request.text];
-                        [self presentInviteModalForEmail:request.email fullName:fullName contactLinkHandle:request.nodeHandle image:request.file];
+                        switch (self.contactLinkQRType) {
+                            case ContactLinkQRTypeContactRequest: {
+                                [self feedbackWithSuccess:YES];
+                                NSString *fullName = [NSString stringWithFormat:@"%@ %@", request.name, request.text];
+                                [self presentInviteModalForEmail:request.email fullName:fullName contactLinkHandle:request.nodeHandle image:request.file];
+                                break;
+                            }
+                                
+                            case ContactLinkQRTypeShareFolder: {
+                                [self dismissViewControllerAnimated:YES completion:^{
+                                    if ([self.contactLinkQRDelegate respondsToSelector:@selector(emailForScannedQR:)]) {
+                                        [self.contactLinkQRDelegate emailForScannedQR:request.email];
+                                    }
+                                }];
+                                break;
+                            }
+                                
+                            default:
+                                break;
+                        }
                     } onError:^(MEGAError *error) {
                         if (error.type == MEGAErrorTypeApiENoent) {
                             [self feedbackWithSuccess:NO];

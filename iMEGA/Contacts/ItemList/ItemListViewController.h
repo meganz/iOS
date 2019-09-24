@@ -2,7 +2,7 @@
 #import <UIKit/UIKit.h>
 #import "ItemListModel.h"
 
-@protocol ItemListViewControllerProtocol <NSObject>
+@protocol ItemListViewControllerDelegate <NSObject>
 
 - (void)removeSelectedItem:(id)item;
 
@@ -10,7 +10,7 @@
 
 @interface ItemListViewController : UIViewController
 
-@property (weak, nonatomic) id<ItemListViewControllerProtocol> itemListDelegate;
+@property (weak, nonatomic) id<ItemListViewControllerDelegate> itemListDelegate;
 
 - (void)addItem:(ItemListModel *)item;
 - (void)removeItem:(ItemListModel *)item;

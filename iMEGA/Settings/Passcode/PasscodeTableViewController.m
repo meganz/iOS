@@ -85,7 +85,7 @@
                 wasPasscodeAlreadyEnabled = YES;
             }
         }
-        self.requirePasscodeDetailLabel.text = LTHPasscodeViewController.timerDuration > RequirePasscodeAfterImmediatelly ? [NSString mnz_stringFromCallDuration:LTHPasscodeViewController.timerDuration] : AMLocalizedString(@"Immediatelly", nil);
+        self.requirePasscodeDetailLabel.text = LTHPasscodeViewController.timerDuration > RequirePasscodeAfterImmediatelly ? [NSString mnz_stringFromCallDuration:LTHPasscodeViewController.timerDuration] : AMLocalizedString(@"Immediately", nil);
     } else {
         [self.simplePasscodeSwitch setOn:NO];
         [self.biometricsSwitch setOn:NO];
