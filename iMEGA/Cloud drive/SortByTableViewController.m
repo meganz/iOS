@@ -137,11 +137,10 @@
     self.sortType = [self orderTypeForRow:indexPath.row];
     
     if (!self.isOffline) {
-        [[NSUserDefaults standardUserDefaults] setInteger:self.sortType forKey:@"SortOrderType"];
+        [NSUserDefaults.standardUserDefaults setInteger:self.sortType forKey:@"SortOrderType"];
     } else {
-        [[NSUserDefaults standardUserDefaults] setInteger:self.sortType forKey:@"OfflineSortOrderType"];
+        [NSUserDefaults.standardUserDefaults setInteger:self.sortType forKey:@"OfflineSortOrderType"];
     }
-    [[NSUserDefaults standardUserDefaults] synchronize];
     [self dismissViewControllerAnimated:YES completion:nil];
     if (@available(iOS 13.0, *)) {
         [self.navigationController.presentationController.delegate presentationControllerDidDismiss:self.navigationController.presentationController];
