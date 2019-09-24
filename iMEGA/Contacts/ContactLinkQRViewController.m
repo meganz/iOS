@@ -158,7 +158,14 @@
             self.qrImageView.hidden = self.avatarBackgroundView.hidden = self.avatarImageView.hidden = self.contactLinkLabel.hidden = NO;
             self.linkCopyButton.hidden = self.moreButton.hidden = (self.contactLinkLabel.text.length == 0);
             self.cameraView.hidden = self.cameraMaskView.hidden = self.cameraMaskBorderView.hidden = self.hintLabel.hidden = self.errorLabel.hidden = YES;
-            self.backButton.tintColor = self.segmentedControl.tintColor = UIColor.mnz_redMain;
+            self.backButton.tintColor = UIColor.mnz_redMain;
+            if (@available(iOS 13.0, *)) {
+                [self.segmentedControl setTitleTextAttributes:@{NSForegroundColorAttributeName:UIColor.blackColor} forState:UIControlStateNormal];
+                [self.segmentedControl setTitleTextAttributes:@{NSForegroundColorAttributeName:UIColor.blackColor} forState:UIControlStateSelected];
+            } else {
+                self.segmentedControl.tintColor = UIColor.mnz_redMain;
+            }
+            
             break;
             
         case 1:
@@ -167,7 +174,14 @@
                 self.qrImageView.hidden = self.avatarBackgroundView.hidden = self.avatarImageView.hidden = self.contactLinkLabel.hidden = self.linkCopyButton.hidden = self.moreButton.hidden = YES;
                 self.cameraView.hidden = self.cameraMaskView.hidden = self.cameraMaskBorderView.hidden = self.hintLabel.hidden = self.errorLabel.hidden = NO;
                 self.queryInProgress = NO;
-                self.backButton.tintColor = self.segmentedControl.tintColor = [UIColor whiteColor];
+                self.backButton.tintColor = UIColor.whiteColor;
+                if (@available(iOS 13.0, *)) {
+                    [self.segmentedControl setTitleTextAttributes:@{NSForegroundColorAttributeName:UIColor.whiteColor} forState:UIControlStateNormal];
+                    [self.segmentedControl setTitleTextAttributes:@{NSForegroundColorAttributeName:UIColor.blackColor} forState:UIControlStateSelected];
+                } else {
+                    self.segmentedControl.tintColor = UIColor.whiteColor;
+                }
+                
             } else {
                 sender.selectedSegmentIndex = 0;
                 [self valueChangedAtSegmentedControl:sender];
