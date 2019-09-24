@@ -154,6 +154,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     
     [self.view addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)]];
     
+    [self.cloudDriveButton setTitle:AMLocalizedString(@"cloudDrive", @"Title for the cloud drive section") forState:UIControlStateNormal];
     [self.recentsButton setTitle:AMLocalizedString(@"Recents", @"Title for the recents section") forState:UIControlStateNormal];
     self.moreBarButtonItem.accessibilityLabel = AMLocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
     
