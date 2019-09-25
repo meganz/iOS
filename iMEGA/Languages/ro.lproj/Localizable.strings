@@ -702,8 +702,6 @@
 "The Hidden Album is where you hide photos or videos in your device Photos app."="Albumul ascuns este locul în care ascunzi fotografii sau videoclipuri în aplicația Fotografii a dispozitivului.";
 /* Title of the switch to config whether to upload Shared Albums */
 "Upload Shared Albums"="Încarcă albume partajate";
-/* Footer description for Upload Shared Albums title */
-"Shared Albums are where you share with other people and subscribe to other people's shares in your device's Photos app."="Albumele partajate sunt locul în care partajezi cu alte persoane și te abonezi la partajările altor persoane din aplicația Poze a dispozitivului.";
 /* Title of the switch to config whether to upload synced albums */
 "Upload albums synced from iTunes"="Încarcă albumele sincronizate de pe iTunes";
 /* Footer description for upload synced albums title */
