@@ -207,7 +207,9 @@ class SMSVerificationViewController: UIViewController {
             MEGASdkManager.sharedMEGASdk()?.getAccountAchievements(with: MEGAGenericRequestDelegate(completion: { [weak self] (request, error) in
                 guard error.type == .apiOk else { return }
                 guard let byteCount = request.megaAchievementsDetails?.classStorage(forClassId: Int(MEGAAchievement.addPhone.rawValue)) else { return }
-                self?.descriptionTextView.text = String(format: AMLocalizedString("Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."), Helper.memoryStyleString(fromByteCount: byteCount))
+                UIView.animate(withDuration: 0.5) {
+                    self?.descriptionTextView.text = String(format: AMLocalizedString("Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."), Helper.memoryStyleString(fromByteCount: byteCount))
+                }
             }))
 
         case .UnblockAccount:
