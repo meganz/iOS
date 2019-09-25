@@ -9,7 +9,7 @@ extension AppDelegate {
             guard error.type == .apiOk else { return }
             guard !MEGASdkManager.sharedMEGASdk().hasVerifiedPhoneNumber else { return }
             
-            UIApplication.mnz_presentingViewController()?.present(AddPhoneNumberViewController.instantiate(withStoryboardName: "SMSVerification"), animated: true, completion: nil)
+            UIApplication.mnz_presentingViewController()?.present(AddPhoneNumberViewController.mnz_instantiate(withStoryboardName: "SMSVerification"), animated: true, completion: nil)
         }))
     }
 }

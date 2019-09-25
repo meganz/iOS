@@ -30,7 +30,7 @@ class SMSVerificationViewController: UIViewController {
     // MARK: - View lifecycle
     
     @objc class func instantiate(with verificationType: SMSVerificationType) -> SMSVerificationViewController {
-        let controller = SMSVerificationViewController.instantiate(withStoryboardName: "SMSVerification")
+        let controller = SMSVerificationViewController.mnz_instantiate(withStoryboardName: "SMSVerification")
         controller.verificationType = verificationType
         return controller
     }
@@ -204,13 +204,13 @@ class SMSVerificationViewController: UIViewController {
             title = AMLocalizedString("Add Phone Number")
             titleLabel.text = title
             cancelButton.setTitle(cancelTitle, for: .normal)
-            MEGASdkManager.sharedMEGASdk()?.getAccountAchievements(with: MEGAGenericRequestDelegate(completion: { [weak self] (request, error) in
+            MEGASdkManager.sharedMEGASdk()?.getAccountAchievements(with: MEGAGenericRequestDelegate() { [weak self] request, error in
                 guard error.type == .apiOk else { return }
                 guard let byteCount = request.megaAchievementsDetails?.classStorage(forClassId: Int(MEGAAchievement.addPhone.rawValue)) else { return }
                 UIView.animate(withDuration: 0.5) {
                     self?.descriptionTextView.text = String(format: AMLocalizedString("Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."), Helper.memoryStyleString(fromByteCount: byteCount))
                 }
-            }))
+            })
 
         case .UnblockAccount:
             title = AMLocalizedString("Verify Your Account")
