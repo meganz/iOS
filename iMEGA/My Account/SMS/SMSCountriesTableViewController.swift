@@ -29,7 +29,7 @@ class SMSCountriesTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "Choose Your Country"
+        title = AMLocalizedString("Choose Your Country")
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: countryCellReuseId)
     }
     

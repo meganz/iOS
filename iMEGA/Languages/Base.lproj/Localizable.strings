@@ -949,6 +949,20 @@
 "xDaysLeft"="%1 days left";
 /* %1 will be replaced by a numeric value and %2 will be 'days' or 'months', for example (Expires in [S]10[/S] days) */
 "bonusExpiresIn"="(Bonus expires in [S]%1[/S] %2)";
+/* Add Phone Number title  */
+"Add Phone Number" = "Add Phone Number";
+/* Achievement explanation for add phone number */
+"You have received %@ storage space and %@ transfer quota for adding your phone number."="You have received %@ storage space and %@ transfer quota for adding your phone number.";
+/* Free storage description to encourage users to add phone number to their accounts */
+"Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."="Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA.";
+/* Description to unblock account by verifying phone number */
+"Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account."="Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.";
+/* Verify your account title */
+"Verify Your Account"="Verify Your Account";
+/* Add your phone number title */
+"Add Your Phone Number"="Add Your Phone Number";
+/* Choose Your Country title */
+"Choose Your Country"="Choose Your Country";
 /* Used to display the number of months a plan was purchased for e.g. 3 months, 6 months. */
 "months"="months";
 /*  */
