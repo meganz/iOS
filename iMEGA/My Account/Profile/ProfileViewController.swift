@@ -24,7 +24,7 @@ enum TwoFactorAuthStatus {
     
     private var twoFactorAuthStatus:TwoFactorAuthStatus = .Unknown
     
-    // MARK: Lifecycle
+    // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,10 +71,10 @@ enum TwoFactorAuthStatus {
         }
     }
     
-    // MARK: Private
+    // MARK: - Private
     
     private func configureGestures() -> Void {
-        let avatarFilePath: String = Helper.path(forSharedSandboxCacheDirectory: "thumbnailsV3")+"/"+MEGASdk.base64Handle(forUserHandle: MEGASdkManager.sharedMEGASdk().myUser?.handle ??  ~0)
+        let avatarFilePath: String = Helper.path(forSharedSandboxCacheDirectory: "thumbnailsV3") + "/" + (MEGASdk.base64Handle(forUserHandle: MEGASdkManager.sharedMEGASdk().myUser?.handle ??  ~0) ?? "")
         
         if FileManager.default.fileExists(atPath: avatarFilePath) {
             let panAvatar = UIPanGestureRecognizer(target: self, action:#selector(handlePan(recognizer:)))
@@ -192,7 +192,7 @@ enum TwoFactorAuthStatus {
         changeAvatarAlertController.popoverPresentationController?.sourceRect = cell.frame;
         changeAvatarAlertController.popoverPresentationController?.sourceView = tableView;
         
-        let avatarFilePath: String = Helper.path(forSharedSandboxCacheDirectory: "thumbnailsV3")+"/"+MEGASdk.base64Handle(forUserHandle: MEGASdkManager.sharedMEGASdk().myUser?.handle ?? ~0)
+        let avatarFilePath: String = Helper.path(forSharedSandboxCacheDirectory: "thumbnailsV3") + "/" + (MEGASdk.base64Handle(forUserHandle: MEGASdkManager.sharedMEGASdk().myUser?.handle ?? ~0) ?? "")
         
         if FileManager.default.fileExists(atPath: avatarFilePath) {
             let removeAvatarAlertAction = UIAlertAction.init(title: NSLocalizedString("removeAvatar", comment: "Button to remove avatar. Try to keep the text short (as in English)"), style: .default) { (UIAlertAction) in
@@ -205,7 +205,7 @@ enum TwoFactorAuthStatus {
         self.present(changeAvatarAlertController, animated: true, completion: nil)
     }
     
-    // MARK: IBActions
+    // MARK: - IBActions
     
     @IBAction func backTouchUpInside(_ sender: UIButton) {
         navigationController?.popViewController(animated: true)
@@ -465,7 +465,7 @@ extension ProfileViewController: MEGARequestDelegate {
                 }
             }
             
-            let avatarFilePath: String = Helper.path(forSharedSandboxCacheDirectory: "thumbnailsV3")+"/"+MEGASdk.base64Handle(forUserHandle: myUser.handle)
+            let avatarFilePath: String = Helper.path(forSharedSandboxCacheDirectory: "thumbnailsV3") + "/" + (MEGASdk.base64Handle(forUserHandle: myUser.handle) ?? "")
             if request.file == nil {
                 FileManager.default.mnz_removeItem(atPath: avatarFilePath)
             }
