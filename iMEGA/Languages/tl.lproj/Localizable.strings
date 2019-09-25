@@ -700,8 +700,6 @@
 "The Hidden Album is where you hide photos or videos in your device Photos app."="Ang Hidden Album ay kung saan mo tinatago ang iyong photos o videos sa iyong device's Photos app.";
 /* Title of the switch to config whether to upload Shared Albums */
 "Upload Shared Albums"="Upload Shared Albums";
-/* Footer description for Upload Shared Albums title */
-"Shared Albums are where you share with other people and subscribe to other people's shares in your device's Photos app."="Shared Albums are where you share with other people and subscribe to other people’s shares in your device’s Photos app.";
 /* Title of the switch to config whether to upload synced albums */
 "Upload albums synced from iTunes"="Upload albums synced from iTunes";
 /* Footer description for upload synced albums title */
@@ -800,6 +798,8 @@
 "filesFolderRemovedToRubbishBinMessage"="%d files at isang folder ang tinanggal sa MEGA";
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
 "filesFoldersRemovedToRubbishBinMessage"="[A] files at [B] folders ang tinanggal sa MEGA";
+/* Hint text to suggest that the user have to write the new password on it */
+"newPassword"="Bagong password";
 /* Hint text where the user have to re-write the new password to confirm it */
 "confirmPassword"="Kumpirmahin ang password";
 /* Success message shown when the password has been changed */
@@ -1245,6 +1245,8 @@
 "dismiss"="Alisin";
 /* Notification text body shown when you have received a new chat message */
 "newMessage"="Bagong mensahe";
+/* Notification text body shown when you have received a contact request */
+"contactRequest"="Contact Request";
 /* Notification text body shown when you have received a new shared folder */
 "newSharedFolder"="Bagong shared folder";
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
@@ -1930,3 +1932,31 @@
 "This folder has been the subject of a takedown notice."="Ang folder na ito ay ipinapatanggal.";
 /* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
 "Dispute Takedown"="I-dispute ang Takedown";
+/* Title of the "Links" Shared Items. */
+"Links"="Links";
+/* Title for empty state view of "Links" in Shared Items. */
+"No Public Links"="Walang Publikong Links";
+/* Text to indicate that the user will leave an incoming shared folder. */
+"Leave Share"="Leave Share";
+/* Text indicating to the user the action that will be executed on tap. */
+"Manage Share"="Manage Share";
+/* Title of the screen that shows the users with whom the user can share a folder */
+"Share with"="Share with";
+/* Chat Notifications DND: Option that does not deactivate DND automatically */
+"Until I Turn it On Again"="Until I Turn it On Again";
+/* Chat Notifications DND: Option that deactivates DND after 30 minutes */
+"30 minutes"="30 minutes";
+/* Chat Notifications DND: Option that deactivates DND after 1 hour */
+"1 hour"="1 oras";
+/* Chat Notifications DND: Option that deactivates DND after 6 hours */
+"6 hours"="6 hours";
+/* Chat Notifications DND: Option that deactivates DND after 24 hours */
+"24 hours"="24 hours";
+/* Chat Notifications DND: Title bar message for the dnd activate options */
+"Mute chat Notifications for"="Mute chat Notifications for";
+/* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
+"Muted forever"="Muted forever";
+/* Chat Notifications DND: DND once activated with timing option, this message will appear below the DND on/off switch with the actual time left to deactivate DND replacing the placeholder below */
+"%@ left"="%@ left";
+/* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
+"Chat Notifications"="Chat Notifications";
