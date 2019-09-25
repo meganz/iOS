@@ -1,7 +1,7 @@
 
 import UIKit
 
-protocol SMSCountriesTableViewControllerDelegate: class {
+protocol SMSCountriesTableViewControllerDelegate: AnyObject {
     func countriesTableViewController(_ controller: SMSCountriesTableViewController, didSelectCountry country:SMSCountry)
 }
 
