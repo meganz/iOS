@@ -68,6 +68,14 @@
             break;
         }
             
+        case MEGAAchievementAddPhone: {
+            navigationTitle = AMLocalizedString(@"Add Phone Number", nil);
+            achievementImage = [UIImage imageNamed:@"addPhoneNumberSmall"];
+            
+            howItWorksExplanationLabel = [NSString stringWithFormat:AMLocalizedString(@"You have received %@ storage space and %@ transfer quota for adding your phone number.", nil), [Helper memoryStyleStringFromByteCount:classStorageReward], [Helper memoryStyleStringFromByteCount:classTransferReward]];
+            break;
+        }
+
         default:
             break;
     }

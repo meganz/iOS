@@ -195,19 +195,26 @@ class SMSVerificationViewController: UIViewController {
     // MARK: - UI configurations
     
     private func configViewContents() {
+        descriptionTextView.text = nil
+        
         switch verificationType {
         case .AddPhoneNumber:
             let cancelTitle = AMLocalizedString("cancel")
             navigationItem.rightBarButtonItem = UIBarButtonItem(title: cancelTitle, style: .plain, target: self, action: #selector(SMSVerificationViewController.didTapCancelButton))
-            title = "Add Phone Number"
+            title = AMLocalizedString("Add Phone Number")
             titleLabel.text = title
             cancelButton.setTitle(cancelTitle, for: .normal)
-            descriptionTextView.text = "Get free [xx]GB when you add your phone number. This makes it easier for your contacts to find you on MEGA."
+            MEGASdkManager.sharedMEGASdk()?.getAccountAchievements(with: MEGAGenericRequestDelegate(completion: { [weak self] (request, error) in
+                guard error.type == .apiOk else { return }
+                guard let byteCount = request.megaAchievementsDetails?.classStorage(forClassId: Int(MEGAAchievement.addPhone.rawValue)) else { return }
+                self?.descriptionTextView.text = String(format: AMLocalizedString("Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."), Helper.memoryStyleString(fromByteCount: byteCount))
+            }))
+
         case .UnblockAccount:
-            title = "Verify Your Account"
+            title = AMLocalizedString("Verify Your Account")
             titleLabel.text = title
             cancelButton.isHidden = true
-            descriptionTextView.text = "Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account. Learn more"
+            descriptionTextView.text = AMLocalizedString("Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.")
         }
     }
     

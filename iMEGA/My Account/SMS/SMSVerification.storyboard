@@ -38,10 +38,9 @@
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O98-zh-nXM">
                                                         <rect key="frame" x="0.0" y="311" width="375" height="76"/>
                                                         <subviews>
-                                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" textAlignment="center" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8PA-Vj-YcB">
+                                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account." textAlignment="center" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8PA-Vj-YcB">
                                                                 <rect key="frame" x="17" y="0.0" width="341" height="76"/>
                                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                <string key="text">Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account. Learn more</string>
                                                                 <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -600,7 +599,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="w46-uN-maF">
                                 <rect key="frame" x="35" y="140" width="305" height="492"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="252" image="addPhoneNumberScreen" translatesAutoresizingMaskIntoConstraints="NO" id="Abt-Sp-hru">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="252" image="addPhoneNumberMedium" translatesAutoresizingMaskIntoConstraints="NO" id="Abt-Sp-hru">
                                         <rect key="frame" x="0.0" y="0.0" width="305" height="128"/>
                                     </imageView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xde-XW-QT2">
@@ -619,7 +618,7 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Get free [xx]GB when you add your phone number. This makes it easier for your contacts to find you on MEGA." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3kq-uo-FOg">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Get free 20 GB when you add your phone number. This makes it easier for your contacts to find you on MEGA." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3kq-uo-FOg">
                                                 <rect key="frame" x="0.0" y="48.5" width="305" height="61"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
@@ -682,7 +681,7 @@
                         <outlet property="addPhoneNumberButton" destination="cQA-jD-WtR" id="6Wr-de-8Ax"/>
                         <outlet property="addPhoneNumberTitle" destination="aCv-KP-OSs" id="CEZ-NI-5Gl"/>
                         <outlet property="descriptionLabel" destination="3kq-uo-FOg" id="9gV-5T-xva"/>
-                        <outlet property="nowNowButton" destination="LNc-u2-8ln" id="cRx-6F-qI9"/>
+                        <outlet property="notNowButton" destination="LNc-u2-8ln" id="cRx-6F-qI9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5LF-wp-H9c" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -691,7 +690,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="addPhoneNumberScreen" width="128" height="128"/>
+        <image name="addPhoneNumberMedium" width="128" height="128"/>
         <image name="delete" width="28" height="28"/>
         <image name="disclosureIndicatorGray" width="16" height="26"/>
         <image name="verificationCountry" width="24" height="24"/>

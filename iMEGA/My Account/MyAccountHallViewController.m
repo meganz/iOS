@@ -87,6 +87,8 @@
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.addPhoneNumberView.hidden = YES;
+    
+    [self configAddPhoneNumberTexts];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -112,6 +114,17 @@
 }
 
 #pragma mark - Private
+
+- (void)configAddPhoneNumberTexts {
+    self.addPhoneNumberTitle.text = AMLocalizedString(@"Add Your Phone Number", nil);
+
+    [MEGASdkManager.sharedMEGASdk getAccountAchievementsWithDelegate:[[MEGAGenericRequestDelegate alloc] initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
+        if (error.type == MEGAErrorTypeApiOk) {
+            NSString *storageText = [Helper memoryStyleStringFromByteCount:[request.megaAchievementsDetails classStorageForClassId:MEGAAchievementAddPhone]];
+            self.addPhoneNumberDescription.text = [NSString stringWithFormat:AMLocalizedString(@"Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA.", nil), storageText];
+        }
+    }]];
+}
 
 - (void)configAddPhoneNumberView {
     if (MEGASdkManager.sharedMEGASdk.hasVerifiedPhoneNumber) {

@@ -16,3 +16,4 @@
 #import "AppDelegate.h"
 #import "MEGALoginRequestDelegate.h"
 #import "UIApplication+MNZCategory.h"
+#import "Helper.h"

@@ -61,9 +61,9 @@ class VerificationCodeViewController: UIViewController {
         
         switch verificationType {
         case .AddPhoneNumber:
-            title = "Add Phone Number"
+            title = AMLocalizedString("Add Phone Number")
         case .UnblockAccount:
-            title = "Verify Your Account"
+            title = AMLocalizedString("Verify Your Account")
         }
     }
     
