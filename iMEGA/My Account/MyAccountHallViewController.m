@@ -27,13 +27,13 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *buyPROBarButtonItem;
 
 @property (weak, nonatomic) IBOutlet UIView *profileView;
-@property (weak, nonatomic) IBOutlet UIView *addPhoneNumberView;
 @property (weak, nonatomic) IBOutlet UILabel *viewAndEditProfileLabel;
 @property (weak, nonatomic) IBOutlet UIButton *viewAndEditProfileButton;
 @property (weak, nonatomic) IBOutlet UIImageView *viewAndEditProfileDisclosureImageView;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIView *addPhoneNumberView;
 @property (weak, nonatomic) IBOutlet UILabel *addPhoneNumberTitle;
 @property (weak, nonatomic) IBOutlet UILabel *addPhoneNumberDescription;
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property (strong, nonatomic) NSNumberFormatter *numberFormatter;
 @property (strong, nonatomic) NSNumber *cloudDriveSize;
