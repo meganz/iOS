@@ -22,7 +22,7 @@
 #import "ChatRoomCell.h"
 #import "ItemListViewController.h"
 
-@interface SendToViewController () <UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, UISearchControllerDelegate, ItemListViewControllerProtocol, UIGestureRecognizerDelegate>
+@interface SendToViewController () <UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, UISearchControllerDelegate, ItemListViewControllerDelegate, UIGestureRecognizerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
@@ -821,7 +821,7 @@
     return [Helper spaceHeightForEmptyState];
 }
 
-#pragma mark - ItemListViewControllerProtocol
+#pragma mark - ItemListViewControllerDelegate
 
 - (void)removeSelectedItem:(id)item {
     if ([[item class] isEqual:MEGAUser.class]) {

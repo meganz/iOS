@@ -93,7 +93,7 @@
     title.text = action.title;
     UIImageView *imageView = [cell viewWithTag:100];
     imageView.image = [UIImage imageNamed:action.iconName];
-    imageView.tintColor = [UIColor mnz_redMain];
+    imageView.tintColor = UIColor.mnz_gray666666;
     
     if (indexPath.row == self.actions.count-1) {
         UIView *separatorView = [cell viewWithTag:101];
@@ -220,14 +220,14 @@
                 
             case MEGAShareTypeAccessRead:
             case MEGAShareTypeAccessReadWrite: {
+                if (self.displayMode != DisplayModeNodeInfo && self.displayMode != DisplayModeNodeVersions) {
+                    [actions addObject:[self actionFileInfo]];
+                }
                 if (self.node.isFile && (self.node.name.mnz_imagePathExtension || (self.node.name.mnz_videoPathExtension && self.node.mnz_isPlayable))) {
                     [actions addObject:[self actionSaveToPhotos]];
                 }
                 [actions addObject:[self actionDownload]];
                 if (self.displayMode != DisplayModeNodeVersions) {
-                    if (self.displayMode != DisplayModeNodeInfo) {
-                        [actions addObject:[self actionFileInfo]];
-                    }
                     [actions addObject:[self actionCopy]];
                     if (self.isIncomingShareChildView) {
                         [actions addObject:[self actionLeaveSharing]];
@@ -237,6 +237,9 @@
             }
                 
             case MEGAShareTypeAccessFull:
+                if (self.displayMode != DisplayModeNodeInfo  && self.displayMode != DisplayModeNodeVersions) {
+                    [actions addObject:[self actionFileInfo]];
+                }
                 if (self.node.isFile && (self.node.name.mnz_imagePathExtension || (self.node.name.mnz_videoPathExtension && self.node.mnz_isPlayable))) {
                     [actions addObject:[self actionSaveToPhotos]];
                 }
@@ -245,11 +248,8 @@
                     [actions addObject:[self actionRevertVersion]];
                     [actions addObject:[self actionRemove]];
                 } else {
-                    if (self.displayMode != DisplayModeNodeInfo) {
-                        [actions addObject:[self actionFileInfo]];
-                    }
-                    [actions addObject:[self actionCopy]];
                     [actions addObject:[self actionRename]];
+                    [actions addObject:[self actionCopy]];
                     if (self.isIncomingShareChildView) {
                         [actions addObject:[self actionLeaveSharing]];
                     }
@@ -259,19 +259,37 @@
                 
             case MEGAShareTypeAccessOwner:
                 if (self.displayMode == DisplayModeCloudDrive || self.displayMode == DisplayModeRubbishBin || self.displayMode == DisplayModeNodeInfo || self.displayMode == DisplayModeRecents) {
+                    if (self.displayMode != DisplayModeNodeInfo) {
+                        [actions addObject:[self actionFileInfo]];
+                    }
                     if (self.displayMode != DisplayModeRubbishBin) {
-                        [actions addObject:[self actionShare]];
                         if (self.node.isFile && (self.node.name.mnz_imagePathExtension || (self.node.name.mnz_videoPathExtension && self.node.mnz_isPlayable))) {
                             [actions addObject:[self actionSaveToPhotos]];
                         }
                         [actions addObject:[self actionDownload]];
+                        
+                        if (self.node.isExported) {
+                            [actions addObject:[self actionManageLink]];
+                            [actions addObject:[self actionRemoveLink]];
+                        } else {
+                            [actions addObject:[self actionGetLink]];
+                        }
+                        
+                        if (self.node.isFolder) {
+                            if (self.node.isOutShare) {
+                                [actions addObject:[self actionManageShare]];
+                            } else {
+                                [actions addObject:[self actionShareFolder]];
+                            }
+                        }
+                        
+                        [actions addObject:[self actionShare]];
                     }
-                    if (self.displayMode != DisplayModeNodeInfo) {
-                        [actions addObject:[self actionFileInfo]];
-                    }
-                    [actions addObject:[self actionCopy]];
-                    [actions addObject:[self actionMove]];
+                    
                     [actions addObject:[self actionRename]];
+                    [actions addObject:[self actionMove]];
+                    [actions addObject:[self actionCopy]];
+                    
                     if (self.isIncomingShareChildView) {
                         [actions addObject:[self actionLeaveSharing]];
                     }
@@ -288,14 +306,15 @@
                     [actions addObject:[self actionRevertVersion]];
                     [actions addObject:[self actionRemove]];
                 } else {
-                    [actions addObject:[self actionShare]];
+                    [actions addObject:[self actionFileInfo]];
                     if (self.node.isFile && (self.node.name.mnz_imagePathExtension || (self.node.name.mnz_videoPathExtension && self.node.mnz_isPlayable))) {
                         [actions addObject:[self actionSaveToPhotos]];
                     }
                     [actions addObject:[self actionDownload]];
-                    [actions addObject:[self actionFileInfo]];
-                    [actions addObject:[self actionCopy]];
+                    [actions addObject:[self actionManageShare]];
+                    [actions addObject:[self actionShare]];
                     [actions addObject:[self actionRename]];
+                    [actions addObject:[self actionCopy]];
                     [actions addObject:[self actionRemoveSharing]];
                 }
                 break;
@@ -320,6 +339,14 @@
 
 - (MegaActionNode *)actionShare {
     return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"share", @"Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected") iconName: @"share" andActionType:MegaNodeActionTypeShare];
+}
+
+- (MegaActionNode *)actionShareFolder {
+    return [MegaActionNode.alloc initWithTitle:AMLocalizedString(@"shareFolder", @"Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive") iconName:@"shareFolder" andActionType:MegaNodeActionTypeShareFolder];
+}
+
+- (MegaActionNode *)actionManageShare {
+    return [MegaActionNode.alloc initWithTitle:AMLocalizedString(@"Manage Share", @"Text indicating to the user the action that will be executed on tap.") iconName:@"shareFolder" andActionType:MegaNodeActionTypeManageShare];
 }
 
 - (MegaActionNode *)actionDownload {
@@ -353,6 +380,14 @@
 
 - (MegaActionNode *)actionLeaveSharing {
     return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"leaveFolder", @"Button title of the action that allows to leave a shared folder") iconName: @"leaveShare" andActionType:MegaNodeActionTypeLeaveSharing];
+}
+
+- (MegaActionNode *)actionGetLink {
+    return [MegaActionNode.alloc initWithTitle:AMLocalizedString(@"getLink", @"Title shown under the action that allows you to get a link to file or folder") iconName:@"Link_grey" andActionType:MegaNodeActionTypeGetLink];
+}
+
+- (MegaActionNode *)actionManageLink {
+    return [MegaActionNode.alloc initWithTitle:AMLocalizedString(@"manageLink", @"Item menu option upon right click on one or multiple files.") iconName:@"Link_grey" andActionType:MegaNodeActionTypeManageLink];
 }
 
 - (MegaActionNode *)actionRemoveLink {

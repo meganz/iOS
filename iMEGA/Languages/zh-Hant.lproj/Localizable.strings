@@ -61,7 +61,7 @@
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="您已從其他位置登出該設備";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="MEGA無法安全地透過SSL金鑰連線。您使用的公共WiFi可能有附加條件。";
+"sslUnverified_alertTitle"="MEGA無法安全的透過SSL連線。您可能使用有額外環境需求的公共WiFi連線。";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="您嘗試存取的內容無法讓此帳戶存取。請試著使用與在手機瀏覽器中同樣的帳戶登入。";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
@@ -489,9 +489,9 @@
 /* Message shown while uploading files. Plural. */
 "cameraUploadsPendingFiles"="正在上傳中，尚有%lu個檔案待處理";
 /* Message shown when camera upload paused because of no WiFi. Singular. */
-"Upload paused because of no WiFi, 1 file pending"="由於沒有WiFi連線，上傳暫停，1個檔案待處中";
+"Upload paused because of no WiFi, 1 file pending"="由於沒有Wi-Fi連線，上傳暫停，1個檔案待處理中";
 /* Message shown when camera upload paused because of no WiFi. Plural. */
-"Upload paused because of no WiFi, %lu files pending"="由於沒有WiFi連線，上傳暫停，%lu個檔案待處中";
+"Upload paused because of no WiFi, %lu files pending"="由於沒有WiFi連線，上傳暫停，%lu個檔案待處理中";
 /* Message shown the pending video file when photos uploaded and video upload is not enabled. Singular. */
 "Photos uploaded, video uploads are off, 1 video not uploaded"="相片已上傳，影片上傳關閉；1個影片未上傳";
 /* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
@@ -802,6 +802,8 @@
 "filesFolderRemovedToRubbishBinMessage"="%d 個檔案與1個資料夾已自MEGA移除";
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
 "filesFoldersRemovedToRubbishBinMessage"="[A] 個檔案與[B]個資料夾已自MEGA移除";
+/* Hint text to suggest that the user have to write the new password on it */
+"newPassword"="新密碼";
 /* Hint text where the user have to re-write the new password to confirm it */
 "confirmPassword"="確認密碼";
 /* Success message shown when the password has been changed */
@@ -1247,6 +1249,8 @@
 "dismiss"="解除";
 /* Notification text body shown when you have received a new chat message */
 "newMessage"="新訊息";
+/* Notification text body shown when you have received a contact request */
+"contactRequest"="聯絡人邀請";
 /* Notification text body shown when you have received a new shared folder */
 "newSharedFolder"="新共享資料夾";
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
@@ -1763,7 +1767,7 @@
 /* When somebody accepted your contact request */
 "Accepted your contact request"="已接受您的聯絡人邀請";
 /* When somebody denied your contact request */
-"Denied your contact request"="拒絕了您的聯絡人邀請";
+"Denied your contact request"="拒絕您的聯絡人邀請";
 /* notification text */
 "A user has left the shared folder {0}"="用戶已經離開共享資料夾{0}";
 /* This is shown in the Notification dialog when the email address of a contact is not found and access to the share is lost for some reason (e.g. share removal or contact removal). */
@@ -1932,3 +1936,31 @@
 "This folder has been the subject of a takedown notice."="此資料夾接獲下架通知且已被移除";
 /* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
 "Dispute Takedown"="爭議被刪除";
+/* Title of the "Links" Shared Items. */
+"Links"="Links";
+/* Title for empty state view of "Links" in Shared Items. */
+"No Public Links"="沒有公開連結";
+/* Text to indicate that the user will leave an incoming shared folder. */
+"Leave Share"="Leave Share";
+/* Text indicating to the user the action that will be executed on tap. */
+"Manage Share"="Manage Share";
+/* Title of the screen that shows the users with whom the user can share a folder */
+"Share with"="與之分享";
+/* Chat Notifications DND: Option that does not deactivate DND automatically */
+"Until I Turn it On Again"="Until I Turn it On Again";
+/* Chat Notifications DND: Option that deactivates DND after 30 minutes */
+"30 minutes"="30 minutes";
+/* Chat Notifications DND: Option that deactivates DND after 1 hour */
+"1 hour"="1小時";
+/* Chat Notifications DND: Option that deactivates DND after 6 hours */
+"6 hours"="6 hours";
+/* Chat Notifications DND: Option that deactivates DND after 24 hours */
+"24 hours"="24 hours";
+/* Chat Notifications DND: Title bar message for the dnd activate options */
+"Mute chat Notifications for"="Mute chat Notifications for";
+/* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
+"Muted forever"="Muted forever";
+/* Chat Notifications DND: DND once activated with timing option, this message will appear below the DND on/off switch with the actual time left to deactivate DND replacing the placeholder below */
+"%@ left"="%@ left";
+/* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
+"Chat Notifications"="Chat Notifications";

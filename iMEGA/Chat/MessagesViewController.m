@@ -71,6 +71,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 @property (nonatomic, strong) MEGALoadingMessagesHeaderView *loadingMessagesHeaderView;
 
 @property (strong, nonatomic) NSMutableArray <MEGAChatMessage *> *messages;
+@property (strong, nonatomic) NSMutableArray <MEGAChatMessage *> *loadingMessages;
 
 @property (strong, nonatomic) JSQMessagesBubbleImage *outgoingBubbleImageData;
 @property (strong, nonatomic) JSQMessagesBubbleImage *incomingBubbleImageData;
@@ -162,6 +163,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     [super viewDidLoad];
     
     _messages = NSMutableArray.new;
+    self.loadingMessages = NSMutableArray.new;
     
     self.isFirstLoad = YES;
     
@@ -848,6 +850,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         groupCallVC.videoCall = videoCall;
         groupCallVC.chatRoom = self.chatRoom;
         groupCallVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+        groupCallVC.modalPresentationStyle = UIModalPresentationFullScreen;
 
         if (@available(iOS 10.0, *)) {
             groupCallVC.megaCallManager = [(MainTabBarController *)UIApplication.sharedApplication.keyWindow.rootViewController megaCallManager];
@@ -859,6 +862,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         callVC.videoCall = videoCall;
         callVC.callType = active ? CallTypeActive : CallTypeOutgoing;
         callVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+        callVC.modalPresentationStyle = UIModalPresentationFullScreen;
         
         if (@available(iOS 10.0, *)) {
             callVC.megaCallManager = [(MainTabBarController *)UIApplication.sharedApplication.keyWindow.rootViewController megaCallManager];
@@ -2271,8 +2275,8 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     JSQMessagesCollectionViewCell *cell = (JSQMessagesCollectionViewCell *)[super collectionView:collectionView cellForItemAtIndexPath:indexPath];
     MEGAChatMessage *message = [self.messages objectAtIndex:indexPath.item];
     
-    if (message.containsMEGALink) {
-        if (![self.observedNodeMessages containsObject:message]) {
+    if (![self.observedNodeMessages containsObject:message]) {
+        if (message.containsMEGALink || (message.type == MEGAChatMessageTypeAttachment && !message.richNumber)) {
             [self.observedNodeMessages addObject:message];
             [message addObserver:self forKeyPath:@"richNumber" options:NSKeyValueObservingOptionNew context:nil];
         }
@@ -3009,7 +3013,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             case MEGAChatMessageTypePublicHandleDelete:
             case MEGAChatMessageTypeSetPrivateMode: {
                 if (!message.isDeleted) {
-                    [self.messages insertObject:message atIndex:0];
+                    [self.loadingMessages insertObject:message atIndex:0];
                 }
                 break;
             }
@@ -3041,6 +3045,12 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             [SVProgressHUD dismiss];
             self.loadingState = NO;
         }
+        
+        for (NSUInteger i = 0; i < self.loadingMessages.count; i++) {
+            [self.messages insertObject:self.loadingMessages[i] atIndex:i];
+        }
+        [self.loadingMessages removeAllObjects];
+        
         if (self.isFirstLoad) {
             if (self.unreadMessages < 0 && self.unreadMessages > -kMaxMessagesToLoad) {
                 if (self.chatRoom.unreadCount < 0) {

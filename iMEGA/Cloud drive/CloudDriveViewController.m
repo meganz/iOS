@@ -35,6 +35,7 @@
 #import "CloudDriveTableViewController.h"
 #import "CloudDriveCollectionViewController.h"
 #import "ContactsViewController.h"
+#import "CopyrightWarningViewController.h"
 #import "CustomActionViewController.h"
 #import "CustomModalAlertViewController.h"
 #import "MEGAAssetsPickerController.h"
@@ -55,7 +56,7 @@
 
 static const NSTimeInterval kSearchTimeDelay = .5;
 
-@interface CloudDriveViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, CustomActionViewControllerDelegate, NodeInfoViewControllerDelegate, UITextFieldDelegate, UISearchControllerDelegate> {
+@interface CloudDriveViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, CustomActionViewControllerDelegate, NodeInfoViewControllerDelegate, UITextFieldDelegate, UISearchControllerDelegate, UIAdaptivePresentationControllerDelegate> {
     
     MEGAShareType lowShareType; //Control the actions allowed for node/nodes selected
 }
@@ -231,6 +232,12 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     [super traitCollectionDidChange:previousTraitCollection];
     
     [self configPreviewingRegistration];
+}
+
+//MARK: - UIAdaptivePresentationControllerDelegate
+
+- (void)presentationControllerDidDismiss:(UIPresentationController *)presentationController {
+    [self reloadUI];
 }
 
 #pragma mark - Layout
@@ -832,6 +839,8 @@ static const NSTimeInterval kSearchTimeDelay = .5;
             
             self.nodes = [[MEGASdkManager sharedMEGASdk] childrenForParent:self.parentNode];
 
+            self.moreMinimizedBarButtonItem.enabled = self.nodes.size.integerValue > 0;
+            
             break;
         }
             
@@ -1032,6 +1041,9 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     SortByTableViewController *sortByTableViewController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"sortByTableViewControllerID"];
     sortByTableViewController.offline = NO;
     MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:sortByTableViewController];
+    if (@available(iOS 13.0, *)) {
+        navigationController.presentationController.delegate = self;
+    }
     
     [self presentViewController:navigationController animated:YES completion:nil];
 }
@@ -1484,13 +1496,15 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     }];
     [sortByAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
     [moreAlertController addAction:sortByAlertAction];
-    
-    UIAlertAction *selectAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"select", @"Button that allows you to select a given folder") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        BOOL enableEditing = self.cdTableView ? !self.cdTableView.tableView.isEditing : !self.cdCollectionView.collectionView.allowsMultipleSelection;
-        [self setEditMode:enableEditing];
-    }];
-    [selectAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
-    [moreAlertController addAction:selectAlertAction];
+        
+    if (self.nodes.size.unsignedIntValue > 0) {
+        UIAlertAction *selectAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"select", @"Button that allows you to select a given folder") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            BOOL enableEditing = self.cdTableView ? !self.cdTableView.tableView.isEditing : !self.cdCollectionView.collectionView.allowsMultipleSelection;
+            [self setEditMode:enableEditing];
+        }];
+        [selectAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
+        [moreAlertController addAction:selectAlertAction];
+    }
     
     UIAlertAction *rubbishBinAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"rubbishBinLabel", @"Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin'") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
@@ -1524,12 +1538,14 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     [sortByAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
     [moreMinimizedAlertController addAction:sortByAlertAction];
     
-    UIAlertAction *selectAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"select", @"Button that allows you to select a given folder") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        BOOL enableEditing = self.cdTableView ? !self.cdTableView.tableView.isEditing : !self.cdCollectionView.collectionView.allowsMultipleSelection;
-        [self setEditMode:enableEditing];
-    }];
-    [selectAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
-    [moreMinimizedAlertController addAction:selectAlertAction];
+    if (self.nodes.size.unsignedIntValue > 0) {
+        UIAlertAction *selectAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"select", @"Button that allows you to select a given folder") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            BOOL enableEditing = self.cdTableView ? !self.cdTableView.tableView.isEditing : !self.cdCollectionView.collectionView.allowsMultipleSelection;
+            [self setEditMode:enableEditing];
+        }];
+        [selectAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
+        [moreMinimizedAlertController addAction:selectAlertAction];
+    }
     
     if (self.displayMode == DisplayModeRubbishBin) {
         UIAlertAction *clearRubbishBinAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"emptyRubbishBin", @"Section title where you can 'Empty Rubbish Bin' of your MEGA account") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
@@ -1775,23 +1791,6 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     browserVC.browserAction = BrowserActionCopy;
     
     self.selectedNodesArray = nil;
-}
-
-- (IBAction)sortByAction:(UIBarButtonItem *)sender {
-    [self presentSortByViewController];
-}
-
-- (IBAction)infoTouchUpInside:(UIButton *)sender {
-    if (self.cdTableView.tableView.isEditing) {
-        return;
-    }
-    
-    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.cdTableView.tableView];
-    NSIndexPath *indexPath = [self.cdTableView.tableView indexPathForRowAtPoint:buttonPosition];
-    
-    MEGANode *node = self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : [self.nodes nodeAtIndex:indexPath.row];
-    
-    [self showCustomActionsForNode:node sender:sender];
 }
 
 - (void)showCustomActionsForNode:(MEGANode *)node sender:(UIButton *)sender {
@@ -2049,6 +2048,23 @@ static const NSTimeInterval kSearchTimeDelay = .5;
         }
             break;
             
+        case MegaNodeActionTypeShareFolder: {
+            MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsNavigationControllerID"];
+            ContactsViewController *contactsVC = navigationController.viewControllers.firstObject;
+            contactsVC.nodesArray = @[node];
+            contactsVC.contactsMode = ContactsModeShareFoldersWith;
+            [self presentViewController:navigationController animated:YES completion:nil];
+            break;
+        }
+            
+        case MegaNodeActionTypeManageShare: {
+            ContactsViewController *contactsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsViewControllerID"];
+            contactsVC.node = node;
+            contactsVC.contactsMode = ContactsModeFolderSharedWith;
+            [self.navigationController pushViewController:contactsVC animated:YES];
+            break;
+        }
+            
         case MegaNodeActionTypeFileInfo:
             [self showNodeInfo:node];
             break;
@@ -2057,8 +2073,18 @@ static const NSTimeInterval kSearchTimeDelay = .5;
             [node mnz_leaveSharingInViewController:self];
             break;
             
-        case MegaNodeActionTypeRemoveLink:
+        case MegaNodeActionTypeGetLink:
+        case MegaNodeActionTypeManageLink: {
+            if (MEGAReachabilityManager.isReachableHUDIfNot) {
+                [CopyrightWarningViewController presentGetLinkViewControllerForNodes:@[node] inViewController:UIApplication.mnz_presentingViewController];
+            }
             break;
+        }
+            
+        case MegaNodeActionTypeRemoveLink: {
+            [node mnz_removeLink];
+            break;
+        }
             
         case MegaNodeActionTypeMoveToRubbishBin:
             [node mnz_moveToTheRubbishBinInViewController:self];

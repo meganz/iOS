@@ -61,7 +61,7 @@
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="Ai fost deconectat de pe acest dispozitiv din altă locație";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="MEGA nu se poate conecta securizat prin SSL. S-ar putea să fii pe WiFi public cu cerințe suplimentare.";
+"sslUnverified_alertTitle"="MEGA nu se poate conecta securizat prin SSL. S-ar putea să fii pe o rețea Wi-Fi publică cu cerințe suplimentare.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="Conținutul pe care încerci să îl accesezi nu este disponibil pentru acest cont. Te rugăm să încerci să te autentifici cu același cont ca și în clientul web mobil.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
@@ -123,7 +123,7 @@
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="Introdu un nume valid";
 /* Error text shown when you have not written the same password */
-"passwordsDoNotMatch"="Parolele nu se potrivesc";
+"passwordsDoNotMatch"="Parolele nu coincid";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
 "termsCheckboxUnselected"="Trebuie să fii de-acord cu Termenii de utilizare a serviciului pentru a înregistra un cont pe MEGA.";
 /* Error text shown when the users tries to create an account with an email already in use */
@@ -489,9 +489,9 @@
 /* Message shown while uploading files. Plural. */
 "cameraUploadsPendingFiles"="Încărcare în curs, %lu fișiere în așteptare";
 /* Message shown when camera upload paused because of no WiFi. Singular. */
-"Upload paused because of no WiFi, 1 file pending"="Încărcare pusă pe pauză din cauza lipsei conexiunii WiFi, 1 fișier în așteptare";
+"Upload paused because of no WiFi, 1 file pending"="Încărcare pusă pe pauză din cauză că nu există conexiune Wi-Fi, 1 fișier în așteptare";
 /* Message shown when camera upload paused because of no WiFi. Plural. */
-"Upload paused because of no WiFi, %lu files pending"="Încărcare pusă pe pauză din cauza lipsei conexiunii WiFi, %lu fișiere în așteptare";
+"Upload paused because of no WiFi, %lu files pending"="Încărcare pusă pe pauză din cauză că nu există conexiune Wi-Fi, %lu fișiere în așteptare";
 /* Message shown the pending video file when photos uploaded and video upload is not enabled. Singular. */
 "Photos uploaded, video uploads are off, 1 video not uploaded"="Fotografiile au fost încărcate, încărcările video sunt dezactivate; 1 videoclip nu a fost încărcat";
 /* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
@@ -671,7 +671,7 @@
 /* Footer for video uploads switch section when disabled */
 "When enabled, videos will be uploaded."="Când este activat, videoclipurile vor fi încărcate.";
 /* Title for new camera upload feature */
-"New Camera Upload!"="Opțiuni noi pentru încărcări cameră!";
+"New Camera Upload!"="Opțiuni noi pentru Încărcări cameră!";
 /* A messge for camera upload v2 migration */
 "Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="Acum poți alege să convertești fotografiile și videoclipurile HEIC/HEVC la formatele JPEG/H.264 compatibile la o scară mai largă.";
 /* Title for an action to use most compatible formats */
@@ -802,6 +802,8 @@
 "filesFolderRemovedToRubbishBinMessage"="%d fișiere și 1 folder eliminate de pe MEGA";
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
 "filesFoldersRemovedToRubbishBinMessage"="[A] fișiere și [B] foldere eliminate de pe MEGA";
+/* Hint text to suggest that the user have to write the new password on it */
+"newPassword"="Parolă nouă";
 /* Hint text where the user have to re-write the new password to confirm it */
 "confirmPassword"="Confirmă parola";
 /* Success message shown when the password has been changed */
@@ -819,7 +821,7 @@
 /* An alert title where the user provided the incorrect Recovery Key. */
 "invalidRecoveryKey"="Cheie de recuperare nevalidă";
 /* Text of the alert after opening the recovery link to reset pass being logged. */
-"youRecoveryKeyIsGoingTo"="Cheia de recuperare va fi folosită pentru a-ți reseta parola. Te rugăm să introduci parola nouă.";
+"youRecoveryKeyIsGoingTo"="Cheia de recuperare va fi folosită pentru a-ți reseta parola. Te rugăm să introduci noua parolă.";
 /*  */
 "yourPasswordHasBeenReset"="Parola ta a fost resetată cu succes. Te rugăm să te autentifici în contul tău acum.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
@@ -842,9 +844,9 @@
 /* The title of the alert dialog to change the email associated to an account. */
 "changeEmail"="Modifică e-mailul";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
-"oldAndNewEmailMatch"="E-mailul nou și cel vechi nu se potrivesc";
+"oldAndNewEmailMatch"="E-mailul nou și cel vechi nu trebuie să coincidă";
 /* Error message shown when you have not written the same email when confirming a new one */
-"emailsDoNotMatch"="E-mailurile nu se potrivesc";
+"emailsDoNotMatch"="E-mailurile nu coincid";
 /* Error message when a use wants to validate the same email twice */
 "emailAddressChangeAlreadyRequested"="Ai solicitat deja un link de confirmare pentru acea adresă de e-mail.";
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
@@ -1056,7 +1058,7 @@
 /* Alert title shown when a restore hasn't been completed correctly */
 "incompleteRestore_title"="Problemă de restaurare";
 /* Alert message shown when a restore hasn't been completed correctly */
-"incompleteRestore_message"="Achiziționarea anterioră nu a putut fi găsită. Te rugăm să selectezi produsul achiziționat anterior pentru restabilire. NU veți fi taxat din nou.";
+"incompleteRestore_message"="Achiziționarea anterioră nu a putut fi găsită. Te rugăm să selectezi produsul achiziționat anterior pentru restabilire. NU vei fi taxat din nou.";
 /* Alert title shown when the restoring process has stopped for some reason */
 "failedRestore_title"="Restaurare oprită";
 /* Alert message shown when the restoring process has stopped for some reason */
@@ -1247,6 +1249,8 @@
 "dismiss"="Înlătură";
 /* Notification text body shown when you have received a new chat message */
 "newMessage"="Mesaj nou";
+/* Notification text body shown when you have received a contact request */
+"contactRequest"="Cerere de contact";
 /* Notification text body shown when you have received a new shared folder */
 "newSharedFolder"="Folder nou partajat";
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
@@ -1763,7 +1767,7 @@
 /* When somebody accepted your contact request */
 "Accepted your contact request"="Ți-a acceptat cererea de contact";
 /* When somebody denied your contact request */
-"Denied your contact request"="Ți-a refuzat cererea de contact";
+"Denied your contact request"="Ți-a respins cererea de contact";
 /* notification text */
 "A user has left the shared folder {0}"="Un utilizator a părăsit folderul partajat {0}";
 /* This is shown in the Notification dialog when the email address of a contact is not found and access to the share is lost for some reason (e.g. share removal or contact removal). */
@@ -1932,3 +1936,31 @@
 "This folder has been the subject of a takedown notice."="Acest folder a făcut obiectul unei notificări de eliminare.";
 /* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
 "Dispute Takedown"="Contestă eliminarea";
+/* Title of the "Links" Shared Items. */
+"Links"="Links";
+/* Title for empty state view of "Links" in Shared Items. */
+"No Public Links"="Niciun link public";
+/* Text to indicate that the user will leave an incoming shared folder. */
+"Leave Share"="Leave Share";
+/* Text indicating to the user the action that will be executed on tap. */
+"Manage Share"="Manage Share";
+/* Title of the screen that shows the users with whom the user can share a folder */
+"Share with"="Partajează cu";
+/* Chat Notifications DND: Option that does not deactivate DND automatically */
+"Until I Turn it On Again"="Until I Turn it On Again";
+/* Chat Notifications DND: Option that deactivates DND after 30 minutes */
+"30 minutes"="30 minutes";
+/* Chat Notifications DND: Option that deactivates DND after 1 hour */
+"1 hour"="1 oră";
+/* Chat Notifications DND: Option that deactivates DND after 6 hours */
+"6 hours"="6 hours";
+/* Chat Notifications DND: Option that deactivates DND after 24 hours */
+"24 hours"="24 hours";
+/* Chat Notifications DND: Title bar message for the dnd activate options */
+"Mute chat Notifications for"="Mute chat Notifications for";
+/* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
+"Muted forever"="Muted forever";
+/* Chat Notifications DND: DND once activated with timing option, this message will appear below the DND on/off switch with the actual time left to deactivate DND replacing the placeholder below */
+"%@ left"="%@ left";
+/* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
+"Chat Notifications"="Chat Notifications";
