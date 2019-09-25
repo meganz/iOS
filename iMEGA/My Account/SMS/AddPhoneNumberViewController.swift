@@ -12,6 +12,14 @@ class AddPhoneNumberViewController: UIViewController {
         super.viewDidLoad()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if MEGASdkManager.sharedMEGASdk().hasVerifiedPhoneNumber {
+           dismiss(animated: true, completion: nil)
+        }
+    }
+    
     // MARK: - UI Actions
     
     @IBAction func didTapAddPhoneNumberButton() {

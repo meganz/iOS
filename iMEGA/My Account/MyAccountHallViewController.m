@@ -114,14 +114,14 @@
 #pragma mark - Private
 
 - (void)configAddPhoneNumberView {
-    if (MEGASdkManager.sharedMEGASdk.smsVerifiedPhoneNumber.length == 0) {
+    if (MEGASdkManager.sharedMEGASdk.hasVerifiedPhoneNumber) {
+        self.addPhoneNumberView.hidden = YES;
+    } else {
         if (self.addPhoneNumberView.isHidden) {
             [UIView animateWithDuration:.75 animations:^{
                 self.addPhoneNumberView.hidden = NO;
             }];
         }
-    } else {
-        self.addPhoneNumberView.hidden = YES;
     }
 }
 

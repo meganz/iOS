@@ -2,6 +2,11 @@
 import Foundation
 
 extension MEGASdk {
+    @objc var hasVerifiedPhoneNumber: Bool {
+        let isPhoneNumberEmpty = MEGASdkManager.sharedMEGASdk()?.smsVerifiedPhoneNumber()?.isEmpty ?? true
+        return !isPhoneNumberEmpty
+    }
+    
     @objc func handleAccountBlockedEvent(_ event: MEGAEvent) {
         guard let suspensionType = AccountSuspensionType(rawValue: event.number) else { return }
         let state = smsAllowedState()
