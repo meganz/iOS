@@ -700,6 +700,10 @@
 "The Hidden Album is where you hide photos or videos in your device Photos app."="숨긴 앨범은 기기의 사진 앱에서 숨긴 사진 또는 동영상입니다.";
 /* Title of the switch to config whether to upload Shared Albums */
 "Upload Shared Albums"="공유된 앨범 업로드";
+/* Footer description for Upload Shared Albums title when option enabled */
+"Shared Albums from your device's Photos app will be uploaded."="Shared Albums from your device’s Photos app will be uploaded.";
+/* Footer description for Upload Shared Albums title when option disabled */
+"Shared Albums from your device's Photos app will not be uploaded."="Shared Albums from your device’s Photos app will not be uploaded.";
 /* Title of the switch to config whether to upload synced albums */
 "Upload albums synced from iTunes"="iTunes에서 동기화된 앨범 업로드";
 /* Footer description for upload synced albums title */
@@ -1187,6 +1191,8 @@
 "moderator"="중재자";
 /* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
 "standard"="기본";
+/* A button title which removes a participant from a chat. */
+"removeParticipant"="참가자 제거";
 /* Title show above the name of the persons with whom you're chatting */
 "chattingWith"="대화중인 사람";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
