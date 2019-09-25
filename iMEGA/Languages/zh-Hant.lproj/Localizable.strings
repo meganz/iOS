@@ -702,8 +702,6 @@
 "The Hidden Album is where you hide photos or videos in your device Photos app."="「隱藏相簿」是在您裝置的相片應用程式中隱藏照片或影片的地方。";
 /* Title of the switch to config whether to upload Shared Albums */
 "Upload Shared Albums"="上傳共享相簿";
-/* Footer description for Upload Shared Albums title */
-"Shared Albums are where you share with other people and subscribe to other people's shares in your device's Photos app."="共享相簿是您與其他人分享並且在您裝置的相片程式裡訂閱其他人所分享相片的地方。";
 /* Title of the switch to config whether to upload synced albums */
 "Upload albums synced from iTunes"="上傳來自iTunes同步的專輯";
 /* Footer description for upload synced albums title */
