@@ -702,8 +702,6 @@
 "The Hidden Album is where you hide photos or videos in your device Photos app."="Скрытый альбом — альбом, где вы прячете фото или видео в приложении «Фото» на устройстве.";
 /* Title of the switch to config whether to upload Shared Albums */
 "Upload Shared Albums"="Загружать общие альбомы";
-/* Footer description for Upload Shared Albums title */
-"Shared Albums are where you share with other people and subscribe to other people's shares in your device's Photos app."="Общие альбомы, в которых вы делитесь фотографиями с другими людьми и подписываетесь на их фотографии в приложении «Фото» на своём устройстве.";
 /* Title of the switch to config whether to upload synced albums */
 "Upload albums synced from iTunes"="Загружать альбомы, синхронизированные из iTunes";
 /* Footer description for upload synced albums title */

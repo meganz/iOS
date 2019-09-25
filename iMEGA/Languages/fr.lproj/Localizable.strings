@@ -702,8 +702,6 @@
 "The Hidden Album is where you hide photos or videos in your device Photos app."="L’album Masqués est l’endroit où vous cachez des photos ou des vidéos dans l’appli Photos de votre appareil.";
 /* Title of the switch to config whether to upload Shared Albums */
 "Upload Shared Albums"="Téléverser les albums partagés";
-/* Footer description for Upload Shared Albums title */
-"Shared Albums are where you share with other people and subscribe to other people's shares in your device's Photos app."="Les albums partagés sont où vous partagez avec d’autres et où vous vous abonnez aux partages d’autres personnes dans l’appli Photos de votre appareil.";
 /* Title of the switch to config whether to upload synced albums */
 "Upload albums synced from iTunes"="Téléverser les albums synchronisés d’iTunes";
 /* Footer description for upload synced albums title */
