@@ -8,6 +8,7 @@
 
 #import "DevicePermissionsHelper.h"
 #import "Helper.h"
+#import "MEGAExportRequestDelegate.h"
 #import "MEGAMoveRequestDelegate.h"
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGALinkManager.h"
@@ -302,9 +303,12 @@
         
         [moveRemoveLeaveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-                void (^completion)(void) = ^{
-                    [viewController dismissViewControllerAnimated:YES completion:nil];
-                };
+                void (^completion)(void) = nil;
+                if (![viewController isKindOfClass:MEGAPhotoBrowserViewController.class]) {
+                    completion = ^{
+                        [viewController dismissViewControllerAnimated:YES completion:nil];
+                    };
+                }
                 MEGAMoveRequestDelegate *moveRequestDelegate = [[MEGAMoveRequestDelegate alloc] initToMoveToTheRubbishBinWithFiles:(self.isFile ? 1 : 0) folders:(self.isFolder ? 1 : 0) completion:completion];
                 [[MEGASdkManager sharedMEGASdk] moveNode:self newParent:[[MEGASdkManager sharedMEGASdk] rubbishNode] delegate:moveRequestDelegate];
             }
@@ -325,9 +329,12 @@
         
         [moveRemoveLeaveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-                void (^completion)(void) = ^{
-                    [viewController dismissViewControllerAnimated:YES completion:nil];
-                };
+                void (^completion)(void) = nil;
+                if (![viewController isKindOfClass:MEGAPhotoBrowserViewController.class]) {
+                    completion = ^{
+                        [viewController dismissViewControllerAnimated:YES completion:nil];
+                    };
+                }
                 MEGARemoveRequestDelegate *removeRequestDelegate = [[MEGARemoveRequestDelegate alloc] initWithMode:1 files:(self.isFile ? 1 : 0) folders:(self.isFolder ? 1 : 0) completion:completion];
                 [[MEGASdkManager sharedMEGASdk] removeNode:self delegate:removeRequestDelegate];
             }
@@ -385,6 +392,14 @@
         moveRequestDelegate.restore = YES;
         [[MEGASdkManager sharedMEGASdk] moveNode:self newParent:restoreNode delegate:moveRequestDelegate];
     }
+}
+
+- (void)mnz_removeLink {
+    MEGAExportRequestDelegate *requestDelegate = [MEGAExportRequestDelegate.alloc initWithCompletion:^(MEGARequest *request) {
+        [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"linkRemoved", @"Message shown when the links to a file or folder has been removed")];
+    } multipleLinks:NO];
+    
+    [MEGASdkManager.sharedMEGASdk disableExportNode:self delegate:requestDelegate];
 }
 
 #pragma mark - File links
