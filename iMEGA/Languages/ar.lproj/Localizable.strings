@@ -702,6 +702,10 @@
 "The Hidden Album is where you hide photos or videos in your device Photos app."="The Hidden Album is where you hide photos or videos in your device’s Photos app.";
 /* Title of the switch to config whether to upload Shared Albums */
 "Upload Shared Albums"="Upload Shared Albums";
+/* Footer description for Upload Shared Albums title when option enabled */
+"Shared Albums from your device's Photos app will be uploaded."="Shared Albums from your device’s Photos app will be uploaded.";
+/* Footer description for Upload Shared Albums title when option disabled */
+"Shared Albums from your device's Photos app will not be uploaded."="Shared Albums from your device’s Photos app will not be uploaded.";
 /* Title of the switch to config whether to upload synced albums */
 "Upload albums synced from iTunes"="Upload albums synced from iTunes";
 /* Footer description for upload synced albums title */
@@ -1100,7 +1104,7 @@
 /* A log message in a chat to display that a participant's permission was changed and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the permission name (such as Moderator or Read-only) and [C] will be replaced with the person who did it. Please keep the [A], [B] and [C] placeholders, they will be replaced at runtime. For example: Alice Jones was changed to Moderator by John Smith. */
 "wasChangedToBy"="[A] تم تغييره إلى [B]  عن طريق [C]";
 /* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
-"changedGroupChatNameTo"="[A]  غير اسم المجموعة إلى \"[B]\"";
+"changedGroupChatNameTo"="[A] غير اسم مجموعة المحادثة الى ‘[B]’";
 /* Button label. Allows to add contacts in current chat conversation. */
 "addParticipant"="إضافة مشارك...";
 /* Menu item to add participants to a chat */
@@ -1189,6 +1193,8 @@
 "moderator"="وسيط";
 /* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
 "standard"="معيار";
+/* A button title which removes a participant from a chat. */
+"removeParticipant"="إزالة مشارك";
 /* Title show above the name of the persons with whom you're chatting */
 "chattingWith"="يتحادث مع";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
@@ -1669,7 +1675,7 @@
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
 "Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="هل تريد انهاء كل الجلسات الفعالة حاليا؟ ذلك سيسجل الخروج من كل هذه الجلسات الفعالة باستثناء الحالية";
 /* Message to inform the local user that someone has joined the current group call */
-"%@ joined the call."="%@ joined the call.";
+"%@ joined the call."="%@ انضم الى المكالمة.";
 /* Message to inform the local user that someone has left the current group call */
 "%@ left the call."="%@ غادر المكالمة.";
 /* Message shown in a chat room when there is an active group call */
@@ -1877,15 +1883,15 @@
 /* Multiple Images title shown in recents section of webclient */
 "%1 Images"="%1 صورة";
 /* Multiple videos title shown in recents section of web client. */
-"%2 Videos"="%2 Videos";
+"%2 Videos"="%2 فيديو";
 /* A single image and single video title shown in recents section of webclient. */
-"1 Image and 1 Video"="1 Image and 1 Video";
+"1 Image and 1 Video"="صورة واحدة و فيديو واحد";
 /* One image and multiple videos title in recents. */
 "1 Image and %2 Videos"="صورة واحدة و%2 فيديو";
 /* Multiple images and 1 video */
 "%1 Images and 1 Video"="%1 صورة وفيديو واحد";
 /* Title for multiple images and multiple videos in recents section */
-"%1 Images and %2 Videos"="%1 Images and %2 Videos";
+"%1 Images and %2 Videos"="%1 صورة و %2 فيديو";
 /* Title for a recent action shown in the webclient, see the attached image for context. */
 "%1 modified by %3"="%1 تم تعديلها من قبل %3";
 /* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
