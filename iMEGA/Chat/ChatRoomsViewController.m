@@ -1183,6 +1183,14 @@
         }
             break;
             
+        case MEGAChatCallStatusJoining:
+            [self showActiveCallButton:call];
+            break;
+            
+        case MEGAChatCallStatusReconnecting:
+            [self hideActiveCallButton];
+            break;
+            
         default:
             break;
     }
