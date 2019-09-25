@@ -1524,7 +1524,7 @@ void uncaughtExceptionHandler(NSException *exception) {
             [self presentBusinessExpiredViewIfNeeded];
             break;
             
-        case EventUserFlagsReady:
+        case EventMiscFlagsReady:
             MEGALogDebug(@"Apple VoIP push status: %d", api.appleVoipPushEnabled);
             [NSUserDefaults.standardUserDefaults setBool:api.appleVoipPushEnabled forKey:@"VoIP_messages"];
             break;

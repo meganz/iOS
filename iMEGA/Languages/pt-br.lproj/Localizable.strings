@@ -61,7 +61,7 @@
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="Você foi desconectado deste dispositivo a partir de outro local.";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="O MEGA não consegue se conectar de forma segura por meio de SSL. Você pode estar usando uma rede WiFi pública com requisitos adicionais.";
+"sslUnverified_alertTitle"="O MEGA não consegue se conectar de forma segura por meio de SSL. Você pode estar usando uma rede Wi-Fi pública com requisitos adicionais.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="O conteúdo que você está tentando acessar não está disponível para esta conta. Por favor, faça login com a mesma conta usada no navegador móvel.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
@@ -141,7 +141,7 @@
 /* Warning message shown when you try to confirm an account but you are logged in with another one */
 "alreadyLoggedInAlertMessage"="Se você concorda, a conta atual será desconectada e todos os dados off-line serão apagados. Pretende continuar?";
 /* Error shown when the user tries to change his mail to one that is already used */
-"emailAlreadyInUse"="Erro. Este endereço de e-mail já está em uso.";
+"emailAlreadyInUse"="Erro. Este endereço de email já está sendo usado.";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Você precisa libertar algum espaço no seu dispositivo";
 /* Title for the file link view */
@@ -551,7 +551,7 @@
 /* Alert title shown when you select to add a contact inserting his/her email */
 "addContact"="Adicionar novo contato";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
-"contactEmail"="E-mail do contato";
+"contactEmail"="Email do contato";
 /* Button title to 'Add' the contact to your contacts list */
 "addContactButton"="Adicionar";
 /* Add contacts and share dialog error message when user try to add your own email address */
@@ -700,8 +700,6 @@
 "The Hidden Album is where you hide photos or videos in your device Photos app."="Um Álbum Oculto é onde você oculta fotos ou vídeos no aplicativo Fotos do seu dispositivo.";
 /* Title of the switch to config whether to upload Shared Albums */
 "Upload Shared Albums"="Fazer upload dos álbuns compartilhados";
-/* Footer description for Upload Shared Albums title */
-"Shared Albums are where you share with other people and subscribe to other people's shares in your device's Photos app."="Álbuns Compartilhados permitem compartilhar com outras pessoas e participar nos compartilhamentos de outras pessoas no aplicativo Fotos do seu dispositivo.";
 /* Title of the switch to config whether to upload synced albums */
 "Upload albums synced from iTunes"="Fazer upload dos álbuns sincronizados no iTunes";
 /* Footer description for upload synced albums title */
@@ -800,6 +798,8 @@
 "filesFolderRemovedToRubbishBinMessage"="%d arquivos e 1 pasta removida do MEGA";
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
 "filesFoldersRemovedToRubbishBinMessage"="[A] arquivos e [B] pastas removidas do MEGA";
+/* Hint text to suggest that the user have to write the new password on it */
+"newPassword"="Nova senha";
 /* Hint text where the user have to re-write the new password to confirm it */
 "confirmPassword"="Confirmar senha";
 /* Success message shown when the password has been changed */
@@ -1245,6 +1245,8 @@
 "dismiss"="Fechar";
 /* Notification text body shown when you have received a new chat message */
 "newMessage"="Nova mensagem";
+/* Notification text body shown when you have received a contact request */
+"contactRequest"="Solicitação de contato";
 /* Notification text body shown when you have received a new shared folder */
 "newSharedFolder"="Nova pasta compartilhada";
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
@@ -1930,3 +1932,31 @@
 "This folder has been the subject of a takedown notice."="Esta pasta foi alvo de um aviso de remoção.";
 /* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
 "Dispute Takedown"="Disputar remoção";
+/* Title of the "Links" Shared Items. */
+"Links"="Links";
+/* Title for empty state view of "Links" in Shared Items. */
+"No Public Links"="Não há links públicos";
+/* Text to indicate that the user will leave an incoming shared folder. */
+"Leave Share"="Leave Share";
+/* Text indicating to the user the action that will be executed on tap. */
+"Manage Share"="Manage Share";
+/* Title of the screen that shows the users with whom the user can share a folder */
+"Share with"="Compartilhar com";
+/* Chat Notifications DND: Option that does not deactivate DND automatically */
+"Until I Turn it On Again"="Until I Turn it On Again";
+/* Chat Notifications DND: Option that deactivates DND after 30 minutes */
+"30 minutes"="30 minutes";
+/* Chat Notifications DND: Option that deactivates DND after 1 hour */
+"1 hour"="1 hora";
+/* Chat Notifications DND: Option that deactivates DND after 6 hours */
+"6 hours"="6 hours";
+/* Chat Notifications DND: Option that deactivates DND after 24 hours */
+"24 hours"="24 hours";
+/* Chat Notifications DND: Title bar message for the dnd activate options */
+"Mute chat Notifications for"="Mute chat Notifications for";
+/* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
+"Muted forever"="Muted forever";
+/* Chat Notifications DND: DND once activated with timing option, this message will appear below the DND on/off switch with the actual time left to deactivate DND replacing the placeholder below */
+"%@ left"="%@ left";
+/* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
+"Chat Notifications"="Chat Notifications";

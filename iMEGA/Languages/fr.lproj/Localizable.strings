@@ -61,7 +61,7 @@
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="Vous avez été déconnecté de cet appareil à partir d’un autre endroit";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="MEGA n’arrive pas à se connecter de façon sécurisée par SSL. Vous êtes peut-être sur un réseau Wi-Fi public qui a des exigences supplémentaires.";
+"sslUnverified_alertTitle"="MEGA n’arrive pas à se connecter de façon sécurisée par SSL. Vous êtes peut-être sur un réseau Wi-Fi public avec des exigences supplémentaires.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="Le contenu auquel vous tentez d’accéder n’est pas proposé pour ce compte. Veuillez essayer de vous connecter avec le même compte que pour le client Web mobile.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
@@ -669,7 +669,7 @@
 /* Footer for video uploads switch section when disabled */
 "When enabled, videos will be uploaded."="Si cette option est activée, les vidéos seront téléversées.";
 /* Title for new camera upload feature */
-"New Camera Upload!"="Nouvelle option Téléversements de l’appareil photo !";
+"New Camera Upload!"="Nouvelles options des Téléversements de l’appareil photo !";
 /* A messge for camera upload v2 migration */
 "Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="Vous pouvez maintenant choisir de convertir les photos et les vidéos HEIC/HEVC vers les formats plus largement compatibles JPEG/H.264.";
 /* Title for an action to use most compatible formats */
@@ -700,8 +700,6 @@
 "The Hidden Album is where you hide photos or videos in your device Photos app."="L’album Masqués est l’endroit où vous cachez des photos ou des vidéos dans l’appli Photos de votre appareil.";
 /* Title of the switch to config whether to upload Shared Albums */
 "Upload Shared Albums"="Téléverser les albums partagés";
-/* Footer description for Upload Shared Albums title */
-"Shared Albums are where you share with other people and subscribe to other people's shares in your device's Photos app."="Les albums partagés sont où vous partagez avec d’autres et où vous vous abonnez aux partages d’autres personnes dans l’appli Photos de votre appareil.";
 /* Title of the switch to config whether to upload synced albums */
 "Upload albums synced from iTunes"="Téléverser les albums synchronisés d’iTunes";
 /* Footer description for upload synced albums title */
@@ -800,6 +798,8 @@
 "filesFolderRemovedToRubbishBinMessage"="%d fichiers et 1 dossier ont été supprimés de MEGA";
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
 "filesFoldersRemovedToRubbishBinMessage"="[A] fichiers et [B] dossiers ont été supprimés de MEGA";
+/* Hint text to suggest that the user have to write the new password on it */
+"newPassword"="Nouveau mot de passe";
 /* Hint text where the user have to re-write the new password to confirm it */
 "confirmPassword"="Confirmez le mot de passe";
 /* Success message shown when the password has been changed */
@@ -1245,6 +1245,8 @@
 "dismiss"="Fermer";
 /* Notification text body shown when you have received a new chat message */
 "newMessage"="Nouveau message";
+/* Notification text body shown when you have received a contact request */
+"contactRequest"="Demande de contact";
 /* Notification text body shown when you have received a new shared folder */
 "newSharedFolder"="Nouveau dossier partagé";
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
@@ -1579,7 +1581,7 @@
 /* A message on the setup two-factor authentication page on the mobile web client. */
 "scanOrCopyTheSeed"="Balayez ou copiez la graine vers votre appli d’authentification. Assurez-vous de sauvegarder cette graine en lieu sûr, au cas où vous perdriez votre appareil.";
 /* A button to help them restore their account if they have lost their 2FA device. */
-"lostYourAuthenticatorDevice"="Avez-vous perdu votre appareil d’authentification ?";
+"lostYourAuthenticatorDevice"="Appareil d’authentification perdu ?";
 /* Settings section title where you can enable the option to 'Save Images in Photos' */
 "Save Images in Photos"="Enregistrer les images dans Photos";
 /* Settings section title where you can enable the option to 'Save Videos in Photos' */
@@ -1671,7 +1673,7 @@
 /* Message shown in a chat room when there is an active group call */
 "There is an active group call. Tap to join."="Un appel de groupe est actif. Touchez pour vous y joindre.";
 /* Message shown in a chat room when there is an active call */
-"There is an active call. Tap to join."="Un appel est en cours. Toucher pour y participer.";
+"There is an active call. Tap to join."="Un appel est en cours. Touchez pour y participer.";
 /* Message shown in a chat room for a group call in progress displaying the duration of the call */
 "Touch to return to call %@"="Touchez pour revenir à l’appel %@";
 /* A button label which allows the users save images/videos in the Photos app. */
@@ -1845,7 +1847,7 @@
 /* Text shown in the chat toolbar while the user is recording a voice clip. The < character should be > in RTL languages. */
 "< Slide to cancel"="< Faire glisser pour annuler";
 /* Tooltip shown when the user presses but does not hold the microphone icon to send a voice clip */
-"Tap and hold %@ to record, release to send"="Touchez et maintenez  %@ pour enregistrer, relâchez pour envoyer";
+"Tap and hold %@ to record, release to send"="Touchez et maintenez %@ pour enregistrer, relâchez pour envoyer";
 /* Message shown when there is an ongoing call and the user tries to record a voice message */
 "It is not possible to record voice messages while there is a call in progress"="Il est impossible d’enregistrer des messages vocaux pendant un appel.";
 /* Text to inform the user there is an active call and is not participating */
@@ -1930,3 +1932,31 @@
 "This folder has been the subject of a takedown notice."="Ce dossier a été l’objet d’un avis de retrait.";
 /* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
 "Dispute Takedown"="Contester le retrait";
+/* Title of the "Links" Shared Items. */
+"Links"="Links";
+/* Title for empty state view of "Links" in Shared Items. */
+"No Public Links"="Il n’y a aucun lien public";
+/* Text to indicate that the user will leave an incoming shared folder. */
+"Leave Share"="Leave Share";
+/* Text indicating to the user the action that will be executed on tap. */
+"Manage Share"="Manage Share";
+/* Title of the screen that shows the users with whom the user can share a folder */
+"Share with"="Partager avec";
+/* Chat Notifications DND: Option that does not deactivate DND automatically */
+"Until I Turn it On Again"="Until I Turn it On Again";
+/* Chat Notifications DND: Option that deactivates DND after 30 minutes */
+"30 minutes"="30 minutes";
+/* Chat Notifications DND: Option that deactivates DND after 1 hour */
+"1 hour"="1 heure";
+/* Chat Notifications DND: Option that deactivates DND after 6 hours */
+"6 hours"="6 hours";
+/* Chat Notifications DND: Option that deactivates DND after 24 hours */
+"24 hours"="24 hours";
+/* Chat Notifications DND: Title bar message for the dnd activate options */
+"Mute chat Notifications for"="Mute chat Notifications for";
+/* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
+"Muted forever"="Muted forever";
+/* Chat Notifications DND: DND once activated with timing option, this message will appear below the DND on/off switch with the actual time left to deactivate DND replacing the placeholder below */
+"%@ left"="%@ left";
+/* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
+"Chat Notifications"="Chat Notifications";

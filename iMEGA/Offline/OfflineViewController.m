@@ -31,7 +31,7 @@ static NSString *kModificationDate = @"kModificationDate";
 static NSString *kFileSize = @"kFileSize";
 static NSString *kisDirectory = @"kisDirectory";
 
-@interface OfflineViewController () <UIViewControllerTransitioningDelegate, UIDocumentInteractionControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGATransferDelegate, UISearchControllerDelegate> {
+@interface OfflineViewController () <UIViewControllerTransitioningDelegate, UIDocumentInteractionControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGATransferDelegate, UISearchControllerDelegate, UIAdaptivePresentationControllerDelegate> {
 }
 
 @property (weak, nonatomic) IBOutlet UIView *containerView;
@@ -169,6 +169,12 @@ static NSString *kisDirectory = @"kisDirectory";
             }
         }
     }];
+}
+
+//MARK: - UIAdaptivePresentationControllerDelegate
+
+- (void)presentationControllerDidDismiss:(UIPresentationController *)presentationController {
+    [self reloadUI];
 }
 
 #pragma mark - Layout
@@ -673,6 +679,9 @@ static NSString *kisDirectory = @"kisDirectory";
     sortByTableViewController.offline = YES;
     
     MEGANavigationController *megaNavigationController = [[MEGANavigationController alloc] initWithRootViewController:sortByTableViewController];
+    if (@available(iOS 13.0, *)) {
+        megaNavigationController.presentationController.delegate = self;
+    }
     
     [self presentViewController:megaNavigationController animated:YES completion:nil];
 }
