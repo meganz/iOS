@@ -702,8 +702,6 @@
 "The Hidden Album is where you hide photos or videos in your device Photos app."="隠しアルバムは、あなたの端末の写真アプリで非表示にしている写真や動画の場所です。";
 /* Title of the switch to config whether to upload Shared Albums */
 "Upload Shared Albums"="共有アルバムをアップロード";
-/* Footer description for Upload Shared Albums title */
-"Shared Albums are where you share with other people and subscribe to other people's shares in your device's Photos app."="共有アルバムでは、他の人と共有したり、あなたの端末の写真アプリで他の人の共有を購読したりできます。";
 /* Title of the switch to config whether to upload synced albums */
 "Upload albums synced from iTunes"="iTunesから同期されたアルバムをアップロード";
 /* Footer description for upload synced albums title */
