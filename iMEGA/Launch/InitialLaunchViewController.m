@@ -2,7 +2,6 @@
 #import "InitialLaunchViewController.h"
 
 #import "OnboardingViewController.h"
-#import "MEGA-Swift.h"
 
 @interface InitialLaunchViewController () <MEGARequestDelegate>
 

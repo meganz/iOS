@@ -1,7 +1,5 @@
 
 #import "MEGASdk+MNZCategory.h"
-#import "UIApplication+MNZCategory.h"
-#import "MEGANavigationController.h"
 #import <objc/runtime.h>
 
 #import "MEGACreateFolderRequestDelegate.h"
