@@ -29,6 +29,14 @@ class AddPhoneNumberViewController: UIViewController {
         }
     }
     
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            return [.portrait, .portraitUpsideDown]
+        } else {
+            return .all
+        }
+    }
+    
     // MARK: - UI Actions
     
     @IBAction func didTapAddPhoneNumberButton() {

@@ -45,9 +45,9 @@ class SMSCountriesTableViewController: UITableViewController {
         }
         
         let appLocale = Locale(identifier: Locale.identifier(fromComponents: [NSLocale.Key.languageCode.rawValue : appLanguageId]))
-        let allCountries = countryCallingCodeDict.map {
+        let allCountries = countryCallingCodeDict.compactMap {
             SMSCountry(countryCode: $0.key, countryLocalizedName: appLocale.localizedString(forRegionCode: $0.key), callingCode: $0.value.first)
-            }.compactMap { $0 }
+        }
         
         var sections = collation.sectionTitles.map { _ in [SMSCountry]() }
         for country in allCountries {
@@ -55,9 +55,9 @@ class SMSCountriesTableViewController: UITableViewController {
             sections[sectionIndex].append(country)
         }
         
-        return sections.map {
+        return sections.compactMap {
             collation.sortedArray(from: $0, collationStringSelector: #selector(getter: SMSCountry.countryLocalizedName)) as? [SMSCountry]
-            }.compactMap { $0 }
+        }
     }
 }
 

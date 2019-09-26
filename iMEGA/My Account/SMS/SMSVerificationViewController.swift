@@ -71,6 +71,14 @@ class SMSVerificationViewController: UIViewController {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            return [.portrait, .portraitUpsideDown]
+        } else {
+            return .all
+        }
+    }
+    
     // MARK: - Network calls
     
     private func loadCountryCallingCodes() {
