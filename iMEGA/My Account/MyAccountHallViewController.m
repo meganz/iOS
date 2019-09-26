@@ -203,7 +203,9 @@
 }
 
 - (IBAction)didTapAddPhoneNumberView {
-    [self presentViewController:[[SMSNavigationViewController alloc] initWithRootViewController:[SMSVerificationViewController instantiateWith:SMSVerificationTypeAddPhoneNumber]] animated:YES completion:nil];
+    SMSNavigationViewController *smsNavigationController = [[SMSNavigationViewController alloc] initWithRootViewController:[SMSVerificationViewController instantiateWith:SMSVerificationTypeAddPhoneNumber]];
+    smsNavigationController.modalPresentationStyle = UIModalPresentationFullScreen;
+    [self presentViewController:smsNavigationController animated:YES completion:nil];
 }
 
 #pragma mark - UITableViewDataSource

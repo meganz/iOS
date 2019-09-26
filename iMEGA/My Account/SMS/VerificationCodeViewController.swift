@@ -51,6 +51,14 @@ class VerificationCodeViewController: UIViewController {
         navigationController?.isNavigationBarHidden = false
     }
     
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            return [.portrait, .portraitUpsideDown]
+        } else {
+            return .all
+        }
+    }
+    
     // MARK: - Config views
     
     private func configViewContents() {
