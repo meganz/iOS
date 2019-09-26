@@ -157,10 +157,7 @@ class VerificationCodeViewController: UIViewController {
         configCodeFieldsAppearance(with: nil)
         dismiss(animated: true, completion: nil)
         
-        switch verificationType {
-        case .AddPhoneNumber:
-            dismiss(animated: true, completion: nil)
-        case .UnblockAccount:
+        if verificationType == .UnblockAccount {
             if let session = SAMKeychain.password(forService: MEGAPasswordService, account: MEGAPasswordName)  {
                 MEGASdkManager.sharedMEGASdk()?.fastLogin(withSession: session, delegate: MEGALoginRequestDelegate())
             } else {
