@@ -757,7 +757,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         groupCallVC.videoCall = videoCall;
         groupCallVC.chatRoom = self.chatRoom;
         groupCallVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-        groupCallVC.modalPresentationStyle = UIModalPresentationFullScreen;
 
         if (@available(iOS 10.0, *)) {
             groupCallVC.megaCallManager = [(MainTabBarController *)UIApplication.sharedApplication.keyWindow.rootViewController megaCallManager];
@@ -769,7 +768,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         callVC.videoCall = videoCall;
         callVC.callType = active ? CallTypeActive : CallTypeOutgoing;
         callVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-        callVC.modalPresentationStyle = UIModalPresentationFullScreen;
         
         if (@available(iOS 10.0, *)) {
             callVC.megaCallManager = [(MainTabBarController *)UIApplication.sharedApplication.keyWindow.rootViewController megaCallManager];

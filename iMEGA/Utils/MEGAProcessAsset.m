@@ -494,8 +494,15 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
     
     if (self.originalName) {
         NSArray *assetResources = [PHAssetResource assetResourcesForAsset:asset];
-        PHAssetResource *assetResource = assetResources.firstObject;
-        name = assetResource.originalFilename;
+        for (PHAssetResource *assetResource in assetResources) {
+            if (asset.mediaType == PHAssetMediaTypeImage && (assetResource.type == PHAssetResourceTypePhoto || assetResource.type == PHAssetResourceTypeAlternatePhoto || assetResource.type == PHAssetResourceTypeFullSizePhoto || assetResource.type == PHAssetResourceTypeAdjustmentBasePhoto)) {
+                name = assetResource.originalFilename;
+                break;
+            } else if (asset.mediaType == PHAssetMediaTypeVideo && (assetResource.type == PHAssetResourceTypeVideo || assetResource.type == PHAssetResourceTypeFullSizeVideo)) {
+                name = assetResource.originalFilename;
+                break;
+            }
+        }
         
         if (self.shareThroughChat && [name.pathExtension.lowercaseString isEqualToString:@"heic"]) {
             name = [[name stringByDeletingPathExtension] stringByAppendingPathExtension:@"jpg"];
