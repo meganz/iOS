@@ -1232,7 +1232,11 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     }
     appData = [appData mnz_appDataToAttachToChatID:self.chatRoom.chatId asVoiceClip:asVoiceClip];
     
-    [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:path parent:parentNode appData:appData isSourceTemporary:!asVoiceClip delegate:startUploadTransferDelegate];
+    [MEGASdkManager.sharedMEGASdk startUploadForChatWithLocalPath:path
+                                                           parent:parentNode
+                                                          appData:appData
+                                                isSourceTemporary:!asVoiceClip
+                                                         delegate:startUploadTransferDelegate];
 }
 
 - (void)attachOrCopyAndAttachNode:(MEGANode *)node toParentNode:(MEGANode *)parentNode {
@@ -1919,11 +1923,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             NSString *appData = [[NSString new] mnz_appDataToSaveCoordinates:[filePath mnz_coordinatesOfPhotoOrVideo]];
             [self startUploadAndAttachWithPath:filePath parentNode:parentNode appData:appData asVoiceClip:NO];
         }
-    } nodes:^(NSArray <MEGANode *> *nodes) {
-        for (MEGANode *node in nodes) {
-            [self attachOrCopyAndAttachNode:node toParentNode:parentNode];
-        }
-    } errors:^(NSArray <NSError *> *errors) {
+    } nodes:nil errors:^(NSArray <NSError *> *errors) {
         NSString *title = AMLocalizedString(@"error", nil);
         NSString *message;
         if (errors.count == 1) {

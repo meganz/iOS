@@ -1927,7 +1927,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 }
 
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
-    if (transfer.isStreamingTransfer) {
+    if (transfer.type != MEGATransferTypeUpload && transfer.isStreamingTransfer) {
         return;
     }
     

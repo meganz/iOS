@@ -302,7 +302,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
 
                              NSString *fingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:filePath];
                              MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:fingerprint parent:self.parentNode];
-                             if (node) {
+                             if (node && !self.shareThroughChat) {
                                  if (self.node) {
                                      self.node(node);
                                  }
@@ -534,7 +534,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
     if (imageData) {
         NSString *fingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForData:imageData modificationTime:asset.creationDate];
         MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:fingerprint parent:self.parentNode];
-        if (node) {
+        if (node && !self.shareThroughChat) {
             if (self.node) {
                 self.node(node);
             }
@@ -751,7 +751,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
             }
             NSString *fingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:filePath];
             MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:fingerprint parent:self.parentNode];
-            if (node) {
+            if (node && !self.shareThroughChat) {
                 if (self.node) {
                     self.node(node);
                 }
