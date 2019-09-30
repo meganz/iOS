@@ -379,7 +379,7 @@
     NodeInfoViewController *nodeInfoVC = nodeInfoNavigation.viewControllers.firstObject;
     nodeInfoVC.node = node;
     nodeInfoVC.nodeInfoDelegate = self;
-    nodeInfoVC.incomingShareChildView = self.incomingButton.selected == 0;
+    nodeInfoVC.incomingShareChildView = self.incomingButton.selected;
 
     [self presentViewController:nodeInfoNavigation animated:YES completion:nil];
 }
