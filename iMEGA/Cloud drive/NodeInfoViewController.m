@@ -18,6 +18,7 @@
 #import "NodePropertyTableViewCell.h"
 #import "NodeTappablePropertyTableViewCell.h"
 #import "NodeVersionsViewController.h"
+#import "UIApplication+MNZCategory.h"
 #import "UIImage+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 
@@ -473,16 +474,10 @@
             [self showShareActivityFromSender:sender];
             break;
             
-        case MegaNodeActionTypeFileInfo:
-            break;
-            
         case MegaNodeActionTypeLeaveSharing:
             [node mnz_leaveSharingInViewController:self];
             break;
-            
-        case MegaNodeActionTypeRemoveLink:
-            break;
-            
+                        
         case MegaNodeActionTypeMoveToRubbishBin:
             [node mnz_moveToTheRubbishBinInViewController:self];
             break;
@@ -497,6 +492,35 @@
             
         case MegaNodeActionTypeSaveToPhotos:
             [node mnz_saveToPhotosWithApi:[MEGASdkManager sharedMEGASdk]];
+            break;
+            
+        case MegaNodeActionTypeManageShare: {
+            ContactsViewController *contactsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsViewControllerID"];
+            contactsVC.node = node;
+            contactsVC.contactsMode = ContactsModeFolderSharedWith;
+            [self.navigationController pushViewController:contactsVC animated:YES];
+            break;
+        }
+            
+        case MegaNodeActionTypeShareFolder: {
+            MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsNavigationControllerID"];
+            ContactsViewController *contactsVC = navigationController.viewControllers.firstObject;
+            contactsVC.nodesArray = @[node];
+            contactsVC.contactsMode = ContactsModeShareFoldersWith;
+            [self presentViewController:navigationController animated:YES completion:nil];
+            break;
+        }
+            
+        case MegaNodeActionTypeManageLink:
+        case MegaNodeActionTypeGetLink: {
+            if (MEGAReachabilityManager.isReachableHUDIfNot) {
+                [CopyrightWarningViewController presentGetLinkViewControllerForNodes:@[node] inViewController:UIApplication.mnz_presentingViewController];
+            }
+            break;
+        }
+           
+        case MegaNodeActionTypeRemoveLink:
+            [node mnz_removeLink];
             break;
             
         default:
