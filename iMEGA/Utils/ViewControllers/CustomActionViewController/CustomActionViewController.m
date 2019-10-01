@@ -252,8 +252,9 @@
                     [actions addObject:[self actionCopy]];
                     if (self.isIncomingShareChildView) {
                         [actions addObject:[self actionLeaveSharing]];
+                    } else {
+                        [actions addObject:[self actionMoveToRubbishBin]];
                     }
-                    [actions addObject:[self actionMoveToRubbishBin]];
                 }
                 break;
                 
