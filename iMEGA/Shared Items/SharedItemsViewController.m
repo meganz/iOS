@@ -127,8 +127,7 @@
     if (@available(iOS 13.0, *)) {
         [self configPreviewingRegistration];
     }
-    
-    self.sortOrderType = MEGASortOrderTypeNone;
+    self.sortOrderType = [NSUserDefaults.standardUserDefaults integerForKey:@"SharedItemsSortOrderType"];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -528,16 +527,20 @@
             UIAlertController *sortByAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
             [sortByAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
             
-            UIAlertAction *sortAscendingAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"nameAscending", @"Sort by option (1/6). This one orders the files alphabethically") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            NSString *ascendingSortTitle = [NSString stringWithFormat:@"%@%@", AMLocalizedString(@"nameAscending", @"Sort by option (1/6). This one orders the files alphabethically"), self.sortOrderType == MEGASortOrderTypeAlphabeticalAsc ? @" ✓" : @""];
+            UIAlertAction *sortAscendingAlertAction = [UIAlertAction actionWithTitle:ascendingSortTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                 self.sortOrderType = MEGASortOrderTypeAlphabeticalAsc;
                 [self reloadUI];
+                [NSUserDefaults.standardUserDefaults setInteger:self.sortOrderType forKey:@"SharedItemsSortOrderType"];
             }];
             [sortAscendingAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
             [sortByAlertController addAction:sortAscendingAlertAction];
             
-            UIAlertAction *sortDescendingAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"nameDescending", @"Sort by option (2/6). This one arranges the files on reverse alphabethical order") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            NSString *descendingSortTitle = [NSString stringWithFormat:@"%@%@", AMLocalizedString(@"nameAscending", @"Sort by option (1/6). This one orders the files alphabethically"), self.sortOrderType == MEGASortOrderTypeAlphabeticalDesc ? @" ✓" : @""];
+            UIAlertAction *sortDescendingAlertAction = [UIAlertAction actionWithTitle:descendingSortTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                 self.sortOrderType = MEGASortOrderTypeAlphabeticalDesc;
                 [self reloadUI];
+                [NSUserDefaults.standardUserDefaults setInteger:self.sortOrderType forKey:@"SharedItemsSortOrderType"];
             }];
             [sortDescendingAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
             [sortByAlertController addAction:sortDescendingAlertAction];
