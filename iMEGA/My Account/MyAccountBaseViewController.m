@@ -78,6 +78,7 @@
     UIAlertAction *myCodeAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"myCode", @"Title for view that displays the QR code of the user. String as short as possible.") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         ContactLinkQRViewController *contactLinkVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactLinkQRViewControllerID"];
         contactLinkVC.scanCode = NO;
+        contactLinkVC.modalPresentationStyle = UIModalPresentationFullScreen;
         [self presentViewController:contactLinkVC animated:YES completion:nil];
     }];
     [myCodeAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
