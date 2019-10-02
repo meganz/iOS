@@ -536,7 +536,7 @@
             [sortAscendingAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
             [sortByAlertController addAction:sortAscendingAlertAction];
             
-            NSString *descendingSortTitle = [NSString stringWithFormat:@"%@%@", AMLocalizedString(@"nameAscending", @"Sort by option (1/6). This one orders the files alphabethically"), self.sortOrderType == MEGASortOrderTypeAlphabeticalDesc ? @" ✓" : @""];
+            NSString *descendingSortTitle = [NSString stringWithFormat:@"%@%@", AMLocalizedString(@"nameDescending", @"Sort by option (2/6). This one arranges the files on reverse alphabethical order"), self.sortOrderType == MEGASortOrderTypeAlphabeticalDesc ? @" ✓" : @""];
             UIAlertAction *sortDescendingAlertAction = [UIAlertAction actionWithTitle:descendingSortTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                 self.sortOrderType = MEGASortOrderTypeAlphabeticalDesc;
                 [self reloadUI];
