@@ -3,7 +3,7 @@ import Foundation
 
 extension MEGASdk {
     @objc var hasVerifiedPhoneNumber: Bool {
-        let isPhoneNumberEmpty = MEGASdkManager.sharedMEGASdk()?.smsVerifiedPhoneNumber().isEmpty ?? true
+        let isPhoneNumberEmpty = MEGASdkManager.sharedMEGASdk()?.smsVerifiedPhoneNumber()?.isEmpty ?? true
         return !isPhoneNumberEmpty
     }
     
