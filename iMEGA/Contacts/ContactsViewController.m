@@ -817,7 +817,11 @@
     contactsPickerViewController.predicateForEnablingContact = [NSPredicate predicateWithFormat:@"emailAddresses.@count > 0"];
     contactsPickerViewController.predicateForSelectionOfProperty = [NSPredicate predicateWithFormat:@"(key == 'emailAddresses')"];
     contactsPickerViewController.delegate = self;
-    [self presentViewController:contactsPickerViewController animated:YES completion:nil];
+    [self presentViewController:contactsPickerViewController animated:YES completion:^{
+        if (self.childViewControllers.count == 0) {
+            [self insertItemListSubviewWithCompletion:nil];
+        }
+    }];
 }
 
 - (void)selectUser:(MEGAUser *)user {
@@ -1602,8 +1606,12 @@
         }
     }
     if (self.contactsMode == ContactsModeShareFoldersWith) {
-        for (NSString *email in contactEmails) {
-            [self inviteEmailToShareFolder:email];
+        if (contactEmails.count) {
+            for (NSString *email in contactEmails) {
+                [self inviteEmailToShareFolder:email];
+            }
+        } else if (self.selectedUsersArray.count == 0) {
+            [self removeUsersListSubview];
         }
     } else {
         MEGAInviteContactRequestDelegate *inviteContactRequestDelegate = [MEGAInviteContactRequestDelegate.alloc initWithNumberOfRequests:contactEmails.count];
