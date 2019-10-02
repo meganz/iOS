@@ -702,8 +702,10 @@
 "The Hidden Album is where you hide photos or videos in your device Photos app."="L'album nascosto è dove nascondi le tue foto e i tuoi video nell'app Foto del tuo dispositivo.";
 /* Title of the switch to config whether to upload Shared Albums */
 "Upload Shared Albums"="Carica gli album condivisi";
-/* Footer description for Upload Shared Albums title */
-"Shared Albums are where you share with other people and subscribe to other people's shares in your device's Photos app."="Gli album condivisi sono dove condividi con altre persone e ti iscrivi alle condivisioni delle altre persone nell'app Foto del tuo dispositivo.";
+/* Footer description for Upload Shared Albums title when option enabled */
+"Shared Albums from your device's Photos app will be uploaded."="Shared Albums from your device’s Photos app will be uploaded.";
+/* Footer description for Upload Shared Albums title when option disabled */
+"Shared Albums from your device's Photos app will not be uploaded."="Shared Albums from your device’s Photos app will not be uploaded.";
 /* Title of the switch to config whether to upload synced albums */
 "Upload albums synced from iTunes"="Carica gli album sincronizzati da iTuned";
 /* Footer description for upload synced albums title */
@@ -1191,6 +1193,8 @@
 "moderator"="Moderatore";
 /* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
 "standard"="Standard";
+/* A button title which removes a participant from a chat. */
+"removeParticipant"="Rimuovi partecipante";
 /* Title show above the name of the persons with whom you're chatting */
 "chattingWith"="Chattando con";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
