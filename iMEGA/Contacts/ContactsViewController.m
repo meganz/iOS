@@ -202,7 +202,8 @@
             self.shareFolderWithBarButtonItem.title = AMLocalizedString(@"share", @"Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected");
             [self.shareFolderWithBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIMediumWithSize:17.0f]} forState:UIControlStateNormal];
             self.navigationItem.rightBarButtonItems = @[self.shareFolderWithBarButtonItem];
-
+            self.shareFolderWithBarButtonItem.enabled = NO;
+            
             self.insertAnEmailBarButtonItem.title = AMLocalizedString(@"inviteContact", @"Text shown when the user tries to make a call and the receiver is not a contact");
             [self.insertAnEmailBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:UIColor.mnz_redMain} forState:UIControlStateNormal];
             
@@ -707,6 +708,9 @@
             }
         }];
     }
+    if (self.contactsMode == ContactsModeShareFoldersWith) {
+            self.shareFolderWithBarButtonItem.enabled = YES;
+    }
 }
 
 - (void)insertItemListSubviewWithCompletion:(void (^ __nullable)(void))completion {
@@ -728,6 +732,9 @@
 }
 
 - (void)removeUsersListSubview {
+    if (self.contactsMode == ContactsModeShareFoldersWith) {
+        self.shareFolderWithBarButtonItem.enabled = NO;
+    }
     ItemListViewController *usersList = self.childViewControllers.lastObject;
     [usersList willMoveToParentViewController:nil];
     [usersList.view removeFromSuperview];
@@ -945,7 +952,7 @@
             } else {
                 [self reloadUI];
             }
-            
+            self.navigationItem.leftBarButtonItems = @[];
             [self setTableViewEditing:NO animated:YES];
         }];
         

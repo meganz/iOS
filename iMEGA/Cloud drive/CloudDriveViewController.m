@@ -2110,6 +2110,10 @@ static const NSTimeInterval kSearchTimeDelay = .5;
             [node mnz_saveToPhotosWithApi:[MEGASdkManager sharedMEGASdk]];
             break;
             
+        case MegaNodeActionTypeSendToChat:
+            [node mnz_sendToChatInViewController:self];
+            break;
+            
         default:
             break;
     }

@@ -21,6 +21,7 @@
 - (void)mnz_restore;
 - (void)mnz_removeLink;
 - (void)mnz_saveToPhotosWithApi:(MEGASdk *)api;
+- (void)mnz_sendToChatInViewController:(UIViewController *)viewController;
 
 #pragma mark - File links
 
