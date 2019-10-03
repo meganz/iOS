@@ -1771,7 +1771,7 @@
 /* When somebody accepted your contact request */
 "Accepted your contact request"="Kontaktanfrage wurde akzeptiert";
 /* When somebody denied your contact request */
-"Denied your contact request"="Ihre Kontaktanfrage wurde abgelehnt";
+"Denied your contact request"="hat ihre Kontaktanfrage abgelehnt";
 /* notification text */
 "A user has left the shared folder {0}"="Ein Benutzer hat die Ordnerfreigabe {0} verlassen";
 /* This is shown in the Notification dialog when the email address of a contact is not found and access to the share is lost for some reason (e.g. share removal or contact removal). */
