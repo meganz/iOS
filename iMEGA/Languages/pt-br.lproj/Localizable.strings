@@ -61,7 +61,7 @@
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="Você foi desconectado deste dispositivo a partir de outro local.";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="O MEGA não consegue se conectar de forma segura por meio de SSL. Você pode estar usando uma rede Wi-Fi pública com requisitos adicionais.";
+"sslUnverified_alertTitle"="O MEGA não consegue se conectar de forma segura por meio de SSL. Você pode estar usando uma rede WiFi pública com requisitos adicionais.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="O conteúdo que você está tentando acessar não está disponível para esta conta. Por favor, faça login com a mesma conta usada no navegador móvel.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
@@ -489,9 +489,9 @@
 /* Message shown while uploading files. Plural. */
 "cameraUploadsPendingFiles"="Upload em andamento, %lu arquivos pendentes";
 /* Message shown when camera upload paused because of no WiFi. Singular. */
-"Upload paused because of no WiFi, 1 file pending"="Upload pausado por falta de conexão WiFi: 1 arquivo pendente";
+"Upload paused because of no WiFi, 1 file pending"="Upload pausado por falta de conexão Wi-Fi: 1 arquivo pendente";
 /* Message shown when camera upload paused because of no WiFi. Plural. */
-"Upload paused because of no WiFi, %lu files pending"="Uploads pausados por falta de conexão WiFi: %lu arquivo pendente";
+"Upload paused because of no WiFi, %lu files pending"="Uploads pausados por falta de conexão Wi-Fi: %lu arquivos pendentes";
 /* Message shown the pending video file when photos uploaded and video upload is not enabled. Singular. */
 "Photos uploaded, video uploads are off, 1 video not uploaded"="Upload de fotos concluído. O upload de vídeos está desativado, portanto o upload de 1 vídeo não foi feito.";
 /* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
@@ -671,7 +671,7 @@
 /* Footer for video uploads switch section when disabled */
 "When enabled, videos will be uploaded."="Ao ativar, será feito o upload de vídeos.";
 /* Title for new camera upload feature */
-"New Camera Upload!"="Novas opções para os Upload da câmera!";
+"New Camera Upload!"="Novas opções para os Uploads da câmera!";
 /* A messge for camera upload v2 migration */
 "Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="Agora você pode optar por converter fotos e vídeos HEIF/HEVC a formatos mais compatíveis, como JPEG e H.264.";
 /* Title for an action to use most compatible formats */
@@ -1713,9 +1713,9 @@
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
 "%@ enabled Encrypted Key Rotation"="%@ ativou a rotação da chave de criptografia.";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
-"%@ created a public link for the chat."="%@ criou um link para este chat.";
+"%@ created a public link for the chat."="%@ criou um link para este chat";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
-"%@ removed a public link for the chat."="%@ removeu o link deste chat.";
+"%@ removed a public link for the chat."="%@ removeu o link deste chat";
 /* Management message shown in a chat when the user %@ joined it from a public chat link */
 "%@ joined the group chat."="%@ se uniu ao chat em grupo.";
 /* Message show when a call cannot be established because there are too many participants in the group call */

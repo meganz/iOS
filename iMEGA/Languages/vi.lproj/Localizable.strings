@@ -61,7 +61,7 @@
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="Bạn đã bị đăng xuất ra bơi một phiên đăng nhập từ chỗ khác";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="MEGA không thực hiện đuợc kết nối bảo mật thông qua xác thực SSL. Có thể do thiết bị đang dùng mạng WiFi công cộng cần được phải chỉnh thêm.";
+"sslUnverified_alertTitle"="MEGA is unable to connect securely through SSL. You might be on public WiFi with additional requirements.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="Nội dung bạn đang muốn truy cập không có nằm trong tài khoản này. Xin đăng nhập vào tài khoản trùng khớp như cái có trên trình duyệt web của điện thoại.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */

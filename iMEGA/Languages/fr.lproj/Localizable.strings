@@ -81,7 +81,7 @@
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="Créer un compte";
 /* Message shown when the user writes a wrong email or password on login */
-"invalidMailOrPassword"="Adresse courriel ou mot de passe invalide. Veuillez ressayer";
+"invalidMailOrPassword"="L’adresse courriel ou le mot de passe est invalide. Veuillez ressayer";
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="Vous avez tenté de vous connecter trop de fois. Veuillez attendre jusqu'à %@ et ressayer.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
@@ -685,15 +685,15 @@
 /* Navigation path for Storage settings in iOS */
 "Settings > General > %@ Storage"="Réglages > Général > Stockage %@";
 /* Title of the switch to config whether to upload videos for Live Photos */
-"Upload videos for Live Photos"="Téléverser les vidéos pour les photos Live";
+"Upload videos for Live Photos"="Téléverser les vidéos pour les Live Photos";
 /* Title of the switch to config whether to upload all burst photos */
 "Upload all burst photos"="Téléverser toutes les photos en rafale";
 /* Title of the switch to config whether to upload Hidden Album */
 "Upload Hidden Album"="Téléverser l'album Masqués";
 /* Footer description when upload videos for Live Photos is enabled */
-"The video and the photo in each Live Photo will be uploaded."="Les versions photo et vidéo de chaque photo Live seront téléversées.";
+"The video and the photo in each Live Photo will be uploaded."="Les versions photo et vidéo de chaque Live Photo seront téléversées.";
 /* Footer description when upload videos for Live Photos is disabled */
-"Only the photo in each Live Photo will be uploaded."="Seule la version photo de chaque photo Live sera téléversée.";
+"Only the photo in each Live Photo will be uploaded."="Seule la version photo de chaque Live Photo sera téléversée.";
 /* Footer description when upload all burst photos is enabled */
 "All the photos from your burst photo sequences will be uploaded."="Toutes les photos de vos séquences de photos en rafale seront téléversées.";
 /* Footer description when upload all burst photos is disabled */
@@ -832,9 +832,9 @@
 /* Headline for parking an account (basically restarting from scratch) */
 "parkAccount"="Remiser le compte";
 /* Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed "Recovery Key") */
-"startingFreshAccount"="Je reconnais que je commence un nouveau compte vide, et que je perdrai toutes les données de mon compte actuel, à moins de me souvenir de mon mot de passe ou de trouver une clé de récupération exportée.";
+"startingFreshAccount"="Je reconnais que je commence un nouveau compte vide et que je perdrai toutes les données de mon compte actuel, à moins de me souvenir de mon mot de passe ou de trouver une clé de récupération exportée.";
 /* Caption of the button to proceed */
-"startNewAccount"="Démarrer un nouveau compte";
+"startNewAccount"="Commencer un nouveau compte";
 /*  */
 "yourAccounHasBeenParked"="Votre ancien compte a été remisé avec succès. Vous pouvez maintenant vous connecter à votre nouveau compte.";
 /* Hint text to suggest that the user have to write the new email on it */

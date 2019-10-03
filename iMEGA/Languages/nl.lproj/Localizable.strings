@@ -61,7 +61,7 @@
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="U bent uitgelogd van dit apparaat vanuit een andere locatie";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="MEGA is niet in staat een veilige verbinding te maken via SSL. U kan op de publieke Wi-Fi met extra benodigdheden.";
+"sslUnverified_alertTitle"="MEGA is niet in staat veilig een verbinding te maken via SSL. U zou op publieke WiFi kunnen zijn met extra benodigdheden.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="De inhoud die u wilt bereiken is niet beschikbaar op dit account. Probeer in te loggen met hetzelfde account als in de mobiele web programma.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
@@ -1953,18 +1953,18 @@
 /* Chat Notifications DND: Option that does not deactivate DND automatically */
 "Until I Turn it On Again"="Until I Turn it On Again";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
-"30 minutes"="30 minutes";
+"30 minutes"="30 minuten";
 /* Chat Notifications DND: Option that deactivates DND after 1 hour */
 "1 hour"="1 uur";
 /* Chat Notifications DND: Option that deactivates DND after 6 hours */
-"6 hours"="6 hours";
+"6 hours"="6 uren";
 /* Chat Notifications DND: Option that deactivates DND after 24 hours */
-"24 hours"="24 hours";
+"24 hours"="24 uren";
 /* Chat Notifications DND: Title bar message for the dnd activate options */
 "Mute chat Notifications for"="Mute chat Notifications for";
 /* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
-"Muted forever"="Muted forever";
+"Muted forever"="Voor altijd gedempt";
 /* Chat Notifications DND: DND once activated with timing option, this message will appear below the DND on/off switch with the actual time left to deactivate DND replacing the placeholder below */
-"%@ left"="%@ left";
+"%@ left"="%@ over";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="Chat Notifications";
