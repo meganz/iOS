@@ -1286,6 +1286,7 @@ void uncaughtExceptionHandler(NSException *exception) {
         NSString *msgIdB64 = [[[payload dictionaryPayload] objectForKey:@"megadata"] objectForKey:@"msgid"];
         NSString *silent = [[[payload dictionaryPayload] objectForKey:@"megadata"] objectForKey:@"silent"];
         if (chatIdB64 && msgIdB64) {
+            [UIApplication sharedApplication].applicationIconBadgeNumber = MEGASdkManager.sharedMEGAChatSdk.unreadChats;
             uint64_t chatId = [MEGASdk handleForBase64UserHandle:chatIdB64];
             [[MEGASdkManager sharedMEGAChatSdk] pushReceivedWithBeep:YES chatId:chatId];
         } else if (silent) {
