@@ -1438,9 +1438,12 @@
             break;
         }
 
-        case MegaNodeActionTypeMove:
         case MegaNodeActionTypeMoveToRubbishBin:
-        case MegaNodeActionTypeRemove:
+            [node mnz_moveToTheRubbishBinInViewController:self];
+            break;
+            
+        case MegaNodeActionTypeSendToChat:
+            [node mnz_sendToChatInViewController:self];
             break;
             
         default:

@@ -32,6 +32,7 @@
 #import "OnboardingViewController.h"
 #import "PreviewDocumentViewController.h"
 #import "SharedItemsViewController.h"
+#import "SendToViewController.h"
 
 @implementation MEGANode (MNZCategory)
 
@@ -400,6 +401,14 @@
     } multipleLinks:NO];
     
     [MEGASdkManager.sharedMEGASdk disableExportNode:self delegate:requestDelegate];
+}
+
+- (void)mnz_sendToChatInViewController:(UIViewController *)viewController {
+    MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"SendToNavigationControllerID"];
+    SendToViewController *sendToViewController = navigationController.viewControllers.firstObject;
+    sendToViewController.nodes = @[self];
+    sendToViewController.sendMode = SendModeCloud;
+    [viewController presentViewController:navigationController animated:YES completion:nil];
 }
 
 #pragma mark - File links
