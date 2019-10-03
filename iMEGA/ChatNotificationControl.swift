@@ -25,20 +25,15 @@ import UIKit
         var localizedTitle: String {
             switch self {
                 case .forever:
-                    return "Until I Turn it On Again"
-                        .localized(comment: "Used for showing the text in the action sheet for the forever DND option")
+                    return "Until I Turn it On Again".localized()
                 case .thirtyMinutes:
-                    return "30 minutes"
-                        .localized(comment: "Used for showing the text in the action sheet for the 30 min DND option")
+                    return "30 minutes".localized()
                 case .oneHour:
-                    return "1 hour"
-                        .localized(comment: "Used for showing the text in the action sheet for the 1 hour DND option")
+                    return "1 hour".localized()
                 case .sixHours:
-                    return "6 hours"
-                        .localized(comment: "Used for showing the text in the action sheet for the 6 hours DND option")
+                    return "6 hours".localized()
                 case .twentyFourHours:
-                    return "24 hours"
-                        .localized(comment: "Used for showing the text in the action sheet for the 24 hours DND option")
+                    return "24 hours".localized()
             }
         }
     }
@@ -71,8 +66,7 @@ import UIKit
 extension ChatNotificationControl {
     
     @objc func configure(cell: ChatNotificationControlCellProtocol, chatId: Int64) {
-        cell.nameLabel?.text = "Chat Notifications"
-            .localized(comment: "This text will appear in the settings of every chat with the on/off switch")
+        cell.nameLabel?.text = "Chat Notifications".localized()
         
         cell.notificationsSwitch?.isEnabled = isNotificationSettingsLoaded()
         cell.notificationsSwitch?.setOn(!isChatDNDEnabled(chatId: chatId), animated: false)
@@ -88,12 +82,12 @@ extension ChatNotificationControl {
     }
     
     @objc func turnOnDND(chatId: Int64, sender: UIView) {
-        let alertMessage = "Mute chat Notifications for".localized(comment: "Used as DND options title bar message")
+        let alertMessage = "Mute chat Notifications for".localized()
         let alertController = UIAlertController(title: nil,
                                                 message: alertMessage,
                                                 preferredStyle: .actionSheet)
         
-        let cancelString = "cancel".localized(comment: "Used as cancel text for the action sheet")
+        let cancelString = "cancel".localized()
         alertController.addAction(UIAlertAction(title: cancelString,
                                                 style: .cancel,
                                                 handler: { _ in
@@ -126,8 +120,13 @@ extension ChatNotificationControl {
     
     @objc func turnOffDND(chatId: Int64) {
         showProgress()
-        pushNotificationSettings?.setChatEnabled(true, forChatId: chatId)
-        MEGASdkManager.sharedMEGASdk()?.setPushNotificationSettings(self.pushNotificationSettings, delegate: self)
+        
+        guard let pushNotificationSettings = pushNotificationSettings else {
+            return
+        }
+        
+        pushNotificationSettings.setChatEnabled(true, forChatId: chatId)
+        MEGASdkManager.sharedMEGASdk()?.setPushNotificationSettings(pushNotificationSettings, delegate: self)
     }
     
     @objc func timeRemainingForDNDDeactivationString(chatId: Int64) -> String? {
@@ -138,13 +137,12 @@ extension ChatNotificationControl {
         let chatDNDTime = chatDND(chatId: chatId)
         
         if chatDNDTime == 0 {
-            return "Muted forever"
-                .localized(comment: "When the DND is active, This text appears below the DND on/off switch indicating the time left until DND turns off")
+            return "Muted forever".localized()
         } else {
             let remainingTime = Int(ceil(Double(chatDNDTime) - NSDate().timeIntervalSince1970))
             
             if let timeString = NSString.mnz_string(fromCallDuration: remainingTime) {
-                let timeLeftFormatString = "%@ left".localized(comment: "Used for displaying the time until DND is active")
+                let timeLeftFormatString = "%@ left".localized()
                 return String(format: timeLeftFormatString, timeString) ;
             }
            
@@ -161,7 +159,7 @@ extension ChatNotificationControl {
 
 extension ChatNotificationControl: MEGARequestDelegate {
     
-    func onRequestFinish(_ api: MEGASdk!, request: MEGARequest!, error: MEGAError!) {
+    func onRequestFinish(_ api: MEGASdk, request: MEGARequest, error: MEGAError) {
         pushNotificationSettings = request.megaPushNotificationSettings
         delegate?.tableView?.reloadData()
         hideProgress()
@@ -207,11 +205,15 @@ extension ChatNotificationControl {
     private func turnOnDND(chatId: Int64, option: DNDTurnOnOption) {
         showProgress()
         
+        guard let pushNotificationSettings = pushNotificationSettings else {
+            return
+        }
+        
         if option == .forever {
-            pushNotificationSettings?.setChatEnabled(false, forChatId: chatId)
+            pushNotificationSettings.setChatEnabled(false, forChatId: chatId)
         } else {
-            let dndTimeInterval = Int64(ceil(NSDate().timeIntervalSince1970 + option.rawValue))
-            pushNotificationSettings?.setChatDndForChatId(chatId, untilTimeStamp: dndTimeInterval)
+            let dndTimeInterval = Int64(ceil(Date().timeIntervalSince1970 + option.rawValue))
+            pushNotificationSettings.setChatDndForChatId(chatId, untilTimeStamp: dndTimeInterval)
         }
         
         MEGASdkManager.sharedMEGASdk()?.setPushNotificationSettings(pushNotificationSettings, delegate: self)
@@ -231,7 +233,7 @@ fileprivate extension UIAlertController {
 // MARK:- String extension.
 
 fileprivate extension String {
-    func localized(comment: String) -> String {
+    func localized(comment: String = "") -> String {
         return NSLocalizedString(self, comment: comment)
     }
 }
