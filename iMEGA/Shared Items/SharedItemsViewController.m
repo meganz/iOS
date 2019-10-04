@@ -1395,6 +1395,10 @@
             [self copyAction:nil];
             break;
             
+        case MegaNodeActionTypeMove:
+            [node mnz_moveInViewController:self];
+            break;
+            
         case MegaNodeActionTypeRename:
             [node mnz_renameNodeInViewController:self];
             break;
