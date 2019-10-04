@@ -1628,6 +1628,12 @@
     }
 }
 
+- (void)contactPickerDidCancel:(CNContactPickerViewController *)picker {
+    if (self.selectedUsersArray.count == 0) {
+        [self removeUsersListSubview];
+    }
+}
+
 #pragma mark - DZNEmptyDataSetSource
 
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
