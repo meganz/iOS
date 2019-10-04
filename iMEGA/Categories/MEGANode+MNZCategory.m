@@ -411,6 +411,17 @@
     [viewController presentViewController:navigationController animated:YES completion:nil];
 }
 
+- (void)mnz_moveInViewController:(UIViewController *)viewController {
+    MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
+    [viewController presentViewController:navigationController animated:YES completion:nil];
+    
+    BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
+    browserVC.selectedNodesArray = @[self];
+    [browserVC setBrowserAction:BrowserActionMove];
+    
+    [viewController setEditing:NO animated:YES];
+}
+
 #pragma mark - File links
 
 - (void)mnz_fileLinkDownloadFromViewController:(UIViewController *)viewController isFolderLink:(BOOL)isFolderLink {
