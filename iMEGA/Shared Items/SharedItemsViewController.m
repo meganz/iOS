@@ -1450,6 +1450,10 @@
             [node mnz_sendToChatInViewController:self];
             break;
             
+        case MegaNodeActionTypeSaveToPhotos:
+            [node mnz_saveToPhotosWithApi:MEGASdkManager.sharedMEGASdk];
+            break;
+            
         default:
             break;
     }
