@@ -1713,7 +1713,6 @@ void uncaughtExceptionHandler(NSException *exception) {
             });
             
             [[MEGASdkManager sharedMEGASdk] getAccountDetails];
-            [self copyDatabasesForExtensions];
             
             break;
         }
@@ -1864,6 +1863,9 @@ void uncaughtExceptionHandler(NSException *exception) {
         [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
         [[MEGASdkManager sharedMEGAChatSdk] logout];
         [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
+    }
+    if (newState == MEGAChatInitOnlineSession) {
+        [self copyDatabasesForExtensions];
     }
 }
 
