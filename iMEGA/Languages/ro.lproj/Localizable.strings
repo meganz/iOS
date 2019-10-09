@@ -61,7 +61,7 @@
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="Ai fost deconectat de pe acest dispozitiv din altă locație";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="MEGA nu se poate conecta securizat prin SSL. S-ar putea să fii pe o rețea WiFi publică cu cerințe suplimentare.";
+"sslUnverified_alertTitle"="MEGA nu se poate conecta securizat prin SSL. S-ar putea să fii pe o rețea Wi-Fi publică cu cerințe suplimentare.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="Conținutul pe care încerci să îl accesezi nu este disponibil pentru acest cont. Te rugăm să încerci să te autentifici cu același cont ca și în clientul web mobil.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
@@ -1951,7 +1951,7 @@
 /* Title of the screen that shows the users with whom the user can share a folder */
 "Share with"="Partajează cu";
 /* Chat Notifications DND: Option that does not deactivate DND automatically */
-"Until I Turn it On Again"="Until I Turn it On Again";
+"Until I Turn it On Again"="Până când le pornesc din nou";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
 "30 minutes"="30 de minute";
 /* Chat Notifications DND: Option that deactivates DND after 1 hour */
@@ -1961,9 +1961,9 @@
 /* Chat Notifications DND: Option that deactivates DND after 24 hours */
 "24 hours"="24 de ore";
 /* Chat Notifications DND: Title bar message for the dnd activate options */
-"Mute chat Notifications for"="Mute chat Notifications for";
+"Mute chat Notifications for"="Amuțește notificările de chat timp de";
 /* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
-"Muted forever"="Amuțit pentru totdeauna";
+"Muted forever"="Amuțite pentru totdeauna";
 /* Chat Notifications DND: DND once activated with timing option, this message will appear below the DND on/off switch with the actual time left to deactivate DND replacing the placeholder below */
 "%@ left"="%@ rămase";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */

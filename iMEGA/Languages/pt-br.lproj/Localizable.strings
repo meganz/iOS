@@ -61,7 +61,7 @@
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="Você foi desconectado deste dispositivo a partir de outro local.";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="O MEGA não consegue se conectar de forma segura por meio de SSL. Você pode estar usando uma rede WiFi pública com requisitos adicionais.";
+"sslUnverified_alertTitle"="Não foi possível conectar-se ao MEGA de forma segura via SSL. Você pode estar usando uma rede Wi-Fi pública com requisitos adicionais.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="O conteúdo que você está tentando acessar não está disponível para esta conta. Por favor, faça login com a mesma conta usada no navegador móvel.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
@@ -1951,20 +1951,20 @@
 /* Title of the screen that shows the users with whom the user can share a folder */
 "Share with"="Compartilhar com";
 /* Chat Notifications DND: Option that does not deactivate DND automatically */
-"Until I Turn it On Again"="Until I Turn it On Again";
+"Until I Turn it On Again"="Até eu ativar novamente";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
-"30 minutes"="30 minutes";
+"30 minutes"="30 minutos";
 /* Chat Notifications DND: Option that deactivates DND after 1 hour */
 "1 hour"="1 hora";
 /* Chat Notifications DND: Option that deactivates DND after 6 hours */
-"6 hours"="6 hours";
+"6 hours"="6 horas";
 /* Chat Notifications DND: Option that deactivates DND after 24 hours */
-"24 hours"="24 hours";
+"24 hours"="24 horas";
 /* Chat Notifications DND: Title bar message for the dnd activate options */
-"Mute chat Notifications for"="Mute chat Notifications for";
+"Mute chat Notifications for"="Silenciar as notificações de chat por";
 /* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
-"Muted forever"="Muted forever";
+"Muted forever"="Silenciado para sempre";
 /* Chat Notifications DND: DND once activated with timing option, this message will appear below the DND on/off switch with the actual time left to deactivate DND replacing the placeholder below */
-"%@ left"="%@ left";
+"%@ left"="%@ restantes";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="Chat Notifications";

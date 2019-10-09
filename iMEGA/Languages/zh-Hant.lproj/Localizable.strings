@@ -61,7 +61,7 @@
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="您已從其他位置登出該設備";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="MEGA無法安全的透過SSL連線，您可能使用了有額外要求的公共Wi-Fi連線。";
+"sslUnverified_alertTitle"="MEGA無法透過SSL安全地連線，您可能在使用有額外要求的公共Wi-Fi。";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="您嘗試存取的內容無法讓此帳戶存取。請試著使用與在手機瀏覽器中同樣的帳戶登入。";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
@@ -1751,7 +1751,7 @@
 /* When a contact sent a contact/friend request */
 "Sent you a contact request"="向您發送了聯絡人邀請";
 /* A notification that the other user cancelled their contact request so it is no longer valid. E.g. user@email.com cancelled their contact request. */
-"Cancelled their contact request"="聯絡人邀請已被刪除";
+"Cancelled their contact request"="取消聯絡人邀請";
 /* A reminder notification to remind the user to respond to the contact request. */
 "Reminder: You have a contact request"="提醒: 您有一個聯絡人邀請";
 /* A notification telling the user that the other user deleted them as a contact. E.g. user@email.com deleted you as a contact. */
@@ -1951,7 +1951,7 @@
 /* Title of the screen that shows the users with whom the user can share a folder */
 "Share with"="與之分享";
 /* Chat Notifications DND: Option that does not deactivate DND automatically */
-"Until I Turn it On Again"="Until I Turn it On Again";
+"Until I Turn it On Again"="直到我再次打開";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
 "30 minutes"="30分鐘";
 /* Chat Notifications DND: Option that deactivates DND after 1 hour */
@@ -1961,7 +1961,7 @@
 /* Chat Notifications DND: Option that deactivates DND after 24 hours */
 "24 hours"="24小時";
 /* Chat Notifications DND: Title bar message for the dnd activate options */
-"Mute chat Notifications for"="Mute chat Notifications for";
+"Mute chat Notifications for"="的聊天通知轉成靜音";
 /* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
 "Muted forever"="永遠靜音";
 /* Chat Notifications DND: DND once activated with timing option, this message will appear below the DND on/off switch with the actual time left to deactivate DND replacing the placeholder below */
