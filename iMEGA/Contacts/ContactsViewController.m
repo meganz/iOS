@@ -27,6 +27,7 @@
 #import "ContactDetailsViewController.h"
 #import "ContactLinkQRViewController.h"
 #import "ContactTableViewCell.h"
+#import "ShareFolderActivity.h"
 #import "ItemListViewController.h"
 #import "MEGA-Swift.h"
 
@@ -488,6 +489,9 @@
                 }
             }
         }
+        if (self.shareFolderActivity != nil) {
+            [self.shareFolderActivity activityDidFinish:YES];
+        }
     } else if (self.contactsMode == ContactsModeFolderSharedWith) {
         void (^completion)(void);
         if (shareType == MEGAShareTypeAccessUnknown) {
@@ -841,7 +845,7 @@
 
 - (void)inviteEmailToShareFolder:(NSString *)email {
     MEGAUser *user = [MEGASdkManager.sharedMEGASdk contactForEmail:email];
-    if (user) {
+    if (user && user.visibility == MEGAUserVisibilityVisible) {
         [self selectUser:user];
     } else {
         [self addItemsToList:@[[ItemListModel.alloc initWithEmail:email]]];
@@ -982,6 +986,10 @@
 }
 
 - (IBAction)cancelAction:(UIBarButtonItem *)sender {
+    if (self.shareFolderActivity != nil) {
+        [self.shareFolderActivity activityDidFinish:YES];
+    }
+    
     if (self.searchController.isActive) {
         self.searchController.active = NO;
     }
