@@ -522,6 +522,10 @@
         case MegaNodeActionTypeRemoveLink:
             [node mnz_removeLink];
             break;
+       
+        case MegaNodeActionTypeSendToChat:
+            [node mnz_sendToChatInViewController:self];
+            break;
             
         default:
             break;
@@ -544,15 +548,21 @@
                     [self currentVersionRemovedOnNodeList:nodeList];
                 } else {
                     if (self.node.mnz_numberOfVersions != 0) {
-                        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationNone];
+                        [self reloadUI];
                     }
                 }
                 break;
                 
             case MEGANodeChangeTypeParent:
                 if (nodeUpdated.handle == self.node.handle) {
-                    self.node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:nodeUpdated.parentHandle];
-                    [self reloadUI];
+                    MEGANode *parentNode = [MEGASdkManager.sharedMEGASdk nodeForHandle:nodeUpdated.parentHandle];
+                    if (parentNode.isFolder) { //Node moved
+                        self.node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:nodeUpdated.handle];
+                        [self reloadUI];
+                    } else { //Node versioned
+                        self.node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:nodeUpdated.parentHandle];
+                        [self reloadUI];
+                    }
                 }
                 break;
                 
