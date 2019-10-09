@@ -3,7 +3,6 @@
 
 #import "DevicePermissionsHelper.h"
 #import "OnboardingView.h"
-#import "UIColor+MNZCategory.h"
 
 @interface OnboardingViewController () <UIScrollViewDelegate>
 

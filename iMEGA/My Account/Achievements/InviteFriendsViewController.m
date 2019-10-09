@@ -9,7 +9,6 @@
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
 #import "NSString+MNZCategory.h"
-#import "UIColor+MNZCategory.h"
 
 #import "HelpModalViewController.h"
 

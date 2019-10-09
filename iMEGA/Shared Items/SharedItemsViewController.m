@@ -93,6 +93,8 @@
     
     self.definesPresentationContext = YES;
     
+    [self updateSelector];
+    
     //White background for the view behind the table view
     self.tableView.backgroundView = UIView.alloc.init;
     
@@ -170,6 +172,12 @@
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateSelector];
+        }
+    }
     
     [self configPreviewingRegistration];
 }
@@ -489,6 +497,22 @@
     [cell configureCellForNode:node delegate:self api:MEGASdkManager.sharedMEGASdk];
     [self configureSelectionForCell:cell atIndexPath:indexPath forNode:node];
     return cell;
+}
+
+- (void)updateSelector {
+    self.selectorView.backgroundColor = [UIColor mnz_mainBarsColorForTraitCollection:self.traitCollection];
+    
+    self.incomingButton.tintColor = self.incomingButton.selected ? [UIColor mnz_redMainForTraitCollection:(self.traitCollection)] : [UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)];
+    self.incomingLabel.textColor = self.incomingButton.selected ? [UIColor mnz_redMainForTraitCollection:(self.traitCollection)] : [UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)];
+    self.incomingLineView.backgroundColor = self.incomingButton.selected ? [UIColor mnz_redMainForTraitCollection:self.traitCollection] : UIColor.mnz_grayCCCCCC;
+    
+    self.outgoingButton.tintColor = self.outgoingButton.selected ? [UIColor mnz_redMainForTraitCollection:(self.traitCollection)] : [UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)];
+    self.outgoingLabel.textColor = self.outgoingButton.selected ? [UIColor mnz_redMainForTraitCollection:(self.traitCollection)] : [UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)];
+    self.outgoingLineView.backgroundColor = self.outgoingButton.selected ? [UIColor mnz_redMainForTraitCollection:self.traitCollection] : UIColor.mnz_grayCCCCCC;
+    
+    self.linksButton.tintColor = self.linksButton.selected ? [UIColor mnz_redMainForTraitCollection:(self.traitCollection)] : [UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)];
+    self.linksLabel.textColor = self.linksButton.selected ? [UIColor mnz_redMainForTraitCollection:(self.traitCollection)] : [UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)];
+    self.linksLineView.backgroundColor = self.linksButton.selected ? [UIColor mnz_redMainForTraitCollection:self.traitCollection] : UIColor.mnz_grayCCCCCC;
 }
 
 #pragma mark - Utils
@@ -825,16 +849,7 @@
     sender.selected = !sender.selected;
     self.outgoingButton.selected = self.linksButton.selected = NO;
 
-    self.incomingButton.tintColor = UIColor.mnz_redMain;
-    self.outgoingButton.tintColor = self.linksButton.tintColor = UIColor.mnz_gray999999;
-    
-    self.incomingLabel.textColor = UIColor.mnz_redMain;
-    self.outgoingLabel.textColor = UIColor.mnz_gray999999;
-    self.linksLabel.textColor = UIColor.mnz_gray999999;
-    
-    self.incomingLineView.backgroundColor = UIColor.mnz_redMain;
-    self.outgoingLineView.backgroundColor = UIColor.mnz_grayCCCCCC;
-    self.linksLineView.backgroundColor = UIColor.mnz_grayCCCCCC;
+    [self updateSelector];
 
     [self disableSearchAndSelection];
     
@@ -850,16 +865,7 @@
     sender.selected = !sender.selected;
     self.incomingButton.selected = self.linksButton.selected = NO;
     
-    self.outgoingButton.tintColor = UIColor.mnz_redMain;
-    self.incomingButton.tintColor = self.linksButton.tintColor = UIColor.mnz_gray999999;
-    
-    self.incomingLabel.textColor = UIColor.mnz_gray999999;
-    self.outgoingLabel.textColor = UIColor.mnz_redMain;
-    self.linksLabel.textColor = UIColor.mnz_gray999999;
-    
-    self.incomingLineView.backgroundColor = UIColor.mnz_grayCCCCCC;
-    self.outgoingLineView.backgroundColor = UIColor.mnz_redMain;
-    self.linksLineView.backgroundColor = UIColor.mnz_grayCCCCCC;
+    [self updateSelector];
     
     [self disableSearchAndSelection];
     
@@ -875,16 +881,7 @@
     sender.selected = !sender.selected;
     self.incomingButton.selected = self.outgoingButton.selected = NO;
     
-    self.linksButton.tintColor = UIColor.mnz_redMain;
-    self.outgoingButton.tintColor = self.incomingButton.tintColor = UIColor.mnz_gray999999;
-    
-    self.incomingLabel.textColor = UIColor.mnz_gray999999;
-    self.outgoingLabel.textColor = UIColor.mnz_gray999999;
-    self.linksLabel.textColor = UIColor.mnz_redMain;
-    
-    self.incomingLineView.backgroundColor = UIColor.mnz_grayCCCCCC;
-    self.outgoingLineView.backgroundColor = UIColor.mnz_grayCCCCCC;
-    self.linksLineView.backgroundColor = UIColor.mnz_redMain;
+    [self updateSelector];
     
     [self disableSearchAndSelection];
     

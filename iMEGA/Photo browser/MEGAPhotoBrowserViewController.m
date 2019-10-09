@@ -26,7 +26,6 @@
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
-#import "UIColor+MNZCategory.h"
 #import "UIDevice+MNZCategory.h"
 
 static const CGFloat GapBetweenPages = 10.0;

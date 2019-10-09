@@ -7,7 +7,6 @@
 
 #import "NSString+MNZCategory.h"
 #import "UICollectionView+MNZCategory.h"
-#import "UIColor+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 
 @interface MEGAPhotoBrowserPickerViewController () <UICollectionViewDataSource, UICollectionViewDelegate>

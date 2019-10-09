@@ -183,6 +183,7 @@
 		5B1AB4AF20E5407300FEDAF9 /* MEGAQuerySignupLinkRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B1AB4AE20E5407200FEDAF9 /* MEGAQuerySignupLinkRequestDelegate.m */; };
 		5B1F74D42126E30C00F09A16 /* AwaitingEmailConfirmationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B1F74D22126E30B00F09A16 /* AwaitingEmailConfirmationView.m */; };
 		5B1F74D52126E30C00F09A16 /* AwaitingEmailConfirmationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B1F74D32126E30B00F09A16 /* AwaitingEmailConfirmationView.xib */; };
+		5B1FEE28231FE4FA001271AF /* AppearanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1FEE27231FE4FA001271AF /* AppearanceManager.swift */; };
 		5B20B00A20E61DDF00511C0F /* MEGALinkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B20B00920E61DDF00511C0F /* MEGALinkManager.m */; };
 		5B20B01120E6300300511C0F /* MEGAGenericRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B20B01020E6300300511C0F /* MEGAGenericRequestDelegate.m */; };
 		5B20F4A21EFA9629007E0A34 /* ChatAttachedNodesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B20F4A11EFA9629007E0A34 /* ChatAttachedNodesViewController.m */; };
@@ -1362,6 +1363,7 @@
 		5B1F74D12126E30B00F09A16 /* AwaitingEmailConfirmationView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AwaitingEmailConfirmationView.h; sourceTree = "<group>"; };
 		5B1F74D22126E30B00F09A16 /* AwaitingEmailConfirmationView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AwaitingEmailConfirmationView.m; sourceTree = "<group>"; };
 		5B1F74D32126E30B00F09A16 /* AwaitingEmailConfirmationView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AwaitingEmailConfirmationView.xib; sourceTree = "<group>"; };
+		5B1FEE27231FE4FA001271AF /* AppearanceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppearanceManager.swift; path = iMEGA/Utils/AppearanceManager.swift; sourceTree = SOURCE_ROOT; };
 		5B20B00920E61DDF00511C0F /* MEGALinkManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGALinkManager.m; sourceTree = "<group>"; };
 		5B20B00B20E61DFB00511C0F /* MEGALinkManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGALinkManager.h; sourceTree = "<group>"; };
 		5B20B00F20E6300300511C0F /* MEGAGenericRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MEGAGenericRequestDelegate.h; path = API/Requests/MEGAGenericRequestDelegate.h; sourceTree = "<group>"; };
@@ -2784,6 +2786,7 @@
 				A819B3401EAFA7E7004592F9 /* ViewControllers */,
 				415226871A692ECC00EC7BB6 /* Helper.h */,
 				415226881A692ECC00EC7BB6 /* Helper.m */,
+				5B1FEE27231FE4FA001271AF /* AppearanceManager.swift */,
 				5B8499071F13DBCE0034A36E /* MEGAAssetsPickerController.h */,
 				5B8499081F13DBCE0034A36E /* MEGAAssetsPickerController.m */,
 				410AD3BF1C883AA900BF939E /* MEGAAVViewController.h */,
@@ -5354,6 +5357,7 @@
 				A86B9F522316D6AB00F35E7A /* FLEXArgumentInputDateView.m in Sources */,
 				A86B9F3B2316D6AB00F35E7A /* FLEXNetworkTransaction.m in Sources */,
 				5BC4912F20AC457F00F7F952 /* SetupTwoFactorAuthenticationTableViewController.m in Sources */,
+				5B1FEE28231FE4FA001271AF /* AppearanceManager.swift in Sources */,
 				417279361DB663FA001AC818 /* UIColor+JSQMessages.m in Sources */,
 				137361931A6664C300B740E8 /* AppDelegate.m in Sources */,
 				83FB1434219AC7DD00418BE6 /* OfflineCollectionViewController.m in Sources */,

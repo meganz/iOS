@@ -21,6 +21,7 @@
 
 @interface TransfersViewController () <UITableViewDelegate, UITableViewDataSource, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGARequestDelegate, MEGATransferDelegate, TransferTableViewCellDelegate>
 
+@property (weak, nonatomic) IBOutlet UIView *selectorView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *pauseBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *resumeBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
@@ -55,6 +56,7 @@
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;
     
+    [self updateSelector];
     [self.allButton setTitle:AMLocalizedString(@"all", @"All") forState:UIControlStateNormal];
     [self.downloadsButton setTitle:AMLocalizedString(@"downloads", @"Downloads") forState:UIControlStateNormal];
     [self.uploadsButton setTitle:AMLocalizedString(@"uploads", @"Uploads") forState:UIControlStateNormal];
@@ -108,6 +110,16 @@
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         [self.tableView reloadEmptyDataSet];
     } completion:nil];
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateSelector];
+        }
+    }
 }
 
 #pragma mark - UITableViewDataSource
@@ -419,6 +431,22 @@
     return numberOfPausedTransfers;
 }
 
+- (void)updateSelector {
+    self.selectorView.backgroundColor = [UIColor mnz_mainBarsColorForTraitCollection:self.traitCollection];
+    
+    [self.allButton setTitleColor:[UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)] forState:UIControlStateNormal];
+    [self.allButton setTitleColor:[UIColor mnz_redMainForTraitCollection:self.traitCollection] forState:UIControlStateSelected];
+    self.allLineView.backgroundColor = self.allButton.selected ? [UIColor mnz_redMainForTraitCollection:self.traitCollection] : UIColor.mnz_grayCCCCCC;
+    
+    [self.downloadsButton setTitleColor:[UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)] forState:UIControlStateNormal];
+    [self.downloadsButton setTitleColor:[UIColor mnz_redMainForTraitCollection:self.traitCollection] forState:UIControlStateSelected];
+    self.downloadsLineView.backgroundColor = self.downloadsButton.selected ? [UIColor mnz_redMainForTraitCollection:self.traitCollection] : UIColor.mnz_grayCCCCCC;
+    
+    [self.uploadsButton setTitleColor:[UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)] forState:UIControlStateNormal];
+    [self.uploadsButton setTitleColor:[UIColor mnz_redMainForTraitCollection:self.traitCollection] forState:UIControlStateSelected];
+    self.uploadsLineView.backgroundColor = self.uploadsButton.selected ? [UIColor mnz_redMainForTraitCollection:self.traitCollection] : UIColor.mnz_grayCCCCCC;
+}
+
 #pragma mark - IBActions
 
 - (IBAction)selectTransfersTouchUpInside:(UIButton *)sender {
@@ -433,24 +461,20 @@
         case AllTransfersSelected:
             self.downloadsButton.selected = self.uploadsButton.selected = NO;
             self.allButton.selected = YES;
-            self.downloadsLineView.backgroundColor = self.uploadsLineView.backgroundColor = UIColor.mnz_grayCCCCCC;
-            self.allLineView.backgroundColor = UIColor.mnz_redMain;
             break;
            
         case DownloadsTransfersSelected:
             self.allButton.selected = self.uploadsButton.selected = NO;
             self.downloadsButton.selected = YES;
-            self.allLineView.backgroundColor = self.uploadsLineView.backgroundColor = UIColor.mnz_grayCCCCCC;
-            self.downloadsLineView.backgroundColor = UIColor.mnz_redMain;
             break;
             
         case UploadsTransfersSelected:
             self.allButton.selected = self.downloadsButton.selected = NO;
             self.uploadsButton.selected = YES;
-            self.allLineView.backgroundColor = self.downloadsLineView.backgroundColor = UIColor.mnz_grayCCCCCC;
-            self.uploadsLineView.backgroundColor = UIColor.mnz_redMain;
             break;
     }
+    
+    [self updateSelector];
     
     if (!self.areTransfersPaused) {
         [self reloadView];

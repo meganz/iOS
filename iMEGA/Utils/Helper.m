@@ -1127,7 +1127,7 @@ static MEGAIndexer *indexer;
 #pragma mark - Utils for UI
 
 + (UILabel *)customNavigationBarLabelWithTitle:(NSString *)title subtitle:(NSString *)subtitle {
-    return [self customNavigationBarLabelWithTitle:title subtitle:subtitle color:[UIColor whiteColor]];
+    return [self customNavigationBarLabelWithTitle:title subtitle:subtitle color:UIColor.mnz_label];
 }
 
 + (UILabel *)customNavigationBarLabelWithTitle:(NSString *)title subtitle:(NSString *)subtitle color:(UIColor *)color {
@@ -1156,10 +1156,6 @@ static MEGAIndexer *indexer;
     searchController.searchBar.delegate = searchBarDelegate;
     searchController.dimsBackgroundDuringPresentation = NO;
     searchController.searchBar.searchBarStyle = UISearchBarStyleMinimal;
-    searchController.searchBar.translucent = NO;
-    searchController.searchBar.backgroundColor = UIColor.whiteColor;
-    searchController.searchBar.barTintColor = UIColor.whiteColor;
-    searchController.searchBar.tintColor = UIColor.mnz_redMain;
     
     return searchController;
 }

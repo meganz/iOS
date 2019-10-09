@@ -11,6 +11,7 @@
 #import "MEGANavigationController.h"
 #import "MEGAProviderDelegate.h"
 #import "MEGAChatCall+MNZCategory.h"
+#import "MEGA-Swift.h"
 #import "MyAccountHallViewController.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGAUserAlertList+MNZCategory.h"
@@ -54,32 +55,22 @@
         [self reloadInsetsForTabBarItem:tabBarItem];
         switch (tabBarItem.tag) {
             case CLOUD:
-                tabBarItem.image = [[UIImage imageNamed:@"cloudDriveIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-                tabBarItem.selectedImage = [UIImage imageNamed:@"cloudDriveSelectedIcon"];
                 tabBarItem.accessibilityLabel = AMLocalizedString(@"cloudDrive", @"Title of the Cloud Drive section");
                 break;
                 
             case PHOTOS:
-                tabBarItem.image = [[UIImage imageNamed:@"cameraUploadsIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-                tabBarItem.selectedImage = [UIImage imageNamed:@"cameraUploadsSelectedIcon"];
                 tabBarItem.accessibilityLabel = AMLocalizedString(@"cameraUploadsLabel", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options");
                 break;
                 
             case CHAT:
-                tabBarItem.image = [[UIImage imageNamed:@"chatIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-                tabBarItem.selectedImage = [UIImage imageNamed:@"chatSelectedIcon"];
                 tabBarItem.accessibilityLabel = AMLocalizedString(@"chat", @"Chat section header");
                 break;
                 
             case SHARES:
-                tabBarItem.image = [[UIImage imageNamed:@"sharedItemsIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-                tabBarItem.selectedImage = [UIImage imageNamed:@"sharedItemsSelectedIcon"];
                 tabBarItem.accessibilityLabel = AMLocalizedString(@"sharedItems", @"Title of Shared Items section");
                 break;
                 
             case MYACCOUNT:
-                tabBarItem.image = [[UIImage imageNamed:@"myAccountIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-                tabBarItem.selectedImage = [UIImage imageNamed:@"myAccountSelectedIcon"];
                 tabBarItem.accessibilityLabel = AMLocalizedString(@"myAccount", @"Title of My Account section. There you can see your account details");
                 break;
         }
@@ -162,12 +153,15 @@
     }
 }
 
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
-}
-
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [AppearanceManager setupAppearance:self.traitCollection];
+            [AppearanceManager invalidateViews];
+        }
+    }
     
     [self configurePhoneImageBadge];
     for (UITabBarItem *tabBarItem in self.tabBar.items) {

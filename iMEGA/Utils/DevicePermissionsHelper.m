@@ -7,7 +7,6 @@
 
 #import "CustomModalAlertViewController.h"
 #import "UIApplication+MNZCategory.h"
-#import "UIColor+MNZCategory.h"
 
 @implementation DevicePermissionsHelper
 

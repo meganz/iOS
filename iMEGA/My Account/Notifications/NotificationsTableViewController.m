@@ -17,7 +17,6 @@
 #import "MEGAUserAlertList+MNZCategory.h"
 #import "NotificationTableViewCell.h"
 #import "SharedItemsViewController.h"
-#import "UIColor+MNZCategory.h"
 
 @interface NotificationsTableViewController () <DZNEmptyDataSetDelegate, DZNEmptyDataSetSource, MEGAGlobalDelegate>
 

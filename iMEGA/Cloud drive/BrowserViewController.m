@@ -123,6 +123,12 @@
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateSelector];
+        }
+    }
+    
     [self configPreviewingRegistration];
 }
 
@@ -213,6 +219,8 @@
 
 - (void)setupDefaultElements {
     if (self.parentBrowser) {
+        [self updateSelector];
+        
         [self.incomingButton setTitle:AMLocalizedString(@"incoming", @"Title of the 'Incoming' Shared Items.") forState:UIControlStateNormal];
         [self.cloudDriveButton setTitle:AMLocalizedString(@"cloudDrive", @"Title of the Cloud Drive section") forState:UIControlStateNormal];
     } else {
@@ -464,6 +472,18 @@
         self.searchController.active = NO;
     }
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)updateSelector {
+    self.selectorView.backgroundColor = [UIColor mnz_mainBarsColorForTraitCollection:self.traitCollection];
+    
+    [self.cloudDriveButton setTitleColor:[UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)] forState:UIControlStateNormal];
+    [self.cloudDriveButton setTitleColor:[UIColor mnz_redMainForTraitCollection:(self.traitCollection)] forState:UIControlStateSelected];
+    self.cloudDriveLineView.backgroundColor = self.cloudDriveButton.selected ? [UIColor mnz_redMainForTraitCollection:self.traitCollection] : UIColor.mnz_grayCCCCCC;
+    
+    [self.incomingButton setTitleColor:[UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)] forState:UIControlStateNormal];
+    [self.incomingButton setTitleColor:[UIColor mnz_redMainForTraitCollection:(self.traitCollection)] forState:UIControlStateSelected];
+    self.incomingLineView.backgroundColor = self.incomingButton.selected ? [UIColor mnz_redMainForTraitCollection:self.traitCollection] : UIColor.mnz_grayCCCCCC;
 }
 
 #pragma mark - IBActions

@@ -124,6 +124,8 @@ static const NSTimeInterval kSearchTimeDelay = .5;
             break;
     }
     
+    [self updateSelector];
+    
     [self determineLayoutView];
     
     if (self.shouldHideSelectorView || self.displayMode != DisplayModeCloudDrive || (([MEGASdkManager.sharedMEGASdk accessLevelForNode:self.parentNode] != MEGAShareTypeAccessOwner) && MEGAReachabilityManager.isReachable)) {
@@ -216,10 +218,6 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     return UIInterfaceOrientationMaskAll;
 }
 
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return self.searchController.isActive ? UIStatusBarStyleDefault : UIStatusBarStyleLightContent;
-}
-
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
     
@@ -230,6 +228,12 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateSelector];
+        }
+    }
     
     [self configPreviewingRegistration];
 }
@@ -1330,6 +1334,18 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     [self.navigationController pushViewController:cloudDriveVC animated:YES];
 }
 
+- (void)updateSelector {
+    self.selectorView.backgroundColor = [UIColor mnz_mainBarsColorForTraitCollection:self.traitCollection];
+    
+    [self.cloudDriveButton setTitleColor:[UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)] forState:UIControlStateNormal];
+    [self.cloudDriveButton setTitleColor:[UIColor mnz_redMainForTraitCollection:(self.traitCollection)] forState:UIControlStateSelected];
+    self.cloudDriveLineView.backgroundColor = self.cloudDriveButton.selected ? [UIColor mnz_redMainForTraitCollection:self.traitCollection] : UIColor.mnz_grayCCCCCC;
+    
+    [self.recentsButton setTitleColor:[UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)] forState:UIControlStateNormal];
+    [self.recentsButton setTitleColor:[UIColor mnz_redMainForTraitCollection:(self.traitCollection)] forState:UIControlStateSelected];
+    self.recentsLineView.backgroundColor = self.recentsButton.selected ? [UIColor mnz_redMainForTraitCollection:self.traitCollection] : UIColor.mnz_grayCCCCCC;
+}
+
 #pragma mark - IBActions
 
 - (IBAction)recentsTouchUpInside:(UIButton *)sender {
@@ -1341,8 +1357,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     sender.selected = !sender.selected;
     self.cloudDriveButton.selected = !self.cloudDriveButton.selected;
     
-    self.recentsLineView.backgroundColor = UIColor.mnz_redMain;
-    self.cloudDriveLineView.backgroundColor = UIColor.mnz_grayCCCCCC;
+    [self updateSelector];
     
     if (self.cdTableView.tableView.isEditing || self.cdCollectionView.collectionView.allowsMultipleSelection) {
         [self setEditMode:NO];
@@ -1385,8 +1400,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     self.recentsButton.selected = !self.recentsButton.selected;
     sender.selected = !sender.selected;
     
-    self.recentsLineView.backgroundColor = UIColor.mnz_grayCCCCCC;
-    self.cloudDriveLineView.backgroundColor = UIColor.mnz_redMain;
+    [self updateSelector];
     
     [self.recentsVC willMoveToParentViewController:nil];
     [self.recentsVC.view removeFromSuperview];

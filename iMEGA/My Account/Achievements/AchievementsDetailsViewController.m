@@ -5,7 +5,6 @@
 
 #import "Helper.h"
 #import "NSString+MNZCategory.h"
-#import "UIColor+MNZCategory.h"
 
 @interface AchievementsDetailsViewController ()
 
