@@ -417,11 +417,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
                                                              style:UIPreviewActionStyleDefault
                                                            handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
                                                                CloudDriveViewController *cloudDriveVC = (CloudDriveViewController *)previewViewController;
-                                                               MEGANavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
-                                                               BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
-                                                               browserVC.selectedNodesArray = @[cloudDriveVC.parentNode];
-                                                               browserVC.browserAction = BrowserActionCopy;
-                                                               [rootViewController presentViewController:navigationController animated:YES completion:nil];
+                                                               [cloudDriveVC.parentNode mnz_copyInViewController:rootViewController];
                                                            }];
     
     NSString *deletePreviewActionTitle;
@@ -530,12 +526,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
                                                                      style:UIPreviewActionStyleDefault
                                                                    handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
                                                                        CloudDriveViewController *cloudDriveVC = (CloudDriveViewController *)previewViewController;
-                                                                       MEGANavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
-                                                                       BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
-                                                                       browserVC.selectedNodesArray = @[cloudDriveVC.parentNode];
-                                                                       browserVC.browserAction = BrowserActionMove;
-                                                                       
-                                                                       [rootViewController presentViewController:navigationController animated:YES completion:nil];
+                                                                       [cloudDriveVC.parentNode mnz_moveInViewController:rootViewController];
                                                                    }];
             
             if (self.displayMode == DisplayModeCloudDrive) {
