@@ -1390,15 +1390,6 @@
             [node mnz_downloadNodeOverwriting:NO];
             break;
             
-        case MegaNodeActionTypeCopy:
-            self.selectedNodesMutableArray = [[NSMutableArray alloc] initWithObjects:node, nil];
-            [self copyAction:nil];
-            break;
-            
-        case MegaNodeActionTypeMove:
-            [node mnz_moveInViewController:self];
-            break;
-            
         case MegaNodeActionTypeRename:
             [node mnz_renameNodeInViewController:self];
             break;
@@ -1452,6 +1443,14 @@
             
         case MegaNodeActionTypeSaveToPhotos:
             [node mnz_saveToPhotosWithApi:MEGASdkManager.sharedMEGASdk];
+            break;
+            
+        case MegaNodeActionTypeMove:
+            [node mnz_moveInViewController:self];
+            break;
+            
+        case MegaNodeActionTypeCopy:
+            [node mnz_copyInViewController:self];
             break;
             
         default:
