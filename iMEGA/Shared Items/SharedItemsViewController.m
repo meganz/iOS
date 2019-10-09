@@ -774,6 +774,14 @@
 
 - (IBAction)shareAction:(UIBarButtonItem *)sender {
     UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:self.selectedNodesMutableArray sender:self.shareBarButtonItem];
+    __weak __typeof__(self) weakSelf = self;
+    activityVC.completionWithItemsHandler = ^(UIActivityType  _Nullable activityType, BOOL completed, NSArray * _Nullable returnedItems, NSError * _Nullable activityError) {
+        if (completed && !activityError) {
+            if ([activityType isEqualToString:MEGAUIActivityTypeRemoveLink]) {
+                [weakSelf setEditing:NO animated:YES];
+            }
+        }
+    };
     [self presentViewController:activityVC animated:YES completion:nil];
 }
 
@@ -1390,11 +1398,6 @@
             [node mnz_downloadNodeOverwriting:NO];
             break;
             
-        case MegaNodeActionTypeCopy:
-            self.selectedNodesMutableArray = [[NSMutableArray alloc] initWithObjects:node, nil];
-            [self copyAction:nil];
-            break;
-            
         case MegaNodeActionTypeRename:
             [node mnz_renameNodeInViewController:self];
             break;
@@ -1444,6 +1447,18 @@
             
         case MegaNodeActionTypeSendToChat:
             [node mnz_sendToChatInViewController:self];
+            break;
+            
+        case MegaNodeActionTypeSaveToPhotos:
+            [node mnz_saveToPhotosWithApi:MEGASdkManager.sharedMEGASdk];
+            break;
+            
+        case MegaNodeActionTypeMove:
+            [node mnz_moveInViewController:self];
+            break;
+            
+        case MegaNodeActionTypeCopy:
+            [node mnz_copyInViewController:self];
             break;
             
         default:
