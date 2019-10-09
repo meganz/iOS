@@ -140,13 +140,7 @@ extension ChatNotificationControl {
             return "Muted forever".localized()
         } else {
             let remainingTime = Int(ceil(Double(chatDNDTime) - NSDate().timeIntervalSince1970))
-            
-            if let timeString = NSString.mnz_string(fromCallDuration: remainingTime) {
-                let timeLeftFormatString = "%@ left".localized()
-                return String(format: timeLeftFormatString, timeString) ;
-            }
-           
-            return nil
+            return remainingTime.timeLeftString()
         }
     }
     
@@ -235,5 +229,32 @@ fileprivate extension UIAlertController {
 fileprivate extension String {
     func localized(comment: String = "") -> String {
         return NSLocalizedString(self, comment: comment)
+    }
+}
+
+// MARK:- Int extension
+
+fileprivate extension Int {
+    func timeLeftString() -> String? {
+        let minutesLeft = (self / 60) % 60;
+        let hoursLeft = (self / 3600)
+        
+        if (hoursLeft > 0) {
+            if (hoursLeft == 1) {
+                return "1 hour left".localized()
+            } else {
+                let timeLeftFormatString = "%d hours left".localized()
+                return String(format: timeLeftFormatString, hoursLeft) ;
+            }
+        } else if (minutesLeft > 0) {
+            if (minutesLeft == 1) {
+                return "1 minute left".localized()
+            } else {
+                let timeLeftFormatString = "%d minutes left".localized()
+                return String(format: timeLeftFormatString, minutesLeft) ;
+            }
+        }
+        
+        return nil
     }
 }
