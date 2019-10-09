@@ -58,10 +58,6 @@
     }
 }
 
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
-}
-
 #pragma mark - Public
 
 - (void)addRightCancelButton {

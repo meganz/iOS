@@ -7,7 +7,6 @@
 #import "NSString+MNZCategory.h"
 
 #import "UIImage+GKContact.h"
-#import "UIColor+MNZCategory.h"
 
 @implementation UIImage (MNZCategory)
 

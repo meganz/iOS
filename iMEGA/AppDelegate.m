@@ -26,6 +26,7 @@
 #import "MEGASdk+MNZCategory.h"
 #import "MEGAStore.h"
 #import "MEGATransfer+MNZCategory.h"
+#import "MEGA-Swift.h"
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "NSURL+MNZCategory.h"
@@ -181,7 +182,7 @@
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
     
-    [self setupAppearance];
+    [AppearanceManager setupAppearance:self.window.traitCollection];
     
     [MEGALinkManager resetLinkAndURLType];
     isFetchNodesDone = NO;
@@ -611,61 +612,6 @@
 }
 
 #pragma mark - Private
-
-- (void)setupAppearance {
-    [UINavigationBar appearanceWhenContainedInInstancesOfClasses:@[MEGANavigationController.class]].titleTextAttributes = @{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:UIColor.whiteColor};
-    [UINavigationBar appearanceWhenContainedInInstancesOfClasses:@[MEGANavigationController.class]].barStyle = UIBarStyleBlack;
-    [UINavigationBar appearanceWhenContainedInInstancesOfClasses:@[MEGANavigationController.class]].barTintColor = UIColor.mnz_redMain;
-    [UINavigationBar appearanceWhenContainedInInstancesOfClasses:@[MEGANavigationController.class]].tintColor = UIColor.whiteColor;
-    [UINavigationBar appearance].translucent = NO;
-
-    //QLPreviewDocument
-    [UINavigationBar appearanceWhenContainedInInstancesOfClasses:@[QLPreviewController.class]].titleTextAttributes = @{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:UIColor.blackColor};
-    [UINavigationBar appearanceWhenContainedInInstancesOfClasses:@[QLPreviewController.class]].barTintColor = UIColor.whiteColor;
-    [UINavigationBar appearanceWhenContainedInInstancesOfClasses:@[QLPreviewController.class]].tintColor = UIColor.mnz_redMain;
-    [UILabel appearanceWhenContainedInInstancesOfClasses:@[QLPreviewController.class]].textColor = UIColor.mnz_redMain;
-    [UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[QLPreviewController.class]].tintColor = UIColor.mnz_redMain;
-    
-    //MEGAAssetsPickerController
-    [UINavigationBar appearanceWhenContainedInInstancesOfClasses:@[MEGAAssetsPickerController.class]].barStyle = UIBarStyleBlack;
-    [UINavigationBar appearanceWhenContainedInInstancesOfClasses:@[MEGAAssetsPickerController.class]].barTintColor = UIColor.mnz_redMain;
-    [UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[MEGAAssetsPickerController.class]].tintColor = UIColor.whiteColor;
-
-    [UISearchBar appearance].translucent = NO;
-    [UISearchBar appearance].backgroundColor = UIColor.mnz_grayFCFCFC;
-    [UITextField appearanceWhenContainedInInstancesOfClasses:@[[UISearchBar class]]].backgroundColor = UIColor.mnz_grayEEEEEE;
-    [UITextField appearanceWhenContainedInInstancesOfClasses:@[[UISearchBar class]]].textColor = UIColor.mnz_black333333;
-    [UITextField appearanceWhenContainedInInstancesOfClasses:@[[UISearchBar class]]].font = [UIFont mnz_SFUIRegularWithSize:17.0f];
-    
-    [[UISegmentedControl appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:13.0f]} forState:UIControlStateNormal];
-    
-    UISwitch.appearance.onTintColor = UIColor.mnz_green00BFA5;
-    
-    [[UIBarButtonItem appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f]} forState:UIControlStateNormal];
-    [UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UIToolbar class]]].tintColor = UIColor.mnz_redMain;
-
-    [UINavigationBar appearance].backIndicatorImage = [UIImage imageNamed:@"backArrow"];
-    [UINavigationBar appearance].backIndicatorTransitionMaskImage = [UIImage imageNamed:@"backArrow"];
-    
-    [UITextField appearance].tintColor = UIColor.mnz_green00BFA5;
-    
-    [UITextView appearance].tintColor = UIColor.mnz_green00BFA5;
-    
-    [UIView appearanceWhenContainedInInstancesOfClasses:@[[UIAlertController class]]].tintColor = UIColor.mnz_redMain;
-    
-    [UIProgressView appearance].tintColor = UIColor.mnz_redMain;
-    
-    [SVProgressHUD setFont:[UIFont mnz_SFUIRegularWithSize:12.0f]];
-    [SVProgressHUD setRingThickness:2.0];
-    [SVProgressHUD setRingNoTextRadius:18.0];
-    [SVProgressHUD setBackgroundColor:UIColor.mnz_grayF7F7F7];
-    [SVProgressHUD setForegroundColor:UIColor.mnz_gray666666];
-    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleCustom];
-    [SVProgressHUD setHapticsEnabled:YES];
-    
-    [SVProgressHUD setSuccessImage:[UIImage imageNamed:@"hudSuccess"]];
-    [SVProgressHUD setErrorImage:[UIImage imageNamed:@"hudError"]];
-}
 
 - (void)beginBackgroundTaskWithName:(NSString *)name {
     MEGALogDebug(@"Begin background task with name: %@", name);

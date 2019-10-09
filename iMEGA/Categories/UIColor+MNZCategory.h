@@ -5,6 +5,13 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus);
 
 @interface UIColor (MNZCategory)
 
+#pragma mark - Objects
+
++ (UIColor *)mnz_mainBarsColorForTraitCollection:(UITraitCollection *)traitCollection;
+
++ (UIColor *)mnz_background;
++ (UIColor *)mnz_label;
+
 #pragma mark - Black
 
 + (UIColor *)mnz_black262626;
@@ -16,8 +23,15 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus);
 
 + (UIColor *)mnz_blue007AFF;
 + (UIColor *)mnz_blue2BA6DE;
++ (UIColor *)mnz_chatBlueForTraitCollection:(UITraitCollection *)traitCollection;
+
 
 #pragma mark - Gray
+
++ (UIColor *)mnz_primaryGrayForTraitCollection:(UITraitCollection *)traitCollection;
++ (UIColor *)mnz_secondaryGrayForTraitCollection:(UITraitCollection *)traitCollection;
++ (UIColor *)mnz_tertiaryGrayForTraitCollection:(UITraitCollection *)traitCollection;
++ (UIColor *)mnz_chatGrayForTraitCollection:(UITraitCollection *)traitCollection;
 
 + (UIColor *)mnz_gray666666;
 + (UIColor *)mnz_gray777777;
@@ -35,6 +49,8 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus);
 #pragma mark - Green
 
 + (UIColor *)mnz_green00897B;
++ (UIColor *)mnz_turquoiseForTraitCollection:(UITraitCollection *)traitCollection;
+
 + (UIColor *)mnz_green00BFA5;
 + (UIColor *)mnz_green13E03C;
 + (UIColor *)mnz_green31B500;
@@ -46,6 +62,8 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus);
 + (UIColor *)mnz_orangeFFD300;
 
 #pragma mark - Red
+
++ (UIColor *)mnz_redMainForTraitCollection:(UITraitCollection *)traitCollection;
 
 + (UIColor *)mnz_redMain;
 + (UIColor *)mnz_redError;

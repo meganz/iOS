@@ -5,6 +5,51 @@
 
 @implementation UIColor (MNZCategory)
 
+#pragma mark - Objects
+
++ (UIColor *)mnz_mainBarsColorForTraitCollection:(UITraitCollection *)traitCollection {
+    if (@available(iOS 13.0, *)) {
+        switch (traitCollection.userInterfaceStyle) {
+            case UIUserInterfaceStyleUnspecified:
+            case UIUserInterfaceStyleLight: {
+                if (traitCollection.accessibilityContrast == UIAccessibilityContrastHigh) {
+                    return UIColor.whiteColor;
+                } else {
+                    return UIColor.mnz_grayF9F9F9;
+                }
+                break;
+            }
+                
+            case UIUserInterfaceStyleDark: {
+                if (traitCollection.accessibilityContrast == UIAccessibilityContrastHigh) {
+                    return UIColor.blackColor;
+                } else {
+                    return [UIColor colorFromHexString:@"121212"];
+                }
+                break;
+            }
+        }
+    } else {
+        return UIColor.mnz_grayF9F9F9;
+    }
+}
+
++ (UIColor *)mnz_background {
+    if (@available(iOS 13.0, *)) {
+        return UIColor.systemBackgroundColor;
+    } else {
+        return UIColor.whiteColor;
+    }
+}
+
++ (UIColor *)mnz_label {
+    if (@available(iOS 13.0, *)) {
+        return UIColor.labelColor;
+    } else {
+        return UIColor.darkTextColor;
+    }
+}
+
 #pragma mark - Black
 
 + (UIColor *)mnz_black262626 {
@@ -25,6 +70,33 @@
 
 #pragma mark - Blue
 
++ (UIColor *)mnz_chatBlueForTraitCollection:(UITraitCollection *)traitCollection {
+    if (@available(iOS 13.0, *)) {
+        switch (traitCollection.userInterfaceStyle) {
+            case UIUserInterfaceStyleUnspecified:
+            case UIUserInterfaceStyleLight: {
+                if (traitCollection.accessibilityContrast == UIAccessibilityContrastHigh) {
+                    return [UIColor colorFromHexString:@"007FB9"];
+                } else {
+                    return [UIColor colorFromHexString:@"009AE0"];
+                }
+                break;
+            }
+                
+            case UIUserInterfaceStyleDark: {
+                if (traitCollection.accessibilityContrast == UIAccessibilityContrastHigh) {
+                    return [UIColor colorFromHexString:@"059DE2"];
+                } else {
+                    return [UIColor colorFromHexString:@"13B2FA"];
+                }
+                break;
+            }
+        }
+    } else {
+        return [UIColor colorFromHexString:@"009AE0"];
+    }
+}
+
 + (UIColor *)mnz_blue007AFF {
     return [UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0];
 }
@@ -34,6 +106,114 @@
 }
 
 #pragma mark - Gray
+
++ (UIColor *)mnz_primaryGrayForTraitCollection:(UITraitCollection *)traitCollection {
+    if (@available(iOS 13.0, *)) {
+        switch (traitCollection.userInterfaceStyle) {
+            case UIUserInterfaceStyleUnspecified:
+            case UIUserInterfaceStyleLight: {
+                if (traitCollection.accessibilityContrast == UIAccessibilityContrastHigh) {
+                    return [UIColor colorFromHexString:@"3D3D3D"];
+                } else {
+                    return [UIColor colorFromHexString:@"515151"];
+                }
+                break;
+            }
+                
+            case UIUserInterfaceStyleDark: {
+                if (traitCollection.accessibilityContrast == UIAccessibilityContrastHigh) {
+                    return [UIColor colorFromHexString:@"E5E5E5"];
+                } else {
+                    return [UIColor colorFromHexString:@"D1D1D1"];
+                }
+                break;
+            }
+        }
+    } else {
+        return [UIColor colorFromHexString:@"515151"];
+    }
+}
+
++ (UIColor *)mnz_secondaryGrayForTraitCollection:(UITraitCollection *)traitCollection {
+    if (@available(iOS 13.0, *)) {
+        switch (traitCollection.userInterfaceStyle) {
+            case UIUserInterfaceStyleUnspecified:
+            case UIUserInterfaceStyleLight: {
+                if (traitCollection.accessibilityContrast == UIAccessibilityContrastHigh) {
+                    return [UIColor colorFromHexString:@"676767"];
+                } else {
+                    return [UIColor colorFromHexString:@"848484"];
+                }
+                break;
+            }
+                
+            case UIUserInterfaceStyleDark: {
+                if (traitCollection.accessibilityContrast == UIAccessibilityContrastHigh) {
+                    return [UIColor colorFromHexString:@"C9C9C9"];
+                } else {
+                    return [UIColor colorFromHexString:@"B5B5B5"];
+                }
+                break;
+            }
+        }
+    } else {
+        return [UIColor colorFromHexString:@"848484"];
+    }
+}
+
++ (UIColor *)mnz_tertiaryGrayForTraitCollection:(UITraitCollection *)traitCollection {
+    if (@available(iOS 13.0, *)) {
+        switch (traitCollection.userInterfaceStyle) {
+            case UIUserInterfaceStyleUnspecified:
+            case UIUserInterfaceStyleLight: {
+                if (traitCollection.accessibilityContrast == UIAccessibilityContrastHigh) {
+                    return [UIColor colorFromHexString:@"949494"];
+                } else {
+                    return [UIColor colorFromHexString:@"BBBBBB"];
+                }
+                break;
+            }
+                
+            case UIUserInterfaceStyleDark: {
+                if (traitCollection.accessibilityContrast == UIAccessibilityContrastHigh) {
+                    return [UIColor colorFromHexString:@"F4F4F4"];
+                } else {
+                    return [UIColor colorFromHexString:@"E2E2E2"];
+                }
+                break;
+            }
+        }
+    } else {
+        return [UIColor colorFromHexString:@"BBBBBB"];
+    }
+}
+
++ (UIColor *)mnz_chatGrayForTraitCollection:(UITraitCollection *)traitCollection {
+    if (@available(iOS 13.0, *)) {
+        switch (traitCollection.userInterfaceStyle) {
+            case UIUserInterfaceStyleUnspecified:
+            case UIUserInterfaceStyleLight: {
+                if (traitCollection.accessibilityContrast == UIAccessibilityContrastHigh) {
+                    return [UIColor colorFromHexString:@"F2F2F2"];
+                } else {
+                    return UIColor.mnz_grayEEEEEE;
+                }
+                break;
+            }
+                
+            case UIUserInterfaceStyleDark: {
+                if (traitCollection.accessibilityContrast == UIAccessibilityContrastHigh) {
+                    return [UIColor colorFromHexString:@"3F3F42"];
+                } else {
+                    return [UIColor colorFromHexString:@"2C2C2E"];
+                }
+                break;
+            }
+        }
+    } else {
+        return UIColor.mnz_grayEEEEEE;
+    }
+}
 
 + (UIColor *)mnz_gray666666 {
     return [UIColor colorWithRed:102.0/255.0 green:102.0/255.0 blue:102.0/255.0 alpha:1.0];
@@ -85,6 +265,33 @@
 
 #pragma mark - Green
 
++ (UIColor *)mnz_turquoiseForTraitCollection:(UITraitCollection *)traitCollection {
+    if (@available(iOS 13.0, *)) {
+        switch (traitCollection.userInterfaceStyle) {
+            case UIUserInterfaceStyleUnspecified:
+            case UIUserInterfaceStyleLight: {
+                if (traitCollection.accessibilityContrast == UIAccessibilityContrastHigh) {
+                    return [UIColor colorFromHexString:@"347467"];
+                } else {
+                    return [UIColor colorFromHexString:@"00A886"];
+                }
+                break;
+            }
+                
+            case UIUserInterfaceStyleDark: {
+                if (traitCollection.accessibilityContrast == UIAccessibilityContrastHigh) {
+                    return [UIColor colorFromHexString:@"00E9B9"];
+                } else {
+                    return [UIColor colorFromHexString:@"00C29A"];
+                }
+                break;
+            }
+        }
+    } else {
+        return [UIColor colorFromHexString:@"00A886"];
+    }
+}
+
 + (UIColor *)mnz_green00897B {
     return [UIColor colorWithRed:0.0f green:0.54 blue:0.48 alpha:1.0f];
 }
@@ -117,6 +324,33 @@
 }
 
 #pragma mark - Red
+
++ (UIColor *)mnz_redMainForTraitCollection:(UITraitCollection *)traitCollection {
+    if (@available(iOS 13.0, *)) {
+        switch (traitCollection.userInterfaceStyle) {
+            case UIUserInterfaceStyleUnspecified:
+            case UIUserInterfaceStyleLight: {
+                if (traitCollection.accessibilityContrast == UIAccessibilityContrastHigh) {
+                    return [UIColor colorFromHexString:@"CE0A11"];
+                } else {
+                    return UIColor.mnz_redMain;
+                }
+                break;
+            }
+                
+            case UIUserInterfaceStyleDark: {
+                if (traitCollection.accessibilityContrast == UIAccessibilityContrastHigh) {
+                    return [UIColor colorFromHexString:@"F95C61"];
+                } else {
+                    return [UIColor colorFromHexString:@"F7363D"];
+                }
+                break;
+            }
+        }
+    } else {
+        return UIColor.mnz_redMain;
+    }
+}
 
 + (UIColor *)mnz_redMain {
     return [UIColor mnz_redF30C14];

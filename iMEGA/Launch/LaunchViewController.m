@@ -3,8 +3,6 @@
 
 #import "MEGASdkManager.h"
 
-#import "UIColor+MNZCategory.h"
-
 @interface LaunchViewController () <MEGARequestDelegate>
 
 @end

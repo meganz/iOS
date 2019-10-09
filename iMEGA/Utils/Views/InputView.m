@@ -1,8 +1,6 @@
 
 #import "InputView.h"
 
-#import "UIColor+MNZCategory.h"
-
 @implementation InputView
 
 #pragma mark - Initialization
