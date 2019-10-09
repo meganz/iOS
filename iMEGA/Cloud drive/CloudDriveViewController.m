@@ -1650,6 +1650,14 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 
 - (IBAction)shareAction:(UIBarButtonItem *)sender {
     UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:self.selectedNodesArray sender:self.shareBarButtonItem];
+    __weak __typeof__(self) weakSelf = self;
+    activityVC.completionWithItemsHandler = ^(UIActivityType  _Nullable activityType, BOOL completed, NSArray * _Nullable returnedItems, NSError * _Nullable activityError) {
+        if (completed && !activityError) {
+            if ([activityType isEqualToString:MEGAUIActivityTypeRemoveLink]) {
+                [weakSelf setEditMode:NO];
+            }
+        }
+    };
     [self presentViewController:activityVC animated:YES completion:nil];
 }
 

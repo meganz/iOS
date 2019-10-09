@@ -25,7 +25,7 @@
 }
 
 - (NSString *)activityType {
-    return @"RemoveLinkActivity";
+    return MEGAUIActivityTypeRemoveLink;
 }
 
 - (NSString *)activityTitle {
@@ -61,6 +61,8 @@
             }
         }
     }
+    
+    [self activityDidFinish:YES];
 }
 
 + (UIActivityCategory)activityCategory {

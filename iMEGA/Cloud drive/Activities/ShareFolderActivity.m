@@ -20,7 +20,7 @@
 }
 
 - (NSString *)activityType {
-    return @"ShareFolderActivity";
+    return MEGAUIActivityTypeShareFolder;
 }
 
 - (NSString *)activityTitle {
