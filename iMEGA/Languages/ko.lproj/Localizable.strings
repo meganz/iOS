@@ -61,7 +61,7 @@
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="다른 위치에서 이 장치가 로그아웃 되었습니다";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="MEGA가 SSL을 통하여 안전하게 연결할 수 없습니다. 추가 요구사항이 있는 공개 WiFi에 연결되어 있을 수 있습니다.";
+"sslUnverified_alertTitle"="MEGA가 SSL을 통하여 안전하게 연결할 수 없습니다. 추가적인 요구사항이 있는 공개 와이파이에 접속했을 수 있습니다.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="접근하려는 항목은 이 계정에서 이용할 수 없습니다. 모바일 웹 클라이언트와 같은 계정으로 로그인하세요.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
@@ -1951,7 +1951,7 @@
 /* Title of the screen that shows the users with whom the user can share a folder */
 "Share with"="다른 사람과 공유";
 /* Chat Notifications DND: Option that does not deactivate DND automatically */
-"Until I Turn it On Again"="Until I Turn it On Again";
+"Until I Turn it On Again"="내가 다시 켜기 전까지";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
 "30 minutes"="30분";
 /* Chat Notifications DND: Option that deactivates DND after 1 hour */
@@ -1961,7 +1961,7 @@
 /* Chat Notifications DND: Option that deactivates DND after 24 hours */
 "24 hours"="24시간";
 /* Chat Notifications DND: Title bar message for the dnd activate options */
-"Mute chat Notifications for"="Mute chat Notifications for";
+"Mute chat Notifications for"="대화 알림 끄기";
 /* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
 "Muted forever"="영구적으로 차단";
 /* Chat Notifications DND: DND once activated with timing option, this message will appear below the DND on/off switch with the actual time left to deactivate DND replacing the placeholder below */
