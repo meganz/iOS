@@ -30,7 +30,7 @@
 }
 
 - (NSString *)activityType {
-    return @"OpenInActivity";
+    return MEGAUIActivityTypeOpenIn;
 }
 
 - (NSString *)activityTitle {
