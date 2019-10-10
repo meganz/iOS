@@ -308,7 +308,7 @@
         self.outSharesForNodeMutableArray = [self outSharesForNode:self.node];
         for (MEGAShare *share in self.outSharesForNodeMutableArray) {
             MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:[share user]];
-            if (user) {
+            if (user && user.visibility == MEGAUserVisibilityVisible) {
                 [self.visibleUsersArray addObject:user];
             } else {
                 [self.pendingShareUsersArray addObject:share];
