@@ -16,8 +16,12 @@
 
 @implementation InitialLaunchViewController
 
+#pragma mark - Lifecycle
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self updateUI];
     
     self.titleLabel.text = AMLocalizedString(@"Setup MEGA", @"Button which triggers the initial setup");
     self.descriptionLabel.text = AMLocalizedString(@"To fully take advantage of your MEGA account we need to ask you some permissions.", @"Detailed explanation of why the user should give some permissions to MEGA");
@@ -45,6 +49,16 @@
     }
     
     return UIInterfaceOrientationMaskAll;
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateUI];
+        }
+    }
 }
 
 #pragma mark - Private
@@ -80,6 +94,20 @@
     self.descriptionLabel.frame = descriptionFrame;
 }
 
+- (void)updateUI {
+    self.view.backgroundColor = UIColor.mnz_background;
+    
+    self.descriptionLabel.textColor = [UIColor mnz_basicButtonTextColorForTraitCollection:self.traitCollection];
+    
+    self.setupButton.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
+    [self.setupButton setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
+    self.setupButton.layer.shadowColor = UIColor.blackColor.CGColor;
+    
+    self.skipButton.backgroundColor = [UIColor mnz_basicButtonForTraitCollection:self.traitCollection];
+    [self.skipButton setTitleColor:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection]  forState:UIControlStateNormal];
+    self.skipButton.layer.shadowColor = UIColor.blackColor.CGColor;
+}
+
 #pragma mark - IBActions
 
 - (IBAction)setupButtonPressed:(UIButton *)sender {
@@ -87,6 +115,9 @@
     setupVC.completion = ^{
         [self.delegate setupFinished];
     };
+    if (@available(iOS 13.0, *)) {
+        setupVC.modalPresentationStyle = UIModalPresentationFullScreen;
+    }
     
     [self presentViewController:setupVC animated:NO completion:^{
         self.titleLabel.hidden = self.descriptionLabel.hidden = YES;
