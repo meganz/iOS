@@ -27,19 +27,20 @@
     return onboardingViewController;
 }
 
+#pragma mark - Lifecycle
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self updateUI];
+    
     switch (self.type) {
         case OnboardingTypeDefault:
-            self.pageControl.currentPageIndicatorTintColor = UIColor.mnz_redMain;
             [self.pageControl addTarget:self action:@selector(pageControlValueChanged) forControlEvents:UIControlEventValueChanged];
             
             [self.primaryButton setTitle:AMLocalizedString(@"createAccount", @"Button title which triggers the action to create a MEGA account") forState:UIControlStateNormal];
-            self.primaryButton.backgroundColor = UIColor.mnz_redMain;
             
             [self.secondaryButton setTitle:AMLocalizedString(@"login", @"Button title which triggers the action to login in your MEGA account") forState:UIControlStateNormal];
-            [self.secondaryButton setTitleColor:UIColor.mnz_redMain forState:UIControlStateNormal];
             
             if (self.scrollView.subviews.firstObject.subviews.count == 4) {
                 OnboardingView *onboardingViewEncryption = self.scrollView.subviews.firstObject.subviews.firstObject;
@@ -59,10 +60,8 @@
             self.pageControl.hidden = YES;
             
             [self.primaryButton setTitle:AMLocalizedString(@"Allow Access", @"Button which triggers a request for a specific permission, that have been explained to the user beforehand") forState:UIControlStateNormal];
-            self.primaryButton.backgroundColor = UIColor.mnz_green00BFA5;
             
             [self.secondaryButton setTitle:AMLocalizedString(@"notNow", nil) forState:UIControlStateNormal];
-            [self.secondaryButton setTitleColor:UIColor.mnz_green899B9C forState:UIControlStateNormal];
             
             if (self.scrollView.subviews.firstObject.subviews.count == 4) {
                 [self.scrollView.subviews.firstObject.subviews.lastObject removeFromSuperview];
@@ -104,6 +103,16 @@
 
 - (BOOL)prefersStatusBarHidden {
     return YES;
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateUI];
+        }
+    }
 }
 
 #pragma mark - Rotation
@@ -148,6 +157,22 @@
     } else {
         [self dismissViewControllerAnimated:YES completion:self.completion];
     }
+}
+
+- (void)updateUI {
+    self.view.backgroundColor = self.scrollView.backgroundColor = UIColor.mnz_background;
+    
+    self.pageControl.currentPageIndicatorTintColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
+    self.pageControl.pageIndicatorTintColor = [UIColor mnz_tertiaryGrayForTraitCollection:self.traitCollection];
+    self.pageControl.backgroundColor = UIColor.mnz_background;
+    
+    self.primaryButton.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
+    [self.primaryButton setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
+    self.primaryButton.layer.shadowColor = UIColor.blackColor.CGColor;
+    
+    self.secondaryButton.backgroundColor = [UIColor mnz_basicButtonForTraitCollection:self.traitCollection];
+    [self.secondaryButton setTitleColor:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection]  forState:UIControlStateNormal];
+    self.secondaryButton.layer.shadowColor = UIColor.blackColor.CGColor;
 }
 
 #pragma mark - Targets
