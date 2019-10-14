@@ -260,6 +260,8 @@
         if ([sharedUserDefaults boolForKey:@"useHttpsOnly"]) {
             [[MEGASdkManager sharedMEGASdk] useHttpsOnly:YES];
         }
+        
+        [CameraUploadManager enableAdvancedSettingsForUpgradingUserIfNeeded];
     } else {
         // Resume ephemeral account
         self.window.rootViewController = [OnboardingViewController instanciateOnboardingWithType:OnboardingTypeDefault];
