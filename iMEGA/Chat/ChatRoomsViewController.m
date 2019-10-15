@@ -48,12 +48,14 @@
 @property (assign, nonatomic) BOOL isArchivedChatsRowVisible;
 @property (assign, nonatomic) BOOL isScrollAtTop;
 
-@property (weak, nonatomic) IBOutlet UIButton *activeCallButton;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *activeCallTopConstraint;
+@property (weak, nonatomic) IBOutlet UIButton *topBannerButton;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topBannerButtonTopConstraint;
 @property (strong, nonatomic) NSTimer *timer;
 @property (strong, nonatomic) NSDate *baseDate;
 @property (assign, nonatomic) NSInteger initDuration;
 @property (strong, nonatomic) MEGAChatRoom *chatRoomOnGoingCall;
+
+@property (nonatomic, getter=isReconnecting) BOOL reconnecting;
 
 @end
 
@@ -165,13 +167,14 @@
     if ((chatRoomIDsWithCallInProgress.size > 0) && MEGAReachabilityManager.isReachable) {
         self.chatRoomOnGoingCall = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:[chatRoomIDsWithCallInProgress megaHandleAtIndex:0]];
         
-        if (self.activeCallTopConstraint.constant == -44) {
+        if (self.topBannerButtonTopConstraint.constant == -44) {
             MEGAChatCall *call = [MEGASdkManager.sharedMEGAChatSdk chatCallForChatId:self.chatRoomOnGoingCall.chatId];
-            [self showActiveCallButton:call];
+            [self showTopBannerButton:call];
+            [self configureTopBannerButtonForInProgressCall:call];
         }
         
-        if (!self.chatRoomOnGoingCall && self.activeCallTopConstraint.constant == 0) {
-            [self hideActiveCallButton];
+        if (!self.chatRoomOnGoingCall && self.topBannerButtonTopConstraint.constant == 0) {
+            [self hideTopBannerButton];
         }
     }
 }
@@ -664,37 +667,63 @@
     return cell;
 }
 
-- (void)showActiveCallButton:(MEGAChatCall *)call {
+#pragma mark - TopBannerButton
+
+- (void)showTopBannerButton:(MEGAChatCall *)call {
+    if (self.topBannerButton.hidden) {
+         self.topBannerButton.hidden = NO;
+           [UIView animateWithDuration:.5f animations:^ {
+               self.topBannerButtonTopConstraint.constant = 0;
+               self.tableView.contentInset = UIEdgeInsetsMake(44, 0, 0, 0);
+               self.tableView.contentOffset = CGPointZero;
+               [self.view layoutIfNeeded];
+           } completion:nil];
+    }
+}
+
+- (void)hideTopBannerButton {
+    if (!self.topBannerButton.hidden) {
+         [UIView animateWithDuration:.5f animations:^ {
+               self.topBannerButtonTopConstraint.constant = -44;
+               self.tableView.contentInset = UIEdgeInsetsZero;
+               [self.tableView setContentOffset:CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame))];
+               [self.view layoutIfNeeded];
+           } completion:^(BOOL finished) {
+               self.topBannerButton.hidden = YES;
+           }];
+    }
+}
+
+- (void)setTopBannerButtonTitle:(NSString *)title color:(UIColor *)color {
+    [self.topBannerButton setTitle:title forState:UIControlStateNormal];
+    self.topBannerButton.backgroundColor = color;
+}
+
+- (void)initTimerForCall:(MEGAChatCall *)call {
     self.initDuration = call.duration;
     self.baseDate = [NSDate date];
-    [self updateDuration];
-    self.timer = [NSTimer timerWithTimeInterval:1.0f target:self selector:@selector(updateDuration) userInfo:nil repeats:YES];
-    [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
-    self.activeCallButton.hidden = NO;
-    [UIView animateWithDuration:.5f animations:^ {
-        self.activeCallTopConstraint.constant = 0;
-        self.tableView.contentInset = UIEdgeInsetsMake(44, 0, 0, 0);
-        self.tableView.contentOffset = CGPointZero;
-        [self.view layoutIfNeeded];
-    } completion:nil];
+    if (!self.timer.isValid) {
+        [self updateDuration];
+        self.timer = [NSTimer timerWithTimeInterval:1.0f target:self selector:@selector(updateDuration) userInfo:nil repeats:YES];
+        [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
+    }
+    self.reconnecting = NO;
 }
-
 - (void)updateDuration {
-    NSTimeInterval interval = ([NSDate date].timeIntervalSince1970 - self.baseDate.timeIntervalSince1970 + self.initDuration);
-    [self.activeCallButton setTitle:[NSString stringWithFormat:AMLocalizedString(@"Touch to return to call %@", @"Message shown in a chat room for a group call in progress displaying the duration of the call"), [NSString mnz_stringFromTimeInterval:interval]] forState:UIControlStateNormal];
+    if (!self.isReconnecting) {
+        NSTimeInterval interval = ([NSDate date].timeIntervalSince1970 - self.baseDate.timeIntervalSince1970 + self.initDuration);
+        [self setTopBannerButtonTitle:[NSString stringWithFormat:AMLocalizedString(@"Touch to return to call %@", @"Message shown in a chat room for a group call in progress displaying the duration of the call"), [NSString mnz_stringFromTimeInterval:interval]] color:UIColor.mnz_green00BFA5];
+    }
 }
 
-- (void)hideActiveCallButton {
-    [UIView animateWithDuration:.5f animations:^ {
-        self.activeCallTopConstraint.constant = -44;
-        self.tableView.contentInset = UIEdgeInsetsZero;
-        [self.tableView setContentOffset:CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame))];
-        [self.view layoutIfNeeded];
-    } completion:^(BOOL finished) {
-        self.activeCallButton.hidden = YES;
-    }];
-    [self.timer invalidate];
+- (void)configureTopBannerButtonForInProgressCall:(MEGAChatCall *)call {
+    if (self.isReconnecting) {
+        [self setTopBannerButtonTitle:AMLocalizedString(@"You are back!", @"Title shown when the user reconnect in a call.") color:UIColor.mnz_green00BFA5];
+    }
+    [self initTimerForCall:call];
 }
+
+#pragma mark - IBActions
 
 - (IBAction)joinActiveCall:(id)sender {
     [self.timer invalidate];
@@ -1165,13 +1194,6 @@
 
 - (void)onChatCallUpdate:(MEGAChatSdk *)api call:(MEGAChatCall *)call {
     MEGALogDebug(@"onChatCallUpdate %@", call);
-    
-    if (call.chatId == self.chatRoomOnGoingCall.chatId) {
-        if (call.status == MEGAChatCallStatusTerminatingUserParticipation) {
-            self.chatRoomOnGoingCall = nil;
-            [self hideActiveCallButton];
-        }
-    }
 
     switch (call.status) {
         case MEGAChatCallStatusUserNoPresent:
@@ -1180,16 +1202,35 @@
             if ([self.tableView.indexPathsForVisibleRows containsObject:indexPath]) {
                 [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
             }
+            break;
         }
+            
+        case MEGAChatConnectionInProgress:
+            if (!self.chatRoomOnGoingCall) {
+                self.chatRoomOnGoingCall = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:call.chatId];
+            }
             break;
             
         case MEGAChatCallStatusJoining:
-            [self showActiveCallButton:call];
+            [self showTopBannerButton:call];
+            [self configureTopBannerButtonForInProgressCall:call];
             break;
             
         case MEGAChatCallStatusReconnecting:
-            [self hideActiveCallButton];
+            self.reconnecting = YES;
+            [self setTopBannerButtonTitle:AMLocalizedString(@"Reconnecting...", @"Title shown when the user lost the connection in a call, and the app will try to reconnect the user again.") color:UIColor.mnz_orangeFFA500];
             break;
+            
+        case MEGAChatCallStatusDestroyed: {
+            [self.timer invalidate];
+            self.chatRoomOnGoingCall = nil;
+            [self hideTopBannerButton];
+            NSIndexPath *indexPath = [self.chatIdIndexPathDictionary objectForKey:@(call.chatId)];
+            if ([self.tableView.indexPathsForVisibleRows containsObject:indexPath]) {
+                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+            }
+            break;
+        }
             
         default:
             break;
