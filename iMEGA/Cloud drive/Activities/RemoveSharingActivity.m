@@ -23,7 +23,7 @@
 }
 
 - (NSString *)activityType {
-    return @"RemoveSharingActivity";
+    return MEGAUIActivityTypeRemoveSharing;
 }
 
 - (NSString *)activityTitle {

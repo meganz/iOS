@@ -1,7 +1,6 @@
 
 #import "NodesFetchListenerOperation.h"
 #import "CameraUploadManager.h"
-#import "MEGAConstants.h"
 
 @implementation NodesFetchListenerOperation
 

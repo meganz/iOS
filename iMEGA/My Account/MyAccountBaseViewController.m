@@ -78,6 +78,7 @@
     UIAlertAction *myCodeAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"myCode", @"Title for view that displays the QR code of the user. String as short as possible.") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         ContactLinkQRViewController *contactLinkVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactLinkQRViewControllerID"];
         contactLinkVC.scanCode = NO;
+        contactLinkVC.modalPresentationStyle = UIModalPresentationFullScreen;
         [self presentViewController:contactLinkVC animated:YES completion:nil];
     }];
     [myCodeAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
@@ -150,9 +151,13 @@
 
 - (void)showImagePickerForSourceType:(UIImagePickerControllerSourceType)sourceType {
     MEGAImagePickerController *imagePickerController = [[MEGAImagePickerController alloc] initToChangeAvatarWithSourceType:sourceType];
-    imagePickerController.modalPresentationStyle = UIModalPresentationPopover;
-    imagePickerController.popoverPresentationController.sourceView = self.view;
-    imagePickerController.popoverPresentationController.sourceRect = self.avatarImageView.frame;
+    
+    if (UIDevice.currentDevice.userInterfaceIdiom == UIUserInterfaceIdiomPad
+        && sourceType != UIImagePickerControllerSourceTypeCamera) {
+        imagePickerController.modalPresentationStyle = UIModalPresentationPopover;
+        imagePickerController.popoverPresentationController.sourceView = self.view;
+        imagePickerController.popoverPresentationController.sourceRect = self.avatarImageView.frame;
+    }
     
     [self presentViewController:imagePickerController animated:YES completion:nil];
 }

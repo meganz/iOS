@@ -13,7 +13,11 @@
 - (NSString *)downloadsDirectory;
 - (NSString *)uploadsDirectory;
 
-#pragma mark - Remove files and folders
+#pragma mark - Manage files and folders
+
+- (unsigned long long)mnz_sizeOfFolderAtPath:(NSString *)path;
+
+- (unsigned long long)mnz_groupSharedDirectorySize;
 
 - (void)mnz_removeItemAtPath:(NSString *)path;
 - (void)mnz_removeFolderContentsAtPath:(NSString *)folderPath;
