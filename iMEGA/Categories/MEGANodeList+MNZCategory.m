@@ -118,20 +118,7 @@
     return shouldProcessOnNodesUpdate;
 }
 
-- (BOOL)mnz_shouldProcessOnNodesUpdateInRubbishBin {
-    BOOL shouldProcessOnNodesUpdate = NO;
-    
-    NSArray *nodesUpdateArray = self.mnz_nodesArrayFromNodeList;
-    for (MEGANode *nodeUpdated in nodesUpdateArray) {
-        if ([nodeUpdated hasChangedType:MEGANodeChangeTypeRemoved] || [nodeUpdated hasChangedType:MEGANodeChangeTypeParent]) {
-            shouldProcessOnNodesUpdate = YES;
-        }
-    }
-    
-    return shouldProcessOnNodesUpdate;
-}
-
-- (BOOL)mnz_shouldProcessOnNodesUpdateInSharedForNodes:(NSArray *)nodesArray {
+- (BOOL)mnz_shouldProcessOnNodesUpdateInSharedForNodes:(NSArray<MEGANode *> *)nodesArray itemSelected:(NSInteger)itemSelected {
     BOOL shouldProcessOnNodesUpdate = NO;
     
     NSMutableDictionary *sharedNodesMutableDictionary = NSMutableDictionary.new;
@@ -141,6 +128,28 @@
     
     NSArray *nodesUpdateArray = self.mnz_nodesArrayFromNodeList;
     for (MEGANode *nodeUpdate in nodesUpdateArray) {
+        switch (itemSelected) {
+            case 0: {
+                if (nodeUpdate.isInShare) {
+                    return YES;
+                }
+                break;
+            }
+            case 1: {
+                if (nodeUpdate.isOutShare) {
+                    return YES;
+                }
+                break;
+            }
+            case 2: {
+                if ([nodeUpdate hasChangedType:MEGANodeChangeTypePublicLink]) {
+                    return YES;
+                }
+                
+                break;
+            }
+        }
+        
         if ([sharedNodesMutableDictionary objectForKey:nodeUpdate.base64Handle]) {
             shouldProcessOnNodesUpdate = YES;
             break;

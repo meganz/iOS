@@ -1326,7 +1326,15 @@
 #pragma mark - MEGAGlobalDelegate
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
-    if ([nodeList mnz_shouldProcessOnNodesUpdateInSharedForNodes:self.incomingButton.selected ? self.incomingNodesMutableArray : self.outgoingNodesMutableArray]) {
+    NSInteger itemSelected;
+    if (self.incomingButton.selected) {
+        itemSelected = 0;
+    } else if (self.outgoingButton.selected) {
+        itemSelected = 1;
+    } else {
+        itemSelected = 2;
+    }
+    if ([nodeList mnz_shouldProcessOnNodesUpdateInSharedForNodes:self.incomingButton.selected ? self.incomingNodesMutableArray : self.outgoingNodesMutableArray itemSelected:itemSelected]) {
         [self reloadUI];
     }
 }
