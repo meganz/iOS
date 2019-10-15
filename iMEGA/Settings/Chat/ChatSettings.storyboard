@@ -98,10 +98,55 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection id="vTY-TS-RSp" userLabel="CHAT">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="DXK-8r-sx5" userLabel="Chat Table View Cell">
+                                        <rect key="frame" x="0.0" y="194" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="DXK-8r-sx5" id="uoV-2J-6Ii">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Do Not Disturb" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NnB-KH-a3D">
+                                                    <rect key="frame" x="16" y="12" width="119.5" height="20"/>
+                                                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
+                                                    <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="L2z-sU-BH0">
+                                                    <rect key="frame" x="310" y="6.5" width="51" height="31"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="49" id="nSj-Ke-o3W"/>
+                                                    </constraints>
+                                                    <color key="onTintColor" red="0.0" green="0.74901960779999999" blue="0.64705882349999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <connections>
+                                                        <action selector="dndSwitchValueChanged:" destination="er2-Fn-lfg" eventType="touchUpInside" id="sN0-L7-zPU"/>
+                                                    </connections>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="NnB-KH-a3D" firstAttribute="leading" secondItem="uoV-2J-6Ii" secondAttribute="leadingMargin" id="6zQ-d3-MVe"/>
+                                                <constraint firstItem="NnB-KH-a3D" firstAttribute="centerY" secondItem="uoV-2J-6Ii" secondAttribute="centerY" id="8re-Me-rXn"/>
+                                                <constraint firstItem="L2z-sU-BH0" firstAttribute="centerY" secondItem="uoV-2J-6Ii" secondAttribute="centerY" id="Qny-ne-RHV"/>
+                                                <constraint firstItem="L2z-sU-BH0" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="NnB-KH-a3D" secondAttribute="trailing" constant="8" id="UWE-s5-iZD"/>
+                                                <constraint firstItem="NnB-KH-a3D" firstAttribute="leading" secondItem="uoV-2J-6Ii" secondAttribute="leadingMargin" id="dyb-r9-F2J"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="L2z-sU-BH0" secondAttribute="trailing" id="ecQ-di-UVG"/>
+                                                <constraint firstItem="L2z-sU-BH0" firstAttribute="trailing" secondItem="uoV-2J-6Ii" secondAttribute="trailingMargin" id="r5a-CU-8LC"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="dyb-r9-F2J"/>
+                                                    <exclude reference="r5a-CU-8LC"/>
+                                                </mask>
+                                            </variation>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                             <tableViewSection footerTitle="Enhance the MEGAchat experience. URL content will be retrieved without end-to-end encryption." id="vGa-mh-a18" userLabel="RICH PREVIEWS">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="cL9-c1-YGJ" userLabel="Use mobile data Table View Cell">
-                                        <rect key="frame" x="0.0" y="194" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="273.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="cL9-c1-YGJ" id="IfR-nI-PY0">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -146,7 +191,7 @@
                             <tableViewSection id="ehf-F0-uHn" userLabel="VIDEO QUALITY">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="PvF-TJ-KqG" detailTextLabel="waA-RD-zxW" style="IBUITableViewCellStyleValue1" id="crP-PW-TFd" userLabel="Video quality Table View Cell">
-                                        <rect key="frame" x="0.0" y="302" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="381.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="crP-PW-TFd" id="3H2-oO-cLL">
                                             <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
@@ -186,6 +231,8 @@
                     <connections>
                         <outlet property="chatLabel" destination="FY1-wX-1My" id="EfD-Gu-OjV"/>
                         <outlet property="chatSwitch" destination="8ys-wU-1hr" id="1l9-KQ-PEE"/>
+                        <outlet property="doNotDisturbLabel" destination="NnB-KH-a3D" id="EBx-3S-iKE"/>
+                        <outlet property="doNotDisturbSwitch" destination="L2z-sU-BH0" id="nlX-mG-NLy"/>
                         <outlet property="richPreviewsLabel" destination="fkD-bH-uof" id="dsH-N0-b3O"/>
                         <outlet property="richPreviewsSwitch" destination="bKk-pd-RXW" id="5kK-zG-Npw"/>
                         <outlet property="statusLabel" destination="dmC-l2-KSe" id="eps-kf-BPw"/>
