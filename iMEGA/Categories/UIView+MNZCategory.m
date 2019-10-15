@@ -41,4 +41,20 @@
     return tapGesture;
 }
 
+- (BOOL)recursivelyFindSubview:(UIView *)view {
+    __block BOOL viewFound = NO;
+    [self.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull subview,
+                                                NSUInteger idx,
+                                                BOOL * _Nonnull stop) {
+        if (subview == view) {
+            viewFound = YES;
+            *stop = YES;
+        } else if (subview.subviews.count > 0) {
+            viewFound = [subview recursivelyFindSubview:view];
+        }
+    }];
+    
+    return viewFound;
+}
+
 @end
