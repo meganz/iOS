@@ -22,6 +22,7 @@
 #import "LayoutView.h"
 #import "NodeCollectionViewCell.h"
 #import "OfflineTableViewCell.h"
+#import "UIViewController+MNZCategory.h"
 
 static NSString *kFileName = @"kFileName";
 static NSString *kIndex = @"kIndex";
@@ -43,7 +44,6 @@ static NSString *kisDirectory = @"kisDirectory";
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *activityBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *deleteBarButtonItem;
-@property (nonatomic) id<UIViewControllerPreviewing> previewingContext;
 
 @property (nonatomic, strong) NSMutableArray *offlineMultimediaFiles;
 @property (nonatomic, strong) NSMutableArray *offlineItems;
@@ -82,6 +82,10 @@ static NSString *kisDirectory = @"kisDirectory";
     self.searchController.delegate = self;
     
     self.moreBarButtonItem.accessibilityLabel = AMLocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
+    
+    if (@available(iOS 13.0, *)) {
+        [self configPreviewingRegistration];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -93,9 +97,9 @@ static NSString *kisDirectory = @"kisDirectory";
     [[MEGASdkManager sharedMEGASdkFolder] retryPendingConnections];
     
     // If the user has activated the logs, then they are imported to the offline section from the shared sandbox:
-    if ([[[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"] boolForKey:@"logging"]) {
+    if ([[NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier] boolForKey:@"logging"]) {
         NSFileManager *fileManager = [NSFileManager defaultManager];
-        NSString *logsPath = [[[fileManager containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"] URLByAppendingPathComponent:@"logs"] path];
+        NSString *logsPath = [[[fileManager containerURLForSecurityApplicationGroupIdentifier:MEGAGroupIdentifier] URLByAppendingPathComponent:MEGAExtensionLogsFolder] path];
         if ([fileManager fileExistsAtPath:logsPath]) {
             NSString *documentProviderLog = @"MEGAiOS.docExt.log";
             NSString *fileProviderLog = @"MEGAiOS.fileExt.log";
@@ -148,16 +152,7 @@ static NSString *kisDirectory = @"kisDirectory";
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
-    if ([self.traitCollection respondsToSelector:@selector(forceTouchCapability)]) {
-        if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) {
-            if (!self.previewingContext) {
-                self.previewingContext = [self registerForPreviewingWithDelegate:self sourceView:self.view];
-            }
-        } else {
-            [self unregisterForPreviewingWithContext:self.previewingContext];
-            self.previewingContext = nil;
-        }
-    }
+    [self configPreviewingRegistration];
 }
 
 - (void)willTransitionToTraitCollection:(UITraitCollection *)newCollection withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
@@ -400,6 +395,8 @@ static NSString *kisDirectory = @"kisDirectory";
         }
     }
     
+    self.moreBarButtonItem.enabled = self.offlineSortedItems.count > 0;
+
     [self updateNavigationBarTitle];
     
     [self reloadData];

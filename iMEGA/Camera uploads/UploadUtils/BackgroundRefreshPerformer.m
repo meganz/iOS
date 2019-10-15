@@ -4,7 +4,6 @@
 #import "CameraUploadManager+Settings.h"
 #import "CameraScanner.h"
 #import "CameraUploadRecordManager.h"
-#import "MEGAConstants.h"
 
 static const NSTimeInterval BackgroundRefreshMaximumDuration = 25;
 static const NSTimeInterval BackgroundRefreshDurationTolerance = 2;

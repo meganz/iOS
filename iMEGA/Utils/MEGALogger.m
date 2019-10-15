@@ -31,7 +31,7 @@ static MEGALogger *_megaLogger = nil;
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"logging"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
-    [[[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"] setBool:YES forKey:@"logging"];
+    [[NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier] setBool:YES forKey:@"logging"];
     
     NSString *version = [NSString stringWithFormat:@"%@ (%@)", [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"], [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"]];
     NSString *systemVersion = [[UIDevice currentDevice] systemVersion];
@@ -48,7 +48,7 @@ static MEGALogger *_megaLogger = nil;
     [self stopLoggingToFile:[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"MEGAiOS.shareExt.log"]];
     // Also remove logs in the shared sandbox:
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSString *logsPath = [[[fileManager containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"] URLByAppendingPathComponent:@"logs"] path];
+    NSString *logsPath = [[[fileManager containerURLForSecurityApplicationGroupIdentifier:MEGAGroupIdentifier] URLByAppendingPathComponent:MEGAExtensionLogsFolder] path];
     [self stopLoggingToFile:[logsPath stringByAppendingPathComponent:@"MEGAiOS.docExt.log"]];
     [self stopLoggingToFile:[logsPath stringByAppendingPathComponent:@"MEGAiOS.fileExt.log"]];
     [self stopLoggingToFile:[logsPath stringByAppendingPathComponent:@"MEGAiOS.shareExt.log"]];
@@ -61,7 +61,7 @@ static MEGALogger *_megaLogger = nil;
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"logging"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
-    NSUserDefaults *sharedUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"];
+    NSUserDefaults *sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];
     [sharedUserDefaults setBool:NO forKey:@"logging"];
     [sharedUserDefaults synchronize];
 }
