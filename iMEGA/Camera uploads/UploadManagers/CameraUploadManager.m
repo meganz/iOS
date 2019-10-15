@@ -5,7 +5,6 @@
 #import "MEGASdkManager.h"
 #import "UploadOperationFactory.h"
 #import "AttributeUploadManager.h"
-#import "MEGAConstants.h"
 #import "CameraUploadManager+Settings.h"
 #import "UploadRecordsCollator.h"
 #import "BackgroundUploadMonitor.h"
@@ -91,6 +90,10 @@ static const NSUInteger VideoUploadBatchCount = 1;
 #pragma mark - setup when app launches
 
 - (void)setupCameraUploadWhenApplicationLaunches {
+    if (CameraUploadManager.hasMigratedToCameraUploadsV2) {
+        [CameraUploadManager configDefaultSettingsForCameraUploadV2];
+    }
+    
     [AttributeUploadManager.shared collateLocalAttributes];
     
     if (CameraUploadManager.isCameraUploadEnabled) {

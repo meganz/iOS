@@ -8,10 +8,12 @@
 #import "NSString+MNZCategory.h"
 #import "UIDevice+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
+#import "MEGAChatMessage+MNZCategory.h"
 #import "MEGAGetPreviewRequestDelegate.h"
 
 @interface MEGAPhotoMediaItem ()
 
+@property (nonatomic) MEGAChatMessage *message;
 @property (nonatomic) MEGANode *node;
 @property (nonatomic) NSString *previewFilePath;
 
@@ -24,13 +26,14 @@
 
 #pragma mark - Initialization
 
-- (instancetype)initWithMEGANode:(MEGANode *)node {
+- (instancetype)initWithMEGAChatMessage:(MEGAChatMessage *)message {
     if (self = [super init]) {
-        _node = node;
+        _message = message;
+        _node = [message.nodeList nodeAtIndex:0];
         
         if (_node.hasPreview) {
             NSString *previewsDirectory = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"previewsV3"];
-            _previewFilePath = [previewsDirectory stringByAppendingPathComponent:node.base64Handle];
+            _previewFilePath = [previewsDirectory stringByAppendingPathComponent:_node.base64Handle];
             
             if ([NSFileManager.defaultManager fileExistsAtPath:_previewFilePath]) {
                 self.image = [UIImage imageWithContentsOfFile:_previewFilePath];
@@ -91,6 +94,8 @@
             [self.cachedImageView addSubview:durationLabel];
             durationLabel.frame = CGRectMake(4, self.cachedImageView.frame.size.height - durationLabel.frame.size.height - 4, durationLabel.frame.size.width, durationLabel.frame.size.height);
         }
+        
+        self.message.richNumber = @(YES);
     }
 }
 
@@ -205,7 +210,7 @@
 #pragma mark - NSCopying
 
 - (instancetype)copyWithZone:(NSZone *)zone {
-    MEGAPhotoMediaItem *copy = [[MEGAPhotoMediaItem allocWithZone:zone] initWithMEGANode:self.node];
+    MEGAPhotoMediaItem *copy = [[MEGAPhotoMediaItem allocWithZone:zone] initWithMEGAChatMessage:self.message];
     copy.appliesMediaViewMaskAsOutgoing = self.appliesMediaViewMaskAsOutgoing;
     return copy;
 }

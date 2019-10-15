@@ -102,6 +102,7 @@
         self.nameLabel.textColor = UIColor.mnz_redMain;
     } else {
         self.nameLabel.text = node.name;
+        self.nameLabel.textColor = UIColor.mnz_black333333;
     }
     
     if (node.isFile) {

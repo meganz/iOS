@@ -7,16 +7,26 @@ typedef NS_ENUM(NSUInteger, AdvancedOptionSection) {
     AdvancedOptionSectionLivePhoto,
     AdvancedOptionSectionBurstPhoto,
     AdvancedOptionSectionHiddenAlbum,
+    AdvancedOptionSectionSharedAlbums,
+    AdvancedOptionSectionSyncedAlbums,
 };
 
 @interface CameraUploadAdvancedOptionsViewController ()
 
 @property (weak, nonatomic) IBOutlet UILabel *uploadVideosForLivePhotosLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *uploadVideosForlivePhotosSwitch;
+
 @property (weak, nonatomic) IBOutlet UILabel *uploadAllBurstPhotosLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *uploadAllBurstPhotosSwitch;
+
 @property (weak, nonatomic) IBOutlet UILabel *uploadHiddenAlbumLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *uploadHiddenAlbumSwitch;
+
+@property (weak, nonatomic) IBOutlet UILabel *uploadSharedAlbumsLabel;
+@property (weak, nonatomic) IBOutlet UISwitch *uploadSharedAlbumsSwitch;
+
+@property (weak, nonatomic) IBOutlet UILabel *uploadSyncedAlbumsLabel;
+@property (weak, nonatomic) IBOutlet UISwitch *uploadSyncedAlbumsSwitch;
 
 @end
 
@@ -33,6 +43,10 @@ typedef NS_ENUM(NSUInteger, AdvancedOptionSection) {
     self.uploadAllBurstPhotosSwitch.on = CameraUploadManager.shouldUploadAllBurstPhotos;
     self.uploadHiddenAlbumLabel.text = AMLocalizedString(@"Upload Hidden Album", nil);
     self.uploadHiddenAlbumSwitch.on = CameraUploadManager.shouldUploadHiddenAlbum;
+    self.uploadSharedAlbumsLabel.text = AMLocalizedString(@"Upload Shared Albums", nil);
+    self.uploadSharedAlbumsSwitch.on = CameraUploadManager.shouldUploadSharedAlbums;
+    self.uploadSyncedAlbumsLabel.text = AMLocalizedString(@"Upload albums synced from iTunes", nil);
+    self.uploadSyncedAlbumsSwitch.on = CameraUploadManager.shouldUploadSyncedAlbums;
 }
 
 #pragma mark - UI Actions
@@ -49,6 +63,16 @@ typedef NS_ENUM(NSUInteger, AdvancedOptionSection) {
 
 - (IBAction)didChangeValueForHiddenAssetsSwitch:(UISwitch *)sender {
     CameraUploadManager.uploadHiddenAlbum = sender.isOn;
+    [self configCameraUploadWhenValueChangedForSwitch:sender];
+}
+
+- (IBAction)didChangeValueForSharedAlbumsSwitch:(UISwitch *)sender {
+    CameraUploadManager.uploadSharedAlbums = sender.isOn;
+    [self configCameraUploadWhenValueChangedForSwitch:sender];
+}
+
+- (IBAction)didChangeValueForSyncedAlbumsSwitch:(UISwitch *)sender {
+    CameraUploadManager.uploadSyncedAlbums = sender.isOn;
     [self configCameraUploadWhenValueChangedForSwitch:sender];
 }
 
@@ -80,6 +104,16 @@ typedef NS_ENUM(NSUInteger, AdvancedOptionSection) {
             break;
         case AdvancedOptionSectionHiddenAlbum:
             title = AMLocalizedString(@"The Hidden Album is where you hide photos or videos in your device Photos app.", nil);
+            break;
+        case AdvancedOptionSectionSharedAlbums:
+            if (self.uploadSharedAlbumsSwitch.isOn) {
+                title = AMLocalizedString(@"Shared Albums from your device's Photos app will be uploaded.", nil);
+            } else {
+                title = AMLocalizedString(@"Shared Albums from your device's Photos app will not be uploaded.", nil);
+            }
+            break;
+        case AdvancedOptionSectionSyncedAlbums:
+            title = AMLocalizedString(@"Synced albums are where you sync photos or videos to your device's Photos app from iTunes.", nil);
             break;
         default:
             break;

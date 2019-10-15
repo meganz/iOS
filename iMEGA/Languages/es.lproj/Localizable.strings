@@ -28,8 +28,6 @@
 "attention"="Atención";
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
 "cameraPermissions"="Por favor permite a la aplicación de MEGA que acceda a tu cámara en Ajustes";
-/* Alert message to notify that MEGA video calls needs the Camera permission and the call will end*/
-"cameraPermissionsInCall"="Por favor permite que la aplicación de MEGA acceda a tu cámara en Ajustes. Al hacer esto, la llamada finalizará porque la aplicación se reiniciará.";
 /* Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it */
 "microphonePermissions"="Por favor permite que la aplicación de MEGA acceda a tu micrófono en Ajustes";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
@@ -63,7 +61,7 @@
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="La sesión en este dispositivo ha sido cerrada desde otra localización";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="MEGA no se puede conectar de forma segura a través de SSL. Es posible que estés conectado a una WiFi pública con requisitos adicionales.";
+"sslUnverified_alertTitle"="MEGA is unable to connect securely through SSL. You might be on public Wi-Fi with additional requirements.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="El contenido al que estás intentando acceder no pertenece a esta cuenta. Inicia sesión con la misma cuenta que tienes abierta en el navegador.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
@@ -143,7 +141,7 @@
 /* Warning message shown when you try to confirm an account but you are logged in with another one */
 "alreadyLoggedInAlertMessage"="Si aceptas, se cerrará la sesión actual y los datos en Sin conexión serán eliminados. ¿Quieres continuar?";
 /* Error shown when the user tries to change his mail to one that is already used */
-"emailAlreadyInUse"="Error. Este correo electrónico ya está asociado a una cuenta MEGA.";
+"emailAlreadyInUse"="Error. Este correo electrónico ya está asociado a una cuenta de MEGA.";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Tienes que liberar espacio";
 /* Title for the file link view */
@@ -292,34 +290,20 @@
 "uploadFrom"="Subir desde...";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
 "fileExistAlertController_Message"="[A] ya subida con el nombre [B]";
-/* Message shown when you try to upload one photo or video that is already uploaded in the current folder. “Already uploaded with name {File name} */
-"fileAlreadyExistMessage"="Este archivo ya se había subido con el nombre %@";
 /* Message shown when you try to upload some photos or/and videos that are already uploaded in the current folder */
 "filesAlreadyExistMessage"="%d archivos de los seleccionados ya se habían subido a esta carpeta.";
 /* Message shown when a upload starts */
 "uploadStarted_Message"="Subida iniciada";
-/* Alert title shown when you are seeing the details of a file and you moved it to the Rubbish Bin from another location */
-"fileMovedToTheRubbishBin_alertTitle"="El archivo ha sido movido a la Papelera";
-/* Alert title shown when you are seeing the details of a folder and you moved it to the Rubbish Bin from another location */
-"folderMovedToTheRubbishBin_alertTitle"="La carpeta ha sido movida a la Papelera";
-/* Alert title shown when you are seeing the details of a file and you moved it from another location */
-"fileMoved_alertTitle"="El archivo ha sido movido";
-/* Alert title shown when you are seeing the details of a folder and you moved it from another location */
-"folderMoved_alertTitle"="La carpeta ha sido movida";
 /* Alert title shown when you are seeing the details of a file and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFile_alertTitle"="Ya no tienes acceso a este archivo";
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFolder_alertTitle"="Ya no tienes acceso a esta carpeta";
 /* The text is shown as an option on the details of a file or folder */
 "saveForOffline"="Guardar en Sin conexión";
-/* List option shown on the details of a file or folder */
-"savedForOffline"="Sin conexión";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
 "folderInboxError"="Inbox es un nombre reservado para uso de Apple.";
 /* Title shown under the action that allows you to save an image to your camera roll */
 "saveImage"="Guardar imagen";
-/* Title shown under the action that allows you to save several images to your camera roll */
-"saveImages"="Guardar imágenes";
 /* Title shown under the action that allows you to get a link to file or folder */
 "getLink"="Obtener enlace";
 /* Title shown under the action that allows you to get several links to files and/or folders */
@@ -396,8 +380,6 @@
 "linksRemoved"="Enlaces eliminados";
 /* Title show when a file is being downloaded */
 "downloading"="Descargando";
-/* Message shown when you tap on the cancel button of an active transfer */
-"cancelDownloadAlertViewText"="¿Quieres cancelar la descarga?";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
 "selectDestination"="Seleccionar destino";
 /* Text of the button for user to select files in MEGA. */
@@ -490,12 +472,6 @@
 "fileImported"="Archivo importado";
 /* Message shown when some files have been imported */
 "filesImported"="Archivos importados";
-/* Error message shown when you have used more MEGA storage than you can */
-"quotaExceeded"="Cuota de almacenamiento agotada";
-/* Alert title shown when the user is overquota */
-"overquotaAlert_title"="¡Has superado la cuota de almacenamiento disponible!";
-/* Alert message shown when the user is overquota */
-"overquotaAlert_message"="Operación no permitida, se superará el límite de almacenamiento disponible. ¿Quieres ampliar tu cuenta?";
 /* Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos */
 "selectTitle"="Seleccionar elementos";
 /* Button title that skips the current action */
@@ -513,9 +489,9 @@
 /* Message shown while uploading files. Plural. */
 "cameraUploadsPendingFiles"="Subida en curso, %lu archivos pendientes";
 /* Message shown when camera upload paused because of no WiFi. Singular. */
-"Upload paused because of no WiFi, 1 file pending"="Subida pausada debido a que no hay conexión WiFi, 1 archivo pendiente";
+"Upload paused because of no WiFi, 1 file pending"="Subida pausada debido a que no hay conexión Wi-Fi, 1 archivo pendiente";
 /* Message shown when camera upload paused because of no WiFi. Plural. */
-"Upload paused because of no WiFi, %lu files pending"="Subida pausada debido a que no hay conexión WiFi, %lu archivos pendientes";
+"Upload paused because of no WiFi, %lu files pending"="Subida pausada debido a que no hay conexión Wi-Fi, %lu archivos pendientes";
 /* Message shown the pending video file when photos uploaded and video upload is not enabled. Singular. */
 "Photos uploaded, video uploads are off, 1 video not uploaded"="Fotos subidas, las subidas de videos están desactivadas;  1 video no subido";
 /* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
@@ -530,10 +506,6 @@
 "itemsSelected"="%lu elementos seleccionados";
 /* Title shown when multiselection is enable in chat tabs, and the user has more than one item selected. */
 "xSelected"="%d seleccionados";
-/* Alert title displayed when Camera Uploads will be disabled because of unexpected errors */
-"cameraUploadsWillBeDisabled"="Las Subidas de la cámara serán desactivadas.";
-/* Message shown when you have Camera Uploads enabled and your device don't have enough space to make it work */
-"cameraUploadsDisabled_alertView_message"="Las Subidas de la cámara serán desactivadas porque no tienes suficiente espacio en el dispositivo";
 /* Title of the Offline section */
 "offline"="Sin conexión";
 /* Title of the Contacts section */
@@ -552,8 +524,6 @@
 "incoming"="Entrante";
 /* Title of the "Outgoing" Shared Items. */
 "outgoing"="Saliente";
-/* Text shown to explain that you have shared a folder with one contact */
-"sharedWithOneContact"="Compartida con 1 contacto";
 /* Text shown to explain with how many contacts you have shared a folder */
 "sharedWithXContacts"="Compartida con %d contactos";
 /* Message shown when you have changed the permissions of a shared folder */
@@ -574,8 +544,6 @@
 "shareRemoved"="Compartición eliminada";
 /* Message shown when some shares have been removed */
 "sharesRemoved"="Comparticiones eliminadas";
-/* Text shown next to name of the "Owner" of the folder that is being shared */
-"owner"="Propietario";
 /* Title of the view where you see with who you have shared a folder */
 "sharedWith"="Compartido con";
 /* Item menu option to add a contact through your device app Contacts */
@@ -586,8 +554,6 @@
 "contactEmail"="Correo electrónico del contacto";
 /* Button title to 'Add' the contact to your contacts list */
 "addContactButton"="Añadir";
-/* Success message shown when a contact has been invited */
-"requestSent"="Invitación enviada";
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="No hace falta que añadas tu propio correo electrónico";
 /* Add contacts and share dialog error message when user try to add already existing email address. */
@@ -596,8 +562,6 @@
 "theUserHasBeenInvited"="El usuario [X] ha sido invitado y aparecerá en tu lista de contactos en cuanto acepte la invitación.";
 /* Success message shown when some contacts have been invited */
 "theUsersHaveBeenInvited"="Los usuarios han sido invitados y aparecerán en tu lista de contactos en cuanto acepten la invitación.";
-/* Error message shown when it hasn't been posible to add a contact */
-"addContactError"="Error al añadir contacto";
 /* Alert title shown when you want to remove one or more contacts */
 "removeUserTitle"="Eliminar contacto";
 /* Alert confirmation message shown when you want to remove one contact from your contacts list */
@@ -610,8 +574,6 @@
 "removedContact"="Contacto %@ eliminado";
 /* Label shown when a contact request is pending */
 "pending"="Pendiente";
-/* Alert title shown when you add a contact from your device and the selected one doesn't have an email. */
-"contactWithoutEmail"="El contacto no tiene correo electrónico";
 /* Button title of the action that allows to leave a shared folder */
 "leaveFolder"="Abandonar";
 /* Alert message shown when the user tap on the leave share action for one inshare */
@@ -686,8 +648,6 @@
 "Compression quality when to transcode HEVC videos to H.264 format."="Calidad de compresión cuando los videos HEVC se transcodifican a formato H.264.";
 /* Option title to enable upload videos with Camera Uploads */
 "uploadVideosLabel"="Subir vídeos";
-/* Option title to enable Camera Uploads only when the device is charging */
-"onlyWhenChargingLabel"="Solo cargando";
 /* Footer text for Camera Upload switch section when camera upload is disabled */
 "When enabled, photos will be uploaded."="Al activar, se subirán las fotos.";
 /* Footer text for Camera Upload switch section when only photos upload is enabled */
@@ -711,7 +671,7 @@
 /* Footer for video uploads switch section when disabled */
 "When enabled, videos will be uploaded."="Al activar, se subirán los videos.";
 /* Title for new camera upload feature */
-"New Camera Upload!"="Nuevas opciones para las subidas de la cámara";
+"New Camera Upload!"="Nuevas opciones para las Subidas de la cámara";
 /* A messge for camera upload v2 migration */
 "Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="Puedes elegir convertir fotos y videos HEIC/HEVC a los formatos más compatibles JPEG/H.264.";
 /* Title for an action to use most compatible formats */
@@ -740,6 +700,16 @@
 "Only the representative photos from your burst photo sequences will be uploaded."="Solo se subirán las fotos favoritas de tus fotos en modo ráfaga.";
 /* Footer description when upload Hidden Album is enabled */
 "The Hidden Album is where you hide photos or videos in your device Photos app."="El Álbum oculto es donde escondes fotos o videos en la aplicación Fotos de tu dispositivo.";
+/* Title of the switch to config whether to upload Shared Albums */
+"Upload Shared Albums"="Subir Álbumes compartidos";
+/* Footer description for Upload Shared Albums title when option enabled */
+"Shared Albums from your device's Photos app will be uploaded."="Shared Albums from your device’s Photos app will be uploaded.";
+/* Footer description for Upload Shared Albums title when option disabled */
+"Shared Albums from your device's Photos app will not be uploaded."="Shared Albums from your device’s Photos app will not be uploaded.";
+/* Title of the switch to config whether to upload synced albums */
+"Upload albums synced from iTunes"="Subir álbumes sincronizados desde iTunes";
+/* Footer description for upload synced albums title */
+"Synced albums are where you sync photos or videos to your device's Photos app from iTunes."="Synced albums are where you sync photos or videos to your device’s Photos app from iTunes.";
 /* App means “Application” */
 "App version"="Versión de la aplicación";
 /* Title of the label where the SDK version is shown */
@@ -758,10 +728,6 @@
 "exportMasterKeyFooter"="Si exportas la Clave de recuperación y la guardas en un lugar seguro podrás cambiar la contraseña sin perder tus datos.";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="¿Por qué necesito la Clave de recuperación?";
-/* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
-"masterKey_firstParagraph"="Tus datos solo se pueden leer a través de una cadena de operaciones de descifrado que comienzan con tu clave maestra de cifrado (Clave de recuperación) que almacenamos cifrada con tu contraseña. Esto significa que si pierdes la contraseña, tu Clave de recuperación ya no podrá ser descifrada y en consecuencia no podrás descifrar tus datos.";
-/*  */
-"masterKey_thirdParagraph"="Un atacante externo no puede acceder a tu cuenta solo con tu clave. Para restablecer la contraseña necesitaría tanto la clave como el acceso a tu correo electrónico.";
 /* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
 "recoveryKeyCopiedToClipboard"="Clave de recuperación copiada al portapapeles. Guárdala en un lugar seguro.";
 /* Alert title shown when you have exported your MEGA Recovery Key */
@@ -838,8 +804,6 @@
 "filesFolderRemovedToRubbishBinMessage"="%d archivos y 1 carpeta eliminados de MEGA";
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
 "filesFoldersRemovedToRubbishBinMessage"="[A] archivos y [B] carpetas eliminados de MEGA";
-/* Hint text to suggest that the user have to write his/her current password */
-"currentPassword"="Contraseña actual";
 /* Hint text to suggest that the user have to write the new password on it */
 "newPassword"="Nueva contraseña";
 /* Hint text where the user have to re-write the new password to confirm it */
@@ -892,7 +856,7 @@
 /* Text shown on the confirm email view to remind the user what to do */
 "verifyYourEmailAddress_description"="Introduce la contraseña para verificar tu dirección de correo electrónico";
 /* The [X] will be replaced with the e-mail address. */
-"congratulationsNewEmailAddress"="Enhorabuena, tu nuevo correo electrónico para esta cuenta MEGA es: [X]";
+"congratulationsNewEmailAddress"="Enhorabuena, tu nuevo correo electrónico para esta cuenta de MEGA es: [X]";
 /* Button text to close other login sessions except the current session in use. This will log out other devices which have an active login session. */
 "closeOtherSessions"="Cerrar el resto de sesiones";
 /* Message shown when you click on 'Close other session' to block other login sessions except the current session in use. This message is shown when this has been done. */
@@ -937,8 +901,6 @@
 "downloadInUppercaseTransfers"="las transferencias de DESCARGA";
 /* Title of My Account section. There you can see your account details */
 "myAccount"="Mi cuenta";
-/* Button title that shows the different MEGA PRO plans to which you can upgrade. (String as short as possible) */
-"buyPRO"="Ampliar cuenta";
 /* Caption of a button to upgrade the account to Pro status */
 "upgrade"="Ampliar";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
@@ -973,8 +935,6 @@
 "storageQuota"="Cuota de almacenamiento";
 /* The header/title of a block/section which contains information about the user's used/available transfer allowance for their account. */
 "transferQuota"="Cuota de transferencia";
-/* The user's achieved base quota */
-"accountBaseQuota"="Cuota base de la cuenta";
 /* achievement type */
 "registrationBonus"="Bono por registro de cuenta";
 /* Message shown on the achievements dialog for achieved achievements, %1 is replaced with e.g. 20 GB */
@@ -1015,8 +975,6 @@
 "firstName"="Nombre";
 /* Hint text for the last name (Placeholder) */
 "lastName"="Apellido(s)";
-/* Button title that goes to the section Usage where you can see how your MEGA space is used */
-"usage"="Uso";
 /* Title for "Local" used space. */
 "localLabel"="Local";
 /* Title for "Used" MEGA space. */
@@ -1031,8 +989,6 @@
 "expiresOn"="caduca el %@";
 /* Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible). */
 "Renews on"="Renovación";
-/* Button title for the section where you can see the 'Purchase history' related to your account */
-"purchaseHistory"="Historial de compras";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="Compartido conmigo";
 /* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
@@ -1045,8 +1001,6 @@
 "upgradeAccount"="Ampliar cuenta";
 /*  */
 "chooseYourAccountType"="Elige tu tipo de cuenta";
-/* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
-"youCanUpgradeLaterInMyAccount"="Puedes ampliar más tarde en Mi cuenta";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
 "cloudDriveIsAlmostFull"="[S]Tu nube está casi llena.[/S] [A]Amplía tu cuenta ahora[/A] y obtén [S]hasta 8TB (8192 GB)[/S] de espacio de almacenamiento en la nube.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
@@ -1133,10 +1087,6 @@
 "chatIsDisabled"="Chat desactivado";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
 "enable"="Activar";
-/* Text button shown when an option is enabled, to allow to disable it. String as sort as possible. */
-"disable"="Desactivar";
-/* Conversations section */
-"conversations"="Conversaciones";
 /* A button on a dialog which invites a contact to join MEGA. */
 "invite"="Invitar";
 /* A log message in a chat to indicate that the message has been deleted by the user. */
@@ -1193,8 +1143,6 @@
 "away"="Ausente";
 /*  */
 "busy"="Ocupado";
-/* title of the contact properties screen */
-"contactInfo"="Info";
 /*  */
 "notifications"="Notificaciones";
 /* Title to perform the action of sending a message to a contact. */
@@ -1202,13 +1150,11 @@
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
 "verifyCredentials"="Verificar credenciales";
 /* A button title to delete the history of a chat. */
-"clearChatHistory"="Limpiar historial de chat";
+"clearChatHistory"="Limpiar historial del chat";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="¿Seguro que quieres limpiar el historial de mensajes completo de esta conversación?";
 /* 'Next' button in a dialog */
 "continue"="Continuar";
-/* Button title that allows the user to close a chat. */
-"closeChat"="Cerrar chat";
 /* Title of the incoming shared folders of a user. */
 "sharedFolders"="Carpetas compartidas";
 /* Label title above the fingerprint credentials of a user's contact. A credential in this case is a stored piece of information representing the identity of the contact */
@@ -1218,23 +1164,15 @@
 /* Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity */
 "yourCredentials"="Tus credenciales";
 /* Button to reset the password */
-"reset"="Cambiar";
+"reset"="Restablecer";
 /* Button title */
 "approve"="Aceptar";
 /* start a chat/conversation */
 "startConversation"="Iniciar conversación";
-/* Title of a menu button which allows users to start a conversation creating a 'Group' chat. */
-"group"="Grupo";
-/* Title of section where you can see the chat group information and the options that you can do with it. Like 'Notifications' or 'Leave Group' and also the participants of the group */
-"groupInfo"="Información del grupo";
 /* Label title for a group chat */
 "groupChat"="Chat de grupo";
 /* The title of a menu button which allows users to rename a group chat. */
 "renameGroup"="Renombrar grupo";
-/* Title of the action that allows you to change the avatar of a group chat. */
-"changeGroupAvatar"="Cambiar imagen del perfil del grupo";
-/* Text used as hint to give the user information to write a name for the group chat. */
-"enterGroupName"="Escribe el nombre del grupo";
 /* A button label. The button allows the user to leave the group conversation. */
 "leave"="Abandonar";
 /* Top menu option which opens more menu options in a context menu. */
@@ -1247,8 +1185,6 @@
 "close"="Cerrar";
 /* Alert text that explains what means confirming the action 'Leave' */
 "youWillNoLongerHaveAccessToThisConversation"="Ya no tendrás acceso a esta conversación";
-/* A button label. The button allows the user to leave the conversation. */
-"leaveChat"="Abandonar el chat";
 /* Button title that allows the user to leave a group chat. */
 "leaveGroup"="Abandonar grupo";
 /* Label to describe the section where you can see the participants of a group chat */
@@ -1259,8 +1195,6 @@
 "standard"="Estándar";
 /* A button title which removes a participant from a chat. */
 "removeParticipant"="Eliminar participante";
-/* Chat conversation header with user %@. Please leave %@ as it is. */
-"conversationWith"="Conversación con %@";
 /* Title show above the name of the persons with whom you're chatting */
 "chattingWith"="Chateando con";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
@@ -1287,16 +1221,12 @@
 "deleteMessage"="Eliminar mensaje";
 /*  */
 "fromCloudDrive"="Desde Mi nube";
-/*  */
-"fromDevice"="Desde el dispositivo";
 /* referring to a contact in the contact list of the user */
 "contact"="Contacto";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="Enviar contacto";
 /* */
 "done"="Hecho";
-/* Button label for sending file attachments through the chat to another user. */
-"sendFiles"="Enviar archivos";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "enableRichUrlPreviews"="Activar la vista previa del enlace";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
@@ -1459,7 +1389,7 @@
 /* Text shown under the title 'Video quality' that explains what it means */
 "qualityOfVideosUploadedToAChat"="Calidad de los vídeos subidos a un chat";
 /* Label used near to the option selected to encode the videos uploaded to a chat (Low, Medium, Original) */
-"videoQuality"="Calidad del vídeo";
+"videoQuality"="Calidad de vídeo";
 /* Property associated with something smaller than the usual or average size, number, value, or amount. For example: option to encode a video with low quality. */
 "low"="Baja";
 /* Option to upload videos with the same resolution and same framerate than the original one, but converting them to MP4. */
@@ -1502,8 +1432,6 @@
 "totalSize"="Tamaño total";
 /* Refers to the type of a file or folder. */
 "type"="Tipo";
-/* Title of the incoming shared folders of a user in singular */
-"sharedFolder"="Carpeta Compartida";
 /* Label for what a selection contains. For example: "Contains: 3 folders & 13 files". (no need to put the colon punctuation in the translation) */
 "contains"="Contenido";
 /* A label for any 'Modified' text or title. For example to show the modification date of a file/folder. */
@@ -1693,7 +1621,7 @@
 /* Button which triggers the initial setup */
 "Setup MEGA"="Configurar MEGA";
 /* Detailed explanation of why the user should give some permissions to MEGA */
-"To fully take advantage of your MEGA account we need to ask you some permissions."="Para aprovechar al máximo tu cuenta MEGA, debemos pedirte algunos permisos.";
+"To fully take advantage of your MEGA account we need to ask you some permissions."="Para aprovechar al máximo tu cuenta de MEGA, debemos pedirte algunos permisos.";
 /* Message warning the user about the risk of not setting up permissions */
 "The MEGA app may not work as expected without the required permissions. Are you sure?"="Es posible que la aplicación de MEGA no funcione correctamente sin los permisos necesarios. ¿Estás seguro?";
 /* Shows number of the current page. '%1' will be replaced by current page number. '%2' will be replaced by number of all pages. */
@@ -1776,22 +1704,18 @@
 "To create a chat link you must name the group."="Para crear un enlace del chat, debes ponerle nombre al grupo.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
 "Chat Link"="Enlace de chat";
-/* Message shown when there is an active chat link that can be deleted */
-"Delete Chat Link"="Desactivar enlace de chat";
 /* Button text in public chat previews that allows the user to join the chat */
 "Join"="Únete";
 /* Text shown in a notification to let the user know that has joined a public chat room after login or account creation */
 "You have joined %@"="Te has unido a %@";
 /* Users previewing a public chat */
 "Observers"="Espectadores";
-/* Alert message shown while deleting a chat link, warning about the consequences */
-"This conversation will no longer be accessible through the link you are about to delete."="Al eliminar el enlace ya no tendrás acceso a esta conversación.";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
 "%@ enabled Encrypted Key Rotation"="%@ ha activado la rotación de la clave de cifrado";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
-"%@ created a public link for the chat."="%@ ha creado un enlace del chat.";
+"%@ created a public link for the chat."="%@ ha creado un enlace del chat";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
-"%@ removed a public link for the chat."="%@ ha eliminado el enlace del chat.";
+"%@ removed a public link for the chat."="%@ ha eliminado el enlace del chat";
 /* Management message shown in a chat when the user %@ joined it from a public chat link */
 "%@ joined the group chat."="%@ se ha unido al chat de grupo.";
 /* Message show when a call cannot be established because there are too many participants in the group call */
@@ -1847,7 +1771,7 @@
 /* When somebody accepted your contact request */
 "Accepted your contact request"="Aceptar la solicitud de tu contacto";
 /* When somebody denied your contact request */
-"Denied your contact request"="Denegó tu solicitud de contacto";
+"Denied your contact request"="Ha rechazado tu solicitud de contacto";
 /* notification text */
 "A user has left the shared folder {0}"="Un usuario ha abandonado la carpeta compartida {0}";
 /* This is shown in the Notification dialog when the email address of a contact is not found and access to the share is lost for some reason (e.g. share removal or contact removal). */
@@ -1968,8 +1892,6 @@
 "%1 Images and 1 Video"="%1 imágenes y 1 vídeo";
 /* Title for multiple images and multiple videos in recents section */
 "%1 Images and %2 Videos"="%1 imágenes y %2 vídeos";
-/* Tooltip message shown on recents section. Please see the attached image. */
-"Modified on %1 at %2"="Modificado el %1 a las %2";
 /* Title for a recent action shown in the webclient, see the attached image for context. */
 "%1 modified by %3"="%1 modificado por %3";
 /* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
@@ -2009,12 +1931,40 @@
 /* Destination folder name of chat files */
 "My chat files"="Mis archivos de chat";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
-"Require passcode"="Require passcode";
+"Require passcode"="Solicitar código";
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
-"Immediately"="Immediately";
+"Immediately"="Inmediatamente";
 /* Popup notification text on mouse-over of taken down file. */
 "This file has been the subject of a takedown notice."="Este archivo ha sido sujeto a notificación y retirada.";
 /* Popup notification text on mouse-over taken down folder. */
 "This folder has been the subject of a takedown notice."="Esta carpeta ha sido sujeta a notificación y retirada.";
 /* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
 "Dispute Takedown"="Disputar la retirada";
+/* Title of the "Links" Shared Items. */
+"Links"="Links";
+/* Title for empty state view of "Links" in Shared Items. */
+"No Public Links"="No hay enlaces públicos";
+/* Text to indicate that the user will leave an incoming shared folder. */
+"Leave Share"="Leave Share";
+/* Text indicating to the user the action that will be executed on tap. */
+"Manage Share"="Manage Share";
+/* Title of the screen that shows the users with whom the user can share a folder */
+"Share with"="Compartir con";
+/* Chat Notifications DND: Option that does not deactivate DND automatically */
+"Until I Turn it On Again"="Hasta que vuelva a activarlas";
+/* Chat Notifications DND: Option that deactivates DND after 30 minutes */
+"30 minutes"="30 minutos";
+/* Chat Notifications DND: Option that deactivates DND after 1 hour */
+"1 hour"="1 hora";
+/* Chat Notifications DND: Option that deactivates DND after 6 hours */
+"6 hours"="6 horas";
+/* Chat Notifications DND: Option that deactivates DND after 24 hours */
+"24 hours"="24 horas";
+/* Chat Notifications DND: Title bar message for the dnd activate options */
+"Mute chat Notifications for"="Silenciar las notificaciones del chat durante:";
+/* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
+"Muted forever"="Silenciado para siempre";
+/* Chat Notifications DND: DND once activated with timing option, this message will appear below the DND on/off switch with the actual time left to deactivate DND replacing the placeholder below */
+"%@ left"="%@ restantes";
+/* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
+"Chat Notifications"="Chat Notifications";

@@ -13,6 +13,8 @@
 
 - (instancetype)initWithUser:(MEGAUser *)user;
 
+- (instancetype)initWithEmail:(NSString *)email;
+
 - (BOOL)isEqual:(ItemListModel *)item;
 
 @end
