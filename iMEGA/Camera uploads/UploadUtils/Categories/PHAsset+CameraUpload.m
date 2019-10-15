@@ -1,6 +1,5 @@
 
 #import "PHAsset+CameraUpload.h"
-#import "MEGAConstants.h"
 
 @implementation PHAsset (CameraUpload)
 

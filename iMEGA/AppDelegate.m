@@ -57,7 +57,6 @@
 #import "MEGAShowPasswordReminderRequestDelegate.h"
 #import "CameraUploadManager+Settings.h"
 #import "TransferSessionManager.h"
-#import "MEGAConstants.h"
 #import "BackgroundRefreshPerformer.h"
 
 #define kFirstRun @"FirstRun"
@@ -191,7 +190,7 @@
     if (sessionV3) {
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"TabsOrderInTabBar"];
         
-        NSUserDefaults *sharedUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"];
+        NSUserDefaults *sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];
         if (![sharedUserDefaults boolForKey:@"extensions"]) {
             [SAMKeychain deletePasswordForService:@"MEGA" account:@"sessionV3"];
             [SAMKeychain setPassword:sessionV3 forService:@"MEGA" account:@"sessionV3"];
@@ -274,16 +273,13 @@
     
     self.indexer = [[MEGAIndexer alloc] init];
     [Helper setIndexer:self.indexer];
-    
-    UIForceTouchCapability forceTouchCapability = self.window.rootViewController.view.traitCollection.forceTouchCapability;
-    if (forceTouchCapability == UIForceTouchCapabilityAvailable) {
-        UIApplicationShortcutItem *applicationShortcutItem = [launchOptions objectForKey:UIApplicationLaunchOptionsShortcutItemKey];
-        if (applicationShortcutItem) {
-            if (isFetchNodesDone) {
-                [self manageQuickActionType:applicationShortcutItem.type];
-            } else {
-                self.quickActionType = applicationShortcutItem.type;
-            }
+
+    UIApplicationShortcutItem *applicationShortcutItem = launchOptions[UIApplicationLaunchOptionsShortcutItemKey];
+    if (applicationShortcutItem != nil) {
+        if (isFetchNodesDone) {
+            [self manageQuickActionType:applicationShortcutItem.type];
+        } else {
+            self.quickActionType = applicationShortcutItem.type;
         }
     }
     
@@ -305,7 +301,9 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     MEGALogDebug(@"[App Lifecycle] Application did enter background");
     
-    [self beginBackgroundTaskWithName:@"Chat-Request-SET_BACKGROUND_STATUS=YES"];
+    if (MEGASdkManager.sharedMEGASdk.isLoggedIn > 1) {
+        [self beginBackgroundTaskWithName:@"Chat-Request-SET_BACKGROUND_STATUS=YES"];
+    }
     [[MEGASdkManager sharedMEGAChatSdk] setBackgroundStatus:YES];
     [[MEGASdkManager sharedMEGAChatSdk] saveCurrentState];
 
@@ -711,9 +709,20 @@
 
 - (void)dismissPresentedViewsAndDo:(void (^)(void))completion {
     if (self.window.rootViewController.presentedViewController) {
-        [self.window.rootViewController dismissViewControllerAnimated:NO completion:^{
-            if (completion) completion();
-        }];
+        if ([self.window.rootViewController.presentedViewController isKindOfClass:CheckEmailAndFollowTheLinkViewController.class]) {
+            CheckEmailAndFollowTheLinkViewController *checkEmailAndFollowTheLinkVC = (CheckEmailAndFollowTheLinkViewController *)self.window.rootViewController.presentedViewController;
+            if (checkEmailAndFollowTheLinkVC.presentedViewController) {
+                [checkEmailAndFollowTheLinkVC.presentedViewController dismissViewControllerAnimated:NO completion:^{
+                    if (completion) completion();
+                }];
+            } else {
+                if (completion) completion();
+            }
+        } else {
+            [self.window.rootViewController dismissViewControllerAnimated:NO completion:^{
+                if (completion) completion();
+            }];
+        }
     } else {
         if (completion) completion();
     }
@@ -979,7 +988,7 @@
         MEGALogError(@"Failed to locate/create NSApplicationSupportDirectory with error: %@", error);
     }
     
-    NSString *groupSupportPath = [[[fileManager containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"] URLByAppendingPathComponent:@"GroupSupport"] path];
+    NSString *groupSupportPath = [[[fileManager containerURLForSecurityApplicationGroupIdentifier:MEGAGroupIdentifier] URLByAppendingPathComponent:MEGAExtensionGroupSupportFolder] path];
     if (![fileManager fileExistsAtPath:groupSupportPath]) {
         [fileManager createDirectoryAtPath:groupSupportPath withIntermediateDirectories:NO attributes:nil error:nil];
     }
@@ -1417,7 +1426,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 - (void)onEvent:(MEGASdk *)api event:(MEGAEvent *)event {
     switch (event.type) {
         case EventChangeToHttps:
-            [[[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"] setBool:YES forKey:@"useHttpsOnly"];
+            [[NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier] setBool:YES forKey:@"useHttpsOnly"];
             break;
             
         case EventAccountBlocked:
@@ -1452,7 +1461,12 @@ void uncaughtExceptionHandler(NSException *exception) {
                     [self presentUpgradeViewControllerTitle:title detail:detail image:image];
                 }
             }
+            break;
         }
+            
+        case EventMiscFlagsReady:
+            MEGALogDebug(@"Apple VoIP push status: %d", api.appleVoipPushEnabled);
+            [NSUserDefaults.standardUserDefaults setBool:api.appleVoipPushEnabled forKey:@"VoIP_messages"];
             
             break;
             
@@ -1667,9 +1681,9 @@ void uncaughtExceptionHandler(NSException *exception) {
             
             if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"] || isAccountFirstLogin) {
                 [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self.mainTBC];
-                                
-                MEGAChatNotificationDelegate *chatNotificationDelegate = [MEGAChatNotificationDelegate new];
-                [[MEGASdkManager sharedMEGAChatSdk] addChatNotificationDelegate:chatNotificationDelegate];
+                
+                MEGAChatNotificationDelegate *chatNotificationDelegate = MEGAChatNotificationDelegate.new;
+                [MEGASdkManager.sharedMEGAChatSdk addChatNotificationDelegate:chatNotificationDelegate];
                 
                 if ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground) {
                     [[MEGASdkManager sharedMEGAChatSdk] connectInBackground];
@@ -1678,7 +1692,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                 }
                 if (isAccountFirstLogin) {
                     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"IsChatEnabled"];
-                    [[[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"] setBool:YES forKey:@"IsChatEnabled"];
+                    [[NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier] setBool:YES forKey:@"IsChatEnabled"];
                 }
             }
             
@@ -1686,7 +1700,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                 [self showMainTabBar];
             }
             
-            NSUserDefaults *sharedUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"];
+            NSUserDefaults *sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];
             dispatch_async(self.indexSerialQueue, ^{
                 if (![sharedUserDefaults boolForKey:@"treeCompleted"]) {
                     [self.indexer generateAndSaveTree];
@@ -1700,7 +1714,6 @@ void uncaughtExceptionHandler(NSException *exception) {
             
             [[MEGASdkManager sharedMEGASdk] getAccountDetails];
             [self copyDatabasesForExtensions];
-            [[NSUserDefaults standardUserDefaults] setBool:[api appleVoipPushEnabled] forKey:@"VoIP_messages"];
             
             break;
         }

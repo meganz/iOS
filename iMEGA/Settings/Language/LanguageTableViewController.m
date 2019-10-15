@@ -84,7 +84,7 @@
         NSString *selectedLanguage = [Helper languageID:indexPath.row];
         [[LocalizationSystem sharedLocalSystem] setLanguage:selectedLanguage];
         [[MEGASdkManager sharedMEGASdk] setLanguageCode:selectedLanguage];
-        [[[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"] setObject:selectedLanguage forKey:@"languageCode"];
+        [[NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier] setObject:selectedLanguage forKey:@"languageCode"];
         
         // Schedule a notification to make it easy to reopen MEGA:
         NSString *notificationText = AMLocalizedString(@"languageRestartNotification", @"Text shown in a notification to make it easy for the user to restart the app after the language is changed");

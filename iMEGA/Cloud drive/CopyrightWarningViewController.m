@@ -30,7 +30,7 @@
 + (void)presentGetLinkViewControllerForNodes:(NSArray<MEGANode *> *)nodes inViewController:(UIViewController *)viewController {
     if (nodes != nil) {
         if (![[NSUserDefaults standardUserDefaults] boolForKey:@"agreedCopywriteWarning"]) {
-            if ([[[MEGASdkManager sharedMEGASdk] publicLinks].size intValue] > 0) {
+            if ([MEGASdkManager.sharedMEGASdk publicLinks:MEGASortOrderTypeNone].size.intValue > 0) {
                 [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"agreedCopywriteWarning"];
             }
         }

@@ -8,7 +8,6 @@
 #import "LivePhotoScanner.h"
 #import "PHFetchOptions+CameraUpload.h"
 #import "PHFetchResult+CameraUpload.h"
-#import "MEGAConstants.h"
 #import "AssetFetchResult.h"
 
 @interface CameraScanner () <PHPhotoLibraryChangeObserver>
