@@ -1561,7 +1561,7 @@
 /* Title of empty state view for archived chats. */
 "noArchivedChats"="Niciun chat arhivat";
 /* A title for the Two-Factor Authentication section on the My Account - Security page. */
-"twoFactorAuthentication"="Autentificarea cu doi factori";
+"twoFactorAuthentication"="Autentificare cu doi factori";
 /* Button title to start the setup of a feature. For example 'Begin Setup' for Two-Factor Authentication */
 "beginSetup"="Începe configurarea";
 /* A message on the Verify Login page telling the user to enter their 2FA code. */
@@ -1661,7 +1661,7 @@
 /* Text of the dialog to delete all the file versions of the account */
 "You are about to delete the version histories of all files. Any file version shared to you from a contact will need to be deleted by them.[Br][Br]Please note that the current files will not be deleted."="Ești pe cale să ștergi istoricul versiunilor tuturor fișierelor. Orice versiune a vreunui fișier partajat ție de la un contact trebuie să fie șters de către acesta\n\nTe rugăm să reții că fișierele actuale nu vor fi șterse.";
 /* Title for the Rubbish-Bin Cleaning Scheduler feature */
-"Rubbish-Bin Cleaning Scheduler:"="Planificatorul de golire a coșului de gunoi";
+"Rubbish-Bin Cleaning Scheduler:"="Planificator de golire a coșului de gunoi";
 /* A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days. */
 "Remove files older than"="Elimină fișierele mai vechi de";
 /* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
@@ -1951,20 +1951,20 @@
 /* Title of the screen that shows the users with whom the user can share a folder */
 "Share with"="Partajează cu";
 /* Chat Notifications DND: Option that does not deactivate DND automatically */
-"Until I Turn it On Again"="Until I Turn it On Again";
+"Until I Turn it On Again"="Până când le pornesc din nou";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
-"30 minutes"="30 minutes";
+"30 minutes"="30 de minute";
 /* Chat Notifications DND: Option that deactivates DND after 1 hour */
 "1 hour"="1 oră";
 /* Chat Notifications DND: Option that deactivates DND after 6 hours */
-"6 hours"="6 hours";
+"6 hours"="6 ore";
 /* Chat Notifications DND: Option that deactivates DND after 24 hours */
-"24 hours"="24 hours";
+"24 hours"="24 de ore";
 /* Chat Notifications DND: Title bar message for the dnd activate options */
-"Mute chat Notifications for"="Mute chat Notifications for";
+"Mute chat Notifications for"="Amuțește notificările de chat timp de";
 /* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
-"Muted forever"="Muted forever";
+"Muted forever"="Amuțite pentru totdeauna";
 /* Chat Notifications DND: DND once activated with timing option, this message will appear below the DND on/off switch with the actual time left to deactivate DND replacing the placeholder below */
-"%@ left"="%@ left";
+"%@ left"="%@ rămase";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="Chat Notifications";

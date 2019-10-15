@@ -417,11 +417,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
                                                              style:UIPreviewActionStyleDefault
                                                            handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
                                                                CloudDriveViewController *cloudDriveVC = (CloudDriveViewController *)previewViewController;
-                                                               MEGANavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
-                                                               BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
-                                                               browserVC.selectedNodesArray = @[cloudDriveVC.parentNode];
-                                                               browserVC.browserAction = BrowserActionCopy;
-                                                               [rootViewController presentViewController:navigationController animated:YES completion:nil];
+                                                               [cloudDriveVC.parentNode mnz_copyInViewController:rootViewController];
                                                            }];
     
     NSString *deletePreviewActionTitle;
@@ -530,12 +526,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
                                                                      style:UIPreviewActionStyleDefault
                                                                    handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
                                                                        CloudDriveViewController *cloudDriveVC = (CloudDriveViewController *)previewViewController;
-                                                                       MEGANavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
-                                                                       BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
-                                                                       browserVC.selectedNodesArray = @[cloudDriveVC.parentNode];
-                                                                       browserVC.browserAction = BrowserActionMove;
-                                                                       
-                                                                       [rootViewController presentViewController:navigationController animated:YES completion:nil];
+                                                                       [cloudDriveVC.parentNode mnz_moveInViewController:rootViewController];
                                                                    }];
             
             if (self.displayMode == DisplayModeCloudDrive) {
@@ -1659,6 +1650,14 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 
 - (IBAction)shareAction:(UIBarButtonItem *)sender {
     UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:self.selectedNodesArray sender:self.shareBarButtonItem];
+    __weak __typeof__(self) weakSelf = self;
+    activityVC.completionWithItemsHandler = ^(UIActivityType  _Nullable activityType, BOOL completed, NSArray * _Nullable returnedItems, NSError * _Nullable activityError) {
+        if (completed && !activityError) {
+            if ([activityType isEqualToString:MEGAUIActivityTypeRemoveLink]) {
+                [weakSelf setEditMode:NO];
+            }
+        }
+    };
     [self presentViewController:activityVC animated:YES completion:nil];
 }
 
@@ -2108,6 +2107,10 @@ static const NSTimeInterval kSearchTimeDelay = .5;
             
         case MegaNodeActionTypeSaveToPhotos:
             [node mnz_saveToPhotosWithApi:[MEGASdkManager sharedMEGASdk]];
+            break;
+            
+        case MegaNodeActionTypeSendToChat:
+            [node mnz_sendToChatInViewController:self];
             break;
             
         default:
