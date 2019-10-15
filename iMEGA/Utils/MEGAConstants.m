@@ -70,3 +70,12 @@ NSString * const MEGAExtensionLogsFolder = @"logs";
 NSString * const MEGAExtensionGroupSupportFolder = @"GroupSupport";
 NSString * const MEGAExtensionCacheFolder = @"Library/Cache/";
 
+#pragma mark - MEGA Activity Types
+
+NSString * const MEGAUIActivityTypeGetLink = @"MEGAUIActivityTypeGetLink";
+NSString * const MEGAUIActivityTypeOpenIn = @"MEGAUIActivityTypeOpenIn";
+NSString * const MEGAUIActivityTypeRemoveLink = @"MEGAUIActivityTypeRemoveLink";
+NSString * const MEGAUIActivityTypeRemoveSharing = @"MEGAUIActivityTypeRemoveSharing";
+NSString * const MEGAUIActivityTypeShareFolder = @"MEGAUIActivityTypeShareFolder";
+NSString * const MEGAUIActivityTypeSaveToCameraRoll = @"MEGAUIActivityTypeSaveToCameraRoll";
+NSString * const MEGAUIActivityTypeSendToChat = @"MEGAUIActivityTypeSendToChat";

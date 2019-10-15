@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Nfe-XI-un1">
-    <device id="retina6_1" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Nfe-XI-un1">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -74,7 +72,7 @@
                                                         </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Incoming" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WeD-FR-O0m">
-                                                        <rect key="frame" x="0.0" y="28" width="138" height="12"/>
+                                                        <rect key="frame" x="0.0" y="25" width="138" height="12"/>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="10"/>
                                                         <color key="textColor" red="0.85098039215686272" green="0.0" blue="0.027450980392156862" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
@@ -97,7 +95,7 @@
                                                     <constraint firstAttribute="bottom" secondItem="sda-hY-kL3" secondAttribute="bottom" id="izY-WE-cN5"/>
                                                     <constraint firstAttribute="trailing" secondItem="WeD-FR-O0m" secondAttribute="trailing" id="mBv-jK-krn"/>
                                                     <constraint firstAttribute="bottom" secondItem="B7H-d7-rZL" secondAttribute="bottom" id="pue-EB-dwm"/>
-                                                    <constraint firstItem="sda-hY-kL3" firstAttribute="top" secondItem="WeD-FR-O0m" secondAttribute="bottom" constant="3" id="s12-ay-LHY"/>
+                                                    <constraint firstItem="sda-hY-kL3" firstAttribute="top" secondItem="WeD-FR-O0m" secondAttribute="bottom" constant="6" id="s12-ay-LHY"/>
                                                     <constraint firstItem="WeD-FR-O0m" firstAttribute="leading" secondItem="jG1-zV-rlv" secondAttribute="leading" id="uZe-lC-Las"/>
                                                 </constraints>
                                             </view>
@@ -115,12 +113,11 @@
                                                             <color key="titleColor" red="0.95294117649999999" green="0.047058823530000002" blue="0.078431372550000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </state>
                                                         <connections>
-                                                            <action selector="incomingTouchUpInside:" destination="2AR-na-hSZ" eventType="touchUpInside" id="08q-6e-3D2"/>
                                                             <action selector="outgoingTouchUpInside:" destination="2AR-na-hSZ" eventType="touchUpInside" id="EDT-nq-skb"/>
                                                         </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Outgoing" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BdG-cC-WBf">
-                                                        <rect key="frame" x="0.0" y="28" width="138" height="12"/>
+                                                        <rect key="frame" x="0.0" y="25" width="138" height="12"/>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="10"/>
                                                         <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
@@ -135,7 +132,7 @@
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
-                                                    <constraint firstItem="7So-eg-Rwh" firstAttribute="top" secondItem="BdG-cC-WBf" secondAttribute="bottom" constant="3" id="CK8-cT-Ruo"/>
+                                                    <constraint firstItem="7So-eg-Rwh" firstAttribute="top" secondItem="BdG-cC-WBf" secondAttribute="bottom" constant="6" id="CK8-cT-Ruo"/>
                                                     <constraint firstItem="BdG-cC-WBf" firstAttribute="leading" secondItem="i0g-8u-weC" secondAttribute="leading" id="I8k-xn-tqE"/>
                                                     <constraint firstAttribute="bottom" secondItem="7So-eg-Rwh" secondAttribute="bottom" id="UMK-wf-98b"/>
                                                     <constraint firstAttribute="trailing" secondItem="7So-eg-Rwh" secondAttribute="trailing" id="lIi-gF-OUm"/>
@@ -161,12 +158,11 @@
                                                             <color key="titleColor" red="0.95294117649999999" green="0.047058823530000002" blue="0.078431372550000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </state>
                                                         <connections>
-                                                            <action selector="incomingTouchUpInside:" destination="2AR-na-hSZ" eventType="touchUpInside" id="VbH-uK-akK"/>
                                                             <action selector="linksTouchUpInside:" destination="2AR-na-hSZ" eventType="touchUpInside" id="tut-1z-P85"/>
                                                         </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Links" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eL3-U7-wf3">
-                                                        <rect key="frame" x="0.0" y="28" width="138" height="12"/>
+                                                        <rect key="frame" x="0.0" y="25" width="138" height="12"/>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="10"/>
                                                         <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
@@ -189,7 +185,7 @@
                                                     <constraint firstItem="eL3-U7-wf3" firstAttribute="leading" secondItem="nI0-PD-DCd" secondAttribute="leading" id="fNO-kE-dvV"/>
                                                     <constraint firstAttribute="bottom" secondItem="9uF-Cm-O0m" secondAttribute="bottom" id="h2k-8s-o6W"/>
                                                     <constraint firstAttribute="trailing" secondItem="eL3-U7-wf3" secondAttribute="trailing" id="hZg-9M-kby"/>
-                                                    <constraint firstItem="9uF-Cm-O0m" firstAttribute="top" secondItem="eL3-U7-wf3" secondAttribute="bottom" constant="3" id="mWK-v6-fNn"/>
+                                                    <constraint firstItem="9uF-Cm-O0m" firstAttribute="top" secondItem="eL3-U7-wf3" secondAttribute="bottom" constant="6" id="mWK-v6-fNn"/>
                                                     <constraint firstItem="sHD-aL-jy5" firstAttribute="top" secondItem="nI0-PD-DCd" secondAttribute="top" id="vHi-87-U3I"/>
                                                 </constraints>
                                             </view>
