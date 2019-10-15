@@ -16,6 +16,7 @@
 #import "MEGARemoveContactRequestDelegate.h"
 #import "MEGASdkManager.h"
 #import "MEGAShareRequestDelegate.h"
+#import "MEGA-Swift.h"
 #import "MEGAUser+MNZCategory.h"
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
@@ -862,75 +863,9 @@
     if (self.searchController.isActive) {
         self.searchController.active = NO;
     }
-    UIAlertController *addContactAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"inviteContact", @"Text shown when the user tries to make a call and the receiver is not a contact") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    [addContactAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
     
-    UIAlertAction *addFromEmailAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"addFromEmail", @"Item menu option to add a contact writting his/her email") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        UIAlertController *addContactFromEmailAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email") message:nil preferredStyle:UIAlertControllerStyleAlert];
-        
-        [addContactFromEmailAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-            textField.placeholder = AMLocalizedString(@"contactEmail", @"Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list");
-            [textField addTarget:self action:@selector(addContactAlertTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
-            textField.shouldReturnCompletion = ^BOOL(UITextField *textField) {
-                return (!textField.text.mnz_isEmpty && textField.text.mnz_isValidEmail);
-            };
-        }];
-        
-        [addContactFromEmailAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
-        
-        UIAlertAction *addContactAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"addContactButton", @"Button title to 'Add' the contact to your contacts list") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            UITextField *textField = addContactFromEmailAlertController.textFields.firstObject;
-            if (self.contactsMode == ContactsModeShareFoldersWith) {
-                [self inviteEmailToShareFolder:textField.text];
-            } else {
-                if (MEGAReachabilityManager.isReachableHUDIfNot) {
-                    MEGAInviteContactRequestDelegate *inviteContactRequestDelegate = [MEGAInviteContactRequestDelegate.alloc initWithNumberOfRequests:1];
-                    [MEGASdkManager.sharedMEGASdk inviteContactWithEmail:textField.text message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
-                    [addContactAlertController dismissViewControllerAnimated:YES completion:nil];
-                }
-            }
-        }];
-        addContactAlertAction.enabled = NO;
-        [addContactFromEmailAlertController addAction:addContactAlertAction];
-        
-        [self presentViewController:addContactFromEmailAlertController animated:YES completion:nil];
-    }];
-    [addFromEmailAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
-    [addContactAlertController addAction:addFromEmailAlertAction];
-    
-    UIAlertAction *addFromContactsAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"addFromContacts", @"Item menu option to add a contact through your device app Contacts") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        if (self.presentedViewController != nil) {
-            [self.presentedViewController dismissViewControllerAnimated:NO completion:nil];
-        }
-        [self showEmailContactPicker];
-    }];
-    [addFromContactsAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
-    [addContactAlertController addAction:addFromContactsAlertAction];
-    
-    UIAlertAction *scanCodeAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"scanCode", @"Segmented control title for view that allows the user to scan QR codes. String as short as possible.") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        ContactLinkQRViewController *contactLinkVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactLinkQRViewControllerID"];
-        contactLinkVC.scanCode = YES;
-        contactLinkVC.modalPresentationStyle = UIModalPresentationFullScreen;
-        if (self.contactsMode == ContactsModeShareFoldersWith) {
-            contactLinkVC.contactLinkQRType = ContactLinkQRTypeShareFolder;
-            contactLinkVC.contactLinkQRDelegate = self;
-        }
-        [self presentViewController:contactLinkVC animated:YES completion:nil];
-    }];
-    [scanCodeAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
-    [addContactAlertController addAction:scanCodeAlertAction];
-    
-    addContactAlertController.modalPresentationStyle = UIModalPresentationPopover;
-    if (self.addBarButtonItem) {
-        addContactAlertController.popoverPresentationController.barButtonItem = self.addBarButtonItem;
-    } else if (self.insertAnEmailBarButtonItem) {
-        addContactAlertController.popoverPresentationController.barButtonItem = self.insertAnEmailBarButtonItem;
-    } else {
-        addContactAlertController.popoverPresentationController.sourceRect = sender.frame;
-        addContactAlertController.popoverPresentationController.sourceView = sender.superview;
-    }
-    
-    [self presentViewController:addContactAlertController animated:YES completion:nil];
+    InviteContactViewController *inviteContacts = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"InviteContactViewControllerID"];
+    [self.navigationController pushViewController:inviteContacts animated:YES];
 }
 
 - (IBAction)deleteAction:(UIBarButtonItem *)sender {

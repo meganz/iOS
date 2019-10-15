@@ -1938,6 +1938,32 @@
 "Change to a test server?"="Change to a test server?";
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Are you sure you want to change to a test server? Your account may suffer irrecoverable problems";
+/* Title label that explains that the user is going to be asked for the contacts permission */
+"Enable Access to Contacts"="Enable Access to Contacts";
+/* Detailed explanation of why the user should give permission to contacts */
+"MEGA needs access to your contacts to help you connect with other people on MEGA."="MEGA needs access to your contacts to help you connect with other people on MEGA.";
+/* Title encouraging the user to check who of its contacts are using MEGA */
+"See who's already on MEGA"="See who's already on MEGA";
+/* Title showing the user how many of his contacts are using MEGA*/
+"You have [X] contacts on MEGA"="You have [X] contacts on MEGA";
+/* Text showing the user how to grant access to contacts in the device settings */
+"To enable access, Settings > Privacy > Contacts > set to “On”"="To enable access, Settings > Privacy > Contacts > set to “On”";
+/* Text indicating the user to perform an action to grant some permission */
+"Enable Access"="Enable Access";
+/* Text indicating the user to open the device settings for MEGA */
+"Open Settings"="Open Settings";
+/* Text encouraging the user to invite contacts to MEGA */
+"Invite contacts and start chatting securely with MEGA’s encrypted chat."="Invite contacts and start chatting securely with MEGA’s encrypted chat.";
+/* Text showing the user how many contacts would be invited */
+"Invite [X] contacts"="Invite [X] contacts";
+/* Text showing the user how to write more than one email in order to invite them to MEGA */
+"Tap space to enter multiple emails"="Tap space to enter multiple emails";
+/* Text used as a section title or similar */
+"Enter Email"="Enter Email";
+/* Text used as a section title or similar showing the user the phone contacts using MEGA */
+"Contacts on MEGA"="Contacts on MEGA";
+/* Text to send as SMS message to user contacts inviting them to MEGA */
+"Hi, Have encrypted conversations on Mega with me and get 50GB free storage."="Hi, Have encrypted conversations on Mega with me and get 50GB free storage.";
 /* Destination folder name of chat files */
 "My chat files"="My chat files";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */

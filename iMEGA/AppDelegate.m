@@ -13,6 +13,7 @@
 
 #import "Helper.h"
 #import "DevicePermissionsHelper.h"
+#import "MEGA-Swift.h"
 #import "MEGAApplication.h"
 #import "MEGAIndexer.h"
 #import "MEGALinkManager.h"
@@ -1712,6 +1713,8 @@ void uncaughtExceptionHandler(NSException *exception) {
             [[MEGASdkManager sharedMEGASdk] getAccountDetails];
             [self copyDatabasesForExtensions];
             
+            [ContactsOnMegaManager.shared configureContactsOnMegaWithCompletion:nil];
+
             break;
         }
             
