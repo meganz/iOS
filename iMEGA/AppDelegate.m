@@ -228,9 +228,6 @@
                 [[MEGASdkManager sharedMEGAChatSdk] logout];
                 [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
             }
-            
-            MEGAChatNotificationDelegate *chatNotificationDelegate = MEGAChatNotificationDelegate.new;
-            [MEGASdkManager.sharedMEGAChatSdk addChatNotificationDelegate:chatNotificationDelegate];
         }
         
         MEGALoginRequestDelegate *loginRequestDelegate = [[MEGALoginRequestDelegate alloc] init];
@@ -260,6 +257,8 @@
         if ([sharedUserDefaults boolForKey:@"useHttpsOnly"]) {
             [[MEGASdkManager sharedMEGASdk] useHttpsOnly:YES];
         }
+        
+        [CameraUploadManager enableAdvancedSettingsForUpgradingUserIfNeeded];
     } else {
         // Resume ephemeral account
         self.window.rootViewController = [OnboardingViewController instanciateOnboardingWithType:OnboardingTypeDefault];
@@ -1684,6 +1683,9 @@ void uncaughtExceptionHandler(NSException *exception) {
             
             if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"] || isAccountFirstLogin) {
                 [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self.mainTBC];
+                
+                MEGAChatNotificationDelegate *chatNotificationDelegate = MEGAChatNotificationDelegate.new;
+                [MEGASdkManager.sharedMEGAChatSdk addChatNotificationDelegate:chatNotificationDelegate];
                 
                 if ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground) {
                     [[MEGASdkManager sharedMEGAChatSdk] connectInBackground];

@@ -18,6 +18,7 @@
 #import "NodePropertyTableViewCell.h"
 #import "NodeTappablePropertyTableViewCell.h"
 #import "NodeVersionsViewController.h"
+#import "UIApplication+MNZCategory.h"
 #import "UIImage+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 
@@ -51,6 +52,7 @@
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *closeBarButtonItem;
 
+@property (nonatomic, strong) NSMutableArray<MEGANode *> *nodeVersionsMutableArray;
 
 @end
 
@@ -95,6 +97,8 @@
     } else if (self.node.type == MEGANodeTypeFolder) {
         [self.thumbnailImageView mnz_imageForNode:self.node];
     }
+    
+    self.nodeVersionsMutableArray = [NSMutableArray.alloc initWithArray:self.node.mnz_versions];
     
     [self.tableView reloadData];
 }
@@ -428,16 +432,12 @@
     }
 }
 
-- (void)currentVersionRemovedOnNodeList:(MEGANodeList *)nodeList {
-    MEGANode *newCurrentNode;
-    
-    NSUInteger size = nodeList.size.unsignedIntegerValue;
-    for (NSUInteger i = 0; i < size; i++) {
-        newCurrentNode = [nodeList nodeAtIndex:i];
-        if (newCurrentNode.getChanges == MEGANodeChangeTypeParent) {
-            self.node = newCurrentNode;
-            [self reloadUI];
-        }
+- (void)currentVersionRemoved {
+    if (self.nodeVersionsMutableArray.count == 1) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    } else {
+        self.node = [self.nodeVersionsMutableArray objectAtIndex:1];
+        [self reloadUI];
     }
 }
 
@@ -473,16 +473,10 @@
             [self showShareActivityFromSender:sender];
             break;
             
-        case MegaNodeActionTypeFileInfo:
-            break;
-            
         case MegaNodeActionTypeLeaveSharing:
             [node mnz_leaveSharingInViewController:self];
             break;
-            
-        case MegaNodeActionTypeRemoveLink:
-            break;
-            
+                        
         case MegaNodeActionTypeMoveToRubbishBin:
             [node mnz_moveToTheRubbishBinInViewController:self];
             break;
@@ -499,6 +493,39 @@
             [node mnz_saveToPhotosWithApi:[MEGASdkManager sharedMEGASdk]];
             break;
             
+        case MegaNodeActionTypeManageShare: {
+            ContactsViewController *contactsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsViewControllerID"];
+            contactsVC.node = node;
+            contactsVC.contactsMode = ContactsModeFolderSharedWith;
+            [self.navigationController pushViewController:contactsVC animated:YES];
+            break;
+        }
+            
+        case MegaNodeActionTypeShareFolder: {
+            MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsNavigationControllerID"];
+            ContactsViewController *contactsVC = navigationController.viewControllers.firstObject;
+            contactsVC.nodesArray = @[node];
+            contactsVC.contactsMode = ContactsModeShareFoldersWith;
+            [self presentViewController:navigationController animated:YES completion:nil];
+            break;
+        }
+            
+        case MegaNodeActionTypeManageLink:
+        case MegaNodeActionTypeGetLink: {
+            if (MEGAReachabilityManager.isReachableHUDIfNot) {
+                [CopyrightWarningViewController presentGetLinkViewControllerForNodes:@[node] inViewController:UIApplication.mnz_presentingViewController];
+            }
+            break;
+        }
+           
+        case MegaNodeActionTypeRemoveLink:
+            [node mnz_removeLink];
+            break;
+       
+        case MegaNodeActionTypeSendToChat:
+            [node mnz_sendToChatInViewController:self];
+            break;
+            
         default:
             break;
     }
@@ -507,36 +534,36 @@
 #pragma mark - MEGAGlobalDelegate
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
-    MEGANode *nodeUpdated;
-    
     NSUInteger size = nodeList.size.unsignedIntegerValue;
     for (NSUInteger i = 0; i < size; i++) {
-        nodeUpdated = [nodeList nodeAtIndex:i];
+        MEGANode *nodeUpdated = [nodeList nodeAtIndex:i];
+        if ([nodeUpdated hasChangedType:MEGANodeChangeTypeRemoved]) {
+            if (nodeUpdated.handle == self.node.handle) {
+                [self currentVersionRemoved];
+                break;
+            } else {
+                if (self.node.mnz_numberOfVersions > 1) {
+                    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationNone];
+                }
+                break;
+            }
+        }
         
-        switch (nodeUpdated.getChanges) {
-                
-            case MEGANodeChangeTypeRemoved:
-                if (nodeUpdated.handle == self.node.handle) {
-                    [self currentVersionRemovedOnNodeList:nodeList];
-                } else {
-                    if (self.node.mnz_numberOfVersions != 0) {
-                        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationNone];
-                    }
-                }
-                break;
-                
-            case MEGANodeChangeTypeParent:
-                if (nodeUpdated.handle == self.node.handle) {
+        if ([nodeUpdated hasChangedType:MEGANodeChangeTypeParent]) {
+            if (nodeUpdated.handle == self.node.handle) {
+                MEGANode *parentNode = [MEGASdkManager.sharedMEGASdk nodeForHandle:nodeUpdated.parentHandle];
+                if (parentNode.isFolder) { //Node moved
+                    self.node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:nodeUpdated.handle];
+                } else { //Node versioned
                     self.node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:nodeUpdated.parentHandle];
-                    [self reloadUI];
                 }
-                break;
-                
-            default:
-                if (nodeUpdated.handle == self.node.handle) {
-                    [self reloadOrShowWarningAfterActionOnNode:nodeUpdated];
-                }
-                break;
+                [self reloadUI];
+            }
+        }
+        
+        if (nodeUpdated.handle == self.node.handle) {
+            [self reloadOrShowWarningAfterActionOnNode:nodeUpdated];
+            break;
         }
     }
 }

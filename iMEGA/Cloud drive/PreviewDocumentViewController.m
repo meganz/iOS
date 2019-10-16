@@ -321,7 +321,11 @@
         }
             
         case MegaNodeActionTypeCopy:
+            [node mnz_copyInViewController:self];
+            break;
         case MegaNodeActionTypeMove:
+            [node mnz_moveInViewController:self];
+            break;
         case MegaNodeActionTypeImport:
             if ([MEGAReachabilityManager isReachableHUDIfNot]) {
                 MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
@@ -329,15 +333,7 @@
                 
                 BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
                 browserVC.selectedNodesArray = @[node];
-                BrowserAction browserAction;
-                if (action == MegaNodeActionTypeCopy) {
-                    browserAction = BrowserActionCopy;
-                } else if (action == BrowserActionMove) {
-                    browserAction = BrowserActionMove;
-                } else {
-                    browserAction = BrowserActionImport;
-                }
-                [browserVC setBrowserAction:browserAction];
+                browserVC.browserAction = BrowserActionImport;
             }
             break;
             
