@@ -1976,3 +1976,5 @@
 "Reconnecting..."="Reconnecting...";
 /* Title shown when the user reconnect in a call. */
 "You are back!"="You are back!";
+/* Subtitle of chat screen when the chat is inactive */
+"Inactive chat"="Inactive chat";
