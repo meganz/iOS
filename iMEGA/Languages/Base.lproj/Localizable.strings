@@ -120,12 +120,14 @@
 "passwordStrong"="This password will withstand most sophisticated brute-force attacks. Please ensure that you will remember it.";
 /*  */
 "agreeWithTheMEGATermsOfService"="I agree with the MEGA <a href=\"terms\">Terms of Service</a>";
+"agreeWithLosingPasswordYouLoseData"="I understand that [S]if I lose my password, I may lose my data.[/S] Read more about <a href=\"terms\">MEGA's end-to-end encryption</a>";
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="Enter a valid name";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="Passwords do not match";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
 "termsCheckboxUnselected"="You need to agree with the Terms of Service to register an account on MEGA.";
+"termsForLosingPasswordCheckboxUnselected"="You need to agree that you understand the danger of losing your password";
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="This email address has already registered an account with MEGA";
 /* Title shown just after doing some action that requires confirming the action by an email */
