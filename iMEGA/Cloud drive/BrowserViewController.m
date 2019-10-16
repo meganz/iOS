@@ -997,7 +997,20 @@
 #pragma mark - MEGAGlobalDelegate
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
-    [self reloadUI];
+    BOOL shouldProcessOnNodesUpdate = NO;
+    if (self.cloudDriveButton.selected) {
+        shouldProcessOnNodesUpdate = [nodeList mnz_shouldProcessOnNodesUpdateForParentNode:self.parentNode childNodesArray:self.nodes.mnz_nodesArrayFromNodeList];
+    } else if (self.incomingButton.selected) {
+        if (self.isParentBrowser) {
+            shouldProcessOnNodesUpdate = [nodeList mnz_shouldProcessOnNodesUpdateInSharedForNodes:self.nodes.mnz_nodesArrayFromNodeList itemSelected:0];
+        } else {
+            shouldProcessOnNodesUpdate = [nodeList mnz_shouldProcessOnNodesUpdateForParentNode:self.parentNode childNodesArray:self.nodes.mnz_nodesArrayFromNodeList];
+        }
+    }
+    
+    if (shouldProcessOnNodesUpdate) {
+        [self reloadUI];
+    }
 }
 
 @end

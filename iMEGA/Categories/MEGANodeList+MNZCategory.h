@@ -9,7 +9,9 @@
 - (NSArray *)mnz_nodesArrayFromNodeList;
 - (NSMutableArray *)mnz_mediaNodesMutableArrayFromNodeList;
 
-- (BOOL)mnz_containsNodeWithParentFolderName:(NSString *)name;
-- (BOOL)mnz_containsNodeWithRestoreFolderName:(NSString *)name;
+#pragma mark - onNodesUpdate filtering
+
+- (BOOL)mnz_shouldProcessOnNodesUpdateForParentNode:(MEGANode *)parentNode childNodesArray:(NSArray<MEGANode *> *)childNodesArray;
+- (BOOL)mnz_shouldProcessOnNodesUpdateInSharedForNodes:(NSArray<MEGANode *> *)nodesArray itemSelected:(NSInteger)itemSelected;
 
 @end

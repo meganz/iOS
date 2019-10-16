@@ -22,7 +22,7 @@
 }
 
 - (NSString *)activityType {
-    return @"GetLinkActivity";
+    return MEGAUIActivityTypeGetLink;
 }
 
 - (NSString *)activityTitle {
