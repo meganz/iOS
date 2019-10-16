@@ -295,7 +295,7 @@
 }
 
 - (BOOL)isSharedFolderSection:(NSInteger)section {
-    return (section == 1 && self.contactDetailsMode == ContactDetailsModeDefault) || (section == 2 && self.contactDetailsMode == ContactDetailsModeFromChat);
+    return (section == 2 && self.contactDetailsMode == ContactDetailsModeDefault) || (section == 2 && self.contactDetailsMode == ContactDetailsModeFromChat);
 }
 
 - (void)openSharedFolderAtIndexPath:(NSIndexPath *)indexPath {
@@ -430,6 +430,15 @@
     }
 }
 
+- (ContactTableViewCell *)chatNotificationTableviewCell {
+    ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsNotificationsTypeID"];
+    cell.nameLabel.font = [UIFont mnz_SFUIRegularWithSize:15.0f];
+    [self.chatNotificationControl configureWithCell:(id<ChatNotificationControlCellProtocol>)cell
+                                             chatId:self.chatRoom.chatId];
+    cell.delegate = self;
+    return cell;
+}
+
 #pragma mark - IBActions
 
 - (IBAction)notificationsSwitchValueChanged:(UISwitch *)sender {
@@ -495,7 +504,7 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     NSInteger numberOfSections = 0;
     if (self.contactDetailsMode == ContactDetailsModeDefault) {
-        numberOfSections = 1;
+        numberOfSections = 2;
     } else if (self.contactDetailsMode == ContactDetailsModeFromChat) {
         numberOfSections = 3;
     } else if (self.contactDetailsMode == ContactDetailsModeFromGroupChat) {
@@ -526,6 +535,8 @@
         if (section == 0) {
             numberOfRows = 1;
         } else if (section == 1) {
+            numberOfRows = 1;
+        } else if (section == 2) {
             numberOfRows = self.incomingNodeListForUser.size.integerValue;
         }
     } else if (self.contactDetailsMode == ContactDetailsModeFromChat) {
@@ -545,7 +556,11 @@
     
     if (self.contactDetailsMode == ContactDetailsModeDefault) {
         switch (indexPath.section) {
-            case 0:
+            case 0: // Chat Notification
+                cell = [self chatNotificationTableviewCell];
+                break;
+                
+            case 1:
                 cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
                 if (self.user.visibility == MEGAUserVisibilityVisible) { //Remove Contact
                     cell.avatarImageView.image = [UIImage imageNamed:@"delete"];
@@ -559,8 +574,8 @@
                     cell.nameLabel.font = [UIFont mnz_SFUIRegularWithSize:15.0f];
                 }
                 break;
-                
-            case 1: //Shared folders
+    
+            case 2: //Shared folders
                 cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsSharedFolderTypeID" forIndexPath:indexPath];
                 MEGANode *node = [self.incomingNodeListForUser nodeAtIndex:indexPath.row];
                 cell.avatarImageView.image = [Helper incomingFolderImage];
@@ -576,11 +591,7 @@
     } else if (self.contactDetailsMode == ContactDetailsModeFromChat) {
         switch (indexPath.section) {
             case 0:
-                cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsNotificationsTypeID"];
-                cell.nameLabel.font = [UIFont mnz_SFUIRegularWithSize:15.0f];
-                [self.chatNotificationControl configureWithCell:(id<ChatNotificationControlCellProtocol>)cell
-                                                         chatId:self.chatRoom.chatId];
-                cell.delegate = self;
+                cell = [self chatNotificationTableviewCell];
                 break;
                 
             case 1: //Clear Chat History
@@ -689,14 +700,18 @@
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
-    if (self.contactDetailsMode == ContactDetailsModeFromChat && section == 0) {
+    if ((self.contactDetailsMode == ContactDetailsModeFromChat
+         || self.contactDetailsMode == ContactDetailsModeDefault)
+        && section == 0) {
         return [self.chatNotificationControl timeRemainingForDNDDeactivationStringWithChatId:self.chatRoom.chatId];
     }
     
     return nil;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    if (self.contactDetailsMode == ContactDetailsModeFromChat && section == 0) {
+    if ((self.contactDetailsMode == ContactDetailsModeFromChat
+         || self.contactDetailsMode == ContactDetailsModeDefault)
+        && section == 0) {
         return UITableViewAutomaticDimension;
     }
     
@@ -716,7 +731,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (self.contactDetailsMode == ContactDetailsModeDefault) {
         switch (indexPath.section) {
-            case 0: {
+            case 1: {
                 if (self.user.visibility == MEGAUserVisibilityVisible) {
                     [self showRemoveContactAlert];
                 } else {
@@ -725,7 +740,7 @@
                 break;
             }
                 
-            case 1: {
+            case 2: {
                 [self openSharedFolderAtIndexPath:indexPath];
                 break;
             }
