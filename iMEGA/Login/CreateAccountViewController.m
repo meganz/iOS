@@ -41,6 +41,9 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 @property (weak, nonatomic) IBOutlet UIButton *termsCheckboxButton;
 @property (weak, nonatomic) IBOutlet UIButton *termsOfServiceButton;
 
+@property (weak, nonatomic) IBOutlet UIButton *termsForLosingPasswordCheckboxButton;
+@property (weak, nonatomic) IBOutlet UILabel *termsForLosingPasswordLabel;
+
 @property (weak, nonatomic) IBOutlet UIButton *createAccountButton;
 
 @property (weak, nonatomic) InputView *activeInputView;
@@ -101,6 +104,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     }
     
     [self setTermsOfServiceAttributedTitle];
+    [self updateTermsForLosingPasswordTextButtonText];
     
     [self.createAccountButton setTitle:AMLocalizedString(@"createAccount", @"Button title which triggers the action to create a MEGA account") forState:UIControlStateNormal];
     
@@ -173,6 +177,15 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     if (!self.termsCheckboxButton.isSelected) {
         if (valid) {
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudWarning"] status:AMLocalizedString(@"termsCheckboxUnselected", @"Error text shown when you don't have selected the checkbox to agree with the Terms of Service")];
+        }
+        
+        valid = NO;
+    }
+    
+    if (!self.termsForLosingPasswordCheckboxButton.isSelected) {
+        if (valid) {
+            [SVProgressHUD showImage:[UIImage imageNamed:@"hudWarning"]
+                              status:AMLocalizedString(@"termsForLosingPasswordCheckboxUnselected", nil)];
         }
         
         valid = NO;
@@ -290,6 +303,35 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     [self.termsOfServiceButton setAttributedTitle:termsOfServiceMutableAttributedString forState:UIControlStateNormal];
 }
 
+- (void)updateTermsForLosingPasswordTextButtonText {
+    NSString *termsAndConditionForLosingPasswordText = AMLocalizedString(@"agreeWithLosingPasswordYouLoseData", @"");
+    NSString *styledText = [termsAndConditionForLosingPasswordText mnz_stringBetweenString:@"[S]"
+                                                                                 andString:@"[/S]"];
+    NSString *boldText = [termsAndConditionForLosingPasswordText mnz_stringBetweenString:@"<a href=\"terms\">"
+                                                                               andString:@"</a>"];
+    
+    termsAndConditionForLosingPasswordText = [termsAndConditionForLosingPasswordText mnz_removeWebclientFormatters];
+    NSRange styledTextRange = [termsAndConditionForLosingPasswordText rangeOfString:styledText];
+    NSRange boldTextRange = [termsAndConditionForLosingPasswordText rangeOfString:boldText];
+    
+    
+    NSMutableAttributedString *mutableAttributedString = [NSMutableAttributedString.alloc
+                                                          initWithString:termsAndConditionForLosingPasswordText
+                                                          attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f],
+                                                                       NSForegroundColorAttributeName:UIColor.mnz_gray666666}];
+    
+    NSDictionary *styledTextAttributes = @{NSForegroundColorAttributeName : UIColor.mnz_redMain};
+    [mutableAttributedString setAttributes:styledTextAttributes
+                                     range:styledTextRange];
+    
+    NSDictionary *boldTextAttributes = @{NSFontAttributeName : [UIFont mnz_SFUISemiBoldWithSize:12.0f],
+                                         NSForegroundColorAttributeName : UIColor.mnz_gray666666};
+    [mutableAttributedString setAttributes:boldTextAttributes
+                                     range:boldTextRange];
+    
+    self.termsForLosingPasswordLabel.attributedText = mutableAttributedString;
+}
+
 #pragma mark - IBActions
 
 - (IBAction)cancel:(UIBarButtonItem *)sender {
@@ -306,6 +348,16 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 
 - (IBAction)termOfServiceTouchUpInside:(UIButton *)sender {
     [[NSURL URLWithString:@"https://mega.nz/terms"] mnz_presentSafariViewController];
+}
+
+- (IBAction)termsForLosingPasswordCheckboxButtonPressed:(id)sender {
+    self.termsForLosingPasswordCheckboxButton.selected = !self.termsForLosingPasswordCheckboxButton.selected;
+    
+    [self hideKeyboard];
+}
+
+- (IBAction)termsForLosingPasswordTapGesture:(UITapGestureRecognizer *)tapGestureRecognizer {
+    [[NSURL URLWithString:@"https://mega.nz/security"] mnz_presentSafariViewController];
 }
 
 - (IBAction)createAccountTouchUpInside:(id)sender {
