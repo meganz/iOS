@@ -9,6 +9,7 @@
 #import "MEGAInviteContactRequestDelegate.h"
 #import "MEGANavigationController.h"
 #import "MEGANode+MNZCategory.h"
+#import "MEGANodeList+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGARemoveContactRequestDelegate.h"
 #import "MEGAChatCreateChatGroupRequestDelegate.h"
@@ -866,18 +867,24 @@
 #pragma mark - MEGAGlobalDelegate
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
-    
-    BOOL shouldReload = NO;
-    
-    NSUInteger nodeListSize = nodeList.size.unsignedIntegerValue;
-    for (NSUInteger i = 0; i < nodeListSize; i++) {
-        MEGANode *nodeUpdated = [nodeList nodeAtIndex:i];
-        if ([nodeUpdated hasChangedType:MEGANodeChangeTypeInShare] || [nodeUpdated hasChangedType:MEGANodeChangeTypeRemoved]) {
-            shouldReload = YES;
+    BOOL shouldProcessOnNodesUpdate = NO;
+    NSArray *incomingNodesForUserArray = self.incomingNodeListForUser.mnz_nodesArrayFromNodeList;
+    NSArray *nodesUpdateArray = nodeList.mnz_nodesArrayFromNodeList;
+    for (MEGANode *incomingNode in incomingNodesForUserArray) {
+        for (MEGANode *nodeUpdated in nodesUpdateArray) {
+            if (incomingNode.handle == nodeUpdated.handle) {
+                shouldProcessOnNodesUpdate = YES;
+                break;
+            } else {
+                if ([nodeUpdated hasChangedType:MEGANodeChangeTypeInShare] || (nodeUpdated.isFolder && [nodeUpdated hasChangedType:MEGANodeChangeTypeNew]) || [nodeUpdated hasChangedType:MEGANodeChangeTypeRemoved]) {
+                    shouldProcessOnNodesUpdate = YES;
+                    break;
+                }
+            }
         }
     }
     
-    if (shouldReload) {
+    if (shouldProcessOnNodesUpdate) {
         self.incomingNodeListForUser = [[MEGASdkManager sharedMEGASdk] inSharesForUser:self.user];
         [self.tableView reloadData];
     }

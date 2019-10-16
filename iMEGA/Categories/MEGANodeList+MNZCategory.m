@@ -3,6 +3,8 @@
 #import "MEGASdkManager.h"
 #import "NSString+MNZCategory.h"
 
+#import "MEGASdkManager.h"
+
 @implementation MEGANodeList (MNZCategory)
 
 - (NSArray *)mnz_numberOfFilesAndFolders {
@@ -71,33 +73,91 @@
     return mediaNodesMutableArray;
 }
 
-- (BOOL)mnz_containsNodeWithParentFolderName:(NSString *)name {
-    BOOL hasMatchedNode = NO;
-    for (NSUInteger i = 0; i < self.size.unsignedIntegerValue; i++) {
-        MEGANode *node = [self nodeAtIndex:i];
-        MEGANode *parentNode = [MEGASdkManager.sharedMEGASdk nodeForHandle:node.parentHandle];
-        if (parentNode.isFolder && [parentNode.name isEqualToString:name]) {
-            hasMatchedNode = YES;
+#pragma mark - onNodesUpdate filtering
+
+- (BOOL)mnz_shouldProcessOnNodesUpdateForParentNode:(MEGANode *)parentNode childNodesArray:(NSArray<MEGANode *> *)childNodesArray {
+    BOOL shouldProcessOnNodesUpdate = NO;
+    
+    NSArray *nodesUpdatedArray = self.mnz_nodesArrayFromNodeList;
+    for (MEGANode *nodeUpdated in nodesUpdatedArray) {
+        if (parentNode.handle == nodeUpdated.parentHandle) { //It is a child node
+            shouldProcessOnNodesUpdate = YES;
             break;
         }
     }
     
-    return hasMatchedNode;
+    if (!shouldProcessOnNodesUpdate) {
+        NSMutableDictionary *childNodesMutableDictionary = NSMutableDictionary.new;
+        for (MEGANode *childNode in childNodesArray) {
+            [childNodesMutableDictionary setObject:childNode forKey:childNode.base64Handle];
+        }
+        
+        for (MEGANode *nodeUpdated in nodesUpdatedArray) {
+            if ([childNodesMutableDictionary objectForKey:nodeUpdated.base64Handle]) { //Node was a child node. So it was moved (To another place or Rubbish Bin).
+                shouldProcessOnNodesUpdate = YES;
+                break;
+            } else {
+                NSString *parentOfNodeUpdatedBase64Handle = [MEGASdk base64HandleForHandle:nodeUpdated.parentHandle]; //Its parent is one of the folder child nodes
+                if ([childNodesMutableDictionary objectForKey:parentOfNodeUpdatedBase64Handle]) {
+                    shouldProcessOnNodesUpdate = YES;
+                    break;
+                } else {
+                    NSString *previousParentOfNodeUpdatedBase64Handle = [MEGASdk base64HandleForHandle:nodeUpdated.restoreHandle];
+                    if ([childNodesMutableDictionary objectForKey:previousParentOfNodeUpdatedBase64Handle]) { //Its parent WAS one of the folder child nodes. Restored from the Rubbish Bin.
+                        shouldProcessOnNodesUpdate = YES;
+                        break;
+                    }
+                }
+                
+                //Missing case if something is moved inside a child folder node. We would need to know or process the node tree on that cases.
+            }
+        }
+        
+    }
+    
+    return shouldProcessOnNodesUpdate;
 }
 
-
-- (BOOL)mnz_containsNodeWithRestoreFolderName:(NSString *)name {
-    BOOL hasMatchedNode = NO;
-    for (NSUInteger i = 0; i < self.size.unsignedIntegerValue; i++) {
-        MEGANode *node = [self nodeAtIndex:i];
-        MEGANode *restoreNode = [MEGASdkManager.sharedMEGASdk nodeForHandle:node.restoreHandle];
-        if (restoreNode.isFolder && [restoreNode.name isEqualToString:name]) {
-            hasMatchedNode = YES;
+- (BOOL)mnz_shouldProcessOnNodesUpdateInSharedForNodes:(NSArray<MEGANode *> *)nodesArray itemSelected:(NSInteger)itemSelected {
+    BOOL shouldProcessOnNodesUpdate = NO;
+    
+    NSMutableDictionary *sharedNodesMutableDictionary = NSMutableDictionary.new;
+    for (MEGANode *sharedNode in nodesArray) {
+        [sharedNodesMutableDictionary setObject:sharedNode.base64Handle forKey:sharedNode.base64Handle];
+    }
+    
+    NSArray *nodesUpdateArray = self.mnz_nodesArrayFromNodeList;
+    for (MEGANode *nodeUpdate in nodesUpdateArray) {
+        switch (itemSelected) {
+            case 0: {
+                if (nodeUpdate.isInShare) {
+                    return YES;
+                }
+                break;
+            }
+            case 1: {
+                if (nodeUpdate.isOutShare) {
+                    return YES;
+                }
+                break;
+            }
+            case 2: {
+                if ([nodeUpdate hasChangedType:MEGANodeChangeTypePublicLink]) {
+                    return YES;
+                }
+                
+                break;
+            }
+        }
+        
+        if ([sharedNodesMutableDictionary objectForKey:nodeUpdate.base64Handle]) {
+            shouldProcessOnNodesUpdate = YES;
             break;
         }
     }
     
-    return hasMatchedNode;
+    
+    return shouldProcessOnNodesUpdate;
 }
 
 @end
