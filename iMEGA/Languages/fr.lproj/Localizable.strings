@@ -61,7 +61,7 @@
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="Vous avez été déconnecté de cet appareil à partir d’un autre endroit";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="MEGA n’arrive pas à se connecter de façon sécurisée par SSL. Vous êtes peut-être sur un réseau Wi-Fi public avec des exigences supplémentaires.";
+"sslUnverified_alertTitle"="MEGA n’arrive pas à se connecter de façon sécurisée par SSL. Vous vous trouvez peut-être sur un réseau Wi-Fi public avec des exigences supplémentaires.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="Le contenu auquel vous tentez d’accéder n’est pas proposé pour ce compte. Veuillez essayer de vous connecter avec le même compte que pour le client Web mobile.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
@@ -81,7 +81,7 @@
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="Créer un compte";
 /* Message shown when the user writes a wrong email or password on login */
-"invalidMailOrPassword"="Adresse courriel ou mot de passe invalide. Veuillez ressayer";
+"invalidMailOrPassword"="L’adresse courriel ou le mot de passe est invalide. Veuillez ressayer";
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="Vous avez tenté de vous connecter trop de fois. Veuillez attendre jusqu'à %@ et ressayer.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
@@ -685,15 +685,15 @@
 /* Navigation path for Storage settings in iOS */
 "Settings > General > %@ Storage"="Réglages > Général > Stockage %@";
 /* Title of the switch to config whether to upload videos for Live Photos */
-"Upload videos for Live Photos"="Téléverser les vidéos pour les photos Live";
+"Upload videos for Live Photos"="Téléverser les vidéos pour les Live Photos";
 /* Title of the switch to config whether to upload all burst photos */
 "Upload all burst photos"="Téléverser toutes les photos en rafale";
 /* Title of the switch to config whether to upload Hidden Album */
 "Upload Hidden Album"="Téléverser l'album Masqués";
 /* Footer description when upload videos for Live Photos is enabled */
-"The video and the photo in each Live Photo will be uploaded."="Les versions photo et vidéo de chaque photo Live seront téléversées.";
+"The video and the photo in each Live Photo will be uploaded."="Les versions photo et vidéo de chaque Live Photo seront téléversées.";
 /* Footer description when upload videos for Live Photos is disabled */
-"Only the photo in each Live Photo will be uploaded."="Seule la version photo de chaque photo Live sera téléversée.";
+"Only the photo in each Live Photo will be uploaded."="Seule la version photo de chaque Live Photo sera téléversée.";
 /* Footer description when upload all burst photos is enabled */
 "All the photos from your burst photo sequences will be uploaded."="Toutes les photos de vos séquences de photos en rafale seront téléversées.";
 /* Footer description when upload all burst photos is disabled */
@@ -832,9 +832,9 @@
 /* Headline for parking an account (basically restarting from scratch) */
 "parkAccount"="Remiser le compte";
 /* Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed "Recovery Key") */
-"startingFreshAccount"="Je reconnais que je commence un nouveau compte vide, et que je perdrai toutes les données de mon compte actuel, à moins de me souvenir de mon mot de passe ou de trouver une clé de récupération exportée.";
+"startingFreshAccount"="Je reconnais que je commence un nouveau compte vide et que je perdrai toutes les données de mon compte actuel, à moins de me souvenir de mon mot de passe ou de trouver une clé de récupération exportée.";
 /* Caption of the button to proceed */
-"startNewAccount"="Démarrer un nouveau compte";
+"startNewAccount"="Commencer un nouveau compte";
 /*  */
 "yourAccounHasBeenParked"="Votre ancien compte a été remisé avec succès. Vous pouvez maintenant vous connecter à votre nouveau compte.";
 /* Hint text to suggest that the user have to write the new email on it */
@@ -1605,11 +1605,11 @@
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="Vous détenez les clés";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
-"Security is why we exist, your files are safe with us behind a well oiled encryption machine where only you can access your files."="La sécurité est notre raison d’être. Avec nous, vos fichiers sont en sécurité à l’abri d’un système de chiffrement efficace dans lequel vous seul avez accès à vos fichiers.";
+"Security is why we exist, your files are safe with us behind a well oiled encryption machine where only you can access your files."="La sécurité est notre raison d’être. Avec nous, vos fichiers sont en sécurité, protégés par un système de chiffrement efficace dans lequel vous seul avez accès à vos fichiers.";
 /* Title shown in a page of the on boarding screens explaining that the chat is encrypted */
 "Encrypted chat"="Dialogue en ligne chiffré";
 /* Description shown in a page of the onboarding screens explaining the chat feature */
-"Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive."="Le dialogue en ligne est entièrement chiffré, offrant des appels voix, des appels vidéo, une messagerie de groupe et le partage de fichiers intégré à votre disque nuagique.";
+"Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive."="Le dialogue en ligne est entièrement chiffré et offre des appels voix, des appels vidéo, une messagerie de groupe et le partage de fichiers tous intégrés à votre disque nuagique.";
 /* Title shown in a page of the on boarding screens explaining that the user can add contacts to chat and colaborate */
 "Create your Network"="Créer votre réseau";
 /* Description shown in a page of the onboarding screens explaining contacts */
@@ -1617,7 +1617,7 @@
 /* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
 "Your Photos in the Cloud"="Vos photos dans le nuage";
 /* Description shown in a page of the onboarding screens explaining the camera uploads feature */
-"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="Les téléversements de l’appareil photo sont une fonction essentielle de tout appareil mobile, et nous nous en occupons pour vous. Créez votre compte maintenant.";
+"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="Téléversements de l’appareil photo est une fonction essentielle de tout appareil mobile et nous nous en occupons pour vous. Créez votre compte maintenant.";
 /* Button which triggers the initial setup */
 "Setup MEGA"="Configurer MEGA";
 /* Detailed explanation of why the user should give some permissions to MEGA */
@@ -1951,7 +1951,7 @@
 /* Title of the screen that shows the users with whom the user can share a folder */
 "Share with"="Partager avec";
 /* Chat Notifications DND: Option that does not deactivate DND automatically */
-"Until I Turn it On Again"="Until I Turn it On Again";
+"Until I Turn it On Again"="Until I turn it on again";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
 "30 minutes"="30 minutes";
 /* Chat Notifications DND: Option that deactivates DND after 1 hour */
@@ -1961,7 +1961,7 @@
 /* Chat Notifications DND: Option that deactivates DND after 24 hours */
 "24 hours"="24 hours";
 /* Chat Notifications DND: Title bar message for the dnd activate options */
-"Mute chat Notifications for"="Mute chat Notifications for";
+"Mute chat Notifications for"="Mute chat notifications for";
 /* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
 "Muted forever"="Muted forever";
 /* Chat Notifications DND: DND once activated with timing option, this message will appear below the DND on/off switch with the actual time left to deactivate DND replacing the placeholder below */
