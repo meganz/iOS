@@ -154,6 +154,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     
     [self.view addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)]];
     
+    [self.cloudDriveButton setTitle:AMLocalizedString(@"cloudDrive", @"Title for the cloud drive section") forState:UIControlStateNormal];
     [self.recentsButton setTitle:AMLocalizedString(@"Recents", @"Title for the recents section") forState:UIControlStateNormal];
     self.moreBarButtonItem.accessibilityLabel = AMLocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
     
@@ -1956,11 +1957,18 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 #pragma mark - MEGAGlobalDelegate
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
-    if (self.nodes.size.unsignedIntegerValue == 0) {
-        self.shouldDetermineLayout = YES;
+    BOOL shouldProcessOnNodesUpdate = NO; //DisplayModeRecents
+    if (self.displayMode == DisplayModeRubbishBin || self.cloudDriveButton.isSelected) {
+        shouldProcessOnNodesUpdate = [nodeList mnz_shouldProcessOnNodesUpdateForParentNode:self.parentNode childNodesArray:self.nodes.mnz_nodesArrayFromNodeList];
     }
-    [self.nodesIndexPathMutableDictionary removeAllObjects];
-    [self reloadUI];
+    
+    if (shouldProcessOnNodesUpdate) {
+        if (self.nodes.size.unsignedIntegerValue == 0) {
+            self.shouldDetermineLayout = YES;
+        }
+        [self.nodesIndexPathMutableDictionary removeAllObjects];
+        [self reloadUI];
+    }
 }
 
 #pragma mark - MEGATransferDelegate
