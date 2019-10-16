@@ -19,7 +19,7 @@ class InviteContactViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        navigationItem.title = NSLocalizedString("inviteContact", comment: "Text shown when the user tries to make a call and the receiver is not a contact")
+        navigationItem.title = AMLocalizedString("inviteContact", "Text shown when the user tries to make a call and the receiver is not a contact")
         
         let contactLinkCreateDelegate = MEGAContactLinkCreateRequestDelegate { (request) in
             guard let base64Handle = MEGASdk.base64Handle(forHandle: request.nodeHandle) else { return }
@@ -96,7 +96,7 @@ extension InviteContactViewController: CNContactPickerDelegate {
                 let composeVC = MFMessageComposeViewController()
                 composeVC.messageComposeDelegate = self
                 composeVC.recipients = phones
-                composeVC.body = NSLocalizedString("Hi, Have encrypted conversations on Mega with me and get 50GB free storage.", comment: "Text to send as SMS message to user contacts inviting them to MEGA") + " " + self.userLink
+                composeVC.body = AMLocalizedString("Hi, Have encrypted conversations on Mega with me and get 50GB free storage.", "Text to send as SMS message to user contacts inviting them to MEGA") + " " + self.userLink
                 self.present(composeVC, animated: true, completion: nil)
             }
         }

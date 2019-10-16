@@ -20,8 +20,8 @@ import UIKit
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.title = NSLocalizedString("Contacts on MEGA", comment: "Text used as a section title or similar showing the user the phone contacts using MEGA")
-        inviteContactLabel.text = NSLocalizedString("inviteContact", comment: "Text shown when the user tries to make a call and the receiver is not a contact")
+        navigationItem.title = AMLocalizedString("Contacts on MEGA", "Text used as a section title or similar showing the user the phone contacts using MEGA")
+        inviteContactLabel.text = AMLocalizedString("inviteContact", "Text shown when the user tries to make a call and the receiver is not a contact")
         searchController = Helper.customSearchController(withSearchResultsUpdaterDelegate: self, searchBarDelegate: self)
         self.searchController.hidesNavigationBarDuringPresentation = false
         searchFixedView.addSubview(searchController.searchBar)
@@ -111,7 +111,7 @@ extension ContactsOnMegaViewController: UITableViewDataSource {
 extension ContactsOnMegaViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        contactsOnMegaHeaderTitle.text = NSLocalizedString("Contacts on MEGA", comment: "Text used as a section title or similar showing the user the phone contacts using MEGA").uppercased()
+        contactsOnMegaHeaderTitle.text = AMLocalizedString("Contacts on MEGA", "Text used as a section title or similar showing the user the phone contacts using MEGA").uppercased()
         return contactsOnMegaHeader
     }
     
@@ -188,22 +188,22 @@ extension ContactsOnMegaViewController: DZNEmptyDataSetSource {
         if (MEGAReachabilityManager.isReachable()) {
             if (self.searchController.isActive ) {
                 if (self.searchController.searchBar.text!.count > 0) {
-                    return NSAttributedString(string: NSLocalizedString("noResults", comment: "Title shown when you make a search and there is 'No Results'"))
+                    return NSAttributedString(string: AMLocalizedString("noResults", "Title shown when you make a search and there is 'No Results'"))
                 } else {
                     return nil
                 }
             } else {
-                return NSAttributedString(string: NSLocalizedString("contactsEmptyState_title", comment: "Title shown when the Contacts section is empty, when you have not added any contact."))
+                return NSAttributedString(string: AMLocalizedString("contactsEmptyState_title", "Title shown when the Contacts section is empty, when you have not added any contact."))
             }
         } else {
-            return NSAttributedString(string: NSLocalizedString("noInternetConnection", comment: "No Internet Connection"))
+            return NSAttributedString(string: AMLocalizedString("noInternetConnection", "No Internet Connection"))
         }
     }
 
     func description(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
         if (MEGAReachabilityManager.isReachable()) {
             if (!self.searchController.isActive) {
-                return NSAttributedString(string: NSLocalizedString("Invite contacts and start chatting securely with MEGA’s encrypted chat.", comment: "Text encouraging the user to invite contacts to MEGA"))
+                return NSAttributedString(string: AMLocalizedString("Invite contacts and start chatting securely with MEGA’s encrypted chat.", "Text encouraging the user to invite contacts to MEGA"))
             }
         }
         return nil
