@@ -427,6 +427,8 @@
 		83B841682051913C00E5AC69 /* MEGAGetThumbnailRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A820DA3B1F0E5BDC00F1F832 /* MEGAGetThumbnailRequestDelegate.m */; };
 		83BC4F1D216B72E800000D30 /* MEGAGroupCallPeer.m in Sources */ = {isa = PBXBuildFile; fileRef = 83BC4F1C216B72E800000D30 /* MEGAGroupCallPeer.m */; };
 		83D64E2D20178A0400E24155 /* PasswordReminder.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83D64E2C20178A0400E24155 /* PasswordReminder.storyboard */; };
+		83D726592316903D007B2E58 /* ContactsHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D726582316903D007B2E58 /* ContactsHeaderFooterView.swift */; };
+		83D7265B23169067007B2E58 /* ContactsHeaderFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83D7265A23169067007B2E58 /* ContactsHeaderFooterView.xib */; };
 		83E076F52179D7BC00058409 /* NodeCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E076F42179D7BC00058409 /* NodeCollectionViewCell.m */; };
 		83FB1431219AC7CD00418BE6 /* OfflineTableViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83FB1430219AC7CD00418BE6 /* OfflineTableViewViewController.m */; };
 		83FB1434219AC7DD00418BE6 /* OfflineCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83FB1433219AC7DD00418BE6 /* OfflineCollectionViewController.m */; };
@@ -1578,6 +1580,7 @@
 		831D61A4218738D20038F5B8 /* MOFolderLayout+CoreDataProperties.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "MOFolderLayout+CoreDataProperties.m"; sourceTree = "<group>"; };
 		831FBEA020EF697200AC1B91 /* MEGAArchiveChatRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAArchiveChatRequestDelegate.h; sourceTree = "<group>"; };
 		831FBEA120EF697200AC1B91 /* MEGAArchiveChatRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAArchiveChatRequestDelegate.m; sourceTree = "<group>"; };
+		83209DF6231D05B700F5E2DB /* ContacLinkQRType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContacLinkQRType.h; sourceTree = "<group>"; };
 		8326F380229FC032009BA19A /* MEGALoadingMessagesHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGALoadingMessagesHeaderView.h; sourceTree = "<group>"; };
 		8326F381229FC032009BA19A /* MEGALoadingMessagesHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGALoadingMessagesHeaderView.m; sourceTree = "<group>"; };
 		8326F382229FC032009BA19A /* MEGALoadingMessagesHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MEGALoadingMessagesHeaderView.xib; sourceTree = "<group>"; };
@@ -1657,6 +1660,8 @@
 		83BC4F1B216B72E800000D30 /* MEGAGroupCallPeer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MEGAGroupCallPeer.h; path = Chat/Model/MEGAGroupCallPeer.h; sourceTree = "<group>"; };
 		83BC4F1C216B72E800000D30 /* MEGAGroupCallPeer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGAGroupCallPeer.m; path = Chat/Model/MEGAGroupCallPeer.m; sourceTree = "<group>"; };
 		83D64E2C20178A0400E24155 /* PasswordReminder.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PasswordReminder.storyboard; sourceTree = "<group>"; };
+		83D726582316903D007B2E58 /* ContactsHeaderFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsHeaderFooterView.swift; sourceTree = "<group>"; };
+		83D7265A23169067007B2E58 /* ContactsHeaderFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContactsHeaderFooterView.xib; sourceTree = "<group>"; };
 		83E076F32179D7BC00058409 /* NodeCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NodeCollectionViewCell.h; sourceTree = "<group>"; };
 		83E076F42179D7BC00058409 /* NodeCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NodeCollectionViewCell.m; sourceTree = "<group>"; };
 		83FB142F219AC7CD00418BE6 /* OfflineTableViewViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OfflineTableViewViewController.h; sourceTree = "<group>"; };
@@ -3605,6 +3610,7 @@
 				831A4F08229C339200EBE256 /* TransfersSelected.h */,
 				5BC4913020AC684500F7F952 /* TwoFactorAuthentication.h */,
 				5B72A14B20D3A69C007FE4FD /* URLType.h */,
+				83209DF6231D05B700F5E2DB /* ContacLinkQRType.h */,
 			);
 			path = Headers;
 			sourceTree = "<group>";
@@ -3845,6 +3851,8 @@
 				415226771A692ECC00EC7BB6 /* ContactTableViewCell.m */,
 				835223AF205957DD00A47438 /* ItemCollectionViewCell.h */,
 				835223B0205957DD00A47438 /* ItemCollectionViewCell.m */,
+				83D726582316903D007B2E58 /* ContactsHeaderFooterView.swift */,
+				83D7265A23169067007B2E58 /* ContactsHeaderFooterView.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -5107,6 +5115,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83D7265B23169067007B2E58 /* ContactsHeaderFooterView.xib in Resources */,
 				5B1F74D52126E30C00F09A16 /* AwaitingEmailConfirmationView.xib in Resources */,
 				947F5DE31FD19AD7004FAC80 /* SF-UI-Text-Bold.otf in Resources */,
 				A82E5BF51F3470B5003C149C /* Spotlight_folder.png in Resources */,
@@ -5416,6 +5425,7 @@
 				4131997A1BD7BD5D002CD6EA /* DTTimePeriodChain.m in Sources */,
 				A86B9F602316D6AB00F35E7A /* FLEXWebViewController.m in Sources */,
 				B6B959412193A9140064334D /* ThumbnailUploadOperation.m in Sources */,
+				83D726592316903D007B2E58 /* ContactsHeaderFooterView.swift in Sources */,
 				A85740C52032F6B80033034C /* MOChatDraft+CoreDataClass.m in Sources */,
 				4122C0E61B274E8C001CE833 /* LocalizationSystem.m in Sources */,
 				5BADE39A1F02BD1F009C9AD7 /* MEGANodeList+MNZCategory.m in Sources */,

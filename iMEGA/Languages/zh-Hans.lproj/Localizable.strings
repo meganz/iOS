@@ -61,7 +61,7 @@
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="您已从其他位置登出该设备";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="MEGA无法通过SSL安全连接。您可能需要使用公共WiFi。";
+"sslUnverified_alertTitle"="MEGA无法通过SSL进行安全连接。您可能正在使用受限制的公共网络。";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="您的访问内容不可用于此帐户。请在手机客户端登录与之相同的MEGA帐户。";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
@@ -489,9 +489,9 @@
 /* Message shown while uploading files. Plural. */
 "cameraUploadsPendingFiles"="正在上传，%lu 文件待处理";
 /* Message shown when camera upload paused because of no WiFi. Singular. */
-"Upload paused because of no WiFi, 1 file pending"="无WiFi连接，上传已暂停，1个文件待上传";
+"Upload paused because of no WiFi, 1 file pending"="无Wi-Fi连接，上传已暂停，1个文件等待上传";
 /* Message shown when camera upload paused because of no WiFi. Plural. */
-"Upload paused because of no WiFi, %lu files pending"="无WiFi连接，上传已暂停，%lu个文件待上传";
+"Upload paused because of no WiFi, %lu files pending"="无Wi-Fi连接，上传已暂停，%lu个文件等待上传";
 /* Message shown the pending video file when photos uploaded and video upload is not enabled. Singular. */
 "Photos uploaded, video uploads are off, 1 video not uploaded"="照片上传，视频上传已关闭；1个视频未上传";
 /* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
@@ -702,8 +702,10 @@
 "The Hidden Album is where you hide photos or videos in your device Photos app."="隐藏相册是指您在设备的照片中隐藏照片或视频的地方。";
 /* Title of the switch to config whether to upload Shared Albums */
 "Upload Shared Albums"="上传共享相册";
-/* Footer description for Upload Shared Albums title */
-"Shared Albums are where you share with other people and subscribe to other people's shares in your device's Photos app."="共享相册是指您在设备的照片应用中与他人共享以及订阅他人共享的相册。";
+/* Footer description for Upload Shared Albums title when option enabled */
+"Shared Albums from your device's Photos app will be uploaded."="Shared Albums from your device’s Photos app will be uploaded.";
+/* Footer description for Upload Shared Albums title when option disabled */
+"Shared Albums from your device's Photos app will not be uploaded."="Shared Albums from your device’s Photos app will not be uploaded.";
 /* Title of the switch to config whether to upload synced albums */
 "Upload albums synced from iTunes"="上传iTunes中已同步的相册";
 /* Footer description for upload synced albums title */
@@ -802,6 +804,8 @@
 "filesFolderRemovedToRubbishBinMessage"="已从MEGA删除%d 个文件与1个文件夹";
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
 "filesFoldersRemovedToRubbishBinMessage"="已从MEGA删除[A]个文件和[B]个文件夹";
+/* Hint text to suggest that the user have to write the new password on it */
+"newPassword"="新密码";
 /* Hint text where the user have to re-write the new password to confirm it */
 "confirmPassword"="确认密码";
 /* Success message shown when the password has been changed */
@@ -1189,6 +1193,8 @@
 "moderator"="共同管理";
 /* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
 "standard"="标准模式";
+/* A button title which removes a participant from a chat. */
+"removeParticipant"="删除该成员";
 /* Title show above the name of the persons with whom you're chatting */
 "chattingWith"="聊天对象";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
@@ -1247,6 +1253,8 @@
 "dismiss"="解除";
 /* Notification text body shown when you have received a new chat message */
 "newMessage"="新信息";
+/* Notification text body shown when you have received a contact request */
+"contactRequest"="联系人邀请";
 /* Notification text body shown when you have received a new shared folder */
 "newSharedFolder"="新共享文件夹";
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
@@ -1932,3 +1940,31 @@
 "This folder has been the subject of a takedown notice."="此文件夹接获下架通知且已被移除";
 /* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
 "Dispute Takedown"="解除争议";
+/* Title of the "Links" Shared Items. */
+"Links"="Links";
+/* Title for empty state view of "Links" in Shared Items. */
+"No Public Links"="无公共链接";
+/* Text to indicate that the user will leave an incoming shared folder. */
+"Leave Share"="Leave Share";
+/* Text indicating to the user the action that will be executed on tap. */
+"Manage Share"="Manage Share";
+/* Title of the screen that shows the users with whom the user can share a folder */
+"Share with"="分享";
+/* Chat Notifications DND: Option that does not deactivate DND automatically */
+"Until I Turn it On Again"="直到再次开启时";
+/* Chat Notifications DND: Option that deactivates DND after 30 minutes */
+"30 minutes"="30分钟";
+/* Chat Notifications DND: Option that deactivates DND after 1 hour */
+"1 hour"="1小时";
+/* Chat Notifications DND: Option that deactivates DND after 6 hours */
+"6 hours"="6小时";
+/* Chat Notifications DND: Option that deactivates DND after 24 hours */
+"24 hours"="24小时";
+/* Chat Notifications DND: Title bar message for the dnd activate options */
+"Mute chat Notifications for"="静音聊天通知";
+/* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
+"Muted forever"="保持静音";
+/* Chat Notifications DND: DND once activated with timing option, this message will appear below the DND on/off switch with the actual time left to deactivate DND replacing the placeholder below */
+"%@ left"="%@已离开";
+/* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
+"Chat Notifications"="Chat Notifications";

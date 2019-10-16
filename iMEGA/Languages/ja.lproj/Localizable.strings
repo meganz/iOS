@@ -61,7 +61,7 @@
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="別の場所から、この機器はログアウトされました。";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="MEGAはSSL経由では安全に接続できません。あなたは追加要件があるパブリックWiFi上にいるかもしれません。";
+"sslUnverified_alertTitle"="MEGAはSSL経由では安全に接続できません。あなたは追加要件を伴うWi-Fiを使っているかもしれません。";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="アクセスしようとしているコンテンツは、このアカウントではご利用いただけません。モバイルウェブクライアントと同じアカウントでログインしてみてください。";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
@@ -489,9 +489,9 @@
 /* Message shown while uploading files. Plural. */
 "cameraUploadsPendingFiles"="アップロード中、%luファイル保留中";
 /* Message shown when camera upload paused because of no WiFi. Singular. */
-"Upload paused because of no WiFi, 1 file pending"="WiFi接続がないためアップロードを一時停止しました。1個のファイルを保留中";
+"Upload paused because of no WiFi, 1 file pending"="WiFi接続がないためアップロードが一時停止されました。1個のファイルが保留中";
 /* Message shown when camera upload paused because of no WiFi. Plural. */
-"Upload paused because of no WiFi, %lu files pending"="WiFi接続がないためアップロードを一時停止しました。%lu個のファイルを保留中";
+"Upload paused because of no WiFi, %lu files pending"="WiFi接続がないためアップロードが一時停止されました。%lu個のファイルが保留中";
 /* Message shown the pending video file when photos uploaded and video upload is not enabled. Singular. */
 "Photos uploaded, video uploads are off, 1 video not uploaded"="写真がアップロードされましたが、動画のアップロードはオフです。1本の動画がアップロードされていません";
 /* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
@@ -671,7 +671,7 @@
 /* Footer for video uploads switch section when disabled */
 "When enabled, videos will be uploaded."="有効にすると、動画がアップロードされます。";
 /* Title for new camera upload feature */
-"New Camera Upload!"="新しいカメラアップロードオプション！";
+"New Camera Upload!"="新しいカメラアップロードオプション！　";
 /* A messge for camera upload v2 migration */
 "Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="HEIC/HEVC写真と動画を、より広く互換性があるJPEG/H.264形式に変換するように選択できるようになりました。";
 /* Title for an action to use most compatible formats */
@@ -702,8 +702,10 @@
 "The Hidden Album is where you hide photos or videos in your device Photos app."="隠しアルバムは、あなたの端末の写真アプリで非表示にしている写真や動画の場所です。";
 /* Title of the switch to config whether to upload Shared Albums */
 "Upload Shared Albums"="共有アルバムをアップロード";
-/* Footer description for Upload Shared Albums title */
-"Shared Albums are where you share with other people and subscribe to other people's shares in your device's Photos app."="共有アルバムでは、他の人と共有したり、あなたの端末の写真アプリで他の人の共有を購読したりできます。";
+/* Footer description for Upload Shared Albums title when option enabled */
+"Shared Albums from your device's Photos app will be uploaded."="Shared Albums from your device’s Photos app will be uploaded.";
+/* Footer description for Upload Shared Albums title when option disabled */
+"Shared Albums from your device's Photos app will not be uploaded."="Shared Albums from your device’s Photos app will not be uploaded.";
 /* Title of the switch to config whether to upload synced albums */
 "Upload albums synced from iTunes"="iTunesから同期されたアルバムをアップロード";
 /* Footer description for upload synced albums title */
@@ -802,6 +804,8 @@
 "filesFolderRemovedToRubbishBinMessage"="MEGAからファイル%dことフォルダ１こ、除去しました。";
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
 "filesFoldersRemovedToRubbishBinMessage"="MEGAからファイル[A]ことフォルダ[B]こ、除去しました。";
+/* Hint text to suggest that the user have to write the new password on it */
+"newPassword"="新しいパスワード";
 /* Hint text where the user have to re-write the new password to confirm it */
 "confirmPassword"="パスワード確認";
 /* Success message shown when the password has been changed */
@@ -1189,6 +1193,8 @@
 "moderator"="モデレーター";
 /* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
 "standard"="標準";
+/* A button title which removes a participant from a chat. */
+"removeParticipant"="参加者を削除する";
 /* Title show above the name of the persons with whom you're chatting */
 "chattingWith"="チャット相手";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
@@ -1247,6 +1253,8 @@
 "dismiss"="終了する";
 /* Notification text body shown when you have received a new chat message */
 "newMessage"="新しいメッセージ";
+/* Notification text body shown when you have received a contact request */
+"contactRequest"="コンタクト要求";
 /* Notification text body shown when you have received a new shared folder */
 "newSharedFolder"="新しい共有フォルダ";
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
@@ -1932,3 +1940,31 @@
 "This folder has been the subject of a takedown notice."="このフォルダは削除通知の対象となっています。";
 /* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
 "Dispute Takedown"="異議申立による削除";
+/* Title of the "Links" Shared Items. */
+"Links"="Links";
+/* Title for empty state view of "Links" in Shared Items. */
+"No Public Links"="パブリックリンクはありません";
+/* Text to indicate that the user will leave an incoming shared folder. */
+"Leave Share"="Leave Share";
+/* Text indicating to the user the action that will be executed on tap. */
+"Manage Share"="Manage Share";
+/* Title of the screen that shows the users with whom the user can share a folder */
+"Share with"="共有先";
+/* Chat Notifications DND: Option that does not deactivate DND automatically */
+"Until I Turn it On Again"="再びそれをオンにするまで";
+/* Chat Notifications DND: Option that deactivates DND after 30 minutes */
+"30 minutes"="30分";
+/* Chat Notifications DND: Option that deactivates DND after 1 hour */
+"1 hour"="1時間";
+/* Chat Notifications DND: Option that deactivates DND after 6 hours */
+"6 hours"="6時間";
+/* Chat Notifications DND: Option that deactivates DND after 24 hours */
+"24 hours"="24時間";
+/* Chat Notifications DND: Title bar message for the dnd activate options */
+"Mute chat Notifications for"="以下用のチャット通知をミュート：";
+/* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
+"Muted forever"="永遠にミュート";
+/* Chat Notifications DND: DND once activated with timing option, this message will appear below the DND on/off switch with the actual time left to deactivate DND replacing the placeholder below */
+"%@ left"="残り%@";
+/* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
+"Chat Notifications"="Chat Notifications";

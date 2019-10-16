@@ -35,6 +35,7 @@
 #import "CloudDriveTableViewController.h"
 #import "CloudDriveCollectionViewController.h"
 #import "ContactsViewController.h"
+#import "CopyrightWarningViewController.h"
 #import "CustomActionViewController.h"
 #import "CustomModalAlertViewController.h"
 #import "MEGAAssetsPickerController.h"
@@ -153,6 +154,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     
     [self.view addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)]];
     
+    [self.cloudDriveButton setTitle:AMLocalizedString(@"cloudDrive", @"Title for the cloud drive section") forState:UIControlStateNormal];
     [self.recentsButton setTitle:AMLocalizedString(@"Recents", @"Title for the recents section") forState:UIControlStateNormal];
     self.moreBarButtonItem.accessibilityLabel = AMLocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
     
@@ -416,11 +418,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
                                                              style:UIPreviewActionStyleDefault
                                                            handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
                                                                CloudDriveViewController *cloudDriveVC = (CloudDriveViewController *)previewViewController;
-                                                               MEGANavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
-                                                               BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
-                                                               browserVC.selectedNodesArray = @[cloudDriveVC.parentNode];
-                                                               browserVC.browserAction = BrowserActionCopy;
-                                                               [rootViewController presentViewController:navigationController animated:YES completion:nil];
+                                                               [cloudDriveVC.parentNode mnz_copyInViewController:rootViewController];
                                                            }];
     
     NSString *deletePreviewActionTitle;
@@ -529,12 +527,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
                                                                      style:UIPreviewActionStyleDefault
                                                                    handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
                                                                        CloudDriveViewController *cloudDriveVC = (CloudDriveViewController *)previewViewController;
-                                                                       MEGANavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
-                                                                       BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
-                                                                       browserVC.selectedNodesArray = @[cloudDriveVC.parentNode];
-                                                                       browserVC.browserAction = BrowserActionMove;
-                                                                       
-                                                                       [rootViewController presentViewController:navigationController animated:YES completion:nil];
+                                                                       [cloudDriveVC.parentNode mnz_moveInViewController:rootViewController];
                                                                    }];
             
             if (self.displayMode == DisplayModeCloudDrive) {
@@ -832,6 +825,8 @@ static const NSTimeInterval kSearchTimeDelay = .5;
             
             self.nodes = [[MEGASdkManager sharedMEGASdk] childrenForParent:self.parentNode];
 
+            self.moreMinimizedBarButtonItem.enabled = self.nodes.size.integerValue > 0;
+            
             break;
         }
             
@@ -1656,6 +1651,14 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 
 - (IBAction)shareAction:(UIBarButtonItem *)sender {
     UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:self.selectedNodesArray sender:self.shareBarButtonItem];
+    __weak __typeof__(self) weakSelf = self;
+    activityVC.completionWithItemsHandler = ^(UIActivityType  _Nullable activityType, BOOL completed, NSArray * _Nullable returnedItems, NSError * _Nullable activityError) {
+        if (completed && !activityError) {
+            if ([activityType isEqualToString:MEGAUIActivityTypeRemoveLink]) {
+                [weakSelf setEditMode:NO];
+            }
+        }
+    };
     [self presentViewController:activityVC animated:YES completion:nil];
 }
 
@@ -1954,11 +1957,18 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 #pragma mark - MEGAGlobalDelegate
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
-    if (self.nodes.size.unsignedIntegerValue == 0) {
-        self.shouldDetermineLayout = YES;
+    BOOL shouldProcessOnNodesUpdate = NO; //DisplayModeRecents
+    if (self.displayMode == DisplayModeRubbishBin || self.cloudDriveButton.isSelected) {
+        shouldProcessOnNodesUpdate = [nodeList mnz_shouldProcessOnNodesUpdateForParentNode:self.parentNode childNodesArray:self.nodes.mnz_nodesArrayFromNodeList];
     }
-    [self.nodesIndexPathMutableDictionary removeAllObjects];
-    [self reloadUI];
+    
+    if (shouldProcessOnNodesUpdate) {
+        if (self.nodes.size.unsignedIntegerValue == 0) {
+            self.shouldDetermineLayout = YES;
+        }
+        [self.nodesIndexPathMutableDictionary removeAllObjects];
+        [self reloadUI];
+    }
 }
 
 #pragma mark - MEGATransferDelegate
@@ -2049,6 +2059,23 @@ static const NSTimeInterval kSearchTimeDelay = .5;
         }
             break;
             
+        case MegaNodeActionTypeShareFolder: {
+            MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsNavigationControllerID"];
+            ContactsViewController *contactsVC = navigationController.viewControllers.firstObject;
+            contactsVC.nodesArray = @[node];
+            contactsVC.contactsMode = ContactsModeShareFoldersWith;
+            [self presentViewController:navigationController animated:YES completion:nil];
+            break;
+        }
+            
+        case MegaNodeActionTypeManageShare: {
+            ContactsViewController *contactsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsViewControllerID"];
+            contactsVC.node = node;
+            contactsVC.contactsMode = ContactsModeFolderSharedWith;
+            [self.navigationController pushViewController:contactsVC animated:YES];
+            break;
+        }
+            
         case MegaNodeActionTypeFileInfo:
             [self showNodeInfo:node];
             break;
@@ -2057,8 +2084,18 @@ static const NSTimeInterval kSearchTimeDelay = .5;
             [node mnz_leaveSharingInViewController:self];
             break;
             
-        case MegaNodeActionTypeRemoveLink:
+        case MegaNodeActionTypeGetLink:
+        case MegaNodeActionTypeManageLink: {
+            if (MEGAReachabilityManager.isReachableHUDIfNot) {
+                [CopyrightWarningViewController presentGetLinkViewControllerForNodes:@[node] inViewController:UIApplication.mnz_presentingViewController];
+            }
             break;
+        }
+            
+        case MegaNodeActionTypeRemoveLink: {
+            [node mnz_removeLink];
+            break;
+        }
             
         case MegaNodeActionTypeMoveToRubbishBin:
             [node mnz_moveToTheRubbishBinInViewController:self];
@@ -2080,6 +2117,10 @@ static const NSTimeInterval kSearchTimeDelay = .5;
             [node mnz_saveToPhotosWithApi:[MEGASdkManager sharedMEGASdk]];
             break;
             
+        case MegaNodeActionTypeSendToChat:
+            [node mnz_sendToChatInViewController:self];
+            break;
+            
         default:
             break;
     }
@@ -2088,33 +2129,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 #pragma mark - NodeInfoViewControllerDelegate
 
 - (void)presentParentNode:(MEGANode *)node {
-    
-    if (self.searchController.isActive) {
-        NSArray *parentTreeArray = node.mnz_parentTreeArray;
-        
-        //Created a reference to self.navigationController because if the presented view is not the root controller and search is active, the 'popToRootViewControllerAnimated' makes nil the self.navigationController and therefore the parentTreeArray nodes can't be pushed
-        UINavigationController *navigation = self.navigationController;
-        [navigation popToRootViewControllerAnimated:NO];
-        
-        for (MEGANode *node in parentTreeArray) {
-            CloudDriveViewController *cloudDriveVC = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-            cloudDriveVC.parentNode = node;
-            [navigation pushViewController:cloudDriveVC animated:NO];
-        }
-        
-        switch (node.type) {
-            case MEGANodeTypeFolder:
-            case MEGANodeTypeRubbish: {
-                CloudDriveViewController *cloudDriveVC = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-                cloudDriveVC.parentNode = node;
-                [navigation pushViewController:cloudDriveVC animated:NO];
-                break;
-            }
-                
-            default:
-                break;
-        }
-    }
+        [node navigateToParentAndPresent];
 }
 
 @end

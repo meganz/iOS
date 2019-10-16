@@ -106,7 +106,11 @@ typedef NS_ENUM(NSUInteger, AdvancedOptionSection) {
             title = AMLocalizedString(@"The Hidden Album is where you hide photos or videos in your device Photos app.", nil);
             break;
         case AdvancedOptionSectionSharedAlbums:
-            title = AMLocalizedString(@"Shared Albums are where you share with other people and subscribe to other people's shares in your device's Photos app.", nil);
+            if (self.uploadSharedAlbumsSwitch.isOn) {
+                title = AMLocalizedString(@"Shared Albums from your device's Photos app will be uploaded.", nil);
+            } else {
+                title = AMLocalizedString(@"Shared Albums from your device's Photos app will not be uploaded.", nil);
+            }
             break;
         case AdvancedOptionSectionSyncedAlbums:
             title = AMLocalizedString(@"Synced albums are where you sync photos or videos to your device's Photos app from iTunes.", nil);

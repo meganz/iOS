@@ -61,7 +61,7 @@
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="لقد تم تسجيل خروجك من هذا الجهاز من موقع آخر";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="لم ينجح تطبيق MEGA بالاتصال الآمن ببروتوكول الاتصال الآمن SSL. قد تكون متصلا بشبكة لاسلكية WiFi عمومية بمتطلبات خاصة إضافية.";
+"sslUnverified_alertTitle"="MEGA is unable to connect securely through SSL. You might be on public Wi-Fi with additional requirements.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="المحتوى الذي تحاول الدخول إليه غير متاح لهذا الحساب. حاول تسجيل الدخول بنفس الحساب الذي كنت فيه في موقع الويب للجوال.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
@@ -489,9 +489,9 @@
 /* Message shown while uploading files. Plural. */
 "cameraUploadsPendingFiles"="جاري الترفيع، %lu ملف قيد الانتظار";
 /* Message shown when camera upload paused because of no WiFi. Singular. */
-"Upload paused because of no WiFi, 1 file pending"="Upload paused due to no WiFi connection, 1 file pending";
+"Upload paused because of no WiFi, 1 file pending"="Upload paused due to no Wi-Fi connection, 1 file pending";
 /* Message shown when camera upload paused because of no WiFi. Plural. */
-"Upload paused because of no WiFi, %lu files pending"="Upload paused due to no WiFi connection, %lu files pending";
+"Upload paused because of no WiFi, %lu files pending"="Upload paused due to no Wi-Fi connection, %lu files pending";
 /* Message shown the pending video file when photos uploaded and video upload is not enabled. Singular. */
 "Photos uploaded, video uploads are off, 1 video not uploaded"="Photos uploaded, video uploads are off; 1 video not uploaded";
 /* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
@@ -671,7 +671,7 @@
 /* Footer for video uploads switch section when disabled */
 "When enabled, videos will be uploaded."="When enabled, videos will be uploaded.";
 /* Title for new camera upload feature */
-"New Camera Upload!"="New Camera Upload Options!";
+"New Camera Upload!"="New Camera Uploads Options!";
 /* A messge for camera upload v2 migration */
 "Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="Now you can choose to convert HEIC/HEVC photos and videos to the more widely compatible JPEG/H.264 formats.";
 /* Title for an action to use most compatible formats */
@@ -702,8 +702,10 @@
 "The Hidden Album is where you hide photos or videos in your device Photos app."="The Hidden Album is where you hide photos or videos in your device’s Photos app.";
 /* Title of the switch to config whether to upload Shared Albums */
 "Upload Shared Albums"="Upload Shared Albums";
-/* Footer description for Upload Shared Albums title */
-"Shared Albums are where you share with other people and subscribe to other people's shares in your device's Photos app."="Shared Albums are where you share with other people and subscribe to other people’s shares in your device’s Photos app.";
+/* Footer description for Upload Shared Albums title when option enabled */
+"Shared Albums from your device's Photos app will be uploaded."="Shared Albums from your device’s Photos app will be uploaded.";
+/* Footer description for Upload Shared Albums title when option disabled */
+"Shared Albums from your device's Photos app will not be uploaded."="Shared Albums from your device’s Photos app will not be uploaded.";
 /* Title of the switch to config whether to upload synced albums */
 "Upload albums synced from iTunes"="Upload albums synced from iTunes";
 /* Footer description for upload synced albums title */
@@ -802,6 +804,8 @@
 "filesFolderRemovedToRubbishBinMessage"="%d ملفات و1 مجلد تم إزالته من MEGA";
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
 "filesFoldersRemovedToRubbishBinMessage"="[A] ملفات و [B] مجلدات أزيلت من MEGA";
+/* Hint text to suggest that the user have to write the new password on it */
+"newPassword"="كلمة سر جديدة";
 /* Hint text where the user have to re-write the new password to confirm it */
 "confirmPassword"="تأكيد كلمة المرور";
 /* Success message shown when the password has been changed */
@@ -1100,7 +1104,7 @@
 /* A log message in a chat to display that a participant's permission was changed and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the permission name (such as Moderator or Read-only) and [C] will be replaced with the person who did it. Please keep the [A], [B] and [C] placeholders, they will be replaced at runtime. For example: Alice Jones was changed to Moderator by John Smith. */
 "wasChangedToBy"="[A] تم تغييره إلى [B]  عن طريق [C]";
 /* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
-"changedGroupChatNameTo"="[A]  غير اسم المجموعة إلى \"[B]\"";
+"changedGroupChatNameTo"="[A] غير اسم مجموعة المحادثة الى ‘[B]’";
 /* Button label. Allows to add contacts in current chat conversation. */
 "addParticipant"="إضافة مشارك...";
 /* Menu item to add participants to a chat */
@@ -1189,6 +1193,8 @@
 "moderator"="وسيط";
 /* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
 "standard"="معيار";
+/* A button title which removes a participant from a chat. */
+"removeParticipant"="إزالة مشارك";
 /* Title show above the name of the persons with whom you're chatting */
 "chattingWith"="يتحادث مع";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
@@ -1247,6 +1253,8 @@
 "dismiss"="رفض";
 /* Notification text body shown when you have received a new chat message */
 "newMessage"="رسالة جديدة";
+/* Notification text body shown when you have received a contact request */
+"contactRequest"="طلب جهة اتصال";
 /* Notification text body shown when you have received a new shared folder */
 "newSharedFolder"="مجلد مشاركة جديد";
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
@@ -1667,7 +1675,7 @@
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
 "Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="هل تريد انهاء كل الجلسات الفعالة حاليا؟ ذلك سيسجل الخروج من كل هذه الجلسات الفعالة باستثناء الحالية";
 /* Message to inform the local user that someone has joined the current group call */
-"%@ joined the call."="%@ joined the call.";
+"%@ joined the call."="%@ انضم الى المكالمة.";
 /* Message to inform the local user that someone has left the current group call */
 "%@ left the call."="%@ غادر المكالمة.";
 /* Message shown in a chat room when there is an active group call */
@@ -1875,15 +1883,15 @@
 /* Multiple Images title shown in recents section of webclient */
 "%1 Images"="%1 صورة";
 /* Multiple videos title shown in recents section of web client. */
-"%2 Videos"="%2 Videos";
+"%2 Videos"="%2 فيديو";
 /* A single image and single video title shown in recents section of webclient. */
-"1 Image and 1 Video"="1 Image and 1 Video";
+"1 Image and 1 Video"="صورة واحدة و فيديو واحد";
 /* One image and multiple videos title in recents. */
 "1 Image and %2 Videos"="صورة واحدة و%2 فيديو";
 /* Multiple images and 1 video */
 "%1 Images and 1 Video"="%1 صورة وفيديو واحد";
 /* Title for multiple images and multiple videos in recents section */
-"%1 Images and %2 Videos"="%1 Images and %2 Videos";
+"%1 Images and %2 Videos"="%1 صورة و %2 فيديو";
 /* Title for a recent action shown in the webclient, see the attached image for context. */
 "%1 modified by %3"="%1 تم تعديلها من قبل %3";
 /* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
@@ -1932,3 +1940,31 @@
 "This folder has been the subject of a takedown notice."="مجلد خاضع لموضوع إشعار إنهاء الخدمة";
 /* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
 "Dispute Takedown"="Dispute Takedown";
+/* Title of the "Links" Shared Items. */
+"Links"="Links";
+/* Title for empty state view of "Links" in Shared Items. */
+"No Public Links"="No Public Links";
+/* Text to indicate that the user will leave an incoming shared folder. */
+"Leave Share"="Leave Share";
+/* Text indicating to the user the action that will be executed on tap. */
+"Manage Share"="Manage Share";
+/* Title of the screen that shows the users with whom the user can share a folder */
+"Share with"="مشاركة مع";
+/* Chat Notifications DND: Option that does not deactivate DND automatically */
+"Until I Turn it On Again"="Until I turn it on again";
+/* Chat Notifications DND: Option that deactivates DND after 30 minutes */
+"30 minutes"="30 minutes";
+/* Chat Notifications DND: Option that deactivates DND after 1 hour */
+"1 hour"="1 ساعة";
+/* Chat Notifications DND: Option that deactivates DND after 6 hours */
+"6 hours"="6 hours";
+/* Chat Notifications DND: Option that deactivates DND after 24 hours */
+"24 hours"="24 hours";
+/* Chat Notifications DND: Title bar message for the dnd activate options */
+"Mute chat Notifications for"="Mute chat notifications for";
+/* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
+"Muted forever"="Muted forever";
+/* Chat Notifications DND: DND once activated with timing option, this message will appear below the DND on/off switch with the actual time left to deactivate DND replacing the placeholder below */
+"%@ left"="%@ left";
+/* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
+"Chat Notifications"="Chat Notifications";
