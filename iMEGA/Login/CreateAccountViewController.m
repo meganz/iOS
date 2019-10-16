@@ -350,7 +350,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     [[NSURL URLWithString:@"https://mega.nz/terms"] mnz_presentSafariViewController];
 }
 
-- (IBAction)termsForLosingPasswordCheckboxButtonPressed:(id)sender {
+- (IBAction)termsForLosingPasswordCheckboxButtonPressed:(UIButton *)sender {
     self.termsForLosingPasswordCheckboxButton.selected = !self.termsForLosingPasswordCheckboxButton.selected;
     
     [self hideKeyboard];
