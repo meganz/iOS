@@ -277,8 +277,21 @@
 #pragma mark - MEGAGlobalDelegate
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
-    self.recentActionBucketArray = MEGASdkManager.sharedMEGASdk.recentActions;
-    [self.tableView reloadData];
+    BOOL shouldProcessOnNodesUpdate = NO;
+    NSArray *nodesUpdateArray = nodeList.mnz_nodesArrayFromNodeList;
+    for (MEGANode *nodeUpdated in nodesUpdateArray) {
+        if ((nodeUpdated.isFolder && [nodeUpdated hasChangedType:MEGANodeChangeTypeNew]) || [nodeUpdated hasChangedType:MEGANodeChangeTypeRemoved]) {
+            shouldProcessOnNodesUpdate = NO;
+        } else {
+            shouldProcessOnNodesUpdate = YES;
+            break;
+        }
+    }
+    
+    if (shouldProcessOnNodesUpdate) {
+        self.recentActionBucketArray = MEGASdkManager.sharedMEGASdk.recentActions;
+        [self.tableView reloadData];
+    }
 }
 
 @end
