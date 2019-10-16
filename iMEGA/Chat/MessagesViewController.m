@@ -627,7 +627,9 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             chatRoomState = AMLocalizedString(@"archived", @"Title of flag of archived chats.");
         } else {
             if (self.chatRoom.isGroup) {
-                if (self.chatRoom.hasCustomTitle) {
+                if (self.chatRoom.ownPrivilege < MEGAChatRoomPrivilegeRo) {
+                    chatRoomState = AMLocalizedString(@"Inactive chat", @"Subtitle of chat screen when the chat is inactive");
+                } else if (self.chatRoom.hasCustomTitle) {
                     chatRoomState = [self participantsNames];
                 } else {
                     if (self.chatRoom.peerCount) {
