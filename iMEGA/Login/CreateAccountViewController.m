@@ -104,7 +104,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     }
     
     [self setTermsOfServiceAttributedTitle];
-    [self updateTermsForLosingPasswordTextButtonText];
+    [self updateTermsForLosingPasswordLabelWithText];
     
     [self.createAccountButton setTitle:AMLocalizedString(@"createAccount", @"Button title which triggers the action to create a MEGA account") forState:UIControlStateNormal];
     
@@ -303,33 +303,33 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     [self.termsOfServiceButton setAttributedTitle:termsOfServiceMutableAttributedString forState:UIControlStateNormal];
 }
 
-- (void)updateTermsForLosingPasswordTextButtonText {
-    NSString *termsAndConditionForLosingPasswordText = AMLocalizedString(@"agreeWithLosingPasswordYouLoseData", @"");
-    NSString *styledText = [termsAndConditionForLosingPasswordText mnz_stringBetweenString:@"[S]"
-                                                                                 andString:@"[/S]"];
-    NSString *boldText = [termsAndConditionForLosingPasswordText mnz_stringBetweenString:@"<a href=\"terms\">"
-                                                                               andString:@"</a>"];
+- (void)updateTermsForLosingPasswordLabelWithText {
+    NSString *agreementForLosingPasswordText = AMLocalizedString(@"agreeWithLosingPasswordYouLoseData", @"");
     
-    termsAndConditionForLosingPasswordText = [termsAndConditionForLosingPasswordText mnz_removeWebclientFormatters];
-    NSRange styledTextRange = [termsAndConditionForLosingPasswordText rangeOfString:styledText];
-    NSRange boldTextRange = [termsAndConditionForLosingPasswordText rangeOfString:boldText];
+    NSString *styledText = [agreementForLosingPasswordText mnz_stringBetweenString:@"[S]" andString:@"[/S]"];
+    NSString *boldText = [agreementForLosingPasswordText mnz_stringBetweenString:@"<a href=\"terms\">" andString:@"</a>"];
     
+    agreementForLosingPasswordText = [agreementForLosingPasswordText mnz_removeWebclientFormatters];
+
+    NSRange styledTextRange = [agreementForLosingPasswordText rangeOfString:styledText];
+    NSRange boldTextRange = [agreementForLosingPasswordText rangeOfString:boldText];
     
-    NSMutableAttributedString *mutableAttributedString = [NSMutableAttributedString.alloc
-                                                          initWithString:termsAndConditionForLosingPasswordText
-                                                          attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f],
-                                                                       NSForegroundColorAttributeName:UIColor.mnz_gray666666}];
+    NSDictionary *termsMutableAttributedStringAttributes = @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f],
+                                                             NSForegroundColorAttributeName:UIColor.mnz_gray666666};
+    NSMutableAttributedString *termsMutableAttributedString = [NSMutableAttributedString.alloc
+                                                               initWithString:agreementForLosingPasswordText
+                                                               attributes:termsMutableAttributedStringAttributes];
     
     NSDictionary *styledTextAttributes = @{NSForegroundColorAttributeName : UIColor.mnz_redMain};
-    [mutableAttributedString setAttributes:styledTextAttributes
-                                     range:styledTextRange];
+    [termsMutableAttributedString setAttributes:styledTextAttributes
+                                          range:styledTextRange];
     
     NSDictionary *boldTextAttributes = @{NSFontAttributeName : [UIFont mnz_SFUISemiBoldWithSize:12.0f],
                                          NSForegroundColorAttributeName : UIColor.mnz_gray666666};
-    [mutableAttributedString setAttributes:boldTextAttributes
-                                     range:boldTextRange];
+    [termsMutableAttributedString setAttributes:boldTextAttributes
+                                          range:boldTextRange];
     
-    self.termsForLosingPasswordLabel.attributedText = mutableAttributedString;
+    self.termsForLosingPasswordLabel.attributedText = termsMutableAttributedString;
 }
 
 #pragma mark - IBActions
