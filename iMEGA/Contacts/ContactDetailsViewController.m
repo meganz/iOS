@@ -793,12 +793,7 @@
             break;
             
         case MegaNodeActionTypeCopy: {
-            MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
-            [self presentViewController:navigationController animated:YES completion:nil];
-            
-            BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
-            browserVC.selectedNodesArray = @[node];
-            browserVC.browserAction = BrowserActionCopy;
+            [node mnz_copyInViewController:self];
             break;
         }
             
