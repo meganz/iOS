@@ -43,7 +43,7 @@
     
     if (@available(iOS 13.0, *)) {
         if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-            self.descriptionLabel.textColor = [UIColor mnz_basicButtonTextColorForTraitCollection:self.traitCollection];
+            self.descriptionLabel.textColor = [UIColor mnz_subtitlesColorForTraitCollection:self.traitCollection];
         }
     }
 }
@@ -55,7 +55,7 @@
     [self addSubview:self.customView];
     self.customView.frame = self.bounds;
     self.customView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    self.descriptionLabel.textColor = [UIColor mnz_basicButtonTextColorForTraitCollection:self.traitCollection];
+    self.descriptionLabel.textColor = [UIColor mnz_subtitlesColorForTraitCollection:self.traitCollection];
 }
 
 #pragma mark - Setters

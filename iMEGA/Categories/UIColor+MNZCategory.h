@@ -10,10 +10,17 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus);
 + (UIColor *)mnz_mainBarsColorForTraitCollection:(UITraitCollection *)traitCollection;
 
 + (UIColor *)mnz_background;
+
++ (UIColor *)mnz_accountViewsBackgroundColorForTraitCollection:(UITraitCollection *)traitCollection;
++ (UIColor *)mnz_inputsBackgroundColorForTraitCollection:(UITraitCollection *)traitCollection;
+
 + (UIColor *)mnz_label;
 
 + (UIColor *)mnz_basicButtonForTraitCollection:(UITraitCollection *)traitCollection;
-+ (UIColor *)mnz_basicButtonTextColorForTraitCollection:(UITraitCollection *)traitCollection;
+
++ (UIColor *)mnz_subtitlesColorForTraitCollection:(UITraitCollection *)traitCollection;
+
++ (UIColor *)mnz_separatorColorForTraitCollection:(UITraitCollection *)traitCollection;
 
 #pragma mark - Black
 

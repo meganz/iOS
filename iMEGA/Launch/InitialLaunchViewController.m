@@ -97,7 +97,7 @@
 - (void)updateUI {
     self.view.backgroundColor = UIColor.mnz_background;
     
-    self.descriptionLabel.textColor = [UIColor mnz_basicButtonTextColorForTraitCollection:self.traitCollection];
+    self.descriptionLabel.textColor = [UIColor mnz_subtitlesColorForTraitCollection:self.traitCollection];
     
     self.setupButton.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
     [self.setupButton setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];

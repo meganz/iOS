@@ -40,6 +40,8 @@
     self.customView.frame = self.bounds;
     self.customView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
+    [self updateUI];
+    
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
     [self addGestureRecognizer:singleTap];
 }
@@ -56,9 +58,25 @@
         self.topLabel.textColor = UIColor.mnz_redError;
         self.inputTextField.textColor = UIColor.mnz_redError;
     } else {
-        self.topLabel.textColor = UIColor.mnz_gray999999;
-        self.inputTextField.textColor = UIColor.blackColor;
+        self.topLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
+        self.inputTextField.textColor = UIColor.mnz_label;
     }
+}
+
+- (void)updateUI {
+    CALayer *topBorderLayer = CALayer.new;
+    topBorderLayer.frame = CGRectMake(0, 0, super.frame.size.width, 0.5);
+    topBorderLayer.backgroundColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection].CGColor;
+    [self.customView.layer addSublayer:topBorderLayer];
+
+    CALayer *bottomBorderLayer = CALayer.new;
+    bottomBorderLayer.frame = CGRectMake(0, self.customView.frame.size.height, super.frame.size.width, 0.5);
+    bottomBorderLayer.backgroundColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection].CGColor;
+    [self.customView.layer addSublayer:bottomBorderLayer];
+    
+    self.iconImageView.tintColor = self.topLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
+    self.inputTextField.textColor = UIColor.mnz_label;
+    self.backgroundColor = [UIColor mnz_inputsBackgroundColorForTraitCollection:self.traitCollection];
 }
 
 #pragma mark - IBInspectables

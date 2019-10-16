@@ -7,6 +7,7 @@
 #import "MEGALoginRequestDelegate.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
+#import "MEGA-Swift.h"
 #import "NSURL+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 
@@ -32,6 +33,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
 
 @property (weak, nonatomic) IBOutlet UIButton *forgotPasswordButton;
+@property (weak, nonatomic) IBOutlet UIImageView *forgotPasswordImageView;
 
 @property (strong, nonatomic) UITapGestureRecognizer *tapGesture;
 
@@ -43,6 +45,8 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self updateUI];
     
     self.tapGesture = [UITapGestureRecognizer.alloc initWithTarget:self action:@selector(hideKeyboard)];
     self.tapGesture.cancelsTouchesInView = NO;
@@ -107,6 +111,19 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     }
     
     return UIInterfaceOrientationMaskAll;
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [AppearanceManager setupAppearance:self.traitCollection];
+            [AppearanceManager invalidateViews];
+            
+            [self updateUI];
+        }
+    }
 }
 
 #pragma mark - IBActions
@@ -245,6 +262,20 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 
 - (void)hideKeyboard {
     [self.view endEditing:YES];
+}
+
+- (void)updateUI {
+    self.view.backgroundColor = [UIColor mnz_accountViewsBackgroundColorForTraitCollection:self.traitCollection];
+    
+    [self.emailInputView updateUI];
+    [self.passwordView updateUI];
+    
+    [self.forgotPasswordButton setTitleColor:[UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection] forState:UIControlStateNormal];
+    self.forgotPasswordImageView.tintColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
+    
+    self.loginButton.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
+    [self.loginButton setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
+    self.loginButton.layer.shadowColor = UIColor.blackColor.CGColor;
 }
 
 #pragma mark - UIGestureRecognizerDelegate

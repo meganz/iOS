@@ -8,6 +8,7 @@
 #import "MEGALoginRequestDelegate.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
+#import "MEGA-Swift.h"
 #import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
 
@@ -37,6 +38,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self updateUI];
     
     if (UIDevice.currentDevice.iPhone4X) {
         self.logoTopLayoutConstraint.constant = 12.f;
@@ -90,6 +93,19 @@
     }
     
     return UIInterfaceOrientationMaskAll;
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [AppearanceManager setupAppearance:self.traitCollection];
+            [AppearanceManager invalidateViews];
+            
+            [self updateUI];
+        }
+    }
 }
 
 #pragma mark - IBActions
@@ -165,6 +181,19 @@
 - (void)lockUI:(BOOL)boolValue {
     self.passwordView.passwordTextField.enabled = !boolValue;
     self.cancelButton.enabled = !boolValue;
+}
+
+- (void)updateUI {
+    self.view.backgroundColor = [UIColor mnz_accountViewsBackgroundColorForTraitCollection:self.traitCollection];
+    
+    [self.emailInputView updateUI];
+    [self.passwordView updateUI];
+    
+    self.confirmAccountButton.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
+    [self.confirmAccountButton setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
+    self.confirmAccountButton.layer.shadowColor = UIColor.blackColor.CGColor;
+    
+    [self.cancelButton setTitleColor:[UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection] forState:UIControlStateNormal];
 }
 
 #pragma mark - UIResponder

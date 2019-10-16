@@ -161,6 +161,7 @@
     if (self.session) {
         UIViewController *privacyVC = [[UIStoryboard storyboardWithName:@"Launch" bundle:[NSBundle bundleForClass:[LaunchViewController class]]] instantiateViewControllerWithIdentifier:@"PrivacyViewControllerID"];
         privacyVC.view.frame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height);
+        privacyVC.view.backgroundColor = UIColor.mnz_background;
         self.privacyView = privacyVC.view;
         [self.view addSubview:self.privacyView];
     }
