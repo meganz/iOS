@@ -1968,3 +1968,7 @@
 "%@ left"="%@ left";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="Chat Notifications";
+/* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
+"Reconnecting..."="Reconnecting...";
+/* Title shown when the user reconnect in a call. */
+"You are back!"="You are back!";
