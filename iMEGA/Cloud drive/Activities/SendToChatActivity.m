@@ -22,7 +22,7 @@
 }
 
 - (NSString *)activityType {
-    return @"SendToChatActivity";
+    return MEGAUIActivityTypeSendToChat;
 }
 
 - (NSString *)activityTitle {

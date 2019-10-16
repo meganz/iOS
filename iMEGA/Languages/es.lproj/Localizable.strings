@@ -61,7 +61,7 @@
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="La sesión en este dispositivo ha sido cerrada desde otra localización";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="MEGA no se puede conectar de forma segura a través de SSL. Es posible que estés conectado a una WiFi pública con requisitos adicionales.";
+"sslUnverified_alertTitle"="MEGA is unable to connect securely through SSL. You might be on public Wi-Fi with additional requirements.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="El contenido al que estás intentando acceder no pertenece a esta cuenta. Inicia sesión con la misma cuenta que tienes abierta en el navegador.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
@@ -489,9 +489,9 @@
 /* Message shown while uploading files. Plural. */
 "cameraUploadsPendingFiles"="Subida en curso, %lu archivos pendientes";
 /* Message shown when camera upload paused because of no WiFi. Singular. */
-"Upload paused because of no WiFi, 1 file pending"="Subida pausada debido a que no hay conexión WiFi, 1 archivo pendiente";
+"Upload paused because of no WiFi, 1 file pending"="Subida pausada debido a que no hay conexión Wi-Fi, 1 archivo pendiente";
 /* Message shown when camera upload paused because of no WiFi. Plural. */
-"Upload paused because of no WiFi, %lu files pending"="Subida pausada debido a que no hay conexión WiFi, %lu archivos pendientes";
+"Upload paused because of no WiFi, %lu files pending"="Subida pausada debido a que no hay conexión Wi-Fi, %lu archivos pendientes";
 /* Message shown the pending video file when photos uploaded and video upload is not enabled. Singular. */
 "Photos uploaded, video uploads are off, 1 video not uploaded"="Fotos subidas, las subidas de videos están desactivadas;  1 video no subido";
 /* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
@@ -671,7 +671,7 @@
 /* Footer for video uploads switch section when disabled */
 "When enabled, videos will be uploaded."="Al activar, se subirán los videos.";
 /* Title for new camera upload feature */
-"New Camera Upload!"="Nuevas opciones para las subidas de la cámara";
+"New Camera Upload!"="Nuevas opciones para las Subidas de la cámara";
 /* A messge for camera upload v2 migration */
 "Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="Puedes elegir convertir fotos y videos HEIC/HEVC a los formatos más compatibles JPEG/H.264.";
 /* Title for an action to use most compatible formats */
@@ -702,8 +702,10 @@
 "The Hidden Album is where you hide photos or videos in your device Photos app."="El Álbum oculto es donde escondes fotos o videos en la aplicación Fotos de tu dispositivo.";
 /* Title of the switch to config whether to upload Shared Albums */
 "Upload Shared Albums"="Subir Álbumes compartidos";
-/* Footer description for Upload Shared Albums title */
-"Shared Albums are where you share with other people and subscribe to other people's shares in your device's Photos app."="Shared Albums are where you share with other people and subscribe to other people’s shares in your device’s Photos app.";
+/* Footer description for Upload Shared Albums title when option enabled */
+"Shared Albums from your device's Photos app will be uploaded."="Shared Albums from your device’s Photos app will be uploaded.";
+/* Footer description for Upload Shared Albums title when option disabled */
+"Shared Albums from your device's Photos app will not be uploaded."="Shared Albums from your device’s Photos app will not be uploaded.";
 /* Title of the switch to config whether to upload synced albums */
 "Upload albums synced from iTunes"="Subir álbumes sincronizados desde iTunes";
 /* Footer description for upload synced albums title */
@@ -802,6 +804,8 @@
 "filesFolderRemovedToRubbishBinMessage"="%d archivos y 1 carpeta eliminados de MEGA";
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
 "filesFoldersRemovedToRubbishBinMessage"="[A] archivos y [B] carpetas eliminados de MEGA";
+/* Hint text to suggest that the user have to write the new password on it */
+"newPassword"="Nueva contraseña";
 /* Hint text where the user have to re-write the new password to confirm it */
 "confirmPassword"="Confirmar contraseña";
 /* Success message shown when the password has been changed */
@@ -1146,7 +1150,7 @@
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
 "verifyCredentials"="Verificar credenciales";
 /* A button title to delete the history of a chat. */
-"clearChatHistory"="Limpiar historial de chat";
+"clearChatHistory"="Limpiar historial del chat";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="¿Seguro que quieres limpiar el historial de mensajes completo de esta conversación?";
 /* 'Next' button in a dialog */
@@ -1160,7 +1164,7 @@
 /* Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity */
 "yourCredentials"="Tus credenciales";
 /* Button to reset the password */
-"reset"="Cambiar";
+"reset"="Restablecer";
 /* Button title */
 "approve"="Aceptar";
 /* start a chat/conversation */
@@ -1189,6 +1193,8 @@
 "moderator"="Moderador";
 /* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
 "standard"="Estándar";
+/* A button title which removes a participant from a chat. */
+"removeParticipant"="Eliminar participante";
 /* Title show above the name of the persons with whom you're chatting */
 "chattingWith"="Chateando con";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
@@ -1247,6 +1253,8 @@
 "dismiss"="Descartar";
 /* Notification text body shown when you have received a new chat message */
 "newMessage"="Nuevo mensaje";
+/* Notification text body shown when you have received a contact request */
+"contactRequest"="Solicitud de contacto";
 /* Notification text body shown when you have received a new shared folder */
 "newSharedFolder"="Nueva carpeta compartida";
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
@@ -1381,7 +1389,7 @@
 /* Text shown under the title 'Video quality' that explains what it means */
 "qualityOfVideosUploadedToAChat"="Calidad de los vídeos subidos a un chat";
 /* Label used near to the option selected to encode the videos uploaded to a chat (Low, Medium, Original) */
-"videoQuality"="Calidad del vídeo";
+"videoQuality"="Calidad de vídeo";
 /* Property associated with something smaller than the usual or average size, number, value, or amount. For example: option to encode a video with low quality. */
 "low"="Baja";
 /* Option to upload videos with the same resolution and same framerate than the original one, but converting them to MP4. */
@@ -1763,7 +1771,7 @@
 /* When somebody accepted your contact request */
 "Accepted your contact request"="Aceptar la solicitud de tu contacto";
 /* When somebody denied your contact request */
-"Denied your contact request"="Denegó tu solicitud de contacto";
+"Denied your contact request"="Ha rechazado tu solicitud de contacto";
 /* notification text */
 "A user has left the shared folder {0}"="Un usuario ha abandonado la carpeta compartida {0}";
 /* This is shown in the Notification dialog when the email address of a contact is not found and access to the share is lost for some reason (e.g. share removal or contact removal). */
@@ -1923,7 +1931,7 @@
 /* Destination folder name of chat files */
 "My chat files"="Mis archivos de chat";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
-"Require passcode"="Solicitar";
+"Require passcode"="Solicitar código";
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
 "Immediately"="Inmediatamente";
 /* Popup notification text on mouse-over of taken down file. */
@@ -1932,3 +1940,31 @@
 "This folder has been the subject of a takedown notice."="Esta carpeta ha sido sujeta a notificación y retirada.";
 /* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
 "Dispute Takedown"="Disputar la retirada";
+/* Title of the "Links" Shared Items. */
+"Links"="Links";
+/* Title for empty state view of "Links" in Shared Items. */
+"No Public Links"="No hay enlaces públicos";
+/* Text to indicate that the user will leave an incoming shared folder. */
+"Leave Share"="Leave Share";
+/* Text indicating to the user the action that will be executed on tap. */
+"Manage Share"="Manage Share";
+/* Title of the screen that shows the users with whom the user can share a folder */
+"Share with"="Compartir con";
+/* Chat Notifications DND: Option that does not deactivate DND automatically */
+"Until I Turn it On Again"="Hasta que vuelva a activarlas";
+/* Chat Notifications DND: Option that deactivates DND after 30 minutes */
+"30 minutes"="30 minutos";
+/* Chat Notifications DND: Option that deactivates DND after 1 hour */
+"1 hour"="1 hora";
+/* Chat Notifications DND: Option that deactivates DND after 6 hours */
+"6 hours"="6 horas";
+/* Chat Notifications DND: Option that deactivates DND after 24 hours */
+"24 hours"="24 horas";
+/* Chat Notifications DND: Title bar message for the dnd activate options */
+"Mute chat Notifications for"="Silenciar las notificaciones del chat durante:";
+/* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
+"Muted forever"="Silenciado para siempre";
+/* Chat Notifications DND: DND once activated with timing option, this message will appear below the DND on/off switch with the actual time left to deactivate DND replacing the placeholder below */
+"%@ left"="%@ restantes";
+/* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
+"Chat Notifications"="Chat Notifications";

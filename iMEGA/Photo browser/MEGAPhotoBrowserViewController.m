@@ -22,6 +22,7 @@
 #import "SaveToCameraRollActivity.h"
 
 #import "MEGANode+MNZCategory.h"
+#import "MEGANodeList+MNZCategory.h"
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
@@ -30,7 +31,7 @@
 
 static const CGFloat GapBetweenPages = 10.0;
 
-@interface MEGAPhotoBrowserViewController () <UIScrollViewDelegate, UIViewControllerTransitioningDelegate, MEGAPhotoBrowserPickerDelegate, PieChartViewDelegate, PieChartViewDataSource, CustomActionViewControllerDelegate, NodeInfoViewControllerDelegate>
+@interface MEGAPhotoBrowserViewController () <UIScrollViewDelegate, UIViewControllerTransitioningDelegate, MEGAPhotoBrowserPickerDelegate, PieChartViewDelegate, PieChartViewDataSource, CustomActionViewControllerDelegate, NodeInfoViewControllerDelegate, MEGADelegate>
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
@@ -140,6 +141,8 @@ static const CGFloat GapBetweenPages = 10.0;
     if (@available(iOS 11.0, *)) {} else {
         self.navigationBar.tintColor = UIColor.mnz_redMain;
     }
+    
+    [[MEGASdkManager sharedMEGASdk] addMEGADelegate:self];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -171,6 +174,8 @@ static const CGFloat GapBetweenPages = 10.0;
     [self airplayClear];
     self.secondWindow.hidden = YES;
     self.secondWindow = nil;
+    
+    [[MEGASdkManager sharedMEGASdk] removeMEGADelegate:self];
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
@@ -997,36 +1002,44 @@ static const CGFloat GapBetweenPages = 10.0;
     [self toggleTransparentInterfaceForDismissal:YES];
 
     [self dismissViewControllerAnimated:YES completion:^{
-        UIViewController *visibleViewController = UIApplication.mnz_presentingViewController;
-        if ([visibleViewController isKindOfClass:MainTabBarController.class]) {
-            NSArray *parentTreeArray = node.mnz_parentTreeArray;
-
-            MainTabBarController *mainTBC = (MainTabBarController *)visibleViewController;
-            UINavigationController *navigationController = (UINavigationController *)(mainTBC.selectedViewController);
-            [navigationController popToRootViewControllerAnimated:NO];
-            
-            for (MEGANode *node in parentTreeArray) {
-                CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-                cloudDriveVC.parentNode = node;
-                [navigationController pushViewController:cloudDriveVC animated:NO];
-            }
-            
-            switch (node.type) {
-                case MEGANodeTypeFolder:
-                case MEGANodeTypeRubbish: {
-                    CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-                    cloudDriveVC.parentNode = node;
-                    [navigationController pushViewController:cloudDriveVC animated:NO];
-                    break;
-                }
-                    
-                default:
-                    break;
-            }
-
-        }
+        [node navigateToParentAndPresent];
     }];
 }
 
+#pragma mark - MEGADelegate
+
+- (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
+    if (nodeList) {
+        NSArray<MEGANode *> *updatedNodesArray = nodeList.mnz_nodesArrayFromNodeList;
+        NSMutableArray<MEGANode *> *nodesToRemoveArray = NSMutableArray.new;
+        
+        for (MEGANode *node in updatedNodesArray) {
+            for (MEGANode *mediaNode in self.mediaNodes) {
+                if (node.handle == mediaNode.handle) {
+                    if ([node hasChangedType:MEGANodeChangeTypeRemoved] || [node hasChangedType:MEGANodeChangeTypeParent]) {
+                        if ([self.mediaNodes indexOfObject:mediaNode] < self.currentIndex) {
+                            self.currentIndex--;
+                        }
+                        [nodesToRemoveArray addObject:mediaNode];
+                    }
+                }
+            }
+        }
+        
+        if (nodesToRemoveArray.count) {
+            [self.mediaNodes removeObjectsInArray:nodesToRemoveArray];
+            if (self.mediaNodes.count) {
+                if (self.currentIndex >= self.mediaNodes.count) {
+                    self.currentIndex = self.mediaNodes.count - 1;
+                }
+                [self reloadUI];
+            } else {
+                [self dismissViewControllerAnimated:YES completion:nil];
+            }
+        }
+    } else {
+        [self reloadUI];
+    }
+}
 
 @end

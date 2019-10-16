@@ -61,7 +61,7 @@
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="다른 위치에서 이 장치가 로그아웃 되었습니다";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="MEGA가 SSL을 통하여 안전하게 연결할 수 없습니다. 추가 요구사항이 있는 공개 WiFi에 연결되어 있을 수 있습니다.";
+"sslUnverified_alertTitle"="MEGA가 SSL을 통하여 안전하게 연결할 수 없습니다. 추가적인 요구사항이 있는 공개 와이파이에 접속했을 수 있습니다.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="접근하려는 항목은 이 계정에서 이용할 수 없습니다. 모바일 웹 클라이언트와 같은 계정으로 로그인하세요.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
@@ -702,8 +702,10 @@
 "The Hidden Album is where you hide photos or videos in your device Photos app."="숨긴 앨범은 기기의 사진 앱에서 숨긴 사진 또는 동영상입니다.";
 /* Title of the switch to config whether to upload Shared Albums */
 "Upload Shared Albums"="공유된 앨범 업로드";
-/* Footer description for Upload Shared Albums title */
-"Shared Albums are where you share with other people and subscribe to other people's shares in your device's Photos app."="공유된 앨범은 당신의 기기의 사진 앱에서 다른 사람들과 공유하거나 다른 사람들의 공유를 구독한 것을 말합니다.";
+/* Footer description for Upload Shared Albums title when option enabled */
+"Shared Albums from your device's Photos app will be uploaded."="Shared Albums from your device’s Photos app will be uploaded.";
+/* Footer description for Upload Shared Albums title when option disabled */
+"Shared Albums from your device's Photos app will not be uploaded."="Shared Albums from your device’s Photos app will not be uploaded.";
 /* Title of the switch to config whether to upload synced albums */
 "Upload albums synced from iTunes"="iTunes에서 동기화된 앨범 업로드";
 /* Footer description for upload synced albums title */
@@ -802,6 +804,8 @@
 "filesFolderRemovedToRubbishBinMessage"="MEGA에서 파일 %d개와 폴더 1개가 삭제됨";
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
 "filesFoldersRemovedToRubbishBinMessage"="MEGA에서 파일 [A]개와 폴더 [B]개가 삭제됨";
+/* Hint text to suggest that the user have to write the new password on it */
+"newPassword"="새 비밀번호";
 /* Hint text where the user have to re-write the new password to confirm it */
 "confirmPassword"="비밀번호 확인";
 /* Success message shown when the password has been changed */
@@ -1189,6 +1193,8 @@
 "moderator"="중재자";
 /* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
 "standard"="기본";
+/* A button title which removes a participant from a chat. */
+"removeParticipant"="참가자 제거";
 /* Title show above the name of the persons with whom you're chatting */
 "chattingWith"="대화중인 사람";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
@@ -1247,6 +1253,8 @@
 "dismiss"="해제";
 /* Notification text body shown when you have received a new chat message */
 "newMessage"="새 메시지";
+/* Notification text body shown when you have received a contact request */
+"contactRequest"="연락처 요청";
 /* Notification text body shown when you have received a new shared folder */
 "newSharedFolder"="새 공유된 폴더";
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
@@ -1932,3 +1940,31 @@
 "This folder has been the subject of a takedown notice."="이 폴더는 게시 중단 통보 대상입니다.";
 /* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
 "Dispute Takedown"="게시중단 이의제기";
+/* Title of the "Links" Shared Items. */
+"Links"="Links";
+/* Title for empty state view of "Links" in Shared Items. */
+"No Public Links"="공개 링크 없음";
+/* Text to indicate that the user will leave an incoming shared folder. */
+"Leave Share"="Leave Share";
+/* Text indicating to the user the action that will be executed on tap. */
+"Manage Share"="Manage Share";
+/* Title of the screen that shows the users with whom the user can share a folder */
+"Share with"="다른 사람과 공유";
+/* Chat Notifications DND: Option that does not deactivate DND automatically */
+"Until I Turn it On Again"="내가 다시 켜기 전까지";
+/* Chat Notifications DND: Option that deactivates DND after 30 minutes */
+"30 minutes"="30분";
+/* Chat Notifications DND: Option that deactivates DND after 1 hour */
+"1 hour"="1시간";
+/* Chat Notifications DND: Option that deactivates DND after 6 hours */
+"6 hours"="6시간";
+/* Chat Notifications DND: Option that deactivates DND after 24 hours */
+"24 hours"="24시간";
+/* Chat Notifications DND: Title bar message for the dnd activate options */
+"Mute chat Notifications for"="대화 알림 끄기";
+/* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
+"Muted forever"="영구적으로 차단";
+/* Chat Notifications DND: DND once activated with timing option, this message will appear below the DND on/off switch with the actual time left to deactivate DND replacing the placeholder below */
+"%@ left"="%@ 남음";
+/* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
+"Chat Notifications"="Chat Notifications";
