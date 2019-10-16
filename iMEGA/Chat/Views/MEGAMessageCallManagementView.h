@@ -1,6 +1,5 @@
 
 #import <UIKit/UIKit.h>
-#import "JSQMessagesCellTextView.h"
 
 @interface MEGAMessageCallManagementView : UIView
 

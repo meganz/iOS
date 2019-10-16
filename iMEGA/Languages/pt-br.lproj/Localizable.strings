@@ -61,7 +61,7 @@
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="Você foi desconectado deste dispositivo a partir de outro local.";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="O MEGA não consegue se conectar de forma segura por meio de SSL. Você pode estar usando uma rede Wi-Fi pública com requisitos adicionais.";
+"sslUnverified_alertTitle"="Não foi possível conectar-se ao MEGA de forma segura via SSL. Você pode estar usando uma rede Wi-Fi pública com requisitos adicionais.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="O conteúdo que você está tentando acessar não está disponível para esta conta. Por favor, faça login com a mesma conta usada no navegador móvel.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
@@ -489,9 +489,9 @@
 /* Message shown while uploading files. Plural. */
 "cameraUploadsPendingFiles"="Upload em andamento, %lu arquivos pendentes";
 /* Message shown when camera upload paused because of no WiFi. Singular. */
-"Upload paused because of no WiFi, 1 file pending"="Upload pausado por falta de conexão WiFi: 1 arquivo pendente";
+"Upload paused because of no WiFi, 1 file pending"="Upload pausado por falta de conexão Wi-Fi: 1 arquivo pendente";
 /* Message shown when camera upload paused because of no WiFi. Plural. */
-"Upload paused because of no WiFi, %lu files pending"="Uploads pausados por falta de conexão WiFi: %lu arquivo pendente";
+"Upload paused because of no WiFi, %lu files pending"="Uploads pausados por falta de conexão Wi-Fi: %lu arquivos pendentes";
 /* Message shown the pending video file when photos uploaded and video upload is not enabled. Singular. */
 "Photos uploaded, video uploads are off, 1 video not uploaded"="Upload de fotos concluído. O upload de vídeos está desativado, portanto o upload de 1 vídeo não foi feito.";
 /* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
@@ -671,7 +671,7 @@
 /* Footer for video uploads switch section when disabled */
 "When enabled, videos will be uploaded."="Ao ativar, será feito o upload de vídeos.";
 /* Title for new camera upload feature */
-"New Camera Upload!"="Novas opções para os Upload da câmera!";
+"New Camera Upload!"="Novas opções para os Uploads da câmera!";
 /* A messge for camera upload v2 migration */
 "Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="Agora você pode optar por converter fotos e vídeos HEIF/HEVC a formatos mais compatíveis, como JPEG e H.264.";
 /* Title for an action to use most compatible formats */
@@ -702,8 +702,10 @@
 "The Hidden Album is where you hide photos or videos in your device Photos app."="Um Álbum Oculto é onde você oculta fotos ou vídeos no aplicativo Fotos do seu dispositivo.";
 /* Title of the switch to config whether to upload Shared Albums */
 "Upload Shared Albums"="Fazer upload dos álbuns compartilhados";
-/* Footer description for Upload Shared Albums title */
-"Shared Albums are where you share with other people and subscribe to other people's shares in your device's Photos app."="Álbuns Compartilhados permitem compartilhar com outras pessoas e participar nos compartilhamentos de outras pessoas no aplicativo Fotos do seu dispositivo.";
+/* Footer description for Upload Shared Albums title when option enabled */
+"Shared Albums from your device's Photos app will be uploaded."="Shared Albums from your device’s Photos app will be uploaded.";
+/* Footer description for Upload Shared Albums title when option disabled */
+"Shared Albums from your device's Photos app will not be uploaded."="Shared Albums from your device’s Photos app will not be uploaded.";
 /* Title of the switch to config whether to upload synced albums */
 "Upload albums synced from iTunes"="Fazer upload dos álbuns sincronizados no iTunes";
 /* Footer description for upload synced albums title */
@@ -1191,6 +1193,8 @@
 "moderator"="Moderador";
 /* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
 "standard"="Padrão";
+/* A button title which removes a participant from a chat. */
+"removeParticipant"="Remover participante";
 /* Title show above the name of the persons with whom you're chatting */
 "chattingWith"="Chat com";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
@@ -1709,9 +1713,9 @@
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
 "%@ enabled Encrypted Key Rotation"="%@ ativou a rotação da chave de criptografia.";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
-"%@ created a public link for the chat."="%@ criou um link para este chat.";
+"%@ created a public link for the chat."="%@ criou um link para este chat";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
-"%@ removed a public link for the chat."="%@ removeu o link deste chat.";
+"%@ removed a public link for the chat."="%@ removeu o link deste chat";
 /* Management message shown in a chat when the user %@ joined it from a public chat link */
 "%@ joined the group chat."="%@ se uniu ao chat em grupo.";
 /* Message show when a call cannot be established because there are too many participants in the group call */
@@ -1947,20 +1951,20 @@
 /* Title of the screen that shows the users with whom the user can share a folder */
 "Share with"="Compartilhar com";
 /* Chat Notifications DND: Option that does not deactivate DND automatically */
-"Until I Turn it On Again"="Until I Turn it On Again";
+"Until I Turn it On Again"="Até eu ativar novamente";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
-"30 minutes"="30 minutes";
+"30 minutes"="30 minutos";
 /* Chat Notifications DND: Option that deactivates DND after 1 hour */
 "1 hour"="1 hora";
 /* Chat Notifications DND: Option that deactivates DND after 6 hours */
-"6 hours"="6 hours";
+"6 hours"="6 horas";
 /* Chat Notifications DND: Option that deactivates DND after 24 hours */
-"24 hours"="24 hours";
+"24 hours"="24 horas";
 /* Chat Notifications DND: Title bar message for the dnd activate options */
-"Mute chat Notifications for"="Mute chat Notifications for";
+"Mute chat Notifications for"="Silenciar as notificações de chat por";
 /* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
-"Muted forever"="Muted forever";
+"Muted forever"="Silenciado para sempre";
 /* Chat Notifications DND: DND once activated with timing option, this message will appear below the DND on/off switch with the actual time left to deactivate DND replacing the placeholder below */
-"%@ left"="%@ left";
+"%@ left"="%@ restantes";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="Chat Notifications";

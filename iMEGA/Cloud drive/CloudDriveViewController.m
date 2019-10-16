@@ -56,7 +56,7 @@
 
 static const NSTimeInterval kSearchTimeDelay = .5;
 
-@interface CloudDriveViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, CustomActionViewControllerDelegate, NodeInfoViewControllerDelegate, UITextFieldDelegate, UISearchControllerDelegate, UIAdaptivePresentationControllerDelegate> {
+@interface CloudDriveViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, CustomActionViewControllerDelegate, NodeInfoViewControllerDelegate, UITextFieldDelegate, UISearchControllerDelegate> {
     
     MEGAShareType lowShareType; //Control the actions allowed for node/nodes selected
 }
@@ -154,6 +154,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     
     [self.view addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)]];
     
+    [self.cloudDriveButton setTitle:AMLocalizedString(@"cloudDrive", @"Title for the cloud drive section") forState:UIControlStateNormal];
     [self.recentsButton setTitle:AMLocalizedString(@"Recents", @"Title for the recents section") forState:UIControlStateNormal];
     self.moreBarButtonItem.accessibilityLabel = AMLocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
     
@@ -232,12 +233,6 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     [super traitCollectionDidChange:previousTraitCollection];
     
     [self configPreviewingRegistration];
-}
-
-//MARK: - UIAdaptivePresentationControllerDelegate
-
-- (void)presentationControllerDidDismiss:(UIPresentationController *)presentationController {
-    [self reloadUI];
 }
 
 #pragma mark - Layout
@@ -423,11 +418,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
                                                              style:UIPreviewActionStyleDefault
                                                            handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
                                                                CloudDriveViewController *cloudDriveVC = (CloudDriveViewController *)previewViewController;
-                                                               MEGANavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
-                                                               BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
-                                                               browserVC.selectedNodesArray = @[cloudDriveVC.parentNode];
-                                                               browserVC.browserAction = BrowserActionCopy;
-                                                               [rootViewController presentViewController:navigationController animated:YES completion:nil];
+                                                               [cloudDriveVC.parentNode mnz_copyInViewController:rootViewController];
                                                            }];
     
     NSString *deletePreviewActionTitle;
@@ -536,12 +527,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
                                                                      style:UIPreviewActionStyleDefault
                                                                    handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
                                                                        CloudDriveViewController *cloudDriveVC = (CloudDriveViewController *)previewViewController;
-                                                                       MEGANavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
-                                                                       BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
-                                                                       browserVC.selectedNodesArray = @[cloudDriveVC.parentNode];
-                                                                       browserVC.browserAction = BrowserActionMove;
-                                                                       
-                                                                       [rootViewController presentViewController:navigationController animated:YES completion:nil];
+                                                                       [cloudDriveVC.parentNode mnz_moveInViewController:rootViewController];
                                                                    }];
             
             if (self.displayMode == DisplayModeCloudDrive) {
@@ -1041,9 +1027,6 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     SortByTableViewController *sortByTableViewController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"sortByTableViewControllerID"];
     sortByTableViewController.offline = NO;
     MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:sortByTableViewController];
-    if (@available(iOS 13.0, *)) {
-        navigationController.presentationController.delegate = self;
-    }
     
     [self presentViewController:navigationController animated:YES completion:nil];
 }
@@ -1496,15 +1479,13 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     }];
     [sortByAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
     [moreAlertController addAction:sortByAlertAction];
-        
-    if (self.nodes.size.unsignedIntValue > 0) {
-        UIAlertAction *selectAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"select", @"Button that allows you to select a given folder") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            BOOL enableEditing = self.cdTableView ? !self.cdTableView.tableView.isEditing : !self.cdCollectionView.collectionView.allowsMultipleSelection;
-            [self setEditMode:enableEditing];
-        }];
-        [selectAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
-        [moreAlertController addAction:selectAlertAction];
-    }
+    
+    UIAlertAction *selectAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"select", @"Button that allows you to select a given folder") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        BOOL enableEditing = self.cdTableView ? !self.cdTableView.tableView.isEditing : !self.cdCollectionView.collectionView.allowsMultipleSelection;
+        [self setEditMode:enableEditing];
+    }];
+    [selectAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+    [moreAlertController addAction:selectAlertAction];
     
     UIAlertAction *rubbishBinAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"rubbishBinLabel", @"Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin'") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
@@ -1538,14 +1519,12 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     [sortByAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
     [moreMinimizedAlertController addAction:sortByAlertAction];
     
-    if (self.nodes.size.unsignedIntValue > 0) {
-        UIAlertAction *selectAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"select", @"Button that allows you to select a given folder") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            BOOL enableEditing = self.cdTableView ? !self.cdTableView.tableView.isEditing : !self.cdCollectionView.collectionView.allowsMultipleSelection;
-            [self setEditMode:enableEditing];
-        }];
-        [selectAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
-        [moreMinimizedAlertController addAction:selectAlertAction];
-    }
+    UIAlertAction *selectAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"select", @"Button that allows you to select a given folder") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        BOOL enableEditing = self.cdTableView ? !self.cdTableView.tableView.isEditing : !self.cdCollectionView.collectionView.allowsMultipleSelection;
+        [self setEditMode:enableEditing];
+    }];
+    [selectAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+    [moreMinimizedAlertController addAction:selectAlertAction];
     
     if (self.displayMode == DisplayModeRubbishBin) {
         UIAlertAction *clearRubbishBinAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"emptyRubbishBin", @"Section title where you can 'Empty Rubbish Bin' of your MEGA account") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
@@ -1672,6 +1651,14 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 
 - (IBAction)shareAction:(UIBarButtonItem *)sender {
     UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:self.selectedNodesArray sender:self.shareBarButtonItem];
+    __weak __typeof__(self) weakSelf = self;
+    activityVC.completionWithItemsHandler = ^(UIActivityType  _Nullable activityType, BOOL completed, NSArray * _Nullable returnedItems, NSError * _Nullable activityError) {
+        if (completed && !activityError) {
+            if ([activityType isEqualToString:MEGAUIActivityTypeRemoveLink]) {
+                [weakSelf setEditMode:NO];
+            }
+        }
+    };
     [self presentViewController:activityVC animated:YES completion:nil];
 }
 
@@ -1791,6 +1778,23 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     browserVC.browserAction = BrowserActionCopy;
     
     self.selectedNodesArray = nil;
+}
+
+- (IBAction)sortByAction:(UIBarButtonItem *)sender {
+    [self presentSortByViewController];
+}
+
+- (IBAction)infoTouchUpInside:(UIButton *)sender {
+    if (self.cdTableView.tableView.isEditing) {
+        return;
+    }
+    
+    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.cdTableView.tableView];
+    NSIndexPath *indexPath = [self.cdTableView.tableView indexPathForRowAtPoint:buttonPosition];
+    
+    MEGANode *node = self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : [self.nodes nodeAtIndex:indexPath.row];
+    
+    [self showCustomActionsForNode:node sender:sender];
 }
 
 - (void)showCustomActionsForNode:(MEGANode *)node sender:(UIButton *)sender {
@@ -2104,6 +2108,10 @@ static const NSTimeInterval kSearchTimeDelay = .5;
             
         case MegaNodeActionTypeSaveToPhotos:
             [node mnz_saveToPhotosWithApi:[MEGASdkManager sharedMEGASdk]];
+            break;
+            
+        case MegaNodeActionTypeSendToChat:
+            [node mnz_sendToChatInViewController:self];
             break;
             
         default:
