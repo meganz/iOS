@@ -3,6 +3,7 @@
 
 #import "DevicePermissionsHelper.h"
 #import "OnboardingView.h"
+#import "MEGA-Swift.h"
 
 @interface OnboardingViewController () <UIScrollViewDelegate>
 
@@ -110,6 +111,9 @@
     
     if (@available(iOS 13.0, *)) {
         if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [AppearanceManager setupAppearance:self.traitCollection];
+            [AppearanceManager invalidateViews];
+            
             [self updateUI];
         }
     }
@@ -187,6 +191,9 @@
     switch (self.type) {
         case OnboardingTypeDefault: {
             UINavigationController *createAccountNC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"CreateAccountNavigationControllerID"];
+            if (@available(iOS 13.0, *)) {
+                createAccountNC.modalPresentationStyle = UIModalPresentationFullScreen;
+            }
             [self presentViewController:createAccountNC animated:YES completion:nil];
             break;
         }
@@ -234,6 +241,9 @@
     switch (self.type) {
         case OnboardingTypeDefault: {
             UINavigationController *loginNC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginNavigationControllerID"];
+            if (@available(iOS 13.0, *)) {
+                loginNC.modalPresentationStyle = UIModalPresentationFullScreen;
+            }
             [self presentViewController:loginNC animated:YES completion:nil];
             break;
         }

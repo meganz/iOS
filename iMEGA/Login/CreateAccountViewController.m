@@ -7,6 +7,7 @@
 #import "MEGACreateAccountRequestDelegate.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
+#import "MEGA-Swift.h"
 #import "NSURL+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
@@ -33,8 +34,9 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 @property (weak, nonatomic) IBOutlet InputView *lastNameInputView;
 @property (weak, nonatomic) IBOutlet InputView *emailInputView;
 
+@property (weak, nonatomic) IBOutlet UIStackView *passwordStackView;
 @property (weak, nonatomic) IBOutlet PasswordView *passwordView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *passwordStrengthIndicatorViewHeightLayoutConstraint;
+@property (weak, nonatomic) IBOutlet UIView *passwordStrengthIndicatorContainerView;
 @property (weak, nonatomic) IBOutlet PasswordStrengthIndicatorView *passwordStrengthIndicatorView;
 @property (weak, nonatomic) IBOutlet PasswordView *retypePasswordView;
 
@@ -57,7 +59,9 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.passwordStrengthIndicatorViewHeightLayoutConstraint.constant = 0;
+    [self updateUI];
+    
+    self.passwordStrengthIndicatorContainerView.hidden = YES;
     
     self.tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
     self.tapGesture.cancelsTouchesInView = NO;
@@ -126,6 +130,19 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     }
     
     return UIInterfaceOrientationMaskAll;
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [AppearanceManager setupAppearance:self.traitCollection];
+            [AppearanceManager invalidateViews];
+            
+            [self updateUI];
+        }
+    }
 }
 
 #pragma mark - Private
@@ -281,13 +298,32 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     }
     agreeWithTheMEGATermsOfService = [agreeWithTheMEGATermsOfService mnz_removeWebclientFormatters];
     
-    NSMutableAttributedString *termsOfServiceMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:agreeWithTheMEGATermsOfService attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:UIColor.mnz_gray666666}];
-    [termsOfServiceMutableAttributedString setAttributes:@{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:12.0f], NSForegroundColorAttributeName:UIColor.mnz_gray666666} range:[agreeWithTheMEGATermsOfService rangeOfString:@"MEGA"]];
+    UIFont *termsOfServiceFont = [UIFont systemFontOfSize:12.f weight:UIFontWeightSemibold];
+    UIColor *termsOfServiceColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
+    NSMutableAttributedString *termsOfServiceMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:agreeWithTheMEGATermsOfService attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName:termsOfServiceColor}];
+    [termsOfServiceMutableAttributedString setAttributes:@{NSFontAttributeName:termsOfServiceFont, NSForegroundColorAttributeName:termsOfServiceColor} range:[agreeWithTheMEGATermsOfService rangeOfString:@"MEGA"]];
     if (termsOfServiceString) {
-        [termsOfServiceMutableAttributedString setAttributes:@{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:12.0f], NSForegroundColorAttributeName:UIColor.mnz_gray666666} range:[agreeWithTheMEGATermsOfService rangeOfString:termsOfServiceString]];
+        [termsOfServiceMutableAttributedString setAttributes:@{NSFontAttributeName:termsOfServiceFont, NSForegroundColorAttributeName:termsOfServiceColor} range:[agreeWithTheMEGATermsOfService rangeOfString:termsOfServiceString]];
     }
     
     [self.termsOfServiceButton setAttributedTitle:termsOfServiceMutableAttributedString forState:UIControlStateNormal];
+}
+
+- (void)updateUI {
+    self.view.backgroundColor = [UIColor mnz_accountViewsBackgroundColorForTraitCollection:self.traitCollection];
+    
+    [self.firstNameInputView updateUI];
+    [self.lastNameInputView updateUI];
+    [self.emailInputView updateUI];
+    [self.passwordView updateUI];
+    self.passwordStrengthIndicatorContainerView.backgroundColor = [UIColor mnz_inputsBackgroundColorForTraitCollection:self.traitCollection];
+    [self.retypePasswordView updateUI];
+    
+    [self setTermsOfServiceAttributedTitle];
+    
+    self.createAccountButton.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
+    [self.createAccountButton setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
+    self.createAccountButton.layer.shadowColor = UIColor.blackColor.CGColor;
 }
 
 #pragma mark - IBActions
@@ -317,6 +353,9 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
                 [SVProgressHUD dismiss];
                 if (error.type == MEGAErrorTypeApiOk) {
                     CheckEmailAndFollowTheLinkViewController *checkEmailAndFollowTheLinkVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"CheckEmailAndFollowTheLinkViewControllerID"];
+                    if (@available(iOS 13.0, *)) {
+                        checkEmailAndFollowTheLinkVC.modalPresentationStyle = UIModalPresentationFullScreen;
+                    }
                     [self dismissViewControllerAnimated:YES completion:^{
                         [UIApplication.mnz_presentingViewController presentViewController:checkEmailAndFollowTheLinkVC animated:YES completion:nil];
                     }];
@@ -421,9 +460,9 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     if (textField.tag == PasswordTextFieldTag) {
         if (text.length == 0) {
             self.passwordStrengthIndicatorView.customView.hidden = YES;
-            self.passwordStrengthIndicatorViewHeightLayoutConstraint.constant = 0;
+            self.passwordStrengthIndicatorContainerView.hidden = YES;
         } else {
-            self.passwordStrengthIndicatorViewHeightLayoutConstraint.constant = 112.0f;
+            self.passwordStrengthIndicatorContainerView.hidden = NO;
             self.passwordStrengthIndicatorView.customView.hidden = NO;
             [self.scrollView scrollRectToVisible:self.passwordStrengthIndicatorView.frame animated:YES];
             [self.passwordStrengthIndicatorView updateViewWithPasswordStrength:[[MEGASdkManager sharedMEGASdk] passwordStrength:text]];

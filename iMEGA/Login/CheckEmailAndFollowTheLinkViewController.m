@@ -33,8 +33,12 @@
 
 @implementation CheckEmailAndFollowTheLinkViewController
 
+#pragma mark - Lifecycle
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self updateUI];
     
     self.email = [SAMKeychain passwordForService:@"MEGA" account:@"email"];
     self.name = [SAMKeychain passwordForService:@"MEGA" account:@"name"];
@@ -50,12 +54,13 @@
 
     self.awaitingEmailConfirmationLabel.text = AMLocalizedString(@"awaitingEmailConfirmation", @"Title shown just after doing some action that requires confirming the action by an email");
     self.checkYourEmailLabel.text = AMLocalizedString(@"accountNotConfirmed", @"Text shown just after creating an account to remenber the user what to do to complete the account creation proccess");
+    
     self.emailInputView.inputTextField.text = self.email;
+    
     self.misspelledLabel.text = AMLocalizedString(@"misspelledEmailAddress", @"A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email.");
     [self.resendButton setTitle:AMLocalizedString(@"resend", @"A button to resend the email confirmation.") forState:UIControlStateNormal];
-    [self.cancelButton setTitle:AMLocalizedString(@"cancel", nil) forState:UIControlStateNormal];
     
-    self.resendButton.layer.borderColor = [UIColor mnz_gray999999].CGColor;
+    [self.cancelButton setTitle:AMLocalizedString(@"cancel", nil) forState:UIControlStateNormal];
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
     [self.view addGestureRecognizer:tap];
@@ -65,7 +70,6 @@
     if (@available(iOS 11.0, *)) {
         self.emailInputView.inputTextField.textContentType = UITextContentTypeUsername;
     }
-
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -78,6 +82,16 @@
     [super viewWillDisappear:animated];
     
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateUI];
+        }
+    }
 }
 
 #pragma mark - Private
@@ -93,9 +107,25 @@
         self.emailInputView.inputTextField.textColor = UIColor.mnz_redError;
     } else {
         self.emailInputView.topLabel.text = AMLocalizedString(@"emailPlaceholder", nil);
-        self.emailInputView.topLabel.textColor = UIColor.mnz_gray999999;
-        self.emailInputView.inputTextField.textColor = UIColor.blackColor;
+        self.emailInputView.topLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
+        self.emailInputView.inputTextField.textColor = UIColor.mnz_label;
     }
+}
+
+- (void)updateUI {
+    self.view.backgroundColor = [UIColor mnz_accountViewsBackgroundColorForTraitCollection:self.traitCollection];
+    
+    self.checkYourEmailLabel.textColor = [UIColor mnz_subtitlesColorForTraitCollection:self.traitCollection];
+    
+    [self.emailInputView updateUI];
+    
+    self.misspelledLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
+    
+    [self.resendButton setTitleColor:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection] forState:UIControlStateNormal];
+    self.resendButton.backgroundColor = [UIColor mnz_basicButtonForTraitCollection:self.traitCollection];
+    self.resendButton.layer.shadowColor = UIColor.blackColor.CGColor;
+    
+    [self.cancelButton setTitleColor:[UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection] forState:UIControlStateNormal];
 }
 
 #pragma mark - IBActions

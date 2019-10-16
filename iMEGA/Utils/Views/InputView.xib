@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15508"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -30,13 +28,6 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HhQ-j5-Cb1">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                     <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nEh-CV-j3T" userLabel="Top Line View">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="1"/>
-                            <color key="backgroundColor" red="0.90588235294117647" green="0.90588235294117647" blue="0.90588235294117647" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="1" id="MPq-Fh-b6G"/>
-                            </constraints>
-                        </view>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nCJ-jJ-kwx">
                             <rect key="frame" x="17" y="18" width="24" height="24"/>
                             <constraints>
@@ -45,45 +36,30 @@
                             </constraints>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MwJ-5i-iM3">
-                            <rect key="frame" x="58" y="12" width="0.0" height="0.0"/>
+                            <rect key="frame" x="58" y="11" width="0.0" height="0.0"/>
                             <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
                             <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fvj-Nu-nez">
-                            <rect key="frame" x="58" y="15" width="300" height="20"/>
+                            <rect key="frame" x="58" y="14" width="300" height="20"/>
                             <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="16"/>
                             <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done"/>
                         </textField>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OaM-a3-qGJ" userLabel="Bottom Line View">
-                            <rect key="frame" x="0.0" y="59" width="375" height="1"/>
-                            <color key="backgroundColor" red="0.90588235294117647" green="0.90588235294117647" blue="0.90588235294117647" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="1" id="wgP-Ij-FQy"/>
-                            </constraints>
-                        </view>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
+                        <constraint firstItem="MwJ-5i-iM3" firstAttribute="top" secondItem="HhQ-j5-Cb1" secondAttribute="top" constant="11" id="4K4-zE-M62"/>
                         <constraint firstItem="fvj-Nu-nez" firstAttribute="top" secondItem="MwJ-5i-iM3" secondAttribute="bottom" constant="3" id="4r7-3W-AHY"/>
-                        <constraint firstItem="nEh-CV-j3T" firstAttribute="top" secondItem="HhQ-j5-Cb1" secondAttribute="top" id="5go-o9-tup"/>
-                        <constraint firstItem="MwJ-5i-iM3" firstAttribute="top" secondItem="nEh-CV-j3T" secondAttribute="bottom" constant="11" id="D0L-5N-h3K"/>
                         <constraint firstItem="fvj-Nu-nez" firstAttribute="leading" secondItem="nCJ-jJ-kwx" secondAttribute="trailing" constant="17" id="E0Y-Ua-ozx"/>
                         <constraint firstItem="nCJ-jJ-kwx" firstAttribute="centerY" secondItem="HhQ-j5-Cb1" secondAttribute="centerY" id="KbY-93-3XX"/>
                         <constraint firstAttribute="trailing" secondItem="fvj-Nu-nez" secondAttribute="trailing" constant="17" id="Ntp-dr-Egi"/>
-                        <constraint firstItem="OaM-a3-qGJ" firstAttribute="leading" secondItem="HhQ-j5-Cb1" secondAttribute="leading" id="Sbs-F2-mmJ"/>
-                        <constraint firstAttribute="trailing" secondItem="OaM-a3-qGJ" secondAttribute="trailing" id="Se0-bu-9kQ"/>
-                        <constraint firstAttribute="trailing" secondItem="nEh-CV-j3T" secondAttribute="trailing" id="Zop-EK-LEZ"/>
                         <constraint firstItem="MwJ-5i-iM3" firstAttribute="leading" secondItem="nCJ-jJ-kwx" secondAttribute="trailing" constant="17" id="fUa-2j-vBS"/>
-                        <constraint firstItem="nEh-CV-j3T" firstAttribute="leading" secondItem="HhQ-j5-Cb1" secondAttribute="leading" id="gCR-U4-zrK"/>
                         <constraint firstItem="nCJ-jJ-kwx" firstAttribute="leading" secondItem="HhQ-j5-Cb1" secondAttribute="leading" constant="17" id="iZs-cg-nGb"/>
-                        <constraint firstAttribute="bottom" secondItem="OaM-a3-qGJ" secondAttribute="bottom" id="jgM-fM-7rk"/>
                         <constraint firstAttribute="height" constant="60" id="m9C-o8-fY1"/>
                     </constraints>
                 </view>
             </subviews>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="HhQ-j5-Cb1" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="HzK-ZW-D0F"/>
                 <constraint firstItem="HhQ-j5-Cb1" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="Yl0-dG-n0j"/>
@@ -92,6 +68,7 @@
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <point key="canvasLocation" x="132" y="155"/>
         </view>
     </objects>
 </document>

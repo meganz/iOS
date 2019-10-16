@@ -14,6 +14,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self updateUI];
+    
     self.circularShapeLayer = [CAShapeLayer layer];
     self.circularShapeLayer.bounds = self.logoImageView.bounds;
     CGFloat radiusLogoImageView = self.logoImageView.bounds.size.width/2.0f;
@@ -47,6 +49,22 @@
 
 - (BOOL)prefersStatusBarHidden {
     return YES;
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {            
+            [self updateUI];
+        }
+    }
+}
+
+#pragma mark - Private
+
+- (void)updateUI {
+    self.view.backgroundColor = UIColor.mnz_background;
 }
 
 #pragma mark - MEGARequestDelegate
