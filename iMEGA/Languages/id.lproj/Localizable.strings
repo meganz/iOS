@@ -121,7 +121,7 @@
 /*  */
 "agreeWithTheMEGATermsOfService"="Saya setuju dengan <a href=\"terms\">Kebijakan Pelayanan MEGA</a>";
 /* This text is displayed in the account creation screen with a checkbox. User will have to tick the checkbox before proceeding on to create an account */
-"agreeWithLosingPasswordYouLoseData"="I understand that [S]if I lose my password, I may lose my data.[/S] Read more about <a href=\\"terms\\">MEGA’s end-to-end encryption</a>";
+"agreeWithLosingPasswordYouLoseData"="I understand that [S]if I lose my password, I may lose my data.[/S] Read more about <a href=\"terms\">MEGA’s end-to-end encryption</a>";
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="Masukan nama yang benar";
 /* Error text shown when you have not written the same password */
