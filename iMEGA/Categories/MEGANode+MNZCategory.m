@@ -54,6 +54,7 @@
     for (MEGANode *node in parentTreeArray) {
         CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
         cloudDriveVC.parentNode = node;
+        cloudDriveVC.hideSelectorView = YES;
         [navigationController pushViewController:cloudDriveVC animated:NO];
     }
     
@@ -62,6 +63,7 @@
         case MEGANodeTypeRubbish: {
             CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
             cloudDriveVC.parentNode = self;
+            cloudDriveVC.hideSelectorView = YES;
             [navigationController pushViewController:cloudDriveVC animated:NO];
             break;
         }
