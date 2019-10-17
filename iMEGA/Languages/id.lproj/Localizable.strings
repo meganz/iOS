@@ -61,7 +61,7 @@
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="Anda telah keluar dari perangkat ini dari lokasi lain";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="MEGA tidak dapat terhubung dengan aman melalui SSL. Anda mungkin berada di WiFi publik dengan persyaratan tambahan.";
+"sslUnverified_alertTitle"="MEGA tidak dapat terhubung dengan aman melalui SSL. Anda mungkin menggunakan Wi-Fi publik dengan persyaratan tambahan.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="Konten yang ingin Anda akses tidak tersedia untuk akun ini. Coba masuk dengan akun yang sama seperti di klien web seluler.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
@@ -120,12 +120,16 @@
 "passwordStrong"="Password ini akan menahan serangan brute-force yang paling rumit. Harap pastikan bahwa anda akan mengingat password anda.";
 /*  */
 "agreeWithTheMEGATermsOfService"="Saya setuju dengan <a href=\"terms\">Kebijakan Pelayanan MEGA</a>";
+/* This text is displayed in the account creation screen with a checkbox. User will have to tick the checkbox before proceeding on to create an account */
+"agreeWithLosingPasswordYouLoseData"="I understand that [S]if I lose my password, I may lose my data.[/S] Read more about <a href=\"terms\">MEGA’s end-to-end encryption</a>";
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="Masukan nama yang benar";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="Password berbeda";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
 "termsCheckboxUnselected"="Anda harus setuju dengan persyaratan layanan untuk mendaftarkan akun MEGA.";
+/* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown  */
+"termsForLosingPasswordCheckboxUnselected"="You need to agree that you understand the danger of losing your password";
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="Surel ini telah memiliki akun di Mega.";
 /* Title shown just after doing some action that requires confirming the action by an email */
@@ -489,9 +493,9 @@
 /* Message shown while uploading files. Plural. */
 "cameraUploadsPendingFiles"="Unggah sedang berlangsung, %lu file tertunda";
 /* Message shown when camera upload paused because of no WiFi. Singular. */
-"Upload paused because of no WiFi, 1 file pending"="Upload paused due to no Wi-Fi connection, 1 file pending";
+"Upload paused because of no WiFi, 1 file pending"="Unggah dijeda karena tidak ada koneksi Wi-Fi, 1 file tertunda";
 /* Message shown when camera upload paused because of no WiFi. Plural. */
-"Upload paused because of no WiFi, %lu files pending"="Upload paused due to no Wi-Fi connection, %lu files pending";
+"Upload paused because of no WiFi, %lu files pending"="Unggah dijeda karena tidak ada koneksi Wi-Fi, %lu file tertunda";
 /* Message shown the pending video file when photos uploaded and video upload is not enabled. Singular. */
 "Photos uploaded, video uploads are off, 1 video not uploaded"="Foto diunggah, unggahan video tidak aktif; 1 video tidak diunggah";
 /* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
@@ -683,13 +687,13 @@
 /* Navigation path for Storage settings in iOS */
 "Settings > General > %@ Storage"="Pengaturan> Umum> %@ Penyimpanan";
 /* Title of the switch to config whether to upload videos for Live Photos */
-"Upload videos for Live Photos"="Upload videos for Live Photos";
+"Upload videos for Live Photos"="Unggah video untuk Foto Langsung";
 /* Title of the switch to config whether to upload all burst photos */
-"Upload all burst photos"="Upload all burst photos";
+"Upload all burst photos"="Unggah semua foto burst";
 /* Title of the switch to config whether to upload Hidden Album */
-"Upload Hidden Album"="Upload Hidden Album";
+"Upload Hidden Album"="Unggah Album Tersembunyi";
 /* Footer description when upload videos for Live Photos is enabled */
-"The video and the photo in each Live Photo will be uploaded."="The photo and video versions of each Live Photo will be uploaded.";
+"The video and the photo in each Live Photo will be uploaded."="Versi foto dan video dari setiap Foto Langsung akan diunggah.";
 /* Footer description when upload videos for Live Photos is disabled */
 "Only the photo in each Live Photo will be uploaded."="Only the photo version of each Live Photo will be uploaded.";
 /* Footer description when upload all burst photos is enabled */
@@ -1943,13 +1947,13 @@
 /* Title for empty state view of "Links" in Shared Items. */
 "No Public Links"="Tidak Ada Tautan Publik";
 /* Text to indicate that the user will leave an incoming shared folder. */
-"Leave Share"="Leave Share";
+"Leave Share"="Tinggalkan pembagian";
 /* Text indicating to the user the action that will be executed on tap. */
-"Manage Share"="Manage Share";
+"Manage Share"="Manage share";
 /* Title of the screen that shows the users with whom the user can share a folder */
 "Share with"="Berbagi dengan";
 /* Chat Notifications DND: Option that does not deactivate DND automatically */
-"Until I Turn it On Again"="Until I Turn it On Again";
+"Until I Turn it On Again"="Until I turn it on again";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
 "30 minutes"="30 minutes";
 /* Chat Notifications DND: Option that deactivates DND after 1 hour */
@@ -1959,10 +1963,22 @@
 /* Chat Notifications DND: Option that deactivates DND after 24 hours */
 "24 hours"="24 hours";
 /* Chat Notifications DND: Title bar message for the dnd activate options */
-"Mute chat Notifications for"="Mute chat Notifications for";
+"Mute chat Notifications for"="Mute chat notifications for";
 /* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
 "Muted forever"="Muted forever";
-/* Chat Notifications DND: DND once activated with timing option, this message will appear below the DND on/off switch with the actual time left to deactivate DND replacing the placeholder below */
-"%@ left"="%@ left";
+/* Chat Notifications DND: Remaining time left to deactivate DND - 1 minute left */
+"1 minute left"="1 minute left";
+/* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 minute left */
+"%@ minutes left"="%d minutes left";
+/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour left */
+"1 hour left"="1 hour left";
+/* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 hour left */
+"%@ hours left"="%d hours left";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
-"Chat Notifications"="Chat Notifications";
+"Chat Notifications"="Notifikasi Chat";
+/* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
+"Reconnecting..."="Reconnecting…";
+/* Title shown when the user reconnect in a call. */
+"You are back!"="You are back!";
+/* Subtitle of chat screen when the chat is inactive */
+"Inactive chat"="Obrolan tidak aktif";

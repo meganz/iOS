@@ -252,8 +252,9 @@
                     [actions addObject:[self actionCopy]];
                     if (self.isIncomingShareChildView) {
                         [actions addObject:[self actionLeaveSharing]];
+                    } else {
+                        [actions addObject:[self actionMoveToRubbishBin]];
                     }
-                    [actions addObject:[self actionMoveToRubbishBin]];
                 }
                 break;
                 
@@ -284,6 +285,10 @@
                         }
                         
                         [actions addObject:[self actionShare]];
+                    }
+                    
+                    if (self.node.isFile && [NSUserDefaults.standardUserDefaults boolForKey:@"IsChatEnabled"]) {
+                        [actions addObject:[self actionSendToChat]];
                     }
                     
                     [actions addObject:[self actionRename]];
@@ -424,6 +429,10 @@
 
 - (MegaActionNode *)actionSaveToPhotos {
     return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"Save to Photos", @"A button label which allows the users save images/videos in the Photos app") iconName: @"saveToPhotos" andActionType:MegaNodeActionTypeSaveToPhotos];
+}
+
+- (MegaActionNode *)actionSendToChat {
+    return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"sendToContact", @"") iconName:@"sendMessage" andActionType:MegaNodeActionTypeSendToChat];
 }
 
 #pragma mark - IBActions
