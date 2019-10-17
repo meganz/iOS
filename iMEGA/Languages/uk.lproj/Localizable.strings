@@ -61,7 +61,7 @@
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="Ви закрили сесію на цьому пристрої з іншого місця";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="MEGA не може безпечно під'єднатись через SSL. Ви можете бути у громадському WiFi з додатковими вимогами.";
+"sslUnverified_alertTitle"="MEGA is unable to connect securely through SSL. You might be on public Wi-Fi with additional requirements.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Please try to login with same account as in the mobile web client.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
@@ -120,12 +120,16 @@
 "passwordStrong"="Цей пароль зможе протистояти найбільш типовим атакам підбору паролів. Будь ласка, переконайтеся, що ви будете пам'ятати його.";
 /*  */
 "agreeWithTheMEGATermsOfService"="Я погоджуюсь з <a href='terms'>Умовами користування</a> MEGA";
+/* This text is displayed in the account creation screen with a checkbox. User will have to tick the checkbox before proceeding on to create an account */
+"agreeWithLosingPasswordYouLoseData"="I understand that [S]if I lose my password, I may lose my data.[/S] Read more about <a href=\"terms\">MEGA’s end-to-end encryption</a>";
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="Введіть дійсне ім'я";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="Паролі не співпадають";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
 "termsCheckboxUnselected"="Ви повинні погодитися з умовами користування, щоб зареєструвати обліковий запис на MEGA.";
+/* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown  */
+"termsForLosingPasswordCheckboxUnselected"="You need to agree that you understand the danger of losing your password";
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="Ця e-mail  адреса, вже зареєстрована в Mega.";
 /* Title shown just after doing some action that requires confirming the action by an email */
@@ -1943,13 +1947,13 @@
 /* Title for empty state view of "Links" in Shared Items. */
 "No Public Links"="No Public Links";
 /* Text to indicate that the user will leave an incoming shared folder. */
-"Leave Share"="Leave Share";
+"Leave Share"="Залишити спільний доступ";
 /* Text indicating to the user the action that will be executed on tap. */
-"Manage Share"="Manage Share";
+"Manage Share"="Manage share";
 /* Title of the screen that shows the users with whom the user can share a folder */
 "Share with"="Share with";
 /* Chat Notifications DND: Option that does not deactivate DND automatically */
-"Until I Turn it On Again"="Until I Turn it On Again";
+"Until I Turn it On Again"="Until I turn it on again";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
 "30 minutes"="30 minutes";
 /* Chat Notifications DND: Option that deactivates DND after 1 hour */
@@ -1959,10 +1963,22 @@
 /* Chat Notifications DND: Option that deactivates DND after 24 hours */
 "24 hours"="24 hours";
 /* Chat Notifications DND: Title bar message for the dnd activate options */
-"Mute chat Notifications for"="Mute chat Notifications for";
+"Mute chat Notifications for"="Mute chat notifications for";
 /* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
 "Muted forever"="Muted forever";
-/* Chat Notifications DND: DND once activated with timing option, this message will appear below the DND on/off switch with the actual time left to deactivate DND replacing the placeholder below */
-"%@ left"="%@ left";
+/* Chat Notifications DND: Remaining time left to deactivate DND - 1 minute left */
+"1 minute left"="1 minute left";
+/* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 minute left */
+"%@ minutes left"="%d minutes left";
+/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour left */
+"1 hour left"="1 hour left";
+/* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 hour left */
+"%@ hours left"="%d hours left";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
-"Chat Notifications"="Chat Notifications";
+"Chat Notifications"="Chat notifications";
+/* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
+"Reconnecting..."="Reconnecting…";
+/* Title shown when the user reconnect in a call. */
+"You are back!"="You are back!";
+/* Subtitle of chat screen when the chat is inactive */
+"Inactive chat"="Inactive chat";
