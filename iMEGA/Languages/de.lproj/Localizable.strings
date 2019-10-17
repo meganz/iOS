@@ -121,7 +121,7 @@
 /*  */
 "agreeWithTheMEGATermsOfService"="Ich stimme MEGAs <a href=\"terms\">Allgemeinen Geschäftsbedingungen</a> zu";
 /* This text is displayed in the account creation screen with a checkbox. User will have to tick the checkbox before proceeding on to create an account */
-"agreeWithLosingPasswordYouLoseData"="I understand that [S]if I lose my password, I may lose my data.[/S] Read more about <a href=\\"terms\\">MEGA’s end-to-end encryption</a>";
+"agreeWithLosingPasswordYouLoseData"="I understand that [S]if I lose my password, I may lose my data.[/S] Read more about <a href=\"terms\">MEGA’s end-to-end encryption</a>";
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="Gültigen Namen eingeben";
 /* Error text shown when you have not written the same password */
