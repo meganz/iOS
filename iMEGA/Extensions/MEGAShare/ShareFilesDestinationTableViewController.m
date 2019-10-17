@@ -44,7 +44,7 @@
     tapGesture.cancelsTouchesInView = NO;
     [self.tableView addGestureRecognizer:tapGesture];
     
-    self.chatReady = MEGASdkManager.sharedMEGAChatSdk.activeChatListItems.size == 0;
+    self.chatReady = MEGASdkManager.sharedMEGAChatSdk.initState == MEGAChatInitOnlineSession && MEGASdkManager.sharedMEGAChatSdk.activeChatListItems.size == 0;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -250,6 +250,15 @@
 }
 
 #pragma mark - MEGAChatDelegate
+
+- (void)onChatInitStateUpdate:(MEGAChatSdk *)api newState:(MEGAChatInit)newState {
+    MEGALogInfo(@"onChatInitStateUpdate new state: %td", newState);
+    BOOL wasChatReady = self.chatReady;
+    self.chatReady = newState == MEGAChatInitOnlineSession && MEGASdkManager.sharedMEGAChatSdk.activeChatListItems.size == 0;
+    if (wasChatReady != self.isChatReady) {
+        [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:1 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+    }
+}
 
 - (void)onChatConnectionStateUpdate:(MEGAChatSdk *)api chatId:(uint64_t)chatId newState:(int)newState {
     MEGALogInfo(@"onChatConnectionStateUpdate: %@, new state: %d", [MEGASdk base64HandleForUserHandle:chatId], newState);

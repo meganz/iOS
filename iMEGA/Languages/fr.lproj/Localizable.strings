@@ -120,12 +120,16 @@
 "passwordStrong"="Ce mot de passe résistera à la plupart des attaques en force sophistiquées. Veuillez vous assurer de vous en souvenir.";
 /*  */
 "agreeWithTheMEGATermsOfService"="J’accepte les <a href='terms'>conditions générales d’utilisation</a> de MEGA";
+/* This text is displayed in the account creation screen with a checkbox. User will have to tick the checkbox before proceeding on to create an account */
+"agreeWithLosingPasswordYouLoseData"="Je comprends que [S]si je perds mon mot de passe, je pourrais perdre mes données[/S]. En apprendre davantage sur le <a href=\"terms\">chiffrement de bout en bout de MEGA</a>";
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="Saisir un nom valide";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="Les mots de passes ne correspondent pas";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
 "termsCheckboxUnselected"="Vous devez accepter les conditions générales d’utilisation pour ouvrir un compte sur MEGA.";
+/* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown  */
+"termsForLosingPasswordCheckboxUnselected"="Vous devez attester que vous comprenez le danger que représente la perte de votre mot de passe";
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="Un compte MEGA a déjà été créé avec cette adresse courriel";
 /* Title shown just after doing some action that requires confirming the action by an email */
@@ -703,9 +707,9 @@
 /* Title of the switch to config whether to upload Shared Albums */
 "Upload Shared Albums"="Téléverser les albums partagés";
 /* Footer description for Upload Shared Albums title when option enabled */
-"Shared Albums from your device's Photos app will be uploaded."="Shared Albums from your device’s Photos app will be uploaded.";
+"Shared Albums from your device's Photos app will be uploaded."="Les albums partagés seront téléversés de Photos sur votre appareil.";
 /* Footer description for Upload Shared Albums title when option disabled */
-"Shared Albums from your device's Photos app will not be uploaded."="Shared Albums from your device’s Photos app will not be uploaded.";
+"Shared Albums from your device's Photos app will not be uploaded."="Les albums partagés ne seront pas téléversés de Photos sur votre appareil.";
 /* Title of the switch to config whether to upload synced albums */
 "Upload albums synced from iTunes"="Téléverser les albums synchronisés d’iTunes";
 /* Footer description for upload synced albums title */
@@ -1284,7 +1288,7 @@
 /* Describe how works auto-renewable subscriptions on the Apple Store */
 "autorenewableDescription"="Les abonnements sont renouvelés automatiquement pour les périodes d’abonnement successives de même durée et au même prix que la période initiale choisie. Vous pouvez désactiver le renouvellement automatique de votre abonnement MEGA PRO, au plus tard 24 heures avant l’échéance de votre prochain paiement, dans la page des réglages de votre compte iTunes. Pour gérer vos abonnements, cliquez simplement sur l’icône de la logithèque App Store sur votre appareil, connectez-vous en bas de la page avec votre identifiant Apple (si ce n’est pas déjà fait) et cliquez sur Afficher l’identifiant Apple. Vous atteindrez la page de votre compte où vous trouverez Gérer vers le bas. Ensuite, vous pourrez sélectionner votre abonnement MEGA PRO et visualiser votre date prévue de renouvellement, choisir un autre type d’abonnement, ou activer/ désactiver le renouvellement automatique de votre abonnement.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
-"openMEGAAndSignInToContinue"="Ouvrir MEGA et se connecter pour continuer";
+"openMEGAAndSignInToContinue"="Ouvrez MEGA et connectez-vous pour continuer";
 /* Label in login screen to inform about the chat initialization proccess */
 "connecting"="Connexion…";
 /* Inform user that there were unsupported assets in the share extension */
@@ -1469,7 +1473,7 @@
 /* Used as a title in the "Password reminder" dialog, that pop ups to ensure that the user had exported his recovery key OR still remembers his password. */
 "remindPasswordTitle"="Vous souvenez-vous de votre mot de passe ?";
 /* Text that describes why the user should test his/her password */
-"remindPasswordText"="En raison de la technologie de chiffrement de MEGA, vous ne pouvez pas réinitialiser votre mot de passe sans perte de données. Veuillez vous assurer de vous rappeler votre mot de passe.";
+"remindPasswordText"="En raison de la technologie de chiffrement de MEGA, vous ne pouvez pas réinitialiser votre mot de passe sans perte de données. Veuillez faire en sorte de vous rappeler votre mot de passe.";
 /* Text that describes why the user should test his/her password before logging out */
 "remindPasswordLogoutText"="Avant de vous déconnecter, nous vous recommandons d’exporter votre clé de récupération en lieu sûr. Notez que vous ne pouvez pas réinitialiser votre mot de passe si vous l’oubliez.";
 /* Text next to a toggle that if enabled won't appear again */
@@ -1809,7 +1813,7 @@
 /* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
 "Your PRO membership plan expired %1 days ago"="Votre abonnement PRO a expiré il y a %1 jours";
 /* The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
-"Your publicly shared %1 (%2) has been taken down."="Votre partage public %1 (%2) a été retiré.";
+"Your publicly shared %1 (%2) has been taken down."="Votre %1 (%2) partagé publiquement a été retiré.";
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your taken down %1 (%2) has been reinstated."="Votre %1 (%2) retiré a été rétabli";
 /* Text shown when a notification or the last message of a chat corresponds to a voice clip */
@@ -1941,30 +1945,42 @@
 /* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
 "Dispute Takedown"="Contester le retrait";
 /* Title of the "Links" Shared Items. */
-"Links"="Links";
+"Links"="Liens";
 /* Title for empty state view of "Links" in Shared Items. */
 "No Public Links"="Il n’y a aucun lien public";
 /* Text to indicate that the user will leave an incoming shared folder. */
-"Leave Share"="Leave Share";
+"Leave Share"="Quitter le partage";
 /* Text indicating to the user the action that will be executed on tap. */
-"Manage Share"="Manage Share";
+"Manage Share"="Gérer le lien";
 /* Title of the screen that shows the users with whom the user can share a folder */
 "Share with"="Partager avec";
 /* Chat Notifications DND: Option that does not deactivate DND automatically */
-"Until I Turn it On Again"="Until I turn it on again";
+"Until I Turn it On Again"="Jusqu’à ce que je les réactive";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
 "30 minutes"="30 minutes";
 /* Chat Notifications DND: Option that deactivates DND after 1 hour */
 "1 hour"="1 heure";
 /* Chat Notifications DND: Option that deactivates DND after 6 hours */
-"6 hours"="6 hours";
+"6 hours"="6 heures";
 /* Chat Notifications DND: Option that deactivates DND after 24 hours */
-"24 hours"="24 hours";
+"24 hours"="24 heures";
 /* Chat Notifications DND: Title bar message for the dnd activate options */
-"Mute chat Notifications for"="Mute chat notifications for";
+"Mute chat Notifications for"="Mettre les notifications en sourdine pendant";
 /* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
-"Muted forever"="Muted forever";
-/* Chat Notifications DND: DND once activated with timing option, this message will appear below the DND on/off switch with the actual time left to deactivate DND replacing the placeholder below */
-"%@ left"="%@ left";
+"Muted forever"="Plus aucune notification";
+/* Chat Notifications DND: Remaining time left to deactivate DND - 1 minute left */
+"1 minute left"="Il reste 1 minute";
+/* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 minute left */
+"%@ minutes left"="Il reste %d minutes";
+/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour left */
+"1 hour left"="Il reste 1 heure";
+/* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 hour left */
+"%@ hours left"="Il reste %d heures";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
-"Chat Notifications"="Chat Notifications";
+"Chat Notifications"="Notifications de dialogue en ligne";
+/* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
+"Reconnecting..."="Reconnecting…";
+/* Title shown when the user reconnect in a call. */
+"You are back!"="You are back!";
+/* Subtitle of chat screen when the chat is inactive */
+"Inactive chat"="La conversation est inactive";

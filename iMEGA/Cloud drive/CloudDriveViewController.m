@@ -1957,11 +1957,18 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 #pragma mark - MEGAGlobalDelegate
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
-    if (self.nodes.size.unsignedIntegerValue == 0) {
-        self.shouldDetermineLayout = YES;
+    BOOL shouldProcessOnNodesUpdate = NO; //DisplayModeRecents
+    if (self.displayMode == DisplayModeRubbishBin || self.cloudDriveButton.isSelected) {
+        shouldProcessOnNodesUpdate = [nodeList mnz_shouldProcessOnNodesUpdateForParentNode:self.parentNode childNodesArray:self.nodes.mnz_nodesArrayFromNodeList];
     }
-    [self.nodesIndexPathMutableDictionary removeAllObjects];
-    [self reloadUI];
+    
+    if (shouldProcessOnNodesUpdate) {
+        if (self.nodes.size.unsignedIntegerValue == 0) {
+            self.shouldDetermineLayout = YES;
+        }
+        [self.nodesIndexPathMutableDictionary removeAllObjects];
+        [self reloadUI];
+    }
 }
 
 #pragma mark - MEGATransferDelegate
@@ -2122,33 +2129,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 #pragma mark - NodeInfoViewControllerDelegate
 
 - (void)presentParentNode:(MEGANode *)node {
-    
-    if (self.searchController.isActive) {
-        NSArray *parentTreeArray = node.mnz_parentTreeArray;
-        
-        //Created a reference to self.navigationController because if the presented view is not the root controller and search is active, the 'popToRootViewControllerAnimated' makes nil the self.navigationController and therefore the parentTreeArray nodes can't be pushed
-        UINavigationController *navigation = self.navigationController;
-        [navigation popToRootViewControllerAnimated:NO];
-        
-        for (MEGANode *node in parentTreeArray) {
-            CloudDriveViewController *cloudDriveVC = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-            cloudDriveVC.parentNode = node;
-            [navigation pushViewController:cloudDriveVC animated:NO];
-        }
-        
-        switch (node.type) {
-            case MEGANodeTypeFolder:
-            case MEGANodeTypeRubbish: {
-                CloudDriveViewController *cloudDriveVC = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-                cloudDriveVC.parentNode = node;
-                [navigation pushViewController:cloudDriveVC animated:NO];
-                break;
-            }
-                
-            default:
-                break;
-        }
-    }
+        [node navigateToParentAndPresent];
 }
 
 @end
