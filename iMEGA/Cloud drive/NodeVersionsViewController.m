@@ -27,6 +27,7 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
+@property (nonatomic, strong) NSMutableArray<MEGANode *> *nodeVersionsMutableArray;
 @property (nonatomic, strong) NSMutableArray<MEGANode *> *selectedNodesArray;
 @property (nonatomic, strong) NSMutableDictionary *nodesIndexPathMutableDictionary;
 
@@ -78,6 +79,9 @@
         [self.navigationController popViewControllerAnimated:YES];
     }  else {
         [self.nodesIndexPathMutableDictionary removeAllObjects];
+        
+        self.nodeVersionsMutableArray = [NSMutableArray.alloc initWithArray:self.node.mnz_versions];
+        
         [self.tableView reloadData];
     }
 }
@@ -317,7 +321,7 @@
     if (indexPath.section == 0) {
         return self.node.mnz_versions.firstObject;
     } else {
-        return [self.node.mnz_versions objectAtIndex:indexPath.row + 1];
+        return [self.nodeVersionsMutableArray objectAtIndex:indexPath.row + 1];
     }
 }
 
@@ -403,7 +407,7 @@
         MEGANode *n = nil;
         
         for (NSInteger i = 1; i < self.node.mnz_numberOfVersions; i++) {
-            n = [self.node.mnz_versions objectAtIndex:i];
+            n = [self.nodeVersionsMutableArray objectAtIndex:i];
             [self.selectedNodesArray addObject:n];
         }
         
@@ -543,50 +547,39 @@
 #pragma mark - MEGAGlobalDelegate
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
-    MEGANode *nodeUpdated;
-    
     NSUInteger size = nodeList.size.unsignedIntegerValue;
     for (NSUInteger i = 0; i < size; i++) {
-        nodeUpdated = [nodeList nodeAtIndex:i];
+        MEGANode *nodeUpdated = [nodeList nodeAtIndex:i];
+        if ([nodeUpdated hasChangedType:MEGANodeChangeTypeRemoved]) {
+            if (nodeUpdated.handle == self.node.handle) {
+                [self currentVersionRemoved];
+                break;
+            } else {
+                if ([self.nodesIndexPathMutableDictionary objectForKey:nodeUpdated.base64Handle]) {
+                    self.node = [MEGASdkManager.sharedMEGASdk nodeForHandle:self.node.handle];
+                    [self reloadUI];
+                    break;
+                }
+            }
+        }
         
-        switch (nodeUpdated.getChanges) {
-                
-            case MEGANodeChangeTypeRemoved:
-                if (nodeUpdated.handle == self.node.handle) {
-                    [self currentVersionRemovedOnNodeList:nodeList];
-                } else {
-                    self.node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.node.handle];
-                    [self reloadUI];
-                }
+        if ([nodeUpdated hasChangedType:MEGANodeChangeTypeParent]) {
+            if (nodeUpdated.handle == self.node.handle) {
+                self.node = [MEGASdkManager.sharedMEGASdk nodeForHandle:nodeUpdated.parentHandle];
+                [self reloadUI];
                 break;
-                
-            case MEGANodeChangeTypeParent:
-                if (nodeUpdated.handle == self.node.handle) {
-                    self.node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:nodeUpdated.parentHandle];
-                    [self reloadUI];
-                }
-                break;
-                
-            default:
-                break;
+            }
         }
     }
 }
 
-- (void)currentVersionRemovedOnNodeList:(MEGANodeList *)nodeList {
-    MEGANode *newCurrentNode;
-    
-    NSUInteger size = nodeList.size.unsignedIntegerValue;
-    for (NSUInteger i = 0; i < size; i++) {
-        newCurrentNode = [nodeList nodeAtIndex:i];
-        if (newCurrentNode.getChanges == MEGANodeChangeTypeParent) {
-            self.node = newCurrentNode;
-            [self reloadUI];
-            return;
-        }
+- (void)currentVersionRemoved {
+    if (self.nodeVersionsMutableArray.count == 1) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    } else {
+        self.node = [self.nodeVersionsMutableArray objectAtIndex:1];
+        [self reloadUI];
     }
-    
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - MEGATransferDelegate

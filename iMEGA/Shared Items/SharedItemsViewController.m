@@ -129,8 +129,7 @@
     if (@available(iOS 13.0, *)) {
         [self configPreviewingRegistration];
     }
-    
-    self.sortOrderType = MEGASortOrderTypeNone;
+    self.sortOrderType = [NSUserDefaults.standardUserDefaults integerForKey:@"SharedItemsSortOrderType"];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -387,7 +386,7 @@
     NodeInfoViewController *nodeInfoVC = nodeInfoNavigation.viewControllers.firstObject;
     nodeInfoVC.node = node;
     nodeInfoVC.nodeInfoDelegate = self;
-    nodeInfoVC.incomingShareChildView = self.incomingButton.selected == 0;
+    nodeInfoVC.incomingShareChildView = self.incomingButton.selected;
 
     [self presentViewController:nodeInfoNavigation animated:YES completion:nil];
 }
@@ -552,16 +551,20 @@
             UIAlertController *sortByAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
             [sortByAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
             
-            UIAlertAction *sortAscendingAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"nameAscending", @"Sort by option (1/6). This one orders the files alphabethically") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            NSString *ascendingSortTitle = [NSString stringWithFormat:@"%@%@", AMLocalizedString(@"nameAscending", @"Sort by option (1/6). This one orders the files alphabethically"), self.sortOrderType == MEGASortOrderTypeAlphabeticalAsc ? @" ✓" : @""];
+            UIAlertAction *sortAscendingAlertAction = [UIAlertAction actionWithTitle:ascendingSortTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                 self.sortOrderType = MEGASortOrderTypeAlphabeticalAsc;
                 [self reloadUI];
+                [NSUserDefaults.standardUserDefaults setInteger:self.sortOrderType forKey:@"SharedItemsSortOrderType"];
             }];
             [sortAscendingAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
             [sortByAlertController addAction:sortAscendingAlertAction];
             
-            UIAlertAction *sortDescendingAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"nameDescending", @"Sort by option (2/6). This one arranges the files on reverse alphabethical order") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            NSString *descendingSortTitle = [NSString stringWithFormat:@"%@%@", AMLocalizedString(@"nameDescending", @"Sort by option (2/6). This one arranges the files on reverse alphabethical order"), self.sortOrderType == MEGASortOrderTypeAlphabeticalDesc ? @" ✓" : @""];
+            UIAlertAction *sortDescendingAlertAction = [UIAlertAction actionWithTitle:descendingSortTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                 self.sortOrderType = MEGASortOrderTypeAlphabeticalDesc;
                 [self reloadUI];
+                [NSUserDefaults.standardUserDefaults setInteger:self.sortOrderType forKey:@"SharedItemsSortOrderType"];
             }];
             [sortDescendingAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
             [sortByAlertController addAction:sortDescendingAlertAction];
@@ -795,6 +798,14 @@
 
 - (IBAction)shareAction:(UIBarButtonItem *)sender {
     UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:self.selectedNodesMutableArray sender:self.shareBarButtonItem];
+    __weak __typeof__(self) weakSelf = self;
+    activityVC.completionWithItemsHandler = ^(UIActivityType  _Nullable activityType, BOOL completed, NSArray * _Nullable returnedItems, NSError * _Nullable activityError) {
+        if (completed && !activityError) {
+            if ([activityType isEqualToString:MEGAUIActivityTypeRemoveLink]) {
+                [weakSelf setEditing:NO animated:YES];
+            }
+        }
+    };
     [self presentViewController:activityVC animated:YES completion:nil];
 }
 
@@ -1312,7 +1323,17 @@
 #pragma mark - MEGAGlobalDelegate
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
-    [self reloadUI];
+    NSInteger itemSelected;
+    if (self.incomingButton.selected) {
+        itemSelected = 0;
+    } else if (self.outgoingButton.selected) {
+        itemSelected = 1;
+    } else {
+        itemSelected = 2;
+    }
+    if ([nodeList mnz_shouldProcessOnNodesUpdateInSharedForNodes:self.incomingButton.selected ? self.incomingNodesMutableArray : self.outgoingNodesMutableArray itemSelected:itemSelected]) {
+        [self reloadUI];
+    }
 }
 
 - (void)onUsersUpdate:(MEGASdk *)api userList:(MEGAUserList *)userList {
@@ -1384,11 +1405,6 @@
             [node mnz_downloadNodeOverwriting:NO];
             break;
             
-        case MegaNodeActionTypeCopy:
-            self.selectedNodesMutableArray = [[NSMutableArray alloc] initWithObjects:node, nil];
-            [self copyAction:nil];
-            break;
-            
         case MegaNodeActionTypeRename:
             [node mnz_renameNodeInViewController:self];
             break;
@@ -1432,9 +1448,24 @@
             break;
         }
 
-        case MegaNodeActionTypeMove:
         case MegaNodeActionTypeMoveToRubbishBin:
-        case MegaNodeActionTypeRemove:
+            [node mnz_moveToTheRubbishBinInViewController:self];
+            break;
+            
+        case MegaNodeActionTypeSendToChat:
+            [node mnz_sendToChatInViewController:self];
+            break;
+            
+        case MegaNodeActionTypeSaveToPhotos:
+            [node mnz_saveToPhotosWithApi:MEGASdkManager.sharedMEGASdk];
+            break;
+            
+        case MegaNodeActionTypeMove:
+            [node mnz_moveInViewController:self];
+            break;
+            
+        case MegaNodeActionTypeCopy:
+            [node mnz_copyInViewController:self];
             break;
             
         default:
@@ -1445,33 +1476,7 @@
 #pragma mark - NodeInfoViewControllerDelegate
 
 - (void)presentParentNode:(MEGANode *)node {
-    
-    if (self.searchController.isActive) {
-        NSArray *parentTreeArray = node.mnz_parentTreeArray;
-        
-        //Created a reference to self.navigationController because if the presented view is not the root controller and search is active, the 'popToRootViewControllerAnimated' makes nil the self.navigationController and therefore the parentTreeArray nodes can't be pushed
-        UINavigationController *navigation = self.navigationController;
-        [navigation popToRootViewControllerAnimated:NO];
-        
-        for (MEGANode *node in parentTreeArray) {
-            CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-            cloudDriveVC.parentNode = node;
-            [navigation pushViewController:cloudDriveVC animated:NO];
-        }
-        
-        switch (node.type) {
-            case MEGANodeTypeFolder:
-            case MEGANodeTypeRubbish: {
-                CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-                cloudDriveVC.parentNode = node;
-                [navigation pushViewController:cloudDriveVC animated:NO];
-                break;
-            }
-                
-            default:
-                break;
-        }
-    }
+        [node navigateToParentAndPresent];
 }
 
 @end

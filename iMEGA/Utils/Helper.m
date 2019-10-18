@@ -27,6 +27,9 @@
 #import "NodeTableViewCell.h"
 #import "OpenInActivity.h"
 #import "PhotoCollectionViewCell.h"
+#import "RemoveLinkActivity.h"
+#import "RemoveSharingActivity.h"
+#import "ShareFolderActivity.h"
 #import "SendToChatActivity.h"
 
 static MEGAIndexer *indexer;
@@ -929,12 +932,18 @@ static MEGAIndexer *indexer;
     NSMutableArray *activitiesMutableArray = [[NSMutableArray alloc] init];
     
     NSMutableArray *excludedActivityTypesMutableArray = [[NSMutableArray alloc] initWithArray:@[UIActivityTypePrint, UIActivityTypeCopyToPasteboard, UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll, UIActivityTypeAddToReadingList, UIActivityTypeAirDrop]];
-        
+    
+    GetLinkActivity *getLinkActivity = [[GetLinkActivity alloc] initWithNodes:nodesArray];
+    [activitiesMutableArray addObject:getLinkActivity];
+    
     NodesAre nodesAre = [Helper checkPropertiesForSharingNodes:nodesArray];
     
     BOOL allNodesExistInOffline = NO;
     NSMutableArray *filesURLMutableArray;
-    if (NodesAreFiles == (nodesAre & NodesAreFiles)) {
+    if (NodesAreFolders == (nodesAre & NodesAreFolders)) {
+        ShareFolderActivity *shareFolderActivity = [[ShareFolderActivity alloc] initWithNodes:nodesArray];
+        [activitiesMutableArray addObject:shareFolderActivity];
+    } else if (NodesAreFiles == (nodesAre & NodesAreFiles)) {
         filesURLMutableArray = [[NSMutableArray alloc] initWithArray:[Helper checkIfAllOfTheseNodesExistInOffline:nodesArray]];
         if ([filesURLMutableArray count]) {
             allNodesExistInOffline = YES;
@@ -976,6 +985,16 @@ static MEGAIndexer *indexer;
         if (nodesArray.count == 1) {
             [excludedActivityTypesMutableArray removeObject:UIActivityTypeAirDrop];
         }
+    }
+    
+    if (NodesAreExported == (nodesAre & NodesAreExported)) {
+        RemoveLinkActivity *removeLinkActivity = [[RemoveLinkActivity alloc] initWithNodes:nodesArray];
+        [activitiesMutableArray addObject:removeLinkActivity];
+    }
+    
+    if (NodesAreOutShares == (nodesAre & NodesAreOutShares)) {
+        RemoveSharingActivity *removeSharingActivity = [[RemoveSharingActivity alloc] initWithNodes:nodesArray];
+        [activitiesMutableArray addObject:removeSharingActivity];
     }
     
     UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:activityItemsMutableArray applicationActivities:activitiesMutableArray];

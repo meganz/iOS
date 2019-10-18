@@ -539,17 +539,17 @@ void uncaughtExceptionHandler(NSException *exception) {
     self.unsupportedAssets = self.alreadyInDestinationAssets = 0;
     
     // This ordered array is needed because the allKeys properties of the classSupport dictionary are unordered, and the order here is determining
-    NSArray<NSString *> *typeIdentifiers = @[(NSString *)kUTTypeGIF,
+    NSArray<NSString *> *typeIdentifiers = @[(NSString *)kUTTypeFileURL,
+                                             (NSString *)kUTTypeGIF,
                                              (NSString *)kUTTypeImage,
                                              (NSString *)kUTTypeMovie,
-                                             (NSString *)kUTTypeFileURL,
                                              (NSString *)kUTTypeURL,
                                              (NSString *)kUTTypeVCard,
                                              (NSString *)kUTTypePlainText,
                                              (NSString *)kUTTypeData];
     
-    NSDictionary<NSString *, NSArray<Class> *> *classesSupported = @{(NSString *)kUTTypeGIF : @[NSData.class, NSURL.class],
-                                                                     (NSString *)kUTTypeImage : @[UIImage.class, NSData.class, NSURL.class],
+    NSDictionary<NSString *, NSArray<Class> *> *classesSupported = @{(NSString *)kUTTypeGIF : @[NSURL.class, NSData.class],
+                                                                     (NSString *)kUTTypeImage : @[NSURL.class, UIImage.class, NSData.class],
                                                                      (NSString *)kUTTypeMovie : @[NSURL.class],
                                                                      (NSString *)kUTTypeFileURL : @[NSURL.class],
                                                                      (NSString *)kUTTypeURL : @[NSURL.class],

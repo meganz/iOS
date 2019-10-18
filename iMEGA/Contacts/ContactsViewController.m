@@ -27,6 +27,7 @@
 #import "ContactDetailsViewController.h"
 #import "ContactLinkQRViewController.h"
 #import "ContactTableViewCell.h"
+#import "ShareFolderActivity.h"
 #import "ItemListViewController.h"
 #import "MEGA-Swift.h"
 
@@ -202,7 +203,8 @@
             self.shareFolderWithBarButtonItem.title = AMLocalizedString(@"share", @"Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected");
             [self.shareFolderWithBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIMediumWithSize:17.0f]} forState:UIControlStateNormal];
             self.navigationItem.rightBarButtonItems = @[self.shareFolderWithBarButtonItem];
-
+            self.shareFolderWithBarButtonItem.enabled = NO;
+            
             self.insertAnEmailBarButtonItem.title = AMLocalizedString(@"inviteContact", @"Text shown when the user tries to make a call and the receiver is not a contact");
             [self.insertAnEmailBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:UIColor.mnz_redMain} forState:UIControlStateNormal];
             
@@ -306,7 +308,7 @@
         self.outSharesForNodeMutableArray = [self outSharesForNode:self.node];
         for (MEGAShare *share in self.outSharesForNodeMutableArray) {
             MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:[share user]];
-            if (user) {
+            if (user && user.visibility == MEGAUserVisibilityVisible) {
                 [self.visibleUsersArray addObject:user];
             } else {
                 [self.pendingShareUsersArray addObject:share];
@@ -486,6 +488,9 @@
                     [MEGASdkManager.sharedMEGASdk shareNode:node withEmail:userToShare level:shareType delegate:shareRequestDelegate];
                 }
             }
+        }
+        if (self.shareFolderActivity != nil) {
+            [self.shareFolderActivity activityDidFinish:YES];
         }
     } else if (self.contactsMode == ContactsModeFolderSharedWith) {
         void (^completion)(void);
@@ -707,6 +712,9 @@
             }
         }];
     }
+    if (self.contactsMode == ContactsModeShareFoldersWith) {
+            self.shareFolderWithBarButtonItem.enabled = YES;
+    }
 }
 
 - (void)insertItemListSubviewWithCompletion:(void (^ __nullable)(void))completion {
@@ -728,6 +736,9 @@
 }
 
 - (void)removeUsersListSubview {
+    if (self.contactsMode == ContactsModeShareFoldersWith) {
+        self.shareFolderWithBarButtonItem.enabled = NO;
+    }
     ItemListViewController *usersList = self.childViewControllers.lastObject;
     [usersList willMoveToParentViewController:nil];
     [usersList.view removeFromSuperview];
@@ -817,7 +828,11 @@
     contactsPickerViewController.predicateForEnablingContact = [NSPredicate predicateWithFormat:@"emailAddresses.@count > 0"];
     contactsPickerViewController.predicateForSelectionOfProperty = [NSPredicate predicateWithFormat:@"(key == 'emailAddresses')"];
     contactsPickerViewController.delegate = self;
-    [self presentViewController:contactsPickerViewController animated:YES completion:nil];
+    [self presentViewController:contactsPickerViewController animated:YES completion:^{
+        if (self.childViewControllers.count == 0) {
+            [self insertItemListSubviewWithCompletion:nil];
+        }
+    }];
 }
 
 - (void)selectUser:(MEGAUser *)user {
@@ -830,7 +845,7 @@
 
 - (void)inviteEmailToShareFolder:(NSString *)email {
     MEGAUser *user = [MEGASdkManager.sharedMEGASdk contactForEmail:email];
-    if (user) {
+    if (user && user.visibility == MEGAUserVisibilityVisible) {
         [self selectUser:user];
     } else {
         [self addItemsToList:@[[ItemListModel.alloc initWithEmail:email]]];
@@ -941,7 +956,7 @@
             } else {
                 [self reloadUI];
             }
-            
+            self.navigationItem.leftBarButtonItems = @[];
             [self setTableViewEditing:NO animated:YES];
         }];
         
@@ -971,6 +986,10 @@
 }
 
 - (IBAction)cancelAction:(UIBarButtonItem *)sender {
+    if (self.shareFolderActivity != nil) {
+        [self.shareFolderActivity activityDidFinish:YES];
+    }
+    
     if (self.searchController.isActive) {
         self.searchController.active = NO;
     }
@@ -1602,14 +1621,24 @@
         }
     }
     if (self.contactsMode == ContactsModeShareFoldersWith) {
-        for (NSString *email in contactEmails) {
-            [self inviteEmailToShareFolder:email];
+        if (contactEmails.count) {
+            for (NSString *email in contactEmails) {
+                [self inviteEmailToShareFolder:email];
+            }
+        } else if (self.selectedUsersArray.count == 0) {
+            [self removeUsersListSubview];
         }
     } else {
         MEGAInviteContactRequestDelegate *inviteContactRequestDelegate = [MEGAInviteContactRequestDelegate.alloc initWithNumberOfRequests:contactEmails.count];
         for (NSString *email in contactEmails) {
             [MEGASdkManager.sharedMEGASdk inviteContactWithEmail:email message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
         }
+    }
+}
+
+- (void)contactPickerDidCancel:(CNContactPickerViewController *)picker {
+    if (self.selectedUsersArray.count == 0) {
+        [self removeUsersListSubview];
     }
 }
 
