@@ -566,11 +566,10 @@
 
                 self.localVideoImageView.userInteractionEnabled = remoteSession.hasVideo;
                 if (remoteSession.hasVideo) {
-                    if (self.remoteVideoImageView.hidden) {
-                        [[MEGASdkManager sharedMEGAChatSdk] addChatRemoteVideo:self.chatRoom.chatId peerId:[self.call.sessionsPeerId megaHandleAtIndex:0] cliendId:[self.call.sessionsClientId megaHandleAtIndex:0] delegate:self.remoteVideoImageView];
-                        self.remoteVideoImageView.hidden = NO;
-                        self.remoteAvatarImageView.hidden = YES;
-                    }
+                    [[MEGASdkManager sharedMEGAChatSdk] removeChatRemoteVideo:self.chatRoom.chatId peerId:[self.call.sessionsPeerId megaHandleAtIndex:0] cliendId:[self.call.sessionsClientId megaHandleAtIndex:0] delegate:self.remoteVideoImageView];
+                    [[MEGASdkManager sharedMEGAChatSdk] addChatRemoteVideo:self.chatRoom.chatId peerId:[self.call.sessionsPeerId megaHandleAtIndex:0] cliendId:[self.call.sessionsClientId megaHandleAtIndex:0] delegate:self.remoteVideoImageView];
+                    self.remoteVideoImageView.hidden = NO;
+                    self.remoteAvatarImageView.hidden = YES;
                 } else {
                     if (!self.remoteVideoImageView.hidden) {
                         [[MEGASdkManager sharedMEGAChatSdk] removeChatRemoteVideo:self.chatRoom.chatId peerId:[self.call.sessionsPeerId megaHandleAtIndex:0] cliendId:[self.call.sessionsClientId megaHandleAtIndex:0] delegate:self.remoteVideoImageView];
