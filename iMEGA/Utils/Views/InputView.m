@@ -40,8 +40,6 @@
     self.customView.frame = self.bounds;
     self.customView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
-    [self updateUI];
-    
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
     [self addGestureRecognizer:singleTap];
 }
@@ -65,12 +63,12 @@
 
 - (void)updateUI {
     CALayer *topBorderLayer = CALayer.new;
-    topBorderLayer.frame = CGRectMake(0, 0, super.frame.size.width, 0.5);
+    topBorderLayer.frame = CGRectMake(0, 0, self.frame.size.width, 0.5);
     topBorderLayer.backgroundColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection].CGColor;
     [self.customView.layer addSublayer:topBorderLayer];
 
     CALayer *bottomBorderLayer = CALayer.new;
-    bottomBorderLayer.frame = CGRectMake(0, self.customView.frame.size.height, super.frame.size.width, 0.5);
+    bottomBorderLayer.frame = CGRectMake(0, self.customView.frame.size.height, self.frame.size.width, 0.5);
     bottomBorderLayer.backgroundColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection].CGColor;
     [self.customView.layer addSublayer:bottomBorderLayer];
     

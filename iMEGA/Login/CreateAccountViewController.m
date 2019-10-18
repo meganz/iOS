@@ -107,9 +107,6 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
         self.retypePasswordView.passwordTextField.textContentType = UITextContentTypeNewPassword;
     }
     
-    [self setTermsOfServiceAttributedTitle];
-    [self updateTermsForLosingPasswordLabelWithText];
-    
     [self.createAccountButton setTitle:AMLocalizedString(@"createAccount", @"Button title which triggers the action to create a MEGA account") forState:UIControlStateNormal];
     
     [self registerForKeyboardNotifications];
@@ -311,44 +308,38 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     }
     agreeWithTheMEGATermsOfService = [agreeWithTheMEGATermsOfService mnz_removeWebclientFormatters];
     
-    UIFont *termsOfServiceFont = [UIFont systemFontOfSize:12.f weight:UIFontWeightSemibold];
-    UIColor *termsOfServiceColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
-    NSMutableAttributedString *termsOfServiceMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:agreeWithTheMEGATermsOfService attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName:termsOfServiceColor}];
-    [termsOfServiceMutableAttributedString setAttributes:@{NSFontAttributeName:termsOfServiceFont, NSForegroundColorAttributeName:termsOfServiceColor} range:[agreeWithTheMEGATermsOfService rangeOfString:@"MEGA"]];
+    UIColor *termsOfServiceColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
+    NSMutableAttributedString *termsOfServiceMutableAttributedString = [NSMutableAttributedString.alloc initWithString:agreeWithTheMEGATermsOfService attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
+    [termsOfServiceMutableAttributedString setAttributes:@{NSForegroundColorAttributeName:termsOfServiceColor} range:[agreeWithTheMEGATermsOfService rangeOfString:@"MEGA"]];
     if (termsOfServiceString) {
-        [termsOfServiceMutableAttributedString setAttributes:@{NSFontAttributeName:termsOfServiceFont, NSForegroundColorAttributeName:termsOfServiceColor} range:[agreeWithTheMEGATermsOfService rangeOfString:termsOfServiceString]];
+        [termsOfServiceMutableAttributedString setAttributes:@{NSForegroundColorAttributeName:termsOfServiceColor} range:[agreeWithTheMEGATermsOfService rangeOfString:termsOfServiceString]];
     }
     
     [self.termsOfServiceButton setAttributedTitle:termsOfServiceMutableAttributedString forState:UIControlStateNormal];
 }
 
-- (void)updateTermsForLosingPasswordLabelWithText {
+- (void)setTermsForLosingPasswordAttributedText {
     NSString *agreementForLosingPasswordText = AMLocalizedString(@"agreeWithLosingPasswordYouLoseData", @"");
 
-    NSString *styledText = [agreementForLosingPasswordText mnz_stringBetweenString:@"[S]" andString:@"[/S]"];
-    NSString *boldText = [agreementForLosingPasswordText mnz_stringBetweenString:@"<a href=\"terms\">" andString:@"</a>"];
+    NSString *semiboldPrimaryGrayText = [agreementForLosingPasswordText mnz_stringBetweenString:@"[S]" andString:@"[/S]"];
+    NSString *greenText = [agreementForLosingPasswordText mnz_stringBetweenString:@"[/S]" andString:@"</a>"];
 
-    agreementForLosingPasswordText = [agreementForLosingPasswordText mnz_removeWebclientFormatters];
+    agreementForLosingPasswordText = agreementForLosingPasswordText.mnz_removeWebclientFormatters;
+    greenText = greenText.mnz_removeWebclientFormatters;
 
-    NSRange styledTextRange = [agreementForLosingPasswordText rangeOfString:styledText];
-    NSRange boldTextRange = [agreementForLosingPasswordText rangeOfString:boldText];
+    NSRange semiboldPrimaryGrayTextRange = [agreementForLosingPasswordText rangeOfString:semiboldPrimaryGrayText];
+    NSRange greenTextRange = [agreementForLosingPasswordText rangeOfString:greenText];
 
-    NSDictionary *termsMutableAttributedStringAttributes = @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f],
-                                                             NSForegroundColorAttributeName:UIColor.mnz_gray666666};
-    NSMutableAttributedString *termsMutableAttributedString = [NSMutableAttributedString.alloc
-                                                               initWithString:agreementForLosingPasswordText
-                                                               attributes:termsMutableAttributedStringAttributes];
+    UIColor *primaryGrayColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
+    NSMutableAttributedString *termsMutableAttributedString = [NSMutableAttributedString.alloc initWithString:agreementForLosingPasswordText attributes:@{NSForegroundColorAttributeName : primaryGrayColor}];
 
-    NSDictionary *styledTextAttributes = @{NSForegroundColorAttributeName : UIColor.mnz_redMain};
-    [termsMutableAttributedString setAttributes:styledTextAttributes
-                                          range:styledTextRange];
+    NSDictionary *semiboldPrimaryGrayTextAttributes = @{NSFontAttributeName : [UIFont systemFontOfSize:12.f weight:UIFontWeightSemibold], NSForegroundColorAttributeName : primaryGrayColor};
+    [termsMutableAttributedString setAttributes:semiboldPrimaryGrayTextAttributes range:semiboldPrimaryGrayTextRange];
 
-    NSDictionary *boldTextAttributes = @{NSFontAttributeName : [UIFont mnz_SFUISemiBoldWithSize:12.0f],
-                                         NSForegroundColorAttributeName : UIColor.mnz_gray666666};
-    [termsMutableAttributedString setAttributes:boldTextAttributes
-                                          range:boldTextRange];
+    NSDictionary *greenTextAttributes = @{NSForegroundColorAttributeName : [UIColor mnz_turquoiseForTraitCollection:self.traitCollection]};
+    [termsMutableAttributedString setAttributes:greenTextAttributes range:greenTextRange];
 
-    self.termsForLosingPasswordLabel.textColor = UIColor.mnz_gray666666;
+    self.termsForLosingPasswordLabel.textColor = primaryGrayColor;
     self.termsForLosingPasswordLabel.attributedText = termsMutableAttributedString;
 }
 
@@ -363,7 +354,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     [self.retypePasswordView updateUI];
     
     [self setTermsOfServiceAttributedTitle];
-    [self updateTermsForLosingPasswordLabelWithText];
+    [self setTermsForLosingPasswordAttributedText];
     
     self.createAccountButton.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
     [self.createAccountButton setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
