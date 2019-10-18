@@ -238,9 +238,19 @@
 }
 
 - (void)processLink:(NSString *)fullLink {
-    NSArray *components = [fullLink componentsSeparatedByString:@"!"];
-    NSString *link = [NSString stringWithFormat:@"%@!%@", components.firstObject, components[1]];
-    NSString *key = components[2];
+    NSArray *components = NSArray.new;
+    NSString *link = NSString.new;
+    NSString *key = NSString.new;
+    
+    if ([fullLink containsString:@"file"] || [fullLink containsString:@"folder"]) {//New format file/folder links
+        components = [fullLink componentsSeparatedByString:@"#"];
+        link = components[0];
+        key = components[1];
+    } else {
+        components = [fullLink componentsSeparatedByString:@"!"];
+        link = [NSString stringWithFormat:@"%@!%@", components.firstObject, components[1]];
+        key = components[2];
+    }
     
     [self.fullLinks addObject:fullLink];
     [self.links addObject:link];
