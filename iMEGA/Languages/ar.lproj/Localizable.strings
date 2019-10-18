@@ -120,12 +120,16 @@
 "passwordStrong"="كلمة السر هذه تستطيع تحمل الهجمات القوية وأكثرها تطورا. يرجى التأكد من أنك سوف تتذكرها.";
 /*  */
 "agreeWithTheMEGATermsOfService"="أنا أتفق مع MEGA <a href=\"terms\">شروط الخدمة</a>";
+/* This text is displayed in the account creation screen with a checkbox. User will have to tick the checkbox before proceeding on to create an account */
+"agreeWithLosingPasswordYouLoseData"="I understand that [S]if I lose my password, I may lose my data.[/S] Read more about <a href=\"terms\">MEGA’s end-to-end encryption</a>";
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="ادخل اسم صالح";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="كلمات السر غير متطابقة";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
 "termsCheckboxUnselected"="تحتاج إلى الموافقة علي شروط الخدمة لتسجيل حساب على MEGA.";
+/* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown  */
+"termsForLosingPasswordCheckboxUnselected"="You need to agree that you understand the danger of losing your password";
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="هذا البريد الإلكتروني لديه حساب مسجل بالفعل مع MEGA.";
 /* Title shown just after doing some action that requires confirming the action by an email */
@@ -1945,9 +1949,9 @@
 /* Title for empty state view of "Links" in Shared Items. */
 "No Public Links"="No Public Links";
 /* Text to indicate that the user will leave an incoming shared folder. */
-"Leave Share"="Leave Share";
+"Leave Share"="أنهاء المشاركة";
 /* Text indicating to the user the action that will be executed on tap. */
-"Manage Share"="Manage Share";
+"Manage Share"="Manage share";
 /* Title of the screen that shows the users with whom the user can share a folder */
 "Share with"="مشاركة مع";
 /* Chat Notifications DND: Option that does not deactivate DND automatically */
@@ -1964,7 +1968,19 @@
 "Mute chat Notifications for"="Mute chat notifications for";
 /* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
 "Muted forever"="Muted forever";
-/* Chat Notifications DND: DND once activated with timing option, this message will appear below the DND on/off switch with the actual time left to deactivate DND replacing the placeholder below */
-"%@ left"="%@ left";
+/* Chat Notifications DND: Remaining time left to deactivate DND - 1 minute left */
+"1 minute left"="1 minute left";
+/* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 minute left */
+"%@ minutes left"="%d minutes left";
+/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour left */
+"1 hour left"="1 hour left";
+/* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 hour left */
+"%@ hours left"="%d hours left";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
-"Chat Notifications"="Chat Notifications";
+"Chat Notifications"="تنبيهات المحادثة";
+/* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
+"Reconnecting..."="Reconnecting…";
+/* Title shown when the user reconnect in a call. */
+"You are back!"="You are back!";
+/* Subtitle of chat screen when the chat is inactive */
+"Inactive chat"="المحادثات الغير نشطة";
