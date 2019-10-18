@@ -357,6 +357,26 @@
 		77F95CF120E3E5EB00F42D9C /* MEGAChatCreateChatGroupRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A815FCE31FE1795C0075AC29 /* MEGAChatCreateChatGroupRequestDelegate.m */; };
 		77F95CF220E3E5F800F42D9C /* MEGAChatBaseRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A802B1F91FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.m */; };
 		77F95CF320E3E60A00F42D9C /* MEGAChatAttachNodeRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B222A73205A9CD40083D433 /* MEGAChatAttachNodeRequestDelegate.m */; };
+		77FD1FFD2359A59C004FB892 /* libwebrtc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77FD1FFC2359A59C004FB892 /* libwebrtc.a */; };
+		77FD20022359A5A7004FB892 /* libvideoframebuffer_objc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77FD1FFE2359A5A6004FB892 /* libvideoframebuffer_objc.a */; };
+		77FD20032359A5A7004FB892 /* libnative_api.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77FD1FFF2359A5A7004FB892 /* libnative_api.a */; };
+		77FD20042359A5A7004FB892 /* libvideocapture_objc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77FD20002359A5A7004FB892 /* libvideocapture_objc.a */; };
+		77FD20052359A5A7004FB892 /* libnative_video.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77FD20012359A5A7004FB892 /* libnative_video.a */; };
+		77FD200C2359E2C6004FB892 /* libwebrtc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77FD1FFC2359A59C004FB892 /* libwebrtc.a */; };
+		77FD200D2359E2D2004FB892 /* libwebrtc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77FD1FFC2359A59C004FB892 /* libwebrtc.a */; };
+		77FD200E2359E2D5004FB892 /* libwebrtc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77FD1FFC2359A59C004FB892 /* libwebrtc.a */; };
+		77FD200F2359E395004FB892 /* libnative_api.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77FD1FFF2359A5A7004FB892 /* libnative_api.a */; };
+		77FD20102359E398004FB892 /* libnative_api.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77FD1FFF2359A5A7004FB892 /* libnative_api.a */; };
+		77FD20112359E39B004FB892 /* libnative_api.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77FD1FFF2359A5A7004FB892 /* libnative_api.a */; };
+		77FD20122359E3CA004FB892 /* libvideocapture_objc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77FD20002359A5A7004FB892 /* libvideocapture_objc.a */; };
+		77FD20132359E3CE004FB892 /* libvideocapture_objc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77FD20002359A5A7004FB892 /* libvideocapture_objc.a */; };
+		77FD20142359E3D2004FB892 /* libvideocapture_objc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77FD20002359A5A7004FB892 /* libvideocapture_objc.a */; };
+		77FD20152359E3FA004FB892 /* libvideoframebuffer_objc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77FD1FFE2359A5A6004FB892 /* libvideoframebuffer_objc.a */; };
+		77FD20162359E3FE004FB892 /* libvideoframebuffer_objc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77FD1FFE2359A5A6004FB892 /* libvideoframebuffer_objc.a */; };
+		77FD20172359E402004FB892 /* libvideoframebuffer_objc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77FD1FFE2359A5A6004FB892 /* libvideoframebuffer_objc.a */; };
+		77FD20182359E42B004FB892 /* libnative_video.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77FD20012359A5A7004FB892 /* libnative_video.a */; };
+		77FD20192359E42E004FB892 /* libnative_video.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77FD20012359A5A7004FB892 /* libnative_video.a */; };
+		77FD201A2359E431004FB892 /* libnative_video.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77FD20012359A5A7004FB892 /* libnative_video.a */; };
 		830B548A2178845300BE1E1F /* CloudDriveTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 830B54892178845300BE1E1F /* CloudDriveTableViewController.m */; };
 		830EF9A420062F3800FAA947 /* DevicePermissionsHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 830EF9A320062F3800FAA947 /* DevicePermissionsHelper.m */; };
 		8310488A21AECD860057400D /* DTConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 413199691BD7BD5D002CD6EA /* DTConstants.m */; };
@@ -786,11 +806,8 @@
 		A8AA4F7A1ED42B9E00E7BA23 /* MEGALoginRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8AA4F781ED42B9E00E7BA23 /* MEGALoginRequestDelegate.m */; };
 		A8AA4F7D1ED433CA00E7BA23 /* MEGABaseRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8AA4F7C1ED433CA00E7BA23 /* MEGABaseRequestDelegate.m */; };
 		A8B354D421354680002018A9 /* MEGAChatNotificationDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8B354D321354680002018A9 /* MEGAChatNotificationDelegate.m */; };
-		A8C262901FA0B3F3006172CE /* librtc_sdk_objc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6E88B1F9E75090087859C /* librtc_sdk_objc.a */; };
 		A8C262911FA0B3F3006172CE /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6E88E1F9E75B60087859C /* libwebsockets.a */; };
-		A8C262921FA0B425006172CE /* librtc_sdk_objc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6E88B1F9E75090087859C /* librtc_sdk_objc.a */; };
 		A8C262931FA0B425006172CE /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6E88E1F9E75B60087859C /* libwebsockets.a */; };
-		A8C262941FA0B439006172CE /* librtc_sdk_objc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6E88B1F9E75090087859C /* librtc_sdk_objc.a */; };
 		A8C262951FA0B439006172CE /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6E88E1F9E75B60087859C /* libwebsockets.a */; };
 		A8C262981FA0B4A2006172CE /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C262971FA0B4A2006172CE /* AudioToolbox.framework */; };
 		A8C262991FA0B4BA006172CE /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C262971FA0B4A2006172CE /* AudioToolbox.framework */; };
@@ -822,7 +839,6 @@
 		A8F5D67D1ED5B0990087DA40 /* MEGASendSignupLinkRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F5D67C1ED5B0990087DA40 /* MEGASendSignupLinkRequestDelegate.m */; };
 		A8F6C5F31FAB3FD3001E274D /* MEGAChatEnableDisableAudioRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F6C5F11FAB3FD3001E274D /* MEGAChatEnableDisableAudioRequestDelegate.m */; };
 		A8F6C5F91FAB4295001E274D /* MEGAChatEnableDisableVideoRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F6C5F71FAB4295001E274D /* MEGAChatEnableDisableVideoRequestDelegate.m */; };
-		A8F6E88D1F9E75A00087859C /* librtc_sdk_objc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6E88B1F9E75090087859C /* librtc_sdk_objc.a */; };
 		A8F6E88F1F9E75B70087859C /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6E88E1F9E75B60087859C /* libwebsockets.a */; };
 		A8F6E8911F9E75D00087859C /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6E8901F9E75C20087859C /* VideoToolbox.framework */; };
 		A8F6E8931F9E75DD0087859C /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8F6E8921F9E75D50087859C /* GLKit.framework */; };
@@ -1564,6 +1580,11 @@
 		77F43DD82034637300AE4F42 /* UICollectionView+MNZCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UICollectionView+MNZCategory.m"; sourceTree = "<group>"; };
 		77F95CED20E3B14D00F42D9C /* ShareFilesDestinationTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShareFilesDestinationTableViewController.h; sourceTree = "<group>"; };
 		77F95CEE20E3B14D00F42D9C /* ShareFilesDestinationTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShareFilesDestinationTableViewController.m; sourceTree = "<group>"; };
+		77FD1FFC2359A59C004FB892 /* libwebrtc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebrtc.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libwebrtc.a; sourceTree = "<group>"; };
+		77FD1FFE2359A5A6004FB892 /* libvideoframebuffer_objc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libvideoframebuffer_objc.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libvideoframebuffer_objc.a; sourceTree = "<group>"; };
+		77FD1FFF2359A5A7004FB892 /* libnative_api.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libnative_api.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libnative_api.a; sourceTree = "<group>"; };
+		77FD20002359A5A7004FB892 /* libvideocapture_objc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libvideocapture_objc.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libvideocapture_objc.a; sourceTree = "<group>"; };
+		77FD20012359A5A7004FB892 /* libnative_video.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libnative_video.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libnative_video.a; sourceTree = "<group>"; };
 		83064D88217F207000FA3DAC /* LayoutView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LayoutView.h; sourceTree = "<group>"; };
 		830B54882178845300BE1E1F /* CloudDriveTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CloudDriveTableViewController.h; sourceTree = "<group>"; };
 		830B54892178845300BE1E1F /* CloudDriveTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CloudDriveTableViewController.m; sourceTree = "<group>"; };
@@ -2350,13 +2371,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				77FD20022359A5A7004FB892 /* libvideoframebuffer_objc.a in Frameworks */,
+				77FD20032359A5A7004FB892 /* libnative_api.a in Frameworks */,
+				77FD20042359A5A7004FB892 /* libvideocapture_objc.a in Frameworks */,
+				77FD20052359A5A7004FB892 /* libnative_video.a in Frameworks */,
+				77FD1FFD2359A59C004FB892 /* libwebrtc.a in Frameworks */,
 				A82A38D7200D333100883533 /* libmediainfo.a in Frameworks */,
 				A82A38D0200D32BD00883533 /* libzen.a in Frameworks */,
 				A8F6E8941F9E770C0087859C /* MobileCoreServices.framework in Frameworks */,
 				A8F6E8931F9E75DD0087859C /* GLKit.framework in Frameworks */,
 				A8F6E8911F9E75D00087859C /* VideoToolbox.framework in Frameworks */,
 				A8F6E88F1F9E75B70087859C /* libwebsockets.a in Frameworks */,
-				A8F6E88D1F9E75A00087859C /* librtc_sdk_objc.a in Frameworks */,
 				A88BFFED1F0A56B80081BCE3 /* libKarere.a in Frameworks */,
 				A88BFFE91F0A55E20081BCE3 /* libMEGASDK.a in Frameworks */,
 				A88BFFDE1F0A52E90081BCE3 /* libuv.a in Frameworks */,
@@ -2375,6 +2400,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				77FD201A2359E431004FB892 /* libnative_video.a in Frameworks */,
+				77FD20152359E3FA004FB892 /* libvideoframebuffer_objc.a in Frameworks */,
+				77FD20142359E3D2004FB892 /* libvideocapture_objc.a in Frameworks */,
+				77FD200F2359E395004FB892 /* libnative_api.a in Frameworks */,
+				77FD200C2359E2C6004FB892 /* libwebrtc.a in Frameworks */,
 				5B09ABB522A9501C007342EF /* CoreTelephony.framework in Frameworks */,
 				77B3AE232163BDB8008E889A /* UserNotifications.framework in Frameworks */,
 				7714901520F7592100769BD4 /* Contacts.framework in Frameworks */,
@@ -2387,7 +2417,6 @@
 				A8C262A21FA0B5AE006172CE /* OpenGLES.framework in Frameworks */,
 				A8C2629F1FA0B57C006172CE /* VideoToolbox.framework in Frameworks */,
 				A8C262981FA0B4A2006172CE /* AudioToolbox.framework in Frameworks */,
-				A8C262921FA0B425006172CE /* librtc_sdk_objc.a in Frameworks */,
 				A8C262931FA0B425006172CE /* libwebsockets.a in Frameworks */,
 				9432292B1EDD84FD007DB542 /* AssetsLibrary.framework in Frameworks */,
 				9432291A1EDD83B0007DB542 /* AVFoundation.framework in Frameworks */,
@@ -2423,12 +2452,16 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				77FD20192359E42E004FB892 /* libnative_video.a in Frameworks */,
+				77FD20162359E3FE004FB892 /* libvideoframebuffer_objc.a in Frameworks */,
+				77FD20132359E3CE004FB892 /* libvideocapture_objc.a in Frameworks */,
+				77FD20102359E398004FB892 /* libnative_api.a in Frameworks */,
+				77FD200D2359E2D2004FB892 /* libwebrtc.a in Frameworks */,
 				A82A38D5200D331700883533 /* libmediainfo.a in Frameworks */,
 				A82A38D2200D32D500883533 /* libzen.a in Frameworks */,
 				A8C262A11FA0B590006172CE /* GLKit.framework in Frameworks */,
 				A8C2629E1FA0B56E006172CE /* VideoToolbox.framework in Frameworks */,
 				A8C262991FA0B4BA006172CE /* AudioToolbox.framework in Frameworks */,
-				A8C262901FA0B3F3006172CE /* librtc_sdk_objc.a in Frameworks */,
 				A8C262911FA0B3F3006172CE /* libwebsockets.a in Frameworks */,
 				A88BFFEF1F0A56CB0081BCE3 /* libKarere.a in Frameworks */,
 				A88BFFEB1F0A562D0081BCE3 /* libMEGASDK.a in Frameworks */,
@@ -2452,11 +2485,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				77FD20182359E42B004FB892 /* libnative_video.a in Frameworks */,
+				77FD20172359E402004FB892 /* libvideoframebuffer_objc.a in Frameworks */,
+				77FD20122359E3CA004FB892 /* libvideocapture_objc.a in Frameworks */,
+				77FD20112359E39B004FB892 /* libnative_api.a in Frameworks */,
+				77FD200E2359E2D5004FB892 /* libwebrtc.a in Frameworks */,
 				A82A38D8200D343E00883533 /* libmediainfo.a in Frameworks */,
 				A82A38D3200D32EB00883533 /* libzen.a in Frameworks */,
 				A8C262A01FA0B58B006172CE /* GLKit.framework in Frameworks */,
 				A8C2629D1FA0B55E006172CE /* VideoToolbox.framework in Frameworks */,
-				A8C262941FA0B439006172CE /* librtc_sdk_objc.a in Frameworks */,
 				A8C262951FA0B439006172CE /* libwebsockets.a in Frameworks */,
 				94B28C3F1F0E4865000331E6 /* libcares.a in Frameworks */,
 				94B28C401F0E4865000331E6 /* libcurl.a in Frameworks */,
@@ -3028,6 +3065,11 @@
 		418851EE1A66826800FDBA15 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				77FD1FFF2359A5A7004FB892 /* libnative_api.a */,
+				77FD20012359A5A7004FB892 /* libnative_video.a */,
+				77FD20002359A5A7004FB892 /* libvideocapture_objc.a */,
+				77FD1FFE2359A5A6004FB892 /* libvideoframebuffer_objc.a */,
+				77FD1FFC2359A59C004FB892 /* libwebrtc.a */,
 				5B62528922A94AE700A4A8AA /* CoreTelephony.framework */,
 				77B3AE222163BDB8008E889A /* UserNotifications.framework */,
 				7714901420F7592000769BD4 /* Contacts.framework */,
@@ -6286,7 +6328,7 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "iMEGA/Vendor/SDK/bindings/ios/** iMEGA/Vendor/Karere/bindings/Objective-C";
+				USER_HEADER_SEARCH_PATHS = "iMEGA/Vendor/SDK/bindings/ios/** iMEGA/Vendor/Karere/bindings/Objective-C iMEGA/Vendor/SDK/bindings/ios/3rdparty/webrtc/sdk/objc/Framework/Headers/WebRTC";
 				VERSIONING_SYSTEM = "";
 			};
 			name = Debug;
@@ -6336,7 +6378,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "iMEGA/MEGA-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "iMEGA/Vendor/SDK/bindings/ios/** iMEGA/Vendor/Karere/bindings/Objective-C";
+				USER_HEADER_SEARCH_PATHS = "iMEGA/Vendor/SDK/bindings/ios/** iMEGA/Vendor/Karere/bindings/Objective-C iMEGA/Vendor/SDK/bindings/ios/3rdparty/webrtc/sdk/objc/Framework/Headers/WebRTC";
 				VERSIONING_SYSTEM = "";
 			};
 			name = Release;
