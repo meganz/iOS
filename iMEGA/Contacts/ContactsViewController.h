@@ -11,6 +11,8 @@ typedef NS_ENUM(NSUInteger, ContactsMode) {
     ContactsModeChatNamingGroup
 };
 
+@class ShareFolderActivity;
+
 @interface ContactsViewController : UIViewController
 
 @property (nonatomic) ContactsMode contactsMode;
@@ -19,6 +21,8 @@ typedef NS_ENUM(NSUInteger, ContactsMode) {
 
 @property (nonatomic, strong) MEGANode *node;
 @property (nonatomic, strong) NSArray *nodesArray;
+
+@property (nonatomic, strong) ShareFolderActivity *shareFolderActivity;
 
 @property (nonatomic, copy) void(^userSelected)(NSArray *);
 @property (nonatomic, copy) void(^createGroupChat)(NSArray *,  NSString *, BOOL, BOOL);

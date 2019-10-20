@@ -61,7 +61,7 @@
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="Você foi desconectado deste dispositivo a partir de outro local.";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="O MEGA não consegue se conectar de forma segura por meio de SSL. Você pode estar usando uma rede Wi-Fi pública com requisitos adicionais.";
+"sslUnverified_alertTitle"="Não foi possível conectar-se ao MEGA de forma segura via SSL. Você pode estar usando uma rede Wi-Fi pública com requisitos adicionais.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="O conteúdo que você está tentando acessar não está disponível para esta conta. Por favor, faça login com a mesma conta usada no navegador móvel.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
@@ -120,12 +120,16 @@
 "passwordStrong"="Esta senha vai resistir aos ataques de força-bruta mais sofisticados. Por favor, certifique-se de que você vai lembrar dela.";
 /*  */
 "agreeWithTheMEGATermsOfService"="Concordo com os <a href=\"terms\">Termos de serviço</a> do MEGA";
+/* This text is displayed in the account creation screen with a checkbox. User will have to tick the checkbox before proceeding on to create an account */
+"agreeWithLosingPasswordYouLoseData"="Eu entendo que, [S]se eu perder a minha senha, poderei perder os meus dados[/S]. Leia mais sobre a  <a href=\"terms\">criptografia de ponta a ponta do MEGA</a>.";
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="Digite um nome válido";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="As senhas não coincidem";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
 "termsCheckboxUnselected"="Você precisa aceitar os termos de serviço para criar uma conta no MEGA.";
+/* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown  */
+"termsForLosingPasswordCheckboxUnselected"="Você precisa confirmar que entende o perigo de perder a sua senha";
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="Já existe uma conta no MEGA com esse email.";
 /* Title shown just after doing some action that requires confirming the action by an email */
@@ -489,9 +493,9 @@
 /* Message shown while uploading files. Plural. */
 "cameraUploadsPendingFiles"="Upload em andamento, %lu arquivos pendentes";
 /* Message shown when camera upload paused because of no WiFi. Singular. */
-"Upload paused because of no WiFi, 1 file pending"="Upload pausado por falta de conexão WiFi: 1 arquivo pendente";
+"Upload paused because of no WiFi, 1 file pending"="Upload pausado por falta de conexão Wi-Fi: 1 arquivo pendente";
 /* Message shown when camera upload paused because of no WiFi. Plural. */
-"Upload paused because of no WiFi, %lu files pending"="Uploads pausados por falta de conexão WiFi: %lu arquivo pendente";
+"Upload paused because of no WiFi, %lu files pending"="Uploads pausados por falta de conexão Wi-Fi: %lu arquivos pendentes";
 /* Message shown the pending video file when photos uploaded and video upload is not enabled. Singular. */
 "Photos uploaded, video uploads are off, 1 video not uploaded"="Upload de fotos concluído. O upload de vídeos está desativado, portanto o upload de 1 vídeo não foi feito.";
 /* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
@@ -671,7 +675,7 @@
 /* Footer for video uploads switch section when disabled */
 "When enabled, videos will be uploaded."="Ao ativar, será feito o upload de vídeos.";
 /* Title for new camera upload feature */
-"New Camera Upload!"="Novas opções para os Upload da câmera!";
+"New Camera Upload!"="Novas opções para os Uploads da câmera!";
 /* A messge for camera upload v2 migration */
 "Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="Agora você pode optar por converter fotos e vídeos HEIF/HEVC a formatos mais compatíveis, como JPEG e H.264.";
 /* Title for an action to use most compatible formats */
@@ -703,9 +707,9 @@
 /* Title of the switch to config whether to upload Shared Albums */
 "Upload Shared Albums"="Fazer upload dos álbuns compartilhados";
 /* Footer description for Upload Shared Albums title when option enabled */
-"Shared Albums from your device's Photos app will be uploaded."="Shared Albums from your device’s Photos app will be uploaded.";
+"Shared Albums from your device's Photos app will be uploaded."="Será feito o upload dos álbuns compartilhados do aplicativo Fotos do seu dispositivo.";
 /* Footer description for Upload Shared Albums title when option disabled */
-"Shared Albums from your device's Photos app will not be uploaded."="Shared Albums from your device’s Photos app will not be uploaded.";
+"Shared Albums from your device's Photos app will not be uploaded."="Não será feito o upload dos álbuns compartilhados do aplicativo Fotos do seu dispositivo.";
 /* Title of the switch to config whether to upload synced albums */
 "Upload albums synced from iTunes"="Fazer upload dos álbuns sincronizados no iTunes";
 /* Footer description for upload synced albums title */
@@ -1713,9 +1717,9 @@
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
 "%@ enabled Encrypted Key Rotation"="%@ ativou a rotação da chave de criptografia.";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
-"%@ created a public link for the chat."="%@ criou um link para este chat.";
+"%@ created a public link for the chat."="%@ criou um link para este chat";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
-"%@ removed a public link for the chat."="%@ removeu o link deste chat.";
+"%@ removed a public link for the chat."="%@ removeu o link deste chat";
 /* Management message shown in a chat when the user %@ joined it from a public chat link */
 "%@ joined the group chat."="%@ se uniu ao chat em grupo.";
 /* Message show when a call cannot be established because there are too many participants in the group call */
@@ -1753,9 +1757,9 @@
 /* A notification that the other user cancelled their contact request so it is no longer valid. E.g. user@email.com cancelled their contact request. */
 "Cancelled their contact request"="Cancelou a solicitação de contato";
 /* A reminder notification to remind the user to respond to the contact request. */
-"Reminder: You have a contact request"="Lembrete: você possui uma solicitação de contato";
+"Reminder: You have a contact request"="Lembrete: você tem uma solicitação de contato";
 /* A notification telling the user that the other user deleted them as a contact. E.g. user@email.com deleted you as a contact. */
-"Deleted you as a contact"="Eliminou você como contato";
+"Deleted you as a contact"="Eliminou você dos contatos";
 /* A notification telling the user that they are now fully connected with the other user (the users are in each other’s address books). */
 "Contact relationship established"="Vocês agora são contatos";
 /* A notification telling the user that one of their contact’s accounts has been deleted or deactivated. */
@@ -1945,24 +1949,38 @@
 /* Title for empty state view of "Links" in Shared Items. */
 "No Public Links"="Não há links públicos";
 /* Text to indicate that the user will leave an incoming shared folder. */
-"Leave Share"="Leave Share";
+"Leave Share"="Sair do compartilhamento";
 /* Text indicating to the user the action that will be executed on tap. */
-"Manage Share"="Manage Share";
+"Manage Share"="Gerenciar compartilhamento";
 /* Title of the screen that shows the users with whom the user can share a folder */
 "Share with"="Compartilhar com";
 /* Chat Notifications DND: Option that does not deactivate DND automatically */
-"Until I Turn it On Again"="Until I Turn it On Again";
+"Until I Turn it On Again"="Até eu ativar novamente";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
-"30 minutes"="30 minutes";
+"30 minutes"="30 minutos";
 /* Chat Notifications DND: Option that deactivates DND after 1 hour */
 "1 hour"="1 hora";
 /* Chat Notifications DND: Option that deactivates DND after 6 hours */
-"6 hours"="6 hours";
+"6 hours"="6 horas";
 /* Chat Notifications DND: Option that deactivates DND after 24 hours */
-"24 hours"="24 hours";
+"24 hours"="24 horas";
 /* Chat Notifications DND: Title bar message for the dnd activate options */
-"Mute chat Notifications for"="Mute chat Notifications for";
+"Mute chat Notifications for"="Silenciar as notificações de chat por";
 /* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
-"Muted forever"="Muted forever";
+"Muted forever"="Silenciado para sempre";
+/* Chat Notifications DND: Remaining time left to deactivate DND - 1 minute left */
+"1 minute left"="1 minuto restante";
+/* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 minute left */
+"%d minutes left"="%d minutos restantes";
+/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour left */
+"1 hour left"="1 hora restante";
+/* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 hour left */
+"%d hours left"="%d horas restantes";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
-"Chat Notifications"="Chat Notifications";
+"Chat Notifications"="Notificações do chat";
+/* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
+"Reconnecting..."="Reconnecting…";
+/* Title shown when the user reconnect in a call. */
+"You are back!"="You are back!";
+/* Subtitle of chat screen when the chat is inactive */
+"Inactive chat"="Chat inativo";

@@ -120,12 +120,16 @@
 "passwordStrong"="To hasło będzie wytrzymałe na najbardziej wyrafinowane ataki brute-force. Upewnij się, że jesteś w stanie je zapamiętać.";
 /*  */
 "agreeWithTheMEGATermsOfService"="Zgadzam się z MEGA <a href=\"terms\">Warunkami korzystania z usługi</a>";
+/* This text is displayed in the account creation screen with a checkbox. User will have to tick the checkbox before proceeding on to create an account */
+"agreeWithLosingPasswordYouLoseData"="Rozumiem, że [S]jeśli stracę hasło, mogę stracić dane.[/S] Dowiedz się więcej o <a href=\"terms\">kompleksowym szyfrowaniu MEGA</a>";
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="Wprowadź poprawną nazwę";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="Hasła do siebie nie pasują";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
 "termsCheckboxUnselected"="Musisz wyrazić akceptację regulamiu serwisu w celu rejestracji konta na MEGA.";
+/* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown  */
+"termsForLosingPasswordCheckboxUnselected"="Musisz zgodzić się, że rozumiesz niebezpieczeństwo utraty hasła";
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="Podany adres e-mail został już użyty podczas rejestracji.";
 /* Title shown just after doing some action that requires confirming the action by an email */
@@ -703,9 +707,9 @@
 /* Title of the switch to config whether to upload Shared Albums */
 "Upload Shared Albums"="Prześlij udostępnione albumy";
 /* Footer description for Upload Shared Albums title when option enabled */
-"Shared Albums from your device's Photos app will be uploaded."="Shared Albums from your device’s Photos app will be uploaded.";
+"Shared Albums from your device's Photos app will be uploaded."="Udostępnione albumy z aplikacji Zdjęcia na urządzeniu zostaną przesłane.";
 /* Footer description for Upload Shared Albums title when option disabled */
-"Shared Albums from your device's Photos app will not be uploaded."="Shared Albums from your device’s Photos app will not be uploaded.";
+"Shared Albums from your device's Photos app will not be uploaded."="Albumy udostępnione z aplikacji Zdjęcia na urządzeniu nie zostaną przesłane.";
 /* Title of the switch to config whether to upload synced albums */
 "Upload albums synced from iTunes"="Prześlij albumy zsynchronizowane z iTunes";
 /* Footer description for upload synced albums title */
@@ -1941,28 +1945,42 @@
 /* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
 "Dispute Takedown"="Roztrzyganie sporów";
 /* Title of the "Links" Shared Items. */
-"Links"="Links";
+"Links"="Linki";
 /* Title for empty state view of "Links" in Shared Items. */
 "No Public Links"="Brak linków publicznych";
 /* Text to indicate that the user will leave an incoming shared folder. */
-"Leave Share"="Leave Share";
+"Leave Share"="Pozostaw";
 /* Text indicating to the user the action that will be executed on tap. */
-"Manage Share"="Manage Share";
+"Manage Share"="Zarządzaj udziałem";
 /* Title of the screen that shows the users with whom the user can share a folder */
 "Share with"="Udostępnij za pomocą";
 /* Chat Notifications DND: Option that does not deactivate DND automatically */
-"Until I Turn it On Again"="Until I Turn it On Again";
+"Until I Turn it On Again"="Dopóki nie włączę go ponownie";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
-"30 minutes"="30 minutes";
+"30 minutes"="30 minut";
 /* Chat Notifications DND: Option that deactivates DND after 1 hour */
 "1 hour"="1 godzina";
 /* Chat Notifications DND: Option that deactivates DND after 6 hours */
-"6 hours"="6 hours";
+"6 hours"="6 godzin";
 /* Chat Notifications DND: Option that deactivates DND after 24 hours */
-"24 hours"="24 hours";
+"24 hours"="24 godziny";
 /* Chat Notifications DND: Title bar message for the dnd activate options */
-"Mute chat Notifications for"="Mute chat Notifications for";
+"Mute chat Notifications for"="Wycisz powiadomienia czatu dla";
 /* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
-"Muted forever"="Muted forever";
+"Muted forever"="Wyciszony na zawsze";
+/* Chat Notifications DND: Remaining time left to deactivate DND - 1 minute left */
+"1 minute left"="Pozostała 1 minuta";
+/* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 minute left */
+"%d minutes left"="Pozostało %d minut";
+/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour left */
+"1 hour left"="Pozostała godzina";
+/* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 hour left */
+"%d hours left"="Pozostało %d godzin";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
-"Chat Notifications"="Chat Notifications";
+"Chat Notifications"="Powiadomienia Chat";
+/* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
+"Reconnecting..."="Reconnecting…";
+/* Title shown when the user reconnect in a call. */
+"You are back!"="You are back!";
+/* Subtitle of chat screen when the chat is inactive */
+"Inactive chat"="Nieaktywny czat";

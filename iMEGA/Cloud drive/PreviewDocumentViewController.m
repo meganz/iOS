@@ -321,7 +321,11 @@
         }
             
         case MegaNodeActionTypeCopy:
+            [node mnz_copyInViewController:self];
+            break;
         case MegaNodeActionTypeMove:
+            [node mnz_moveInViewController:self];
+            break;
         case MegaNodeActionTypeImport:
             if ([MEGAReachabilityManager isReachableHUDIfNot]) {
                 MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
@@ -329,15 +333,7 @@
                 
                 BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
                 browserVC.selectedNodesArray = @[node];
-                BrowserAction browserAction;
-                if (action == MegaNodeActionTypeCopy) {
-                    browserAction = BrowserActionCopy;
-                } else if (action == BrowserActionMove) {
-                    browserAction = BrowserActionMove;
-                } else {
-                    browserAction = BrowserActionImport;
-                }
-                [browserVC setBrowserAction:browserAction];
+                browserVC.browserAction = BrowserActionImport;
             }
             break;
             
@@ -361,34 +357,7 @@
 
 - (void)presentParentNode:(MEGANode *)node {
     [self dismissViewControllerAnimated:YES completion:^{
-        UIViewController *visibleViewController = UIApplication.mnz_presentingViewController;
-        if ([visibleViewController isKindOfClass:MainTabBarController.class]) {
-            NSArray *parentTreeArray = node.mnz_parentTreeArray;
-            
-            MainTabBarController *mainTBC = (MainTabBarController *)visibleViewController;
-            UINavigationController *navigationController = (UINavigationController *)(mainTBC.selectedViewController);
-            [navigationController popToRootViewControllerAnimated:NO];
-            
-            for (MEGANode *node in parentTreeArray) {
-                CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-                cloudDriveVC.parentNode = node;
-                [navigationController pushViewController:cloudDriveVC animated:NO];
-            }
-            
-            switch (node.type) {
-                case MEGANodeTypeFolder:
-                case MEGANodeTypeRubbish: {
-                    CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-                    cloudDriveVC.parentNode = node;
-                    [navigationController pushViewController:cloudDriveVC animated:NO];
-                    break;
-                }
-                    
-                default:
-                    break;
-            }
-            
-        }
+        [node navigateToParentAndPresent];
     }];
 }
 

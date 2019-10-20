@@ -83,8 +83,12 @@
     UIImage *avatarImage = [UIImage imageForName:self.chatRoom.title.uppercaseString size:avatarSize backgroundColor:[UIColor mnz_gray999999] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:(avatarSize.width/2.0f)]];
     self.avatarImageView.image = avatarImage;
     
-    NSInteger peers = self.chatRoom.peerCount + (!self.chatRoom.isPreview && self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeRo ? 1 : 0);
-    self.participantsLabel.text = (peers == 1) ? [NSString stringWithFormat:AMLocalizedString(@"%d participant", @"Singular of participant. 1 participant").capitalizedString, 1] : [NSString stringWithFormat:AMLocalizedString(@"%d participants", @"Singular of participant. 1 participant").capitalizedString, peers];
+    if (self.chatRoom.peerCount == 0) {
+        self.participantsLabel.text = AMLocalizedString(@"Inactive chat", @"Subtitle of chat screen when the chat is inactive");
+    } else {
+        NSInteger peers = self.chatRoom.peerCount + (!self.chatRoom.isPreview ? 1 : 0);
+        self.participantsLabel.text = (peers == 1) ? [NSString stringWithFormat:AMLocalizedString(@"%d participant", @"Singular of participant. 1 participant").capitalizedString, 1] : [NSString stringWithFormat:AMLocalizedString(@"%d participants", @"Singular of participant. 1 participant").capitalizedString, peers];
+    }
 }
 
 - (void)setParticipants {
@@ -96,7 +100,7 @@
         }
     }
     
-    if (!self.chatRoom.isPreview && self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeRo) {
+    if (!self.chatRoom.isPreview) {
         uint64_t myHandle = [[MEGASdkManager sharedMEGAChatSdk] myUserHandle];
         [self.participantsMutableArray addObject:[NSNumber numberWithUnsignedLongLong:myHandle]];
     }
@@ -349,7 +353,11 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 9;
+    if (self.participantsMutableArray.count == 1 && [self.participantsMutableArray[0] isEqual:[NSNumber numberWithUnsignedLongLong:MEGASdkManager.sharedMEGAChatSdk.myUserHandle]]) {
+        return 8;
+    } else {
+        return 9;
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -834,9 +842,9 @@
                 }
                 
                 NSInteger index = (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator) ? (indexPath.row - 1) : indexPath.row;
-                
-                if (index != (self.participantsMutableArray.count - 1)) {
-                    uint64_t userHandle = [[self.participantsMutableArray objectAtIndex:index] unsignedLongLongValue];
+                uint64_t userHandle = [self.participantsMutableArray[index] unsignedLongLongValue];
+
+                if (userHandle != MEGASdkManager.sharedMEGASdk.myUser.handle) {
                     
                     NSString *userName = [self.chatRoom peerFullnameByHandle:userHandle];
                     NSString *userEmail = [self.chatRoom peerEmailByHandle:userHandle];

@@ -1002,34 +1002,7 @@ static const CGFloat GapBetweenPages = 10.0;
     [self toggleTransparentInterfaceForDismissal:YES];
 
     [self dismissViewControllerAnimated:YES completion:^{
-        UIViewController *visibleViewController = UIApplication.mnz_presentingViewController;
-        if ([visibleViewController isKindOfClass:MainTabBarController.class]) {
-            NSArray *parentTreeArray = node.mnz_parentTreeArray;
-
-            MainTabBarController *mainTBC = (MainTabBarController *)visibleViewController;
-            UINavigationController *navigationController = (UINavigationController *)(mainTBC.selectedViewController);
-            [navigationController popToRootViewControllerAnimated:NO];
-            
-            for (MEGANode *node in parentTreeArray) {
-                CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-                cloudDriveVC.parentNode = node;
-                [navigationController pushViewController:cloudDriveVC animated:NO];
-            }
-            
-            switch (node.type) {
-                case MEGANodeTypeFolder:
-                case MEGANodeTypeRubbish: {
-                    CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-                    cloudDriveVC.parentNode = node;
-                    [navigationController pushViewController:cloudDriveVC animated:NO];
-                    break;
-                }
-                    
-                default:
-                    break;
-            }
-
-        }
+        [node navigateToParentAndPresent];
     }];
 }
 

@@ -23,7 +23,7 @@
 }
 
 - (NSString *)activityType {
-    return @"SaveToCameraRollActivity";
+    return MEGAUIActivityTypeSaveToCameraRoll;
 }
 
 - (NSString *)activityTitle {
