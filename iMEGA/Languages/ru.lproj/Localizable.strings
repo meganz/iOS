@@ -61,7 +61,7 @@
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="Вы вышли из этого устройства из другого места";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="MEGA не удаётся подключиться в защищённом режиме по SSL. Возможно, вы используете общественный Wi-Fi с дополнительными требованиями.";
+"sslUnverified_alertTitle"="MEGA не может безопасно подключиться через SSL. Возможно, вы используете общедоступный Wi-Fi с дополнительными требованиями.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="Содержимое, которое вы пытаетесь получить, недоступно для этого аккаунта. Пожалуйста, попробуйте войти в тот же аккаунт, что и в мобильном веб-клиенте.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
@@ -120,12 +120,16 @@
 "passwordStrong"="Этот пароль не поддастся самым самым мощным атакам с применением полного перебора. Убедитесь, что запомнили его.";
 /*  */
 "agreeWithTheMEGATermsOfService"="Я согласен с <a href=\"terms\">Условиями предоставления услуг</a> MEGA";
+/* This text is displayed in the account creation screen with a checkbox. User will have to tick the checkbox before proceeding on to create an account */
+"agreeWithLosingPasswordYouLoseData"="Я понимаю, что, [S]если я потеряю пароль, я могу потерять свои данные.[/S] Подробнее о <a href=\"terms\">сквозном шифровании MEGA</a>";
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="Введите правильное имя";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="Пароли не совпадают";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
 "termsCheckboxUnselected"="Вы должны принять условия предоставления услуг, чтобы зарегистрировать учётную запись в MEGA.";
+/* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown  */
+"termsForLosingPasswordCheckboxUnselected"="Вы должны согласиться с тем, что понимаете опасность потери пароля";
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="На введенный вами электронный адрес уже зарегистрирована учётная запись сервиса MEGA.";
 /* Title shown just after doing some action that requires confirming the action by an email */
@@ -703,9 +707,9 @@
 /* Title of the switch to config whether to upload Shared Albums */
 "Upload Shared Albums"="Загружать общие альбомы";
 /* Footer description for Upload Shared Albums title when option enabled */
-"Shared Albums from your device's Photos app will be uploaded."="Shared Albums from your device’s Photos app will be uploaded.";
+"Shared Albums from your device's Photos app will be uploaded."="Общие альбомы из приложения «Фото» были загружены.";
 /* Footer description for Upload Shared Albums title when option disabled */
-"Shared Albums from your device's Photos app will not be uploaded."="Shared Albums from your device’s Photos app will not be uploaded.";
+"Shared Albums from your device's Photos app will not be uploaded."="Общие альбомы из приложения «Фото» не были загружены.";
 /* Title of the switch to config whether to upload synced albums */
 "Upload albums synced from iTunes"="Загружать альбомы, синхронизированные из iTunes";
 /* Footer description for upload synced albums title */
@@ -1751,7 +1755,7 @@
 /* When a contact sent a contact/friend request */
 "Sent you a contact request"="Хочет связаться с вами";
 /* A notification that the other user cancelled their contact request so it is no longer valid. E.g. user@email.com cancelled their contact request. */
-"Cancelled their contact request"="Отменил его запрос на контакт";
+"Cancelled their contact request"="Отменил запрос добавления в контакты";
 /* A reminder notification to remind the user to respond to the contact request. */
 "Reminder: You have a contact request"="Напоминание: У вас запрос на контакт";
 /* A notification telling the user that the other user deleted them as a contact. E.g. user@email.com deleted you as a contact. */
@@ -1761,7 +1765,7 @@
 /* A notification telling the user that one of their contact’s accounts has been deleted or deactivated. */
 "Account has been deleted/deactivated"="Аккаунт был удален/отключен";
 /* A notification telling the user that another user blocked them as a contact (they will no longer be able to contact them). E.g. name@email.com blocked you as a contact. */
-"Blocked you as a contact"="Заблокировал Вас как контакт";
+"Blocked you as a contact"="Заблокировал ваш контакт";
 /* Response text after clicking Ignore on an incoming contact request notification. */
 "You ignored a contact request"="Вы проигнорировали запрос контакта";
 /* Response text after clicking Accept on an incoming contact request notification. */
@@ -1941,28 +1945,42 @@
 /* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
 "Dispute Takedown"="Оспорить блокировку";
 /* Title of the "Links" Shared Items. */
-"Links"="Links";
+"Links"="Ссылки";
 /* Title for empty state view of "Links" in Shared Items. */
 "No Public Links"="Нет публичных ссылок";
 /* Text to indicate that the user will leave an incoming shared folder. */
-"Leave Share"="Leave Share";
+"Leave Share"="Покинуть общее пользование";
 /* Text indicating to the user the action that will be executed on tap. */
-"Manage Share"="Manage Share";
+"Manage Share"="Управлять обменом";
 /* Title of the screen that shows the users with whom the user can share a folder */
 "Share with"="Поделиться с";
 /* Chat Notifications DND: Option that does not deactivate DND automatically */
-"Until I Turn it On Again"="Until I Turn it On Again";
+"Until I Turn it On Again"="Пока я не включу снова";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
-"30 minutes"="30 minutes";
+"30 minutes"="30 минут";
 /* Chat Notifications DND: Option that deactivates DND after 1 hour */
 "1 hour"="1 час";
 /* Chat Notifications DND: Option that deactivates DND after 6 hours */
-"6 hours"="6 hours";
+"6 hours"="6 часов";
 /* Chat Notifications DND: Option that deactivates DND after 24 hours */
-"24 hours"="24 hours";
+"24 hours"="24 часа";
 /* Chat Notifications DND: Title bar message for the dnd activate options */
-"Mute chat Notifications for"="Mute chat Notifications for";
+"Mute chat Notifications for"="Отключить уведомления чата на";
 /* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
-"Muted forever"="Muted forever";
+"Muted forever"="Выключен постоянно";
+/* Chat Notifications DND: Remaining time left to deactivate DND - 1 minute left */
+"1 minute left"="Осталась 1 минута";
+/* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 minute left */
+"%d minutes left"="Осталось %d мин.";
+/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour left */
+"1 hour left"="Остался 1 час";
+/* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 hour left */
+"%d hours left"="Осталось %d час.";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
-"Chat Notifications"="Chat Notifications";
+"Chat Notifications"="Уведомления чата";
+/* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
+"Reconnecting..."="Reconnecting…";
+/* Title shown when the user reconnect in a call. */
+"You are back!"="You are back!";
+/* Subtitle of chat screen when the chat is inactive */
+"Inactive chat"="Неактивный чат";
