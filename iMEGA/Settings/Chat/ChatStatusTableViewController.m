@@ -10,6 +10,8 @@
 
 #import "SelectableTableViewCell.h"
 
+static const NSInteger MaxAutoawayTimeout = 1457; // 87420 seconds
+
 @interface ChatStatusTableViewController () <UITextFieldDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAChatDelegate>
 
 @property (nonatomic) MEGAChatPresenceConfig *presenceConfig;
@@ -182,6 +184,10 @@
     
     if (self.autoAwayTimeTextField.text.intValue == 0) {
         self.autoAwayTimeTextField.text = @"1";
+    }
+    
+    if (self.autoAwayTimeTextField.text.intValue > MaxAutoawayTimeout) {
+        self.autoAwayTimeTextField.text = [NSString stringWithFormat:@"%td", MaxAutoawayTimeout];
     }
     
     if ([self.autoAwayTimeTextField.text isEqualToString:[NSString stringWithFormat:@"%lld", (self.presenceConfig.autoAwayTimeout / 60)]]) {
