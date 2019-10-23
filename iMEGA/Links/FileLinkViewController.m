@@ -209,9 +209,7 @@
     
     UIAlertAction *decryptAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"decrypt", @"Button title to try to decrypt the link") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-            NSString *key = decryptionAlertController.textFields.firstObject.text;
-            NSString *linkString = ([[key substringToIndex:1] isEqualToString:@"!"]) ? self.publicLinkString : [self.publicLinkString stringByAppendingString:@"!"];
-            linkString = [linkString stringByAppendingString:key];
+            NSString *linkString = [Helper buildPublicLink:self.publicLinkString.copy withKey:decryptionAlertController.textFields.firstObject.text isFolder:NO];
             
             MEGAGetPublicNodeRequestDelegate *delegate = [[MEGAGetPublicNodeRequestDelegate alloc] initWithCompletion:^(MEGARequest *request, MEGAError *error) {
                 self.request = request;
