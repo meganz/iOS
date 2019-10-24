@@ -3,7 +3,8 @@
 #import <CallKit/CallKit.h>
 
 #import "MEGACallManager.h"
-#import "MEGAChatCall+MNZCategory.h"
+
+@class MEGAChatCall;
 
 @interface MEGAProviderDelegate : NSObject <CXProviderDelegate>
 

@@ -10,7 +10,6 @@
 #import "Helper.h"
 #import "MEGANavigationController.h"
 #import "MEGAProviderDelegate.h"
-#import "MEGAChatCall+MNZCategory.h"
 #import "MyAccountHallViewController.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGAUserAlertList+MNZCategory.h"
@@ -268,9 +267,7 @@
 - (void)presentRingingCall:(MEGAChatSdk *)api call:(MEGAChatCall *)call {
     if (call.status == MEGAChatCallStatusRingIn) {
         MEGAChatRoom *chatRoom = [api chatRoomForChatId:call.chatId];
-        if (@available(iOS 10.0, *)) {
-            NSUUID *uuid = [[NSUUID alloc] init];
-            call.uuid = uuid;            
+        if (@available(iOS 10.0, *)) {          
             [self.megaProviderDelegate reportIncomingCall:call];
         } else {
             if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {

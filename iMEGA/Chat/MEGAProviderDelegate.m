@@ -47,7 +47,7 @@
 }
 
 - (void)reportIncomingCall:(MEGAChatCall *)call {
-    MEGALogDebug(@"[CallKit] Report incoming call %@ with uuid %@, video %@", call, call.uuid, call.hasVideoInitialCall ? @"YES" : @"NO");
+    MEGALogDebug(@"[CallKit] Report incoming call %@, video %@", call, call.hasVideoInitialCall ? @"YES" : @"NO");
     
     MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:call.chatId];
 
@@ -69,17 +69,15 @@
 }
 
 - (void)reportOutgoingCall:(MEGAChatCall *)call {
-    NSUUID *uuid = [self.megaCallManager UUIDForCall:call];
-    MEGALogDebug(@"[CallKit] Report outgoing call %@ with uuid %@", call, uuid);
+    MEGALogDebug(@"[CallKit] Report outgoing call %@", call);
     
     [self stopDialerTone];
-    [self.provider reportOutgoingCallWithUUID:uuid connectedAtDate:nil];
+    [self.provider reportOutgoingCallWithUUID:call.uuid connectedAtDate:nil];
 }
 
 - (void)reportEndCall:(MEGAChatCall *)call {
-    NSUUID *uuid = [self.megaCallManager UUIDForCall:call];
-    MEGALogDebug(@"[CallKit] Report end call %@ with uuid %@", call, uuid);
-    if (!uuid) return;
+    MEGALogDebug(@"[CallKit] Report end call %@", call);
+    if (!call.uuid) return;
     
     CXCallEndedReason callEndedReason = 0;
     switch (call.termCode) {
@@ -114,9 +112,9 @@
     
     MEGALogDebug(@"[CallKit] Report end call reason %ld", (long)callEndedReason);
     if (callEndedReason) {
-        [self.provider reportCallWithUUID:uuid endedAtDate:nil reason:callEndedReason];
+        [self.provider reportCallWithUUID:call.uuid endedAtDate:nil reason:callEndedReason];
     }
-    [self.megaCallManager removeCallByUUID:uuid];
+    [self.megaCallManager removeCall:call];
 }
 
 - (void)stopDialerTone {
@@ -237,7 +235,7 @@
     
     if (call) {
         [action fulfill];
-        [self.megaCallManager removeCallByUUID:action.callUUID];
+        [self.megaCallManager removeCall:call];
         [[MEGASdkManager sharedMEGAChatSdk] hangChatCall:call.chatId];
     } else {
         [action fail];
