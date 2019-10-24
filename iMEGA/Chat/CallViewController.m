@@ -74,12 +74,7 @@
     
     if (self.callType == CallTypeIncoming) {
         self.outgoingCallView.hidden = YES;
-        if (@available(iOS 10.0, *)) {
-            [self acceptCall:nil];
-        } else {
-            self.call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
-            self.statusCallLabel.text = AMLocalizedString(@"Incoming call", nil);
-        }
+        [self acceptCall:nil];
     } else if (self.callType == CallTypeOutgoing) {
         MEGAChatStartCallRequestDelegate *startCallRequestDelegate = [[MEGAChatStartCallRequestDelegate alloc] initWithCompletion:^(MEGAChatError *error) {
             if (error.type) {
@@ -90,16 +85,14 @@
 
                 self.statusCallLabel.text = AMLocalizedString(@"calling...", @"Label shown when you call someone (outgoing call), before the call starts.");
                 
-                if (@available(iOS 10.0, *)) {
-                    NSUUID *uuid = [[NSUUID alloc] init];
-                    self.call.uuid = uuid;
-                    self.currentCallUUID = uuid;
-                    [self.megaCallManager addCall:self.call];
-                    
-                    uint64_t peerHandle = [self.chatRoom peerHandleAtIndex:0];
-                    NSString *peerEmail = [self.chatRoom peerEmailByHandle:peerHandle];
-                    [self.megaCallManager startCall:self.call email:peerEmail];
-                }
+                NSUUID *uuid = [[NSUUID alloc] init];
+                self.call.uuid = uuid;
+                self.currentCallUUID = uuid;
+                [self.megaCallManager addCall:self.call];
+                
+                uint64_t peerHandle = [self.chatRoom peerHandleAtIndex:0];
+                NSString *peerEmail = [self.chatRoom peerEmailByHandle:peerHandle];
+                [self.megaCallManager startCall:self.call email:peerEmail];
             }
         }];
         
@@ -123,16 +116,6 @@
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didWirelessRoutesAvailableChange:) name:MPVolumeViewWirelessRoutesAvailableDidChangeNotification object:nil];
     
     self.nameLabel.text = [self.chatRoom peerFullnameAtIndex:0];
-    
-    if (@available(iOS 10.0, *)) {} else {
-        NSString *soundFilePath = [[NSBundle mainBundle] pathForResource:@"incoming_voice_video_call" ofType:@"mp3"];
-        NSURL *soundFileURL = [NSURL fileURLWithPath:soundFilePath];
-        
-        _player = [[AVAudioPlayer alloc] initWithContentsOfURL:soundFileURL error:nil];
-        self.player.numberOfLoops = -1; //Infinite
-        
-        [self.player play];
-    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -398,11 +381,7 @@
 }
 
 - (IBAction)hangCall:(UIButton *)sender {
-    if (@available(iOS 10.0, *)) {
-        [self.megaCallManager endCall:self.call];
-    } else {
-        [[MEGASdkManager sharedMEGAChatSdk] hangChatCall:self.chatRoom.chatId];
-    }
+    [self.megaCallManager endCall:self.call];
 }
 
 - (IBAction)muteOrUnmuteCall:(UIButton *)sender {
@@ -490,22 +469,18 @@
     MEGALogDebug(@"onChatCallUpdate %@", call);
     
     if (self.call.callId == call.callId) {
-        if (@available(iOS 10.0, *)) {
-            if (self.currentCallUUID) {
-                call.uuid = self.currentCallUUID;
-            }
+        if (self.currentCallUUID) {
+            call.uuid = self.currentCallUUID;
         }
         self.call = call;
     } else if (self.call.chatId == call.chatId) {
         MEGALogInfo(@"Two calls at same time in same chat.");
-        if (@available(iOS 10.0, *)) {
-            //Put the same UUID to the call that is going to replace the current one
-            if (self.currentCallUUID) {
-                call.uuid = self.currentCallUUID;
-                [self.megaCallManager addCall:call];
-            }
+        //Put the same UUID to the call that is going to replace the current one
+        if (self.currentCallUUID) {
+            call.uuid = self.currentCallUUID;
+            [self.megaCallManager addCall:call];
         }
-        
+
         self.call = call;
     } else {
         return;
