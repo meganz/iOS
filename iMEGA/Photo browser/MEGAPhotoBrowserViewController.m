@@ -304,7 +304,6 @@ static const CGFloat GapBetweenPages = 10.0;
                 [self.delegate photoBrowser:self didPresentNodeAtIndex:self.currentIndex];
             }
         }
-        [self fixFrames];
     }
 }
 
@@ -562,19 +561,6 @@ static const CGFloat GapBetweenPages = 10.0;
     frame.origin.x = MAX(frame.origin.x + (zoomableView.frame.size.width - (view.frame.size.width * scale)) / 2, 0);
     frame.origin.y = MAX(frame.origin.y + (zoomableView.frame.size.height - (view.frame.size.height * scale)) / 2, 0);
     view.frame = frame;
-}
-
-- (void)fixFrames {
-    if (@available(iOS 10.0, *)) {} else {
-        NSUInteger initialIndex = self.currentIndex == 0 ? 0 : self.currentIndex - 1;
-        NSUInteger finalIndex = self.currentIndex >= self.mediaNodes.count - 1 ? self.mediaNodes.count - 1 : self.currentIndex + 1;
-        for (NSUInteger i = initialIndex; i <= finalIndex; i++) {
-            UIScrollView *zoomableView = [self.imageViewsCache objectForKey:@(i)];
-            if (zoomableView) {
-                zoomableView.frame = CGRectMake(self.scrollView.frame.size.width * i, 0.0f, self.view.frame.size.width, self.view.frame.size.height);
-            }
-        }
-    }
 }
 
 #pragma mark - IBActions

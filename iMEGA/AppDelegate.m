@@ -1021,19 +1021,14 @@ void uncaughtExceptionHandler(NSException *exception) {
         groupCallVC.videoCall = self.videoCall;
         groupCallVC.chatRoom = self.chatRoom;
         groupCallVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-        
-        if (@available(iOS 10.0, *)) {
-            groupCallVC.megaCallManager = [self.mainTBC megaCallManager];
-        }
+        groupCallVC.megaCallManager = [self.mainTBC megaCallManager];
         [self.mainTBC presentViewController:groupCallVC animated:YES completion:nil];
     } else {
         CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
         callVC.chatRoom = self.chatRoom;
         callVC.videoCall = self.videoCall;
         callVC.callType = CallTypeOutgoing;
-        if (@available(iOS 10.0, *)) {
-            callVC.megaCallManager = [self.mainTBC megaCallManager];
-        }
+        callVC.megaCallManager = [self.mainTBC megaCallManager];
         [self.mainTBC presentViewController:callVC animated:YES completion:nil];
     }
     self.chatRoom = nil;
@@ -1258,22 +1253,20 @@ void uncaughtExceptionHandler(NSException *exception) {
         
         if (!DevicePermissionsHelper.shouldAskForNotificationsPermissions) {
             [DevicePermissionsHelper notificationsPermissionWithCompletionHandler:^(BOOL granted) {
-                if (@available(iOS 10.0, *)) {
-                    if (granted && !DevicePermissionsHelper.shouldAskForAudioPermissions) {
-                        [DevicePermissionsHelper audioPermissionModal:NO forIncomingCall:YES withCompletionHandler:^(BOOL granted) {
-                            if (!granted) {
-                                UNMutableNotificationContent *content = [UNMutableNotificationContent new];
-                                content.body = AMLocalizedString(@"Incoming call", @"notification subtitle of incoming calls");
-                                content.sound = [UNNotificationSound soundNamed:@"incoming_voice_video_call_iOS9.mp3"];
-                                UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:1 repeats:NO];
-                                NSString *identifier = @"Incoming call";
-                                UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:identifier
-                                                                                                      content:content
-                                                                                                      trigger:trigger];
-                                [UNUserNotificationCenter.currentNotificationCenter addNotificationRequest:request withCompletionHandler:nil];
-                            }
-                        }];
-                    }
+                if (granted && !DevicePermissionsHelper.shouldAskForAudioPermissions) {
+                    [DevicePermissionsHelper audioPermissionModal:NO forIncomingCall:YES withCompletionHandler:^(BOOL granted) {
+                        if (!granted) {
+                            UNMutableNotificationContent *content = [UNMutableNotificationContent new];
+                            content.body = AMLocalizedString(@"Incoming call", @"notification subtitle of incoming calls");
+                            content.sound = [UNNotificationSound soundNamed:@"incoming_voice_video_call_iOS9.mp3"];
+                            UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:1 repeats:NO];
+                            NSString *identifier = @"Incoming call";
+                            UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:identifier
+                                                                                                  content:content
+                                                                                                  trigger:trigger];
+                            [UNUserNotificationCenter.currentNotificationCenter addNotificationRequest:request withCompletionHandler:nil];
+                        }
+                    }];
                 }
             }];
         }
@@ -1318,14 +1311,6 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 - (void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions options))completionHandler {
     completionHandler(UNNotificationPresentationOptionAlert | UNNotificationPresentationOptionSound);
-}
-
-- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
-    if (@available(iOS 10, *)) {} else {
-        if ([[UIApplication sharedApplication] applicationState] != UIApplicationStateActive) {
-            [self.mainTBC openChatRoomNumber:notification.userInfo[@"chatId"]];
-        }
-    }
 }
 
 #pragma mark - LaunchViewControllerDelegate
@@ -1610,12 +1595,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                     [self.sslKeyPinningController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"openBrowser", @"Button title to allow the user open the default browser") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                         self.sslKeyPinningController = nil;
                         NSURL *url = [NSURL URLWithString:@"https://www.mega.nz"];
-                        
-                        if (@available(iOS 10.0, *)) {
-                            [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:NULL];
-                        } else {
-                            [[UIApplication sharedApplication] openURL:url];
-                        }
+                        [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:NULL];
                     }]];
                     
                     [UIApplication.mnz_presentingViewController presentViewController:self.sslKeyPinningController animated:YES completion:nil];

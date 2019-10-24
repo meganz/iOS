@@ -387,11 +387,7 @@
 
 - (IBAction)hangCall:(UIButton *)sender {
     [self removeAllVideoListeners];
-    if (@available(iOS 10.0, *)) {
-        [self.megaCallManager endCall:self.call];
-    } else {
-        [[MEGASdkManager sharedMEGAChatSdk] hangChatCall:self.chatRoom.chatId];
-    }
+    [self.megaCallManager endCall:self.call];
 }
 
 - (IBAction)muteOrUnmuteCall:(UIButton *)sender {
@@ -737,18 +733,6 @@
     });
 }
 
-- (void)playCallingSound {
-    if (@available(iOS 10.0, *)) {} else {
-        NSString *soundFilePath = [[NSBundle mainBundle] pathForResource:@"incoming_voice_video_call" ofType:@"mp3"];
-        NSURL *soundFileURL = [NSURL fileURLWithPath:soundFilePath];
-        
-        _player = [[AVAudioPlayer alloc] initWithContentsOfURL:soundFileURL error:nil];
-        self.player.numberOfLoops = -1; //Infinite
-        
-        [self.player play];
-    }
-}
-
 - (MEGAGroupCallPeer *)peerForSession:(MEGAChatSession *)session {
     for (MEGAGroupCallPeer *peer in self.peersInCall) {
         if (peer.peerId == session.peerId && peer.clientId == session.clientId) {
@@ -846,19 +830,16 @@
             weakSelf.call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:weakSelf.chatRoom.chatId];
             weakSelf.incomingCallView.hidden = YES;
             
-            if (@available(iOS 10.0, *)) {
-                NSUUID *uuid = [[NSUUID alloc] init];
-                weakSelf.call.uuid = uuid;
-                [weakSelf.megaCallManager addCall:weakSelf.call];
-                
-                uint64_t peerHandle = [weakSelf.chatRoom peerHandleAtIndex:0];
-                NSString *peerEmail = [weakSelf.chatRoom peerEmailByHandle:peerHandle];
-                [weakSelf.megaCallManager startCall:weakSelf.call email:peerEmail];
-            }
+            NSUUID *uuid = [[NSUUID alloc] init];
+            weakSelf.call.uuid = uuid;
+            [weakSelf.megaCallManager addCall:weakSelf.call];
+            
+            uint64_t peerHandle = [weakSelf.chatRoom peerHandleAtIndex:0];
+            NSString *peerEmail = [weakSelf.chatRoom peerEmailByHandle:peerHandle];
+            [weakSelf.megaCallManager startCall:weakSelf.call email:peerEmail];
             
             [self.collectionView reloadData];
             MEGALogDebug(@"[Group Call] Reload data %s", __PRETTY_FUNCTION__);
-            [self playCallingSound];
             
             [AVAudioSession.sharedInstance mnz_setSpeakerEnabled:NO];
         }
@@ -869,12 +850,7 @@
 
 - (void)showIncomingCall {
     self.outgoingCallView.hidden = YES;
-    if (@available(iOS 10.0, *)) {
-        [self acceptCall:nil];
-    } else {
-        _call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
-    }
-    [self playCallingSound];
+    [self acceptCall:nil];
 }
 
 - (void)configureUserOnFocus:(MEGAGroupCallPeer *)peerSelected manual:(BOOL)manual {

@@ -100,11 +100,7 @@
     [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
     [alertController addAction:[UIAlertAction actionWithTitle:@"App Store" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         NSURL *url = [NSURL URLWithString:@"itms-apps://itunes.apple.com/search"];
-        if (@available(iOS 10.0, *)) {
-            [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:NULL];
-        } else {
-            [[UIApplication sharedApplication] openURL:url];
-        }
+        [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:NULL];
     }]];
     
     [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
@@ -120,23 +116,14 @@
 
 - (IBAction)openInTouchUpInside:(UIButton *)sender {
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"otpauth://totp/MEGA:%@?secret=%@&issuer=MEGA", [[MEGASdkManager sharedMEGASdk] myEmail], self.seed]];
-    if (@available(iOS 10.0, *)) {
-        [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:^(BOOL success) {
-            if (success) {
-                MEGALogInfo(@"URL opened on authenticator app");
-            } else {
-                MEGALogInfo(@"URL NOT opened");
-                [self youNeedATwoFactorAuthenticationAppAlertWithTitle:AMLocalizedString(@"youNeedATwoFactorAuthenticationApp", @"Alert text shown when enabling the two factor authentication when you don't have a two factor authentication app installed on the device")];
-            }
-        }];
-    } else {
-        if ([[UIApplication sharedApplication] openURL:url]) {
+    [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:^(BOOL success) {
+        if (success) {
             MEGALogInfo(@"URL opened on authenticator app");
         } else {
             MEGALogInfo(@"URL NOT opened");
             [self youNeedATwoFactorAuthenticationAppAlertWithTitle:AMLocalizedString(@"youNeedATwoFactorAuthenticationApp", @"Alert text shown when enabling the two factor authentication when you don't have a two factor authentication app installed on the device")];
         }
-    }
+    }];
 }
 
 - (IBAction)nextTouchUpInside:(UIButton *)sender {
