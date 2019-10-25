@@ -1153,6 +1153,10 @@
 "sendMessage"="Send Message";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
 "verifyCredentials"="Verify Credentials";
+/* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
+"verify"="Verify";
+/* Button title */
+"verified"="Verified";
 /* A button title to delete the history of a chat. */
 "clearChatHistory"="Clear Chat History";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
