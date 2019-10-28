@@ -105,6 +105,8 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.view.backgroundColor = self.containerView.backgroundColor = UIColor.mnz_background;
+    
     self.definesPresentationContext = YES;
     
     switch (self.displayMode) {
@@ -1050,7 +1052,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     if (newFolderAlertController) {
         UIAlertAction *rightButtonAction = newFolderAlertController.actions.lastObject;
         BOOL containsInvalidChars = textField.text.mnz_containsInvalidChars;
-        textField.textColor = containsInvalidChars ? UIColor.mnz_redMain : UIColor.darkTextColor;
+        textField.textColor = containsInvalidChars ? UIColor.mnz_redError : UIColor.mnz_label;
         rightButtonAction.enabled = (!textField.text.mnz_isEmpty && !containsInvalidChars);
     }
 }
@@ -1062,7 +1064,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     UIAlertAction *fromPhotosAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"choosePhotoVideo", @"Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self showImagePickerForSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
     }];
-    [fromPhotosAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+    [fromPhotosAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
     [uploadAlertController addAction:fromPhotosAlertAction];
     
     UIAlertAction *captureAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"capturePhotoVideo", @"Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
@@ -1082,7 +1084,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
             }
         }];
     }];
-    [captureAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+    [captureAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
     [uploadAlertController addAction:captureAlertAction];
     
     UIAlertAction *importFromAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"uploadFrom", @"Option given on the `Add` section to allow the user upload something from another cloud storage provider.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
@@ -1092,7 +1094,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
         
         [self presentViewController:documentMenuViewController animated:YES completion:nil];
     }];
-    [importFromAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+    [importFromAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
     [uploadAlertController addAction:importFromAlertAction];
     
     [self presentFromMoreBarButtonItemTheAlertController:uploadAlertController];
@@ -1329,13 +1331,15 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 - (void)updateSelector {
     self.selectorView.backgroundColor = [UIColor mnz_mainBarsColorForTraitCollection:self.traitCollection];
     
+    self.cloudDriveButton.titleLabel.font = self.cloudDriveButton.selected ? [UIFont systemFontOfSize:15.0f weight:UIFontWeightMedium] : [UIFont systemFontOfSize:15.0f];
     [self.cloudDriveButton setTitleColor:[UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)] forState:UIControlStateNormal];
     [self.cloudDriveButton setTitleColor:[UIColor mnz_redMainForTraitCollection:(self.traitCollection)] forState:UIControlStateSelected];
-    self.cloudDriveLineView.backgroundColor = self.cloudDriveButton.selected ? [UIColor mnz_redMainForTraitCollection:self.traitCollection] : UIColor.mnz_grayCCCCCC;
+    self.cloudDriveLineView.backgroundColor = self.cloudDriveButton.selected ? [UIColor mnz_redMainForTraitCollection:self.traitCollection] : nil;
     
+    self.recentsButton.titleLabel.font = self.recentsButton.selected ? [UIFont systemFontOfSize:15.0f weight:UIFontWeightMedium] : [UIFont systemFontOfSize:15.0f];
     [self.recentsButton setTitleColor:[UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)] forState:UIControlStateNormal];
     [self.recentsButton setTitleColor:[UIColor mnz_redMainForTraitCollection:(self.traitCollection)] forState:UIControlStateSelected];
-    self.recentsLineView.backgroundColor = self.recentsButton.selected ? [UIColor mnz_redMainForTraitCollection:self.traitCollection] : UIColor.mnz_grayCCCCCC;
+    self.recentsLineView.backgroundColor = self.recentsButton.selected ? [UIColor mnz_redMainForTraitCollection:self.traitCollection] : nil;
 }
 
 #pragma mark - IBActions
@@ -1443,7 +1447,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     UIAlertAction *uploadAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"upload", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self presentUploadAlertController];
     }];
-    [uploadAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+    [uploadAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
     [moreAlertController addAction:uploadAlertAction];
     
     UIAlertAction *newFolderAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"newFolder", @"Menu option from the `Add` section that allows you to create a 'New Folder'") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
@@ -1476,7 +1480,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
         
         [self presentViewController:newFolderAlertController animated:YES completion:nil];
     }];
-    [newFolderAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+    [newFolderAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
     [moreAlertController addAction:newFolderAlertAction];
     
     if ([self numberOfRows]) {
@@ -1484,21 +1488,21 @@ static const NSTimeInterval kSearchTimeDelay = .5;
         UIAlertAction *changeViewAlertAction = [UIAlertAction actionWithTitle:changeViewTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             [self changeLayoutMode];
         }];
-        [changeViewAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+        [changeViewAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
         [moreAlertController addAction:changeViewAlertAction];
     }
     
     UIAlertAction *sortByAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"sortTitle", @"Section title of the 'Sort by'") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self presentSortByViewController];
     }];
-    [sortByAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+    [sortByAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
     [moreAlertController addAction:sortByAlertAction];
     
     UIAlertAction *selectAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"select", @"Button that allows you to select a given folder") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         BOOL enableEditing = self.cdTableView ? !self.cdTableView.tableView.isEditing : !self.cdCollectionView.collectionView.allowsMultipleSelection;
         [self setEditMode:enableEditing];
     }];
-    [selectAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+    [selectAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
     [moreAlertController addAction:selectAlertAction];
     
     UIAlertAction *rubbishBinAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"rubbishBinLabel", @"Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin'") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
@@ -1508,7 +1512,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
         cloudDriveVC.title = AMLocalizedString(@"rubbishBinLabel", @"Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin'");
         [self.navigationController pushViewController:cloudDriveVC animated:YES];
     }];
-    [rubbishBinAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+    [rubbishBinAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
     [moreAlertController addAction:rubbishBinAlertAction];
     
     [self presentFromMoreBarButtonItemTheAlertController:moreAlertController];
@@ -1523,21 +1527,21 @@ static const NSTimeInterval kSearchTimeDelay = .5;
         UIAlertAction *changeViewAlertAction = [UIAlertAction actionWithTitle:changeViewTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             [self changeLayoutMode];
         }];
-        [changeViewAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+        [changeViewAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
         [moreMinimizedAlertController addAction:changeViewAlertAction];
     }
     
     UIAlertAction *sortByAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"sortTitle", @"Section title of the 'Sort by'") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self presentSortByViewController];
     }];
-    [sortByAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+    [sortByAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
     [moreMinimizedAlertController addAction:sortByAlertAction];
     
     UIAlertAction *selectAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"select", @"Button that allows you to select a given folder") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         BOOL enableEditing = self.cdTableView ? !self.cdTableView.tableView.isEditing : !self.cdCollectionView.collectionView.allowsMultipleSelection;
         [self setEditMode:enableEditing];
     }];
-    [selectAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+    [selectAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
     [moreMinimizedAlertController addAction:selectAlertAction];
     
     if (self.displayMode == DisplayModeRubbishBin) {
@@ -1552,7 +1556,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
                 [UIApplication.mnz_visibleViewController presentViewController:clearRubbishBinAlertController animated:YES completion:nil];
             }
         }];
-        [clearRubbishBinAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+        [clearRubbishBinAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
         [moreMinimizedAlertController addAction:clearRubbishBinAlertAction];
     }
     
@@ -1572,7 +1576,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     UIAlertAction *uploadAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"upload", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self presentUploadAlertController];
     }];
-    [uploadAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
+    [uploadAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
     [recentsMoreAlertController addAction:uploadAlertAction];
     
     UIAlertAction *rubbishBinAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"rubbishBinLabel", @"Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin'") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
@@ -1582,7 +1586,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
         cloudDriveVC.title = AMLocalizedString(@"rubbishBinLabel", @"Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin'");
         [self.navigationController pushViewController:cloudDriveVC animated:YES];
     }];
-    [rubbishBinAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
+    [rubbishBinAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
     [recentsMoreAlertController addAction:rubbishBinAlertAction];
     
     if (UIDevice.currentDevice.iPadDevice) {

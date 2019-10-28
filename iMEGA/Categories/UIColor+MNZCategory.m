@@ -15,7 +15,7 @@
                 if (traitCollection.accessibilityContrast == UIAccessibilityContrastHigh) {
                     return UIColor.whiteColor;
                 } else {
-                    return UIColor.mnz_grayF9F9F9;
+                    return [UIColor colorWithRed:247.0/255.0 green:247.0/255.0 blue:247.0/255.0 alpha:1.0];
                 }
             }
                 
@@ -23,12 +23,12 @@
                 if (traitCollection.accessibilityContrast == UIAccessibilityContrastHigh) {
                     return UIColor.blackColor;
                 } else {
-                    return [UIColor colorFromHexString:@"121212"];
+                    return [UIColor colorWithRed:22.0/255.0 green:22.0/255.0 blue:22.0/255.0 alpha:1.0];
                 }
             }
         }
     } else {
-        return UIColor.mnz_grayF9F9F9;
+        return [UIColor colorWithRed:247.0/255.0 green:247.0/255.0 blue:247.0/255.0 alpha:1.0];
     }
 }
 

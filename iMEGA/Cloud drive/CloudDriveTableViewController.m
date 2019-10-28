@@ -33,6 +33,7 @@
 
     //White background for the view behind the table view
     self.tableView.backgroundView = UIView.alloc.init;
+    self.tableView.separatorColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -52,6 +53,16 @@
         self.bucketHeaderParentFolderNameLabel.text = [NSString stringWithFormat:@"%@ •", parentNode.name.uppercaseString];
         self.bucketHeaderUploadOrVersionImageView.image = self.cloudDrive.recentActionBucket.isUpdate ? [UIImage imageNamed:@"versioned"] : [UIImage imageNamed:@"recentUpload"];
         self.bucketHeaderHourLabel.text = dateString.uppercaseString;
+    }
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            self.tableView.separatorColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
+        }
     }
 }
 
