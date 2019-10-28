@@ -912,7 +912,7 @@
             } else {
                 enableRightButton = YES;
             }
-            textField.textColor = containsInvalidChars ? UIColor.mnz_redMain : UIColor.darkTextColor;
+            textField.textColor = containsInvalidChars ? UIColor.mnz_redError : UIColor.mnz_label;
         }
         
         rightButtonAction.enabled = enableRightButton;

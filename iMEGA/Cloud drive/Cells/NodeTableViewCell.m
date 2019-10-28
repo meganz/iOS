@@ -102,7 +102,8 @@
         self.nameLabel.textColor = UIColor.mnz_redMain;
     } else {
         self.nameLabel.text = node.name;
-        self.nameLabel.textColor = UIColor.mnz_black333333;
+        self.nameLabel.textColor = UIColor.mnz_label;
+        self.subtitleLabel.textColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
     }
     
     if (node.isFile) {
@@ -119,6 +120,8 @@
     } else {
         self.delegate = delegate;
     }
+    
+    self.separatorView.backgroundColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
 }
 
 - (void)configureForRecentAction:(MEGARecentActionBucket *)recentActionBucket {

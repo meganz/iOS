@@ -449,7 +449,7 @@
     UIAlertController *alertController = (UIAlertController *)self.presentedViewController;
     if (alertController) {
         BOOL containsInvalidChars = textField.text.mnz_containsInvalidChars;
-        textField.textColor = containsInvalidChars ? UIColor.mnz_redMain : UIColor.darkTextColor;
+        textField.textColor = containsInvalidChars ? UIColor.mnz_redError : UIColor.mnz_label;
         UIAlertAction *rightButtonAction = alertController.actions.lastObject;
         rightButtonAction.enabled = !textField.text.mnz_isEmpty && !containsInvalidChars;
     }
@@ -477,10 +477,12 @@
 - (void)updateSelector {
     self.selectorView.backgroundColor = [UIColor mnz_mainBarsColorForTraitCollection:self.traitCollection];
     
+    self.cloudDriveButton.titleLabel.font = self.cloudDriveButton.selected ? [UIFont systemFontOfSize:15.0f weight:UIFontWeightMedium] : [UIFont systemFontOfSize:15.0f];
     [self.cloudDriveButton setTitleColor:[UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)] forState:UIControlStateNormal];
     [self.cloudDriveButton setTitleColor:[UIColor mnz_redMainForTraitCollection:(self.traitCollection)] forState:UIControlStateSelected];
     self.cloudDriveLineView.backgroundColor = self.cloudDriveButton.selected ? [UIColor mnz_redMainForTraitCollection:self.traitCollection] : UIColor.mnz_grayCCCCCC;
     
+    self.incomingButton.titleLabel.font = self.incomingButton.selected ? [UIFont systemFontOfSize:15.0f weight:UIFontWeightMedium] : [UIFont systemFontOfSize:15.0f];
     [self.incomingButton setTitleColor:[UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)] forState:UIControlStateNormal];
     [self.incomingButton setTitleColor:[UIColor mnz_redMainForTraitCollection:(self.traitCollection)] forState:UIControlStateSelected];
     self.incomingLineView.backgroundColor = self.incomingButton.selected ? [UIColor mnz_redMainForTraitCollection:self.traitCollection] : UIColor.mnz_grayCCCCCC;
@@ -606,8 +608,7 @@
     sender.selected = !sender.selected;
     self.incomingButton.selected = !self.incomingButton.selected;
     
-    self.cloudDriveLineView.backgroundColor = UIColor.mnz_redMain;
-    self.incomingLineView.backgroundColor = UIColor.mnz_grayCCCCCC;
+    [self updateSelector];
     
     if (self.searchController.isActive) {
         self.searchController.active = NO;
@@ -624,8 +625,7 @@
     sender.selected = !sender.selected;
     self.cloudDriveButton.selected = !self.cloudDriveButton.selected;
     
-    self.incomingLineView.backgroundColor = UIColor.mnz_redMain;
-    self.cloudDriveLineView.backgroundColor = UIColor.mnz_grayCCCCCC;
+    [self updateSelector];
     
     if (self.searchController.isActive) {
         self.searchController.active = NO;
