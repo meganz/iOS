@@ -17,6 +17,7 @@
 #import "MEGARenameRequestDelegate.h"
 #import "MEGAShareRequestDelegate.h"
 #import "MEGAStore.h"
+#import "MEGA-Swift.h"
 #import "NSAttributedString+MNZCategory.h"
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
@@ -143,12 +144,16 @@
                 previewController.isLink = isFolderLink;
                 
                 return navigationController;
+            } else if ([previewDocumentPath.pathExtension isEqualToString:@"html"]) {
+                return [self mnz_htmlViewControllerWithFilePath:previewDocumentPath];
             } else {
                 MEGAQLPreviewController *previewController = [[MEGAQLPreviewController alloc] initWithFilePath:previewDocumentPath];
                 previewController.currentPreviewItemIndex = 0;
                 
                 return previewController;
             }
+        } else if ([previewDocumentPath.pathExtension isEqualToString:@"html"]) {
+            return [self mnz_htmlViewControllerWithFilePath:previewDocumentPath];;
         } else {
             MEGAQLPreviewController *previewController = [[MEGAQLPreviewController alloc] initWithFilePath:previewDocumentPath];
             previewController.currentPreviewItemIndex = 0;
@@ -433,6 +438,15 @@
     browserVC.browserAction = BrowserActionCopy;
     
     [viewController setEditing:NO animated:YES];
+}
+
+#pragma mark - Private
+
+- (MEGANavigationController *)mnz_htmlViewControllerWithFilePath:(NSString *)filePath {
+    HtmlViewController *htmlVC = [HtmlViewController.alloc initWithFilePath:filePath];
+    MEGANavigationController *navigationController = [MEGANavigationController.alloc initWithRootViewController:htmlVC];
+    [navigationController addLeftDismissButtonWithText:AMLocalizedString(@"ok", nil)];
+    return navigationController;
 }
 
 #pragma mark - File links
