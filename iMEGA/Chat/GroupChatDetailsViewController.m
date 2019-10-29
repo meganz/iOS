@@ -521,15 +521,15 @@
                     break;
                     
                 case MEGAChatRoomPrivilegeRo:
-                    permissionsImage = [UIImage imageNamed:@"readPermissions"];
+                    permissionsImage = [UIImage imageNamed:@"readOnly"];
                     break;
                     
                 case MEGAChatRoomPrivilegeStandard:
-                    permissionsImage = [UIImage imageNamed:@"readWritePermissions"];
+                    permissionsImage = [UIImage imageNamed:@"standard"];
                     break;
                     
                 case MEGAChatRoomPrivilegeModerator:
-                    permissionsImage = [UIImage imageNamed:@"permissions"];
+                    permissionsImage = [UIImage imageNamed:@"moderator"];
                     break;
             }
             [cell.permissionsButton setImage:permissionsImage forState:UIControlStateNormal];

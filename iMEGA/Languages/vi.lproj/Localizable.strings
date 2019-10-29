@@ -1978,6 +1978,16 @@
 "%d hours left"="%d hours left";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="Âm báo chát";
+/* Chat settings: This text appears with the Do Not Disturb switch */
+"Do Not Disturb"="Do Not Disturb";
+/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, 1 minute left */
+"1 hour, 1 minute left"="1 hour, 1 minute left";
+/* Chat Notifications DND: Remaining time left to deactivate DND - X hours, X minutes left */
+"%d hours, %d minutes left"="%d hours, %d minutes left";
+/* Chat Notifications DND: Remaining time left to deactivate DND - X hours, 1 minute left */
+"%d hours, 1 minute left"="%d hours, 1 minute left";
+/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, X minutes left */
+"1 hour, %d minutes left"="1 hour, %d minutes left";
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
 "Reconnecting..."="Reconnecting…";
 /* Title shown when the user reconnect in a call. */
