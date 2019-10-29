@@ -255,7 +255,7 @@
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
 
-    if ([cell recursivelyFindSubview:self.doNotDisturbSwitch]) {
+    if (indexPath.section == 2 && indexPath.row == 0) {
         [self.globalDNDNotificationControl configureWithDndSwitch:self.doNotDisturbSwitch];
     }
 }

@@ -23,6 +23,24 @@ class PushNotificationControl: NSObject {
         }
     }
     
+    private var pushNotificationSettingsDelegate: MEGAGenericRequestDelegate {
+        return MEGAGenericRequestDelegate { [weak self] request, error in
+            guard let error = error,
+                let request = request else {
+                    return
+            }
+            
+            if error.type == .apiENoent {
+                self?.pushNotificationSettings = MEGAPushNotificationSettings()
+            } else if error.type == .apiOk {
+                self?.pushNotificationSettings = request.megaPushNotificationSettings
+            }
+            
+            self?.delegate?.tableView?.reloadData()
+            self?.hideProgress()
+        }!
+    }
+    
     weak var delegate: PushNotificationControlProtocol?
     
     // MARK:- Initializer
@@ -30,7 +48,7 @@ class PushNotificationControl: NSObject {
     @objc init(delegate: PushNotificationControlProtocol) {
         self.delegate = delegate
         super.init()
-        MEGASdkManager.sharedMEGASdk()?.getPushNotificationSettings(with: self)
+        MEGASdkManager.sharedMEGASdk()?.getPushNotificationSettings(with: pushNotificationSettingsDelegate)
     }
     
     //MARK:- Interface.
@@ -69,7 +87,8 @@ extension PushNotificationControl {
         
         showProgress()
         block()
-        MEGASdkManager.sharedMEGASdk()?.setPushNotificationSettings(pushNotificationSettings, delegate: self)
+        MEGASdkManager.sharedMEGASdk()?.setPushNotificationSettings(pushNotificationSettings,
+                                                                    delegate: pushNotificationSettingsDelegate)
     }
     
     func dndTimeInterval(dndTurnOnOption: DNDTurnOnOption) -> Int64 {
@@ -94,15 +113,5 @@ extension PushNotificationControl {
             SVProgressHUD.setDefaultMaskType(.none)
             SVProgressHUD.dismiss()
         }
-    }
-}
-
-// MARK:- MEGARequestDelegate extension
-
-extension PushNotificationControl: MEGARequestDelegate {
-    func onRequestFinish(_ api: MEGASdk, request: MEGARequest, error: MEGAError) {
-        pushNotificationSettings = request.megaPushNotificationSettings
-        delegate?.tableView?.reloadData()
-        hideProgress()
     }
 }

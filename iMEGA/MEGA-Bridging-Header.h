@@ -8,6 +8,7 @@
 #import "MEGAPushNotificationSettings.h"
 #import "MEGASdkManager.h"
 #import "SVProgressHUD.h"
+#import "MEGAGenericRequestDelegate.h"
 
 #import "NSString+MNZCategory.h"
 #import "UIColor+MNZCategory.h"
