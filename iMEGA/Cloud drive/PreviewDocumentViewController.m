@@ -21,6 +21,7 @@
 #import "UIImageView+MNZCategory.h"
 #import "MEGAStore.h"
 #import "MEGAQLPreviewController.h"
+#import "MEGA-Swift.h"
 #import "UIView+MNZCategory.h"
 
 @interface PreviewDocumentViewController () <QLPreviewControllerDataSource, QLPreviewControllerDelegate, MEGATransferDelegate, UICollectionViewDelegate, UICollectionViewDataSource, CustomActionViewControllerDelegate, NodeInfoViewControllerDelegate, SearchInPdfViewControllerProtocol, UIGestureRecognizerDelegate> {
@@ -226,6 +227,24 @@
     }
 }
 
+- (void)presentMEGAQlPreviewController {
+    MEGAQLPreviewController *previewController = [[MEGAQLPreviewController alloc] initWithFilePath:previewDocumentTransfer.path];
+    
+    [self dismissViewControllerAnimated:YES completion:^{
+        [UIApplication.mnz_presentingViewController presentViewController:previewController animated:YES completion:nil];
+    }];
+}
+
+- (void)presentHtmlViewController {
+    HtmlViewController *htmlVC = [HtmlViewController.alloc initWithFilePath:previewDocumentTransfer.path];
+    MEGANavigationController *navigationController = [MEGANavigationController.alloc initWithRootViewController:htmlVC];
+    [navigationController addLeftDismissButtonWithText:AMLocalizedString(@"ok", nil)];
+    
+    [self dismissViewControllerAnimated:YES completion:^{
+        [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:nil];
+    }];
+}
+
 #pragma mark - QLPreviewControllerDataSource
 
 - (NSInteger)numberOfPreviewItemsInPreviewController:(QLPreviewController *)controller {
@@ -275,24 +294,20 @@
     }
     
     if (self.isViewLoaded && self.view.window) {
-        if (@available(iOS 11.0, *)) {
-            if ([transfer.path.pathExtension isEqualToString:@"pdf"]) {
-                [self loadPdfKit:[NSURL fileURLWithPath:transfer.path]];
+        if ([transfer.path.pathExtension isEqualToString:@"html"]) {
+            [self presentHtmlViewController];
+        } else {
+            if (@available(iOS 11.0, *)) {
+                if ([transfer.path.pathExtension isEqualToString:@"pdf"]) {
+                    [self loadPdfKit:[NSURL fileURLWithPath:transfer.path]];
+                } else {
+                    [self presentMEGAQlPreviewController];
+                }
             } else {
                 [self presentMEGAQlPreviewController];
             }
-        } else {
-            [self presentMEGAQlPreviewController];
         }
     }
-}
-
-- (void)presentMEGAQlPreviewController {
-    MEGAQLPreviewController *previewController = [[MEGAQLPreviewController alloc] initWithFilePath:previewDocumentTransfer.path];
-    
-    [self dismissViewControllerAnimated:YES completion:^{
-        [UIApplication.mnz_presentingViewController presentViewController:previewController animated:YES completion:nil];
-    }];
 }
 
 #pragma mark - CustomActionViewControllerDelegate
