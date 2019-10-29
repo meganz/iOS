@@ -154,13 +154,17 @@ NSNotificationName kVoiceClipsShouldPauseNotification = @"kVoiceClipsShouldPause
             self.revertSpeaker = YES;
         }
         
+        if (![AVAudioSession.sharedInstance setMode:AVAudioSessionModeDefault error:&error]) {
+            MEGALogError(@"[Voice clips] Error setting default mode: %@", error);
+        }
+
         if (![[AVAudioSession sharedInstance] setActive:YES error:&error]) {
             MEGALogError(@"[Voice clips] Error activating audio session: %@", error);
             return;
         }
         
         [AVAudioSession.sharedInstance mnz_setSpeakerEnabled:YES];
-        
+
         if (!self.audioPlayer) {
             MEGANode *node = [self.message.nodeList nodeAtIndex:0];
             NSString *nodePath = [node mnz_temporaryPathForDownloadCreatingDirectories:YES];
@@ -184,6 +188,10 @@ NSNotificationName kVoiceClipsShouldPauseNotification = @"kVoiceClipsShouldPause
         [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(voiceClipWillPlayOrRecord:) name:kVoiceClipsShouldPauseNotification object:nil];
         [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(proximityChange:) name:UIDeviceProximityStateDidChangeNotification object:nil];
     } else {
+        if (![AVAudioSession.sharedInstance setMode:AVAudioSessionModeVoiceChat error:&error]) {
+            MEGALogError(@"[Voice clips] Error setting voice chat mode: %@", error);
+        }
+        
         [NSNotificationCenter.defaultCenter removeObserver:self name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
         [NSNotificationCenter.defaultCenter removeObserver:self name:kVoiceClipsShouldPauseNotification object:nil];
         [NSNotificationCenter.defaultCenter removeObserver:self name:UIDeviceProximityStateDidChangeNotification object:nil];
@@ -231,11 +239,15 @@ NSNotificationName kVoiceClipsShouldPauseNotification = @"kVoiceClipsShouldPause
     
     self.audioPlayer = nil;
     
+    NSError *error;
+    if (![AVAudioSession.sharedInstance setMode:AVAudioSessionModeVoiceChat error:&error]) {
+        MEGALogError(@"[Voice clips] Error setting voice chat mode: %@", error);
+    }
+    
     [NSNotificationCenter.defaultCenter removeObserver:self name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
     [NSNotificationCenter.defaultCenter removeObserver:self name:AVAudioSessionRouteChangeNotification object:nil];
     [NSNotificationCenter.defaultCenter removeObserver:self name:UIDeviceProximityStateDidChangeNotification object:nil];
     
-    NSError *error;
     if ([MEGASdkManager.sharedMEGAChatSdk chatCallsWithState:MEGAChatCallStatusInProgress].size > 0) {
         if (self.shouldRevertSpeaker) {
             [AVAudioSession.sharedInstance mnz_setSpeakerEnabled:NO];
