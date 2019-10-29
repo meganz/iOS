@@ -767,10 +767,14 @@ static NSString *kisDirectory = @"kisDirectory";
         }
         
     } else if ([self.previewDocumentPath.pathExtension isEqualToString:@"pdf"]){
-        MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];
+        MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"DocumentPreviewer" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];
         PreviewDocumentViewController *previewController = navigationController.viewControllers.firstObject;
         previewController.filesPathsArray = self.offlineFiles;
         previewController.nodeFileIndex = [[[self itemAtIndexPath:indexPath] objectForKey:kIndex] integerValue];
+        if (@available(iOS 13.0, *)) {
+            navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
+        }
+        
         [self presentViewController:navigationController animated:YES completion:nil];
         switch (self.layoutView) {
             case LayoutModeList:
@@ -1054,10 +1058,13 @@ static NSString *kisDirectory = @"kisDirectory";
             return [self qlPreviewControllerForIndexPath:indexPath];
         }
     } else if ([self.previewDocumentPath.pathExtension isEqualToString:@"pdf"]){
-        MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];
+        MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"DocumentPreviewer" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];
         PreviewDocumentViewController *previewController = navigationController.viewControllers.firstObject;
         previewController.filesPathsArray = self.offlineFiles;
         previewController.nodeFileIndex = [[[self itemAtIndexPath:indexPath] objectForKey:kIndex] integerValue];
+        if (@available(iOS 13.0, *)) {
+            navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
+        }
         
         [self.offlineTableView.tableView deselectRowAtIndexPath:indexPath animated:YES];
         

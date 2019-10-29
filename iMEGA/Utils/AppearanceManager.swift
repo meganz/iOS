@@ -23,11 +23,11 @@ class AppearanceManager: NSObject {
         UILabel.appearance(whenContainedInInstancesOf: [MEGANavigationController.self]).textColor = UIColor.mnz_label()
         
         //QLPreviewDocument
-        UINavigationBar.appearance(whenContainedInInstancesOf: [QLPreviewController.self]).titleTextAttributes = [NSAttributedString.Key.font: navigationBarFont,  NSAttributedString.Key.foregroundColor: UIColor.black]
-        UINavigationBar.appearance(whenContainedInInstancesOf: [QLPreviewController.self]).barTintColor = UIColor.white
-        UINavigationBar.appearance(whenContainedInInstancesOf: [QLPreviewController.self]).tintColor = UIColor.mnz_redMain()
-        UILabel.appearance(whenContainedInInstancesOf: [QLPreviewController.self]).textColor = UIColor.mnz_redMain()
-        UIBarButtonItem.appearance(whenContainedInInstancesOf: [QLPreviewController.self]).tintColor = UIColor.mnz_redMain()
+        UINavigationBar.appearance(whenContainedInInstancesOf: [QLPreviewController.self]).titleTextAttributes = [NSAttributedString.Key.font: navigationBarFont,  NSAttributedString.Key.foregroundColor: UIColor.mnz_label()]
+        UINavigationBar.appearance(whenContainedInInstancesOf: [QLPreviewController.self]).barTintColor = UIColor.mnz_mainBarsColor(for: traitCollection)
+        UINavigationBar.appearance(whenContainedInInstancesOf: [QLPreviewController.self]).tintColor = UIColor.mnz_primaryGray(for: traitCollection)
+        UILabel.appearance(whenContainedInInstancesOf: [QLPreviewController.self]).textColor = UIColor.mnz_primaryGray(for: traitCollection)
+        UIBarButtonItem.appearance(whenContainedInInstancesOf: [QLPreviewController.self]).tintColor = UIColor.mnz_primaryGray(for: traitCollection)
         
         //MEGAAssetsPickerController
         UINavigationBar.appearance(whenContainedInInstancesOf: [MEGAAssetsPickerController.self]).barStyle = UIBarStyle.black
@@ -36,6 +36,7 @@ class AppearanceManager: NSObject {
         
         UISearchBar.appearance().isTranslucent = false
         UISearchBar.appearance().backgroundColor = UIColor.mnz_background()
+        UISearchBar.appearance().tintColor = UIColor.mnz_primaryGray(for: traitCollection)
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = UIColor.mnz_background()
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).textColor = UIColor.mnz_label()
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).font = UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.regular)

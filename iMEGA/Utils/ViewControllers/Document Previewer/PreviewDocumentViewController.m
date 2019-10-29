@@ -51,7 +51,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     [self configureNavigation];
+    [self updateUI];
     
     self.moreBarButtonItem.accessibilityLabel = AMLocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
 }
@@ -121,9 +123,6 @@
         [self.imageView mnz_setImageForExtension:[self.filesPathsArray objectAtIndex:self.nodeFileIndex].pathExtension];
     }
     
-    self.navigationController.navigationBar.barTintColor = [UIColor colorFromHexString:@"FCFCFC"];
-    self.navigationController.navigationBar.tintColor = UIColor.mnz_redMain;
-    self.navigationController.navigationBar.titleTextAttributes = @{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_black333333]};
 }
 
 - (void)loadPreview {
@@ -176,11 +175,6 @@
 }
 
 - (IBAction)doneTapped:(id)sender {
-    [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:[UIColor whiteColor]}];
-    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
-    [[UINavigationBar appearance] setBarTintColor:UIColor.mnz_redMain];
-    [[UILabel appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTextColor:[UIColor whiteColor]];
-    [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTintColor:[UIColor whiteColor]];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -218,12 +212,16 @@
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     if ([keyPath isEqualToString:@"self.previewController.title"]) {
-        UILabel *titleLabel = [Helper customNavigationBarLabelWithTitle:[self.filesPathsArray objectAtIndex:self.previewController.currentPreviewItemIndex].lastPathComponent subtitle:self.previewController.title color:[UIColor mnz_black333333]];
+        UILabel *titleLabel = [Helper customNavigationBarLabelWithTitle:[self.filesPathsArray objectAtIndex:self.previewController.currentPreviewItemIndex].lastPathComponent subtitle:self.previewController.title color:UIColor.mnz_label];
         titleLabel.adjustsFontSizeToFitWidth = YES;
         titleLabel.minimumScaleFactor = 0.8f;
         self.navigationItem.titleView = titleLabel;
         [self.navigationItem.titleView sizeToFit];
     }
+}
+
+- (void)updateUI {
+    self.view.backgroundColor = UIColor.mnz_background;
 }
 
 #pragma mark - QLPreviewControllerDataSource
@@ -365,7 +363,7 @@
 #pragma clang diagnostic ignored "-Wunguarded-availability"
 
 - (IBAction)searchTapped:(id)sender {
-    UINavigationController *searchInPdfNavigation = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"SearchInPdfNavigationID"];
+    UINavigationController *searchInPdfNavigation = [[UIStoryboard storyboardWithName:@"DocumentPreviewer" bundle:nil] instantiateViewControllerWithIdentifier:@"SearchInPdfNavigationID"];
     SearchInPdfViewController *searchInPdfVC = searchInPdfNavigation.viewControllers.firstObject;
     searchInPdfVC.pdfDocument = self.pdfView.document;
     searchInPdfVC.delegate = self;
@@ -499,7 +497,7 @@
         self.collectionView.hidden = YES;
         self.thumbnailBarButtonItem.image = [UIImage imageNamed:@"thumbnailsView"];
     }
-    result.color = UIColor.yellowColor;
+    result.color = UIColor.systemYellowColor;
     [self.pdfView setCurrentSelection:result];
     [self.pdfView setScaleFactor:self.pdfView.scaleFactorForSizeToFit];
     [self.pdfView goToPage:result.pages.firstObject];
