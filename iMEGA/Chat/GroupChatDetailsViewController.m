@@ -878,6 +878,7 @@
             default:
                 break;
         }
+        [self updateHeadingView];
     }
 }
 
