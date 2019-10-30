@@ -2,7 +2,7 @@
 import UIKit
 import WebKit
 
-@objc class HtmlViewController: UIViewController {
+@objc class WebCodeViewController: UIViewController {
     
     private var textView = UITextView(frame: .zero)
     private var fileUrl: URL!
@@ -54,7 +54,7 @@ import WebKit
             textView.trailingAnchor.constraint(equalTo: margins.trailingAnchor)
         ])
         
-        if #available(iOS 11, *) {
+        if #available(iOS 11.0, *) {
             let guide = view.safeAreaLayoutGuide
             NSLayoutConstraint.activate([
                 textView.topAnchor.constraint(equalToSystemSpacingBelow: guide.topAnchor, multiplier: 1.0),
@@ -73,11 +73,7 @@ import WebKit
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(shareButtonTapped(sender:)))
         title = fileUrl.lastPathComponent
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-    
+       
     @objc func shareButtonTapped(sender: UIBarButtonItem) -> Void {
         let fileToShare = [fileUrl]
         let activityViewController = UIActivityViewController(activityItems: fileToShare as [Any], applicationActivities: nil)
