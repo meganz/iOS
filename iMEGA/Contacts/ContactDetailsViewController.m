@@ -86,8 +86,6 @@
     self.callLabel.text = AMLocalizedString(@"Call", @"Title of the button in the contact info screen to start an audio call").lowercaseString;
     self.videoLabel.text = AMLocalizedString(@"Video", @"Title of the button in the contact info screen to start a video call").lowercaseString;
     
-    //TODO: Show the blue check if the Contact is verified
-    
     self.nameLabel.text = self.userName;
     self.nameLabel.layer.shadowOffset = CGSizeMake(0, 1);
     self.nameLabel.layer.shadowColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.2].CGColor;
