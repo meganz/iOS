@@ -20,10 +20,10 @@ import WebKit
             textView.text = contents
         } catch {
             do {
-                let contents = try String(contentsOf: fileUrl, encoding: .isoLatin2)
+                let contents = try String(contentsOf: fileUrl, encoding: .isoLatin1)
                 textView.text = contents
             } catch {
-                textView.text = "It has not been possible to obtain the content of the file " + fileUrl.lastPathComponent + " ,it is not encoded in utf8 nor in iso latin 2."
+                textView.text = NSLocalizedString("It was not possible to obtain the content of this file, that is not encoded in either UTF-8 or ISO/IEC 8859-1.", comment: "Error message shown when the user tries to open a file with an unsupported encoding")
             }
         }
     }
