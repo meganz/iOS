@@ -133,32 +133,28 @@
                 
                 return previewController;
             }
-        } else if (@available(iOS 11.0, *)) {
-            if ([previewDocumentPath.pathExtension isEqualToString:@"pdf"]) {
-                MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];
-                PreviewDocumentViewController *previewController = navigationController.viewControllers.firstObject;
-                previewController.api = api;
-                previewController.filesPathsArray = @[previewDocumentPath];
-                previewController.nodeFileIndex = 0;
-                previewController.node = self;
-                previewController.isLink = isFolderLink;
-                
-                return navigationController;
-            } else if ([previewDocumentPath.pathExtension isEqualToString:@"html"]) {
-                return [self mnz_htmlViewControllerWithFilePath:previewDocumentPath];
+        } else {
+            if (@available(iOS 11.0, *)) {
+                if ([previewDocumentPath.pathExtension isEqualToString:@"pdf"]) {
+                    MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];
+                    PreviewDocumentViewController *previewController = navigationController.viewControllers.firstObject;
+                    previewController.api = api;
+                    previewController.filesPathsArray = @[previewDocumentPath];
+                    previewController.nodeFileIndex = 0;
+                    previewController.node = self;
+                    previewController.isLink = isFolderLink;
+                    
+                    return navigationController;
+                }
+            }
+            if (previewDocumentPath.mnz_isWebCodePathExtension) {
+                return [self mnz_webCodeViewControllerWithFilePath:previewDocumentPath];
             } else {
                 MEGAQLPreviewController *previewController = [[MEGAQLPreviewController alloc] initWithFilePath:previewDocumentPath];
                 previewController.currentPreviewItemIndex = 0;
                 
                 return previewController;
             }
-        } else if ([previewDocumentPath.pathExtension isEqualToString:@"html"]) {
-            return [self mnz_htmlViewControllerWithFilePath:previewDocumentPath];;
-        } else {
-            MEGAQLPreviewController *previewController = [[MEGAQLPreviewController alloc] initWithFilePath:previewDocumentPath];
-            previewController.currentPreviewItemIndex = 0;
-            
-            return previewController;
         }
     } else if (self.name.mnz_isMultimediaPathExtension && [apiForStreaming httpServerStart:NO port:4443]) {
         if (self.mnz_isPlayable) {
@@ -442,9 +438,9 @@
 
 #pragma mark - Private
 
-- (MEGANavigationController *)mnz_htmlViewControllerWithFilePath:(NSString *)filePath {
-    HtmlViewController *htmlVC = [HtmlViewController.alloc initWithFilePath:filePath];
-    MEGANavigationController *navigationController = [MEGANavigationController.alloc initWithRootViewController:htmlVC];
+- (MEGANavigationController *)mnz_webCodeViewControllerWithFilePath:(NSString *)filePath {
+    WebCodeViewController *webCodeVC = [WebCodeViewController.alloc initWithFilePath:filePath];
+    MEGANavigationController *navigationController = [MEGANavigationController.alloc initWithRootViewController:webCodeVC];
     [navigationController addLeftDismissButtonWithText:AMLocalizedString(@"ok", nil)];
     return navigationController;
 }

@@ -327,7 +327,7 @@ static NSString *kisDirectory = @"kisDirectory";
             [self.offlineItems addObject:tempDictionary];
             
             if (!isDirectory) {
-                if (!fileName.mnz_isMultimediaPathExtension && ![fileName.pathExtension isEqualToString:@"html"]) {
+                if (!fileName.mnz_isMultimediaPathExtension && !fileName.mnz_isWebCodePathExtension) {
                     offsetIndex++;
                 }
             }
@@ -380,7 +380,7 @@ static NSString *kisDirectory = @"kisDirectory";
                         offsetIndex++;
                         [self.offlineFiles addObject:[fileURL path]];                        
                     }
-                } else if (![fileName.pathExtension isEqualToString:@"html"]) {
+                } else if (!fileName.mnz_isWebCodePathExtension) {
                     offsetIndex++;
                     [self.offlineFiles addObject:[fileURL path]];
                 }
@@ -592,9 +592,9 @@ static NSString *kisDirectory = @"kisDirectory";
     return numberOfRows;
 }
 
-- (MEGANavigationController *)htmlViewControllerWithFilePath:(NSString *)filePath {
-    HtmlViewController *htmlVC = [HtmlViewController.alloc initWithFilePath:filePath];
-    MEGANavigationController *navigationController = [MEGANavigationController.alloc initWithRootViewController:htmlVC];
+- (MEGANavigationController *)webCodeViewControllerWithFilePath:(NSString *)filePath {
+    WebCodeViewController *webCodeVC = [WebCodeViewController.alloc initWithFilePath:filePath];
+    MEGANavigationController *navigationController = [MEGANavigationController.alloc initWithRootViewController:webCodeVC];
     [navigationController addLeftDismissButtonWithText:AMLocalizedString(@"ok", nil)];
     return navigationController;
 }
@@ -789,8 +789,8 @@ static NSString *kisDirectory = @"kisDirectory";
                 [self.offlineCollectionView.collectionView deselectItemAtIndexPath:indexPath animated:YES];
                 break;
         }
-    } else if ([self.previewDocumentPath.pathExtension isEqualToString:@"html"]) {
-        MEGANavigationController *navigationController = [self htmlViewControllerWithFilePath:self.previewDocumentPath];
+    } else if (self.previewDocumentPath.mnz_isWebCodePathExtension) {
+        MEGANavigationController *navigationController = [self webCodeViewControllerWithFilePath:self.previewDocumentPath];
         [self presentViewController:navigationController animated:YES completion:nil];
     } else {
         MEGAQLPreviewController *previewController = [self qlPreviewControllerForIndexPath:indexPath];
@@ -1073,8 +1073,8 @@ static NSString *kisDirectory = @"kisDirectory";
         [self.offlineTableView.tableView deselectRowAtIndexPath:indexPath animated:YES];
         
         return navigationController;
-    } else if ([self.previewDocumentPath.pathExtension isEqualToString:@"html"]) {
-        return [self htmlViewControllerWithFilePath:self.previewDocumentPath];
+    } else if (self.previewDocumentPath.mnz_isWebCodePathExtension) {
+        return [self webCodeViewControllerWithFilePath:self.previewDocumentPath];
     } else {
         return [self qlPreviewControllerForIndexPath:indexPath];
     }

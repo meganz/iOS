@@ -17,6 +17,7 @@
 #import "SearchInPdfViewController.h"
 
 #import "MEGANode+MNZCategory.h"
+#import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 #import "MEGAStore.h"
@@ -235,9 +236,9 @@
     }];
 }
 
-- (void)presentHtmlViewController {
-    HtmlViewController *htmlVC = [HtmlViewController.alloc initWithFilePath:previewDocumentTransfer.path];
-    MEGANavigationController *navigationController = [MEGANavigationController.alloc initWithRootViewController:htmlVC];
+- (void)presentWebCodeViewController {
+    WebCodeViewController *webCodeVC = [WebCodeViewController.alloc initWithFilePath:previewDocumentTransfer.path];
+    MEGANavigationController *navigationController = [MEGANavigationController.alloc initWithRootViewController:webCodeVC];
     [navigationController addLeftDismissButtonWithText:AMLocalizedString(@"ok", nil)];
     
     [self dismissViewControllerAnimated:YES completion:^{
@@ -294,8 +295,8 @@
     }
     
     if (self.isViewLoaded && self.view.window) {
-        if ([transfer.path.pathExtension isEqualToString:@"html"]) {
-            [self presentHtmlViewController];
+        if (transfer.path.mnz_isWebCodePathExtension) {
+            [self presentWebCodeViewController];
         } else {
             if (@available(iOS 11.0, *)) {
                 if ([transfer.path.pathExtension isEqualToString:@"pdf"]) {

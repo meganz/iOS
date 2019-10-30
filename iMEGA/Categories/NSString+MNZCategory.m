@@ -82,6 +82,53 @@ static NSString* const B = @"[B]";
     return self.mnz_isVideoPathExtension || self.mnz_isAudioPathExtension;
 }
 
+- (BOOL)mnz_isWebCodePathExtension {
+    NSArray<NSString *> *supportedExtensions = @[@"action",
+                                                 @"adp",
+                                                 @"ashx",
+                                                 @"asmx",
+                                                 @"asp",
+                                                 @"aspx",
+                                                 @"atom",
+                                                 @"axd",
+                                                 @"bml",
+                                                 @"cer",
+                                                 @"cfm",
+                                                 @"cfm",
+                                                 @"cgi",
+                                                 @"css",
+                                                 @"dhtml",
+                                                 @"do",
+                                                 @"dtd",
+                                                 @"eml",
+                                                 @"htm",
+                                                 @"html",
+                                                 @"ihtml",
+                                                 @"jhtml",
+                                                 @"jsonld",
+                                                 @"jsp",
+                                                 @"jspx",
+                                                 @"las",
+                                                 @"lasso",
+                                                 @"lassoapp",
+                                                 @"markdown",
+                                                 @"met",
+                                                 @"metalink",
+                                                 @"mht",
+                                                 @"mhtml",
+                                                 @"rhtml",
+                                                 @"rna",
+                                                 @"rnx",
+                                                 @"se",
+                                                 @"shtml",
+                                                 @"stm",
+                                                 @"wss",
+                                                 @"yaws",
+                                                 @"zhtml"];
+    
+    return [supportedExtensions containsObject:self.pathExtension.lowercaseString];
+}
+
 #pragma mark - appData
 
 - (NSString *)mnz_appDataToSaveInPhotosApp {
