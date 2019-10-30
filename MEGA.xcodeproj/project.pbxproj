@@ -2538,7 +2538,6 @@
 				41A602971A8A5CF9001AE538 /* Camera uploads */,
 				4152267E1A692ECC00EC7BB6 /* Offline */,
 				E8D5BF631BF359A000955550 /* Shared Items */,
-				77D9A5692023538600B48470 /* Photo browser */,
 				415226721A692ECC00EC7BB6 /* Contacts */,
 				415226821A692ECC00EC7BB6 /* Settings */,
 				E8B5191F1AC9C43B00BB7324 /* Transfers */,
@@ -3790,7 +3789,8 @@
 				77CAAAE1202C72F8004B16ED /* MEGAPhotoBrowserPickerCollectionViewCell.h */,
 				77CAAAE2202C72F8004B16ED /* MEGAPhotoBrowserPickerCollectionViewCell.m */,
 			);
-			path = "Photo browser";
+			name = "Photo browser";
+			path = "../../Photo browser";
 			sourceTree = "<group>";
 		};
 		832E1020202B097900BDD30F /* CustomActionViewController */ = {
@@ -4055,6 +4055,7 @@
 				5B59B4CD2367266900A57229 /* Document Previewer */,
 				832E1020202B097900BDD30F /* CustomActionViewController */,
 				83D64E2B2017873D00E24155 /* PasswordReminder */,
+				77D9A5692023538600B48470 /* Photo browser */,
 				7795677421C80C43002B6227 /* OnboardingViewController */,
 				A819B33D1EAFA7E2004592F9 /* CustomModalAlertViewController.h */,
 				A819B33E1EAFA7E2004592F9 /* CustomModalAlertViewController.m */,

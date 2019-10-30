@@ -130,16 +130,12 @@ static const CGFloat GapBetweenPages = 10.0;
         default:
             break;
     }
+    
+    [self updateUI];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
-    self.navigationBar.barTintColor = [UIColor whiteColor];
-    
-    if (@available(iOS 11.0, *)) {} else {
-        self.navigationBar.tintColor = UIColor.mnz_redMain;
-    }
     
     [[MEGASdkManager sharedMEGASdk] addMEGADelegate:self];
 }
@@ -179,6 +175,16 @@ static const CGFloat GapBetweenPages = 10.0;
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
     return UIInterfaceOrientationMaskAll;
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateUI];
+        }
+    }
 }
 
 #pragma mark - UI
@@ -243,7 +249,7 @@ static const CGFloat GapBetweenPages = 10.0;
         }
     }
     
-    UILabel *titleLabel = [Helper customNavigationBarLabelWithTitle:[self.mediaNodes objectAtIndex:newIndex].name subtitle:subtitle color:[UIColor mnz_black333333]];
+    UILabel *titleLabel = [Helper customNavigationBarLabelWithTitle:[self.mediaNodes objectAtIndex:newIndex].name subtitle:subtitle color:UIColor.mnz_label];
     titleLabel.adjustsFontSizeToFitWidth = YES;
     titleLabel.minimumScaleFactor = 0.8f;
     self.navigationItem.titleView = titleLabel;
@@ -261,7 +267,7 @@ static const CGFloat GapBetweenPages = 10.0;
 }
 
 - (void)toggleTransparentInterfaceForDismissal:(BOOL)transparent {
-    self.view.backgroundColor = transparent ? [UIColor clearColor] : [UIColor whiteColor];
+    self.view.backgroundColor = transparent ? UIColor.clearColor : UIColor.mnz_background;
     self.statusBarBackground.layer.opacity = self.navigationBar.layer.opacity = self.toolbar.layer.opacity = transparent ? 0.0f : 1.0f;
     
     // Toggle the play button:
@@ -284,6 +290,14 @@ static const CGFloat GapBetweenPages = 10.0;
             completion();
         }
     }];
+}
+
+- (void)updateUI {
+    self.statusBarBackground.backgroundColor = self.navigationBar.backgroundColor = self.toolbar.barTintColor = [UIColor mnz_mainBarsColorForTraitCollection:self.traitCollection];
+    self.navigationBar.tintColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
+    [self reloadTitle];
+    
+    self.view.backgroundColor = UIColor.mnz_background;
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -754,10 +768,10 @@ static const CGFloat GapBetweenPages = 10.0;
     [UIView animateWithDuration:0.3 animations:^{
         if (self.isInterfaceHidden) {
             self.statusBarBackground.layer.opacity = self.navigationBar.layer.opacity = self.toolbar.layer.opacity = 1.0f;
-            self.view.backgroundColor = [UIColor whiteColor];
+            self.view.backgroundColor = UIColor.mnz_background;
             self.interfaceHidden = NO;
         } else {
-            self.view.backgroundColor = [UIColor blackColor];
+            self.view.backgroundColor = UIColor.mnz_background;
             self.statusBarBackground.layer.opacity = self.navigationBar.layer.opacity = self.toolbar.layer.opacity = 0.0f;
             self.interfaceHidden = YES;
         }
