@@ -14,6 +14,7 @@
 #import "MEGANode+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
+#import "MEGA-Swift.h"
 #import "NSString+MNZCategory.h"
 #import "NodePropertyTableViewCell.h"
 #import "NodeTappablePropertyTableViewCell.h"
@@ -45,10 +46,15 @@
 @interface NodeInfoViewController () <UITableViewDelegate, UITableViewDataSource, CustomActionViewControllerDelegate, MEGAGlobalDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+
+@property (weak, nonatomic) IBOutlet UIView *nodeView;
+@property (weak, nonatomic) IBOutlet UIView *nodeTopSeparatorView;
 @property (weak, nonatomic) IBOutlet UIImageView *thumbnailImageView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (strong, nonatomic) NSArray<MegaNodeProperty *> *nodeProperties;
 @property (strong, nonatomic) MEGAFolderInfo *folderInfo;
+@property (weak, nonatomic) IBOutlet UIButton *infoButton;
+@property (weak, nonatomic) IBOutlet UIView *nodeBottomSeparatorView;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *closeBarButtonItem;
 
@@ -64,6 +70,8 @@
     [super viewDidLoad];
     
     self.closeBarButtonItem.title = AMLocalizedString(@"close", @"A button label. The button allows the user to close the conversation.");
+    
+    [self updateUI];
     
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     [[MEGAReachabilityManager sharedManager] retryPendingConnections];
@@ -83,7 +91,22 @@
     }
 }
 
-#pragma mark - Layout
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [AppearanceManager setupAppearance:self.traitCollection];
+            [AppearanceManager invalidateViews];
+            
+            [self updateUI];
+            
+            [self.tableView reloadData];
+        }
+    }
+}
+
+#pragma mark - Private
 
 - (void)reloadUI {
 
@@ -103,6 +126,47 @@
     [self.tableView reloadData];
 }
 
+- (void)updateUI {
+    self.nodeTopSeparatorView.backgroundColor = self.nodeBottomSeparatorView.backgroundColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
+    
+    self.infoButton.tintColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        switch (self.traitCollection.userInterfaceStyle) {
+            case UIUserInterfaceStyleUnspecified:
+            case UIUserInterfaceStyleLight: {
+                self.nodeView.backgroundColor = UIColor.mnz_background;
+                self.tableView.backgroundColor = (self.traitCollection.accessibilityContrast == UIAccessibilityContrastHigh) ? [UIColor colorFromHexString:@"E6E6E6"] : UIColor.mnz_grayF7F7F7;
+                break;
+            }
+                
+            case UIUserInterfaceStyleDark: {
+                self.nodeView.backgroundColor = [UIColor mnz_chatGrayForTraitCollection:self.traitCollection];
+                self.tableView.backgroundColor = [UIColor mnz_mainBarsColorForTraitCollection:self.traitCollection];
+                break;
+            }
+        }
+    } else {
+        self.nodeView.backgroundColor = UIColor.mnz_background;
+        self.tableView.backgroundColor = UIColor.mnz_grayF7F7F7;
+    }
+}
+
+- (UIColor *)backgroundColorForCells {
+    if (@available(iOS 13.0, *)) {
+        switch (self.traitCollection.userInterfaceStyle) {
+            case UIUserInterfaceStyleUnspecified:
+            case UIUserInterfaceStyleLight:
+                return UIColor.whiteColor;
+                
+            case UIUserInterfaceStyleDark:
+                return [UIColor mnz_chatGrayForTraitCollection:self.traitCollection];
+        }
+    } else {
+        return UIColor.whiteColor;
+    }
+}
+
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -113,10 +177,19 @@
     }
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 58.f;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    return 2.0f;
+}
+
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     UITableViewCell *sectionHeader = [self.tableView dequeueReusableCellWithIdentifier:@"nodeInfoHeader"];
     
     UILabel *titleSection = (UILabel *)[sectionHeader viewWithTag:1];
+    titleSection.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
     switch (section) {
         case 0:
             titleSection.text = AMLocalizedString(@"details", @"Label title header of node details").uppercaseString;
@@ -138,11 +211,17 @@
             break;
     }
     
+    UIView *separatorView = [sectionHeader viewWithTag:2];
+    separatorView.backgroundColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
+    
     return sectionHeader;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
     UITableViewCell *sectionFooter = [self.tableView dequeueReusableCellWithIdentifier:@"nodeInfoFooter"];
+    
+    UIView *separatorView = [sectionFooter viewWithTag:2];
+    separatorView.backgroundColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
 
     return sectionFooter;
 }
@@ -229,10 +308,12 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
         NodePropertyTableViewCell *propertyCell = [self.tableView dequeueReusableCellWithIdentifier:@"nodePropertyCell" forIndexPath:indexPath];
+        propertyCell.backgroundColor = [self backgroundColorForCells];
         propertyCell.keyLabel.text = [self.nodeProperties objectAtIndex:indexPath.row].title;
+        propertyCell.keyLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
         propertyCell.valueLabel.text = [self.nodeProperties objectAtIndex:indexPath.row].value;
         if ([propertyCell.keyLabel.text isEqualToString:AMLocalizedString(@"location", @"Title label of a node property.")]) {
-            propertyCell.valueLabel.textColor = UIColor.mnz_green00BFA5;
+            propertyCell.valueLabel.textColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
         }
         
         return propertyCell;
@@ -337,8 +418,11 @@
 
 - (NodeTappablePropertyTableViewCell *)versionCellForIndexPath:(NSIndexPath *)indexPath {
     NodeTappablePropertyTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"nodeTappablePropertyCell" forIndexPath:indexPath];
+    cell.backgroundColor = [self backgroundColorForCells];
+    cell.iconImageView.tintColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
     cell.iconImageView.image = [UIImage imageNamed:@"versions"];
     cell.titleLabel.text = [AMLocalizedString(@"xVersions", @"Message to display the number of historical versions of files.") stringByReplacingOccurrencesOfString:@"[X]" withString: [NSString stringWithFormat:@"%ld", (long)self.node.mnz_numberOfVersions]];
+    cell.separatorView.backgroundColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
     cell.separatorView.hidden = YES;
     
     return cell;
@@ -346,8 +430,10 @@
 
 - (NodeTappablePropertyTableViewCell *)sharedFolderCellForIndexPath:(NSIndexPath *)indexPath {
     NodeTappablePropertyTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"nodeTappablePropertyCell" forIndexPath:indexPath];
+    cell.backgroundColor = [self backgroundColorForCells];
     cell.iconImageView.image = [UIImage imageNamed:@"shareFolder"];
-    cell.iconImageView.tintColor = UIColor.mnz_redMain;
+    cell.iconImageView.tintColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
+    cell.separatorView.backgroundColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
     if (self.node.isShared) {
         cell.titleLabel.text = AMLocalizedString(@"sharedWidth", @"Label title indicating the number of users having a node shared");
         NSString *usersString = [self outSharesForNode:self.node].count > 1 ? AMLocalizedString(@"users", @"used for example when a folder is shared with 2 or more users") : AMLocalizedString(@"user", @"user (singular) label indicating is receiving some info");
@@ -362,12 +448,15 @@
 
 - (NodeTappablePropertyTableViewCell *)linkCellForIndexPath:(NSIndexPath *)indexPath {
     NodeTappablePropertyTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"nodeTappablePropertyCell" forIndexPath:indexPath];
+    cell.backgroundColor = [self backgroundColorForCells];
     cell.iconImageView.image = [UIImage imageNamed:@"link"];
+    cell.iconImageView.tintColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
     if (self.node.isExported) {
         cell.titleLabel.text = self.node.publicLink;
     } else {
         cell.titleLabel.text = AMLocalizedString(@"getLink", @"Title shown under the action that allows you to get a link to file or folder");
     }
+    cell.separatorView.backgroundColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
     cell.separatorView.hidden = YES;
     
     return cell;
