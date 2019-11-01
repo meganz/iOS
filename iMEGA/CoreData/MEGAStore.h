@@ -30,12 +30,18 @@
 
 #pragma mark - MOUser entity
 
-- (void)insertUserWithUserHandle:(uint64_t)userHandle firstname:(NSString *)firstname lastname:(NSString *)lastname email:(NSString *)email;
+- (void)insertUserWithUserHandle:(uint64_t)userHandle
+                       firstname:(NSString *)firstname
+                        lastname:(NSString *)lastname
+                        nickname:(NSString *)nickname
+                           email:(NSString *)email;
 - (void)updateUserWithUserHandle:(uint64_t)userHandle firstname:(NSString *)firstname;
 - (void)updateUserWithUserHandle:(uint64_t)userHandle lastname:(NSString *)lastname;
 - (void)updateUserWithUserHandle:(uint64_t)userHandle email:(NSString *)email;
+- (void)updateUserWithUserHandle:(uint64_t)userHandle nickname:(NSString *)nickname;
 - (void)updateUserWithEmail:(NSString *)email firstname:(NSString *)firstname;
 - (void)updateUserWithEmail:(NSString *)email lastname:(NSString *)lastname;
+- (void)updateUserWithEmail:(NSString *)email nickname:(NSString *)nickname;
 - (MOUser *)fetchUserWithUserHandle:(uint64_t)userHandle;
 - (MOUser *)fetchUserWithEmail:(NSString *)email;
 

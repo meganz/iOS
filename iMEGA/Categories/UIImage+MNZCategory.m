@@ -113,7 +113,10 @@
         NSString *colorString = [MEGASdk avatarColorForBase64UserHandle:base64Handle];
         MOUser *user = [[MEGAStore shareInstance] fetchUserWithUserHandle:userHandle];
         NSString *initialForAvatar = nil;
-        if (user) {
+        if (user.nickname.length > 0) {
+            initialForAvatar = user.nickname.mnz_initialForAvatar;
+        } else
+            if (user) {
             if (user.fullName.length) {
                 initialForAvatar = user.fullName.mnz_initialForAvatar;
             } else {

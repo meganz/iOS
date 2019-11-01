@@ -1172,7 +1172,8 @@
         [self.indexPathsMutableDictionary setObject:indexPath forKey:base64Handle];
         
         ContactTableViewCell *cell;
-        NSString *userName = user.mnz_fullName;
+        NSString *userNickname = user.mnz_nickname;
+        NSString *userName = (userNickname != nil) ? userNickname : user.mnz_fullName;
         
         if (user.handle == MEGASdkManager.sharedMEGASdk.myUser.handle) {
             userName = [userName stringByAppendingString:[NSString stringWithFormat:@" (%@)", AMLocalizedString(@"me", @"The title for my message in a chat. The message was sent from yourself.")]];

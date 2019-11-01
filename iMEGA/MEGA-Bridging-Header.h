@@ -3,8 +3,10 @@
 //
 
 #import "MEGASdk.h"
-
+#import "MEGASdkManager.h"
+#import "MEGAGenericRequestDelegate.h"
 #import "LTHPasscodeViewController.h"
 
 #import "NSString+MNZCategory.h"
 #import "UIColor+MNZCategory.h"
+#import "MEGAUser+MNZCategory.h"
