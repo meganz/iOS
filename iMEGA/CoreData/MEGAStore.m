@@ -145,7 +145,11 @@
 
 #pragma mark - MOUser entity
 
-- (void)insertUserWithUserHandle:(uint64_t)userHandle firstname:(NSString *)firstname lastname:(NSString *)lastname email:(NSString *)email {
+- (void)insertUserWithUserHandle:(uint64_t)userHandle
+                       firstname:(NSString *)firstname
+                        lastname:(NSString *)lastname
+                        nickname:(NSString *)nickname
+                           email:(NSString *)email {
     NSString *base64userHandle = [MEGASdk base64HandleForUserHandle:userHandle];
     
     if (!base64userHandle) return;
@@ -155,6 +159,7 @@
     moUser.firstname        = firstname;
     moUser.lastname         = lastname;
     moUser.email            = email;
+    moUser.nickname         = nickname;
     
     MEGALogDebug(@"Save context - insert user: %@", moUser.description);
     
@@ -191,6 +196,16 @@
     }
 }
 
+- (void)updateUserWithUserHandle:(uint64_t)userHandle nickname:(NSString *)nickname {
+    MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithUserHandle:userHandle];
+       
+    if (moUser) {
+        moUser.nickname = nickname;
+        MEGALogDebug(@"Save context - update nickname: %@", nickname);
+        [self saveContext];
+    }
+}
+
 - (void)updateUserWithEmail:(NSString *)email firstname:(NSString *)firstname {
     MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithEmail:email];
     
@@ -207,6 +222,16 @@
     if (moUser) {
         moUser.lastname = lastname;
         MEGALogDebug(@"Save context - update lastname: %@", lastname);
+        [self saveContext];
+    }
+}
+
+- (void)updateUserWithEmail:(NSString *)email nickname:(NSString *)nickname {
+    MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithEmail:email];
+
+    if (moUser) {
+        moUser.nickname = nickname;
+        MEGALogDebug(@"Save context - update nickname: %@", nickname);
         [self saveContext];
     }
 }

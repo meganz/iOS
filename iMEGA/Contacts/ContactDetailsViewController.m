@@ -30,12 +30,21 @@
 #import "NodeInfoViewController.h"
 #import "SharedItemsTableViewCell.h"
 #import "VerifyCredentialsViewController.h"
+#import "MEGAUser+MNZCategory.h"
+#import "MEGA-Swift.h"
+
+typedef NS_ENUM(NSInteger, ContactDetailsModeDefaultCell) {
+    ContactDetailsModeDefaultCellSetNickname = 0,
+    ContactDetailsModeDefaultCellAddAndRemoveContact,
+    ContactDetailsModeDefaultCellSharedFolders
+};
 
 @interface ContactDetailsViewController () <CustomActionViewControllerDelegate, MEGAChatDelegate, MEGAChatCallDelegate, MEGAGlobalDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *verifiedImageView;
-@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *nameOrNicknameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *optionalNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 @property (weak, nonatomic) IBOutlet UILabel *emailLabel;
 @property (weak, nonatomic) IBOutlet UIView *onlineStatusView;
@@ -61,6 +70,9 @@
 @property (strong, nonatomic) UIPanGestureRecognizer *panAvatar;
 @property (assign, nonatomic) CGFloat avatarExpandedPosition;
 @property (assign, nonatomic) CGFloat avatarCollapsedPosition;
+
+@property (strong, nonatomic) NSString *userNickname;
+@property (strong, nonatomic) NSArray<NSNumber *> *contactDetailsModeDefaultCells;
 
 @end
 
@@ -88,11 +100,17 @@
     
     //TODO: Show the blue check if the Contact is verified
     
-    self.nameLabel.text = self.userName;
-    self.nameLabel.layer.shadowOffset = CGSizeMake(0, 1);
-    self.nameLabel.layer.shadowColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.2].CGColor;
-    self.nameLabel.layer.shadowRadius = 2.0;
-    self.nameLabel.layer.shadowOpacity = 1;
+    if (self.userNickname == nil) {
+        self.userNickname = self.user.mnz_nickname;
+    }
+    
+    if (self.userName == nil) {
+        self.userName = self.user.mnz_fullName;
+    }
+    
+    [self configureNameLabel:self.nameOrNicknameLabel];
+    [self configureNameLabel:self.optionalNameLabel];
+    [self updateUserDetails];
     
     self.emailLabel.text = self.userEmail;
     self.emailLabel.layer.shadowOffset = CGSizeMake(0, 1);
@@ -147,7 +165,13 @@
     [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
     [[MEGASdkManager sharedMEGAChatSdk] removeChatCallDelegate:self];
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
-    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    
+    // Creates a glitch in the animation when the view controller is presented.
+    // So do not remove it if the view controller is presented
+    if (self.presentedViewController == nil) {
+        [self.navigationController setNavigationBarHidden:NO animated:YES];
+    }
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
 }
 
@@ -291,7 +315,11 @@
 }
 
 - (BOOL)isSharedFolderSection:(NSInteger)section {
-    return (section == 1 && self.contactDetailsMode == ContactDetailsModeDefault) || (section == 2 && self.contactDetailsMode == ContactDetailsModeFromChat);
+    return (self.contactDetailsModeDefaultCells.count > section
+            && self.contactDetailsModeDefaultCells[section].intValue == ContactDetailsModeDefaultCellSharedFolders
+            && self.contactDetailsMode == ContactDetailsModeDefault)
+    || (section == 2
+        && self.contactDetailsMode == ContactDetailsModeFromChat);
 }
 
 - (void)openSharedFolderAtIndexPath:(NSIndexPath *)indexPath {
@@ -426,6 +454,89 @@
     }
 }
 
+- (void)showNickNameViewContoller {
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Contacts" bundle:nil];
+    UINavigationController *navigationController = [storyboard instantiateViewControllerWithIdentifier:@"AddNickNameNavigationControllerID"];
+    
+    AddNickNameViewController *nicknameViewController = navigationController.viewControllers.firstObject;
+    
+    nicknameViewController.user = self.user;
+    nicknameViewController.nickname = self.userNickname;
+    
+    __weak typeof(self) weakself = self;
+    nicknameViewController.nicknameChangedHandler = ^(NSString * _Nonnull nickname) {
+        weakself.userNickname = nickname;
+        [self updateUserDetails];
+        [weakself.tableView reloadData];
+    };
+    
+    [self presentViewController:navigationController animated:YES completion:nil];
+}
+
+- (void)updateUserDetails {
+    self.nameOrNicknameLabel.text = self.userNickname.length > 0 ? self.userNickname : self.userName;
+    if (self.userNickname.length > 0) {
+        self.optionalNameLabel.text = self.userName;
+        self.contactDetailsModeDefaultCells = @[ @(ContactDetailsModeDefaultCellAddAndRemoveContact),
+                                                 @(ContactDetailsModeDefaultCellSharedFolders)
+                                                 ];
+
+    } else {
+        self.optionalNameLabel.text = nil;
+        self.contactDetailsModeDefaultCells = @[ @(ContactDetailsModeDefaultCellSetNickname),
+                                                 @(ContactDetailsModeDefaultCellAddAndRemoveContact),
+                                                 @(ContactDetailsModeDefaultCellSharedFolders)
+                                                 ];
+    }
+}
+
+- (void)showEditOrRemoveAlertOptions {
+    UIAlertController *editNicknameAlertController = [UIAlertController alertControllerWithTitle:nil
+                                                                                         message:nil
+                                                                                  preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    UIAlertAction *cancelAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil)
+                                                                style:UIAlertActionStyleCancel
+                                                              handler:nil];
+    [cancelAlertAction mnz_setTitleTextColor:UIColor.mnz_redMain];
+    [editNicknameAlertController addAction:cancelAlertAction];
+    
+    UIAlertAction *editNicknameAlertAction = [UIAlertAction actionWithTitle: AMLocalizedString(@"edit",nil)
+                                                                      style:UIAlertActionStyleDefault
+                                                                    handler:^(UIAlertAction *action) {
+                                                                        [self showNickNameViewContoller];
+                                                                    }];
+    [editNicknameAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+    [editNicknameAlertController addAction:editNicknameAlertAction];
+    
+    UIAlertAction *removeNicknameAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"remove", nil)
+                                                                        style:UIAlertActionStyleDefault
+                                                                      handler:^(UIAlertAction *action) {
+                                                                          [MEGASdkManager.sharedMEGASdk setUserAlias:nil
+                                                                                                           forHandle:self.user.handle];
+                                                                          self.userNickname = nil;
+                                                                          self.user.mnz_nickname = nil;
+                                                                          [self updateUserDetails];
+                                                                          [self.tableView reloadData];
+                                                                      }];
+    [editNicknameAlertController addAction:removeNicknameAlertAction];
+    
+    if (UIDevice.currentDevice.iPadDevice) {
+        editNicknameAlertController.modalPresentationStyle = UIModalPresentationPopover;
+        editNicknameAlertController.popoverPresentationController.sourceView = self.nameOrNicknameLabel;
+        editNicknameAlertController.popoverPresentationController.sourceRect = self.nameOrNicknameLabel.bounds;
+    }
+    
+    [self presentViewController:editNicknameAlertController animated:YES completion:nil];
+}
+
+- (void)configureNameLabel:(UILabel *)label {
+    label.layer.shadowOffset = CGSizeMake(0, 1);
+    label.layer.shadowColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.2].CGColor;
+    label.layer.shadowRadius = 2.0;
+    label.layer.shadowOpacity = 1;
+}
+
 #pragma mark - IBActions
 
 - (IBAction)notificationsSwitchValueChanged:(UISwitch *)sender {
@@ -486,12 +597,21 @@
     }
 }
 
+- (IBAction)changeNickname:(UITapGestureRecognizer *)sender {
+    if (self.userNickname == nil || self.contactDetailsMode != ContactDetailsModeDefault) {
+        return;
+    }
+    
+    [self showEditOrRemoveAlertOptions];
+}
+
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     NSInteger numberOfSections = 0;
     if (self.contactDetailsMode == ContactDetailsModeDefault) {
-        numberOfSections = 1;
+        numberOfSections = self.contactDetailsModeDefaultCells.count - 1;
     } else if (self.contactDetailsMode == ContactDetailsModeFromChat) {
         numberOfSections = 2;
     } else if (self.contactDetailsMode == ContactDetailsModeFromGroupChat) {
@@ -519,10 +639,17 @@
     //TODO: When possible, re-add the rows "Chat Notifications", "Set Nickname" and "Verify Credentials".
     NSInteger numberOfRows = 0;
     if (self.contactDetailsMode == ContactDetailsModeDefault) {
-        if (section == 0) {
-            numberOfRows = 1;
-        } else if (section == 1) {
-            numberOfRows = self.incomingNodeListForUser.size.integerValue;
+        switch (self.contactDetailsModeDefaultCells[section].intValue) {
+            case ContactDetailsModeDefaultCellSetNickname:
+            case ContactDetailsModeDefaultCellAddAndRemoveContact:
+                numberOfRows = 1;
+                break;
+            case ContactDetailsModeDefaultCellSharedFolders:
+                numberOfRows = self.incomingNodeListForUser.size.integerValue;
+                break;
+                
+            default:
+                break;
         }
     } else if (self.contactDetailsMode == ContactDetailsModeFromChat) {
         if (section == 2) {
@@ -540,8 +667,16 @@
     ContactTableViewCell *cell;
     
     if (self.contactDetailsMode == ContactDetailsModeDefault) {
-        switch (indexPath.section) {
-            case 0:
+        switch (self.contactDetailsModeDefaultCells[indexPath.section].intValue) {
+            case ContactDetailsModeDefaultCellSetNickname:
+                cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
+                cell.avatarImageView.image = [UIImage imageNamed:@"setNickname"];
+                cell.nameLabel.text = AMLocalizedString(@"Set Nickname", nil);
+                cell.nameLabel.font = [UIFont mnz_SFUIRegularWithSize:15.0f];
+                cell.nameLabel.textColor = UIColor.mnz_gray666666;
+                break;
+                
+            case ContactDetailsModeDefaultCellAddAndRemoveContact:
                 cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
                 if (self.user.visibility == MEGAUserVisibilityVisible) { //Remove Contact
                     cell.avatarImageView.image = [UIImage imageNamed:@"delete"];
@@ -556,7 +691,7 @@
                 }
                 break;
                 
-            case 1: //Shared folders
+            case ContactDetailsModeDefaultCellSharedFolders: //Shared folders
                 cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsSharedFolderTypeID" forIndexPath:indexPath];
                 MEGANode *node = [self.incomingNodeListForUser nodeAtIndex:indexPath.row];
                 cell.avatarImageView.image = [Helper incomingFolderImage];
@@ -686,8 +821,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (self.contactDetailsMode == ContactDetailsModeDefault) {
-        switch (indexPath.section) {
-            case 0: {
+        switch (self.contactDetailsModeDefaultCells[indexPath.section].intValue) {
+            case ContactDetailsModeDefaultCellSetNickname:
+                [self showNickNameViewContoller];
+                break;
+            case ContactDetailsModeDefaultCellAddAndRemoveContact: {
                 if (self.user.visibility == MEGAUserVisibilityVisible) {
                     [self showRemoveContactAlert];
                 } else {
@@ -696,7 +834,7 @@
                 break;
             }
         
-            case 1: {
+            case ContactDetailsModeDefaultCellSharedFolders: {
                 [self openSharedFolderAtIndexPath:indexPath];
                 break;
             }
