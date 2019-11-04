@@ -1,8 +1,6 @@
 
 #import "NSAttributedString+MNZCategory.h"
 
-#import <CoreText/CoreText.h>
-
 #import "NSString+MNZCategory.h"
 
 @implementation NSAttributedString (MNZCategory)
@@ -144,31 +142,21 @@
     }
     
     CGFloat size = font.pointSize;
-    CFStringRef name = (__bridge CFStringRef)font.fontName;
-    NSString *fontCacheKey = [NSString stringWithFormat:@"%@-%@-%@-%@", name, bold ? @"bold" : @"normal", italic ? @"italic" : @"normal", @(size)];
+    NSString *fontCacheKey = [NSString stringWithFormat:@"%@-%@-%@-%@", font.fontName, bold ? @"bold" : @"normal", italic ? @"italic" : @"normal", @(size)];
     if (fonts[fontCacheKey]) {
         return fonts[fontCacheKey];
     }
     
-    CTFontRef ctBase = CTFontCreateWithName(name, size, NULL);
-    CTFontRef ctAlt;
+    UIFontDescriptor * fontDescriptor;
     if (bold && italic) {
-        ctAlt = CTFontCreateCopyWithSymbolicTraits(ctBase, 0, NULL, kCTFontBoldTrait | kCTFontItalicTrait, kCTFontBoldTrait | kCTFontItalicTrait);
+        fontDescriptor = [font.fontDescriptor fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold | UIFontDescriptorTraitItalic];
     } else if (bold) {
-        ctAlt = CTFontCreateCopyWithSymbolicTraits(ctBase, 0, NULL, kCTFontBoldTrait, kCTFontBoldTrait);
+        fontDescriptor = [font.fontDescriptor fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold];
     } else {
-        ctAlt = CTFontCreateCopyWithSymbolicTraits(ctBase, 0, NULL, kCTFontItalicTrait, kCTFontItalicTrait);
+        fontDescriptor = [font.fontDescriptor fontDescriptorWithSymbolicTraits: UIFontDescriptorTraitItalic];
     }
-    CFStringRef altName = CTFontCopyName(ctAlt, kCTFontPostScriptNameKey);
-    UIFont *altFont = [UIFont fontWithName:(__bridge_transfer NSString *)altName size:size] ?: font;
+    UIFont *altFont = [UIFont fontWithDescriptor:fontDescriptor size:size] ?: font;
     fonts[fontCacheKey] = altFont;
-    
-    if (ctBase) {
-        CFRelease(ctBase);
-    }
-    if (ctAlt) {
-        CFRelease(ctAlt);
-    }
     
     return altFont;
 }

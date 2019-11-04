@@ -120,12 +120,16 @@
 "passwordStrong"="Această parolă va rezista în fața celor mai sofisticate atacuri de tip „brute-force”. Te rugăm să te asiguri că o vei reține.";
 /*  */
 "agreeWithTheMEGATermsOfService"="Sunt de acord cu <a href=\"terms\">Termenii de utilizare a serviciului</a> MEGA";
+/* This text is displayed in the account creation screen with a checkbox. User will have to tick the checkbox before proceeding on to create an account */
+"agreeWithLosingPasswordYouLoseData"="I understand that [S]if I lose my password, I may lose my data.[/S] Read more about <a href=\"terms\">MEGA’s end-to-end encryption</a>";
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="Introdu un nume valid";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="Parolele nu coincid";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
 "termsCheckboxUnselected"="Trebuie să fii de-acord cu Termenii de utilizare a serviciului pentru a înregistra un cont pe MEGA.";
+/* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown  */
+"termsForLosingPasswordCheckboxUnselected"="You need to agree that you understand the danger of losing your password";
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="Această adresă de e-mail a înregistrat deja un cont cu MEGA";
 /* Title shown just after doing some action that requires confirming the action by an email */
@@ -699,13 +703,13 @@
 /* Footer description when upload all burst photos is disabled */
 "Only the representative photos from your burst photo sequences will be uploaded."="Se vor încărca doar fotografiile favorite din secvențele fotografiilor în rafală.";
 /* Footer description when upload Hidden Album is enabled */
-"The Hidden Album is where you hide photos or videos in your device Photos app."="Albumul ascuns este locul în care ascunzi fotografii sau videoclipuri în aplicația Fotografii a dispozitivului.";
+"The Hidden Album is where you hide photos or videos in your device Photos app."="Albumul ascuns este locul în care ascunzi fotografii sau videoclipuri în aplicația Poze a dispozitivului.";
 /* Title of the switch to config whether to upload Shared Albums */
 "Upload Shared Albums"="Încarcă albume partajate";
 /* Footer description for Upload Shared Albums title when option enabled */
-"Shared Albums from your device's Photos app will be uploaded."="Shared Albums from your device’s Photos app will be uploaded.";
+"Shared Albums from your device's Photos app will be uploaded."="Vor fi încărcate albume partajate din aplicația Poze a dispozitivului.";
 /* Footer description for Upload Shared Albums title when option disabled */
-"Shared Albums from your device's Photos app will not be uploaded."="Shared Albums from your device’s Photos app will not be uploaded.";
+"Shared Albums from your device's Photos app will not be uploaded."="Nu vor fi încărcate albume partajate din aplicația Poze a dispozitivului.";
 /* Title of the switch to config whether to upload synced albums */
 "Upload albums synced from iTunes"="Încarcă albumele sincronizate de pe iTunes";
 /* Footer description for upload synced albums title */
@@ -1685,11 +1689,11 @@
 /* Message shown in a chat room for a group call in progress displaying the duration of the call */
 "Touch to return to call %@"="Atinge pentru a reveni la apelul %@";
 /* A button label which allows the users save images/videos in the Photos app. */
-"Save to Photos"="Salvează în Fotografii";
+"Save to Photos"="Salvează în Poze";
 /* Text shown when starting the process to save a photo or video to Photos app */
-"Saving to Photos…"="Se salvează în Fotografii…";
+"Saving to Photos…"="Se salvează în Poze…";
 /* Text shown when a photo or video is saved to Photos app */
-"Saved to Photos"="Salvat(ă) în Fotografii";
+"Saved to Photos"="Salvat(ă) în Poze";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
 "Could not save Item"="Nu se poate salva elementul";
 /* Label in a cell where you can enable the 'Encrypted Key Rotation' */
@@ -1801,7 +1805,7 @@
 /* A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II. */
 "Your payment for the %1 plan was unsuccessful."="Plata pentru planul %1 nu a avut succes.";
 /* The professional pricing plan which the user is currently on will expire in one day. */
-"Your PRO membership plan will expire in 1 day."="Planul pentru calitatea de membru PRO va expira în termen de 1 zi.";
+"Your PRO membership plan will expire in 1 day."="Planul pentru calitatea de membru PRO va expira peste 1 zi.";
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
 "Your PRO membership plan will expire in %1 days."="Planul pentru calitatea de membru PRO va expira în %1 zile.";
 /* The professional pricing plan which the user was on expired one day ago. */
@@ -1941,13 +1945,13 @@
 /* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
 "Dispute Takedown"="Contestă eliminarea";
 /* Title of the "Links" Shared Items. */
-"Links"="Links";
+"Links"="Linkuri";
 /* Title for empty state view of "Links" in Shared Items. */
 "No Public Links"="Niciun link public";
 /* Text to indicate that the user will leave an incoming shared folder. */
-"Leave Share"="Leave Share";
+"Leave Share"="Părăsește partajarea";
 /* Text indicating to the user the action that will be executed on tap. */
-"Manage Share"="Manage Share";
+"Manage Share"="Gestionează partajarea";
 /* Title of the screen that shows the users with whom the user can share a folder */
 "Share with"="Partajează cu";
 /* Chat Notifications DND: Option that does not deactivate DND automatically */
@@ -1964,7 +1968,29 @@
 "Mute chat Notifications for"="Amuțește notificările de chat timp de";
 /* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
 "Muted forever"="Amuțite pentru totdeauna";
-/* Chat Notifications DND: DND once activated with timing option, this message will appear below the DND on/off switch with the actual time left to deactivate DND replacing the placeholder below */
-"%@ left"="%@ rămase";
+/* Chat Notifications DND: Remaining time left to deactivate DND - 1 minute left */
+"1 minute left"="1 minut rămas";
+/* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 minute left */
+"%d minutes left"="%d minute rămase";
+/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour left */
+"1 hour left"="1 oră rămasă";
+/* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 hour left */
+"%d hours left"="%d ore rămase";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
-"Chat Notifications"="Chat Notifications";
+"Chat Notifications"="Notificări de chat";
+/* Chat settings: This text appears with the Do Not Disturb switch */
+"Do Not Disturb"="Do Not Disturb";
+/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, 1 minute left */
+"1 hour, 1 minute left"="1 hour, 1 minute left";
+/* Chat Notifications DND: Remaining time left to deactivate DND - X hours, X minutes left */
+"%d hours, %d minutes left"="%d hours, %d minutes left";
+/* Chat Notifications DND: Remaining time left to deactivate DND - X hours, 1 minute left */
+"%d hours, 1 minute left"="%d hours, 1 minute left";
+/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, X minutes left */
+"1 hour, %d minutes left"="1 hour, %d minutes left";
+/* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
+"Reconnecting..."="Reconnecting…";
+/* Title shown when the user reconnect in a call. */
+"You are back!"="You are back!";
+/* Subtitle of chat screen when the chat is inactive */
+"Inactive chat"="Chat inactiv";
