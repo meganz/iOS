@@ -257,6 +257,8 @@
         if ([sharedUserDefaults boolForKey:@"useHttpsOnly"]) {
             [[MEGASdkManager sharedMEGASdk] useHttpsOnly:YES];
         }
+        
+        [CameraUploadManager enableAdvancedSettingsForUpgradingUserIfNeeded];
     } else {
         // Resume ephemeral account
         self.window.rootViewController = [OnboardingViewController instanciateOnboardingWithType:OnboardingTypeDefault];
@@ -1713,7 +1715,6 @@ void uncaughtExceptionHandler(NSException *exception) {
             });
             
             [[MEGASdkManager sharedMEGASdk] getAccountDetails];
-            [self copyDatabasesForExtensions];
             
             break;
         }
@@ -1865,6 +1866,9 @@ void uncaughtExceptionHandler(NSException *exception) {
         [[MEGASdkManager sharedMEGAChatSdk] logout];
         [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
     }
+    if (newState == MEGAChatInitOnlineSession) {
+        [self copyDatabasesForExtensions];
+    }
 }
 
 - (void)onChatPresenceConfigUpdate:(MEGAChatSdk *)api presenceConfig:(MEGAChatPresenceConfig *)presenceConfig {
@@ -1927,7 +1931,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 }
 
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
-    if (transfer.isStreamingTransfer) {
+    if (transfer.type != MEGATransferTypeUpload && transfer.isStreamingTransfer) {
         return;
     }
     

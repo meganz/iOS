@@ -52,6 +52,8 @@
 
 @property (assign, nonatomic, getter=isSpeakerEnabled) BOOL speakerEnabled;
 
+@property (assign, nonatomic, getter=isReconnecting) BOOL reconnecting;
+
 @end
 
 @implementation CallViewController
@@ -512,17 +514,26 @@
     if ([call hasChangedForType:MEGAChatCallChangeTypeSessionStatus]) {
         MEGAChatSession *remoteSession = [self.call sessionForPeer:self.call.peerSessionStatusChange clientId:self.call.clientSessionStatusChange];
 
-        if (remoteSession.status == MEGAChatSessionStatusInProgress) {
-            if (!self.timer.isValid) {
-                [self.player stop];
-                
-                _timer = [NSTimer timerWithTimeInterval:1.0f target:self selector:@selector(updateDuration) userInfo:nil repeats:YES];
-                [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
-                _baseDate = [NSDate date];
-                [self initShowHideControls];
+        switch (remoteSession.status) {
+            case MEGAChatSessionStatusInProgress: {
+                if (!self.timer.isValid) {
+                    [self.player stop];
+                    [self initShowHideControls];
+                    [self initDurationTimer];
+                }
+                break;
             }
-        } else {
-            self.statusCallLabel.text = AMLocalizedString(@"connecting", nil);
+                
+            case MEGAChatSessionStatusInitial:
+                if (self.isReconnecting) {
+                    self.reconnecting = NO;
+                    self.statusCallLabel.text = AMLocalizedString(@"You are back!", @"Title shown when the user reconnect in a call.");
+                } else {
+                    self.statusCallLabel.text = AMLocalizedString(@"connecting", nil);
+                }
+
+            default:
+                break;
         }
     }
     
@@ -616,6 +627,12 @@
             break;
         }
             
+        case MEGAChatCallStatusReconnecting:
+            [self.timer invalidate];
+            self.reconnecting = YES;
+            self.statusCallLabel.text = AMLocalizedString(@"Reconnecting...", @"Title shown when the user lost the connection in a call, and the app will try to reconnect the user again");
+            break;
+        
         default:
             break;
     }

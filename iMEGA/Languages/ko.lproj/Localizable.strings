@@ -120,12 +120,16 @@
 "passwordStrong"="이 비밀번호는 대부분의 정교한 무한 대입 공격을 버틸 것입니다. 확실히 기억해두세요.";
 /*  */
 "agreeWithTheMEGATermsOfService"="나는 MEGA의 <a href=\"terms\">이용약관</a>에 동의합니다";
+/* This text is displayed in the account creation screen with a checkbox. User will have to tick the checkbox before proceeding on to create an account */
+"agreeWithLosingPasswordYouLoseData"="[S]만약 내가 비밀번호를 잊으면, 내 데이터를 잃는다는 것을[/S] 이해하였습니다. 자세한 사항은 <a href=\"terms\">MEGA의 종단간 암호화</a>를 읽어보세요.";
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="올바른 이름을 입력하세요";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="비밀번호가 일치하지 않습니다";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
 "termsCheckboxUnselected"="MEGA에 계정을 등록하려면 이용 약관에 동의해야합니다.";
+/* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown  */
+"termsForLosingPasswordCheckboxUnselected"="비밀번호를 잊는 것에 대한 위험성을 이해하였다는데에 동의해야합니다";
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="이 이메일 주소는 이미 MEGA에 가입되어 있습니다.";
 /* Title shown just after doing some action that requires confirming the action by an email */
@@ -703,9 +707,9 @@
 /* Title of the switch to config whether to upload Shared Albums */
 "Upload Shared Albums"="공유된 앨범 업로드";
 /* Footer description for Upload Shared Albums title when option enabled */
-"Shared Albums from your device's Photos app will be uploaded."="Shared Albums from your device’s Photos app will be uploaded.";
+"Shared Albums from your device's Photos app will be uploaded."="기기의 사진 앱의 공유된 앨범이 업로드될 것입니다";
 /* Footer description for Upload Shared Albums title when option disabled */
-"Shared Albums from your device's Photos app will not be uploaded."="Shared Albums from your device’s Photos app will not be uploaded.";
+"Shared Albums from your device's Photos app will not be uploaded."="기기의 사진 앱의 공유된 앨범이 업로드되지 않을 것입니다";
 /* Title of the switch to config whether to upload synced albums */
 "Upload albums synced from iTunes"="iTunes에서 동기화된 앨범 업로드";
 /* Footer description for upload synced albums title */
@@ -1941,13 +1945,13 @@
 /* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
 "Dispute Takedown"="게시중단 이의제기";
 /* Title of the "Links" Shared Items. */
-"Links"="Links";
+"Links"="링크";
 /* Title for empty state view of "Links" in Shared Items. */
 "No Public Links"="공개 링크 없음";
 /* Text to indicate that the user will leave an incoming shared folder. */
-"Leave Share"="Leave Share";
+"Leave Share"="공유 떠나기";
 /* Text indicating to the user the action that will be executed on tap. */
-"Manage Share"="Manage Share";
+"Manage Share"="공유 관리";
 /* Title of the screen that shows the users with whom the user can share a folder */
 "Share with"="다른 사람과 공유";
 /* Chat Notifications DND: Option that does not deactivate DND automatically */
@@ -1964,7 +1968,29 @@
 "Mute chat Notifications for"="대화 알림 끄기";
 /* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
 "Muted forever"="영구적으로 차단";
-/* Chat Notifications DND: DND once activated with timing option, this message will appear below the DND on/off switch with the actual time left to deactivate DND replacing the placeholder below */
-"%@ left"="%@ 남음";
+/* Chat Notifications DND: Remaining time left to deactivate DND - 1 minute left */
+"1 minute left"="1분 남음";
+/* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 minute left */
+"%d minutes left"="%d분 남음";
+/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour left */
+"1 hour left"="1시간 남음";
+/* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 hour left */
+"%d hours left"="%d시간 남음";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
-"Chat Notifications"="Chat Notifications";
+"Chat Notifications"="대화 알림";
+/* Chat settings: This text appears with the Do Not Disturb switch */
+"Do Not Disturb"="방해금지";
+/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, 1 minute left */
+"1 hour, 1 minute left"="1시간, 1분 남음";
+/* Chat Notifications DND: Remaining time left to deactivate DND - X hours, X minutes left */
+"%d hours, %d minutes left"="%d시간, %d분 남음";
+/* Chat Notifications DND: Remaining time left to deactivate DND - X hours, 1 minute left */
+"%d hours, 1 minute left"="%d시간, 1분 남음";
+/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, X minutes left */
+"1 hour, %d minutes left"="1시간, %d분 남음";
+/* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
+"Reconnecting..."="재접속중...";
+/* Title shown when the user reconnect in a call. */
+"You are back!"="돌아왔습니다!";
+/* Subtitle of chat screen when the chat is inactive */
+"Inactive chat"="활성화되지 않은 대화";

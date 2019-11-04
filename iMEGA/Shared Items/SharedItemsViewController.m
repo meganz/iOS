@@ -1326,7 +1326,17 @@
 #pragma mark - MEGAGlobalDelegate
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
-    [self reloadUI];
+    NSInteger itemSelected;
+    if (self.incomingButton.selected) {
+        itemSelected = 0;
+    } else if (self.outgoingButton.selected) {
+        itemSelected = 1;
+    } else {
+        itemSelected = 2;
+    }
+    if ([nodeList mnz_shouldProcessOnNodesUpdateInSharedForNodes:self.incomingButton.selected ? self.incomingNodesMutableArray : self.outgoingNodesMutableArray itemSelected:itemSelected]) {
+        [self reloadUI];
+    }
 }
 
 - (void)onUsersUpdate:(MEGASdk *)api userList:(MEGAUserList *)userList {
@@ -1469,33 +1479,7 @@
 #pragma mark - NodeInfoViewControllerDelegate
 
 - (void)presentParentNode:(MEGANode *)node {
-    
-    if (self.searchController.isActive) {
-        NSArray *parentTreeArray = node.mnz_parentTreeArray;
-        
-        //Created a reference to self.navigationController because if the presented view is not the root controller and search is active, the 'popToRootViewControllerAnimated' makes nil the self.navigationController and therefore the parentTreeArray nodes can't be pushed
-        UINavigationController *navigation = self.navigationController;
-        [navigation popToRootViewControllerAnimated:NO];
-        
-        for (MEGANode *node in parentTreeArray) {
-            CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-            cloudDriveVC.parentNode = node;
-            [navigation pushViewController:cloudDriveVC animated:NO];
-        }
-        
-        switch (node.type) {
-            case MEGANodeTypeFolder:
-            case MEGANodeTypeRubbish: {
-                CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-                cloudDriveVC.parentNode = node;
-                [navigation pushViewController:cloudDriveVC animated:NO];
-                break;
-            }
-                
-            default:
-                break;
-        }
-    }
+        [node navigateToParentAndPresent];
 }
 
 @end

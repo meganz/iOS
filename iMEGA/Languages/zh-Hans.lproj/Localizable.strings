@@ -120,12 +120,16 @@
 "passwordStrong"="该密码不容易被攻破。请确保您会将它牢记。";
 /*  */
 "agreeWithTheMEGATermsOfService"="我同意MEGA的<a href=\"terms\">服务条款</a>";
+/* This text is displayed in the account creation screen with a checkbox. User will have to tick the checkbox before proceeding on to create an account */
+"agreeWithLosingPasswordYouLoseData"="我了解[S]如果我丢失密码，则会失去我的数据。[/S]进一步了解<a href=\"terms\">MEGA终端至终端加密技术</a>.";
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="请输入有效的名字";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="密码不匹配";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
 "termsCheckboxUnselected"="您需要同意MEGA服务条款才可注册账号。";
+/* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown  */
+"termsForLosingPasswordCheckboxUnselected"="您需要同意您已了解丢失密码的风险";
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="此邮箱已在MEGA注册过";
 /* Title shown just after doing some action that requires confirming the action by an email */
@@ -703,9 +707,9 @@
 /* Title of the switch to config whether to upload Shared Albums */
 "Upload Shared Albums"="上传共享相册";
 /* Footer description for Upload Shared Albums title when option enabled */
-"Shared Albums from your device's Photos app will be uploaded."="Shared Albums from your device’s Photos app will be uploaded.";
+"Shared Albums from your device's Photos app will be uploaded."="设备照片中的共享相册将会被上传。";
 /* Footer description for Upload Shared Albums title when option disabled */
-"Shared Albums from your device's Photos app will not be uploaded."="Shared Albums from your device’s Photos app will not be uploaded.";
+"Shared Albums from your device's Photos app will not be uploaded."="设备照片中的共享相册不会被上传。";
 /* Title of the switch to config whether to upload synced albums */
 "Upload albums synced from iTunes"="上传iTunes中已同步的相册";
 /* Footer description for upload synced albums title */
@@ -1941,13 +1945,13 @@
 /* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
 "Dispute Takedown"="解除争议";
 /* Title of the "Links" Shared Items. */
-"Links"="Links";
+"Links"="链接";
 /* Title for empty state view of "Links" in Shared Items. */
 "No Public Links"="无公共链接";
 /* Text to indicate that the user will leave an incoming shared folder. */
-"Leave Share"="Leave Share";
+"Leave Share"="离开共享";
 /* Text indicating to the user the action that will be executed on tap. */
-"Manage Share"="Manage Share";
+"Manage Share"="管理共享";
 /* Title of the screen that shows the users with whom the user can share a folder */
 "Share with"="分享";
 /* Chat Notifications DND: Option that does not deactivate DND automatically */
@@ -1964,7 +1968,29 @@
 "Mute chat Notifications for"="静音聊天通知";
 /* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
 "Muted forever"="保持静音";
-/* Chat Notifications DND: DND once activated with timing option, this message will appear below the DND on/off switch with the actual time left to deactivate DND replacing the placeholder below */
-"%@ left"="%@已离开";
+/* Chat Notifications DND: Remaining time left to deactivate DND - 1 minute left */
+"1 minute left"="剩余1分钟";
+/* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 minute left */
+"%d minutes left"="剩余%d分钟";
+/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour left */
+"1 hour left"="剩余1小时";
+/* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 hour left */
+"%d hours left"="剩余%d小时";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
-"Chat Notifications"="Chat Notifications";
+"Chat Notifications"="Chat信息通知";
+/* Chat settings: This text appears with the Do Not Disturb switch */
+"Do Not Disturb"="Do Not Disturb";
+/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, 1 minute left */
+"1 hour, 1 minute left"="1 hour, 1 minute left";
+/* Chat Notifications DND: Remaining time left to deactivate DND - X hours, X minutes left */
+"%d hours, %d minutes left"="%d hours, %d minutes left";
+/* Chat Notifications DND: Remaining time left to deactivate DND - X hours, 1 minute left */
+"%d hours, 1 minute left"="%d hours, 1 minute left";
+/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, X minutes left */
+"1 hour, %d minutes left"="1 hour, %d minutes left";
+/* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
+"Reconnecting..."="正在重连中……";
+/* Title shown when the user reconnect in a call. */
+"You are back!"="已重连！";
+/* Subtitle of chat screen when the chat is inactive */
+"Inactive chat"="非活跃聊天";

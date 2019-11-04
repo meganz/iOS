@@ -125,7 +125,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 
 @property (nonatomic, getter=shouldShowJoinView) BOOL showJoinView;
 
-@property (strong, nonatomic) UIButton *activeCallButton;
+@property (strong, nonatomic) UIButton *topBannerButton;
 @property (strong, nonatomic) NSTimer *timer;
 @property (strong, nonatomic) NSDate *baseDate;
 @property (assign, nonatomic) int64_t initDuration;
@@ -142,6 +142,8 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 @property (nonatomic) NSString *lastGreenString;
 
 @property (nonatomic) InputToolbarState inputToolbarState;
+
+@property (nonatomic, getter=isReconnecting) BOOL reconnecting;
 
 @end
 
@@ -312,15 +314,14 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     if (!self.isMovingToParentViewController) {
         [self customNavigationBarLabel];
     }
-
-    if (!self.activeCallButton) {
-        [self createJoinActiveCallButton];
-        [self.view addSubview:self.activeCallButton];
+    
+    if (!self.topBannerButton) {
+        [self createTopBannerButton];
+        [self.view addSubview:self.topBannerButton];
     }
     
+    [self checkIfChatHasActiveCall];
     
-    [self updateUIbasedOnChatConnectionAndReachability];
-        
     self.previewersView.hidden = self.chatRoom.previewersCount == 0;
     self.previewersLabel.text = [NSString stringWithFormat:@"%tu", self.chatRoom.previewersCount];
 }
@@ -626,7 +627,9 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             chatRoomState = AMLocalizedString(@"archived", @"Title of flag of archived chats.");
         } else {
             if (self.chatRoom.isGroup) {
-                if (self.chatRoom.hasCustomTitle) {
+                if (self.chatRoom.ownPrivilege < MEGAChatRoomPrivilegeRo) {
+                    chatRoomState = AMLocalizedString(@"Inactive chat", @"Subtitle of chat screen when the chat is inactive");
+                } else if (self.chatRoom.hasCustomTitle) {
                     chatRoomState = [self participantsNames];
                 } else {
                     if (self.chatRoom.peerCount) {
@@ -708,29 +711,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     }
 }
 
-- (void)updateUIbasedOnChatConnectionAndReachability {
-    MEGAChatConnection chatConnection = [[MEGASdkManager sharedMEGAChatSdk] chatConnectionState:self.chatRoom.chatId];
-    [self updateNavigationBarButtonsState];
-    
-    if (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeStandard && chatConnection == MEGAChatConnectionOnline && MEGAReachabilityManager.isReachable) {
-        if ([[MEGASdkManager sharedMEGAChatSdk] hasCallInChatRoom:self.chatRoom.chatId]) {
-            MEGAChatCall *call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
-            if (call.status == MEGAChatCallStatusInProgress) {
-                [self showTapToReturnCall:call];
-            } else if (self.chatRoom.group || call.status == MEGAChatCallStatusRequestSent) {
-                MEGAHandleList *chatRoomIDsWithCallInProgress = [MEGASdkManager.sharedMEGAChatSdk chatCallsWithState:MEGAChatCallStatusInProgress];
-                if (chatRoomIDsWithCallInProgress.size == 0) {
-                    [self showActiveCallButton];
-                }
-            }
-        }
-    } else {
-        if (!self.activeCallButton.hidden) {
-            [self hideActiveCallButton];
-        }
-    }
-}
-
 - (void)updateNavigationBarButtonsState {
     MEGAChatConnection chatConnection = [[MEGASdkManager sharedMEGAChatSdk] chatConnectionState:self.chatRoom.chatId];
     
@@ -746,77 +726,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     }
     
     self.audioCallBarButtonItem.enabled = self.videoCallBarButtonItem.enabled = YES;
-}
-
-- (void)createJoinActiveCallButton {
-    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, -44, self.view.frame.size.width, 44)];
-    button.backgroundColor = UIColor.mnz_green00BFA5;
-    NSString *title;
-    if (self.chatRoom.isGroup) {
-        title = AMLocalizedString(@"There is an active group call. Tap to join.", @"Message shown in a chat room when there is an active group call");
-    } else {
-        title = AMLocalizedString(@"There is an active call. Tap to join.", @"Message shown in a chat room when there is an active call");
-    }
-    [button setTitle:title forState:UIControlStateNormal];
-    [button setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
-    button.titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
-    [button addTarget:self action:@selector(joinActiveCall:) forControlEvents:UIControlEventTouchUpInside];
-    button.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-    button.hidden = YES;
-    self.activeCallButton = button;
-}
-
-- (void)showTapToReturnCall:(MEGAChatCall *)call {
-    self.initDuration = call.duration;
-    self.baseDate = [NSDate date];
-    [self updateDuration];
-    self.timer = [NSTimer timerWithTimeInterval:1.0f target:self selector:@selector(updateDuration) userInfo:nil repeats:YES];
-    [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
-    if (self.activeCallButton.hidden) {
-        self.activeCallButton.hidden = NO;
-        [UIView animateWithDuration:.5f animations:^ {
-            self.activeCallButton.frame = CGRectMake(0, 0, self.activeCallButton.frame.size.width, self.activeCallButton.frame.size.height);
-        } completion:nil];
-    }
-}
-
-- (void)updateDuration {
-    NSTimeInterval interval = ([NSDate date].timeIntervalSince1970 - self.baseDate.timeIntervalSince1970 + self.initDuration);
-    [self.activeCallButton setTitle:[NSString stringWithFormat:AMLocalizedString(@"Touch to return to call %@", @"Message shown in a chat room for a group call in progress displaying the duration of the call"), [NSString mnz_stringFromTimeInterval:interval]] forState:UIControlStateNormal];
-}
-
-- (void)showActiveCallButton {
-    [self.timer invalidate];
-    NSString *title;
-    if (self.chatRoom.isGroup) {
-        title = AMLocalizedString(@"There is an active group call. Tap to join.", @"Message shown in a chat room when there is an active group call");
-    } else {
-        title = AMLocalizedString(@"There is an active call. Tap to join.", @"Message shown in a chat room when there is an active call");
-    }
-    [self.activeCallButton setTitle:title forState:UIControlStateNormal];
-    if (self.activeCallButton.hidden) {
-        self.activeCallButton.hidden = NO;
-        [UIView animateWithDuration:.5f animations:^ {
-            self.activeCallButton.frame = CGRectMake(0, 0, self.activeCallButton.frame.size.width, self.activeCallButton.frame.size.height);
-        } completion:nil];
-    }
-}
-
-- (void)hideActiveCallButton {
-    if (!self.activeCallButton.hidden) {
-        [UIView animateWithDuration:.5f animations:^ {
-            self.activeCallButton.frame = CGRectMake(0, -44, self.activeCallButton.frame.size.width, self.activeCallButton.frame.size.height);
-        } completion:^(BOOL finished) {
-            if (finished) {
-                self.activeCallButton.hidden = YES;
-            }
-        }];
-    }
-}
-
-- (IBAction)joinActiveCall:(id)sender {
-    [self.timer invalidate];
-    [self openCallViewWithVideo:NO active:YES];
 }
 
 - (void)startAudioVideoCall:(UIBarButtonItem *)sender {
@@ -1232,7 +1141,11 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     }
     appData = [appData mnz_appDataToAttachToChatID:self.chatRoom.chatId asVoiceClip:asVoiceClip];
     
-    [[MEGASdkManager sharedMEGASdk] startUploadWithLocalPath:path parent:parentNode appData:appData isSourceTemporary:!asVoiceClip delegate:startUploadTransferDelegate];
+    [MEGASdkManager.sharedMEGASdk startUploadForChatWithLocalPath:path
+                                                           parent:parentNode
+                                                          appData:appData
+                                                isSourceTemporary:!asVoiceClip
+                                                         delegate:startUploadTransferDelegate];
 }
 
 - (void)attachOrCopyAndAttachNode:(MEGANode *)node toParentNode:(MEGANode *)parentNode {
@@ -1291,10 +1204,10 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 }
 
 - (void)internetConnectionChanged {
-    [self updateUIbasedOnChatConnectionAndReachability];
-    
-    [self customNavigationBarLabel];
+    [self updateNavigationBarButtonsState];
 
+    [self customNavigationBarLabel];
+    
     if (self.openMessageHeaderView) {
         self.openMessageHeaderView.onlineStatusLabel.text = self.lastChatRoomStateString;
         self.openMessageHeaderView.onlineStatusView.backgroundColor = self.lastChatRoomStateColor;
@@ -1526,12 +1439,105 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     [self presentViewController:userAlertController animated:YES completion:nil];
 }
 
+#pragma mark - TopBannerButton
+
+- (void)createTopBannerButton {
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, -44, self.view.frame.size.width, 44)];
+    button.backgroundColor = UIColor.mnz_green00BFA5;
+    
+    [button setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
+    button.titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
+    [button addTarget:self action:@selector(joinActiveCall:) forControlEvents:UIControlEventTouchUpInside];
+    button.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    button.hidden = YES;
+    self.topBannerButton = button;
+}
+
+- (void)showTopBannerButton {
+    if (self.topBannerButton.hidden) {
+        self.topBannerButton.hidden = NO;
+        [UIView animateWithDuration:.5f animations:^ {
+            self.topBannerButton.frame = CGRectMake(0, 0, self.topBannerButton.frame.size.width, self.topBannerButton.frame.size.height);
+        } completion:nil];
+    }
+}
+
+- (void)hideTopBannerButton {
+    if (!self.topBannerButton.hidden) {
+        [UIView animateWithDuration:.5f animations:^ {
+            self.topBannerButton.frame = CGRectMake(0, -44, self.topBannerButton.frame.size.width, self.topBannerButton.frame.size.height);
+        } completion:^(BOOL finished) {
+            if (finished) {
+                self.topBannerButton.hidden = YES;
+            }
+        }];
+    }
+}
+
+- (void)checkIfChatHasActiveCall {
+    if (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeStandard) {
+        if ([[MEGASdkManager sharedMEGAChatSdk] hasCallInChatRoom:self.chatRoom.chatId]) {
+            MEGAChatCall *call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
+            if (call.status == MEGAChatCallStatusInProgress) {
+                [self configureTopBannerButtonForInProgressCall:call];
+            }  else if (self.chatRoom.group || call.status == MEGAChatCallStatusRequestSent) {
+                [self configureTopBannerButtonForActiveCall:call];
+            }
+            [self showTopBannerButton];
+        } else {
+            [self hideTopBannerButton];
+        }
+    }
+}
+
+- (void)setTopBannerButtonTitle:(NSString *)title color:(UIColor *)color {
+    [self.topBannerButton setTitle:title forState:UIControlStateNormal];
+    self.topBannerButton.backgroundColor = color;
+}
+
+- (void)initTimerForCall:(MEGAChatCall *)call {
+    self.initDuration = call.duration;
+    self.baseDate = [NSDate date];
+    if (!self.timer.isValid) {
+        [self updateDuration];
+        self.timer = [NSTimer timerWithTimeInterval:1.0f target:self selector:@selector(updateDuration) userInfo:nil repeats:YES];
+        [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
+    }
+    self.reconnecting = NO;
+}
+
+- (void)updateDuration {
+    if (!self.isReconnecting) {
+        NSTimeInterval interval = ([NSDate date].timeIntervalSince1970 - self.baseDate.timeIntervalSince1970 + self.initDuration);
+        [self setTopBannerButtonTitle:[NSString stringWithFormat:AMLocalizedString(@"Touch to return to call %@", @"Message shown in a chat room for a group call in progress displaying the duration of the call"), [NSString mnz_stringFromTimeInterval:interval]] color:UIColor.mnz_green00BFA5];
+    }
+}
+
+- (void)configureTopBannerButtonForInProgressCall:(MEGAChatCall *)call {
+    if (self.isReconnecting) {
+        [self setTopBannerButtonTitle:AMLocalizedString(@"You are back!", @"Title shown when the user reconnect in a call.") color:UIColor.mnz_green00BFA5];
+    }
+    [self initTimerForCall:call];
+}
+
+- (void)configureTopBannerButtonForActiveCall:(MEGAChatCall *)call {
+    [self.timer invalidate];
+    NSString *title = self.chatRoom.isGroup ? AMLocalizedString(@"There is an active group call. Tap to join.", @"Message shown in a chat room when there is an active group call"): AMLocalizedString(@"There is an active call. Tap to join.", @"Message shown in a chat room when there is an active call");
+    [self setTopBannerButtonTitle:title color:UIColor.mnz_green00BFA5];
+    [self showTopBannerButton];
+}
+
 #pragma mark - IBActions
 
 - (IBAction)closeTooltipTapped:(UIButton *)sender {
     [UIView animateWithDuration:0.2f animations:^{
         self.tooltipView.alpha = 0.0f;
     } completion:nil];
+}
+
+- (IBAction)joinActiveCall:(id)sender {
+    [self.timer invalidate];
+    [self openCallViewWithVideo:NO active:YES];
 }
 
 #pragma mark - Gesture recognizer
@@ -1547,7 +1553,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 #pragma mark - Custom menu actions for cells
 
 - (void)didReceiveMenuWillShowNotification:(NSNotification *)notification {
-     //Display custom menu actions for cells.
+    //Display custom menu actions for cells.
     [self setupMenuController:[notification object]];
     
     [super didReceiveMenuWillShowNotification:notification];
@@ -1919,11 +1925,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             NSString *appData = [[NSString new] mnz_appDataToSaveCoordinates:[filePath mnz_coordinatesOfPhotoOrVideo]];
             [self startUploadAndAttachWithPath:filePath parentNode:parentNode appData:appData asVoiceClip:NO];
         }
-    } nodes:^(NSArray <MEGANode *> *nodes) {
-        for (MEGANode *node in nodes) {
-            [self attachOrCopyAndAttachNode:node toParentNode:parentNode];
-        }
-    } errors:^(NSArray <NSError *> *errors) {
+    } nodes:nil errors:^(NSArray <NSError *> *errors) {
         NSString *title = AMLocalizedString(@"error", nil);
         NSString *message;
         if (errors.count == 1) {
@@ -2266,7 +2268,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 }
 
 - (UICollectionViewCell *)collectionView:(JSQMessagesCollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row == 8 && ![[MEGASdkManager sharedMEGAChatSdk] isFullHistoryLoadedForChat:self.chatRoom.chatId]) {
+    if (indexPath.row == 0 && ![[MEGASdkManager sharedMEGAChatSdk] isFullHistoryLoadedForChat:self.chatRoom.chatId]) {
         [self loadMessages];
     }
     
@@ -2663,12 +2665,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 
 #pragma mark - Responding to collection view tap events
 
-- (void)collectionView:(JSQMessagesCollectionView *)collectionView
-                header:(JSQMessagesLoadEarlierHeaderView *)headerView didTapLoadEarlierMessagesButton:(UIButton *)sender {
-    NSLog(@"Load earlier messages!");
-    [self loadMessages];
-}
-
 - (void)collectionView:(JSQMessagesCollectionView *)collectionView didTapAvatarImageView:(UIImageView *)avatarImageView atIndexPath:(NSIndexPath *)indexPath {
     MEGAChatMessage *message = [self.messages objectAtIndex:indexPath.item];
     uint64_t userHandle = message.userHandle;
@@ -2859,6 +2855,12 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     }
 }
 
+#pragma mark - UIScrollViewDelegate
+
+- (BOOL)scrollViewShouldScrollToTop:(UIScrollView *)scrollView {
+    return NO;
+}
+
 #pragma mark - UITextViewDelegate
 
 - (void)textViewDidChange:(UITextView *)textView {
@@ -2920,7 +2922,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     message.chatId= self.chatRoom.chatId;
     
     if (message.type == MEGAChatMessageTypeCallEnded) {
-        [self hideActiveCallButton];
+        [self hideTopBannerButton];
     }
 
     switch (message.type) {
@@ -2939,7 +2941,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         case MEGAChatMessageTypeVoiceClip:
         case MEGAChatMessageTypePublicHandleCreate:
         case MEGAChatMessageTypePublicHandleDelete:
-        case MEGAChatMessageTypeSetPrivateMode: {        
+        case MEGAChatMessageTypeSetPrivateMode: {
             NSUInteger unreads;
             if (UIApplication.sharedApplication.applicationState == UIApplicationStateActive && UIApplication.mnz_visibleViewController == self) {
                 [[MEGASdkManager sharedMEGAChatSdk] setMessageSeenForChat:self.chatRoom.chatId messageId:message.messageId];
@@ -3304,16 +3306,17 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 - (void)onChatConnectionStateUpdate:(MEGAChatSdk *)api chatId:(uint64_t)chatId newState:(int)newState {
     if (chatId == self.chatRoom.chatId) {
         [self customNavigationBarLabel];
-        
+        [self updateNavigationBarButtonsState];
+
         if (newState == MEGAChatConnectionOnline) {
-            [self updateUIbasedOnChatConnectionAndReachability];
+            [self checkIfChatHasActiveCall];
             if (self.loadMessagesLater) {
                 self.loadMessagesLater = NO;
                 self.isFirstLoad = YES;
                 [self loadMessages];
             }
         } else if (newState == MEGAChatConnectionOffline) {
-            [self updateUIbasedOnChatConnectionAndReachability];
+            [self checkIfChatHasActiveCall];
         }
     }
 }
@@ -3372,8 +3375,28 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 #pragma mark - MEGAChatCallDelegate
 
 - (void)onChatCallUpdate:(MEGAChatSdk *)api call:(MEGAChatCall *)call {
-    if (call.status == MEGAChatCallStatusDestroyed) {
-        [self updateNavigationBarButtonsState];
+    switch (call.status) {
+        case MEGAChatCallStatusUserNoPresent:
+            [self configureTopBannerButtonForActiveCall:call];
+            break;
+            
+        case MEGAChatCallStatusInProgress:
+            [self configureTopBannerButtonForInProgressCall:call];
+            break;
+            
+        case MEGAChatCallStatusReconnecting:
+            self.reconnecting = YES;
+            [self setTopBannerButtonTitle:AMLocalizedString(@"Reconnecting...", @"Title shown when the user lost the connection in a call, and the app will try to reconnect the user again.") color:UIColor.mnz_orangeFFA500];
+            break;
+            
+        case MEGAChatCallStatusDestroyed:
+            [self.timer invalidate];
+            [self updateNavigationBarButtonsState];
+            [self hideTopBannerButton];
+            break;
+            
+        default:
+            break;
     }
 }
 
