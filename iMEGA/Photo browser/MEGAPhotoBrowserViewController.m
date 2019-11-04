@@ -187,6 +187,12 @@ static const CGFloat GapBetweenPages = 10.0;
     }
 }
 
+#pragma mark - Status bar
+
+- (BOOL)prefersStatusBarHidden {
+    return self.isInterfaceHidden;
+}
+
 #pragma mark - UI
 
 - (void)reloadUI {
@@ -775,6 +781,8 @@ static const CGFloat GapBetweenPages = 10.0;
             self.statusBarBackground.layer.opacity = self.navigationBar.layer.opacity = self.toolbar.layer.opacity = 0.0f;
             self.interfaceHidden = YES;
         }
+        
+        [self setNeedsStatusBarAppearanceUpdate];
     }];
 }
 
