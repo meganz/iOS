@@ -58,6 +58,7 @@
 #import "CameraUploadManager+Settings.h"
 #import "TransferSessionManager.h"
 #import "BackgroundRefreshPerformer.h"
+#import "MEGA-Swift.h"
 
 #define kFirstRun @"FirstRun"
 
@@ -1432,7 +1433,14 @@ void uncaughtExceptionHandler(NSException *exception) {
             break;
             
         case EventAccountBlocked:
-            _messageForSuspendedAccount = event.text;
+            if (event.number == 700) {
+                if (![UIApplication.mnz_visibleViewController isKindOfClass:VerifyEmailViewController.class]) {
+                    VerifyEmailViewController *verifyEmailVC = [[UIStoryboard storyboardWithName:@"VerifyEmail" bundle:nil] instantiateViewControllerWithIdentifier:@"VerifyEmailViewController"];
+                    [UIApplication.mnz_presentingViewController presentViewController:verifyEmailVC animated:YES completion:nil];
+                }
+            } else {
+                _messageForSuspendedAccount = event.text;
+            }
             break;
             
         case EventNodesCurrent:
@@ -1620,17 +1628,6 @@ void uncaughtExceptionHandler(NSException *exception) {
                     
                     [UIApplication.mnz_presentingViewController presentViewController:self.sslKeyPinningController animated:YES completion:nil];
                 }
-                break;
-            }
-                
-            case MEGAErrorTypeApiEBlocked: {
-                if ([request type] == MEGARequestTypeLogin || [request type] == MEGARequestTypeFetchNodes) {
-                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:AMLocalizedString(@"accountBlocked", @"Error message when trying to login and the account is blocked") preferredStyle:UIAlertControllerStyleAlert];
-                    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-                    [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
-                    [api logout];
-                }
-                
                 break;
             }
                 
