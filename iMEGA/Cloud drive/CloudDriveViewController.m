@@ -290,12 +290,12 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     [self.cdCollectionView.view removeFromSuperview];
     [self.cdCollectionView removeFromParentViewController];
     self.cdCollectionView = nil;
-
+    
     self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
     self.searchController.hidesNavigationBarDuringPresentation = NO;
     self.searchController.delegate = self;
     self.layoutView = LayoutModeList;
-
+    
     self.cdTableView = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveTableID"];
     [self addChildViewController:self.cdTableView];
     self.cdTableView.view.frame = self.containerView.bounds;
@@ -319,7 +319,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     self.searchController.hidesNavigationBarDuringPresentation = NO;
     self.searchController.delegate = self;
     self.layoutView = LayoutModeThumbnail;
-
+    
     self.cdCollectionView = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveCollectionID"];
     self.cdCollectionView.cloudDrive = self;
     [self addChildViewController:self.cdCollectionView];
@@ -571,7 +571,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 - (void)longPress:(UILongPressGestureRecognizer *)longPressGestureRecognizer {
     UIView *view = self.cdTableView ? self.cdTableView.tableView : self.cdCollectionView.collectionView;
     CGPoint touchPoint = [longPressGestureRecognizer locationInView:view];
-
+    
     NSIndexPath *indexPath;
     
     if (self.layoutView == LayoutModeList) {
@@ -804,33 +804,32 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 
 #pragma mark - Private
 
+
+- (MEGASortOrderType)sortOrdertype {
+    //Sort configuration by default is "default ascending"
+    if (![[NSUserDefaults standardUserDefaults] integerForKey:@"SortOrderType"]) {
+        [[NSUserDefaults standardUserDefaults] setInteger:MEGASortOrderTypeDefaultAsc forKey:@"SortOrderType"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+    return [[NSUserDefaults standardUserDefaults] integerForKey:@"SortOrderType"];
+}
+
 - (void)reloadUI {
+    
     switch (self.displayMode) {
         case DisplayModeCloudDrive: {
             if (!self.parentNode) {
                 self.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
             }
-            
             [self updateNavigationBarTitle];
+            self.nodes = [[MEGASdkManager sharedMEGASdk] childrenForParent:self.parentNode order:[self sortOrdertype]];
             
-            //Sort configuration by default is "default ascending"
-            if (![[NSUserDefaults standardUserDefaults] integerForKey:@"SortOrderType"]) {
-                [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"SortOrderType"];
-                [[NSUserDefaults standardUserDefaults] synchronize];
-            }
-            
-            MEGASortOrderType sortOrderType = [[NSUserDefaults standardUserDefaults] integerForKey:@"SortOrderType"];
-            
-            self.nodes = [[MEGASdkManager sharedMEGASdk] childrenForParent:self.parentNode order:sortOrderType];
-
             break;
         }
             
         case DisplayModeRubbishBin: {
             [self updateNavigationBarTitle];
-            
-            self.nodes = [[MEGASdkManager sharedMEGASdk] childrenForParent:self.parentNode];
-
+            self.nodes = [[MEGASdkManager sharedMEGASdk] childrenForParent:self.parentNode order:[self sortOrdertype]];
             self.moreMinimizedBarButtonItem.enabled = self.nodes.size.integerValue > 0;
             
             break;
@@ -1018,7 +1017,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
             self.editBarButtonItem.enabled = boolValue;
             break;
         }
-        
+            
         case DisplayModeRecents: {
             self.moreRecentsBarButtonItem.enabled = boolValue;
             break;
@@ -1156,14 +1155,14 @@ static const NSTimeInterval kSearchTimeDelay = .5;
         NSDate *lastEncourageUpgradeDate = [[NSUserDefaults standardUserDefaults] objectForKey:@"lastEncourageUpgradeDate"];
         if (lastEncourageUpgradeDate) {
             NSInteger week = [[NSCalendar currentCalendar] components:NSCalendarUnitWeekOfYear
-                                                              fromDate:lastEncourageUpgradeDate
-                                                                toDate:[NSDate date]
-                                                               options:NSCalendarWrapComponents].weekOfYear;
+                                                             fromDate:lastEncourageUpgradeDate
+                                                               toDate:[NSDate date]
+                                                              options:NSCalendarWrapComponents].weekOfYear;
             if (week < 1) {
                 return;
             }
         }
-        MEGAAccountDetails *accountDetails = [[MEGASdkManager sharedMEGASdk] mnz_accountDetails];                
+        MEGAAccountDetails *accountDetails = [[MEGASdkManager sharedMEGASdk] mnz_accountDetails];
         if (accountDetails && (arc4random_uniform(20) == 0)) { // 5 % of the times
             [self showUpgradeTVC];
             alreadyPresented = YES;
@@ -1410,7 +1409,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 
 - (IBAction)selectAllAction:(UIBarButtonItem *)sender {
     [self.selectedNodesArray removeAllObjects];
-
+    
     if (!self.allNodesSelected) {
         MEGANode *n = nil;
         NSInteger nodeListSize = self.nodes.size.integerValue;
@@ -1605,7 +1604,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 
 - (void)setViewEditing:(BOOL)editing {
     [self updateNavigationBarTitle];
-
+    
     if (editing) {
         self.editBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
         self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
@@ -1629,7 +1628,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
         [UIView animateWithDuration:0.33f animations:^ {
             [self.toolbar setAlpha:1.0];
         }];
-    } else {        
+    } else {
         [self setNavigationBarButtonItems];
         self.allNodesSelected = NO;
         self.selectedNodesArray = nil;
@@ -2147,7 +2146,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 #pragma mark - NodeInfoViewControllerDelegate
 
 - (void)presentParentNode:(MEGANode *)node {
-        [node navigateToParentAndPresent];
+    [node navigateToParentAndPresent];
 }
 
 @end

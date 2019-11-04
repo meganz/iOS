@@ -121,7 +121,7 @@
 /*  */
 "agreeWithTheMEGATermsOfService"="Acepto los <a href='terms'>Términos de Servicio</a> de MEGA";
 /* This text is displayed in the account creation screen with a checkbox. User will have to tick the checkbox before proceeding on to create an account */
-"agreeWithLosingPasswordYouLoseData"="I understand that [S]if I lose my password, I may lose my data.[/S] Read more about <a href=\"terms\">MEGA’s end-to-end encryption</a>";
+"agreeWithLosingPasswordYouLoseData"="Entiendo que [S]si pierdo mi contraseña, puedo perder mis datos.[/S] Más información sobre <a href=\"terms\">el cifrado punto a punto de MEGA</a>.";
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="Introduce un nombre";
 /* Error text shown when you have not written the same password */
@@ -129,7 +129,7 @@
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
 "termsCheckboxUnselected"="Necesitas aceptar los Términos de servicio para poder crear una cuenta en MEGA.";
 /* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown  */
-"termsForLosingPasswordCheckboxUnselected"="You need to agree that you understand the danger of losing your password";
+"termsForLosingPasswordCheckboxUnselected"="Debes confirmar que comprendes el peligro de perder tu contraseña";
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="Esta dirección de correo electrónico ya fue utilizada para el registro de una cuenta con MEGA";
 /* Title shown just after doing some action that requires confirming the action by an email */
@@ -1437,7 +1437,7 @@
 /* Refers to the type of a file or folder. */
 "type"="Tipo";
 /* Label for what a selection contains. For example: "Contains: 3 folders & 13 files". (no need to put the colon punctuation in the translation) */
-"contains"="Contenido";
+"contains"="Contiene";
 /* A label for any 'Modified' text or title. For example to show the modification date of a file/folder. */
 "modified"="Modificado";
 /* A label for any ‘Added’ text or title. For example to show the upload date of a file/folder. */
@@ -1969,18 +1969,28 @@
 /* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
 "Muted forever"="Silenciado para siempre";
 /* Chat Notifications DND: Remaining time left to deactivate DND - 1 minute left */
-"1 minute left"="1 minute left";
+"1 minute left"="1 minuto restante";
 /* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 minute left */
-"%@ minutes left"="%d minutes left";
+"%d minutes left"="%d minutos restantes";
 /* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour left */
-"1 hour left"="1 hour left";
+"1 hour left"="1 hora restante";
 /* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 hour left */
-"%@ hours left"="%d hours left";
+"%d hours left"="%d horas restantes";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="Notificaciones del Chat";
+/* Chat settings: This text appears with the Do Not Disturb switch */
+"Do Not Disturb"="No molestar";
+/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, 1 minute left */
+"1 hour, 1 minute left"="1 hora, 1 minuto restantes";
+/* Chat Notifications DND: Remaining time left to deactivate DND - X hours, X minutes left */
+"%d hours, %d minutes left"="%d horas, %d minutos restantes";
+/* Chat Notifications DND: Remaining time left to deactivate DND - X hours, 1 minute left */
+"%d hours, 1 minute left"="%d horas, 1 minuto restantes";
+/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, X minutes left */
+"1 hour, %d minutes left"="1 hora, %d minutos restantes";
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
-"Reconnecting..."="Reconnecting…";
+"Reconnecting..."="Reconectando...";
 /* Title shown when the user reconnect in a call. */
-"You are back!"="You are back!";
+"You are back!"="¡Has vuelto!";
 /* Subtitle of chat screen when the chat is inactive */
 "Inactive chat"="Chat inactivo";
