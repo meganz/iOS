@@ -308,7 +308,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h3T-5n-ShB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6627.5362318840589" y="-3514.402173913044"/>
+            <point key="canvasLocation" x="3990" y="-3736"/>
         </scene>
         <!--Sort By Table View Controller-->
         <scene sceneID="4eE-xy-Jk2">
@@ -368,7 +368,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kyu-Vi-huh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2158" y="-4832"/>
+            <point key="canvasLocation" x="2183" y="-4501"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="J0U-BP-QZ2">
@@ -390,7 +390,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NrI-gE-uVw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="128" y="-2609"/>
+            <point key="canvasLocation" x="1430" y="-2996"/>
         </scene>
         <!--Browser View Controller-->
         <scene sceneID="QN9-Nw-lfs">
@@ -705,7 +705,7 @@
                     <viewLayoutGuide key="safeArea" id="9wX-GZ-NA5"/>
                 </view>
             </objects>
-            <point key="canvasLocation" x="950.72463768115949" y="-2609.5108695652175"/>
+            <point key="canvasLocation" x="2183" y="-2996"/>
         </scene>
         <!--Get Link Table View Controller-->
         <scene sceneID="Okz-rU-Dgj">
@@ -1094,7 +1094,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Ql-le-QJr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5988.4057971014499" y="-2611.9565217391305"/>
+            <point key="canvasLocation" x="3990" y="-2996"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="xI5-qd-9ig">
@@ -1113,7 +1113,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sh5-KU-lvB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1451" y="-4831"/>
+            <point key="canvasLocation" x="1476" y="-4499"/>
         </scene>
         <!--Cloud Drive View Controller-->
         <scene sceneID="Z9t-lm-QoQ">
@@ -1300,7 +1300,7 @@
                     </connections>
                 </barButtonItem>
             </objects>
-            <point key="canvasLocation" x="2721.739130434783" y="-3933.4239130434785"/>
+            <point key="canvasLocation" x="791" y="-3755"/>
         </scene>
         <!--Cloud Drive Table View Controller-->
         <scene sceneID="vES-M0-swf">
@@ -1697,7 +1697,7 @@
                     <viewLayoutGuide key="safeArea" id="y1d-no-Msc"/>
                 </view>
             </objects>
-            <point key="canvasLocation" x="3406" y="-3933"/>
+            <point key="canvasLocation" x="1476" y="-3754"/>
         </scene>
         <!--Cloud Drive Collection View Controller-->
         <scene sceneID="nSS-lf-aWa">
@@ -1844,7 +1844,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZEu-vf-pNd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4088" y="-3933"/>
+            <point key="canvasLocation" x="2158" y="-3754"/>
         </scene>
         <!--Copyright Warning-->
         <scene sceneID="OyL-ME-4zN">
@@ -1914,7 +1914,7 @@ You are strictly prohibited from using the MEGA cloud service to infringe copyri
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lLt-dj-Mzk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3843.4782608695655" y="-2611.9565217391305"/>
+            <point key="canvasLocation" x="5732" y="-2996"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="FQk-Ve-k32">
@@ -1936,7 +1936,7 @@ You are strictly prohibited from using the MEGA cloud service to infringe copyri
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dCI-fL-1GQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5123.188405797102" y="-2610.326086956522"/>
+            <point key="canvasLocation" x="3254" y="-2996"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Tjv-hu-zdo">
@@ -1954,18 +1954,18 @@ You are strictly prohibited from using the MEGA cloud service to infringe copyri
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vfc-Jf-wQV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2976.811594202899" y="-2610.326086956522"/>
+            <point key="canvasLocation" x="5001" y="-2996"/>
         </scene>
         <!--Node Versions View Controller-->
         <scene sceneID="Kvm-0D-acq">
             <objects>
                 <viewController storyboardIdentifier="NodeVersionsVC" id="ShX-bU-gfj" customClass="NodeVersionsViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="wbt-r9-UWn">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="724"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" allowsSelectionDuringEditing="YES" allowsMultipleSelectionDuringEditing="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="50" sectionFooterHeight="2" translatesAutoresizingMaskIntoConstraints="NO" id="WwE-ru-viU">
-                                <rect key="frame" x="0.0" y="88" width="375" height="724"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="724"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="nodeInfoHeader" id="vOa-Tp-ipQ">
@@ -1975,23 +1975,21 @@ You are strictly prohibited from using the MEGA cloud service to infringe copyri
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.666667938232422"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fqg-sw-tPc">
-                                                    <rect key="frame" x="0.0" y="42.666666666666664" width="375" height="1"/>
-                                                    <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                                                <view tag="3" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fqg-sw-tPc">
+                                                    <rect key="frame" x="0.0" y="43.333333333333336" width="375" height="0.3333333333333357"/>
+                                                    <color key="backgroundColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="1" id="5YW-Rz-aVU"/>
-                                                        <constraint firstAttribute="height" constant="1" id="euC-d1-EtS"/>
-                                                        <constraint firstAttribute="height" relation="lessThanOrEqual" constant="1" id="x9L-l7-wq5"/>
+                                                        <constraint firstAttribute="height" constant="0.5" id="euC-d1-EtS"/>
                                                     </constraints>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eBU-8S-ckF">
-                                                    <rect key="frame" x="12" y="23.333333333333332" width="25" height="14.333333333333332"/>
+                                                    <rect key="frame" x="12" y="24" width="25" height="14.333333333333336"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="110 MB" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dhI-Ar-6l9">
-                                                    <rect key="frame" x="324.33333333333331" y="23.333333333333332" width="40.666666666666686" height="14.333333333333332"/>
+                                                    <rect key="frame" x="324.33333333333331" y="24" width="40.666666666666686" height="14.333333333333336"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -2049,7 +2047,6 @@ You are strictly prohibited from using the MEGA cloud service to infringe copyri
                                                             <subviews>
                                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="downloadQueued" translatesAutoresizingMaskIntoConstraints="NO" id="hQo-78-LYj" userLabel="Arrow Image View">
                                                                     <rect key="frame" x="0.0" y="0.0" width="11" height="11"/>
-                                                                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="11" id="WBE-C2-Ps4"/>
                                                                         <constraint firstAttribute="width" constant="11" id="sO4-Sy-7zC"/>
@@ -2162,7 +2159,6 @@ You are strictly prohibited from using the MEGA cloud service to infringe copyri
                                                 <constraint firstAttribute="bottom" secondItem="0OL-pO-gIW" secondAttribute="bottom" id="tT3-vm-odg"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <color key="tintColor" red="0.0" green="0.74901960779999999" blue="0.64705882349999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <inset key="separatorInset" minX="60" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <connections>
                                             <outlet property="cancelButton" destination="XFK-HP-efG" id="iIp-2l-qAU"/>
@@ -2185,19 +2181,17 @@ You are strictly prohibited from using the MEGA cloud service to infringe copyri
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.666667938232422"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CKp-Mn-yXc">
-                                                    <rect key="frame" x="0.0" y="42.666666666666664" width="375" height="1"/>
+                                                <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CKp-Mn-yXc">
+                                                    <rect key="frame" x="0.0" y="42.333333333333336" width="375" height="0.3333333333333357"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="1" id="Q6I-N9-enE"/>
-                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="1" id="tjR-ZA-TXv"/>
-                                                        <constraint firstAttribute="height" relation="lessThanOrEqual" constant="1" id="y9D-FM-Tv5"/>
+                                                        <constraint firstAttribute="height" constant="0.5" id="Q6I-N9-enE"/>
                                                     </constraints>
                                                 </view>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="CKp-Mn-yXc" secondAttribute="trailing" id="7hg-2l-dmI"/>
                                                 <constraint firstItem="CKp-Mn-yXc" firstAttribute="leading" secondItem="KQO-s1-sFh" secondAttribute="leading" id="L0t-X6-HMi"/>
-                                                <constraint firstAttribute="bottom" secondItem="CKp-Mn-yXc" secondAttribute="bottom" id="fyG-pH-7vp"/>
+                                                <constraint firstAttribute="bottom" secondItem="CKp-Mn-yXc" secondAttribute="bottom" constant="1" id="fyG-pH-7vp"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -2255,7 +2249,7 @@ You are strictly prohibited from using the MEGA cloud service to infringe copyri
                 </barButtonItem>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Uze-yK-GXX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6013.04347826087" y="-4308.4239130434789"/>
+            <point key="canvasLocation" x="5732" y="-3737"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="bze-B8-7uR">
@@ -2273,14 +2267,14 @@ You are strictly prohibited from using the MEGA cloud service to infringe copyri
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="myD-32-EkO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5892.753623188406" y="-3514.402173913044"/>
+            <point key="canvasLocation" x="3254" y="-3737"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="7zb-lt-8Ja">
             <objects>
                 <navigationController storyboardIdentifier="NodeVersionsNC" automaticallyAdjustsScrollViewInsets="NO" id="Vnk-U0-2If" customClass="MEGANavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="hih-9K-OhR">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="hih-9K-OhR">
                         <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -2294,7 +2288,7 @@ You are strictly prohibited from using the MEGA cloud service to infringe copyri
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zvy-4u-WwO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5342.0289855072469" y="-4308.4239130434789"/>
+            <point key="canvasLocation" x="5001" y="-3737"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="7NI-Kw-6L0">
@@ -2314,7 +2308,7 @@ You are strictly prohibited from using the MEGA cloud service to infringe copyri
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1IJ-N7-3jU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1986" y="-3933"/>
+            <point key="canvasLocation" x="55" y="-3754"/>
         </scene>
     </scenes>
     <resources>

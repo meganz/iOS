@@ -129,7 +129,7 @@
 - (void)updateUI {
     self.nodeTopSeparatorView.backgroundColor = self.nodeBottomSeparatorView.backgroundColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
     
-    self.infoButton.tintColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
+    self.infoButton.tintColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
     
     if (@available(iOS 13.0, *)) {
         switch (self.traitCollection.userInterfaceStyle) {
