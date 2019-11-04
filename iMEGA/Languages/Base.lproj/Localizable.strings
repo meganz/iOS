@@ -1991,10 +1991,12 @@
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
 "Reconnecting..."="Reconnecting…";
 /* Title shown when the user reconnect in a call. */
-"You are back!"="You are back!";
+"You are back!"="You are back.";
 /* Subtitle of chat screen when the chat is inactive */
 "Inactive chat"="Inactive chat";
 /* Contact details screen: Set the alias(nickname) for a user */
 "Set Nickname" = "Set Nickname";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
 "Alias/ Nickname" = "Alias/ Nickname";
+/* Error message shown when the user tries to open a file with an unsupported encoding */
+"It was not possible to obtain the content of this file, that is not encoded in either UTF-8 or ISO/IEC 8859-1."="It was not possible to obtain the content of this file, that is not encoded in either UTF-8 or ISO/IEC 8859-1.";
