@@ -72,7 +72,19 @@
     }
 }
 
-#pragma mark - Layout
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateUI];
+            
+            [self.tableView reloadData];
+        }
+    }
+}
+
+#pragma mark - Private
 
 - (void)reloadUI {
     if (self.node.mnz_numberOfVersions == 0) {
@@ -83,6 +95,40 @@
         self.nodeVersionsMutableArray = [NSMutableArray.alloc initWithArray:self.node.mnz_versions];
         
         [self.tableView reloadData];
+    }
+}
+
+- (void)updateUI {
+    if (@available(iOS 13.0, *)) {
+        switch (self.traitCollection.userInterfaceStyle) {
+            case UIUserInterfaceStyleUnspecified:
+            case UIUserInterfaceStyleLight: {
+                self.tableView.backgroundColor = (self.traitCollection.accessibilityContrast == UIAccessibilityContrastHigh) ? [UIColor colorFromHexString:@"E6E6E6"] : UIColor.mnz_grayF7F7F7;
+                break;
+            }
+                
+            case UIUserInterfaceStyleDark: {
+                self.tableView.backgroundColor = [UIColor mnz_mainBarsColorForTraitCollection:self.traitCollection];
+                break;
+            }
+        }
+    } else {
+        self.tableView.backgroundColor = UIColor.mnz_grayF7F7F7;
+    }
+}
+
+- (UIColor *)backgroundColorForCells {
+    if (@available(iOS 13.0, *)) {
+        switch (self.traitCollection.userInterfaceStyle) {
+            case UIUserInterfaceStyleUnspecified:
+            case UIUserInterfaceStyleLight:
+                return UIColor.whiteColor;
+                
+            case UIUserInterfaceStyleDark:
+                return [UIColor mnz_chatGrayForTraitCollection:self.traitCollection];
+        }
+    } else {
+        return UIColor.whiteColor;
     }
 }
 
@@ -107,6 +153,9 @@
     
     NodeTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"nodeCell" forIndexPath:indexPath];
     [cell configureCellForNode:node delegate:self api:[MEGASdkManager sharedMEGASdk]];
+    cell.backgroundColor = [self backgroundColorForCells];
+    cell.nameLabel.textColor = UIColor.mnz_label;
+    cell.subtitleLabel.textColor = [UIColor mnz_subtitlesColorForTraitCollection:self.traitCollection];
     
     if (self.tableView.isEditing) {
         for (MEGANode *tempNode in self.selectedNodesArray) {
@@ -192,7 +241,9 @@
     UITableViewCell *sectionHeader = [self.tableView dequeueReusableCellWithIdentifier:@"nodeInfoHeader"];
     
     UILabel *titleSection = (UILabel*)[sectionHeader viewWithTag:1];
+    titleSection.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];;
     UILabel *versionsSize = (UILabel*)[sectionHeader viewWithTag:2];
+    versionsSize.textColor = UIColor.mnz_label;
     
     if (section == 0) {
         titleSection.text = AMLocalizedString(@"currentVersion", @"Title of section to display information of the current version of a file").uppercaseString;
@@ -202,12 +253,18 @@
         versionsSize.text = [Helper memoryStyleStringFromByteCount:self.node.mnz_versionsSize];
     }
     
+    UIView *separatorView = [sectionHeader viewWithTag:3];
+    separatorView.backgroundColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
+    
     return sectionHeader;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
     UITableViewCell *sectionFooter = [self.tableView dequeueReusableCellWithIdentifier:@"nodeInfoFooter"];
-
+    
+    UIView *separatorView = [sectionFooter viewWithTag:1];
+    separatorView.backgroundColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
+    
     return sectionFooter;
 }
 
