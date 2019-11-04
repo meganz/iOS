@@ -608,6 +608,7 @@
 		A810CF3020C157BC00A6C6C5 /* FLAnimatedImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = A810CF2E20C157BC00A6C6C5 /* FLAnimatedImageView.m */; };
 		A811CE2C22EAFB1700B24E76 /* SearchOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = A811CE2B22EAFB1700B24E76 /* SearchOperation.m */; };
 		A813A79D22B38D7F00418737 /* AVAudioSession+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = A813A79C22B38D7F00418737 /* AVAudioSession+MNZCategory.m */; };
+		A815EE1923630BB2009B8D59 /* WebCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A815EE1823630BB2009B8D59 /* WebCodeViewController.swift */; };
 		A815FCE41FE1795C0075AC29 /* MEGAChatCreateChatGroupRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A815FCE31FE1795C0075AC29 /* MEGAChatCreateChatGroupRequestDelegate.m */; };
 		A815FCEA1FE2AD080075AC29 /* UIApplication+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = A815FCE91FE2AD080075AC29 /* UIApplication+MNZCategory.m */; };
 		A81613FE1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A81613FD1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.m */; };
@@ -1764,6 +1765,7 @@
 		A811CE2B22EAFB1700B24E76 /* SearchOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchOperation.m; sourceTree = "<group>"; };
 		A813A79B22B38D7F00418737 /* AVAudioSession+MNZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AVAudioSession+MNZCategory.h"; sourceTree = "<group>"; };
 		A813A79C22B38D7F00418737 /* AVAudioSession+MNZCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "AVAudioSession+MNZCategory.m"; sourceTree = "<group>"; };
+		A815EE1823630BB2009B8D59 /* WebCodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebCodeViewController.swift; sourceTree = "<group>"; };
 		A815FCE21FE1795C0075AC29 /* MEGAChatCreateChatGroupRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAChatCreateChatGroupRequestDelegate.h; sourceTree = "<group>"; };
 		A815FCE31FE1795C0075AC29 /* MEGAChatCreateChatGroupRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAChatCreateChatGroupRequestDelegate.m; sourceTree = "<group>"; };
 		A815FCE81FE2AD080075AC29 /* UIApplication+MNZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIApplication+MNZCategory.h"; sourceTree = "<group>"; };
@@ -4052,10 +4054,19 @@
 			path = Operations;
 			sourceTree = "<group>";
 		};
+		A815EE1723630BB2009B8D59 /* WebCodeViewController */ = {
+			isa = PBXGroup;
+			children = (
+				A815EE1823630BB2009B8D59 /* WebCodeViewController.swift */,
+			);
+			path = WebCodeViewController;
+			sourceTree = "<group>";
+		};
 		A819B3401EAFA7E7004592F9 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
 				5B59B4CD2367266900A57229 /* Document Previewer */,
+				A815EE1723630BB2009B8D59 /* WebCodeViewController */,
 				832E1020202B097900BDD30F /* CustomActionViewController */,
 				83D64E2B2017873D00E24155 /* PasswordReminder */,
 				77D9A5692023538600B48470 /* Photo browser */,
@@ -5509,6 +5520,7 @@
 				415226911A692ECC00EC7BB6 /* ContactsViewController.m in Sources */,
 				A8F0A1C7217898F600575C57 /* MEGALocalNotificationManager.m in Sources */,
 				B6998320228E73BC0021BE31 /* BackgroundRefreshPerformer.m in Sources */,
+				A815EE1923630BB2009B8D59 /* WebCodeViewController.swift in Sources */,
 				E889C9E91B566EC400ECEFDF /* UsageViewController.m in Sources */,
 				A86B9F3D2316D6AB00F35E7A /* FLEXNetworkRecorder.m in Sources */,
 				417279511DB663FA001AC818 /* JSQMessagesCollectionViewCellIncoming.m in Sources */,

@@ -15,6 +15,7 @@
 #import "OpenInActivity.h"
 #import "SortByTableViewController.h"
 #import "MEGAStore.h"
+#import "MEGA-Swift.h"
 #import "MEGAAVViewController.h"
 #import "MEGAQLPreviewController.h"
 #import "OfflineTableViewViewController.h"
@@ -326,7 +327,7 @@ static NSString *kisDirectory = @"kisDirectory";
             [self.offlineItems addObject:tempDictionary];
             
             if (!isDirectory) {
-                if (!fileName.mnz_isMultimediaPathExtension) {
+                if (!fileName.mnz_isMultimediaPathExtension && !fileName.mnz_isWebCodePathExtension) {
                     offsetIndex++;
                 }
             }
@@ -379,7 +380,7 @@ static NSString *kisDirectory = @"kisDirectory";
                         offsetIndex++;
                         [self.offlineFiles addObject:[fileURL path]];                        
                     }
-                } else {
+                } else if (!fileName.mnz_isWebCodePathExtension) {
                     offsetIndex++;
                     [self.offlineFiles addObject:[fileURL path]];
                 }
@@ -591,6 +592,13 @@ static NSString *kisDirectory = @"kisDirectory";
     return numberOfRows;
 }
 
+- (MEGANavigationController *)webCodeViewControllerWithFilePath:(NSString *)filePath {
+    WebCodeViewController *webCodeVC = [WebCodeViewController.alloc initWithFilePath:filePath];
+    MEGANavigationController *navigationController = [MEGANavigationController.alloc initWithRootViewController:webCodeVC];
+    [navigationController addLeftDismissButtonWithText:AMLocalizedString(@"ok", nil)];
+    return navigationController;
+}
+
 #pragma mark - IBActions
 
 - (IBAction)editTapped:(UIBarButtonItem *)sender {
@@ -785,6 +793,9 @@ static NSString *kisDirectory = @"kisDirectory";
                 [self.offlineCollectionView.collectionView deselectItemAtIndexPath:indexPath animated:YES];
                 break;
         }
+    } else if (self.previewDocumentPath.mnz_isWebCodePathExtension) {
+        MEGANavigationController *navigationController = [self webCodeViewControllerWithFilePath:self.previewDocumentPath];
+        [self presentViewController:navigationController animated:YES completion:nil];
     } else {
         MEGAQLPreviewController *previewController = [self qlPreviewControllerForIndexPath:indexPath];
         [self presentViewController:previewController animated:YES completion:nil];
@@ -1069,6 +1080,8 @@ static NSString *kisDirectory = @"kisDirectory";
         [self.offlineTableView.tableView deselectRowAtIndexPath:indexPath animated:YES];
         
         return navigationController;
+    } else if (self.previewDocumentPath.mnz_isWebCodePathExtension) {
+        return [self webCodeViewControllerWithFilePath:self.previewDocumentPath];
     } else {
         return [self qlPreviewControllerForIndexPath:indexPath];
     }
