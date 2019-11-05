@@ -86,7 +86,7 @@
             self.linkCopyButton.hidden = self.moreButton.hidden = NO;
         }
         
-        self.qrImageView.image = [UIImage mnz_qrImageWithDotsFromString:destination withSize:self.qrImageView.frame.size color:UIColor.mnz_redMain];
+        self.qrImageView.image = [UIImage mnz_qrImageFromString:destination withSize:self.qrImageView.frame.size color:UIColor.mnz_redMain];
         [self setUserAvatar];
     }];
 }
