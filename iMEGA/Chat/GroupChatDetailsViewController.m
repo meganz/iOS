@@ -896,10 +896,11 @@
             case MEGAChatListItemChangeTypeParticipants:
                 [self setParticipants];
                 [self.tableView reloadData];
+                [self updateHeadingView];
                 break;
                 
             case MEGAChatListItemChangeTypeTitle:
-                self.nameLabel.text = item.title;
+                [self updateHeadingView];
                 break;
                 
             case MEGAChatListItemChangeTypeClosed:

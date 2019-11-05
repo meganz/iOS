@@ -68,8 +68,8 @@
     self.viewControllers.firstObject.navigationItem.rightBarButtonItem = [self cancelBarButtonItem];
 }
 
-- (void)addLeftCancelButton {
-    self.viewControllers.firstObject.navigationItem.leftBarButtonItem = [self cancelBarButtonItem];
+- (void)addLeftDismissButtonWithText:(NSString *)text {
+    self.viewControllers.firstObject.navigationItem.leftBarButtonItem = [self dismissBarButtonItemWithText:text];
 }
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
@@ -83,6 +83,11 @@
 
 - (UIBarButtonItem *)cancelBarButtonItem {
     UIBarButtonItem *cancelBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"cancel", nil) style:UIBarButtonItemStylePlain target:nil action:@selector(dismissNavigationController)];
+    return cancelBarButtonItem;
+}
+
+- (UIBarButtonItem *)dismissBarButtonItemWithText:(NSString *)text {
+    UIBarButtonItem *cancelBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:text style:UIBarButtonItemStylePlain target:nil action:@selector(dismissNavigationController)];
     return cancelBarButtonItem;
 }
 

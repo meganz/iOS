@@ -1431,7 +1431,7 @@
 /* Title of section to display number of all historical versions of files. */
 "versions"="Versions";
 /* Title label of a node property. */
-"location"="Position";
+"location"="Emplacement";
 /* label for the total file size of multiple files and/or folders (no need to put the colon punctuation in the translation)*/
 "totalSize"="Taille totale";
 /* Refers to the type of a file or folder. */
@@ -1994,3 +1994,5 @@
 "You are back!"="Vous êtes de retour.";
 /* Subtitle of chat screen when the chat is inactive */
 "Inactive chat"="La conversation est inactive";
+/* Error message shown when the user tries to open a file with an unsupported encoding */
+"It was not possible to obtain the content of this file, that is not encoded in either UTF-8 or ISO/IEC 8859-1."="It was not possible to obtain the content of this file, that is not encoded in either UTF-8 or ISO/IEC 8859-1.";
