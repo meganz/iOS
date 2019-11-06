@@ -1971,16 +1971,28 @@
 /* Chat Notifications DND: Remaining time left to deactivate DND - 1 minute left */
 "1 minute left"="残り1分";
 /* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 minute left */
-"%@ minutes left"="残り%d分";
+"%d minutes left"="残り%d分";
 /* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour left */
 "1 hour left"="残り1時間";
 /* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 hour left */
-"%@ hours left"="残り%d時間";
+"%d hours left"="残り%d時間";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="チャット通知";
+/* Chat settings: This text appears with the Do Not Disturb switch */
+"Do Not Disturb"="邪魔しないでください";
+/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, 1 minute left */
+"1 hour, 1 minute left"="残り1時間、1分";
+/* Chat Notifications DND: Remaining time left to deactivate DND - X hours, X minutes left */
+"%d hours, %d minutes left"="残り%d時間、%d分";
+/* Chat Notifications DND: Remaining time left to deactivate DND - X hours, 1 minute left */
+"%d hours, 1 minute left"="残り%d時間、1分";
+/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, X minutes left */
+"1 hour, %d minutes left"="残り1時間、%d分";
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
-"Reconnecting..."="Reconnecting…";
+"Reconnecting..."="再接続中...";
 /* Title shown when the user reconnect in a call. */
-"You are back!"="You are back!";
+"You are back!"="戻りました！";
 /* Subtitle of chat screen when the chat is inactive */
 "Inactive chat"="非アクティブなチャット";
+/* Error message shown when the user tries to open a file with an unsupported encoding */
+"It was not possible to obtain the content of this file, that is not encoded in either UTF-8 or ISO/IEC 8859-1."="It was not possible to obtain the content of this file, that is not encoded in either UTF-8 or ISO/IEC 8859-1.";

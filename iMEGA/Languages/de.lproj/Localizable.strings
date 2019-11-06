@@ -121,7 +121,7 @@
 /*  */
 "agreeWithTheMEGATermsOfService"="Ich stimme MEGAs <a href=\"terms\">Allgemeinen Geschäftsbedingungen</a> zu";
 /* This text is displayed in the account creation screen with a checkbox. User will have to tick the checkbox before proceeding on to create an account */
-"agreeWithLosingPasswordYouLoseData"="I understand that [S]if I lose my password, I may lose my data.[/S] Read more about <a href=\"terms\">MEGA’s end-to-end encryption</a>";
+"agreeWithLosingPasswordYouLoseData"="Mir ist klar, dass ich [S]bei Passwortverlust meine Daten nicht mehr entschlüsseln kann.[/S] Mehr Informationen zum Thema <a href=\"terms\">Ende-zu-Ende-Verschlüsselung</a>.";
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="Gültigen Namen eingeben";
 /* Error text shown when you have not written the same password */
@@ -129,7 +129,7 @@
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
 "termsCheckboxUnselected"="Bitte stimmen Sie den Allgemeinen Geschäftsbedingungen zu, um ein MEGA-Konto zu erstellen.";
 /* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown  */
-"termsForLosingPasswordCheckboxUnselected"="You need to agree that you understand the danger of losing your password";
+"termsForLosingPasswordCheckboxUnselected"="Bitte bestätigen Sie, dass Ihnen die Konsequenzen eines Passwortverlusts bewusst sind.";
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="Unter dieser E-Mail-Adresse ist bereits ein MEGA-Account registriert.";
 /* Title shown just after doing some action that requires confirming the action by an email */
@@ -493,9 +493,9 @@
 /* Message shown while uploading files. Plural. */
 "cameraUploadsPendingFiles"="Upload läuft, noch %lu Dateien";
 /* Message shown when camera upload paused because of no WiFi. Singular. */
-"Upload paused because of no WiFi, 1 file pending"="Upload paused due to no Wi-Fi connection, 1 file pending";
+"Upload paused because of no WiFi, 1 file pending"="Upload mangels WLAN-Verbindung gestoppt, 1 Dateie in der Warteschlange";
 /* Message shown when camera upload paused because of no WiFi. Plural. */
-"Upload paused because of no WiFi, %lu files pending"="Upload paused due to no Wi-Fi connection, %lu files pending";
+"Upload paused because of no WiFi, %lu files pending"="Upload mangels WLAN-Verbindung gestoppt, %lu Dateien in der Warteschlange";
 /* Message shown the pending video file when photos uploaded and video upload is not enabled. Singular. */
 "Photos uploaded, video uploads are off, 1 video not uploaded"="Photos uploaded, video uploads are off; 1 video not uploaded";
 /* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
@@ -689,31 +689,31 @@
 /* Navigation path for Storage settings in iOS */
 "Settings > General > %@ Storage"="Settings > General > %@ Storage";
 /* Title of the switch to config whether to upload videos for Live Photos */
-"Upload videos for Live Photos"="Upload videos for Live Photos";
+"Upload videos for Live Photos"="Live-Fotos als Video hochladen";
 /* Title of the switch to config whether to upload all burst photos */
-"Upload all burst photos"="Upload all burst photos";
+"Upload all burst photos"="Alle Burst-Sequenzen hochladen";
 /* Title of the switch to config whether to upload Hidden Album */
-"Upload Hidden Album"="Upload Hidden Album";
+"Upload Hidden Album"="Versteckte Alben hochladen";
 /* Footer description when upload videos for Live Photos is enabled */
-"The video and the photo in each Live Photo will be uploaded."="The photo and video versions of each Live Photo will be uploaded.";
+"The video and the photo in each Live Photo will be uploaded."="Die Standbild- und Videoversion jedes Live-Fotos wird hochgeladen.";
 /* Footer description when upload videos for Live Photos is disabled */
-"Only the photo in each Live Photo will be uploaded."="Only the photo version of each Live Photo will be uploaded.";
+"Only the photo in each Live Photo will be uploaded."="Nur die Standbildversion eines Live-Fotos wird hochgeladen.";
 /* Footer description when upload all burst photos is enabled */
-"All the photos from your burst photo sequences will be uploaded."="All the photos from your burst photo sequences will be uploaded.";
+"All the photos from your burst photo sequences will be uploaded."="Burst-Foto-Sequenzen werden komplett hochgeladen.";
 /* Footer description when upload all burst photos is disabled */
-"Only the representative photos from your burst photo sequences will be uploaded."="Only favourite photos from your burst photo sequences will be uploaded.";
+"Only the representative photos from your burst photo sequences will be uploaded."="Nur ausgewählte Fotos aus Burst-Sequenzen werden hochgeladen.";
 /* Footer description when upload Hidden Album is enabled */
-"The Hidden Album is where you hide photos or videos in your device Photos app."="The Hidden Album is where you hide photos or videos in your device’s Photos app.";
+"The Hidden Album is where you hide photos or videos in your device Photos app."="Sie können Fotos und Videos in Ihrer Photos-App in versteckten Alben unsichtbar machen.";
 /* Title of the switch to config whether to upload Shared Albums */
-"Upload Shared Albums"="Upload Shared Albums";
+"Upload Shared Albums"="Geteilte Alben hochladen";
 /* Footer description for Upload Shared Albums title when option enabled */
-"Shared Albums from your device's Photos app will be uploaded."="Shared Albums from your device’s Photos app will be uploaded.";
+"Shared Albums from your device's Photos app will be uploaded."="Durch die Photos-App freigegebene Alben werden hochgeladen.";
 /* Footer description for Upload Shared Albums title when option disabled */
-"Shared Albums from your device's Photos app will not be uploaded."="Shared Albums from your device’s Photos app will not be uploaded.";
+"Shared Albums from your device's Photos app will not be uploaded."="Durch die Photos-App freigegebene Alben werden nicht hochgeladen.";
 /* Title of the switch to config whether to upload synced albums */
-"Upload albums synced from iTunes"="Upload albums synced from iTunes";
+"Upload albums synced from iTunes"="Alben hochladen, die von iTunes synchronisiert wurden";
 /* Footer description for upload synced albums title */
-"Synced albums are where you sync photos or videos to your device's Photos app from iTunes."="Synced albums are where you sync photos or videos to your device’s Photos app from iTunes.";
+"Synced albums are where you sync photos or videos to your device's Photos app from iTunes."="Sychronisierte Alben sind Fotos und Videos, die von iTunes an Ihre Photos-App synchronisiert werden.";
 /* App means “Application” */
 "App version"="App Version";
 /* Title of the label where the SDK version is shown */
@@ -1124,7 +1124,7 @@
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
 "useMobileData"="Mobildatennutzung erlauben";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for videos. */
-"Use Mobile Data for Videos"="Use Mobile Data for Videos";
+"Use Mobile Data for Videos"="Mobile Datenverbindung für Videoupload nutzen";
 /* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
 "autoAway"="Auto-Abwesend";
 /* */
@@ -1935,9 +1935,9 @@
 /* Destination folder name of chat files */
 "My chat files"="Chatdateien";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
-"Require passcode"="Require passcode";
+"Require passcode"="Passcodeschutz";
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
-"Immediately"="Immediately";
+"Immediately"="Sofort";
 /* Popup notification text on mouse-over of taken down file. */
 "This file has been the subject of a takedown notice."="Diese Datei wurde wegen einer Beschwerde gelöscht.";
 /* Popup notification text on mouse-over taken down folder. */
@@ -1951,36 +1951,48 @@
 /* Text to indicate that the user will leave an incoming shared folder. */
 "Leave Share"="Freigegebenen Ordner verlassen";
 /* Text indicating to the user the action that will be executed on tap. */
-"Manage Share"="Manage share";
+"Manage Share"="Ordnerfreigabe bearbeiten";
 /* Title of the screen that shows the users with whom the user can share a folder */
 "Share with"="Freigeben an";
 /* Chat Notifications DND: Option that does not deactivate DND automatically */
-"Until I Turn it On Again"="Until I turn it on again";
+"Until I Turn it On Again"="Bis zur manuellen Reaktivierung";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
-"30 minutes"="30 minutes";
+"30 minutes"="30 Minuten";
 /* Chat Notifications DND: Option that deactivates DND after 1 hour */
 "1 hour"="1 Stunde";
 /* Chat Notifications DND: Option that deactivates DND after 6 hours */
-"6 hours"="6 hours";
+"6 hours"="Sechs Stunden";
 /* Chat Notifications DND: Option that deactivates DND after 24 hours */
-"24 hours"="24 hours";
+"24 hours"="24 Stunden";
 /* Chat Notifications DND: Title bar message for the dnd activate options */
-"Mute chat Notifications for"="Mute chat notifications for";
+"Mute chat Notifications for"="Stummschalten für";
 /* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
-"Muted forever"="Muted forever";
+"Muted forever"="Permanent stummgeschaltet";
 /* Chat Notifications DND: Remaining time left to deactivate DND - 1 minute left */
-"1 minute left"="1 minute left";
+"1 minute left"="Noch 1 Minute";
 /* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 minute left */
-"%@ minutes left"="%d minutes left";
+"%d minutes left"="Noch %d Minuten";
 /* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour left */
-"1 hour left"="1 hour left";
+"1 hour left"="Noch 1 Stunde";
 /* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 hour left */
-"%@ hours left"="%d hours left";
+"%d hours left"="Noch %d Stunden";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="Chatbenachrichtigungen";
+/* Chat settings: This text appears with the Do Not Disturb switch */
+"Do Not Disturb"="Bitte nicht stören";
+/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, 1 minute left */
+"1 hour, 1 minute left"="Noch eine Stunde und eine Minute";
+/* Chat Notifications DND: Remaining time left to deactivate DND - X hours, X minutes left */
+"%d hours, %d minutes left"="Noch %d Stunden und %d Minuten";
+/* Chat Notifications DND: Remaining time left to deactivate DND - X hours, 1 minute left */
+"%d hours, 1 minute left"="Noch %d Stunden und 1 Minute";
+/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, X minutes left */
+"1 hour, %d minutes left"="Noch 1 Stunde und %d Minuten";
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
-"Reconnecting..."="Reconnecting…";
+"Reconnecting..."="Verbindung wird wiederhergestellt...";
 /* Title shown when the user reconnect in a call. */
-"You are back!"="You are back!";
+"You are back!"="Verbindung wiederhergestellt.";
 /* Subtitle of chat screen when the chat is inactive */
 "Inactive chat"="Inaktiver Chat";
+/* Error message shown when the user tries to open a file with an unsupported encoding */
+"It was not possible to obtain the content of this file, that is not encoded in either UTF-8 or ISO/IEC 8859-1."="It was not possible to obtain the content of this file, that is not encoded in either UTF-8 or ISO/IEC 8859-1.";
