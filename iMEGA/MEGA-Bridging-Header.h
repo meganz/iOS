@@ -29,6 +29,4 @@
 
 #import "MEGAContactLinkCreateRequestDelegate.h"
 #import "MEGAChatGenericRequestDelegate.h"
-#import "MEGAGetCountryCallingCodesRequestDelegate.h"
-#import "MEGAGetRegisteredContactsRequestDelegate.h"
 #import "MEGAInviteContactRequestDelegate.h"
