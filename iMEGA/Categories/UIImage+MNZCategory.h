@@ -14,7 +14,6 @@ typedef NS_ENUM(NSInteger, MEGAChatMessageEndCallReason);
 + (UIImage *)imageWithColor:(UIColor *)color andBounds:(CGRect)imgBounds;
 
 + (UIImage *)mnz_qrImageFromString:(NSString *)qrString withSize:(CGSize)size color:(UIColor *)color;
-+ (UIImage *)mnz_qrImageWithDotsFromString:(NSString *)qrString withSize:(CGSize)size color:(UIColor *)color;
 
 + (UIImage *)mnz_imageByEndCallReason:(MEGAChatMessageEndCallReason)endCallReason userHandle:(uint64_t)userHandle;
 
