@@ -2,6 +2,7 @@
 #import "OfflineTableViewViewController.h"
 
 #import "NSString+MNZCategory.h"
+#import "UIAlertAction+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 
 #import "Helper.h"
@@ -77,7 +78,7 @@ static NSString *kPath = @"kPath";
         [self.offline removeOfflineNodeCell:itemPath];
     }];
     
-    [removeItemAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+    [removeItemAction mnz_setTitleTextColor:UIColor.mnz_label];
     [infoAlertController addAction:removeItemAction];
     
     BOOL isDirectory;
@@ -108,7 +109,7 @@ static NSString *kPath = @"kPath";
             [self presentViewController:activityViewController animated:YES completion:nil];
         }];
         
-        [shareItemAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+        [shareItemAction mnz_setTitleTextColor:UIColor.mnz_label];
         [infoAlertController addAction:shareItemAction];
     }
     

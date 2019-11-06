@@ -93,7 +93,7 @@
     title.text = action.title;
     UIImageView *imageView = [cell viewWithTag:100];
     imageView.image = [UIImage imageNamed:action.iconName];
-    imageView.tintColor = UIColor.mnz_gray666666;
+    imageView.tintColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
     
     if (indexPath.row == self.actions.count-1) {
         UIView *separatorView = [cell viewWithTag:101];

@@ -543,10 +543,10 @@
                     cell.avatarImageView.image = [UIImage imageNamed:@"delete"];
                     cell.nameLabel.text = AMLocalizedString(@"removeUserTitle", @"Alert title shown when you want to remove one or more contacts");
                     cell.nameLabel.font = [UIFont mnz_SFUIRegularWithSize:15.0f];
-                    cell.nameLabel.textColor = UIColor.mnz_redMain;
+                    cell.nameLabel.textColor = [UIColor mnz_redMainForTraitCollection:(self.traitCollection)];
                 } else { //Add contact
                     cell.avatarImageView.image = [UIImage imageNamed:@"add"];
-                    cell.avatarImageView.tintColor = [UIColor mnz_gray777777];
+                    cell.avatarImageView.tintColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
                     cell.nameLabel.text = AMLocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email");
                     cell.nameLabel.font = [UIFont mnz_SFUIRegularWithSize:15.0f];
                 }
@@ -579,7 +579,7 @@
                 cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
                 cell.avatarImageView.image = self.chatRoom.isArchived ? [UIImage imageNamed:@"unArchiveChat"] : [UIImage imageNamed:@"archiveChat_gray"];
                 cell.nameLabel.text = self.chatRoom.isArchived ? AMLocalizedString(@"unarchiveChat", @"The title of the dialog to unarchive an archived chat.") : AMLocalizedString(@"archiveChat", @"Title of button to archive chats.");
-                cell.nameLabel.textColor = self.chatRoom.isArchived ? UIColor.mnz_redMain : UIColor.mnz_black333333;
+                cell.nameLabel.textColor = self.chatRoom.isArchived ? [UIColor mnz_redMainForTraitCollection:(self.traitCollection)] : UIColor.mnz_label;
                 cell.nameLabel.font = [UIFont mnz_SFUIRegularWithSize:15.0f];
                 cell.userInteractionEnabled = cell.avatarImageView.userInteractionEnabled = cell.nameLabel.enabled = MEGAReachabilityManager.isReachable && [MEGASdkManager.sharedMEGAChatSdk chatConnectionState:self.chatRoom.chatId] == MEGAChatConnectionOnline;
                 break;
@@ -602,7 +602,7 @@
             //Add contact
             cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
             cell.avatarImageView.image = [UIImage imageNamed:@"add"];
-            cell.avatarImageView.tintColor = [UIColor mnz_gray777777];
+            cell.avatarImageView.tintColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
             cell.nameLabel.text = AMLocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email");
             cell.nameLabel.font = [UIFont mnz_SFUIRegularWithSize:15.0f];
             cell.userInteractionEnabled = cell.avatarImageView.userInteractionEnabled = cell.nameLabel.enabled = MEGAReachabilityManager.isReachable;
@@ -637,7 +637,7 @@
             cell.avatarImageView.image = [UIImage imageNamed:@"delete"];
             cell.nameLabel.text = AMLocalizedString(@"removeParticipant", @"A button title which removes a participant from a chat.");
             cell.nameLabel.font = [UIFont mnz_SFUIRegularWithSize:15.0f];
-            cell.nameLabel.textColor = [UIColor mnz_redMain];
+            cell.nameLabel.textColor = [UIColor mnz_redMainForTraitCollection:(self.traitCollection)];
             cell.userInteractionEnabled = cell.avatarImageView.userInteractionEnabled = cell.nameLabel.enabled = MEGAReachabilityManager.isReachable && [MEGASdkManager.sharedMEGAChatSdk chatConnectionState:self.groupChatRoom.chatId] == MEGAChatConnectionOnline;
         }
     }
@@ -733,25 +733,25 @@
             
             UIAlertController *permissionsAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
             UIAlertAction *cancelAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil];
-            [cancelAlertAction mnz_setTitleTextColor:UIColor.mnz_redMain];
+            [cancelAlertAction mnz_setTitleTextColor:[UIColor mnz_redMainForTraitCollection:(self.traitCollection)]];
             [permissionsAlertController addAction:cancelAlertAction];
             
             UIAlertAction *moderatorAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"moderator", @"The Moderator permission level in chat. With moderator permissions a participant can manage the chat.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                 [MEGASdkManager.sharedMEGAChatSdk updateChatPermissions:self.groupChatRoom.chatId userHandle:self.userHandle privilege:MEGAChatRoomPrivilegeModerator delegate:delegate];
             }];
-            [moderatorAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+            [moderatorAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
             [permissionsAlertController addAction:moderatorAlertAction];
             
             UIAlertAction *standartAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"standard", @"The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                 [MEGASdkManager.sharedMEGAChatSdk updateChatPermissions:self.groupChatRoom.chatId userHandle:self.userHandle privilege:MEGAChatRoomPrivilegeStandard delegate:delegate];
             }];
-            [standartAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+            [standartAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
             [permissionsAlertController addAction:standartAlertAction];
             
             UIAlertAction *readOnlyAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                 [MEGASdkManager.sharedMEGAChatSdk updateChatPermissions:self.groupChatRoom.chatId userHandle:self.userHandle privilege:MEGAChatRoomPrivilegeRo delegate:delegate];
             }];
-            [readOnlyAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+            [readOnlyAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
             [permissionsAlertController addAction:readOnlyAlertAction];
             
             if (permissionsAlertController.actions.count > 1) {

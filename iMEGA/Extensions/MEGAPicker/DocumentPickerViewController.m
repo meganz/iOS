@@ -212,7 +212,7 @@
     [SVProgressHUD setRingThickness:2.0];
     [SVProgressHUD setRingNoTextRadius:18.0];
     [SVProgressHUD setBackgroundColor:[UIColor mnz_grayF7F7F7]];
-    [SVProgressHUD setForegroundColor:[UIColor mnz_gray666666]];
+    [SVProgressHUD setForegroundColor:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]];
     [SVProgressHUD setDefaultStyle:SVProgressHUDStyleCustom];
     [SVProgressHUD setHapticsEnabled:YES];
     

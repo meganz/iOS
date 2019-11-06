@@ -55,11 +55,11 @@
     self.seedQrImageView.image = [UIImage mnz_qrImageWithDotsFromString:qrString withSize:self.seedQrImageView.frame.size color:UIColor.blackColor];
     
     self.seedTextView.text = [self seedSplitInGroupsOfFourCharacters];
-    self.seedTextViewView.layer.borderColor = [UIColor mnz_grayE3E3E3].CGColor;
+    self.seedTextViewView.layer.borderColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection].CGColor;
     
     [self.openInButton setTitle:AMLocalizedString(@"openIn", @"Title shown under the action that allows you to open a file in another app") forState:UIControlStateNormal];
     [self.nextButton setTitle:AMLocalizedString(@"next", @"") forState:UIControlStateNormal];
-    self.nextButton.layer.borderColor = [UIColor mnz_gray999999].CGColor;
+    self.nextButton.layer.borderColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection].CGColor;
     
     [self.seedTextView addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressOnTextView:)]];
 }

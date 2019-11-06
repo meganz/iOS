@@ -91,10 +91,10 @@
     
     // Colors:
     if (self.message.userHandle == [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
-        dialogView.backgroundColor = [UIColor mnz_green00BFA5];
+        dialogView.backgroundColor = [UIColor mnz_chatBlueForTraitCollection:UIScreen.mainScreen.traitCollection];
         dialogView.contentTextView.textColor = [UIColor whiteColor];
     } else {
-        dialogView.backgroundColor = [UIColor mnz_grayE2EAEA];
+        dialogView.backgroundColor = [UIColor mnz_chatGrayForTraitCollection:UIScreen.mainScreen.traitCollection];
         dialogView.contentTextView.textColor = [UIColor blackColor];
     }
     dialogView.contentTextView.linkTextAttributes = @{ NSForegroundColorAttributeName : dialogView.contentTextView.textColor,

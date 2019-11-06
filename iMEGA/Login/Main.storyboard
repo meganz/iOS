@@ -162,7 +162,6 @@
                                                 </connections>
                                             </button>
                                         </subviews>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstItem="NEs-0T-7bT" firstAttribute="leading" secondItem="ptk-b4-EIp" secondAttribute="leading" id="0K6-yz-Axz"/>
                                             <constraint firstItem="UnQ-C2-8bb" firstAttribute="top" secondItem="NEs-0T-7bT" secondAttribute="bottom" constant="8" id="14p-KH-qQj"/>

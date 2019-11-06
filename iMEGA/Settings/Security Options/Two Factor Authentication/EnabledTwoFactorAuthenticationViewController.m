@@ -36,11 +36,11 @@
     self.firstLabel.text = AMLocalizedString(@"twoFactorAuthenticationEnabledDescription", @"A message on the dialog shown after 2FA was successfully enabled.");
     self.secondLabel.text = AMLocalizedString(@"twoFactorAuthenticationEnabledWarning", @"An informational message on the Backup Recovery Key dialog.");
     
-    self.recoveryKeyView.layer.borderColor = [UIColor mnz_grayE3E3E3].CGColor;
+    self.recoveryKeyView.layer.borderColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection].CGColor;
     
     [self.exportRecoveryButton setTitle:AMLocalizedString(@"exportRecoveryKey", @"A dialog title to export the Recovery Key for the current user.") forState:UIControlStateNormal];
     [self.closeButton setTitle:AMLocalizedString(@"close", @"A button label. The button allows the user to close the conversation.") forState:UIControlStateNormal];
-    self.closeButton.layer.borderColor = [UIColor mnz_gray999999].CGColor;
+    self.closeButton.layer.borderColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection].CGColor;
     
     [[MEGASdkManager sharedMEGASdk] isMasterKeyExportedWithDelegate:self];
 }

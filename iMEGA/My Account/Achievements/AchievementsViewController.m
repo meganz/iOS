@@ -124,10 +124,10 @@
         classTransferReward = [self.achievementsDetails rewardTransferByAwardId:awardId];
     }
     
-    cell.storageQuotaRewardView.backgroundColor = cell.storageQuotaRewardLabel.backgroundColor = ((classStorageReward == 0) ? [UIColor mnz_grayCCCCCC] : [UIColor mnz_blue2BA6DE]);
+    cell.storageQuotaRewardView.backgroundColor = cell.storageQuotaRewardLabel.backgroundColor = ((classStorageReward == 0) ? [UIColor mnz_tertiaryGrayForTraitCollection:self.traitCollection] : UIColor.mnz_blue2BA6DE);
     cell.storageQuotaRewardLabel.text = (classStorageReward == 0) ? @"— GB" : [Helper memoryStyleStringFromByteCount:classStorageReward];
     
-    cell.transferQuotaRewardView.backgroundColor = cell.transferQuotaRewardLabel.backgroundColor = ((classTransferReward == 0) ? [UIColor mnz_grayCCCCCC] : [UIColor mnz_green31B500]);
+    cell.transferQuotaRewardView.backgroundColor = cell.transferQuotaRewardLabel.backgroundColor = ((classTransferReward == 0) ? [UIColor mnz_tertiaryGrayForTraitCollection:self.traitCollection] : UIColor.mnz_green31B500);
     cell.transferQuotaRewardLabel.text = (classTransferReward == 0) ? @"— GB" : [Helper memoryStyleStringFromByteCount:classTransferReward];
 }
 
@@ -209,7 +209,7 @@
         
         NSDate *awardExpirationdDate = [self.achievementsDetails awardExpirationAtIndex:index.unsignedIntegerValue];
         cell.subtitleLabel.text = (awardExpirationdDate.daysUntil == 0) ? AMLocalizedString(@"expired", @"Label to show that an error related with expiration occurs during a SDK operation.") : [AMLocalizedString(@"xDaysLeft", @"") stringByReplacingOccurrencesOfString:@"%1" withString:[NSString stringWithFormat:@"%zd", awardExpirationdDate.daysUntil]];
-        cell.subtitleLabel.textColor = (awardExpirationdDate.daysUntil <= 15) ? UIColor.mnz_redMain : [UIColor mnz_gray666666];
+        cell.subtitleLabel.textColor = (awardExpirationdDate.daysUntil <= 15) ? [UIColor mnz_redMainForTraitCollection:(self.traitCollection)] : [UIColor mnz_subtitlesColorForTraitCollection:self.traitCollection];
     }
     
     return cell;

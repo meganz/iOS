@@ -35,9 +35,9 @@
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         SFSafariViewController *safariViewController = [[SFSafariViewController alloc] initWithURL:self];
         if (@available(iOS 10.0, *)) {
-            safariViewController.preferredControlTintColor = UIColor.mnz_redMain;
+            safariViewController.preferredControlTintColor = [UIColor mnz_primaryGrayForTraitCollection:UIScreen.mainScreen.traitCollection];
         } else {
-            safariViewController.view.tintColor = UIColor.mnz_redMain;
+            safariViewController.view.tintColor = [UIColor mnz_primaryGrayForTraitCollection:UIScreen.mainScreen.traitCollection];
         }
         
         [UIApplication.mnz_visibleViewController presentViewController:safariViewController animated:YES completion:nil];

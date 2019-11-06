@@ -44,18 +44,18 @@ class AppearanceManager: NSObject {
         let segmentedControlFont = UIFont.systemFont(ofSize: 13, weight: UIFont.Weight.regular)
         UISegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.font: segmentedControlFont], for: .normal)
         
-        UISwitch.appearance().onTintColor = UIColor.mnz_green00BFA5()
+        UISwitch.appearance().onTintColor = UIColor.mnz_turquoise(for: traitCollection)
         
         let barButtonItemFont = UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.regular)
         UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font: barButtonItemFont], for: .normal)
         UIBarButtonItem.appearance(whenContainedInInstancesOf: [UIToolbar.self]).tintColor = UIColor.mnz_primaryGray(for: traitCollection)
         
-        UITextField.appearance().tintColor = UIColor.mnz_green00BFA5()
+        UITextField.appearance().tintColor = UIColor.mnz_turquoise(for: traitCollection)
         
-        UITextView.appearance().tintColor = UIColor.mnz_green00BFA5()
+        UITextView.appearance().tintColor = UIColor.mnz_turquoise(for: traitCollection)
         
         UIProgressView.appearance().backgroundColor = UIColor.clear
-        UIProgressView.appearance().tintColor = UIColor.mnz_redMain()
+        UIProgressView.appearance().tintColor = UIColor.mnz_turquoise(for: traitCollection)
         
         if #available(iOS 10, *) {
             UITabBar.appearance().unselectedItemTintColor = UIColor.mnz_primaryGray(for: traitCollection)
@@ -73,16 +73,16 @@ class AppearanceManager: NSObject {
         UIToolbar.appearance().backgroundColor = UIColor.mnz_mainBarsColor(for: traitCollection)
         UIToolbar.appearance().tintColor = UIColor.mnz_primaryGray(for: traitCollection)
         
-        self.setupThirdPartyAppereance()
+        self.setupThirdPartyAppereance(traitCollection)
     }
     
-    class func setupThirdPartyAppereance() {
+    class func setupThirdPartyAppereance(_ traitCollection: UITraitCollection) {
         let SVProgressHUDFont = UIFont.systemFont(ofSize: 12, weight: UIFont.Weight.regular)
         SVProgressHUD.setFont(SVProgressHUDFont)
         SVProgressHUD.setRingThickness(2)
         SVProgressHUD.setRingNoTextRadius(18)
         SVProgressHUD.setBackgroundColor(UIColor.mnz_grayF7F7F7())
-        SVProgressHUD.setForegroundColor(UIColor.mnz_gray666666())
+        SVProgressHUD.setForegroundColor(UIColor.mnz_primaryGray(for: traitCollection))
         SVProgressHUD.setDefaultStyle(SVProgressHUDStyle.custom)
         SVProgressHUD.setHapticsEnabled(true)
         

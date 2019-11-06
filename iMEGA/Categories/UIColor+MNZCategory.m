@@ -48,7 +48,7 @@
                 if (traitCollection.accessibilityContrast == UIAccessibilityContrastHigh) {
                     return [UIColor colorFromHexString:@"F4F5F6"];
                 } else {
-                    return UIColor.mnz_grayFCFCFC;
+                    return UIColor.mnz_grayF7F7F7;
                 }
             }
                 
@@ -57,7 +57,7 @@
             }
         }
     } else {
-        return UIColor.mnz_grayFCFCFC;
+        return UIColor.mnz_grayF7F7F7;
     }
 }
 
@@ -155,18 +155,6 @@
 
 #pragma mark - Black
 
-+ (UIColor *)mnz_black262626 {
-    return [UIColor colorWithRed:38.0/255.0 green:38.0/255.0 blue:38.0/255.0 alpha:1.0];
-}
-
-+ (UIColor *)mnz_black333333 {
-    return [UIColor colorWithRed:51.0/255.0 green:51.0/255.0 blue:51.0/255.0 alpha:1.0];
-}
-
-+ (UIColor *)mnz_black151412_09 {
-    return [UIColor colorWithRed:0.08 green:0.08 blue:0.07 alpha:0.9];
-}
-
 + (UIColor *)mnz_black000000_01 {
     return [UIColor colorWithRed:0.0  green:0.0  blue:0.0 alpha:0.100];
 }
@@ -196,10 +184,6 @@
     } else {
         return [UIColor colorFromHexString:@"009AE0"];
     }
-}
-
-+ (UIColor *)mnz_blue007AFF {
-    return [UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0];
 }
 
 + (UIColor *)mnz_blue2BA6DE {
@@ -291,7 +275,7 @@
                 if (traitCollection.accessibilityContrast == UIAccessibilityContrastHigh) {
                     return [UIColor colorFromHexString:@"F2F2F2"];
                 } else {
-                    return UIColor.mnz_grayEEEEEE;
+                    return [UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0]; //EEEEEE
                 }
             }
                 
@@ -304,56 +288,16 @@
             }
         }
     } else {
-        return UIColor.mnz_grayEEEEEE;
+        return [UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0]; //EEEEEE
     }
-}
-
-+ (UIColor *)mnz_gray666666 {
-    return [UIColor colorWithRed:102.0/255.0 green:102.0/255.0 blue:102.0/255.0 alpha:1.0];
-}
-
-+ (UIColor *)mnz_gray777777 {
-    return [UIColor colorWithRed:119.0/255.0 green:119.0/255.0 blue:119.0/255.0 alpha:1.0];
-}
-
-+ (UIColor *)mnz_gray999999 {
-    return [UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1.0];
-}
-
-+ (UIColor *)mnz_grayCCCCCC {
-    return [UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1.0];
-}
-
-+ (UIColor *)mnz_grayD8D8D8 {
-    return [UIColor colorWithRed:0.85f green:0.85f blue:0.85f alpha:1.0];
-}
-
-+ (UIColor *)mnz_grayE2EAEA {
-    return [UIColor colorWithRed:0.89f green:0.92f blue:0.92f alpha:1.0];
-}
-
-+ (UIColor *)mnz_grayE3E3E3 {
-    return [UIColor colorWithRed:227.0/255.0 green:227.0/255.0 blue:227.0/255.0 alpha:1.0];
-}
-
-+ (UIColor *)mnz_grayEEEEEE {
-    return [UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0];
 }
 
 + (UIColor *)mnz_grayFAFAFA {
     return [UIColor colorWithRed:250.0/255.0 green:250.0/255.0 blue:250.0/255.0 alpha:1.0];
 }
 
-+ (UIColor *)mnz_grayFCFCFC {
-    return [UIColor colorWithRed:252.0/255.0 green:252.0/255.0 blue:252.0/255.0 alpha:1.0];
-}
-
 + (UIColor *)mnz_grayF7F7F7 {
     return [UIColor colorWithRed:247.0/255.0 green:247.0/255.0 blue:247.0/255.0 alpha:1.0];
-}
-
-+ (UIColor *)mnz_grayF9F9F9 {
-    return [UIColor colorWithRed:249.0/255.0 green:249.0/255.0 blue:249.0/255.0 alpha:1.0];
 }
 
 #pragma mark - Green
@@ -387,22 +331,9 @@
     return [UIColor colorWithRed:0.0f green:0.54 blue:0.48 alpha:1.0f];
 }
 
-+ (UIColor *)mnz_green00BFA5 {
-    return [UIColor colorWithRed:0.0f green:0.75 blue:0.65 alpha:1.0f];
-}
-
-+ (UIColor *)mnz_green13E03C {
-    return [UIColor colorWithRed:19.0f / 255.0f green:224.0f / 255.0f blue:60.0f / 255.0f alpha:1.0f];
-}
-
 + (UIColor *)mnz_green31B500 {
     return [UIColor colorWithRed:49.0/255.0 green:181.0/255.0 blue:0.0 alpha:1.0];
 }
-
-+ (UIColor *)mnz_green899B9C {
-    return [UIColor colorWithRed:0.54 green:0.61 blue:0.61 alpha:1];
-}
-
 
 #pragma mark - Orange
 
@@ -512,7 +443,7 @@
     UIColor *colorForStatusChange;
     switch (onlineStatus) {
         case MEGAChatStatusOffline:
-            colorForStatusChange = [self mnz_gray666666];
+            colorForStatusChange = [self mnz_primaryGrayForTraitCollection:UIScreen.mainScreen.traitCollection];
             break;
             
         case MEGAChatStatusAway:
@@ -520,7 +451,7 @@
             break;
             
         case MEGAChatStatusOnline:
-            colorForStatusChange = [self mnz_green13E03C];
+            colorForStatusChange = UIColor.systemGreenColor;
             break;
             
         case MEGAChatStatusBusy:

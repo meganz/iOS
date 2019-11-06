@@ -7,7 +7,7 @@
 
     self.backgroundColor = UIColor.whiteColor;
     
-    self.bottomSeparatorView.layer.borderColor = UIColor.mnz_grayCCCCCC.CGColor;
+    self.bottomSeparatorView.layer.borderColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection].CGColor;
     self.bottomSeparatorView.layer.borderWidth = 0.5;
 }
 

@@ -58,7 +58,7 @@
 
 - (void)configureCellForArchivedChat {
     self.unreadView.hidden = NO;
-    self.unreadView.backgroundColor = UIColor.mnz_gray777777;
+    self.unreadView.backgroundColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
     self.unreadView.layer.cornerRadius = 4;
     self.unreadCount.text = AMLocalizedString(@"archived", @"Title of flag of archived chats.").uppercaseString;
     self.unreadCountLabelHorizontalMarginConstraint.constant = 7;
@@ -76,7 +76,7 @@
     
     if (chatListItem.isGroup) {
         self.onlineStatusView.hidden = YES;
-        self.avatarImageView.image = [UIImage imageForName:chatListItem.title.uppercaseString size:self.avatarImageView.frame.size backgroundColor:UIColor.mnz_gray999999 textColor:UIColor.whiteColor font:[UIFont mnz_SFUIRegularWithSize:(self.avatarImageView.frame.size.width/2.0f)]];
+        self.avatarImageView.image = [UIImage imageForName:chatListItem.title.uppercaseString size:self.avatarImageView.frame.size backgroundColor:[UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection] textColor:UIColor.whiteColor font:[UIFont systemFontOfSize:(self.avatarImageView.frame.size.width/2.0f)]];
     } else {
         [self.avatarImageView mnz_setImageForUserHandle:chatListItem.peerHandle name:chatListItem.title];
         UIColor *statusColor = [UIColor mnz_colorForStatusChange:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:chatListItem.peerHandle]];
@@ -122,7 +122,7 @@
             }
         }
         self.chatLastMessage.font = [[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1] fontWithWeight:UIFontWeightMedium];
-        self.chatLastMessage.textColor = UIColor.mnz_green00BFA5;
+        self.chatLastMessage.textColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
     } else {
         self.activeCallImageView.hidden = YES;
         self.onCallInfoView.hidden = YES;
@@ -165,18 +165,17 @@
 
 - (void)updateUnreadCountChange:(NSInteger)unreadCount {
     self.chatTitle.font = [[UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline] fontWithWeight:UIFontWeightMedium];
-    self.chatTitle.textColor = UIColor.mnz_black333333;
     
     if ([[MEGASdkManager sharedMEGAChatSdk] hasCallInChatRoom:self.chatListItem.chatId] && MEGAReachabilityManager.isReachable) {
         self.chatLastMessage.font = [[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1] fontWithWeight:UIFontWeightMedium];
-        self.chatLastMessage.textColor = UIColor.mnz_green00BFA5;
+        self.chatLastMessage.textColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
     } else {
         if (unreadCount != 0) {
             self.chatLastMessage.font = [[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1] fontWithWeight:UIFontWeightMedium];
-            self.chatLastMessage.textColor = UIColor.mnz_black333333;
+            self.chatLastMessage.textColor = [UIColor mnz_subtitlesColorForTraitCollection:self.traitCollection];
             
             self.chatLastTime.font = [[UIFont preferredFontForTextStyle:UIFontTextStyleCaption2] fontWithWeight:UIFontWeightMedium];
-            self.chatLastTime.textColor = UIColor.mnz_green00BFA5;
+            self.chatLastTime.textColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
             
             self.unreadView.hidden = NO;
             self.unreadView.clipsToBounds = YES;
@@ -188,9 +187,9 @@
             }
         } else {
             self.chatLastMessage.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
-            self.chatLastMessage.textColor = UIColor.mnz_gray666666;
+            self.chatLastMessage.textColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
             self.chatLastTime.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption2];
-            self.chatLastTime.textColor = UIColor.mnz_gray666666;
+            self.chatLastTime.textColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
             
             self.unreadView.hidden = YES;
             self.unreadCount.text = nil;

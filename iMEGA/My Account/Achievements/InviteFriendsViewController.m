@@ -82,16 +82,16 @@
     self.tokenField.inputTextFieldKeyboardType = UIKeyboardTypeEmailAddress;
     
     self.tokenField.toLabelText = @"";
-    self.tokenField.inputTextFieldTextColor = [UIColor mnz_black333333];
+    self.tokenField.inputTextFieldTextColor = UIColor.mnz_label;
     self.tokenField.inputTextFieldFont = [UIFont mnz_SFUIRegularWithSize:17.0f];
     
     self.tokenField.tokenFont = [UIFont mnz_SFUIRegularWithSize:17.0f];
-    self.tokenField.tokenHighlightedTextColor = [UIColor mnz_black333333];
-    self.tokenField.tokenHighlightedBackgroundColor = [UIColor mnz_grayEEEEEE];
+    self.tokenField.tokenHighlightedTextColor = UIColor.mnz_label;
+    self.tokenField.tokenHighlightedBackgroundColor = UIColor.mnz_grayF7F7F7;
     
     self.tokenField.delimiters = @[@",", @" "];
     self.tokenField.placeholderText = AMLocalizedString(@"insertYourFriendsEmails", @"");
-    [self.tokenField setColorScheme:UIColor.mnz_redMain];
+    [self.tokenField setColorScheme:[UIColor mnz_redMainForTraitCollection:(self.traitCollection)]];
 }
 
 - (void)addEmailToTokenList:(NSString *)email {
@@ -101,12 +101,12 @@
     
     [self cleanErrors];
     
-    self.inviteButton.backgroundColor = UIColor.mnz_redMain;
+    self.inviteButton.backgroundColor = [UIColor mnz_redMainForTraitCollection:(self.traitCollection)];
 }
 
 - (void)cleanErrors {
     self.inviteButtonUpperLabel.text = @"";
-    self.inviteButtonUpperLabel.textColor = [UIColor mnz_gray999999];
+    self.inviteButtonUpperLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
 }
 
 #pragma mark - IBActions
@@ -159,7 +159,7 @@
             } else {
                 error = YES;
                 self.inviteButtonUpperLabel.text = [NSString stringWithFormat:@"%@ %@", AMLocalizedString(@"theEmailAddressFormatIsInvalid", @"Add contacts and share dialog error message when user try to add wrong email address"), email];
-                self.inviteButtonUpperLabel.textColor = UIColor.mnz_redMain;
+                self.inviteButtonUpperLabel.textColor = UIColor.mnz_redError;
             }
         }
     }
@@ -167,7 +167,7 @@
     [self.tokenField reloadData];
     self.tokenFieldHeightLayoutConstraint.constant = self.tokenField.frame.size.height;
     
-    self.inviteButton.backgroundColor = self.tokens.count == 0 ? UIColor.mnz_grayCCCCCC : UIColor.mnz_redMain;
+    self.inviteButton.backgroundColor = self.tokens.count == 0 ? [UIColor mnz_tertiaryGrayForTraitCollection:self.traitCollection] : [UIColor mnz_redMainForTraitCollection:(self.traitCollection)];
     
     if (!error) {
         [self cleanErrors];
@@ -182,17 +182,17 @@
     }
     
     if (text.mnz_isValidEmail) {               
-        self.tokenField.inputTextFieldTextColor = [UIColor mnz_black333333];
+        self.tokenField.inputTextFieldTextColor = UIColor.mnz_label;
         
         self.inviteButtonUpperLabel.text = @"";
-        self.inviteButtonUpperLabel.textColor = [UIColor mnz_gray999999];
+        self.inviteButtonUpperLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
         
         [self addEmailToTokenList:text];
     } else {
-        self.tokenField.inputTextFieldTextColor = UIColor.mnz_redMain;
+        self.tokenField.inputTextFieldTextColor = UIColor.mnz_redError;
         
         self.inviteButtonUpperLabel.text = AMLocalizedString(@"theEmailAddressFormatIsInvalid", @"Add contacts and share dialog error message when user try to add wrong email address");
-        self.inviteButtonUpperLabel.textColor = UIColor.mnz_redMain;
+        self.inviteButtonUpperLabel.textColor = UIColor.mnz_redError;
     }
 }
 
@@ -204,7 +204,7 @@
     [self cleanErrors];
     
     if (self.tokens.count == 0) {
-        self.inviteButton.backgroundColor = [UIColor mnz_grayCCCCCC];
+        self.inviteButton.backgroundColor = [UIColor mnz_tertiaryGrayForTraitCollection:self.traitCollection];
     }
 }
 
@@ -219,7 +219,7 @@
 }
 
 - (UIColor *)tokenField:(VENTokenField *)tokenField colorSchemeForTokenAtIndex:(NSUInteger)index {
-    return [UIColor mnz_black333333];
+    return UIColor.mnz_label;
 }
 
 @end

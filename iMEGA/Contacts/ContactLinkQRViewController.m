@@ -86,7 +86,7 @@
             self.linkCopyButton.hidden = self.moreButton.hidden = NO;
         }
         
-        self.qrImageView.image = [UIImage mnz_qrImageWithDotsFromString:destination withSize:self.qrImageView.frame.size color:UIColor.mnz_redMain];
+        self.qrImageView.image = [UIImage mnz_qrImageWithDotsFromString:destination withSize:self.qrImageView.frame.size color:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection]];
         [self setUserAvatar];
     }];
 }
@@ -158,10 +158,10 @@
             self.qrImageView.hidden = self.avatarBackgroundView.hidden = self.avatarImageView.hidden = self.contactLinkLabel.hidden = NO;
             self.linkCopyButton.hidden = self.moreButton.hidden = (self.contactLinkLabel.text.length == 0);
             self.cameraView.hidden = self.cameraMaskView.hidden = self.cameraMaskBorderView.hidden = self.hintLabel.hidden = self.errorLabel.hidden = YES;
-            self.backButton.tintColor = UIColor.mnz_redMain;
+            self.backButton.tintColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
             if (@available(iOS 13.0, *)) {
-                [self.segmentedControl setTitleTextAttributes:@{NSForegroundColorAttributeName:UIColor.blackColor} forState:UIControlStateNormal];
-                [self.segmentedControl setTitleTextAttributes:@{NSForegroundColorAttributeName:UIColor.blackColor} forState:UIControlStateSelected];
+                [self.segmentedControl setTitleTextAttributes:@{NSForegroundColorAttributeName:UIColor.mnz_label} forState:UIControlStateNormal];
+                [self.segmentedControl setTitleTextAttributes:@{NSForegroundColorAttributeName:UIColor.mnz_label} forState:UIControlStateSelected];
             } else {
                 self.segmentedControl.tintColor = UIColor.mnz_redMain;
             }
@@ -219,7 +219,7 @@
             
             [self presentViewController:activityVC animated:YES completion:nil];
         }];
-        [shareAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+        [shareAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
         [moreAlertController addAction:shareAlertAction];
     }
     
@@ -227,7 +227,7 @@
         UINavigationController *qrSettingsNC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"QRSettingsNavigationControllerID"];
         [self presentViewController:qrSettingsNC animated:YES completion:nil];
     }];
-    [settingsAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+    [settingsAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
     [moreAlertController addAction:settingsAlertAction];
     
     UIAlertAction *resetAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"resetQrCode", @"Action to reset the current valid QR code of the user") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {

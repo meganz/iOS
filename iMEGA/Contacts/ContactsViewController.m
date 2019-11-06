@@ -206,7 +206,7 @@
             self.shareFolderWithBarButtonItem.enabled = NO;
             
             self.insertAnEmailBarButtonItem.title = AMLocalizedString(@"inviteContact", @"Text shown when the user tries to make a call and the receiver is not a contact");
-            [self.insertAnEmailBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:UIColor.mnz_redMain} forState:UIControlStateNormal];
+            [self.insertAnEmailBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_redMainForTraitCollection:(self.traitCollection)]} forState:UIControlStateNormal];
             
             UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
             self.navigationController.topViewController.toolbarItems = @[flexibleItem, self.insertAnEmailBarButtonItem];
@@ -222,7 +222,7 @@
             
             UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
             self.deleteBarButtonItem.title = AMLocalizedString(@"remove", @"Title for the action that allows to remove a file or folder");
-            [self.deleteBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:UIColor.mnz_redMain} forState:UIControlStateNormal];
+            [self.deleteBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_redMainForTraitCollection:(self.traitCollection)]} forState:UIControlStateNormal];
             self.toolbar.items = @[flexibleItem, self.deleteBarButtonItem];
             break;
         }
@@ -250,7 +250,7 @@
         }
             
         case ContactsModeChatCreateGroup: {
-            self.tableView.backgroundColor = UIColor.mnz_grayFCFCFC;
+            self.tableView.backgroundColor = UIColor.mnz_grayF7F7F7;
             [self setTableViewEditing:YES animated:NO];
             self.createGroupBarButtonItem.title = AMLocalizedString(@"next", nil);
             [self.createGroupBarButtonItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
@@ -443,19 +443,19 @@
     UIAlertAction *fullAccessAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"fullAccess", @"Permissions given to the user you share your folder with") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self shareNodesWithLevel:MEGAShareTypeAccessFull];
     }];
-    [fullAccessAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
+    [fullAccessAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
     [shareFolderAlertController addAction:fullAccessAlertAction];
     
     UIAlertAction *readAndWritetAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"readAndWrite", @"Permissions given to the user you share your folder with") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self shareNodesWithLevel:MEGAShareTypeAccessReadWrite];
     }];
-    [readAndWritetAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
+    [readAndWritetAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
     [shareFolderAlertController addAction:readAndWritetAlertAction];
     
     UIAlertAction *readOnlyAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self shareNodesWithLevel:MEGAShareTypeAccessRead];
     }];
-    [readOnlyAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
+    [readOnlyAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
     [shareFolderAlertController addAction:readOnlyAlertAction];
     
     shareFolderAlertController.modalPresentationStyle = UIModalPresentationPopover;
@@ -676,7 +676,7 @@
 
 - (void)setContactRequestBarButtomItemWithValue:(NSInteger)value {
     self.contactRequestsBarButtonItem.badgeBGColor = UIColor.whiteColor;
-    self.contactRequestsBarButtonItem.badgeTextColor = UIColor.mnz_redMain;
+    self.contactRequestsBarButtonItem.badgeTextColor = [UIColor mnz_redMainForTraitCollection:(self.traitCollection)];
     self.contactRequestsBarButtonItem.badgeFont = [UIFont mnz_SFUIMediumWithSize:11.0f];
     self.contactRequestsBarButtonItem.shouldAnimateBadge = NO;
     if (@available(iOS 11.0, *)) {
@@ -782,7 +782,7 @@
     }
     
     if (self.contactsMode == ContactsModeChatCreateGroup) {
-        self.searchController.searchBar.barTintColor = UIColor.mnz_grayFCFCFC;
+        self.searchController.searchBar.barTintColor = UIColor.mnz_grayF7F7F7;
     }
 }
 
@@ -910,7 +910,7 @@
         
         [self presentViewController:addContactFromEmailAlertController animated:YES completion:nil];
     }];
-    [addFromEmailAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
+    [addFromEmailAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
     [addContactAlertController addAction:addFromEmailAlertAction];
     
     UIAlertAction *addFromContactsAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"addFromContacts", @"Item menu option to add a contact through your device app Contacts") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
@@ -919,7 +919,7 @@
         }
         [self showEmailContactPicker];
     }];
-    [addFromContactsAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
+    [addFromContactsAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
     [addContactAlertController addAction:addFromContactsAlertAction];
     
     UIAlertAction *scanCodeAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"scanCode", @"Segmented control title for view that allows the user to scan QR codes. String as short as possible.") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -932,7 +932,7 @@
         }
         [self presentViewController:contactLinkVC animated:YES completion:nil];
     }];
-    [scanCodeAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
+    [scanCodeAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
     [addContactAlertController addAction:scanCodeAlertAction];
     
     addContactAlertController.modalPresentationStyle = UIModalPresentationPopover;
@@ -1202,7 +1202,7 @@
                 cell = [tableView dequeueReusableCellWithIdentifier:@"ContactPermissionsEmailTableViewCellID" forIndexPath:indexPath];
                 cell.nameLabel.text = self.pendingShareUsersArray[indexPath.row].user;
                 cell.permissionsImageView.image = [UIImage imageNamed:@"delete"];
-                cell.permissionsImageView.tintColor = UIColor.mnz_redMain;
+                cell.permissionsImageView.tintColor = [UIColor mnz_redMainForTraitCollection:(self.traitCollection)];
             }
         } else {
             cell = [tableView dequeueReusableCellWithIdentifier:@"contactCell" forIndexPath:indexPath];
@@ -1669,7 +1669,7 @@
         text = AMLocalizedString(@"Mobile Data is turned off", @"Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings.");
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleFootnote], NSForegroundColorAttributeName:UIColor.mnz_gray777777};
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleFootnote], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]};
     
     return [NSAttributedString.alloc initWithString:text attributes:attributes];
 }

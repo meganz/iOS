@@ -50,7 +50,7 @@
         
         if (@available(iOS 10.0, *)) {
             tabBarItem.badgeColor = UIColor.clearColor;
-            [tabBarItem setBadgeTextAttributes:@{ NSForegroundColorAttributeName: UIColor.mnz_redMain } forState:UIControlStateNormal];
+            [tabBarItem setBadgeTextAttributes:@{NSForegroundColorAttributeName: [UIColor mnz_redMainForTraitCollection:(self.traitCollection)]} forState:UIControlStateNormal];
         }
         [self reloadInsetsForTabBarItem:tabBarItem];
         switch (tabBarItem.tag) {
@@ -78,7 +78,7 @@
     
     self.viewControllers = defaultViewControllersMutableArray;
     
-    self.view.tintColor = UIColor.mnz_redMain;
+    self.view.tintColor = [UIColor mnz_redMainForTraitCollection:(self.traitCollection)];
     
     [self setDelegate:self];
     

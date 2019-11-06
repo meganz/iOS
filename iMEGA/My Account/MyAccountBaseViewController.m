@@ -66,13 +66,13 @@
         MEGANavigationController *changeNameNavigationController = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"ChangeNameNavigationControllerID"];
         [self presentViewController:changeNameNavigationController animated:YES completion:nil];
     }];
-    [changeNameAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+    [changeNameAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
     [editProfileAlertController addAction:changeNameAlertAction];
     
     UIAlertAction *changeAvatarAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"changeAvatar", @"button that allows the user the change his avatar") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self presentChangeAvatarAlertController];
     }];
-    [changeAvatarAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+    [changeAvatarAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
     [editProfileAlertController addAction:changeAvatarAlertAction];
     
     UIAlertAction *myCodeAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"myCode", @"Title for view that displays the QR code of the user. String as short as possible.") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -81,7 +81,7 @@
         contactLinkVC.modalPresentationStyle = UIModalPresentationFullScreen;
         [self presentViewController:contactLinkVC animated:YES completion:nil];
     }];
-    [myCodeAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+    [myCodeAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
     [editProfileAlertController addAction:myCodeAlertAction];
     
     NSString *myUserBase64Handle = [MEGASdk base64HandleForUserHandle:[[[MEGASdkManager sharedMEGASdk] myUser] handle]];
@@ -90,7 +90,7 @@
         UIAlertAction *removeAvatarAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"removeAvatar", @"Button to remove avatar. Try to keep the text short (as in English)") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             [[MEGASdkManager sharedMEGASdk] setAvatarUserWithSourceFilePath:nil];
         }];
-        [removeAvatarAlertAction mnz_setTitleTextColor:UIColor.mnz_redMain];
+        [removeAvatarAlertAction mnz_setTitleTextColor:[UIColor mnz_redMainForTraitCollection:(self.traitCollection)]];
         [editProfileAlertController addAction:removeAvatarAlertAction];
     }
     
@@ -120,7 +120,7 @@
             }
         }];
     }];
-    [fromPhotosAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+    [fromPhotosAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
     [changeAvatarAlertController addAction:fromPhotosAlertAction];
     UIAlertAction *captureAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"capturePhotoVideo", @"Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [DevicePermissionsHelper videoPermissionWithCompletionHandler:^(BOOL granted) {
@@ -139,7 +139,7 @@
             }
         }];
     }];
-    [captureAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+    [captureAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
     [changeAvatarAlertController addAction:captureAlertAction];
     
     changeAvatarAlertController.modalPresentationStyle = UIModalPresentationPopover;
