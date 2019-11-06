@@ -147,7 +147,7 @@
         }
     }
     
-    self.saveButton.backgroundColor = shouldSaveButtonBeEnabled ? UIColor.mnz_redMain : UIColor.mnz_grayCCCCCC;
+    self.saveButton.backgroundColor = shouldSaveButtonBeEnabled ? [UIColor mnz_redMainForTraitCollection:self.traitCollection] : [UIColor mnz_tertiaryGrayForTraitCollection:self.traitCollection];
     
     return YES;
 }
@@ -172,7 +172,7 @@
             break;
         }
     }
-    self.saveButton.backgroundColor = shouldSaveButtonColorBeDisabled ? [UIColor mnz_grayCCCCCC] : UIColor.mnz_redMain;
+    self.saveButton.backgroundColor = shouldSaveButtonColorBeDisabled ? [UIColor mnz_tertiaryGrayForTraitCollection:self.traitCollection] : [UIColor mnz_redMainForTraitCollection:self.traitCollection];
     
     return YES;
 }

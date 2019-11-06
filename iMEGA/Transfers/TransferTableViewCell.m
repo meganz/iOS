@@ -76,7 +76,7 @@
     
     [self configureCellWithTransferState:transfer.state];
     
-    self.separatorView.layer.borderColor = UIColor.mnz_grayCCCCCC.CGColor;
+    self.separatorView.layer.borderColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection].CGColor;
     self.separatorView.layer.borderWidth = 0.5;
 }
 
@@ -151,7 +151,7 @@
     NSMutableAttributedString *percentageAttributedString = [[NSMutableAttributedString alloc] initWithString:percentageCompleted attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:percentageColor}];
     
     NSString *speed = [NSString stringWithFormat:@" %@/s", [Helper memoryStyleStringFromByteCount:transfer.speed.longLongValue]];
-    NSAttributedString *speedAttributedString = [[NSAttributedString alloc] initWithString:speed attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:UIColor.mnz_gray666666}];
+    NSAttributedString *speedAttributedString = [NSAttributedString.alloc initWithString:speed attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
     [percentageAttributedString appendAttributedString:speedAttributedString];
     self.infoLabel.attributedText = percentageAttributedString;
 }
@@ -169,7 +169,7 @@
     switch (transferState) {
         case MEGATransferStateQueued: {
             self.arrowImageView.image = (self.transfer.type == MEGATransferTypeDownload) ? [Helper downloadQueuedTransferImage] : [Helper uploadQueuedTransferImage];
-            self.infoLabel.textColor = UIColor.mnz_gray666666;
+            self.infoLabel.textColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
             self.infoLabel.text = AMLocalizedString(@"queued", @"Queued");
             [self.pauseButton setImage:[UIImage imageNamed:@"pauseTransfers"] forState:UIControlStateNormal];
             self.pauseButton.hidden = self.cancelButton.hidden = NO;
@@ -186,7 +186,7 @@
             
         case MEGATransferStatePaused: {
             self.arrowImageView.image = (self.transfer.type == MEGATransferTypeDownload) ? [Helper downloadQueuedTransferImage] : [Helper uploadQueuedTransferImage];
-            self.infoLabel.textColor = UIColor.mnz_gray666666;
+            self.infoLabel.textColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
             self.infoLabel.text = AMLocalizedString(@"paused", @"Paused");
             [self.pauseButton setImage:[UIImage imageNamed:@"resumeTransfers"] forState:UIControlStateNormal];
             self.pauseButton.hidden = self.cancelButton.hidden = NO;
@@ -208,7 +208,7 @@
             
         default: {
             self.arrowImageView.image = (self.transfer.type == MEGATransferTypeDownload) ? [Helper downloadQueuedTransferImage] : [Helper uploadQueuedTransferImage];
-            self.infoLabel.textColor = UIColor.mnz_gray666666;
+            self.infoLabel.textColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
             self.infoLabel.text = AMLocalizedString(@"queued", @"Queued");
             [self.pauseButton setImage:[UIImage imageNamed:@"pauseTransfers"] forState:UIControlStateNormal];
             self.pauseButton.hidden = self.cancelButton.hidden = NO;
@@ -219,7 +219,7 @@
 
 - (void)queuedStateLayout {
     self.arrowImageView.image = [Helper uploadQueuedTransferImage];
-    self.infoLabel.textColor = UIColor.mnz_gray666666;
+    self.infoLabel.textColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
     self.infoLabel.text = AMLocalizedString(@"pending", @"Label shown when a contact request is pending");
     self.pauseButton.hidden = YES;
     self.cancelButton.hidden = NO;

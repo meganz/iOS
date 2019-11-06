@@ -271,7 +271,7 @@
         }
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleFootnote], NSForegroundColorAttributeName:UIColor.mnz_gray777777};
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleFootnote], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]};
     
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
@@ -536,7 +536,7 @@
         UIAlertAction *onlineAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"online", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             [self changeToOnlineStatus:MEGAChatStatusOnline];
         }];
-        [onlineAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
+        [onlineAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
         [changeOnlineStatusAlertController addAction:onlineAlertAction];
     }
     
@@ -544,7 +544,7 @@
         UIAlertAction *awayAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"away", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             [self changeToOnlineStatus:MEGAChatStatusAway];
         }];
-        [awayAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
+        [awayAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
         [changeOnlineStatusAlertController addAction:awayAlertAction];
     }
     
@@ -552,7 +552,7 @@
         UIAlertAction *busyAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"busy", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             [self changeToOnlineStatus:MEGAChatStatusBusy];
         }];
-        [busyAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
+        [busyAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
         [changeOnlineStatusAlertController addAction:busyAlertAction];
     }
     
@@ -560,7 +560,7 @@
         UIAlertAction *offlineAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"offline", @"Title of the Offline section") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             [self changeToOnlineStatus:MEGAChatStatusOffline];
         }];
-        [offlineAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
+        [offlineAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
         [changeOnlineStatusAlertController addAction:offlineAlertAction];
     }
     
@@ -712,13 +712,13 @@
 - (void)updateDuration {
     if (!self.isReconnecting) {
         NSTimeInterval interval = ([NSDate date].timeIntervalSince1970 - self.baseDate.timeIntervalSince1970 + self.initDuration);
-        [self setTopBannerButtonTitle:[NSString stringWithFormat:AMLocalizedString(@"Touch to return to call %@", @"Message shown in a chat room for a group call in progress displaying the duration of the call"), [NSString mnz_stringFromTimeInterval:interval]] color:UIColor.mnz_green00BFA5];
+        [self setTopBannerButtonTitle:[NSString stringWithFormat:AMLocalizedString(@"Touch to return to call %@", @"Message shown in a chat room for a group call in progress displaying the duration of the call"), [NSString mnz_stringFromTimeInterval:interval]] color:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection]];
     }
 }
 
 - (void)configureTopBannerButtonForInProgressCall:(MEGAChatCall *)call {
     if (self.isReconnecting) {
-        [self setTopBannerButtonTitle:AMLocalizedString(@"You are back!", @"Title shown when the user reconnect in a call.") color:UIColor.mnz_green00BFA5];
+        [self setTopBannerButtonTitle:AMLocalizedString(@"You are back!", @"Title shown when the user reconnect in a call.") color:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection]];
     }
     [self initTimerForCall:call];
 }
@@ -945,12 +945,12 @@
             UITableViewRowAction *infoAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:AMLocalizedString(@"info", @"A button label. The button allows the user to get more info of the current context.") handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
                 [self presentGroupOrContactDetailsForChatListItem:chatListItem];
             }];
-            infoAction.backgroundColor = UIColor.mnz_grayCCCCCC;
+            infoAction.backgroundColor = [UIColor mnz_tertiaryGrayForTraitCollection:self.traitCollection];
             
             UITableViewRowAction *archiveAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:AMLocalizedString(@"archiveChat", @"Title of button to archive chats.") handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
                 [[MEGASdkManager sharedMEGAChatSdk] archiveChat:chatListItem.chatId archive:YES];
             }];
-            archiveAction.backgroundColor = UIColor.mnz_green00BFA5;
+            archiveAction.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
 
             return @[archiveAction, infoAction];
         }
@@ -959,7 +959,7 @@
             UITableViewRowAction *unarchiveAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:AMLocalizedString(@"unarchiveChat", @"The title of the dialog to unarchive an archived chat.") handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
                 [[MEGASdkManager sharedMEGAChatSdk] archiveChat:chatListItem.chatId archive:NO];
             }];
-            unarchiveAction.backgroundColor = UIColor.mnz_green00BFA5;
+            unarchiveAction.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
             
             return @[unarchiveAction];
         }

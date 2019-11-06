@@ -71,9 +71,9 @@
     
     // Colors:
     if (self.message.userHandle == [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
-        geolocationView.backgroundColor = [UIColor mnz_green00BFA5];
+        geolocationView.backgroundColor = [UIColor mnz_chatBlueForTraitCollection:UIScreen.mainScreen.traitCollection];
     } else {
-        geolocationView.backgroundColor = [UIColor mnz_grayE2EAEA];
+        geolocationView.backgroundColor = [UIColor mnz_chatGrayForTraitCollection:UIScreen.mainScreen.traitCollection];
     }
     
     NSData *imageData = [[NSData alloc] initWithBase64EncodedString:self.message.containsMeta.geolocation.image options:NSDataBase64DecodingIgnoreUnknownCharacters];

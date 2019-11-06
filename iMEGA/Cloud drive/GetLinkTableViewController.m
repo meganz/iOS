@@ -301,7 +301,7 @@
     
     if (sender.isOn) {
         self.encryptWithPasswordLabel.text = AMLocalizedString(@"encrypt", @"The text of a button. This button will encrypt a link with a password.");
-        self.encryptWithPasswordLabel.textColor = [UIColor mnz_blue007AFF];
+        self.encryptWithPasswordLabel.textColor = [UIColor mnz_chatBlueForTraitCollection:self.traitCollection];
         
         self.encryptedLinks = [NSMutableArray new];
         self.selectedArray = self.encryptedLinks;

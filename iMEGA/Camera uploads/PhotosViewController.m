@@ -77,9 +77,8 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     self.photosCollectionView.emptyDataSetDelegate = self;
     
     self.stateView.backgroundColor = [UIColor mnz_mainBarsColorForTraitCollection:self.traitCollection];
-    self.enableCameraUploadsButton.tintColor = [UIColor mnz_green00BFA5];
+    self.enableCameraUploadsButton.tintColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
     [self.enableCameraUploadsButton setTitle:AMLocalizedString(@"enable", nil) forState:UIControlStateNormal];
-    self.photosUploadedProgressView.progressTintColor = [UIColor mnz_green00BFA5];
     
     self.selectedItemsDictionary = [[NSMutableDictionary alloc] init];
     
@@ -617,7 +616,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     
     cell.nodeHandle = [node handle];
     
-    cell.thumbnailSelectionOverlayView.layer.borderColor = [UIColor.mnz_green00BFA5 CGColor];
+    cell.thumbnailSelectionOverlayView.layer.borderColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection].CGColor;
     cell.thumbnailSelectionOverlayView.hidden = [self.selectedItemsDictionary objectForKey:[NSNumber numberWithLongLong:node.handle]] == nil;
     
     cell.thumbnailVideoOverlayView.hidden = !node.name.mnz_isVideoPathExtension;
@@ -889,7 +888,9 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
         text = AMLocalizedString(@"Mobile Data is turned off", @"Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings.");
     }
     
-    return [[NSAttributedString alloc] initWithString:text attributes:[Helper descriptionAttributesForEmptyState]];
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleFootnote], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]};
+    
+    return [NSAttributedString.alloc initWithString:text attributes:attributes];
 }
 
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {

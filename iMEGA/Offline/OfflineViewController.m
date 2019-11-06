@@ -2,6 +2,7 @@
 
 #import "SVProgressHUD.h"
 
+#import "UIAlertAction+MNZCategory.h"
 #import "UIScrollView+EmptyDataSet.h"
 #import "NSString+MNZCategory.h"
 #import "NSFileManager+MNZCategory.h"
@@ -694,21 +695,21 @@ static NSString *kisDirectory = @"kisDirectory";
         UIAlertAction *changeViewAlertAction = [UIAlertAction actionWithTitle:changeViewTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             [self changeLayoutMode];
         }];
-        [changeViewAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+        [changeViewAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
         [moreAlertController addAction:changeViewAlertAction];
     }
     
     UIAlertAction *sortByAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"sortTitle", @"Section title of the 'Sort by'") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self sortByTapped:self.sortByBarButtonItem];
     }];
-    [sortByAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+    [sortByAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
     [moreAlertController addAction:sortByAlertAction];
     
     if (self.offlineSortedItems.count) {
         UIAlertAction *selectAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"select", @"Button that allows you to select a given folder") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             [self editTapped:self.editButtonItem];
         }];
-        [selectAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
+        [selectAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
         [moreAlertController addAction:selectAlertAction];
     }
     

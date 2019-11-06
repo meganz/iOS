@@ -296,7 +296,7 @@
             MEGAInviteContactRequestDelegate *inviteContactRequestDelegate = [[MEGAInviteContactRequestDelegate alloc] initWithNumberOfRequests:1];
             [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:userEmailSelected message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
         }];
-        [addContactAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+        [addContactAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
         [addContactAlertController addAction:addContactAlertAction];
         
         addContactAlertController.modalPresentationStyle = UIModalPresentationPopover;

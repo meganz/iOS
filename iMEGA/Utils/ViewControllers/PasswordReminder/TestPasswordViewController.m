@@ -208,7 +208,7 @@
     
     [self.confirmButton setImage:nil forState:UIControlStateNormal];
     self.confirmButton.titleLabel.font = [UIFont mnz_SFUIRegularWithSize:16.0f];
-    [self.confirmButton setTitleColor:UIColor.mnz_gray666666 forState:UIControlStateNormal];
+    [self.confirmButton setTitleColor:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection] forState:UIControlStateNormal];
 }
 
 - (void)keyboardDidShow:(NSNotification *)notification {

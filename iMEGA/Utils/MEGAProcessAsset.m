@@ -801,7 +801,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
     CGRect rect = CGRectMake(margin, 72.0, self.alertController.view.frame.size.width - margin * 2.0 , 2.0);
     self.progressView = [[UIProgressView alloc] initWithFrame:rect];
     self.progressView.progress = 0.0;
-    self.progressView.tintColor = UIColor.mnz_redMain;
+    self.progressView.tintColor = [UIColor mnz_turquoiseForTraitCollection:UIScreen.mainScreen.traitCollection];
     [self.alertController.view addSubview:self.progressView];
 }
 

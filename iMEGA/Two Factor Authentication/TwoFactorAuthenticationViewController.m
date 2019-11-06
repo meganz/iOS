@@ -118,7 +118,7 @@
 }
 
 - (void)showInvalidCode {
-    [self tintCodeWithColor:UIColor.mnz_redMain];
+    [self tintCodeWithColor:UIColor.mnz_redError];
     self.invalidCodeImageView.hidden = self.invalidCodeLabel.hidden = NO;
 }
 
@@ -197,7 +197,7 @@
         textView.selectedTextRange = [textView textRangeFromPosition:end toPosition:end];
     });
     
-    [self tintCodeWithColor:UIColor.mnz_black333333];
+    [self tintCodeWithColor:UIColor.mnz_label];
     self.invalidCodeImageView.hidden = self.invalidCodeLabel.hidden = YES;
 }
 

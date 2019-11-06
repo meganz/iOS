@@ -557,7 +557,7 @@
                 [self reloadUI];
                 [NSUserDefaults.standardUserDefaults setInteger:self.sortOrderType forKey:@"SharedItemsSortOrderType"];
             }];
-            [sortAscendingAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
+            [sortAscendingAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
             [sortByAlertController addAction:sortAscendingAlertAction];
             
             NSString *descendingSortTitle = [NSString stringWithFormat:@"%@%@", AMLocalizedString(@"nameDescending", @"Sort by option (2/6). This one arranges the files on reverse alphabethical order"), self.sortOrderType == MEGASortOrderTypeAlphabeticalDesc ? @" ✓" : @""];
@@ -566,7 +566,7 @@
                 [self reloadUI];
                 [NSUserDefaults.standardUserDefaults setInteger:self.sortOrderType forKey:@"SharedItemsSortOrderType"];
             }];
-            [sortDescendingAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
+            [sortDescendingAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
             [sortByAlertController addAction:sortDescendingAlertAction];
             
             if (UIDevice.currentDevice.iPadDevice) {
@@ -577,7 +577,7 @@
             }
             [self presentViewController:sortByAlertController animated:YES completion:nil];
         }];
-        [sortByAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
+        [sortByAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
         [moreAlertController addAction:sortByAlertAction];
         
         UIAlertAction *selectAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"select", @"Button that allows you to select a given folder") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
@@ -589,7 +589,7 @@
             [self toolbarItemsForSharedItems];
             [self toolbarItemsSetEnabled:NO];
         }];
-        [selectAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
+        [selectAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
         [moreAlertController addAction:selectAlertAction];
         
         if (UIDevice.currentDevice.iPadDevice) {
@@ -1254,7 +1254,7 @@
         text = AMLocalizedString(@"Mobile Data is turned off", @"Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings.");
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleFootnote], NSForegroundColorAttributeName:UIColor.mnz_gray777777};
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleFootnote], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]};
     
     return [NSAttributedString.alloc initWithString:text attributes:attributes];
 }

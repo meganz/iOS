@@ -74,7 +74,7 @@
     self.nameLabel.text = self.chatRoom.title;
     
     CGSize avatarSize = self.avatarImageView.frame.size;
-    UIImage *avatarImage = [UIImage imageForName:self.chatRoom.title.uppercaseString size:avatarSize backgroundColor:[UIColor mnz_gray999999] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:(avatarSize.width/2.0f)]];
+    UIImage *avatarImage = [UIImage imageForName:self.chatRoom.title.uppercaseString size:avatarSize backgroundColor:[UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection] textColor:UIColor.whiteColor font:[UIFont systemFontOfSize:(avatarSize.width/2.0f)]];
     self.avatarImageView.image = avatarImage;
     
     if (self.chatRoom.peerCount == 0) {
@@ -163,7 +163,7 @@
             [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:[self.chatRoom peerEmailByHandle:userHandle] message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
         }
     }];
-    [sendParticipantContactRequest mnz_setTitleTextColor:[UIColor mnz_black333333]];
+    [sendParticipantContactRequest mnz_setTitleTextColor:UIColor.mnz_label];
     return sendParticipantContactRequest;
 }
 
@@ -290,26 +290,26 @@
         
         UIAlertController *permissionsAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
         UIAlertAction *cancelAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil];
-        [cancelAlertAction mnz_setTitleTextColor:UIColor.mnz_redMain];
+        [cancelAlertAction mnz_setTitleTextColor:[UIColor mnz_redMainForTraitCollection:(self.traitCollection)]];
         [permissionsAlertController addAction:cancelAlertAction];
         
         if (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator) {
             UIAlertAction *moderatorAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"moderator", @"The Moderator permission level in chat. With moderator permissions a participant can manage the chat.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                 [[MEGASdkManager sharedMEGAChatSdk] updateChatPermissions:self.chatRoom.chatId userHandle:userHandle privilege:MEGAChatRoomPrivilegeModerator delegate:self];
             }];
-            [moderatorAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+            [moderatorAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
             [permissionsAlertController addAction:moderatorAlertAction];
             
             UIAlertAction *standartAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"standard", @"The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                 [[MEGASdkManager sharedMEGAChatSdk] updateChatPermissions:self.chatRoom.chatId userHandle:userHandle privilege:MEGAChatRoomPrivilegeStandard delegate:self];
             }];
-            [standartAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+            [standartAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
             [permissionsAlertController addAction:standartAlertAction];
             
             UIAlertAction *readOnlyAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                 [[MEGASdkManager sharedMEGAChatSdk] updateChatPermissions:self.chatRoom.chatId userHandle:userHandle privilege:MEGAChatRoomPrivilegeRo delegate:self];
             }];
-            [readOnlyAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+            [readOnlyAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
             [permissionsAlertController addAction:readOnlyAlertAction];
             
             MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:[self.chatRoom peerEmailByHandle:userHandle]];
@@ -407,7 +407,7 @@
     switch (indexPath.section) {
         case 0:
             cell.leftImageView.image = [UIImage imageNamed:@"renameGroup"];
-            cell.leftImageView.tintColor = UIColor.mnz_gray777777;
+            cell.leftImageView.tintColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
             cell.nameLabel.text = AMLocalizedString(@"renameGroup", @"The title of a menu button which allows users to rename a group chat.");
             break;
             
@@ -425,13 +425,13 @@
         case 3:
             cell.leftImageView.image = self.chatRoom.isArchived ? [UIImage imageNamed:@"unArchiveChat"] : [UIImage imageNamed:@"archiveChat_gray"];
             cell.nameLabel.text = self.chatRoom.isArchived ? AMLocalizedString(@"unarchiveChat", @"The title of the dialog to unarchive an archived chat.") : AMLocalizedString(@"archiveChat", @"Title of button to archive chats.");
-            cell.nameLabel.textColor = self.chatRoom.isArchived ? UIColor.mnz_redMain : UIColor.mnz_black333333;
+            cell.nameLabel.textColor = self.chatRoom.isArchived ? [UIColor mnz_redMainForTraitCollection:(self.traitCollection)] : UIColor.mnz_label;
             break;
             
         case 4:
             cell.leftImageView.image = [UIImage imageNamed:@"leaveGroup"];
             cell.nameLabel.text = self.chatRoom.isPreview ? AMLocalizedString(@"close", nil) : AMLocalizedString(@"leaveGroup", @"Button title that allows the user to leave a group chat.");
-            cell.nameLabel.textColor = UIColor.mnz_redMain;            
+            cell.nameLabel.textColor = [UIColor mnz_redMainForTraitCollection:(self.traitCollection)];            
             break;
                         
         case 5:

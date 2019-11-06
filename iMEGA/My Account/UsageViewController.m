@@ -188,7 +188,7 @@
                                                   value:[UIFont mnz_SFUILightWithSize:12.0f]
                                                   range:secondPartRange];
         [secondPartMutableAttributedString addAttribute:NSForegroundColorAttributeName
-                                                  value:[UIColor mnz_gray777777]
+                                                  value:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]
                                                   range:secondPartRange];
         
         [firstPartMutableAttributedString appendAttributedString:secondPartMutableAttributedString];

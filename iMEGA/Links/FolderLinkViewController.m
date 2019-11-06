@@ -679,7 +679,7 @@
         cell.selectedBackgroundView = nil;
     }
     
-    cell.separatorView.layer.borderColor = UIColor.mnz_grayCCCCCC.CGColor;
+    cell.separatorView.layer.borderColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection].CGColor;
     cell.separatorView.layer.borderWidth = 0.5;
     
     if (@available(iOS 11.0, *)) {
@@ -852,7 +852,7 @@
         text = AMLocalizedString(@"Mobile Data is turned off", @"Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings.");
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleFootnote], NSForegroundColorAttributeName:UIColor.mnz_gray777777};
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleFootnote], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]};
     
     return [NSAttributedString.alloc initWithString:text attributes:attributes];
 }

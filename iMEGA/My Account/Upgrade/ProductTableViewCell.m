@@ -14,9 +14,9 @@
     [super setHighlighted:highlighted animated:animated];
     
     if (highlighted) {
-        self.upperLineView.backgroundColor = UIColor.mnz_grayCCCCCC;
+        self.upperLineView.backgroundColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
         self.productNameView.backgroundColor = self.productPriceLabel.textColor;
-        self.underLineView.backgroundColor = UIColor.mnz_grayCCCCCC;
+        self.underLineView.backgroundColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
     }
 }
 

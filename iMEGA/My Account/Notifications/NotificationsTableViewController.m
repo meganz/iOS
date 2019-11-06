@@ -100,22 +100,22 @@
         case MEGAUserAlertTypePaymentSucceeded:
         case MEGAUserAlertTypePaymentFailed:
             typeLabel.text = AMLocalizedString(@"Payment info", @"The header of a notification related to payments").uppercaseString;
-            typeLabel.textColor = UIColor.mnz_redMain;
+            typeLabel.textColor = [UIColor mnz_redMainForTraitCollection:(self.traitCollection)];
             break;
             
         case MEGAUserAlertTypePaymentReminder:
             typeLabel.text = AMLocalizedString(@"PRO membership plan expiring soon", @"A title for a notification saying the user’s pricing plan will expire soon.").uppercaseString;
-            typeLabel.textColor = UIColor.mnz_redMain;
+            typeLabel.textColor = [UIColor mnz_redMainForTraitCollection:(self.traitCollection)];
             break;
             
         case MEGAUserAlertTypeTakedown:
             typeLabel.text = AMLocalizedString(@"Takedown notice", @"The header of a notification indicating that a file or folder has been taken down due to infringement or other reason.").uppercaseString;
-            typeLabel.textColor = UIColor.mnz_redMain;
+            typeLabel.textColor = [UIColor mnz_redMainForTraitCollection:(self.traitCollection)];
             break;
             
         case MEGAUserAlertTypeTakedownReinstated:
             typeLabel.text = AMLocalizedString(@"Takedown reinstated", @"The header of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice.").uppercaseString;
-            typeLabel.textColor = UIColor.mnz_redMain;
+            typeLabel.textColor = [UIColor mnz_redMainForTraitCollection:(self.traitCollection)];
             break;
             
         default:
@@ -480,7 +480,7 @@
         text = AMLocalizedString(@"Mobile Data is turned off", @"Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings.");
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleFootnote], NSForegroundColorAttributeName:UIColor.mnz_gray777777};
+    NSDictionary *attributes = @{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleFootnote], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]};
     
     return [NSAttributedString.alloc initWithString:text attributes:attributes];
 }
