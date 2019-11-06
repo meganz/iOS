@@ -377,8 +377,6 @@
 		831D61AA218738F40038F5B8 /* MOFolderLayout+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 831D61A4218738D20038F5B8 /* MOFolderLayout+CoreDataProperties.m */; };
 		831FBEA220EF697200AC1B91 /* MEGAArchiveChatRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 831FBEA120EF697200AC1B91 /* MEGAArchiveChatRequestDelegate.m */; };
 		8320213622B78D530057D96F /* ContactsOnMegaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8320213522B78D530057D96F /* ContactsOnMegaViewController.swift */; };
-		8320213E22B8C8710057D96F /* MEGAGetCountryCallingCodesRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8320213D22B8C8710057D96F /* MEGAGetCountryCallingCodesRequestDelegate.m */; };
-		8320214422B903D70057D96F /* MEGAGetRegisteredContactsRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8320214322B903D70057D96F /* MEGAGetRegisteredContactsRequestDelegate.m */; };
 		8326F383229FC032009BA19A /* MEGALoadingMessagesHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8326F381229FC032009BA19A /* MEGALoadingMessagesHeaderView.m */; };
 		8326F384229FC032009BA19A /* MEGALoadingMessagesHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8326F382229FC032009BA19A /* MEGALoadingMessagesHeaderView.xib */; };
 		832E1025202B09AE00BDD30F /* NodeActionCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 832E1023202B09AE00BDD30F /* NodeActionCollectionViewCell.m */; };
@@ -1627,13 +1625,8 @@
 		831D61A4218738D20038F5B8 /* MOFolderLayout+CoreDataProperties.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "MOFolderLayout+CoreDataProperties.m"; sourceTree = "<group>"; };
 		831FBEA020EF697200AC1B91 /* MEGAArchiveChatRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAArchiveChatRequestDelegate.h; sourceTree = "<group>"; };
 		831FBEA120EF697200AC1B91 /* MEGAArchiveChatRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAArchiveChatRequestDelegate.m; sourceTree = "<group>"; };
-		83209DF6231D05B700F5E2DB /* ContacLinkQRType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContacLinkQRType.h; sourceTree = "<group>"; };
-		8320213222B78CDB0057D96F /* MEGA-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MEGA-Bridging-Header.h"; sourceTree = "<group>"; };
 		8320213522B78D530057D96F /* ContactsOnMegaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsOnMegaViewController.swift; sourceTree = "<group>"; };
-		8320213C22B8C8710057D96F /* MEGAGetCountryCallingCodesRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MEGAGetCountryCallingCodesRequestDelegate.h; path = API/Requests/MEGAGetCountryCallingCodesRequestDelegate.h; sourceTree = "<group>"; };
-		8320213D22B8C8710057D96F /* MEGAGetCountryCallingCodesRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGAGetCountryCallingCodesRequestDelegate.m; path = API/Requests/MEGAGetCountryCallingCodesRequestDelegate.m; sourceTree = "<group>"; };
-		8320214222B903D60057D96F /* MEGAGetRegisteredContactsRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGAGetRegisteredContactsRequestDelegate.h; path = API/Requests/MEGAGetRegisteredContactsRequestDelegate.h; sourceTree = "<group>"; };
-		8320214322B903D70057D96F /* MEGAGetRegisteredContactsRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGAGetRegisteredContactsRequestDelegate.m; path = API/Requests/MEGAGetRegisteredContactsRequestDelegate.m; sourceTree = "<group>"; };
+		83209DF6231D05B700F5E2DB /* ContacLinkQRType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContacLinkQRType.h; sourceTree = "<group>"; };
 		8326F380229FC032009BA19A /* MEGALoadingMessagesHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGALoadingMessagesHeaderView.h; sourceTree = "<group>"; };
 		8326F381229FC032009BA19A /* MEGALoadingMessagesHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGALoadingMessagesHeaderView.m; sourceTree = "<group>"; };
 		8326F382229FC032009BA19A /* MEGALoadingMessagesHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MEGALoadingMessagesHeaderView.xib; sourceTree = "<group>"; };
@@ -4626,8 +4619,6 @@
 		A8AA4F6E1ED4296700E7BA23 /* Requests */ = {
 			isa = PBXGroup;
 			children = (
-				8320214222B903D60057D96F /* MEGAGetRegisteredContactsRequestDelegate.h */,
-				8320214322B903D70057D96F /* MEGAGetRegisteredContactsRequestDelegate.m */,
 				A8AA4F7B1ED433CA00E7BA23 /* MEGABaseRequestDelegate.h */,
 				A8AA4F7C1ED433CA00E7BA23 /* MEGABaseRequestDelegate.m */,
 				77F1DBDA2056A9DF005D5F0E /* MEGAContactLinkCreateRequestDelegate.h */,
@@ -4686,8 +4677,6 @@
 				5B20B01020E6300300511C0F /* MEGAGenericRequestDelegate.m */,
 				5B14A41420D10042005F8146 /* MEGAMultiFactorAuthCheckRequestDelegate.h */,
 				5B14A41320D10042005F8146 /* MEGAMultiFactorAuthCheckRequestDelegate.m */,
-				8320213C22B8C8710057D96F /* MEGAGetCountryCallingCodesRequestDelegate.h */,
-				8320213D22B8C8710057D96F /* MEGAGetCountryCallingCodesRequestDelegate.m */,
 			);
 			name = Requests;
 			sourceTree = "<group>";
@@ -5571,7 +5560,6 @@
 				A815FCE41FE1795C0075AC29 /* MEGAChatCreateChatGroupRequestDelegate.m in Sources */,
 				41D21E6C1D01AEC3002E6296 /* CTAssetsPickerAccessDeniedView.m in Sources */,
 				B6C524DD21E2BC9900AE3575 /* AVAsset+CameraUpload.m in Sources */,
-				8320214422B903D70057D96F /* MEGAGetRegisteredContactsRequestDelegate.m in Sources */,
 				83C570E122E5BFCF00216896 /* RegexManager.swift in Sources */,
 				41A66D0D1AE7A0FE007D7E20 /* ProductTableViewCell.m in Sources */,
 				E8E3E6F91E0939BE00D45F45 /* MEGAOpenMessageHeaderView.m in Sources */,
@@ -5648,7 +5636,6 @@
 				5BADE39A1F02BD1F009C9AD7 /* MEGANodeList+MNZCategory.m in Sources */,
 				839D5A9721C25A7D00FAE757 /* GridFlowLayout.m in Sources */,
 				5B367576204FFBF60087362D /* SendToChatActivity.m in Sources */,
-				A824AE3F228B1D6900EDF27E /* FLEXGlobalsTableViewController.m in Sources */,
 				8311208822C0CD69006F6E36 /* EnterEmailViewController.swift in Sources */,
 				5B00B6E8210745BF0076D5BB /* FileManagementTableViewController.m in Sources */,
 				5B78F0B21F3C5362007ED721 /* MyAccountHallViewController.m in Sources */,
@@ -5724,7 +5711,6 @@
 				A86B9F6E2316D6AB00F35E7A /* FLEXAddressExplorerCoordinator.m in Sources */,
 				5BB68CA120359B5400B03C00 /* PasswordStrengthIndicatorView.m in Sources */,
 				E8B519261AC9CD8000BB7324 /* TransfersViewController.m in Sources */,
-				A824AE33228B1D6800EDF27E /* FLEXSystemLogTableViewCell.m in Sources */,
 				8315F20C22C2202400EA40CC /* ContactsOnMegaManager.swift in Sources */,
 				5B20B00A20E61DDF00511C0F /* MEGALinkManager.m in Sources */,
 				5B64D4EE2111D5DE004CD155 /* EnabledTwoFactorAuthenticationViewController.m in Sources */,
@@ -5834,10 +5820,7 @@
 				E8F791821BC5754A00C58676 /* ShareFolderActivity.m in Sources */,
 				A86B9F5B2316D6AB00F35E7A /* FLEXExplorerViewController.m in Sources */,
 				B67DA38A2330AF9900E62067 /* AddPhoneNumberViewController.swift in Sources */,
-				8320213E22B8C8710057D96F /* MEGAGetCountryCallingCodesRequestDelegate.m in Sources */,
-				A824AE42228B1D6900EDF27E /* FLEXHierarchyTableViewCell.m in Sources */,
 				E8F791821BC5754A00C58676 /* ShareFolderActivity.m in Sources */,
-				A824AE49228B1D6900EDF27E /* FLEXRuntimeUtility.m in Sources */,
 				417279381DB663FA001AC818 /* UIView+JSQMessages.m in Sources */,
 				A89E77471EA6058E00ADC0D2 /* MEGAMessageAttachmentView.m in Sources */,
 				A86B9F792316D6AB00F35E7A /* FLEXLibrariesTableViewController.m in Sources */,
@@ -5987,9 +5970,7 @@
 				8394CFB8211B1AFD00A1634A /* GroupCallCollectionViewCell.m in Sources */,
 				A89629781FACEAF800F02F7A /* MEGAProviderDelegate.m in Sources */,
 				83BC4F1D216B72E800000D30 /* MEGAGroupCallPeer.m in Sources */,
-				A824AE01228B1D6800EDF27E /* FLEXObjectExplorerViewController.m in Sources */,
 				8320213622B78D530057D96F /* ContactsOnMegaViewController.swift in Sources */,
-				A824AE11228B1D6800EDF27E /* FLEXManager.m in Sources */,
 				5B14A41520D10043005F8146 /* MEGAMultiFactorAuthCheckRequestDelegate.m in Sources */,
 				B695E58023275A4E00D12B9E /* MEGAFunctions.swift in Sources */,
 				77597006219DD4D100B31671 /* MEGAUserAlertList+MNZCategory.m in Sources */,

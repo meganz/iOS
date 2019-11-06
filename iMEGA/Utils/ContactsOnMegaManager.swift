@@ -105,7 +105,7 @@ struct ContactOnMega {
     private func getContactsOnMega() {
         var contactsOnMegaDictionary = [UInt64:String]()
 
-        let getRegisteredContactsDelegate = MEGAGetRegisteredContactsRequestDelegate.init { (request, error) in
+        let getRegisteredContactsDelegate = MEGAGenericRequestDelegate.init { (request, error) in
             if error.type == .apiOk {
                 request.stringTableArray.forEach({ (contactOnMega) in
                     let userHandle = MEGASdk.handle(forBase64UserHandle: contactOnMega[1])
