@@ -37,7 +37,7 @@ struct ContactOnMega {
     
     @objc func contactsOnMegaCount() -> NSInteger {
         if state == .ready {
-            return contactsOnMega.count
+            return contactsOnMegaFilteredByOutgoingContactRequests().count
         } else {
             return 0
         }
@@ -45,13 +45,37 @@ struct ContactOnMega {
     
     func fetchContactsOnMega() -> [ContactOnMega]? {
         if state == .ready {
-            return contactsOnMega
+            return contactsOnMegaFilteredByOutgoingContactRequests()
         } else {
             return nil
         }
     }
 
+    func contactsOnMegaFilteredByOutgoingContactRequests() -> [ContactOnMega] {
+        let outgoingContactRequestList = MEGASdkManager.sharedMEGASdk()?.outgoingContactRequests()
+        guard let size = outgoingContactRequestList?.size.intValue else {
+            return contactsOnMega
+        }
+        
+        var contactsOnMegaFilteredByInvited = [ContactOnMega]()
+        
+        var outgoingContactsRequestEmails = [String]()
+        for n in 0 ..< size {
+            outgoingContactsRequestEmails.append(outgoingContactRequestList?.contactRequest(at: n)?.targetEmail ?? "")
+        }
+        
+        for contact in contactsOnMega {
+            if outgoingContactsRequestEmails.filter({$0 == contact.email}).count == 0 {
+                contactsOnMegaFilteredByInvited.append(contact)
+            }
+        }
+        
+        return contactsOnMegaFilteredByInvited
+    }
+    
     @objc func configureContactsOnMega(completion: (() -> Void)?) {
+        contactsOnMega.removeAll()
+        
         if CNContactStore.authorizationStatus(for: .contacts) == .authorized {
             let userContacts = MEGASdkManager.sharedMEGASdk().contacts()
             for i in 0 ..< userContacts.size.intValue {
@@ -149,6 +173,7 @@ struct ContactOnMega {
                     }
                 }
             })
-            MEGASdkManager.sharedMEGAChatSdk().userEmail(byUserHandle: contactOnMega.key, delegate: emailRequestDelegate)        }
+            MEGASdkManager.sharedMEGAChatSdk().userEmail(byUserHandle: contactOnMega.key, delegate: emailRequestDelegate)
+        }
     }
 }

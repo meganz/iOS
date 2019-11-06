@@ -86,6 +86,7 @@
     OnboardingViewController *setupVC = [OnboardingViewController instanciateOnboardingWithType:OnboardingTypePermissions];
     setupVC.completion = ^{
         [self.delegate setupFinished];
+        [self.delegate didReadyToShowRecommendations];
     };
     
     [self presentViewController:setupVC animated:NO completion:^{
@@ -113,7 +114,6 @@
     
     if (request.type == MEGARequestTypeFetchNodes) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self.delegate didReadyToShowRecommendations];
             [self performAnimation];
         });
     }

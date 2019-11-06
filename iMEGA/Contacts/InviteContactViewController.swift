@@ -20,6 +20,10 @@ class InviteContactViewController: UIViewController {
         super.viewDidLoad()
 
         navigationItem.title = AMLocalizedString("inviteContact", "Text shown when the user tries to make a call and the receiver is not a contact")
+        addFromContactsLabel.text = AMLocalizedString("addFromContacts", "Item menu option to add a contact through your device app Contacts")
+        enterEmailLabel.text = AMLocalizedString("Enter Email", "Text used as a section title or similar")
+        scanQrCodeLabel.text = AMLocalizedString("scanCode")
+        moreLabel.text = AMLocalizedString("more")
         
         let contactLinkCreateDelegate = MEGAContactLinkCreateRequestDelegate { (request) in
             guard let base64Handle = MEGASdk.base64Handle(forHandle: request.nodeHandle) else { return }
@@ -32,7 +36,11 @@ class InviteContactViewController: UIViewController {
         if !MFMessageComposeViewController.canSendText() {
             addFromContactsLabel.textColor = UIColor.mnz_gray8F8F8F()
         }
-}
+    }
+    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .portrait
+    }
     
     //MARK: Private
     func createContactsOnMegaChild() {

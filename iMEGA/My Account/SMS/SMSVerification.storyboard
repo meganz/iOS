@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="RUe-vS-5fH">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="RUe-vS-5fH">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -179,6 +179,7 @@
                                                                     </stackView>
                                                                 </subviews>
                                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <gestureRecognizers/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="trailing" secondItem="eZO-Um-Lk6" secondAttribute="trailing" constant="17" id="Qo3-3G-hVa"/>
                                                                     <constraint firstItem="eZO-Um-Lk6" firstAttribute="top" secondItem="c17-Yd-FEL" secondAttribute="top" id="Wyf-4c-s1F"/>
@@ -194,6 +195,9 @@
                                                                 </constraints>
                                                             </view>
                                                         </subviews>
+                                                        <connections>
+                                                            <outletCollection property="gestureRecognizers" destination="Fai-gh-XiA" appends="YES" id="CZl-iU-1VM"/>
+                                                        </connections>
                                                     </stackView>
                                                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wjd-LL-FkO">
                                                         <rect key="frame" x="0.0" y="589" width="375" height="0.0"/>
@@ -335,6 +339,11 @@
                 <tapGestureRecognizer id="LXG-D4-X6J">
                     <connections>
                         <action selector="didTapCountryView" destination="RUe-vS-5fH" id="THh-RK-RmR"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="Fai-gh-XiA">
+                    <connections>
+                        <action selector="didTapPhoneView" destination="RUe-vS-5fH" id="0Iu-qC-34C"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>

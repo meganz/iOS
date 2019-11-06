@@ -20,7 +20,7 @@ import UIKit
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.title = AMLocalizedString("Contacts on MEGA", "Text used as a section title or similar showing the user the phone contacts using MEGA")
+        navigationItem.title = AMLocalizedString("On MEGA", "Text used as a section title or similar showing the user the phone contacts using MEGA")
         inviteContactLabel.text = AMLocalizedString("inviteContact", "Text shown when the user tries to make a call and the receiver is not a contact")
         searchController = Helper.customSearchController(withSearchResultsUpdaterDelegate: self, searchBarDelegate: self)
         self.searchController.hidesNavigationBarDuringPresentation = false
@@ -35,6 +35,7 @@ import UIKit
         super.viewWillAppear(animated)
        
         contactsOnMega = ContactsOnMegaManager.shared.fetchContactsOnMega() ?? []
+        self.tableView.layoutIfNeeded()
         tableView.reloadData()
     }
     
@@ -72,7 +73,7 @@ extension ContactsOnMegaViewController: UISearchResultsUpdating {
                 searchingContactsOnMega = contactsOnMega.filter( {$0.name.contains(searchString)} )
             }
         }
-        self.tableView.reloadData()
+        tableView.reloadData()
     }
 }
 
@@ -101,7 +102,7 @@ extension ContactsOnMegaViewController: UITableViewDataSource {
             fatalError("Could not dequeue cell with identifier contactOnMegaCell")
         }
         
-        cell.configure(for: contacts()[indexPath.row])
+        cell.configure(for: contacts()[indexPath.row], delegate: self)
         
         return cell
     }
@@ -111,7 +112,7 @@ extension ContactsOnMegaViewController: UITableViewDataSource {
 extension ContactsOnMegaViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        contactsOnMegaHeaderTitle.text = AMLocalizedString("Contacts on MEGA", "Text used as a section title or similar showing the user the phone contacts using MEGA").uppercased()
+        contactsOnMegaHeaderTitle.text = AMLocalizedString("CONTACTS ON MEGA", "Text used as a section title or similar showing the user the phone contacts using MEGA")
         return contactsOnMegaHeader
     }
     
@@ -123,7 +124,7 @@ extension ContactsOnMegaViewController: UITableViewDelegate {
         switch CNContactStore.authorizationStatus(for: CNEntityType.contacts) {
         case .notDetermined:
             guard let bottomView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ContactsPermissionBottomView().bottomReuserIdentifier()) as? ContactsPermissionBottomView else {
-                return UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+                return UIView(frame: .zero)
             }
             bottomView.configureForRequestingPermission ( action: {
                 DevicePermissionsHelper.contactsPermission { (granted) in
@@ -132,6 +133,8 @@ extension ContactsOnMegaViewController: UITableViewDelegate {
                             self.contactsOnMega = ContactsOnMegaManager.shared.fetchContactsOnMega() ?? []
                             tableView.reloadData()
                         })
+                    } else {
+                        tableView.reloadData()
                     }
                 }
             })
@@ -139,7 +142,7 @@ extension ContactsOnMegaViewController: UITableViewDelegate {
             
         case .restricted, .denied:
             guard let bottomView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ContactsPermissionBottomView().bottomReuserIdentifier()) as? ContactsPermissionBottomView else {
-                return UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+                return UIView(frame: CGRect.zero)
             }
             bottomView.configureForOpenSettingsPermission( action: {
                 UIApplication.shared.openURL(URL(string: UIApplication.openSettingsURLString)!)
@@ -148,11 +151,10 @@ extension ContactsOnMegaViewController: UITableViewDelegate {
             return bottomView
             
         case .authorized:
-            return UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+            return UIView(frame: CGRect.zero)
             
         @unknown default:
-            return UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-            
+            return UIView(frame: CGRect.zero)
         }
     }
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -207,5 +209,17 @@ extension ContactsOnMegaViewController: DZNEmptyDataSetSource {
             }
         }
         return nil
+    }
+}
+
+// MARK: - ContactOnMegaTableViewCellDelegate
+extension ContactsOnMegaViewController: ContactOnMegaTableViewCellDelegate {
+    func addContactCellTapped(_ cell: ContactOnMegaTableViewCell) {
+        guard let indexPath = tableView.indexPath(for: cell) else { return }
+        contactsOnMega.remove(at: indexPath.row)
+        tableView.deleteRows(at: [indexPath], with: .automatic)
+        if contactsOnMega.count == 0 {
+            tableView.reloadEmptyDataSet()
+        }
     }
 }

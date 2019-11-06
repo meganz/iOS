@@ -26,7 +26,7 @@ class ContactsPermissionBottomView: UITableViewHeaderFooterView {
     }
     
     func configureForOpenSettingsPermission(action: @escaping completion) {
-        subtitleLabel.text = AMLocalizedString("MEGA needs access to your contacts to help you connect with other people on MEGA.", "Detailed explanation of why the user should give permission to contacts") + "\n" + AMLocalizedString("To enable access, Settings > Privacy > Contacts > set to “On”", "Text showing the user how to grant access to contacts in the device settings")
+        subtitleLabel.text = AMLocalizedString("MEGA needs access to your contacts to help you connect with other people on MEGA.", "Detailed explanation of why the user should give permission to contacts")
         enableButton.setTitle(AMLocalizedString("Open Settings", "Text indicating the user to open the device settings for MEGA"), for: .normal)
         enableButtonAction = action
     }

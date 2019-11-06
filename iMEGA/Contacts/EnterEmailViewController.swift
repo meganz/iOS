@@ -81,8 +81,8 @@ class EnterEmailViewController: UIViewController {
     
     // MARK: Private
     func updateBottomConstraint(_ newValue:CGFloat) {
-        self.inviteContactsButtonBottomConstraint.constant += newValue
-        self.view.layoutIfNeeded()
+        inviteContactsButtonBottomConstraint.constant = newValue
+        view.layoutIfNeeded()
     }
 
     func disableInviteContactsButton() {
@@ -126,7 +126,7 @@ class EnterEmailViewController: UIViewController {
             return
         }
         
-        guard let inviteContactRequestDelegate = MEGAInviteContactRequestDelegate.init(numberOfRequests: UInt(tokens.count)) else { return }
+        let inviteContactRequestDelegate = MEGAInviteContactRequestDelegate.init(numberOfRequests: UInt(tokens.count))
         tokens.forEach { (email) in
             MEGASdkManager.sharedMEGASdk().inviteContact(withEmail: email, message: "", action: MEGAInviteAction.add, delegate: inviteContactRequestDelegate)
         }

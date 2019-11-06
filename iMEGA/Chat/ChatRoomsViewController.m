@@ -388,7 +388,7 @@
         }
         if ([CNContactStore authorizationStatusForEntityType:CNEntityTypeContacts] == CNAuthorizationStatusAuthorized) {
             if (self.contactsOnMegaCount) {
-                self.contactsOnMegaEmptyStateTitle.text = [AMLocalizedString(@"You have [X] contacts on MEGA", @"Title showing the user how many of his contacts are using MEGA") stringByReplacingOccurrencesOfString:@"[X]" withString:[NSString stringWithFormat:@"%tu", self.contactsOnMegaCount]];
+                self.contactsOnMegaEmptyStateTitle.text = self.contactsOnMegaCount == 1 ? AMLocalizedString(@"You have 1 contact on MEGA", @"Title showing the user one of his contacts are using MEGA") : [AMLocalizedString(@"You have [X] contacts on MEGA", @"Title showing the user how many of his contacts are using MEGA") stringByReplacingOccurrencesOfString:@"[X]" withString:[NSString stringWithFormat:@"%tu", self.contactsOnMegaCount]];
                 self.contactsOnMegaEmptyStateView.hidden = NO;
             }
         } else {
@@ -732,7 +732,7 @@
 - (UITableViewCell *)contactsOnMegaCellForIndexPath:(NSIndexPath *)indexPath {
     ChatRoomCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"contactsOnMegaCell" forIndexPath:indexPath];
     if ([CNContactStore authorizationStatusForEntityType:CNEntityTypeContacts] == CNAuthorizationStatusAuthorized) {
-        cell.chatTitle.text = [AMLocalizedString(@"You have [X] contacts on MEGA", @"Title showing the user how many of his contacts are using MEGA") stringByReplacingOccurrencesOfString:@"[X]" withString:[NSString stringWithFormat:@"%tu", self.contactsOnMegaCount]];
+         cell.chatTitle.text = self.contactsOnMegaCount == 1 ? AMLocalizedString(@"You have 1 contact on MEGA", @"Title showing the user one of his contacts are using MEGA") : [AMLocalizedString(@"You have [X] contacts on MEGA", @"Title showing the user how many of his contacts are using MEGA") stringByReplacingOccurrencesOfString:@"[X]" withString:[NSString stringWithFormat:@"%tu", self.contactsOnMegaCount]];
     } else {
         cell.chatTitle.text = AMLocalizedString(@"See who's already on MEGA", @"Title encouraging the user to check who of its contacts are using MEGA");
     }

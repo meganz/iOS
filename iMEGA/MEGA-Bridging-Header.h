@@ -30,3 +30,4 @@
 #import "MEGAContactLinkCreateRequestDelegate.h"
 #import "MEGAChatGenericRequestDelegate.h"
 #import "MEGAInviteContactRequestDelegate.h"
+#import "InitialLaunchViewController.h"
