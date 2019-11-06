@@ -121,7 +121,7 @@
 /*  */
 "agreeWithTheMEGATermsOfService"="J’accepte les <a href='terms'>conditions générales d’utilisation</a> de MEGA";
 /* This text is displayed in the account creation screen with a checkbox. User will have to tick the checkbox before proceeding on to create an account */
-"agreeWithLosingPasswordYouLoseData"="Je comprends que [S]si je perds mon mot de passe, je pourrais perdre mes données[/S]. En apprendre davantage sur le <a href=\"terms\">chiffrement de bout en bout de MEGA</a>";
+"agreeWithLosingPasswordYouLoseData"="Je comprends que [S]si je perds mon mot de passe, je pourrais perdre mes données[/S]. En apprendre davantage sur le <a href=\"terms\">chiffrement de bout en bout de MEGA</a>.";
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="Saisir un nom valide";
 /* Error text shown when you have not written the same password */
@@ -165,7 +165,7 @@
 /* */
 "fileLinkUnavailableText3"="L’URL est invalide. Le lien auquel vous tentez d’accéder n’existe pas.";
 /* */
-"fileLinkUnavailableText4"="Le fichier a été supprimé par l'utilisateur.";
+"fileLinkUnavailableText4"="Le fichier a été supprimé par l’utilisateur.";
 /* Message shown when a download starts */
 "downloadStarted"="Le téléchargement est lancé";
 /* Title for the folder link view */
@@ -477,7 +477,7 @@
 /* Message shown when some files have been imported */
 "filesImported"="Les fichiers ont été importés";
 /* Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos */
-"selectTitle"="Choisir des éléments";
+"selectTitle"="Sélectionner des éléments";
 /* Button title that skips the current action */
 "skipButton"="Ignorer";
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
@@ -519,7 +519,7 @@
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
 "foldersShared"="%d dossiers";
 /* Item menu option to add a contact writting his/her email */
-"addFromEmail"="Insérer une adresse courriel";
+"addFromEmail"="Saisir une adresse courriel";
 /* Title of Shared Items section */
 "sharedItems"="Éléments partagés";
 /* Title of the tab bar item for the Shared Items section */
@@ -553,7 +553,7 @@
 /* Item menu option to add a contact through your device app Contacts */
 "addFromContacts"="Ajouter à partir des contacts";
 /* Alert title shown when you select to add a contact inserting his/her email */
-"addContact"="Ajouter le contact";
+"addContact"="Ajouter un contact";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
 "contactEmail"="Adresse courriel du contact";
 /* Button title to 'Add' the contact to your contacts list */
@@ -563,7 +563,7 @@
 /* Add contacts and share dialog error message when user try to add already existing email address. */
 "alreadyHaveAContactWithThatEmailAddress"="Vous avez déjà un contact avec cette adresse courriel";
 /* Success message shown when a contact has been invited */
-"theUserHasBeenInvited"="L'utilisateur [X] a été invité et apparaîtra dans votre liste de contacts s'il accepte.";
+"theUserHasBeenInvited"="L’utilisateur [X] a été invité et apparaîtra dans votre liste de contacts s’il accepte.";
 /* Success message shown when some contacts have been invited */
 "theUsersHaveBeenInvited"="Les utilisateurs ont été invités et apparaîtront dans votre liste de contacts s'ils acceptent.";
 /* Alert title shown when you want to remove one or more contacts */
@@ -655,7 +655,7 @@
 /* Footer text for Camera Upload switch section when camera upload is disabled */
 "When enabled, photos will be uploaded."="Si cette option est activée, les photos seront téléversées.";
 /* Footer text for Camera Upload switch section when only photos upload is enabled */
-"Photos will be uploaded to Camera Uploads folder."="Les photos seront téléversées dans le dossier";
+"Photos will be uploaded to Camera Uploads folder."="Les photos seront téléversées dans le dossier Téléversements de l’appareil photo.";
 /* Footer text for Camera Upload switch section when photos and videos upload is enabled */
 "Photos and videos will be uploaded to Camera Uploads folder."="Les photos et les vidéos seront téléversées dans le dossier Téléversements de l’appareil photo.";
 /* Title to show for upload in background */
@@ -707,13 +707,13 @@
 /* Title of the switch to config whether to upload Shared Albums */
 "Upload Shared Albums"="Téléverser les albums partagés";
 /* Footer description for Upload Shared Albums title when option enabled */
-"Shared Albums from your device's Photos app will be uploaded."="Les albums partagés seront téléversés de Photos sur votre appareil.";
+"Shared Albums from your device's Photos app will be uploaded."="Les albums partagés de l’appli Photos de votre appareil seront téléversés.";
 /* Footer description for Upload Shared Albums title when option disabled */
-"Shared Albums from your device's Photos app will not be uploaded."="Les albums partagés ne seront pas téléversés de Photos sur votre appareil.";
+"Shared Albums from your device's Photos app will not be uploaded."="Les albums partagés de l’appli Photos de votre appareil ne seront pas téléversés.";
 /* Title of the switch to config whether to upload synced albums */
 "Upload albums synced from iTunes"="Téléverser les albums synchronisés d’iTunes";
 /* Footer description for upload synced albums title */
-"Synced albums are where you sync photos or videos to your device's Photos app from iTunes."="Les albums synchronisés sont où vous synchronisez les photos ou les vidéos dans l’appli Photos de votre appareil, à partir d’iTunes.";
+"Synced albums are where you sync photos or videos to your device's Photos app from iTunes."="Les albums synchronisés sont où vous synchronisez les photos ou les vidéos vers l’appli Photos de votre appareil, à partir d’iTunes.";
 /* App means “Application” */
 "App version"="Version de l’appli";
 /* Title of the label where the SDK version is shown */
@@ -1000,11 +1000,11 @@
 /* Sentence shown under the used space to complete the info with the user account maximum storage. "used of {maximun storage}" */
 "used of %@"="utilisés sur %@";
 /* Sentence shown under the available space to complete the info with the user account maximum storage. "available of {maximun storage}" */
-"available of %@"="disponible sur %@";
+"available of %@"="disponibles sur %@";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Surclasser le compte";
 /*  */
-"chooseYourAccountType"="Choisir votre type de compte";
+"chooseYourAccountType"="Choisissez votre type de compte";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
 "cloudDriveIsAlmostFull"="[S]Votre disque nuagique est presque plein.[/S] [A]Surclassez votre compte maintenant[/A] vers un compte PRO et obtenez [S]jusqu’à 8 To (8 192 Go)[/S] d’espace de stockage nuagique.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
@@ -1032,7 +1032,7 @@
 /* Asks the user to request a custom Pro plan from customer support because their storage usage is more than the regular plans. */
 "thereAreNoPlansSuitableForYourCurrentUsage"="Aucun abonnement ne correspond à votre utilisation actuelle. Veuillez [A]contacter l’assistance[/A] pour obtenir un abonnement personnalisé.";
 /* Header shown to help on the purchasin process */
-"selectMembership"="Choisir un abonnement :";
+"selectMembership"="Sélectionner un abonnement :";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
 "save17"="Économisez 17 %";
 /* Error message shown when the purchase has failed */
@@ -1296,7 +1296,7 @@
 /* Message shown to the user when the share extension is about to be killed by iOS due to a memory issue */
 "Limited system resources are available when sharing items. Try uploading these files from within the MEGA app."="Les ressources du système sont restreintes lors du partage d’éléments. Veuillez essayer de téléverser ces fichiers à partir de l’appli MEGA.";
 /* Success message shown when the user has successfully shared something */
-"Shared successfully"="Partagé avec succès";
+"Shared successfully"="A été partagé avec succès";
 /* Notification message shown when a transfer failed. Keep colon. */
 "Transfer failed:"="Échec de transfert :";
 /* MEGAError */
@@ -1431,13 +1431,13 @@
 /* Title of section to display number of all historical versions of files. */
 "versions"="Versions";
 /* Title label of a node property. */
-"location"="Position";
+"location"="Emplacement";
 /* label for the total file size of multiple files and/or folders (no need to put the colon punctuation in the translation)*/
 "totalSize"="Taille totale";
 /* Refers to the type of a file or folder. */
 "type"="Type";
 /* Label for what a selection contains. For example: "Contains: 3 folders & 13 files". (no need to put the colon punctuation in the translation) */
-"contains"="Contient";
+"contains"="Comprend";
 /* A label for any 'Modified' text or title. For example to show the modification date of a file/folder. */
 "modified"="Modifié";
 /* A label for any ‘Added’ text or title. For example to show the upload date of a file/folder. */
@@ -1705,9 +1705,9 @@
 /* Footer text to explain what means 'Encrypted Key Rotation' */
 "Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="La rotation de la clé est un peu plus sécurisée, mais elle ne vous permet pas de créer un lien de conversation, et les nouveaux participants ne verront pas les anciens messages.";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
-"To create a chat link you must name the group."="Pour créer un lien vers la conversation, vous devez nommer le groupe.";
+"To create a chat link you must name the group."="Pour créer un lien de conversation, vous devez nommer le groupe.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
-"Chat Link"="Lien vers la conversation";
+"Chat Link"="Lien de conversation";
 /* Button text in public chat previews that allows the user to join the chat */
 "Join"="Vous y joindre";
 /* Text shown in a notification to let the user know that has joined a public chat room after login or account creation */
@@ -1717,9 +1717,9 @@
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
 "%@ enabled Encrypted Key Rotation"="%@ a activé la rotation de la clé chiffrée.";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
-"%@ created a public link for the chat."="%@ a créé un lien vers la conversation";
+"%@ created a public link for the chat."="%@ a créé un lien de conversation";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
-"%@ removed a public link for the chat."="%@ a supprimé le lien vers la conversation.";
+"%@ removed a public link for the chat."="%@ a supprimé le lien de conversation.";
 /* Management message shown in a chat when the user %@ joined it from a public chat link */
 "%@ joined the group chat."="%@ s’est joint à la conversation de groupe.";
 /* Message show when a call cannot be established because there are too many participants in the group call */
@@ -1879,7 +1879,7 @@
 /* The label of the toggle switch to indicate that file versioning is enabled. */
 "Enabled"="Activé";
 /* Text button for init a group chat with link. */
-"New Chat Link"="Nouveau lien vers la conversation";
+"New Chat Link"="Nouveau lien de conversation";
 /* Text button for init a group chat */
 "New group chat"="Nouvelle conversation de groupe";
 /* Title for the recents section. */
@@ -1907,13 +1907,13 @@
 /* Plural of items which contains a folder. 2 items */
 "items"="éléments";
 /* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
-"Chat link unavailable"="Le lien vers la conversation n’est pas disponible";
+"Chat link unavailable"="Le lien de conversation n’est pas disponible";
 /* Shown when an inexisting/unavailable/removed link is tried to be opened. */
-"This chat link is no longer available"="Le lien vers la conversation n’est pas disponible";
+"This chat link is no longer available"="Le lien de conversation n’est pas disponible";
 /* Text explaining users how the chat links work. */
 "People can join your group by using this link."="D'autres peuvent se joindre à votre groupe en utilisant ce lien.";
 /* Subtitle shown in a chat to inform where to tap to enter in the chat details view */
-"Tap here for info"="Touchez ici pour les détails";
+"Tap here for info"="Touchez ici pour obtenir des renseignements";
 /* In some cases, a user may try to get the link for a chat room, but if such is not set by an operator - it would say "not link available" and not auto create it. */
 "No chat link available."="Aucun lien de conversation n’est disponible.";
 /* Title of a dialog in which we request access to a specific permission, like the Location Services */
@@ -1971,16 +1971,28 @@
 /* Chat Notifications DND: Remaining time left to deactivate DND - 1 minute left */
 "1 minute left"="Il reste 1 minute";
 /* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 minute left */
-"%@ minutes left"="Il reste %d minutes";
+"%d minutes left"="Il reste %d minutes";
 /* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour left */
 "1 hour left"="Il reste 1 heure";
 /* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 hour left */
-"%@ hours left"="Il reste %d heures";
+"%d hours left"="Il reste %d heures";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="Notifications de dialogue en ligne";
+/* Chat settings: This text appears with the Do Not Disturb switch */
+"Do Not Disturb"="Ne pas déranger";
+/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, 1 minute left */
+"1 hour, 1 minute left"="Il reste 1 heure, 1 minute";
+/* Chat Notifications DND: Remaining time left to deactivate DND - X hours, X minutes left */
+"%d hours, %d minutes left"="Il reste %d heures, %d minutes";
+/* Chat Notifications DND: Remaining time left to deactivate DND - X hours, 1 minute left */
+"%d hours, 1 minute left"="Il reste %d heures, 1 minute";
+/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, X minutes left */
+"1 hour, %d minutes left"="Il reste 1 heure, %d minutes";
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
-"Reconnecting..."="Reconnecting…";
+"Reconnecting..."="Reconnexion…";
 /* Title shown when the user reconnect in a call. */
-"You are back!"="You are back!";
+"You are back!"="Vous êtes de retour.";
 /* Subtitle of chat screen when the chat is inactive */
 "Inactive chat"="La conversation est inactive";
+/* Error message shown when the user tries to open a file with an unsupported encoding */
+"It was not possible to obtain the content of this file, that is not encoded in either UTF-8 or ISO/IEC 8859-1."="It was not possible to obtain the content of this file, that is not encoded in either UTF-8 or ISO/IEC 8859-1.";

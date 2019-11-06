@@ -367,8 +367,8 @@
         ChatSettingsTableViewController *chatSettingsTVC = [[UIStoryboard storyboardWithName:@"ChatSettings" bundle:nil] instantiateViewControllerWithIdentifier:@"ChatSettingsTableViewControllerID"];
         [self.navigationController pushViewController:chatSettingsTVC animated:YES];
     } else {
-        MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsNavigationControllerID"];
-        [navigationController addLeftCancelButton];
+        MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsNavigationControllerID"];        
+        [navigationController addLeftDismissButtonWithText:AMLocalizedString(@"cancel", nil)];
         ContactsViewController *contactsVC = navigationController.viewControllers.firstObject;
         contactsVC.contactsMode = ContactsModeChatNamingGroup;
         contactsVC.getChatLinkEnabled = YES;

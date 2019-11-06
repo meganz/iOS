@@ -72,7 +72,7 @@
         CGSize qrImageSie = self.qrCodeImageView.frame.size;
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
             NSString *destination = [NSString stringWithFormat:@"https://mega.nz/C!%@", [MEGASdk base64HandleForHandle:request.nodeHandle]];
-            UIImage *image = [UIImage mnz_qrImageWithDotsFromString:destination withSize:qrImageSie color:UIColor.mnz_redMain];
+            UIImage *image = [UIImage mnz_qrImageFromString:destination withSize:qrImageSie color:UIColor.mnz_redMain];
             dispatch_async(dispatch_get_main_queue(), ^{
                 self.qrCodeImageView.image = image;
                 self.avatarImageView.layer.borderColor = [UIColor whiteColor].CGColor;
