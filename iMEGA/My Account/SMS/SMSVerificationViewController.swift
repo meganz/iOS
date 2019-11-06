@@ -116,6 +116,10 @@ class SMSVerificationViewController: UIViewController {
         navigationController?.pushViewController(SMSCountriesTableViewController(countryCallingCodeDict: countryCallingCodeDict, delegate: self), animated: true)
     }
     
+    @IBAction private func didTapPhoneView() {
+        phoneNumberTextField.becomeFirstResponder()
+    }
+    
     @IBAction private func didTapNextButton() {
         guard let country = currentCountry, let localNumber = phoneNumberTextField.text else { return }
         

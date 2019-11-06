@@ -1475,7 +1475,7 @@ void uncaughtExceptionHandler(NSException *exception) {
         case EventMiscFlagsReady:
             MEGALogDebug(@"Apple VoIP push status: %d", api.appleVoipPushEnabled);
             [NSUserDefaults.standardUserDefaults setBool:api.appleVoipPushEnabled forKey:@"VoIP_messages"];
-            
+            [self showAddPhoneNumberIfNeeded];
             break;
             
         default:
@@ -1697,7 +1697,6 @@ void uncaughtExceptionHandler(NSException *exception) {
             
             if (!isAccountFirstLogin) {
                 [self showMainTabBar];
-                [self showAddPhoneNumberIfNeeded];
             }
             
             NSUserDefaults *sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];

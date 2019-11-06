@@ -1952,10 +1952,10 @@
 "MEGA needs access to your contacts to help you connect with other people on MEGA."="MEGA needs access to your contacts to help you connect with other people on MEGA.";
 /* Title encouraging the user to check who of its contacts are using MEGA */
 "See who's already on MEGA"="See who's already on MEGA";
-/* Title showing the user how many of his contacts are using MEGA*/
+/* Title showing the user how many of his contacts are using MEGA */
 "You have [X] contacts on MEGA"="You have [X] contacts on MEGA";
-/* Text showing the user how to grant access to contacts in the device settings */
-"To enable access, Settings > Privacy > Contacts > set to “On”"="To enable access, Settings > Privacy > Contacts > set to “On”";
+/* Title showing the user that one of his contacts are using MEGA */
+"You have 1 contact on MEGA"="You have 1 contact on MEGA";
 /* Text indicating the user to perform an action to grant some permission */
 "Enable Access"="Enable Access";
 /* Text indicating the user to open the device settings for MEGA */
@@ -1968,8 +1968,10 @@
 "Tap space to enter multiple emails"="Tap space to enter multiple emails";
 /* Text used as a section title or similar */
 "Enter Email"="Enter Email";
+/* Text used as view title showing the user the phone contacts using MEGA */
+"On MEGA"="On MEGA";
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
-"Contacts on MEGA"="Contacts on MEGA";
+"CONTACTS ON MEGA"="CONTACTS ON MEGA";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
 "Hi, Have encrypted conversations on Mega with me and get 50GB free storage."="Hi, Have encrypted conversations on Mega with me and get 50GB free storage.";
 /* Destination folder name of chat files */
