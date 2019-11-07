@@ -117,9 +117,15 @@ struct ContactOnMega {
                 }
             }
             
-            deviceContactsChunked = Array(deviceContacts.prefix(500)).mnz_chunked(into: 100)
-            
-            getContactsOnMega()
+            if deviceContacts.count == 0 {
+                state = .ready
+                if (self.completionWhenReady != nil) {
+                    self.completionWhenReady!()
+                }
+            } else {
+                deviceContactsChunked = Array(deviceContacts.prefix(500)).mnz_chunked(into: 100)
+                getContactsOnMega()
+            }
         } catch {
             state = .error
             print("Error fetching user contacts: ", error)
@@ -157,7 +163,8 @@ struct ContactOnMega {
             }
         }
         
-        MEGASdkManager.sharedMEGASdk().getRegisteredContacts(deviceContactsChunked.first!, delegate: getRegisteredContactsDelegate)
+        guard let firstChunkOfContacts = deviceContactsChunked.first else { return }
+        MEGASdkManager.sharedMEGASdk().getRegisteredContacts(firstChunkOfContacts, delegate: getRegisteredContactsDelegate)
     }
     
     private func fetchContactsOnMegaEmails(_ contactsOnMegaDictionary: [UInt64:String]) {
