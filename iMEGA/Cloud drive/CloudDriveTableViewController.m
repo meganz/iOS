@@ -251,7 +251,7 @@
         [self setTableViewEditing:NO animated:YES];
     }];
     downloadAction.image = [UIImage imageNamed:@"infoDownload"];
-    downloadAction.backgroundColor = [UIColor colorWithRed:0 green:0.75 blue:0.65 alpha:1];
+    downloadAction.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
     
     return [UISwipeActionsConfiguration configurationWithActions:@[downloadAction]];
 }
@@ -270,7 +270,7 @@
                 [self setTableViewEditing:NO animated:YES];
             }];
             restoreAction.image = [UIImage imageNamed:@"restore"];
-            restoreAction.backgroundColor = [UIColor colorWithRed:0 green:0.75 blue:0.65 alpha:1];
+            restoreAction.backgroundColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection] ;
             
             return [UISwipeActionsConfiguration configurationWithActions:@[restoreAction]];
         }
@@ -280,8 +280,8 @@
             [self presentViewController:activityVC animated:YES completion:nil];
             [self setTableViewEditing:NO animated:YES];
         }];
-        shareAction.image = [UIImage imageNamed:@"shareGray"];
-        shareAction.backgroundColor = [UIColor colorWithRed:1.0 green:0.64 blue:0 alpha:1];
+        shareAction.image = [[UIImage imageNamed:@"shareGray"] imageWithTintColor:UIColor.whiteColor];
+        shareAction.backgroundColor = UIColor.systemOrangeColor;
         
         return [UISwipeActionsConfiguration configurationWithActions:@[shareAction]];
     }
@@ -322,7 +322,7 @@
         if ([[MEGASdkManager sharedMEGASdk] isNodeInRubbish:node]) {
             return nil;
         } else {
-            MGSwipeButton *downloadButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"infoDownload"] backgroundColor:[UIColor colorWithRed:0.0 green:0.75 blue:0.65 alpha:1.0] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
+            MGSwipeButton *downloadButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"infoDownload"] backgroundColor:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
                 [node mnz_downloadNodeOverwriting:NO];
                 return YES;
             }];
@@ -338,7 +338,7 @@
         if ([[MEGASdkManager sharedMEGASdk] isNodeInRubbish:node]) {
             MEGANode *restoreNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:node.restoreHandle];
             if (restoreNode && ![[MEGASdkManager sharedMEGASdk] isNodeInRubbish:restoreNode]) {
-                MGSwipeButton *restoreButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"restore"] backgroundColor:[UIColor colorWithRed:0.0 green:0.75 blue:0.65 alpha:1.0] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
+                MGSwipeButton *restoreButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"restore"] backgroundColor:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
                     [node mnz_restore];
                     return YES;
                 }];
@@ -347,7 +347,7 @@
                 return @[restoreButton];
             }
         } else {
-            MGSwipeButton *shareButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"shareGray"] backgroundColor:[UIColor colorWithRed:1.0 green:0.64 blue:0 alpha:1.0] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
+            MGSwipeButton *shareButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"shareGray"] backgroundColor:UIColor.systemOrangeColor padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
                 UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:@[node] sender:[self.tableView cellForRowAtIndexPath:indexPath]];
                 [self presentViewController:activityVC animated:YES completion:nil];
                 return YES;

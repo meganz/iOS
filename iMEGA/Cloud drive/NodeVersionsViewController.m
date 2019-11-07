@@ -279,7 +279,7 @@
         [self setEditing:NO animated:YES];
     }];
     downloadAction.image = [UIImage imageNamed:@"infoDownload"];
-    downloadAction.backgroundColor = [UIColor colorWithRed:0 green:0.75 blue:0.65 alpha:1];
+    downloadAction.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
     
     return [UISwipeActionsConfiguration configurationWithActions:@[downloadAction]];
 }
@@ -304,7 +304,7 @@
             [self revertAction:nil];
         }];
         revertAction.image = [UIImage imageNamed:@"history"];
-        revertAction.backgroundColor = UIColor.darkGrayColor;
+        revertAction.backgroundColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
         [rightActions addObject:revertAction];
     }
 
@@ -538,7 +538,7 @@
     
     if (direction == MGSwipeDirectionLeftToRight && [[Helper downloadingNodes] objectForKey:node.base64Handle] == nil) {
         
-        MGSwipeButton *downloadButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"infoDownload"] backgroundColor:[UIColor colorWithRed:0.0 green:0.75 blue:0.65 alpha:1.0] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
+        MGSwipeButton *downloadButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"infoDownload"] backgroundColor:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
             [node mnz_downloadNodeOverwriting:YES];
             return YES;
         }];
@@ -558,7 +558,7 @@
         [rightButtons addObject:deleteButton];
         
         if (indexPath.section != 0) {
-            MGSwipeButton *revertButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"history"] backgroundColor:UIColor.darkGrayColor padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
+            MGSwipeButton *revertButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"history"] backgroundColor:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
                 [self revertAction:nil];
                 return YES;
             }];

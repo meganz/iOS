@@ -109,7 +109,6 @@
 
     self.navigationController.topViewController.toolbarItems = self.toolbar.items;
     [self.navigationController setToolbarHidden:NO animated:YES];
-    self.navigationController.toolbar.barTintColor = UIColor.whiteColor;
     
     self.closeBarButtonItem.title = AMLocalizedString(@"close", @"A button label.");
 

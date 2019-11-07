@@ -289,7 +289,7 @@ static NSString *kPath = @"kPath";
         [self.offline updateNavigationBarTitle];
     }];
     deleteAction.image = [UIImage imageNamed:@"delete"];
-    deleteAction.backgroundColor = [UIColor colorWithRed:0.94 green:0.22 blue:0.23 alpha:1];
+    deleteAction.backgroundColor = [UIColor mnz_redMainForTraitCollection:self.traitCollection];
     return [UISwipeActionsConfiguration configurationWithActions:@[deleteAction]];
 }
 
@@ -319,7 +319,7 @@ static NSString *kPath = @"kPath";
     
     if (direction == MGSwipeDirectionRightToLeft) {
         
-        MGSwipeButton *deleteButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"delete"] backgroundColor:[UIColor colorWithRed:0.93 green:0.22 blue:0.23 alpha:1.0] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
+        MGSwipeButton *deleteButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"delete"] backgroundColor:[UIColor mnz_redMainForTraitCollection:self.traitCollection] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
             OfflineTableViewCell *offlineCell = (OfflineTableViewCell *)cell;
             NSString *itemPath = [self.offline.currentOfflinePath stringByAppendingPathComponent:offlineCell.itemNameString];
             [self.offline removeOfflineNodeCell:itemPath];

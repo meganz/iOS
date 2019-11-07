@@ -503,15 +503,15 @@
     
     self.incomingButton.tintColor = self.incomingButton.selected ? [UIColor mnz_redMainForTraitCollection:(self.traitCollection)] : [UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)];
     self.incomingLabel.textColor = self.incomingButton.selected ? [UIColor mnz_redMainForTraitCollection:(self.traitCollection)] : [UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)];
-    self.incomingLineView.backgroundColor = self.incomingButton.selected ? [UIColor mnz_redMainForTraitCollection:self.traitCollection] : UIColor.mnz_grayCCCCCC;
+    self.incomingLineView.backgroundColor = self.incomingButton.selected ? [UIColor mnz_redMainForTraitCollection:self.traitCollection] : nil;
     
     self.outgoingButton.tintColor = self.outgoingButton.selected ? [UIColor mnz_redMainForTraitCollection:(self.traitCollection)] : [UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)];
     self.outgoingLabel.textColor = self.outgoingButton.selected ? [UIColor mnz_redMainForTraitCollection:(self.traitCollection)] : [UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)];
-    self.outgoingLineView.backgroundColor = self.outgoingButton.selected ? [UIColor mnz_redMainForTraitCollection:self.traitCollection] : UIColor.mnz_grayCCCCCC;
+    self.outgoingLineView.backgroundColor = self.outgoingButton.selected ? [UIColor mnz_redMainForTraitCollection:self.traitCollection] : nil;
     
     self.linksButton.tintColor = self.linksButton.selected ? [UIColor mnz_redMainForTraitCollection:(self.traitCollection)] : [UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)];
     self.linksLabel.textColor = self.linksButton.selected ? [UIColor mnz_redMainForTraitCollection:(self.traitCollection)] : [UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)];
-    self.linksLineView.backgroundColor = self.linksButton.selected ? [UIColor mnz_redMainForTraitCollection:self.traitCollection] : UIColor.mnz_grayCCCCCC;
+    self.linksLineView.backgroundColor = self.linksButton.selected ? [UIColor mnz_redMainForTraitCollection:self.traitCollection] : nil;
 }
 
 #pragma mark - Utils
@@ -1088,21 +1088,21 @@
             [node mnz_leaveSharingInViewController:self];
             [self setEditing:NO animated:YES];
         }];
-        shareAction.backgroundColor = [UIColor colorWithRed:0.95 green:0.05 blue:0.08 alpha:1];
+        shareAction.backgroundColor = [UIColor mnz_redMainForTraitCollection:self.traitCollection];
         return [UISwipeActionsConfiguration configurationWithActions:@[shareAction]];
     } else if (self.outgoingButton.selected) {
         UIContextualAction *shareAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:AMLocalizedString(@"removeSharing", @"Alert title shown on the Shared Items section when you want to remove 1 share") handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
             [node mnz_removeSharing];
             [self setEditing:NO animated:YES];
         }];
-        shareAction.backgroundColor = [UIColor colorWithRed:0.95 green:0.05 blue:0.08 alpha:1];
+        shareAction.backgroundColor = [UIColor mnz_redMainForTraitCollection:self.traitCollection];
         return [UISwipeActionsConfiguration configurationWithActions:@[shareAction]];
     } else if (self.linksButton.selected) {
         UIContextualAction *removeLinkAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:AMLocalizedString(@"removeLink", @"Message shown when there is an active link that can be removed or disabled") handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
             [node mnz_removeLink];
             [self setEditing:NO animated:YES];
         }];
-        removeLinkAction.backgroundColor = [UIColor colorWithRed:0.95 green:0.05 blue:0.08 alpha:1];
+        removeLinkAction.backgroundColor = [UIColor mnz_redMainForTraitCollection:self.traitCollection];
         return [UISwipeActionsConfiguration configurationWithActions:@[removeLinkAction]];
     } else {
         return [UISwipeActionsConfiguration configurationWithActions:@[]];
@@ -1365,7 +1365,7 @@
     
     if (direction == MGSwipeDirectionRightToLeft) {
         if (self.incomingButton.selected) {
-            MGSwipeButton *shareButton = [MGSwipeButton buttonWithTitle:AMLocalizedString(@"Leave Share", @"Text to indicate that the user will leave an incoming shared folder.") icon:nil backgroundColor:[UIColor colorWithRed:0.95 green:0.05 blue:0.08 alpha:1] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
+            MGSwipeButton *shareButton = [MGSwipeButton buttonWithTitle:AMLocalizedString(@"Leave Share", @"Text to indicate that the user will leave an incoming shared folder.") icon:nil backgroundColor:[UIColor mnz_redMainForTraitCollection:self.traitCollection] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
                 [node mnz_leaveSharingInViewController:self];
                 return YES;
             }];
@@ -1373,7 +1373,7 @@
             
             return @[shareButton];
         } else if (self.outgoingButton.selected) {
-            MGSwipeButton *shareButton = [MGSwipeButton buttonWithTitle:AMLocalizedString(@"removeSharing", @"Alert title shown on the Shared Items section when you want to remove 1 share") icon:nil backgroundColor:[UIColor colorWithRed:0.95 green:0.05 blue:0.08 alpha:1] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
+            MGSwipeButton *shareButton = [MGSwipeButton buttonWithTitle:AMLocalizedString(@"removeSharing", @"Alert title shown on the Shared Items section when you want to remove 1 share") icon:nil backgroundColor:[UIColor mnz_redMainForTraitCollection:self.traitCollection] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
                 [node mnz_removeSharing];
                 return YES;
             }];
@@ -1381,7 +1381,7 @@
             
             return @[shareButton];
         } else if (self.linksButton.selected) {
-            MGSwipeButton *removeLinkButton = [MGSwipeButton buttonWithTitle:AMLocalizedString(@"removeLink", @"Message shown when there is an active link that can be removed or disabled") icon:nil backgroundColor:[UIColor colorWithRed:0.95 green:0.05 blue:0.08 alpha:1] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
+            MGSwipeButton *removeLinkButton = [MGSwipeButton buttonWithTitle:AMLocalizedString(@"removeLink", @"Message shown when there is an active link that can be removed or disabled") icon:nil backgroundColor:[UIColor mnz_redMainForTraitCollection:self.traitCollection] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
                 [node mnz_removeLink];
                 return YES;
             }];
