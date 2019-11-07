@@ -49,6 +49,12 @@
     if (self.chat) {
         return self.chat.title;
     } else if (self.user) {
+        NSString *nickname = self.user.mnz_nickname;
+        
+        if (nickname.length > 0) {
+            return nickname;
+        }
+        
         return self.user.mnz_firstName;
     } else {
         return self.email;

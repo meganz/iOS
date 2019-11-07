@@ -10,3 +10,4 @@
 #import "NSString+MNZCategory.h"
 #import "UIColor+MNZCategory.h"
 #import "MEGAUser+MNZCategory.h"
+#import "MEGAStore.h"
