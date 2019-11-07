@@ -56,6 +56,7 @@
 #import "OnboardingViewController.h"
 #import "SendToViewController.h"
 #import "ShareLocationViewController.h"
+#import "MEGA-Swift.h"
 
 const CGFloat kGroupChatCellLabelHeightBuffer = 12.0f;
 const CGFloat k1on1CellLabelHeightBuffer = 5.0f;
@@ -977,15 +978,20 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 - (NSString *)participantsNames {
     NSString *participantsNames = @"";
     for (NSUInteger i = 0; i < self.chatRoom.peerCount; i++) {
-        NSString *peerName;
-        NSString *peerFirstname = [self.chatRoom peerFirstnameAtIndex:i];
-        if (peerFirstname.length > 0 && ![[peerFirstname stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""]) {
-            peerName = peerFirstname;
-        } else {
-            NSString *peerLastname = [self.chatRoom peerLastnameAtIndex:i];
-            if (peerLastname.length > 0 && ![[peerLastname stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""]) {
-                peerName = peerLastname;
+        NSString *peerName = [self.chatRoom userNicknameAtIndex:i];
+        
+        if (peerName.length == 0) {
+            NSString *peerFirstname = [self.chatRoom peerFirstnameAtIndex:i];
+            
+            if (peerFirstname.length > 0 && ![[peerFirstname stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""]) {
+                peerName = peerFirstname;
+            } else {
+                NSString *peerLastname = [self.chatRoom peerLastnameAtIndex:i];
+                if (peerLastname.length > 0 && ![[peerLastname stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""]) {
+                    peerName = peerLastname;
+                }
             }
+
         }
         
         if (!peerName.length) {
@@ -2237,7 +2243,8 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         NSMutableAttributedString *topCellAttributed = [[NSMutableAttributedString alloc] init];
         
         if (self.chatRoom.isGroup && !message.isManagementMessage) {
-            NSString *fullname = [self.chatRoom peerFullnameByHandle:message.userHandle];
+            NSString *nickname = [self.chatRoom userNicknameForUserHandle:message.userHandle];
+            NSString *fullname = (nickname.length > 0) ? nickname : [self.chatRoom peerFullnameByHandle:message.userHandle];
             if (!fullname.length) {
                 fullname = [self.chatRoom peerEmailByHandle:message.userHandle];
                 if (!fullname) {
