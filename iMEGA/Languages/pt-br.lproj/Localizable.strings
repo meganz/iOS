@@ -1992,3 +1992,5 @@
 "You are back!"="Você voltou!";
 /* Subtitle of chat screen when the chat is inactive */
 "Inactive chat"="Chat inativo";
+/* Error message shown when the user tries to open a file with an unsupported encoding */
+"It was not possible to obtain the content of this file, that is not encoded in either UTF-8 or ISO/IEC 8859-1."="It was not possible to obtain the content of this file, that is not encoded in either UTF-8 or ISO/IEC 8859-1.";
