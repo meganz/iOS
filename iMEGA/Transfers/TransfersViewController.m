@@ -436,15 +436,15 @@
     
     [self.allButton setTitleColor:[UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)] forState:UIControlStateNormal];
     [self.allButton setTitleColor:[UIColor mnz_redMainForTraitCollection:self.traitCollection] forState:UIControlStateSelected];
-    self.allLineView.backgroundColor = self.allButton.selected ? [UIColor mnz_redMainForTraitCollection:self.traitCollection] : UIColor.mnz_grayCCCCCC;
+    self.allLineView.backgroundColor = self.allButton.selected ? [UIColor mnz_redMainForTraitCollection:self.traitCollection] : nil;
     
     [self.downloadsButton setTitleColor:[UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)] forState:UIControlStateNormal];
     [self.downloadsButton setTitleColor:[UIColor mnz_redMainForTraitCollection:self.traitCollection] forState:UIControlStateSelected];
-    self.downloadsLineView.backgroundColor = self.downloadsButton.selected ? [UIColor mnz_redMainForTraitCollection:self.traitCollection] : UIColor.mnz_grayCCCCCC;
+    self.downloadsLineView.backgroundColor = self.downloadsButton.selected ? [UIColor mnz_redMainForTraitCollection:self.traitCollection] : nil;
     
     [self.uploadsButton setTitleColor:[UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)] forState:UIControlStateNormal];
     [self.uploadsButton setTitleColor:[UIColor mnz_redMainForTraitCollection:self.traitCollection] forState:UIControlStateSelected];
-    self.uploadsLineView.backgroundColor = self.uploadsButton.selected ? [UIColor mnz_redMainForTraitCollection:self.traitCollection] : UIColor.mnz_grayCCCCCC;
+    self.uploadsLineView.backgroundColor = self.uploadsButton.selected ? [UIColor mnz_redMainForTraitCollection:self.traitCollection] : nil;
 }
 
 #pragma mark - IBActions

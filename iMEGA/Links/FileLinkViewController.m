@@ -59,8 +59,6 @@
     
     self.navigationController.topViewController.toolbarItems = self.toolbar.items;
     [self.navigationController setToolbarHidden:NO animated:YES];
-    self.navigationController.toolbar.barTintColor = UIColor.whiteColor;
-    self.navigationController.toolbar.backgroundColor = UIColor.whiteColor;
 
     [self.previewButton setTitle:AMLocalizedString(@"previewContent", @"Title to preview document") forState:UIControlStateNormal];
     
