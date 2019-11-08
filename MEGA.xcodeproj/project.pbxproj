@@ -914,6 +914,7 @@
 		BF000568235E6E0B005F23B6 /* MEGAUser+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF000567235E6E0B005F23B6 /* MEGAUser+Additions.swift */; };
 		BF0BBEFE230627BE001FD542 /* UIViewController+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0BBEFD230627BE001FD542 /* UIViewController+MNZCategory.m */; };
 		BF1574AE2373AB8C0095B283 /* MEGAChatRoom+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1574AD2373AB8C0095B283 /* MEGAChatRoom+Additions.swift */; };
+		BF69E5172374F3720031913D /* AppDelegate+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF69E5162374F3720031913D /* AppDelegate+Extensions.swift */; };
 		BFD23CCE236255A5005D4A1E /* AddNickNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD23CCD236255A5005D4A1E /* AddNickNameViewController.swift */; };
 		BFD23CF3236A64FB005D4A1E /* String+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD23CF2236A64FB005D4A1E /* String+Additions.swift */; };
 		BFE54778231F0F27007FB8F6 /* UIViewController+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0BBEFD230627BE001FD542 /* UIViewController+MNZCategory.m */; };
@@ -2250,6 +2251,7 @@
 		BF0BBEFC230627BE001FD542 /* UIViewController+MNZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+MNZCategory.h"; sourceTree = "<group>"; };
 		BF0BBEFD230627BE001FD542 /* UIViewController+MNZCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+MNZCategory.m"; sourceTree = "<group>"; };
 		BF1574AD2373AB8C0095B283 /* MEGAChatRoom+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAChatRoom+Additions.swift"; sourceTree = "<group>"; };
+		BF69E5162374F3720031913D /* AppDelegate+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Extensions.swift"; sourceTree = "<group>"; };
 		BFD23CCD236255A5005D4A1E /* AddNickNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNickNameViewController.swift; sourceTree = "<group>"; };
 		BFD23CF2236A64FB005D4A1E /* String+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Additions.swift"; sourceTree = "<group>"; };
 		E803CB651D5336F100F81A36 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -3264,6 +3266,7 @@
 				BF000567235E6E0B005F23B6 /* MEGAUser+Additions.swift */,
 				BFD23CF2236A64FB005D4A1E /* String+Additions.swift */,
 				BF1574AD2373AB8C0095B283 /* MEGAChatRoom+Additions.swift */,
+				BF69E5162374F3720031913D /* AppDelegate+Extensions.swift */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -5532,6 +5535,7 @@
 				A86B9F4B2316D6AB00F35E7A /* FLEXIvarEditorViewController.m in Sources */,
 				A86B9F6E2316D6AB00F35E7A /* FLEXAddressExplorerCoordinator.m in Sources */,
 				5BB68CA120359B5400B03C00 /* PasswordStrengthIndicatorView.m in Sources */,
+				BF69E5172374F3720031913D /* AppDelegate+Extensions.swift in Sources */,
 				E8B519261AC9CD8000BB7324 /* TransfersViewController.m in Sources */,
 				5B20B00A20E61DDF00511C0F /* MEGALinkManager.m in Sources */,
 				5B64D4EE2111D5DE004CD155 /* EnabledTwoFactorAuthenticationViewController.m in Sources */,

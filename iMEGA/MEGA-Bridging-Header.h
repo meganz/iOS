@@ -11,3 +11,5 @@
 #import "UIColor+MNZCategory.h"
 #import "MEGAUser+MNZCategory.h"
 #import "MEGAStore.h"
+#import "AppDelegate.h"
+#import "MEGAConstants.h"
