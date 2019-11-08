@@ -107,7 +107,18 @@ class SMSVerificationViewController: UIViewController {
     // MARK: - UI actions
     
     @IBAction private func didTapCancelButton() {
-        dismiss(animated: true, completion: nil)
+        switch verificationType {
+        case .UnblockAccount:
+            MEGASdkManager.sharedMEGASdk()?.logout()
+            phoneNumberTextField.resignFirstResponder()
+            
+        case .AddPhoneNumber:
+            dismiss(animated: true, completion: nil)
+            
+        default:
+            dismiss(animated: true, completion: nil)
+            
+        }
     }
     
     @IBAction private func didTapCountryView() {
@@ -223,11 +234,13 @@ class SMSVerificationViewController: UIViewController {
                     self?.descriptionTextView.text = String(format: AMLocalizedString("Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."), Helper.memoryStyleString(fromByteCount: byteCount))
                 }
             })
-
+            
         case .UnblockAccount:
+            let logoutTitle = AMLocalizedString("logoutLabel")
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: logoutTitle, style: .plain, target: self, action: #selector(SMSVerificationViewController.didTapCancelButton))
             title = AMLocalizedString("Verify Your Account")
             titleLabel.text = title
-            cancelButton.isHidden = true
+            cancelButton.setTitle(logoutTitle, for: .normal)
             descriptionTextView.text = AMLocalizedString("Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.")
         }
     }
