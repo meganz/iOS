@@ -794,10 +794,10 @@
                                                     </constraints>
                                                 </imageView>
                                                 <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lKT-mP-lgf">
-                                                    <rect key="frame" x="298" y="5" width="60" height="50"/>
+                                                    <rect key="frame" x="278" y="5" width="80" height="50"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="50" id="hJT-cM-d6W"/>
-                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="60" id="hZ6-GW-wVg"/>
+                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="80" id="hZ6-GW-wVg"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                                     <state key="normal" title="Add">
@@ -811,16 +811,16 @@
                                                     </connections>
                                                 </button>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="MA9-uQ-Zqn">
-                                                    <rect key="frame" x="60" y="11.666666666666664" width="230" height="37"/>
+                                                    <rect key="frame" x="60" y="11.666666666666664" width="210" height="37"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Contact Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z0A-eS-9IX">
-                                                            <rect key="frame" x="0.0" y="0.0" width="230" height="18"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" ambiguous="YES" text="Contact Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z0A-eS-9IX">
+                                                            <rect key="frame" x="0.0" y="0.0" width="210" height="18"/>
                                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                                             <color key="textColor" white="0.20000000000000001" alpha="1" colorSpace="calibratedWhite"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Contact email" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IqL-Dq-4O9">
-                                                            <rect key="frame" x="0.0" y="20" width="230" height="17"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" ambiguous="YES" text="Contact email" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IqL-Dq-4O9">
+                                                            <rect key="frame" x="0.0" y="20" width="210" height="17"/>
                                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
                                                             <color key="textColor" white="0.40000000000000002" alpha="1" colorSpace="calibratedWhite"/>
                                                             <nil key="highlightedColor"/>
@@ -1237,9 +1237,9 @@
                         <viewLayoutGuide key="safeArea" id="q3r-T3-EW0"/>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="4q5-yJ-61c"/>
                                 <exclude reference="BjL-bW-Jy4"/>
                                 <exclude reference="tbQ-u4-9ho"/>
+                                <exclude reference="4q5-yJ-61c"/>
                                 <exclude reference="BYf-6b-5F2"/>
                                 <exclude reference="QCW-GM-XJM"/>
                                 <exclude reference="bmv-Mx-qoq"/>
@@ -1404,7 +1404,7 @@
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Use space to enter multiple addresses" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BNI-oV-pBa">
-                                                <rect key="frame" x="71.333333333333314" y="144" width="232.33333333333337" height="15.666666666666657"/>
+                                                <rect key="frame" x="71.333333333333329" y="144" width="232.33333333333337" height="15.666666666666657"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                 <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>

@@ -125,8 +125,12 @@ class EnterEmailViewController: UIViewController {
         guard MEGAReachabilityManager.isReachableHUDIfNot(), tokens.count > 0 else {
             return
         }
-        
-        let inviteContactRequestDelegate = MEGAInviteContactRequestDelegate.init(numberOfRequests: UInt(tokens.count))
+                
+        weak var weakSelf = self
+        let inviteContactRequestDelegate = MEGAInviteContactRequestDelegate.init(numberOfRequests: UInt(tokens.count), presentSuccessOver: UIApplication.mnz_presentingViewController()) {
+            weakSelf?.tokens.removeAll()
+            weakSelf?.tokenField.reloadData()
+        }
         tokens.forEach { (email) in
             MEGASdkManager.sharedMEGASdk().inviteContact(withEmail: email, message: "", action: MEGAInviteAction.add, delegate: inviteContactRequestDelegate)
         }

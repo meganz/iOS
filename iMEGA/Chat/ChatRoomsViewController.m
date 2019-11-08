@@ -389,8 +389,10 @@
         if ([CNContactStore authorizationStatusForEntityType:CNEntityTypeContacts] == CNAuthorizationStatusAuthorized) {
             if (self.contactsOnMegaCount) {
                 self.contactsOnMegaEmptyStateTitle.text = self.contactsOnMegaCount == 1 ? AMLocalizedString(@"You have 1 contact on MEGA", @"Title showing the user one of his contacts are using MEGA") : [AMLocalizedString(@"You have [X] contacts on MEGA", @"Title showing the user how many of his contacts are using MEGA") stringByReplacingOccurrencesOfString:@"[X]" withString:[NSString stringWithFormat:@"%tu", self.contactsOnMegaCount]];
-                self.contactsOnMegaEmptyStateView.hidden = NO;
+            } else {
+                self.contactsOnMegaEmptyStateTitle.text = AMLocalizedString(@"inviteContact", @"Text shown when the user tries to make a call and the receiver is not a contact");
             }
+            self.contactsOnMegaEmptyStateView.hidden = NO;
         } else {
             self.contactsOnMegaEmptyStateTitle.text = AMLocalizedString(@"See who's already on MEGA", @"Title encouraging the user to check who of its contacts are using MEGA");
             self.contactsOnMegaEmptyStateView.hidden = NO;
@@ -904,8 +906,13 @@
 }
 
 - (IBAction)openContactsOnMega:(id)sender {
-    ContactsOnMegaViewController *contactsOnMega = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsOnMegaViewControllerID"];
-    [self.navigationController pushViewController:contactsOnMega animated:YES];
+    if (self.contactsOnMegaCount) {
+        ContactsOnMegaViewController *contactsOnMega = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsOnMegaViewControllerID"];
+        [self.navigationController pushViewController:contactsOnMega animated:YES];
+    } else {
+        InviteContactViewController *inviteContacts = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"InviteContactViewControllerID"];
+        [self.navigationController pushViewController:inviteContacts animated:YES];
+    }
 }
 
 #pragma mark - IBActions

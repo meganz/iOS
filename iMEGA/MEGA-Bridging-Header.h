@@ -31,3 +31,4 @@
 #import "MEGAChatGenericRequestDelegate.h"
 #import "MEGAInviteContactRequestDelegate.h"
 #import "InitialLaunchViewController.h"
+#import "UIDevice+MNZCategory.h"
