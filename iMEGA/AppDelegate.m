@@ -832,28 +832,6 @@
     }
 }
 
-- (void)requestNicknameForUser:(MEGAUser *)user {
-    MEGAGenericRequestDelegate *genericDelegate = [MEGAGenericRequestDelegate.alloc
-                                                   initWithCompletion:^(MEGARequest *request, MEGAError *error) {
-        if (request.name != nil && request.nodeHandle == user.handle) {
-            [MEGAStore.shareInstance updateUserWithUserHandle:request.nodeHandle
-                                                     nickname:request.name];
-        }
-    }];
-    
-    [user fetchNicknameWithCompletionHandler:genericDelegate];
-}
-
-- (void)requestContactsNickname {
-    MEGAUserList *userList = MEGASdkManager.sharedMEGASdk.contacts;
-       for (NSInteger i = 0; i < userList.size.integerValue; i++) {
-           MEGAUser *user = [userList userAtIndex:i];
-           if (user.visibility == MEGAUserVisibilityVisible) {
-               [self requestNicknameForUser:user];
-           }
-       }
-}
-
 - (void)showMainTabBar {
     if (![self.window.rootViewController isKindOfClass:[LTHPasscodeViewController class]]) {
         
@@ -1405,7 +1383,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                         [[MEGASdkManager sharedMEGASdk] getUserAttributeType:MEGAUserAttributeLastname];
                     }
                     if ([user hasChangedType:MEGAUserChangeTypeUserAlias]) {
-                        [self requestContactsNickname];
+                        [self fetchContactsNickname];
                     }
                     if ([user hasChangedType:MEGAUserChangeTypeRichPreviews]) {
                         [NSUserDefaults.standardUserDefaults removeObjectForKey:@"richLinks"];
@@ -1710,7 +1688,7 @@ void uncaughtExceptionHandler(NSException *exception) {
             
             [self requestUserName];
             [self requestContactsFullname];
-            [self requestContactsNickname];
+            [self fetchContactsNickname];
             
             if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"] || isAccountFirstLogin) {
                 [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self.mainTBC];
@@ -1833,7 +1811,9 @@ void uncaughtExceptionHandler(NSException *exception) {
                     }
                 }
             } else if (request.paramType == MEGAUserAttributeAlias) {
-                [MEGAStore.shareInstance updateUserWithUserHandle:user.handle nickname:request.name];
+                [MEGAStore.shareInstance updateUserWithUserHandle:user.handle
+                                                         nickname:request.name
+                                                          context:nil];
             }
             break;
         }

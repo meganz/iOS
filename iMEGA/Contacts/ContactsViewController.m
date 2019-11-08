@@ -131,6 +131,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    [self addNicknamesLoadedNotification];
 
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
@@ -145,6 +146,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+    [self removeNicknamesLoadedNotification];
 
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
     [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
@@ -851,6 +853,22 @@
         [self addItemsToList:@[[ItemListModel.alloc initWithEmail:email]]];
         [self.selectedUsersArray addObject:email];
     }
+}
+
+- (void)addNicknamesLoadedNotification {
+    __weak typeof(self) weakself = self;
+    [NSNotificationCenter.defaultCenter addObserverForName:MEGAAllUsersNicknameLoaded
+                                                    object:nil
+                                                     queue:NSOperationQueue.mainQueue
+                                                usingBlock:^(NSNotification * _Nonnull note) {
+                                                    [weakself.tableView reloadData];
+                                                }];
+}
+
+- (void)removeNicknamesLoadedNotification {
+    [NSNotificationCenter.defaultCenter removeObserver:self
+                                                  name:MEGAAllUsersNicknameLoaded
+                                                object:nil];
 }
 
 #pragma mark - IBActions

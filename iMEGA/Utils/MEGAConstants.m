@@ -79,3 +79,7 @@ NSString * const MEGAUIActivityTypeRemoveSharing = @"MEGAUIActivityTypeRemoveSha
 NSString * const MEGAUIActivityTypeShareFolder = @"MEGAUIActivityTypeShareFolder";
 NSString * const MEGAUIActivityTypeSaveToCameraRoll = @"MEGAUIActivityTypeSaveToCameraRoll";
 NSString * const MEGAUIActivityTypeSendToChat = @"MEGAUIActivityTypeSendToChat";
+
+#pragma mark - Background Task completion.
+
+NSString * const MEGAAllUsersNicknameLoaded = @"MEGAAllUsersNicknameLoaded";

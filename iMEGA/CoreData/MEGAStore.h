@@ -15,6 +15,7 @@
 #pragma mark - store stack
 
 @property (readonly) MEGAStoreStack *storeStack;
+@property (nonatomic, readonly) NSManagedObjectContext *childPrivateQueueContext;
 
 #pragma mark - Singleton Lifecycle
 
@@ -38,11 +39,16 @@
 - (void)updateUserWithUserHandle:(uint64_t)userHandle firstname:(NSString *)firstname;
 - (void)updateUserWithUserHandle:(uint64_t)userHandle lastname:(NSString *)lastname;
 - (void)updateUserWithUserHandle:(uint64_t)userHandle email:(NSString *)email;
-- (void)updateUserWithUserHandle:(uint64_t)userHandle nickname:(NSString *)nickname;
+// Context is optional, passing nil will use the default main queue context.
+- (void)updateUserWithUserHandle:(uint64_t)userHandle
+                        nickname:(NSString *)nickname
+                         context:(NSManagedObjectContext *)context;
 - (void)updateUserWithEmail:(NSString *)email firstname:(NSString *)firstname;
 - (void)updateUserWithEmail:(NSString *)email lastname:(NSString *)lastname;
 - (void)updateUserWithEmail:(NSString *)email nickname:(NSString *)nickname;
 - (MOUser *)fetchUserWithUserHandle:(uint64_t)userHandle;
+- (MOUser *)fetchUserWithUserHandle:(uint64_t)userHandle
+                            context:(NSManagedObjectContext *)context;
 - (MOUser *)fetchUserWithEmail:(NSString *)email;
 
 #pragma mark - MOChatDraft entity
@@ -80,5 +86,8 @@
 - (void)insertMessage:(uint64_t)messageId chatId:(uint64_t)chatId;
 - (void)deleteMessage:(MOMessage *)message;
 - (MOMessage *)fetchMessageWithChatId:(uint64_t)chatId messageId:(uint64_t)messageId;
+
+#pragma mark - Context Save
+- (void)saveContext:(NSManagedObjectContext *)context;
 
 @end
