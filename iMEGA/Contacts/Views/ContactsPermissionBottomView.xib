@@ -84,6 +84,7 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <connections>
+                <outlet property="accessImage" destination="nnr-mV-Idm" id="I8s-Lh-clm"/>
                 <outlet property="enableButton" destination="0aB-c3-0Fx" id="Aj9-9h-KaT"/>
                 <outlet property="subtitleLabel" destination="YpO-vW-kfg" id="H8h-FY-ohS"/>
                 <outlet property="titleLabel" destination="pgu-bC-DWR" id="628-j1-Z6O"/>

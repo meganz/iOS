@@ -3,7 +3,7 @@ import Foundation
 
 extension AppDelegate {
     @objc func showAddPhoneNumberIfNeeded() {
-        if UIApplication.mnz_presentingViewController() is AddPhoneNumberViewController || UIApplication.mnz_presentingViewController() is InitialLaunchViewController || UIApplication.mnz_presentingViewController() is LaunchViewController { return }
+        if UIApplication.mnz_presentingViewController() is AddPhoneNumberViewController || UIApplication.mnz_presentingViewController() is InitialLaunchViewController || UIApplication.mnz_presentingViewController() is LaunchViewController || UIApplication.mnz_presentingViewController() is SMSNavigationViewController { return }
 
         if MEGASdkManager.sharedMEGASdk()?.smsAllowedState() != .optInAndUnblock { return }
         

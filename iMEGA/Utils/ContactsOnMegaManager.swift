@@ -112,7 +112,7 @@ struct ContactOnMega {
                         deviceContacts.append([formatedNumber:name])
                     }
                     catch {
-                        print("Device contact number parser error " + label.value.stringValue)
+                        MEGALogError("Device contact number parser error " + label.value.stringValue)
                     }
                 }
             }
@@ -128,7 +128,7 @@ struct ContactOnMega {
             }
         } catch {
             state = .error
-            print("Error fetching user contacts: ", error)
+            MEGALogError("Error fetching user contacts: " + error.localizedDescription)
         }
     }
     
@@ -150,7 +150,7 @@ struct ContactOnMega {
                     }
                 })
             } else {
-                print("Error getting contacts on MEGA: ", error)
+                MEGALogError("Error getting contacts on MEGA: " + error.name)
                 self.state = .error
             }
 
