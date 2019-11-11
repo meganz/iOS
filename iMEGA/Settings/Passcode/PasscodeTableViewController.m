@@ -59,7 +59,8 @@
     
     [[LTHPasscodeViewController sharedUser] setNavigationBarTintColor:UIColor.mnz_redMain];
     [[LTHPasscodeViewController sharedUser] setNavigationTintColor:[UIColor whiteColor]];
-    
+    [[LTHPasscodeViewController sharedUser] setNavigationTitleColor:[UIColor whiteColor]];
+
     self.navigationItem.backBarButtonItem = [UIBarButtonItem.alloc initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
 }
 

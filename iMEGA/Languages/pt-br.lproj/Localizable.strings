@@ -121,7 +121,7 @@
 /*  */
 "agreeWithTheMEGATermsOfService"="Concordo com os <a href=\"terms\">Termos de serviço</a> do MEGA";
 /* This text is displayed in the account creation screen with a checkbox. User will have to tick the checkbox before proceeding on to create an account */
-"agreeWithLosingPasswordYouLoseData"="Eu entendo que, [S]se eu perder a minha senha, poderei perder os meus dados[/S]. Leia mais sobre a  <a href=\"terms\">criptografia de ponta a ponta do MEGA</a>.";
+"agreeWithLosingPasswordYouLoseData"="Eu entendo que, [S]se eu perder a minha senha, poderei perder os meus dados[/S]. Leia mais sobre a <a href=\"terms\">criptografia de ponta a ponta do MEGA</a>.";
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="Digite um nome válido";
 /* Error text shown when you have not written the same password */
@@ -1971,16 +1971,28 @@
 /* Chat Notifications DND: Remaining time left to deactivate DND - 1 minute left */
 "1 minute left"="1 minuto restante";
 /* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 minute left */
-"%@ minutes left"="%d minutos restantes";
+"%d minutes left"="%d minutos restantes";
 /* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour left */
 "1 hour left"="1 hora restante";
 /* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 hour left */
-"%@ hours left"="%d horas restantes";
+"%d hours left"="%d horas restantes";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="Notificações do chat";
+/* Chat settings: This text appears with the Do Not Disturb switch */
+"Do Not Disturb"="Não perturbe";
+/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, 1 minute left */
+"1 hour, 1 minute left"="1 hora e 1 minuto restantes";
+/* Chat Notifications DND: Remaining time left to deactivate DND - X hours, X minutes left */
+"%d hours, %d minutes left"="%d horas e %d minutos restantes";
+/* Chat Notifications DND: Remaining time left to deactivate DND - X hours, 1 minute left */
+"%d hours, 1 minute left"="%d horas e 1 minuto restantes";
+/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, X minutes left */
+"1 hour, %d minutes left"="1 hora e %d minutos restantes";
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
-"Reconnecting..."="Reconnecting…";
+"Reconnecting..."="Reconectando…";
 /* Title shown when the user reconnect in a call. */
-"You are back!"="You are back!";
+"You are back!"="Você voltou.";
 /* Subtitle of chat screen when the chat is inactive */
 "Inactive chat"="Chat inativo";
+/* Error message shown when the user tries to open a file with an unsupported encoding */
+"It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="Não foi possível obter o conteúdo deste arquivo, pois ele não está codificado em UTF-8 ou ISO/IEC 8859-1.";
