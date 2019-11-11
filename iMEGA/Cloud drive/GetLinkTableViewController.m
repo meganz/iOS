@@ -238,9 +238,9 @@
 }
 
 - (void)processLink:(NSString *)fullLink {
-    NSArray *components = NSArray.new;
-    NSString *link = NSString.new;
-    NSString *key = NSString.new;
+    NSArray *components;
+    NSString *link;
+    NSString *key;
     
     if ([fullLink containsString:@"file"] || [fullLink containsString:@"folder"]) {//New format file/folder links
         components = [fullLink componentsSeparatedByString:@"#"];
