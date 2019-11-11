@@ -1,6 +1,7 @@
 
 #import "MEGAQLPreviewController.h"
 #import "Helper.h"
+#import "MEGALinkManager.h"
 
 @interface MEGAQLPreviewController () <UIViewControllerTransitioningDelegate, QLPreviewControllerDelegate, QLPreviewControllerDataSource>
 
@@ -60,7 +61,12 @@
 #pragma mark - QLPreviewControllerDelegate
 
 - (BOOL)previewController:(QLPreviewController *)controller shouldOpenURL:(NSURL *)url forPreviewItem:(id <QLPreviewItem>)item {
-    return YES;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        MEGALinkManager.linkURL = url;
+        [MEGALinkManager processLinkURL:url];
+    });
+
+    return NO;
 }
 
 @end
