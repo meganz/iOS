@@ -519,7 +519,7 @@
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
 "foldersShared"="%d katalogów";
 /* Item menu option to add a contact writting his/her email */
-"addFromEmail"="Dodaj email";
+"addFromEmail"="Wprowadź adres email";
 /* Title of Shared Items section */
 "sharedItems"="Udostępnione";
 /* Title of the tab bar item for the Shared Items section */
@@ -1991,8 +1991,8 @@
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
 "Reconnecting..."="Ponowne łączenie…";
 /* Title shown when the user reconnect in a call. */
-"You are back!"="Wróciłeś!";
+"You are back!"="Wróciłeś.";
 /* Subtitle of chat screen when the chat is inactive */
 "Inactive chat"="Nieaktywny czat";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
-"It was not possible to obtain the content of this file, that is not encoded in either UTF-8 or ISO/IEC 8859-1."="It was not possible to obtain the content of this file, that is not encoded in either UTF-8 or ISO/IEC 8859-1.";
+"It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="Nie można było uzyskać zawartości tego pliku, ponieważ nie jest on zakodowany ani w UTF-8, ani w ISO / IEC 8859-1.";

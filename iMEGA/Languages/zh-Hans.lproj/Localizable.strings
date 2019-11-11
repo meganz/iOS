@@ -519,7 +519,7 @@
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
 "foldersShared"="%d 个文件夹";
 /* Item menu option to add a contact writting his/her email */
-"addFromEmail"="输入邮箱地址";
+"addFromEmail"="输入电子邮箱地址";
 /* Title of Shared Items section */
 "sharedItems"="共享文件";
 /* Title of the tab bar item for the Shared Items section */
@@ -1991,8 +1991,8 @@
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
 "Reconnecting..."="正在重连中……";
 /* Title shown when the user reconnect in a call. */
-"You are back!"="已重连！";
+"You are back!"="已重连。";
 /* Subtitle of chat screen when the chat is inactive */
 "Inactive chat"="非活跃聊天";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
-"It was not possible to obtain the content of this file, that is not encoded in either UTF-8 or ISO/IEC 8859-1."="It was not possible to obtain the content of this file, that is not encoded in either UTF-8 or ISO/IEC 8859-1.";
+"It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="该文件未使用UTF-8或ISO/IEC 8859-1进行编码，无法读取文件内容。";
