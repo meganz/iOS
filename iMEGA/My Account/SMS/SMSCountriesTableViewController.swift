@@ -12,7 +12,7 @@ class SMSCountriesTableViewController: UITableViewController {
     private var countryCallingCodeDict: [String: MEGAStringList]
     private var collation = UILocalizedIndexedCollation.current()
     
-    private lazy var countrySections = self.buildCountrySections()
+    private lazy var countrySections = buildCountrySections()
     
     private weak var delegate: SMSCountriesTableViewControllerDelegate?
     
