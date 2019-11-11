@@ -20,9 +20,9 @@ extension MEGASdk {
             UIApplication.mnz_presentingViewController()?.present(smsNavigationController, animated: true, completion: nil)
         } else {
             let alert = UIAlertController(title: AMLocalizedString("error"), message: AMLocalizedString("accountBlocked", "Error message when trying to login and the account is blocked"), preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: AMLocalizedString("ok"), style: .cancel, handler: { _ in
+            alert.addAction(UIAlertAction(title: AMLocalizedString("ok"), style: .cancel) { _ in
                 self.logout()
-            }))
+            })
             UIApplication.mnz_presentingViewController()?.present(alert, animated: true, completion: nil)
         }
     }

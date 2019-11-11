@@ -2,15 +2,9 @@
 import Contacts
 
 struct ContactOnMega {
-    var handle = UInt64()
-    var email = String()
-    var name = String()
-
-    init(handle: UInt64, email: String, name: String) {
-        self.handle = handle
-        self.email = email
-        self.name = name
-    }
+    let handle: UInt64
+    let email: String
+    let name: String
 }
 
 @objc class ContactsOnMegaManager: NSObject {
