@@ -127,6 +127,7 @@
                 break;
                 
             case ChatRoomsTypeArchived:
+                self.contactsOnMegaEmptyStateView.hidden = YES;
                 self.chatListItemList = [[MEGASdkManager sharedMEGAChatSdk] archivedChatListItems];
                 self.navigationItem.rightBarButtonItem = nil;
                 break;
@@ -295,12 +296,16 @@
                 return nil;
             }
         } else {
-            switch (self.chatRoomsType) {
-                case ChatRoomsTypeDefault:
-                    return [UIImage imageNamed:@"chatEmptyState"];
-                    
-                case ChatRoomsTypeArchived:
-                    return [UIImage imageNamed:@"chatsArchivedEmptyState"];
+            if (UIInterfaceOrientationIsLandscape(UIApplication.sharedApplication.statusBarOrientation) && UIDevice.currentDevice.iPhoneDevice) {
+                return nil;
+            } else {
+                switch (self.chatRoomsType) {
+                    case ChatRoomsTypeDefault:
+                        return [UIImage imageNamed:@"chatEmptyState"];
+                        
+                    case ChatRoomsTypeArchived:
+                        return [UIImage imageNamed:@"chatsArchivedEmptyState"];
+                }
             }
         }
     } else {
@@ -379,22 +384,31 @@
 }
 
 - (void)emptyDataSetWillAppear:(UIScrollView *)scrollView {
-    if (!self.searchController.active) {
-        self.searchController.searchBar.hidden = YES;
-        if (self.archivedChatListItemList.size) {
-            self.archivedChatEmptyStateTitle.text = AMLocalizedString(@"archivedChats", @"Title of archived chats button");
-            self.archivedChatEmptyStateCount.text = [NSString stringWithFormat:@"%tu", self.archivedChatListItemList.size];
-            self.archivedChatEmptyState.hidden = NO;
-        }
-        if ([CNContactStore authorizationStatusForEntityType:CNEntityTypeContacts] == CNAuthorizationStatusAuthorized) {
-            if (self.contactsOnMegaCount) {
-                self.contactsOnMegaEmptyStateTitle.text = self.contactsOnMegaCount == 1 ? AMLocalizedString(@"You have 1 contact on MEGA", @"Title showing the user one of his contacts are using MEGA") : [AMLocalizedString(@"You have [X] contacts on MEGA", @"Title showing the user how many of his contacts are using MEGA") stringByReplacingOccurrencesOfString:@"[X]" withString:[NSString stringWithFormat:@"%tu", self.contactsOnMegaCount]];
-            } else {
-                self.contactsOnMegaEmptyStateTitle.text = AMLocalizedString(@"inviteContact", @"Text shown when the user tries to make a call and the receiver is not a contact");
-            }
-            self.contactsOnMegaEmptyStateView.hidden = NO;
-        } else {
-            self.contactsOnMegaEmptyStateTitle.text = AMLocalizedString(@"See who's already on MEGA", @"Title encouraging the user to check who of its contacts are using MEGA");
+    if ([NSUserDefaults.standardUserDefaults boolForKey:@"IsChatEnabled"]) {
+        if (!self.searchController.active) {
+               self.searchController.searchBar.hidden = YES;
+               if (self.archivedChatListItemList.size) {
+                   self.archivedChatEmptyStateTitle.text = AMLocalizedString(@"archivedChats", @"Title of archived chats button");
+                   self.archivedChatEmptyStateCount.text = [NSString stringWithFormat:@"%tu", self.archivedChatListItemList.size];
+                   self.archivedChatEmptyState.hidden = NO;
+               }
+               if (self.chatRoomsType == ChatRoomsTypeDefault) {
+                   if ([CNContactStore authorizationStatusForEntityType:CNEntityTypeContacts] == CNAuthorizationStatusAuthorized) {
+                       if (self.contactsOnMegaCount) {
+                           self.contactsOnMegaEmptyStateTitle.text = self.contactsOnMegaCount == 1 ? AMLocalizedString(@"You have 1 contact on MEGA", @"Title showing the user one of his contacts are using MEGA") : [AMLocalizedString(@"You have [X] contacts on MEGA", @"Title showing the user how many of his contacts are using MEGA") stringByReplacingOccurrencesOfString:@"[X]" withString:[NSString stringWithFormat:@"%tu", self.contactsOnMegaCount]];
+                       } else {
+                           self.contactsOnMegaEmptyStateTitle.text = AMLocalizedString(@"Invite contact now", @"Text emncouraging the user to add contacts in MEGA");
+                       }
+                       self.contactsOnMegaEmptyStateView.hidden = NO;
+                   } else {
+                       self.contactsOnMegaEmptyStateTitle.text = AMLocalizedString(@"See who's already on MEGA", @"Title encouraging the user to check who of its contacts are using MEGA");
+                       self.contactsOnMegaEmptyStateView.hidden = NO;
+                   }
+               }
+           }
+    } else {
+        if (MEGAReachabilityManager.isReachable) {
+            self.contactsOnMegaEmptyStateTitle.text = AMLocalizedString(@"Invite contact now", @"Text emncouraging the user to add contacts in MEGA");
             self.contactsOnMegaEmptyStateView.hidden = NO;
         }
     }
@@ -734,7 +748,11 @@
 - (UITableViewCell *)contactsOnMegaCellForIndexPath:(NSIndexPath *)indexPath {
     ChatRoomCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"contactsOnMegaCell" forIndexPath:indexPath];
     if ([CNContactStore authorizationStatusForEntityType:CNEntityTypeContacts] == CNAuthorizationStatusAuthorized) {
-         cell.chatTitle.text = self.contactsOnMegaCount == 1 ? AMLocalizedString(@"You have 1 contact on MEGA", @"Title showing the user one of his contacts are using MEGA") : [AMLocalizedString(@"You have [X] contacts on MEGA", @"Title showing the user how many of his contacts are using MEGA") stringByReplacingOccurrencesOfString:@"[X]" withString:[NSString stringWithFormat:@"%tu", self.contactsOnMegaCount]];
+        if (self.contactsOnMegaCount == 0) {
+            cell.chatTitle.text = AMLocalizedString(@"Invite contact now", @"Text emncouraging the user to add contacts in MEGA");
+        } else {
+            cell.chatTitle.text = self.contactsOnMegaCount == 1 ? AMLocalizedString(@"You have 1 contact on MEGA", @"Title showing the user one of his contacts are using MEGA") : [AMLocalizedString(@"You have [X] contacts on MEGA", @"Title showing the user how many of his contacts are using MEGA") stringByReplacingOccurrencesOfString:@"[X]" withString:[NSString stringWithFormat:@"%tu", self.contactsOnMegaCount]];
+        }
     } else {
         cell.chatTitle.text = AMLocalizedString(@"See who's already on MEGA", @"Title encouraging the user to check who of its contacts are using MEGA");
     }
@@ -906,12 +924,12 @@
 }
 
 - (IBAction)openContactsOnMega:(id)sender {
-    if (self.contactsOnMegaCount) {
-        ContactsOnMegaViewController *contactsOnMega = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsOnMegaViewControllerID"];
-        [self.navigationController pushViewController:contactsOnMega animated:YES];
-    } else {
+    if (([CNContactStore authorizationStatusForEntityType:CNEntityTypeContacts] == CNAuthorizationStatusAuthorized && self.contactsOnMegaCount== 0) || ![NSUserDefaults.standardUserDefaults boolForKey:@"IsChatEnabled"]) {
         InviteContactViewController *inviteContacts = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"InviteContactViewControllerID"];
         [self.navigationController pushViewController:inviteContacts animated:YES];
+    } else {
+        ContactsOnMegaViewController *contactsOnMega = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsOnMegaViewControllerID"];
+        [self.navigationController pushViewController:contactsOnMega animated:YES];
     }
 }
 
@@ -927,7 +945,7 @@
 }
 
 - (BOOL)isUserContactsSectionVisible {
-    return ([CNContactStore authorizationStatusForEntityType:CNEntityTypeContacts] != CNAuthorizationStatusAuthorized || self.contactsOnMegaCount) && [self numberOfChatRooms] > 0;
+    return [self numberOfChatRooms] > 0;
 }
 
 #pragma mark - UITableViewDataSource
@@ -1015,7 +1033,6 @@
             break;
         }
     }
-    
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {

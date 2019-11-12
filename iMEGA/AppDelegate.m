@@ -1712,8 +1712,10 @@ void uncaughtExceptionHandler(NSException *exception) {
             });
             
             [[MEGASdkManager sharedMEGASdk] getAccountDetails];
-            
-            [ContactsOnMegaManager.shared configureContactsOnMegaWithCompletion:nil];
+
+            if ([NSUserDefaults.standardUserDefaults boolForKey:@"IsChatEnabled"]) {
+                [ContactsOnMegaManager.shared configureContactsOnMegaWithCompletion:nil];
+            }
 
             break;
         }
