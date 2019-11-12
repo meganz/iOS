@@ -37,6 +37,7 @@ import UIKit
         contactsOnMega = ContactsOnMegaManager.shared.fetchContactsOnMega() ?? []
         self.tableView.layoutIfNeeded()
         tableView.reloadData()
+        searchFixedView.isHidden = inviteContactView.isHidden || contacts().count == 0 || CNContactStore.authorizationStatus(for: CNEntityType.contacts) != CNAuthorizationStatus.authorized
     }
     
     func hideSearchAndInviteViews() {
@@ -44,6 +45,15 @@ import UIKit
         inviteContactView.isHidden = true
     }
     
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        
+        coordinator.animate(alongsideTransition: nil) { [unowned self] _ in
+            self.tableView.reloadData()
+            self.searchController.searchBar.frame.size.width = self.searchFixedView.frame.size.width
+        }
+    }
+
     // MARK: Private
     private func contacts() -> [ContactOnMega] {
         return (searchController.isActive && searchController.searchBar.text != "") ? searchingContactsOnMega : contactsOnMega
@@ -84,6 +94,7 @@ extension ContactsOnMegaViewController: UISearchBarDelegate {
         if !MEGAReachabilityManager.isReachable() {
             searchFixedView.isHidden = true
         }
+        self.searchController.searchBar.frame.size.width = self.searchFixedView.frame.size.width
     }
 }
 
@@ -132,6 +143,7 @@ extension ContactsOnMegaViewController: UITableViewDelegate {
                         ContactsOnMegaManager.shared.configureContactsOnMega(completion: {
                             self.contactsOnMega = ContactsOnMegaManager.shared.fetchContactsOnMega() ?? []
                             tableView.reloadData()
+                            self.searchFixedView.isHidden = self.inviteContactView.isHidden
                         })
                     } else {
                         tableView.reloadData()

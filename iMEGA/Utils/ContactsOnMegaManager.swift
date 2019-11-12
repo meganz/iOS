@@ -165,7 +165,9 @@ struct ContactOnMega {
         var contactsCount = contactsOnMegaDictionary.count
         contactsOnMegaDictionary.forEach { (contactOnMega) in
             let emailRequestDelegate = MEGAChatGenericRequestDelegate.init(completion: { (request, error) in
-                self.contactsOnMega.append(ContactOnMega(handle: contactOnMega.key, email: request.text, name: contactOnMega.value))
+                if request.text != MEGASdkManager.sharedMEGASdk()?.myEmail {
+                    self.contactsOnMega.append(ContactOnMega(handle: contactOnMega.key, email: request.text, name: contactOnMega.value))
+                }
                 contactsCount -= 1
                 if contactsCount == 0 {
                     self.state = .ready
