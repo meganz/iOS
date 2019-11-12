@@ -1,6 +1,6 @@
 
 #import "DocumentPickerViewController.h"
-
+#import <PureLayout/PureLayout.h>
 #import "LTHPasscodeViewController.h"
 #import "SAMKeychain.h"
 #import "SVProgressHUD.h"
@@ -260,6 +260,7 @@
         browserVC.browserViewControllerDelegate = self;
         [self addChildViewController:browserVC];
         [self.view addSubview:browserVC.view];
+        [browserVC.view autoPinEdgesToSuperviewEdges];
         self.pickerPresented = YES;
     }
     if (self.launchVC) {
