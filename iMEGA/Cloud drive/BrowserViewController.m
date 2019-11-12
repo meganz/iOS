@@ -787,7 +787,7 @@
 #pragma mark - UISearchControllerDelegate
 
 - (void)didPresentSearchController:(UISearchController *)searchController {
-    float yPosition = self.selectorView.hidden ? 0 : 44;
+    float yPosition = self.selectorView.hidden ? 0 : self.selectorViewHeightConstraint.constant;
     self.searchController.searchBar.superview.frame = CGRectMake(0, yPosition, self.searchController.searchBar.superview.frame.size.width, self.searchController.searchBar.superview.frame.size.height);
 }
 
