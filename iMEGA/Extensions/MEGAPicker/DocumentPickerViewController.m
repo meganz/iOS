@@ -255,14 +255,11 @@
 - (void)presentDocumentPicker {
     if (!self.pickerPresented) {
         UIStoryboard *cloudStoryboard = [UIStoryboard storyboardWithName:@"Cloud" bundle:[NSBundle bundleForClass:BrowserViewController.class]];
-        MEGANavigationController *navigationController = [cloudStoryboard instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
-        BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
+        BrowserViewController *browserVC = [cloudStoryboard instantiateViewControllerWithIdentifier:@"BrowserViewControllerID"];
         browserVC.browserAction = BrowserActionDocumentProvider;
         browserVC.browserViewControllerDelegate = self;
-        
-        [self addChildViewController:navigationController];
-        [navigationController.view setFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height)];
-        [self.view addSubview:navigationController.view];
+        [self addChildViewController:browserVC];
+        [self.view addSubview:browserVC.view];
         self.pickerPresented = YES;
     }
     if (self.launchVC) {
