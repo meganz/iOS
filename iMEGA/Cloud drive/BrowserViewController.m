@@ -28,14 +28,12 @@
 
 @property (nonatomic) NSUInteger remainingOperations;
 
-@property (weak, nonatomic) IBOutlet UIView *extendedNavigationBar_view;
-@property (weak, nonatomic) IBOutlet UIButton *extendedNavigationBar_backButton;
-@property (weak, nonatomic) IBOutlet UILabel *extendedNavigationBar_label;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *selectorViewHeightConstraint;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewTopConstraint;
 
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
+@property (strong, nonatomic) UIBarButtonItem *cancelBarButtonItem;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *toolBarNewFolderBarButtonItem;
 
@@ -64,7 +62,7 @@
     
     //White background for the view behind the table view
     self.tableView.backgroundView = UIView.alloc.init;
-    
+    self.navigationController.navigationBar.translucent = NO;
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;
     
@@ -131,7 +129,6 @@
 - (void)setupBrowser {
     self.parentBrowser = !self.isChildBrowser;
     
-    self.cancelBarButtonItem.title = AMLocalizedString(@"cancel", nil);
     
     UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
@@ -200,7 +197,8 @@
             
         case BrowserActionDocumentProvider: {
             if (self.isChildBrowser) {
-                [self.selectorView addSubview:self.extendedNavigationBar_view];
+                self.selectorViewHeightConstraint.constant = 0;
+                [self.selectorView updateConstraintsIfNeeded];
             }
             
             self.navigationController.toolbarHidden = YES;
@@ -220,6 +218,11 @@
         self.tableViewTopConstraint.constant = -self.selectorView.frame.size.height;
     }
     
+    self.cancelBarButtonItem = [UIBarButtonItem.alloc initWithTitle:AMLocalizedString(@"cancel", nil)
+                                                              style:UIBarButtonItemStylePlain
+                                                             target:self
+                                                             action:@selector(cancel:)];
+    self.navigationItem.rightBarButtonItem = self.cancelBarButtonItem;
     self.toolBarNewFolderBarButtonItem.title = AMLocalizedString(@"newFolder", @"Menu option from the `Add` section that allows you to create a 'New Folder'");
     [self.toolBarNewFolderBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f]} forState:UIControlStateNormal];
 }
@@ -275,7 +278,7 @@
     if (self.isParentBrowser) {
         self.navigationItem.title = @"MEGA";
         if (self.browserAction == BrowserActionDocumentProvider) {
-            self.extendedNavigationBar_label.text = AMLocalizedString(@"cloudDrive", @"Title of the Cloud Drive section");
+            self.navigationItem.title = AMLocalizedString(@"cloudDrive", @"Title of the Cloud Drive section");
         }
     } else {
         if (self.isChildBrowserFromIncoming) {
@@ -307,8 +310,7 @@
             }
         } else {
             if (self.browserAction == BrowserActionDocumentProvider) {
-                self.navigationItem.title = @"MEGA";
-                self.extendedNavigationBar_label.text = self.parentNode.name;
+                self.navigationItem.title = self.parentNode.name;
             } else {
                 self.navigationItem.title = self.parentNode.name;
             }
