@@ -260,6 +260,7 @@
         browserVC.browserViewControllerDelegate = self;
         [self addChildViewController:browserVC];
         [self.view addSubview:browserVC.view];
+        [browserVC didMoveToParentViewController:self];
         [browserVC.view autoPinEdgesToSuperviewEdges];
         self.pickerPresented = YES;
     }
