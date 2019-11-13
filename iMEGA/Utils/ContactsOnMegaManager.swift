@@ -18,7 +18,6 @@ struct ContactOnMega {
     
     var state = ContactsOnMegaState.unknown
     var contactsOnMega = [ContactOnMega]()
-    var contacts = [MEGAUser]()
     var deviceContactsChunked = [[[String:String]]]()
 
     var completionWhenReady : (() -> Void)?
@@ -31,7 +30,7 @@ struct ContactOnMega {
     
     @objc func contactsOnMegaCount() -> NSInteger {
         if state == .ready {
-            return contactsOnMegaFilteredByOutgoingContactRequests().count
+            return contactsOnMegaFiltered().count
         } else {
             return 0
         }
@@ -39,46 +38,53 @@ struct ContactOnMega {
     
     func fetchContactsOnMega() -> [ContactOnMega]? {
         if state == .ready {
-            return contactsOnMegaFilteredByOutgoingContactRequests()
+            return contactsOnMegaFiltered()
         } else {
             return nil
         }
     }
 
-    func contactsOnMegaFilteredByOutgoingContactRequests() -> [ContactOnMega] {
+    private func contactsOnMegaFiltered() -> [ContactOnMega] {
+        var contactsOnMegaFiltered = [ContactOnMega]()
+        var contactEmailsToFilter = [String]()
+
+        //Get all outgoing contact request emails
         let outgoingContactRequestList = MEGASdkManager.sharedMEGASdk()?.outgoingContactRequests()
-        guard let size = outgoingContactRequestList?.size.intValue else {
+        guard let outgoingContactRequestSize = outgoingContactRequestList?.size.intValue else {
             return contactsOnMega
         }
-        
-        var contactsOnMegaFilteredByInvited = [ContactOnMega]()
-        
-        var outgoingContactsRequestEmails = [String]()
-        for n in 0 ..< size {
-            outgoingContactsRequestEmails.append(outgoingContactRequestList?.contactRequest(at: n)?.targetEmail ?? "")
+        for i in 0 ..< outgoingContactRequestSize {
+            contactEmailsToFilter.append(outgoingContactRequestList?.contactRequest(at: i)?.targetEmail ?? "")
         }
         
-        for contact in contactsOnMega {
-            if outgoingContactsRequestEmails.filter({$0 == contact.email}).count == 0 {
-                contactsOnMegaFilteredByInvited.append(contact)
+        //Get all visible contacts emails
+        let userContacts = MEGASdkManager.sharedMEGASdk()?.contacts()
+        guard let userContactsSize = userContacts?.size.intValue else {
+            return contactsOnMega
+        }
+        for j in 0 ..< userContactsSize {
+            guard let user = userContacts?.user(at: j) else {
+                return contactsOnMega
+            }
+            if user.visibility == .visible {
+                contactEmailsToFilter.append(user.email)
             }
         }
         
-        return contactsOnMegaFilteredByInvited
+        //Filter ContactsOnMEGA from API with outgoing contact request and visible contacts
+        for contact in contactsOnMega {
+            if contactEmailsToFilter.filter({$0 == contact.email}).count == 0 {
+                contactsOnMegaFiltered.append(contact)
+            }
+        }
+        
+        return contactsOnMegaFiltered
     }
     
     @objc func configureContactsOnMega(completion: (() -> Void)?) {
         contactsOnMega.removeAll()
         
         if CNContactStore.authorizationStatus(for: .contacts) == .authorized {
-            let userContacts = MEGASdkManager.sharedMEGASdk().contacts()
-            for i in 0 ..< userContacts.size.intValue {
-                guard let user = userContacts.user(at: i) else { return }
-                if user.visibility == .visible {
-                    contacts.append(user)
-                }
-            }
-            
             completionWhenReady = completion
             state = .fetching
             getDeviceContacts()
@@ -133,13 +139,11 @@ struct ContactOnMega {
             if error.type == .apiOk {
                 request.stringTableArray.forEach({ (contactOnMega) in
                     let userHandle = MEGASdk.handle(forBase64UserHandle: contactOnMega[1])
-                    if self.contacts.filter({$0.handle == userHandle}).count == 0 { //contactOnMega is not contact yet
-                        guard let deviceContacts = self.deviceContactsChunked.first else { return }
-                        for deviceContact in deviceContacts {
-                            if let contactName = deviceContact[contactOnMega[0]] { //Get contactOnMega device name and save it to fetch email later
-                                contactsOnMegaDictionary[userHandle] = contactName
-                                break
-                            }
+                    guard let deviceContacts = self.deviceContactsChunked.first else { return }
+                    for deviceContact in deviceContacts {
+                        if let contactName = deviceContact[contactOnMega[0]] { //Get contactOnMega device name and save it to fetch email later
+                            contactsOnMegaDictionary[userHandle] = contactName
+                            break
                         }
                     }
                 })

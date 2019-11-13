@@ -2040,3 +2040,5 @@
 "It was not possible to obtain the content of this file, that is not encoded in either UTF-8 or ISO/IEC 8859-1."="It was not possible to obtain the content of this file, that is not encoded in either UTF-8 or ISO/IEC 8859-1.";
 /* Text emncouraging the user to add contacts in MEGA */
 "Invite contact now"="Invite contact now";
+/* Text showing the user one contact would be invited */
+"Invite 1 contact"="Invite 1 contact";

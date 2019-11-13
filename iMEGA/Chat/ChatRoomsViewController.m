@@ -344,7 +344,14 @@
 }
 
 - (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
-    return [Helper verticalOffsetForEmptyStateWithNavigationBarSize:self.navigationController.navigationBar.frame.size searchBarActive:self.searchController.isActive];
+    CGFloat offset = [Helper verticalOffsetForEmptyStateWithNavigationBarSize:self.navigationController.navigationBar.frame.size searchBarActive:self.searchController.isActive];
+    
+    if (UIInterfaceOrientationIsLandscape(UIApplication.sharedApplication.statusBarOrientation)) {
+        offset += self.archivedChatEmptyState.hidden ? 0 : self.archivedChatEmptyState.frame.size.height/2;
+        offset += self.contactsOnMegaEmptyStateView.hidden ? 0 : self.contactsOnMegaEmptyStateView.frame.size.height/2;
+    }
+    
+    return offset;
 }
 
 - (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView {
