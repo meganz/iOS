@@ -38,6 +38,7 @@
 #import "CopyrightWarningViewController.h"
 #import "CustomActionViewController.h"
 #import "CustomModalAlertViewController.h"
+#import "EmptyStateView.h"
 #import "MEGAAssetsPickerController.h"
 #import "MEGAImagePickerController.h"
 #import "MEGANavigationController.h"
@@ -613,13 +614,22 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 
 #pragma mark - DZNEmptyDataSetSource
 
-- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
+- (nullable UIView *)customViewForEmptyDataSet:(UIScrollView *)scrollView {
+    EmptyStateView *emptyStateView = [EmptyStateView.alloc initWithImage:[self imageForEmptyState] title:[self titleForEmptyState] description:[self descriptionForEmptyState] buttonTitle:[self buttonTitleForEmptyState]];
+    [emptyStateView.button addTarget:self action:@selector(buttonTouchUpInsideEmptyState) forControlEvents:UIControlEventTouchUpInside];
+    
+    return emptyStateView;
+}
+
+#pragma mark - Empty State
+
+- (NSString *)titleForEmptyState {
     NSString *text;
     if ([MEGAReachabilityManager isReachable]) {
         if (self.parentNode == nil) {
             return nil;
         }
-        
+
         if (self.searchController.isActive) {
             text = AMLocalizedString(@"noResults", nil);
         } else {
@@ -632,7 +642,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
                     }
                     break;
                 }
-                    
+
                 case DisplayModeRubbishBin:
                     if ([self.parentNode type] == MEGANodeTypeRubbish) {
                         text = AMLocalizedString(@"cloudDriveEmptyState_titleRubbishBin", @"Title shown when your Rubbish Bin is empty.");
@@ -640,7 +650,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
                         text = AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
                     }
                     break;
-                    
+
                 default:
                     break;
             }
@@ -648,28 +658,26 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     } else {
         text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");
     }
-    
-    return [[NSAttributedString alloc] initWithString:text attributes:[Helper titleAttributesForEmptyState]];
+
+    return text;
 }
 
-- (nullable NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView {
+- (NSString *)descriptionForEmptyState {
     NSString *text = @"";
     if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
         text = AMLocalizedString(@"Mobile Data is turned off", @"Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings.");
     }
-    
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleFootnote], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]};
-    
-    return [NSAttributedString.alloc initWithString:text attributes:attributes];
+
+    return text;
 }
 
-- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
+- (UIImage *)imageForEmptyState {
     UIImage *image = nil;
     if ([MEGAReachabilityManager isReachable]) {
         if (self.parentNode == nil) {
             return nil;
         }
-        
+
         if (self.searchController.isActive) {
             image = [UIImage imageNamed:@"searchEmptyState"];
         } else {
@@ -682,7 +690,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
                     }
                     break;
                 }
-                    
+
                 case DisplayModeRubbishBin: {
                     if ([self.parentNode type] == MEGANodeTypeRubbish) {
                         image = [UIImage imageNamed:@"rubbishEmptyState"];
@@ -691,7 +699,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
                     }
                     break;
                 }
-                    
+
                 default:
                     break;
             }
@@ -699,22 +707,22 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     } else {
         image = [UIImage imageNamed:@"noInternetEmptyState"];
     }
-    
+
     return image;
 }
 
-- (NSAttributedString *)buttonTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
+- (NSString *)buttonTitleForEmptyState {
     MEGAShareType parentShareType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.parentNode];
     if (parentShareType == MEGAShareTypeAccessRead) {
         return nil;
     }
-    
+
     NSString *text = @"";
     if ([MEGAReachabilityManager isReachable]) {
         if (self.parentNode == nil) {
             return nil;
         }
-        
+
         switch (self.displayMode) {
             case DisplayModeCloudDrive: {
                 if (!self.searchController.isActive) {
@@ -722,48 +730,21 @@ static const NSTimeInterval kSearchTimeDelay = .5;
                 }
                 break;
             }
-                
+
             default:
                 text = @"";
                 break;
         }
-        
     } else {
         if (!MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
             text = AMLocalizedString(@"Turn Mobile Data on", @"Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app.");
         }
     }
-    
-    return [[NSAttributedString alloc] initWithString:text attributes:[Helper buttonTextAttributesForEmptyState]];
+
+    return text;
 }
 
-- (UIImage *)buttonBackgroundImageForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
-    MEGAShareType parentShareType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.parentNode];
-    if (parentShareType == MEGAShareTypeAccessRead) {
-        return nil;
-    }
-    
-    UIEdgeInsets capInsets = [Helper capInsetsForEmptyStateButton];
-    UIEdgeInsets rectInsets = [Helper rectInsetsForEmptyStateButton];
-    
-    return [[[UIImage imageNamed:@"emptyStateButton"] resizableImageWithCapInsets:capInsets resizingMode:UIImageResizingModeStretch] imageWithAlignmentRectInsets:rectInsets];
-}
-
-- (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
-    return [UIColor whiteColor];
-}
-
-- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
-    return [Helper verticalOffsetForEmptyStateWithNavigationBarSize:self.navigationController.navigationBar.frame.size searchBarActive:self.searchController.isActive];
-}
-
-- (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView {
-    return [Helper spaceHeightForEmptyState];
-}
-
-#pragma mark - DZNEmptyDataSetDelegate
-
-- (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
+- (void)buttonTouchUpInsideEmptyState {
     if (MEGAReachabilityManager.isReachable) {
         switch (self.displayMode) {
             case DisplayModeCloudDrive: {

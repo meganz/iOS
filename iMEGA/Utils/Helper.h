@@ -90,18 +90,6 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 
 + (void)setIndexer:(MEGAIndexer* )megaIndexer;
 
-#pragma mark - Utils for empty states
-
-+ (UIEdgeInsets)capInsetsForEmptyStateButton;
-+ (UIEdgeInsets)rectInsetsForEmptyStateButton;
-
-+ (CGFloat)verticalOffsetForEmptyStateWithNavigationBarSize:(CGSize)navigationBarSize searchBarActive:(BOOL)isSearchBarActive;
-+ (CGFloat)spaceHeightForEmptyState;
-+ (CGFloat)spaceHeightForEmptyStateWithDescription;
-
-+ (NSDictionary *)titleAttributesForEmptyState;
-+ (NSDictionary *)buttonTextAttributesForEmptyState;
-
 #pragma mark - Utils for UI
 
 + (UILabel *)customNavigationBarLabelWithTitle:(NSString *)title subtitle:(NSString *)subtitle;
