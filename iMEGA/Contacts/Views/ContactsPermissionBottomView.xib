@@ -22,20 +22,20 @@
                     <rect key="frame" x="8" y="44" width="398" height="496"/>
                     <subviews>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="249" verticalHuggingPriority="249" horizontalCompressionResistancePriority="748" verticalCompressionResistancePriority="748" image="access contact" translatesAutoresizingMaskIntoConstraints="NO" id="nnr-mV-Idm">
-                            <rect key="frame" x="79" y="0.0" width="240" height="240"/>
+                            <rect key="frame" x="79" y="8" width="240" height="240"/>
                             <constraints>
                                 <constraint firstAttribute="width" relation="lessThanOrEqual" constant="240" id="9MN-Lg-5y4"/>
                                 <constraint firstAttribute="width" secondItem="nnr-mV-Idm" secondAttribute="height" multiplier="1:1" id="fAN-R4-fbN"/>
                             </constraints>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enable Access to Contacts" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pgu-bC-DWR">
-                            <rect key="frame" x="91" y="273.5" width="216" height="21.5"/>
+                            <rect key="frame" x="91" y="279" width="216" height="21.5"/>
                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
                             <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" text="MEGA needs access to your contacts to help you connect with other people on MEGA. " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YpO-vW-kfg">
-                            <rect key="frame" x="11" y="329" width="376.5" height="33.5"/>
+                            <rect key="frame" x="11" y="331.5" width="376.5" height="33.5"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <color key="textColor" red="0.46666666670000001" green="0.46666666670000001" blue="0.46666666670000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
@@ -67,7 +67,7 @@
                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="0aB-c3-0Fx" secondAttribute="trailing" constant="10" id="EWk-oj-2Hg"/>
                         <constraint firstItem="nnr-mV-Idm" firstAttribute="centerX" secondItem="9Xh-hf-MXE" secondAttribute="centerX" id="rJj-cP-EXE"/>
                     </constraints>
-                    <directionalEdgeInsets key="directionalLayoutMargins" top="0.0" leading="8" bottom="50" trailing="8"/>
+                    <directionalEdgeInsets key="directionalLayoutMargins" top="8" leading="8" bottom="50" trailing="8"/>
                 </stackView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -85,6 +85,7 @@
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <connections>
                 <outlet property="accessImage" destination="nnr-mV-Idm" id="I8s-Lh-clm"/>
+                <outlet property="containerStackView" destination="9Xh-hf-MXE" id="U4a-4F-7WS"/>
                 <outlet property="enableButton" destination="0aB-c3-0Fx" id="Aj9-9h-KaT"/>
                 <outlet property="subtitleLabel" destination="YpO-vW-kfg" id="H8h-FY-ohS"/>
                 <outlet property="titleLabel" destination="pgu-bC-DWR" id="628-j1-Z6O"/>

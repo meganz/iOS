@@ -27,7 +27,7 @@
                 break;
                 
             case MEGAErrorTypeApiEFailed:
-                title = AMLocalizedString(@"error", nil);
+                title = @"";
                 message = AMLocalizedString(@"emailAddressChangeAlreadyRequested", @"Error message shown when you try to change your account email to one that you already requested.");
                 break;
                 

@@ -92,7 +92,8 @@ class EnterEmailViewController: UIViewController {
     
     func enableInviteContactsButton() {
         inviteContactsButton.backgroundColor = UIColor.mnz_green00BFA5()
-        inviteContactsButton.setTitle(AMLocalizedString("Invite [X] contacts", "Text showing the user how many contacts would be invited").replacingOccurrences(of: "[X]", with: String(tokens.count)), for: .normal)
+        let inviteContactsString = tokens.count == 1 ? AMLocalizedString("Invite 1 contact", "Text showing the user one contact would be invited").replacingOccurrences(of: "[X]", with: String(tokens.count)) : AMLocalizedString("Invite [X] contacts", "Text showing the user how many contacts would be invited").replacingOccurrences(of: "[X]", with: String(tokens.count))
+        inviteContactsButton.setTitle(inviteContactsString, for: .normal)
     }
     
     func customizeTokenField() {
@@ -130,6 +131,7 @@ class EnterEmailViewController: UIViewController {
         let inviteContactRequestDelegate = MEGAInviteContactRequestDelegate.init(numberOfRequests: UInt(tokens.count), presentSuccessOver: UIApplication.mnz_presentingViewController()) {
             weakSelf?.tokens.removeAll()
             weakSelf?.tokenField.reloadData()
+            weakSelf?.disableInviteContactsButton()
         }
         tokens.forEach { (email) in
             MEGASdkManager.sharedMEGASdk().inviteContact(withEmail: email, message: "", action: MEGAInviteAction.add, delegate: inviteContactRequestDelegate)
