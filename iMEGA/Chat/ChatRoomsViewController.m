@@ -22,6 +22,7 @@
 #import "ChatSettingsTableViewController.h"
 #import "ContactDetailsViewController.h"
 #import "ContactsViewController.h"
+#import "EmptyStateView.h"
 #import "GroupCallViewController.h"
 #import "GroupChatDetailsViewController.h"
 #import "MainTabBarController.h"
@@ -224,7 +225,46 @@
 
 #pragma mark - DZNEmptyDataSetSource
 
-- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
+- (nullable UIView *)customViewForEmptyDataSet:(UIScrollView *)scrollView {
+    if (MEGAReachabilityManager.isReachable) {
+        if ([NSUserDefaults.standardUserDefaults boolForKey:@"IsChatEnabled"]) {
+            if (MEGASdkManager.sharedMEGAChatSdk.initState == MEGAChatInitWaitingNewSession || MEGASdkManager.sharedMEGAChatSdk.initState == MEGAChatInitNoCache) {
+                return [UIImageView.alloc initWithImage:[UIImage imageNamed:@"chatListLoading"]];
+            }
+        }
+    }
+    
+    EmptyStateView *emptyStateView = [EmptyStateView.alloc initWithImage:[self imageForEmptyState] title:[self titleForEmptyState] description:[self descriptionForEmptyState] buttonTitle:[self buttonTitleForEmptyState]];
+    [emptyStateView.button addTarget:self action:@selector(buttonTouchUpInsideEmptyState) forControlEvents:UIControlEventTouchUpInside];
+    
+    return emptyStateView;
+}
+
+#pragma mark - DZNEmptyDataSetDelegate
+
+- (void)emptyDataSetWillAppear:(UIScrollView *)scrollView {
+    if (!self.searchController.active) {
+        self.searchController.searchBar.hidden = YES;
+        if (self.archivedChatListItemList.size) {
+            self.archivedChatEmptyStateTitle.text = AMLocalizedString(@"archivedChats", @"Title of archived chats button");
+            self.archivedChatEmptyStateCount.text = [NSString stringWithFormat:@"%tu", self.archivedChatListItemList.size];
+            self.archivedChatEmptyState.hidden = NO;
+        }
+    }
+}
+
+- (void)emptyDataSetWillDisappear:(UIScrollView *)scrollView {
+    if (!self.searchController.active) {
+        self.searchController.searchBar.hidden = NO;
+        if (!self.archivedChatEmptyState.hidden) {
+            self.archivedChatEmptyState.hidden  = YES;
+        }
+    }
+}
+
+#pragma mark - Empty State
+
+- (NSString *)titleForEmptyState {
     NSString *text = @"";
     if (self.searchController.isActive) {
         if (self.searchController.searchBar.text.length > 0) {
@@ -250,10 +290,10 @@
         }
     }
     
-    return [[NSAttributedString alloc] initWithString:text attributes:[Helper titleAttributesForEmptyState]];
+    return text;
 }
 
-- (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView {
+- (NSString *)descriptionForEmptyState {
     NSString *text = @"";
 
     if (self.searchController.isActive) {
@@ -271,12 +311,10 @@
         }
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleFootnote], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]};
-    
-    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+    return text;
 }
 
-- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
+- (UIImage *)imageForEmptyState {
     if ([MEGAReachabilityManager isReachable]) {
         if (self.searchController.isActive) {
             if (self.searchController.searchBar.text.length > 0) {
@@ -298,7 +336,7 @@
     }
 }
 
-- (NSAttributedString *)buttonTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
+- (NSString *)buttonTitleForEmptyState {
     NSString *text = @"";
     if ([MEGAReachabilityManager isReachable]) {
         if (![[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
@@ -314,45 +352,10 @@
         }
     }
     
-    return [[NSAttributedString alloc] initWithString:text attributes:[Helper buttonTextAttributesForEmptyState]];
+    return text;
 }
 
-- (UIImage *)buttonBackgroundImageForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
-    UIEdgeInsets capInsets = [Helper capInsetsForEmptyStateButton];
-    UIEdgeInsets rectInsets = [Helper rectInsetsForEmptyStateButton];
-    
-    return [[[UIImage imageNamed:@"emptyStateButton"] resizableImageWithCapInsets:capInsets resizingMode:UIImageResizingModeStretch] imageWithAlignmentRectInsets:rectInsets];
-}
-
-- (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
-    return UIColor.whiteColor;
-}
-
-- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
-    return [Helper verticalOffsetForEmptyStateWithNavigationBarSize:self.navigationController.navigationBar.frame.size searchBarActive:self.searchController.isActive];
-}
-
-- (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView {
-    return [Helper spaceHeightForEmptyState];
-}
-
-- (UIView *)customViewForEmptyDataSet:(UIScrollView *)scrollView {
-    UIImageView *skeletonImageView = nil;
-    
-    if ([MEGAReachabilityManager isReachable]) {
-        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
-            if ([[MEGASdkManager sharedMEGAChatSdk] initState] == MEGAChatInitWaitingNewSession || [[MEGASdkManager sharedMEGAChatSdk] initState] == MEGAChatInitNoCache) {
-                skeletonImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"chatListLoading"]];
-            }
-        }
-    }
-    
-    return skeletonImageView;
-}
-
-#pragma mark - DZNEmptyDataSetDelegate
-
-- (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
+- (void)buttonTouchUpInsideEmptyState {
     if (![[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
         ChatSettingsTableViewController *chatSettingsTVC = [[UIStoryboard storyboardWithName:@"ChatSettings" bundle:nil] instantiateViewControllerWithIdentifier:@"ChatSettingsTableViewControllerID"];
         [self.navigationController pushViewController:chatSettingsTVC animated:YES];
@@ -365,26 +368,6 @@
         [self blockCompletionsForCreateChatInContacts:contactsVC];
 
         [self presentViewController:navigationController animated:YES completion:nil];
-    }
-}
-
-- (void)emptyDataSetWillAppear:(UIScrollView *)scrollView {
-    if (!self.searchController.active) {
-        self.searchController.searchBar.hidden = YES;
-        if (self.archivedChatListItemList.size) {
-            self.archivedChatEmptyStateTitle.text = AMLocalizedString(@"archivedChats", @"Title of archived chats button");
-            self.archivedChatEmptyStateCount.text = [NSString stringWithFormat:@"%tu", self.archivedChatListItemList.size];
-            self.archivedChatEmptyState.hidden = NO;
-        }
-    }
-}
-
-- (void)emptyDataSetWillDisappear:(UIScrollView *)scrollView {
-    if (!self.searchController.active) {
-        self.searchController.searchBar.hidden = NO;
-        if (!self.archivedChatEmptyState.hidden) {
-            self.archivedChatEmptyState.hidden  = YES;
-        }
     }
 }
 
