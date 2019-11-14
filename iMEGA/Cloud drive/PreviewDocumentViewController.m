@@ -15,6 +15,7 @@
 #import "CloudDriveViewController.h"
 #import "MainTabBarController.h"
 #import "SearchInPdfViewController.h"
+#import "MEGALinkManager.h"
 
 #import "MEGANode+MNZCategory.h"
 #import "NSString+MNZCategory.h"
@@ -25,7 +26,7 @@
 #import "MEGA-Swift.h"
 #import "UIView+MNZCategory.h"
 
-@interface PreviewDocumentViewController () <QLPreviewControllerDataSource, QLPreviewControllerDelegate, MEGATransferDelegate, UICollectionViewDelegate, UICollectionViewDataSource, CustomActionViewControllerDelegate, NodeInfoViewControllerDelegate, SearchInPdfViewControllerProtocol, UIGestureRecognizerDelegate> {
+@interface PreviewDocumentViewController () <QLPreviewControllerDataSource, QLPreviewControllerDelegate, MEGATransferDelegate, UICollectionViewDelegate, UICollectionViewDataSource, CustomActionViewControllerDelegate, NodeInfoViewControllerDelegate, SearchInPdfViewControllerProtocol, UIGestureRecognizerDelegate, PDFViewDelegate> {
     MEGATransfer *previewDocumentTransfer;
 }
 
@@ -391,6 +392,7 @@
 - (void)loadPdfKit:(NSURL *)url {
     if (!self.pdfView.document) {
         self.pdfView.hidden = NO;
+        self.pdfView.delegate = self;
         self.activityIndicator.hidden = YES;
         self.progressView.hidden = YES;
         self.imageView.hidden = YES;
@@ -464,6 +466,15 @@
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(nonnull UIGestureRecognizer *)otherGestureRecognizer {
     return YES;
+}
+
+
+#pragma mark - PDFViewDelegate
+
+- (void)PDFViewWillClickOnLink:(PDFView *)sender withURL:(NSURL *)url {
+    
+    MEGALinkManager.linkURL = url;
+    [MEGALinkManager processLinkURL:url];
 }
 
 #pragma mark - CollectionViewDelegate
