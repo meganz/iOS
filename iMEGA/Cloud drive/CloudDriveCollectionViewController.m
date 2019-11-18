@@ -25,9 +25,9 @@
 
 #pragma mark - Lifecycle
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    
+- (void)viewDidLoad {
+    [super viewDidLoad];
+
     [self.searchView addSubview:self.cloudDrive.searchController.searchBar];
     self.cloudDrive.searchController.searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 }

@@ -2075,7 +2075,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         self.editMessage = nil;
     }
     
-    [navigationViewController addLeftCancelButton];
+    [navigationViewController addLeftDismissButtonWithText:AMLocalizedString(@"cancel", nil)];
     [self presentViewController:navigationViewController animated:YES completion:nil];
 }
 
@@ -2268,7 +2268,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 }
 
 - (UICollectionViewCell *)collectionView:(JSQMessagesCollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row == 8 && ![[MEGASdkManager sharedMEGAChatSdk] isFullHistoryLoadedForChat:self.chatRoom.chatId]) {
+    if (indexPath.row == 0 && ![[MEGASdkManager sharedMEGAChatSdk] isFullHistoryLoadedForChat:self.chatRoom.chatId]) {
         [self loadMessages];
     }
     
@@ -2665,12 +2665,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 
 #pragma mark - Responding to collection view tap events
 
-- (void)collectionView:(JSQMessagesCollectionView *)collectionView
-                header:(JSQMessagesLoadEarlierHeaderView *)headerView didTapLoadEarlierMessagesButton:(UIButton *)sender {
-    NSLog(@"Load earlier messages!");
-    [self loadMessages];
-}
-
 - (void)collectionView:(JSQMessagesCollectionView *)collectionView didTapAvatarImageView:(UIImageView *)avatarImageView atIndexPath:(NSIndexPath *)indexPath {
     MEGAChatMessage *message = [self.messages objectAtIndex:indexPath.item];
     uint64_t userHandle = message.userHandle;
@@ -2859,6 +2853,12 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         [self.selectedMessages addObject:message];
         [self forwardSelectedMessages];
     }
+}
+
+#pragma mark - UIScrollViewDelegate
+
+- (BOOL)scrollViewShouldScrollToTop:(UIScrollView *)scrollView {
+    return NO;
 }
 
 #pragma mark - UITextViewDelegate
