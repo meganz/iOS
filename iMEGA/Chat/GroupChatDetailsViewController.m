@@ -136,8 +136,15 @@
     
     [archiveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         MEGAArchiveChatRequestDelegate *archiveChatRequesDelegate = [[MEGAArchiveChatRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
-            self.chatRoom = chatRoom;
-            [self.tableView reloadData];
+            if (chatRoom.isArchived) {
+                if (self.navigationController.childViewControllers.count == 3) {
+                    [MEGASdkManager.sharedMEGAChatSdk closeChatRoom:chatRoom.chatId delegate:self.navigationController.childViewControllers[1]];
+                }
+                [self.navigationController popToRootViewControllerAnimated:YES];
+            } else {
+                self.chatRoom = chatRoom;
+                [self.tableView reloadData];
+            }
         }];
         [[MEGASdkManager sharedMEGAChatSdk] archiveChat:self.chatRoom.chatId archive:!self.chatRoom.isArchived delegate:archiveChatRequesDelegate];
     }]];
@@ -500,15 +507,15 @@
                     break;
                     
                 case MEGAChatRoomPrivilegeRo:
-                    permissionsImage = [UIImage imageNamed:@"readPermissions"];
+                    permissionsImage = [UIImage imageNamed:@"readOnly"];
                     break;
                     
                 case MEGAChatRoomPrivilegeStandard:
-                    permissionsImage = [UIImage imageNamed:@"readWritePermissions"];
+                    permissionsImage = [UIImage imageNamed:@"standard"];
                     break;
                     
                 case MEGAChatRoomPrivilegeModerator:
-                    permissionsImage = [UIImage imageNamed:@"permissions"];
+                    permissionsImage = [UIImage imageNamed:@"moderator"];
                     break;
             }
             [cell.permissionsButton setImage:permissionsImage forState:UIControlStateNormal];
@@ -860,10 +867,11 @@
             case MEGAChatListItemChangeTypeParticipants:
                 [self setParticipants];
                 [self.tableView reloadData];
+                [self updateHeadingView];
                 break;
                 
             case MEGAChatListItemChangeTypeTitle:
-                self.nameLabel.text = item.title;
+                [self updateHeadingView];
                 break;
                 
             case MEGAChatListItemChangeTypeClosed:
