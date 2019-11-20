@@ -20,7 +20,13 @@ enum TwoFactorAuthStatus {
     private var avatarExpandedPosition: CGFloat = 0.0
     private var avatarCollapsedPosition: CGFloat = 0.0
     
-    private let dateFormatter = DateFormatter()
+    private lazy var dateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .short
+        dateFormatter.timeStyle = .none
+        dateFormatter.locale = NSLocale.autoupdatingCurrent
+        return dateFormatter
+    }()
     
     private var twoFactorAuthStatus:TwoFactorAuthStatus = .Unknown
     
@@ -29,9 +35,9 @@ enum TwoFactorAuthStatus {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        avatarExpandedPosition = view.frame.size.height * 0.5;
-        avatarCollapsedPosition = view.frame.size.height * 0.3;
-        avatarViewHeightConstraint.constant = avatarCollapsedPosition;
+        avatarExpandedPosition = view.frame.size.height * 0.5
+        avatarCollapsedPosition = view.frame.size.height * 0.3
+        avatarViewHeightConstraint.constant = avatarCollapsedPosition
         
         nameLabel.text = MEGASdkManager.sharedMEGASdk().myUser?.mnz_fullName
         nameLabel.layer.shadowOffset = CGSize(width: 0, height: 1)
@@ -49,10 +55,6 @@ enum TwoFactorAuthStatus {
         configureGestures()
         
         MEGASdkManager.sharedMEGASdk().add(self)
-        
-        dateFormatter.dateStyle = .short
-        dateFormatter.timeStyle = .none
-        dateFormatter.locale = NSLocale.autoupdatingCurrent
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -93,7 +95,7 @@ enum TwoFactorAuthStatus {
         }
     }
     
-    @objc private func handlePan(recognizer: UIPanGestureRecognizer) -> Void {
+    @objc private func handlePan(recognizer: UIPanGestureRecognizer) {
         let translation = recognizer.translation(in: avatarImageView)
         if recognizer.state == .changed {
             if translation.y < 0 && avatarViewHeightConstraint.constant > avatarCollapsedPosition {
@@ -128,7 +130,7 @@ enum TwoFactorAuthStatus {
         }
     }
     
-    private func collapseAvatarView() -> Void {
+    private func collapseAvatarView() {
         UIView.animate(withDuration: 0.3) {
             self.avatarViewHeightConstraint.constant = self.avatarCollapsedPosition
             self.gradientView.alpha = 1
@@ -136,7 +138,7 @@ enum TwoFactorAuthStatus {
         }
     }
     
-    private func expandAvatarView() -> Void {
+    private func expandAvatarView() {
         UIView.animate(withDuration: 0.3) {
             self.avatarViewHeightConstraint.constant = self.avatarExpandedPosition
             self.gradientView.alpha = 0
