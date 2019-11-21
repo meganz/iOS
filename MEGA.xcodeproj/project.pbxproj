@@ -12,6 +12,7 @@
 		1373619E1A6664C300B740E8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1373619D1A6664C300B740E8 /* Images.xcassets */; };
 		2F8F5F1623691A390049603F /* UINavigationViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8F5F1523691A390049603F /* UINavigationViewController+Additions.swift */; };
 		2FCA4B7A2385FB260011B7DA /* ChatImageQualityTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCA4B792385FB260011B7DA /* ChatImageQualityTableViewController.swift */; };
+		2FCC5BC2238740ED00E1E5A0 /* ChatImageUploadQuality.h in Sources */ = {isa = PBXBuildFile; fileRef = 2FCC5BC1238740ED00E1E5A0 /* ChatImageUploadQuality.h */; };
 		410AD3C11C883AA900BF939E /* MEGAAVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 410AD3C01C883AA900BF939E /* MEGAAVViewController.m */; };
 		411504941CEB183600BF38E3 /* SaveToCameraRollActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 411504931CEB183600BF38E3 /* SaveToCameraRollActivity.m */; };
 		4115D6441E718B1F004BB0FF /* UIImage+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 4115D6431E718B1F004BB0FF /* UIImage+MNZCategory.m */; };
@@ -1026,6 +1027,7 @@
 		1373619D1A6664C300B740E8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		2F8F5F1523691A390049603F /* UINavigationViewController+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationViewController+Additions.swift"; sourceTree = "<group>"; };
 		2FCA4B792385FB260011B7DA /* ChatImageQualityTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatImageQualityTableViewController.swift; sourceTree = "<group>"; };
+		2FCC5BC1238740ED00E1E5A0 /* ChatImageUploadQuality.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChatImageUploadQuality.h; sourceTree = "<group>"; };
 		410333D71B9993A000380FF3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		410333E11B99948600380FF3 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		410333EB1B9994F400380FF3 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = nl; path = nl.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
@@ -3605,6 +3607,7 @@
 				8394CFA4211AE5B700A1634A /* CallType.h */,
 				836A987C20F8C8DA00EC719B /* ChatRoomsType.h */,
 				A85D93BD20457DAA0066F45B /* ChatVideoUploadQuality.h */,
+				2FCC5BC1238740ED00E1E5A0 /* ChatImageUploadQuality.h */,
 				5B2417E720527FB800C8DDE2 /* DisplayMode.h */,
 				83681574202AFA1700CA8EFC /* MegaNodeActionType.h */,
 				83064D88217F207000FA3DAC /* LayoutView.h */,
@@ -5651,6 +5654,7 @@
 				A86B9F372316D6AB00F35E7A /* FLEXSubtitleTableViewCell.m in Sources */,
 				A824A9192039ECD700D777D2 /* SDAVAssetExportSession.m in Sources */,
 				41E250141D79E9D400499A6C /* SAMKeychainQuery.m in Sources */,
+				2FCC5BC2238740ED00E1E5A0 /* ChatImageUploadQuality.h in Sources */,
 				B6D11AE2219E5E2C00446B86 /* AttributeUploadOperation.m in Sources */,
 				A86B9F642316D6AB00F35E7A /* FLEXKeychainQuery.m in Sources */,
 				B6D9D7E9216AB0C700D7B08A /* CameraScanner.m in Sources */,
