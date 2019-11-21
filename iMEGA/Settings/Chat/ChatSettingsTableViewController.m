@@ -26,6 +26,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *richPreviewsLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *richPreviewsSwitch;
 
+@property (weak, nonatomic) IBOutlet UILabel *imageQualityLabel;
+@property (weak, nonatomic) IBOutlet UILabel *imageQualityRightDetailLabel;
+
 @end
 
 @implementation ChatSettingsTableViewController
@@ -193,7 +196,7 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     NSInteger numberOfSections = 1;
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
-        numberOfSections = 4;
+        numberOfSections = 5;
     }
     
     return numberOfSections;
@@ -205,7 +208,7 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     NSString *titleForHeader;
-    if (section == 4) {
+    if (section == 5) {
         titleForHeader = AMLocalizedString(@"voiceAndVideoCalls", @"Section title of a button where you can enable mobile data for voice and video calls.");
     }
     
@@ -217,7 +220,7 @@
     if (section == 2) {
         footerTitle = AMLocalizedString(@"richPreviewsFooter", @"Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers.");
     }
-    if (section == 3) {
+    if (section == 4) {
         footerTitle = AMLocalizedString(@"qualityOfVideosUploadedToAChat", @"Footer text to explain the meaning of the functionaly 'Video quality' for videos uploaded to a chat.");
     }
     return footerTitle;
