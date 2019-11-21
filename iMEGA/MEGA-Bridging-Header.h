@@ -8,3 +8,4 @@
 
 #import "NSString+MNZCategory.h"
 #import "UIColor+MNZCategory.h"
+#import "ChatImageUploadQuality.h"

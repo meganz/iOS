@@ -8,12 +8,6 @@
 
 import UIKit
 
-enum ChatImageQuality {
-    case auto
-    case high
-    case optimised
-}
-
 
 class ChatImageQualityTableViewController: UITableViewController {
 

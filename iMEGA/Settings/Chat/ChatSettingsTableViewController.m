@@ -10,6 +10,7 @@
 
 #import "ChatStatusTableViewController.h"
 #import "ChatVideoUploadQuality.h"
+#import "ChatImageUploadQuality.h"
 
 @interface ChatSettingsTableViewController () <MEGARequestDelegate, MEGAChatDelegate, MEGAChatRequestDelegate>
 
@@ -69,6 +70,7 @@
     
     [self onlineStatus];
     
+    [self imageQualityString];
     [self videoQualityString];
     
     [self setUIElementsEnabled:MEGAReachabilityManager.isReachable];
@@ -153,6 +155,30 @@
     }
     
     self.statusRightDetailLabel.text = onlineStatus;
+}
+
+- (void)imageQualityString {
+
+    ChatImageUploadQuality imageQuality = [[NSUserDefaults standardUserDefaults] integerForKey:@"chatImageQuality"];
+    NSString *imageQualityString;
+    switch (imageQuality) {
+        case ChatImageUploadQualityAuto:
+            imageQualityString = @"Automatic";
+            break;
+            
+            case ChatImageUploadQualityHigh:
+            imageQualityString = @"High";
+            break;
+            
+            case ChatImageUploadQualityOptimsed:
+            imageQualityString = @"Optimised";
+            break;
+            
+        default:
+            break;
+    }
+    
+    _imageQualityRightDetailLabel.text = imageQualityString;
 }
 
 - (void)videoQualityString {
