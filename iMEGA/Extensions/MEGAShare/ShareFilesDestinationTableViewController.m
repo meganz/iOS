@@ -2,6 +2,7 @@
 #import "ShareFilesDestinationTableViewController.h"
 
 #import "BrowserViewController.h"
+#import "MEGAShare-Swift.h"
 #import "NSString+MNZCategory.h"
 #import "SendToViewController.h"
 #import "ShareAttachment.h"
@@ -64,6 +65,17 @@
     [self.tableView reloadData];
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [ExtensionAppearanceManager setupAppearance:self.traitCollection];
+            [ExtensionAppearanceManager invalidateViews];
+        }
+    }
+}
+
 #pragma mark - Private
 
 - (void)hideKeyboard {
@@ -100,6 +112,8 @@
         UIImageView *imageView = cell.contentView.subviews.firstObject;
         UILabel *label = cell.contentView.subviews.lastObject;
 
+        
+        cell.tintColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
         if (indexPath.row == 0) {
             imageView.image = [UIImage imageNamed:@"upload"];
             label.text = AMLocalizedString(@"uploadToMega", nil);
@@ -113,14 +127,21 @@
             
             if ([self.sharedUserDefaults boolForKey:@"IsChatEnabled"]) {
                 if (self.isChatReady) {
+                    cell.tintColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
                     cell.accessoryView = nil;
                     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                 } else {
+                    cell.tintColor = [[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection] colorWithAlphaComponent:0.5];
+                    
                     UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+                    if (@available(iOS 13.0, *)) {
+                        activityIndicator.color = (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) ? UIColor.whiteColor : [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
+                    }
                     [activityIndicator startAnimating];
                     cell.accessoryView = activityIndicator;
                 }
             } else {
+                cell.tintColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
                 cell.accessoryView = nil;
                 cell.accessoryType = UITableViewCellAccessoryNone;
             }

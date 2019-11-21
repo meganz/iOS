@@ -103,9 +103,10 @@
     } else {
         self.nameLabel.text = node.name;
         self.nameLabel.textColor = UIColor.mnz_label;
-        self.subtitleLabel.textColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
+        self.subtitleLabel.textColor = [UIColor mnz_subtitlesColorForTraitCollection:self.traitCollection];
     }
     
+    self.infoLabel.textColor = [UIColor mnz_subtitlesColorForTraitCollection:self.traitCollection];
     if (node.isFile) {
         self.infoLabel.text = self.recentActionBucket ? [NSString stringWithFormat:@"%@ • %@", [Helper sizeForNode:node api:MEGASdkManager.sharedMEGASdk], node.creationTime.mnz_formattedHourAndMinutes] : [Helper sizeAndDateForNode:node api:api];
         self.versionedImageView.hidden = ![[MEGASdkManager sharedMEGASdk] hasVersionsForNode:node];
