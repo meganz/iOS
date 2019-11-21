@@ -17,6 +17,7 @@
 #import "MEGARequestDelegate.h"
 #import "MEGASdkManager.h"
 #import "MEGASdk+MNZCategory.h"
+#import "MEGAShare-Swift.h"
 #import "MEGATransferDelegate.h"
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
@@ -111,7 +112,7 @@
                                                  name:UIApplicationDidReceiveMemoryWarningNotification
                                                object:nil];
     
-    [self setupAppearance];
+    [ExtensionAppearanceManager setupAppearance:self.traitCollection];
     [SVProgressHUD setViewForExtension:self.view];
     
     self.session = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
@@ -238,6 +239,17 @@
     }
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [ExtensionAppearanceManager setupAppearance:self.traitCollection];
+            [ExtensionAppearanceManager invalidateViews];
+        }
+    }
+}
+
 #pragma mark - Language
 
 - (void)languageCompatibility {
@@ -340,52 +352,6 @@
         
         [self presentViewController:self.loginRequiredNC animated:YES completion:nil];
     }
-}
-
-- (void)setupAppearance {
-    [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:[UIColor whiteColor]}];
-    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
-    [[UINavigationBar appearance] setBarTintColor:UIColor.mnz_redMain];
-    [[UINavigationBar appearance] setTranslucent:NO];
-    
-    //To tint the color of the prompt.
-    [[UILabel appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTextColor:[UIColor whiteColor]];
-    
-    [[UISearchBar appearance] setTranslucent:NO];
-    UISearchBar.appearance.backgroundColor = UIColor.mnz_grayF7F7F7;
-    [UITextField appearanceWhenContainedInInstancesOfClasses:@[UISearchBar.class]].backgroundColor = UIColor.mnz_grayF7F7F7;
-    
-    [[UISegmentedControl appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:13.0f]} forState:UIControlStateNormal];
-    
-    [[UIBarButtonItem appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f]} forState:UIControlStateNormal];
-    [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UINavigationBar class]]] setTintColor:[UIColor whiteColor]];
-    [[UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UIToolbar class]]] setTintColor:UIColor.mnz_redMain];
-    
-    [[UINavigationBar appearance] setBackIndicatorImage:[UIImage imageNamed:@"backArrow"]];
-    [[UINavigationBar appearance] setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@"backArrow"]];
-    
-    UITextField.appearance.tintColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
-        
-    [[UIView appearanceWhenContainedInInstancesOfClasses:@[[UIAlertController class]]] setTintColor:UIColor.mnz_redMain];
-    
-    [[UIProgressView appearance] setTintColor:UIColor.mnz_redMain];
-    
-    [self configureProgressHUD];
-}
-
-- (void)configureProgressHUD {
-    [SVProgressHUD setViewForExtension:self.view];
-    
-    [SVProgressHUD setFont:[UIFont mnz_SFUIRegularWithSize:12.0f]];
-    [SVProgressHUD setRingThickness:2.0];
-    [SVProgressHUD setRingNoTextRadius:18.0];
-    [SVProgressHUD setBackgroundColor:[UIColor mnz_grayF7F7F7]];
-    [SVProgressHUD setForegroundColor:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]];
-    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleCustom];
-    [SVProgressHUD setHapticsEnabled:YES];
-    
-    [SVProgressHUD setSuccessImage:[UIImage imageNamed:@"hudSuccess"]];
-    [SVProgressHUD setErrorImage:[UIImage imageNamed:@"hudError"]];
 }
 
 - (IBAction)openMegaTouchUpInside:(id)sender {

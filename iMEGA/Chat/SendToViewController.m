@@ -19,6 +19,12 @@
 #import "MEGASdkManager.h"
 #import "MEGAUser+MNZCategory.h"
 
+#ifdef MNZ_APP_EXTENSION
+#import "MEGAShare-Swift.h"
+#else
+#import "MEGA-Swift.h"
+#endif
+
 #import "ContactTableViewCell.h"
 #import "ChatRoomCell.h"
 #import "ItemListViewController.h"
@@ -31,10 +37,16 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *itemListViewHeightConstraint;
 @property (weak, nonatomic) IBOutlet UIView *itemListView;
 @property (weak, nonatomic) IBOutlet UIView *searchView;
+
+@property (weak, nonatomic) IBOutlet UIView *topSeparatorRecentsHeaderView;
 @property (weak, nonatomic) IBOutlet UIView *recentsHeaderView;
 @property (weak, nonatomic) IBOutlet UILabel *recentsHeaderViewLabel;
+@property (weak, nonatomic) IBOutlet UIView *bottomSeparatorRecentsHeaderView;
+
+@property (weak, nonatomic) IBOutlet UIView *topSeparatorChatsHeaderView;
 @property (weak, nonatomic) IBOutlet UIView *chatsHeaderView;
 @property (weak, nonatomic) IBOutlet UILabel *chatsHeaderViewLabel;
+@property (weak, nonatomic) IBOutlet UIView *bottomSeparatorChatsHeaderView;
 
 @property (nonatomic, strong) UISearchController *searchController;
 
@@ -78,12 +90,12 @@
         case SendModeCloud:
         case SendModeForward:
             self.cancelBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
-
+            
             break;
             
         case SendModeShareExtension:
             self.navigationItem.leftBarButtonItem = nil;
-
+            
             break;
     }
     
@@ -92,8 +104,11 @@
     
     self.navigationItem.title = AMLocalizedString(@"selectDestination", @"Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them.");
     
+    self.tableView.separatorColor = self.topSeparatorRecentsHeaderView.backgroundColor = self.bottomSeparatorRecentsHeaderView.backgroundColor = self.topSeparatorRecentsHeaderView.backgroundColor = self.bottomSeparatorRecentsHeaderView.backgroundColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
     self.recentsHeaderViewLabel.text = AMLocalizedString(@"Recents", @"Title for the recents section").uppercaseString;
+    self.recentsHeaderViewLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
     self.chatsHeaderViewLabel.text = AMLocalizedString(@"My chats", @"Column header of my contacts/chats at copy dialog").uppercaseString;
+    self.chatsHeaderViewLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
     
     self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
     self.searchController.definesPresentationContext = YES;
@@ -124,6 +139,22 @@
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+#ifdef MNZ_APP_EXTENSION
+            [ExtensionAppearanceManager setupAppearance:self.traitCollection];
+            [ExtensionAppearanceManager invalidateViews];
+#else
+            [AppearanceManager setupAppearance:self.traitCollection];
+            [AppearanceManager invalidateViews];
+#endif
+        }
+    }
 }
 
 #pragma mark - Private
@@ -599,7 +630,7 @@
         ChatRoomCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"chatRoomCell" forIndexPath:indexPath];
         
         cell.onlineStatusView.hidden = YES;
-
+        
         UIImage *avatar = [UIImage imageForName:chatListItem.title.uppercaseString size:cell.avatarImageView.frame.size backgroundColor:[UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection] textColor:UIColor.whiteColor font:[UIFont systemFontOfSize:(cell.avatarImageView.frame.size.width/2.0f)]];
         cell.avatarImageView.image = avatar;
         
@@ -700,7 +731,7 @@
     if (!self.searchController.isActive && section == 0 && self.recentsMutableArray.count == 0) {
         return nil;
     }
-
+    
     switch (section) {
         case 0:
             return self.searchController.isActive ? self.chatsHeaderView : self.recentsHeaderView;
