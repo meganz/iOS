@@ -60,9 +60,9 @@
     
     self.sendLocationLabel.text = AMLocalizedString(@"Send This Location", @"Title of the button to share a location in a chat.");
     
-    UIView *layer = [[UIView alloc] initWithFrame:CGRectMake(0, 45, self.mapOptionsView.frame.size.width, 1)];
-    layer.backgroundColor = [UIColor colorWithRed:0.85 green:0.85 blue:0.87 alpha:1];
-    [self.mapOptionsView addSubview:layer];
+    UIView *separatorBetweenButtonsLayer = [UIView.alloc initWithFrame:CGRectMake(0, self.mapOptionsView.frame.size.height / 2, self.mapOptionsView.frame.size.width, 0.5)];
+    separatorBetweenButtonsLayer.backgroundColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
+    [self.mapOptionsView addSubview:separatorBetweenButtonsLayer];
     
     LocationSearchTableViewController *locationSearchTVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"LocationSearchTableViewControllerID"];
     locationSearchTVC.mapView = self.mapView;
@@ -76,9 +76,6 @@
     self.searchController.dimsBackgroundDuringPresentation = YES;
     self.searchController.searchBar.searchBarStyle = UISearchBarStyleMinimal;
     self.searchController.searchBar.translucent = NO;
-    self.searchController.searchBar.backgroundColor = UIColor.whiteColor;
-    self.searchController.searchBar.barTintColor = UIColor.whiteColor;
-    self.searchController.searchBar.tintColor = UIColor.mnz_redMain;
     self.searchController.searchBar.frame = CGRectMake(0, 0, self.view.frame.size.width, self.searchController.searchBar.frame.size.height);
     self.searchController.searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     [self.view addSubview:self.searchController.searchBar];

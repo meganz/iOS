@@ -213,6 +213,7 @@ static NSString *kPath = @"kPath";
         cell.infoLabel.text = sizeAndDate;
     }
     cell.nameLabel.text = [[MEGASdkManager sharedMEGASdk] unescapeFsIncompatible:nameString];
+    cell.infoLabel.textColor = [UIColor mnz_subtitlesColorForTraitCollection:self.traitCollection];
     
     if (self.tableView.isEditing) {
         for (NSURL *url in self.offline.selectedItems) {

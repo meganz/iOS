@@ -57,9 +57,9 @@
     wasPasscodeAlreadyEnabled = [LTHPasscodeViewController doesPasscodeExist];
     [[LTHPasscodeViewController sharedUser] setHidesCancelButton:NO];
     
-    [[LTHPasscodeViewController sharedUser] setNavigationBarTintColor:UIColor.mnz_redMain];
-    [[LTHPasscodeViewController sharedUser] setNavigationTintColor:[UIColor whiteColor]];
-    [[LTHPasscodeViewController sharedUser] setNavigationTitleColor:[UIColor whiteColor]];
+    LTHPasscodeViewController.sharedUser.navigationBarTintColor = [UIColor mnz_mainBarsColorForTraitCollection:self.traitCollection];
+    LTHPasscodeViewController.sharedUser.navigationTintColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
+    LTHPasscodeViewController.sharedUser.navigationTitleColor = UIColor.mnz_label;
 
     self.navigationItem.backBarButtonItem = [UIBarButtonItem.alloc initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
 }

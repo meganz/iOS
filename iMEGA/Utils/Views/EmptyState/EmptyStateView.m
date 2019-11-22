@@ -39,16 +39,22 @@
     return self;
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateUI];
+        }
+    }
+}
+
 #pragma mark - Lifecycle
 
 - (void)awakeFromNib {
     [super awakeFromNib];
     
-    self.descriptionLabel.textColor = [UIColor mnz_subtitlesColorForTraitCollection:self.traitCollection];
-    
-    [self.button setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
-    self.button.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
-    self.button.layer.shadowColor = UIColor.blackColor.CGColor;
+    [self updateUI];
 }
 
 - (BOOL)shouldAutorotate {
@@ -57,6 +63,16 @@
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
     return UIInterfaceOrientationMaskAll;
+}
+
+#pragma mark - Private
+
+- (void)updateUI {
+    self.descriptionLabel.textColor = [UIColor mnz_subtitlesColorForTraitCollection:self.traitCollection];
+    
+    [self.button setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
+    self.button.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
+    self.button.layer.shadowColor = UIColor.blackColor.CGColor;
 }
 
 @end

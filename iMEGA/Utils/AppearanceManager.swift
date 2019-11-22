@@ -23,16 +23,16 @@ class AppearanceManager: NSObject {
         UILabel.appearance(whenContainedInInstancesOf: [MEGANavigationController.self]).textColor = UIColor.mnz_label()
         
         //QLPreviewDocument
-        UINavigationBar.appearance(whenContainedInInstancesOf: [QLPreviewController.self]).titleTextAttributes = [NSAttributedString.Key.font: navigationBarFont,  NSAttributedString.Key.foregroundColor: UIColor.mnz_label()]
+        UINavigationBar.appearance(whenContainedInInstancesOf: [QLPreviewController.self]).titleTextAttributes = [NSAttributedString.Key.font: navigationBarFont,  NSAttributedString.Key.foregroundColor: UIColor.mnz_label()!]
         UINavigationBar.appearance(whenContainedInInstancesOf: [QLPreviewController.self]).barTintColor = UIColor.mnz_mainBarsColor(for: traitCollection)
         UINavigationBar.appearance(whenContainedInInstancesOf: [QLPreviewController.self]).tintColor = UIColor.mnz_primaryGray(for: traitCollection)
         UILabel.appearance(whenContainedInInstancesOf: [QLPreviewController.self]).textColor = UIColor.mnz_primaryGray(for: traitCollection)
         UIBarButtonItem.appearance(whenContainedInInstancesOf: [QLPreviewController.self]).tintColor = UIColor.mnz_primaryGray(for: traitCollection)
         
-        //MEGAAssetsPickerController
-        UINavigationBar.appearance(whenContainedInInstancesOf: [MEGAAssetsPickerController.self]).barStyle = UIBarStyle.black
-        UINavigationBar.appearance(whenContainedInInstancesOf: [MEGAAssetsPickerController.self]).barTintColor = UIColor.mnz_redMain()
-        UIBarButtonItem.appearance(whenContainedInInstancesOf: [MEGAAssetsPickerController.self]).tintColor = UIColor.white
+        UINavigationBar.appearance(whenContainedInInstancesOf: [MEGAAssetsPickerController.self]).titleTextAttributes = [NSAttributedString.Key.font: navigationBarFont, NSAttributedString.Key.foregroundColor: UIColor.mnz_label()!]
+        UINavigationBar.appearance(whenContainedInInstancesOf: [MEGAAssetsPickerController.self]).barTintColor = UIColor.mnz_mainBarsColor(for: traitCollection)
+        UINavigationBar.appearance(whenContainedInInstancesOf: [MEGAAssetsPickerController.self]).backgroundColor = UIColor.mnz_mainBarsColor(for: traitCollection)
+        UIBarButtonItem.appearance(whenContainedInInstancesOf: [MEGAAssetsPickerController.self]).tintColor = UIColor.mnz_primaryGray(for: traitCollection)
         
         UISearchBar.appearance().isTranslucent = false
         UISearchBar.appearance().backgroundColor = UIColor.mnz_background()
@@ -70,24 +70,30 @@ class AppearanceManager: NSObject {
         UICollectionView.appearance().backgroundColor = UIColor.mnz_background()
         UIButton.appearance(whenContainedInInstancesOf: [UICollectionViewCell.self]).tintColor = UIColor.mnz_tertiaryGray(for: traitCollection)
         
-        UIToolbar.appearance().backgroundColor = UIColor.mnz_mainBarsColor(for: traitCollection)
+        UIToolbar.appearance().barTintColor = UIColor.mnz_mainBarsColor(for: traitCollection)
         UIToolbar.appearance().tintColor = UIColor.mnz_primaryGray(for: traitCollection)
         
         self.setupThirdPartyAppereance(traitCollection)
     }
     
     class func setupThirdPartyAppereance(_ traitCollection: UITraitCollection) {
-        let SVProgressHUDFont = UIFont.systemFont(ofSize: 12, weight: UIFont.Weight.regular)
-        SVProgressHUD.setFont(SVProgressHUDFont)
-        SVProgressHUD.setRingThickness(2)
-        SVProgressHUD.setRingNoTextRadius(18)
-        SVProgressHUD.setBackgroundColor(UIColor.mnz_grayF7F7F7())
-        SVProgressHUD.setForegroundColor(UIColor.mnz_primaryGray(for: traitCollection))
         SVProgressHUD.setDefaultStyle(SVProgressHUDStyle.custom)
+        SVProgressHUD.setMinimumSize(CGSize(width: 180, height: 100))
+        SVProgressHUD.setRingThickness(2)
+        SVProgressHUD.setRingRadius(16)
+        SVProgressHUD.setRingNoTextRadius(16)
+        SVProgressHUD.setCornerRadius(8)
+        if #available(iOS 13.0, *) {
+            SVProgressHUD.setHudViewCustomBlurEffect(UIBlurEffect.init(style: UIBlurEffect.Style.systemChromeMaterial))
+        }
+        SVProgressHUD.setFont(UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.semibold))
+        SVProgressHUD.setForegroundColor(UIColor.mnz_primaryGray(for: traitCollection))
+        SVProgressHUD.setForegroundImageColor(UIColor.mnz_primaryGray(for: traitCollection))
+        SVProgressHUD.setBackgroundColor(UIColor.mnz_background())
         SVProgressHUD.setHapticsEnabled(true)
         
         SVProgressHUD.setSuccessImage(UIImage(named: "hudSuccess")!)
-        SVProgressHUD.setSuccessImage(UIImage(named: "hudError")!)
+        SVProgressHUD.setErrorImage(UIImage(named: "hudError")!)
     }
     
     /// Reload the current view that was configured using UIAppearance

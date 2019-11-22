@@ -236,6 +236,8 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     if (@available(iOS 13.0, *)) {
         if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
             [self updateSelector];
+            
+            [self reloadData];
         }
     }
     
