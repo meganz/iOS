@@ -65,6 +65,14 @@
         return URLTypeFolderLink;
     }
     
+    if (afterSlashesString.length >= 4 && [[afterSlashesString substringToIndex:4] isEqualToString:@"file"]) {
+        return URLTypeFileLink;
+    }
+    
+    if (afterSlashesString.length >= 6 && [[afterSlashesString substringToIndex:6] isEqualToString:@"folder"]) {
+        return URLTypeFolderLink;
+    }
+    
     if (afterSlashesString.length >= 3 && [[afterSlashesString substringToIndex:3] isEqualToString:@"#P!"]) {
         return URLTypeEncryptedLink;
     }
@@ -72,6 +80,7 @@
     if (afterSlashesString.length >= 8 && [[afterSlashesString substringToIndex:8] isEqualToString:@"#confirm"]) {
         return URLTypeConfirmationLink;
     }
+    
     if (afterSlashesString.length >= 7 && [[afterSlashesString substringToIndex:7] isEqualToString:@"confirm"]) {
         return URLTypeConfirmationLink;
     }
