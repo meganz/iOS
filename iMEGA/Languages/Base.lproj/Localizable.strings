@@ -1523,7 +1523,7 @@
 /* When an active call of user A with user B had failed */
 "callFailed"="Call failed";
 /* When an active call of user A with user B had ended */
-"callEnded"="Call ended";
+"callEnded"="Call ended.";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="Duration: %@";
 /* */
@@ -1649,7 +1649,7 @@
 /* Title of the option to enable or disable file versioning on Settings section */
 "File versioning"="File Versioning";
 /* Subtitle of the option to enable or disable file versioning on Settings section */
-"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="Enable or disable file versioning for your entire account.\nYou may still receive file versions from shared folders if your contacts have this enabled.";
+"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="Enable or disable file versioning for your entire account.\nDisabling file versioning does not prevent your contacts from creating new versions in shared folders.";
 /* A confirmation message when the user chooses to disable file versioning. */
 "When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?";
 /* Settings preference title to show file versions info of the account */
@@ -1996,3 +1996,21 @@
 "Inactive chat"="Inactive chat";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
 "It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1.";
+/*Section header of the settings that contains the folder to which photos will be uploded in camera upload */
+"MEGA CAMERA UPLOADS FOLDER"="MEGA CAMERA UPLOADS FOLDER";
+/*Action button text of folder selection screen for camera uploads */
+"Select Folder"="Select Folder";
+/*Title of the folder selection screen for camera uploads */
+"Choose Folder"="Choose Folder";
+/* Label used near to the option selected to encode the videos uploaded to a chat (Low, Medium, Original) */
+"Image quality"="Image quality";
+/*Title of Image Quality option*/
+"Automatic"="Automatic";
+/*Description of Image Quality option*/
+"Send smaller size images through cellular networks and original size images through wifi"="Send smaller size images through cellular networks and original size images through wifi";
+/*Title of Image Quality option*/
+"Optimised"="Optimised";
+/*Description of Image Quality option*/
+"Send smaller size images optimised for lower data consumption"="Send smaller size images optimised for lower data consumption";
+/*Description of Image Quality option*/
+"Send original size, increased quality images" = "Send original size, increased quality images";
