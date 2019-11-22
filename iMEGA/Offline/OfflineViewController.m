@@ -155,6 +155,12 @@ static NSString *kisDirectory = @"kisDirectory";
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self reloadData];
+        }
+    }
+    
     [self configPreviewingRegistration];
 }
 
@@ -256,6 +262,7 @@ static NSString *kisDirectory = @"kisDirectory";
     self.offlineTableView.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.offlineTableView.tableView.emptyDataSetDelegate = self;
     self.offlineTableView.tableView.emptyDataSetSource = self;
+    self.offlineTableView.tableView.separatorColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
 }
 
 - (void)initCollection {
