@@ -225,7 +225,7 @@
 /* Success message shown when you remove a contact request */
 "requestDeleted"="요청 삭제됨";
 /* Title shown when there's no pending contact requests */
-"noRequestPending"="보류중인 요청 없음";
+"noRequestPending"="대기중인 요청 없음";
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="일시정지된 전송";
 /* Title shown when the there is not any transfer and they are not paused */
@@ -519,7 +519,7 @@
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
 "foldersShared"="%d개의 폴더";
 /* Item menu option to add a contact writting his/her email */
-"addFromEmail"="이메일을 입력하세요";
+"addFromEmail"="이메일 주소를 입력하세요";
 /* Title of Shared Items section */
 "sharedItems"="공유된 항목";
 /* Title of the tab bar item for the Shared Items section */
@@ -1991,8 +1991,8 @@
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
 "Reconnecting..."="재접속중...";
 /* Title shown when the user reconnect in a call. */
-"You are back!"="돌아왔습니다!";
+"You are back!"="돌아왔습니다.";
 /* Subtitle of chat screen when the chat is inactive */
 "Inactive chat"="활성화되지 않은 대화";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
-"It was not possible to obtain the content of this file, that is not encoded in either UTF-8 or ISO/IEC 8859-1."="It was not possible to obtain the content of this file, that is not encoded in either UTF-8 or ISO/IEC 8859-1.";
+"It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="이 파일이 UTF-8 또는 ISO/IEC 8859-1로 기록되지 않아서, 내용을 가져올 수 없었습니다.";
