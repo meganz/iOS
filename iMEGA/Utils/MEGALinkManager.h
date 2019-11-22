@@ -32,6 +32,8 @@
 
 #pragma mark - Manage MEGA links
 
++ (NSString *)buildPublicLink:(NSString *)link withKey:(NSString *)key isFolder:(BOOL)isFolder;
+
 + (void)processLinkURL:(NSURL *)url;
 
 + (void)showLinkNotValid;
