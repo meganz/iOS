@@ -95,20 +95,16 @@ class InviteContactViewController: UIViewController {
 
 // MARK: - CNContactPickerDelegate
 extension InviteContactViewController: CNContactPickerDelegate {
-    func contactPicker(_ picker: CNContactPickerViewController, didSelect contacts: [CNContact]) {
-        var phones = [String]()
-        contacts.forEach { (contact) in
-            phones.append(contentsOf: contact.phoneNumbers.map( { $0.value.stringValue.replacingOccurrences(of: " ", with: "") } ) )
-        }
-        
+    func contactPicker(_ picker: CNContactPickerViewController, didSelect contactProperty: CNContactProperty) {
+        print(contactProperty)
         picker.dismiss(animated: true) {
-            if phones.count > 0 {
-                let composeVC = MFMessageComposeViewController()
-                composeVC.messageComposeDelegate = self
-                composeVC.recipients = phones
-                composeVC.body = AMLocalizedString("Hi, Have encrypted conversations on Mega with me and get 50GB free storage.", "Text to send as SMS message to user contacts inviting them to MEGA") + " " + self.userLink
-                self.present(composeVC, animated: true, completion: nil)
-            }
+            let composeVC = MFMessageComposeViewController()
+            composeVC.messageComposeDelegate = self
+            guard let phone = (contactProperty.value as AnyObject).stringValue else { return }
+            
+            composeVC.recipients = [phone]
+            composeVC.body = AMLocalizedString("Hi, Have encrypted conversations on Mega with me and get 50GB free storage.", "Text to send as SMS message to user contacts inviting them to MEGA") + " " + self.userLink
+            self.present(composeVC, animated: true, completion: nil)
         }
     }
 }

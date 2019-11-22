@@ -963,6 +963,8 @@
 "You have received %@ storage space and %@ transfer quota for adding your phone number."="You have received %@ storage space and %@ transfer quota for adding your phone number.";
 /* Free storage description to encourage users to add phone number to their accounts */
 "Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."="Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA.";
+/* Description to encourage users to add phone number to their accounts when there are not achievements */
+"Add your phone number to MEGA. This makes it easier for your contacts to find you on MEGA."="Add your phone number to MEGA. This makes it easier for your contacts to find you on MEGA.";
 /* Description to unblock account by verifying phone number */
 "Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account."="Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.";
 /* Verify your account title */
@@ -1953,9 +1955,9 @@
 /* Title encouraging the user to check who of its contacts are using MEGA */
 "See who's already on MEGA"="See who's already on MEGA";
 /* Title showing the user how many of his contacts are using MEGA */
-"You have [X] contacts on MEGA"="You have [X] contacts on MEGA";
+"[X] contacts found on MEGA"="[X] contacts found on MEGA";
 /* Title showing the user that one of his contacts are using MEGA */
-"You have 1 contact on MEGA"="You have 1 contact on MEGA";
+"1 contact found on MEGA"="1 contact found on MEGA";
 /* Text indicating the user to perform an action to grant some permission */
 "Enable Access"="Enable Access";
 /* Text indicating the user to open the device settings for MEGA */
@@ -2042,3 +2044,21 @@
 "Invite contact now"="Invite contact now";
 /* Text showing the user one contact would be invited */
 "Invite 1 contact"="Invite 1 contact";
+/* Error message if user click next button without enter a valid phone number */
+"Please enter a valid phone number"="Please enter a valid phone number";
+/* Error message that will show to user when user reached the sms verification daily limit */
+"You have reached the daily limit"="You have reached the daily limit";
+/* Error message that will show to user when user entered invalid verification code */
+"Wrong code. Please try again or resend."="Wrong code. Please try again or resend.";
+/* Error message that will show to user when host detected that the mobile number has been registered already */
+"This number is already associated with a Mega account"="This number is already associated with a Mega account";
+/* Country label for a button, title, etc. */
+"Country"="Country";
+/* Error message that will show to user its account is already verified */
+"Your account is already verified"="Your account is already verified";
+/* Place holder for enter mobile number field */
+"Your phone number"="Your phone number";
+/* Label tell user to enter received txt to below input boxes */
+"Please type the verification code sent to"="Please type the verification code sent to";
+/* Text message to remind user to resend verification code */
+"You didn't receive a code?"="You didn't receive a code?";

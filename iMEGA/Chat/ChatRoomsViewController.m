@@ -160,7 +160,15 @@
     }
     
     if (self.chatRoomsType == ChatRoomsTypeDefault) {
-        self.contactsOnMegaCount = ContactsOnMegaManager.shared.contactsOnMegaCount;
+        if (![ContactsOnMegaManager.shared areContactsOnMegaRequestedWithinDays:1]) {
+            [ContactsOnMegaManager.shared configureContactsOnMegaWithCompletion:^{
+                self.contactsOnMegaCount = ContactsOnMegaManager.shared.contactsOnMegaCount;
+                [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
+            }];
+        } else {
+            [ContactsOnMegaManager.shared loadContactsOnMegaFromLocal];
+            self.contactsOnMegaCount = ContactsOnMegaManager.shared.contactsOnMegaCount;
+        }
     }
     
     [self.tableView reloadData];
@@ -401,8 +409,8 @@
                }
                if (self.chatRoomsType == ChatRoomsTypeDefault) {
                    if ([CNContactStore authorizationStatusForEntityType:CNEntityTypeContacts] == CNAuthorizationStatusAuthorized) {
-                       if (self.contactsOnMegaCount) {
-                           self.contactsOnMegaEmptyStateTitle.text = self.contactsOnMegaCount == 1 ? AMLocalizedString(@"You have 1 contact on MEGA", @"Title showing the user one of his contacts are using MEGA") : [AMLocalizedString(@"You have [X] contacts on MEGA", @"Title showing the user how many of his contacts are using MEGA") stringByReplacingOccurrencesOfString:@"[X]" withString:[NSString stringWithFormat:@"%tu", self.contactsOnMegaCount]];
+                       if (self.contactsOnMegaCount) {//[X] contacts found on MEGA
+                           self.contactsOnMegaEmptyStateTitle.text = self.contactsOnMegaCount == 1 ? AMLocalizedString(@"1 contact found on MEGA", @"Title showing the user one of his contacts are using MEGA") : [AMLocalizedString(@"[X] contacts found on MEGA", @"Title showing the user how many of his contacts are using MEGA") stringByReplacingOccurrencesOfString:@"[X]" withString:[NSString stringWithFormat:@"%tu", self.contactsOnMegaCount]];
                        } else {
                            self.contactsOnMegaEmptyStateTitle.text = AMLocalizedString(@"Invite contact now", @"Text emncouraging the user to add contacts in MEGA");
                        }
@@ -758,7 +766,7 @@
         if (self.contactsOnMegaCount == 0) {
             cell.chatTitle.text = AMLocalizedString(@"Invite contact now", @"Text emncouraging the user to add contacts in MEGA");
         } else {
-            cell.chatTitle.text = self.contactsOnMegaCount == 1 ? AMLocalizedString(@"You have 1 contact on MEGA", @"Title showing the user one of his contacts are using MEGA") : [AMLocalizedString(@"You have [X] contacts on MEGA", @"Title showing the user how many of his contacts are using MEGA") stringByReplacingOccurrencesOfString:@"[X]" withString:[NSString stringWithFormat:@"%tu", self.contactsOnMegaCount]];
+            cell.chatTitle.text = self.contactsOnMegaCount == 1 ? AMLocalizedString(@"1 contact found on MEGA", @"Title showing the user one of his contacts are using MEGA") : [AMLocalizedString(@"[X] contacts found on MEGA", @"Title showing the user how many of his contacts are using MEGA") stringByReplacingOccurrencesOfString:@"[X]" withString:[NSString stringWithFormat:@"%tu", self.contactsOnMegaCount]];
         }
     } else {
         cell.chatTitle.text = AMLocalizedString(@"See who's already on MEGA", @"Title encouraging the user to check who of its contacts are using MEGA");

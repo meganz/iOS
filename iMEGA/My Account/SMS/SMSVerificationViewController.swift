@@ -1,6 +1,10 @@
 
 import UIKit
 
+protocol SMSVerificationViewControllerDelegate: AnyObject {
+    func cancelDidTapped()
+}
+
 @objc enum SMSVerificationType: Int {
     case UnblockAccount
     case AddPhoneNumber
@@ -8,6 +12,8 @@ import UIKit
 
 class SMSVerificationViewController: UIViewController {
     
+    private weak var delegate: SMSVerificationViewControllerDelegate?
+
     @IBOutlet private weak var scrollView: UIScrollView!
     @IBOutlet private weak var headerImageView: UIImageView!
     @IBOutlet private weak var descriptionTextView: UITextView!
@@ -21,6 +27,7 @@ class SMSVerificationViewController: UIViewController {
     @IBOutlet private weak var errorImageView: UIImageView!
     @IBOutlet private weak var errorMessageLabel: UILabel!
     @IBOutlet private weak var errorView: UIView!
+    @IBOutlet private weak var countryLabel: UILabel!
     
     private var currentCountry: SMSCountry?
     private var countryCallingCodeDict: [String: MEGAStringList]?
@@ -32,6 +39,13 @@ class SMSVerificationViewController: UIViewController {
     @objc class func instantiate(with verificationType: SMSVerificationType) -> SMSVerificationViewController {
         let controller = SMSVerificationViewController.mnz_instantiate(withStoryboardName: "SMSVerification")
         controller.verificationType = verificationType
+        return controller
+    }
+    
+    class func instantiate(with verificationType: SMSVerificationType, delegate: SMSVerificationViewControllerDelegate? = nil) -> SMSVerificationViewController {
+        let controller = SMSVerificationViewController.mnz_instantiate(withStoryboardName: "SMSVerification")
+        controller.verificationType = verificationType
+        controller.delegate = delegate
         return controller
     }
     
@@ -113,7 +127,9 @@ class SMSVerificationViewController: UIViewController {
             phoneNumberTextField.resignFirstResponder()
             
         case .AddPhoneNumber:
-            dismiss(animated: true, completion: nil)
+            dismiss(animated: true) {
+                self.delegate?.cancelDidTapped()
+            }
             
         default:
             dismiss(animated: true, completion: nil)
@@ -148,35 +164,34 @@ class SMSVerificationViewController: UIViewController {
                 }
             })
         } catch {
-            configErrorStyle(withErrorMessage: "The phone number is invalid")
+            configErrorStyle(withErrorMessage: AMLocalizedString("Please enter a valid phone number"))
         }
     }
     
     @IBAction private func didEditingChangedInPhoneNumberField() {
         nextButton.isEnabled = !(phoneNumberTextField.text?.isEmpty ?? true)
-    }
-    
-    private func sendVerificationCodeSucceeded(with number: PhoneNumber) {
         phoneNumberLabel.textColor = UIColor.mnz_gray999999()
         phoneNumberTextField.textColor = UIColor.black
         errorView.isHidden = true
+    }
+    
+    private func sendVerificationCodeSucceeded(with number: PhoneNumber) {
         navigationController?.pushViewController(VerificationCodeViewController.instantiate(with: number, verificationType: verificationType), animated: true)
     }
     
     private func sendVerificationCodeFailed(with error: MEGAError) {
-        errorView.isHidden = false
         var errorMessage: String?
         switch error.type {
         case .apiETempUnavail: // a limit is reached.
-            errorMessage = "You have reached your limit in getting verification code for today"
+            errorMessage = AMLocalizedString("You have reached the daily limit")
         case .apiEAccess: // your account is already verified with an SMS number
-            errorMessage = "Your account is already verified by an phone number"
+            errorMessage = AMLocalizedString("Your account is already verified")
         case .apiEExist: // MEGAErrorTypeApiEExist if the number is already verified for some other account
-            errorMessage = "This number is already associated with a mega account"
+            errorMessage = AMLocalizedString("This number is already associated with a Mega account")
         case .apiEArgs: // the phone number is badly formatted or invalid
-            errorMessage = "The phone number is invalid"
+            errorMessage = AMLocalizedString("Wrong code. Please try again or resend.")
         default: // other errors
-            errorMessage = "Error happended in sending message to your phone number"
+            errorMessage = AMLocalizedString("Unknown error")
         }
         
         configErrorStyle(withErrorMessage: errorMessage)
@@ -220,6 +235,10 @@ class SMSVerificationViewController: UIViewController {
     private func configViewContents() {
         descriptionTextView.text = nil
         
+        countryLabel.text = AMLocalizedString("Country")
+        phoneNumberLabel.text = AMLocalizedString("Your phone number")
+        nextButton.setTitle(AMLocalizedString("next"), for: .normal)
+        
         switch verificationType {
         case .AddPhoneNumber:
             let cancelTitle = AMLocalizedString("cancel")
@@ -227,13 +246,17 @@ class SMSVerificationViewController: UIViewController {
             title = AMLocalizedString("Add Phone Number")
             titleLabel.text = title
             cancelButton.setTitle(cancelTitle, for: .normal)
-            MEGASdkManager.sharedMEGASdk()?.getAccountAchievements(with: MEGAGenericRequestDelegate() { [weak self] request, error in
-                guard error.type == .apiOk else { return }
-                guard let byteCount = request.megaAchievementsDetails?.classStorage(forClassId: Int(MEGAAchievement.addPhone.rawValue)) else { return }
-                UIView.animate(withDuration: 0.5) {
-                    self?.descriptionTextView.text = String(format: AMLocalizedString("Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."), Helper.memoryStyleString(fromByteCount: byteCount))
-                }
-            })
+            if !MEGASdkManager.sharedMEGASdk().isAchievementsEnabled {
+                descriptionTextView.text = AMLocalizedString("Add your phone number to MEGA. This makes it easier for your contacts to find you on MEGA.")
+            } else {
+                MEGASdkManager.sharedMEGASdk()?.getAccountAchievements(with: MEGAGenericRequestDelegate() { [weak self] request, error in
+                    guard error.type == .apiOk else { return }
+                    guard let byteCount = request.megaAchievementsDetails?.classStorage(forClassId: Int(MEGAAchievement.addPhone.rawValue)) else { return }
+                    UIView.animate(withDuration: 0.5) {
+                        self?.descriptionTextView.text = String(format: AMLocalizedString("Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."), Helper.memoryStyleString(fromByteCount: byteCount))
+                    }
+                })
+            }
             
         case .UnblockAccount:
             let logoutTitle = AMLocalizedString("logoutLabel")
@@ -249,6 +272,7 @@ class SMSVerificationViewController: UIViewController {
         phoneNumberLabel.textColor = UIColor.mnz_redError()
         phoneNumberTextField.textColor = UIColor.mnz_redError()
         errorMessageLabel.text = errorMessage
+        errorView.isHidden = false
     }
     
     private func configView(by country: SMSCountry) {
@@ -306,5 +330,19 @@ extension SMSVerificationViewController: SMSCountriesTableViewControllerDelegate
     func countriesTableViewController(_ controller: SMSCountriesTableViewController, didSelectCountry country: SMSCountry) {
         navigationController?.popToViewController(self, animated: true)
         configView(by: country)
+    }
+}
+
+//MARK: - UITextFieldDelegate
+
+extension SMSVerificationViewController: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let currentText = textField.text ?? ""
+        
+        guard let stringRange = Range(range, in: currentText) else { return false }
+        
+        let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
+        
+        return updatedText.count <= 20
     }
 }

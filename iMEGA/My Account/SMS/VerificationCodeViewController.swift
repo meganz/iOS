@@ -66,7 +66,10 @@ class VerificationCodeViewController: UIViewController {
         didnotReceiveCodeLabel.textColor = UIColor.gray
         errorImageView.tintColor = UIColor.mnz_redError()
         errorMessageLabel.textColor = UIColor.mnz_redError()
-        
+        verificationCodeSentToLabel.text = AMLocalizedString("Please type the verification code sent to")
+        didnotReceiveCodeLabel.text = AMLocalizedString("You didn't receive a code?")
+        resendButton.setTitle(AMLocalizedString("resend"), for: .normal)
+        confirmButton.setTitle(AMLocalizedString("confirm"), for: .normal)
         switch verificationType {
         case .AddPhoneNumber:
             title = AMLocalizedString("Add Phone Number")
@@ -88,7 +91,11 @@ class VerificationCodeViewController: UIViewController {
     
     private func configCodeFieldsAppearance(with error: MEGAError? = nil) {
         if let error = error {
-            resendStackView.isHidden = false
+            DispatchQueue.main.asyncAfter(deadline: .now() + resendCheckTimeInterval) {
+                UIView.animate(withDuration: 0.75, animations: {
+                    self.resendStackView.isHidden = false
+                })
+            }
             errorView.isHidden = false
             verificationCodeFields.forEach {
                 $0.layer.cornerRadius = 8
@@ -103,11 +110,11 @@ class VerificationCodeViewController: UIViewController {
             var errorMessage: String?
             switch error.type {
             case .apiEAccess: // you have reached the verification limits.
-                errorMessage = "You have reached your limit in getting verification code for today"
+                errorMessage = AMLocalizedString("You have reached the daily limit")
             case .apiEFailed: // the verification code does not match.
-                errorMessage = "The verification code does not match"
+                errorMessage = AMLocalizedString("The verification code doesn't match.")
             case .apiEExpired: // the phone number was verified on a different account.
-                errorMessage = "Your account is already verified by an phone number"
+                errorMessage = AMLocalizedString("Your account is already verified")
             default: break
             }
             errorMessageLabel.text = errorMessage
