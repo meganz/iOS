@@ -246,6 +246,26 @@
     if (section == 2) {
         footerTitle = AMLocalizedString(@"richPreviewsFooter", @"Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers.");
     }
+
+    if (section == 3) {
+        ChatImageUploadQuality imageQuality = [[NSUserDefaults standardUserDefaults] integerForKey:@"chatImageQuality"];
+        switch (imageQuality) {
+            case ChatImageUploadQualityAuto:
+                footerTitle = @"Send smaller size images through cellular networks and original size images through wifi";
+                break;
+                
+            case ChatImageUploadQualityHigh:
+                footerTitle = @"Send original size, increased quality images";
+                break;
+                
+            case ChatImageUploadQualityOptimsed:
+                footerTitle = @"Send smaller size images optimised for lower data consumption";
+                break;
+                
+            default:
+                break;
+        }
+    }
     if (section == 4) {
         footerTitle = AMLocalizedString(@"qualityOfVideosUploadedToAChat", @"Footer text to explain the meaning of the functionaly 'Video quality' for videos uploaded to a chat.");
     }

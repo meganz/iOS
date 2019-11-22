@@ -2,6 +2,7 @@
 #import "MEGAProcessAsset.h"
 
 #import "ChatVideoUploadQuality.h"
+#import "ChatImageUploadQuality.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
 #import "NSDate+MNZCategory.h"
@@ -198,41 +199,64 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
         options.version = PHImageRequestOptionsVersionOriginal;
     }
     
-    
-    if (self.toShareThroughChat && ![MEGAReachabilityManager isReachableViaWiFi]) {
-        NSUInteger totalPixels = asset.pixelWidth * asset.pixelHeight;
-        float factor = MIN(sqrtf((float)DOWNSCALE_IMAGES_PX / totalPixels), 1);
-        if (factor >= 1) {
+    ChatImageUploadQuality imageQuality = [[NSUserDefaults standardUserDefaults] integerForKey:@"chatImageQuality"];
+
+    switch (imageQuality) {
+        case ChatImageUploadQualityAuto:
+            if (self.toShareThroughChat && ![MEGAReachabilityManager isReachableViaWiFi]) {
+                [self compressedImageAsset:asset options:options];
+            } else {
+                [self requestImageForAsset:asset options:options];
+            }
+            break;
+        case ChatImageUploadQualityHigh:
             [self requestImageForAsset:asset options:options];
-        } else { // Optimize image
-            options.synchronous = YES;
-            options.resizeMode = PHImageRequestOptionsResizeModeExact;
-            [[PHImageManager defaultManager] requestImageForAsset:asset targetSize:CGSizeMake(asset.pixelWidth * factor, asset.pixelHeight * factor) contentMode:PHImageContentModeAspectFit options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
-                if (result) {
-                    NSData *imageData = UIImageJPEGRepresentation(result, 0.75);
-                    [self proccessImageData:imageData asset:asset withInfo:info];
+
+            break;
+        case ChatImageUploadQualityOptimsed:
+            [self compressedImageAsset:asset options:options];
+            break;
+        default:
+            [self requestImageForAsset:asset options:options];
+            break;
+    }
+    
+
+}
+
+- (void)compressedImageAsset:(PHAsset *)asset options:(PHImageRequestOptions *)options {
+    
+    NSUInteger totalPixels = asset.pixelWidth * asset.pixelHeight;
+    float factor = MIN(sqrtf((float)DOWNSCALE_IMAGES_PX / totalPixels), 1);
+    if (factor >= 1) {
+        [self requestImageForAsset:asset options:options];
+    } else {
+        
+        options.synchronous = YES;
+        options.resizeMode = PHImageRequestOptionsResizeModeExact;
+        [[PHImageManager defaultManager] requestImageForAsset:asset targetSize:CGSizeMake(asset.pixelWidth * factor, asset.pixelHeight * factor) contentMode:PHImageContentModeAspectFit options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+            if (result) {
+                NSData *imageData = UIImageJPEGRepresentation(result, 0.75);
+                [self proccessImageData:imageData asset:asset withInfo:info];
+            } else {
+                NSError *error = [info objectForKey:@"PHImageErrorKey"];
+                MEGALogError(@"[PA] Request image data for asset: %@ failed with error: %@", asset, error);
+                if (self.retries < 20) {
+                    self.retries++;
+                    [self requestImageAsset:asset];
                 } else {
-                    NSError *error = [info objectForKey:@"PHImageErrorKey"];
-                    MEGALogError(@"[PA] Request image data for asset: %@ failed with error: %@", asset, error);
-                    if (self.retries < 20) {
-                        self.retries++;
-                        [self requestImageAsset:asset];
-                    } else {
-                        if (self.error) {
-                            MEGALogDebug(@"[PA] Max attempts reached");
-                            self.error(error);
-                        }
-                        if (self.errors) {
-                            MEGALogDebug(@"[PA] Max attempts reached");
-                            [self.errorsArray addObject:error];
-                            dispatch_semaphore_signal(self.semaphore);
-                        }
+                    if (self.error) {
+                        MEGALogDebug(@"[PA] Max attempts reached");
+                        self.error(error);
+                    }
+                    if (self.errors) {
+                        MEGALogDebug(@"[PA] Max attempts reached");
+                        [self.errorsArray addObject:error];
+                        dispatch_semaphore_signal(self.semaphore);
                     }
                 }
-            }];
-        }
-    } else {
-        [self requestImageForAsset:asset options:options];
+            }
+        }];
     }
 }
 
