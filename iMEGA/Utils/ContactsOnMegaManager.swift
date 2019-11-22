@@ -1,7 +1,7 @@
 
 import Contacts
 
-struct ContactOnMega {
+struct ContactOnMega: Codable {
     let handle: UInt64
     let email: String
     let name: String
@@ -81,13 +81,39 @@ struct ContactOnMega {
         return contactsOnMegaFiltered
     }
     
+    @objc func areContactsOnMegaRequestedWithin(days: Int) -> Bool {
+        let sharedUserDefaults = UserDefaults.init(suiteName: MEGAGroupIdentifier)
+        guard let lastDateContactsOnMegaRequested = sharedUserDefaults?.value(forKey: "lastDateContactsOnMegaRequested") else {
+            return false
+        }
+        guard let daysSinceLastRequest = Calendar.current.dateComponents([.day], from: lastDateContactsOnMegaRequested as! Date, to: Date()).day else {
+            return false
+        }
+        if daysSinceLastRequest >= days {
+            return false
+        } else {
+            return true
+        }
+    }
+    
+    @objc func loadContactsOnMegaFromLocal() {
+        guard let sharedUserDefaults = UserDefaults.init(suiteName: MEGAGroupIdentifier) else { return }
+        contactsOnMega = sharedUserDefaults.structArrayData(ContactOnMega.self, forKey: "ContactsOnMega")
+        contactsFetched()
+        print(contactsOnMega)
+    }
+    
     @objc func configureContactsOnMega(completion: (() -> Void)?) {
-        contactsOnMega.removeAll()
-        
         if CNContactStore.authorizationStatus(for: .contacts) == .authorized {
+            contactsOnMega.removeAll()
+            guard let sharedUserDefaults = UserDefaults.init(suiteName: MEGAGroupIdentifier) else { return }
+            sharedUserDefaults.removeObject(forKey: "ContactsOnMega")
+            
             completionWhenReady = completion
             state = .fetching
             getDeviceContacts()
+        } else {
+            MEGALogDebug("Device Contact Permission not granted")
         }
     }
     
@@ -118,10 +144,7 @@ struct ContactOnMega {
             }
             
             if deviceContacts.count == 0 {
-                state = .ready
-                if (self.completionWhenReady != nil) {
-                    self.completionWhenReady!()
-                }
+                contactsFetched()
             } else {
                 deviceContactsChunked = Array(deviceContacts.prefix(500)).mnz_chunked(into: 100)
                 getContactsOnMega()
@@ -167,6 +190,9 @@ struct ContactOnMega {
     
     private func fetchContactsOnMegaEmails(_ contactsOnMegaDictionary: [UInt64:String]) {
         var contactsCount = contactsOnMegaDictionary.count
+        if contactsCount == 0 {
+            contactsFetched()
+        }
         contactsOnMegaDictionary.forEach { (contactOnMega) in
             let emailRequestDelegate = MEGAChatGenericRequestDelegate.init(completion: { (request, error) in
                 if request.text != MEGASdkManager.sharedMEGASdk()?.myEmail {
@@ -174,13 +200,25 @@ struct ContactOnMega {
                 }
                 contactsCount -= 1
                 if contactsCount == 0 {
-                    self.state = .ready
-                    if (self.completionWhenReady != nil) {
-                        self.completionWhenReady!()
-                    }
+                    self.persistContactsOnMega()
                 }
             })
             MEGASdkManager.sharedMEGAChatSdk().userEmail(byUserHandle: contactOnMega.key, delegate: emailRequestDelegate)
         }
+    }
+    
+    private func contactsFetched() {
+        self.state = .ready
+        if (self.completionWhenReady != nil) {
+            self.completionWhenReady!()
+        }
+    }
+    
+    private func persistContactsOnMega() {
+        guard let sharedUserDefaults = UserDefaults.init(suiteName: MEGAGroupIdentifier) else { return }
+        sharedUserDefaults.setStructArray(contactsOnMega, forKey: "ContactsOnMega")
+        sharedUserDefaults.set(Date(), forKey: "lastDateContactsOnMegaRequested")
+
+        contactsFetched()
     }
 }

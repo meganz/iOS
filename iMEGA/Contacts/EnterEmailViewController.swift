@@ -148,6 +148,7 @@ class EnterEmailViewController: UIViewController {
         let contactsPickerVC = CNContactPickerViewController()
         contactsPickerVC.predicateForEnablingContact = NSPredicate(format: "emailAddresses.@count > 0")
         contactsPickerVC.predicateForSelectionOfProperty = NSPredicate(format: "key == 'emailAddresses'")
+        contactsPickerVC.displayedPropertyKeys = [CNContactEmailAddressesKey]
         contactsPickerVC.delegate = self
         present(contactsPickerVC, animated: true, completion: nil)
     }
@@ -208,28 +209,17 @@ extension EnterEmailViewController: VENTokenFieldDelegate {
 
 // MARK: - CNContactPickerDelegate
 extension EnterEmailViewController: CNContactPickerDelegate {
-    func contactPicker(_ picker: CNContactPickerViewController, didSelect contacts: [CNContact]) {
-        var invalidEmails = [String]()
-        contacts.forEach { (contact) in
-            contact.emailAddresses.forEach({ (email) in
-                if email.value.mnz_isValidEmail() {
-                    tokens.append(String(email.value))
-                } else {
-                    invalidEmails.append(String(email.value))
-                }
-            })
-        }
-        
-        if invalidEmails.count > 0 {
-            var invalidEmailsString = ""
-            invalidEmails.forEach { (email) in
-                invalidEmailsString += AMLocalizedString("theEmailAddressFormatIsInvalid", "Add contacts and share dialog error message when user try to add wrong email address") + ": " + email + "\n"
+    func contactPicker(_ picker: CNContactPickerViewController, didSelect contactProperty: CNContactProperty) {
+        guard let email = (contactProperty.value as AnyObject).stringValue else { return }
+        if email.mnz_isValidEmail() {
+            if !tokens.contains(email) {
+                tokens.append(email)
             }
-            instructionsLabel.text = invalidEmailsString
-            instructionsLabel.textColor = UIColor.mnz_redMain()
-        } else {
             instructionsLabel.text = AMLocalizedString("Tap space to enter multiple emails", "Text showing the user how to write more than one email in order to invite them to MEGA")
             instructionsLabel.textColor = UIColor.mnz_gray999999()
+        } else {
+            instructionsLabel.text = AMLocalizedString("theEmailAddressFormatIsInvalid", "Add contacts and share dialog error message when user try to add wrong email address") + ": " + email + "\n"
+            instructionsLabel.textColor = UIColor.mnz_redMain()
         }
         
         tokenField.reloadData()

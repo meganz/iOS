@@ -1355,6 +1355,8 @@ static MEGAIndexer *indexer;
     [sharedUserDefaults removeObjectForKey:@"IsChatEnabled"];
     [sharedUserDefaults removeObjectForKey:@"logging"];
     [sharedUserDefaults removeObjectForKey:@"lastDateAddPhoneNumberShowed"];
+    [sharedUserDefaults removeObjectForKey:@"ContactsOnMega"];
+
     [sharedUserDefaults synchronize];
 }
 

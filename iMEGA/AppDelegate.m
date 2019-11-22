@@ -59,7 +59,6 @@
 #import "CameraUploadManager+Settings.h"
 #import "TransferSessionManager.h"
 #import "BackgroundRefreshPerformer.h"
-#import "MEGA-Swift.h"
 
 #define kFirstRun @"FirstRun"
 
@@ -1713,8 +1712,10 @@ void uncaughtExceptionHandler(NSException *exception) {
             
             [[MEGASdkManager sharedMEGASdk] getAccountDetails];
 
-            if ([NSUserDefaults.standardUserDefaults boolForKey:@"IsChatEnabled"]) {
+            if ([NSUserDefaults.standardUserDefaults boolForKey:@"IsChatEnabled"] && ![ContactsOnMegaManager.shared areContactsOnMegaRequestedWithinDays:7]) {
                 [ContactsOnMegaManager.shared configureContactsOnMegaWithCompletion:nil];
+            } else {
+                [ContactsOnMegaManager.shared loadContactsOnMegaFromLocal];
             }
 
             break;

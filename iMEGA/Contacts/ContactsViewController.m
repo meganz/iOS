@@ -30,7 +30,6 @@
 #import "ContactTableViewCell.h"
 #import "ShareFolderActivity.h"
 #import "ItemListViewController.h"
-#import "MEGA-Swift.h"
 
 @interface ContactsViewController () <CNContactPickerDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, ItemListViewControllerDelegate, UISearchControllerDelegate, UIGestureRecognizerDelegate, MEGAChatDelegate, ContactLinkQRViewControllerDelegate>
 

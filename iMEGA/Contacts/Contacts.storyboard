@@ -3,7 +3,7 @@
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15509"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -813,13 +813,13 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="MA9-uQ-Zqn">
                                                     <rect key="frame" x="60" y="11.666666666666664" width="210" height="37"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Contact Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z0A-eS-9IX">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" ambiguous="YES" text="Contact Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z0A-eS-9IX">
                                                             <rect key="frame" x="0.0" y="0.0" width="210" height="18"/>
                                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                                             <color key="textColor" white="0.20000000000000001" alpha="1" colorSpace="calibratedWhite"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Contact email" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IqL-Dq-4O9">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" ambiguous="YES" text="Contact email" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IqL-Dq-4O9">
                                                             <rect key="frame" x="0.0" y="20" width="210" height="17"/>
                                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
                                                             <color key="textColor" white="0.40000000000000002" alpha="1" colorSpace="calibratedWhite"/>
@@ -881,7 +881,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CONTACTS ON MEGA" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2b3-h5-2uN" userLabel="CONTACTS Header View Label">
-                            <rect key="frame" x="12" y="3" width="147" height="17"/>
+                            <rect key="frame" x="12" y="2.6666666666666661" width="147" height="17"/>
                             <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="14"/>
                             <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
@@ -905,10 +905,10 @@
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="02J-vY-e5b" secondAttribute="trailing" id="7RR-5E-7nu"/>
                         <constraint firstAttribute="trailing" secondItem="uQb-Ng-LDD" secondAttribute="trailing" id="A0F-mD-1i7"/>
-                        <constraint firstItem="2b3-h5-2uN" firstAttribute="centerY" secondItem="QhR-h3-iuU" secondAttribute="centerY" id="DZT-a3-QmV"/>
                         <constraint firstItem="2b3-h5-2uN" firstAttribute="leading" secondItem="QhR-h3-iuU" secondAttribute="leading" constant="12" id="ddz-H9-1n3"/>
                         <constraint firstItem="02J-vY-e5b" firstAttribute="leading" secondItem="QhR-h3-iuU" secondAttribute="leading" id="gL8-f3-nFw"/>
                         <constraint firstAttribute="bottom" secondItem="uQb-Ng-LDD" secondAttribute="bottom" id="mu1-nm-I88"/>
+                        <constraint firstItem="uQb-Ng-LDD" firstAttribute="top" secondItem="2b3-h5-2uN" secondAttribute="bottom" constant="3" id="nZz-58-5qp"/>
                         <constraint firstItem="02J-vY-e5b" firstAttribute="top" secondItem="QhR-h3-iuU" secondAttribute="top" id="phD-jC-lLV"/>
                         <constraint firstItem="uQb-Ng-LDD" firstAttribute="leading" secondItem="QhR-h3-iuU" secondAttribute="leading" id="siP-6L-pDN"/>
                     </constraints>
