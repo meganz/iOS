@@ -5018,7 +5018,7 @@
 					};
 					942254DB1EDC03130074C51A = {
 						CreatedOnToolsVersion = 8.3.2;
-						DevelopmentTeam = T9RH74Y7L9;
+						DevelopmentTeam = KUU7CVJ7BU;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Keychain = {
@@ -5028,7 +5028,7 @@
 					};
 					942254EA1EDC03140074C51A = {
 						CreatedOnToolsVersion = 8.3.2;
-						DevelopmentTeam = T9RH74Y7L9;
+						DevelopmentTeam = KUU7CVJ7BU;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Keychain = {
@@ -5038,7 +5038,7 @@
 					};
 					943F8B0E1EF26E9C00AFD89F = {
 						CreatedOnToolsVersion = 8.3.3;
-						DevelopmentTeam = T9RH74Y7L9;
+						DevelopmentTeam = KUU7CVJ7BU;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
@@ -5051,7 +5051,7 @@
 					};
 					B6CED48A22B8AC70009C4861 = {
 						CreatedOnToolsVersion = 10.2.1;
-						DevelopmentTeam = T9RH74Y7L9;
+						DevelopmentTeam = KUU7CVJ7BU;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 137361891A6664C300B740E8;
 					};
@@ -6356,7 +6356,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = T9RH74Y7L9;
+				DEVELOPMENT_TEAM = KUU7CVJ7BU;
 				GCC_PREFIX_HEADER = "iMEGA/Extensions/MEGAPickerFileProvider/MEGAPickerFileProvider-PrefixHeader.pch";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -6392,7 +6392,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = T9RH74Y7L9;
+				DEVELOPMENT_TEAM = KUU7CVJ7BU;
 				GCC_PREFIX_HEADER = "iMEGA/Extensions/MEGAPickerFileProvider/MEGAPickerFileProvider-PrefixHeader.pch";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -6428,7 +6428,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = T9RH74Y7L9;
+				DEVELOPMENT_TEAM = KUU7CVJ7BU;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -6476,7 +6476,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = T9RH74Y7L9;
+				DEVELOPMENT_TEAM = KUU7CVJ7BU;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -6519,7 +6519,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = T9RH74Y7L9;
+				DEVELOPMENT_TEAM = KUU7CVJ7BU;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -6565,7 +6565,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = T9RH74Y7L9;
+				DEVELOPMENT_TEAM = KUU7CVJ7BU;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -6611,7 +6611,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = T9RH74Y7L9;
+				DEVELOPMENT_TEAM = KUU7CVJ7BU;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = MEGAUnitTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -6640,7 +6640,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = T9RH74Y7L9;
+				DEVELOPMENT_TEAM = KUU7CVJ7BU;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = MEGAUnitTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
