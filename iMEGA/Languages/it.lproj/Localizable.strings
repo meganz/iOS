@@ -519,7 +519,7 @@
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
 "foldersShared"="%d cartelle";
 /* Item menu option to add a contact writting his/her email */
-"addFromEmail"="Inserisci una email";
+"addFromEmail"="Inserisci un indirizzo email";
 /* Title of Shared Items section */
 "sharedItems"="Elementi condivisi";
 /* Title of the tab bar item for the Shared Items section */
