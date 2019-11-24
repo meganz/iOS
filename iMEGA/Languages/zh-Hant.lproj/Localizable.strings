@@ -1523,7 +1523,7 @@
 /* When an active call of user A with user B had failed */
 "callFailed"="通話失敗";
 /* When an active call of user A with user B had ended */
-"callEnded"="通話結束了。";
+"callEnded"="通話結束。";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="通話時間：%@";
 /* */
@@ -1649,7 +1649,7 @@
 /* Title of the option to enable or disable file versioning on Settings section */
 "File versioning"="檔案版本控制";
 /* Subtitle of the option to enable or disable file versioning on Settings section */
-"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="於您的整個帳戶中啟用或停用檔案版本控制。\n如果您的聯絡人已啟用此功能，您仍可能會從共享資料夾中看到檔案版本存在。";
+"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="為您整個帳戶啟用或停用檔案版本控制。\nr]停用檔案版本控制並不會讓您的聯絡人在共享資料夾中無法建立新版本的檔案。";
 /* A confirmation message when the user chooses to disable file versioning. */
 "When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="檔案版本功能被停用後，當檔案更新時，該檔案將直接被替換為最新版本（系統不會再記錄您修改檔案的歷程）。您確定要停用檔案版本功能嗎？";
 /* Settings preference title to show file versions info of the account */

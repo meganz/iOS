@@ -1649,7 +1649,7 @@
 /* Title of the option to enable or disable file versioning on Settings section */
 "File versioning"="Версии файлов";
 /* Subtitle of the option to enable or disable file versioning on Settings section */
-"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="Включите или отключите управление версиями файлов для всего аккаунта.\nВы всё равно можете получать версии файлов из общих папок, если ваши контакты включили эту функцию.";
+"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="Включите или отключите управление версиями файлов для всего аккаунта.\nОтключение версий файлов не запретит вашим контактам создавать новые версии в общих папках.";
 /* A confirmation message when the user chooses to disable file versioning. */
 "When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="Когда версии файлов отключены, текущая версия будет заменяться новой при каждом обновлении (и ваши изменения в файле больше не будут записываться). Действительно отключить версии файлов?";
 /* Settings preference title to show file versions info of the account */
