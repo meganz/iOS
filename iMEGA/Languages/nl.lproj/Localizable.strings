@@ -519,7 +519,7 @@
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
 "foldersShared"="%d mappen";
 /* Item menu option to add a contact writting his/her email */
-"addFromEmail"="Voeg een email adres toe";
+"addFromEmail"="Voer een email adres in";
 /* Title of Shared Items section */
 "sharedItems"="Gedeelde items";
 /* Title of the tab bar item for the Shared Items section */
