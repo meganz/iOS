@@ -171,7 +171,10 @@
             session.outputFileType = outputFileType;
             session.canPerformMultiplePassesOverSourceMediaData = YES;
             session.shouldOptimizeForNetworkUse = YES;
-            session.metadataItemFilter = [AVMetadataItemFilter metadataItemFilterForSharing];
+            
+            if (!CameraUploadManager.shouldIncludeGPSTags) {
+                session.metadataItemFilter = [AVMetadataItemFilter metadataItemFilterForSharing];
+            }
             
             self.uploadInfo.fileName = [self mnz_generateLocalFileNamewithExtension:extension];
             session.outputURL = self.uploadInfo.fileURL;
