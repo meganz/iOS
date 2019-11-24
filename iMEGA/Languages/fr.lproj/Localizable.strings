@@ -43,7 +43,7 @@
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="Saisir la clé de déchiffrement";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertMessage"="Afin d'accéder à ce dossier/fichier, il vous faudra sa clé de déchiffrement. Si vous ne possédez pas la clé, veuillez contacter le créateur du lien.";
+"decryptionKeyAlertMessage"="Pour accéder à ce dossier ou fichier, il vous faudra sa clé de déchiffrement. Si vous n’avez pas la clé, veuillez contacter le créateur du lien.";
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="Clé de déchiffrement";
 /* Button title to try to decrypt the link */
@@ -125,7 +125,7 @@
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="Saisir un nom valide";
 /* Error text shown when you have not written the same password */
-"passwordsDoNotMatch"="Les mots de passes ne correspondent pas";
+"passwordsDoNotMatch"="Les mots de passe ne correspondent pas";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
 "termsCheckboxUnselected"="Vous devez accepter les conditions générales d’utilisation pour ouvrir un compte sur MEGA.";
 /* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown  */
@@ -157,7 +157,7 @@
 /* Error message shown when you try to open something bigger than the free space in your device */
 "fileTooBigMessage_open"="Le fichier que vous tentez d’ouvrir est plus grand que la mémoire disponible.";
 /* Error title shown when you open a file or folder link and it's no longer available */
-"linkUnavailable"="Lien non disponible";
+"linkUnavailable"="Le lien n’est pas disponible";
 /* */
 "fileLinkUnavailableText1"="Cela pourrait être dû aux raisons suivantes :";
 /* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
@@ -299,9 +299,9 @@
 /* Message shown when a upload starts */
 "uploadStarted_Message"="Le téléversement est lancé";
 /* Alert title shown when you are seeing the details of a file and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
-"youNoLongerHaveAccessToThisFile_alertTitle"="Vous n'avez plus accès à ce fichier";
+"youNoLongerHaveAccessToThisFile_alertTitle"="Vous n’avez plus accès à ce fichier";
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
-"youNoLongerHaveAccessToThisFolder_alertTitle"="Vous n'avez plus accès à ce dossier";
+"youNoLongerHaveAccessToThisFolder_alertTitle"="Vous n’avez plus accès à ce dossier";
 /* The text is shown as an option on the details of a file or folder */
 "saveForOffline"="Enregistrer Hors ligne";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
@@ -391,7 +391,7 @@
 /* Title for the action that allows you to move a file or folder */
 "move"="Déplacer";
 /* Success message shown when you have moved 1 file */
-"moveFileMessage"="1 fichier déplacé";
+"moveFileMessage"="1 fichier a été déplacé";
 /* Success message shown when you have moved {1+} files */
 "moveFilesMessage"="%d fichiers ont été déplacés";
 /* Success message shown when you have moved 1 folder */
@@ -409,7 +409,7 @@
 /* List option shown on the details of a file or folder */
 "copy"="Copier";
 /* Success message shown when you have copied 1 file */
-"copyFileMessage"="1 fichier copié";
+"copyFileMessage"="1 fichier a été copié";
 /* Success message shown when you have copied {1+} files */
 "copyFilesMessage"="%d fichiers ont été copiés";
 /* Success message shown when you have copied 1 folder */
@@ -743,7 +743,7 @@
 /* Section title where you can 'Clear Offline files' of your MEGA app */
 "clearOfflineFiles"="Vider les fichiers Hors ligne";
 /* Section title where you can 'Clear Cache' of your MEGA app */
-"clearCache"="Vider le cache";
+"clearCache"="Nettoyer le cache";
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
 "onMEGA"="Sur MEGA";
 /* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
@@ -819,7 +819,7 @@
 /* Message shown during forgot your password process if the link to reset password has expired */
 "recoveryLinkHasExpired"="Le lien de récupération est expiré. Veuillez ressayer.";
 /* Headline of the password reset recovery procedure */
-"passwordReset"="Réinitialiser le mot de passe";
+"passwordReset"="Réinitialisation du mot de passe";
 /* A message shown to explain that the user has to input (type or paste) their recovery key to continue with the reset password process. */
 "pleaseEnterYourRecoveryKey"="Veuillez saisir votre clé de récupération";
 /* Label for any 'Recovery Key' button, link, text, title, etc. Preserve uppercase - (String as short as possible). The Recovery Key is the new name for the account 'Master Key', and can unlock (recover) the account if the user forgets their password. */
@@ -968,7 +968,7 @@
 /* String shown when you are logging out of your account. */
 "loggingOut"="Déconnexion";
 /* Button to remove avatar. Try to keep the text short (as in English) */
-"removeAvatar"="Supprimer l'avatar";
+"removeAvatar"="Supprimer l’avatar";
 /* button that allows the user the change his avatar */
 "changeAvatar"="Changer l’avatar";
 /* Button title that allows the user change his name */
@@ -992,11 +992,11 @@
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="expire le %@";
 /* Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible). */
-"Renews on"="Renouvelle";
+"Renews on"="Se renouvelle le";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="Partages entrants";
 /* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
-"of %@"="de %@";
+"of %@"="sur %@";
 /* Sentence shown under the used space to complete the info with the user account maximum storage. "used of {maximun storage}" */
 "used of %@"="utilisés sur %@";
 /* Sentence shown under the available space to complete the info with the user account maximum storage. "available of {maximun storage}" */
@@ -1062,7 +1062,7 @@
 /* Alert message shown when a purchase has stopped because some error between the process */
 "failedPurchase_message"="Soit vous avez annulé la demande, soit Apple a signalé une erreur de transaction. Veuillez ressayer ultérieurement ou contacter ios@mega.nz.";
 /* Alert title shown when a restore hasn't been completed correctly */
-"incompleteRestore_title"="Erreur de restauration";
+"incompleteRestore_title"="Problème de restauration";
 /* Alert message shown when a restore hasn't been completed correctly */
 "incompleteRestore_message"="L'achat précédent n'a pas été trouvé. Veuillez sélectionner le produit acheté précédemment afin de le rétablir. Vous ne serez PAS facturé de nouveau.";
 /* Alert title shown when the restoring process has stopped for some reason */
@@ -1218,7 +1218,7 @@
 /* This is shown in the typing area in chat, as a placeholder before the user starts typing anything in the field. The format is: Write a message to Contact Name... Write a message to "Chat room topic"... Write a message to Contact Name1, Contact Name2, Contact Name3 */
 "writeAMessage"="Rédigez un message pour %s…";
 /* Information if there are no history messages in current chat conversation */
-"noConversationHistory"="Aucun historique de conversation";
+"noConversationHistory"="Il n’y a aucun historique de conversation";
 /* Button which allows to retry send message in chat conversation. */
 "retry"="Ressayer";
 /* Button which allows to delete message in chat conversation. */
@@ -1419,7 +1419,7 @@
 /* Label that encourage the user to line the QR to scan with the camera */
 "lineCodeWithCamera"="Alignez le code QR pour le balayer avec l’appareil photo de votre appareil";
 /* Error text shown when the user scans a QR that is not valid. String as short as possible. */
-"invalidCode"="Code invalide";
+"invalidCode"="Le code est invalide";
 /* Success text shown in a label when the user scans a valid QR. String as short as possible. */
 "codeScanned"="Code balayé";
 /* title of the screen that shows the users with whom the user has shared a folder */
@@ -1523,7 +1523,7 @@
 /* When an active call of user A with user B had failed */
 "callFailed"="Échec d’appel";
 /* When an active call of user A with user B had ended */
-"callEnded"="L’appel est terminé";
+"callEnded"="Fin de l’appel.";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="Durée : %@";
 /* */
@@ -1649,7 +1649,7 @@
 /* Title of the option to enable or disable file versioning on Settings section */
 "File versioning"="Versionnage des fichiers";
 /* Subtitle of the option to enable or disable file versioning on Settings section */
-"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="Activer ou désactiver le versionnage des fichiers pour votre compte entier.\nSi vos contacts ont activé cette option, vous pourriez encore recevoir des versions de fichiers provenant de dossiers partagés.";
+"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="Activer ou désactiver le versionnage des fichiers pour votre compte entier.\nDésactiver le versionnage des fichiers n’empêche pas vos contacts de créer de nouvelles versions dans les dossiers partagés.";
 /* A confirmation message when the user chooses to disable file versioning. */
 "When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="Quand le versionnage des fichiers est désactivé, la version actuelle est remplacée par la nouvelle version quand le fichier est mis à jour (et vos changements apportés au fichier ne sont plus enregistrés). Souhaitez-vous vraiment désactiver le versionnage des fichiers ?";
 /* Settings preference title to show file versions info of the account */
@@ -1741,7 +1741,7 @@
 /* Menu item to change from list view to grid view */
 "Thumbnail view"="Vue en imagettes";
 /* There are no notifications to display. */
-"No notifications"="Aucune notification";
+"No notifications"="Il n’y a aucune notification";
 /* The header of a notification related to payments */
 "Payment info"="Renseignements sur le paiement";
 /* A title for a notification saying the user’s pricing plan will expire soon. */
@@ -1757,13 +1757,13 @@
 /* A notification that the other user cancelled their contact request so it is no longer valid. E.g. user@email.com cancelled their contact request. */
 "Cancelled their contact request"="A annulé sa demande de contact";
 /* A reminder notification to remind the user to respond to the contact request. */
-"Reminder: You have a contact request"="Rappel : vous avez une demande de contact";
+"Reminder: You have a contact request"="Rappel : vous avez une demande de contact";
 /* A notification telling the user that the other user deleted them as a contact. E.g. user@email.com deleted you as a contact. */
 "Deleted you as a contact"="vous a supprimé en tant que contact";
 /* A notification telling the user that they are now fully connected with the other user (the users are in each other’s address books). */
 "Contact relationship established"="La relation de contact est établie";
 /* A notification telling the user that one of their contact’s accounts has been deleted or deactivated. */
-"Account has been deleted/deactivated"="Le compte a été supprimé/désactivé";
+"Account has been deleted/deactivated"="Le compte a été supprimé ou désactivé";
 /* A notification telling the user that another user blocked them as a contact (they will no longer be able to contact them). E.g. name@email.com blocked you as a contact. */
 "Blocked you as a contact"="vous a bloqué en tant que contact";
 /* Response text after clicking Ignore on an incoming contact request notification. */

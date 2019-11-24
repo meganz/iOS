@@ -1523,7 +1523,7 @@
 /* When an active call of user A with user B had failed */
 "callFailed"="Nieudane połączenie";
 /* When an active call of user A with user B had ended */
-"callEnded"="Połączenie zakończone.";
+"callEnded"="Rozmowa została zakończona.";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="Trwanie: %@";
 /* */
@@ -1649,7 +1649,7 @@
 /* Title of the option to enable or disable file versioning on Settings section */
 "File versioning"="Wersja pliku";
 /* Subtitle of the option to enable or disable file versioning on Settings section */
-"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="Włącz lub wyłącz wersjonowanie plików dla całego konta. \nNadal możesz odbierać wersje plików z folderów współdzielonych, jeśli są one włączone.";
+"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="Włącz lub wyłącz kontrolę wersji dla całego konta. \n Wyłączenie kontroli wersji nie uniemożliwia twojemu kontaktowi tworzenia nowych wersji w folderach współdzielonych.";
 /* A confirmation message when the user chooses to disable file versioning. */
 "When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="Kiedy wersjonowanie jest zablokowane, aktualna wersja pliku zostanie zastąpiona nową wersją (zmiany nie będą rejestrowane). Czy chcesz wyłączyć wersjonowanie?";
 /* Settings preference title to show file versions info of the account */

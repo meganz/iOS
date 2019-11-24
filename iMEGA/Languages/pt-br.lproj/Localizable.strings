@@ -1523,7 +1523,7 @@
 /* When an active call of user A with user B had failed */
 "callFailed"="Falha na chamada";
 /* When an active call of user A with user B had ended */
-"callEnded"="Chamada finalizada.";
+"callEnded"="Chamada finalizada";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="Duração: %@";
 /* */
@@ -1649,7 +1649,7 @@
 /* Title of the option to enable or disable file versioning on Settings section */
 "File versioning"="Controle de versões de arquivos";
 /* Subtitle of the option to enable or disable file versioning on Settings section */
-"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="Ative ou desative o controle de versões de arquivos para toda a sua conta. \nVocê ainda pode receber versões de arquivos em pastas compartilhadas se os seus contatos tiverem essa função ativa.";
+"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="Ativar ou desativar o controle de versões de arquivos na sua conta. \nDesativar as versões de arquivos não previne que os seus arquivos criem novas versões em pastas compartilhadas .";
 /* A confirmation message when the user chooses to disable file versioning. */
 "When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="Se o controle de versões de arquivos estiver desativado, ao modificar um arquivo a versão atual será substituída pela nova versão (e suas alterações no arquivo já não serão salvas). Você tem certeza de que quer desativar o controle de versões de arquivos?";
 /* Settings preference title to show file versions info of the account */

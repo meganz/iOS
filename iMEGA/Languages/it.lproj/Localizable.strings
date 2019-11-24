@@ -1649,7 +1649,7 @@
 /* Title of the option to enable or disable file versioning on Settings section */
 "File versioning"="Versioni dei file";
 /* Subtitle of the option to enable or disable file versioning on Settings section */
-"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="Attiva o disattiva le versioni dei file per il tuo intero account.\nPotresti ancora ricevere versioni dei file dalle cartelle condivise se i tuoi contatti hanno attivato ciò.";
+"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="Attiva o disattiva le versioni dei file per il tuo account.\nDisabilitare le versioni dei file non esclude che i tuoi contatti creino nuove versioni nelle cartelle condivise.";
 /* A confirmation message when the user chooses to disable file versioning. */
 "When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="Quando le versioni dei file sono disabilitate, la versione corrente verrà rimpiazzata dalla nuova versione una volta che il file viene aggiornato (e i cambiamenti del file non verranno più registrati). Sei sicuro di voler disabilitare le versioni dei file?";
 /* Settings preference title to show file versions info of the account */

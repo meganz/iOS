@@ -515,7 +515,7 @@
 /* Title of the Contacts section */
 "contactsTitle"="Kontakte";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
-"oneFolderShared"="Ein Ordner";
+"oneFolderShared"="1 Ordner";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
 "foldersShared"="%d Ordner";
 /* Item menu option to add a contact writting his/her email */
@@ -1523,7 +1523,7 @@
 /* When an active call of user A with user B had failed */
 "callFailed"="Anruf fehlgeschlagen";
 /* When an active call of user A with user B had ended */
-"callEnded"="Anruf beendet.";
+"callEnded"="Gespräch beendet.";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="Dauer: %@";
 /* */

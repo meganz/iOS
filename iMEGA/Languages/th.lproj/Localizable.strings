@@ -1523,7 +1523,7 @@
 /* When an active call of user A with user B had failed */
 "callFailed"="ติดต่อไม่ได้";
 /* When an active call of user A with user B had ended */
-"callEnded"="จบการสนทนา";
+"callEnded"="วางสายแล้ว";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="ระยะเวลา: %@";
 /* */
