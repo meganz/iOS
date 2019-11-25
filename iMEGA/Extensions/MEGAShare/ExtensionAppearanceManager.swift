@@ -54,6 +54,10 @@ class ExtensionAppearanceManager: NSObject {
         SVProgressHUD.setRingRadius(16)
         SVProgressHUD.setRingNoTextRadius(16)
         SVProgressHUD.setCornerRadius(8)
+        SVProgressHUD.setShadowOffset(CGSize(width: 0, height: 1))
+        SVProgressHUD.setShadowOpacity(0.15)
+        SVProgressHUD.setShadowRadius(8)
+        SVProgressHUD.setShadowColor(UIColor.black)
         if #available(iOS 13.0, *) {
             SVProgressHUD.setHudViewCustomBlurEffect(UIBlurEffect.init(style: UIBlurEffect.Style.systemChromeMaterial))
         }
