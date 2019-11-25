@@ -1,11 +1,3 @@
-//
-//  ChatImageQualityTableViewController.swift
-//  MEGA
-//
-//  Created by Haoran Li on 21/11/19.
-//  Copyright © 2019 MEGA. All rights reserved.
-//
-
 import UIKit
 
 
