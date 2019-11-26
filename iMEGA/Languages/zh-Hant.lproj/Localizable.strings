@@ -519,7 +519,7 @@
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
 "foldersShared"="%d 個資料夾";
 /* Item menu option to add a contact writting his/her email */
-"addFromEmail"="輸入郵箱地址";
+"addFromEmail"="輸入電子郵件地址";
 /* Title of Shared Items section */
 "sharedItems"="共享檔案";
 /* Title of the tab bar item for the Shared Items section */
@@ -1521,7 +1521,7 @@
 /* When an active call of user A with user B had failed */
 "callFailed"="通話失敗";
 /* When an active call of user A with user B had ended */
-"callEnded"="通話結束了。";
+"callEnded"="通話結束。";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="通話時間：%@";
 /* */
@@ -1647,7 +1647,7 @@
 /* Title of the option to enable or disable file versioning on Settings section */
 "File versioning"="檔案版本控制";
 /* Subtitle of the option to enable or disable file versioning on Settings section */
-"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="於您的整個帳戶中啟用或停用檔案版本控制。\n如果您的聯絡人已啟用此功能，您仍可能會從共享資料夾中看到檔案版本存在。";
+"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="為您整個帳戶啟用或停用檔案版本控制。\nr]停用檔案版本控制並不會讓您的聯絡人在共享資料夾中無法建立新版本的檔案。";
 /* A confirmation message when the user chooses to disable file versioning. */
 "When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="檔案版本功能被停用後，當檔案更新時，該檔案將直接被替換為最新版本（系統不會再記錄您修改檔案的歷程）。您確定要停用檔案版本功能嗎？";
 /* Settings preference title to show file versions info of the account */
@@ -1989,8 +1989,8 @@
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
 "Reconnecting..."="正在重新連線中…";
 /* Title shown when the user reconnect in a call. */
-"You are back!"="你回來了！";
+"You are back!"="你回來了。";
 /* Subtitle of chat screen when the chat is inactive */
 "Inactive chat"="不活躍的聊天";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
-"It was not possible to obtain the content of this file, that is not encoded in either UTF-8 or ISO/IEC 8859-1."="It was not possible to obtain the content of this file, that is not encoded in either UTF-8 or ISO/IEC 8859-1.";
+"It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="無法獲得此檔案的內容，因為它並不是以UTF-8或ISO/IEC 8859-1進行編碼。";

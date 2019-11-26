@@ -20,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param error the error you pass in to get detail error info when error happens.
  @return YES if succeeded, NO if error happended in file moving.
  */
-- (BOOL)mnz_moveToDirectory:(NSURL *)directoryURL renameTo:(NSString *)fileName error:(NSError *__autoreleasing _Nullable *)error;;
+- (BOOL)mnz_moveToDirectory:(NSURL *)directoryURL renameTo:(NSString *)fileName error:(NSError *__autoreleasing _Nullable *)error;
 
 @end
 

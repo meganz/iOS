@@ -519,7 +519,7 @@
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
 "foldersShared"="Папок: %d";
 /* Item menu option to add a contact writting his/her email */
-"addFromEmail"="Вставить email";
+"addFromEmail"="Ввести email";
 /* Title of Shared Items section */
 "sharedItems"="Общие элементы";
 /* Title of the tab bar item for the Shared Items section */
@@ -1647,7 +1647,7 @@
 /* Title of the option to enable or disable file versioning on Settings section */
 "File versioning"="Версии файлов";
 /* Subtitle of the option to enable or disable file versioning on Settings section */
-"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="Включите или отключите управление версиями файлов для всего аккаунта.\nВы всё равно можете получать версии файлов из общих папок, если ваши контакты включили эту функцию.";
+"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="Включите или отключите управление версиями файлов для всего аккаунта.\nОтключение версий файлов не запретит вашим контактам создавать новые версии в общих папках.";
 /* A confirmation message when the user chooses to disable file versioning. */
 "When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="Когда версии файлов отключены, текущая версия будет заменяться новой при каждом обновлении (и ваши изменения в файле больше не будут записываться). Действительно отключить версии файлов?";
 /* Settings preference title to show file versions info of the account */
@@ -1993,4 +1993,4 @@
 /* Subtitle of chat screen when the chat is inactive */
 "Inactive chat"="Неактивный чат";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
-"It was not possible to obtain the content of this file, that is not encoded in either UTF-8 or ISO/IEC 8859-1."="It was not possible to obtain the content of this file, that is not encoded in either UTF-8 or ISO/IEC 8859-1.";
+"It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="Не удалось получить содержимое этого файла, так как он не закодирован ни в UTF-8, ни в ISO/IEC 8859-1.";

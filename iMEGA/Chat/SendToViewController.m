@@ -430,7 +430,7 @@
     NSString *myName = [[MEGASdkManager sharedMEGAChatSdk] myFullname];
     BOOL isNameEmpty = [[myName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""];
     if (isNameEmpty) {
-        myName = [[MEGASdkManager sharedMEGAChatSdk] myEmail];;
+        myName = MEGASdkManager.sharedMEGAChatSdk.myEmail;
     }
     myName = [NSString stringWithFormat:@"%@ (%@)", myName, AMLocalizedString(@"me", @"The title for my message in a chat. The message was sent from yourself.")];
     if (chatRoom.peerCount) {
