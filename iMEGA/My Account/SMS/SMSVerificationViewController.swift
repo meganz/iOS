@@ -1,10 +1,6 @@
 
 import UIKit
 
-protocol SMSVerificationViewControllerDelegate: AnyObject {
-    func cancelDidTapped()
-}
-
 @objc enum SMSVerificationType: Int {
     case UnblockAccount
     case AddPhoneNumber
@@ -12,8 +8,6 @@ protocol SMSVerificationViewControllerDelegate: AnyObject {
 
 class SMSVerificationViewController: UIViewController {
     
-    private weak var delegate: SMSVerificationViewControllerDelegate?
-
     @IBOutlet private weak var scrollView: UIScrollView!
     @IBOutlet private weak var headerImageView: UIImageView!
     @IBOutlet private weak var descriptionTextView: UITextView!
@@ -39,13 +33,6 @@ class SMSVerificationViewController: UIViewController {
     @objc class func instantiate(with verificationType: SMSVerificationType) -> SMSVerificationViewController {
         let controller = SMSVerificationViewController.mnz_instantiate(withStoryboardName: "SMSVerification")
         controller.verificationType = verificationType
-        return controller
-    }
-    
-    class func instantiate(with verificationType: SMSVerificationType, delegate: SMSVerificationViewControllerDelegate? = nil) -> SMSVerificationViewController {
-        let controller = SMSVerificationViewController.mnz_instantiate(withStoryboardName: "SMSVerification")
-        controller.verificationType = verificationType
-        controller.delegate = delegate
         return controller
     }
     
@@ -127,9 +114,7 @@ class SMSVerificationViewController: UIViewController {
             phoneNumberTextField.resignFirstResponder()
             
         case .AddPhoneNumber:
-            dismiss(animated: true) {
-                self.delegate?.cancelDidTapped()
-            }
+            dismiss(animated: true, completion: nil)
             
         default:
             dismiss(animated: true, completion: nil)

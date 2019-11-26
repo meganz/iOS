@@ -160,6 +160,7 @@ class VerificationCodeViewController: UIViewController {
     }
     
     private func checkSMSVerificationCodeSucceeded() {
+        SVProgressHUD.showInfo(withStatus: AMLocalizedString("Your phone number has been verified successfully"))
         setEditing(false, animated: true)
         configCodeFieldsAppearance(with: nil)
         dismiss(animated: true, completion: nil)
