@@ -82,8 +82,7 @@ struct ContactOnMega: Codable {
     }
     
     @objc func areContactsOnMegaRequestedWithin(days: Int) -> Bool {
-        let sharedUserDefaults = UserDefaults.init(suiteName: MEGAGroupIdentifier)
-        guard let lastDateContactsOnMegaRequested = sharedUserDefaults?.value(forKey: "lastDateContactsOnMegaRequested") else {
+        guard let lastDateContactsOnMegaRequested = UserDefaults.standard.value(forKey: "lastDateContactsOnMegaRequested") else {
             return false
         }
         guard let daysSinceLastRequest = Calendar.current.dateComponents([.day], from: lastDateContactsOnMegaRequested as! Date, to: Date()).day else {
@@ -97,17 +96,14 @@ struct ContactOnMega: Codable {
     }
     
     @objc func loadContactsOnMegaFromLocal() {
-        guard let sharedUserDefaults = UserDefaults.init(suiteName: MEGAGroupIdentifier) else { return }
-        contactsOnMega = sharedUserDefaults.structArrayData(ContactOnMega.self, forKey: "ContactsOnMega")
+        contactsOnMega = UserDefaults.standard.structArrayData(ContactOnMega.self, forKey: "ContactsOnMega")
         contactsFetched()
-        print(contactsOnMega)
     }
     
     @objc func configureContactsOnMega(completion: (() -> Void)?) {
         if CNContactStore.authorizationStatus(for: .contacts) == .authorized {
             contactsOnMega.removeAll()
-            guard let sharedUserDefaults = UserDefaults.init(suiteName: MEGAGroupIdentifier) else { return }
-            sharedUserDefaults.removeObject(forKey: "ContactsOnMega")
+            UserDefaults.standard.removeObject(forKey: "ContactsOnMega")
             
             completionWhenReady = completion
             state = .fetching
@@ -175,7 +171,9 @@ struct ContactOnMega: Codable {
                 self.state = .error
             }
 
-            self.deviceContactsChunked.removeFirst()
+            if self.deviceContactsChunked.count > 0 {
+                self.deviceContactsChunked.removeFirst()
+            }
 
             if self.deviceContactsChunked.count == 0 {
                 self.fetchContactsOnMegaEmails(contactsOnMegaDictionary)
@@ -209,15 +207,14 @@ struct ContactOnMega: Codable {
     
     private func contactsFetched() {
         self.state = .ready
-        if (self.completionWhenReady != nil) {
-            self.completionWhenReady!()
-        }
+        guard let completion = completionWhenReady else { return }
+        completion()
+        completionWhenReady = nil
     }
     
     private func persistContactsOnMega() {
-        guard let sharedUserDefaults = UserDefaults.init(suiteName: MEGAGroupIdentifier) else { return }
-        sharedUserDefaults.setStructArray(contactsOnMega, forKey: "ContactsOnMega")
-        sharedUserDefaults.set(Date(), forKey: "lastDateContactsOnMegaRequested")
+        UserDefaults.standard.setStructArray(contactsOnMega, forKey: "ContactsOnMega")
+        UserDefaults.standard.set(Date(), forKey: "lastDateContactsOnMegaRequested")
 
         contactsFetched()
     }

@@ -44,17 +44,13 @@ class AddPhoneNumberViewController: UIViewController {
     // MARK: - UI Actions
     
     @IBAction func didTapAddPhoneNumberButton() {
-        let smsNavigation = SMSNavigationViewController(rootViewController: SMSVerificationViewController.instantiate(with: .AddPhoneNumber, delegate: self))
-        present(smsNavigation, animated: true, completion: nil)
+        dismiss(animated: true) {
+            let smsNavigation = SMSNavigationViewController(rootViewController: SMSVerificationViewController.instantiate(with: .AddPhoneNumber))
+            UIApplication.mnz_visibleViewController()?.present(smsNavigation, animated: true, completion: nil)
+        }
     }
     
     @IBAction func didTapNotNowButton() {
-        dismiss(animated: true, completion: nil)
-    }
-}
-
-extension AddPhoneNumberViewController: SMSVerificationViewControllerDelegate {
-    func cancelDidTapped() {
         dismiss(animated: true, completion: nil)
     }
 }

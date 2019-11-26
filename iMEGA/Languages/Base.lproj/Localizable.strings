@@ -2062,3 +2062,5 @@
 "Please type the verification code sent to"="Please type the verification code sent to";
 /* Text message to remind user to resend verification code */
 "You didn't receive a code?"="You didn't receive a code?";
+/* Message shown when verify phone number successfully */
+"Your phone number has been verified successfully"="Your phone number has been verified successfully";
