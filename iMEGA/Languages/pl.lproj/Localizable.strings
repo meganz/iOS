@@ -519,7 +519,7 @@
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
 "foldersShared"="%d katalogów";
 /* Item menu option to add a contact writting his/her email */
-"addFromEmail"="Dodaj email";
+"addFromEmail"="Wprowadź adres email";
 /* Title of Shared Items section */
 "sharedItems"="Udostępnione";
 /* Title of the tab bar item for the Shared Items section */
@@ -1521,7 +1521,7 @@
 /* When an active call of user A with user B had failed */
 "callFailed"="Nieudane połączenie";
 /* When an active call of user A with user B had ended */
-"callEnded"="Połączenie zakończone.";
+"callEnded"="Rozmowa została zakończona.";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="Trwanie: %@";
 /* */
@@ -1647,7 +1647,7 @@
 /* Title of the option to enable or disable file versioning on Settings section */
 "File versioning"="Wersja pliku";
 /* Subtitle of the option to enable or disable file versioning on Settings section */
-"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="Włącz lub wyłącz wersjonowanie plików dla całego konta. \nNadal możesz odbierać wersje plików z folderów współdzielonych, jeśli są one włączone.";
+"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="Włącz lub wyłącz kontrolę wersji dla całego konta. \n Wyłączenie kontroli wersji nie uniemożliwia twojemu kontaktowi tworzenia nowych wersji w folderach współdzielonych.";
 /* A confirmation message when the user chooses to disable file versioning. */
 "When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="Kiedy wersjonowanie jest zablokowane, aktualna wersja pliku zostanie zastąpiona nową wersją (zmiany nie będą rejestrowane). Czy chcesz wyłączyć wersjonowanie?";
 /* Settings preference title to show file versions info of the account */
@@ -1989,8 +1989,8 @@
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
 "Reconnecting..."="Ponowne łączenie…";
 /* Title shown when the user reconnect in a call. */
-"You are back!"="Wróciłeś!";
+"You are back!"="Wróciłeś.";
 /* Subtitle of chat screen when the chat is inactive */
 "Inactive chat"="Nieaktywny czat";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
-"It was not possible to obtain the content of this file, that is not encoded in either UTF-8 or ISO/IEC 8859-1."="It was not possible to obtain the content of this file, that is not encoded in either UTF-8 or ISO/IEC 8859-1.";
+"It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="Nie można było uzyskać zawartości tego pliku, ponieważ nie jest on zakodowany ani w UTF-8, ani w ISO / IEC 8859-1.";
