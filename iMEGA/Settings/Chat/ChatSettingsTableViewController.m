@@ -168,7 +168,7 @@
             
             case ChatImageUploadQualityHigh:
             imageQualityString = AMLocalizedString(@"high", @"High");
-            
+break;
             case ChatImageUploadQualityOptimsed:
             imageQualityString = AMLocalizedString(@"Optimised", @"Optimised");
             break;
