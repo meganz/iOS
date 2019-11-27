@@ -62,6 +62,8 @@
     LTHPasscodeViewController.sharedUser.navigationTitleColor = UIColor.mnz_label;
 
     self.navigationItem.backBarButtonItem = [UIBarButtonItem.alloc initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
+    
+    [self updateUI];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -99,9 +101,28 @@
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
     return UIInterfaceOrientationMaskAll;
 }
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateUI];
+        }
+    }
+}
         
 #pragma mark - Private
-        
+
+- (void)updateUI {
+    self.requirePasscodeDetailLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
+    
+    self.tableView.separatorColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
+    self.tableView.backgroundColor = [UIColor mnz_settingsBackgroundForTraitCollection:self.traitCollection];
+    
+    [self.tableView reloadData];
+}
+
 - (void)eraseLocalData {
     BOOL eraseLocalDataEnaled = [[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled];
     
@@ -193,6 +214,10 @@
 }
 
 #pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    cell.backgroundColor = [UIColor mnz_settingsDetailsBackgroundForTraitCollection:self.traitCollection];
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if ((indexPath.section == 0) && (indexPath.row == 1)) {

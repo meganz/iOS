@@ -55,6 +55,8 @@
         self.richPreviewsSwitch.on = request.flag;
     }];
     [[MEGASdkManager sharedMEGASdk] isRichPreviewsEnabledWithDelegate:delegate];
+    
+    [self updateUI];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -79,6 +81,16 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
     
     [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateUI];
+        }
+    }
 }
 
 #pragma mark - IBActions
@@ -127,6 +139,15 @@
 }
 
 #pragma mark - Private
+
+- (void)updateUI {
+    self.statusRightDetailLabel.textColor = self.videoQualityRightDetailLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
+    
+    self.tableView.separatorColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
+    self.tableView.backgroundColor = [UIColor mnz_settingsBackgroundForTraitCollection:self.traitCollection];
+    
+    [self.tableView reloadData];
+}
 
 - (void)internetConnectionChanged {
     [self setUIElementsEnabled:MEGAReachabilityManager.isReachable];
@@ -224,6 +245,10 @@
 }
 
 #pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    cell.backgroundColor = [UIColor mnz_settingsDetailsBackgroundForTraitCollection:self.traitCollection];
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {    
     if ([indexPath isEqual:[NSIndexPath indexPathForRow:0 inSection:1]] && !self.isInvalidStatus) {

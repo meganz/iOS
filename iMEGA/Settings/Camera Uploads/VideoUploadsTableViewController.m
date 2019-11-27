@@ -30,13 +30,35 @@ typedef NS_ENUM(NSUInteger, VideoUploadsSectionFormatRow) {
 
 @implementation VideoUploadsTableViewController
 
+#pragma mark - Lifecycle
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     [self.uploadVideosLabel setText:AMLocalizedString(@"uploadVideosLabel", @"Title to switch on/off video uploads")];
     self.videoQualityLabel.text = AMLocalizedString(@"videoQuality", @"Title that refers to the video compression quality when to transcode from HEVC to H.264 codec");
     [self configVideoFormatTexts];
+    
+    [self updateUI];
 }
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [self configUI];
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateUI];
+        }
+    }
+}
+
+#pragma mark - Private
 
 - (void)configVideoFormatTexts {
     NSDictionary<NSAttributedStringKey, id> *formatAttributes = @{NSFontAttributeName : [UIFont systemFontOfSize:17.0], NSForegroundColorAttributeName : UIColor.mnz_label};
@@ -82,10 +104,13 @@ typedef NS_ENUM(NSUInteger, VideoUploadsSectionFormatRow) {
     self.videoQualityRightDetailLabel.text = videoQualityString;
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
+- (void)updateUI {
+    self.videoQualityRightDetailLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
     
-    [self configUI];
+    self.tableView.separatorColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
+    self.tableView.backgroundColor = [UIColor mnz_settingsBackgroundForTraitCollection:self.traitCollection];
+    
+    [self.tableView reloadData];
 }
 
 #pragma mark - UI Actions
@@ -100,7 +125,7 @@ typedef NS_ENUM(NSUInteger, VideoUploadsSectionFormatRow) {
     [self configUI];
 }
 
-#pragma mark - Table view data source
+#pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     NSInteger numberOfSections = 0;
@@ -183,6 +208,12 @@ typedef NS_ENUM(NSUInteger, VideoUploadsSectionFormatRow) {
     }
     
     return title;
+}
+
+#pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    cell.backgroundColor = [UIColor mnz_settingsDetailsBackgroundForTraitCollection:self.traitCollection];
 }
 
 @end

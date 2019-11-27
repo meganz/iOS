@@ -42,6 +42,8 @@
     
     _offlineSizeString = @"...";
     _cacheSizeString = @"...";
+    
+    [self updateUI];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -72,6 +74,28 @@
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateUI];
+        }
+    }
+}
+
+#pragma mark - Private
+
+- (void)updateUI {
+    self.tableView.separatorColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
+    self.tableView.backgroundColor = [UIColor mnz_settingsBackgroundForTraitCollection:self.traitCollection];
+    
+    self.fileVersionsDetailLabel.textColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
+    self.deleteOldVersionsLabel.textColor = [UIColor mnz_redMainForTraitCollection:self.traitCollection];
+    
+    [self.tableView reloadData];
+}
+
 - (void)reloadUI {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
         unsigned long long offlineSize = [NSFileManager.defaultManager mnz_sizeOfFolderAtPath:NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject];
@@ -100,8 +124,6 @@
     [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:[groupSharedDirectoryPath stringByAppendingPathComponent:MEGAFileExtensionStorageFolder]];
     [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:[groupSharedDirectoryPath stringByAppendingPathComponent:MEGAShareExtensionStorageFolder]];
 }
-
-#pragma mark - Private
 
 - (NSString *)formatStringFromByteCountFormatter:(NSString *)stringFromByteCount {
     NSArray *componentsSeparatedByStringArray = [stringFromByteCount componentsSeparatedByString:@" "];
@@ -208,6 +230,10 @@
 }
 
 #pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    cell.backgroundColor = [UIColor mnz_settingsDetailsBackgroundForTraitCollection:self.traitCollection];
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     switch (indexPath.section) {

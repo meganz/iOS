@@ -71,6 +71,8 @@ static const NSInteger MaxAutoawayTimeout = 1457; // 87420 seconds
     [showLastSeenAttributedString appendAttributedString:lastSeenString];
     
     self.lastActiveLabel.attributedText = showLastSeenAttributedString;
+    
+    [self updateUI];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -94,7 +96,27 @@ static const NSInteger MaxAutoawayTimeout = 1457; // 87420 seconds
     [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateUI];
+        }
+    }
+}
+
 #pragma mark - Private
+
+- (void)updateUI {
+    self.tableView.separatorColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
+    self.tableView.backgroundColor = [UIColor mnz_settingsBackgroundForTraitCollection:self.traitCollection];
+    
+    self.autoAwayTimeTextField.textColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
+    [self.autoAwayTimeSaveButton setTitleColor:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection] forState:UIControlStateNormal];
+    
+    [self.tableView reloadData];
+}
 
 - (void)internetConnectionChanged {
     [self.tableView reloadData];
@@ -268,6 +290,10 @@ static const NSInteger MaxAutoawayTimeout = 1457; // 87420 seconds
 }
 
 #pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    cell.backgroundColor = [UIColor mnz_settingsDetailsBackgroundForTraitCollection:self.traitCollection];
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];

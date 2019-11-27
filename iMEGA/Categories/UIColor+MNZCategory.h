@@ -22,6 +22,9 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus);
 
 + (UIColor *)mnz_separatorColorForTraitCollection:(UITraitCollection *)traitCollection;
 
++ (UIColor *)mnz_settingsBackgroundForTraitCollection:(UITraitCollection *)traitCollection;
++ (UIColor *)mnz_settingsDetailsBackgroundForTraitCollection:(UITraitCollection *)traitCollection;
+
 #pragma mark - Black
 
 + (UIColor *)mnz_black000000_01;

@@ -131,25 +131,8 @@
     
     self.infoButton.tintColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
     
-    if (@available(iOS 13.0, *)) {
-        switch (self.traitCollection.userInterfaceStyle) {
-            case UIUserInterfaceStyleUnspecified:
-            case UIUserInterfaceStyleLight: {
-                self.nodeView.backgroundColor = UIColor.mnz_background;
-                self.tableView.backgroundColor = (self.traitCollection.accessibilityContrast == UIAccessibilityContrastHigh) ? [UIColor colorFromHexString:@"E6E6E6"] : UIColor.mnz_grayF7F7F7;
-                break;
-            }
-                
-            case UIUserInterfaceStyleDark: {
-                self.nodeView.backgroundColor = [UIColor mnz_chatGrayForTraitCollection:self.traitCollection];
-                self.tableView.backgroundColor = [UIColor mnz_mainBarsColorForTraitCollection:self.traitCollection];
-                break;
-            }
-        }
-    } else {
-        self.nodeView.backgroundColor = UIColor.mnz_background;
-        self.tableView.backgroundColor = UIColor.mnz_grayF7F7F7;
-    }
+    self.tableView.backgroundColor = [UIColor mnz_settingsBackgroundForTraitCollection:self.traitCollection];
+    self.nodeView.backgroundColor = [UIColor mnz_settingsDetailsBackgroundForTraitCollection:self.traitCollection];
 }
 
 - (UIColor *)backgroundColorForCells {
