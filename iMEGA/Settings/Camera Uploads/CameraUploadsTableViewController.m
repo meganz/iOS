@@ -81,6 +81,8 @@
             [CameraUploadManager configDefaultSettingsForCameraUploadV2];
         }
     }
+    
+    [self updateUI];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -100,7 +102,17 @@
     return UIInterfaceOrientationMaskAll;
 }
 
-#pragma mark - Properties
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateUI];
+        }
+    }
+}
+
+#pragma mark - Private
 
 - (CLLocationManager *)locationManager {
     if (_locationManager == nil) {
@@ -110,8 +122,6 @@
     
     return _locationManager;
 }
-
-#pragma mark - UI configuration
 
 - (void)configImageFormatTexts {
     NSDictionary<NSAttributedStringKey, id> *formatAttributes = @{NSFontAttributeName : [UIFont systemFontOfSize:17.0], NSForegroundColorAttributeName : UIColor.mnz_label};
@@ -133,6 +143,15 @@
     [self configOptionsUI];
     
     [self configTableSections];
+    [self.tableView reloadData];
+}
+
+- (void)updateUI {
+    self.uploadVideosInfoRightDetailLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
+    
+    self.tableView.separatorColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
+    self.tableView.backgroundColor = [UIColor mnz_settingsBackgroundForTraitCollection:self.traitCollection];
+    
     [self.tableView reloadData];
 }
 
@@ -322,7 +341,7 @@
     [self presentViewController:customModalAlertVC animated:YES completion:nil];
 }
 
-#pragma mark - UITableview data source and delegate
+#pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return self.tableSections.count;
@@ -344,6 +363,12 @@
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
     NSString *title = self.sectionFooterTitles[section];
     return [title isEqualToString:@""] ? nil : title;
+}
+
+#pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    cell.backgroundColor = [UIColor mnz_settingsDetailsBackgroundForTraitCollection:self.traitCollection];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

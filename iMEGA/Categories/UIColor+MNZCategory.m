@@ -153,6 +153,44 @@
     }
 }
 
++ (UIColor *)mnz_settingsBackgroundForTraitCollection:(UITraitCollection *)traitCollection {
+    if (@available(iOS 13.0, *)) {
+        switch (traitCollection.userInterfaceStyle) {
+            case UIUserInterfaceStyleUnspecified:
+            case UIUserInterfaceStyleLight: {
+                if (traitCollection.accessibilityContrast == UIAccessibilityContrastHigh) {
+                    return [UIColor colorFromHexString:@"E6E6E6"];
+                } else {
+                    return UIColor.mnz_grayF7F7F7;
+                }
+            }
+                
+            case UIUserInterfaceStyleDark: {
+                return [UIColor mnz_mainBarsColorForTraitCollection:traitCollection];
+            }
+        }
+    } else {
+        return UIColor.mnz_grayF7F7F7;
+    }
+}
+
++ (UIColor *)mnz_settingsDetailsBackgroundForTraitCollection:(UITraitCollection *)traitCollection {
+    if (@available(iOS 13.0, *)) {
+        switch (traitCollection.userInterfaceStyle) {
+            case UIUserInterfaceStyleUnspecified:
+            case UIUserInterfaceStyleLight: {
+                return UIColor.mnz_background;
+            }
+                
+            case UIUserInterfaceStyleDark: {
+                return [UIColor mnz_chatGrayForTraitCollection:traitCollection];
+            }
+        }
+    } else {
+        return UIColor.mnz_background;
+    }
+}
+
 #pragma mark - Black
 
 + (UIColor *)mnz_black000000_01 {

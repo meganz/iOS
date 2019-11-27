@@ -30,8 +30,29 @@ class PasscodeTimeDurationTableViewController: UITableViewController {
         passcodeDurationInfoArray.append(PasscodeDurationInfo(duration: RequirePasscodeAfter.OneMinute, title: NSString.mnz_string(fromCallDuration: RequirePasscodeAfter.OneMinute.rawValue)))
         passcodeDurationInfoArray.append(PasscodeDurationInfo(duration: RequirePasscodeAfter.TwoMinutes, title: NSString.mnz_string(fromCallDuration: RequirePasscodeAfter.TwoMinutes.rawValue)))
         passcodeDurationInfoArray.append(PasscodeDurationInfo(duration: RequirePasscodeAfter.FiveMinutes, title: NSString.mnz_string(fromCallDuration: RequirePasscodeAfter.FiveMinutes.rawValue)))
+        
+        tableView.backgroundColor = UIColor.mnz_settingsBackground(for: traitCollection)
     }
-
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        if #available(iOS 13, *) {
+            if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+                self.updateUI()
+            }
+        }
+    }
+    
+    // MARK: - Private
+    
+    func updateUI() {
+        tableView.separatorColor = UIColor.mnz_separatorColor(for: traitCollection)
+        tableView.backgroundColor = UIColor.mnz_settingsBackground(for: traitCollection)
+        
+        tableView.reloadData()
+    }
+    
     // MARK: - UITableViewDataSource
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -47,7 +68,7 @@ class PasscodeTimeDurationTableViewController: UITableViewController {
         let timerDuration = LTHPasscodeViewController.timerDuration()
         
         if Int(timerDuration) == passcodeDurationInfoArray[indexPath.row].duration.rawValue {
-            cell.accessoryView = UIImageView.init(image: UIImage.init(named: "red_checkmark"))
+            cell.accessoryView = UIImageView.init(image: UIImage.init(named: "turquoise_checkmark"))
         } else {
             cell.accessoryView = nil
         }
@@ -57,6 +78,10 @@ class PasscodeTimeDurationTableViewController: UITableViewController {
     
     
     // MARK: - UITableViewDelegate
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.backgroundColor = UIColor.mnz_settingsDetailsBackground(for: traitCollection)
+    }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
