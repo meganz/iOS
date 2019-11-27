@@ -102,11 +102,14 @@ struct ContactOnMega: Codable {
     
     @objc func configureContactsOnMega(completion: (() -> Void)?) {
         if CNContactStore.authorizationStatus(for: .contacts) == .authorized {
+            completionWhenReady = completion
+
+            if state == .fetching { return }
+            state = .fetching
+
             contactsOnMega.removeAll()
             UserDefaults.standard.removeObject(forKey: "ContactsOnMega")
             
-            completionWhenReady = completion
-            state = .fetching
             getDeviceContacts()
         } else {
             MEGALogDebug("Device Contact Permission not granted")
