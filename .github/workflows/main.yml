@@ -14,7 +14,9 @@ jobs:
     - name: Download the third party directory
       run: curl https://mega.nz/#!kAsQia7A!6-E0wO2N8BwSGfucwQRQ0mEWU1Yz-s-OjbaG3Vixb0M --output 3rdparty.zip
     - name: List all files
-      run: ls   
+      run: ls
+    - name: Size of zip
+      run: du -h 3rdparty.zip   
     - name: Unzip the third party library
       run: unzip 3rdparty.zip
     - name: Move to karere directory
