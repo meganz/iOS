@@ -1,4 +1,4 @@
-name: CI
+name: Build
 
 on: [push]
 
@@ -22,13 +22,13 @@ jobs:
     - name: Move files from libraryFiles folder to its parent directory
       run: mv iMEGA/Vendor/sdk/bindings/ios/3rdparty/libraryFiles/* iMEGA/Vendor/sdk/bindings/ios/3rdparty/ 
     - name: Move to karere directory
-      run: cd ./.github/iMEGA/Vendor/Karere/src/
+      run: cd iMEGA/Vendor/Karere/src/
     - name: Run the cmake command on karere directory
       run: cmake -P genDbSchema.cmake
     - name: Return back to main directory
-      run: cd ./.github/
+      run: cd /
     - name: Build the project
-      run: xcodebuild clean build -workspace ./.github/iMEGA.xcworkspace -scheme "MEGA"
+      run: xcodebuild clean build -workspace "iMEGA.xcworkspace" -scheme "MEGA"
 
 
 
