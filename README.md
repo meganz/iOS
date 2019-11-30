@@ -1,5 +1,6 @@
-MEGA for iOS
+MEGA for iOS 
 ===============
+![](https://github.com/lancy98/iOS/workflows/Build/badge.svg)
 
 [![Download on the App Store](https://linkmaker.itunes.apple.com/en-us/badge-lrg.svg?releaseDate=2013-11-26&kind=iossoftware&bubble=ios_apps)](https://apps.apple.com/app/mega/id706857885?mt=8)
 
