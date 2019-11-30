@@ -12,13 +12,15 @@ jobs:
     - name: Update submodules
       run: git submodule update --init --recursive
     - name: Download the third party directory
-      run: curl https://mega.nz/#!kAsQia7A!6-E0wO2N8BwSGfucwQRQ0mEWU1Yz-s-OjbaG3Vixb0M --output 3rdparty.zip
+      run: curl -L 'https://www.dropbox.com/s/0al5rl9afi2al73/libraryFiles.zip?dl=0' --output libraryFiles.zip
     - name: List all files
       run: ls
     - name: Size of zip
-      run: du -h 3rdparty.zip   
+      run: du -h libraryFiles.zip   
     - name: Unzip the third party library
-      run: unzip 3rdparty.zip
+      run: unzip libraryFiles.zip -d iMEGA/Vendor/sdk/bindings/ios/3rdparty/
+    - name: Move files from libraryFiles folder to its parent directory
+      run: mv iMEGA/Vendor/sdk/bindings/ios/3rdparty/libraryFiles/* iMEGA/Vendor/sdk/bindings/ios/3rdparty/ 
     - name: Move to karere directory
       run: cd ./.github/iMEGA/Vendor/Karere/src/
     - name: Run the cmake command on karere directory
