@@ -23,6 +23,8 @@ jobs:
       run: mv iMEGA/Vendor/sdk/bindings/ios/3rdparty/libraryFiles/* iMEGA/Vendor/sdk/bindings/ios/3rdparty/ 
     - name: Move to karere directory
       run: cd iMEGA/Vendor/Karere/src/
+    - name: List all files
+      run: ls
     - name: Run the cmake command on karere directory
       run: cmake -P genDbSchema.cmake
     - name: Return back to main directory
