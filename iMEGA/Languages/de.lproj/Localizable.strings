@@ -906,7 +906,7 @@
 /* Title of My Account section. There you can see your account details */
 "myAccount"="Mein Account";
 /* Caption of a button to upgrade the account to Pro status */
-"upgrade"="Account erweitern";
+"upgrade"="PRO-Status";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
 "viewAndEditProfile"="Profil anzeigen/bearbeiten";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
@@ -1995,4 +1995,4 @@
 /* Subtitle of chat screen when the chat is inactive */
 "Inactive chat"="Inaktiver Chat";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
-"It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1.";
+"It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="Diese Datei ist weder UTF-8, noch ISO/IEC 8859-1-kodiert.";

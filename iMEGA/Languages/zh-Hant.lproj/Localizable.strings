@@ -43,7 +43,7 @@
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="請輸入解密金鑰";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertMessage"="要進入此資料夾/檔案，您需要它的解密密鑰。如果沒有密鑰，請聯絡此連結的創建者。";
+"decryptionKeyAlertMessage"="要存取此資料夾/檔案，您需要它的解密密鑰。如果您沒有密鑰，請聯絡此連結的建立者。";
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="解密密鑰";
 /* Button title to try to decrypt the link */

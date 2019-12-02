@@ -43,7 +43,7 @@
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="Wprowadź klucz deszyfrujący";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertMessage"="Aby uzyskać dostęp do tego katalogu/pliku, wymagany jest klucz deszyfrujący. Jeżeli go nie posiadasz, skontaktuj się z autorem linka.";
+"decryptionKeyAlertMessage"="Aby uzyskać dostęp do tego folderu / pliku, będziesz potrzebować jego klucza deszyfrowania. Jeśli nie masz klucza, skontaktuj się z twórcą linku.";
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="Klucz deszyfrowania";
 /* Button title to try to decrypt the link */

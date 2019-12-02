@@ -43,7 +43,7 @@
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="Vul decoderingssleutel in";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertMessage"="Om toegang te krijgen tot deze map / bestand heeft u de decoderingssleutel nodig. Als u de sleutel niet heeft, neem contact op met de maker van de koppeling.";
+"decryptionKeyAlertMessage"="Om toegang tot deze map/bestand te krijgen, heeft u zijn decryptie code nodig. Als u de sleutel niet heeft, neem contact op met de maker van de link.";
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="Decoderingssleutel";
 /* Button title to try to decrypt the link */
@@ -1649,7 +1649,7 @@
 /* Title of the option to enable or disable file versioning on Settings section */
 "File versioning"="Bestand Versies";
 /* Subtitle of the option to enable or disable file versioning on Settings section */
-"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="bestandsversies inschakelen of uitschakelen voor uw hele account. \nU kunt nog steeds bestandsversies ontvangen van gedeelde mappen als contacten dit hebben ingeschakeld.";
+"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="Versionering inschakelen of uitschakelen voor uw gehele account. \nVersionering uischakelen zorgt er niet voor dat uw contacten nieuwe versies kunnen creëren in gedeelde mappen.";
 /* A confirmation message when the user chooses to disable file versioning. */
 "When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="Wanneer bestandsversie is uitgeschakeld, worden de huidige versies vervangen door de nieuwe versie zodra een bestand is ge-update ( en uw wijzigingen van het bestand niet langer worden vastgelegd). Weet u zeker dat u de bestandsversie wilt uitschakelen?";
 /* Settings preference title to show file versions info of the account */

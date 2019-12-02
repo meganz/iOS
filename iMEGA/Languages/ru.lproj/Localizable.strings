@@ -43,7 +43,7 @@
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="Введите ключ дешифрирования";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertMessage"="Для доступа к этой папке/файлу нужен ключ дешифрования. Если у вас его нет, свяжитесь с создателем ссылки.";
+"decryptionKeyAlertMessage"="Для доступа к этой папке/файлу нужен ключ дешифрования. Если у вас его нет, пожалуйста, свяжитесь с создателем ссылки.";
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="Ключ дешифрования";
 /* Button title to try to decrypt the link */

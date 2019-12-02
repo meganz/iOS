@@ -735,7 +735,7 @@
 /* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
 "recoveryKeyCopiedToClipboard"="恢复秘钥已复制到剪贴板。请妥善保管。";
 /* Alert title shown when you have exported your MEGA Recovery Key */
-"masterKeyExported"="恢复金匙已导出";
+"masterKeyExported"="恢复秘钥已导出";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
 "masterKeyExported_alertMessage"="还原金钥已以RecoveryKey.txt(还原金钥文字档)汇出至离线模式中。注意：您登出后它将会被删除，请将其存放于安全之处。";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
@@ -964,7 +964,7 @@
 /* Label to show that an error related with expiration occurs during a SDK operation. */
 "expired"="已过期";
 /* Title of the button which logs out from your account. */
-"logoutLabel"="注销";
+"logoutLabel"="登出";
 /* String shown when you are logging out of your account. */
 "loggingOut"="正在登出";
 /* Button to remove avatar. Try to keep the text short (as in English) */
@@ -1489,7 +1489,7 @@
 /* Used as a message in the "Password reminder" dialog that is shown when the user enters his password, clicks confirm and his password is correct. */
 "passwordAccepted"="密码已确认";
 /* A dialog title to export the Recovery Key for the current user. */
-"exportRecoveryKey"="导出恢复金匙";
+"exportRecoveryKey"="导出恢复密钥";
 /* Title to confirm that you want to logout */
 "proceedToLogout"="继续登出";
 /* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.  */
