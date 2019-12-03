@@ -1006,9 +1006,9 @@
 /*  */
 "chooseYourAccountType"="اختر نوع حسابك";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]مساحة السحابة على وشك الامتلاء[/S] [A]قم بترقية حسابك الآن[/A] الى حساب PRO واحصل [S]حتى 8 تيرابايت (8096 جيجابايت)[/S] كمساحة تخزين.";
+"cloudDriveIsAlmostFull"="[S]مساحة السحابة على وشك الامتلاء[/S] [A]قم بترقية حسابك الآن[/A] الى حساب PRO واحصل [S]حتى @% تيرابايت (@% جيجابايت)[/S] كمساحة تخزين.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]سحابة التخزين ممتلئة بالكامل[/S] [A] قك بترقية حسابك الآن[/A] الى PRO واحصل على [S]8 تيرابايت (8096 جيجابايت)[/S] كمساحة تخزين.";
+"cloudDriveIsFull"="[S]سحابة التخزين ممتلئة بالكامل[/S] [A] قك بترقية حسابك الآن[/A] الى PRO واحصل على [S]%@ تيرابايت (@% جيجابايت)[/S] كمساحة تخزين.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="التخزين";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */

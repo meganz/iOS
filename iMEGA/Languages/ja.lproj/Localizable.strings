@@ -1006,9 +1006,9 @@
 /*  */
 "chooseYourAccountType"="アカウントのタイプを選択して下さい。";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]クラウドドライブはほぼいっぱいです。[/S]PROアカウントに[A]今すぐアップグレード[/A]し、[S]最大8TB（8192GB）[/S]のクラウドストレージスペースを取得してください。";
+"cloudDriveIsAlmostFull"="[S]クラウドドライブはほぼいっぱいです。[/S]PROアカウントに[A]今すぐアップグレード[/A]し、[S]最大%@TB（%@GB）[/S]のクラウドストレージスペースを取得してください。";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]あなたのアカウントはいっぱいです。[/S]PROアカウントに[A]今すぐアップグレード[/A]し、[S]最大8TB（8192GB）[/S]のクラウドストレージスペースを取得してください。";
+"cloudDriveIsFull"="[S]あなたのアカウントはいっぱいです。[/S]PROアカウントに[A]今すぐアップグレード[/A]し、[S]最大%@TB（%@GB）[/S]のクラウドストレージスペースを取得してください。";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="ストレージ";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */

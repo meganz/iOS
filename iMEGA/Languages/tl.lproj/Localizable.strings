@@ -1006,9 +1006,9 @@
 /*  */
 "chooseYourAccountType"="Pumili ng account type";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]Mapupuno na ang iyong Cloud Drive.[/S] [A]Mag-upgrade na[/A] sa PRO account at makakuha ng [S]hanggang 8 na TB (8192 GB)[/S] ng cloud storage space.";
+"cloudDriveIsAlmostFull"="[S]Mapupuno na ang iyong Cloud Drive.[/S] [A]Mag-upgrade na[/A] sa PRO account at makakuha ng [S]hanggang %@ na TB (%@ GB)[/S] ng cloud storage space.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]Ang iyong account ay puno na.[/S] [A]Mag-upgrade na[/A] sa PRO account at makakuha [S]ng hanggang 8 TB (8192 GB)[/S] ng cloud storage space.";
+"cloudDriveIsFull"="[S]Ang iyong account ay puno na.[/S] [A]Mag-upgrade na[/A] sa PRO account at makakuha [S]ng hanggang %@ TB (%@ GB)[/S] ng cloud storage space.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Lagayan";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
