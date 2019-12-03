@@ -5,6 +5,10 @@
 #import "SVProgressHUD.h"
 #import "UIApplication+MNZCategory.h"
 
+@interface MEGAPurchase ()
+@property (nonatomic, strong) NSArray *iOSProductIdentifiers;
+@end
+
 @implementation MEGAPurchase
 
 + (MEGAPurchase *)sharedInstance {
@@ -28,13 +32,14 @@
 - (void)requestProducts {
     MEGALogDebug(@"[StoreKit] Request %ld products:", (long)self.pricing.products);
     if ([SKPaymentQueue canMakePayments]) {
-        NSMutableSet *productIdentifieres = [[NSMutableSet alloc] initWithCapacity:self.pricing.products];
+        NSMutableArray *productIdentifieres = [NSMutableArray.alloc initWithCapacity:self.pricing.products];
         for (NSInteger i = 0; i < self.pricing.products; i++) {
             MEGALogDebug(@"[StoreKit] Product \"%@\"", [self.pricing iOSIDAtProductIndex:i]);
             [productIdentifieres addObject:[self.pricing iOSIDAtProductIndex:i]];
         }
         _products = [[NSMutableArray alloc] initWithCapacity:productIdentifieres.count];
-        SKProductsRequest *prodRequest = [[SKProductsRequest alloc] initWithProductIdentifiers:productIdentifieres];
+        self.iOSProductIdentifiers = [productIdentifieres copy];
+        SKProductsRequest *prodRequest = [[SKProductsRequest alloc] initWithProductIdentifiers:[NSSet setWithArray:self.iOSProductIdentifiers]];
         prodRequest.delegate = self;
         [prodRequest start];
         
@@ -77,6 +82,10 @@
         [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
         [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
     }
+}
+
+- (NSUInteger)pricingProductIndexForProduct:(SKProduct *)product {
+    return [self.iOSProductIdentifiers indexOfObject:product.productIdentifier];
 }
 
 #pragma mark - SKProductsRequestDelegate Methods

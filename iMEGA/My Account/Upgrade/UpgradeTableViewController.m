@@ -359,15 +359,22 @@
 }
 
 - (NSString *)storageAndUnitsByProduct:(SKProduct *)product {
-    NSArray *storageTransferArray = [product.localizedDescription componentsSeparatedByString:@";"];
-    NSArray *storageArray = [storageTransferArray.firstObject componentsSeparatedByString:@" "];
-    return [NSString stringWithFormat:@"%@ %@", storageArray.firstObject, [storageArray objectAtIndex:1]];
+    NSUInteger index = [MEGAPurchase.sharedInstance pricingProductIndexForProduct:product];
+    NSInteger storageValue = [MEGAPurchase.sharedInstance.pricing storageGBAtProductIndex:index];
+    return [self displayStringForGBValue:storageValue];
 }
 
 - (NSString *)transferAndUnitsByProduct:(SKProduct *)product {
-    NSArray *storageTransferArray = [product.localizedDescription componentsSeparatedByString:@";"];
-    NSArray *transferArray = [[storageTransferArray objectAtIndex:1] componentsSeparatedByString:@" "];
-    return [NSString stringWithFormat:@"%@ %@", transferArray.firstObject, [transferArray objectAtIndex:1]];
+    NSUInteger index = [MEGAPurchase.sharedInstance pricingProductIndexForProduct:product];
+    NSInteger transferValue = [MEGAPurchase.sharedInstance.pricing transferGBAtProductIndex:index];
+    return [self displayStringForGBValue:transferValue];
+}
+
+- (NSString *)displayStringForGBValue:(NSInteger)gbValue {
+    // 1 GB = 1024 * 1024 * 1024 Bytes
+    long long valueInBytes = (gbValue * 1024 * 1024 * 1024);
+    return [NSByteCountFormatter stringFromByteCount:valueInBytes
+                                          countStyle:NSByteCountFormatterCountStyleBinary];
 }
 
 #pragma mark - IBActions
