@@ -115,8 +115,7 @@
         NSString *initialForAvatar = nil;
         if (user.nickname.length > 0) {
             initialForAvatar = user.nickname.mnz_initialForAvatar;
-        } else
-            if (user) {
+        } else if (user) {
             if (user.fullName.length) {
                 initialForAvatar = user.fullName.mnz_initialForAvatar;
             } else {

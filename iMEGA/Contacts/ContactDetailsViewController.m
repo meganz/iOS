@@ -105,9 +105,8 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
     
     //TODO: Show the blue check if the Contact is verified
     
-    if (self.userNickname == nil) {
-        self.userNickname = self.user.mnz_nickname;
-    }
+    self.userNickname = self.user.mnz_nickname;
+
     
     if (self.userName == nil) {
         self.userName = self.user.mnz_fullName;
@@ -210,7 +209,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
     cell.avatarImageView.image = [UIImage imageNamed:@"setNickname"];
     cell.nameLabel.text = AMLocalizedString(@"Set Nickname", nil);
     cell.nameLabel.font = [UIFont mnz_SFUIRegularWithSize:15.0f];
-    cell.nameLabel.textColor = UIColor.mnz_gray666666;
+    cell.nameLabel.textColor = UIColor.mnz_black333333;
     return cell;
 }
 
