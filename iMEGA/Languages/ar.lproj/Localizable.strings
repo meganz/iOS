@@ -43,7 +43,7 @@
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="أدخل مفتاح فك التشفير";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertMessage"="للولوج في هذا المجلد/الملف. ستحتاج لمفتاح فك التشفير. إذا كنت لاتمتلك المفتاح فتواصل مع منشئ الرابط.";
+"decryptionKeyAlertMessage"="للدخول إلى هذا المجلد/الملف، أنت بحاجة لمفتاح فك التشفير الخاص به. إذا كنت لا تملك هذا المفتاح، يرجى التواصل مع منشئ الرابط.";
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="مفتاح التشفير";
 /* Button title to try to decrypt the link */
@@ -61,7 +61,7 @@
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="لقد تم تسجيل خروجك من هذا الجهاز من موقع آخر";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="MEGA is unable to connect securely through SSL. You might be on public Wi-Fi with additional requirements.";
+"sslUnverified_alertTitle"="ميغا Mega غير قابل على الإتصال بشكل آمن عبر التراسل المشفر SSL. ربما تقوم باستخدام شبكة إتصال بالانترنت Wi-Fi عامة مع متطلبات إضافية.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="المحتوى الذي تحاول الدخول إليه غير متاح لهذا الحساب. حاول تسجيل الدخول بنفس الحساب الذي كنت فيه في موقع الويب للجوال.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
@@ -121,7 +121,7 @@
 /*  */
 "agreeWithTheMEGATermsOfService"="أنا أتفق مع MEGA <a href=\"terms\">شروط الخدمة</a>";
 /* This text is displayed in the account creation screen with a checkbox. User will have to tick the checkbox before proceeding on to create an account */
-"agreeWithLosingPasswordYouLoseData"="I understand that [S]if I lose my password, I may lose my data.[/S] Read more about <a href=\"terms\">MEGA’s end-to-end encryption</a>";
+"agreeWithLosingPasswordYouLoseData"="I understand that [S]if I lose my password, I may lose my data.[/S] Read more about <a href=\"terms\">MEGA’s end-to-end encryption</a>.";
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="ادخل اسم صالح";
 /* Error text shown when you have not written the same password */
@@ -519,7 +519,7 @@
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
 "foldersShared"="%d مجلدات";
 /* Item menu option to add a contact writting his/her email */
-"addFromEmail"="ادخل بريدك الإلكتروني";
+"addFromEmail"="ادخل بريداً الكترونياً";
 /* Title of Shared Items section */
 "sharedItems"="العناصر المشاركة";
 /* Title of the tab bar item for the Shared Items section */
@@ -1523,7 +1523,7 @@
 /* When an active call of user A with user B had failed */
 "callFailed"="فشل الاتصال";
 /* When an active call of user A with user B had ended */
-"callEnded"="انتهاء الاتصال";
+"callEnded"="انتهاء المكالمة.";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="مدة الاتصال: %@";
 /* */
@@ -1995,4 +1995,4 @@
 /* Subtitle of chat screen when the chat is inactive */
 "Inactive chat"="المحادثات الغير نشطة";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
-"It was not possible to obtain the content of this file, that is not encoded in either UTF-8 or ISO/IEC 8859-1."="It was not possible to obtain the content of this file, that is not encoded in either UTF-8 or ISO/IEC 8859-1.";
+"It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1.";

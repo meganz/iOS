@@ -519,7 +519,7 @@
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
 "foldersShared"="%d 个文件夹";
 /* Item menu option to add a contact writting his/her email */
-"addFromEmail"="输入邮箱地址";
+"addFromEmail"="输入电子邮箱地址";
 /* Title of Shared Items section */
 "sharedItems"="共享文件";
 /* Title of the tab bar item for the Shared Items section */
@@ -735,7 +735,7 @@
 /* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
 "recoveryKeyCopiedToClipboard"="恢复秘钥已复制到剪贴板。请妥善保管。";
 /* Alert title shown when you have exported your MEGA Recovery Key */
-"masterKeyExported"="恢复金匙已导出";
+"masterKeyExported"="恢复秘钥已导出";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
 "masterKeyExported_alertMessage"="还原金钥已以RecoveryKey.txt(还原金钥文字档)汇出至离线模式中。注意：您登出后它将会被删除，请将其存放于安全之处。";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
@@ -964,7 +964,7 @@
 /* Label to show that an error related with expiration occurs during a SDK operation. */
 "expired"="已过期";
 /* Title of the button which logs out from your account. */
-"logoutLabel"="注销";
+"logoutLabel"="登出";
 /* String shown when you are logging out of your account. */
 "loggingOut"="正在登出";
 /* Button to remove avatar. Try to keep the text short (as in English) */
@@ -1489,7 +1489,7 @@
 /* Used as a message in the "Password reminder" dialog that is shown when the user enters his password, clicks confirm and his password is correct. */
 "passwordAccepted"="密码已确认";
 /* A dialog title to export the Recovery Key for the current user. */
-"exportRecoveryKey"="导出恢复金匙";
+"exportRecoveryKey"="导出恢复密钥";
 /* Title to confirm that you want to logout */
 "proceedToLogout"="继续登出";
 /* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.  */
@@ -1523,7 +1523,7 @@
 /* When an active call of user A with user B had failed */
 "callFailed"="通话失败";
 /* When an active call of user A with user B had ended */
-"callEnded"="通话结束";
+"callEnded"="呼叫结束。";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="时长：%@";
 /* */
@@ -1649,7 +1649,7 @@
 /* Title of the option to enable or disable file versioning on Settings section */
 "File versioning"="文件版本";
 /* Subtitle of the option to enable or disable file versioning on Settings section */
-"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="启用或禁用整个帐户的文件版本控制。如果您的联系人已启用此功能，\n您仍可以从共享文件夹接收文件版本。";
+"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="为整个帐户启用或禁用文件版本功能。\n禁用文件版本功能不会阻止您的联系人在共享文件夹中创建新版本。";
 /* A confirmation message when the user chooses to disable file versioning. */
 "When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="当文件版本控制被禁用时，一旦文件被更新，当前版本将被替换为新版本（并且不再记录对文件的更改）。您确定要禁用文件版本控制吗？";
 /* Settings preference title to show file versions info of the account */
@@ -1991,8 +1991,8 @@
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
 "Reconnecting..."="正在重连中……";
 /* Title shown when the user reconnect in a call. */
-"You are back!"="已重连！";
+"You are back!"="已重连。";
 /* Subtitle of chat screen when the chat is inactive */
 "Inactive chat"="非活跃聊天";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
-"It was not possible to obtain the content of this file, that is not encoded in either UTF-8 or ISO/IEC 8859-1."="It was not possible to obtain the content of this file, that is not encoded in either UTF-8 or ISO/IEC 8859-1.";
+"It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="该文件未使用UTF-8或ISO/IEC 8859-1进行编码，无法读取文件内容。";

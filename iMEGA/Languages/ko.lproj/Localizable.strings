@@ -225,7 +225,7 @@
 /* Success message shown when you remove a contact request */
 "requestDeleted"="요청 삭제됨";
 /* Title shown when there's no pending contact requests */
-"noRequestPending"="보류중인 요청 없음";
+"noRequestPending"="대기중인 요청 없음";
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="일시정지된 전송";
 /* Title shown when the there is not any transfer and they are not paused */
@@ -519,7 +519,7 @@
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
 "foldersShared"="%d개의 폴더";
 /* Item menu option to add a contact writting his/her email */
-"addFromEmail"="이메일을 입력하세요";
+"addFromEmail"="이메일 주소를 입력하세요";
 /* Title of Shared Items section */
 "sharedItems"="공유된 항목";
 /* Title of the tab bar item for the Shared Items section */
@@ -1523,7 +1523,7 @@
 /* When an active call of user A with user B had failed */
 "callFailed"="통화 실패";
 /* When an active call of user A with user B had ended */
-"callEnded"="통화 종료.";
+"callEnded"="통화 종료됨.";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="시간: %@";
 /* */
@@ -1649,7 +1649,7 @@
 /* Title of the option to enable or disable file versioning on Settings section */
 "File versioning"="파일 버전 기록";
 /* Subtitle of the option to enable or disable file versioning on Settings section */
-"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="당신의 계정 전체에 대해 파일 버전 기록을 활성화하거나 비활성화합니다.\n연락처가 이것을 활성화했다면 공유된 폴더에서 계속해서 파일 버전을 받게 됩니다.";
+"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="계정 전체에 대한 파일 버전 기록을 활성화하거나 비활성화합니다.\n파일 버전 기록을 해제하면 지인이 공유된 폴더에 새로운 버전을 만드는 것을 막을 수 없습니다.";
 /* A confirmation message when the user chooses to disable file versioning. */
 "When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="파일 버전 기록이 해제되면, 파일이 업데이트되면 현재 버전이 새 버전 으로 교체됩니다 (그리고 파일의 변경점의 기록되지 않습니다).파일 버전 기록을 해제하시겠습니까?";
 /* Settings preference title to show file versions info of the account */
@@ -1991,8 +1991,8 @@
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
 "Reconnecting..."="재접속중...";
 /* Title shown when the user reconnect in a call. */
-"You are back!"="돌아왔습니다!";
+"You are back!"="돌아왔습니다.";
 /* Subtitle of chat screen when the chat is inactive */
 "Inactive chat"="활성화되지 않은 대화";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
-"It was not possible to obtain the content of this file, that is not encoded in either UTF-8 or ISO/IEC 8859-1."="It was not possible to obtain the content of this file, that is not encoded in either UTF-8 or ISO/IEC 8859-1.";
+"It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="이 파일이 UTF-8 또는 ISO/IEC 8859-1로 기록되지 않아서, 내용을 가져올 수 없었습니다.";
