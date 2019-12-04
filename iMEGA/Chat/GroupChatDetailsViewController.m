@@ -485,7 +485,7 @@
                 privilege = self.chatRoom.ownPrivilege;
             } else {
                 MOUser *user = [MEGAStore.shareInstance fetchUserWithUserHandle:handle];
-                peerFullname = user.nickname ? user.nickname : [self.chatRoom peerFullnameByHandle:handle];
+                peerFullname = user.nickname ?: [self.chatRoom peerFullnameByHandle:handle];
                 peerEmail = [self.chatRoom peerEmailByHandle:handle];
                 privilege = [self.chatRoom peerPrivilegeAtIndex:index];
             }
