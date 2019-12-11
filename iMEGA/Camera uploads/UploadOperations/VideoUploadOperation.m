@@ -201,7 +201,7 @@
                             [weakSelf finishUploadWithNoEnoughDiskSpace];
                         } else if (exportOptionsEnabled) {
                             MEGALogDebug(@"[Camera Upload] %@ export options enabled, Now try disabling export options and try exporting", weakSelf);
-                            [self exportAsset:asset withPreset:preset outputFileType:outputFileType outputFileExtension:extension enableExportOptions:NO];
+                            [weakSelf exportAsset:asset withPreset:preset outputFileType:outputFileType outputFileExtension:extension enableExportOptions:NO];
                         } else {
                             [weakSelf finishOperationWithStatus:CameraAssetUploadStatusFailed];
                         }
