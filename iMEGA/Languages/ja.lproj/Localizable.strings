@@ -562,6 +562,8 @@
 "noNeedToAddYourOwnEmailAddress"="あなたのメールアドレスを加える必要はありません。";
 /* Add contacts and share dialog error message when user try to add already existing email address. */
 "alreadyHaveAContactWithThatEmailAddress"="そのアドレスを持つ知り合いは既に存在します。";
+/* Add contacts and share dialog error message when user try to add already existing email address. */
+"invitationAlreadySentToContactBefore"="The invitation to contact %@ has been sent before and can be consulted in the Sent Requests tab.";
 /* Success message shown when a contact has been invited */
 "theUserHasBeenInvited"="[X] が招待されています。あなたが認めれば、知り合いのリストに載ります。";
 /* Success message shown when some contacts have been invited */
@@ -1006,9 +1008,9 @@
 /*  */
 "chooseYourAccountType"="アカウントのタイプを選択して下さい。";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]クラウドドライブはほぼいっぱいです。[/S]PROアカウントに[A]今すぐアップグレード[/A]し、[S]最大%@TB（%@GB）[/S]のクラウドストレージスペースを取得してください。";
+"cloudDriveIsAlmostFull"="[S]クラウドドライブはほぼいっぱいです。[/S]PROアカウントに[A]今すぐアップグレード[/A]し、[S]最大%@ TB（%@ GB）[/S]のクラウドストレージスペースを取得してください。";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]あなたのアカウントはいっぱいです。[/S]PROアカウントに[A]今すぐアップグレード[/A]し、[S]最大%@TB（%@GB）[/S]のクラウドストレージスペースを取得してください。";
+"cloudDriveIsFull"="[S]あなたのクラウドドライブはいっぱいです。[/S]PROアカウントに[A]今すぐアップグレード[/A]し、[S]最大%@ TB（%@ GB）[/S]のクラウドストレージスペースを取得してください。";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="ストレージ";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */

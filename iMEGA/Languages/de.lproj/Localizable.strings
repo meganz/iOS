@@ -562,6 +562,8 @@
 "noNeedToAddYourOwnEmailAddress"="Ihre eigene E-Mail-Adresse muss nicht hinzugefügt werden";
 /* Add contacts and share dialog error message when user try to add already existing email address. */
 "alreadyHaveAContactWithThatEmailAddress"="Sie stehen bereits mit dieser E-Mail-Adresse in Kontakt";
+/* Add contacts and share dialog error message when user try to add already existing email address. */
+"invitationAlreadySentToContactBefore"="The invitation to contact %@ has been sent before and can be consulted in the Sent Requests tab.";
 /* Success message shown when a contact has been invited */
 "theUserHasBeenInvited"="Der Benutzer [X] wurden eingeladen und wird in Ihrer Kontaktliste erscheinen, sobald er die Einladung annimmt.";
 /* Success message shown when some contacts have been invited */
@@ -1006,9 +1008,9 @@
 /*  */
 "chooseYourAccountType"="Wählen Sie Ihre Pro-Stufe";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]Ihr Cloud Drive ist fast voll.[/S] [A]Wechseln Sie jetzt[/A] auf einen PRO-Plan und erhalten Sie [S]bis zu %@ TB (%@ GB)[/S] Speicherplatz in der Cloud.";
+"cloudDriveIsAlmostFull"="[S]Your Cloud Drive is almost full.[/S] [A]Upgrade now[/A] to a PRO account and get [S]up to %@ TB (%@ GB)[/S] of cloud storage space.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]Ihr Account hat sein Speicherlimit erreicht.[/S] Mit [A]MEGA PRO[/A] erhalten Sie [S]bis zu %@ TB (%@ GB)[/S] Speicherplatz in der Cloud.";
+"cloudDriveIsFull"="[S]Your Cloud Drive is full.[/S] [A]Upgrade now[/A] to a PRO account and get [S]up to %@ TB (%@ GB)[/S] of cloud storage space.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Speicher";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */

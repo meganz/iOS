@@ -562,6 +562,8 @@
 "noNeedToAddYourOwnEmailAddress"="لاحاجة لإضافة بريدك الإلكتروني";
 /* Add contacts and share dialog error message when user try to add already existing email address. */
 "alreadyHaveAContactWithThatEmailAddress"="لديك بالفعل جهة اتصال مرتبطة بهذا البريد الإلكتروني";
+/* Add contacts and share dialog error message when user try to add already existing email address. */
+"invitationAlreadySentToContactBefore"="The invitation to contact %@ has been sent before and can be consulted in the Sent Requests tab.";
 /* Success message shown when a contact has been invited */
 "theUserHasBeenInvited"="المستخدم [X] الذي قمت بدعوته سوف يظهر في قائمة الاتصال الخاصة بك فور موافقته على طلب الإضافة.";
 /* Success message shown when some contacts have been invited */
@@ -1006,9 +1008,9 @@
 /*  */
 "chooseYourAccountType"="اختر نوع حسابك";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]مساحة السحابة على وشك الامتلاء[/S] [A]قم بترقية حسابك الآن[/A] الى حساب PRO واحصل [S]حتى %@ تيرابايت (%@ جيجابايت)[/S] كمساحة تخزين.";
+"cloudDriveIsAlmostFull"="[S]السواقة السحابية ممتلئة تقريباً.[/S] [A]قم بترقية حسابك الآن[/A] الى حساب برو PRO و احصل [S]تصل حتى %@ تيرابايت (%@ غيغابايت)[/S] من مساحة تخزين سحابية.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]سحابة التخزين ممتلئة بالكامل[/S] [A] قك بترقية حسابك الآن[/A] الى PRO واحصل على [S]%@ تيرابايت (%@ جيجابايت)[/S] كمساحة تخزين.";
+"cloudDriveIsFull"="[S]سواقتك السحابية ممتلئة.[/S] [A]قم بترقية حسابك الآن[/A] إلى حساب برو PRO و احصل على [S]يصل إلى %@ تيرابايت (%@ غيغابايت)[/S] من مساحة تخزين سحابية.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="التخزين";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
