@@ -1006,9 +1006,9 @@
 /*  */
 "chooseYourAccountType"="Kies uw type account";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]Cloud Schijf is bijna vol.[/S] [A]Upgrade nu[/A] naar een PRO account en krijg [S]tot 8 TB (8192 GB)[/S] aan cloud opslag ruimte.";
+"cloudDriveIsAlmostFull"="[S]Cloud Schijf is bijna vol.[/S] [A]Upgrade nu[/A] naar een PRO account en krijg [S]tot %@ TB (%@ GB)[/S] aan cloud opslag ruimte.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]Uw account is vol.[/S] [A] Upgrade nu[/A] naar een PRO account en krijg [S]tot 8 TB (8192 GB) [/S] aan cloud opslag ruimte.";
+"cloudDriveIsFull"="[S]Uw account is vol.[/S] [A] Upgrade nu[/A] naar een PRO account en krijg [S]tot %@ TB (%@ GB) [/S] aan cloud opslag ruimte.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Opslag";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */

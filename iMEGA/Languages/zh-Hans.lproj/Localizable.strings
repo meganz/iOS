@@ -1006,9 +1006,9 @@
 /*  */
 "chooseYourAccountType"="选择您的账号类型";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]您的云盘几乎已满。[/S] [A]立即升级[/A]至PRO帐户，可获得[S]最高8TB (8192GB)[/S]的云储存空间。";
+"cloudDriveIsAlmostFull"="[S]您的云盘几乎已满。[/S] [A]立即升级[/A]至PRO帐户，可获得[S]最高%@TB (%@GB)[/S]的云储存空间。";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]您的帐户空间已满。[/S] [A]立即升级[/A]至PRO帐户，可获得[S]最高8TB (8192GB)[/S]的云储存空间。";
+"cloudDriveIsFull"="[S]您的帐户空间已满。[/S] [A]立即升级[/A]至PRO帐户，可获得[S]最高%@TB (%@GB)[/S]的云储存空间。";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="储存空间";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */

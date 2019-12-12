@@ -1006,9 +1006,9 @@
 /*  */
 "chooseYourAccountType"="계정 유형을 선택하세요";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]클라우드 드라이브가 거의 찼습니다.[/S] PRO 계정으로 [A]지금 업그레이드[/A]하고 [S]최대 8 TB (8192 GB)[/S]의 클라우드 저장 공간을 받으세요.";
+"cloudDriveIsAlmostFull"="[S]클라우드 드라이브가 거의 찼습니다.[/S] PRO 계정으로 [A]지금 업그레이드[/A]하고 [S]최대 %@ TB (%@ GB)[/S]의 클라우드 저장 공간을 받으세요.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]계정이 가득 찼습니다.[/S] PRO 계정으로 [A]지금 업그레이드[/A]하고 [S]최대 8 TB (8192 GB)[/S]의 클라우드 저장 공간을 얻으세요.";
+"cloudDriveIsFull"="[S]계정이 가득 찼습니다.[/S] PRO 계정으로 [A]지금 업그레이드[/A]하고 [S]최대 %@ TB (%@ GB)[/S]의 클라우드 저장 공간을 얻으세요.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="저장소";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */

@@ -1455,8 +1455,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                     detail = [detail mnz_removeWebclientFormatters];
                     NSString *maxStorage = [NSString stringWithFormat:@"%ld", (long)[[MEGAPurchase sharedInstance].pricing storageGBAtProductIndex:7]];
                     NSString *maxStorageTB = [NSString stringWithFormat:@"%ld", (long)[[MEGAPurchase sharedInstance].pricing storageGBAtProductIndex:7] / 1024];
-                    detail = [detail stringByReplacingOccurrencesOfString:@"4096" withString:maxStorage];
-                    detail = [detail stringByReplacingOccurrencesOfString:@"4" withString:maxStorageTB];
+                    detail = [NSString stringWithFormat:detail, maxStorageTB, maxStorage];
                     alreadyPresented = YES;
                     NSString *title = AMLocalizedString(@"upgradeAccount", @"Button title which triggers the action to upgrade your MEGA account level");
                     UIImage *image = event.number == StorageStateOrange ? [UIImage imageNamed:@"storage_almost_full"] : [UIImage imageNamed:@"storage_full"];
