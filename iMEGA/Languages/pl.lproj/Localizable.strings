@@ -562,6 +562,8 @@
 "noNeedToAddYourOwnEmailAddress"="Nie ma potrzeby podawania własnego adresu email";
 /* Add contacts and share dialog error message when user try to add already existing email address. */
 "alreadyHaveAContactWithThatEmailAddress"="Już posiadasz kontakt z tym adresem email";
+/* Add contacts and share dialog error message when user try to add already existing email address. */
+"invitationAlreadySentToContactBefore"="Zaproszenie do kontaktu z %@ zostało wysłane wcześniej i można je sprawdzić w zakładce Wysłane żądania.";
 /* Success message shown when a contact has been invited */
 "theUserHasBeenInvited"="Użytkownik [X] został zaproszony i pojawi się na liście Twoich kontaktów po akceptacji zaproszenia.";
 /* Success message shown when some contacts have been invited */
@@ -1006,9 +1008,9 @@
 /*  */
 "chooseYourAccountType"="Wybierz rodzaj konta";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]Cloud Drive jest prawie pełny.[/S] [A]Zaktualizuj teraz [/A] do konta PRO i uzyskaj [S]do %@ TB (%@ GB)[/S] przestrzeni dyskowej w chmurze.";
+"cloudDriveIsAlmostFull"="[S]Twój dysk w chmurze jest prawie pełny.[/S] [A] Uaktualnij teraz[/A] do konta PRO i uzyskaj [S]do %@ TB (%@ GB)[/S] miejsca w chmurze.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]Twoje konto jest pełne.[/S] [A]Zaktualizuj teraz[/A] do konta PRO i uzyskaj[S] do %@ TB (%@ GB)[/S] miejsca w chmurze.";
+"cloudDriveIsFull"="[S]Twój dysk w chmurze jest pełny.[/S] [A] Uaktualnij teraz[/A] do konta PRO i uzyskaj [S]do %@ TB (%@ GB)[/S] miejsca w chmurze.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Pojemności";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
