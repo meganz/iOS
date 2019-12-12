@@ -1006,9 +1006,9 @@
 /*  */
 "chooseYourAccountType"="Scegli il tuo tipo di account";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]Il tuo Cloud è quasi pieno.[/S] [A]Fai l'upgrade a PRO ora[/A] e ottieni [S]fino a 8TB (8192GB)[/S] di spazio cloud.";
+"cloudDriveIsAlmostFull"="[S]Il tuo Cloud è quasi pieno.[/S] [A]Fai l'upgrade a PRO ora[/A] e ottieni [S]fino a %@TB (%@GB)[/S] di spazio cloud.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]Il tuo account è pieno.[/S] [A]Fai l'upgrade a PRO ora[/A] e ottieni [S]fino a 8TB (8192 GB)[/S] di spazio cloud.";
+"cloudDriveIsFull"="[S]Il tuo account è pieno.[/S] [A]Fai l'upgrade a PRO ora[/A] e ottieni [S]fino a %@TB (%@ GB)[/S] di spazio cloud.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Archivio";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
