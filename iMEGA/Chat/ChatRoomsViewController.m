@@ -163,7 +163,9 @@
         if (![ContactsOnMegaManager.shared areContactsOnMegaRequestedWithinDays:1]) {
             [ContactsOnMegaManager.shared configureContactsOnMegaWithCompletion:^{
                 self.contactsOnMegaCount = ContactsOnMegaManager.shared.contactsOnMegaCount;
-                [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
+                if (self.contactsOnMegaCount > 0) {
+                    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
+                }
             }];
         } else {
             [ContactsOnMegaManager.shared loadContactsOnMegaFromLocal];

@@ -72,7 +72,7 @@
             navigationTitle = AMLocalizedString(@"Add Phone Number", nil);
             achievementImage = [UIImage imageNamed:@"addPhoneNumberSmall"];
             
-            howItWorksExplanationLabel = [NSString stringWithFormat:AMLocalizedString(@"You have received %@ storage space and %@ transfer quota for adding your phone number.", nil), [Helper memoryStyleStringFromByteCount:classStorageReward], [Helper memoryStyleStringFromByteCount:classTransferReward]];
+            howItWorksExplanationLabel = [[AMLocalizedString(@"You have received %1$s storage space and %2$s transfer quota for verifying your phone number.", nil) stringByReplacingOccurrencesOfString:@"%1$s" withString:[Helper memoryStyleStringFromByteCount:classStorageReward]] stringByReplacingOccurrencesOfString:@"%2$s" withString:[Helper memoryStyleStringFromByteCount:classTransferReward]];
             break;
         }
 
