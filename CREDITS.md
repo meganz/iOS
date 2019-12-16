@@ -73,6 +73,18 @@ https://github.com/Flipboard/FLEX/blob/master/LICENSE
 
 --------------------------------------------------------------------
 
+#### FrameAccessor
+https://github.com/AlexDenisov/FrameAccessor
+
+Copyright (c) 2012 Alexey Denisov
+
+###### License:
+The MIT License (MIT)
+
+https://github.com/AlexDenisov/FrameAccessor/blob/master/LICENSE
+
+--------------------------------------------------------------------
+
 #### GKContactImage
 https://github.com/gekitz/GKContactImage
 
@@ -170,12 +182,12 @@ https://github.com/pwillsey/PWProgressView/blob/master/LICENSE
 --------------------------------------------------------------------
 
 #### Reachability
-https://github.com/tonymillion/Reachability
+https://developer.apple.com/library/archive/samplecode/Reachability/Introduction/Intro.html#//apple_ref/doc/uid/DTS40007324
 
-Copyright (c) 2011-2013, Tony Million.
+Copyright (C) 2016 Apple Inc.
 
 ###### License:
-https://github.com/tonymillion/Reachability/blob/master/LICENCE.txt
+https://developer.apple.com/library/archive/samplecode/Reachability/Reachability.zip
 
 --------------------------------------------------------------------
 
@@ -203,6 +215,18 @@ https://github.com/GabrielMassana/SearchEmojiOnString-iOS/blob/master/LICENSE.md
 
 --------------------------------------------------------------------
 
+#### SDAVAssetExportSession
+https://github.com/rs/SDAVAssetExportSession
+
+Copyright (c) 2013 Olivier Poitrey <rs@dailymotion.com>
+
+###### License:
+The MIT License (MIT)
+
+https://github.com/rs/SDAVAssetExportSession/blob/master/LICENSE
+
+--------------------------------------------------------------------
+
 #### SVProgressHUD
 https://github.com/SVProgressHUD/SVProgressHUD
 
@@ -215,23 +239,23 @@ https://github.com/SVProgressHUD/SVProgressHUD/blob/master/LICENSE.txt
 
 --------------------------------------------------------------------
 
-#### SVWebViewController
-https://github.com/TransitApp/SVWebViewController
-
-Copyright (c) 2011 Sam Vermette
-
-###### License:
-The MIT License (MIT)
-
-https://github.com/TransitApp/SVWebViewController/blob/master/LICENSE.txt
-
---------------------------------------------------------------------
-
 #### UIBarButtonItem-Badge
 https://github.com/meganz/UIBarButtonItem-Badge
 
 ###### License:
 The MIT License (MIT)
+
+--------------------------------------------------------------------
+
+#### VENTokenField
+https://github.com/venmo/VENTokenField
+
+Copyright (c) 2014 Venmo
+
+###### License:
+The MIT License (MIT)
+
+https://github.com/venmo/VENTokenField/blob/master/LICENSE
 
 --------------------------------------------------------------------
 
