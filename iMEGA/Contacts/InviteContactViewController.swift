@@ -86,7 +86,8 @@ class InviteContactViewController: UIViewController {
     }
     
     @IBAction func moreButtonTapped(_ sender: Any) {
-        let activity = UIActivityViewController(activityItems: [userLink], applicationActivities: [])
+        let items = [AMLocalizedString("Hi, Have encrypted conversations on Mega with me and get 50GB free storage.", "Text to send as SMS message to user contacts inviting them to MEGA"), userLink]
+        let activity = UIActivityViewController(activityItems: items, applicationActivities: [])
         activity.popoverPresentationController?.sourceView = moreLabel
         activity.popoverPresentationController?.sourceRect = moreLabel.frame
         present(activity, animated: true)

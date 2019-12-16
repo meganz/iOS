@@ -960,7 +960,7 @@
 /* Add Phone Number title  */
 "Add Phone Number" = "Add Phone Number";
 /* Achievement explanation for add phone number */
-"You have received %@ storage space and %@ transfer quota for adding your phone number."="You have received %@ storage space and %@ transfer quota for adding your phone number.";
+"You have received %1$s storage space and %2$s transfer quota for verifying your phone number."="You have received %1$s storage space and %2$s transfer quota for verifying your phone number.";
 /* Free storage description to encourage users to add phone number to their accounts */
 "Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."="Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA.";
 /* Description to encourage users to add phone number to their accounts when there are not achievements */
