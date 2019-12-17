@@ -43,8 +43,8 @@ import UIKit
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        //Fix to avoid ContactsPermissionBottomView button not being rendered correctly in small screens
-        if CNContactStore.authorizationStatus(for: CNEntityType.contacts) != CNAuthorizationStatus.authorized && (UIDevice.current.iPhone4X || UIDevice.current.iPhone5X) {
+        //Fix to avoid ContactsPermissionBottomView button not being rendered correctly in small screens and iOS10
+        if CNContactStore.authorizationStatus(for: CNEntityType.contacts) != CNAuthorizationStatus.authorized {
             tableView.reloadData()
         }
     }
@@ -181,7 +181,7 @@ extension ContactsOnMegaViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         switch CNContactStore.authorizationStatus(for: CNEntityType.contacts) {
         case .notDetermined, .restricted, .denied:
-            return tableView.frame.height * 0.8
+            return tableView.frame.height * 0.9
             
         default:
             return 0
