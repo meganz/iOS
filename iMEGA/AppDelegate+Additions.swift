@@ -7,7 +7,8 @@ extension AppDelegate {
         if  visibleViewController is AddPhoneNumberViewController ||
             visibleViewController is InitialLaunchViewController ||
             visibleViewController is LaunchViewController ||
-            visibleViewController is SMSNavigationViewController ||
+            visibleViewController is SMSVerificationViewController ||
+            visibleViewController is VerificationCodeViewController ||
             visibleViewController is CreateAccountViewController ||
             visibleViewController is UpgradeTableViewController ||
             visibleViewController is OnboardingViewController ||
