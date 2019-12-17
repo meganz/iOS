@@ -4,6 +4,7 @@
 #import "UIScrollView+EmptyDataSet.h"
 #import "UIApplication+MNZCategory.h"
 
+#import "AppDelegate.h"
 #import "DevicePermissionsHelper.h"
 #import "Helper.h"
 #import "MEGAChatChangeGroupNameRequestDelegate.h"
@@ -735,7 +736,7 @@
         groupCallVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
         
         if (@available(iOS 10.0, *)) {
-            groupCallVC.megaCallManager = [(MainTabBarController *)UIApplication.sharedApplication.keyWindow.rootViewController megaCallManager];
+            groupCallVC.megaCallManager = [(AppDelegate *)UIApplication.sharedApplication.delegate megaCallManager];
         }
         [self presentViewController:groupCallVC animated:YES completion:nil];
     } else {
@@ -746,7 +747,7 @@
         callVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
         
         if (@available(iOS 10.0, *)) {
-            callVC.megaCallManager = [(MainTabBarController *)UIApplication.sharedApplication.keyWindow.rootViewController megaCallManager];
+            callVC.megaCallManager = [(AppDelegate *)UIApplication.sharedApplication.delegate megaCallManager];
         }
         [self presentViewController:callVC animated:YES completion:nil];
     }

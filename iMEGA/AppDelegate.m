@@ -59,6 +59,8 @@
 #import "TransferSessionManager.h"
 #import "BackgroundRefreshPerformer.h"
 
+#import "MEGAProviderDelegate.h"
+
 #define kFirstRun @"FirstRun"
 
 @interface AppDelegate () <PKPushRegistryDelegate, UIApplicationDelegate, UNUserNotificationCenterDelegate, LTHPasscodeViewControllerDelegate, LaunchViewControllerDelegate, MEGAApplicationDelegate, MEGAChatDelegate, MEGAChatRequestDelegate, MEGAGlobalDelegate, MEGAPurchasePricingDelegate, MEGARequestDelegate, MEGATransferDelegate> {
@@ -102,6 +104,7 @@
 
 @property (strong, nonatomic) dispatch_queue_t indexSerialQueue;
 @property (strong, nonatomic) BackgroundRefreshPerformer *backgroundRefreshPerformer;
+@property (nonatomic, strong) MEGAProviderDelegate *megaProviderDelegate;
 
 @end
 
@@ -218,6 +221,9 @@
             } else {
                 [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
             }
+
+            _megaCallManager = MEGACallManager.new;
+            _megaProviderDelegate = [MEGAProviderDelegate.alloc initWithMEGACallManager:self.megaCallManager];
             
             MEGAChatInit chatInit = [[MEGASdkManager sharedMEGAChatSdk] initKarereWithSid:sessionV3];
             if (chatInit == MEGAChatInitError) {
@@ -1023,7 +1029,7 @@ void uncaughtExceptionHandler(NSException *exception) {
         groupCallVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
         
         if (@available(iOS 10.0, *)) {
-            groupCallVC.megaCallManager = [self.mainTBC megaCallManager];
+            groupCallVC.megaCallManager = self.megaCallManager;
         }
         [self.mainTBC presentViewController:groupCallVC animated:YES completion:nil];
     } else {
@@ -1032,7 +1038,7 @@ void uncaughtExceptionHandler(NSException *exception) {
         callVC.videoCall = self.videoCall;
         callVC.callType = CallTypeOutgoing;
         if (@available(iOS 10.0, *)) {
-            callVC.megaCallManager = [self.mainTBC megaCallManager];
+            callVC.megaCallManager = self.megaCallManager;
         }
         [self.mainTBC presentViewController:callVC animated:YES completion:nil];
     }
@@ -1254,7 +1260,12 @@ void uncaughtExceptionHandler(NSException *exception) {
     
     // Call
     if ([[UIApplication sharedApplication] applicationState] == UIApplicationStateBackground && [[[payload dictionaryPayload] objectForKey:@"megatype"] integerValue] == 4) {
-        [self beginBackgroundTaskWithName:@"VoIP"];
+        NSString *chatIdB64 = [[payload.dictionaryPayload objectForKey:@"megadata"] objectForKey:@"chatid"];
+        NSString *callIdB64 = [[payload.dictionaryPayload objectForKey:@"megadata"] objectForKey:@"callid"];
+        uint64_t chatId = [MEGASdk handleForBase64UserHandle:chatIdB64];
+        uint64_t callId = [MEGASdk handleForBase64UserHandle:callIdB64];
+        
+        [self.megaProviderDelegate reportIncomingCallWithCallId:callId chatId:chatId];
         
         if (!DevicePermissionsHelper.shouldAskForNotificationsPermissions) {
             [DevicePermissionsHelper notificationsPermissionWithCompletionHandler:^(BOOL granted) {
