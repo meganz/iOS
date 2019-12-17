@@ -9,6 +9,7 @@
 #import "UIImage+GKContact.h"
 #import "UIScrollView+EmptyDataSet.h"
 
+#import "AppDelegate.h"
 #import "Helper.h"
 #import "DevicePermissionsHelper.h"
 #import "DisplayMode.h"
@@ -761,7 +762,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         groupCallVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
 
         if (@available(iOS 10.0, *)) {
-            groupCallVC.megaCallManager = [(MainTabBarController *)UIApplication.sharedApplication.keyWindow.rootViewController megaCallManager];
+            groupCallVC.megaCallManager = [(AppDelegate *)UIApplication.sharedApplication.delegate megaCallManager];
         }
         [self presentViewController:groupCallVC animated:YES completion:nil];
     } else {
@@ -772,7 +773,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         callVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
         
         if (@available(iOS 10.0, *)) {
-            callVC.megaCallManager = [(MainTabBarController *)UIApplication.sharedApplication.keyWindow.rootViewController megaCallManager];
+            callVC.megaCallManager = [(AppDelegate *)UIApplication.sharedApplication.delegate megaCallManager];
         }
         [self presentViewController:callVC animated:YES completion:nil];
     }

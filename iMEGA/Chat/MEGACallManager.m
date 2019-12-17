@@ -67,6 +67,12 @@
     [self printAllCalls];
 }
 
+- (void)addCallWithCallId:(uint64_t)callId uuid:(NSUUID *)uuid {
+    MEGALogDebug(@"[CallKit] Add call with callid %llu and uuid %@", callId, uuid);
+    [self.callsDictionary setObject:@(callId) forKey:uuid];
+    [self printAllCalls];
+}
+
 - (void)removeCall:(MEGAChatCall *)call {
     MEGALogDebug(@"[CallKit] Remove call: %@", call);
     [self.callsDictionary removeObjectForKey:call.uuid];
