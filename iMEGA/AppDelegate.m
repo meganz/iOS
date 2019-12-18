@@ -1471,6 +1471,8 @@ void uncaughtExceptionHandler(NSException *exception) {
             
             break;
             
+        case EventStorageSumChanged:
+            [MEGASdkManager.sharedMEGASdk mnz_setShouldRequestAccountDetails:YES];
         default:
             break;
     }
@@ -1733,6 +1735,7 @@ void uncaughtExceptionHandler(NSException *exception) {
         }
             
         case MEGARequestTypeAccountDetails:
+            [MEGASdkManager.sharedMEGASdk mnz_setShouldRequestAccountDetails:NO];
             [[MEGASdkManager sharedMEGASdk] mnz_setAccountDetails:[request megaAccountDetails]];
             break;
             
