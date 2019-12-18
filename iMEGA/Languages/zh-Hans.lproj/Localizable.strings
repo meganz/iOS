@@ -43,7 +43,7 @@
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="请输入解密金钥";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertMessage"="要进入此文件夹/文件，您需要它的解密密钥。如果没有密钥，请联系此链接的创建者。";
+"decryptionKeyAlertMessage"="访问此文件夹或文件需要解密密钥。如果您没有密钥，请与链接创建者联系。";
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="解密密钥";
 /* Button title to try to decrypt the link */
@@ -562,6 +562,8 @@
 "noNeedToAddYourOwnEmailAddress"="您无须增加个人的电子邮件";
 /* Add contacts and share dialog error message when user try to add already existing email address. */
 "alreadyHaveAContactWithThatEmailAddress"="您已有一个使用该电子邮件的连络人";
+/* Add contacts and share dialog error message when user try to add already existing email address. */
+"invitationAlreadySentToContactBefore"="The invitation to contact %@ has been sent before and can be consulted in the Sent Requests tab.";
 /* Success message shown when a contact has been invited */
 "theUserHasBeenInvited"="用户[X]已被邀请。该邀请被接受后，他将会出现在您的联系人列表中。";
 /* Success message shown when some contacts have been invited */
@@ -735,7 +737,7 @@
 /* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
 "recoveryKeyCopiedToClipboard"="恢复秘钥已复制到剪贴板。请妥善保管。";
 /* Alert title shown when you have exported your MEGA Recovery Key */
-"masterKeyExported"="恢复金匙已导出";
+"masterKeyExported"="恢复秘钥已导出";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
 "masterKeyExported_alertMessage"="还原金钥已以RecoveryKey.txt(还原金钥文字档)汇出至离线模式中。注意：您登出后它将会被删除，请将其存放于安全之处。";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
@@ -964,7 +966,7 @@
 /* Label to show that an error related with expiration occurs during a SDK operation. */
 "expired"="已过期";
 /* Title of the button which logs out from your account. */
-"logoutLabel"="注销";
+"logoutLabel"="登出";
 /* String shown when you are logging out of your account. */
 "loggingOut"="正在登出";
 /* Button to remove avatar. Try to keep the text short (as in English) */
@@ -1006,9 +1008,9 @@
 /*  */
 "chooseYourAccountType"="选择您的账号类型";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]您的云盘几乎已满。[/S] [A]立即升级[/A]至PRO帐户，可获得[S]最高8TB (8192GB)[/S]的云储存空间。";
+"cloudDriveIsAlmostFull"="[S]您的云盘空间几乎已满。[/S] [A]立即升级[/A]到PRO帐户并获得[S]最高%@ TB (%@ GB)[/S]的云存储空间。";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]您的帐户空间已满。[/S] [A]立即升级[/A]至PRO帐户，可获得[S]最高8TB (8192GB)[/S]的云储存空间。";
+"cloudDriveIsFull"="[S]您的云盘空间已满。[/S] [A]立即升级[/A]到PRO帐户并获得[S]最高%@ TB (%@ GB)[/S]的云存储空间。";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="储存空间";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
@@ -1364,7 +1366,7 @@
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph4"="注册用户只要参与奖励计划即可获得50GB免费储存空间，亦可付费获得更多配额：";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph5"="PRO LITE订阅：每月€4.99（$4.99）或每年€49.99（$49.99），每月为您提供每月200GB的存储空间和1TB的传输配额。\nPRO I订阅：每月€9.99（$9.99）或每年€99.99（$99.99），每月为您提供1TB的存储空间和2TB的传输配额。\nPRO II订阅：每月€19.99（$19.99）或每年€199.99（$199.99），每月为您提供4TB的存储空间和8TB的传输配额。[BR]PRO III订阅：每月€29.99（$29.99）或每年€299.99（$299.99），每月为您提供8TB的存储空间和16TB的传输配额。";
+"generalDescriptionParagraph5"="PRO LITE订阅：每月€4.99 (USD$4.99)或每年€49.99 (USD$49.99)，您会获得每月400GB的存储空间和1TB的传输流量。\nPRO I订阅：每月€9.99 (USD$9.99)或每年€99.99 (USD$99.99)，您会获得每月2TB的存储空间和2TB的传输流量。\nPRO II订阅：每月€19.99 (USD$19.99)或每年€199.99 (USD$199.99)，您会获得每月8TB的存储空间和8TB的传输流量。\nPRO III订阅：每月€29.99 (USD$29.99)或每年€299.99 (USD$299.99)，您会获得每月16TB的存储空间和16TB的传输流量。";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph6"="欲了解更多信息，请浏览我们的网站：https://mega.nz/\n服务条款：https://mega.nz/terms\n隐私政策：https://mega.nz/privacy";
@@ -1489,7 +1491,7 @@
 /* Used as a message in the "Password reminder" dialog that is shown when the user enters his password, clicks confirm and his password is correct. */
 "passwordAccepted"="密码已确认";
 /* A dialog title to export the Recovery Key for the current user. */
-"exportRecoveryKey"="导出恢复金匙";
+"exportRecoveryKey"="导出恢复密钥";
 /* Title to confirm that you want to logout */
 "proceedToLogout"="继续登出";
 /* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.  */
@@ -1523,7 +1525,7 @@
 /* When an active call of user A with user B had failed */
 "callFailed"="通话失败";
 /* When an active call of user A with user B had ended */
-"callEnded"="通话结束";
+"callEnded"="呼叫结束。";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="时长：%@";
 /* */
@@ -1649,7 +1651,7 @@
 /* Title of the option to enable or disable file versioning on Settings section */
 "File versioning"="文件版本";
 /* Subtitle of the option to enable or disable file versioning on Settings section */
-"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="启用或禁用整个帐户的文件版本控制。如果您的联系人已启用此功能，\n您仍可以从共享文件夹接收文件版本。";
+"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="为整个帐户启用或禁用文件版本功能。\n禁用文件版本功能不会阻止您的联系人在共享文件夹中创建新版本。";
 /* A confirmation message when the user chooses to disable file versioning. */
 "When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="当文件版本控制被禁用时，一旦文件被更新，当前版本将被替换为新版本（并且不再记录对文件的更改）。您确定要禁用文件版本控制吗？";
 /* Settings preference title to show file versions info of the account */
