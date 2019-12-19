@@ -200,7 +200,11 @@ extension ContactsOnMegaViewController: DZNEmptyDataSetSource {
                     return nil
                 }
             } else {
-                return UIImage(named: "contactsEmptyState")
+                if UIDevice.current.iPhone4X || UIDevice.current.iPhone5X {
+                    return nil
+                } else {
+                    return UIImage(named: "contactsEmptyState")
+                }
             }
         } else {
             return UIImage(named: "noInternetEmptyState")
