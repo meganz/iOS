@@ -562,6 +562,8 @@
 "noNeedToAddYourOwnEmailAddress"="Nu este nevoie să adaugi adresa de e-mail proprie";
 /* Add contacts and share dialog error message when user try to add already existing email address. */
 "alreadyHaveAContactWithThatEmailAddress"="Ai deja un contact cu acea adresă de e-mail";
+/* Add contacts and share dialog error message when user try to add already existing email address. */
+"invitationAlreadySentToContactBefore"="The invitation to contact %@ has been sent before and can be consulted in the Sent Requests tab.";
 /* Success message shown when a contact has been invited */
 "theUserHasBeenInvited"="Utilizatorul [X] a fost invitat și va apărea în lista de contacte de îndată ce a acceptat invitația.";
 /* Success message shown when some contacts have been invited */
@@ -1004,9 +1006,9 @@
 /*  */
 "chooseYourAccountType"="Alege tipul contului tău";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]Unitatea cloud este aproape plină.[/S] [A]Upgradează acum[/A] la un cont PRO și obține [S]până la 8 TB (8192 GB)[/S] spațiu de stocare în cloud.";
+"cloudDriveIsAlmostFull"="[S]Your Cloud Drive is almost full.[/S] [A]Upgrade now[/A] to a PRO account and get [S]up to %@ TB (%@ GB)[/S] of cloud storage space.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]Contul tău este plin.[/S] [A]Upgradează acum[/A] la un cont PRO și obține [S]până la 8 TB (8192 GB)[/S] spațiu de stocare în cloud.";
+"cloudDriveIsFull"="[S]Your Cloud Drive is full.[/S] [A]Upgrade now[/A] to a PRO account and get [S]up to %@ TB (%@ GB)[/S] of cloud storage space.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Spațiu de stocare";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
@@ -1667,7 +1669,7 @@
 /* A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days. */
 "Remove files older than"="Elimină fișierele mai vechi de";
 /* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
-"Days"="Zile";
+"Days"="zile";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
 "The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="Coșul de gunoi este golit pentru tine automat. Perioada minimă este de 7 zile și perioada maximă este de 30 de zile.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
