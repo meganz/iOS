@@ -1260,6 +1260,10 @@ void uncaughtExceptionHandler(NSException *exception) {
     
     // Call
     if ([[UIApplication sharedApplication] applicationState] == UIApplicationStateBackground && [[[payload dictionaryPayload] objectForKey:@"megatype"] integerValue] == 4) {
+        if (self.megaProviderDelegate == nil) {            
+            _megaCallManager = MEGACallManager.new;
+            _megaProviderDelegate = [MEGAProviderDelegate.alloc initWithMEGACallManager:self.megaCallManager];
+        }
         NSString *chatIdB64 = [[payload.dictionaryPayload objectForKey:@"megadata"] objectForKey:@"chatid"];
         NSString *callIdB64 = [[payload.dictionaryPayload objectForKey:@"megadata"] objectForKey:@"callid"];
         uint64_t chatId = [MEGASdk handleForBase64UserHandle:chatIdB64];
