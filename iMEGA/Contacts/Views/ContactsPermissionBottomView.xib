@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -19,29 +19,30 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </view>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="9Xh-hf-MXE">
-                    <rect key="frame" x="8" y="44" width="357" height="264"/>
+                    <rect key="frame" x="8" y="0.0" width="357" height="308"/>
                     <subviews>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="249" verticalHuggingPriority="249" horizontalCompressionResistancePriority="748" verticalCompressionResistancePriority="748" image="access contact" translatesAutoresizingMaskIntoConstraints="NO" id="nnr-mV-Idm">
-                            <rect key="frame" x="140" y="8" width="77" height="77"/>
+                            <rect key="frame" x="122" y="16" width="113" height="113"/>
                             <constraints>
                                 <constraint firstAttribute="width" relation="lessThanOrEqual" constant="240" id="9MN-Lg-5y4"/>
                                 <constraint firstAttribute="width" secondItem="nnr-mV-Idm" secondAttribute="height" multiplier="1:1" id="fAN-R4-fbN"/>
                             </constraints>
+                            <variation key="heightClass=compact" hidden="YES"/>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Enable Access to Contacts" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pgu-bC-DWR">
-                            <rect key="frame" x="70.5" y="93" width="216" height="21.5"/>
+                            <rect key="frame" x="70.5" y="137" width="216" height="21.5"/>
                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
                             <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="249" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="MEGA needs access to your contacts to help you connect with other people on MEGA. " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="YpO-vW-kfg">
-                            <rect key="frame" x="18.5" y="122.5" width="320" height="33.5"/>
+                            <rect key="frame" x="18.5" y="166.5" width="320" height="33.5"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <color key="textColor" red="0.46666666670000001" green="0.46666666670000001" blue="0.46666666670000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0aB-c3-0Fx">
-                            <rect key="frame" x="53.5" y="164" width="250" height="50"/>
+                            <rect key="frame" x="53.5" y="208" width="250" height="50"/>
                             <color key="backgroundColor" red="0.0" green="0.74901960779999999" blue="0.64705882349999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="250" id="XxY-4a-ATS"/>
@@ -67,7 +68,7 @@
                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="0aB-c3-0Fx" secondAttribute="trailing" constant="10" id="EWk-oj-2Hg"/>
                         <constraint firstItem="nnr-mV-Idm" firstAttribute="centerX" secondItem="9Xh-hf-MXE" secondAttribute="centerX" id="rJj-cP-EXE"/>
                     </constraints>
-                    <directionalEdgeInsets key="directionalLayoutMargins" top="8" leading="8" bottom="50" trailing="8"/>
+                    <directionalEdgeInsets key="directionalLayoutMargins" top="16" leading="8" bottom="50" trailing="8"/>
                 </stackView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
