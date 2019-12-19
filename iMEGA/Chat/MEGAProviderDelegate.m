@@ -99,7 +99,7 @@
                                             uuid:uuid
                                           callId:callId];
         } else {
-            [self reportNewIncomingCallWithValue:@"Connecting"
+            [self reportNewIncomingCallWithValue:[MEGASdk base64HandleForUserHandle:chatId]
                                       callerName:@"Connecting"
                                         hasVideo:NO
                                             uuid:uuid
