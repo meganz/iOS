@@ -12,6 +12,6 @@
 - (void)addCallWithCallId:(uint64_t)callId uuid:(NSUUID *)uuid;
 - (void)removeCall:(MEGAChatCall *)call;
 - (void)removeAllCalls;
-- (MEGAChatCall *)callForUUID:(NSUUID *)uuid;
+- (uint64_t)callForUUID:(NSUUID *)uuid;
 
 @end
