@@ -7,7 +7,7 @@
 @interface MEGACallManager ()
 
 @property (nonatomic, strong) CXCallController *callController;
-@property (nonatomic, strong) NSMutableDictionary *callsDictionary;
+@property (nonatomic, strong) NSMutableDictionary <NSUUID *, NSNumber *> *callsDictionary;
 
 @end
 
@@ -68,7 +68,7 @@
 }
 
 - (void)addCallWithCallId:(uint64_t)callId uuid:(NSUUID *)uuid {
-    MEGALogDebug(@"[CallKit] Add call with callid %llu and uuid %@", callId, uuid);
+    MEGALogDebug(@"[CallKit] Add call with callid %@ and uuid %@", [MEGASdk base64HandleForUserHandle:callId], uuid);
     [self.callsDictionary setObject:@(callId) forKey:uuid];
     [self printAllCalls];
 }
@@ -86,12 +86,11 @@
 }
 
 
-- (MEGAChatCall *)callForUUID:(NSUUID *)uuid {
+- (uint64_t)callForUUID:(NSUUID *)uuid {
     [self printAllCalls];
     uint64_t callId = [[self.callsDictionary objectForKey:uuid] unsignedLongLongValue];
-    MEGAChatCall *call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForCallId:callId];
-    MEGALogDebug(@"[CallKit] Call %@ for uuid: %@", call, uuid);
-    return call;
+    MEGALogDebug(@"[CallKit] Call %@ for uuid: %@", [MEGASdk base64HandleForUserHandle:callId], uuid);
+    return callId;
 }
 
 - (void)printAllCalls {

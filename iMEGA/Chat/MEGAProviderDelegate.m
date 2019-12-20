@@ -58,34 +58,12 @@
     return self;
 }
 
-- (void)reportIncomingCall:(MEGAChatCall *)call {
-    MEGALogDebug(@"[CallKit] Report incoming call %@, video %@", call, call.hasVideoInitialCall ? @"YES" : @"NO");
-    
-    MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:call.chatId];
-
-    CXCallUpdate *update = [[CXCallUpdate alloc] init];
-    update.remoteHandle = [[CXHandle alloc] initWithType:CXHandleTypeGeneric value:[MEGASdk base64HandleForUserHandle:chatRoom.chatId]];
-    update.localizedCallerName = chatRoom.title;
-    update.supportsHolding = NO;
-    update.supportsGrouping = NO;
-    update.supportsUngrouping = NO;
-    update.supportsDTMF = NO;
-    update.hasVideo = call.hasVideoInitialCall;
-    [self.provider reportNewIncomingCallWithUUID:call.uuid update:update completion:^(NSError * _Nullable error) {
-        if (error) {
-            MEGALogError(@"Report new incoming call failed with error: %@", error);
-        } else {
-            [self.megaCallManager addCall:call];
-        }
-    }];
-}
-
 - (void)reportIncomingCallWithCallId:(uint64_t)callId chatId:(uint64_t)chatId {
     MEGALogDebug(@"[CallKit] Report incoming call with callid %@ and chatid %@", [MEGASdk base64HandleForUserHandle:callId], [MEGASdk base64HandleForUserHandle:chatId]);
     
     MEGAChatCall *call = [MEGASdkManager.sharedMEGAChatSdk chatCallForCallId:callId];
     if (call) {
-        [self reportIncomingCall:call];
+        [self reportIncomingCallOrUpdate:call];
     } else {
         MEGAChatRoom *chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:chatId];
         unsigned char tempUuid[128];
@@ -171,6 +149,36 @@
     [[LTHPasscodeViewController sharedUser] disablePasscodeWhenApplicationEntersBackground];
 }
 
+- (void)reportIncomingCallOrUpdate:(MEGAChatCall *)call {
+    MEGALogDebug(@"[CallKit] Report incoming call %@, video %@", call, call.hasVideoInitialCall ? @"YES" : @"NO");
+    
+    MEGAChatRoom *chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:call.chatId];
+
+    CXCallUpdate *update = CXCallUpdate.new;
+    update.remoteHandle = [CXHandle.alloc initWithType:CXHandleTypeGeneric value:[MEGASdk base64HandleForUserHandle:chatRoom.chatId]];
+    update.localizedCallerName = chatRoom.title;
+    update.supportsHolding = NO;
+    update.supportsGrouping = NO;
+    update.supportsUngrouping = NO;
+    update.supportsDTMF = NO;
+    update.hasVideo = call.hasVideoInitialCall;
+        
+    uint64_t callId = [self.megaCallManager callForUUID:call.uuid];
+    
+    if (callId) {
+        MEGALogDebug(@"[CallKit] Call already reported, update the information");
+        [self.provider reportCallWithUUID:call.uuid updated:update];
+    } else {
+        [self.provider reportNewIncomingCallWithUUID:call.uuid update:update completion:^(NSError * _Nullable error) {
+            if (error) {
+                MEGALogError(@"Report new incoming call failed with error: %@", error);
+            } else {
+                [self.megaCallManager addCall:call];
+            }
+        }];
+    }
+}
+
 - (void)reportNewIncomingCallWithValue:(NSString *)value
                             callerName:(NSString *)callerName
                               hasVideo:(BOOL)hasVideo
@@ -211,7 +219,8 @@
 }
 
 - (void)provider:(CXProvider *)provider performStartCallAction:(CXStartCallAction *)action {
-    MEGAChatCall *call = [self.megaCallManager callForUUID:action.callUUID];
+    uint64_t callId = [self.megaCallManager callForUUID:action.callUUID];
+    MEGAChatCall *call = [MEGASdkManager.sharedMEGAChatSdk chatCallForCallId:callId];
     
     MEGALogDebug(@"[CallKit] Provider perform start call: %@, uuid: %@", call, action.callUUID);
     
@@ -238,7 +247,8 @@
 }
 
 - (void)provider:(CXProvider *)provider performAnswerCallAction:(CXAnswerCallAction *)action {
-    MEGAChatCall *call = [self.megaCallManager callForUUID:action.callUUID];
+    uint64_t callId = [self.megaCallManager callForUUID:action.callUUID];
+    MEGAChatCall *call = [MEGASdkManager.sharedMEGAChatSdk chatCallForCallId:callId];
     
     MEGALogDebug(@"[CallKit] Provider perform answer call: %@, uuid: %@", call, action.callUUID);
     
@@ -299,7 +309,8 @@
 }
 
 - (void)provider:(CXProvider *)provider performEndCallAction:(CXEndCallAction *)action {
-    MEGAChatCall *call = [self.megaCallManager callForUUID:action.callUUID];
+    uint64_t callId = [self.megaCallManager callForUUID:action.callUUID];
+    MEGAChatCall *call = [MEGASdkManager.sharedMEGAChatSdk chatCallForCallId:callId];
     
     MEGALogDebug(@"[CallKit] Provider perform end call: %@, uuid: %@", call, action.callUUID);
     
@@ -313,7 +324,8 @@
 }
 
 - (void)provider:(CXProvider *)provider performSetMutedCallAction:(CXSetMutedCallAction *)action {
-    MEGAChatCall *call = [self.megaCallManager callForUUID:action.callUUID];
+    uint64_t callId = [self.megaCallManager callForUUID:action.callUUID];
+    MEGAChatCall *call = [MEGASdkManager.sharedMEGAChatSdk chatCallForCallId:callId];
     
     MEGALogDebug(@"[CallKit] Provider perform mute call: %@, uuid: %@", call, action.callUUID);
     
@@ -374,10 +386,10 @@
                     if (granted) {
                         if (call.hasVideoInitialCall) {
                             [DevicePermissionsHelper videoPermissionWithCompletionHandler:^(BOOL granted) {
-                                [self reportIncomingCall:call];;
+                                [self reportIncomingCallOrUpdate:call];;
                             }];
                         } else {
-                            [self reportIncomingCall:call];;
+                            [self reportIncomingCallOrUpdate:call];;
                         }
                     } else {
                         [DevicePermissionsHelper alertAudioPermissionForIncomingCall:YES];
