@@ -230,6 +230,10 @@ extension ProfileViewController: UITableViewDataSource {
             } else {
                 return 4
             }
+        } else if section == 2 {
+            if MEGASdkManager.sharedMEGASdk().isBusinessAccount {
+                return 2
+            }
         }
         return 1
     }
@@ -312,31 +316,41 @@ extension ProfileViewController: UITableViewDataSource {
                 return cell
             }
             let accountType = accountDetails.type
-            switch accountType {
-            case .free:
-                cell.accountTypeLabel.text = NSLocalizedString("free", comment: "Text relative to the MEGA account level. UPPER CASE")
-            case .proI:
-                cell.accountTypeLabel.text = "Pro I"
-                cell.accountTypeLabel.textColor = UIColor.mnz_redProI()
-            case .proII:
-                cell.accountTypeLabel.text = "Pro II"
-                cell.accountTypeLabel.textColor = UIColor.mnz_redProII()
-            case .proIII:
-                cell.accountTypeLabel.text = "Pro III"
-                cell.accountTypeLabel.textColor = UIColor.mnz_redProIII()
-            case .lite:
-                cell.accountTypeLabel.text = "Lite"
-                cell.accountTypeLabel.textColor = UIColor.mnz_orangeFFA500()
-            case .business:
+            if indexPath.row == 0 {
+                switch accountType {
+                case .free:
+                    cell.accountTypeLabel.text = NSLocalizedString("free", comment: "Text relative to the MEGA account level. UPPER CASE")
+                case .proI:
+                    cell.accountTypeLabel.text = "Pro I"
+                    cell.accountTypeLabel.textColor = UIColor.mnz_redProI()
+                case .proII:
+                    cell.accountTypeLabel.text = "Pro II"
+                    cell.accountTypeLabel.textColor = UIColor.mnz_redProII()
+                case .proIII:
+                    cell.accountTypeLabel.text = "Pro III"
+                    cell.accountTypeLabel.textColor = UIColor.mnz_redProIII()
+                case .lite:
+                    cell.accountTypeLabel.text = "Lite"
+                    cell.accountTypeLabel.textColor = UIColor.mnz_orangeFFA500()
+                case .business:
+                    if MEGASdkManager.sharedMEGASdk().businessStatus == .active {
+                        cell.accountTypeLabel.text = NSLocalizedString("Active", comment: "")
+                    } else {
+                        cell.accountTypeLabel.text = NSLocalizedString("Payment Overdue", comment: "Business expired account Overdue payment page header.")
+                    }
+                    cell.upgradePlanLabel.text = NSLocalizedString("Business", comment: "")
+                    cell.accessoryType = .none
+                default:
+                    cell.accountTypeLabel.text = "..."
+                }
+            } else {
                 if MEGASdkManager.sharedMEGASdk().isMasterBusinessAccount {
                     cell.accountTypeLabel.text = NSLocalizedString("Administrator", comment: "")
                 } else {
                     cell.accountTypeLabel.text = NSLocalizedString("user", comment: "user (singular) label indicating is receiving some info, for example shared folders").capitalized
                 }
-                cell.upgradePlanLabel.text = NSLocalizedString("Business", comment: "")
+                cell.upgradePlanLabel.text = NSLocalizedString("Role", comment: "title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts")
                 cell.accessoryType = .none
-            default:
-                cell.accountTypeLabel.text = "..."
             }
             return cell
         } else {

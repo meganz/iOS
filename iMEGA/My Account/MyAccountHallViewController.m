@@ -51,13 +51,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.navigationItem.title = AMLocalizedString(@"myAccount", @"Title of the app section where you can see your account details");
-        
+                
     if (MEGASdkManager.sharedMEGASdk.isBusinessAccount) {
         self.navigationItem.rightBarButtonItem = nil;
+        UILabel *label = [Helper customNavigationBarLabelWithTitle:AMLocalizedString(@"myAccount", @"Title of the app section where you can see your account details") subtitle:AMLocalizedString(@"Business", nil)];
+        label.frame = CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44);
+        self.navigationItem.titleView = label;
     } else {
         self.buyPROBarButtonItem.title = AMLocalizedString(@"upgrade", @"Caption of a button to upgrade the account to Pro status");
+        self.navigationItem.title = AMLocalizedString(@"myAccount", @"Title of the app section where you can see your account details");
     }
     
     self.viewAndEditProfileLabel.text = AMLocalizedString(@"viewAndEditProfile", @"Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile");
