@@ -990,7 +990,7 @@
 /* title of the My Account screen */
 "accountType"="Тип учётной записи:";
 /* Text relative to the MEGA account level. UPPER CASE */
-"free"="БЕСПЛАТНЫЙ";
+"Free"="БЕСПЛАТНЫЙ";
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="истекает %@";
 /* Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible). */

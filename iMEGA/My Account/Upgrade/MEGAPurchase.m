@@ -39,7 +39,7 @@
             if (productId.length) {
                 [productIdentifieres addObject:productId];
             } else {
-                MEGALogWarning(@"Product identifier \“%@\” does not exist in the App Store, not need to request its information", productId);
+                MEGALogWarning(@"Product identifier \"%@\" (account type \"%@\") does not exist in the App Store, not need to request its information", productId, [MEGAAccountDetails stringForAccountType:[self.pricing proLevelAtProductIndex:i]]);
             }
         }
         _products = [[NSMutableArray alloc] initWithCapacity:productIdentifieres.count];
