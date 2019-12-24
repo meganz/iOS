@@ -990,7 +990,7 @@
 /* title of the My Account screen */
 "accountType"="Uri ng Account:";
 /* Text relative to the MEGA account level. UPPER CASE */
-"free"="LIBRE";
+"Free"="LIBRE";
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="magtatapos sa %@";
 /* Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible). */

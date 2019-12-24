@@ -990,7 +990,7 @@
 /* title of the My Account screen */
 "accountType"="계정 유형:";
 /* Text relative to the MEGA account level. UPPER CASE */
-"free"="무료";
+"Free"="무료";
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="%@에 만기";
 /* Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible). */
