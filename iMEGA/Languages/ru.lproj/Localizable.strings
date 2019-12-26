@@ -563,7 +563,7 @@
 /* Add contacts and share dialog error message when user try to add already existing email address. */
 "alreadyHaveAContactWithThatEmailAddress"="У Вас уже есть контакт с таким email-адресом";
 /* Add contacts and share dialog error message when user try to add already existing email address. */
-"invitationAlreadySentToContactBefore"="The invitation to contact %@ has been sent before and can be consulted in the Sent Requests tab.";
+"invitationAlreadySentToContactBefore"="Приглашение контакту %@ уже было отправлено, и с ним можно ознакомиться на вкладке «Отправленные запросы».";
 /* Success message shown when a contact has been invited */
 "theUserHasBeenInvited"="Пользователь [X]  приглашён. Он появится в вашем списке контактов, если согласится.";
 /* Success message shown when some contacts have been invited */
@@ -1409,7 +1409,7 @@
 /* Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible. */
 "autoAccept"="Принимать автоматически";
 /* Footer that explains the way Auto-Accept works for QR codes */
-"autoAcceptFooter"="Контакты, просканировавшие ваш QR-код, будут автоматически добавлены в ваш список контактов.";
+"autoAcceptFooter"="Пользователи MEGA, просканировавшие ваш QR-код, будут автоматически добавлены в ваш список контактов.";
 /* Action to reset the current valid QR code of the user */
 "resetQrCode"="Сбросить QR-код";
 /* Footer that explains what would happen if the user resets his/her QR code */

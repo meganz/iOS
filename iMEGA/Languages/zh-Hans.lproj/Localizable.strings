@@ -1409,7 +1409,7 @@
 /* Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible. */
 "autoAccept"="自动接受";
 /* Footer that explains the way Auto-Accept works for QR codes */
-"autoAcceptFooter"="扫描二维码码的联系人会自动添加到您的联系人列表中。";
+"autoAcceptFooter"="通过扫描二维码添加的用户会自动添加到您的联系人列表";
 /* Action to reset the current valid QR code of the user */
 "resetQrCode"="重置二维码";
 /* Footer that explains what would happen if the user resets his/her QR code */

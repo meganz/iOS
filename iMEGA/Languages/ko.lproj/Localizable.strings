@@ -1409,7 +1409,7 @@
 /* Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible. */
 "autoAccept"="자동 승인";
 /* Footer that explains the way Auto-Accept works for QR codes */
-"autoAcceptFooter"="당신의 QR 코드를 스캔한 연락처는 자동으로 연락처 목록에 추가됩니다.";
+"autoAcceptFooter"="당신의 QR 코드를 스캔한 MEGA 이용자는 자동으로 연락처 목록에 추가됩니다.";
 /* Action to reset the current valid QR code of the user */
 "resetQrCode"="QR 코드 초기화";
 /* Footer that explains what would happen if the user resets his/her QR code */

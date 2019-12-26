@@ -563,7 +563,7 @@
 /* Add contacts and share dialog error message when user try to add already existing email address. */
 "alreadyHaveAContactWithThatEmailAddress"="そのアドレスを持つ知り合いは既に存在します。";
 /* Add contacts and share dialog error message when user try to add already existing email address. */
-"invitationAlreadySentToContactBefore"="The invitation to contact %@ has been sent before and can be consulted in the Sent Requests tab.";
+"invitationAlreadySentToContactBefore"="%@さんに連絡するための招待状は以前に送信され、「送信済み要求」タブで照会できます。";
 /* Success message shown when a contact has been invited */
 "theUserHasBeenInvited"="[X] が招待されています。あなたが認めれば、知り合いのリストに載ります。";
 /* Success message shown when some contacts have been invited */
@@ -1409,7 +1409,7 @@
 /* Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible. */
 "autoAccept"="自動承認";
 /* Footer that explains the way Auto-Accept works for QR codes */
-"autoAcceptFooter"="あなたのQRコードをスキャンする連絡先は自動的にあなたの連絡先リストに追加されます。";
+"autoAcceptFooter"="あなたのQRコードをスキャンするMEGAユーザー様は自動的にあなたの連絡先リストに追加されます。";
 /* Action to reset the current valid QR code of the user */
 "resetQrCode"="QRコードをリセット";
 /* Footer that explains what would happen if the user resets his/her QR code */
