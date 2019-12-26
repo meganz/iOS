@@ -1334,7 +1334,7 @@ void uncaughtExceptionHandler(NSException *exception) {
     [self showMainTabBar];
 }
 
-- (void)didReadyToShowRecommendations {
+- (void)readyToShowRecommendations {
     [self showAddPhoneNumberIfNeeded];
 }
 
