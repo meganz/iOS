@@ -562,8 +562,6 @@
 "noNeedToAddYourOwnEmailAddress"="لاحاجة لإضافة بريدك الإلكتروني";
 /* Add contacts and share dialog error message when user try to add already existing email address. */
 "alreadyHaveAContactWithThatEmailAddress"="لديك بالفعل جهة اتصال مرتبطة بهذا البريد الإلكتروني";
-/* Add contacts and share dialog error message when user try to add already existing email address. */
-"invitationAlreadySentToContactBefore"="The invitation to contact %@ has been sent before and can be consulted in the Sent Requests tab.";
 /* Success message shown when a contact has been invited */
 "theUserHasBeenInvited"="المستخدم [X] الذي قمت بدعوته سوف يظهر في قائمة الاتصال الخاصة بك فور موافقته على طلب الإضافة.";
 /* Success message shown when some contacts have been invited */
@@ -989,7 +987,7 @@
 "availableLabel"="متواجد";
 /* title of the My Account screen */
 "accountType"="نوع الحساب:";
-/* Text relative to the MEGA account level. UPPER CASE */
+/* Label to indicate that the current user has a Free account. */
 "Free"="مجانا";
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="تنتهي في %@";

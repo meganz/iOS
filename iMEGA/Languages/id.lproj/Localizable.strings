@@ -562,8 +562,6 @@
 "noNeedToAddYourOwnEmailAddress"="Tidak perlu menambahkan email anda sendiri.";
 /* Add contacts and share dialog error message when user try to add already existing email address. */
 "alreadyHaveAContactWithThatEmailAddress"="Anda telah memiliki kontak dengan alamat email itu.";
-/* Add contacts and share dialog error message when user try to add already existing email address. */
-"invitationAlreadySentToContactBefore"="The invitation to contact %@ has been sent before and can be consulted in the Sent Requests tab.";
 /* Success message shown when a contact has been invited */
 "theUserHasBeenInvited"="Nama pengguna [X] telah diundang dan akan muncul dalam daftar kontak anda setelah undangan anda diterima.";
 /* Success message shown when some contacts have been invited */
@@ -989,8 +987,8 @@
 "availableLabel"="Tersedia";
 /* title of the My Account screen */
 "accountType"="Tipe Akun:";
-/* Text relative to the MEGA account level. UPPER CASE */
-"Free"="GRATIS";
+/* Label to indicate that the current user has a Free account. */
+"Free"="Gratis";
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="expire pada %@";
 /* Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible). */

@@ -562,8 +562,6 @@
 "noNeedToAddYourOwnEmailAddress"="您無須增加個人的電子郵件";
 /* Add contacts and share dialog error message when user try to add already existing email address. */
 "alreadyHaveAContactWithThatEmailAddress"="您已有一個使用該電子郵件的連絡人";
-/* Add contacts and share dialog error message when user try to add already existing email address. */
-"invitationAlreadySentToContactBefore"="給聯絡人%@的邀請之前已發送過，可在已發送請求的頁面中查詢。";
 /* Success message shown when a contact has been invited */
 "theUserHasBeenInvited"="用戶[X]已被邀請。該邀請被接受後，他將會出現在您的聯絡人列表中。";
 /* Success message shown when some contacts have been invited */
@@ -989,7 +987,7 @@
 "availableLabel"="可使用的";
 /* title of the My Account screen */
 "accountType"="帳號類型:";
-/* Text relative to the MEGA account level. UPPER CASE */
+/* Label to indicate that the current user has a Free account. */
 "Free"="免費";
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="到 %@ 過期";
