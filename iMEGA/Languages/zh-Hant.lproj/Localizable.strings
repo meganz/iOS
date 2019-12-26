@@ -1409,7 +1409,7 @@
 /* Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible. */
 "autoAccept"="自動加入";
 /* Footer that explains the way Auto-Accept works for QR codes */
-"autoAcceptFooter"="使用者只要掃描您的QR二維條碼，便可自動新增至您的聯絡人列表中。";
+"autoAcceptFooter"="掃描您QR二維條碼的MEGA用戶將會自動加入至您的聯絡人列表。";
 /* Action to reset the current valid QR code of the user */
 "resetQrCode"="重設QR二維條碼";
 /* Footer that explains what would happen if the user resets his/her QR code */

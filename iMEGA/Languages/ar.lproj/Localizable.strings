@@ -938,7 +938,7 @@
 /* Header of block with achievements bonuses. */
 "unlockedBonuses"="الإضافات الممنوحة:";
 /* A header/title of a section which contains information about used/available storage space on a user's cloud drive. */
-"storageQuota"="حصة التخزين";
+"storageQuota"="مساحة التخزين المتاحة";
 /* The header/title of a block/section which contains information about the user's used/available transfer allowance for their account. */
 "transferQuota"="حصة النقل";
 /* achievement type */
@@ -1409,7 +1409,7 @@
 /* Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible. */
 "autoAccept"="قبول تلقائي";
 /* Footer that explains the way Auto-Accept works for QR codes */
-"autoAcceptFooter"="سيتم إضافة جهات الاتصال التي تمسح رمز الاستجابة السريعة الخاص بك تلقائيًا إلى قائمة جهات اتصالك.";
+"autoAcceptFooter"="مستخدمو ميغا MEGA الذين يقومون بمسح رمز الاستجابة السريعة QR الخاص بك، سيتم إضافتهم إلى قائمة الاتصال الخاصة بك تلقائياً.";
 /* Action to reset the current valid QR code of the user */
 "resetQrCode"="إعادة تعيين كود QR";
 /* Footer that explains what would happen if the user resets his/her QR code */
@@ -1629,7 +1629,7 @@
 /* Detailed explanation of why the user should give some permissions to MEGA */
 "To fully take advantage of your MEGA account we need to ask you some permissions."="للاستفادة القصوى من ميزات حسابك على MEGA نحتاج ان نطلب منك بعض الصلاحيات.";
 /* Message warning the user about the risk of not setting up permissions */
-"The MEGA app may not work as expected without the required permissions. Are you sure?"="The MEGA app may not work as expected without the required permissions. Are you sure?";
+"The MEGA app may not work as expected without the required permissions. Are you sure?"="قد لا يعمل تطبيق ميغا MEGA بالشكل المتوقع بدون الأذونات المطلوبة. هل أنت متأكد؟";
 /* Shows number of the current page. '%1' will be replaced by current page number. '%2' will be replaced by number of all pages. */
 "%1 of %2"="%1 من %2";
 /* Title label that explains that the user is going to be asked for the photos permission */
@@ -1945,7 +1945,7 @@
 /* Popup notification text on mouse-over taken down folder. */
 "This folder has been the subject of a takedown notice."="مجلد خاضع لموضوع إشعار إنهاء الخدمة";
 /* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
-"Dispute Takedown"="Dispute Takedown";
+"Dispute Takedown"="تمت إزالته لشكوى";
 /* Title of the "Links" Shared Items. */
 "Links"="Links";
 /* Title for empty state view of "Links" in Shared Items. */
