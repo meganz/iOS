@@ -562,8 +562,6 @@
 "noNeedToAddYourOwnEmailAddress"="당신의 이메일을 추가할 필요는 없습니다";
 /* Add contacts and share dialog error message when user try to add already existing email address. */
 "alreadyHaveAContactWithThatEmailAddress"="이 이메일 주소의 연락처가 이미 있습니다";
-/* Add contacts and share dialog error message when user try to add already existing email address. */
-"invitationAlreadySentToContactBefore"="이전에 지인 %@님께 발송된 초대장이 있으며 발송된 요청 탭에서 검토할 수 있습니다.";
 /* Success message shown when a contact has been invited */
 "theUserHasBeenInvited"="[X]님이 초대되었으며 수락되면 당신의 연락처 목록에 나타날 것입니다.";
 /* Success message shown when some contacts have been invited */
@@ -989,7 +987,7 @@
 "availableLabel"="이용가능";
 /* title of the My Account screen */
 "accountType"="계정 유형:";
-/* Text relative to the MEGA account level. UPPER CASE */
+/* Label to indicate that the current user has a Free account. */
 "Free"="무료";
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="%@에 만기";

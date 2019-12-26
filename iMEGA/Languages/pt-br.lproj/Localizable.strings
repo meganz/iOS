@@ -562,8 +562,6 @@
 "noNeedToAddYourOwnEmailAddress"="Não é necessário adicionar o seu próprio email";
 /* Add contacts and share dialog error message when user try to add already existing email address. */
 "alreadyHaveAContactWithThatEmailAddress"="Você já tem um contato com este email";
-/* Add contacts and share dialog error message when user try to add already existing email address. */
-"invitationAlreadySentToContactBefore"="A solicitação de contato já foi enviada a %@ anteriormente, e pode ser consultada nas Solicitações enviadas.";
 /* Success message shown when a contact has been invited */
 "theUserHasBeenInvited"="O usuário [X] foi convidado, e aparecerá na sua lista de contatos assim que aceitar.";
 /* Success message shown when some contacts have been invited */
@@ -989,8 +987,8 @@
 "availableLabel"="Disponível";
 /* title of the My Account screen */
 "accountType"="Tipo de conta:";
-/* Text relative to the MEGA account level. UPPER CASE */
-"Free"="GRATUITA";
+/* Label to indicate that the current user has a Free account. */
+"Free"="Grátis";
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="expira em %@";
 /* Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible). */

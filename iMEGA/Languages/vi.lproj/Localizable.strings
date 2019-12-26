@@ -562,8 +562,6 @@
 "noNeedToAddYourOwnEmailAddress"="Không cần phải nhập chính email của mình vào danh bạ";
 /* Add contacts and share dialog error message when user try to add already existing email address. */
 "alreadyHaveAContactWithThatEmailAddress"="Bạn đã có tên liên lạc với địa chỉ email đó rồi";
-/* Add contacts and share dialog error message when user try to add already existing email address. */
-"invitationAlreadySentToContactBefore"="The invitation to contact %@ has been sent before and can be consulted in the Sent Requests tab.";
 /* Success message shown when a contact has been invited */
 "theUserHasBeenInvited"="Người dùng [X] đã được mời và sẽ xuất hiện trong danh bạ của quý vị khi họ chấp nhận y/c đó.";
 /* Success message shown when some contacts have been invited */
@@ -989,8 +987,8 @@
 "availableLabel"="Không Gian Trống";
 /* title of the My Account screen */
 "accountType"="Hạng Tài Khoản";
-/* Text relative to the MEGA account level. UPPER CASE */
-"Free"="MIễN PHÍ";
+/* Label to indicate that the current user has a Free account. */
+"Free"="Miễn phí";
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="hết hạn vào %@";
 /* Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible). */
