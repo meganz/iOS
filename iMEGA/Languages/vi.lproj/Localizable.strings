@@ -121,7 +121,7 @@
 /*  */
 "agreeWithTheMEGATermsOfService"="Tôi đồng ý với <a href=\"terms\">Điều Khoản Dịch Vụ</a> của MEGA";
 /* This text is displayed in the account creation screen with a checkbox. User will have to tick the checkbox before proceeding on to create an account */
-"agreeWithLosingPasswordYouLoseData"="I understand that [S]if I lose my password, I may lose my data.[/S] Read more about <a href=\"terms\">MEGA’s end-to-end encryption</a>";
+"agreeWithLosingPasswordYouLoseData"="I understand that [S]if I lose my password, I may lose my data.[/S] Read more about <a href=\"terms\">MEGA’s end-to-end encryption</a>.";
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="Xin nhập một tên hợp lệ";
 /* Error text shown when you have not written the same password */
@@ -562,6 +562,8 @@
 "noNeedToAddYourOwnEmailAddress"="Không cần phải nhập chính email của mình vào danh bạ";
 /* Add contacts and share dialog error message when user try to add already existing email address. */
 "alreadyHaveAContactWithThatEmailAddress"="Bạn đã có tên liên lạc với địa chỉ email đó rồi";
+/* Add contacts and share dialog error message when user try to add already existing email address. */
+"invitationAlreadySentToContactBefore"="The invitation to contact %@ has been sent before and can be consulted in the Sent Requests tab.";
 /* Success message shown when a contact has been invited */
 "theUserHasBeenInvited"="Người dùng [X] đã được mời và sẽ xuất hiện trong danh bạ của quý vị khi họ chấp nhận y/c đó.";
 /* Success message shown when some contacts have been invited */
@@ -1006,9 +1008,9 @@
 /*  */
 "chooseYourAccountType"="Chọn hạng tài khoản";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]Ổ Mây sắp đầy.[/S] [A]Nâng cấp lên[/A] hạng PRO ngay để nhận [S]tới 8 TB (8192 GB)[/S] để lưu trữ dữ liệu.";
+"cloudDriveIsAlmostFull"="[S]Your Cloud Drive is almost full.[/S] [A]Upgrade now[/A] to a PRO account and get [S]up to %@ TB (%@ GB)[/S] of cloud storage space.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]Tài khoản đã hết không gian lưu trữ.[/S] [A]Nâng cấp ngay[/A] lên hạng PRO và nhận lên [S]đến 8 TB (8192 GB)[/S] không gian lưu trữ.";
+"cloudDriveIsFull"="[S]Your Cloud Drive is full.[/S] [A]Upgrade now[/A] to a PRO account and get [S]up to %@ TB (%@ GB)[/S] of cloud storage space.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Lưu trữ";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
@@ -1523,7 +1525,7 @@
 /* When an active call of user A with user B had failed */
 "callFailed"="Cuộc gọi thất bại";
 /* When an active call of user A with user B had ended */
-"callEnded"="Cuộc gọi kết thúc.";
+"callEnded"="Cuộc gọi chấm dứt.";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="Thời lượng: %@";
 /* */
@@ -1669,7 +1671,7 @@
 /* A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days. */
 "Remove files older than"="Dọn dữ liệu tồn đọng hơn";
 /* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
-"Days"="Ngày";
+"Days"="ngày";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
 "The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="Thùng Rác tự động được dọn dẹp. Thời gian chờ (ít nhất) cho mỗi lần dọn là 7 ngày và chờ lâu nhất là 30 ngày.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
@@ -1991,6 +1993,8 @@
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
 "Reconnecting..."="Reconnecting…";
 /* Title shown when the user reconnect in a call. */
-"You are back!"="You are back!";
+"You are back!"="You are back.";
 /* Subtitle of chat screen when the chat is inactive */
 "Inactive chat"="Cuộc chát bất hoạt động";
+/* Error message shown when the user tries to open a file with an unsupported encoding */
+"It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1.";
