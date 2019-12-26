@@ -114,7 +114,7 @@
     
     self.currentPlanImageView.image = [self imageForProLevel:self.userProLevel];
     self.currentPlanNameView.backgroundColor = [self colorForProLevel:self.userProLevel];
-    self.currentPlanNameLabel.text = [self nameForProLevel:self.userProLevel];
+    self.currentPlanNameLabel.text = AMLocalizedString([MEGAAccountDetails stringForAccountType:self.userProLevel], nil);
     
     if ([[MEGASdkManager sharedMEGASdk] mnz_isProAccount]) {
         self.tableView.tableHeaderView = self.chooseFromOneOfThePlansPROHeaderView;
@@ -262,36 +262,6 @@
     return proLevelColor;
 }
 
-- (NSString *)nameForProLevel:(MEGAAccountType)proLevel {
-    NSString *proLevelName;
-    switch (proLevel) {
-        case MEGAAccountTypeFree:
-            proLevelName = AMLocalizedString(@"free", @"Text relative to the MEGA account level. UPPER CASE");
-            break;
-            
-        case MEGAAccountTypeLite:
-            proLevelName = @"LITE";
-            break;
-            
-        case MEGAAccountTypeProI:
-            proLevelName = @"PRO I";
-            break;
-            
-        case MEGAAccountTypeProII:
-            proLevelName = @"PRO II";
-            break;
-            
-        case MEGAAccountTypeProIII:
-            proLevelName = @"PRO III";
-            break;
-            
-        default:
-            break;
-    }
-    
-    return proLevelName;
-}
-
 - (NSAttributedString *)storageAttributedStringForProLevelAtIndex:(NSInteger)index {
     NSMutableAttributedString *storageString = [NSMutableAttributedString.alloc initWithString:[NSString stringWithFormat:@" %@", AMLocalizedString(@"productSpace", @"Storage related with the MEGA PRO account level you can subscribe")] attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
     
@@ -359,15 +329,22 @@
 }
 
 - (NSString *)storageAndUnitsByProduct:(SKProduct *)product {
-    NSArray *storageTransferArray = [product.localizedDescription componentsSeparatedByString:@";"];
-    NSArray *storageArray = [storageTransferArray.firstObject componentsSeparatedByString:@" "];
-    return [NSString stringWithFormat:@"%@ %@", storageArray.firstObject, [storageArray objectAtIndex:1]];
+    NSUInteger index = [MEGAPurchase.sharedInstance pricingProductIndexForProduct:product];
+    NSInteger storageValue = [MEGAPurchase.sharedInstance.pricing storageGBAtProductIndex:index];
+    return [self displayStringForGBValue:storageValue];
 }
 
 - (NSString *)transferAndUnitsByProduct:(SKProduct *)product {
-    NSArray *storageTransferArray = [product.localizedDescription componentsSeparatedByString:@";"];
-    NSArray *transferArray = [[storageTransferArray objectAtIndex:1] componentsSeparatedByString:@" "];
-    return [NSString stringWithFormat:@"%@ %@", transferArray.firstObject, [transferArray objectAtIndex:1]];
+    NSUInteger index = [MEGAPurchase.sharedInstance pricingProductIndexForProduct:product];
+    NSInteger transferValue = [MEGAPurchase.sharedInstance.pricing transferGBAtProductIndex:index];
+    return [self displayStringForGBValue:transferValue];
+}
+
+- (NSString *)displayStringForGBValue:(NSInteger)gbValue {
+    // 1 GB = 1024 * 1024 * 1024 Bytes
+    long long valueInBytes = (gbValue * 1024 * 1024 * 1024);
+    return [NSByteCountFormatter stringFromByteCount:valueInBytes
+                                          countStyle:NSByteCountFormatterCountStyleBinary];
 }
 
 #pragma mark - IBActions
@@ -420,7 +397,7 @@
     
     NSNumber *proLevelNumber = [self.proLevelsMutableArray objectAtIndex:indexPath.row];
     cell.productImageView.image = [self imageForProLevel:proLevelNumber.integerValue];
-    cell.productNameLabel.text = [self nameForProLevel:proLevelNumber.integerValue];
+    cell.productNameLabel.text = AMLocalizedString([MEGAAccountDetails stringForAccountType:proLevelNumber.integerValue], nil);
     cell.productNameView.backgroundColor = [self colorForProLevel:proLevelNumber.integerValue];
     cell.productPriceLabel.textColor = [self colorForProLevel:proLevelNumber.integerValue];
     

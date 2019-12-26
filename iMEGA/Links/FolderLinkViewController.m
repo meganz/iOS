@@ -316,7 +316,7 @@
     }]];
     
     [decryptionAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"decrypt", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        NSString *linkString = [Helper buildPublicLink:self.publicLinkString withKey:decryptionAlertController.textFields.firstObject.text isFolder:YES];
+        NSString *linkString = [MEGALinkManager buildPublicLink:self.publicLinkString withKey:decryptionAlertController.textFields.firstObject.text isFolder:YES];
         
         isValidatingDecryptionKey = YES;
         

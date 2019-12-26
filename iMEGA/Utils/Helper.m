@@ -1337,12 +1337,4 @@ static MEGAIndexer *indexer;
     [UIApplication.mnz_presentingViewController presentViewController:logAlertController animated:YES completion:nil];
 }
 
-#pragma mark - Links
-
-+ (NSString *)buildPublicLink:(NSString *)link withKey:(NSString *)key isFolder:(BOOL)isFolder {
-    NSString *stringWithoutSymbols = [[link stringByReplacingOccurrencesOfString:@"#" withString:@""] stringByReplacingOccurrencesOfString:@"!" withString:@""];
-    NSString *publicHandle = [stringWithoutSymbols substringFromIndex:stringWithoutSymbols.length - 8];
-    return [MEGASdkManager.sharedMEGASdk buildPublicLinkForHandle:publicHandle key:key isFolder:isFolder];
-}
-
 @end

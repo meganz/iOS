@@ -384,8 +384,6 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     MEGALogDebug(@"[App Lifecycle] Application will terminate");
     
-    [MEGASdkManager destroySharedMEGAChatSdk];
-    
     [[SKPaymentQueue defaultQueue] removeTransactionObserver:[MEGAPurchase sharedInstance]];
     
     if ([[[[MEGASdkManager sharedMEGASdk] downloadTransfers] size] integerValue] == 0) {
@@ -1405,8 +1403,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                     detail = [detail mnz_removeWebclientFormatters];
                     NSString *maxStorage = [NSString stringWithFormat:@"%ld", (long)[[MEGAPurchase sharedInstance].pricing storageGBAtProductIndex:7]];
                     NSString *maxStorageTB = [NSString stringWithFormat:@"%ld", (long)[[MEGAPurchase sharedInstance].pricing storageGBAtProductIndex:7] / 1024];
-                    detail = [detail stringByReplacingOccurrencesOfString:@"4096" withString:maxStorage];
-                    detail = [detail stringByReplacingOccurrencesOfString:@"4" withString:maxStorageTB];
+                    detail = [NSString stringWithFormat:detail, maxStorageTB, maxStorage];
                     alreadyPresented = YES;
                     NSString *title = AMLocalizedString(@"upgradeAccount", @"Button title which triggers the action to upgrade your MEGA account level");
                     UIImage *image = event.number == StorageStateOrange ? [UIImage imageNamed:@"storage_almost_full"] : [UIImage imageNamed:@"storage_full"];
@@ -1422,6 +1419,8 @@ void uncaughtExceptionHandler(NSException *exception) {
             
             break;
             
+        case EventStorageSumChanged:
+            [MEGASdkManager.sharedMEGASdk mnz_setShouldRequestAccountDetails:YES];
         default:
             break;
     }
@@ -1684,6 +1683,7 @@ void uncaughtExceptionHandler(NSException *exception) {
         }
             
         case MEGARequestTypeAccountDetails:
+            [MEGASdkManager.sharedMEGASdk mnz_setShouldRequestAccountDetails:NO];
             [[MEGASdkManager sharedMEGASdk] mnz_setAccountDetails:[request megaAccountDetails]];
             break;
             

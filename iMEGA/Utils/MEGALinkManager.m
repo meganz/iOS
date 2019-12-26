@@ -305,6 +305,13 @@ static NSString *nodeToPresentBase64Handle;
 
 #pragma mark - Manage MEGA links
 
++ (NSString *)buildPublicLink:(NSString *)link withKey:(NSString *)key isFolder:(BOOL)isFolder {
+    NSString *stringWithoutSymbols = [[link stringByReplacingOccurrencesOfString:@"#" withString:@""] stringByReplacingOccurrencesOfString:@"!" withString:@""];
+    NSString *publicHandle = [stringWithoutSymbols substringFromIndex:stringWithoutSymbols.length - 8];
+    
+    return [MEGASdkManager.sharedMEGASdk buildPublicLinkForHandle:publicHandle key:key isFolder:isFolder];
+}
+
 + (void)processLinkURL:(NSURL *)url {
     if (!url) {
         return;

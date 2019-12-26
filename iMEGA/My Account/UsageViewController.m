@@ -3,6 +3,8 @@
 #import "PieChartView.h"
 
 #import "NSString+MNZCategory.h"
+#import "MEGASdkManager.h"
+#import "MEGASdk+MNZCategory.h"
 
 #import "Helper.h"
 
@@ -27,7 +29,12 @@
 @property (weak, nonatomic) IBOutlet UILabel *incomingSharesSizeLabel;
 @property (weak, nonatomic) IBOutlet UIProgressView *incomingSharesProgressView;
 
-@property (nonatomic) NSNumberFormatter *numberFormatter;
+@property (strong, nonatomic) NSNumberFormatter *numberFormatter;
+@property (strong, nonatomic) NSNumber *cloudDriveSize;
+@property (strong, nonatomic) NSNumber *rubbishBinSize;
+@property (strong, nonatomic) NSNumber *incomingSharesSize;
+@property (strong, nonatomic) NSNumber *usedStorage;
+@property (strong, nonatomic) NSNumber *maxStorage;
 
 @end
 
@@ -37,7 +44,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    [self initializeStorageInfo];
     self.numberFormatter = NSNumberFormatter.alloc.init;
     self.numberFormatter.numberStyle = NSNumberFormatterDecimalStyle;
     self.numberFormatter.locale = NSLocale.autoupdatingCurrentLocale;
@@ -58,17 +65,17 @@
     [_pieChartView.layer setMasksToBounds:YES];
     [self changePieChartText:_usagePageControl.currentPage];
     
-    NSString *stringFromByteCount = [Helper memoryStyleStringFromByteCount:[self.sizesArray.firstObject longLongValue]];
+    NSString *stringFromByteCount = [Helper memoryStyleStringFromByteCount:self.cloudDriveSize.longLongValue];
     [_cloudDriveSizeLabel setAttributedText:[self textForSizeLabels:stringFromByteCount]];
-    [_cloudDriveProgressView setProgress:([self.sizesArray.firstObject floatValue] / [[self.sizesArray objectAtIndex:4] floatValue]) animated:NO];
+    [_cloudDriveProgressView setProgress:(self.cloudDriveSize.doubleValue / self.maxStorage.floatValue) animated:NO];
     
-    stringFromByteCount = [Helper memoryStyleStringFromByteCount:[[self.sizesArray objectAtIndex:1] longLongValue]];
+    stringFromByteCount = [Helper memoryStyleStringFromByteCount:self.rubbishBinSize.longLongValue];
     [_rubbishBinSizeLabel setAttributedText:[self textForSizeLabels:stringFromByteCount]];
-    [_rubbishBinProgressView setProgress:([[self.sizesArray objectAtIndex:1] floatValue] / [[self.sizesArray objectAtIndex:4] floatValue]) animated:NO];
+    [_rubbishBinProgressView setProgress:(self.rubbishBinSize.floatValue / self.maxStorage.floatValue) animated:NO];
      
-    stringFromByteCount = [Helper memoryStyleStringFromByteCount:[[self.sizesArray objectAtIndex:2] longLongValue]];
+    stringFromByteCount = [Helper memoryStyleStringFromByteCount:self.incomingSharesSize.longLongValue];
     [_incomingSharesSizeLabel setAttributedText:[self textForSizeLabels:stringFromByteCount]];
-    [_incomingSharesProgressView setProgress:([[self.sizesArray objectAtIndex:2] floatValue] / [[self.sizesArray objectAtIndex:4] floatValue]) animated:NO];
+    [_incomingSharesProgressView setProgress:(self.incomingSharesSize.floatValue/ self.maxStorage.floatValue) animated:NO];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -83,6 +90,25 @@
 
 #pragma mark - Private
 
+- (void)initializeStorageInfo {
+    MEGAAccountDetails *accountDetails = MEGASdkManager.sharedMEGASdk.mnz_accountDetails;
+    
+    self.cloudDriveSize = [accountDetails storageUsedForHandle:MEGASdkManager.sharedMEGASdk.rootNode.handle];
+    self.rubbishBinSize = [accountDetails storageUsedForHandle:MEGASdkManager.sharedMEGASdk.rubbishNode.handle];
+    
+    MEGANodeList *incomingShares = MEGASdkManager.sharedMEGASdk.inShares;
+    NSUInteger count = incomingShares.size.unsignedIntegerValue;
+    long long incomingSharesSizeLongLong = 0;
+    for (NSUInteger i = 0; i < count; i++) {
+        MEGANode *node = [incomingShares nodeAtIndex:i];
+        incomingSharesSizeLongLong += [MEGASdkManager.sharedMEGASdk sizeForNode:node].longLongValue;
+    }
+    self.incomingSharesSize = [NSNumber numberWithLongLong:incomingSharesSizeLongLong];
+    
+    self.usedStorage = accountDetails.storageUsed;
+    self.maxStorage = accountDetails.storageMax;
+}
+
 - (void)changePieChartText:(NSInteger)currentPage {
     
     [_pieChartMainLabel setAttributedText:[self textForMainLabel:currentPage]];
@@ -90,17 +116,17 @@
     NSString *textSecondaryLabel;
     switch (currentPage) {
         case 0: {
-            textSecondaryLabel = [NSString stringWithFormat:AMLocalizedString(@"of %@", @"Sentece showed under the used space percentage to complete the info with the maximum storage."), [Helper memoryStyleStringFromByteCount:[[self.sizesArray objectAtIndex:4] longLongValue]]];
+            textSecondaryLabel = [NSString stringWithFormat:AMLocalizedString(@"of %@", @"Sentece showed under the used space percentage to complete the info with the maximum storage."), [Helper memoryStyleStringFromByteCount:self.maxStorage.longLongValue]];
             break;
         }
             
         case 1: {
-            textSecondaryLabel = [NSString stringWithFormat:AMLocalizedString(@"used of %@", @"Sentece showed under the used space to complete the info with the maximum storage."), [Helper memoryStyleStringFromByteCount:[[self.sizesArray objectAtIndex:4] longLongValue]]];
+            textSecondaryLabel = [NSString stringWithFormat:AMLocalizedString(@"used of %@", @"Sentece showed under the used space to complete the info with the maximum storage."), [Helper memoryStyleStringFromByteCount:self.maxStorage.longLongValue]];
             break;
         }
             
         case 2: {
-            textSecondaryLabel = [NSString stringWithFormat:AMLocalizedString(@"available of %@", @"Sentece showed under the available space to complete the info with the maximum storage."), [Helper memoryStyleStringFromByteCount:[[self.sizesArray objectAtIndex:4] longLongValue]]];
+            textSecondaryLabel = [NSString stringWithFormat:AMLocalizedString(@"available of %@", @"Sentece showed under the available space to complete the info with the maximum storage."), [Helper memoryStyleStringFromByteCount:self.maxStorage.longLongValue]];
             break;
         }
     }
@@ -116,7 +142,7 @@
     
     switch (currentPage) {
         case 0: {
-            NSNumber *number = [NSNumber numberWithFloat:(([[self.sizesArray objectAtIndex:3] floatValue] / [[self.sizesArray objectAtIndex:4] floatValue]) * 100)];
+            NSNumber *number = [NSNumber numberWithFloat:((self.usedStorage.floatValue / self.maxStorage.floatValue) * 100)];
             NSString *firstPartString = [self.numberFormatter stringFromNumber:number];
             firstPartRange = [firstPartString rangeOfString:firstPartString];
             firstPartMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:firstPartString];
@@ -128,12 +154,12 @@
         }
             
         case 1: {
-            stringFromByteCount = [Helper memoryStyleStringFromByteCount:[[self.sizesArray objectAtIndex:3] longLongValue]];
+            stringFromByteCount = [Helper memoryStyleStringFromByteCount:self.usedStorage.longLongValue];
             break;
         }
             
         case 2: {
-            long long availableStorage = [[self.sizesArray objectAtIndex:4] longLongValue] - [[self.sizesArray objectAtIndex:3] longLongValue];
+            long long availableStorage = self.maxStorage.longLongValue - self.usedStorage.longLongValue;
             stringFromByteCount = [Helper memoryStyleStringFromByteCount:(availableStorage < 0) ? 0 : availableStorage];
             break;
         }
@@ -279,19 +305,19 @@
             break;
             
         case 0: //Cloud Drive
-            valueForSlice = ([self.sizesArray.firstObject doubleValue] / [[self.sizesArray objectAtIndex:4] doubleValue]) * 94.0f;
+            valueForSlice = (self.cloudDriveSize.doubleValue / self.maxStorage.doubleValue) * 94.0f;
             break;
             
         case 2: //Rubbish Bin
-            valueForSlice = ([[self.sizesArray objectAtIndex:1] doubleValue] / [[self.sizesArray objectAtIndex:4] doubleValue]) * 94.0f;
+            valueForSlice = (self.rubbishBinSize.doubleValue / self.maxStorage.doubleValue) * 94.0f;
             break;
             
         case 4: //Incoming Shares
-            valueForSlice = ([[self.sizesArray objectAtIndex:2] doubleValue] / [[self.sizesArray objectAtIndex:4] doubleValue]) * 94.0f;
+            valueForSlice = (self.incomingSharesSize.doubleValue / self.maxStorage.doubleValue) * 94.0f;
             break;
             
         case 6: //Available space
-            valueForSlice = (([[self.sizesArray objectAtIndex:4] doubleValue] - [[self.sizesArray objectAtIndex:3] doubleValue]) / [[self.sizesArray objectAtIndex:4] doubleValue]) * 94.0f;
+            valueForSlice = ((self.maxStorage.doubleValue - self.usedStorage.doubleValue) / self.maxStorage.doubleValue) * 94.0f;
             break;
             
         default:
