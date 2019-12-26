@@ -2075,7 +2075,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         self.editMessage = nil;
     }
     
-    [navigationViewController addLeftCancelButton];
+    [navigationViewController addLeftDismissButtonWithText:AMLocalizedString(@"cancel", nil)];
     [self presentViewController:navigationViewController animated:YES completion:nil];
 }
 

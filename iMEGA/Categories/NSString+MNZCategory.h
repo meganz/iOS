@@ -9,6 +9,7 @@ typedef NS_ENUM(NSInteger, MEGAChatMessageEndCallReason);
 @property (nonatomic, readonly, getter=mnz_isImagePathExtension) BOOL mnz_imagePathExtension;
 @property (nonatomic, readonly, getter=mnz_isVideoPathExtension) BOOL mnz_videoPathExtension;
 @property (nonatomic, readonly, getter=mnz_isMultimediaPathExtension) BOOL mnz_multimediaPathExtension;
+@property (nonatomic, readonly, getter=mnz_isWebCodePathExtension) BOOL mnz_webCodePathExtension;
 
 #pragma mark - appData
 
