@@ -15,15 +15,18 @@
 #import "CloudDriveViewController.h"
 #import "MainTabBarController.h"
 #import "SearchInPdfViewController.h"
+#import "MEGALinkManager.h"
 
 #import "MEGANode+MNZCategory.h"
+#import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 #import "MEGAStore.h"
 #import "MEGAQLPreviewController.h"
+#import "MEGA-Swift.h"
 #import "UIView+MNZCategory.h"
 
-@interface PreviewDocumentViewController () <QLPreviewControllerDataSource, QLPreviewControllerDelegate, MEGATransferDelegate, UICollectionViewDelegate, UICollectionViewDataSource, CustomActionViewControllerDelegate, NodeInfoViewControllerDelegate, SearchInPdfViewControllerProtocol, UIGestureRecognizerDelegate> {
+@interface PreviewDocumentViewController () <QLPreviewControllerDataSource, QLPreviewControllerDelegate, MEGATransferDelegate, UICollectionViewDelegate, UICollectionViewDataSource, CustomActionViewControllerDelegate, NodeInfoViewControllerDelegate, SearchInPdfViewControllerProtocol, UIGestureRecognizerDelegate, PDFViewDelegate> {
     MEGATransfer *previewDocumentTransfer;
 }
 
@@ -226,6 +229,24 @@
     }
 }
 
+- (void)presentMEGAQlPreviewController {
+    MEGAQLPreviewController *previewController = [[MEGAQLPreviewController alloc] initWithFilePath:previewDocumentTransfer.path];
+    
+    [self dismissViewControllerAnimated:YES completion:^{
+        [UIApplication.mnz_presentingViewController presentViewController:previewController animated:YES completion:nil];
+    }];
+}
+
+- (void)presentWebCodeViewController {
+    WebCodeViewController *webCodeVC = [WebCodeViewController.alloc initWithFilePath:previewDocumentTransfer.path];
+    MEGANavigationController *navigationController = [MEGANavigationController.alloc initWithRootViewController:webCodeVC];
+    [navigationController addLeftDismissButtonWithText:AMLocalizedString(@"ok", nil)];
+    
+    [self dismissViewControllerAnimated:YES completion:^{
+        [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:nil];
+    }];
+}
+
 #pragma mark - QLPreviewControllerDataSource
 
 - (NSInteger)numberOfPreviewItemsInPreviewController:(QLPreviewController *)controller {
@@ -275,24 +296,20 @@
     }
     
     if (self.isViewLoaded && self.view.window) {
-        if (@available(iOS 11.0, *)) {
-            if ([transfer.path.pathExtension isEqualToString:@"pdf"]) {
-                [self loadPdfKit:[NSURL fileURLWithPath:transfer.path]];
+        if (transfer.path.mnz_isWebCodePathExtension) {
+            [self presentWebCodeViewController];
+        } else {
+            if (@available(iOS 11.0, *)) {
+                if ([transfer.path.pathExtension isEqualToString:@"pdf"]) {
+                    [self loadPdfKit:[NSURL fileURLWithPath:transfer.path]];
+                } else {
+                    [self presentMEGAQlPreviewController];
+                }
             } else {
                 [self presentMEGAQlPreviewController];
             }
-        } else {
-            [self presentMEGAQlPreviewController];
         }
     }
-}
-
-- (void)presentMEGAQlPreviewController {
-    MEGAQLPreviewController *previewController = [[MEGAQLPreviewController alloc] initWithFilePath:previewDocumentTransfer.path];
-    
-    [self dismissViewControllerAnimated:YES completion:^{
-        [UIApplication.mnz_presentingViewController presentViewController:previewController animated:YES completion:nil];
-    }];
 }
 
 #pragma mark - CustomActionViewControllerDelegate
@@ -375,6 +392,7 @@
 - (void)loadPdfKit:(NSURL *)url {
     if (!self.pdfView.document) {
         self.pdfView.hidden = NO;
+        self.pdfView.delegate = self;
         self.activityIndicator.hidden = YES;
         self.progressView.hidden = YES;
         self.imageView.hidden = YES;
@@ -448,6 +466,15 @@
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(nonnull UIGestureRecognizer *)otherGestureRecognizer {
     return YES;
+}
+
+
+#pragma mark - PDFViewDelegate
+
+- (void)PDFViewWillClickOnLink:(PDFView *)sender withURL:(NSURL *)url {
+    
+    MEGALinkManager.linkURL = url;
+    [MEGALinkManager processLinkURL:url];
 }
 
 #pragma mark - CollectionViewDelegate

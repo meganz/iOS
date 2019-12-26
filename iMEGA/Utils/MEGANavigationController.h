@@ -3,6 +3,6 @@
 @interface MEGANavigationController : UINavigationController <UIGestureRecognizerDelegate, UINavigationControllerDelegate>
 
 - (void)addRightCancelButton;
-- (void)addLeftCancelButton;
+- (void)addLeftDismissButtonWithText:(NSString *)text;
 
 @end
