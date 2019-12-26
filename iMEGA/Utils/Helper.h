@@ -116,8 +116,4 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 
 + (void)enableOrDisableLog;
 
-#pragma mark - Links
-
-+ (nullable NSString *)buildPublicLink:(NSString *_Nonnull)link withKey:(NSString *_Nonnull)key isFolder:(BOOL)isFolder;
-
 @end
