@@ -23,7 +23,7 @@
     self.backgroundTaskId = [UIApplication.sharedApplication beginBackgroundTaskWithName:NSStringFromClass([self class]) expirationHandler:^{
         MEGALogDebug(@"%@ background task expired", self);
         [self.expireDelegate backgroundTaskDidExpire];
-        [self endBackgroundTaskIfNeeded];;
+        [self endBackgroundTaskIfNeeded];
     }];
     
     if (self.backgroundTaskId == UIBackgroundTaskInvalid) {
