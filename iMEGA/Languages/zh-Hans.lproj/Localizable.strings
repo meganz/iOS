@@ -560,8 +560,6 @@
 "addContactButton"="新增";
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="您无须增加个人的电子邮件";
-/* Add contacts and share dialog error message when user try to add already existing email address. */
-"alreadyHaveAContactWithThatEmailAddress"="您已有一个使用该电子邮件的连络人";
 /* Success message shown when a contact has been invited */
 "theUserHasBeenInvited"="用户[X]已被邀请。该邀请被接受后，他将会出现在您的联系人列表中。";
 /* Success message shown when some contacts have been invited */

@@ -560,8 +560,6 @@
 "addContactButton"="เพิ่ม";
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="ไม่มีความจำเป็นที่จะเพิ่มที่อยู่อีเมลของคุณเอง";
-/* Add contacts and share dialog error message when user try to add already existing email address. */
-"alreadyHaveAContactWithThatEmailAddress"="คุณมีอีเมลของผู้ติดต่อนี้อยู่แล้ว";
 /* Success message shown when a contact has been invited */
 "theUserHasBeenInvited"="[X] ได้รับคำเชิญแล้วและจะปรากฏในรายชื่อผู้ติดต่อของคุณ";
 /* Success message shown when some contacts have been invited */

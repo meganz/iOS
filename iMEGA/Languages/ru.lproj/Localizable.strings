@@ -560,8 +560,6 @@
 "addContactButton"="Добавить";
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="Не обязательно добавлять свой собственный  email адрес";
-/* Add contacts and share dialog error message when user try to add already existing email address. */
-"alreadyHaveAContactWithThatEmailAddress"="У Вас уже есть контакт с таким email-адресом";
 /* Success message shown when a contact has been invited */
 "theUserHasBeenInvited"="Пользователь [X]  приглашён. Он появится в вашем списке контактов, если согласится.";
 /* Success message shown when some contacts have been invited */

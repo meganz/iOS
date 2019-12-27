@@ -560,8 +560,6 @@
 "addContactButton"="Thêm";
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="Không cần phải nhập chính email của mình vào danh bạ";
-/* Add contacts and share dialog error message when user try to add already existing email address. */
-"alreadyHaveAContactWithThatEmailAddress"="Bạn đã có tên liên lạc với địa chỉ email đó rồi";
 /* Success message shown when a contact has been invited */
 "theUserHasBeenInvited"="Người dùng [X] đã được mời và sẽ xuất hiện trong danh bạ của quý vị khi họ chấp nhận y/c đó.";
 /* Success message shown when some contacts have been invited */

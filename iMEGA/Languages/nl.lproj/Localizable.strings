@@ -560,8 +560,6 @@
 "addContactButton"="Voeg toe";
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="Het is niet noodzakelijk uw eigen e-mailadres toe te voegen";
-/* Add contacts and share dialog error message when user try to add already existing email address. */
-"alreadyHaveAContactWithThatEmailAddress"="U heeft al een contact met dit e-mailadres";
 /* Success message shown when a contact has been invited */
 "theUserHasBeenInvited"="De gebruiker [X] is uitgenodigd en zal, eenmaal geaccepteerd, verschijnen in uw lijst met contactpersonen.";
 /* Success message shown when some contacts have been invited */
