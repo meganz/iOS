@@ -43,7 +43,7 @@
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="Saisir la clé de déchiffrement";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertMessage"="Afin d'accéder à ce dossier/fichier, il vous faudra sa clé de déchiffrement. Si vous ne possédez pas la clé, veuillez contacter le créateur du lien.";
+"decryptionKeyAlertMessage"="Pour accéder à ce dossier ou fichier, il vous faudra sa clé de déchiffrement. Si vous n’avez pas la clé, veuillez contacter le créateur du lien.";
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="Clé de déchiffrement";
 /* Button title to try to decrypt the link */
@@ -121,11 +121,11 @@
 /*  */
 "agreeWithTheMEGATermsOfService"="J’accepte les <a href='terms'>conditions générales d’utilisation</a> de MEGA";
 /* This text is displayed in the account creation screen with a checkbox. User will have to tick the checkbox before proceeding on to create an account */
-"agreeWithLosingPasswordYouLoseData"="Je comprends que [S]si je perds mon mot de passe, je pourrais perdre mes données[/S]. En apprendre davantage sur le <a href=\"terms\">chiffrement de bout en bout de MEGA</a>";
+"agreeWithLosingPasswordYouLoseData"="Je comprends que [S]si je perds mon mot de passe, je pourrais perdre mes données[/S]. En apprendre davantage sur le <a href=\"terms\">chiffrement de bout en bout de MEGA</a>.";
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="Saisir un nom valide";
 /* Error text shown when you have not written the same password */
-"passwordsDoNotMatch"="Les mots de passes ne correspondent pas";
+"passwordsDoNotMatch"="Les mots de passe ne correspondent pas";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
 "termsCheckboxUnselected"="Vous devez accepter les conditions générales d’utilisation pour ouvrir un compte sur MEGA.";
 /* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown  */
@@ -157,7 +157,7 @@
 /* Error message shown when you try to open something bigger than the free space in your device */
 "fileTooBigMessage_open"="Le fichier que vous tentez d’ouvrir est plus grand que la mémoire disponible.";
 /* Error title shown when you open a file or folder link and it's no longer available */
-"linkUnavailable"="Lien non disponible";
+"linkUnavailable"="Le lien n’est pas disponible";
 /* */
 "fileLinkUnavailableText1"="Cela pourrait être dû aux raisons suivantes :";
 /* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
@@ -165,7 +165,7 @@
 /* */
 "fileLinkUnavailableText3"="L’URL est invalide. Le lien auquel vous tentez d’accéder n’existe pas.";
 /* */
-"fileLinkUnavailableText4"="Le fichier a été supprimé par l'utilisateur.";
+"fileLinkUnavailableText4"="Le fichier a été supprimé par l’utilisateur.";
 /* Message shown when a download starts */
 "downloadStarted"="Le téléchargement est lancé";
 /* Title for the folder link view */
@@ -299,9 +299,9 @@
 /* Message shown when a upload starts */
 "uploadStarted_Message"="Le téléversement est lancé";
 /* Alert title shown when you are seeing the details of a file and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
-"youNoLongerHaveAccessToThisFile_alertTitle"="Vous n'avez plus accès à ce fichier";
+"youNoLongerHaveAccessToThisFile_alertTitle"="Vous n’avez plus accès à ce fichier";
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
-"youNoLongerHaveAccessToThisFolder_alertTitle"="Vous n'avez plus accès à ce dossier";
+"youNoLongerHaveAccessToThisFolder_alertTitle"="Vous n’avez plus accès à ce dossier";
 /* The text is shown as an option on the details of a file or folder */
 "saveForOffline"="Enregistrer Hors ligne";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
@@ -391,7 +391,7 @@
 /* Title for the action that allows you to move a file or folder */
 "move"="Déplacer";
 /* Success message shown when you have moved 1 file */
-"moveFileMessage"="1 fichier déplacé";
+"moveFileMessage"="1 fichier a été déplacé";
 /* Success message shown when you have moved {1+} files */
 "moveFilesMessage"="%d fichiers ont été déplacés";
 /* Success message shown when you have moved 1 folder */
@@ -409,7 +409,7 @@
 /* List option shown on the details of a file or folder */
 "copy"="Copier";
 /* Success message shown when you have copied 1 file */
-"copyFileMessage"="1 fichier copié";
+"copyFileMessage"="1 fichier a été copié";
 /* Success message shown when you have copied {1+} files */
 "copyFilesMessage"="%d fichiers ont été copiés";
 /* Success message shown when you have copied 1 folder */
@@ -477,7 +477,7 @@
 /* Message shown when some files have been imported */
 "filesImported"="Les fichiers ont été importés";
 /* Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos */
-"selectTitle"="Choisir des éléments";
+"selectTitle"="Sélectionner des éléments";
 /* Button title that skips the current action */
 "skipButton"="Ignorer";
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
@@ -519,7 +519,7 @@
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
 "foldersShared"="%d dossiers";
 /* Item menu option to add a contact writting his/her email */
-"addFromEmail"="Insérer une adresse courriel";
+"addFromEmail"="Saisir une adresse courriel";
 /* Title of Shared Items section */
 "sharedItems"="Éléments partagés";
 /* Title of the tab bar item for the Shared Items section */
@@ -553,17 +553,15 @@
 /* Item menu option to add a contact through your device app Contacts */
 "addFromContacts"="Ajouter à partir des contacts";
 /* Alert title shown when you select to add a contact inserting his/her email */
-"addContact"="Ajouter le contact";
+"addContact"="Ajouter un contact";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
 "contactEmail"="Adresse courriel du contact";
 /* Button title to 'Add' the contact to your contacts list */
 "addContactButton"="Ajouter";
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="Vous n'avez pas à ajouter votre propre adresse courriel";
-/* Add contacts and share dialog error message when user try to add already existing email address. */
-"alreadyHaveAContactWithThatEmailAddress"="Vous avez déjà un contact avec cette adresse courriel";
 /* Success message shown when a contact has been invited */
-"theUserHasBeenInvited"="L'utilisateur [X] a été invité et apparaîtra dans votre liste de contacts s'il accepte.";
+"theUserHasBeenInvited"="L’utilisateur [X] a été invité et apparaîtra dans votre liste de contacts s’il accepte.";
 /* Success message shown when some contacts have been invited */
 "theUsersHaveBeenInvited"="Les utilisateurs ont été invités et apparaîtront dans votre liste de contacts s'ils acceptent.";
 /* Alert title shown when you want to remove one or more contacts */
@@ -621,7 +619,7 @@
 /* Title of one of the Settings sections where you can set up the 'Language' of the app */
 "language"="Langue";
 /* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
-"sendFeedbackLabel"="Envoyer une rétroaction";
+"sendFeedbackLabel"="Envoyer un commentaire";
 /* Message body of the email that appears when the users tap on "Send feedback" */
 "pleaseWriteYourFeedback"="Veuillez rédiger votre commentaire ici :";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
@@ -655,7 +653,7 @@
 /* Footer text for Camera Upload switch section when camera upload is disabled */
 "When enabled, photos will be uploaded."="Si cette option est activée, les photos seront téléversées.";
 /* Footer text for Camera Upload switch section when only photos upload is enabled */
-"Photos will be uploaded to Camera Uploads folder."="Les photos seront téléversées dans le dossier";
+"Photos will be uploaded to Camera Uploads folder."="Les photos seront téléversées dans le dossier Téléversements de l’appareil photo.";
 /* Footer text for Camera Upload switch section when photos and videos upload is enabled */
 "Photos and videos will be uploaded to Camera Uploads folder."="Les photos et les vidéos seront téléversées dans le dossier Téléversements de l’appareil photo.";
 /* Title to show for upload in background */
@@ -707,13 +705,13 @@
 /* Title of the switch to config whether to upload Shared Albums */
 "Upload Shared Albums"="Téléverser les albums partagés";
 /* Footer description for Upload Shared Albums title when option enabled */
-"Shared Albums from your device's Photos app will be uploaded."="Les albums partagés seront téléversés de Photos sur votre appareil.";
+"Shared Albums from your device's Photos app will be uploaded."="Les albums partagés de l’appli Photos de votre appareil seront téléversés.";
 /* Footer description for Upload Shared Albums title when option disabled */
-"Shared Albums from your device's Photos app will not be uploaded."="Les albums partagés ne seront pas téléversés de Photos sur votre appareil.";
+"Shared Albums from your device's Photos app will not be uploaded."="Les albums partagés de l’appli Photos de votre appareil ne seront pas téléversés.";
 /* Title of the switch to config whether to upload synced albums */
 "Upload albums synced from iTunes"="Téléverser les albums synchronisés d’iTunes";
 /* Footer description for upload synced albums title */
-"Synced albums are where you sync photos or videos to your device's Photos app from iTunes."="Les albums synchronisés sont où vous synchronisez les photos ou les vidéos dans l’appli Photos de votre appareil, à partir d’iTunes.";
+"Synced albums are where you sync photos or videos to your device's Photos app from iTunes."="Les albums synchronisés sont où vous synchronisez les photos ou les vidéos vers l’appli Photos de votre appareil, à partir d’iTunes.";
 /* App means “Application” */
 "App version"="Version de l’appli";
 /* Title of the label where the SDK version is shown */
@@ -743,7 +741,7 @@
 /* Section title where you can 'Clear Offline files' of your MEGA app */
 "clearOfflineFiles"="Vider les fichiers Hors ligne";
 /* Section title where you can 'Clear Cache' of your MEGA app */
-"clearCache"="Vider le cache";
+"clearCache"="Nettoyer le cache";
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
 "onMEGA"="Sur MEGA";
 /* Button text on the Rubbish Bin page. This button will empty all files and folders currently stored in the rubbish bin. */
@@ -819,7 +817,7 @@
 /* Message shown during forgot your password process if the link to reset password has expired */
 "recoveryLinkHasExpired"="Le lien de récupération est expiré. Veuillez ressayer.";
 /* Headline of the password reset recovery procedure */
-"passwordReset"="Réinitialiser le mot de passe";
+"passwordReset"="Réinitialisation du mot de passe";
 /* A message shown to explain that the user has to input (type or paste) their recovery key to continue with the reset password process. */
 "pleaseEnterYourRecoveryKey"="Veuillez saisir votre clé de récupération";
 /* Label for any 'Recovery Key' button, link, text, title, etc. Preserve uppercase - (String as short as possible). The Recovery Key is the new name for the account 'Master Key', and can unlock (recover) the account if the user forgets their password. */
@@ -858,7 +856,7 @@
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
 "emailIsChanging_description"="Veuillez vous rendre dans votre boîte de réception et cliquer sur le lien pour confirmer votre nouvelle adresse courriel.";
 /* Text shown on the confirm email view to remind the user what to do */
-"verifyYourEmailAddress_description"="Veuillez saisir votre mot de passe pour vérifier votre adresse courriel";
+"verifyYourEmailAddress_description"="Veuillez saisir votre mot de passe pour confirmer votre adresse courriel";
 /* The [X] will be replaced with the e-mail address. */
 "congratulationsNewEmailAddress"="Félicitations, votre nouvelle adresse courriel pour ce compte MEGA est : [X]";
 /* Button text to close other login sessions except the current session in use. This will log out other devices which have an active login session. */
@@ -968,7 +966,7 @@
 /* String shown when you are logging out of your account. */
 "loggingOut"="Déconnexion";
 /* Button to remove avatar. Try to keep the text short (as in English) */
-"removeAvatar"="Supprimer l'avatar";
+"removeAvatar"="Supprimer l’avatar";
 /* button that allows the user the change his avatar */
 "changeAvatar"="Changer l’avatar";
 /* Button title that allows the user change his name */
@@ -987,34 +985,34 @@
 "availableLabel"="Disponibles";
 /* title of the My Account screen */
 "accountType"="Type de compte :";
-/* Text relative to the MEGA account level. UPPER CASE */
-"free"="GRATUIT";
+/* Label to indicate that the current user has a Free account. */
+"Free"="Gratuit";
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="expire le %@";
 /* Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible). */
-"Renews on"="Renouvelle";
+"Renews on"="Se renouvelle le";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="Partages entrants";
 /* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
-"of %@"="de %@";
+"of %@"="sur %@";
 /* Sentence shown under the used space to complete the info with the user account maximum storage. "used of {maximun storage}" */
 "used of %@"="utilisés sur %@";
 /* Sentence shown under the available space to complete the info with the user account maximum storage. "available of {maximun storage}" */
-"available of %@"="disponible sur %@";
+"available of %@"="disponibles sur %@";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Surclasser le compte";
 /*  */
-"chooseYourAccountType"="Choisir votre type de compte";
+"chooseYourAccountType"="Choisissez votre type de compte";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]Votre disque nuagique est presque plein.[/S] [A]Surclassez votre compte maintenant[/A] vers un compte PRO et obtenez [S]jusqu’à 8 To (8 192 Go)[/S] d’espace de stockage nuagique.";
+"cloudDriveIsAlmostFull"="[S]Votre disque nuagique est presque plein.[/S] [A]Surclassez votre compte maintenant[/A] vers un compte PRO et obtenez [S]jusqu’à %@ To (%@ Go)[/S] d’espace de stockage nuagique.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]Votre espace de stockage est plein.[/S] [A]Surclassez votre compte maintenant[/A] vers un compte PRO et obtenez [S]jusqu’à 8 To (8 192 Go)[/S] d’espace de stockage nuagique.";
+"cloudDriveIsFull"="[S]Votre disque nuagique est plein.[/S] [A]Surclassez votre compte maintenant[/A] vers un compte PRO et obtenez [S]jusqu’à %@ To (%@ Go)[/S] d’espace de stockage nuagique.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Espace de stockage";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "transferQuota"="Quota de transfert";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
-"limited"="Limités";
+"limited"="Limité";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
 "subjectToYourParticipationInOurAchievementsProgram"="Sous réserve de votre participation à notre programme d’objectifs.";
 /* Price asociated with the MEGA PRO account level you can subscribe */
@@ -1032,7 +1030,7 @@
 /* Asks the user to request a custom Pro plan from customer support because their storage usage is more than the regular plans. */
 "thereAreNoPlansSuitableForYourCurrentUsage"="Aucun abonnement ne correspond à votre utilisation actuelle. Veuillez [A]contacter l’assistance[/A] pour obtenir un abonnement personnalisé.";
 /* Header shown to help on the purchasin process */
-"selectMembership"="Choisir un abonnement :";
+"selectMembership"="Sélectionner un abonnement :";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
 "save17"="Économisez 17 %";
 /* Error message shown when the purchase has failed */
@@ -1062,7 +1060,7 @@
 /* Alert message shown when a purchase has stopped because some error between the process */
 "failedPurchase_message"="Soit vous avez annulé la demande, soit Apple a signalé une erreur de transaction. Veuillez ressayer ultérieurement ou contacter ios@mega.nz.";
 /* Alert title shown when a restore hasn't been completed correctly */
-"incompleteRestore_title"="Erreur de restauration";
+"incompleteRestore_title"="Problème de restauration";
 /* Alert message shown when a restore hasn't been completed correctly */
 "incompleteRestore_message"="L'achat précédent n'a pas été trouvé. Veuillez sélectionner le produit acheté précédemment afin de le rétablir. Vous ne serez PAS facturé de nouveau.";
 /* Alert title shown when the restoring process has stopped for some reason */
@@ -1152,7 +1150,7 @@
 /* Title to perform the action of sending a message to a contact. */
 "sendMessage"="Envoyer un message";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
-"verifyCredentials"="Vérifier les coordonnées";
+"verifyCredentials"=" Confirmer les coordonnées";
 /* A button title to delete the history of a chat. */
 "clearChatHistory"="Effacer l’historique de la conversation";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
@@ -1218,7 +1216,7 @@
 /* This is shown in the typing area in chat, as a placeholder before the user starts typing anything in the field. The format is: Write a message to Contact Name... Write a message to "Chat room topic"... Write a message to Contact Name1, Contact Name2, Contact Name3 */
 "writeAMessage"="Rédigez un message pour %s…";
 /* Information if there are no history messages in current chat conversation */
-"noConversationHistory"="Aucun historique de conversation";
+"noConversationHistory"="Il n’y a aucun historique de conversation";
 /* Button which allows to retry send message in chat conversation. */
 "retry"="Ressayer";
 /* Button which allows to delete message in chat conversation. */
@@ -1296,7 +1294,7 @@
 /* Message shown to the user when the share extension is about to be killed by iOS due to a memory issue */
 "Limited system resources are available when sharing items. Try uploading these files from within the MEGA app."="Les ressources du système sont restreintes lors du partage d’éléments. Veuillez essayer de téléverser ces fichiers à partir de l’appli MEGA.";
 /* Success message shown when the user has successfully shared something */
-"Shared successfully"="Partagé avec succès";
+"Shared successfully"="A été partagé avec succès";
 /* Notification message shown when a transfer failed. Keep colon. */
 "Transfer failed:"="Échec de transfert :";
 /* MEGAError */
@@ -1305,11 +1303,11 @@
 /* Label to show that an Internal error occurs during a SDK operation. */
 "Internal error"="Erreur interne";
 /* Label to show that an error of Invalid argument occurs during a SDK operation. */
-"Invalid argument"="Argument invalide";
+"Invalid argument"="L’argument est invalide";
 /* Label to show that a request error occurs during a SDK operation. */
 "Request failed, retrying"="Échec de la requête, nouvelle tentative";
 /* Label to show that the rate limit has been reached during a SDK operation. */
-"Rate limit exceeded"="Limite dépassée";
+"Rate limit exceeded"="La limite est dépassée";
 /* Label to show that a SDK operation has failed permanently. */
 "Failed permanently"="Échec définitif";
 /* Label to show that an error for multiple concurrent connections or transfers occurs during a SDK operation. */
@@ -1319,19 +1317,19 @@
 /* Label to show that an error related with expiration occurs during a SDK operation. */
 "Expired"="Expiré";
 /* Label to show that an error related with a resource Not found occurs during a SDK operation. */
-"Not found"="Non trouvé";
+"Not found"="Introuvable";
 /* Label to show that an error related with a circular linkage occurs during a SDK operation. */
 "Circular linkage detected"="Un lien circulaire a été détecté";
 /* Label to show that an error related with an denied access occurs during a SDK operation. */
-"Access denied"="Accès refusé";
+"Access denied"="L’accès a été refusé";
 /* Label to show that an error related with an existent resource occurs during a SDK operation. */
 "Already exists"="Existe déjà";
 /* Label to show that an error related with an Incomplete SDK operation. */
-"Incomplete"="Non terminée";
+"Incomplete"="Non terminé";
 /* Label to show that an error related with the decryption process of a node occurs during a SDK operation. */
 "Invalid key/Decryption error"="Erreur de déchiffrement";
 /* Label to show that an error related with a bad session ID occurs during a SDK operation. */
-"Bad session ID"="ID de session erroné";
+"Bad session ID"="L’ID de session est erroné";
 /* Label to show that an error related with a blocked account occurs during a SDK operation. */
 "Blocked"="Bloqué";
 /* Label to show that an error related with an over quota occurs during a SDK operation. */
@@ -1339,7 +1337,7 @@
 /* Label to show that an error related with a temporary problem occurs during a SDK operation. */
 "Temporarily not available"="Temporairement non disponible";
 /* Label to show that an error related with too many connections occurs during a SDK operation. */
-"Connection overflow"="Surcharge de la connexion";
+"Connection overflow"="Dépassement du nombre de connexions";
 /* Label to show that an error related with an write error occurs during a SDK operation. */
 "Write error"="Erreur d’écriture";
 /* Label to show that an error related with an read error occurs during a SDK operation. */
@@ -1358,13 +1356,13 @@
 /* Paragraph 2 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph2"="Téléversez vos fichiers de votre téléphone intelligent ou tablette, puis recherchez, stockez, téléchargez, lisez en continu, visualisez, partagez, renommez ou supprimez vos fichiers n’importe quand, de n’importe quel appareil, n’importe où. Partagez des dossiers avec vos contacts et suivez leurs modifications en temps réel.";
 /* Paragraph 3 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
-"generalDescriptionParagraph3"="Le processus de chiffrement signifie que nous ne pouvons ni accéder à votre mot de passe ni le réinitialiser. Vous DEVEZ donc le mémoriser (à moins que vous ayez sauvegardé votre clé de récupération) ou vous perdrez l’accès à vos fichiers stockés.";
+"generalDescriptionParagraph3"="Le processus de chiffrement implique que nous ne pouvons ni accéder à votre mot de passe ni le réinitialiser. Vous DEVEZ donc le mémoriser (à moins que vous ayez sauvegardé votre clé de récupération) ou vous perdrez l’accès à vos fichiers stockés.";
 /* Paragraph between 3rd and 4th of the general description of MEGA shown on the iOS App Store, part of Android string 17769 */
 "generalDescriptionVideoChat"="Le système de dialogue vidéo de MEGA, chiffré de bout en bout par l’utilisateur, permet une confidentialité totale et est proposé pour les navigateurs depuis 2016. Le service a été étendu à notre appli mobile, avec un historique de conversations accessible à partir de plusieurs appareils. Les utilisateurs peuvent aussi facilement ajouter des fichiers à une conversation à partir de leur disque nuagique MEGA.";
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph4"="MEGA offre un généreux espace de stockage gratuit de 50 Go à tous les utilisateurs inscrits, avec des primes d’objectif, et propose des abonnements payants avec des limites beaucoup plus élevées :";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph5"="Abonnement PRO LÉGER : 4,99 € (4,99 USD) par mois ou 49,99 € (49,99 USD) par an vous donne 200 Go d’espace de stockage et 1 To de quota de transfert par mois. \n Abonnement PRO I : 9,99 € (9,99 USD) par mois ou 99,99 € (99,99 USD) par an vous donne 1 To d’espace de stockage et 2 To de quota de transfert par mois. \n Abonnement PRO II : 19,99 € (19,99 USD) par mois ou 199,99 € (199,99 USD) par an vous donne 4 To d’espace de stockage et 8 To de quota de transfert par mois. \n Abonnement PRO III : 29,99 € (29,99 USD) par mois ou 299,99 € (299,99 USD) par an vous donne 8 To d’espace de stockage et 16 To de quota de transfert par mois.";
+"generalDescriptionParagraph5"="Abonnement PRO LÉGER : 4,99 € (4,99 USD) par mois ou 49,99 € (49,99 USD) par an vous donne 400 Go d’espace de stockage et 1 To de quota de transfert par mois.\nAbonnement PRO I : 9,99 € (9,99 USD) par mois ou 99,99 € (99,99 USD) par an vous donne 2 To d’espace de stockage et 2 To de quota de transfert par mois.\nAbonnement PRO II : 19,99 € (19,99 USD) par mois ou 199,99 € (199,99 USD) par an vous donne 8 To d’espace de stockage et 8 To de quota de transfert par mois.\nAbonnement PRO III : 29,99 € (29,99 USD) par mois ou 299,99 € (299,99 USD) par an vous donne 16 To d’espace de stockage et 16 To de quota de transfert par mois.";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph6"="Pour de plus amples renseignements, veuillez consulter notre site Web : https://mega.nz/\nConditions générales d’utilisation : https://mega.nz/terms\nPolitique de confidentialité : https://mega.nz/privacy";
@@ -1407,7 +1405,7 @@
 /* Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible. */
 "autoAccept"="Accepter automatiquement";
 /* Footer that explains the way Auto-Accept works for QR codes */
-"autoAcceptFooter"="Les contacts qui balayeront votre code QR seront automatiquement ajoutés à votre liste de contacts.";
+"autoAcceptFooter"="Les utilisateurs de MEGA qui balayeront votre code QR seront automatiquement ajoutés à votre liste de contacts.";
 /* Action to reset the current valid QR code of the user */
 "resetQrCode"="Réinitialiser le code QR";
 /* Footer that explains what would happen if the user resets his/her QR code */
@@ -1419,11 +1417,11 @@
 /* Label that encourage the user to line the QR to scan with the camera */
 "lineCodeWithCamera"="Alignez le code QR pour le balayer avec l’appareil photo de votre appareil";
 /* Error text shown when the user scans a QR that is not valid. String as short as possible. */
-"invalidCode"="Code invalide";
+"invalidCode"="Le code est invalide";
 /* Success text shown in a label when the user scans a valid QR. String as short as possible. */
 "codeScanned"="Code balayé";
 /* title of the screen that shows the users with whom the user has shared a folder */
-"sharedWidth"="Partagé avec :";
+"sharedWidth"="Partagé avec :";
 /*   */
 "details"="Détails";
 /* Item menu option upon right click on one or multiple files. */
@@ -1431,13 +1429,13 @@
 /* Title of section to display number of all historical versions of files. */
 "versions"="Versions";
 /* Title label of a node property. */
-"location"="Position";
+"location"="Emplacement";
 /* label for the total file size of multiple files and/or folders (no need to put the colon punctuation in the translation)*/
 "totalSize"="Taille totale";
 /* Refers to the type of a file or folder. */
 "type"="Type";
 /* Label for what a selection contains. For example: "Contains: 3 folders & 13 files". (no need to put the colon punctuation in the translation) */
-"contains"="Contient";
+"contains"="Comprend";
 /* A label for any 'Modified' text or title. For example to show the modification date of a file/folder. */
 "modified"="Modifié";
 /* A label for any ‘Added’ text or title. For example to show the upload date of a file/folder. */
@@ -1523,7 +1521,7 @@
 /* When an active call of user A with user B had failed */
 "callFailed"="Échec d’appel";
 /* When an active call of user A with user B had ended */
-"callEnded"="L’appel est terminé";
+"callEnded"="Fin de l’appel.";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="Durée : %@";
 /* */
@@ -1649,7 +1647,7 @@
 /* Title of the option to enable or disable file versioning on Settings section */
 "File versioning"="Versionnage des fichiers";
 /* Subtitle of the option to enable or disable file versioning on Settings section */
-"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="Activer ou désactiver le versionnage des fichiers pour votre compte entier.\nSi vos contacts ont activé cette option, vous pourriez encore recevoir des versions de fichiers provenant de dossiers partagés.";
+"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="Activer ou désactiver le versionnage des fichiers pour votre compte entier.\nDésactiver le versionnage des fichiers n’empêche pas vos contacts de créer de nouvelles versions dans les dossiers partagés.";
 /* A confirmation message when the user chooses to disable file versioning. */
 "When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="Quand le versionnage des fichiers est désactivé, la version actuelle est remplacée par la nouvelle version quand le fichier est mis à jour (et vos changements apportés au fichier ne sont plus enregistrés). Souhaitez-vous vraiment désactiver le versionnage des fichiers ?";
 /* Settings preference title to show file versions info of the account */
@@ -1703,11 +1701,11 @@
 /* Label in a cell where you can get the chat link */
 "Get Chat Link"="Obtenir le lien vers la conversation";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
-"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="La rotation de la clé est un peu plus sécurisée, mais elle ne vous permet pas de créer un lien de conversation, et les nouveaux participants ne verront pas les anciens messages.";
+"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="La rotation de la clé est un peu plus sécurisée, mais elle ne vous permet pas de créer un lien de conversation et les nouveaux participants ne verront pas les anciens messages.";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
-"To create a chat link you must name the group."="Pour créer un lien vers la conversation, vous devez nommer le groupe.";
+"To create a chat link you must name the group."="Pour créer un lien de conversation, vous devez nommer le groupe.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
-"Chat Link"="Lien vers la conversation";
+"Chat Link"="Lien de conversation";
 /* Button text in public chat previews that allows the user to join the chat */
 "Join"="Vous y joindre";
 /* Text shown in a notification to let the user know that has joined a public chat room after login or account creation */
@@ -1717,9 +1715,9 @@
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
 "%@ enabled Encrypted Key Rotation"="%@ a activé la rotation de la clé chiffrée.";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
-"%@ created a public link for the chat."="%@ a créé un lien vers la conversation";
+"%@ created a public link for the chat."="%@ a créé un lien de conversation";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
-"%@ removed a public link for the chat."="%@ a supprimé le lien vers la conversation.";
+"%@ removed a public link for the chat."="%@ a supprimé le lien de conversation.";
 /* Management message shown in a chat when the user %@ joined it from a public chat link */
 "%@ joined the group chat."="%@ s’est joint à la conversation de groupe.";
 /* Message show when a call cannot be established because there are too many participants in the group call */
@@ -1741,7 +1739,7 @@
 /* Menu item to change from list view to grid view */
 "Thumbnail view"="Vue en imagettes";
 /* There are no notifications to display. */
-"No notifications"="Aucune notification";
+"No notifications"="Il n’y a aucune notification";
 /* The header of a notification related to payments */
 "Payment info"="Renseignements sur le paiement";
 /* A title for a notification saying the user’s pricing plan will expire soon. */
@@ -1757,13 +1755,13 @@
 /* A notification that the other user cancelled their contact request so it is no longer valid. E.g. user@email.com cancelled their contact request. */
 "Cancelled their contact request"="A annulé sa demande de contact";
 /* A reminder notification to remind the user to respond to the contact request. */
-"Reminder: You have a contact request"="Rappel : vous avez une demande de contact";
+"Reminder: You have a contact request"="Rappel : vous avez une demande de contact";
 /* A notification telling the user that the other user deleted them as a contact. E.g. user@email.com deleted you as a contact. */
 "Deleted you as a contact"="vous a supprimé en tant que contact";
 /* A notification telling the user that they are now fully connected with the other user (the users are in each other’s address books). */
 "Contact relationship established"="La relation de contact est établie";
 /* A notification telling the user that one of their contact’s accounts has been deleted or deactivated. */
-"Account has been deleted/deactivated"="Le compte a été supprimé/désactivé";
+"Account has been deleted/deactivated"="Le compte a été supprimé ou désactivé";
 /* A notification telling the user that another user blocked them as a contact (they will no longer be able to contact them). E.g. name@email.com blocked you as a contact. */
 "Blocked you as a contact"="vous a bloqué en tant que contact";
 /* Response text after clicking Ignore on an incoming contact request notification. */
@@ -1879,7 +1877,7 @@
 /* The label of the toggle switch to indicate that file versioning is enabled. */
 "Enabled"="Activé";
 /* Text button for init a group chat with link. */
-"New Chat Link"="Nouveau lien vers la conversation";
+"New Chat Link"="Nouveau lien de conversation";
 /* Text button for init a group chat */
 "New group chat"="Nouvelle conversation de groupe";
 /* Title for the recents section. */
@@ -1907,13 +1905,13 @@
 /* Plural of items which contains a folder. 2 items */
 "items"="éléments";
 /* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
-"Chat link unavailable"="Le lien vers la conversation n’est pas disponible";
+"Chat link unavailable"="Le lien de conversation n’est pas disponible";
 /* Shown when an inexisting/unavailable/removed link is tried to be opened. */
-"This chat link is no longer available"="Le lien vers la conversation n’est pas disponible";
+"This chat link is no longer available"="Le lien de conversation n’est pas disponible";
 /* Text explaining users how the chat links work. */
 "People can join your group by using this link."="D'autres peuvent se joindre à votre groupe en utilisant ce lien.";
 /* Subtitle shown in a chat to inform where to tap to enter in the chat details view */
-"Tap here for info"="Touchez ici pour les détails";
+"Tap here for info"="Touchez ici pour obtenir des renseignements";
 /* In some cases, a user may try to get the link for a chat room, but if such is not set by an operator - it would say "not link available" and not auto create it. */
 "No chat link available."="Aucun lien de conversation n’est disponible.";
 /* Title of a dialog in which we request access to a specific permission, like the Location Services */
@@ -1971,16 +1969,28 @@
 /* Chat Notifications DND: Remaining time left to deactivate DND - 1 minute left */
 "1 minute left"="Il reste 1 minute";
 /* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 minute left */
-"%@ minutes left"="Il reste %d minutes";
+"%d minutes left"="Il reste %d minutes";
 /* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour left */
 "1 hour left"="Il reste 1 heure";
 /* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 hour left */
-"%@ hours left"="Il reste %d heures";
+"%d hours left"="Il reste %d heures";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="Notifications de dialogue en ligne";
+/* Chat settings: This text appears with the Do Not Disturb switch */
+"Do Not Disturb"="Ne pas déranger";
+/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, 1 minute left */
+"1 hour, 1 minute left"="Il reste 1 heure, 1 minute";
+/* Chat Notifications DND: Remaining time left to deactivate DND - X hours, X minutes left */
+"%d hours, %d minutes left"="Il reste %d heures, %d minutes";
+/* Chat Notifications DND: Remaining time left to deactivate DND - X hours, 1 minute left */
+"%d hours, 1 minute left"="Il reste %d heures, 1 minute";
+/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, X minutes left */
+"1 hour, %d minutes left"="Il reste 1 heure, %d minutes";
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
-"Reconnecting..."="Reconnecting…";
+"Reconnecting..."="Reconnexion…";
 /* Title shown when the user reconnect in a call. */
-"You are back!"="You are back!";
+"You are back!"="Vous êtes de retour.";
 /* Subtitle of chat screen when the chat is inactive */
 "Inactive chat"="La conversation est inactive";
+/* Error message shown when the user tries to open a file with an unsupported encoding */
+"It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="Il n’a pas été possible d’obtenir le contenu de ce fichier, car il n’est codé ni en UTF-8 ni en ISO/IEC 8859-1.";
