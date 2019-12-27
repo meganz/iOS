@@ -560,10 +560,6 @@
 "addContactButton"="เพิ่ม";
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="ไม่มีความจำเป็นที่จะเพิ่มที่อยู่อีเมลของคุณเอง";
-/* Add contacts and share dialog error message when user try to add already existing email address. */
-"alreadyHaveAContactWithThatEmailAddress"="คุณมีอีเมลของผู้ติดต่อนี้อยู่แล้ว";
-/* Add contacts and share dialog error message when user try to add already existing email address. */
-"invitationAlreadySentToContactBefore"="The invitation to contact %@ has been sent before and can be consulted in the Sent Requests tab.";
 /* Success message shown when a contact has been invited */
 "theUserHasBeenInvited"="[X] ได้รับคำเชิญแล้วและจะปรากฏในรายชื่อผู้ติดต่อของคุณ";
 /* Success message shown when some contacts have been invited */
@@ -987,8 +983,8 @@
 "availableLabel"="ใช้ได้";
 /* title of the My Account screen */
 "accountType"="ประเภทบัญชี:";
-/* Text relative to the MEGA account level. UPPER CASE */
-"free"="ฟรี";
+/* Label to indicate that the current user has a Free account. */
+"Free"="ฟรี";
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="หมดอายุใน %@";
 /* Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible). */
