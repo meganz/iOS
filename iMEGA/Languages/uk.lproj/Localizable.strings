@@ -560,10 +560,6 @@
 "addContactButton"="Додати";
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="Не потрібно додавати власну адресу е-пошти";
-/* Add contacts and share dialog error message when user try to add already existing email address. */
-"alreadyHaveAContactWithThatEmailAddress"="Ви вже маєте контакт з цією адресою е-пошти";
-/* Add contacts and share dialog error message when user try to add already existing email address. */
-"invitationAlreadySentToContactBefore"="The invitation to contact %@ has been sent before and can be consulted in the Sent Requests tab.";
 /* Success message shown when a contact has been invited */
 "theUserHasBeenInvited"="Користувача [X] було запрошено. Він з'явиться у списку контактів, щойно прийме запрошення.";
 /* Success message shown when some contacts have been invited */
@@ -987,8 +983,8 @@
 "availableLabel"="Доступно";
 /* title of the My Account screen */
 "accountType"="Тип облікового запису:";
-/* Text relative to the MEGA account level. UPPER CASE */
-"free"="БЕЗКОШТОВНО";
+/* Label to indicate that the current user has a Free account. */
+"Free"="Безкоштовно";
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="закінчується %@";
 /* Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible). */
@@ -1407,7 +1403,7 @@
 /* Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible. */
 "autoAccept"="Auto-Accept";
 /* Footer that explains the way Auto-Accept works for QR codes */
-"autoAcceptFooter"="Contacts that scan your QR Code will be automatically added to your contact list.";
+"autoAcceptFooter"="MEGA users who scan your QR code will be automatically added to your contact list.";
 /* Action to reset the current valid QR code of the user */
 "resetQrCode"="Reset QR Code";
 /* Footer that explains what would happen if the user resets his/her QR code */
