@@ -43,7 +43,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
 @property (weak, nonatomic) InputView *activeInputView;
 @property (weak, nonatomic) PasswordView *activePasswordView;
 
-@property (weak, nonatomic) IBOutlet UIButton *confirmButton;
+@property (strong, nonatomic) UIBarButtonItem *confirmButton;
 
 @property (strong, nonatomic) UITapGestureRecognizer *tapGesture;
 
@@ -57,6 +57,8 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
     [super viewDidLoad];
     
     self.passwordStrengthIndicatorViewHeightLayoutConstraint.constant = 0;
+    self.confirmButton = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"save", @"save password or email associated to an account.") style:UIBarButtonItemStylePlain target:self action:@selector(confirmButtonTouchUpInside:)];
+    self.navigationItem.rightBarButtonItem = self.confirmButton;
     
     switch (self.changeType) {
         case ChangeTypePassword:
@@ -74,7 +76,6 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
                 self.confirmPasswordView.passwordTextField.textContentType = UITextContentTypeNewPassword;
             }
             
-            [self.confirmButton setTitle:AMLocalizedString(@"changePasswordLabel", @"Section title where you can change your MEGA's password") forState:UIControlStateNormal];
             
             [self.theNewPasswordView.passwordTextField becomeFirstResponder];
             
@@ -101,8 +102,6 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
                 self.confirmEmailInputView.inputTextField.textContentType = UITextContentTypeUsername;
             }
             
-            [self.confirmButton setTitle:AMLocalizedString(@"Change Email", @"The title of the alert dialog to change the email associated to an account.") forState:UIControlStateNormal];
-            
             [self.theNewEmailInputView.inputTextField becomeFirstResponder];
             
             break;
@@ -126,10 +125,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
                 self.theNewPasswordView.passwordTextField.textContentType = UITextContentTypePassword;
                 self.confirmPasswordView.passwordTextField.textContentType = UITextContentTypeNewPassword;
             }
-            
-            NSString *buttonTitle = (self.changeType == ChangeTypeResetPassword) ? AMLocalizedString(@"changePasswordLabel", @"Section title where you can change your MEGA's password") : AMLocalizedString(@"startNewAccount", @"Caption of the button to proceed");
-            [self.confirmButton setTitle:buttonTitle forState:UIControlStateNormal];
-            
+
             [self.theNewPasswordView.passwordTextField becomeFirstResponder];
             
             break;
@@ -166,7 +162,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
 - (void)createNavigationCancelButton {
     UIBarButtonItem *cancel = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelAction:)];
     [cancel setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:UIColor.whiteColor} forState:UIControlStateNormal];
-    self.navigationItem.rightBarButtonItem = cancel;
+    self.navigationItem.leftBarButtonItem = cancel;
 }
 
 #pragma mark - Private
