@@ -58,6 +58,7 @@
     self.fileVersionsLabel.text = AMLocalizedString(@"File versions", @"Settings preference title to show file versions info of the account");
     long long totalNumberOfVersions = [[[MEGASdkManager sharedMEGASdk] mnz_accountDetails] numberOfVersionFilesForHandle:[[[MEGASdkManager sharedMEGASdk] rootNode] handle]];
     self.fileVersionsDetailLabel.text = [NSString stringWithFormat:@"%lld", totalNumberOfVersions];
+    [MEGASdkManager.sharedMEGASdk getAccountDetailsWithDelegate:self];
     
     self.deleteOldVersionsLabel.text = AMLocalizedString(@"Delete previous versions", @"Text of a button which deletes all historical versions of files in the users entire account.");
     
@@ -68,7 +69,6 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
 }
 
@@ -261,7 +261,7 @@
             [deleteAllFileVersionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"no", nil) style:UIAlertActionStyleCancel handler:nil]];
             [deleteAllFileVersionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"yes", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-                    [[MEGASdkManager sharedMEGASdk] removeVersions];
+                    [MEGASdkManager.sharedMEGASdk removeVersionsWithDelegate:self];
                 }
             }]];
             
@@ -300,6 +300,20 @@
         if (!error.type || error.type == MEGAErrorTypeApiENoent) {
             self.fileVersioningSwitch.on = self.fileVersioningEnabled = !request.flag;
             
+            [self.tableView reloadData];
+        }
+    }
+    
+    if (request.type == MEGARequestTypeRemoveVersions) {
+        if (!error.type) {
+            [MEGASdkManager.sharedMEGASdk getAccountDetailsWithDelegate:self];
+        }
+    }
+    
+    if (request.type == MEGARequestTypeAccountDetails) {
+        if (!error.type) {
+            long long totalNumberOfVersions = [MEGASdkManager.sharedMEGASdk.mnz_accountDetails numberOfVersionFilesForHandle:MEGASdkManager.sharedMEGASdk.rootNode.handle];
+            self.fileVersionsDetailLabel.text = [NSString stringWithFormat:@"%lld", totalNumberOfVersions];
             [self.tableView reloadData];
         }
     }
