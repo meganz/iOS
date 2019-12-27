@@ -13,7 +13,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *firstNameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *lastNameTextField;
 
-@property (weak, nonatomic) IBOutlet UIButton *saveButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *saveButton;
 
 @property (strong, nonatomic) NSString *firstName;
 @property (strong, nonatomic) NSString *lastName;
@@ -41,7 +41,7 @@
         self.lastNameTextField.textContentType = UITextContentTypeFamilyName;
     }
     
-    [self.saveButton setTitle:AMLocalizedString(@"save", @"Button title to 'Save' the selected option") forState:UIControlStateNormal];
+    [self.saveButton setTitle:AMLocalizedString(@"save", @"Button title to 'Save' the selected option")];
 }
 
 #pragma mark - Private
@@ -84,14 +84,7 @@
 
 #pragma mark - IBActions
 
-- (IBAction)cancelAction:(UIBarButtonItem *)sender {
-    [self.firstNameTextField resignFirstResponder];
-    [self.lastNameTextField resignFirstResponder];
-    
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (IBAction)saveTouchUpInside:(UIButton *)sender {
+- (IBAction)saveTouchUpInside:(UIBarButtonItem *)sender {
     [self.firstNameTextField resignFirstResponder];
     [self.lastNameTextField resignFirstResponder];
     
@@ -144,32 +137,7 @@
         }
     }
     
-    self.saveButton.backgroundColor = shouldSaveButtonBeEnabled ? UIColor.mnz_redMain : UIColor.mnz_grayCCCCCC;
-    
-    return YES;
-}
-
-- (BOOL)textFieldShouldClear:(UITextField *)textField {
-    BOOL shouldSaveButtonColorBeDisabled = NO;
-    switch (textField.tag) {
-        case 0: { //FirstNameTextField
-            shouldSaveButtonColorBeDisabled = YES;
-            break;
-        }
-            
-        case 1: { //LastNameTextField
-            BOOL hasLastNameBeenEdited = [self hasNameBeenEdited:@"" inTextFieldForTag:textField.tag];
-            if (hasLastNameBeenEdited) {
-                shouldSaveButtonColorBeDisabled = NO;
-            } else {
-                BOOL hasFirstNameBeenEdited = [self hasNameBeenEdited:self.firstNameTextField.text inTextFieldForTag:self.firstNameTextField.tag];
-                BOOL isFirstNameEmpty = self.firstNameTextField.text.mnz_isEmpty;
-                shouldSaveButtonColorBeDisabled = (hasFirstNameBeenEdited && !isFirstNameEmpty) ? NO : YES;
-            }
-            break;
-        }
-    }
-    self.saveButton.backgroundColor = shouldSaveButtonColorBeDisabled ? [UIColor mnz_grayCCCCCC] : UIColor.mnz_redMain;
+    self.saveButton.enabled = shouldSaveButtonBeEnabled;
     
     return YES;
 }
