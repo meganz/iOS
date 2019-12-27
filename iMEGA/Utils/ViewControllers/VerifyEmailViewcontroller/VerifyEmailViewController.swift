@@ -135,10 +135,10 @@ class VerifyEmailViewController: UIViewController {
             SVProgressHUD.show()
             let resendVerificationEmailDelegate = MEGAGenericRequestDelegate.init { (request, error) in
                 SVProgressHUD.dismiss()
-                if error.type == MEGAErrorType.apiOk || error.type == MEGAErrorType.apiEArgs {
+                if error.type == .apiOk || error.type == .apiEArgs {
                     self.hintLabel.isHidden = false
                 } else {
-                    SVProgressHUD.showError(withStatus: NSLocalizedString("error", comment: ""))
+                    SVProgressHUD.showError(withStatus: NSLocalizedString(error.name, comment: ""))
                 }
             }
             MEGASdkManager.sharedMEGASdk()?.resendVerificationEmail(with: resendVerificationEmailDelegate)
