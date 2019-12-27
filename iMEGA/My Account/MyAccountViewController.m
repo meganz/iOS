@@ -192,7 +192,7 @@
         
         switch (accountDetails.type) {
             case MEGAAccountTypeFree: {
-                self.proStatusLabel.text = AMLocalizedString(@"free", @"Text relative to the MEGA account level. UPPER CASE");
+                self.proStatusLabel.text = AMLocalizedString(@"Free", @"Label to indicate that the current user has a Free account.");
                 self.proStatusLabel.textColor = [UIColor mnz_green31B500];
                 
                 self.proExpiryDateLabelHeightLayoutConstraint.constant = 0;

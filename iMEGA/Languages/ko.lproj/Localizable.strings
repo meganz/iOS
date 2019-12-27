@@ -225,7 +225,7 @@
 /* Success message shown when you remove a contact request */
 "requestDeleted"="요청 삭제됨";
 /* Title shown when there's no pending contact requests */
-"noRequestPending"="보류중인 요청 없음";
+"noRequestPending"="대기중인 요청 없음";
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="일시정지된 전송";
 /* Title shown when the there is not any transfer and they are not paused */
@@ -519,7 +519,7 @@
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
 "foldersShared"="%d개의 폴더";
 /* Item menu option to add a contact writting his/her email */
-"addFromEmail"="이메일을 입력하세요";
+"addFromEmail"="이메일 주소를 입력하세요";
 /* Title of Shared Items section */
 "sharedItems"="공유된 항목";
 /* Title of the tab bar item for the Shared Items section */
@@ -560,8 +560,6 @@
 "addContactButton"="추가";
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="당신의 이메일을 추가할 필요는 없습니다";
-/* Add contacts and share dialog error message when user try to add already existing email address. */
-"alreadyHaveAContactWithThatEmailAddress"="이 이메일 주소의 연락처가 이미 있습니다";
 /* Success message shown when a contact has been invited */
 "theUserHasBeenInvited"="[X]님이 초대되었으며 수락되면 당신의 연락처 목록에 나타날 것입니다.";
 /* Success message shown when some contacts have been invited */
@@ -987,8 +985,8 @@
 "availableLabel"="이용가능";
 /* title of the My Account screen */
 "accountType"="계정 유형:";
-/* Text relative to the MEGA account level. UPPER CASE */
-"free"="무료";
+/* Label to indicate that the current user has a Free account. */
+"Free"="무료";
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="%@에 만기";
 /* Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible). */
@@ -1006,9 +1004,9 @@
 /*  */
 "chooseYourAccountType"="계정 유형을 선택하세요";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]클라우드 드라이브가 거의 찼습니다.[/S] PRO 계정으로 [A]지금 업그레이드[/A]하고 [S]최대 8 TB (8192 GB)[/S]의 클라우드 저장 공간을 받으세요.";
+"cloudDriveIsAlmostFull"="[S]클라우드 드라이브가 거의 찼습니다.[/S] PRO 계정으로 [A]지금 업그레이드[/A]하고 [S]최대 %@ TB (%@ GB)[/S]의 클라우드 저장 공간을 받으세요.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]계정이 가득 찼습니다.[/S] PRO 계정으로 [A]지금 업그레이드[/A]하고 [S]최대 8 TB (8192 GB)[/S]의 클라우드 저장 공간을 얻으세요.";
+"cloudDriveIsFull"="[S]클라우드 드라이브가 가득 찼습니다.[/S] PRO 계정으로 [A]지금 업그레이드[/A]하고 [S]최대 %@ TB (%@ GB)[/S]의 클라우드 저장 공간을 얻으세요.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="저장소";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
@@ -1364,7 +1362,7 @@
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph4"="MEGA는 모든 가입 회원에게 넉넉한 50 GB의 무료 저장소를 보너스 도전 과제와 함께 제공하며, 더 높은 제한을 가진 유료 요금제를 제공합니다:";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph5"="PRO LITE 구독권: 매달 €4.99 (US$4.99) 또는 매해 €49.99 (US$49.99)에 200 GB의 저장 공간과 매달 1 TB의 전송 할당량을 드립니다.\nPRO I 구독권: 매달 €9.99 (US$9.99) 또는 매해 €99.99 (US$99.99)에 1 TB의 저장 공간과 매달 2 TB의 전송 할당량을 드립니다.\nPRO II 구독권: 매달 €19.99 (US$19.99) 또는 매해 €199.99 (US$199.99)에 4 TB의 저장 공간과 매달 8 TB의 전송 할당량을 드립니다.\nPRO III 구독권: 매달 €29.99 (US$29.99) 또는 매해 €299.99 (US$299.99)에 8 TB의 저장 공간과 매달 16 TB의 전송 할당량을 드립니다.";
+"generalDescriptionParagraph5"="PRO LITE 구독권: 매달 €4.99 (US$4.99) 또는 매해 €49.99 (US$49.99)에 400 GB의 저장 공간과 매달 1 TB의 전송 할당량을 드립니다.\nPRO I 구독권: 매달 €9.99 (US$9.99) 또는 매해 €99.99 (US$99.99)에 2 TB의 저장 공간과 매달 2 TB의 전송 할당량을 드립니다.\nPRO II 구독권: 매달 €19.99 (US$19.99) 또는 매해 €199.99 (US$199.99)에 8 TB의 저장 공간과 매달 8 TB의 전송 할당량을 드립니다.\nPRO III 구독권: 매달 €29.99 (US$29.99) 또는 매해 €299.99 (US$299.99)에 16 TB의 저장 공간과 매달 16 TB의 전송 할당량을 드립니다.";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph6"="자세한 정보는, 우리의 웹사이트를 확인하세요: https://mega.nz/\n이용 약관: https://mega.nz/terms\n개인정보 처리방침: https://mega.nz/privacy";
@@ -1407,7 +1405,7 @@
 /* Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible. */
 "autoAccept"="자동 승인";
 /* Footer that explains the way Auto-Accept works for QR codes */
-"autoAcceptFooter"="당신의 QR 코드를 스캔한 연락처는 자동으로 연락처 목록에 추가됩니다.";
+"autoAcceptFooter"="당신의 QR 코드를 스캔한 MEGA 이용자는 자동으로 연락처 목록에 추가됩니다.";
 /* Action to reset the current valid QR code of the user */
 "resetQrCode"="QR 코드 초기화";
 /* Footer that explains what would happen if the user resets his/her QR code */
@@ -1523,7 +1521,7 @@
 /* When an active call of user A with user B had failed */
 "callFailed"="통화 실패";
 /* When an active call of user A with user B had ended */
-"callEnded"="통화 종료.";
+"callEnded"="통화 종료됨.";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="시간: %@";
 /* */
@@ -1649,7 +1647,7 @@
 /* Title of the option to enable or disable file versioning on Settings section */
 "File versioning"="파일 버전 기록";
 /* Subtitle of the option to enable or disable file versioning on Settings section */
-"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="당신의 계정 전체에 대해 파일 버전 기록을 활성화하거나 비활성화합니다.\n연락처가 이것을 활성화했다면 공유된 폴더에서 계속해서 파일 버전을 받게 됩니다.";
+"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="계정 전체에 대한 파일 버전 기록을 활성화하거나 비활성화합니다.\n파일 버전 기록을 해제하면 지인이 공유된 폴더에 새로운 버전을 만드는 것을 막을 수 없습니다.";
 /* A confirmation message when the user chooses to disable file versioning. */
 "When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="파일 버전 기록이 해제되면, 파일이 업데이트되면 현재 버전이 새 버전 으로 교체됩니다 (그리고 파일의 변경점의 기록되지 않습니다).파일 버전 기록을 해제하시겠습니까?";
 /* Settings preference title to show file versions info of the account */
@@ -1991,8 +1989,8 @@
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
 "Reconnecting..."="재접속중...";
 /* Title shown when the user reconnect in a call. */
-"You are back!"="돌아왔습니다!";
+"You are back!"="돌아왔습니다.";
 /* Subtitle of chat screen when the chat is inactive */
 "Inactive chat"="활성화되지 않은 대화";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
-"It was not possible to obtain the content of this file, that is not encoded in either UTF-8 or ISO/IEC 8859-1."="It was not possible to obtain the content of this file, that is not encoded in either UTF-8 or ISO/IEC 8859-1.";
+"It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="이 파일이 UTF-8 또는 ISO/IEC 8859-1로 기록되지 않아서, 내용을 가져올 수 없었습니다.";
