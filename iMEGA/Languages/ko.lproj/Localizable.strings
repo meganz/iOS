@@ -560,8 +560,6 @@
 "addContactButton"="추가";
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="당신의 이메일을 추가할 필요는 없습니다";
-/* Add contacts and share dialog error message when user try to add already existing email address. */
-"alreadyHaveAContactWithThatEmailAddress"="이 이메일 주소의 연락처가 이미 있습니다";
 /* Success message shown when a contact has been invited */
 "theUserHasBeenInvited"="[X]님이 초대되었으며 수락되면 당신의 연락처 목록에 나타날 것입니다.";
 /* Success message shown when some contacts have been invited */

@@ -560,8 +560,6 @@
 "addContactButton"="追加";
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="あなたのメールアドレスを加える必要はありません。";
-/* Add contacts and share dialog error message when user try to add already existing email address. */
-"alreadyHaveAContactWithThatEmailAddress"="そのアドレスを持つ知り合いは既に存在します。";
 /* Success message shown when a contact has been invited */
 "theUserHasBeenInvited"="[X] が招待されています。あなたが認めれば、知り合いのリストに載ります。";
 /* Success message shown when some contacts have been invited */

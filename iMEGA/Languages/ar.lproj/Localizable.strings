@@ -560,8 +560,6 @@
 "addContactButton"="اضافة";
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="لاحاجة لإضافة بريدك الإلكتروني";
-/* Add contacts and share dialog error message when user try to add already existing email address. */
-"alreadyHaveAContactWithThatEmailAddress"="لديك بالفعل جهة اتصال مرتبطة بهذا البريد الإلكتروني";
 /* Success message shown when a contact has been invited */
 "theUserHasBeenInvited"="المستخدم [X] الذي قمت بدعوته سوف يظهر في قائمة الاتصال الخاصة بك فور موافقته على طلب الإضافة.";
 /* Success message shown when some contacts have been invited */

@@ -560,8 +560,6 @@
 "addContactButton"="Tambah";
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="Tidak perlu menambahkan email anda sendiri.";
-/* Add contacts and share dialog error message when user try to add already existing email address. */
-"alreadyHaveAContactWithThatEmailAddress"="Anda telah memiliki kontak dengan alamat email itu.";
 /* Success message shown when a contact has been invited */
 "theUserHasBeenInvited"="Nama pengguna [X] telah diundang dan akan muncul dalam daftar kontak anda setelah undangan anda diterima.";
 /* Success message shown when some contacts have been invited */

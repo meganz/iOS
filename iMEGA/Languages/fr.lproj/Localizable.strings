@@ -560,8 +560,6 @@
 "addContactButton"="Ajouter";
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="Vous n'avez pas à ajouter votre propre adresse courriel";
-/* Add contacts and share dialog error message when user try to add already existing email address. */
-"alreadyHaveAContactWithThatEmailAddress"="Vous avez déjà un contact avec cette adresse courriel";
 /* Success message shown when a contact has been invited */
 "theUserHasBeenInvited"="L’utilisateur [X] a été invité et apparaîtra dans votre liste de contacts s’il accepte.";
 /* Success message shown when some contacts have been invited */

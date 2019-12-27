@@ -560,8 +560,6 @@
 "addContactButton"="Adaugă";
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="Nu este nevoie să adaugi adresa de e-mail proprie";
-/* Add contacts and share dialog error message when user try to add already existing email address. */
-"alreadyHaveAContactWithThatEmailAddress"="Ai deja un contact cu acea adresă de e-mail";
 /* Success message shown when a contact has been invited */
 "theUserHasBeenInvited"="Utilizatorul [X] a fost invitat și va apărea în lista de contacte de îndată ce a acceptat invitația.";
 /* Success message shown when some contacts have been invited */

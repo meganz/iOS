@@ -560,8 +560,6 @@
 "addContactButton"="Idagdag";
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="Hindi mo na dapat idagdag pa ang iyong email";
-/* Add contacts and share dialog error message when user try to add already existing email address. */
-"alreadyHaveAContactWithThatEmailAddress"="Mayroon ka ng contact sa email na ito";
 /* Success message shown when a contact has been invited */
 "theUserHasBeenInvited"="Si user [X] ay inimbitahan at lalabas sa inyong contact list sa oras na tanggapin mo siya.";
 /* Success message shown when some contacts have been invited */

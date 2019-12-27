@@ -560,8 +560,6 @@
 "addContactButton"="Додати";
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="Не потрібно додавати власну адресу е-пошти";
-/* Add contacts and share dialog error message when user try to add already existing email address. */
-"alreadyHaveAContactWithThatEmailAddress"="Ви вже маєте контакт з цією адресою е-пошти";
 /* Success message shown when a contact has been invited */
 "theUserHasBeenInvited"="Користувача [X] було запрошено. Він з'явиться у списку контактів, щойно прийме запрошення.";
 /* Success message shown when some contacts have been invited */
