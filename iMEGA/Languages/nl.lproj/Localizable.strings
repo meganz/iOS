@@ -43,7 +43,7 @@
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="Vul decoderingssleutel in";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertMessage"="Om toegang te krijgen tot deze map / bestand heeft u de decoderingssleutel nodig. Als u de sleutel niet heeft, neem contact op met de maker van de koppeling.";
+"decryptionKeyAlertMessage"="Om toegang tot deze map/bestand te krijgen, heeft u zijn decryptie code nodig. Als u de sleutel niet heeft, neem contact op met de maker van de link.";
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="Decoderingssleutel";
 /* Button title to try to decrypt the link */
@@ -121,7 +121,7 @@
 /*  */
 "agreeWithTheMEGATermsOfService"="Ik ga akkoord met de MEGA <a href=\"terms\">Algemene Overeenkomst</a>";
 /* This text is displayed in the account creation screen with a checkbox. User will have to tick the checkbox before proceeding on to create an account */
-"agreeWithLosingPasswordYouLoseData"="Ik begrijp dat [S] als ik mijn wachtwoord verlies, ik mijn gegevens kan verliezen.[/S] Lees meer over <a href=\"terms\">MEGA's eind-tot-eind codering </a>";
+"agreeWithLosingPasswordYouLoseData"="Ik begrijp dat [S] als ik mijn wachtwoord verlies, ik mijn gegevens kan verliezen. [/S] Lees meer over  <a href=\"terms\">MEGA’s eind-tot-eind codering</a>.";
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="Vul uw naam in";
 /* Error text shown when you have not written the same password */
@@ -519,7 +519,7 @@
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
 "foldersShared"="%d mappen";
 /* Item menu option to add a contact writting his/her email */
-"addFromEmail"="Voeg een email adres toe";
+"addFromEmail"="Voer een email adres in";
 /* Title of Shared Items section */
 "sharedItems"="Gedeelde items";
 /* Title of the tab bar item for the Shared Items section */
@@ -560,8 +560,6 @@
 "addContactButton"="Voeg toe";
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="Het is niet noodzakelijk uw eigen e-mailadres toe te voegen";
-/* Add contacts and share dialog error message when user try to add already existing email address. */
-"alreadyHaveAContactWithThatEmailAddress"="U heeft al een contact met dit e-mailadres";
 /* Success message shown when a contact has been invited */
 "theUserHasBeenInvited"="De gebruiker [X] is uitgenodigd en zal, eenmaal geaccepteerd, verschijnen in uw lijst met contactpersonen.";
 /* Success message shown when some contacts have been invited */
@@ -987,8 +985,8 @@
 "availableLabel"="Beschikbaar";
 /* title of the My Account screen */
 "accountType"="Account type:";
-/* Text relative to the MEGA account level. UPPER CASE */
-"free"="GRATIS";
+/* Label to indicate that the current user has a Free account. */
+"Free"="Gratis";
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="verloopt op %@";
 /* Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible). */
@@ -1006,9 +1004,9 @@
 /*  */
 "chooseYourAccountType"="Kies uw type account";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]Cloud Schijf is bijna vol.[/S] [A]Upgrade nu[/A] naar een PRO account en krijg [S]tot 8 TB (8192 GB)[/S] aan cloud opslag ruimte.";
+"cloudDriveIsAlmostFull"="[S]Cloud Schijf is bijna vol. [/S] [A]Upgrade nu[/A] naar een PRO account en krijg [S] tot %@ TB (%@ GB)[/S] aan cloud opslag ruimte.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]Uw account is vol.[/S] [A] Upgrade nu[/A] naar een PRO account en krijg [S]tot 8 TB (8192 GB) [/S] aan cloud opslag ruimte.";
+"cloudDriveIsFull"="[S]Uw account is vol.[/S] [A]Upgrade nu[/A] naar een PRO account en krijg tot [S] %@ TB (%@ GB)[/S] aan cloud opslag ruimte.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Opslag";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
@@ -1364,7 +1362,7 @@
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph4"="MEGA biedt een gulle 50 GB gratis opslag voor alle geregistreerde gebruikers met bonus prestaties, en biedt betaalde abonnementen met veel hogere limieten:";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph5"="PRO LITE abonnement: €4.99 (US$4.99) per maand of €49.99 (US$49.99) per jaar biedt u 200 GB aan opslag ruimte en 1 TB aan overdracht tegoed per maand.\nPRO I abonnement: €9.99 (US$9.99) per maand of €99.99 (US$99.99) per jaar biedt u 1 TB aan opslag ruimte en 2 TB aan overdracht tegoed per maand.\nPRO II abonnement: €19.99 (US$19.99) per maand of €199.99 (US$199.99) per jaar biedt u 4 TB aan opslag ruimte en 8 TB aan overdracht tegoed per maand.\nPRO III abonnement: €29.99 (US$29.99) per maand of €299.99 (US$299.99) per jaar biedt u 8 TB aan opslag ruimte en 16 TB aan overdracht tegoed per maand.";
+"generalDescriptionParagraph5"="PRO LITE-abonnement: €4,99(US$4,99) per maand of €49,99 (US$49,99) per jaar biedt 400 GB opslagruimte en 1 TB overdrachtstegoed per maand. \n PRO I-abonnement: € 9,99 (US$9,99) per maand of € 99,99 (US $99,99) per jaar geeft u 2 TB opslagruimte en 2 TB overdrachtstegoed per maand. \n PRO II-abonnement: € 19,99 (US$19,99) per maand of € 199,99 (US$199,99) per maand geeft u 8 TB opslagruimte en 8 TB overdrachtstegoed per maand. \n PRO III-abonnement: € 29,99 (US$29,99) per maand of € 299,99 (US$299,99) per jaar geeft u 16 TB opslagruimte en 16 TB overdrachtstegoed per maand.";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph6"="Voor meer informatie, controleer onze website: https://mega.nz/\nAlgemene Voorwaarden: https://mega.nz/terms\nGeheimhouding Beleid: https://mega.nz/privacy";
@@ -1649,7 +1647,7 @@
 /* Title of the option to enable or disable file versioning on Settings section */
 "File versioning"="Bestand Versies";
 /* Subtitle of the option to enable or disable file versioning on Settings section */
-"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="bestandsversies inschakelen of uitschakelen voor uw hele account. \nU kunt nog steeds bestandsversies ontvangen van gedeelde mappen als contacten dit hebben ingeschakeld.";
+"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="Versionering inschakelen of uitschakelen voor uw gehele account. \nVersionering uischakelen zorgt er niet voor dat uw contacten nieuwe versies kunnen creëren in gedeelde mappen.";
 /* A confirmation message when the user chooses to disable file versioning. */
 "When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="Wanneer bestandsversie is uitgeschakeld, worden de huidige versies vervangen door de nieuwe versie zodra een bestand is ge-update ( en uw wijzigingen van het bestand niet langer worden vastgelegd). Weet u zeker dat u de bestandsversie wilt uitschakelen?";
 /* Settings preference title to show file versions info of the account */
@@ -1669,7 +1667,7 @@
 /* A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days. */
 "Remove files older than"="Verwijder bestanden ouder dan";
 /* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
-"Days"="Dagen";
+"Days"="dagen";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
 "The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="De Prullenbak wordt automatisch voor u gewist. De minimale periode is 7 dagen en uw maximale periode is 30 dagen.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
@@ -1971,16 +1969,28 @@
 /* Chat Notifications DND: Remaining time left to deactivate DND - 1 minute left */
 "1 minute left"="nog 1 minuut";
 /* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 minute left */
-"%@ minutes left"="%d minuten over";
+"%d minutes left"="%d minuten over";
 /* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour left */
 "1 hour left"="nog 1 uur";
 /* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 hour left */
-"%@ hours left"="%d uren over";
+"%d hours left"="%d uren over";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="Chat notificaties";
+/* Chat settings: This text appears with the Do Not Disturb switch */
+"Do Not Disturb"="Niet Storen";
+/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, 1 minute left */
+"1 hour, 1 minute left"="1 uur, 1 minuut over";
+/* Chat Notifications DND: Remaining time left to deactivate DND - X hours, X minutes left */
+"%d hours, %d minutes left"="%d uren, %d minuten over";
+/* Chat Notifications DND: Remaining time left to deactivate DND - X hours, 1 minute left */
+"%d hours, 1 minute left"="%d uren, 1 minuut over";
+/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, X minutes left */
+"1 hour, %d minutes left"="1 uur, %d minuten over";
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
-"Reconnecting..."="Reconnecting…";
+"Reconnecting..."="Opnieuw verbinding maken...";
 /* Title shown when the user reconnect in a call. */
-"You are back!"="You are back!";
+"You are back!"="U bent terug.";
 /* Subtitle of chat screen when the chat is inactive */
 "Inactive chat"="Inactief gesprek";
+/* Error message shown when the user tries to open a file with an unsupported encoding */
+"It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="Het was niet mogelijk om de inhoud van dit bestand te verkrijgen, omdat het niet gecodeerd is in UTF-8 of ISO/IEC 8859-1.";

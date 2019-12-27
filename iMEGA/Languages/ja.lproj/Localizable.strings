@@ -519,7 +519,7 @@
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
 "foldersShared"="フォルダ%dこ";
 /* Item menu option to add a contact writting his/her email */
-"addFromEmail"="メール挿入";
+"addFromEmail"="メールアドレスを入力";
 /* Title of Shared Items section */
 "sharedItems"="共有アイテム";
 /* Title of the tab bar item for the Shared Items section */
@@ -560,8 +560,6 @@
 "addContactButton"="追加";
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="あなたのメールアドレスを加える必要はありません。";
-/* Add contacts and share dialog error message when user try to add already existing email address. */
-"alreadyHaveAContactWithThatEmailAddress"="そのアドレスを持つ知り合いは既に存在します。";
 /* Success message shown when a contact has been invited */
 "theUserHasBeenInvited"="[X] が招待されています。あなたが認めれば、知り合いのリストに載ります。";
 /* Success message shown when some contacts have been invited */
@@ -987,8 +985,8 @@
 "availableLabel"="使用可能";
 /* title of the My Account screen */
 "accountType"="アカウントタイプ:";
-/* Text relative to the MEGA account level. UPPER CASE */
-"free"="無料";
+/* Label to indicate that the current user has a Free account. */
+"Free"="無料";
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="失効日%@";
 /* Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible). */
@@ -1006,9 +1004,9 @@
 /*  */
 "chooseYourAccountType"="アカウントのタイプを選択して下さい。";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]クラウドドライブはほぼいっぱいです。[/S]PROアカウントに[A]今すぐアップグレード[/A]し、[S]最大8TB（8192GB）[/S]のクラウドストレージスペースを取得してください。";
+"cloudDriveIsAlmostFull"="[S]クラウドドライブはほぼいっぱいです。[/S]PROアカウントに[A]今すぐアップグレード[/A]し、[S]最大%@ TB（%@ GB）[/S]のクラウドストレージスペースを取得してください。";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]あなたのアカウントはいっぱいです。[/S]PROアカウントに[A]今すぐアップグレード[/A]し、[S]最大8TB（8192GB）[/S]のクラウドストレージスペースを取得してください。";
+"cloudDriveIsFull"="[S]あなたのクラウドドライブはいっぱいです。[/S]PROアカウントに[A]今すぐアップグレード[/A]し、[S]最大%@ TB（%@ GB）[/S]のクラウドストレージスペースを取得してください。";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="ストレージ";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
@@ -1364,7 +1362,7 @@
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph4"="MEGAは、ボーナスを達成された、ご登録済みの全ユーザー様に50 GBの豊富な無料ストレージをご提供しております。また、上限がはるかに高い有料プランもご用意しております：";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph5"="PRO LITEサブスクリプション：月額4.99ユーロ（4.99米ドル）または年間49.99ユーロ（49.99米ドル）で、200GBのストレージ容量と毎月1TBの転送容量をご提供いたします。\nPRO Iサブスクリプション：月額9.99ユーロ（9.99米ドル）または年間99.99ユーロ（99.99米ドル）で、1TBのストレージ容量と毎月2TBの転送容量をご提供いたします。\nPRO II サブスクリプション：月額19.99ユーロ（19.99米ドル）または年間199.99ユーロ（199.99米ドル）で、4TBのストレージ容量と毎月8TBの転送容量をご提供いたします。\nPRO IIIサブスクリプション：月額29.99ユーロ（29.99米ドル）または年間299.99ユーロ（299.99米ドル）で、8TBのストレージ容量と毎月16TBの転送容量をご提供いたします。";
+"generalDescriptionParagraph5"="PRO LITEサブスクリプション：月額4.99ユーロ（4.99米ドル）または年間49.99ユーロ（49.99米ドル）で、400GBのストレージ容量と毎月1TBの転送容量をご提供いたします。\nPRO Iサブスクリプション：月額9.99ユーロ（9.99米ドル）または年間99.99ユーロ（99.99米ドル）で、2TBのストレージ容量と毎月2TBの転送容量をご提供いたします。\nPRO II サブスクリプション：月額19.99ユーロ（19.99米ドル）または年間199.99ユーロ（199.99米ドル）で、8TBのストレージ容量と毎月8TBの転送容量をご提供いたします。\nPRO IIIサブスクリプション：月額29.99ユーロ（29.99米ドル）または年間299.99ユーロ（299.99米ドル）で、16TBのストレージ容量と毎月16TBの転送容量をご提供いたします。";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph6"="詳細については、当社のウェブサイトをご覧ください：https://mega.nz/\nご利用規約：https://mega.nz/terms\nプライバシーポリシー：https://mega.nz/privacy";
@@ -1407,7 +1405,7 @@
 /* Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible. */
 "autoAccept"="自動承認";
 /* Footer that explains the way Auto-Accept works for QR codes */
-"autoAcceptFooter"="あなたのQRコードをスキャンする連絡先は自動的にあなたの連絡先リストに追加されます。";
+"autoAcceptFooter"="あなたのQRコードをスキャンするMEGAユーザー様は自動的にあなたの連絡先リストに追加されます。";
 /* Action to reset the current valid QR code of the user */
 "resetQrCode"="QRコードをリセット";
 /* Footer that explains what would happen if the user resets his/her QR code */
@@ -1649,7 +1647,7 @@
 /* Title of the option to enable or disable file versioning on Settings section */
 "File versioning"="ファイルのバージョン管理";
 /* Subtitle of the option to enable or disable file versioning on Settings section */
-"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="アカウント全体に対するファイルのバージョン管理を有効または無効にします。\n連絡先がこれを有効にしている場合は、共有フォルダからファイルバージョンを受け取ることができます。";
+"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="あなたの全アカウントを対象にファイルのバージョン管理を有効または無効にします。\nファイルのバージョン管理を無効にしても、あなたの連絡先が共有フォルダで新しいバージョンを作成するのを妨げません。";
 /* A confirmation message when the user chooses to disable file versioning. */
 "When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="ファイルのバージョン管理が無効になっていると、ファイルが更新されると現在のバージョンが新しいバージョンに置き換えられます（また、当該ファイルへの変更は記録されなくなります）。ファイルのバージョン管理を無効にしてもよろしいですか？　";
 /* Settings preference title to show file versions info of the account */
@@ -1971,16 +1969,28 @@
 /* Chat Notifications DND: Remaining time left to deactivate DND - 1 minute left */
 "1 minute left"="残り1分";
 /* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 minute left */
-"%@ minutes left"="残り%d分";
+"%d minutes left"="残り%d分";
 /* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour left */
 "1 hour left"="残り1時間";
 /* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 hour left */
-"%@ hours left"="残り%d時間";
+"%d hours left"="残り%d時間";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="チャット通知";
+/* Chat settings: This text appears with the Do Not Disturb switch */
+"Do Not Disturb"="邪魔しないでください";
+/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, 1 minute left */
+"1 hour, 1 minute left"="残り1時間、1分";
+/* Chat Notifications DND: Remaining time left to deactivate DND - X hours, X minutes left */
+"%d hours, %d minutes left"="残り%d時間、%d分";
+/* Chat Notifications DND: Remaining time left to deactivate DND - X hours, 1 minute left */
+"%d hours, 1 minute left"="残り%d時間、1分";
+/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, X minutes left */
+"1 hour, %d minutes left"="残り1時間、%d分";
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
-"Reconnecting..."="Reconnecting…";
+"Reconnecting..."="再接続中...";
 /* Title shown when the user reconnect in a call. */
-"You are back!"="You are back!";
+"You are back!"="戻りました。";
 /* Subtitle of chat screen when the chat is inactive */
 "Inactive chat"="非アクティブなチャット";
+/* Error message shown when the user tries to open a file with an unsupported encoding */
+"It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="このファイルの内容を取得できませんでした。なぜなら、UTF-8またはISO/IEC 8859-1でエンコードされていないからです。";
