@@ -136,8 +136,16 @@
     
     [archiveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         MEGAArchiveChatRequestDelegate *archiveChatRequesDelegate = [[MEGAArchiveChatRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
-            self.chatRoom = chatRoom;
-            [self.tableView reloadData];
+            if (chatRoom.isArchived) {
+                if (self.navigationController.childViewControllers.count >= 3) {
+                    NSUInteger MessagesVCIndex = self.navigationController.childViewControllers.count - 2;
+                    [MEGASdkManager.sharedMEGAChatSdk closeChatRoom:chatRoom.chatId delegate:self.navigationController.childViewControllers[MessagesVCIndex]];
+                }
+                [self.navigationController popToRootViewControllerAnimated:YES];
+            } else {
+                self.chatRoom = chatRoom;
+                [self.tableView reloadData];
+            }
         }];
         [[MEGASdkManager sharedMEGAChatSdk] archiveChat:self.chatRoom.chatId archive:!self.chatRoom.isArchived delegate:archiveChatRequesDelegate];
     }]];
@@ -860,10 +868,11 @@
             case MEGAChatListItemChangeTypeParticipants:
                 [self setParticipants];
                 [self.tableView reloadData];
+                [self updateHeadingView];
                 break;
                 
             case MEGAChatListItemChangeTypeTitle:
-                self.nameLabel.text = item.title;
+                [self updateHeadingView];
                 break;
                 
             case MEGAChatListItemChangeTypeClosed:

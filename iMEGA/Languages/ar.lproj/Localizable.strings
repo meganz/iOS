@@ -43,7 +43,7 @@
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="أدخل مفتاح فك التشفير";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertMessage"="للولوج في هذا المجلد/الملف. ستحتاج لمفتاح فك التشفير. إذا كنت لاتمتلك المفتاح فتواصل مع منشئ الرابط.";
+"decryptionKeyAlertMessage"="للدخول إلى هذا المجلد/الملف، أنت بحاجة لمفتاح فك التشفير الخاص به. إذا كنت لا تملك هذا المفتاح، يرجى التواصل مع منشئ الرابط.";
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="مفتاح التشفير";
 /* Button title to try to decrypt the link */
@@ -61,7 +61,7 @@
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="لقد تم تسجيل خروجك من هذا الجهاز من موقع آخر";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="MEGA is unable to connect securely through SSL. You might be on public Wi-Fi with additional requirements.";
+"sslUnverified_alertTitle"="ميغا Mega غير قابل على الإتصال بشكل آمن عبر التراسل المشفر SSL. ربما تقوم باستخدام شبكة إتصال بالانترنت Wi-Fi عامة مع متطلبات إضافية.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="المحتوى الذي تحاول الدخول إليه غير متاح لهذا الحساب. حاول تسجيل الدخول بنفس الحساب الذي كنت فيه في موقع الويب للجوال.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
@@ -121,7 +121,7 @@
 /*  */
 "agreeWithTheMEGATermsOfService"="أنا أتفق مع MEGA <a href=\"terms\">شروط الخدمة</a>";
 /* This text is displayed in the account creation screen with a checkbox. User will have to tick the checkbox before proceeding on to create an account */
-"agreeWithLosingPasswordYouLoseData"="I understand that [S]if I lose my password, I may lose my data.[/S] Read more about <a href=\"terms\">MEGA’s end-to-end encryption</a>";
+"agreeWithLosingPasswordYouLoseData"="I understand that [S]if I lose my password, I may lose my data.[/S] Read more about <a href=\"terms\">MEGA’s end-to-end encryption</a>.";
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="ادخل اسم صالح";
 /* Error text shown when you have not written the same password */
@@ -171,7 +171,7 @@
 /* Title for the folder link view */
 "folderLink"="رابط المجلد";
 /* Button title which downloads a file/folder to your device */
-"downloadButton"="تحميل";
+"downloadButton"="تنزيل";
 /* Message shown when you try to downlonad a folder bigger than the available memory. */
 "folderTooBigMessage"="المجلد الذي تحاول تحميله أكبر من الذاكرة المتوفرة.";
 /* Error message shown when a folder can't be created. */
@@ -519,7 +519,7 @@
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
 "foldersShared"="%d مجلدات";
 /* Item menu option to add a contact writting his/her email */
-"addFromEmail"="ادخل بريدك الإلكتروني";
+"addFromEmail"="ادخل بريداً الكترونياً";
 /* Title of Shared Items section */
 "sharedItems"="العناصر المشاركة";
 /* Title of the tab bar item for the Shared Items section */
@@ -560,8 +560,6 @@
 "addContactButton"="اضافة";
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="لاحاجة لإضافة بريدك الإلكتروني";
-/* Add contacts and share dialog error message when user try to add already existing email address. */
-"alreadyHaveAContactWithThatEmailAddress"="لديك بالفعل جهة اتصال مرتبطة بهذا البريد الإلكتروني";
 /* Success message shown when a contact has been invited */
 "theUserHasBeenInvited"="المستخدم [X] الذي قمت بدعوته سوف يظهر في قائمة الاتصال الخاصة بك فور موافقته على طلب الإضافة.";
 /* Success message shown when some contacts have been invited */
@@ -886,7 +884,7 @@
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
 "all"="الكل";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
-"downloads"="التحميلات";
+"downloads"="التنزيلات";
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
 "uploads"="الملفات المرفوعه";
 /* Success message shown when one transfer has been cancelled */
@@ -936,7 +934,7 @@
 /* Header of block with achievements bonuses. */
 "unlockedBonuses"="الإضافات الممنوحة:";
 /* A header/title of a section which contains information about used/available storage space on a user's cloud drive. */
-"storageQuota"="حصة التخزين";
+"storageQuota"="مساحة التخزين المتاحة";
 /* The header/title of a block/section which contains information about the user's used/available transfer allowance for their account. */
 "transferQuota"="حصة النقل";
 /* achievement type */
@@ -987,8 +985,8 @@
 "availableLabel"="متواجد";
 /* title of the My Account screen */
 "accountType"="نوع الحساب:";
-/* Text relative to the MEGA account level. UPPER CASE */
-"free"="مجانا";
+/* Label to indicate that the current user has a Free account. */
+"Free"="مجانا";
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="تنتهي في %@";
 /* Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible). */
@@ -1006,9 +1004,9 @@
 /*  */
 "chooseYourAccountType"="اختر نوع حسابك";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]مساحة السحابة على وشك الامتلاء[/S] [A]قم بترقية حسابك الآن[/A] الى حساب PRO واحصل [S]حتى 8 تيرابايت (8096 جيجابايت)[/S] كمساحة تخزين.";
+"cloudDriveIsAlmostFull"="[S]السواقة السحابية ممتلئة تقريباً.[/S] [A]قم بترقية حسابك الآن[/A] الى حساب برو PRO و احصل [S]تصل حتى %@ تيرابايت (%@ غيغابايت)[/S] من مساحة تخزين سحابية.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]سحابة التخزين ممتلئة بالكامل[/S] [A] قك بترقية حسابك الآن[/A] الى PRO واحصل على [S]8 تيرابايت (8096 جيجابايت)[/S] كمساحة تخزين.";
+"cloudDriveIsFull"="[S]سواقتك السحابية ممتلئة.[/S] [A]قم بترقية حسابك الآن[/A] إلى حساب برو PRO و احصل على [S]يصل إلى %@ تيرابايت (%@ غيغابايت)[/S] من مساحة تخزين سحابية.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="التخزين";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
@@ -1364,7 +1362,7 @@
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph4"="تقدم MEGA مساحة تخزين مجانية بحجم 50 غيغا بايت لكل المشتركين بلاضافة الى مكافات على الانجازات. بالاضافة الى باقات مأجورة بمساحات تخزين اكبر.";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph5"="اشتراك برو لايت: 4،99 € (4،99 $) في الشهر أو 49،99 € (49،99 $) سنويا يمنحك 200 غيغابايت من مساحة التخزين و 1 تيرابايت من حصة نقل في الشهر.\nاشتراك برو 1: 9.99 € (9.99 دولار أمريكي) في الشهر أو 99.99 € (99.99 دولار أمريكي) سنويا يمنحك 1 تيرابايت من مساحة التخزين و 2 تيرابايت من حصة نقل شهريا.\nاشتراك برو 2: 19.99 يورو (19.99 دولار أمريكي) في الشهر أو 199.99 يورو (199.99 دولار أمريكي) سنويا يمنحك 4 تيرابايت من مساحة التخزين و 8 تيرابايت من حصة النقل شهريا.\nاشتراك برو 3: 29.99 € (29.99 دولار أمريكي) في الشهر أو 299.99 € (299.99 دولار أمريكي) سنويا يمنحك 8 تيرابايت من مساحة التخزين و 16 تيرابايت من حصة نقل في الشهر.";
+"generalDescriptionParagraph5"="اشتراك برو لايت: €4.99 (US$4.99) في الشهر أو €49.99 (US$49.99) في السنة يعطيك 400 غيغابايت من مساحة التخزين و 1 تيرابايت من حجم التراسل المتاح في الشهر. \nاشتراك برو 1: €9.99 (US$9.99) في الشهر أو €99.99 (US$99.99) في السنة يعطيك 2 تيرابايت من مساحة التخزين و 2 تيرابايت من حجم التراسل المتاح في الشهر. [BR]اشتراك برو 2:€19.99 (US$19.99) في الشهر أو €199.99 (US$199.99) في السنة يعطيك 8 تيرابايت من مساحة التخزين و 8 تيرابايت من حجم التراسل المتاح في الشهر.\nاشتراك برو 3: €29.99 (US$29.99) في الشهر أو €299.99 (US$299.99) في السنة يعطيك 16 تيرابايت من مساحة التخزين و 16 تيرابايت من حجم التراسل المتاح في الشهر.";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph6"="لمزيد من المعلومات يرجى زيارة موقعنا الالكتروني: https://mega.nz \n شروط استخدام الخدمة: https://mega.nz/terms \n سياسة الخصوصية: https://mega.nz/privacy";
@@ -1407,7 +1405,7 @@
 /* Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible. */
 "autoAccept"="قبول تلقائي";
 /* Footer that explains the way Auto-Accept works for QR codes */
-"autoAcceptFooter"="سيتم إضافة جهات الاتصال التي تمسح رمز الاستجابة السريعة الخاص بك تلقائيًا إلى قائمة جهات اتصالك.";
+"autoAcceptFooter"="مستخدمو ميغا MEGA الذين يقومون بمسح رمز الاستجابة السريعة QR الخاص بك، سيتم إضافتهم إلى قائمة الاتصال الخاصة بك تلقائياً.";
 /* Action to reset the current valid QR code of the user */
 "resetQrCode"="إعادة تعيين كود QR";
 /* Footer that explains what would happen if the user resets his/her QR code */
@@ -1461,7 +1459,7 @@
 /* A button label which reverts a certain version of a file to be the current version of the selected file. */
 "revert"="العودة";
 /*  */
-"download"="تحميل";
+"download"="تنزيل";
 /* Singular of file. 1 file */
 "file"="ملف";
 /* Title of section to display information of the current version of a file. */
@@ -1523,7 +1521,7 @@
 /* When an active call of user A with user B had failed */
 "callFailed"="فشل الاتصال";
 /* When an active call of user A with user B had ended */
-"callEnded"="انتهاء الاتصال";
+"callEnded"="انتهاء المكالمة.";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="مدة الاتصال: %@";
 /* */
@@ -1627,7 +1625,7 @@
 /* Detailed explanation of why the user should give some permissions to MEGA */
 "To fully take advantage of your MEGA account we need to ask you some permissions."="للاستفادة القصوى من ميزات حسابك على MEGA نحتاج ان نطلب منك بعض الصلاحيات.";
 /* Message warning the user about the risk of not setting up permissions */
-"The MEGA app may not work as expected without the required permissions. Are you sure?"="The MEGA app may not work as expected without the required permissions. Are you sure?";
+"The MEGA app may not work as expected without the required permissions. Are you sure?"="قد لا يعمل تطبيق ميغا MEGA بالشكل المتوقع بدون الأذونات المطلوبة. هل أنت متأكد؟";
 /* Shows number of the current page. '%1' will be replaced by current page number. '%2' will be replaced by number of all pages. */
 "%1 of %2"="%1 من %2";
 /* Title label that explains that the user is going to be asked for the photos permission */
@@ -1649,7 +1647,7 @@
 /* Title of the option to enable or disable file versioning on Settings section */
 "File versioning"="النسخ المعدلة للملفات";
 /* Subtitle of the option to enable or disable file versioning on Settings section */
-"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="تفعيل او تعطيل الاحتفاظ بنسخ معدلة للملفات لكامل حسابك.\nمن الممكن ان تستقبل ملفات مع نسخها المعدلة في مجلدات مشاركة معك اذا كانت جهة الاتصال مفعلة لهذه الميزة.";
+"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="تفعيل أو تعطيل النسخ المعدلة للملفات لكامل حسابك.\nتعطيل ميزة النسخ المعدلة للملفات لا تمنع جهات الاتصال الخاصة بك من إنشاء نسخ جديدة في الملفات المشاركة.";
 /* A confirmation message when the user chooses to disable file versioning. */
 "When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="عند تعطيل نسخ الملف، سيتم استبدال الإصدار الحالي بالإصدار الجديد بمجرد تحديث الملف (ولن يتم تسجيل التغييرات التي أجريتها على الملف). هل تريد بالتأكيد تعطيل نسخ الملفات؟";
 /* Settings preference title to show file versions info of the account */
@@ -1669,7 +1667,7 @@
 /* A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days. */
 "Remove files older than"="أزل الملفات الأكبر من";
 /* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
-"Days"="يوم";
+"Days"="أيام";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
 "The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="سيتم افراغ سلة المحذوفات بشكل أتوماتيكي. أقصر مدة يمكن تحديدها هي 7 أيام وأطول مدة هي 30 يوم.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
@@ -1853,9 +1851,9 @@
 /* Text shown in location-type messages */
 "Pinned Location"="Pinned Location";
 /* Plural of participant. 2 participants */
-"%d participants"="%d participants";
+"%d participants"="%d المشاركون";
 /* Singular of participant. 1 participant */
-"%d participant"="%d participant";
+"%d participant"="%d المشارك";
 /* Text shown in the chat toolbar while the user is recording a voice clip. The < character should be > in RTL languages. */
 "< Slide to cancel"="< Slide to cancel";
 /* Tooltip shown when the user presses but does not hold the microphone icon to send a voice clip */
@@ -1903,7 +1901,7 @@
 /* Title for a recent action shown in the webclient, see the attached image for context. */
 "%1 created by %3"="%1 تم اجرائها من قبل %3";
 /* Message shown when the user has not recent activity in their account. */
-"No recent activity"="لا يوجد عمليات مؤخراً";
+"No recent activity"="لا وجود لأي نشاط مؤخراً";
 /* Plural of items which contains a folder. 2 items */
 "items"="عناصر";
 /* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
@@ -1933,7 +1931,7 @@
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="هل أنت متأكد من رغبتك بالانتقال الى المخدم التجريبي؟ من الممكن ان يتعرض حسابك لمشاكل غير قابلة للإصلاح.";
 /* Destination folder name of chat files */
-"My chat files"="My chat files";
+"My chat files"="ملفات المحادثة الخاصة بي";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
 "Require passcode"="Require passcode";
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
@@ -1943,7 +1941,7 @@
 /* Popup notification text on mouse-over taken down folder. */
 "This folder has been the subject of a takedown notice."="مجلد خاضع لموضوع إشعار إنهاء الخدمة";
 /* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
-"Dispute Takedown"="Dispute Takedown";
+"Dispute Takedown"="تمت إزالته لشكوى";
 /* Title of the "Links" Shared Items. */
 "Links"="Links";
 /* Title for empty state view of "Links" in Shared Items. */
@@ -1965,7 +1963,7 @@
 /* Chat Notifications DND: Option that deactivates DND after 24 hours */
 "24 hours"="24 hours";
 /* Chat Notifications DND: Title bar message for the dnd activate options */
-"Mute chat Notifications for"="Mute chat notifications for";
+"Mute chat Notifications for"="كتم صوت الإشعارات لـ";
 /* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
 "Muted forever"="Muted forever";
 /* Chat Notifications DND: Remaining time left to deactivate DND - 1 minute left */
@@ -1991,6 +1989,8 @@
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
 "Reconnecting..."="Reconnecting…";
 /* Title shown when the user reconnect in a call. */
-"You are back!"="You are back!";
+"You are back!"="You are back.";
 /* Subtitle of chat screen when the chat is inactive */
 "Inactive chat"="المحادثات الغير نشطة";
+/* Error message shown when the user tries to open a file with an unsupported encoding */
+"It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1.";
