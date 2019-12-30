@@ -687,9 +687,9 @@
 /* Navigation path for Storage settings in iOS */
 "Settings > General > %@ Storage"="Settings > General > %@ Storage";
 /* Title of the switch to config whether to upload videos for Live Photos */
-"Upload videos for Live Photos"="Upload videos for Live Photos";
+"Upload videos for Live Photos"="ترفيع فيديوهات من أجل Live Photos";
 /* Title of the switch to config whether to upload all burst photos */
-"Upload all burst photos"="Upload all burst photos";
+"Upload all burst photos"="ترفيع كل الصور المتتابعة";
 /* Title of the switch to config whether to upload Hidden Album */
 "Upload Hidden Album"="Upload Hidden Album";
 /* Footer description when upload videos for Live Photos is enabled */
@@ -1721,9 +1721,9 @@
 /* Management message shown in a chat when the user %@ joined it from a public chat link */
 "%@ joined the group chat."="%@ انضم الى المجموعة";
 /* Message show when a call cannot be established because there are too many participants in the group call */
-"Error. No more participants are allowed in this group call."="You are not allowed to join this call as it has reached the maximum number of participants.";
+"Error. No more participants are allowed in this group call."="لا يمكنك الانضمام إلى هذه المكالمة لأنها بلغت الحد الأقصى لعدد المشاركين.";
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
-"Error. No more video are allowed in this group call."="You are not allowed to enable video as this call has reached the maximum number of participants using video.";
+"Error. No more video are allowed in this group call."="لا يمكنك القيام بمكالمة الفيديو لأن هذه المكالمة بلغت الحد الأقصى لعدد المشاركين الذين يستخدمون الفيديو.";
 /* Text shown for switching from thumbnail view to list view. */
 "List view"="طريقة عرض القائمة";
 /* Text shown for switching from list view to thumbnail view. */
@@ -1807,9 +1807,9 @@
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
 "Your PRO membership plan will expire in %1 days."="عضويتك كـ PRO ستنتهس في %1 أيام.";
 /* The professional pricing plan which the user was on expired one day ago. */
-"Your PRO membership plan expired 1 day ago"="Your PRO plan expired 1 day ago";
+"Your PRO membership plan expired 1 day ago"="لقد انتهت صلاحية إشتراك PRO الخاص بك منذ يوم واحد";
 /* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
-"Your PRO membership plan expired %1 days ago"="Your PRO plan expired %1 days ago";
+"Your PRO membership plan expired %1 days ago"="لقد انتهت صلاحية إشتراك PRO الخاص بك منذ %1 يوم";
 /* The text of a notification indicating that a file or folder has been taken down due to infringement or other reason. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your publicly shared %1 (%2) has been taken down."="لقد شاركت بشكل عام  %1 (%2)";
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
