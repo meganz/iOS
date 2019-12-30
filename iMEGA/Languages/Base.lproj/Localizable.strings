@@ -985,8 +985,8 @@
 "availableLabel"="Available";
 /* title of the My Account screen */
 "accountType"="Account Type:";
-/* Text relative to the MEGA account level. UPPER CASE */
-"Free"="FREE";
+/* Label to indicate that the current user has a Free account. */
+"Free"="Free";
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="expires on %@";
 /* Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible). */
