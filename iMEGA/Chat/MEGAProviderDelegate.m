@@ -78,7 +78,7 @@
                                           callId:callId];
         } else {
             [self reportNewIncomingCallWithValue:[MEGASdk base64HandleForUserHandle:chatId]
-                                      callerName:@"Connecting"
+                                      callerName:AMLocalizedString(@"connecting", nil)
                                         hasVideo:NO
                                             uuid:uuid
                                           callId:callId];
@@ -171,7 +171,7 @@
     } else {
         [self.provider reportNewIncomingCallWithUUID:call.uuid update:update completion:^(NSError * _Nullable error) {
             if (error) {
-                MEGALogError(@"Report new incoming call failed with error: %@", error);
+                MEGALogError(@"[CallKit] Report new incoming call failed with error: %@", error);
             } else {
                 [self.megaCallManager addCall:call];
             }
@@ -195,7 +195,7 @@
     update.hasVideo = hasVideo;
     [self.provider reportNewIncomingCallWithUUID:uuid update:update completion:^(NSError * _Nullable error) {
         if (error) {
-            MEGALogError(@"Report new incoming call failed with error: %@", error);
+            MEGALogError(@"[CallKit] Report new incoming call failed with error: %@", error);
         } else {
             MEGAChatCall *call = [MEGASdkManager.sharedMEGAChatSdk chatCallForCallId:callId];
             if (call) {
