@@ -2006,11 +2006,11 @@
 "Image quality"="Image quality";
 /* Title of Image Quality option */
 "Automatic"="Automatic";
-/* Description of Image Quality option */
+/* Description of Automatic Image Quality option */
 "Send smaller size images through cellular networks and original size images through wifi"="Send smaller size images through cellular networks and original size images through wifi";
-/* Title of Image Quality option*/
+/* Title of Image Quality option */
 "Optimised"="Optimised";
-/* Description of Image Quality option */
+/* Description of Optimised Image Quality option */
 "Send smaller size images optimised for lower data consumption"="Send smaller size images optimised for lower data consumption";
-/* Description of Image Quality option */
+/* Description of High Image Quality option */
 "Send original size, increased quality images" = "Send original size, increased quality images";
