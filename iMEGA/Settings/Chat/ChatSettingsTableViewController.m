@@ -162,7 +162,7 @@
     NSString *imageQualityString;
     switch (imageQuality) {
         case ChatImageUploadQualityAuto:
-            imageQualityString = AMLocalizedString(@"Automatic", @"Automatic");
+            imageQualityString = AMLocalizedString(@"Automatic", nil);
             break;
             
         case ChatImageUploadQualityHigh:
