@@ -309,11 +309,11 @@
     if (self.contactsMode == ContactsModeFolderSharedWith) {
         self.outSharesForNodeMutableArray = [self outSharesForNode:self.node];
         for (MEGAShare *share in self.outSharesForNodeMutableArray) {
-            MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:[share user]];
-            if (user && user.visibility == MEGAUserVisibilityVisible) {
-                [self.visibleUsersArray addObject:user];
-            } else {
+            if (share.isPending) {
                 [self.pendingShareUsersArray addObject:share];
+            } else {
+                MEGAUser *user = [MEGASdkManager.sharedMEGASdk contactForEmail:share.user];
+                [self.visibleUsersArray addObject:user];
             }
         }
     } else {
