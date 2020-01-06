@@ -8,8 +8,7 @@ class ChatImageQualityTableViewController: UITableViewController {
         navigationItem.title = NSLocalizedString("Image quality", comment: "Image quality")
     }
 
-    // MARK: - Table view data source
-
+    // MARK: - UITableViewDataSource
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = super.tableView(tableView, cellForRowAt: indexPath)
@@ -26,7 +25,7 @@ class ChatImageQualityTableViewController: UITableViewController {
             cell.textLabel?.text = NSLocalizedString("High", comment: "High")
             cell.detailTextLabel?.text = NSLocalizedString("Send original size, increased quality images", comment: "High description")
         case 2:
-            cell.textLabel?.text = "Optimised"
+            cell.textLabel?.text = NSLocalizedString("Optimised", comment: "")
             cell.detailTextLabel?.text = NSLocalizedString("Send smaller size images optimised for lower data consumption", comment: "Optimised description")
         default:
             return cell
