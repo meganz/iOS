@@ -199,11 +199,11 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
         options.version = PHImageRequestOptionsVersionOriginal;
     }
     
-    ChatImageUploadQuality imageQuality = [[NSUserDefaults standardUserDefaults] integerForKey:@"chatImageQuality"];
+    ChatImageUploadQuality imageQuality = [NSUserDefaults.standardUserDefaults integerForKey:@"chatImageQuality"];
 
     switch (imageQuality) {
         case ChatImageUploadQualityAuto:
-            if (self.toShareThroughChat && ![MEGAReachabilityManager isReachableViaWiFi]) {
+            if (self.toShareThroughChat && ![EGAReachabilityManager.isReachableViaWiFi) {
                 [self compressedImageAsset:asset options:options];
             } else {
                 [self requestImageForAsset:asset options:options];
@@ -213,28 +213,24 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
             [self requestImageForAsset:asset options:options];
 
             break;
-        case ChatImageUploadQualityOptimsed:
+        case ChatImageUploadQualityOptimised:
             [self compressedImageAsset:asset options:options];
             break;
         default:
             [self requestImageForAsset:asset options:options];
             break;
     }
-    
-
 }
 
 - (void)compressedImageAsset:(PHAsset *)asset options:(PHImageRequestOptions *)options {
-    
     NSUInteger totalPixels = asset.pixelWidth * asset.pixelHeight;
     float factor = MIN(sqrtf((float)DOWNSCALE_IMAGES_PX / totalPixels), 1);
     if (factor >= 1) {
         [self requestImageForAsset:asset options:options];
     } else {
-        
         options.synchronous = YES;
         options.resizeMode = PHImageRequestOptionsResizeModeExact;
-        [[PHImageManager defaultManager] requestImageForAsset:asset targetSize:CGSizeMake(asset.pixelWidth * factor, asset.pixelHeight * factor) contentMode:PHImageContentModeAspectFit options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+        [PHImageManager.defaultManager requestImageForAsset:asset targetSize:CGSizeMake(asset.pixelWidth * factor, asset.pixelHeight * factor) contentMode:PHImageContentModeAspectFit options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
             if (result) {
                 NSData *imageData = UIImageJPEGRepresentation(result, 0.75);
                 [self proccessImageData:imageData asset:asset withInfo:info];

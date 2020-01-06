@@ -158,8 +158,7 @@
 }
 
 - (void)imageQualityString {
-
-    ChatImageUploadQuality imageQuality = [[NSUserDefaults standardUserDefaults] integerForKey:@"chatImageQuality"];
+    ChatImageUploadQuality imageQuality = [NSUserDefaults.standardUserDefaults integerForKey:@"chatImageQuality"];
     NSString *imageQualityString;
     switch (imageQuality) {
         case ChatImageUploadQualityAuto:
@@ -170,15 +169,15 @@
             imageQualityString = AMLocalizedString(@"high", @"High");
             break;
             
-        case ChatImageUploadQualityOptimsed:
-            imageQualityString = AMLocalizedString(@"Optimised", @"Optimised");
+        case ChatImageUploadQualityOptimised:
+            imageQualityString = AMLocalizedString(@"Optimised", nil);
             break;
             
         default:
             break;
     }
     
-    _imageQualityRightDetailLabel.text = imageQualityString;
+    self.imageQualityRightDetailLabel.text = imageQualityString;
 }
 
 - (void)videoQualityString {
@@ -248,7 +247,7 @@
     }
 
     if (section == 3) {
-        ChatImageUploadQuality imageQuality = [[NSUserDefaults standardUserDefaults] integerForKey:@"chatImageQuality"];
+        ChatImageUploadQuality imageQuality = [NSUserDefaults.standardUserDefaults integerForKey:@"chatImageQuality"];
         switch (imageQuality) {
             case ChatImageUploadQualityAuto:
                 footerTitle = AMLocalizedString(@"Send smaller size images through cellular networks and original size images through wifi", @"Automatic description");
@@ -258,7 +257,7 @@
                 footerTitle = AMLocalizedString(@"Send original size, increased quality images", @"High description");
                 break;
                 
-            case ChatImageUploadQualityOptimsed:
+            case ChatImageUploadQualityOptimised:
                 footerTitle = AMLocalizedString(@"Send smaller size images optimised for lower data consumption", @"Optimised description");
                 break;
                 
