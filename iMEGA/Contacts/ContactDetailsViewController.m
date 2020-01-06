@@ -652,7 +652,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
     __weak typeof(self) weakself = self;
     nicknameViewController.nicknameChangedHandler = ^(NSString * _Nonnull nickname) {
         weakself.userNickname = nickname;
-        [self updateUserDetails];
+        [weakself updateUserDetails];
         [weakself.tableView reloadData];
     };
     

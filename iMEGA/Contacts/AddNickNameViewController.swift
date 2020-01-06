@@ -3,7 +3,7 @@ import UIKit
 
 class AddNickNameViewController: UIViewController {
 
-    @IBOutlet weak var canelBarButtonItem: UIBarButtonItem!
+    @IBOutlet weak var cancelBarButtonItem: UIBarButtonItem!
     @IBOutlet weak var saveBarButtonItem: UIBarButtonItem!
     
     @IBOutlet weak var nicknameLabel: UILabel!
@@ -41,7 +41,7 @@ class AddNickNameViewController: UIViewController {
         super.viewDidLoad()
         
         title = "Set Nickname".localized()
-        canelBarButtonItem.title = "Cancel".localized()
+        cancelBarButtonItem.title = "Cancel".localized()
         saveBarButtonItem.title = "save".localized()
         nicknameLabel.text = "Alias/ Nickname".localized()
     }
