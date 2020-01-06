@@ -939,7 +939,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="canelBarButtonItem" destination="YgS-JW-D3e" id="FqG-Rq-cfw"/>
+                        <outlet property="cancelBarButtonItem" destination="YgS-JW-D3e" id="CQU-bO-j0V"/>
                         <outlet property="nicknameLabel" destination="woa-na-PTZ" id="wGz-kJ-ueb"/>
                         <outlet property="nicknameTextField" destination="2s0-sw-5wX" id="fFC-Hw-gVr"/>
                         <outlet property="saveBarButtonItem" destination="Qg5-Ea-bZH" id="siR-2A-M5R"/>
