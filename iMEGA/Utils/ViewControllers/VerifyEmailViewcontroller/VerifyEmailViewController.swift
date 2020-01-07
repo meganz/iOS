@@ -90,19 +90,19 @@ class VerifyEmailViewController: UIViewController {
         customModal.modalPresentationStyle = .overCurrentContext
         
         customModal.image = UIImage(named: "lockedAccounts")
-        customModal.viewTitle = NSLocalizedString("Locked Accounts", comment: "")
-        customModal.detail = NSLocalizedString("It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.", comment: "") + "\n\n" + NSLocalizedString("Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.", comment: "")
-        customModal.dismissButtonTitle = NSLocalizedString("close", comment: "")
+        customModal.viewTitle = NSLocalizedString("Locked Accounts", comment: "Title of a helping view about locked accounts")
+        customModal.detail = NSLocalizedString("It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.", comment: "Locked accounts description text by an external data breach. This text is 1 of 2 paragraph of a description.") + "\n\n" + NSLocalizedString("Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.", comment: "Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description.")
+        customModal.dismissButtonTitle = NSLocalizedString("close", comment: "A button label. The button allows the user to close the conversation.")
         
         present(customModal, animated: true, completion: nil)
     }
     
     func localizeLabels() {
-        topDescriptionLabel.text = NSLocalizedString("Your account has been temporarily suspended for your safety.", comment: "")
-        bottomDescriptionLabel.text = NSLocalizedString("[S]Please verify your email[/S] and follow its steps to unlock your account.", comment: "")
-        resendButton.setTitle(NSLocalizedString("resend", comment: ""), for: .normal)
-        hintButton.setTitle(NSLocalizedString("Why am I seeing this?", comment: ""), for: .normal)
-        hintLabel.text = NSLocalizedString("Email sent", comment: "")
+        topDescriptionLabel.text = NSLocalizedString("Your account has been temporarily suspended for your safety.", comment: "Text describing account suspended state to the user")
+        bottomDescriptionLabel.text = NSLocalizedString("[S]Please verify your email[/S] and follow its steps to unlock your account.", comment: "Text indicating the user next step to unlock suspended account. Please leave [S], [/S] as it is which is used to bolden the text.")
+        resendButton.setTitle(NSLocalizedString("resend", comment: "A button to resend the email confirmation."), for: .normal)
+        hintButton.setTitle(NSLocalizedString("Why am I seeing this?", comment: "Text for button to open an helping view"), for: .normal)
+        hintLabel.text = NSLocalizedString("Email sent", comment: "Text to notify user an email has been sent")
     }
     
     @objc func checkIfBlocked() {
