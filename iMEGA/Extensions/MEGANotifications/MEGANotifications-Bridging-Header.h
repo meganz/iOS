@@ -4,7 +4,9 @@
 
 #import "SAMKeychain.h"
 
+#import "MEGAConstants.h"
 #import "MEGAError.h"
+#import "NSFileManager+MNZCategory.h"
 #import "MEGAGenericRequestDelegate.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
