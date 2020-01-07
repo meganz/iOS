@@ -560,10 +560,6 @@
 "addContactButton"="Add";
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="There’s no need to add your own email address";
-/* Add contacts and share dialog error message when user try to add already existing email address. */
-"alreadyHaveAContactWithThatEmailAddress"="You already have a contact with that email address";
-/* Add contacts and share dialog error message when user try to add already existing email address. */
-"invitationAlreadySentToContactBefore"="The invitation to contact %@ has been sent before and can be consulted in the Sent Requests tab.";
 /* Success message shown when a contact has been invited */
 "theUserHasBeenInvited"="The user [X] has been invited and will appear in your contact list once accepted.";
 /* Success message shown when some contacts have been invited */
@@ -1413,7 +1409,7 @@
 /* Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible. */
 "autoAccept"="Auto-Accept";
 /* Footer that explains the way Auto-Accept works for QR codes */
-"autoAcceptFooter"="Contacts that scan your QR Code will be automatically added to your contact list.";
+"autoAcceptFooter"="MEGA users who scan your QR code will be automatically added to your contact list.";
 /* Action to reset the current valid QR code of the user */
 "resetQrCode"="Reset QR Code";
 /* Footer that explains what would happen if the user resets his/her QR code */
@@ -1675,7 +1671,7 @@
 /* A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days. */
 "Remove files older than"="Remove files older than";
 /* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
-"Days"="days";
+"Days"="Days";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
 "The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="The Rubbish Bin is cleared for you automatically. The minimum period is 7 days and the maximum period is 30 days.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
