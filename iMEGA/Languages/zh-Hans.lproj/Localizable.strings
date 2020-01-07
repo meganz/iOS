@@ -43,7 +43,7 @@
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="请输入解密金钥";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertMessage"="要进入此文件夹/文件，您需要它的解密密钥。如果没有密钥，请联系此链接的创建者。";
+"decryptionKeyAlertMessage"="访问此文件夹或文件需要解密密钥。如果您没有密钥，请与链接创建者联系。";
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="解密密钥";
 /* Button title to try to decrypt the link */
@@ -61,7 +61,7 @@
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="您已从其他位置登出该设备";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="MEGA无法通过SSL安全连接。您可能需要使用公共WiFi。";
+"sslUnverified_alertTitle"="MEGA无法通过SSL进行安全连接。您可能正在使用受限制的公共网络。";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="您的访问内容不可用于此帐户。请在手机客户端登录与之相同的MEGA帐户。";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
@@ -120,12 +120,16 @@
 "passwordStrong"="该密码不容易被攻破。请确保您会将它牢记。";
 /*  */
 "agreeWithTheMEGATermsOfService"="我同意MEGA的<a href=\"terms\">服务条款</a>";
+/* This text is displayed in the account creation screen with a checkbox. User will have to tick the checkbox before proceeding on to create an account */
+"agreeWithLosingPasswordYouLoseData"="我了解[S]如果我丢失密码，则会失去我的数据。[/S]进一步了解<a href=\"terms\">MEGA终端至终端加密技术</a>.";
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="请输入有效的名字";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="密码不匹配";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
 "termsCheckboxUnselected"="您需要同意MEGA服务条款才可注册账号。";
+/* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown  */
+"termsForLosingPasswordCheckboxUnselected"="您需要同意您已了解丢失密码的风险";
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="此邮箱已在MEGA注册过";
 /* Title shown just after doing some action that requires confirming the action by an email */
@@ -489,9 +493,9 @@
 /* Message shown while uploading files. Plural. */
 "cameraUploadsPendingFiles"="正在上传，%lu 文件待处理";
 /* Message shown when camera upload paused because of no WiFi. Singular. */
-"Upload paused because of no WiFi, 1 file pending"="无WiFi连接，上传已暂停，1个文件待上传";
+"Upload paused because of no WiFi, 1 file pending"="无Wi-Fi连接，上传已暂停，1个文件等待上传";
 /* Message shown when camera upload paused because of no WiFi. Plural. */
-"Upload paused because of no WiFi, %lu files pending"="无WiFi连接，上传已暂停，%lu个文件待上传";
+"Upload paused because of no WiFi, %lu files pending"="无Wi-Fi连接，上传已暂停，%lu个文件等待上传";
 /* Message shown the pending video file when photos uploaded and video upload is not enabled. Singular. */
 "Photos uploaded, video uploads are off, 1 video not uploaded"="照片上传，视频上传已关闭；1个视频未上传";
 /* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
@@ -515,7 +519,7 @@
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
 "foldersShared"="%d 个文件夹";
 /* Item menu option to add a contact writting his/her email */
-"addFromEmail"="输入邮箱地址";
+"addFromEmail"="输入电子邮箱地址";
 /* Title of Shared Items section */
 "sharedItems"="共享文件";
 /* Title of the tab bar item for the Shared Items section */
@@ -556,8 +560,6 @@
 "addContactButton"="新增";
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="您无须增加个人的电子邮件";
-/* Add contacts and share dialog error message when user try to add already existing email address. */
-"alreadyHaveAContactWithThatEmailAddress"="您已有一个使用该电子邮件的连络人";
 /* Success message shown when a contact has been invited */
 "theUserHasBeenInvited"="用户[X]已被邀请。该邀请被接受后，他将会出现在您的联系人列表中。";
 /* Success message shown when some contacts have been invited */
@@ -702,8 +704,10 @@
 "The Hidden Album is where you hide photos or videos in your device Photos app."="隐藏相册是指您在设备的照片中隐藏照片或视频的地方。";
 /* Title of the switch to config whether to upload Shared Albums */
 "Upload Shared Albums"="上传共享相册";
-/* Footer description for Upload Shared Albums title */
-"Shared Albums are where you share with other people and subscribe to other people's shares in your device's Photos app."="共享相册是指您在设备的照片应用中与他人共享以及订阅他人共享的相册。";
+/* Footer description for Upload Shared Albums title when option enabled */
+"Shared Albums from your device's Photos app will be uploaded."="设备照片中的共享相册将会被上传。";
+/* Footer description for Upload Shared Albums title when option disabled */
+"Shared Albums from your device's Photos app will not be uploaded."="设备照片中的共享相册不会被上传。";
 /* Title of the switch to config whether to upload synced albums */
 "Upload albums synced from iTunes"="上传iTunes中已同步的相册";
 /* Footer description for upload synced albums title */
@@ -729,7 +733,7 @@
 /* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
 "recoveryKeyCopiedToClipboard"="恢复秘钥已复制到剪贴板。请妥善保管。";
 /* Alert title shown when you have exported your MEGA Recovery Key */
-"masterKeyExported"="恢复金匙已导出";
+"masterKeyExported"="恢复秘钥已导出";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
 "masterKeyExported_alertMessage"="还原金钥已以RecoveryKey.txt(还原金钥文字档)汇出至离线模式中。注意：您登出后它将会被删除，请将其存放于安全之处。";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
@@ -802,6 +806,8 @@
 "filesFolderRemovedToRubbishBinMessage"="已从MEGA删除%d 个文件与1个文件夹";
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
 "filesFoldersRemovedToRubbishBinMessage"="已从MEGA删除[A]个文件和[B]个文件夹";
+/* Hint text to suggest that the user have to write the new password on it */
+"newPassword"="新密码";
 /* Hint text where the user have to re-write the new password to confirm it */
 "confirmPassword"="确认密码";
 /* Success message shown when the password has been changed */
@@ -956,7 +962,7 @@
 /* Label to show that an error related with expiration occurs during a SDK operation. */
 "expired"="已过期";
 /* Title of the button which logs out from your account. */
-"logoutLabel"="注销";
+"logoutLabel"="登出";
 /* String shown when you are logging out of your account. */
 "loggingOut"="正在登出";
 /* Button to remove avatar. Try to keep the text short (as in English) */
@@ -979,8 +985,8 @@
 "availableLabel"="可用";
 /* title of the My Account screen */
 "accountType"="账号类型:";
-/* Text relative to the MEGA account level. UPPER CASE */
-"free"="免费";
+/* Label to indicate that the current user has a Free account. */
+"Free"="免费";
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="到%@ 过期";
 /* Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible). */
@@ -998,9 +1004,9 @@
 /*  */
 "chooseYourAccountType"="选择您的账号类型";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]您的云盘几乎已满。[/S] [A]立即升级[/A]至PRO帐户，可获得[S]最高8TB (8192GB)[/S]的云储存空间。";
+"cloudDriveIsAlmostFull"="[S]您的云盘空间几乎已满。[/S] [A]立即升级[/A]到PRO帐户并获得[S]最高%@ TB (%@ GB)[/S]的云存储空间。";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]您的帐户空间已满。[/S] [A]立即升级[/A]至PRO帐户，可获得[S]最高8TB (8192GB)[/S]的云储存空间。";
+"cloudDriveIsFull"="[S]您的云盘空间已满。[/S] [A]立即升级[/A]到PRO帐户并获得[S]最高%@ TB (%@ GB)[/S]的云存储空间。";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="储存空间";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
@@ -1189,6 +1195,8 @@
 "moderator"="共同管理";
 /* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
 "standard"="标准模式";
+/* A button title which removes a participant from a chat. */
+"removeParticipant"="删除该成员";
 /* Title show above the name of the persons with whom you're chatting */
 "chattingWith"="聊天对象";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
@@ -1247,6 +1255,8 @@
 "dismiss"="解除";
 /* Notification text body shown when you have received a new chat message */
 "newMessage"="新信息";
+/* Notification text body shown when you have received a contact request */
+"contactRequest"="联系人邀请";
 /* Notification text body shown when you have received a new shared folder */
 "newSharedFolder"="新共享文件夹";
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
@@ -1352,7 +1362,7 @@
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph4"="注册用户只要参与奖励计划即可获得50GB免费储存空间，亦可付费获得更多配额：";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph5"="PRO LITE订阅：每月€4.99（$4.99）或每年€49.99（$49.99），每月为您提供每月200GB的存储空间和1TB的传输配额。\nPRO I订阅：每月€9.99（$9.99）或每年€99.99（$99.99），每月为您提供1TB的存储空间和2TB的传输配额。\nPRO II订阅：每月€19.99（$19.99）或每年€199.99（$199.99），每月为您提供4TB的存储空间和8TB的传输配额。[BR]PRO III订阅：每月€29.99（$29.99）或每年€299.99（$299.99），每月为您提供8TB的存储空间和16TB的传输配额。";
+"generalDescriptionParagraph5"="PRO LITE订阅：每月€4.99 (USD$4.99)或每年€49.99 (USD$49.99)，您会获得每月400GB的存储空间和1TB的传输流量。\nPRO I订阅：每月€9.99 (USD$9.99)或每年€99.99 (USD$99.99)，您会获得每月2TB的存储空间和2TB的传输流量。\nPRO II订阅：每月€19.99 (USD$19.99)或每年€199.99 (USD$199.99)，您会获得每月8TB的存储空间和8TB的传输流量。\nPRO III订阅：每月€29.99 (USD$29.99)或每年€299.99 (USD$299.99)，您会获得每月16TB的存储空间和16TB的传输流量。";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph6"="欲了解更多信息，请浏览我们的网站：https://mega.nz/\n服务条款：https://mega.nz/terms\n隐私政策：https://mega.nz/privacy";
@@ -1395,7 +1405,7 @@
 /* Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible. */
 "autoAccept"="自动接受";
 /* Footer that explains the way Auto-Accept works for QR codes */
-"autoAcceptFooter"="扫描二维码码的联系人会自动添加到您的联系人列表中。";
+"autoAcceptFooter"="通过扫描二维码添加的用户会自动添加到您的联系人列表";
 /* Action to reset the current valid QR code of the user */
 "resetQrCode"="重置二维码";
 /* Footer that explains what would happen if the user resets his/her QR code */
@@ -1477,7 +1487,7 @@
 /* Used as a message in the "Password reminder" dialog that is shown when the user enters his password, clicks confirm and his password is correct. */
 "passwordAccepted"="密码已确认";
 /* A dialog title to export the Recovery Key for the current user. */
-"exportRecoveryKey"="导出恢复金匙";
+"exportRecoveryKey"="导出恢复密钥";
 /* Title to confirm that you want to logout */
 "proceedToLogout"="继续登出";
 /* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.  */
@@ -1511,7 +1521,7 @@
 /* When an active call of user A with user B had failed */
 "callFailed"="通话失败";
 /* When an active call of user A with user B had ended */
-"callEnded"="通话结束";
+"callEnded"="呼叫结束。";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="时长：%@";
 /* */
@@ -1637,7 +1647,7 @@
 /* Title of the option to enable or disable file versioning on Settings section */
 "File versioning"="文件版本";
 /* Subtitle of the option to enable or disable file versioning on Settings section */
-"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="启用或禁用整个帐户的文件版本控制。如果您的联系人已启用此功能，\n您仍可以从共享文件夹接收文件版本。";
+"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="为整个帐户启用或禁用文件版本功能。\n禁用文件版本功能不会阻止您的联系人在共享文件夹中创建新版本。";
 /* A confirmation message when the user chooses to disable file versioning. */
 "When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="当文件版本控制被禁用时，一旦文件被更新，当前版本将被替换为新版本（并且不再记录对文件的更改）。您确定要禁用文件版本控制吗？";
 /* Settings preference title to show file versions info of the account */
@@ -1932,3 +1942,55 @@
 "This folder has been the subject of a takedown notice."="此文件夹接获下架通知且已被移除";
 /* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
 "Dispute Takedown"="解除争议";
+/* Title of the "Links" Shared Items. */
+"Links"="链接";
+/* Title for empty state view of "Links" in Shared Items. */
+"No Public Links"="无公共链接";
+/* Text to indicate that the user will leave an incoming shared folder. */
+"Leave Share"="离开共享";
+/* Text indicating to the user the action that will be executed on tap. */
+"Manage Share"="管理共享";
+/* Title of the screen that shows the users with whom the user can share a folder */
+"Share with"="分享";
+/* Chat Notifications DND: Option that does not deactivate DND automatically */
+"Until I Turn it On Again"="直到再次开启时";
+/* Chat Notifications DND: Option that deactivates DND after 30 minutes */
+"30 minutes"="30分钟";
+/* Chat Notifications DND: Option that deactivates DND after 1 hour */
+"1 hour"="1小时";
+/* Chat Notifications DND: Option that deactivates DND after 6 hours */
+"6 hours"="6小时";
+/* Chat Notifications DND: Option that deactivates DND after 24 hours */
+"24 hours"="24小时";
+/* Chat Notifications DND: Title bar message for the dnd activate options */
+"Mute chat Notifications for"="静音聊天通知";
+/* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
+"Muted forever"="保持静音";
+/* Chat Notifications DND: Remaining time left to deactivate DND - 1 minute left */
+"1 minute left"="剩余1分钟";
+/* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 minute left */
+"%d minutes left"="剩余%d分钟";
+/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour left */
+"1 hour left"="剩余1小时";
+/* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 hour left */
+"%d hours left"="剩余%d小时";
+/* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
+"Chat Notifications"="Chat信息通知";
+/* Chat settings: This text appears with the Do Not Disturb switch */
+"Do Not Disturb"="勿扰模式";
+/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, 1 minute left */
+"1 hour, 1 minute left"="剩余1小时，1分钟";
+/* Chat Notifications DND: Remaining time left to deactivate DND - X hours, X minutes left */
+"%d hours, %d minutes left"="剩余%d小时，%d分钟";
+/* Chat Notifications DND: Remaining time left to deactivate DND - X hours, 1 minute left */
+"%d hours, 1 minute left"="剩余%d小时，1分钟";
+/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, X minutes left */
+"1 hour, %d minutes left"="剩余1小时，%d分钟";
+/* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
+"Reconnecting..."="正在重连中……";
+/* Title shown when the user reconnect in a call. */
+"You are back!"="已重连。";
+/* Subtitle of chat screen when the chat is inactive */
+"Inactive chat"="非活跃聊天";
+/* Error message shown when the user tries to open a file with an unsupported encoding */
+"It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="该文件未使用UTF-8或ISO/IEC 8859-1进行编码，无法读取文件内容。";

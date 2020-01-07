@@ -13,7 +13,6 @@
 #import "GroupCallViewController.h"
 #import "UIApplication+MNZCategory.h"
 
-#import "MEGAUser+MNZCategory.h"
 #import "MEGANavigationController.h"
 
 @interface MEGAProviderDelegate ()
@@ -47,8 +46,8 @@
     return self;
 }
 
-- (void)reportIncomingCall:(MEGAChatCall *)call user:(MEGAUser *)user {
-    MEGALogDebug(@"[CallKit] Report incoming call %@ with uuid %@, video %@ and email %@", call, call.uuid, call.hasVideoInitialCall ? @"YES" : @"NO", user.email);
+- (void)reportIncomingCall:(MEGAChatCall *)call {
+    MEGALogDebug(@"[CallKit] Report incoming call %@ with uuid %@, video %@", call, call.uuid, call.hasVideoInitialCall ? @"YES" : @"NO");
     
     MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:call.chatId];
 

@@ -20,7 +20,7 @@
 }
 
 - (NSString *)activityType {
-    return @"ShareFolderActivity";
+    return MEGAUIActivityTypeShareFolder;
 }
 
 - (NSString *)activityTitle {
@@ -45,7 +45,7 @@
     ContactsViewController *contactsVC = navigationController.viewControllers.firstObject;
     contactsVC.nodesArray = self.nodes;
     contactsVC.contactsMode = ContactsModeShareFoldersWith;
-    [contactsVC setShareFolderActivity:self];
+    contactsVC.shareFolderActivity = self;
     
     return navigationController;
 }

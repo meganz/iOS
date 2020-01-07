@@ -11,7 +11,7 @@
 
 - (instancetype)initWithMEGACallManager:(MEGACallManager *)megaCallManager;
 
-- (void)reportIncomingCall:(MEGAChatCall *)call user:(MEGAUser *)user;
+- (void)reportIncomingCall:(MEGAChatCall *)call;
 - (void)reportOutgoingCall:(MEGAChatCall *)call;
 - (void)reportEndCall:(MEGAChatCall *)call;
 

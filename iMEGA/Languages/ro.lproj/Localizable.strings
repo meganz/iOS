@@ -43,7 +43,7 @@
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="Introdu cheia de decriptare";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertMessage"="Pentru a accesa acest folder/fișier, vei avea nevoie de cheia de decriptare a acestuia. Dacă nu ai cheia, contactează creatorul linkului.";
+"decryptionKeyAlertMessage"="Pentru a accesa acest folder/fișier, vei avea nevoie de cheia de decriptare a acestuia. Dacă nu ai cheia, te rugăm să contactezi creatorul linkului.";
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="Cheie de decriptare";
 /* Button title to try to decrypt the link */
@@ -61,7 +61,7 @@
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="Ai fost deconectat de pe acest dispozitiv din altă locație";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="MEGA nu se poate conecta securizat prin SSL. S-ar putea să fii pe WiFi public cu cerințe suplimentare.";
+"sslUnverified_alertTitle"="MEGA nu se poate conecta securizat prin SSL. S-ar putea să fii pe o rețea Wi-Fi publică cu cerințe suplimentare.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="Conținutul pe care încerci să îl accesezi nu este disponibil pentru acest cont. Te rugăm să încerci să te autentifici cu același cont ca și în clientul web mobil.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
@@ -120,12 +120,16 @@
 "passwordStrong"="Această parolă va rezista în fața celor mai sofisticate atacuri de tip „brute-force”. Te rugăm să te asiguri că o vei reține.";
 /*  */
 "agreeWithTheMEGATermsOfService"="Sunt de acord cu <a href=\"terms\">Termenii de utilizare a serviciului</a> MEGA";
+/* This text is displayed in the account creation screen with a checkbox. User will have to tick the checkbox before proceeding on to create an account */
+"agreeWithLosingPasswordYouLoseData"="Înțeleg că [S]dacă îmi pierd parola, se poate să îmi pierd datele.[/S] Citește mai multe despre <a href=\"terms\">criptarea capăt-la-capăt MEGA</a>.";
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="Introdu un nume valid";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="Parolele nu coincid";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
 "termsCheckboxUnselected"="Trebuie să fii de-acord cu Termenii de utilizare a serviciului pentru a înregistra un cont pe MEGA.";
+/* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown  */
+"termsForLosingPasswordCheckboxUnselected"="Trebuie să fii de acord cu faptul că înțelegi pericolul pierderii parolei";
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="Această adresă de e-mail a înregistrat deja un cont cu MEGA";
 /* Title shown just after doing some action that requires confirming the action by an email */
@@ -489,9 +493,9 @@
 /* Message shown while uploading files. Plural. */
 "cameraUploadsPendingFiles"="Încărcare în curs, %lu fișiere în așteptare";
 /* Message shown when camera upload paused because of no WiFi. Singular. */
-"Upload paused because of no WiFi, 1 file pending"="Încărcare pusă pe pauză din cauza lipsei conexiunii WiFi, 1 fișier în așteptare";
+"Upload paused because of no WiFi, 1 file pending"="Încărcare pusă pe pauză din cauză că nu există conexiune Wi-Fi, 1 fișier în așteptare";
 /* Message shown when camera upload paused because of no WiFi. Plural. */
-"Upload paused because of no WiFi, %lu files pending"="Încărcare pusă pe pauză din cauza lipsei conexiunii WiFi, %lu fișiere în așteptare";
+"Upload paused because of no WiFi, %lu files pending"="Încărcare pusă pe pauză din cauză că nu există conexiune Wi-Fi, %lu fișiere în așteptare";
 /* Message shown the pending video file when photos uploaded and video upload is not enabled. Singular. */
 "Photos uploaded, video uploads are off, 1 video not uploaded"="Fotografiile au fost încărcate, încărcările video sunt dezactivate; 1 videoclip nu a fost încărcat";
 /* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
@@ -515,7 +519,7 @@
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
 "foldersShared"="%d foldere";
 /* Item menu option to add a contact writting his/her email */
-"addFromEmail"="Inserează un e-mail";
+"addFromEmail"="Inserează o adresă de e-mail";
 /* Title of Shared Items section */
 "sharedItems"="Elemente partajate";
 /* Title of the tab bar item for the Shared Items section */
@@ -556,8 +560,6 @@
 "addContactButton"="Adaugă";
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="Nu este nevoie să adaugi adresa de e-mail proprie";
-/* Add contacts and share dialog error message when user try to add already existing email address. */
-"alreadyHaveAContactWithThatEmailAddress"="Ai deja un contact cu acea adresă de e-mail";
 /* Success message shown when a contact has been invited */
 "theUserHasBeenInvited"="Utilizatorul [X] a fost invitat și va apărea în lista de contacte de îndată ce a acceptat invitația.";
 /* Success message shown when some contacts have been invited */
@@ -671,7 +673,7 @@
 /* Footer for video uploads switch section when disabled */
 "When enabled, videos will be uploaded."="Când este activat, videoclipurile vor fi încărcate.";
 /* Title for new camera upload feature */
-"New Camera Upload!"="Opțiuni noi pentru încărcări cameră!";
+"New Camera Upload!"="Opțiuni noi pentru Încărcări cameră!";
 /* A messge for camera upload v2 migration */
 "Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="Acum poți alege să convertești fotografiile și videoclipurile HEIC/HEVC la formatele JPEG/H.264 compatibile la o scară mai largă.";
 /* Title for an action to use most compatible formats */
@@ -699,11 +701,13 @@
 /* Footer description when upload all burst photos is disabled */
 "Only the representative photos from your burst photo sequences will be uploaded."="Se vor încărca doar fotografiile favorite din secvențele fotografiilor în rafală.";
 /* Footer description when upload Hidden Album is enabled */
-"The Hidden Album is where you hide photos or videos in your device Photos app."="Albumul ascuns este locul în care ascunzi fotografii sau videoclipuri în aplicația Fotografii a dispozitivului.";
+"The Hidden Album is where you hide photos or videos in your device Photos app."="Albumul ascuns este locul în care ascunzi fotografii sau videoclipuri în aplicația Poze a dispozitivului.";
 /* Title of the switch to config whether to upload Shared Albums */
 "Upload Shared Albums"="Încarcă albume partajate";
-/* Footer description for Upload Shared Albums title */
-"Shared Albums are where you share with other people and subscribe to other people's shares in your device's Photos app."="Albumele partajate sunt locul în care partajezi cu alte persoane și te abonezi la partajările altor persoane din aplicația Poze a dispozitivului.";
+/* Footer description for Upload Shared Albums title when option enabled */
+"Shared Albums from your device's Photos app will be uploaded."="Vor fi încărcate albume partajate din aplicația Poze a dispozitivului.";
+/* Footer description for Upload Shared Albums title when option disabled */
+"Shared Albums from your device's Photos app will not be uploaded."="Nu vor fi încărcate albume partajate din aplicația Poze a dispozitivului.";
 /* Title of the switch to config whether to upload synced albums */
 "Upload albums synced from iTunes"="Încarcă albumele sincronizate de pe iTunes";
 /* Footer description for upload synced albums title */
@@ -802,6 +806,8 @@
 "filesFolderRemovedToRubbishBinMessage"="%d fișiere și 1 folder eliminate de pe MEGA";
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
 "filesFoldersRemovedToRubbishBinMessage"="[A] fișiere și [B] foldere eliminate de pe MEGA";
+/* Hint text to suggest that the user have to write the new password on it */
+"newPassword"="Parolă nouă";
 /* Hint text where the user have to re-write the new password to confirm it */
 "confirmPassword"="Confirmă parola";
 /* Success message shown when the password has been changed */
@@ -930,7 +936,7 @@
 /* A header/title of a section which contains information about used/available storage space on a user's cloud drive. */
 "storageQuota"="Cotă de stocare";
 /* The header/title of a block/section which contains information about the user's used/available transfer allowance for their account. */
-"transferQuota"="Cotă de transfer";
+"transferQuota"="Cotă de transferuri";
 /* achievement type */
 "registrationBonus"="Bonus de înregistrare";
 /* Message shown on the achievements dialog for achieved achievements, %1 is replaced with e.g. 20 GB */
@@ -979,8 +985,8 @@
 "availableLabel"="Disponibil";
 /* title of the My Account screen */
 "accountType"="Tipul contului:";
-/* Text relative to the MEGA account level. UPPER CASE */
-"free"="GRATUIT";
+/* Label to indicate that the current user has a Free account. */
+"Free"="Gratuit";
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="expiră pe %@";
 /* Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible). */
@@ -998,13 +1004,13 @@
 /*  */
 "chooseYourAccountType"="Alege tipul contului tău";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]Unitatea cloud este aproape plină.[/S] [A]Upgradează acum[/A] la un cont PRO și obține [S]până la 8 TB (8192 GB)[/S] spațiu de stocare în cloud.";
+"cloudDriveIsAlmostFull"="[S]Unitatea ta cloud este aproape plină.[/S] [A]Upgradează acum[/A] la un cont PRO și obține [S]până la %@ TB (%@ GB)[/S] spațiu de stocare în cloud.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]Contul tău este plin.[/S] [A]Upgradează acum[/A] la un cont PRO și obține [S]până la 8 TB (8192 GB)[/S] spațiu de stocare în cloud.";
+"cloudDriveIsFull"="[S]Unitatea ta cloud este plină.[/S] [A]Upgradează acum[/A] la un cont PRO și obține [S]până la %@ TB (%@ GB)[/S] spațiu de stocare în cloud.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Spațiu de stocare";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
-"transferQuota"="Cotă de transfer";
+"transferQuota"="Cotă de transferuri";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
 "limited"="Limitat";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
@@ -1189,6 +1195,8 @@
 "moderator"="Moderator";
 /* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
 "standard"="Standard";
+/* A button title which removes a participant from a chat. */
+"removeParticipant"="Elimină participantul";
 /* Title show above the name of the persons with whom you're chatting */
 "chattingWith"="Chat împreună cu";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
@@ -1247,6 +1255,8 @@
 "dismiss"="Înlătură";
 /* Notification text body shown when you have received a new chat message */
 "newMessage"="Mesaj nou";
+/* Notification text body shown when you have received a contact request */
+"contactRequest"="Cerere de contact";
 /* Notification text body shown when you have received a new shared folder */
 "newSharedFolder"="Folder nou partajat";
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
@@ -1352,7 +1362,7 @@
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph4"="MEGA oferă un spațiu de stocare generos de 50 GB gratuit pentru toți utilizatorii înregistrați cu realizările bonus și oferă planuri plătite cu limite mult mai mari:";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph5"="Abonamentul PRO LITE: 4,99€ (4,99$ SUA) pe lună sau 49,99€ (49,99$ SUA) pe an îți oferă 200 GB spațiu de stocare și 1 TB cotă de transfer pe lună.\nAbonamentul PRO I: 9,99€ (9,99$ SUA) pe lună sau 99,99€ (99,99$ SUA) pe an îți oferă 1 TB spațiu de stocare și 2 TB cotă de transfer pe lună.\nAbonamentul PRO II: 19,99€ (19,99$ SUA) pe lună sau 199,99€ (199,99$ SUA) pe an îți oferă 4 TB spațiu de stocare și 8 TB cotă de transfer pe lună.\nAbonamentul PRO III: 29,99€ (29,99$ SUA) pe lună sau 299,99€ (299,99$ SUA) pe an îți oferă 8 TB spațiu de stocare și 16 TB cotă de transfer pe lună.";
+"generalDescriptionParagraph5"="Abonamentul PRO LITE: 4,99€ (4,99$ SUA) pe lună sau 49,99€ (49,99$ SUA) pe an îți oferă 400 GB spațiu de stocare și 1 TB cotă de transfer pe lună.\nAbonamentul PRO I: 9,99€ (9,99$ SUA) pe lună sau 99,99€ (99,99$ SUA) pe an îți oferă 2 TB spațiu de stocare și 2 TB cotă de transfer pe lună.\nAbonamentul PRO II: 19,99€ (19,99$ SUA) pe lună sau 199,99€ (199,99$ SUA) pe an îți oferă 8 TB spațiu de stocare și 8 TB cotă de transfer pe lună.\nAbonamentul PRO III: 29,99€ (29,99$ SUA) pe lună sau 299,99€ (299,99$ SUA) pe an îți oferă 16 TB spațiu de stocare și 16 TB cotă de transfer pe lună.";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph6"="Pentru mai multe informații, te rugăm să verifici site-ul nostru web: https://mega.nz/\nTermenii de utilizare a serviciului: https://mega.nz/terms\nPolitica de confidențialitate: https://mega.nz/privacy";
@@ -1395,7 +1405,7 @@
 /* Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible. */
 "autoAccept"="Acceptă automat";
 /* Footer that explains the way Auto-Accept works for QR codes */
-"autoAcceptFooter"="Contactele care îți scanează codul QR vor fi adăugați automat în lista de contacte.";
+"autoAcceptFooter"="Utilizatorii MEGA care îți scanează codul QR vor fi adăugați automat în lista de contacte.";
 /* Action to reset the current valid QR code of the user */
 "resetQrCode"="Resetează codul QR";
 /* Footer that explains what would happen if the user resets his/her QR code */
@@ -1511,7 +1521,7 @@
 /* When an active call of user A with user B had failed */
 "callFailed"="Apel eșuat";
 /* When an active call of user A with user B had ended */
-"callEnded"="Apel încheiat";
+"callEnded"="Apel încheiat.";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="Durată: %@";
 /* */
@@ -1553,7 +1563,7 @@
 /* Title of empty state view for archived chats. */
 "noArchivedChats"="Niciun chat arhivat";
 /* A title for the Two-Factor Authentication section on the My Account - Security page. */
-"twoFactorAuthentication"="Autentificarea cu doi factori";
+"twoFactorAuthentication"="Autentificare cu doi factori";
 /* Button title to start the setup of a feature. For example 'Begin Setup' for Two-Factor Authentication */
 "beginSetup"="Începe configurarea";
 /* A message on the Verify Login page telling the user to enter their 2FA code. */
@@ -1637,7 +1647,7 @@
 /* Title of the option to enable or disable file versioning on Settings section */
 "File versioning"="Versionarea fișierelor";
 /* Subtitle of the option to enable or disable file versioning on Settings section */
-"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="Activează sau dezactivează versionarea fișierelor pentru întregul cont.\nEste posibil să primești în continuare versiuni ale fișierelor din folderele partajate, dacă contactele tale au această opțiune activată.";
+"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="Activează sau dezactivează versionarea fișierelor pentru întregul cont.\nDezactivarea versionării fișierelor nu împiedică contactele tale să creeze noi versiuni în folderele partajate.";
 /* A confirmation message when the user chooses to disable file versioning. */
 "When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="Când versionarea fișierelor este dezactivată, versiunea actuală va fi înlocuită cu noua versiune odată ce fișierul este actualizat (iar modificările aduse fișierului nu vor mai fi înregistrate). Sigur vrei să dezactivezi versionarea fișierelor?";
 /* Settings preference title to show file versions info of the account */
@@ -1653,7 +1663,7 @@
 /* Text of the dialog to delete all the file versions of the account */
 "You are about to delete the version histories of all files. Any file version shared to you from a contact will need to be deleted by them.[Br][Br]Please note that the current files will not be deleted."="Ești pe cale să ștergi istoricul versiunilor tuturor fișierelor. Orice versiune a vreunui fișier partajat ție de la un contact trebuie să fie șters de către acesta\n\nTe rugăm să reții că fișierele actuale nu vor fi șterse.";
 /* Title for the Rubbish-Bin Cleaning Scheduler feature */
-"Rubbish-Bin Cleaning Scheduler:"="Planificatorul de golire a coșului de gunoi";
+"Rubbish-Bin Cleaning Scheduler:"="Planificator de golire a coșului de gunoi";
 /* A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days. */
 "Remove files older than"="Elimină fișierele mai vechi de";
 /* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
@@ -1677,11 +1687,11 @@
 /* Message shown in a chat room for a group call in progress displaying the duration of the call */
 "Touch to return to call %@"="Atinge pentru a reveni la apelul %@";
 /* A button label which allows the users save images/videos in the Photos app. */
-"Save to Photos"="Salvează în Fotografii";
+"Save to Photos"="Salvează în Poze";
 /* Text shown when starting the process to save a photo or video to Photos app */
-"Saving to Photos…"="Se salvează în Fotografii…";
+"Saving to Photos…"="Se salvează în Poze…";
 /* Text shown when a photo or video is saved to Photos app */
-"Saved to Photos"="Salvat(ă) în Fotografii";
+"Saved to Photos"="Salvat(ă) în Poze";
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
 "Could not save Item"="Nu se poate salva elementul";
 /* Label in a cell where you can enable the 'Encrypted Key Rotation' */
@@ -1793,7 +1803,7 @@
 /* A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II. */
 "Your payment for the %1 plan was unsuccessful."="Plata pentru planul %1 nu a avut succes.";
 /* The professional pricing plan which the user is currently on will expire in one day. */
-"Your PRO membership plan will expire in 1 day."="Planul pentru calitatea de membru PRO va expira în termen de 1 zi.";
+"Your PRO membership plan will expire in 1 day."="Planul pentru calitatea de membru PRO va expira peste 1 zi.";
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
 "Your PRO membership plan will expire in %1 days."="Planul pentru calitatea de membru PRO va expira în %1 zile.";
 /* The professional pricing plan which the user was on expired one day ago. */
@@ -1932,3 +1942,55 @@
 "This folder has been the subject of a takedown notice."="Acest folder a făcut obiectul unei notificări de eliminare.";
 /* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
 "Dispute Takedown"="Contestă eliminarea";
+/* Title of the "Links" Shared Items. */
+"Links"="Linkuri";
+/* Title for empty state view of "Links" in Shared Items. */
+"No Public Links"="Niciun link public";
+/* Text to indicate that the user will leave an incoming shared folder. */
+"Leave Share"="Părăsește partajarea";
+/* Text indicating to the user the action that will be executed on tap. */
+"Manage Share"="Gestionează partajarea";
+/* Title of the screen that shows the users with whom the user can share a folder */
+"Share with"="Partajează cu";
+/* Chat Notifications DND: Option that does not deactivate DND automatically */
+"Until I Turn it On Again"="Până când le pornesc din nou";
+/* Chat Notifications DND: Option that deactivates DND after 30 minutes */
+"30 minutes"="30 de minute";
+/* Chat Notifications DND: Option that deactivates DND after 1 hour */
+"1 hour"="1 oră";
+/* Chat Notifications DND: Option that deactivates DND after 6 hours */
+"6 hours"="6 ore";
+/* Chat Notifications DND: Option that deactivates DND after 24 hours */
+"24 hours"="24 de ore";
+/* Chat Notifications DND: Title bar message for the dnd activate options */
+"Mute chat Notifications for"="Amuțește notificările de chat timp de";
+/* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
+"Muted forever"="Amuțite pentru totdeauna";
+/* Chat Notifications DND: Remaining time left to deactivate DND - 1 minute left */
+"1 minute left"="1 minut rămas";
+/* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 minute left */
+"%d minutes left"="%d minute rămase";
+/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour left */
+"1 hour left"="1 oră rămasă";
+/* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 hour left */
+"%d hours left"="%d ore rămase";
+/* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
+"Chat Notifications"="Notificări de chat";
+/* Chat settings: This text appears with the Do Not Disturb switch */
+"Do Not Disturb"="Nu deranja";
+/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, 1 minute left */
+"1 hour, 1 minute left"="1 oră, 1 minut rămase";
+/* Chat Notifications DND: Remaining time left to deactivate DND - X hours, X minutes left */
+"%d hours, %d minutes left"="%d ore, %d minute rămase";
+/* Chat Notifications DND: Remaining time left to deactivate DND - X hours, 1 minute left */
+"%d hours, 1 minute left"="%d ore, 1 minut rămase";
+/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, X minutes left */
+"1 hour, %d minutes left"="1 oră, %d minute rămase";
+/* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
+"Reconnecting..."="Se reconectează…";
+/* Title shown when the user reconnect in a call. */
+"You are back!"="Te-ai întors.";
+/* Subtitle of chat screen when the chat is inactive */
+"Inactive chat"="Chat inactiv";
+/* Error message shown when the user tries to open a file with an unsupported encoding */
+"It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="Nu a fost posibil să se obțină conținutul acestui fișier, deoarece nu este codificat nici în UTF-8, nici în ISO/IEC 8859-1.";
