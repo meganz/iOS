@@ -393,6 +393,7 @@
 		77D9A5712023814800B48470 /* MEGAStartDownloadTransferDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D9A5702023814800B48470 /* MEGAStartDownloadTransferDelegate.m */; };
 		77F0522122CB8BA800032138 /* MEGAGenericRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B20B01020E6300300511C0F /* MEGAGenericRequestDelegate.m */; };
 		77F0522222CB8BBE00032138 /* MEGAGenericRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B20B01020E6300300511C0F /* MEGAGenericRequestDelegate.m */; };
+		77F0ED4323C4C750000E6B5B /* NSFileManager+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 41DC6F711D54E7080081832C /* NSFileManager+MNZCategory.m */; };
 		77F1DBDC2056A9DF005D5F0E /* MEGAContactLinkCreateRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F1DBDB2056A9DF005D5F0E /* MEGAContactLinkCreateRequestDelegate.m */; };
 		77F1DBDF2056AA13005D5F0E /* MEGAContactLinkQueryRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F1DBDE2056AA13005D5F0E /* MEGAContactLinkQueryRequestDelegate.m */; };
 		77F1DBE22056B752005D5F0E /* MEGAGetAttrUserRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F1DBE12056B752005D5F0E /* MEGAGetAttrUserRequestDelegate.m */; };
@@ -6026,6 +6027,7 @@
 				7794AF1A231FDF4C0039C1D2 /* SVProgressHUD.m in Sources */,
 				7794AED7231E4E0A0039C1D2 /* NotificationService.swift in Sources */,
 				7794AF18231FDF180039C1D2 /* SAMKeychainQuery.m in Sources */,
+				77F0ED4323C4C750000E6B5B /* NSFileManager+MNZCategory.m in Sources */,
 				7794AF1C231FDF590039C1D2 /* SVIndefiniteAnimatedView.m in Sources */,
 				7794AF19231FDF3D0039C1D2 /* Reachability.m in Sources */,
 				7794AF17231FDF120039C1D2 /* SAMKeychain.m in Sources */,
