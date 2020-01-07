@@ -305,6 +305,13 @@ static NSString *nodeToPresentBase64Handle;
 
 #pragma mark - Manage MEGA links
 
++ (NSString *)buildPublicLink:(NSString *)link withKey:(NSString *)key isFolder:(BOOL)isFolder {
+    NSString *stringWithoutSymbols = [[link stringByReplacingOccurrencesOfString:@"#" withString:@""] stringByReplacingOccurrencesOfString:@"!" withString:@""];
+    NSString *publicHandle = [stringWithoutSymbols substringFromIndex:stringWithoutSymbols.length - 8];
+    
+    return [MEGASdkManager.sharedMEGASdk buildPublicLinkForHandle:publicHandle key:key isFolder:isFolder];
+}
+
 + (void)processLinkURL:(NSURL *)url {
     if (!url) {
         return;
@@ -504,9 +511,8 @@ static NSString *nodeToPresentBase64Handle;
 
 + (void)showEncryptedLinkAlert:(NSString *)encryptedLinkURLString {
     MEGAPasswordLinkRequestDelegate *delegate = [[MEGAPasswordLinkRequestDelegate alloc] initForDecryptionWithCompletion:^(MEGARequest *request) {
-        NSString *url = [NSString stringWithFormat:@"mega://%@", [[request.text componentsSeparatedByString:@"/"] lastObject]];
-        MEGALinkManager.linkURL = [NSURL URLWithString:url];
-        [MEGALinkManager processLinkURL:[NSURL URLWithString:url]];
+        MEGALinkManager.linkURL = [NSURL URLWithString:request.text];
+        [MEGALinkManager processLinkURL:[NSURL URLWithString:request.text]];
     } onError:^(MEGARequest *request) {
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"To access this link, you will need its password.", @"This dialog message is used on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link.") message:nil preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {

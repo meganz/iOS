@@ -66,6 +66,7 @@ static const NSTimeInterval BoardingScreenShowUpMinimumInterval = 30 * 24 * 3600
     [self setMigratedToCameraUploadsV2:YES];
     [NSUserDefaults.standardUserDefaults setBool:cameraUploadEnabled forKey:IsCameraUploadsEnabledKey];
     [self configDefaultSettingsIfNeededForCameraUpload];
+    [self configDefaultSharedAlbumsAndSyncedAlbumsSettingsIfNeeded];
 }
 
 + (void)configDefaultSettingsIfNeededForCameraUpload {
@@ -84,13 +85,19 @@ static const NSTimeInterval BoardingScreenShowUpMinimumInterval = 30 * 24 * 3600
     if ([NSUserDefaults.standardUserDefaults objectForKey:UploadAllBurstAssetsKey] == nil) {
         [self setUploadAllBurstPhotos:YES];
     }
+}
+
++ (void)configDefaultSharedAlbumsAndSyncedAlbumsSettingsIfNeeded {
+    if (![self isCameraUploadEnabled]) {
+        return;
+    }
     
     if ([NSUserDefaults.standardUserDefaults objectForKey:UploadSharedAlbumsKey] == nil) {
-        [self setUploadSharedAlbums:YES];
+        [self setUploadSharedAlbums:NO];
     }
     
     if ([NSUserDefaults.standardUserDefaults objectForKey:UploadSyncedAlbumsKey] == nil) {
-        [self setUploadSyncedAlbums:YES];
+        [self setUploadSyncedAlbums:NO];
     }
 }
 
@@ -295,6 +302,20 @@ static const NSTimeInterval BoardingScreenShowUpMinimumInterval = 30 * 24 * 3600
 
 + (BOOL)isCameraUploadPausedBecauseOfNoWiFiConnection {
     return ![self isCellularUploadAllowed] && !MEGAReachabilityManager.isReachableViaWiFi;
+}
+
++ (void)enableAdvancedSettingsForUpgradingUserIfNeeded {
+    if (![self isCameraUploadEnabled]) {
+        return;
+    }
+    
+    if ([NSUserDefaults.standardUserDefaults objectForKey:UploadSharedAlbumsKey] == nil) {
+        [self setUploadSharedAlbums:YES];
+    }
+    
+    if ([NSUserDefaults.standardUserDefaults objectForKey:UploadSyncedAlbumsKey] == nil) {
+        [self setUploadSyncedAlbums:YES];
+    }
 }
 
 #pragma mark - camera upload v2 migration

@@ -9,6 +9,7 @@
 #import "MEGAInviteContactRequestDelegate.h"
 #import "MEGANavigationController.h"
 #import "MEGANode+MNZCategory.h"
+#import "MEGANodeList+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGARemoveContactRequestDelegate.h"
 #import "MEGAChatCreateChatGroupRequestDelegate.h"
@@ -197,8 +198,17 @@
     
     [leaveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         MEGAArchiveChatRequestDelegate *archiveChatRequesDelegate = [[MEGAArchiveChatRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
-            self.chatRoom = chatRoom;
-            [self.tableView reloadData];
+            if (chatRoom.isArchived) {
+                [self.navigationController setNavigationBarHidden:NO animated:NO];
+                if (self.navigationController.childViewControllers.count >= 3) {
+                    NSUInteger MessagesVCIndex = self.navigationController.childViewControllers.count - 2;
+                    [MEGASdkManager.sharedMEGAChatSdk closeChatRoom:chatRoom.chatId delegate:self.navigationController.childViewControllers[MessagesVCIndex]];
+                }
+                [self.navigationController popToRootViewControllerAnimated:YES];
+            } else {
+                self.chatRoom = chatRoom;
+                [self.tableView reloadData];
+            }
         }];
         [MEGASdkManager.sharedMEGAChatSdk archiveChat:self.chatRoom.chatId archive:!self.chatRoom.isArchived delegate:archiveChatRequesDelegate];
     }]];
@@ -793,12 +803,7 @@
             break;
             
         case MegaNodeActionTypeCopy: {
-            MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
-            [self presentViewController:navigationController animated:YES completion:nil];
-            
-            BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
-            browserVC.selectedNodesArray = @[node];
-            browserVC.browserAction = BrowserActionCopy;
+            [node mnz_copyInViewController:self];
             break;
         }
             
@@ -871,18 +876,24 @@
 #pragma mark - MEGAGlobalDelegate
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
-    
-    BOOL shouldReload = NO;
-    
-    NSUInteger nodeListSize = nodeList.size.unsignedIntegerValue;
-    for (NSUInteger i = 0; i < nodeListSize; i++) {
-        MEGANode *nodeUpdated = [nodeList nodeAtIndex:i];
-        if ([nodeUpdated hasChangedType:MEGANodeChangeTypeInShare] || [nodeUpdated hasChangedType:MEGANodeChangeTypeRemoved]) {
-            shouldReload = YES;
+    BOOL shouldProcessOnNodesUpdate = NO;
+    NSArray *incomingNodesForUserArray = self.incomingNodeListForUser.mnz_nodesArrayFromNodeList;
+    NSArray *nodesUpdateArray = nodeList.mnz_nodesArrayFromNodeList;
+    for (MEGANode *incomingNode in incomingNodesForUserArray) {
+        for (MEGANode *nodeUpdated in nodesUpdateArray) {
+            if (incomingNode.handle == nodeUpdated.handle) {
+                shouldProcessOnNodesUpdate = YES;
+                break;
+            } else {
+                if ([nodeUpdated hasChangedType:MEGANodeChangeTypeInShare] || (nodeUpdated.isFolder && [nodeUpdated hasChangedType:MEGANodeChangeTypeNew]) || [nodeUpdated hasChangedType:MEGANodeChangeTypeRemoved]) {
+                    shouldProcessOnNodesUpdate = YES;
+                    break;
+                }
+            }
         }
     }
     
-    if (shouldReload) {
+    if (shouldProcessOnNodesUpdate) {
         self.incomingNodeListForUser = [[MEGASdkManager sharedMEGASdk] inSharesForUser:self.user];
         [self.tableView reloadData];
     }

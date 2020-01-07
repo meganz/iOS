@@ -238,9 +238,19 @@
 }
 
 - (void)processLink:(NSString *)fullLink {
-    NSArray *components = [fullLink componentsSeparatedByString:@"!"];
-    NSString *link = [NSString stringWithFormat:@"%@!%@", components.firstObject, components[1]];
-    NSString *key = components[2];
+    NSArray *components;
+    NSString *link;
+    NSString *key;
+    
+    if ([fullLink containsString:@"file"] || [fullLink containsString:@"folder"]) {//New format file/folder links
+        components = [fullLink componentsSeparatedByString:@"#"];
+        link = components[0];
+        key = components[1];
+    } else {
+        components = [fullLink componentsSeparatedByString:@"!"];
+        link = [NSString stringWithFormat:@"%@!%@", components.firstObject, components[1]];
+        key = components[2];
+    }
     
     [self.fullLinks addObject:fullLink];
     [self.links addObject:link];
@@ -268,6 +278,9 @@
         self.expireDateSetLabel.text = self.expireDatePicker.date.mnz_formattedDateMediumStyle;
         [self showDatePicker];
     } else {
+        [self.fullLinks removeAllObjects];
+        [self.links removeAllObjects];
+        [self.keys removeAllObjects];
         self.pending = self.nodesToExport.count;
         for (MEGANode *node in self.nodesToExport) {
             [MEGASdkManager.sharedMEGASdk exportNode:node expireTime:[NSDate dateWithTimeIntervalSince1970:0] delegate:self.exportDelegate];
@@ -330,6 +343,9 @@
         return;
     }
     
+    [self.fullLinks removeAllObjects];
+    [self.links removeAllObjects];
+    [self.keys removeAllObjects];
     self.pending = self.nodesToExport.count;
     for (MEGANode *node in self.nodesToExport) {
         [MEGASdkManager.sharedMEGASdk exportNode:node expireTime:self.expireDatePicker.date delegate:self.exportDelegate];

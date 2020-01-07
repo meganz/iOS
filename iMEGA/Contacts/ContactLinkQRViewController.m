@@ -86,7 +86,7 @@
             self.linkCopyButton.hidden = self.moreButton.hidden = NO;
         }
         
-        self.qrImageView.image = [UIImage mnz_qrImageWithDotsFromString:destination withSize:self.qrImageView.frame.size color:UIColor.mnz_redMain];
+        self.qrImageView.image = [UIImage mnz_qrImageFromString:destination withSize:self.qrImageView.frame.size color:UIColor.mnz_redMain];
         [self setUserAvatar];
     }];
 }
@@ -158,7 +158,14 @@
             self.qrImageView.hidden = self.avatarBackgroundView.hidden = self.avatarImageView.hidden = self.contactLinkLabel.hidden = NO;
             self.linkCopyButton.hidden = self.moreButton.hidden = (self.contactLinkLabel.text.length == 0);
             self.cameraView.hidden = self.cameraMaskView.hidden = self.cameraMaskBorderView.hidden = self.hintLabel.hidden = self.errorLabel.hidden = YES;
-            self.backButton.tintColor = self.segmentedControl.tintColor = UIColor.mnz_redMain;
+            self.backButton.tintColor = UIColor.mnz_redMain;
+            if (@available(iOS 13.0, *)) {
+                [self.segmentedControl setTitleTextAttributes:@{NSForegroundColorAttributeName:UIColor.blackColor} forState:UIControlStateNormal];
+                [self.segmentedControl setTitleTextAttributes:@{NSForegroundColorAttributeName:UIColor.blackColor} forState:UIControlStateSelected];
+            } else {
+                self.segmentedControl.tintColor = UIColor.mnz_redMain;
+            }
+            
             break;
             
         case 1:
@@ -167,7 +174,14 @@
                 self.qrImageView.hidden = self.avatarBackgroundView.hidden = self.avatarImageView.hidden = self.contactLinkLabel.hidden = self.linkCopyButton.hidden = self.moreButton.hidden = YES;
                 self.cameraView.hidden = self.cameraMaskView.hidden = self.cameraMaskBorderView.hidden = self.hintLabel.hidden = self.errorLabel.hidden = NO;
                 self.queryInProgress = NO;
-                self.backButton.tintColor = self.segmentedControl.tintColor = [UIColor whiteColor];
+                self.backButton.tintColor = UIColor.whiteColor;
+                if (@available(iOS 13.0, *)) {
+                    [self.segmentedControl setTitleTextAttributes:@{NSForegroundColorAttributeName:UIColor.whiteColor} forState:UIControlStateNormal];
+                    [self.segmentedControl setTitleTextAttributes:@{NSForegroundColorAttributeName:UIColor.blackColor} forState:UIControlStateSelected];
+                } else {
+                    self.segmentedControl.tintColor = UIColor.whiteColor;
+                }
+                
             } else {
                 sender.selectedSegmentIndex = 0;
                 [self valueChangedAtSegmentedControl:sender];
@@ -233,6 +247,10 @@
 #pragma mark - QR recognizing
 
 - (BOOL)startRecognizingCodes {
+    if (self.captureSession.isRunning) {
+        return YES;
+    }
+    
     NSError *error;
     AVCaptureDevice *captureDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
     AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:captureDevice error:&error];
@@ -285,9 +303,26 @@
                     NSString *base64Handle = [detectedString stringByReplacingOccurrencesOfString:baseString withString:@""];
                     
                     MEGAContactLinkQueryRequestDelegate *delegate = [[MEGAContactLinkQueryRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
-                        [self feedbackWithSuccess:YES];
-                        NSString *fullName = [NSString stringWithFormat:@"%@ %@", request.name, request.text];
-                        [self presentInviteModalForEmail:request.email fullName:fullName contactLinkHandle:request.nodeHandle image:request.file];
+                        switch (self.contactLinkQRType) {
+                            case ContactLinkQRTypeContactRequest: {
+                                [self feedbackWithSuccess:YES];
+                                NSString *fullName = [NSString stringWithFormat:@"%@ %@", request.name, request.text];
+                                [self presentInviteModalForEmail:request.email fullName:fullName contactLinkHandle:request.nodeHandle image:request.file];
+                                break;
+                            }
+                                
+                            case ContactLinkQRTypeShareFolder: {
+                                [self dismissViewControllerAnimated:YES completion:^{
+                                    if ([self.contactLinkQRDelegate respondsToSelector:@selector(emailForScannedQR:)]) {
+                                        [self.contactLinkQRDelegate emailForScannedQR:request.email];
+                                    }
+                                }];
+                                break;
+                            }
+                                
+                            default:
+                                break;
+                        }
                     } onError:^(MEGAError *error) {
                         if (error.type == MEGAErrorTypeApiENoent) {
                             [self feedbackWithSuccess:NO];

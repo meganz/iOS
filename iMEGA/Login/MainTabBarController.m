@@ -121,7 +121,7 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(presentCallViewControllerIfThereIsAnIncomingCall) name:UIApplicationDidBecomeActiveNotification object:nil];
     }
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
-    [self.tabBar sizeToFit];
+    [self.view setNeedsLayout];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -270,13 +270,8 @@
         MEGAChatRoom *chatRoom = [api chatRoomForChatId:call.chatId];
         if (@available(iOS 10.0, *)) {
             NSUUID *uuid = [[NSUUID alloc] init];
-            call.uuid = uuid;
-            
-            uint64_t peerHandle = [chatRoom peerHandleAtIndex:0];
-            NSString *email = [chatRoom peerEmailByHandle:peerHandle];
-            MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:email];
-            
-            [self.megaProviderDelegate reportIncomingCall:call user:user];
+            call.uuid = uuid;            
+            [self.megaProviderDelegate reportIncomingCall:call];
         } else {
             if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
                 if (chatRoom.isGroup) {

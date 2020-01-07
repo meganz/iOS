@@ -61,7 +61,7 @@
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="Ihre Sitzung wurde beendet";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="MEGA kann keine gesicherte SSL-Verbindung aufbauen. Möglicherweise müssen Sie sich zunächst in den WLAN-Hotspot einloggen.";
+"sslUnverified_alertTitle"="Ihre SSL-Verbindung zu den MEGA-Servern wurde manipuliert. Bitte prüfen Sie, ob Ihr WLAN-Hotspot einen Login erfordert.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="Dieser Account kann auf die gewünschte Datei nicht zugreifen. Bitte nutzen Sie denselben Account wie im Browser.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
@@ -120,12 +120,16 @@
 "passwordStrong"="Dieses Passwort wird auch gut ausgestatteten Angreifern standhalten. Bitte stellen Sie sicher, dass Sie es nicht vergessen.";
 /*  */
 "agreeWithTheMEGATermsOfService"="Ich stimme MEGAs <a href=\"terms\">Allgemeinen Geschäftsbedingungen</a> zu";
+/* This text is displayed in the account creation screen with a checkbox. User will have to tick the checkbox before proceeding on to create an account */
+"agreeWithLosingPasswordYouLoseData"="Mir ist klar, dass ich [S]bei Passwortverlust meine Daten nicht mehr entschlüsseln kann.[/S] Mehr Informationen zum Thema <a href=\"terms\">Ende-zu-Ende-Verschlüsselung</a>.";
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="Gültigen Namen eingeben";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="Passwörter stimmen nicht überein";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
 "termsCheckboxUnselected"="Bitte stimmen Sie den Allgemeinen Geschäftsbedingungen zu, um ein MEGA-Konto zu erstellen.";
+/* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown  */
+"termsForLosingPasswordCheckboxUnselected"="Bitte bestätigen Sie, dass Ihnen die Konsequenzen eines Passwortverlusts bewusst sind.";
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="Unter dieser E-Mail-Adresse ist bereits ein MEGA-Account registriert.";
 /* Title shown just after doing some action that requires confirming the action by an email */
@@ -489,9 +493,9 @@
 /* Message shown while uploading files. Plural. */
 "cameraUploadsPendingFiles"="Upload läuft, noch %lu Dateien";
 /* Message shown when camera upload paused because of no WiFi. Singular. */
-"Upload paused because of no WiFi, 1 file pending"="Upload paused due to no WiFi connection, 1 file pending";
+"Upload paused because of no WiFi, 1 file pending"="Upload mangels WLAN-Verbindung gestoppt, 1 Dateie in der Warteschlange";
 /* Message shown when camera upload paused because of no WiFi. Plural. */
-"Upload paused because of no WiFi, %lu files pending"="Upload paused due to no WiFi connection, %lu files pending";
+"Upload paused because of no WiFi, %lu files pending"="Upload mangels WLAN-Verbindung gestoppt, %lu Dateien in der Warteschlange";
 /* Message shown the pending video file when photos uploaded and video upload is not enabled. Singular. */
 "Photos uploaded, video uploads are off, 1 video not uploaded"="Photos uploaded, video uploads are off; 1 video not uploaded";
 /* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
@@ -511,7 +515,7 @@
 /* Title of the Contacts section */
 "contactsTitle"="Kontakte";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
-"oneFolderShared"="Ein Ordner";
+"oneFolderShared"="1 Ordner";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
 "foldersShared"="%d Ordner";
 /* Item menu option to add a contact writting his/her email */
@@ -556,8 +560,6 @@
 "addContactButton"="Hinzufügen";
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="Ihre eigene E-Mail-Adresse muss nicht hinzugefügt werden";
-/* Add contacts and share dialog error message when user try to add already existing email address. */
-"alreadyHaveAContactWithThatEmailAddress"="Sie stehen bereits mit dieser E-Mail-Adresse in Kontakt";
 /* Success message shown when a contact has been invited */
 "theUserHasBeenInvited"="Der Benutzer [X] wurden eingeladen und wird in Ihrer Kontaktliste erscheinen, sobald er die Einladung annimmt.";
 /* Success message shown when some contacts have been invited */
@@ -685,29 +687,31 @@
 /* Navigation path for Storage settings in iOS */
 "Settings > General > %@ Storage"="Settings > General > %@ Storage";
 /* Title of the switch to config whether to upload videos for Live Photos */
-"Upload videos for Live Photos"="Upload videos for Live Photos";
+"Upload videos for Live Photos"="Live-Fotos als Video hochladen";
 /* Title of the switch to config whether to upload all burst photos */
-"Upload all burst photos"="Upload all burst photos";
+"Upload all burst photos"="Alle Burst-Sequenzen hochladen";
 /* Title of the switch to config whether to upload Hidden Album */
-"Upload Hidden Album"="Upload Hidden Album";
+"Upload Hidden Album"="Versteckte Alben hochladen";
 /* Footer description when upload videos for Live Photos is enabled */
-"The video and the photo in each Live Photo will be uploaded."="The photo and video versions of each Live Photo will be uploaded.";
+"The video and the photo in each Live Photo will be uploaded."="Die Standbild- und Videoversion jedes Live-Fotos wird hochgeladen.";
 /* Footer description when upload videos for Live Photos is disabled */
-"Only the photo in each Live Photo will be uploaded."="Only the photo version of each Live Photo will be uploaded.";
+"Only the photo in each Live Photo will be uploaded."="Nur die Standbildversion eines Live-Fotos wird hochgeladen.";
 /* Footer description when upload all burst photos is enabled */
-"All the photos from your burst photo sequences will be uploaded."="All the photos from your burst photo sequences will be uploaded.";
+"All the photos from your burst photo sequences will be uploaded."="Burst-Foto-Sequenzen werden komplett hochgeladen.";
 /* Footer description when upload all burst photos is disabled */
-"Only the representative photos from your burst photo sequences will be uploaded."="Only favourite photos from your burst photo sequences will be uploaded.";
+"Only the representative photos from your burst photo sequences will be uploaded."="Nur ausgewählte Fotos aus Burst-Sequenzen werden hochgeladen.";
 /* Footer description when upload Hidden Album is enabled */
-"The Hidden Album is where you hide photos or videos in your device Photos app."="The Hidden Album is where you hide photos or videos in your device’s Photos app.";
+"The Hidden Album is where you hide photos or videos in your device Photos app."="Sie können Fotos und Videos in Ihrer Photos-App in versteckten Alben unsichtbar machen.";
 /* Title of the switch to config whether to upload Shared Albums */
-"Upload Shared Albums"="Upload Shared Albums";
-/* Footer description for Upload Shared Albums title */
-"Shared Albums are where you share with other people and subscribe to other people's shares in your device's Photos app."="Shared Albums are where you share with other people and subscribe to other people’s shares in your device’s Photos app.";
+"Upload Shared Albums"="Geteilte Alben hochladen";
+/* Footer description for Upload Shared Albums title when option enabled */
+"Shared Albums from your device's Photos app will be uploaded."="Durch die Photos-App freigegebene Alben werden hochgeladen.";
+/* Footer description for Upload Shared Albums title when option disabled */
+"Shared Albums from your device's Photos app will not be uploaded."="Durch die Photos-App freigegebene Alben werden nicht hochgeladen.";
 /* Title of the switch to config whether to upload synced albums */
-"Upload albums synced from iTunes"="Upload albums synced from iTunes";
+"Upload albums synced from iTunes"="Alben hochladen, die von iTunes synchronisiert wurden";
 /* Footer description for upload synced albums title */
-"Synced albums are where you sync photos or videos to your device's Photos app from iTunes."="Synced albums are where you sync photos or videos to your device’s Photos app from iTunes.";
+"Synced albums are where you sync photos or videos to your device's Photos app from iTunes."="Sychronisierte Alben sind Fotos und Videos, die von iTunes an Ihre Photos-App synchronisiert werden.";
 /* App means “Application” */
 "App version"="App Version";
 /* Title of the label where the SDK version is shown */
@@ -802,6 +806,8 @@
 "filesFolderRemovedToRubbishBinMessage"="%d Dateien und 1 Ordner von MEGA entfernt";
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
 "filesFoldersRemovedToRubbishBinMessage"="[A] Dateien und [B] Ordner von MEGA entfernt";
+/* Hint text to suggest that the user have to write the new password on it */
+"newPassword"="Neues Passwort";
 /* Hint text where the user have to re-write the new password to confirm it */
 "confirmPassword"="Passwort bestätigen";
 /* Success message shown when the password has been changed */
@@ -898,7 +904,7 @@
 /* Title of My Account section. There you can see your account details */
 "myAccount"="Mein Account";
 /* Caption of a button to upgrade the account to Pro status */
-"upgrade"="Account erweitern";
+"upgrade"="PRO-Status";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
 "viewAndEditProfile"="Profil anzeigen/bearbeiten";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
@@ -979,8 +985,8 @@
 "availableLabel"="Verfügbar";
 /* title of the My Account screen */
 "accountType"="Account Typ:";
-/* Text relative to the MEGA account level. UPPER CASE */
-"free"="GRATIS";
+/* Label to indicate that the current user has a Free account. */
+"Free"="Kostenlos";
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="gültig bis %@";
 /* Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible). */
@@ -998,9 +1004,9 @@
 /*  */
 "chooseYourAccountType"="Wählen Sie Ihre Pro-Stufe";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]Ihr Cloud Drive ist fast voll.[/S] [A]Wechseln Sie jetzt[/A] auf einen PRO-Plan und erhalten Sie [S]bis zu 8 TB (8192 GB)[/S] Speicherplatz in der Cloud.";
+"cloudDriveIsAlmostFull"="[S]Ihr Cloud-Speicher ist fast voll.[/S] Mit [A]MEGA PRO[/A] erhalten Sie [S]bis zu %@ TB (%@ GB)[/S] Speicherplatz in der Cloud.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]Ihr Account hat sein Speicherlimit erreicht.[/S] Mit [A]MEGA PRO[/A] erhalten Sie [S]bis zu 8 TB (8192 GB)[/S] Speicherplatz in der Cloud.";
+"cloudDriveIsFull"="[S]Ihr Cloud-Speicher ist voll.[/S] Mit [A]MEGA PRO[/A] erhalten Sie [S]bis zu %@ TB (%@ GB)[/S] Speicherplatz in der Cloud.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Speicher";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
@@ -1116,7 +1122,7 @@
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
 "useMobileData"="Mobildatennutzung erlauben";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for videos. */
-"Use Mobile Data for Videos"="Use Mobile Data for Videos";
+"Use Mobile Data for Videos"="Mobile Datenverbindung für Videoupload nutzen";
 /* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
 "autoAway"="Auto-Abwesend";
 /* */
@@ -1189,6 +1195,8 @@
 "moderator"="Moderator";
 /* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
 "standard"="Standard";
+/* A button title which removes a participant from a chat. */
+"removeParticipant"="Teilnehmer entfernen";
 /* Title show above the name of the persons with whom you're chatting */
 "chattingWith"="Konversation mit";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
@@ -1247,6 +1255,8 @@
 "dismiss"="Später";
 /* Notification text body shown when you have received a new chat message */
 "newMessage"="Neue Nachricht";
+/* Notification text body shown when you have received a contact request */
+"contactRequest"="Kontaktersuchen";
 /* Notification text body shown when you have received a new shared folder */
 "newSharedFolder"="Neue Ordnerfreigabe";
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
@@ -1511,7 +1521,7 @@
 /* When an active call of user A with user B had failed */
 "callFailed"="Anruf fehlgeschlagen";
 /* When an active call of user A with user B had ended */
-"callEnded"="Anruf beendet.";
+"callEnded"="Gespräch beendet.";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="Dauer: %@";
 /* */
@@ -1733,7 +1743,7 @@
 /* The header of a notification related to payments */
 "Payment info"="Informationen zur Zahlung";
 /* A title for a notification saying the user’s pricing plan will expire soon. */
-"PRO membership plan expiring soon"="Ihre PRO-Mitgliedschaft läuft bald ab";
+"PRO membership plan expiring soon"="Ihr PRO-Status läuft bald ab";
 /* The header of a notification indicating that a file or folder has been taken down due to infringement or other reason. */
 "Takedown notice"="Löschung durch Dritte";
 /* The header of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. */
@@ -1763,7 +1773,7 @@
 /* When somebody accepted your contact request */
 "Accepted your contact request"="Kontaktanfrage wurde akzeptiert";
 /* When somebody denied your contact request */
-"Denied your contact request"="Ihre Kontaktanfrage wurde abgelehnt";
+"Denied your contact request"="hat ihre Kontaktanfrage abgelehnt";
 /* notification text */
 "A user has left the shared folder {0}"="Ein Benutzer hat die Ordnerfreigabe {0} verlassen";
 /* This is shown in the Notification dialog when the email address of a contact is not found and access to the share is lost for some reason (e.g. share removal or contact removal). */
@@ -1923,12 +1933,64 @@
 /* Destination folder name of chat files */
 "My chat files"="Chatdateien";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
-"Require passcode"="Require passcode";
+"Require passcode"="Passcodeschutz";
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
-"Immediately"="Immediately";
+"Immediately"="Sofort";
 /* Popup notification text on mouse-over of taken down file. */
 "This file has been the subject of a takedown notice."="Diese Datei wurde wegen einer Beschwerde gelöscht.";
 /* Popup notification text on mouse-over taken down folder. */
 "This folder has been the subject of a takedown notice."="Dieser Ordner wurde wegen einer Beschwerde gelöscht.";
 /* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
 "Dispute Takedown"="Löschbeanstandung";
+/* Title of the "Links" Shared Items. */
+"Links"="Links";
+/* Title for empty state view of "Links" in Shared Items. */
+"No Public Links"="Keine exportierten Links";
+/* Text to indicate that the user will leave an incoming shared folder. */
+"Leave Share"="Freigegebenen Ordner verlassen";
+/* Text indicating to the user the action that will be executed on tap. */
+"Manage Share"="Ordnerfreigabe bearbeiten";
+/* Title of the screen that shows the users with whom the user can share a folder */
+"Share with"="Freigeben an";
+/* Chat Notifications DND: Option that does not deactivate DND automatically */
+"Until I Turn it On Again"="Bis zur manuellen Reaktivierung";
+/* Chat Notifications DND: Option that deactivates DND after 30 minutes */
+"30 minutes"="30 Minuten";
+/* Chat Notifications DND: Option that deactivates DND after 1 hour */
+"1 hour"="1 Stunde";
+/* Chat Notifications DND: Option that deactivates DND after 6 hours */
+"6 hours"="Sechs Stunden";
+/* Chat Notifications DND: Option that deactivates DND after 24 hours */
+"24 hours"="24 Stunden";
+/* Chat Notifications DND: Title bar message for the dnd activate options */
+"Mute chat Notifications for"="Stummschalten für";
+/* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
+"Muted forever"="Permanent stummgeschaltet";
+/* Chat Notifications DND: Remaining time left to deactivate DND - 1 minute left */
+"1 minute left"="Noch 1 Minute";
+/* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 minute left */
+"%d minutes left"="Noch %d Minuten";
+/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour left */
+"1 hour left"="Noch 1 Stunde";
+/* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 hour left */
+"%d hours left"="Noch %d Stunden";
+/* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
+"Chat Notifications"="Chatbenachrichtigungen";
+/* Chat settings: This text appears with the Do Not Disturb switch */
+"Do Not Disturb"="Bitte nicht stören";
+/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, 1 minute left */
+"1 hour, 1 minute left"="Noch eine Stunde und eine Minute";
+/* Chat Notifications DND: Remaining time left to deactivate DND - X hours, X minutes left */
+"%d hours, %d minutes left"="Noch %d Stunden und %d Minuten";
+/* Chat Notifications DND: Remaining time left to deactivate DND - X hours, 1 minute left */
+"%d hours, 1 minute left"="Noch %d Stunden und 1 Minute";
+/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, X minutes left */
+"1 hour, %d minutes left"="Noch 1 Stunde und %d Minuten";
+/* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
+"Reconnecting..."="Verbindung wird wiederhergestellt...";
+/* Title shown when the user reconnect in a call. */
+"You are back!"="Verbindung wiederhergestellt.";
+/* Subtitle of chat screen when the chat is inactive */
+"Inactive chat"="Inaktiver Chat";
+/* Error message shown when the user tries to open a file with an unsupported encoding */
+"It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="Diese Datei ist weder UTF-8, noch ISO/IEC 8859-1-kodiert.";

@@ -51,7 +51,8 @@
     self.explanationLabel.text = AMLocalizedString(@"thisIsBestDoneInRealLife", @"'Verify user' dialog description");
     
     self.yourCredentialsLabel.text = AMLocalizedString(@"yourCredentials", @"Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity");
-    NSString *yourCredentials = [[MEGASdkManager sharedMEGASdk] myFingerprint];
+    // TODO: myFingerprint doesn't exist, getMyCredentials should be used instead
+    NSString *yourCredentials = @""; //[[MEGASdkManager sharedMEGASdk] myFingerprint];
     if (yourCredentials.length == 40) {
         self.firstPartOfYourCredentialsLabel.text =  [yourCredentials substringWithRange:NSMakeRange(0, length)];
         self.secondPartOfYourCredentialsLabel.text =  [yourCredentials substringWithRange:NSMakeRange(position, length)];

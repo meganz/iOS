@@ -43,7 +43,7 @@
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="Digite a chave de decodificação";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertMessage"="Para acessar esta pasta/arquivo, você precisa da chave de decodificação. Se você não possui a chave, entre em contato com o criador da pasta/arquivo.";
+"decryptionKeyAlertMessage"="Para acessar este link de pasta/arquivo, você precisa da chave de decodificação. Se você não possui essa chave, entre em contato com o criador do link.";
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="Chave de decodificação";
 /* Button title to try to decrypt the link */
@@ -61,7 +61,7 @@
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="Você foi desconectado deste dispositivo a partir de outro local.";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="O MEGA não consegue se conectar de forma segura por meio de SSL. Você pode estar usando uma rede WiFi pública com requisitos adicionais.";
+"sslUnverified_alertTitle"="Não foi possível conectar-se ao MEGA de forma segura via SSL. Você pode estar usando uma rede Wi-Fi pública com requisitos adicionais.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="O conteúdo que você está tentando acessar não está disponível para esta conta. Por favor, faça login com a mesma conta usada no navegador móvel.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
@@ -120,12 +120,16 @@
 "passwordStrong"="Esta senha vai resistir aos ataques de força-bruta mais sofisticados. Por favor, certifique-se de que você vai lembrar dela.";
 /*  */
 "agreeWithTheMEGATermsOfService"="Concordo com os <a href=\"terms\">Termos de serviço</a> do MEGA";
+/* This text is displayed in the account creation screen with a checkbox. User will have to tick the checkbox before proceeding on to create an account */
+"agreeWithLosingPasswordYouLoseData"="Eu entendo que, [S]se eu perder a minha senha, poderei perder os meus dados[/S]. Leia mais sobre a <a href=\"terms\">criptografia de ponta a ponta do MEGA</a>.";
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="Digite um nome válido";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="As senhas não coincidem";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
 "termsCheckboxUnselected"="Você precisa aceitar os termos de serviço para criar uma conta no MEGA.";
+/* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown  */
+"termsForLosingPasswordCheckboxUnselected"="Você precisa confirmar que entende o perigo de perder a sua senha";
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="Já existe uma conta no MEGA com esse email.";
 /* Title shown just after doing some action that requires confirming the action by an email */
@@ -141,7 +145,7 @@
 /* Warning message shown when you try to confirm an account but you are logged in with another one */
 "alreadyLoggedInAlertMessage"="Se você concorda, a conta atual será desconectada e todos os dados off-line serão apagados. Pretende continuar?";
 /* Error shown when the user tries to change his mail to one that is already used */
-"emailAlreadyInUse"="Erro. Este endereço de e-mail já está em uso.";
+"emailAlreadyInUse"="Erro. Este endereço de email já está sendo usado.";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Você precisa libertar algum espaço no seu dispositivo";
 /* Title for the file link view */
@@ -489,9 +493,9 @@
 /* Message shown while uploading files. Plural. */
 "cameraUploadsPendingFiles"="Upload em andamento, %lu arquivos pendentes";
 /* Message shown when camera upload paused because of no WiFi. Singular. */
-"Upload paused because of no WiFi, 1 file pending"="Upload pausado por falta de conexão WiFi: 1 arquivo pendente";
+"Upload paused because of no WiFi, 1 file pending"="Upload pausado por falta de conexão Wi-Fi: 1 arquivo pendente";
 /* Message shown when camera upload paused because of no WiFi. Plural. */
-"Upload paused because of no WiFi, %lu files pending"="Uploads pausados por falta de conexão WiFi: %lu arquivo pendente";
+"Upload paused because of no WiFi, %lu files pending"="Uploads pausados por falta de conexão Wi-Fi: %lu arquivos pendentes";
 /* Message shown the pending video file when photos uploaded and video upload is not enabled. Singular. */
 "Photos uploaded, video uploads are off, 1 video not uploaded"="Upload de fotos concluído. O upload de vídeos está desativado, portanto o upload de 1 vídeo não foi feito.";
 /* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
@@ -551,13 +555,11 @@
 /* Alert title shown when you select to add a contact inserting his/her email */
 "addContact"="Adicionar novo contato";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
-"contactEmail"="E-mail do contato";
+"contactEmail"="Email do contato";
 /* Button title to 'Add' the contact to your contacts list */
 "addContactButton"="Adicionar";
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="Não é necessário adicionar o seu próprio email";
-/* Add contacts and share dialog error message when user try to add already existing email address. */
-"alreadyHaveAContactWithThatEmailAddress"="Você já tem um contato com este email";
 /* Success message shown when a contact has been invited */
 "theUserHasBeenInvited"="O usuário [X] foi convidado, e aparecerá na sua lista de contatos assim que aceitar.";
 /* Success message shown when some contacts have been invited */
@@ -671,7 +673,7 @@
 /* Footer for video uploads switch section when disabled */
 "When enabled, videos will be uploaded."="Ao ativar, será feito o upload de vídeos.";
 /* Title for new camera upload feature */
-"New Camera Upload!"="Novas opções para os Upload da câmera!";
+"New Camera Upload!"="Novas opções para os Uploads da câmera!";
 /* A messge for camera upload v2 migration */
 "Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="Agora você pode optar por converter fotos e vídeos HEIF/HEVC a formatos mais compatíveis, como JPEG e H.264.";
 /* Title for an action to use most compatible formats */
@@ -702,8 +704,10 @@
 "The Hidden Album is where you hide photos or videos in your device Photos app."="Um Álbum Oculto é onde você oculta fotos ou vídeos no aplicativo Fotos do seu dispositivo.";
 /* Title of the switch to config whether to upload Shared Albums */
 "Upload Shared Albums"="Fazer upload dos álbuns compartilhados";
-/* Footer description for Upload Shared Albums title */
-"Shared Albums are where you share with other people and subscribe to other people's shares in your device's Photos app."="Álbuns Compartilhados permitem compartilhar com outras pessoas e participar nos compartilhamentos de outras pessoas no aplicativo Fotos do seu dispositivo.";
+/* Footer description for Upload Shared Albums title when option enabled */
+"Shared Albums from your device's Photos app will be uploaded."="Será feito o upload dos álbuns compartilhados do aplicativo Fotos do seu dispositivo.";
+/* Footer description for Upload Shared Albums title when option disabled */
+"Shared Albums from your device's Photos app will not be uploaded."="Não será feito o upload dos álbuns compartilhados do aplicativo Fotos do seu dispositivo.";
 /* Title of the switch to config whether to upload synced albums */
 "Upload albums synced from iTunes"="Fazer upload dos álbuns sincronizados no iTunes";
 /* Footer description for upload synced albums title */
@@ -802,6 +806,8 @@
 "filesFolderRemovedToRubbishBinMessage"="%d arquivos e 1 pasta removida do MEGA";
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
 "filesFoldersRemovedToRubbishBinMessage"="[A] arquivos e [B] pastas removidas do MEGA";
+/* Hint text to suggest that the user have to write the new password on it */
+"newPassword"="Nova senha";
 /* Hint text where the user have to re-write the new password to confirm it */
 "confirmPassword"="Confirmar senha";
 /* Success message shown when the password has been changed */
@@ -979,8 +985,8 @@
 "availableLabel"="Disponível";
 /* title of the My Account screen */
 "accountType"="Tipo de conta:";
-/* Text relative to the MEGA account level. UPPER CASE */
-"free"="GRATUITA";
+/* Label to indicate that the current user has a Free account. */
+"Free"="Grátis";
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="expira em %@";
 /* Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible). */
@@ -998,9 +1004,9 @@
 /*  */
 "chooseYourAccountType"="Escolha o seu tipo de conta";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="A sua [S]Nuvem de arquivos está quase cheia.[/S] [A]Faça upgrade[/A] para uma conta PRO e obtenha [S]até 8 TB (8192 GB)[/S] de espaço de armazenamento em nuvem.";
+"cloudDriveIsAlmostFull"="A sua [S]Nuvem de arquivos está quase cheia.[/S] [A]Faça upgrade[/A] a um plano PRO e obtenha [S]até %@ TB (%@ GB)[/S] de espaço de armazenamento.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]A sua conta está cheia.[/S] [A]Faça upgrade[/A] para uma conta PRO e obtenha [S]até 8 TB (8192 GB)[/S] de espaço de armazenamento em nuvem.";
+"cloudDriveIsFull"="[S]A sua Nuvem de arquivos está cheia.[/S] [A]Faça upgrade[/A] a um plano PRO e obtenha [S]até %@ TB (%@ GB)[/S] de espaço de armazenamento.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Armazenamento";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
@@ -1189,6 +1195,8 @@
 "moderator"="Moderador";
 /* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
 "standard"="Padrão";
+/* A button title which removes a participant from a chat. */
+"removeParticipant"="Remover participante";
 /* Title show above the name of the persons with whom you're chatting */
 "chattingWith"="Chat com";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
@@ -1247,6 +1255,8 @@
 "dismiss"="Fechar";
 /* Notification text body shown when you have received a new chat message */
 "newMessage"="Nova mensagem";
+/* Notification text body shown when you have received a contact request */
+"contactRequest"="Solicitação de contato";
 /* Notification text body shown when you have received a new shared folder */
 "newSharedFolder"="Nova pasta compartilhada";
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
@@ -1395,7 +1405,7 @@
 /* Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible. */
 "autoAccept"="Auto-aceitar";
 /* Footer that explains the way Auto-Accept works for QR codes */
-"autoAcceptFooter"="Os contatos que escanearem o seu código QR serão automaticamente adicionados à sua lista de contatos.";
+"autoAcceptFooter"="Os usuários do MEGA que escanearem o seu código QR serão automaticamente adicionados à sua lista de contatos.";
 /* Action to reset the current valid QR code of the user */
 "resetQrCode"="Resetar código QR";
 /* Footer that explains what would happen if the user resets his/her QR code */
@@ -1511,7 +1521,7 @@
 /* When an active call of user A with user B had failed */
 "callFailed"="Falha na chamada";
 /* When an active call of user A with user B had ended */
-"callEnded"="Chamada finalizada.";
+"callEnded"="Chamada finalizada";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="Duração: %@";
 /* */
@@ -1637,7 +1647,7 @@
 /* Title of the option to enable or disable file versioning on Settings section */
 "File versioning"="Controle de versões de arquivos";
 /* Subtitle of the option to enable or disable file versioning on Settings section */
-"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="Ative ou desative o controle de versões de arquivos para toda a sua conta. \nVocê ainda pode receber versões de arquivos em pastas compartilhadas se os seus contatos tiverem essa função ativa.";
+"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="Ativar ou desativar o controle de versões de arquivos na sua conta. \nDesativar as versões de arquivos não previne que os seus arquivos criem novas versões em pastas compartilhadas .";
 /* A confirmation message when the user chooses to disable file versioning. */
 "When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="Se o controle de versões de arquivos estiver desativado, ao modificar um arquivo a versão atual será substituída pela nova versão (e suas alterações no arquivo já não serão salvas). Você tem certeza de que quer desativar o controle de versões de arquivos?";
 /* Settings preference title to show file versions info of the account */
@@ -1705,9 +1715,9 @@
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
 "%@ enabled Encrypted Key Rotation"="%@ ativou a rotação da chave de criptografia.";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
-"%@ created a public link for the chat."="%@ criou um link para este chat.";
+"%@ created a public link for the chat."="%@ criou um link para este chat";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
-"%@ removed a public link for the chat."="%@ removeu o link deste chat.";
+"%@ removed a public link for the chat."="%@ removeu o link deste chat";
 /* Management message shown in a chat when the user %@ joined it from a public chat link */
 "%@ joined the group chat."="%@ se uniu ao chat em grupo.";
 /* Message show when a call cannot be established because there are too many participants in the group call */
@@ -1745,9 +1755,9 @@
 /* A notification that the other user cancelled their contact request so it is no longer valid. E.g. user@email.com cancelled their contact request. */
 "Cancelled their contact request"="Cancelou a solicitação de contato";
 /* A reminder notification to remind the user to respond to the contact request. */
-"Reminder: You have a contact request"="Lembrete: você possui uma solicitação de contato";
+"Reminder: You have a contact request"="Lembrete: você tem uma solicitação de contato";
 /* A notification telling the user that the other user deleted them as a contact. E.g. user@email.com deleted you as a contact. */
-"Deleted you as a contact"="Eliminou você como contato";
+"Deleted you as a contact"="Eliminou você dos contatos";
 /* A notification telling the user that they are now fully connected with the other user (the users are in each other’s address books). */
 "Contact relationship established"="Vocês agora são contatos";
 /* A notification telling the user that one of their contact’s accounts has been deleted or deactivated. */
@@ -1932,3 +1942,55 @@
 "This folder has been the subject of a takedown notice."="Esta pasta foi alvo de um aviso de remoção.";
 /* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
 "Dispute Takedown"="Disputar remoção";
+/* Title of the "Links" Shared Items. */
+"Links"="Links";
+/* Title for empty state view of "Links" in Shared Items. */
+"No Public Links"="Não há links públicos";
+/* Text to indicate that the user will leave an incoming shared folder. */
+"Leave Share"="Sair do compartilhamento";
+/* Text indicating to the user the action that will be executed on tap. */
+"Manage Share"="Gerenciar compartilhamento";
+/* Title of the screen that shows the users with whom the user can share a folder */
+"Share with"="Compartilhar com";
+/* Chat Notifications DND: Option that does not deactivate DND automatically */
+"Until I Turn it On Again"="Até eu ativar novamente";
+/* Chat Notifications DND: Option that deactivates DND after 30 minutes */
+"30 minutes"="30 minutos";
+/* Chat Notifications DND: Option that deactivates DND after 1 hour */
+"1 hour"="1 hora";
+/* Chat Notifications DND: Option that deactivates DND after 6 hours */
+"6 hours"="6 horas";
+/* Chat Notifications DND: Option that deactivates DND after 24 hours */
+"24 hours"="24 horas";
+/* Chat Notifications DND: Title bar message for the dnd activate options */
+"Mute chat Notifications for"="Silenciar as notificações de chat por";
+/* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
+"Muted forever"="Silenciado para sempre";
+/* Chat Notifications DND: Remaining time left to deactivate DND - 1 minute left */
+"1 minute left"="1 minuto restante";
+/* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 minute left */
+"%d minutes left"="%d minutos restantes";
+/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour left */
+"1 hour left"="1 hora restante";
+/* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 hour left */
+"%d hours left"="%d horas restantes";
+/* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
+"Chat Notifications"="Notificações do chat";
+/* Chat settings: This text appears with the Do Not Disturb switch */
+"Do Not Disturb"="Não perturbe";
+/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, 1 minute left */
+"1 hour, 1 minute left"="1 hora e 1 minuto restantes";
+/* Chat Notifications DND: Remaining time left to deactivate DND - X hours, X minutes left */
+"%d hours, %d minutes left"="%d horas e %d minutos restantes";
+/* Chat Notifications DND: Remaining time left to deactivate DND - X hours, 1 minute left */
+"%d hours, 1 minute left"="%d horas e 1 minuto restantes";
+/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, X minutes left */
+"1 hour, %d minutes left"="1 hora e %d minutos restantes";
+/* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
+"Reconnecting..."="Reconectando…";
+/* Title shown when the user reconnect in a call. */
+"You are back!"="Você voltou.";
+/* Subtitle of chat screen when the chat is inactive */
+"Inactive chat"="Chat inativo";
+/* Error message shown when the user tries to open a file with an unsupported encoding */
+"It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="Não foi possível obter o conteúdo deste arquivo, pois ele não está codificado em UTF-8 ou ISO/IEC 8859-1.";

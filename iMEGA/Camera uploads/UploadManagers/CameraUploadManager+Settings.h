@@ -62,6 +62,8 @@ typedef NS_ENUM(NSUInteger, CameraUploadVideoQuality) {
 
 + (void)clearLocalSettings;
 
++ (void)enableAdvancedSettingsForUpgradingUserIfNeeded;
+
 @end
 
 NS_ASSUME_NONNULL_END
