@@ -1667,7 +1667,7 @@
 /* A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days. */
 "Remove files older than"="Rimuovi file più vecchi di";
 /* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
-"Days"="giorni";
+"Days"="Giorni";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
 "The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="Il Cestino viene svuotato per te automaticamente. Il periodo minimo è di 7 giorni ed il periodo massimo è di 30 giorni.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
