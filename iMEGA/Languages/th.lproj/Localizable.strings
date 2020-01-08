@@ -1946,8 +1946,6 @@
 "Links"="Links";
 /* Title for empty state view of "Links" in Shared Items. */
 "No Public Links"="ไม่มีลิงก์สาธารณะ";
-/* Text to indicate that the user will leave an incoming shared folder. */
-"Leave Share"="ออกจากการแชร์";
 /* Text indicating to the user the action that will be executed on tap. */
 "Manage Share"="Manage share";
 /* Title of the screen that shows the users with whom the user can share a folder */

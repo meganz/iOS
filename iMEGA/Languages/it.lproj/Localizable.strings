@@ -1946,8 +1946,6 @@
 "Links"="Link";
 /* Title for empty state view of "Links" in Shared Items. */
 "No Public Links"="Nessun link pubblico";
-/* Text to indicate that the user will leave an incoming shared folder. */
-"Leave Share"="Lascia quota";
 /* Text indicating to the user the action that will be executed on tap. */
 "Manage Share"="Gestisci condivisione";
 /* Title of the screen that shows the users with whom the user can share a folder */
