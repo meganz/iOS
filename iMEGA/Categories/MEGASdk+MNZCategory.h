@@ -7,6 +7,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, setter=mnz_setAccountDetails:) MEGAAccountDetails *mnz_accountDetails;
 @property (nonatomic, readonly) BOOL mnz_isProAccount;
+@property (nonatomic, assign, setter=mnz_setShouldRequestAccountDetails:) BOOL mnz_shouldRequestAccountDetails;
 
 #pragma mark - Chat
 

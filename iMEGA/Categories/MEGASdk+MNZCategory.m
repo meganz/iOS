@@ -23,6 +23,14 @@ static const void *mnz_accountDetailsKey = &mnz_accountDetailsKey;
     return [self.mnz_accountDetails type] > MEGAAccountTypeFree;
 }
 
+- (BOOL)mnz_shouldRequestAccountDetails {
+    return [objc_getAssociatedObject(self, @selector(mnz_setShouldRequestAccountDetails:)) boolValue];
+}
+
+- (void)mnz_setShouldRequestAccountDetails:(BOOL)mnz_shouldRequestAccountDetails {
+    objc_setAssociatedObject(self, @selector(mnz_setShouldRequestAccountDetails:), @(mnz_shouldRequestAccountDetails), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
 #pragma mark - Chat
 
 - (void)getMyChatFilesFolderWithCompletion:(void(^)(MEGANode *myChatFilesNode))completion {

@@ -18,6 +18,7 @@ static NSString * const ShouldConvertHEICPhotoKey = @"ShouldConvertHEICPhoto";
 static NSString * const ShouldConvertHEVCVideoKey = @"ShouldConvertHEVCVideo";
 static NSString * const HEVCToH264CompressionQualityKey = @"HEVCToH264CompressionQuality";
 static NSString * const IsLocationBasedBackgroundUploadAllowedKey = @"IsLocationBasedBackgroundUploadAllowed";
+static NSString * const IncludeGPSTags = @"IncludeGPSTags";
 static NSString * const UploadHiddenAlbumKey = @"UploadHiddenAlbum";
 static NSString * const UploadAllBurstAssetsKey = @"UploadAllBurstAssets";
 static NSString * const UploadVideosForLivePhotosKey = @"UploadVideosForLivePhotos";
@@ -34,6 +35,7 @@ static const NSTimeInterval BoardingScreenShowUpMinimumInterval = 30 * 24 * 3600
     [NSUserDefaults.standardUserDefaults removeObjectForKey:IsCameraUploadsEnabledKey];
     [NSUserDefaults.standardUserDefaults removeObjectForKey:HasMigratedToCameraUploadsV2Key];
     [NSUserDefaults.standardUserDefaults removeObjectForKey:BoardingScreenLastShowedDateKey];
+    [NSUserDefaults.standardUserDefaults removeObjectForKey:IncludeGPSTags];
     [self clearCameraSettings];
 }
 
@@ -112,6 +114,14 @@ static const NSTimeInterval BoardingScreenShowUpMinimumInterval = 30 * 24 * 3600
     } else {
         [CameraUploadManager.shared stopBackgroundUpload];
     }
+}
+
++ (BOOL)shouldIncludeGPSTags {
+    return [NSUserDefaults.standardUserDefaults boolForKey:IncludeGPSTags];
+}
+
++ (void)setIncludeGPSTags:(BOOL)includeGPSTags {
+    [NSUserDefaults.standardUserDefaults setBool:includeGPSTags forKey:IncludeGPSTags];
 }
 
 + (NSDate *)boardingScreenLastShowedDate {

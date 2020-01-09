@@ -560,10 +560,6 @@
 "addContactButton"="新增";
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="您无须增加个人的电子邮件";
-/* Add contacts and share dialog error message when user try to add already existing email address. */
-"alreadyHaveAContactWithThatEmailAddress"="您已有一个使用该电子邮件的连络人";
-/* Add contacts and share dialog error message when user try to add already existing email address. */
-"invitationAlreadySentToContactBefore"="The invitation to contact %@ has been sent before and can be consulted in the Sent Requests tab.";
 /* Success message shown when a contact has been invited */
 "theUserHasBeenInvited"="用户[X]已被邀请。该邀请被接受后，他将会出现在您的联系人列表中。";
 /* Success message shown when some contacts have been invited */
@@ -989,8 +985,8 @@
 "availableLabel"="可用";
 /* title of the My Account screen */
 "accountType"="账号类型:";
-/* Text relative to the MEGA account level. UPPER CASE */
-"free"="免费";
+/* Label to indicate that the current user has a Free account. */
+"Free"="免费";
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="到%@ 过期";
 /* Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible). */
@@ -1409,7 +1405,7 @@
 /* Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible. */
 "autoAccept"="自动接受";
 /* Footer that explains the way Auto-Accept works for QR codes */
-"autoAcceptFooter"="扫描二维码码的联系人会自动添加到您的联系人列表中。";
+"autoAcceptFooter"="通过扫描二维码添加的用户会自动添加到您的联系人列表";
 /* Action to reset the current valid QR code of the user */
 "resetQrCode"="重置二维码";
 /* Footer that explains what would happen if the user resets his/her QR code */

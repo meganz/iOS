@@ -560,10 +560,6 @@
 "addContactButton"="Ajouter";
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="Vous n'avez pas à ajouter votre propre adresse courriel";
-/* Add contacts and share dialog error message when user try to add already existing email address. */
-"alreadyHaveAContactWithThatEmailAddress"="Vous avez déjà un contact avec cette adresse courriel";
-/* Add contacts and share dialog error message when user try to add already existing email address. */
-"invitationAlreadySentToContactBefore"="The invitation to contact %@ has been sent before and can be consulted in the Sent Requests tab.";
 /* Success message shown when a contact has been invited */
 "theUserHasBeenInvited"="L’utilisateur [X] a été invité et apparaîtra dans votre liste de contacts s’il accepte.";
 /* Success message shown when some contacts have been invited */
@@ -989,8 +985,8 @@
 "availableLabel"="Disponibles";
 /* title of the My Account screen */
 "accountType"="Type de compte :";
-/* Text relative to the MEGA account level. UPPER CASE */
-"free"="GRATUIT";
+/* Label to indicate that the current user has a Free account. */
+"Free"="Gratuit";
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="expire le %@";
 /* Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible). */
@@ -1409,7 +1405,7 @@
 /* Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible. */
 "autoAccept"="Accepter automatiquement";
 /* Footer that explains the way Auto-Accept works for QR codes */
-"autoAcceptFooter"="Les contacts qui balayeront votre code QR seront automatiquement ajoutés à votre liste de contacts.";
+"autoAcceptFooter"="Les utilisateurs de MEGA qui balayeront votre code QR seront automatiquement ajoutés à votre liste de contacts.";
 /* Action to reset the current valid QR code of the user */
 "resetQrCode"="Réinitialiser le code QR";
 /* Footer that explains what would happen if the user resets his/her QR code */

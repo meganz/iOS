@@ -379,8 +379,6 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     MEGALogDebug(@"[App Lifecycle] Application will terminate");
     
-    [MEGASdkManager destroySharedMEGAChatSdk];
-    
     [[SKPaymentQueue defaultQueue] removeTransactionObserver:[MEGAPurchase sharedInstance]];
     
     if ([[[[MEGASdkManager sharedMEGASdk] downloadTransfers] size] integerValue] == 0) {
@@ -1476,6 +1474,8 @@ void uncaughtExceptionHandler(NSException *exception) {
             [self showAddPhoneNumberIfNeeded];
             break;
             
+        case EventStorageSumChanged:
+            [MEGASdkManager.sharedMEGASdk mnz_setShouldRequestAccountDetails:YES];
         default:
             break;
     }
@@ -1729,6 +1729,7 @@ void uncaughtExceptionHandler(NSException *exception) {
         }
             
         case MEGARequestTypeAccountDetails:
+            [MEGASdkManager.sharedMEGASdk mnz_setShouldRequestAccountDetails:NO];
             [[MEGASdkManager sharedMEGASdk] mnz_setAccountDetails:[request megaAccountDetails]];
             break;
             

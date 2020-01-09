@@ -560,10 +560,6 @@
 "addContactButton"="Dodaj";
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="Nie ma potrzeby podawania własnego adresu email";
-/* Add contacts and share dialog error message when user try to add already existing email address. */
-"alreadyHaveAContactWithThatEmailAddress"="Już posiadasz kontakt z tym adresem email";
-/* Add contacts and share dialog error message when user try to add already existing email address. */
-"invitationAlreadySentToContactBefore"="Zaproszenie do kontaktu z %@ zostało wysłane wcześniej i można je sprawdzić w zakładce Wysłane żądania.";
 /* Success message shown when a contact has been invited */
 "theUserHasBeenInvited"="Użytkownik [X] został zaproszony i pojawi się na liście Twoich kontaktów po akceptacji zaproszenia.";
 /* Success message shown when some contacts have been invited */
@@ -989,8 +985,8 @@
 "availableLabel"="Dostępne";
 /* title of the My Account screen */
 "accountType"="Rodzaj konta";
-/* Text relative to the MEGA account level. UPPER CASE */
-"free"="ZA DARMO";
+/* Label to indicate that the current user has a Free account. */
+"Free"="Darmowe";
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="wygasa w %@";
 /* Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible). */
@@ -1409,7 +1405,7 @@
 /* Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible. */
 "autoAccept"="Auto-akceptacja";
 /* Footer that explains the way Auto-Accept works for QR codes */
-"autoAcceptFooter"="Kontakty, które zeskanuj Twój kod QR zostaną automatycznie dodane do listy Twoich kontaktów.";
+"autoAcceptFooter"="Użytkownicy MEGA, którzy skanują Twój kod QR, zostaną automatycznie dodani do Twojej listy kontaktów.";
 /* Action to reset the current valid QR code of the user */
 "resetQrCode"="Zresetuj QR kod";
 /* Footer that explains what would happen if the user resets his/her QR code */
@@ -1671,7 +1667,7 @@
 /* A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days. */
 "Remove files older than"="Usuń pliki starsze niż";
 /* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
-"Days"="dni";
+"Days"="Dni";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
 "The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="Kosz na śmieci jest automatycznie sprawdzany. Minimalny okres wynosi 7 dni, a maksymalny okres 30 dni.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
