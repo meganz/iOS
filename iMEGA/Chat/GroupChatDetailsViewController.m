@@ -137,8 +137,9 @@
     [archiveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         MEGAArchiveChatRequestDelegate *archiveChatRequesDelegate = [[MEGAArchiveChatRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
             if (chatRoom.isArchived) {
-                if (self.navigationController.childViewControllers.count == 3) {
-                    [MEGASdkManager.sharedMEGAChatSdk closeChatRoom:chatRoom.chatId delegate:self.navigationController.childViewControllers[1]];
+                if (self.navigationController.childViewControllers.count >= 3) {
+                    NSUInteger MessagesVCIndex = self.navigationController.childViewControllers.count - 2;
+                    [MEGASdkManager.sharedMEGAChatSdk closeChatRoom:chatRoom.chatId delegate:self.navigationController.childViewControllers[MessagesVCIndex]];
                 }
                 [self.navigationController popToRootViewControllerAnimated:YES];
             } else {

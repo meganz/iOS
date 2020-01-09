@@ -34,8 +34,13 @@
     if ([SKPaymentQueue canMakePayments]) {
         NSMutableArray *productIdentifieres = [NSMutableArray.alloc initWithCapacity:self.pricing.products];
         for (NSInteger i = 0; i < self.pricing.products; i++) {
-            MEGALogDebug(@"[StoreKit] Product \"%@\"", [self.pricing iOSIDAtProductIndex:i]);
-            [productIdentifieres addObject:[self.pricing iOSIDAtProductIndex:i]];
+            NSString *productId = [self.pricing iOSIDAtProductIndex:i];
+            MEGALogDebug(@"[StoreKit] Product \"%@\"", productId);
+            if (productId.length) {
+                [productIdentifieres addObject:productId];
+            } else {
+                MEGALogWarning(@"Product identifier \"%@\" (account type \"%@\") does not exist in the App Store, not need to request its information", productId, [MEGAAccountDetails stringForAccountType:[self.pricing proLevelAtProductIndex:i]]);
+            }
         }
         _products = [[NSMutableArray alloc] initWithCapacity:productIdentifieres.count];
         self.iOSProductIdentifiers = [productIdentifieres copy];
@@ -214,4 +219,3 @@
 }
 
 @end
-

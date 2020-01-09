@@ -3,6 +3,7 @@
 #import "PHAsset+CameraUpload.h"
 #import "CameraUploadOperation+Utils.h"
 #import "PHAssetResource+CameraUpload.h"
+#import "CameraUploadManager+Settings.h"
 @import Photos;
 @import CoreServices;
 
@@ -74,7 +75,10 @@ static NSString * const LivePhotoVideoResourceExportName = @"livePhotoVideoResou
     session.outputURL = self.uploadInfo.fileURL;
     session.canPerformMultiplePassesOverSourceMediaData = YES;
     session.shouldOptimizeForNetworkUse = YES;
-    session.metadataItemFilter = [AVMetadataItemFilter metadataItemFilterForSharing];
+    
+    if (!CameraUploadManager.shouldIncludeGPSTags) {
+        session.metadataItemFilter = [AVMetadataItemFilter metadataItemFilterForSharing];
+    }
     
     __weak __typeof__(self) weakSelf = self;
     [session exportAsynchronouslyWithCompletionHandler:^{

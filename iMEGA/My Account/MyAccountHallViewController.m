@@ -36,11 +36,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *addPhoneNumberDescription;
 
 @property (strong, nonatomic) NSNumberFormatter *numberFormatter;
-@property (strong, nonatomic) NSNumber *cloudDriveSize;
-@property (strong, nonatomic) NSNumber *rubbishBinSize;
-@property (strong, nonatomic) NSNumber *incomingSharesSize;
-@property (strong, nonatomic) NSNumber *usedStorage;
-@property (strong, nonatomic) NSNumber *maxStorage;
 
 @end
 
@@ -97,6 +92,10 @@
     [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     
+    
+    if (MEGASdkManager.sharedMEGASdk.mnz_shouldRequestAccountDetails) {
+        [MEGASdkManager.sharedMEGASdk getAccountDetails];
+    }
     [self reloadUI];
     self.buyPROBarButtonItem.enabled = [MEGAPurchase sharedInstance].products.count;
     
@@ -147,25 +146,6 @@
     [self setUserAvatar];
     
     [self.tableView reloadData];
-}
-
-- (void)initializeStorageInfo {
-    MEGAAccountDetails *accountDetails = [[MEGASdkManager sharedMEGASdk] mnz_accountDetails];
-    
-    self.cloudDriveSize = [accountDetails storageUsedForHandle:[[[MEGASdkManager sharedMEGASdk] rootNode] handle]];
-    self.rubbishBinSize = [accountDetails storageUsedForHandle:[[[MEGASdkManager sharedMEGASdk] rubbishNode] handle]];
-    
-    MEGANodeList *incomingShares = [[MEGASdkManager sharedMEGASdk] inShares];
-    NSUInteger count = incomingShares.size.unsignedIntegerValue;
-    long long incomingSharesSizeLongLong = 0;
-    for (NSUInteger i = 0; i < count; i++) {
-        MEGANode *node = [incomingShares nodeAtIndex:i];
-        incomingSharesSizeLongLong += [[[MEGASdkManager sharedMEGASdk] sizeForNode:node] longLongValue];
-    }
-    self.incomingSharesSize = [NSNumber numberWithLongLong:incomingSharesSizeLongLong];
-    
-    self.usedStorage = accountDetails.storageUsed;
-    self.maxStorage = accountDetails.storageMax;
 }
 
 - (void)openAchievements {
@@ -346,12 +326,7 @@
     switch (indexPath.row) {
         case 0: { // Used Storage
             if ([[MEGASdkManager sharedMEGASdk] mnz_accountDetails]) {
-                if (!self.cloudDriveSize || !self.rubbishBinSize || !self.incomingSharesSize || !self.usedStorage || !self.maxStorage) {
-                    [self initializeStorageInfo];
-                }
-                NSArray *sizesArray = @[self.cloudDriveSize, self.rubbishBinSize, self.incomingSharesSize, self.usedStorage, self.maxStorage];
                 UsageViewController *usageVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UsageViewControllerID"];
-                usageVC.sizesArray = sizesArray;
                 [self.navigationController pushViewController:usageVC animated:YES];
             } else {
                 MEGALogError(@"Account details unavailable");
@@ -428,7 +403,6 @@
             if (error.type) {
                 return;
             }
-            
             [self reloadUI];
             
             break;
