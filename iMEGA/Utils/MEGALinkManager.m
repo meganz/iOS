@@ -737,6 +737,10 @@ static NSString *nodeToPresentBase64Handle;
             [MEGALinkManager createChatAndShow:request.chatHandle publicChatLink:chatLinkUrl];
         }
         
+        [NSUserDefaults.standardUserDefaults setObject:[NSNumber numberWithUnsignedLongLong:request.chatHandle] forKey:MEGALastPublicHandleAccessed];
+        [NSUserDefaults.standardUserDefaults setInteger:AffiliateTypeChat forKey:MEGALastPublicTypeAccessed];
+        [NSUserDefaults.standardUserDefaults setDouble:NSDate.date.timeIntervalSince1970 forKey:MEGALastPublicTimestampAccessed];
+        
         [SVProgressHUD dismiss];
     }];
     
