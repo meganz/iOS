@@ -28,8 +28,7 @@
 
 @interface GroupCallViewController () <UICollectionViewDataSource, MEGAChatCallDelegate, UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate>
 
-@property (weak, nonatomic) IBOutlet UIView *outgoingCallView;
-@property (weak, nonatomic) IBOutlet UIView *incomingCallView;
+@property (weak, nonatomic) IBOutlet UIView *callControlsView;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
 @property (weak, nonatomic) IBOutlet UIButton *enableDisableVideoButton;
@@ -92,7 +91,7 @@
     [self initDataSource];
  
     if (self.callType == CallTypeIncoming) {
-        [self showIncomingCall];
+        [self answerChatCall];
     } else  if (self.callType == CallTypeOutgoing) {
         [self startOutgoingCall];
     } else  if (self.callType == CallTypeActive) {
@@ -354,37 +353,6 @@
 
 #pragma mark - IBActions
 
-- (IBAction)acceptCallWithVideo:(UIButton *)sender {
-    MEGAChatAnswerCallRequestDelegate *answerCallRequestDelegate = [[MEGAChatAnswerCallRequestDelegate alloc] initWithCompletion:^(MEGAChatError *error) {
-        if (error.type == MEGAChatErrorTypeOk) {
-            self.enableDisableVideoButton.selected = YES;
-        } else {
-            [self dismissViewControllerAnimated:YES completion:^{
-                if (error.type == MEGAChatErrorTooMany) {
-                    [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"Error. No more participants are allowed in this group call.", @"Message show when a call cannot be established because there are too many participants in the group call")];
-                }
-            }];
-        }
-    }];
-    [[MEGASdkManager sharedMEGAChatSdk] answerChatCall:self.chatRoom.chatId enableVideo:YES delegate:answerCallRequestDelegate];
-}
-
-- (IBAction)acceptCall:(UIButton *)sender {
-    MEGAChatAnswerCallRequestDelegate *answerCallRequestDelegate = [[MEGAChatAnswerCallRequestDelegate alloc] initWithCompletion:^(MEGAChatError *error) {
-        if (error.type != MEGAChatErrorTypeOk) {
-            [self dismissViewControllerAnimated:YES completion:^{
-                if (error.type == MEGAChatErrorTooMany) {
-                    [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"Error. No more participants are allowed in this group call.", @"Message show when a call cannot be established because there are too many participants in the group call")];
-                }
-            }];
-        } else {
-            self.incomingCallView.hidden = YES;
-            self.outgoingCallView.hidden = NO;
-        }
-    }];
-    [[MEGASdkManager sharedMEGAChatSdk] answerChatCall:self.chatRoom.chatId enableVideo:self.videoCall delegate:answerCallRequestDelegate];
-}
-
 - (IBAction)hangCall:(UIButton *)sender {
     [self removeAllVideoListeners];
     [self.megaCallManager endCall:self.call];
@@ -466,6 +434,19 @@
 }
 
 #pragma mark - Private
+
+- (void)answerChatCall {
+    MEGAChatAnswerCallRequestDelegate *answerCallRequestDelegate = [MEGAChatAnswerCallRequestDelegate.alloc initWithCompletion:^(MEGAChatError *error) {
+        if (error.type != MEGAChatErrorTypeOk) {
+            [self dismissViewControllerAnimated:YES completion:^{
+                if (error.type == MEGAChatErrorTooMany) {
+                    [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"Error. No more participants are allowed in this group call.", @"Message show when a call cannot be established because there are too many participants in the group call")];
+                }
+            }];
+        }
+    }];
+    [MEGASdkManager.sharedMEGAChatSdk answerChatCall:self.chatRoom.chatId enableVideo:self.videoCall delegate:answerCallRequestDelegate];
+}
 
 - (void)customNavigationBarLabel {
     self.navigationTitleLabel.text = self.chatRoom.title;
@@ -664,13 +645,13 @@
 
 - (void)showOrHideControls {
     [UIView animateWithDuration:0.3f animations:^{
-        if (self.outgoingCallView.alpha != 1.0f) {
-            [self.outgoingCallView setAlpha:1.0f];
+        if (self.callControlsView.alpha != 1.0f) {
+            [self.callControlsView setAlpha:1.0f];
             [UIView animateWithDuration:0.25 animations:^{
                 [self setNeedsStatusBarAppearanceUpdate];
             }];
         } else {
-            [self.outgoingCallView setAlpha:0.0f];
+            [self.callControlsView setAlpha:0.0f];
             [UIView animateWithDuration:0.25 animations:^{
                 [self setNeedsStatusBarAppearanceUpdate];
             }];
@@ -780,7 +761,6 @@
         self.shouldHideAcivity = YES;
         [self configureUserOnFocus:self.peersInCall.firstObject manual:NO];
     }
-    self.incomingCallView.hidden = YES;
     
     if (self.call.status == MEGAChatCallStatusInProgress) {
         [self initShowHideControls];
@@ -806,7 +786,6 @@
         } else {
             [self initDataSource];
             weakSelf.call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:weakSelf.chatRoom.chatId];
-            weakSelf.incomingCallView.hidden = YES;
             if (self.call.numParticipants >= kSmallPeersLayout) {
                 [self showSpinner];
                 [self configureUserOnFocus:self.peersInCall.firstObject manual:NO];
@@ -828,7 +807,6 @@
             [weakSelf dismissViewControllerAnimated:YES completion:nil];
         } else {
             weakSelf.call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:weakSelf.chatRoom.chatId];
-            weakSelf.incomingCallView.hidden = YES;
             
             NSUUID *uuid = [[NSUUID alloc] init];
             weakSelf.call.uuid = uuid;
@@ -846,11 +824,6 @@
     }];
     
     [[MEGASdkManager sharedMEGAChatSdk] startChatCall:self.chatRoom.chatId enableVideo:self.videoCall delegate:startCallRequestDelegate];
-}
-
-- (void)showIncomingCall {
-    self.outgoingCallView.hidden = YES;
-    [self acceptCall:nil];
 }
 
 - (void)configureUserOnFocus:(MEGAGroupCallPeer *)peerSelected manual:(BOOL)manual {
@@ -1115,12 +1088,6 @@
                         [self createChatSession:chatSession];
                         break;
                         
-                    case MEGAChatSessionStatusInProgress: {
-                        self.outgoingCallView.hidden = NO;
-                        self.incomingCallView.hidden = YES;
-                        break;
-                    }
-                        
                     case MEGAChatSessionStatusDestroyed:
                         [self destroyChatSession:chatSession];
                         break;
@@ -1144,7 +1111,6 @@
     
         case MEGAChatCallStatusTerminatingUserParticipation:
         case MEGAChatCallStatusDestroyed: {
-            self.incomingCallView.userInteractionEnabled = NO;
             
             [self.timer invalidate];
 
