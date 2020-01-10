@@ -2701,7 +2701,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
                         }
                     }
                     
-                    MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:[MEGASdkManager sharedMEGASdk] displayMode:DisplayModeSharedItem presentingNode:nil preferredIndex:[reverseArray indexOfObject:message]];
+                    MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:[MEGASdkManager sharedMEGASdk] displayMode:DisplayModeChatAttachment presentingNode:nil preferredIndex:[reverseArray indexOfObject:message]];
                     photoBrowserVC.delegate = self;
                     
                     [self.navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
