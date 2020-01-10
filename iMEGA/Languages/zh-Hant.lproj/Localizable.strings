@@ -1946,8 +1946,6 @@
 "Links"="連結";
 /* Title for empty state view of "Links" in Shared Items. */
 "No Public Links"="沒有公開連結";
-/* Text to indicate that the user will leave an incoming shared folder. */
-"Leave Share"="離開共享";
 /* Text indicating to the user the action that will be executed on tap. */
 "Manage Share"="管理分享";
 /* Title of the screen that shows the users with whom the user can share a folder */

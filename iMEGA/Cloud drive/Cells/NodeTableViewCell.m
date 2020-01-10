@@ -58,21 +58,8 @@
         self.moreButton.hidden = NO;
     }
     
-    if (node.isExported) {
-        if (isDownloaded) {
-            self.upImageView.image = [UIImage imageNamed:@"linked"];
-            self.middleImageView.image = nil;
-            self.downImageView.image = [Helper downloadedArrowImage];
-        } else {
-            self.upImageView.image = nil;
-            self.middleImageView.image = [UIImage imageNamed:@"linked"];
-            self.downImageView.image = nil;
-        }
-    } else {
-        self.upImageView.image = nil;
-        self.middleImageView.image = (isDownloaded) ? [Helper downloadedArrowImage] : nil;
-        self.downImageView.image = nil;
-    }
+    self.middleImageView.hidden = !isDownloaded;
+    self.linkImageView.hidden = !node.isExported;
     
     if (node.hasThumbnail) {
         NSString *thumbnailFilePath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];

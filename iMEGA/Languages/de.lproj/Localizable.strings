@@ -1667,7 +1667,7 @@
 /* A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days. */
 "Remove files older than"="Automatische Löschung nach";
 /* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
-"Days"="Tag(en)";
+"Days"="Days";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
 "The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="Die Leerung des Papierkorbs erfolgt automatisch. Die Aufbewahrungsfrist beträgt zwischen sieben und 30 Tagen.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
@@ -1743,7 +1743,7 @@
 /* The header of a notification related to payments */
 "Payment info"="Informationen zur Zahlung";
 /* A title for a notification saying the user’s pricing plan will expire soon. */
-"PRO membership plan expiring soon"="Ihre PRO-Mitgliedschaft läuft bald ab";
+"PRO membership plan expiring soon"="Ihr PRO-Status läuft bald ab";
 /* The header of a notification indicating that a file or folder has been taken down due to infringement or other reason. */
 "Takedown notice"="Löschung durch Dritte";
 /* The header of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. */
@@ -1946,8 +1946,6 @@
 "Links"="Links";
 /* Title for empty state view of "Links" in Shared Items. */
 "No Public Links"="Keine exportierten Links";
-/* Text to indicate that the user will leave an incoming shared folder. */
-"Leave Share"="Freigegebenen Ordner verlassen";
 /* Text indicating to the user the action that will be executed on tap. */
 "Manage Share"="Ordnerfreigabe bearbeiten";
 /* Title of the screen that shows the users with whom the user can share a folder */
