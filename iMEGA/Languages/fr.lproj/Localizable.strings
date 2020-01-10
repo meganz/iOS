@@ -1946,8 +1946,6 @@
 "Links"="Liens";
 /* Title for empty state view of "Links" in Shared Items. */
 "No Public Links"="Il n’y a aucun lien public";
-/* Text to indicate that the user will leave an incoming shared folder. */
-"Leave Share"="Quitter le partage";
 /* Text indicating to the user the action that will be executed on tap. */
 "Manage Share"="Gérer le lien";
 /* Title of the screen that shows the users with whom the user can share a folder */
