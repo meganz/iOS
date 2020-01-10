@@ -1111,7 +1111,7 @@
             [node mnz_removeLink];
             [self setEditing:NO animated:YES];
         }];
-        removeLinkAction.image = [[UIImage imageNamed:@"removeLinkGesture"] imageWithTintColor:UIColor.whiteColor];
+        removeLinkAction.image = [UIImage imageNamed:@"removeLinkGesture"];
         removeLinkAction.backgroundColor = [UIColor colorWithRed:0.95 green:0.05 blue:0.08 alpha:1];
         return [UISwipeActionsConfiguration configurationWithActions:@[removeLinkAction]];
     } else {
