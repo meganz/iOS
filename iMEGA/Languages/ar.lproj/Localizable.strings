@@ -1667,7 +1667,7 @@
 /* A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days. */
 "Remove files older than"="أزل الملفات الأكبر من";
 /* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
-"Days"="أيام";
+"Days"="يوم";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
 "The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="سيتم افراغ سلة المحذوفات بشكل أتوماتيكي. أقصر مدة يمكن تحديدها هي 7 أيام وأطول مدة هي 30 يوم.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
@@ -1695,29 +1695,29 @@
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
 "Could not save Item"="فشل عملية الحفظ";
 /* Label in a cell where you can enable the 'Encrypted Key Rotation' */
-"Encrypted Key Rotation"="Encrypted Key Rotation";
+"Encrypted Key Rotation"="تدوير المفتاح المشفر";
 /* Title shown in a cell to allow the users enable the 'Encrypted Key Rotation' */
-"Enable Encrypted Key Rotation"="Enable Encrypted Key Rotation";
+"Enable Encrypted Key Rotation"="تمكين تدوير المفتاح المشفر";
 /* Label in a cell where you can get the chat link */
 "Get Chat Link"="استخرج رابط المحادثة";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
-"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages.";
+"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="تعد ميزة تدوير المفاتيح أكثر أماناً بقليل، لكنها لا تسمح لك بإنشاء رابط محادثة ولن يرى المشاركون الجدد الرسائل السابقة.";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
-"To create a chat link you must name the group."="To create a chat link you must name the group.";
+"To create a chat link you must name the group."="لإنشاء رابط محادثة، يجب عليك تسمية المجموعة.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
 "Chat Link"="رابط المحادثة";
 /* Button text in public chat previews that allows the user to join the chat */
 "Join"="الانضمام";
 /* Text shown in a notification to let the user know that has joined a public chat room after login or account creation */
-"You have joined %@"="You have joined %@";
+"You have joined %@"="لقد انضممت إلى %@";
 /* Users previewing a public chat */
 "Observers"="المشاهدون";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
-"%@ enabled Encrypted Key Rotation"="%@ enabled Encrypted Key Rotation.";
+"%@ enabled Encrypted Key Rotation"="%@ تم تمكين تدوير مفتاح مشفر.";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
-"%@ created a public link for the chat."="%@ created a chat link";
+"%@ created a public link for the chat."="%@ قام بإنشاء رابط محادثة";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
-"%@ removed a public link for the chat."="%@ removed the chat link";
+"%@ removed a public link for the chat."="%@ إزالة رابط المحادثة";
 /* Management message shown in a chat when the user %@ joined it from a public chat link */
 "%@ joined the group chat."="%@ انضم الى المجموعة";
 /* Message show when a call cannot be established because there are too many participants in the group call */
@@ -1863,7 +1863,7 @@
 /* Text to inform the user there is an active call and is not participating */
 "Ongoing Call"="مكالمة جارية";
 /* Message shown when there is an ongoing call and the user tries to play an audio or video */
-"It is not possible to play content while there is a call in progress"="It is not possible to play media files while there is a call in progress.";
+"It is not possible to play content while there is a call in progress"="لا يمكن تشغيل ملفات الوسائط أثناء وجود مكالمة جارية.";
 /* Text to inform the user there is an active call and is participating */
 "Call Started"="المكالمة بدأت";
 /* Title for feature Password Reminder */
@@ -1877,7 +1877,7 @@
 /* The label of the toggle switch to indicate that file versioning is enabled. */
 "Enabled"="تمكين";
 /* Text button for init a group chat with link. */
-"New Chat Link"="New chat link";
+"New Chat Link"="رابط محادثة جديد";
 /* Text button for init a group chat */
 "New group chat"="مجموعة محادثة جديدة";
 /* Title for the recents section. */
@@ -1907,11 +1907,11 @@
 /* Shown when an invalid/inexisting/not-available-anymore chat link is opened. */
 "Chat link unavailable"="رابط المحادثة غير موجود";
 /* Shown when an inexisting/unavailable/removed link is tried to be opened. */
-"This chat link is no longer available"="This chat link is no longer available";
+"This chat link is no longer available"="لم يعد رابط المحادثة هذا متاحاً";
 /* Text explaining users how the chat links work. */
-"People can join your group by using this link."="People can join your group by using this link.";
+"People can join your group by using this link."="يمكن للأشخاص الانضمام إلى مجموعتك باستخدام هذا الرابط.";
 /* Subtitle shown in a chat to inform where to tap to enter in the chat details view */
-"Tap here for info"="Tap here for info";
+"Tap here for info"="اضغط هنا للحصول على معلومات";
 /* In some cases, a user may try to get the link for a chat room, but if such is not set by an operator - it would say "not link available" and not auto create it. */
 "No chat link available."="لا يوجد رابط محادثة متاح";
 /* Title of a dialog in which we request access to a specific permission, like the Location Services */
@@ -1946,8 +1946,6 @@
 "Links"="Links";
 /* Title for empty state view of "Links" in Shared Items. */
 "No Public Links"="No Public Links";
-/* Text to indicate that the user will leave an incoming shared folder. */
-"Leave Share"="أنهاء المشاركة";
 /* Text indicating to the user the action that will be executed on tap. */
 "Manage Share"="Manage share";
 /* Title of the screen that shows the users with whom the user can share a folder */
