@@ -1946,8 +1946,6 @@
 "Links"="링크";
 /* Title for empty state view of "Links" in Shared Items. */
 "No Public Links"="공개 링크 없음";
-/* Text to indicate that the user will leave an incoming shared folder. */
-"Leave Share"="공유 떠나기";
 /* Text indicating to the user the action that will be executed on tap. */
 "Manage Share"="공유 관리";
 /* Title of the screen that shows the users with whom the user can share a folder */
