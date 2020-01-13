@@ -1151,6 +1151,10 @@
 "sendMessage"="ส่งข้อความ";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
 "verifyCredentials"="ยืนยันข้อมูลรับรอง";
+/* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
+"verify"="ตรวจสอบ";
+/* Button title */
+"verified"="ตรวจสอบแล้ว";
 /* A button title to delete the history of a chat. */
 "clearChatHistory"="ล้างประวัติการแชท";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
@@ -1992,3 +1996,7 @@
 "Inactive chat"="แชทที่ไม่ได้ใช้งาน";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
 "It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1.";
+/* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
+"Include location tags"="Include location tags";
+/* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
+"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them.";
