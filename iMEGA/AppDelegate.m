@@ -399,11 +399,6 @@
     return YES;
 }
 
-- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings {
-    MEGALogDebug(@"[App Lifecycle] Application did register user notification settings");
-    [application registerForRemoteNotifications];
-}
-
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     if([deviceToken length] == 0) {
         MEGALogError(@"[App Lifecycle] Application did register for remote notifications with device token length 0");
@@ -575,15 +570,6 @@
     MEGALogWarning(@"[App Lifecycle] Application did receive memory warning");
     
     [self.indexer stopIndexing];
-}
-
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
-    MEGALogDebug(@"[App Lifecycle] Application did receive remote notification");
-    
-    if (application.applicationState == UIApplicationStateInactive) {
-        _megatype = [[userInfo objectForKey:@"megatype"] unsignedIntegerValue];
-        [self openTabBasedOnNotificationMegatype];
-    }
 }
 
 - (void)application:(UIApplication *)application handleEventsForBackgroundURLSession:(NSString *)identifier completionHandler:(void (^)(void))completionHandler {
