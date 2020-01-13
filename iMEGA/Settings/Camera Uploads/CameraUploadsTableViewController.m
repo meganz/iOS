@@ -326,7 +326,7 @@
                 [self configBackgroudUploadUI];
                 break;
             default:
-                [UIApplication.sharedApplication openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+                [UIApplication.sharedApplication openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString] options:@{} completionHandler:nil];
                 break;
         }
     };
