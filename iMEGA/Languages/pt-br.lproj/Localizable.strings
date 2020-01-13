@@ -159,7 +159,7 @@
 /* Error title shown when you open a file or folder link and it's no longer available */
 "linkUnavailable"="Link indisponível";
 /* */
-"fileLinkUnavailableText1"="Isto pode ser devido as seguintes razões:";
+"fileLinkUnavailableText1"="Poderia ser por uma das razões abaixo:";
 /* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
 "fileLinkUnavailableText2"="O arquivo foi removido por causa de uma infração dos Termos de serviço.";
 /* */
@@ -177,7 +177,7 @@
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="O arquivo '%@' não pode ser criado";
 /* */
-"folderLinkUnavailableText1"="Isto pode ser devido as seguintes razões:";
+"folderLinkUnavailableText1"="Poderia ser por uma das razões abaixo:";
 /* */
 "folderLinkUnavailableText2"="O link desta pasta foi eliminado por uma infração dos nossos Termos de serviço.";
 /* */
@@ -938,7 +938,7 @@
 /* The header/title of a block/section which contains information about the user's used/available transfer allowance for their account. */
 "transferQuota"="Cota de transferência";
 /* achievement type */
-"registrationBonus"="Bônus de registro";
+"registrationBonus"="Bônus de cadastro";
 /* Message shown on the achievements dialog for achieved achievements, %1 is replaced with e.g. 20 GB */
 "registrationBonusExplanation"="Você recebeu %1 de espaço de armazenamento como bônus por criar uma conta.";
 /* achievement type */
@@ -1151,6 +1151,10 @@
 "sendMessage"="Enviar mensagem";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
 "verifyCredentials"="Verificar as credenciais";
+/* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
+"verify"="Verificar";
+/* Button title */
+"verified"="Verificado";
 /* A button title to delete the history of a chat. */
 "clearChatHistory"="Deletar o histórico do chat";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
@@ -1260,7 +1264,7 @@
 /* Notification text body shown when you have received a new shared folder */
 "newSharedFolder"="Nova pasta compartilhada";
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
-"areYouSureYouWantToAbortTheRegistration"="Tem certeza que deseja cancelar o cadastro?";
+"areYouSureYouWantToAbortTheRegistration"="Você tem certeza que quer cancelar o cadastro?";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
 "misspelledEmailAddress"="Se você digitou incorretamente o seu endereço de e-mail, corrija-o e clique em \"Reenviar\".";
 /* A button to resend the email confirmation. */
@@ -1992,3 +1996,7 @@
 "Inactive chat"="Chat inativo";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
 "It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="Não foi possível obter o conteúdo deste arquivo, pois ele não está codificado em UTF-8 ou ISO/IEC 8859-1.";
+/* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
+"Include location tags"="Incluir etiquetas de localização";
+/* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
+"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them.";
