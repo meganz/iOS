@@ -35,6 +35,7 @@
 
 typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
     ContactDetailsSectionSetNickname = 0,
+    ContactDetailsSectionVerifyCredentials,
     ContactDetailsSectionAddAndRemoveContact,
     ContactDetailsSectionSharedFolders,
     ContactDetailsSectionClearChatHistory,
@@ -102,11 +103,8 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
     self.messageLabel.text = AMLocalizedString(@"Message", @"Label for any ‘Message’ button, link, text, title, etc. - (String as short as possible).").lowercaseString;
     self.callLabel.text = AMLocalizedString(@"Call", @"Title of the button in the contact info screen to start an audio call").lowercaseString;
     self.videoLabel.text = AMLocalizedString(@"Video", @"Title of the button in the contact info screen to start a video call").lowercaseString;
-    
-    //TODO: Show the blue check if the Contact is verified
-    
+        
     self.userNickname = self.user.mnz_nickname;
-
     
     if (self.userName == nil) {
         self.userName = self.user.mnz_fullName;
@@ -162,6 +160,8 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
     [self updateCallButtonsState];
     
     [self configureGestures];
+    
+    [self.tableView reloadData];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -211,6 +211,15 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
     cell.nameLabel.font = [UIFont mnz_SFUIRegularWithSize:15.0f];
     cell.nameLabel.textColor = UIColor.mnz_black333333;
     return cell;
+}
+
+- (ContactTableViewCell *)cellForVerifyCredentialsWithIndexPath:(NSIndexPath *)indexPath {
+    ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsPermissionsTypeID" forIndexPath:indexPath];
+    cell.avatarImageView.image = [UIImage imageNamed:@"verifyCredentials"];
+    cell.nameLabel.text = AMLocalizedString(@"verifyCredentials", @"Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials.");
+    cell.nameLabel.font = [UIFont systemFontOfSize:15.0];
+    cell.nameLabel.textColor = UIColor.mnz_black333333;
+    cell.permissionsLabel.text = [MEGASdkManager.sharedMEGASdk areCredentialsVerifiedOfUser:self.user] ? AMLocalizedString(@"verified", @"Button title") : @"";
 }
 
 - (ContactTableViewCell *)cellForAddAndRemoveContactWithIndexPath:(NSIndexPath *)indexPath {
@@ -451,6 +460,8 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
 
 - (void)pushVerifyCredentialsViewController {
     VerifyCredentialsViewController *verifyCredentialsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"VerifyCredentialsViewControllerID"];
+    verifyCredentialsVC.user = self.user;
+    verifyCredentialsVC.userName = self.userName;
     [self.navigationController pushViewController:verifyCredentialsVC animated:YES];
 }
 
@@ -542,10 +553,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
     callVC.videoCall = videoCall;
     callVC.callType = active ? CallTypeActive : CallTypeOutgoing;
     callVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-    
-    if (@available(iOS 10.0, *)) {
-        callVC.megaCallManager = [(MainTabBarController *)UIApplication.sharedApplication.keyWindow.rootViewController megaCallManager];
-    }
+    callVC.megaCallManager = [(MainTabBarController *)UIApplication.sharedApplication.keyWindow.rootViewController megaCallManager];
     [self presentViewController:callVC animated:YES completion:nil];
 }
 
@@ -737,9 +745,11 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
 
 - (NSArray<NSNumber *> *)sectionsForContactModeDefault {
     if (self.userNickname.length > 0) {
-        return [self addSharedFoldersSectionIfNeededToSections:@[@(ContactDetailsSectionAddAndRemoveContact)]];
+        return [self addSharedFoldersSectionIfNeededToSections:@[@(ContactDetailsSectionAddAndRemoveContact),
+                                                                 @(ContactDetailsSectionVerifyCredentials)]];
     } else {
         return [self addSharedFoldersSectionIfNeededToSections:@[ @(ContactDetailsSectionSetNickname),
+                                                                  @(ContactDetailsSectionVerifyCredentials),
                                                                   @(ContactDetailsSectionAddAndRemoveContact)
                                                                   ]];
     }
@@ -883,6 +893,10 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
             cell = [self cellForNicknameWithIndexPath:indexPath];
             break;
             
+        case ContactDetailsSectionVerifyCredentials: // Verify user credentials
+            cell = [self cellForVerifyCredentialsWithIndexPath:indexPath];
+            break;
+            
         case ContactDetailsSectionAddAndRemoveContact: // Add and remove contact cell.
             cell = [self cellForAddAndRemoveContactWithIndexPath:indexPath];
             break;
@@ -963,6 +977,10 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
     switch (self.contactDetailsSections[indexPath.section].intValue) {
         case ContactDetailsSectionSetNickname:
             [self showNickNameViewContoller];
+            break;
+            
+        case ContactDetailsSectionVerifyCredentials:
+            [self pushVerifyCredentialsViewController];
             break;
             
         case ContactDetailsSectionAddAndRemoveContact:

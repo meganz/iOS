@@ -1,20 +1,32 @@
 #import "VerifyCredentialsViewController.h"
 
+#import "SVProgressHUD.h"
+
 #import "MEGASdkManager.h"
+#import "MEGAGenericRequestDelegate.h"
 
 @interface VerifyCredentialsViewController ()
 
-@property (weak, nonatomic) IBOutlet UILabel *contactCredentialsLabel;
-@property (weak, nonatomic) IBOutlet UILabel *firstPartOfContactCredentialsLabel;
-@property (weak, nonatomic) IBOutlet UILabel *secondPartOfContactCredentialsLabel;
-@property (weak, nonatomic) IBOutlet UILabel *thirdPartOfContactCredentialsLabel;
-@property (weak, nonatomic) IBOutlet UILabel *fourthPartOfContactCredentialsLabel;
-@property (weak, nonatomic) IBOutlet UILabel *fifthPartOfContactCredentialsLabel;
-@property (weak, nonatomic) IBOutlet UILabel *sixthPartOfContactCredentialsLabel;
-@property (weak, nonatomic) IBOutlet UILabel *seventhPartOfContactCredentialsLabel;
-@property (weak, nonatomic) IBOutlet UILabel *eighthPartOfContactCredentialsLabel;
-@property (weak, nonatomic) IBOutlet UILabel *ninthPartOfContactCredentialsLabel;
-@property (weak, nonatomic) IBOutlet UILabel *tenthPartOfContactCredentialsLabel;
+@property (weak, nonatomic) IBOutlet UIView *userCredentialsView;
+
+@property (weak, nonatomic) IBOutlet UILabel *userNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *userEmailLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *firstPartOfUserCredentialsLabel;
+@property (weak, nonatomic) IBOutlet UILabel *secondPartOfUserCredentialsLabel;
+@property (weak, nonatomic) IBOutlet UILabel *thirdPartOfUserCredentialsLabel;
+@property (weak, nonatomic) IBOutlet UILabel *fourthPartOfUserCredentialsLabel;
+@property (weak, nonatomic) IBOutlet UILabel *fifthPartOfUserCredentialsLabel;
+@property (weak, nonatomic) IBOutlet UILabel *sixthPartOfUserCredentialsLabel;
+@property (weak, nonatomic) IBOutlet UILabel *seventhPartOfUserCredentialsLabel;
+@property (weak, nonatomic) IBOutlet UILabel *eighthPartOfUserCredentialsLabel;
+@property (weak, nonatomic) IBOutlet UILabel *ninthPartOfUserCredentialsLabel;
+@property (weak, nonatomic) IBOutlet UILabel *tenthPartOfUserCredentialsLabel;
+
+
+@property (weak, nonatomic) IBOutlet UIView *myCredentialsView;
+@property (weak, nonatomic) IBOutlet UIView *myCredentialsSubView;
+
 @property (weak, nonatomic) IBOutlet UILabel *explanationLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *yourCredentialsLabel;
@@ -29,8 +41,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *ninthPartOfYourCredentialsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *tenthPartOfYourCredentialsLabel;
 
-@property (weak, nonatomic) IBOutlet UIButton *resetButton;
-@property (weak, nonatomic) IBOutlet UIButton *approveButton;
+@property (weak, nonatomic) IBOutlet UIButton *verifyOrResetButton;
 
 @end
 
@@ -43,16 +54,42 @@
     
     self.navigationItem.title = AMLocalizedString(@"verifyCredentials", @"Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials.");
     
+    self.userNameLabel.text = self.userName;
+    self.userEmailLabel.text = self.user.email;
+    
     NSInteger length = 4;
     NSInteger position = 4;
     
-    self.contactCredentialsLabel.text = AMLocalizedString(@"contactCredentials", @"Label title above the fingerprint credentials of a user's contact. A credential in this case is a stored piece of information representing the identity of the contact");
-    //TODO: Show contact credentials
+    MEGAGenericRequestDelegate *userCredentialsDelegate = [MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest *request, MEGAError *error) {
+        if (error.type) {
+            [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, error.name]];
+        } else {
+            NSString *userCredentials = request.password;
+            if (userCredentials.length == 40) {
+                self.firstPartOfUserCredentialsLabel.text =  [userCredentials substringWithRange:NSMakeRange(0, length)];
+                self.secondPartOfUserCredentialsLabel.text =  [userCredentials substringWithRange:NSMakeRange(position, length)];
+                self.thirdPartOfUserCredentialsLabel.text =  [userCredentials substringWithRange:NSMakeRange((position * 2), length)];
+                self.fourthPartOfUserCredentialsLabel.text =  [userCredentials substringWithRange:NSMakeRange((position * 3), length)];
+                self.fifthPartOfUserCredentialsLabel.text =  [userCredentials substringWithRange:NSMakeRange((position * 4), length)];
+                self.sixthPartOfUserCredentialsLabel.text =  [userCredentials substringWithRange:NSMakeRange((position * 5), length)];
+                self.seventhPartOfUserCredentialsLabel.text =  [userCredentials substringWithRange:NSMakeRange((position * 6), length)];
+                self.eighthPartOfUserCredentialsLabel.text =  [userCredentials substringWithRange:NSMakeRange((position * 7), length)];
+                self.ninthPartOfUserCredentialsLabel.text =  [userCredentials substringWithRange:NSMakeRange((position * 8), length)];
+                self.tenthPartOfUserCredentialsLabel.text =  [userCredentials substringWithRange:NSMakeRange((position * 9), length)];
+            }
+        }
+    }];
+    [MEGASdkManager.sharedMEGASdk getUserCredentials:self.user delegate:userCredentialsDelegate];
+    
+    self.myCredentialsView.backgroundColor = UIColor.mnz_grayFAFAFA;
+    
+    self.myCredentialsSubView.backgroundColor = UIColor.whiteColor;
+    self.myCredentialsSubView.layer.borderColor = UIColor.mnz_grayEEEEEE.CGColor;
+    
     self.explanationLabel.text = AMLocalizedString(@"thisIsBestDoneInRealLife", @"'Verify user' dialog description");
     
     self.yourCredentialsLabel.text = AMLocalizedString(@"yourCredentials", @"Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity");
-    // TODO: myFingerprint doesn't exist, getMyCredentials should be used instead
-    NSString *yourCredentials = @""; //[[MEGASdkManager sharedMEGASdk] myFingerprint];
+    NSString *yourCredentials = MEGASdkManager.sharedMEGASdk.myCredentials;
     if (yourCredentials.length == 40) {
         self.firstPartOfYourCredentialsLabel.text =  [yourCredentials substringWithRange:NSMakeRange(0, length)];
         self.secondPartOfYourCredentialsLabel.text =  [yourCredentials substringWithRange:NSMakeRange(position, length)];
@@ -66,19 +103,45 @@
         self.tenthPartOfYourCredentialsLabel.text =  [yourCredentials substringWithRange:NSMakeRange((position * 9), length)];
     }
     
-    [self.resetButton setTitle:AMLocalizedString(@"reset", @"Button to reset the password") forState:UIControlStateNormal];
-    
-    [self.approveButton setTitle:AMLocalizedString(@"approve", @"Button title") forState:UIControlStateNormal];
+    [self updateUI];
+}
+
+#pragma mark - Private
+
+- (void)updateUI {
+    if ([MEGASdkManager.sharedMEGASdk areCredentialsVerifiedOfUser:self.user]) {
+        [self.verifyOrResetButton setBackgroundColor:UIColor.mnz_redMain];
+        [self.verifyOrResetButton setTitle:AMLocalizedString(@"reset", @"Button to reset the password") forState:UIControlStateNormal];
+    } else {
+        [self.verifyOrResetButton setBackgroundColor:UIColor.mnz_green00BFA5];
+        [self.verifyOrResetButton setTitle:AMLocalizedString(@"verify", @"Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible).") forState:UIControlStateNormal];
+    }
 }
 
 #pragma mark - IBActions
 
-- (IBAction)resetTouchUpInside:(UIButton *)sender {
-    //TODO: Reset contact credentials
-}
-
-- (IBAction)approveTouchUpInside:(UIButton *)sender {
-    //TODO: Approve contact credentials
+- (IBAction)verifyOrResetTouchUpInside:(UIButton *)sender {
+    if ([MEGASdkManager.sharedMEGASdk areCredentialsVerifiedOfUser:self.user]) {
+        MEGAGenericRequestDelegate *resetCredentialsOfUserDelegate = [MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest *request, MEGAError *error) {
+            if (error.type) {
+                [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, error.name]];
+            } else {
+                [self updateUI];
+            }
+        }];
+        [MEGASdkManager.sharedMEGASdk resetCredentialsOfUser:self.user delegate:resetCredentialsOfUserDelegate];
+    } else {
+        MEGAGenericRequestDelegate *verifyCredentialsOfUserDelegate = [MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest *request, MEGAError *error) {
+            if (error.type) {
+                [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, error.name]];
+            } else {
+                [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"verified", @"Button title")];
+                
+                [self updateUI];
+            }
+        }];
+        [MEGASdkManager.sharedMEGASdk verifyCredentialsOfUser:self.user delegate:verifyCredentialsOfUserDelegate];
+    }
 }
 
 @end
