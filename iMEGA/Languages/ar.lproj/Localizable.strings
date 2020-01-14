@@ -43,7 +43,7 @@
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="أدخل مفتاح فك التشفير";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertMessage"="للدخول إلى هذا المجلد/الملف، أنت بحاجة لمفتاح فك التشفير الخاص به. إذا كنت لا تملك هذا المفتاح، يرجى التواصل مع منشئ الرابط.";
+"decryptionKeyAlertMessage"="للدخول إلى هذا المجلد/الملف، أنت بحاجة لمفتاح فك التشفير الخاص به. إذا كنت لا تملك هذا المفتاح، تواصل مع منشئ الرابط.";
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="مفتاح التشفير";
 /* Button title to try to decrypt the link */
@@ -825,7 +825,7 @@
 /* An alert title where the user provided the incorrect Recovery Key. */
 "invalidRecoveryKey"="مفتاح الاستعادة غير صالح";
 /* Text of the alert after opening the recovery link to reset pass being logged. */
-"youRecoveryKeyIsGoingTo"="مفتاح الاستعادة الخاص بك سيستخدم لاستعادة كلمة المرور. الرجاء أدخل كلمة المرور الجديدة.";
+"youRecoveryKeyIsGoingTo"="مفتاح الاستعادة الخاص بك سيستخدم لإعادة تعيين كلمة مرورك. الرجاء ادخال كلمة مرورك الجديدة.";
 /*  */
 "yourPasswordHasBeenReset"="تم إعادة تعيين كلمة المرور الخاصة بك بنجاح. يرجى تسجيل الدخول إلى حسابك.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
@@ -1151,6 +1151,10 @@
 "sendMessage"="أرسل رسالة";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
 "verifyCredentials"="توثيق البيانات";
+/* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
+"verify"="تحقق";
+/* Button title */
+"verified"="تم التحقق";
 /* A button title to delete the history of a chat. */
 "clearChatHistory"="امسح تاريخ المحادثة";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
@@ -1946,8 +1950,6 @@
 "Links"="Links";
 /* Title for empty state view of "Links" in Shared Items. */
 "No Public Links"="No Public Links";
-/* Text to indicate that the user will leave an incoming shared folder. */
-"Leave Share"="أنهاء المشاركة";
 /* Text indicating to the user the action that will be executed on tap. */
 "Manage Share"="Manage share";
 /* Title of the screen that shows the users with whom the user can share a folder */
@@ -1994,3 +1996,7 @@
 "Inactive chat"="المحادثات الغير نشطة";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
 "It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1.";
+/* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
+"Include location tags"="Include location tags";
+/* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
+"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them.";

@@ -1151,6 +1151,10 @@
 "sendMessage"="發送訊息";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
 "verifyCredentials"="確認憑證";
+/* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
+"verify"="確認";
+/* Button title */
+"verified"="已驗證";
 /* A button title to delete the history of a chat. */
 "clearChatHistory"="清空對話記錄";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
@@ -1946,8 +1950,6 @@
 "Links"="連結";
 /* Title for empty state view of "Links" in Shared Items. */
 "No Public Links"="沒有公開連結";
-/* Text to indicate that the user will leave an incoming shared folder. */
-"Leave Share"="離開共享";
 /* Text indicating to the user the action that will be executed on tap. */
 "Manage Share"="管理分享";
 /* Title of the screen that shows the users with whom the user can share a folder */
@@ -1994,3 +1996,7 @@
 "Inactive chat"="不活躍的聊天";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
 "It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="無法獲得此檔案的內容，因為它並不是以UTF-8或ISO/IEC 8859-1進行編碼。";
+/* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
+"Include location tags"="包含位置標籤";
+/* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
+"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them.";

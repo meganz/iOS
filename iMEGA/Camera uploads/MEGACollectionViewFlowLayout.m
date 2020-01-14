@@ -4,9 +4,7 @@
 @implementation MEGACollectionViewFlowLayout
 
 - (void)prepareLayout {
-    if (@available(iOS 10.0, *)) {
-        self.collectionView.prefetchingEnabled = false;
-    }
+    self.collectionView.prefetchingEnabled = false;
 }
 
 - (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect {
