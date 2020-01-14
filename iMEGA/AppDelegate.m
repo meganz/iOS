@@ -103,12 +103,23 @@
 @property (strong, nonatomic) dispatch_queue_t indexSerialQueue;
 @property (strong, nonatomic) BackgroundRefreshPerformer *backgroundRefreshPerformer;
 
+@property (nonatomic, strong) NSString *sessionV3;
+
 @end
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
+    
+    [SAMKeychain setAccessibilityType:kSecAttrAccessibleAfterFirstUnlock];
+    
+    NSError *error;
+    _sessionV3 = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3" error:&error];
+    if (error.code == errSecInteractionNotAllowed) {
+        exit(0);
+    }
+
 #ifdef DEBUG
     [MEGASdk setLogLevel:MEGALogLevelMax];
     [MEGAChatSdk setCatchException:false];
@@ -167,13 +178,9 @@
     
     self.backgroundTaskMutableDictionary = [[NSMutableDictionary alloc] init];
     
-    [SAMKeychain setAccessibilityType:kSecAttrAccessibleAfterFirstUnlock];
-    
-    NSString *sessionV3 = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
-    
     //Clear keychain (session) and delete passcode on first run in case of reinstallation
     if (![[NSUserDefaults standardUserDefaults] objectForKey:kFirstRun]) {
-        sessionV3 = nil;
+        self.sessionV3 = nil;
         [Helper clearEphemeralSession];
         [Helper clearSession];
         [Helper deletePasscode];
@@ -187,13 +194,13 @@
     isFetchNodesDone = NO;
     _presentInviteContactVCLater = NO;
     
-    if (sessionV3) {
+    if (self.sessionV3) {
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"TabsOrderInTabBar"];
         
         NSUserDefaults *sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];
         if (![sharedUserDefaults boolForKey:@"extensions"]) {
             [SAMKeychain deletePasswordForService:@"MEGA" account:@"sessionV3"];
-            [SAMKeychain setPassword:sessionV3 forService:@"MEGA" account:@"sessionV3"];
+            [SAMKeychain setPassword:self.sessionV3 forService:@"MEGA" account:@"sessionV3"];
             [sharedUserDefaults setBool:YES forKey:@"extensions"];
         }
         if (![sharedUserDefaults boolForKey:@"extensions-passcode"]) {
@@ -219,7 +226,7 @@
                 [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
             }
             
-            MEGAChatInit chatInit = [[MEGASdkManager sharedMEGAChatSdk] initKarereWithSid:sessionV3];
+            MEGAChatInit chatInit = [MEGASdkManager.sharedMEGAChatSdk initKarereWithSid:self.sessionV3];
             if (chatInit == MEGAChatInitError) {
                 MEGALogError(@"Init Karere with session failed");
                 NSString *message = [NSString stringWithFormat:@"Error (%ld) initializing the chat", (long)chatInit];
@@ -231,7 +238,7 @@
         }
         
         MEGALoginRequestDelegate *loginRequestDelegate = [[MEGALoginRequestDelegate alloc] init];
-        [[MEGASdkManager sharedMEGASdk] fastLoginWithSession:sessionV3 delegate:loginRequestDelegate];
+        [MEGASdkManager.sharedMEGASdk fastLoginWithSession:self.sessionV3 delegate:loginRequestDelegate];
         
         if ([MEGAReachabilityManager isReachable]) {
             LaunchViewController *launchVC = [[UIStoryboard storyboardWithName:@"Launch" bundle:nil] instantiateViewControllerWithIdentifier:@"LaunchViewControllerID"];
