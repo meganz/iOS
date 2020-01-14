@@ -43,7 +43,7 @@
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="Vul decoderingssleutel in";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertMessage"="Om toegang tot deze map/bestand te krijgen, heeft u zijn decryptie code nodig. Als u de sleutel niet heeft, neem contact op met de maker van de link.";
+"decryptionKeyAlertMessage"="Om toegang te krijgen tot deze map/dit bestand, hebt u de decoderingssleutel nodig. Neem contact op met de maker van de link als u de sleutel niet hebt.";
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="Decoderingssleutel";
 /* Button title to try to decrypt the link */
@@ -825,7 +825,7 @@
 /* An alert title where the user provided the incorrect Recovery Key. */
 "invalidRecoveryKey"="Ongeldige Herstelsleutel";
 /* Text of the alert after opening the recovery link to reset pass being logged. */
-"youRecoveryKeyIsGoingTo"="Uw coderingssleutel zal worden gebruikt om uw wachtwoord te resetten. Voer alstublieft uw nieuwe wachtwoord in.";
+"youRecoveryKeyIsGoingTo"="Uw herstelsleutel wordt gebruikt om uw wachtwoord opnieuw in te stellen. Voer uw nieuwe wachtwoord in.";
 /*  */
 "yourPasswordHasBeenReset"="Uw wachtwoord is succesvol gewijzigd. Log nu aub in met uw account.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
@@ -1004,9 +1004,9 @@
 /*  */
 "chooseYourAccountType"="Kies uw type account";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]Cloud Schijf is bijna vol. [/S] [A]Upgrade nu[/A] naar een PRO account en krijg [S] tot %@ TB (%@ GB)[/S] aan cloud opslag ruimte.";
+"cloudDriveIsAlmostFull"="[S]Uw Cloud Schijf is bijna vol. [/S][A]Upgrade nu [/A] naar een PRO-account en krijg [S] tot %@TB (%@GB) [/S] cloud opslagruimte.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]Uw account is vol.[/S] [A]Upgrade nu[/A] naar een PRO account en krijg tot [S] %@ TB (%@ GB)[/S] aan cloud opslag ruimte.";
+"cloudDriveIsFull"="[S]Uw Cloud Drive is vol. [/S][A]Upgrade nu [/A] naar een PRO-account en krijg [S] tot %@TB (%@GB) [/S] cloud opslagruimte.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Opslag";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
@@ -1151,6 +1151,10 @@
 "sendMessage"="Bericht Versturen";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
 "verifyCredentials"="Bevestig identiteit";
+/* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
+"verify"="Verifiëren";
+/* Button title */
+"verified"="Geverifieerd";
 /* A button title to delete the history of a chat. */
 "clearChatHistory"="Verwijder Chatgeschiedenis";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
@@ -1405,7 +1409,7 @@
 /* Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible. */
 "autoAccept"="Automatisch-Accepteren";
 /* Footer that explains the way Auto-Accept works for QR codes */
-"autoAcceptFooter"="Contacts die uw QR Code scannen worden automatisch toegevoegd tot uw contact lijst.";
+"autoAcceptFooter"="MEGA gebruikers die uw QR code scannen, worden automatisch toegevoegd aan uw lijst met contactpersonen.";
 /* Action to reset the current valid QR code of the user */
 "resetQrCode"="QR Code Resetten";
 /* Footer that explains what would happen if the user resets his/her QR code */
@@ -1946,8 +1950,6 @@
 "Links"="Links";
 /* Title for empty state view of "Links" in Shared Items. */
 "No Public Links"="Geen Publieke Links";
-/* Text to indicate that the user will leave an incoming shared folder. */
-"Leave Share"="Verlaat gedeeld";
 /* Text indicating to the user the action that will be executed on tap. */
 "Manage Share"="Delen beheer";
 /* Title of the screen that shows the users with whom the user can share a folder */
@@ -1994,3 +1996,7 @@
 "Inactive chat"="Inactief gesprek";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
 "It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="Het was niet mogelijk om de inhoud van dit bestand te verkrijgen, omdat het niet gecodeerd is in UTF-8 of ISO/IEC 8859-1.";
+/* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
+"Include location tags"="Inclusief locatie labels";
+/* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
+"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them.";

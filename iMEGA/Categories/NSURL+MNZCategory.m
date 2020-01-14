@@ -12,34 +12,20 @@
 
 - (void)mnz_presentSafariViewController {
     if (!([self.scheme.lowercaseString isEqualToString:@"http"] || [self.scheme.lowercaseString isEqualToString:@"https"])) {
-        if (@available(iOS 10.0, *)) {
-            [UIApplication.sharedApplication openURL:self options:@{} completionHandler:^(BOOL success) {
-                if (success) {
-                    MEGALogInfo(@"URL opened on other app");
-                } else {
-                    MEGALogInfo(@"URL NOT opened");
-                    [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"linkNotValid", @"Message shown when the user clicks on an link that is not valid")];
-                }
-            }];
-        } else {
-            if ([UIApplication.sharedApplication openURL:self]) {
+        [UIApplication.sharedApplication openURL:self options:@{} completionHandler:^(BOOL success) {
+            if (success) {
                 MEGALogInfo(@"URL opened on other app");
             } else {
                 MEGALogInfo(@"URL NOT opened");
                 [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"linkNotValid", @"Message shown when the user clicks on an link that is not valid")];
             }
-        }
+        }];
         return;
     }
     
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         SFSafariViewController *safariViewController = [[SFSafariViewController alloc] initWithURL:self];
-        if (@available(iOS 10.0, *)) {
-            safariViewController.preferredControlTintColor = UIColor.mnz_redMain;
-        } else {
-            safariViewController.view.tintColor = UIColor.mnz_redMain;
-        }
-        
+        safariViewController.preferredControlTintColor = UIColor.mnz_redMain;
         [UIApplication.mnz_visibleViewController presentViewController:safariViewController animated:YES completion:nil];
     }
 }
