@@ -1151,6 +1151,10 @@
 "sendMessage"="Kirim Pesan";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
 "verifyCredentials"="Verifikasi Kredensial";
+/* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
+"verify"="Verify";
+/* Button title */
+"verified"="Ter-verifikasi";
 /* A button title to delete the history of a chat. */
 "clearChatHistory"="Hapus Riwayat Chat";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
@@ -1667,7 +1671,7 @@
 /* A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days. */
 "Remove files older than"="Hapus file lebih lama dari";
 /* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
-"Days"="hari";
+"Days"="Hari";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
 "The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="Tempat Sampah dibersihkan untuk Anda secara otomatis. Periode minimum adalah 7 hari dan periode maksimum adalah 30 hari.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
@@ -1946,8 +1950,6 @@
 "Links"="Tautan";
 /* Title for empty state view of "Links" in Shared Items. */
 "No Public Links"="Tidak Ada Tautan Publik";
-/* Text to indicate that the user will leave an incoming shared folder. */
-"Leave Share"="Tinggalkan pembagian";
 /* Text indicating to the user the action that will be executed on tap. */
 "Manage Share"="Kelola berbagi";
 /* Title of the screen that shows the users with whom the user can share a folder */
@@ -1994,3 +1996,7 @@
 "Inactive chat"="Obrolan tidak aktif";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
 "It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="Tidak mungkin mendapatkan konten file ini, karena tidak dikodekan dalam UTF-8 atau ISO / IEC 8859-1.";
+/* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
+"Include location tags"="Include location tags";
+/* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
+"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them.";

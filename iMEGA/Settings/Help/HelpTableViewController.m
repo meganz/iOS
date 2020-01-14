@@ -122,7 +122,7 @@
 
 - (void)rateApp {
     NSString *appStoreLink = @"https://itunes.apple.com/us/app/mega/id706857885?mt=8&action=write-review";
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:appStoreLink]];
+    [UIApplication.sharedApplication openURL:[NSURL URLWithString:appStoreLink] options:@{} completionHandler:nil];
 }
 
 #pragma mark - MFMailComposeViewControllerDelegate
