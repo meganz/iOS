@@ -43,7 +43,7 @@
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="请输入解密金钥";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertMessage"="访问此文件夹或文件需要解密密钥。如果您没有密钥，请与链接创建者联系。";
+"decryptionKeyAlertMessage"="需要解密密钥才能访问该文件夹/文件。如果您没有密钥，需联系链接创建者。";
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="解密密钥";
 /* Button title to try to decrypt the link */
@@ -825,7 +825,7 @@
 /* An alert title where the user provided the incorrect Recovery Key. */
 "invalidRecoveryKey"="恢复密钥无效";
 /* Text of the alert after opening the recovery link to reset pass being logged. */
-"youRecoveryKeyIsGoingTo"="还原金钥将被用于重设您的密码。请输入您的新密码。";
+"youRecoveryKeyIsGoingTo"="您的恢复密钥将用于重置您的密码。请输入您的新密码。";
 /*  */
 "yourPasswordHasBeenReset"="密码已重置。请立即登入账户。";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
