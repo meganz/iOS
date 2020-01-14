@@ -807,6 +807,7 @@
 		A89629721FACE30900F02F7A /* MEGAChatCall+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = A89629711FACE30900F02F7A /* MEGAChatCall+MNZCategory.m */; };
 		A89629751FACE78B00F02F7A /* MEGACallManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A89629741FACE78B00F02F7A /* MEGACallManager.m */; };
 		A89629781FACEAF800F02F7A /* MEGAProviderDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A89629771FACEAF800F02F7A /* MEGAProviderDelegate.m */; };
+		A89D2A9D23CE2B3E00AD5488 /* SAMKeychain.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A89D2A9C23CE2B3E00AD5488 /* SAMKeychain.bundle */; };
 		A89E77441EA6041C00ADC0D2 /* MEGAAttachmentMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = A89E77431EA6041C00ADC0D2 /* MEGAAttachmentMediaItem.m */; };
 		A89E77471EA6058E00ADC0D2 /* MEGAMessageAttachmentView.m in Sources */ = {isa = PBXBuildFile; fileRef = A89E77461EA6058E00ADC0D2 /* MEGAMessageAttachmentView.m */; };
 		A89E77491EA605A900ADC0D2 /* MEGAMessageAttachmentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A89E77481EA605A900ADC0D2 /* MEGAMessageAttachmentView.xib */; };
@@ -2064,6 +2065,7 @@
 		A89629741FACE78B00F02F7A /* MEGACallManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGACallManager.m; path = Chat/MEGACallManager.m; sourceTree = "<group>"; };
 		A89629761FACEAF800F02F7A /* MEGAProviderDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MEGAProviderDelegate.h; path = Chat/MEGAProviderDelegate.h; sourceTree = "<group>"; };
 		A89629771FACEAF800F02F7A /* MEGAProviderDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGAProviderDelegate.m; path = Chat/MEGAProviderDelegate.m; sourceTree = "<group>"; };
+		A89D2A9C23CE2B3E00AD5488 /* SAMKeychain.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SAMKeychain.bundle; path = iMEGA/Vendor/SAMKeychain/Support/SAMKeychain.bundle; sourceTree = SOURCE_ROOT; };
 		A89E77421EA6041C00ADC0D2 /* MEGAAttachmentMediaItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAAttachmentMediaItem.h; sourceTree = "<group>"; };
 		A89E77431EA6041C00ADC0D2 /* MEGAAttachmentMediaItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAAttachmentMediaItem.m; sourceTree = "<group>"; };
 		A89E77451EA6058E00ADC0D2 /* MEGAMessageAttachmentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAMessageAttachmentView.h; sourceTree = "<group>"; };
@@ -3474,6 +3476,7 @@
 		41E2500E1D79E9D400499A6C /* SAMKeychain */ = {
 			isa = PBXGroup;
 			children = (
+				A89D2A9C23CE2B3E00AD5488 /* SAMKeychain.bundle */,
 				41E2500F1D79E9D400499A6C /* SAMKeychain.h */,
 				41E250101D79E9D400499A6C /* SAMKeychain.m */,
 				41E250111D79E9D400499A6C /* SAMKeychainQuery.h */,
@@ -5205,8 +5208,9 @@
 				83681579202AFBC000CA8EFC /* CustomActionViewController.xib in Resources */,
 				41EABF171DA7C5250087271C /* Chat.storyboard in Resources */,
 				5B6429E42020A9A3000E0DCB /* SF-UI-Display-Bold.otf in Resources */,
-				E8C289F51BF5F8A200F7A034 /* SF-UI-Text-Light.otf in Resources */,		
+				E8C289F51BF5F8A200F7A034 /* SF-UI-Text-Light.otf in Resources */,
 				2F913910238CC3CA004C611A /* MEGARecordView.xib in Resources */,
+				A89D2A9D23CE2B3E00AD5488 /* SAMKeychain.bundle in Resources */,
 				7795677F21C83130002B6227 /* OnboardingView.xib in Resources */,
 				5BB68CA220359B5400B03C00 /* PasswordStrengthIndicatorView.xib in Resources */,
 				41A72F1F1C22EA1600516603 /* LTHPasscodeViewController.bundle in Resources */,
