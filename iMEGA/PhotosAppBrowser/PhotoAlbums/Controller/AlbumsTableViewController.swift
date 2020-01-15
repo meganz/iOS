@@ -36,20 +36,18 @@ class AlbumsTableViewController: UITableViewController {
         }
         tableView.delegate = albumsDelegate
         
-        self.navigationController?.delegate = self
         addLeftCancelBarButtonItem()
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
     
     func showDetail(album: Album) {
-        navigationController?.pushViewController(PhotoGridViewController(album: album, completionBlock: completionBlock),
+        navigationController?.pushViewController(PhotoGridViewController(album: album,
+                                                                         completionBlock: completionBlock),
                                                  animated: true)
 
     }
-}
-
-extension AlbumsTableViewController: UINavigationControllerDelegate {
-    func navigationControllerSupportedInterfaceOrientations(_ navigationController: UINavigationController) -> UIInterfaceOrientationMask {
+    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .portrait
     }
 }
