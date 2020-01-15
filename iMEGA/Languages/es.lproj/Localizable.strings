@@ -1004,9 +1004,9 @@
 /*  */
 "chooseYourAccountType"="Elige tu tipo de cuenta";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]Tu Nube está casi llena.[/S] [A] Amplía tu cuenta[/A] y obtén [S]hasta %@ TB (%@ GB)[/S] de espacio de almacenamiento en la nube.";
+"cloudDriveIsAlmostFull"="[S]Tu Nube está casi llena.[/S] [A]Amplía tu cuenta[/A] y obtén [S]hasta %@ TB (%@ GB)[/S] de espacio de almacenamiento en la nube.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]Tu Nube está llena.[/S] [A] Amplía tu cuenta[/A] y obtén [S]hasta %@ TB (%@ GB)[/S] de espacio de almacenamiento en la nube.";
+"cloudDriveIsFull"="[S]Tu Nube está llena.[/S] [A]Amplía tu cuenta[/A] y obtén [S]hasta %@ TB (%@ GB)[/S] de espacio de almacenamiento en la nube.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Almacenamiento";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
@@ -1151,6 +1151,10 @@
 "sendMessage"="Enviar mensaje";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
 "verifyCredentials"="Confirmar credenciales";
+/* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
+"verify"="Verificar";
+/* Button title */
+"verified"="Verificado";
 /* A button title to delete the history of a chat. */
 "clearChatHistory"="Limpiar historial del chat";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
@@ -1992,3 +1996,7 @@
 "Inactive chat"="Chat inactivo";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
 "It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="No se puede obtener el contenido de este archivo, ya que no está codificado ni en UTF-8 ni en ISO/IEC 8859-1.";
+/* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
+"Include location tags"="Incluir etiquetas de ubicación";
+/* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
+"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them.";
