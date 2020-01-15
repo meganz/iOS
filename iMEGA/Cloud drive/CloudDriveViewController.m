@@ -53,6 +53,7 @@
 #import "SharedItemsViewController.h"
 #import "UpgradeTableViewController.h"
 #import "UIViewController+MNZCategory.h"
+#import "MEGA-Swift.h"
 
 static const NSTimeInterval kSearchTimeDelay = .5;
 
@@ -856,6 +857,28 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     [self reloadData];
 }
 
+- (void)loadPhotoAlbumBrowser {
+    [DevicePermissionsHelper photosPermissionWithCompletionHandler:^(BOOL granted) {
+        if (granted) {
+            AlbumsTableViewController *albumTableViewController = [AlbumsTableViewController.alloc initWithCompletionBlock:^(NSArray<PHAsset *> * _Nonnull assets) {
+                if (assets.count > 0) {
+                    for (PHAsset *asset in assets) {
+                        [[MEGAStore shareInstance] insertUploadTransferWithLocalIdentifier:asset.localIdentifier
+                                                                          parentNodeHandle:self.parentNode.handle];
+                    }
+                    
+                    [Helper startPendingUploadTransferIfNeeded];
+                }
+            }];
+            MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:albumTableViewController];
+            [self presentViewController:navigationController animated:YES completion:nil];
+
+        } else {
+            [DevicePermissionsHelper alertPhotosPermission];
+        }
+    }];
+}
+
 - (void)showImagePickerForSourceType:(UIImagePickerControllerSourceType)sourceType {
     if (sourceType == UIImagePickerControllerSourceTypeCamera) {
         MEGAImagePickerController *imagePickerController = [[MEGAImagePickerController alloc] initToUploadWithParentNode:self.parentNode sourceType:sourceType];
@@ -1055,7 +1078,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     [uploadAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
     
     UIAlertAction *fromPhotosAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"choosePhotoVideo", @"Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [self showImagePickerForSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+        [self loadPhotoAlbumBrowser];
     }];
     [fromPhotosAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
     [uploadAlertController addAction:fromPhotosAlertAction];
