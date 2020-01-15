@@ -10,7 +10,7 @@ class PhotoCarouselDataSource: PhotoGridViewDataSource {
         let asset = album.asset(atIndex: indexPath.item)
         cell.asset = asset
         cell.selectedIndex = selectedAssets.firstIndex(of: asset)
-        cell.durationString = (asset.mediaType == .video) ? asset.duration.displayString : nil
+        cell.durationString = (asset.mediaType == .video) ? asset.duration.timeDisplayString : nil
         return cell
     }
     

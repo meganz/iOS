@@ -1,15 +1,6 @@
 
-import Foundation
-
-extension String {
-    func localized(comment: String = "") -> String {
-        return NSLocalizedString(self, comment: comment)
-    }
-}
-
-
 extension TimeInterval {
-    var displayString: String {
+    var timeDisplayString: String {
         let timeInt = Int(self)
         let seconds = timeInt % 60
         let minutes = (timeInt / 60) % 60
