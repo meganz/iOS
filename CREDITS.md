@@ -14,17 +14,6 @@ https://github.com/tagyro/AMLocalizedString/blob/master/LICENSE
 
 --------------------------------------------------------------------
 
-#### CTAssetsPickerController
-https://github.com/chiunam/CTAssetsPickerController
-
-Copyright (c) 2015 Clement CN Tsang
-###### License:
-The MIT License (MIT)
-
-https://github.com/chiunam/CTAssetsPickerController/blob/master/LICENSE
-
---------------------------------------------------------------------
-
 #### DateTools
 https://github.com/MatthewYork/DateTools
 

@@ -38,7 +38,6 @@
 #import "CopyrightWarningViewController.h"
 #import "CustomActionViewController.h"
 #import "CustomModalAlertViewController.h"
-#import "MEGAAssetsPickerController.h"
 #import "MEGAImagePickerController.h"
 #import "MEGANavigationController.h"
 #import "MEGAPhotoBrowserViewController.h"
@@ -54,6 +53,8 @@
 #import "UpgradeTableViewController.h"
 #import "UIViewController+MNZCategory.h"
 #import "MEGA-Swift.h"
+
+@import Photos;
 
 static const NSTimeInterval kSearchTimeDelay = .5;
 
@@ -858,25 +859,18 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 }
 
 - (void)loadPhotoAlbumBrowser {
-    [DevicePermissionsHelper photosPermissionWithCompletionHandler:^(BOOL granted) {
-        if (granted) {
-            AlbumsTableViewController *albumTableViewController = [AlbumsTableViewController.alloc initWithCompletionBlock:^(NSArray<PHAsset *> * _Nonnull assets) {
-                if (assets.count > 0) {
-                    for (PHAsset *asset in assets) {
-                        [[MEGAStore shareInstance] insertUploadTransferWithLocalIdentifier:asset.localIdentifier
-                                                                          parentNodeHandle:self.parentNode.handle];
-                    }
-                    
-                    [Helper startPendingUploadTransferIfNeeded];
-                }
-            }];
-            MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:albumTableViewController];
-            [self presentViewController:navigationController animated:YES completion:nil];
-
-        } else {
-            [DevicePermissionsHelper alertPhotosPermission];
+    AlbumsTableViewController *albumTableViewController = [AlbumsTableViewController.alloc initWithCompletionBlock:^(NSArray<PHAsset *> * _Nonnull assets) {
+        if (assets.count > 0) {
+            for (PHAsset *asset in assets) {
+                [[MEGAStore shareInstance] insertUploadTransferWithLocalIdentifier:asset.localIdentifier
+                                                                  parentNodeHandle:self.parentNode.handle];
+            }
+            
+            [Helper startPendingUploadTransferIfNeeded];
         }
     }];
+    MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:albumTableViewController];
+    [self presentViewController:navigationController animated:YES completion:nil];
 }
 
 - (void)showImagePickerForSourceType:(UIImagePickerControllerSourceType)sourceType {
@@ -886,8 +880,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     } else {
         [DevicePermissionsHelper photosPermissionWithCompletionHandler:^(BOOL granted) {
             if (granted) {
-                MEGAAssetsPickerController *pickerViewController = [[MEGAAssetsPickerController alloc] initToUploadToCloudDriveWithParentNode:self.parentNode];
-                [self presentViewController:pickerViewController animated:YES completion:nil];
+                [self loadPhotoAlbumBrowser];
             } else {
                 [DevicePermissionsHelper alertPhotosPermission];
             }
@@ -1078,7 +1071,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     [uploadAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
     
     UIAlertAction *fromPhotosAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"choosePhotoVideo", @"Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [self loadPhotoAlbumBrowser];
+        [self showImagePickerForSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
     }];
     [fromPhotosAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
     [uploadAlertController addAction:fromPhotosAlertAction];
