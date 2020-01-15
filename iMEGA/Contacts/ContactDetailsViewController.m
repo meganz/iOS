@@ -220,6 +220,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
     cell.nameLabel.font = [UIFont systemFontOfSize:15.0];
     cell.nameLabel.textColor = UIColor.mnz_black333333;
     cell.permissionsLabel.text = [MEGASdkManager.sharedMEGASdk areCredentialsVerifiedOfUser:self.user] ? AMLocalizedString(@"verified", @"Button title") : @"";
+    return cell;
 }
 
 - (ContactTableViewCell *)cellForAddAndRemoveContactWithIndexPath:(NSIndexPath *)indexPath {
