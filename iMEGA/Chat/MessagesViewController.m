@@ -211,11 +211,9 @@ static NSMutableSet<NSString *> *tapForInfoSet;
                                                  name:UIApplicationDidBecomeActiveNotification
                                                object:nil];
     
-    if (@available(iOS 10.0, *)) {
-        [[UNUserNotificationCenter currentNotificationCenter] removeDeliveredNotificationsWithIdentifiers:@[[MEGASdk base64HandleForUserHandle:self.chatRoom.chatId]]];
-        [[UNUserNotificationCenter currentNotificationCenter] removePendingNotificationRequestsWithIdentifiers:@[[MEGASdk base64HandleForUserHandle:self.chatRoom.chatId]]];
-        self.collectionView.prefetchingEnabled = NO;
-    }
+    [[UNUserNotificationCenter currentNotificationCenter] removeDeliveredNotificationsWithIdentifiers:@[[MEGASdk base64HandleForUserHandle:self.chatRoom.chatId]]];
+    [[UNUserNotificationCenter currentNotificationCenter] removePendingNotificationRequestsWithIdentifiers:@[[MEGASdk base64HandleForUserHandle:self.chatRoom.chatId]]];
+    self.collectionView.prefetchingEnabled = NO;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
     
@@ -760,10 +758,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         groupCallVC.videoCall = videoCall;
         groupCallVC.chatRoom = self.chatRoom;
         groupCallVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-
-        if (@available(iOS 10.0, *)) {
-            groupCallVC.megaCallManager = [(AppDelegate *)UIApplication.sharedApplication.delegate megaCallManager];
-        }
+        groupCallVC.megaCallManager = [(AppDelegate *)UIApplication.sharedApplication.delegate megaCallManager];
         [self presentViewController:groupCallVC animated:YES completion:nil];
     } else {
         CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
@@ -771,10 +766,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         callVC.videoCall = videoCall;
         callVC.callType = active ? CallTypeActive : CallTypeOutgoing;
         callVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-        
-        if (@available(iOS 10.0, *)) {
-            callVC.megaCallManager = [(AppDelegate *)UIApplication.sharedApplication.delegate megaCallManager];
-        }
+        callVC.megaCallManager = [(AppDelegate *)UIApplication.sharedApplication.delegate megaCallManager];
         [self presentViewController:callVC animated:YES completion:nil];
     }
 }

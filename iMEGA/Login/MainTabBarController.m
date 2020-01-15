@@ -36,11 +36,8 @@
     for (NSInteger i = 0; i < [defaultViewControllersMutableArray count]; i++) {
         UITabBarItem *tabBarItem = [[defaultViewControllersMutableArray objectAtIndex:i] tabBarItem];
         tabBarItem.title = nil;
-        
-        if (@available(iOS 10.0, *)) {
-            tabBarItem.badgeColor = UIColor.clearColor;
-            [tabBarItem setBadgeTextAttributes:@{ NSForegroundColorAttributeName: UIColor.mnz_redMain } forState:UIControlStateNormal];
-        }
+        tabBarItem.badgeColor = UIColor.clearColor;
+        [tabBarItem setBadgeTextAttributes:@{ NSForegroundColorAttributeName: UIColor.mnz_redMain } forState:UIControlStateNormal];
         [self reloadInsetsForTabBarItem:tabBarItem];
         switch (tabBarItem.tag) {
             case CLOUD:
@@ -86,7 +83,6 @@
     
     [self setBadgeValueForChats];
     [self setBadgeValueForMyAccount];
-    
     [self configurePhoneImageBadge];
 }
 
@@ -206,14 +202,8 @@
 - (void)setBadgeValueForMyAccount {
     int incomingContacts = [[MEGASdkManager sharedMEGASdk] incomingContactRequests].size.intValue;
     NSUInteger unseenUserAlerts = [MEGASdkManager sharedMEGASdk].userAlertList.mnz_relevantUnseenCount;
-    
-    NSString *badgeValue;
     NSUInteger total = incomingContacts + unseenUserAlerts;
-    if (@available(iOS 10.0, *)) {
-        badgeValue = total ? @"⦁" : nil;
-    } else {
-        badgeValue = total ? [NSString stringWithFormat:@"%tu", total] : nil;
-    }
+    NSString *badgeValue = total ? @"⦁" : nil;
     [self setBadgeValue:badgeValue tabPosition:MYACCOUNT];
 }
 
@@ -223,17 +213,13 @@
     
     NSString *badgeValue;
     self.phoneBadgeImageView.hidden = YES;
-    if (@available(iOS 10.0, *)) {
-        if (MEGAReachabilityManager.isReachable && numCalls) {
-            MEGAHandleList *chatRoomIDsWithCallInProgress = [MEGASdkManager.sharedMEGAChatSdk chatCallsWithState:MEGAChatCallStatusInProgress];
-            self.phoneBadgeImageView.hidden = (chatRoomIDsWithCallInProgress.size > 0);
-            
-            badgeValue = self.phoneBadgeImageView.hidden && unreadChats ? @"⦁" : nil;
-        } else {
-            badgeValue = unreadChats ? @"⦁" : nil;
-        }
+    if (MEGAReachabilityManager.isReachable && numCalls) {
+        MEGAHandleList *chatRoomIDsWithCallInProgress = [MEGASdkManager.sharedMEGAChatSdk chatCallsWithState:MEGAChatCallStatusInProgress];
+        self.phoneBadgeImageView.hidden = (chatRoomIDsWithCallInProgress.size > 0);
+        
+        badgeValue = self.phoneBadgeImageView.hidden && unreadChats ? @"⦁" : nil;
     } else {
-        badgeValue = unreadChats ? [NSString stringWithFormat:@"%td", unreadChats] : nil;
+        badgeValue = unreadChats ? @"⦁" : nil;
     }
     [self setBadgeValue:badgeValue tabPosition:CHAT];
 }
@@ -243,7 +229,6 @@
         [[self.viewControllers objectAtIndex:tabPosition] tabBarItem].badgeValue = badgeValue;
     }
 }
-
 - (void)internetConnectionChanged {
     [self setBadgeValueForChats];
 }
