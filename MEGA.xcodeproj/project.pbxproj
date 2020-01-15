@@ -2629,7 +2629,6 @@
 				137361921A6664C300B740E8 /* AppDelegate.m */,
 				41840EE81E811CD600D8308D /* MEGAApplication.h */,
 				41840EE91E811CD600D8308D /* MEGAApplication.m */,
-				BFAB110C23CEA5C300BCE72D /* PhotoAlbumBrowser */,
 				E8C289F91BF65B2200F7A034 /* Launch */,
 				4147C2CE1B4EE8A400A37044 /* CoreData */,
 				E84CDAFE1A7292AA003F4C77 /* Links */,
@@ -2639,6 +2638,7 @@
 				4152267E1A692ECC00EC7BB6 /* Offline */,
 				E8D5BF631BF359A000955550 /* Shared Items */,
 				77D9A5692023538600B48470 /* Photo browser */,
+				BFAB110C23CEA5C300BCE72D /* PhotosAppBrowser */,
 				415226721A692ECC00EC7BB6 /* Contacts */,
 				415226821A692ECC00EC7BB6 /* Settings */,
 				E8B5191F1AC9C43B00BB7324 /* Transfers */,
@@ -4860,7 +4860,7 @@
 			path = AttributeOperations;
 			sourceTree = "<group>";
 		};
-		BFAB110C23CEA5C300BCE72D /* PhotoAlbumBrowser */ = {
+		BFAB110C23CEA5C300BCE72D /* PhotosAppBrowser */ = {
 			isa = PBXGroup;
 			children = (
 				BFAB112F23CEA5C300BCE72D /* PhotoAlbums */,
@@ -4869,7 +4869,7 @@
 				BFAB111823CEA5C300BCE72D /* Miscellaneous */,
 				BFAB112C23CEA5C300BCE72D /* DataModel */,
 			);
-			path = PhotoAlbumBrowser;
+			path = PhotosAppBrowser;
 			sourceTree = "<group>";
 		};
 		BFAB110D23CEA5C300BCE72D /* PhotoGridView */ = {

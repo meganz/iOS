@@ -135,6 +135,10 @@ class PhotoGridViewController: UIViewController {
         completionBlock(selectedAssets)
         dismiss(animated: true, completion: nil)
     }
+    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .portrait
+    }
 }
 
 extension PhotoGridViewController: PhotoCarouselViewControllerDelegate {

@@ -162,6 +162,10 @@ class PhotoCarouselViewController: UIViewController {
         titleLabel.sizeToFit()
         navigationItem.titleView = titleLabel
     }
+    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .portrait
+    }
 }
 
 fileprivate extension PHAsset {
