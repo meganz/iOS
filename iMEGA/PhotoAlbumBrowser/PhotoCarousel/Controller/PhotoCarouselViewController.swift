@@ -27,6 +27,15 @@ class PhotoCarouselViewController: UIViewController {
         return selectedAssets.count > 0 ? "Send (\(selectedAssets.count))" : "Send"
     }
     
+    private lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.backgroundColor = .clear
+        label.numberOfLines = 2
+        label.textAlignment = .center
+        label.textColor = .white
+        return label
+    }()
+    
     weak var delegate: PhotoCarouselViewControllerDelegate?
     
     @IBOutlet weak var collectionView: UICollectionView!
@@ -79,6 +88,8 @@ class PhotoCarouselViewController: UIViewController {
         
         addToolbar()
         addLeftCancelBarButtonItem()
+        
+        updateTitleView(withAssetIndex: selectedPhotoIndexPath.item)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -87,20 +98,6 @@ class PhotoCarouselViewController: UIViewController {
         collectionView.layoutIfNeeded()
         collectionView.scrollToItem(at: selectedPhotoIndexPath, at: .centeredHorizontally, animated: false)
         updateSelectDeselectButtonTitle(withSelectedAsset: album.asset(atIndex: selectedPhotoIndexPath.item))
-    }
-    
-    private func addToolbar() {
-        let sendBarButtonItem = UIBarButtonItem(title: senderBarButtonText, style: .plain, target: self, action: #selector(sendBarButtonTapped))
-        let selectDeselectBarButtonItem = UIBarButtonItem(title: "Select", style: .plain, target: self, action: #selector(selectBarButtonTapped))
-        
-        sendBarButtonItem.isEnabled = selectedAssets.count > 0
-        let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
-        
-        toolbarItems = [selectDeselectBarButtonItem, spacer, sendBarButtonItem]
-        navigationController?.setToolbarHidden(false, animated: false)
-        
-        self.sendBarButtonItem = sendBarButtonItem
-        self.selectDeselectBarButtonItem = selectDeselectBarButtonItem
     }
     
     @objc func sendBarButtonTapped() {
@@ -128,6 +125,7 @@ class PhotoCarouselViewController: UIViewController {
     
     func didViewPage(atIndex index: Int) {
         updateSelectDeselectButtonTitle(withSelectedAsset: album.asset(atIndex: index))
+        updateTitleView(withAssetIndex: index)
     }
     
     func didSelectIndex(index: Int) {
@@ -140,6 +138,73 @@ class PhotoCarouselViewController: UIViewController {
             flowLayout.shouldLayoutEverything = true
             flowLayout.invalidateLayout()
         }
+    }
+    
+    // MARK:- Private methods.
+    
+    private func addToolbar() {
+        let sendBarButtonItem = UIBarButtonItem(title: senderBarButtonText, style: .plain, target: self, action: #selector(sendBarButtonTapped))
+        let selectDeselectBarButtonItem = UIBarButtonItem(title: "Select", style: .plain, target: self, action: #selector(selectBarButtonTapped))
+        
+        sendBarButtonItem.isEnabled = selectedAssets.count > 0
+        let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
+        
+        toolbarItems = [selectDeselectBarButtonItem, spacer, sendBarButtonItem]
+        navigationController?.setToolbarHidden(false, animated: false)
+        
+        self.sendBarButtonItem = sendBarButtonItem
+        self.selectDeselectBarButtonItem = selectDeselectBarButtonItem
+    }
+    
+    private func updateTitleView(withAssetIndex index: Int) {
+        let asset = album.asset(atIndex: index)
+        titleLabel.attributedText = asset.attributedTitleString
+        titleLabel.sizeToFit()
+        navigationItem.titleView = titleLabel
+    }
+}
+
+fileprivate extension PHAsset {
+    var attributedTitleString: NSAttributedString? {
+        guard let assetCreationDate = creationDate else {
+            return nil
+        }
+        
+        let attributedDateString = NSMutableAttributedString(
+            string: assetCreationDate.dateString + "\n",
+            attributes: [NSAttributedString.Key.font:
+                UIFont.systemFont(ofSize: 16.0, weight: .semibold)]
+        )
+        
+        attributedDateString.append(
+            NSAttributedString(string: assetCreationDate.timeString,
+                               attributes: [NSAttributedString.Key.font:
+                                UIFont.systemFont(ofSize: 13.0, weight: .regular)])
+        )
+        
+        return attributedDateString
+    }
+}
+
+fileprivate extension Date {
+    var dateString: String {
+        let format = isThisYear ? "MMMM dd" : "MMMM dd, yyyy"
+        return string(dateFormat: format)
+    }
+    
+    var timeString: String {
+        let format = "HH:mm"
+        return string(dateFormat: format)
+    }
+    
+    private var isThisYear: Bool {
+        return Calendar.current.isDate(self, equalTo: Date(), toGranularity: .year)
+    }
+    
+    private func string(dateFormat: String) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = dateFormat
+        return dateFormatter.string(from: self)
     }
 }
 
