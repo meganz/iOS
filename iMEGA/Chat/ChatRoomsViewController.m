@@ -734,10 +734,7 @@
         groupCallVC.videoCall = NO;
         groupCallVC.chatRoom = self.chatRoomOnGoingCall;
         groupCallVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-        
-        if (@available(iOS 10.0, *)) {
-            groupCallVC.megaCallManager = [(AppDelegate *)UIApplication.sharedApplication.delegate megaCallManager];
-        }
+        groupCallVC.megaCallManager = [(AppDelegate *)UIApplication.sharedApplication.delegate megaCallManager];
         [self presentViewController:groupCallVC animated:YES completion:nil];
     } else {
         CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
@@ -745,10 +742,7 @@
         callVC.videoCall = NO;
         callVC.callType = CallTypeActive;
         callVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-        
-        if (@available(iOS 10.0, *)) {
-            callVC.megaCallManager = [(AppDelegate *)UIApplication.sharedApplication.delegate megaCallManager];
-        }
+        callVC.megaCallManager = [(AppDelegate *)UIApplication.sharedApplication.delegate megaCallManager];
         [self presentViewController:callVC animated:YES completion:nil];
     }
 }

@@ -560,10 +560,6 @@
 "addContactButton"="Hinzufügen";
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="Ihre eigene E-Mail-Adresse muss nicht hinzugefügt werden";
-/* Add contacts and share dialog error message when user try to add already existing email address. */
-"alreadyHaveAContactWithThatEmailAddress"="Sie stehen bereits mit dieser E-Mail-Adresse in Kontakt";
-/* Add contacts and share dialog error message when user try to add already existing email address. */
-"invitationAlreadySentToContactBefore"="The invitation to contact %@ has been sent before and can be consulted in the Sent Requests tab.";
 /* Success message shown when a contact has been invited */
 "theUserHasBeenInvited"="Der Benutzer [X] wurden eingeladen und wird in Ihrer Kontaktliste erscheinen, sobald er die Einladung annimmt.";
 /* Success message shown when some contacts have been invited */
@@ -989,8 +985,8 @@
 "availableLabel"="Verfügbar";
 /* title of the My Account screen */
 "accountType"="Account Typ:";
-/* Text relative to the MEGA account level. UPPER CASE */
-"Free"="GRATIS";
+/* Label to indicate that the current user has a Free account. */
+"Free"="Kostenlos";
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="gültig bis %@";
 /* Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible). */
@@ -1008,9 +1004,9 @@
 /*  */
 "chooseYourAccountType"="Wählen Sie Ihre Pro-Stufe";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]Your Cloud Drive is almost full.[/S] [A]Upgrade now[/A] to a PRO account and get [S]up to %@ TB (%@ GB)[/S] of cloud storage space.";
+"cloudDriveIsAlmostFull"="[S]Ihr Cloud-Speicher ist fast voll.[/S] Mit [A]MEGA PRO[/A] erhalten Sie [S]bis zu %@ TB (%@ GB)[/S] Speicherplatz in der Cloud.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]Your Cloud Drive is full.[/S] [A]Upgrade now[/A] to a PRO account and get [S]up to %@ TB (%@ GB)[/S] of cloud storage space.";
+"cloudDriveIsFull"="[S]Ihr Cloud-Speicher ist voll.[/S] Mit [A]MEGA PRO[/A] erhalten Sie [S]bis zu %@ TB (%@ GB)[/S] Speicherplatz in der Cloud.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Speicher";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
@@ -1155,6 +1151,10 @@
 "sendMessage"="Nachricht schicken";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
 "verifyCredentials"="Identität prüfen";
+/* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
+"verify"="Überprüfen";
+/* Button title */
+"verified"="Bestätigt";
 /* A button title to delete the history of a chat. */
 "clearChatHistory"="Chatverlauf löschen";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
@@ -1671,7 +1671,7 @@
 /* A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days. */
 "Remove files older than"="Automatische Löschung nach";
 /* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
-"Days"="Tag(en)";
+"Days"="Days";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
 "The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="Die Leerung des Papierkorbs erfolgt automatisch. Die Aufbewahrungsfrist beträgt zwischen sieben und 30 Tagen.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
@@ -1747,7 +1747,7 @@
 /* The header of a notification related to payments */
 "Payment info"="Informationen zur Zahlung";
 /* A title for a notification saying the user’s pricing plan will expire soon. */
-"PRO membership plan expiring soon"="Ihre PRO-Mitgliedschaft läuft bald ab";
+"PRO membership plan expiring soon"="Ihr PRO-Status läuft bald ab";
 /* The header of a notification indicating that a file or folder has been taken down due to infringement or other reason. */
 "Takedown notice"="Löschung durch Dritte";
 /* The header of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. */
@@ -1950,8 +1950,6 @@
 "Links"="Links";
 /* Title for empty state view of "Links" in Shared Items. */
 "No Public Links"="Keine exportierten Links";
-/* Text to indicate that the user will leave an incoming shared folder. */
-"Leave Share"="Freigegebenen Ordner verlassen";
 /* Text indicating to the user the action that will be executed on tap. */
 "Manage Share"="Ordnerfreigabe bearbeiten";
 /* Title of the screen that shows the users with whom the user can share a folder */
@@ -1998,3 +1996,7 @@
 "Inactive chat"="Inaktiver Chat";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
 "It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="Diese Datei ist weder UTF-8, noch ISO/IEC 8859-1-kodiert.";
+/* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
+"Include location tags"="Ortsinformationen";
+/* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
+"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them.";

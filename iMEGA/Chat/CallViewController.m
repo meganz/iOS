@@ -29,8 +29,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *muteUnmuteMicrophone;
 @property (weak, nonatomic) IBOutlet UIButton *enableDisableSpeaker;
 
-@property (weak, nonatomic) IBOutlet UIView *outgoingCallView;
-@property (weak, nonatomic) IBOutlet UIView *incomingCallView;
+@property (weak, nonatomic) IBOutlet UIView *callControlsView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *statusCallLabel;
 
@@ -72,35 +71,23 @@
     self.localVideoImageView.userInteractionEnabled = self.call.hasVideoInitialCall;
     
     if (self.callType == CallTypeIncoming) {
-        self.outgoingCallView.hidden = YES;
-        if (@available(iOS 10.0, *)) {
-            [self acceptCall:nil];
-        } else {
-            self.call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
-            self.statusCallLabel.text = AMLocalizedString(@"Incoming call", nil);
-        }
+        [self answerChatCall];
     } else if (self.callType == CallTypeOutgoing) {
         MEGAChatStartCallRequestDelegate *startCallRequestDelegate = [[MEGAChatStartCallRequestDelegate alloc] initWithCompletion:^(MEGAChatError *error) {
             if (error.type) {
                 [self dismissViewControllerAnimated:YES completion:nil];
             } else {
                 self.call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
-                self.incomingCallView.hidden = YES;
 
                 self.statusCallLabel.text = AMLocalizedString(@"calling...", @"Label shown when you call someone (outgoing call), before the call starts.");
-                
-                if (@available(iOS 10.0, *)) {
-                    [self.megaCallManager addCall:self.call];
-                    [self.megaCallManager startCall:self.call];
-                }
+                [self.megaCallManager addCall:self.call];
+                [self.megaCallManager startCall:self.call];
             }
         }];
         
         [[MEGASdkManager sharedMEGAChatSdk] startChatCall:self.chatRoom.chatId enableVideo:self.videoCall delegate:startCallRequestDelegate];
     } else {
         self.call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
-        self.incomingCallView.hidden = YES;
-        self.outgoingCallView.hidden = NO;
         
         if (self.call.status == MEGAChatCallStatusInProgress) {
             NSTimeInterval interval = ([NSDate date].timeIntervalSince1970 - [NSDate date].timeIntervalSince1970 + self.call.duration);
@@ -116,16 +103,6 @@
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didWirelessRoutesAvailableChange:) name:MPVolumeViewWirelessRoutesAvailableDidChangeNotification object:nil];
     
     self.nameLabel.text = [self.chatRoom peerFullnameAtIndex:0];
-    
-    if (@available(iOS 10.0, *)) {} else {
-        NSString *soundFilePath = [[NSBundle mainBundle] pathForResource:@"incoming_voice_video_call" ofType:@"mp3"];
-        NSURL *soundFileURL = [NSURL fileURLWithPath:soundFilePath];
-        
-        _player = [[AVAudioPlayer alloc] initWithContentsOfURL:soundFileURL error:nil];
-        self.player.numberOfLoops = -1; //Infinite
-        
-        [self.player play];
-    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -236,6 +213,15 @@
 
 #pragma mark - Private
 
+- (void)answerChatCall {
+    MEGAChatAnswerCallRequestDelegate *answerCallRequestDelegate = [MEGAChatAnswerCallRequestDelegate.alloc initWithCompletion:^(MEGAChatError *error) {
+        if (error.type != MEGAChatErrorTypeOk) {
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }
+    }];
+    [MEGASdkManager.sharedMEGAChatSdk answerChatCall:self.chatRoom.chatId enableVideo:self.videoCall delegate:answerCallRequestDelegate];
+}
+
 - (void)didSessionRouteChange:(NSNotification *)notification {
     dispatch_async(dispatch_get_main_queue(), ^{
         NSDictionary *interuptionDict = notification.userInfo;
@@ -286,8 +272,8 @@
 
 - (void)showOrHideControls {
     [UIView animateWithDuration:0.3f animations:^{
-        if (self.outgoingCallView.alpha != 1.0f) {
-            [self.outgoingCallView setAlpha:1.0f];
+        if (self.callControlsView.alpha != 1.0f) {
+            [self.callControlsView setAlpha:1.0f];
             [self.nameLabel setAlpha:1.0f];
             self.statusBarShouldBeHidden = NO;
             [UIView animateWithDuration:0.25 animations:^{
@@ -296,7 +282,7 @@
             self.localVideoImageView.visibleControls = YES;
             self.minimizeButton.hidden = NO;
         } else {
-            [self.outgoingCallView setAlpha:0.0f];
+            [self.callControlsView setAlpha:0.0f];
             self.statusBarShouldBeHidden = YES;
             [UIView animateWithDuration:0.25 animations:^{
                 [self setNeedsStatusBarAppearanceUpdate];
@@ -366,36 +352,8 @@
 
 #pragma mark - IBActions
 
-- (IBAction)acceptCallWithVideo:(UIButton *)sender {
-    MEGAChatAnswerCallRequestDelegate *answerCallRequestDelegate = [[MEGAChatAnswerCallRequestDelegate alloc] initWithCompletion:^(MEGAChatError *error) {
-        if (error.type == MEGAChatErrorTypeOk) {
-            [[MEGASdkManager sharedMEGAChatSdk] addChatLocalVideo:self.chatRoom.chatId delegate:self.localVideoImageView];
-            self.enableDisableVideoButton.selected = YES;
-        } else {
-            [self dismissViewControllerAnimated:YES completion:nil];
-        }
-    }];
-    [[MEGASdkManager sharedMEGAChatSdk] answerChatCall:self.chatRoom.chatId enableVideo:YES delegate:answerCallRequestDelegate];
-}
-
-- (IBAction)acceptCall:(UIButton *)sender {
-    MEGAChatAnswerCallRequestDelegate *answerCallRequestDelegate = [[MEGAChatAnswerCallRequestDelegate alloc] initWithCompletion:^(MEGAChatError *error) {
-        if (error.type != MEGAChatErrorTypeOk) {
-            [self dismissViewControllerAnimated:YES completion:nil];
-        } else {
-            self.incomingCallView.hidden = YES;
-            self.outgoingCallView.hidden = NO;
-        }
-    }];
-    [[MEGASdkManager sharedMEGAChatSdk] answerChatCall:self.chatRoom.chatId enableVideo:self.videoCall delegate:answerCallRequestDelegate];
-}
-
 - (IBAction)hangCall:(UIButton *)sender {
-    if (@available(iOS 10.0, *)) {
-        [self.megaCallManager endCall:self.call];
-    } else {
-        [[MEGASdkManager sharedMEGAChatSdk] hangChatCall:self.chatRoom.chatId];
-    }
+    [self.megaCallManager endCall:self.call];
 }
 
 - (IBAction)muteOrUnmuteCall:(UIButton *)sender {
@@ -538,8 +496,6 @@
             break;
             
         case MEGAChatCallStatusInProgress: {
-            self.outgoingCallView.hidden = NO;
-            self.incomingCallView.hidden = YES;
             MEGAChatSession *remoteSession = [self.call sessionForPeer:self.call.peerSessionStatusChange clientId:self.call.clientSessionStatusChange];
             
             if ([call hasChangedForType:MEGAChatCallChangeTypeRemoteAVFlags]) {
@@ -547,7 +503,7 @@
                 self.localVideoImageView.userInteractionEnabled = remoteSession.hasVideo;
                 if (remoteSession.hasVideo) {
                     if (self.remoteVideoImageView.hidden) {
-                        [[MEGASdkManager sharedMEGAChatSdk] addChatRemoteVideo:self.chatRoom.chatId peerId:[self.call.sessionsPeerId megaHandleAtIndex:0] cliendId:[self.call.sessionsClientId megaHandleAtIndex:0] delegate:self.remoteVideoImageView];
+                        [MEGASdkManager.sharedMEGAChatSdk addChatRemoteVideo:self.chatRoom.chatId peerId:[self.call.sessionsPeerId megaHandleAtIndex:0] cliendId:[self.call.sessionsClientId megaHandleAtIndex:0] delegate:self.remoteVideoImageView];
                         self.remoteVideoImageView.hidden = NO;
                         self.remoteAvatarImageView.hidden = YES;
                     }
@@ -567,7 +523,8 @@
             
             if ([call hasChangedForType:MEGAChatCallChangeTypeSessionStatus]) {
                 if (remoteSession.hasVideo && remoteSession.status == MEGAChatSessionStatusDestroyed) {
-                    [[MEGASdkManager sharedMEGAChatSdk] removeChatRemoteVideo:self.chatRoom.chatId peerId:[self.call.sessionsPeerId megaHandleAtIndex:0] cliendId:[self.call.sessionsClientId megaHandleAtIndex:0] delegate:self.remoteVideoImageView];
+                    [MEGASdkManager.sharedMEGAChatSdk removeChatRemoteVideo:self.chatRoom.chatId peerId:[self.call.sessionsPeerId megaHandleAtIndex:0] cliendId:[self.call.sessionsClientId megaHandleAtIndex:0] delegate:self.remoteVideoImageView];
+                    self.remoteVideoImageView.hidden = YES;                    
                 }
             }
             
@@ -588,8 +545,6 @@
             }
             
             [self deleteActiveCallFlags];
-            
-            self.incomingCallView.userInteractionEnabled = NO;
             
             [self.timer invalidate];
             

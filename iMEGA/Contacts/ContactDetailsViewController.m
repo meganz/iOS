@@ -87,8 +87,6 @@
     self.callLabel.text = AMLocalizedString(@"Call", @"Title of the button in the contact info screen to start an audio call").lowercaseString;
     self.videoLabel.text = AMLocalizedString(@"Video", @"Title of the button in the contact info screen to start a video call").lowercaseString;
     
-    //TODO: Show the blue check if the Contact is verified
-    
     self.nameLabel.text = self.userName;
     self.nameLabel.layer.shadowOffset = CGSizeMake(0, 1);
     self.nameLabel.layer.shadowColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.2].CGColor;
@@ -141,6 +139,8 @@
     [self updateCallButtonsState];
     
     [self configureGestures];
+    
+    [self.tableView reloadData];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -247,6 +247,8 @@
 
 - (void)pushVerifyCredentialsViewController {
     VerifyCredentialsViewController *verifyCredentialsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"VerifyCredentialsViewControllerID"];
+    verifyCredentialsVC.user = self.user;
+    verifyCredentialsVC.userName = self.userName;
     [self.navigationController pushViewController:verifyCredentialsVC animated:YES];
 }
 
@@ -301,7 +303,7 @@
 }
 
 - (BOOL)isSharedFolderSection:(NSInteger)section {
-    return (section == 1 && self.contactDetailsMode == ContactDetailsModeDefault) || (section == 2 && self.contactDetailsMode == ContactDetailsModeFromChat);
+    return (section == 2 && self.contactDetailsMode == ContactDetailsModeDefault) || (section == 2 && self.contactDetailsMode == ContactDetailsModeFromChat);
 }
 
 - (void)openSharedFolderAtIndexPath:(NSIndexPath *)indexPath {
@@ -337,10 +339,7 @@
     callVC.videoCall = videoCall;
     callVC.callType = active ? CallTypeActive : CallTypeOutgoing;
     callVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-    
-    if (@available(iOS 10.0, *)) {
-        callVC.megaCallManager = [(AppDelegate *)UIApplication.sharedApplication.delegate megaCallManager];
-    }
+    callVC.megaCallManager = [(AppDelegate *)UIApplication.sharedApplication.delegate megaCallManager];
     [self presentViewController:callVC animated:YES completion:nil];
 }
 
@@ -501,7 +500,7 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     NSInteger numberOfSections = 0;
     if (self.contactDetailsMode == ContactDetailsModeDefault) {
-        numberOfSections = 1;
+        numberOfSections = 2;
     } else if (self.contactDetailsMode == ContactDetailsModeFromChat) {
         numberOfSections = 2;
     } else if (self.contactDetailsMode == ContactDetailsModeFromGroupChat) {
@@ -529,9 +528,9 @@
     //TODO: When possible, re-add the rows "Chat Notifications", "Set Nickname" and "Verify Credentials".
     NSInteger numberOfRows = 0;
     if (self.contactDetailsMode == ContactDetailsModeDefault) {
-        if (section == 0) {
+        if (section == 0 || section == 1) {
             numberOfRows = 1;
-        } else if (section == 1) {
+        } else if (section == 2) {
             numberOfRows = self.incomingNodeListForUser.size.integerValue;
         }
     } else if (self.contactDetailsMode == ContactDetailsModeFromChat) {
@@ -551,7 +550,17 @@
     
     if (self.contactDetailsMode == ContactDetailsModeDefault) {
         switch (indexPath.section) {
-            case 0:
+            case 0: {
+                cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsPermissionsTypeID" forIndexPath:indexPath];
+                cell.avatarImageView.image = [UIImage imageNamed:@"verifyCredentials"];
+                cell.nameLabel.text = AMLocalizedString(@"verifyCredentials", @"Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials.");
+                cell.nameLabel.font = [UIFont systemFontOfSize:15.0];
+                cell.nameLabel.textColor = UIColor.mnz_black333333;
+                cell.permissionsLabel.text = [MEGASdkManager.sharedMEGASdk areCredentialsVerifiedOfUser:self.user] ? AMLocalizedString(@"verified", @"Button title") : @"";
+                break;
+            }
+                
+            case 1:
                 cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
                 if (self.user.visibility == MEGAUserVisibilityVisible) { //Remove Contact
                     cell.avatarImageView.image = [UIImage imageNamed:@"delete"];
@@ -566,7 +575,7 @@
                 }
                 break;
                 
-            case 1: //Shared folders
+            case 2: //Shared folders
                 cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsSharedFolderTypeID" forIndexPath:indexPath];
                 MEGANode *node = [self.incomingNodeListForUser nodeAtIndex:indexPath.row];
                 cell.avatarImageView.image = [Helper incomingFolderImage];
@@ -698,6 +707,11 @@
     if (self.contactDetailsMode == ContactDetailsModeDefault) {
         switch (indexPath.section) {
             case 0: {
+                [self pushVerifyCredentialsViewController];
+                break;
+            }
+            
+            case 1: {
                 if (self.user.visibility == MEGAUserVisibilityVisible) {
                     [self showRemoveContactAlert];
                 } else {
@@ -705,8 +719,8 @@
                 }
                 break;
             }
-        
-            case 1: {
+                
+            case 2: {
                 [self openSharedFolderAtIndexPath:indexPath];
                 break;
             }

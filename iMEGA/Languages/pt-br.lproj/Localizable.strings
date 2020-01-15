@@ -159,7 +159,7 @@
 /* Error title shown when you open a file or folder link and it's no longer available */
 "linkUnavailable"="Link indisponível";
 /* */
-"fileLinkUnavailableText1"="Isto pode ser devido as seguintes razões:";
+"fileLinkUnavailableText1"="Poderia ser por uma das razões abaixo:";
 /* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
 "fileLinkUnavailableText2"="O arquivo foi removido por causa de uma infração dos Termos de serviço.";
 /* */
@@ -177,7 +177,7 @@
 /* Error message shown when a folder can't be created. */
 "folderCreationError"="O arquivo '%@' não pode ser criado";
 /* */
-"folderLinkUnavailableText1"="Isto pode ser devido as seguintes razões:";
+"folderLinkUnavailableText1"="Poderia ser por uma das razões abaixo:";
 /* */
 "folderLinkUnavailableText2"="O link desta pasta foi eliminado por uma infração dos nossos Termos de serviço.";
 /* */
@@ -560,10 +560,6 @@
 "addContactButton"="Adicionar";
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="Não é necessário adicionar o seu próprio email";
-/* Add contacts and share dialog error message when user try to add already existing email address. */
-"alreadyHaveAContactWithThatEmailAddress"="Você já tem um contato com este email";
-/* Add contacts and share dialog error message when user try to add already existing email address. */
-"invitationAlreadySentToContactBefore"="The invitation to contact %@ has been sent before and can be consulted in the Sent Requests tab.";
 /* Success message shown when a contact has been invited */
 "theUserHasBeenInvited"="O usuário [X] foi convidado, e aparecerá na sua lista de contatos assim que aceitar.";
 /* Success message shown when some contacts have been invited */
@@ -942,7 +938,7 @@
 /* The header/title of a block/section which contains information about the user's used/available transfer allowance for their account. */
 "transferQuota"="Cota de transferência";
 /* achievement type */
-"registrationBonus"="Bônus de registro";
+"registrationBonus"="Bônus de cadastro";
 /* Message shown on the achievements dialog for achieved achievements, %1 is replaced with e.g. 20 GB */
 "registrationBonusExplanation"="Você recebeu %1 de espaço de armazenamento como bônus por criar uma conta.";
 /* achievement type */
@@ -989,8 +985,8 @@
 "availableLabel"="Disponível";
 /* title of the My Account screen */
 "accountType"="Tipo de conta:";
-/* Text relative to the MEGA account level. UPPER CASE */
-"Free"="GRATUITA";
+/* Label to indicate that the current user has a Free account. */
+"Free"="Grátis";
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="expira em %@";
 /* Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible). */
@@ -1010,7 +1006,7 @@
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
 "cloudDriveIsAlmostFull"="A sua [S]Nuvem de arquivos está quase cheia.[/S] [A]Faça upgrade[/A] a um plano PRO e obtenha [S]até %@ TB (%@ GB)[/S] de espaço de armazenamento.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]A sua conta está cheia.[/S] [A]Faça upgrade[/A] a um plano PRO e obtenha [S]até %@ TB (%@ GB)[/S] de espaço de armazenamento em nuvem.";
+"cloudDriveIsFull"="[S]A sua Nuvem de arquivos está cheia.[/S] [A]Faça upgrade[/A] a um plano PRO e obtenha [S]até %@ TB (%@ GB)[/S] de espaço de armazenamento.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Armazenamento";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
@@ -1155,6 +1151,10 @@
 "sendMessage"="Enviar mensagem";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
 "verifyCredentials"="Verificar as credenciais";
+/* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
+"verify"="Verificar";
+/* Button title */
+"verified"="Verificado";
 /* A button title to delete the history of a chat. */
 "clearChatHistory"="Deletar o histórico do chat";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
@@ -1264,7 +1264,7 @@
 /* Notification text body shown when you have received a new shared folder */
 "newSharedFolder"="Nova pasta compartilhada";
 /* Asking whether the user really wants to abort/stop the registration process or continue on. */
-"areYouSureYouWantToAbortTheRegistration"="Tem certeza que deseja cancelar o cadastro?";
+"areYouSureYouWantToAbortTheRegistration"="Você tem certeza que quer cancelar o cadastro?";
 /* A hint shown at the bottom of the Send Signup Link dialog to tell users they can edit the provided email. */
 "misspelledEmailAddress"="Se você digitou incorretamente o seu endereço de e-mail, corrija-o e clique em \"Reenviar\".";
 /* A button to resend the email confirmation. */
@@ -1409,7 +1409,7 @@
 /* Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible. */
 "autoAccept"="Auto-aceitar";
 /* Footer that explains the way Auto-Accept works for QR codes */
-"autoAcceptFooter"="Os contatos que escanearem o seu código QR serão automaticamente adicionados à sua lista de contatos.";
+"autoAcceptFooter"="Os usuários do MEGA que escanearem o seu código QR serão automaticamente adicionados à sua lista de contatos.";
 /* Action to reset the current valid QR code of the user */
 "resetQrCode"="Resetar código QR";
 /* Footer that explains what would happen if the user resets his/her QR code */
@@ -1671,7 +1671,7 @@
 /* A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days. */
 "Remove files older than"="Remover arquivos com mais de";
 /* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
-"Days"="dias";
+"Days"="Dias";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
 "The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="A Lixeira será esvaziada de forma automática. O período mínimo é de 7 dias, e o período máximo é de 30 dias.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
@@ -1950,8 +1950,6 @@
 "Links"="Links";
 /* Title for empty state view of "Links" in Shared Items. */
 "No Public Links"="Não há links públicos";
-/* Text to indicate that the user will leave an incoming shared folder. */
-"Leave Share"="Sair do compartilhamento";
 /* Text indicating to the user the action that will be executed on tap. */
 "Manage Share"="Gerenciar compartilhamento";
 /* Title of the screen that shows the users with whom the user can share a folder */
@@ -1998,3 +1996,7 @@
 "Inactive chat"="Chat inativo";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
 "It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="Não foi possível obter o conteúdo deste arquivo, pois ele não está codificado em UTF-8 ou ISO/IEC 8859-1.";
+/* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
+"Include location tags"="Incluir etiquetas de localização";
+/* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
+"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them.";

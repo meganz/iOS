@@ -2,12 +2,12 @@
 
 @interface NodeTableViewCell : MGSwipeTableCell
 
-@property (weak, nonatomic) IBOutlet UIImageView *upImageView;
+
 @property (weak, nonatomic) IBOutlet UIImageView *middleImageView;
-@property (weak, nonatomic) IBOutlet UIImageView *downImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *thumbnailImageView;
 
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *linkImageView;
 
 @property (weak, nonatomic) IBOutlet UIImageView *downloadingArrowImageView;
 
