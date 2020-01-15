@@ -38,6 +38,7 @@ class AlbumsTableViewController: UITableViewController {
         
         self.navigationController?.delegate = self
         addLeftCancelBarButtonItem()
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
     
     func showDetail(album: Album) {
