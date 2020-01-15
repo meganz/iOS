@@ -73,7 +73,7 @@ extension PhotoGridViewDataSource: UICollectionViewDataSource {
             self?.selectionHandler(asset, indexPath, size, point)
         }
         
-        cell.durationString = (asset.mediaType == .video) ? asset.duration.displayString : nil
+        cell.durationString = (asset.mediaType == .video) ? asset.duration.timeDisplayString : nil
         return cell
     }
 }
