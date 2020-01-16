@@ -57,6 +57,8 @@ class PhotoSelectedMarkerView: UIView {
         }
     }
     
+    // MARK:- Initializers.
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureLayers()
@@ -67,11 +69,7 @@ class PhotoSelectedMarkerView: UIView {
         configureLayers()
     }
     
-    private func configureLayers() {
-        layer.addSublayer(outerCircle)
-        layer.addSublayer(innerCircle)
-        addSubview(label)
-    }
+    // MARK:- Overriden method.
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -81,6 +79,13 @@ class PhotoSelectedMarkerView: UIView {
         label.center = CGPoint(x: bounds.midX, y: bounds.midY)
     }
     
+    // MARK:- Private methods.
+    
+    private func configureLayers() {
+        layer.addSublayer(outerCircle)
+        layer.addSublayer(innerCircle)
+        addSubview(label)
+    }
     
     private func createPath(circleLayer: CAShapeLayer, insetValue: CGFloat) {
         circleLayer.path = UIBezierPath(ovalIn: bounds.insetBy(dx: insetValue,

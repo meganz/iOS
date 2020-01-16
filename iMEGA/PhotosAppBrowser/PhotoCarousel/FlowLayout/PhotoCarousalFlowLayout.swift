@@ -2,12 +2,12 @@
 import UIKit
 
 class PhotoCarousalFlowLayout: UICollectionViewFlowLayout {
-    fileprivate var cellEstimatedCenterPoints: [CGPoint] = []
-    fileprivate var cellEstimatedFrames: [CGRect] = []
-    var cellSpacing: CGFloat = 100
-    var shouldLayoutEverything = true
+    private var cellEstimatedCenterPoints: [CGPoint] = []
+    private var cellEstimatedFrames: [CGRect] = []
+    private var cellSpacing: CGFloat = 100
+    private var shouldLayoutEverything = true
 
-    var cellCount: Int {
+    private var cellCount: Int {
         guard let collectionView = collectionView,
             let dataSource = collectionView.dataSource else {
             return 0
@@ -16,7 +16,7 @@ class PhotoCarousalFlowLayout: UICollectionViewFlowLayout {
        return dataSource.collectionView(collectionView, numberOfItemsInSection: 0)
     }
     
-    var collectionViewWidth: CGFloat {
+    private var collectionViewWidth: CGFloat {
          guard let collectionView = collectionView else {
              return 0
          }
@@ -24,16 +24,38 @@ class PhotoCarousalFlowLayout: UICollectionViewFlowLayout {
         return collectionView.bounds.width
     }
     
-    var collectionViewHeight: CGFloat {
+    private var collectionViewHeight: CGFloat {
          guard let collectionView = collectionView else {
              return 0
          }
         
         return collectionView.bounds.height
     }
+        
+    private var currentOffset: CGFloat {
+        return (collectionView!.contentOffset.x + collectionView!.contentInset.left)
+    }
+    
+    private var currentCellIndex: Int {
+        return min(cellCount - 1, Int(currentOffset / collectionViewWidth))
+    }
+    
+    private var currentFractionComplete: CGFloat {
+        let relativeOffset = currentOffset / collectionViewWidth
+        return modf(relativeOffset).1
+    }
     
     var currentPage: Int = 0
+    
+    // MARK:- Interface methods.
 
+    func relayout() {
+        shouldLayoutEverything = true
+        invalidateLayout()
+    }
+    
+    // MARK:- Overriden methods.
+    
     override func prepare() {
         guard shouldLayoutEverything else { return }
         
@@ -59,19 +81,6 @@ class PhotoCarousalFlowLayout: UICollectionViewFlowLayout {
         }
         
         shouldLayoutEverything = false
-    }
-    
-    var currentOffset: CGFloat {
-        return (collectionView!.contentOffset.x + collectionView!.contentInset.left)
-    }
-    
-    var currentCellIndex: Int {
-        return min(cellCount - 1, Int(currentOffset / collectionViewWidth))
-    }
-    
-    var currentFractionComplete: CGFloat {
-        let relativeOffset = currentOffset / collectionViewWidth
-        return modf(relativeOffset).1
     }
     
     override var collectionViewContentSize: CGSize {

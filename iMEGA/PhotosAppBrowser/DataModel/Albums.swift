@@ -5,10 +5,14 @@ import Photos
 class Albums {
     private var items: [Album] = []
     
+    // MARK:- Initializer.
+    
     init() {
         loadAlbums()
     }
     
+    // MARK:- Interface methods.
+
     func loadAlbums() {
         let status = PHPhotoLibrary.authorizationStatus()
         if status == .authorized {
@@ -25,7 +29,8 @@ class Albums {
     }
 }
 
-// MARK: Private methods.
+// MARK:- Private methods.
+
 extension Albums {
     private var fetchOptions: PHFetchOptions {
         let fetchOptions = PHFetchOptions()

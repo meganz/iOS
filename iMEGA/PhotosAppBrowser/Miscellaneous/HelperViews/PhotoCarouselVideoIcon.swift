@@ -20,6 +20,8 @@ class PhotoCarouselVideoIcon: UIView {
         return playIconLayer
     }()
     
+    // MARK:- Initializers.
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         configure()
@@ -30,10 +32,7 @@ class PhotoCarouselVideoIcon: UIView {
         configure()
     }
     
-    private func configure() {
-        addSubview(vibrancyView)
-        layer.addSublayer(playIconLayer)
-    }
+    // MARK:- Overriden method.
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -53,9 +52,18 @@ class PhotoCarouselVideoIcon: UIView {
                                       size: CGSize(width: iconHeight * widthToHeightRatio, height: iconHeight))
 
     }
+    
+    // MARK:- Private method.
+    
+    private func configure() {
+        addSubview(vibrancyView)
+        layer.addSublayer(playIconLayer)
+    }
 }
 
-extension UIBezierPath {
+// MARK:- UIBezierPath Extension for the play Icon path and default size.
+
+fileprivate extension UIBezierPath {
     static var playIconDefaultSize: CGSize {
         return CGSize(width: 48, height: 68)
     }

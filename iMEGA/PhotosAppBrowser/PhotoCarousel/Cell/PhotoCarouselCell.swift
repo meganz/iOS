@@ -3,11 +3,15 @@ import UIKit
 import Photos
 
 class PhotoCarouselCell: UICollectionViewCell {
+    
+    // MARK:- Static variables.
 
     static let reuseIdentifier = String(describing: PhotoCarouselCell.self)
     static var nib: UINib {
         return UINib(nibName: PhotoCarouselCell.reuseIdentifier, bundle: nil)
     }
+    
+    // MARK:- Outlets.
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var imageViewHeightConstraint: NSLayoutConstraint!
@@ -19,11 +23,13 @@ class PhotoCarouselCell: UICollectionViewCell {
     @IBOutlet weak var markerViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var videoDurationViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var videoDurationViewLeadingConstraint: NSLayoutConstraint!
+    
+    // MARK:- Instance variables.
 
     private let videoDurationLabelPadding: CGFloat = 5.0
+    private var assetDownloader: AssetDownloader?
 
     var asset: PHAsset?
-    var assetDownloader: AssetDownloader?
     var selectedIndex: Int? {
         didSet {
             markerView.selected = (selectedIndex != nil)
@@ -44,6 +50,23 @@ class PhotoCarouselCell: UICollectionViewCell {
         }
     }
     
+    // MARK:- overriden methods.
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        updateImageViewConstraints()
+        updateSubviewsConstraints()
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        cancelDownloadRequest()
+        markerViewTopConstraint.constant = 0
+        videoDurationViewBottomConstraint.constant = 0
+    }
+    
+    // MARK:- Interface methods.
+    
     func willDisplay(size: CGSize) {
         guard let asset = asset,
             let imageView = imageView else {
@@ -60,22 +83,11 @@ class PhotoCarouselCell: UICollectionViewCell {
         self.assetDownloader = assetDownloader
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        updateImageViewConstraints()
-        updateSubviewsConstraints()
-    }
-    
     func didEndDisplaying() {
         cancelDownloadRequest()
     }
     
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        cancelDownloadRequest()
-        markerViewTopConstraint.constant = 0
-        videoDurationViewBottomConstraint.constant = 0
-    }
+    // MARK:- Private methods.
     
     private func cancelDownloadRequest() {
         if self.assetDownloader != nil {

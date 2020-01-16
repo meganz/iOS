@@ -9,11 +9,15 @@ class AssetDownloader {
     private let imageManager = PHCachingImageManager.default()
     private var imageRequestId: PHImageRequestID?
     
+    // MARK:- Initializer.
+
     init(asset: PHAsset, imageView: UIImageView, imageSize: CGSize) {
         self.asset = asset
         self.imageView = imageView
         self.imageSize = imageSize
     }
+    
+    // MARK:- Interface methods.
     
     func download(handler: ((Bool)-> Void)?) {
         let scale = UIScreen.main.scale

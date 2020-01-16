@@ -4,17 +4,22 @@ import Photos
 
 class PhotoGridViewCell: UICollectionViewCell {
     
+    // MARK:- Static variables.
+
     static let reuseIdentifier = String(describing: PhotoGridViewCell.self)
-    
     static var nib: UINib {
         return UINib(nibName: PhotoGridViewCell.reuseIdentifier, bundle: nil)
     }
+    
+    // MARK:- Outlets.
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var markerView: PhotoSelectedMarkerView!
     @IBOutlet weak var bottomView: PhotoCollectionBottomView!
     @IBOutlet weak var markerViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var bottomViewBottomConstraint: NSLayoutConstraint!
+
+    // MARK:- Instance variables.
 
     var asset: PHAsset?
     var tapHandler: ((PhotoGridViewCell, CGSize, CGPoint) -> Void)?
@@ -37,11 +42,21 @@ class PhotoGridViewCell: UICollectionViewCell {
         }
     }
     
+    // MARK:- Overriden methods.
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapped(_:)))
         addGestureRecognizer(tapGestureRecognizer)
     }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        relayoutSubViews()
+    }
+    
+    // MARK:- Interface methods.
     
     func willDisplay(size: CGSize) {
         guard let asset = asset,
@@ -57,10 +72,20 @@ class PhotoGridViewCell: UICollectionViewCell {
         self.assetDownloader = assetDownloader
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        relayoutSubViews()
+    func didEndDisplaying() {
+        if self.assetDownloader != nil {
+            self.assetDownloader?.cancel()
+            self.assetDownloader = nil
+        }
+    }
+    
+    // MARK:- Private methods.
+    
+    @objc private func tapped(_ tapGesture: UITapGestureRecognizer) {
+        if let handler = tapHandler {
+            let location = tapGesture.location(in: self)
+            handler(self, self.bounds.size, location)
+        }
     }
     
     private func relayoutSubViews() {
@@ -76,20 +101,6 @@ class PhotoGridViewCell: UICollectionViewCell {
             self.markerViewTopConstraint.constant = padding
             self.bottomViewBottomConstraint.constant = padding
             self.layoutIfNeeded()
-        }
-    }
-    
-    func didEndDisplaying() {
-        if self.assetDownloader != nil {
-            self.assetDownloader?.cancel()
-            self.assetDownloader = nil
-        }
-    }
-    
-    @objc func tapped(_ tapGesture: UITapGestureRecognizer) {
-        if let handler = tapHandler {
-            let location = tapGesture.location(in: self)
-            handler(self, self.bounds.size, location)
         }
     }
 }

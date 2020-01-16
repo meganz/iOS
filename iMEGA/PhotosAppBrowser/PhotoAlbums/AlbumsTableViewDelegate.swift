@@ -4,9 +4,13 @@ import UIKit
 class AlbumsTableViewDelegate: NSObject, UITableViewDelegate {
     let tapHandler: (Album) -> Void
     
+    // MARK:- Initializer.
+
     init(tapHandler: @escaping (Album) -> Void) {
         self.tapHandler = tapHandler
     }
+    
+    // MARK:- UITableViewDelegate methods.
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let tableViewCell = cell as! AlbumTableViewCell
