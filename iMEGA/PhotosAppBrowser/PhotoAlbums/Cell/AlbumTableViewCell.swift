@@ -8,6 +8,7 @@ class AlbumTableViewCell: UITableViewCell {
     @IBOutlet var albumImageViews: [UIImageView]!
     @IBOutlet weak var albumTitleLabel: UILabel!
     @IBOutlet weak var albumPhotosCount: UILabel!
+    
     private let activityIndicator = UIActivityIndicatorView(style: .gray)
     var assetDownloaders: [AssetDownloader] = []
     
@@ -18,6 +19,8 @@ class AlbumTableViewCell: UITableViewCell {
             albumPhotosCount.text = "\(assetCount)"
         }
     }
+    
+    // MARK:- Interface methods.
     
     func displayPreviewImages() {
         guard let album = album else {
@@ -47,15 +50,6 @@ class AlbumTableViewCell: UITableViewCell {
         cancelPendingRequests()
     }
     
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        
-        cancelPendingRequests()
-        albumImageViews.forEach { imageView in
-            imageView.image = nil
-        }
-    }
-    
     func cancelPendingRequests() {
         if assetDownloaders.isEmpty {
             return
@@ -66,9 +60,21 @@ class AlbumTableViewCell: UITableViewCell {
         }
         assetDownloaders = []
     }
+    
+    // MARK:- Overriden methods.
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        cancelPendingRequests()
+        albumImageViews.forEach { imageView in
+            imageView.image = nil
+        }
+    }
 }
 
-// MARK: Show and Hide Activity Indicator methods.
+// MARK:- Show and Hide Activity Indicator methods.
+
 extension AlbumTableViewCell {
     private func showImageDownloadInProgress() {
         if let imageView = albumImageViews.first,

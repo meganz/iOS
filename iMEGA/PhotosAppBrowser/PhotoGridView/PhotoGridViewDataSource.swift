@@ -9,6 +9,8 @@ class PhotoGridViewDataSource: NSObject {
     typealias SelectionHandler = (PHAsset, IndexPath, CGSize, CGPoint) -> Void
     let selectionHandler: SelectionHandler
     
+    // MARK:- Initializer.
+
     init(album: Album,
          collectionView: UICollectionView,
          selectedAssets: [PHAsset],
@@ -19,6 +21,8 @@ class PhotoGridViewDataSource: NSObject {
         self.selectionHandler = selectionHandler
     }
     
+    // MARK:- Interface methods.
+
     func didSelect(asset: PHAsset, atIndexPath indexPath: IndexPath) {
         if let index = selectedAssets.firstIndex(of: asset) {
            remove(asset: asset, atIndex: index, selectedIndexPath: indexPath)
@@ -26,6 +30,13 @@ class PhotoGridViewDataSource: NSObject {
             add(asset: asset, selectedIndexPath: indexPath)
         }
     }
+    
+    func updateCollectionCell(atIndexPath indexPath: IndexPath, selectedIndex: Int?) {
+        let collectionCell = collectionView.cellForItem(at: indexPath) as! PhotoGridViewCell
+        collectionCell.selectedIndex = selectedIndex
+    }
+    
+    // MARK:- Private methods.
     
     private func add(asset: PHAsset, selectedIndexPath: IndexPath) {
         updateCollectionCell(atIndexPath: selectedIndexPath, selectedIndex: selectedAssets.count)
@@ -48,12 +59,9 @@ class PhotoGridViewDataSource: NSObject {
             }
         }
     }
-    
-    func updateCollectionCell(atIndexPath indexPath: IndexPath, selectedIndex: Int?) {
-        let collectionCell = collectionView.cellForItem(at: indexPath) as! PhotoGridViewCell
-        collectionCell.selectedIndex = selectedIndex
-    }
 }
+
+// MARK:- UICollectionViewDataSource.
 
 extension PhotoGridViewDataSource: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

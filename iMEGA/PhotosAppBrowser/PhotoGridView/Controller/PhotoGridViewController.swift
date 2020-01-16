@@ -13,6 +13,8 @@ class PhotoGridViewController: UIViewController {
     let album: Album
     let completionBlock: AlbumsTableViewController.CompletionBlock
     
+    // MARK:- Initializers.
+    
     init(album: Album, completionBlock: @escaping AlbumsTableViewController.CompletionBlock) {
         self.album = album
         self.completionBlock = completionBlock
@@ -22,6 +24,8 @@ class PhotoGridViewController: UIViewController {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK:- View controller lifecycle methods.
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,7 +58,15 @@ class PhotoGridViewController: UIViewController {
         collectionView.collectionViewLayout.invalidateLayout()
     }
     
-    func showDetail(indexPath: IndexPath) {
+    // MARK:- Orientation method.
+    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .portrait
+    }
+    
+    // MARK:- Private methods.
+    
+    private func showDetail(indexPath: IndexPath) {
         guard let selectedAssets = dataSource?.selectedAssets else {
             return
         }
@@ -125,7 +137,14 @@ class PhotoGridViewController: UIViewController {
         let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
         toolbarItems = [spacer, sendBarButton!]
     }
-    
+}
+
+extension PhotoGridViewController: PhotoCarouselViewControllerDelegate {
+    func selected(assets: [PHAsset]) {
+        dataSource?.selectedAssets = assets
+        updateBottomView()
+        collectionView.reloadData()
+    }
     
     @objc func sendButtonTapped() {
         guard let selectedAssets = dataSource?.selectedAssets else {
@@ -134,17 +153,5 @@ class PhotoGridViewController: UIViewController {
         
         completionBlock(selectedAssets)
         dismiss(animated: true, completion: nil)
-    }
-    
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return .portrait
-    }
-}
-
-extension PhotoGridViewController: PhotoCarouselViewControllerDelegate {
-    func selected(assets: [PHAsset]) {
-        dataSource?.selectedAssets = assets
-        updateBottomView()
-        collectionView.reloadData()
     }
 }

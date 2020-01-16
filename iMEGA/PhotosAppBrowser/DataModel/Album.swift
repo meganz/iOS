@@ -6,10 +6,14 @@ class Album {
     let title: String
     private let fetchResult: PHFetchResult<PHAsset>
     
+    // MARK:- Initializer.
+
     init(title: String, fetchResult: PHFetchResult<PHAsset>) {
         self.title = title
         self.fetchResult = fetchResult
     }
+    
+    // MARK:- Interface methods.
     
     func assetCount() -> Int {
         return fetchResult.count

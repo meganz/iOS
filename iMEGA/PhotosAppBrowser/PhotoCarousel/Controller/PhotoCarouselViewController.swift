@@ -2,12 +2,21 @@
 import UIKit
 import Photos
 
+// MARK:- PhotoCarouselViewControllerDelegate.
+
 protocol PhotoCarouselViewControllerDelegate: class {
     func selected(assets: [PHAsset])
     func sendButtonTapped()
 }
 
+// MARK:- PhotoCarouselViewController.
+
 class PhotoCarouselViewController: UIViewController {
+    
+    @IBOutlet weak var collectionView: UICollectionView!
+    
+    // MARK:- Private instance variables.
+    
     private let album: Album
     private let selectedPhotoIndexPath: IndexPath
     private var selectedAssets: [PHAsset] {
@@ -36,10 +45,10 @@ class PhotoCarouselViewController: UIViewController {
         return label
     }()
     
-    weak var delegate: PhotoCarouselViewControllerDelegate?
+    weak private var delegate: PhotoCarouselViewControllerDelegate?
     
-    @IBOutlet weak var collectionView: UICollectionView!
-    
+    // MARK:- Initializers.
+
     init(album: Album,
          selectedPhotoIndexPath: IndexPath,
          selectedAssets: [PHAsset],
@@ -56,6 +65,8 @@ class PhotoCarouselViewController: UIViewController {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK:- View controller lifecycle methods.
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -98,11 +109,38 @@ class PhotoCarouselViewController: UIViewController {
         updateSelectDeselectButtonTitle(withSelectedAsset: album.asset(atIndex: selectedPhotoIndexPath.item))
     }
     
-    @objc func sendBarButtonTapped() {
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        if let flowLayout = collectionView.collectionViewLayout as? PhotoCarousalFlowLayout {
+            flowLayout.relayout()
+        }
+    }
+    
+    // MARK:- Orientation method.
+
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .portrait
+    }
+    
+    // MARK:- Interface methods.
+    
+    func didViewPage(atIndex index: Int) {
+        updateFlowLayoutCurrentPage(withIndex: index)
+        updateSelectDeselectButtonTitle(withSelectedAsset: album.asset(atIndex: index))
+        updateTitleView(withAssetIndex: index)
+    }
+    
+    func didSelectIndex(index: Int) {
+        selectBarButtonTapped()
+    }
+    
+    // MARK:- Private methods.
+    
+    @objc private func sendBarButtonTapped() {
         delegate?.sendButtonTapped()
     }
     
-    @objc func selectBarButtonTapped() {
+    @objc private func selectBarButtonTapped() {
         if let visibleCell = collectionView.visibleCells.first,
             let indexPath = collectionView.indexPath(for: visibleCell) {
             let asset = album.asset(atIndex: indexPath.row)
@@ -120,27 +158,7 @@ class PhotoCarouselViewController: UIViewController {
             selectDeselectBarButtonItem?.title = "select".localized()
         }
     }
-    
-    func didViewPage(atIndex index: Int) {
-        updateFlowLayoutCurrentPage(withIndex: index)
-        updateSelectDeselectButtonTitle(withSelectedAsset: album.asset(atIndex: index))
-        updateTitleView(withAssetIndex: index)
-    }
-    
-    func didSelectIndex(index: Int) {
-        selectBarButtonTapped()
-    }
-    
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        if let flowLayout = collectionView.collectionViewLayout as? PhotoCarousalFlowLayout {
-            flowLayout.shouldLayoutEverything = true
-            flowLayout.invalidateLayout()
-        }
-    }
-    
-    // MARK:- Private methods.
-    
+        
     private func addToolbar() {
         let sendBarButtonItem = UIBarButtonItem(title: senderBarButtonText, style: .plain, target: self, action: #selector(sendBarButtonTapped))
         let selectDeselectBarButtonItem = UIBarButtonItem(title: "select".localized(), style: .plain, target: self, action: #selector(selectBarButtonTapped))
@@ -167,11 +185,9 @@ class PhotoCarouselViewController: UIViewController {
             flowLayout.currentPage = index
         }
     }
-    
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return .portrait
-    }
 }
+
+// MARK:- PHAsset extension Helper.
 
 fileprivate extension PHAsset {
     var attributedTitleString: NSAttributedString? {
@@ -194,6 +210,8 @@ fileprivate extension PHAsset {
         return attributedDateString
     }
 }
+
+// MARK:- Date Extension Helper.
 
 fileprivate extension Date {
     var dateString: String {

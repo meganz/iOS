@@ -33,6 +33,8 @@ class PhotoCollectionBottomView: UIView {
         }
     }
     
+    // MARK:- Initializers.
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         configure()
@@ -43,11 +45,7 @@ class PhotoCollectionBottomView: UIView {
         configure()
     }
     
-    private func configure() {
-        layer.addSublayer(gradientLayer)
-        layer.addSublayer(videoIconLayer)
-        addSubview(label)
-    }
+    // MARK:- Overriden method.
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -64,6 +62,14 @@ class PhotoCollectionBottomView: UIView {
         layoutLabel()
     }
     
+    // MARK:- Private methods
+    
+    private func configure() {
+        layer.addSublayer(gradientLayer)
+        layer.addSublayer(videoIconLayer)
+        addSubview(label)
+    }
+    
     private func layoutLabel() {
         label.sizeToFit()
         label.frame = CGRect(origin: CGPoint(x: bounds.width - label.bounds.width - padding,
@@ -72,6 +78,7 @@ class PhotoCollectionBottomView: UIView {
     }
 }
 
+// MARK:- UIBezierPath extension for video icon drawing path.
 
 fileprivate extension UIBezierPath {
     static var videoIconPath: UIBezierPath {

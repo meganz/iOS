@@ -5,11 +5,15 @@ class PhotoGridViewDelegate: NSObject {
     let collectionView: UICollectionView
     let cellsPerRow: () -> Int
     
+    // MARK:- Initializer.
+    
     init(collectionView: UICollectionView, cellsPerRow: @escaping () -> Int) {
         self.collectionView = collectionView
         self.cellsPerRow = cellsPerRow
     }
 }
+
+// MARK:- Private methods.
 
 extension PhotoGridViewDelegate {
     private var cellSize: CGSize {
@@ -17,6 +21,8 @@ extension PhotoGridViewDelegate {
         return CGSize(width: cellWidth, height: cellWidth)
     }
 }
+
+// MARK:- UICollectionViewDelegate.
 
 extension PhotoGridViewDelegate: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView,
@@ -33,6 +39,8 @@ extension PhotoGridViewDelegate: UICollectionViewDelegate {
         }
     }
 }
+
+// MARK:- UICollectionViewDelegateFlowLayout.
 
 extension PhotoGridViewDelegate: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
