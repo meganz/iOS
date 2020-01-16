@@ -560,10 +560,6 @@
 "addContactButton"="추가";
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="당신의 이메일을 추가할 필요는 없습니다";
-/* Add contacts and share dialog error message when user try to add already existing email address. */
-"alreadyHaveAContactWithThatEmailAddress"="이 이메일 주소의 연락처가 이미 있습니다";
-/* Add contacts and share dialog error message when user try to add already existing email address. */
-"invitationAlreadySentToContactBefore"="이전에 지인 %@님께 발송된 초대장이 있으며 발송된 요청 탭에서 검토할 수 있습니다.";
 /* Success message shown when a contact has been invited */
 "theUserHasBeenInvited"="[X]님이 초대되었으며 수락되면 당신의 연락처 목록에 나타날 것입니다.";
 /* Success message shown when some contacts have been invited */
@@ -989,8 +985,8 @@
 "availableLabel"="이용가능";
 /* title of the My Account screen */
 "accountType"="계정 유형:";
-/* Text relative to the MEGA account level. UPPER CASE */
-"free"="무료";
+/* Label to indicate that the current user has a Free account. */
+"Free"="무료";
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="%@에 만기";
 /* Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible). */
@@ -1155,6 +1151,10 @@
 "sendMessage"="메시지 보내기";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
 "verifyCredentials"="개인정보 인증";
+/* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
+"verify"="인증";
+/* Button title */
+"verified"="확인됨";
 /* A button title to delete the history of a chat. */
 "clearChatHistory"="대화 기록 삭제";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
@@ -1409,7 +1409,7 @@
 /* Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible. */
 "autoAccept"="자동 승인";
 /* Footer that explains the way Auto-Accept works for QR codes */
-"autoAcceptFooter"="당신의 QR 코드를 스캔한 연락처는 자동으로 연락처 목록에 추가됩니다.";
+"autoAcceptFooter"="당신의 QR 코드를 스캔한 MEGA 이용자는 자동으로 연락처 목록에 추가됩니다.";
 /* Action to reset the current valid QR code of the user */
 "resetQrCode"="QR 코드 초기화";
 /* Footer that explains what would happen if the user resets his/her QR code */
@@ -1950,8 +1950,6 @@
 "Links"="링크";
 /* Title for empty state view of "Links" in Shared Items. */
 "No Public Links"="공개 링크 없음";
-/* Text to indicate that the user will leave an incoming shared folder. */
-"Leave Share"="공유 떠나기";
 /* Text indicating to the user the action that will be executed on tap. */
 "Manage Share"="공유 관리";
 /* Title of the screen that shows the users with whom the user can share a folder */
@@ -1998,3 +1996,7 @@
 "Inactive chat"="활성화되지 않은 대화";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
 "It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="이 파일이 UTF-8 또는 ISO/IEC 8859-1로 기록되지 않아서, 내용을 가져올 수 없었습니다.";
+/* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
+"Include location tags"="위치 태그 포함";
+/* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
+"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them.";

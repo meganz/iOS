@@ -191,29 +191,20 @@ static NSString *nodeToPresentBase64Handle;
                             [SVProgressHUD showSuccessWithStatus:notificationText];
                         } else {
                             [DevicePermissionsHelper notificationsPermissionWithCompletionHandler:^(BOOL granted) {
-                                if (@available(iOS 10.0, *)) {
-                                    if (granted) {
-                                        UNMutableNotificationContent *content = [UNMutableNotificationContent new];
-                                        content.body = notificationText;
-                                        content.sound = UNNotificationSound.defaultSound;
-                                        content.userInfo = @{@"chatId" : @(chatId)};
-                                        UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:1 repeats:NO];
-                                        UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:identifier content:content trigger:trigger];
-                                        [UNUserNotificationCenter.currentNotificationCenter addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
-                                            if (error) {
-                                                [SVProgressHUD showSuccessWithStatus:notificationText];
-                                            }
-                                        }];
-                                    } else {
-                                        [SVProgressHUD showSuccessWithStatus:notificationText];
-                                    }
+                                if (granted) {
+                                    UNMutableNotificationContent *content = [UNMutableNotificationContent new];
+                                    content.body = notificationText;
+                                    content.sound = UNNotificationSound.defaultSound;
+                                    content.userInfo = @{@"chatId" : @(chatId)};
+                                    UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:1 repeats:NO];
+                                    UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:identifier content:content trigger:trigger];
+                                    [UNUserNotificationCenter.currentNotificationCenter addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
+                                        if (error) {
+                                            [SVProgressHUD showSuccessWithStatus:notificationText];
+                                        }
+                                    }];
                                 } else {
-                                    UILocalNotification* localNotification = [[UILocalNotification alloc] init];
-                                    localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:1];
-                                    localNotification.alertBody = notificationText;
-                                    localNotification.timeZone = NSTimeZone.defaultTimeZone;
-                                    localNotification.userInfo = @{@"chatId" : @(chatId)};
-                                    [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+                                    [SVProgressHUD showSuccessWithStatus:notificationText];
                                 }
                             }];
                         }
