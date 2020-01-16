@@ -31,15 +31,23 @@ class PhotoCarousalFlowLayout: UICollectionViewFlowLayout {
         
         return collectionView.bounds.height
     }
+    
+    var currentPage: Int = 0
 
     override func prepare() {
         guard shouldLayoutEverything else { return }
-
+        
+        if let collectionView = collectionView {
+            let collectionViewXOffset = ceil(CGFloat(currentPage) * collectionViewWidth)
+            let collectionViewYOffset = collectionView.contentOffset.y
+            collectionView.contentOffset = CGPoint(x: collectionViewXOffset,y: collectionViewYOffset)
+        }
+        
         cellEstimatedCenterPoints = []
         cellEstimatedFrames = []
         for itemIndex in 0 ..< cellCount {
             var cellCenter: CGPoint = CGPoint(x: 0, y: 0)
-            cellCenter.y = collectionView!.frame.size.height / 2.0
+            cellCenter.y = collectionViewHeight / 2.0
             cellCenter.x = collectionViewWidth * CGFloat(itemIndex) + collectionViewWidth  / 2.0
             cellEstimatedCenterPoints.append(cellCenter)
             cellEstimatedFrames.append(
