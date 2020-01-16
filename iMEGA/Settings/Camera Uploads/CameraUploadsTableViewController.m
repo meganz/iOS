@@ -27,6 +27,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *JPGLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *JPGRedCheckmarkImageView;
 
+@property (weak, nonatomic) IBOutlet UILabel *includeGPSTagsLabel;
+@property (weak, nonatomic) IBOutlet UISwitch *includeGPSTagsSwitch;
+
 @property (weak, nonatomic) IBOutlet UILabel *useCellularConnectionLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *useCellularConnectionSwitch;
 @property (weak, nonatomic) IBOutlet UILabel *useCellularConnectionForVideosLabel;
@@ -42,6 +45,7 @@
 @property (weak, nonatomic) IBOutlet UITableViewCell *videoUploadSwitchCell;
 @property (weak, nonatomic) IBOutlet UITableViewCell *HEICCell;
 @property (weak, nonatomic) IBOutlet UITableViewCell *JPGCell;
+@property (weak, nonatomic) IBOutlet UITableViewCell *includeGPSTagsCell;
 @property (weak, nonatomic) IBOutlet UITableViewCell *mobileDataCell;
 @property (weak, nonatomic) IBOutlet UITableViewCell *mobileDataForVideosCell;
 @property (weak, nonatomic) IBOutlet UITableViewCell *uploadInBackgroundCell;
@@ -74,6 +78,8 @@
     self.backgroundUploadLabel.text = AMLocalizedString(@"Upload in Background", nil);
     self.advancedLabel.text = AMLocalizedString(@"advanced", nil);
     
+    self.includeGPSTagsLabel.text = AMLocalizedString(@"Include location tags", nil);
+
     [self configImageFormatTexts];
     
     if (self.isPresentedModally) {
@@ -129,6 +135,7 @@
     self.enableCameraUploadsSwitch.on = CameraUploadManager.isCameraUploadEnabled;
     self.uploadVideosSwitch.on = CameraUploadManager.isVideoUploadEnabled;
     self.uploadVideosInfoRightDetailLabel.text = CameraUploadManager.isVideoUploadEnabled ? AMLocalizedString(@"on", nil) : AMLocalizedString(@"off", nil);
+    self.includeGPSTagsSwitch.on = CameraUploadManager.includeGPSTags;
 
     [self configPhotoFormatUI];
     [self configOptionsUI];
@@ -180,6 +187,11 @@
         [headerTitles addObject:AMLocalizedString(@"SAVE HEIC PHOTOS AS", @"What format to upload HEIC photos")];
         [footerTitles addObject:AMLocalizedString(@"We recommend JPG, as its the most compatible format for photos.", nil)];
     }
+    
+    // Include GPS info cell.
+    [sections addObject:@[self.includeGPSTagsCell]];
+    [headerTitles addObject:@""];
+    [footerTitles addObject:AMLocalizedString(@"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them.", nil)];
     
     // options section
     NSMutableArray *optionSection = [NSMutableArray array];
@@ -325,12 +337,16 @@
                 [self configBackgroudUploadUI];
                 break;
             default:
-                [UIApplication.sharedApplication openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+                [UIApplication.sharedApplication openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString] options:@{} completionHandler:nil];
                 break;
         }
     };
     
     [self presentViewController:customModalAlertVC animated:YES completion:nil];
+}
+
+- (IBAction)includeGPSTagsSwitchValueChanged:(UISwitch *)sender {
+    CameraUploadManager.includeGPSTags = sender.on;
 }
 
 #pragma mark - UITableview data source and delegate

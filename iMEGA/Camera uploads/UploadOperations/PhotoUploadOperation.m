@@ -138,7 +138,7 @@ static NSString * const PhotoExportTempName = @"photoExportTemp";
     }
     
     __weak __typeof__(self) weakSelf = self;
-    [ImageExportManager.shared exportImageAtURL:URL dataTypeUTI:dataUTI toURL:self.uploadInfo.fileURL outputTypeUTI:outputTypeUTI shouldStripGPSInfo:YES completion:^(BOOL succeeded) {
+    [ImageExportManager.shared exportImageAtURL:URL dataTypeUTI:dataUTI toURL:self.uploadInfo.fileURL outputTypeUTI:outputTypeUTI shouldStripGPSInfo:!CameraUploadManager.shouldIncludeGPSTags completion:^(BOOL succeeded) {
         if (weakSelf.isCancelled) {
             [weakSelf finishOperationWithStatus:CameraAssetUploadStatusCancelled];
             return;
