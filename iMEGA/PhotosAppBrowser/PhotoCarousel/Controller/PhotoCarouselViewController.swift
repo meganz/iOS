@@ -94,9 +94,7 @@ class PhotoCarouselViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        collectionView.reloadData()
-        collectionView.layoutIfNeeded()
-        collectionView.scrollToItem(at: selectedPhotoIndexPath, at: .centeredHorizontally, animated: false)
+        updateFlowLayoutCurrentPage(withIndex: selectedPhotoIndexPath.item)
         updateSelectDeselectButtonTitle(withSelectedAsset: album.asset(atIndex: selectedPhotoIndexPath.item))
     }
     
@@ -124,6 +122,7 @@ class PhotoCarouselViewController: UIViewController {
     }
     
     func didViewPage(atIndex index: Int) {
+        updateFlowLayoutCurrentPage(withIndex: index)
         updateSelectDeselectButtonTitle(withSelectedAsset: album.asset(atIndex: index))
         updateTitleView(withAssetIndex: index)
     }
@@ -161,6 +160,12 @@ class PhotoCarouselViewController: UIViewController {
         titleLabel.attributedText = asset.attributedTitleString
         titleLabel.sizeToFit()
         navigationItem.titleView = titleLabel
+    }
+    
+    private func updateFlowLayoutCurrentPage(withIndex index: Int) {
+        if let flowLayout = collectionView.collectionViewLayout as? PhotoCarousalFlowLayout {
+            flowLayout.currentPage = index
+        }
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
