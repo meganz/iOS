@@ -37,6 +37,10 @@ class AlbumsTableViewController: UITableViewController {
         
         addLeftCancelBarButtonItem()
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        
+        if albums.numberOfAlbums() == 0 {
+            showNoPhotosOrVideos()
+        }
     }
     
     func showDetail(album: Album) {
@@ -44,6 +48,20 @@ class AlbumsTableViewController: UITableViewController {
                                                                          completionBlock: completionBlock),
                                                  animated: true)
 
+    }
+    
+    private func showNoPhotosOrVideos() {
+        let label = UILabel()
+        label.textAlignment = .center
+        label.font = UIFont.preferredFont(forTextStyle: .body)
+        label.text = "No Photos or Videos".localized()
+        view.addSubview(label)
+        
+        label.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            label.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
