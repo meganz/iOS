@@ -69,7 +69,7 @@ class PhotoGridViewController: UIViewController {
     private func updateBottomView() {
         if let assetsCount = dataSource?.selectedAssets.count,
             (assetsCount > 0) {
-            sendBarButton?.title = "Send (\(assetsCount))"
+            sendBarButton?.title = String(format: "Send (%d)".localized(), assetsCount)
         }
         
         if navigationController?.topViewController == self {
@@ -121,7 +121,7 @@ class PhotoGridViewController: UIViewController {
     }
     
     private func addToolbar() {
-        sendBarButton = UIBarButtonItem(title: "Send (1)", style: .plain, target: self, action: #selector(sendButtonTapped))
+        sendBarButton = UIBarButtonItem(title: "send".localized(), style: .plain, target: self, action: #selector(sendButtonTapped))
         let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
         toolbarItems = [spacer, sendBarButton!]
     }
