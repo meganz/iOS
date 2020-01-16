@@ -24,7 +24,7 @@ class PhotoCarouselViewController: UIViewController {
     private var collectionViewDelegate: PhotoCarouselDelegate?
     
     private var senderBarButtonText: String {
-        return selectedAssets.count > 0 ? "Send (\(selectedAssets.count))" : "Send"
+        return selectedAssets.count > 0 ? String(format: "Send (%d)".localized(), selectedAssets.count) : "send".localized()
     }
     
     private lazy var titleLabel: UILabel = {
@@ -115,9 +115,9 @@ class PhotoCarouselViewController: UIViewController {
     
     private func updateSelectDeselectButtonTitle(withSelectedAsset asset: PHAsset) {
         if selectedAssets.contains(asset) {
-            selectDeselectBarButtonItem?.title = "Unselect"
+            selectDeselectBarButtonItem?.title = "Unselect".localized()
         } else {
-            selectDeselectBarButtonItem?.title = "Select"
+            selectDeselectBarButtonItem?.title = "select".localized()
         }
     }
     
@@ -143,7 +143,7 @@ class PhotoCarouselViewController: UIViewController {
     
     private func addToolbar() {
         let sendBarButtonItem = UIBarButtonItem(title: senderBarButtonText, style: .plain, target: self, action: #selector(sendBarButtonTapped))
-        let selectDeselectBarButtonItem = UIBarButtonItem(title: "Select", style: .plain, target: self, action: #selector(selectBarButtonTapped))
+        let selectDeselectBarButtonItem = UIBarButtonItem(title: "select".localized(), style: .plain, target: self, action: #selector(selectBarButtonTapped))
         
         sendBarButtonItem.isEnabled = selectedAssets.count > 0
         let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
