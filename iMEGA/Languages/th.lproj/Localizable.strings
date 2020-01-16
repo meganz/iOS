@@ -43,7 +43,7 @@
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="กรอกคีย์เพื่อถอดรหัสลับ";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertMessage"="ในการเข้าถึงโฟลเดอร์/ไฟล์นี้ คุณจะต้องมีคีย์สำหรับถอดรหัส แต่หากไม่มี กรุณาติดต่อผู้ที่สร้างลิงก์นี้";
+"decryptionKeyAlertMessage"="ในการเข้าถึงโฟลเดอร์/ไฟล์นี้ คุณจะต้องมีคีย์สำหรับถอดรหัส แต่หากไม่มีให้ติดต่อผู้ที่สร้างลิงก์นี้";
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="คีย์ถอดรหัสลับ";
 /* Button title to try to decrypt the link */
@@ -61,7 +61,7 @@
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="คุณได้ออกจากระบบของอุปกรณ์นี้จากตำแหน่งที่ตั้งอื่น";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="MEGA is unable to connect securely through SSL. You might be on public Wi-Fi with additional requirements.";
+"sslUnverified_alertTitle"="MEGA ไม่สามารถเชื่อมต่ออย่างปลอดภัยผ่าน SSL ได้ คุณอาจใช้ Wi-Fi สาธารณะที่มาพร้อมกับข้อกำหนดเพิ่มเติม";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="เนื้อหาที่คุณพยายามเข้าถึง ไม่สามารถใช้งานได้กับบัญชีนี้ กรุณาลองลงชื่อเข้าใช้ด้วยบัญชีเดียวกันกับในเว็บไคลเอ็นต์บนมือถืออีกครั้ง";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
@@ -1004,9 +1004,9 @@
 /*  */
 "chooseYourAccountType"="เลือกประเภทบัญชีของคุณ";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]Your Cloud Drive is almost full.[/S] [A]Upgrade now[/A] to a PRO account and get [S]up to %@ TB (%@ GB)[/S] of cloud storage space.";
+"cloudDriveIsAlmostFull"="[S]คลาวด์ไดร์ฟของคุณใกล้เต็มแล้ว[/S] [A]อัปเกรด[/A]เป็นบัญชี PRO และรับพื้นที่เก็บข้อมูลบนคลาวด์[S]สูงสุด %@ TB (%@ GB)[/S]";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]Your Cloud Drive is full.[/S] [A]Upgrade now[/A] to a PRO account and get [S]up to %@ TB (%@ GB)[/S] of cloud storage space.";
+"cloudDriveIsFull"="[S]คลาวด์ไดร์ฟของคุณเต็มแล้ว[/S] [A]อัปเกรด[/A]เป็นบัญชี PRO และรับพื้นที่เก็บข้อมูลบนคลาวด์[S]สูงสุด %@ TB (%@ GB)[/S]";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="ที่เก็บข้อมูล";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
@@ -1651,7 +1651,7 @@
 /* Title of the option to enable or disable file versioning on Settings section */
 "File versioning"="เวอร์ชันไฟล์";
 /* Subtitle of the option to enable or disable file versioning on Settings section */
-"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="เปิดหรือปิดใช้งานการกำหนดเวอร์ชันไฟล์สำหรับทั้งบัญชีของคุณ\nคุณอาจจะยังได้รับเวอร์ชันไฟล์จากโฟลเดอร์ที่แชร์ถ้ารายชื่อติดต่อของคุณเปิดใช้งานอยู่";
+"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="เปิดหรือปิดใช้งานการกำหนดเวอร์ชันไฟล์สำหรับทั้งบัญชีของคุณ\nการปิดใช้งานการกำหนดเวอร์ชันไฟล์ ไม่ได้มีการป้องกันผู้ติดต่อของคุณเพื่อสร้างเวอร์ชันใหม่ในโฟลเดอร์ที่แชร์";
 /* A confirmation message when the user chooses to disable file versioning. */
 "When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="เมื่อมีการปิดใช้งานเวอร์ชันไฟล์ เวอร์ชันปัจจุบันจะถูกแทนที่ด้วยเวอร์ชันใหม่เมื่อไฟล์ได้รับการอัปเดตแล้ว (และการเปลี่ยนแปลงไฟล์จะไม่ได้รับการบันทึกอีกต่อไป) คุณแน่ใจหรือไม่ว่าต้องการปิดใช้งานการกำหนดเวอร์ชันของไฟล์";
 /* Settings preference title to show file versions info of the account */
@@ -1719,9 +1719,9 @@
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
 "%@ enabled Encrypted Key Rotation"="%@ ได้เปิดใช้งาน Encrypted Key Rotation";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
-"%@ created a public link for the chat."="%@ ได้สร้างลิงค์แชทเพื่อสนทนาแล้ว";
+"%@ created a public link for the chat."="%@ ได้สร้างลิงก์แชทแล้ว";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
-"%@ removed a public link for the chat."="%@ ได้ลบลิงก์แชทออกแล้ว";
+"%@ removed a public link for the chat."="%@ ได้ลบลิงก์แชทแล้ว";
 /* Management message shown in a chat when the user %@ joined it from a public chat link */
 "%@ joined the group chat."="%@ ได้เข้าร่วมแชทกลุ่ม";
 /* Message show when a call cannot be established because there are too many participants in the group call */
