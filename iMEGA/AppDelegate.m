@@ -1255,31 +1255,6 @@ void uncaughtExceptionHandler(NSException *exception) {
             }];
         }
     }
-    
-    // Message
-    if ([[[payload dictionaryPayload] objectForKey:@"megatype"] integerValue] == 2) {
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"VoIP_messages"];
-        NSString *chatIdB64 = [[[payload dictionaryPayload] objectForKey:@"megadata"] objectForKey:@"chatid"];
-        NSString *msgIdB64 = [[[payload dictionaryPayload] objectForKey:@"megadata"] objectForKey:@"msgid"];
-        NSString *silent = [[[payload dictionaryPayload] objectForKey:@"megadata"] objectForKey:@"silent"];
-        if (chatIdB64 && msgIdB64) {
-            uint64_t chatId = [MEGASdk handleForBase64UserHandle:chatIdB64];
-            uint64_t msgId = [MEGASdk handleForBase64UserHandle:msgIdB64];
-            MEGAChatMessage *message = [[MEGASdkManager sharedMEGAChatSdk] messageForChat:chatId messageId:msgId];
-            MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatId];
-            
-            [[MEGASdkManager sharedMEGAChatSdk] pushReceivedWithBeep:YES chatId:chatId];
-                                    
-            if (chatRoom && message && [UIApplication sharedApplication].applicationState != UIApplicationStateActive) {
-                MEGALocalNotificationManager *localNotificationManager = [[MEGALocalNotificationManager alloc] initWithChatRoom:chatRoom message:message silent:NO];
-                [localNotificationManager proccessNotification];
-            } else {
-                [[MEGAStore shareInstance] insertMessage:msgId chatId:chatId];
-            }
-        } else if (silent) {
-            [[MEGASdkManager sharedMEGAChatSdk] pushReceivedWithBeep:NO chatId:~(uint64_t)0];
-        }
-    }
 }
 
 #pragma mark - UNUserNotificationCenterDelegate
@@ -1434,14 +1409,9 @@ void uncaughtExceptionHandler(NSException *exception) {
             break;
         }
             
-        case EventMiscFlagsReady:
-            MEGALogDebug(@"Apple VoIP push status: %d", api.appleVoipPushEnabled);
-            [NSUserDefaults.standardUserDefaults setBool:api.appleVoipPushEnabled forKey:@"VoIP_messages"];
-            
-            break;
-            
         case EventStorageSumChanged:
             [MEGASdkManager.sharedMEGASdk mnz_setShouldRequestAccountDetails:YES];
+            
         default:
             break;
     }
