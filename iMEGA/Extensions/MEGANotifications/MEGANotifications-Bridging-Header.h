@@ -4,8 +4,10 @@
 
 #import "SAMKeychain.h"
 
+#import "MEGAChatGenericRequestDelegate.h"
 #import "MEGAConstants.h"
 #import "MEGAError.h"
+#import "MEGALocalNotificationManager.h"
 #import "NSFileManager+MNZCategory.h"
 #import "MEGAGenericRequestDelegate.h"
 #import "MEGAReachabilityManager.h"
