@@ -169,7 +169,10 @@
             AVAssetExportSession *session = [AVAssetExportSession exportSessionWithAsset:asset presetName:preset];
             self.exportSession = session;
             session.outputFileType = outputFileType;
-            session.metadataItemFilter = [AVMetadataItemFilter metadataItemFilterForSharing];
+            
+            if (!CameraUploadManager.shouldIncludeGPSTags) {
+                session.metadataItemFilter = [AVMetadataItemFilter metadataItemFilterForSharing];
+            }
             
             if (exportOptionsEnabled) {
                 session.canPerformMultiplePassesOverSourceMediaData = YES;
