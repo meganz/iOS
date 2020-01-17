@@ -62,22 +62,16 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
     // MARK: Private
     
     func generateNotification(with message: MEGAChatMessage, immediately: Bool) {
-        // TODO: Use MEGALocalNotificationManager class
-        bestAttemptContent?.userInfo = ["chatId" : chatId!]
-        bestAttemptContent?.body = message.content
-        bestAttemptContent?.sound = UNNotificationSound.default
-        
         guard let chatRoom = MEGASdkManager.sharedMEGAChatSdk()?.chatRoom(forChatId: chatId) else {
             return
         }
-        
+        let notificationManager = MEGALocalNotificationManager(chatRoom: chatRoom, message: message, silent: false)
+        bestAttemptContent?.userInfo = ["chatId" : chatId!]
+        bestAttemptContent?.body = notificationManager.bodyString()
+        bestAttemptContent?.sound = UNNotificationSound.default
         bestAttemptContent?.title = chatRoom.title
         if chatRoom.isGroup {
-            if let fullname = chatRoom.peerFullname(byHandle: message.userHandle) {
-                bestAttemptContent?.subtitle = fullname
-            } else if let email = chatRoom.peerEmail(byHandle: message.userHandle) {
-                bestAttemptContent?.subtitle = email
-            }
+            bestAttemptContent?.subtitle = notificationManager.subtitle()
         }
         
         if immediately {
