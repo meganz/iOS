@@ -1011,7 +1011,7 @@ void uncaughtExceptionHandler(NSException *exception) {
         groupCallVC.videoCall = self.videoCall;
         groupCallVC.chatRoom = self.chatRoom;
         groupCallVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-            groupCallVC.megaCallManager = self.megaCallManager;
+        groupCallVC.megaCallManager = self.megaCallManager;
         [self.mainTBC presentViewController:groupCallVC animated:YES completion:nil];
     } else {
         CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];

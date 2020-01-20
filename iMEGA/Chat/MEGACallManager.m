@@ -29,6 +29,8 @@
     CXHandle *handle = [[CXHandle alloc] initWithType:CXHandleTypeGeneric value:[MEGASdk base64HandleForUserHandle:call.chatId]];
     CXStartCallAction *startCallAction = [[CXStartCallAction alloc] initWithCallUUID:call.uuid handle:handle];
     startCallAction.video = call.hasLocalVideo;
+    MEGAChatRoom *chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:call.chatId];
+    startCallAction.contactIdentifier = chatRoom.title;
     
     CXTransaction *transaction = [[CXTransaction alloc] init];
     [transaction addAction:startCallAction];
