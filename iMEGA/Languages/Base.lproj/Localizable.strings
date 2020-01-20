@@ -43,7 +43,7 @@
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="Enter decryption key";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertMessage"="To access this folder/file, you will need its Decryption key. If you do not have the key, please contact the creator of the link.";
+"decryptionKeyAlertMessage"="To access this folder/file, you will need its Decryption key. If you do not have the key, contact the creator of the link.";
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="Decryption key";
 /* Button title to try to decrypt the link */
@@ -825,7 +825,7 @@
 /* An alert title where the user provided the incorrect Recovery Key. */
 "invalidRecoveryKey"="Invalid Recovery Key";
 /* Text of the alert after opening the recovery link to reset pass being logged. */
-"youRecoveryKeyIsGoingTo"="Your Recovery Key is going to be used to reset your password. Please, enter your new password.";
+"youRecoveryKeyIsGoingTo"="Your Recovery Key is going to be used to reset your password. Please enter your new password.";
 /*  */
 "yourPasswordHasBeenReset"="Your password has been reset successfully. Please log into your account now.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
@@ -1864,6 +1864,8 @@
 "Tap and hold %@ to record, release to send"="Tap and hold %@ to record, release to send";
 /* Message shown when there is an ongoing call and the user tries to record a voice message */
 "It is not possible to record voice messages while there is a call in progress"="It is not possible to record voice messages while there is a call in progress.";
+/* Label indicating that a voice clip is being recorded. String as short as possible. */
+"Recording..."="Recording…";
 /* Text to inform the user there is an active call and is not participating */
 "Ongoing Call"="Ongoing Call";
 /* Message shown when there is an ongoing call and the user tries to play an audio or video */
@@ -1997,6 +1999,6 @@
 /* Error message shown when the user tries to open a file with an unsupported encoding */
 "It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1.";
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
-"Include location tags" = "Include location tags";
+"Include location tags"="Include location tags";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
-"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them." = "If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them.";
+"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them.";

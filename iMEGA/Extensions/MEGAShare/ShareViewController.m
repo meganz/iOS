@@ -388,7 +388,7 @@
 }
 
 - (IBAction)openMegaTouchUpInside:(id)sender {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"mega://#loginrequired"]];
+    [UIApplication.sharedApplication openURL:[NSURL URLWithString:@"mega://#loginrequired"] options:@{} completionHandler:nil];
 }
 
 - (void)loginToMEGA {

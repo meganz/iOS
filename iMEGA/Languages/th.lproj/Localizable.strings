@@ -17,7 +17,7 @@
 /* State shown if something is 'Saved' (String as short as possible). */
 "saved"="บันทึกแล้ว";
 /*  */
-"passcode"="รหัสผ่าน";
+"passcode"="รหัส";
 /* "Size" of the file or folder you are sharing */
 "size"="ขนาด";
 /*  */
@@ -43,7 +43,7 @@
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="กรอกคีย์เพื่อถอดรหัสลับ";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertMessage"="ในการเข้าถึงโฟลเดอร์/ไฟล์นี้ คุณจะต้องมีคีย์สำหรับถอดรหัส แต่หากไม่มี กรุณาติดต่อผู้ที่สร้างลิงก์นี้";
+"decryptionKeyAlertMessage"="ในการเข้าถึงโฟลเดอร์/ไฟล์นี้ คุณจะต้องมีคีย์สำหรับถอดรหัส แต่หากไม่มีให้ติดต่อผู้ที่สร้างลิงก์นี้";
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="คีย์ถอดรหัสลับ";
 /* Button title to try to decrypt the link */
@@ -61,7 +61,7 @@
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="คุณได้ออกจากระบบของอุปกรณ์นี้จากตำแหน่งที่ตั้งอื่น";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="MEGA is unable to connect securely through SSL. You might be on public Wi-Fi with additional requirements.";
+"sslUnverified_alertTitle"="MEGA ไม่สามารถเชื่อมต่ออย่างปลอดภัยผ่าน SSL ได้ คุณอาจใช้ Wi-Fi สาธารณะที่มาพร้อมกับข้อกำหนดเพิ่มเติม";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="เนื้อหาที่คุณพยายามเข้าถึง ไม่สามารถใช้งานได้กับบัญชีนี้ กรุณาลองลงชื่อเข้าใช้ด้วยบัญชีเดียวกันกับในเว็บไคลเอ็นต์บนมือถืออีกครั้ง";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
@@ -121,7 +121,7 @@
 /*  */
 "agreeWithTheMEGATermsOfService"="ฉันเห็นด้วยกับ<a href=\"terms\">เงื่อนไขการให้บริการ</a>ของ MEGA";
 /* This text is displayed in the account creation screen with a checkbox. User will have to tick the checkbox before proceeding on to create an account */
-"agreeWithLosingPasswordYouLoseData"="I understand that [S]if I lose my password, I may lose my data.[/S] Read more about <a href=\"terms\">MEGA’s end-to-end encryption</a>.";
+"agreeWithLosingPasswordYouLoseData"="ฉันเข้าใจว่า[S]ถ้าฉันทำรหัสผ่านหาย ฉันอาจสูญเสียข้อมูลของฉันได้[/S] อ่านเพิ่มเติมเกี่ยวกับ<a href=\"terms\">การเข้ารหัสลับแบบต้นทางถึงปลายทาง</a>";
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="กรอกชื่อให้ถูกต้อง";
 /* Error text shown when you have not written the same password */
@@ -129,7 +129,7 @@
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
 "termsCheckboxUnselected"="คุณจะต้องเห็นด้วยกับเงื่อนไขการให้บริการในการลงทะเบียนบัญชีผู้ใช้บน MEGA";
 /* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown  */
-"termsForLosingPasswordCheckboxUnselected"="You need to agree that you understand the danger of losing your password";
+"termsForLosingPasswordCheckboxUnselected"="คุณต้องยอมรับว่าคุณเข้าใจถึงอันตราย หากลืมรหัสผ่าน";
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="ที่อยู่อีเมลนี้เคยลงทะเบียนกับ MEGA แล้ว";
 /* Title shown just after doing some action that requires confirming the action by an email */
@@ -481,7 +481,7 @@
 /* Button title that skips the current action */
 "skipButton"="ข้าม";
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
-"Automatically backup your photos and videos to the Cloud Drive."="Automatically backup your photos and videos to your Cloud Drive.";
+"Automatically backup your photos and videos to the Cloud Drive."="สำรองรูปภาพและวิดีโอของคุณไปยังคลาวด์ไดร์ฟโดยอัตโนมัติ";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="เปิดใช้งานอัปโหลดกล้อง";
 /* Success message shown when Camera Uploads has been enabled */
@@ -493,13 +493,13 @@
 /* Message shown while uploading files. Plural. */
 "cameraUploadsPendingFiles"="กำลังอัปโหลด กำลังรอไฟล์ %lu ไฟล์";
 /* Message shown when camera upload paused because of no WiFi. Singular. */
-"Upload paused because of no WiFi, 1 file pending"="Upload paused due to no Wi-Fi connection, 1 file pending";
+"Upload paused because of no WiFi, 1 file pending"="การอัปโหลดหยุดชั่วคราว เนื่องจากไม่มีการเชื่อมต่อ Wi-Fi ตอนนี้รออยู่ 1 ไฟล์";
 /* Message shown when camera upload paused because of no WiFi. Plural. */
-"Upload paused because of no WiFi, %lu files pending"="Upload paused due to no Wi-Fi connection, %lu files pending";
+"Upload paused because of no WiFi, %lu files pending"="การอัปโหลดหยุดชั่วคราว เนื่องจากไม่มีการเชื่อมต่อ Wi-Fi ตอนนี้รออยู่ %lu ไฟล์";
 /* Message shown the pending video file when photos uploaded and video upload is not enabled. Singular. */
-"Photos uploaded, video uploads are off, 1 video not uploaded"="Photos uploaded, video uploads are off; 1 video not uploaded";
+"Photos uploaded, video uploads are off, 1 video not uploaded"="อัปโหลดรูปภาพ, การอัปโหลดวิดีโอ ถูกปิด; ไม่ได้อัปโหลดวิดีโอ 1 รายการ";
 /* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
-"Photos uploaded, video uploads are off, %lu videos not uploaded"="Photos uploaded, video uploads are off; %lu videos not uploaded";
+"Photos uploaded, video uploads are off, %lu videos not uploaded"="อัปโหลดรูปภาพ, การอัปโหลดวิดีโอ ถูกปิด; ไม่ได้อัปโหลดวิดีโอ %lu รายการ";
 /* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
 "indexOfTotalFile"="ไฟล์ %1$d จาก %2$d ไฟล์";
 /* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
@@ -637,81 +637,81 @@
 /* Header to explain that 'Upload videos', 'Use cellular connection' and 'Only when charging' are options of the Camera Uploads */
 "options"="ตัวเลือก";
 /* A hint to show one option is recommended by MEGA */
-"(Recommended)"="(Recommended)";
+"(Recommended)"="(แนะนำ)";
 /* Header to introduce how to deal with HEIC format photos in Camera Uplaod */
-"SAVE HEIC PHOTOS AS"="Save HEIC photos as";
+"SAVE HEIC PHOTOS AS"="บันทึกรูปภาพ HEIC เป็น";
 /* Footer for HEIC format section */
-"We recommend JPG, as its the most compatible format for photos."="We recommend JPG, as it is the most compatible format for photos.";
+"We recommend JPG, as its the most compatible format for photos."="เราขอแนะนำ JPG เนื่องจากเป็นรูปแบบที่เข้ากันได้กับรูปภาพมากที่สุด";
 /* Header to introduce how to deal with HEVC format videos in Camera Uplaod */
-"SAVE HEVC VIDEOS AS"="Save HEVC videos as";
+"SAVE HEVC VIDEOS AS"="บันทึกวิดีโอ HEVC เป็น";
 /* Footer for HEVC format section */
-"We recommend H.264, as its the most compatible format for videos."="We recommend H.264, as it is the most compatible format for videos.";
+"We recommend H.264, as its the most compatible format for videos."="เราแนะนำ H.264 เนื่องจากเป็นรูปแบบที่เข้ากันได้กับวิดีโอมากที่สุด";
 /* Footer for video compression quality */
-"Compression quality when to transcode HEVC videos to H.264 format."="Compression quality when HEVC videos are transcoded to H.264 format.";
+"Compression quality when to transcode HEVC videos to H.264 format."="คุณภาพการบีบอัดเมื่อวิดีโอ HEVC ถูกแปลงเป็นรูปแบบ H.264";
 /* Option title to enable upload videos with Camera Uploads */
 "uploadVideosLabel"="อัปโหลดวิดีโอ";
 /* Footer text for Camera Upload switch section when camera upload is disabled */
-"When enabled, photos will be uploaded."="When enabled, photos will be uploaded.";
+"When enabled, photos will be uploaded."="เมื่อเปิดใช้งาน รูปภาพจะถูกอัปโหลด";
 /* Footer text for Camera Upload switch section when only photos upload is enabled */
-"Photos will be uploaded to Camera Uploads folder."="Photos will be uploaded to the Camera Uploads folder.";
+"Photos will be uploaded to Camera Uploads folder."="รูปภาพจะถูกอัปโหลดไปยังโฟลเดอร์อัปโหลดจากกล้อง";
 /* Footer text for Camera Upload switch section when photos and videos upload is enabled */
-"Photos and videos will be uploaded to Camera Uploads folder."="Photos and videos will be uploaded to the Camera Uploads folder.";
+"Photos and videos will be uploaded to Camera Uploads folder."="รูปภาพและวิดีโอจะถูกอัปโหลดไปยังโฟลเดอร์อัปโหลดจากกล้อง";
 /* Title to show for upload in background */
-"Upload in Background"="Upload in Background";
+"Upload in Background"="อัปโหลดในพื้นหลัง";
 /* Title for the location based background upload message */
-"Enable location services for background upload"="Enable location services for background upload";
+"Enable location services for background upload"="ปิดใช้งานบริการระบุตำแหน่งเพื่ออัปโหลดพื้นหลัง";
 /* Message for the location based background upload when the location data access is not denied by users */
-"MEGA can periodically start camera uploads in background when your location changes."="MEGA can periodically start camera uploads in the background when your location changes.";
+"MEGA can periodically start camera uploads in background when your location changes."="MEGA สามารถเริ่มต้นการอัปโหลดจากกล้องในพื้นหลังเป็นระยะเมื่อตำแหน่งของคุณเปลี่ยนไป";
 /* Message for the location based background upload when the location data access is denied by users */
-"Please select “Always” at your Location page in Settings, then MEGA can periodically start camera uploads in background when your location changes."="Please select “Always” at your Location page in Settings, so that MEGA can periodically start camera uploads in background when your location changes.";
+"Please select “Always” at your Location page in Settings, then MEGA can periodically start camera uploads in background when your location changes."="กรุณาเลือก “เสมอ” ที่หน้าตำแหน่งของคุณในการตั้งค่า เพื่อให้ MEGA สามารถเริ่มการอัปโหลดกล้องเป็นพื้นหลังเมื่อตำแหน่งของคุณเปลี่ยนไป";
 /* Title for turn on a feature */
-"Turn On"="Turn On";
+"Turn On"="เปิด";
 /* Title for turn on a feature in settings */
-"Turn On in Settings"="Turn On in Settings";
+"Turn On in Settings"="เปิดในการตั้งค่า";
 /* Footer for video uploads switch section when enabled */
-"Videos will be uploaded to the Camera Uploads folder."="Videos will be uploaded to the Camera Uploads folder.";
+"Videos will be uploaded to the Camera Uploads folder."="วิดีโอจะถูกอัปโหลดไปยังโฟลเดอร์อัปโหลดจากกล้อง";
 /* Footer for video uploads switch section when disabled */
-"When enabled, videos will be uploaded."="When enabled, videos will be uploaded.";
+"When enabled, videos will be uploaded."="เมื่อเปิดใช้งาน วิดีโอจะถูกอัปโหลด";
 /* Title for new camera upload feature */
-"New Camera Upload!"="New Camera Uploads Options!";
+"New Camera Upload!"="ตัวเลือกอัพโหลดกล้องใหม่!";
 /* A messge for camera upload v2 migration */
-"Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="Now you can choose to convert HEIC/HEVC photos and videos to the more widely compatible JPEG/H.264 formats.";
+"Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="ตอนนี้คุณสามารถเลือกที่จะแปลงรูปภาพและวิดีโอ HEIC/HEVC เป็นรูปแบบ JPEG/H.264 ที่เข้ากันได้มากขึ้น";
 /* Title for an action to use most compatible formats */
-"Use Most Compatible Formats"="Use Most Compatible Formats";
+"Use Most Compatible Formats"="ใช้รูปแบบที่เข้ากันได้มากที่สุด";
 /* Title for custom settings */
-"Custom Settings"="Custom Settings";
+"Custom Settings"="การตั้งค่าที่กำหนดเอง";
 /* Title to show when device local storage is full */
-"%@ Storage Full"="%@ Storage Full";
+"%@ Storage Full"="พื้นที่จัดเก็บข้อมูลของ %@ เต็มแล้ว";
 /* Detail for local storage full situation */
-"You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="You do not have enough storage for further camera uploads. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@";
+"You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="คุณมีพื้นที่เก็บข้อมูลไม่เพียงพอสำหรับการอัปโหลดของกล้องเพิ่มเติม เพิ่มพื้นที่ว่างโดยการลบแอป วิดีโอหรือเพลงที่ไม่จำเป็น คุณสามารถจัดการที่เก็บข้อมูลของคุณใน %@";
 /* Navigation path for Storage settings in iOS */
-"Settings > General > %@ Storage"="Settings > General > %@ Storage";
+"Settings > General > %@ Storage"="การตั้งค่า > ทั่วไป > พื้นที่จัดเก็บข้อมูลของ %@";
 /* Title of the switch to config whether to upload videos for Live Photos */
-"Upload videos for Live Photos"="Upload videos for Live Photos";
+"Upload videos for Live Photos"="อัปโหลดวิดีโอสำหรับ Live Photos";
 /* Title of the switch to config whether to upload all burst photos */
-"Upload all burst photos"="Upload all burst photos";
+"Upload all burst photos"="อัปโหลดรูปภาพต่อเนื่องทั้งหมด";
 /* Title of the switch to config whether to upload Hidden Album */
-"Upload Hidden Album"="Upload Hidden Album";
+"Upload Hidden Album"="อัปโหลดอัลบั้มที่ซ่อนอยู่";
 /* Footer description when upload videos for Live Photos is enabled */
-"The video and the photo in each Live Photo will be uploaded."="The photo and video versions of each Live Photo will be uploaded.";
+"The video and the photo in each Live Photo will be uploaded."="Live Photo แต่ละเวอร์ชันและวิดีโอจะถูกอัปโหลด";
 /* Footer description when upload videos for Live Photos is disabled */
-"Only the photo in each Live Photo will be uploaded."="Only the photo version of each Live Photo will be uploaded.";
+"Only the photo in each Live Photo will be uploaded."="เฉพาะเวอร์ชันรูปภาพของ Live Photo แต่ละอันเท่านั้นที่จะถูกอัปโหลด";
 /* Footer description when upload all burst photos is enabled */
-"All the photos from your burst photo sequences will be uploaded."="All the photos from your burst photo sequences will be uploaded.";
+"All the photos from your burst photo sequences will be uploaded."="รูปภาพทั้งหมดจากลำดับรูปภาพที่ถ่ายต่อเนื่องของคุณจะถูกอัปโหลด";
 /* Footer description when upload all burst photos is disabled */
-"Only the representative photos from your burst photo sequences will be uploaded."="Only favourite photos from your burst photo sequences will be uploaded.";
+"Only the representative photos from your burst photo sequences will be uploaded."="เฉพาะภาพโปรดจากลำดับรูปภาพที่ถ่ายต่อเนื่องเท่านั้นที่จะอัปโหลด";
 /* Footer description when upload Hidden Album is enabled */
-"The Hidden Album is where you hide photos or videos in your device Photos app."="The Hidden Album is where you hide photos or videos in your device’s Photos app.";
+"The Hidden Album is where you hide photos or videos in your device Photos app."="อัลบั้มที่ซ่อนคือที่ที่คุณซ่อนรูปภาพหรือวิดีโอในแอปรูปภาพของอุปกรณ์";
 /* Title of the switch to config whether to upload Shared Albums */
-"Upload Shared Albums"="Upload Shared Albums";
+"Upload Shared Albums"="อัปโหลดอัลบั้มที่แชร์";
 /* Footer description for Upload Shared Albums title when option enabled */
-"Shared Albums from your device's Photos app will be uploaded."="Shared Albums from your device’s Photos app will be uploaded.";
+"Shared Albums from your device's Photos app will be uploaded."="อัลบั้มที่แชร์จากแอปรูปภาพของอุปกรณ์จะถูกอัปโหลด";
 /* Footer description for Upload Shared Albums title when option disabled */
-"Shared Albums from your device's Photos app will not be uploaded."="Shared Albums from your device’s Photos app will not be uploaded.";
+"Shared Albums from your device's Photos app will not be uploaded."="อัลบั้มที่แชร์จากแอปรูปภาพของอุปกรณ์จะไม่ถูกอัปโหลด";
 /* Title of the switch to config whether to upload synced albums */
-"Upload albums synced from iTunes"="Upload albums synced from iTunes";
+"Upload albums synced from iTunes"="อัปโหลดอัลบั้มที่ซิงค์จาก iTunes";
 /* Footer description for upload synced albums title */
-"Synced albums are where you sync photos or videos to your device's Photos app from iTunes."="Synced albums are where you sync photos or videos to your device’s Photos app from iTunes.";
+"Synced albums are where you sync photos or videos to your device's Photos app from iTunes."="อัลบั้มที่ซิงค์คือที่ที่คุณซิงค์รูปภาพหรือวิดีโอกับแอปรูปภาพของอุปกรณ์จาก iTunes";
 /* App means “Application” */
 "App version"="เวอร์ชันแอป";
 /* Title of the label where the SDK version is shown */
@@ -864,13 +864,13 @@
 /* Message shown when you click on 'Close other session' to block other login sessions except the current session in use. This message is shown when this has been done. */
 "sessionsClosed"="เซสชันถูกปิดแล้ว";
 /* Section title where you can change the app's passcode */
-"changePasscodeLabel"="เปลี่ยนรหัสผ่าน";
+"changePasscodeLabel"="เปลี่ยนรหัส";
 /* Title to describe a simple (four digit) passcode */
-"simplePasscodeLabel"="ตัวอย่างรหัสผ่าน";
+"simplePasscodeLabel"="รหัสแบบง่าย";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="ลบข้อมูลบนเครื่อง";
 /* Footer text that explain what will happen if "Erase local data" is enabled */
-"failedAttempstSectionTitle"="ออกจากระบบและลบข้อมูลภายในเครื่องหลังจากพยายามกรอกรหัสผ่านผิดเกิน 10 ครั้ง";
+"failedAttempstSectionTitle"="ออกจากระบบและลบข้อมูลภายในเครื่องหลังจากพยายามกรอกรหัสไม่ถูกต้องเกิน 10 ครั้ง";
 /* Menu item */
 "help"="ช่วยเหลือ";
 /* Title of the section to access MEGA's help centre */
@@ -1004,9 +1004,9 @@
 /*  */
 "chooseYourAccountType"="เลือกประเภทบัญชีของคุณ";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]Your Cloud Drive is almost full.[/S] [A]Upgrade now[/A] to a PRO account and get [S]up to %@ TB (%@ GB)[/S] of cloud storage space.";
+"cloudDriveIsAlmostFull"="[S]คลาวด์ไดร์ฟของคุณใกล้เต็มแล้ว[/S] [A]อัปเกรด[/A]เป็นบัญชี PRO และรับพื้นที่เก็บข้อมูลบนคลาวด์[S]สูงสุด %@ TB (%@ GB)[/S]";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]Your Cloud Drive is full.[/S] [A]Upgrade now[/A] to a PRO account and get [S]up to %@ TB (%@ GB)[/S] of cloud storage space.";
+"cloudDriveIsFull"="[S]คลาวด์ไดร์ฟของคุณเต็มแล้ว[/S] [A]อัปเกรด[/A]เป็นบัญชี PRO และรับพื้นที่เก็บข้อมูลบนคลาวด์[S]สูงสุด %@ TB (%@ GB)[/S]";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="ที่เก็บข้อมูล";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
@@ -1122,7 +1122,7 @@
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
 "useMobileData"="ใช้ข้อมูลมือถือ";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for videos. */
-"Use Mobile Data for Videos"="Use Mobile Data for Videos";
+"Use Mobile Data for Videos"="ใช้ข้อมูลมือถือสำหรับวิดีโอ";
 /* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
 "autoAway"="ไม่อยู่อัตโนมัติ";
 /* */
@@ -1151,6 +1151,10 @@
 "sendMessage"="ส่งข้อความ";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
 "verifyCredentials"="ยืนยันข้อมูลรับรอง";
+/* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
+"verify"="ตรวจสอบ";
+/* Button title */
+"verified"="ตรวจสอบแล้ว";
 /* A button title to delete the history of a chat. */
 "clearChatHistory"="ล้างประวัติการแชท";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
@@ -1647,7 +1651,7 @@
 /* Title of the option to enable or disable file versioning on Settings section */
 "File versioning"="เวอร์ชันไฟล์";
 /* Subtitle of the option to enable or disable file versioning on Settings section */
-"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="เปิดหรือปิดใช้งานการกำหนดเวอร์ชันไฟล์สำหรับทั้งบัญชีของคุณ\nคุณอาจจะยังได้รับเวอร์ชันไฟล์จากโฟลเดอร์ที่แชร์ถ้ารายชื่อติดต่อของคุณเปิดใช้งานอยู่";
+"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="เปิดหรือปิดใช้งานการกำหนดเวอร์ชันไฟล์สำหรับทั้งบัญชีของคุณ\nการปิดใช้งานการกำหนดเวอร์ชันไฟล์ ไม่ได้มีการป้องกันผู้ติดต่อของคุณเพื่อสร้างเวอร์ชันใหม่ในโฟลเดอร์ที่แชร์";
 /* A confirmation message when the user chooses to disable file versioning. */
 "When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="เมื่อมีการปิดใช้งานเวอร์ชันไฟล์ เวอร์ชันปัจจุบันจะถูกแทนที่ด้วยเวอร์ชันใหม่เมื่อไฟล์ได้รับการอัปเดตแล้ว (และการเปลี่ยนแปลงไฟล์จะไม่ได้รับการบันทึกอีกต่อไป) คุณแน่ใจหรือไม่ว่าต้องการปิดใช้งานการกำหนดเวอร์ชันของไฟล์";
 /* Settings preference title to show file versions info of the account */
@@ -1695,13 +1699,13 @@
 /* Text shown when an error occurs when trying to save a photo or video to Photos app */
 "Could not save Item"="ไม่สามารถบันทึกรายการได้";
 /* Label in a cell where you can enable the 'Encrypted Key Rotation' */
-"Encrypted Key Rotation"="Encrypted Key Rotation";
+"Encrypted Key Rotation"="เข้ารหัสการหมุนคีย์";
 /* Title shown in a cell to allow the users enable the 'Encrypted Key Rotation' */
-"Enable Encrypted Key Rotation"="เปิดใช้งาน Encrypted Key Rotation";
+"Enable Encrypted Key Rotation"="เปิดใช้งานเข้ารหัสการหมุนคีย์";
 /* Label in a cell where you can get the chat link */
 "Get Chat Link"="รับลิงก์แชท";
 /* Footer text to explain what means 'Encrypted Key Rotation' */
-"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="Key Rotation จะเพิ่มความปลอดภัยขึ้นเล็กน้อย แต่ไม่อนุญาตให้คุณสร้างลิงก์แชทได้ และผู้เข้าร่วมใหม่ก็จะไม่เห็นข้อความที่ผ่านมาเช่นกัน";
+"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="การหมุนคีย์ จะเพิ่มความปลอดภัยขึ้นเล็กน้อย แต่ไม่อนุญาตให้คุณสร้างลิงก์แชทได้ และผู้เข้าร่วมใหม่ก็จะไม่เห็นข้อความที่ผ่านมาเช่นกัน";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
 "To create a chat link you must name the group."="ในการสร้างลิงก์แชทคุณจะต้องตั้งชื่อกลุ่มก่อน";
 /* Label shown in a cell where you can enable a switch to get a chat link */
@@ -1713,11 +1717,11 @@
 /* Users previewing a public chat */
 "Observers"="ผู้สังเกตการณ์";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
-"%@ enabled Encrypted Key Rotation"="%@ ได้เปิดใช้งาน Encrypted Key Rotation";
+"%@ enabled Encrypted Key Rotation"="%@ ได้เปิดใช้งานเข้ารหัสการหมุนคีย์";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
-"%@ created a public link for the chat."="%@ ได้สร้างลิงค์แชทเพื่อสนทนาแล้ว";
+"%@ created a public link for the chat."="%@ ได้สร้างลิงก์แชทแล้ว";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
-"%@ removed a public link for the chat."="%@ ได้ลบลิงก์แชทออกแล้ว";
+"%@ removed a public link for the chat."="%@ ได้ลบลิงก์แชทแล้ว";
 /* Management message shown in a chat when the user %@ joined it from a public chat link */
 "%@ joined the group chat."="%@ ได้เข้าร่วมแชทกลุ่ม";
 /* Message show when a call cannot be established because there are too many participants in the group call */
@@ -1815,7 +1819,7 @@
 /* The text of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. The %1 placeholder will be replaced with the text ‘file’ or ‘folder’. The %2 will be replaced with the name of the file or folder. */
 "Your taken down %1 (%2) has been reinstated."="การแจ้งให้ดำเนินการของคุณ %1 (%2) ถูกคืนสิทธิ์เรียบร้อยแล้ว";
 /* Text shown when a notification or the last message of a chat corresponds to a voice clip */
-"Voice message"="Voice message";
+"Voice message"="ข้อความเสียง";
 /* Error message shown to user when a copy/import operation would take them over their storage limit. */
 "This action can not be completed as it would take you over your current storage limit"="ไม่สามารถดำเนินการนี้ได้ เพราะจะทำให้พื้นที่เก็บข้อมูลปัจจุบันของคุณเกินขีดจำกัดได้";
 /* uploads over storage quota warning dialog title */
@@ -1833,33 +1837,35 @@
 /* */
 "Yesterday"="เมื่อวาน";
 /* Title of the button to share a location in a chat */
-"Send This Location"="Send This Location";
+"Send This Location"="ส่งตำแหน่งนี้";
 /* Title of the alert that allows change between different maps: Standard, Satellite or Hybrid. */
-"Map settings"="Map settings";
+"Map settings"="การตั้งค่าแผนที่";
 /* Type of data displayed in a map view. A street map that shows the position of all roads and some road names. */
 "Standard"="มาตรฐาน";
 /* Type of data displayed in a map view. Satellite imagery of the area. */
-"Satellite"="Satellite";
+"Satellite"="ดาวเทียม";
 /* Type of data displayed in a map view. A satellite image of the area with road and road name information layered on top. */
-"Hybrid"="Hybrid";
+"Hybrid"="ไฮบริด";
 /* Label to give feedback to the user when he is going to share his location, indicating that it may not be the exact location. */
-"Accurate to %d meters"="Accurate to %d meters";
+"Accurate to %d meters"="แม่นยำถึง %d เมตร";
 /* Alert title shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm. */
-"Send Location"="Send Location";
+"Send Location"="ส่งตำแหน่ง";
 /* Message shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm. */
-"This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform."="This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform.";
+"This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform."="ตำแหน่งนี้จะเปิดขึ้นโดยใช้ผู้ให้บริการแผนที่บุคคลที่สามนอกแพลตฟอร์ม MEGA ที่เข้ารหัสลับแบบต้นทางถึงปลายทาง";
 /* Text shown in location-type messages */
-"Pinned Location"="Pinned Location";
+"Pinned Location"="ตำแหน่งที่ปักหมุด";
 /* Plural of participant. 2 participants */
 "%d participants"="ผู้เข้าร่วม %d คน";
 /* Singular of participant. 1 participant */
 "%d participant"="ผู้เข้าร่วม %d คน";
 /* Text shown in the chat toolbar while the user is recording a voice clip. The < character should be > in RTL languages. */
-"< Slide to cancel"="< Slide to cancel";
+"< Slide to cancel"="< สไลด์เพื่อยกเลิก";
 /* Tooltip shown when the user presses but does not hold the microphone icon to send a voice clip */
-"Tap and hold %@ to record, release to send"="Tap and hold %@ to record, release to send";
+"Tap and hold %@ to record, release to send"="แตะ %@ ค้างไว้เพื่อบันทึก ปล่อยเพื่อส่ง";
 /* Message shown when there is an ongoing call and the user tries to record a voice message */
-"It is not possible to record voice messages while there is a call in progress"="It is not possible to record voice messages while there is a call in progress.";
+"It is not possible to record voice messages while there is a call in progress"="ไม่สามารถบันทึกข้อความเสียงในขณะที่มีการโทรได้";
+/* Label indicating that a voice clip is being recorded. String as short as possible. */
+"Recording..."="Recording…";
 /* Text to inform the user there is an active call and is not participating */
 "Ongoing Call"="สายที่กำลังโทร";
 /* Message shown when there is an ongoing call and the user tries to play an audio or video */
@@ -1915,17 +1921,17 @@
 /* In some cases, a user may try to get the link for a chat room, but if such is not set by an operator - it would say "not link available" and not auto create it. */
 "No chat link available."="ไม่มีลิงก์แชท";
 /* Title of a dialog in which we request access to a specific permission, like the Location Services */
-"Please allow access"="Please allow access";
+"Please allow access"="กรุณาอนุญาตให้เข้าถึง";
 /* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
-"Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="Please go to the Privacy section in your device’s Settings. Enable Location Services and set MEGA to While Using the App or Always.";
+"Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="กรุณาไปที่ส่วนความเป็นส่วนตัวในการตั้งค่าอุปกรณ์ของคุณ เปิดใช้งานบริการระบุตำแหน่งและตั้งค่า MEGA เป็นขณะใช้งานแอปหรือตลอดเวลา";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
-"MEGA accesses your location when you elect to share it with your contacts."="MEGA accesses your location when you elect to share it with your contacts.";
+"MEGA accesses your location when you elect to share it with your contacts."="MEGA เข้าถึงตำแหน่งของคุณเมื่อคุณเลือกที่จะแชร์กับผู้ติดต่อของคุณ";
 /* Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
-"Mobile Data is turned off"="Mobile Data is turned off";
+"Mobile Data is turned off"="ข้อมูลมือถือถูกปิด";
 /* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */
-"Turn Mobile Data on"="Turn Mobile Data on";
+"Turn Mobile Data on"="เปิดใช้งานข้อมูลมือถือ";
 /* Extra information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
-"You can turn on mobile data for this app in Settings."="You can turn on mobile data for this App in the device’s Settings.";
+"You can turn on mobile data for this app in Settings."="คุณสามารถเปิดข้อมูลมือถือสำหรับแอปนี้ได้ในการตั้งค่าของอุปกรณ์";
 /* title of the alert dialog when the user is changing the API URL to staging */
 "Change to a test server?"="เปลี่ยนเป็นเซิร์ฟเวอร์ทดสอบหรือไม่";
 /* text of the alert dialog when the user is changing the API URL to staging */
@@ -1933,9 +1939,9 @@
 /* Destination folder name of chat files */
 "My chat files"="ไฟล์แชทของฉัน";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
-"Require passcode"="Require passcode";
+"Require passcode"="ต้องใช้รหัส";
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
-"Immediately"="Immediately";
+"Immediately"="ทันที";
 /* Popup notification text on mouse-over of taken down file. */
 "This file has been the subject of a takedown notice."="ไฟล์นี้ถูกแจ้งว่าให้ลบเนื้อหา";
 /* Popup notification text on mouse-over taken down folder. */
@@ -1943,52 +1949,56 @@
 /* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
 "Dispute Takedown"="ระงับข้อพิพาท";
 /* Title of the "Links" Shared Items. */
-"Links"="Links";
+"Links"="ลิงก์";
 /* Title for empty state view of "Links" in Shared Items. */
 "No Public Links"="ไม่มีลิงก์สาธารณะ";
 /* Text indicating to the user the action that will be executed on tap. */
-"Manage Share"="Manage share";
+"Manage Share"="จัดการการแชร์";
 /* Title of the screen that shows the users with whom the user can share a folder */
 "Share with"="แชร์กับ";
 /* Chat Notifications DND: Option that does not deactivate DND automatically */
-"Until I Turn it On Again"="Until I turn it on again";
+"Until I Turn it On Again"="จนกว่าฉันจะเปิดอีกครั้ง";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
-"30 minutes"="30 minutes";
+"30 minutes"="30 นาที";
 /* Chat Notifications DND: Option that deactivates DND after 1 hour */
 "1 hour"="1 ชั่วโมง";
 /* Chat Notifications DND: Option that deactivates DND after 6 hours */
-"6 hours"="6 hours";
+"6 hours"="6 ชั่วโมง";
 /* Chat Notifications DND: Option that deactivates DND after 24 hours */
-"24 hours"="24 hours";
+"24 hours"="24 ชั่วโมง";
 /* Chat Notifications DND: Title bar message for the dnd activate options */
-"Mute chat Notifications for"="Mute chat notifications for";
+"Mute chat Notifications for"="ปิดเสียงแจ้งเตือนแชทเป็นเวลา";
 /* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
-"Muted forever"="Muted forever";
+"Muted forever"="ปิดเสียงตลอดไป";
 /* Chat Notifications DND: Remaining time left to deactivate DND - 1 minute left */
-"1 minute left"="1 minute left";
+"1 minute left"="เหลืออีก 1 นาที";
 /* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 minute left */
-"%d minutes left"="%d minutes left";
+"%d minutes left"="เหลืออีก %d นาที";
 /* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour left */
-"1 hour left"="1 hour left";
+"1 hour left"="เหลืออีก 1 ชั่วโมง";
 /* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 hour left */
-"%d hours left"="%d hours left";
+"%d hours left"="เหลืออีก %d ชั่วโมง";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="การแจ้งเตือนแชท";
 /* Chat settings: This text appears with the Do Not Disturb switch */
-"Do Not Disturb"="Do Not Disturb";
+"Do Not Disturb"="ห้ามรบกวน";
 /* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, 1 minute left */
-"1 hour, 1 minute left"="1 hour, 1 minute left";
+"1 hour, 1 minute left"="เหลืออีก 1 ชั่วโมง 1 นาที";
 /* Chat Notifications DND: Remaining time left to deactivate DND - X hours, X minutes left */
-"%d hours, %d minutes left"="%d hours, %d minutes left";
+"%d hours, %d minutes left"="เหลืออีก %d ชั่วโมง %d นาที";
 /* Chat Notifications DND: Remaining time left to deactivate DND - X hours, 1 minute left */
-"%d hours, 1 minute left"="%d hours, 1 minute left";
+"%d hours, 1 minute left"="เหลืออีก %d ชั่วโมง 1 นาที";
 /* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, X minutes left */
-"1 hour, %d minutes left"="1 hour, %d minutes left";
+"1 hour, %d minutes left"="เหลืออีก 1 ชั่วโมง %d นาที";
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
-"Reconnecting..."="Reconnecting…";
+"Reconnecting..."="กำลังเชื่อมต่อใหม่...";
 /* Title shown when the user reconnect in a call. */
-"You are back!"="You are back.";
+"You are back!"="คุณกลับมาแล้ว";
 /* Subtitle of chat screen when the chat is inactive */
 "Inactive chat"="แชทที่ไม่ได้ใช้งาน";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
-"It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1.";
+"It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="ไม่สามารถรับเนื้อหาของไฟล์นี้เนื่องจากไม่ได้เข้ารหัสเป็น UTF-8 หรือ ISO/IEC 8859-1";
+/* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
+"Include location tags"="รวมแท็กตำแหน่งที่ตั้ง";
+/* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
+"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="หากเปิดใช้งาน คุณจะอัปโหลดข้อมูลเกี่ยวกับตำแหน่งที่ถ่ายภาพและวิดีโอของคุณ ดังนั้นโปรดระมัดระวังถ้าคุณจะแชร์ตำแหน่งที่ตั้ง";
