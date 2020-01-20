@@ -225,20 +225,6 @@
     MEGALogDebug(@"[CallKit] Provider perform start call: %@, uuid: %@", call, action.callUUID);
     
     if (call) {
-        MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:call.chatId];
-        
-        CXCallUpdate *update = [[CXCallUpdate alloc] init];
-        update.remoteHandle = [[CXHandle alloc] initWithType:CXHandleTypeGeneric value:[MEGASdk base64HandleForUserHandle:chatRoom.chatId]];
-        update.localizedCallerName = chatRoom.title;
-        update.supportsHolding = NO;
-        update.supportsGrouping = NO;
-        update.supportsUngrouping = NO;
-        update.supportsDTMF = NO;
-        update.hasVideo = call.hasVideoInitialCall;
-        
-        [provider reportCallWithUUID:action.callUUID updated:update];
-        
-        [provider reportOutgoingCallWithUUID:action.callUUID startedConnectingAtDate:nil];
         [action fulfill];
         [self disablePasscodeIfNeeded];
     } else {
@@ -315,9 +301,9 @@
     MEGALogDebug(@"[CallKit] Provider perform end call: %@, uuid: %@", call, action.callUUID);
     
     if (call) {
+        [MEGASdkManager.sharedMEGAChatSdk hangChatCall:call.chatId];
         [action fulfill];
         [self.megaCallManager removeCall:call];
-        [[MEGASdkManager sharedMEGAChatSdk] hangChatCall:call.chatId];
     } else {
         [action fail];
     }
@@ -377,6 +363,7 @@
             
         case MEGAChatCallStatusRequestSent:
             self.outgoingCall = YES;
+            [self.provider reportOutgoingCallWithUUID:call.uuid startedConnectingAtDate:nil];
             break;
             
         case MEGAChatCallStatusRingIn: {
@@ -403,13 +390,23 @@
             self.outgoingCall = NO;
             break;
             
-        case MEGAChatCallStatusInProgress:
+        case MEGAChatCallStatusInProgress: {
             if (self.isOutgoingCall) {
                 [self reportOutgoingCall:call];
                 self.outgoingCall = NO;
             }
+            
+            if ([call hasChangedForType:MEGAChatCallChangeTypeLocalAVFlags] || [call hasChangedForType:MEGAChatCallChangeTypeRemoteAVFlags]) {
+                CXCallUpdate *callUpdate = CXCallUpdate.alloc.init;
+                MEGAChatSession *remoteSession = [call sessionForPeer:call.peerSessionStatusChange clientId:call.clientSessionStatusChange];
+                callUpdate.hasVideo = call.hasLocalVideo || remoteSession.hasVideo;
+                
+                [self.provider reportCallWithUUID:call.uuid updated:callUpdate];
+            }
+            
             [self.missedCallsDictionary removeObjectForKey:@(call.chatId)];
             break;
+        }
             
         case MEGAChatCallStatusUserNoPresent:
             break;
