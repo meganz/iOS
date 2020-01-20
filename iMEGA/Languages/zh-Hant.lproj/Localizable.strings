@@ -1151,6 +1151,10 @@
 "sendMessage"="發送訊息";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
 "verifyCredentials"="確認憑證";
+/* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
+"verify"="確認";
+/* Button title */
+"verified"="已驗證";
 /* A button title to delete the history of a chat. */
 "clearChatHistory"="清空對話記錄";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
@@ -1860,6 +1864,8 @@
 "Tap and hold %@ to record, release to send"="點擊並按住%@以進行錄製，並發佈送出";
 /* Message shown when there is an ongoing call and the user tries to record a voice message */
 "It is not possible to record voice messages while there is a call in progress"="通話進行中無法錄製語音留言。";
+/* Label indicating that a voice clip is being recorded. String as short as possible. */
+"Recording..."="Recording…";
 /* Text to inform the user there is an active call and is not participating */
 "Ongoing Call"="正在進行中的通話";
 /* Message shown when there is an ongoing call and the user tries to play an audio or video */
@@ -1992,3 +1998,7 @@
 "Inactive chat"="不活躍的聊天";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
 "It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="無法獲得此檔案的內容，因為它並不是以UTF-8或ISO/IEC 8859-1進行編碼。";
+/* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
+"Include location tags"="包含位置標籤";
+/* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
+"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="如果啟用，您將上傳關於相片與影片拍攝位置的資訊，所以分享時請格外小心。";

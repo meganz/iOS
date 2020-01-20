@@ -825,7 +825,7 @@
 /* An alert title where the user provided the incorrect Recovery Key. */
 "invalidRecoveryKey"="Klucz jest nieprawidłowy";
 /* Text of the alert after opening the recovery link to reset pass being logged. */
-"youRecoveryKeyIsGoingTo"="Twój klucz zostanie użyty aby zresetować Twoje hasło. Wprowadź nowe hasło.";
+"youRecoveryKeyIsGoingTo"="Twój klucz zapasowy zostanie użyty do zresetowania hasła. Proszę podać nowe hasło.";
 /*  */
 "yourPasswordHasBeenReset"="Hasło zostało zresetowane pomyślnie. Zaloguj się teraz do konta.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
@@ -1151,6 +1151,10 @@
 "sendMessage"="Wyślij wiadomość";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
 "verifyCredentials"="Zweryfikuj uprawnienia";
+/* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
+"verify"="Weryfikacja";
+/* Button title */
+"verified"="Zweryfikowany";
 /* A button title to delete the history of a chat. */
 "clearChatHistory"="Wyczyść historię czatu.";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
@@ -1860,6 +1864,8 @@
 "Tap and hold %@ to record, release to send"="Dotknij i przytrzymaj %@, aby nagrać, zwolnij, aby wysłać";
 /* Message shown when there is an ongoing call and the user tries to record a voice message */
 "It is not possible to record voice messages while there is a call in progress"="Nie można nagrywać wiadomości głosowych podczas trwającego połączenia.";
+/* Label indicating that a voice clip is being recorded. String as short as possible. */
+"Recording..."="Recording…";
 /* Text to inform the user there is an active call and is not participating */
 "Ongoing Call"="Trwające połączenie";
 /* Message shown when there is an ongoing call and the user tries to play an audio or video */
@@ -1992,3 +1998,7 @@
 "Inactive chat"="Nieaktywny czat";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
 "It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="Nie można było uzyskać zawartości tego pliku, ponieważ nie jest on zakodowany ani w UTF-8, ani w ISO / IEC 8859-1.";
+/* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
+"Include location tags"="Dołącz tagi lokalizacji";
+/* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
+"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="Jeśli ta opcja jest włączona, będziesz przesyłać informacje o tym, gdzie zostały zrobione Twoje zdjęcia i filmy, więc zachowaj ostrożność, udostępniając je.";
