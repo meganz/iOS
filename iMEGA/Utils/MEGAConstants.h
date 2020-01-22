@@ -81,3 +81,9 @@ extern NSString * const MEGAUIActivityTypeRemoveSharing;
 extern NSString * const MEGAUIActivityTypeShareFolder;
 extern NSString * const MEGAUIActivityTypeSaveToCameraRoll;
 extern NSString * const MEGAUIActivityTypeSendToChat;
+
+#pragma mark - MEGA Affiliate program
+
+extern NSString * const MEGALastPublicHandleAccessed;
+extern NSString * const MEGALastPublicTypeAccessed;
+extern NSString * const MEGALastPublicTimestampAccessed;

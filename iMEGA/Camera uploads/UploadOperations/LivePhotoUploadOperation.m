@@ -38,12 +38,7 @@ static NSString * const LivePhotoVideoResourceExportName = @"livePhotoVideoResou
         return;
     }
     
-    NSArray *livePhotoSearchTypes;
-    if (@available(iOS 10.0, *)) {
-        livePhotoSearchTypes = @[@(PHAssetResourceTypeFullSizePairedVideo), @(PHAssetResourceTypePairedVideo), @(PHAssetResourceTypeAdjustmentBasePairedVideo)];
-    } else {
-        livePhotoSearchTypes = @[@(PHAssetResourceTypePairedVideo)];
-    }
+    NSArray *livePhotoSearchTypes = @[@(PHAssetResourceTypeFullSizePairedVideo), @(PHAssetResourceTypePairedVideo), @(PHAssetResourceTypeAdjustmentBasePairedVideo)];
     
     PHAssetResource *videoResource = [self.uploadInfo.asset searchAssetResourceByTypes:livePhotoSearchTypes];
     if (videoResource) {
