@@ -1864,6 +1864,8 @@
 "Tap and hold %@ to record, release to send"="%@を長押しすると録音し、離すと送信します。";
 /* Message shown when there is an ongoing call and the user tries to record a voice message */
 "It is not possible to record voice messages while there is a call in progress"="通話中にボイスメッセージの録音はできません。";
+/* Label indicating that a voice clip is being recorded. String as short as possible. */
+"Recording..."="Recording…";
 /* Text to inform the user there is an active call and is not participating */
 "Ongoing Call"="継続中の通話";
 /* Message shown when there is an ongoing call and the user tries to play an audio or video */
@@ -1999,4 +2001,4 @@
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
 "Include location tags"="場所タグを含める";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
-"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them.";
+"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="有効にすると、あなたの写真や動画が撮影された場所に関する情報をアップロードするため、それらを共有する際にご注意ください。";
