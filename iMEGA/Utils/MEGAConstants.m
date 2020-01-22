@@ -81,3 +81,9 @@ NSString * const MEGAUIActivityTypeRemoveSharing = @"MEGAUIActivityTypeRemoveSha
 NSString * const MEGAUIActivityTypeShareFolder = @"MEGAUIActivityTypeShareFolder";
 NSString * const MEGAUIActivityTypeSaveToCameraRoll = @"MEGAUIActivityTypeSaveToCameraRoll";
 NSString * const MEGAUIActivityTypeSendToChat = @"MEGAUIActivityTypeSendToChat";
+
+#pragma mark - MEGA Affiliate program
+
+NSString * const MEGALastPublicHandleAccessed = @"kLastPublicHandleAccessed";
+NSString * const MEGALastPublicTypeAccessed = @"kLastPublicTypeAccessed";
+NSString * const MEGALastPublicTimestampAccessed = @"kLastPublicTimestampAccessed";
