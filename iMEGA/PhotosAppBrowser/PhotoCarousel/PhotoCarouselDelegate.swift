@@ -24,7 +24,7 @@ class PhotoCarouselDelegate: PhotoGridViewDelegate {
     
     override func collectionView(_ collectionView: UICollectionView,
                         didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if let cell = cell as? PhotoGridViewCell {
+        if let cell = cell as? PhotoCarouselCell {
             cell.didEndDisplaying()
         }
     }
