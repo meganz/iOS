@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="RUe-vS-5fH">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="RUe-vS-5fH">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -16,7 +16,7 @@
         <!--Verification View Controller-->
         <scene sceneID="lzC-Lw-lbm">
             <objects>
-                <viewController storyboardIdentifier="SMSVerificationViewController" id="RUe-vS-5fH" customClass="SMSVerificationViewController" customModule="MEGA" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SMSVerificationViewControllerID" id="RUe-vS-5fH" customClass="SMSVerificationViewController" customModule="MEGA" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="xLd-8O-fwZ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -335,7 +335,7 @@
         <!--Single Code Delegate-->
         <scene sceneID="Asa-Cw-ikC">
             <objects>
-                <viewController storyboardIdentifier="VerificationCodeViewController" id="ZVj-3U-FfW" customClass="VerificationCodeViewController" customModule="MEGA" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="VerificationCodeViewControllerID" id="ZVj-3U-FfW" customClass="VerificationCodeViewController" customModule="MEGA" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5aj-i3-PKT">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -580,7 +580,7 @@
         <!--Add Phone Number View Controller-->
         <scene sceneID="ZaE-xk-idF">
             <objects>
-                <viewController storyboardIdentifier="AddPhoneNumberViewController" id="V8p-lh-ad7" customClass="AddPhoneNumberViewController" customModule="MEGA" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AddPhoneNumberViewControllerID" id="V8p-lh-ad7" customClass="AddPhoneNumberViewController" customModule="MEGA" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="etF-Iz-rXx">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

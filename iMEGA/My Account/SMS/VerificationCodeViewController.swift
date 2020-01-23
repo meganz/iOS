@@ -26,7 +26,7 @@ class VerificationCodeViewController: UIViewController {
     }
     
     class func instantiate(with phoneNumber: PhoneNumber, verificationType: SMSVerificationType) -> VerificationCodeViewController {
-        let controller = VerificationCodeViewController.mnz_instantiate(withStoryboardName: "SMSVerification")
+        let controller = UIStoryboard(name: "SMSVerification", bundle: nil).instantiateViewController(withIdentifier: "VerificationCodeViewControllerID") as! VerificationCodeViewController
         controller.phoneNumber = phoneNumber
         controller.verificationType = verificationType
         return controller
