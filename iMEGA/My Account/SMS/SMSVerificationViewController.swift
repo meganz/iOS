@@ -31,7 +31,7 @@ class SMSVerificationViewController: UIViewController {
     // MARK: - View lifecycle
     
     @objc class func instantiate(with verificationType: SMSVerificationType) -> SMSVerificationViewController {
-        let controller = SMSVerificationViewController.mnz_instantiate(withStoryboardName: "SMSVerification")
+        let controller = UIStoryboard(name: "SMSVerification", bundle: nil).instantiateViewController(withIdentifier: "SMSVerificationViewControllerID") as! SMSVerificationViewController
         controller.verificationType = verificationType
         return controller
     }
@@ -97,7 +97,7 @@ class SMSVerificationViewController: UIViewController {
     private func configDefaultCountryCode() {
         guard let countryCallingCodeDict = countryCallingCodeDict else { return }
         guard let systemCurrentRegionCode = Locale.current.regionCode else { return }
-        guard let callingCode = countryCallingCodeDict.first(where: { $0.key == systemCurrentRegionCode })?.value.first else { return }
+        guard let callingCode = countryCallingCodeDict.first(where: { $0.key == systemCurrentRegionCode })?.value.string(at: 0) else { return }
         guard let appLanguageId = LocalizationSystem.sharedLocal()?.getLanguage() else { return }
         let appLocale = Locale(identifier: Locale.identifier(fromComponents: [NSLocale.Key.languageCode.rawValue : appLanguageId]))
         guard let country = SMSCountry(countryCode: systemCurrentRegionCode, countryLocalizedName: appLocale.localizedString(forRegionCode: systemCurrentRegionCode), callingCode: callingCode) else { return }

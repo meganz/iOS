@@ -166,7 +166,7 @@ extension ContactsOnMegaViewController: UITableViewDelegate {
                 return UIView(frame: CGRect.zero)
             }
             bottomView.configureForOpenSettingsPermission( action: {
-                UIApplication.shared.openURL(URL(string: UIApplication.openSettingsURLString)!)
+                UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!, options: [:], completionHandler: nil)
             })
             
             return bottomView

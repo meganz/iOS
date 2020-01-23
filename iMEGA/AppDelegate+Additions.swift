@@ -25,7 +25,7 @@ extension AppDelegate {
 
         UserDefaults.standard.set(Date(), forKey: "lastDateAddPhoneNumberShowed")
         
-        let addPhoneNumberController = AddPhoneNumberViewController.mnz_instantiate(withStoryboardName: "SMSVerification")
+        let addPhoneNumberController = UIStoryboard(name: "SMSVerification", bundle: nil).instantiateViewController(withIdentifier: "AddPhoneNumberViewControllerID")
         addPhoneNumberController.modalPresentationStyle = .fullScreen
         UIApplication.mnz_presentingViewController()?.present(addPhoneNumberController, animated: true, completion: nil)
     }
