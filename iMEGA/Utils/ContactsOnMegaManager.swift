@@ -22,9 +22,7 @@ struct ContactOnMega: Codable {
 
     var completionWhenReady : (() -> Void)?
 
-    @objc static let shared: ContactsOnMegaManager = {
-        return ContactsOnMegaManager()
-    }()
+    @objc static let shared = ContactsOnMegaManager()
     
     private override init() {}
     
@@ -49,50 +47,40 @@ struct ContactOnMega: Codable {
         var contactEmailsToFilter = [String]()
 
         //Get all outgoing contact request emails
-        let outgoingContactRequestList = MEGASdkManager.sharedMEGASdk()?.outgoingContactRequests()
-        guard let outgoingContactRequestSize = outgoingContactRequestList?.size.intValue else {
-            return contactsOnMega
-        }
-        for i in 0 ..< outgoingContactRequestSize {
-            contactEmailsToFilter.append(outgoingContactRequestList?.contactRequest(at: i)?.targetEmail ?? "")
+        let outgoingContactRequestList = MEGASdkManager.sharedMEGASdk().outgoingContactRequests()
+        for i in 0 ..< outgoingContactRequestList.size.intValue {
+            contactEmailsToFilter.append(outgoingContactRequestList.contactRequest(at: i)?.targetEmail ?? "")
         }
         
         //Get all visible contacts emails
-        let userContacts = MEGASdkManager.sharedMEGASdk()?.contacts()
-        guard let userContactsSize = userContacts?.size.intValue else {
-            return contactsOnMega
-        }
-        for j in 0 ..< userContactsSize {
-            guard let user = userContacts?.user(at: j) else {
-                return contactsOnMega
-            }
-            if user.visibility == .visible {
-                contactEmailsToFilter.append(user.email)
+        let userContacts = MEGASdkManager.sharedMEGASdk().contacts()
+        for j in 0 ..< userContacts.size.intValue {
+            if let user = userContacts.user(at: j) {
+                if user.visibility == .visible {
+                    contactEmailsToFilter.append(user.email)
+                }
             }
         }
         
         //Filter ContactsOnMEGA from API with outgoing contact request and visible contacts
-        for contact in contactsOnMega {
-            if contactEmailsToFilter.filter({$0 == contact.email}).count == 0 {
-                contactsOnMegaFiltered.append(contact)
+        if contactEmailsToFilter.count > 0 {
+            for contact in contactsOnMega {
+                if contactEmailsToFilter.filter({$0 == contact.email}).count == 0 {
+                    contactsOnMegaFiltered.append(contact)
+                }
             }
+            return contactsOnMegaFiltered
+        } else {
+            return contactsOnMega
         }
-        
-        return contactsOnMegaFiltered
     }
     
     @objc func areContactsOnMegaRequestedWithin(days: Int) -> Bool {
-        guard let lastDateContactsOnMegaRequested = UserDefaults.standard.value(forKey: "lastDateContactsOnMegaRequested") else {
+        guard let lastDateContactsOnMegaRequested = UserDefaults.standard.value(forKey: "lastDateContactsOnMegaRequested"), let daysSinceLastRequest = Calendar.current.dateComponents([.day], from: lastDateContactsOnMegaRequested as! Date, to: Date()).day else {
             return false
         }
-        guard let daysSinceLastRequest = Calendar.current.dateComponents([.day], from: lastDateContactsOnMegaRequested as! Date, to: Date()).day else {
-            return false
-        }
-        if daysSinceLastRequest >= days {
-            return false
-        } else {
-            return true
-        }
+
+        return daysSinceLastRequest < days
     }
     
     @objc func loadContactsOnMegaFromLocal() {
