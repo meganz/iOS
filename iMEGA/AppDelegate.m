@@ -5,6 +5,7 @@
 #import <Photos/Photos.h>
 #import <PushKit/PushKit.h>
 #import <QuickLook/QuickLook.h>
+#import <SafariServices/SafariServices.h>
 #import <UserNotifications/UserNotifications.h>
 
 #import "LTHPasscodeViewController.h"
@@ -678,8 +679,12 @@
 
 - (void)manageLink:(NSURL *)url {
     if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
-        if (![LTHPasscodeViewController doesPasscodeExist] && isFetchNodesDone) {
-            [self showLink:url];
+        if (![LTHPasscodeViewController doesPasscodeExist]) {
+            if ([UIApplication.mnz_visibleViewController isKindOfClass:VerifyEmailViewController.class] && [url.absoluteString containsString:@"emailverify"]) {
+                [self showLink:url];
+            } else if (isFetchNodesDone) {
+                [self showLink:url];
+            }
         }
     } else {
         [self showLink:url];
@@ -689,9 +694,13 @@
 - (void)showLink:(NSURL *)url {
     if (!MEGALinkManager.linkURL) return;
     
-    [self dismissPresentedViewsAndDo:^{
+    if ([UIApplication.mnz_visibleViewController isKindOfClass:VerifyEmailViewController.class] && [url.absoluteString containsString:@"emailverify"]) {
         [MEGALinkManager processLinkURL:url];
-    }];
+    } else {
+        [self dismissPresentedViewsAndDo:^{
+            [MEGALinkManager processLinkURL:url];
+        }];
+    }
 }
 
 - (void)dismissPresentedViewsAndDo:(void (^)(void))completion {
@@ -1403,7 +1412,7 @@ void uncaughtExceptionHandler(NSException *exception) {
             
         case EventAccountBlocked:
             if (event.number == 700) {
-                if (![UIApplication.mnz_visibleViewController isKindOfClass:VerifyEmailViewController.class]) {
+                if (![UIApplication.mnz_visibleViewController isKindOfClass:VerifyEmailViewController.class] && ![UIApplication.mnz_visibleViewController isKindOfClass:SFSafariViewController.class]) {
                     VerifyEmailViewController *verifyEmailVC = [[UIStoryboard storyboardWithName:@"VerifyEmail" bundle:nil] instantiateViewControllerWithIdentifier:@"VerifyEmailViewController"];
                     [UIApplication.mnz_presentingViewController presentViewController:verifyEmailVC animated:YES completion:nil];
                 }
