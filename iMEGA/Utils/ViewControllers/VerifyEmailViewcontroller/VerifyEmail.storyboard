@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Rav-a2-W4d">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Rav-a2-W4d">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <array key="SF-UI-Text-Regular.otf">
+            <string>SFUIText-Regular</string>
+        </array>
         <array key="SF-UI-Text-Semibold.otf">
             <string>SFUIText-Semibold</string>
         </array>
@@ -108,7 +111,7 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="df8-dJ-avN">
-                                <rect key="frame" x="63" y="792" width="288" height="50"/>
+                                <rect key="frame" x="63" y="726" width="288" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="cio-2a-HHL"/>
                                     <constraint firstAttribute="width" constant="288" id="ifd-f6-iMX"/>
@@ -135,8 +138,36 @@
                                     <action selector="tapResendButton:" destination="Rav-a2-W4d" eventType="touchUpInside" id="zDM-RI-dfW"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JpX-4Y-xFk">
+                                <rect key="frame" x="63" y="792" width="288" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="288" id="98i-fF-G6r"/>
+                                    <constraint firstAttribute="height" constant="50" id="XCh-gy-xkr"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
+                                <state key="normal" title="Logout">
+                                    <color key="titleColor" systemColor="systemGrayColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="8"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowOpacity">
+                                        <real key="value" value="0.10000000000000001"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowRadius">
+                                        <integer key="value" value="3"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="size" keyPath="layer.shadowOffset">
+                                        <size key="value" width="0.0" height="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="tapLogoutButton:" destination="Rav-a2-W4d" eventType="touchUpInside" id="OGG-dB-DAN"/>
+                                </connections>
+                            </button>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email Sent" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="11A-mY-zvo">
-                                <rect key="frame" x="177" y="761.66666666666663" width="60" height="14.333333333333371"/>
+                                <rect key="frame" x="177" y="695.66666666666663" width="60" height="14.333333333333371"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <color key="textColor" red="0.51764705879999995" green="0.51764705879999995" blue="0.51764705879999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -147,7 +178,7 @@
                             <constraint firstItem="df8-dJ-avN" firstAttribute="top" secondItem="11A-mY-zvo" secondAttribute="bottom" constant="16" id="2vK-2e-r6W"/>
                             <constraint firstItem="nK5-Ww-h37" firstAttribute="top" secondItem="Ppm-ej-WVc" secondAttribute="bottom" constant="34" id="68r-oC-iie"/>
                             <constraint firstItem="ovs-Ha-LAP" firstAttribute="height" secondItem="ZYs-ao-LRC" secondAttribute="height" multiplier="0.35" id="CRB-Ec-Z7m"/>
-                            <constraint firstItem="ZYs-ao-LRC" firstAttribute="bottom" secondItem="df8-dJ-avN" secondAttribute="bottom" constant="20" id="CUB-70-d8L"/>
+                            <constraint firstItem="JpX-4Y-xFk" firstAttribute="top" secondItem="df8-dJ-avN" secondAttribute="bottom" constant="16" id="CUB-70-d8L"/>
                             <constraint firstItem="CBJ-Fw-i0r" firstAttribute="width" secondItem="ZYs-ao-LRC" secondAttribute="width" multiplier="0.7" id="Fa9-FZ-ufM"/>
                             <constraint firstItem="Ppm-ej-WVc" firstAttribute="centerX" secondItem="PLv-ca-qbJ" secondAttribute="centerX" id="H8Y-Xd-q3y"/>
                             <constraint firstItem="df8-dJ-avN" firstAttribute="centerX" secondItem="PLv-ca-qbJ" secondAttribute="centerX" id="JC1-ee-rjm"/>
@@ -156,7 +187,9 @@
                             <constraint firstItem="4I6-Zf-6Y2" firstAttribute="top" secondItem="ZYs-ao-LRC" secondAttribute="top" constant="12" id="Wga-2S-lu3"/>
                             <constraint firstItem="ovs-Ha-LAP" firstAttribute="top" secondItem="PLv-ca-qbJ" secondAttribute="top" id="X9l-IB-f9X"/>
                             <constraint firstItem="ZYs-ao-LRC" firstAttribute="trailing" secondItem="ovs-Ha-LAP" secondAttribute="trailing" id="Xap-Eo-dZl"/>
+                            <constraint firstItem="JpX-4Y-xFk" firstAttribute="centerX" secondItem="PLv-ca-qbJ" secondAttribute="centerX" id="XrC-kE-ogD"/>
                             <constraint firstItem="11A-mY-zvo" firstAttribute="centerX" secondItem="PLv-ca-qbJ" secondAttribute="centerX" id="YMt-OK-y2d"/>
+                            <constraint firstItem="ZYs-ao-LRC" firstAttribute="bottom" secondItem="JpX-4Y-xFk" secondAttribute="bottom" constant="20" id="aOk-Dn-zUG"/>
                             <constraint firstItem="nK5-Ww-h37" firstAttribute="width" secondItem="PLv-ca-qbJ" secondAttribute="width" id="cGD-sE-eXG"/>
                             <constraint firstItem="CBJ-Fw-i0r" firstAttribute="top" secondItem="ovs-Ha-LAP" secondAttribute="bottom" constant="50" id="fWc-LF-GPA"/>
                             <constraint firstItem="Ppm-ej-WVc" firstAttribute="width" secondItem="ZYs-ao-LRC" secondAttribute="width" multiplier="0.7" id="gdd-zT-7Sf"/>
@@ -170,6 +203,7 @@
                         <outlet property="bottomSeparatorView" destination="q02-Zj-Ol1" id="USi-ct-gb2"/>
                         <outlet property="hintButton" destination="Tr2-K8-Gnq" id="8M7-Wt-CNb"/>
                         <outlet property="hintLabel" destination="11A-mY-zvo" id="t8T-IK-SXP"/>
+                        <outlet property="logoutButton" destination="JpX-4Y-xFk" id="oYz-l2-wH2"/>
                         <outlet property="resendButton" destination="df8-dJ-avN" id="MCp-vy-ae8"/>
                         <outlet property="titleLabel" destination="4I6-Zf-6Y2" id="zTI-WH-Mpv"/>
                         <outlet property="topDescriptionLabel" destination="CBJ-Fw-i0r" id="Gad-VE-LjX"/>

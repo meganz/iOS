@@ -15,7 +15,8 @@ class VerifyEmailViewController: UIViewController {
     
     @IBOutlet weak var hintButton: UIButton!
     @IBOutlet weak var resendButton: UIButton!
-    
+    @IBOutlet weak var logoutButton: UIButton!
+
     //MARK: Lifecyle
 
     override func viewDidLoad() {
@@ -101,6 +102,7 @@ class VerifyEmailViewController: UIViewController {
         topDescriptionLabel.text = NSLocalizedString("Your account has been temporarily suspended for your safety.", comment: "Text describing account suspended state to the user")
         bottomDescriptionLabel.text = NSLocalizedString("[S]Please verify your email[/S] and follow its steps to unlock your account.", comment: "Text indicating the user next step to unlock suspended account. Please leave [S], [/S] as it is which is used to bolden the text.")
         resendButton.setTitle(NSLocalizedString("resend", comment: "A button to resend the email confirmation."), for: .normal)
+        logoutButton.setTitle(NSLocalizedString("logoutLabel", comment: "Title of the button which logs out from your account."), for: .normal)
         hintButton.setTitle(NSLocalizedString("Why am I seeing this?", comment: "Text for button to open an helping view"), for: .normal)
         hintLabel.text = NSLocalizedString("Email sent", comment: "Text to notify user an email has been sent")
     }
@@ -143,5 +145,10 @@ class VerifyEmailViewController: UIViewController {
             }
             MEGASdkManager.sharedMEGASdk()?.resendVerificationEmail(with: resendVerificationEmailDelegate)
         }
+    }
+    
+    
+    @IBAction func tapLogoutButton(_ sender: Any) {
+        MEGASdkManager.sharedMEGASdk().logout()
     }
 }
