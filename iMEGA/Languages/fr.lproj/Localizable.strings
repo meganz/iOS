@@ -1864,6 +1864,8 @@
 "Tap and hold %@ to record, release to send"="Touchez et maintenez %@ pour enregistrer, relâchez pour envoyer";
 /* Message shown when there is an ongoing call and the user tries to record a voice message */
 "It is not possible to record voice messages while there is a call in progress"="Il est impossible d’enregistrer des messages vocaux pendant un appel.";
+/* Label indicating that a voice clip is being recorded. String as short as possible. */
+"Recording..."="Recording…";
 /* Text to inform the user there is an active call and is not participating */
 "Ongoing Call"="Appel en cours";
 /* Message shown when there is an ongoing call and the user tries to play an audio or video */
@@ -1999,4 +2001,4 @@
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
 "Include location tags"="Inclure des géobalises";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
-"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them.";
+"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="Si cette option est activée, vous téléverserez des renseignements sur le lieu où vos photos et vidéos ont été prises. Veuillez donc faire preuve de prudence en les partageant.";

@@ -1864,6 +1864,8 @@
 "Tap and hold %@ to record, release to send"="Tik en vasthouden %@ om op te nemen, loslaten om te verzenden";
 /* Message shown when there is an ongoing call and the user tries to record a voice message */
 "It is not possible to record voice messages while there is a call in progress"="Het is niet mogelijk om spraakberichten op te nemen tijdens een oproep die gaande is.";
+/* Label indicating that a voice clip is being recorded. String as short as possible. */
+"Recording..."="Recording…";
 /* Text to inform the user there is an active call and is not participating */
 "Ongoing Call"="Lopend Gesprek";
 /* Message shown when there is an ongoing call and the user tries to play an audio or video */
@@ -1999,4 +2001,4 @@
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
 "Include location tags"="Inclusief locatie labels";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
-"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them.";
+"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="Indien ingeschakeld, upload u informatie over waar uw foto's en video's zijn gemaakt, dus wees voorzichtig wanneer u ze deelt.";
