@@ -13,6 +13,7 @@
 
 #import "Helper.h"
 #import "DevicePermissionsHelper.h"
+#import "MEGA-Swift.h"
 #import "MEGAApplication.h"
 #import "MEGAIndexer.h"
 #import "MEGALinkManager.h"
@@ -72,7 +73,6 @@
 @property (nonatomic, strong) UIView *privacyView;
 
 @property (nonatomic, strong) NSString *quickActionType;
-@property (nonatomic, strong) NSString *messageForSuspendedAccount;
 
 @property (nonatomic, strong) UIAlertController *API_ESIDAlertController;
 
@@ -1311,6 +1311,10 @@ void uncaughtExceptionHandler(NSException *exception) {
     [self showMainTabBar];
 }
 
+- (void)readyToShowRecommendations {
+    [self showAddPhoneNumberIfNeeded];
+}
+
 #pragma mark - MEGAPurchasePricingDelegate
 
 - (void)pricingsReady {
@@ -1403,13 +1407,14 @@ void uncaughtExceptionHandler(NSException *exception) {
 }
 
 - (void)onEvent:(MEGASdk *)api event:(MEGAEvent *)event {
+    MEGALogDebug(@"on event type %lu, number %lu", event.type, event.number);
     switch (event.type) {
         case EventChangeToHttps:
             [[NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier] setBool:YES forKey:@"useHttpsOnly"];
             break;
             
         case EventAccountBlocked:
-            _messageForSuspendedAccount = event.text;
+            [api handleAccountBlockedEvent:event];
             break;
             
         case EventNodesCurrent:
@@ -1445,7 +1450,7 @@ void uncaughtExceptionHandler(NSException *exception) {
         case EventMiscFlagsReady:
             MEGALogDebug(@"Apple VoIP push status: %d", api.appleVoipPushEnabled);
             [NSUserDefaults.standardUserDefaults setBool:api.appleVoipPushEnabled forKey:@"VoIP_messages"];
-            
+            [self showAddPhoneNumberIfNeeded];
             break;
             
         case EventStorageSumChanged:
@@ -1512,6 +1517,8 @@ void uncaughtExceptionHandler(NSException *exception) {
 }
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
+    MEGALogDebug(@"onRequestFinish, request type: %ld, error type: %ldd", (long)request.type, (long)error.type)
+    
     if ([error type]) {
         switch ([error type]) {
             case MEGAErrorTypeApiEArgs: {
@@ -1596,17 +1603,6 @@ void uncaughtExceptionHandler(NSException *exception) {
                 break;
             }
                 
-            case MEGAErrorTypeApiEBlocked: {
-                if ([request type] == MEGARequestTypeLogin || [request type] == MEGARequestTypeFetchNodes) {
-                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:AMLocalizedString(@"accountBlocked", @"Error message when trying to login and the account is blocked") preferredStyle:UIAlertControllerStyleAlert];
-                    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-                    [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
-                    [api logout];
-                }
-                
-                break;
-            }
-                
             default:
                 break;
         }
@@ -1688,7 +1684,13 @@ void uncaughtExceptionHandler(NSException *exception) {
             });
             
             [[MEGASdkManager sharedMEGASdk] getAccountDetails];
-            
+
+            if ([NSUserDefaults.standardUserDefaults boolForKey:@"IsChatEnabled"] && ![ContactsOnMegaManager.shared areContactsOnMegaRequestedWithinDays:7]) {
+                [ContactsOnMegaManager.shared configureContactsOnMegaWithCompletion:nil];
+            } else {
+                [ContactsOnMegaManager.shared loadContactsOnMegaFromLocal];
+            }
+
             break;
         }
             
@@ -1697,12 +1699,6 @@ void uncaughtExceptionHandler(NSException *exception) {
             [self showOnboarding];
             
             [[MEGASdkManager sharedMEGASdk] mnz_setAccountDetails:nil];
-            
-            if (self.messageForSuspendedAccount) {
-                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:self.messageForSuspendedAccount preferredStyle:UIAlertControllerStyleAlert];
-                [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-                [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
-            }
             break;
         }
             
