@@ -1864,6 +1864,8 @@
 "Tap and hold %@ to record, release to send"="Tap and hold %@ to record, release to send";
 /* Message shown when there is an ongoing call and the user tries to record a voice message */
 "It is not possible to record voice messages while there is a call in progress"="It is not possible to record voice messages while there is a call in progress.";
+/* Label indicating that a voice clip is being recorded. String as short as possible. */
+"Recording..."="Recording…";
 /* Text to inform the user there is an active call and is not participating */
 "Ongoing Call"="مكالمة جارية";
 /* Message shown when there is an ongoing call and the user tries to play an audio or video */
@@ -1949,7 +1951,7 @@
 /* Title of the "Links" Shared Items. */
 "Links"="Links";
 /* Title for empty state view of "Links" in Shared Items. */
-"No Public Links"="No Public Links";
+"No Public Links"="لا يوجد روابط عامة";
 /* Text indicating to the user the action that will be executed on tap. */
 "Manage Share"="Manage share";
 /* Title of the screen that shows the users with whom the user can share a folder */

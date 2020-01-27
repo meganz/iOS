@@ -43,7 +43,7 @@
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="Introdu cheia de decriptare";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertMessage"="Pentru a accesa acest folder/fișier, vei avea nevoie de cheia de decriptare a acestuia. Dacă nu ai cheia, te rugăm să contactezi creatorul linkului.";
+"decryptionKeyAlertMessage"="Pentru a accesa acest folder/fișier, vei avea nevoie de cheia de decriptare a acestuia. Dacă nu ai cheia, contactează creatorul linkului.";
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="Cheie de decriptare";
 /* Button title to try to decrypt the link */
@@ -1864,6 +1864,8 @@
 "Tap and hold %@ to record, release to send"="Atinge și ține %@ pentru a înregistra, eliberează pentru a trimite";
 /* Message shown when there is an ongoing call and the user tries to record a voice message */
 "It is not possible to record voice messages while there is a call in progress"="Nu este posibilă înregistrarea mesajelor vocale în timp ce există un apel în desfășurare.";
+/* Label indicating that a voice clip is being recorded. String as short as possible. */
+"Recording..."="Recording…";
 /* Text to inform the user there is an active call and is not participating */
 "Ongoing Call"="Apel în desfășurare";
 /* Message shown when there is an ongoing call and the user tries to play an audio or video */
