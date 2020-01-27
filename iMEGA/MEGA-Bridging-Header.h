@@ -7,6 +7,7 @@
 #import "MEGANavigationController.h"
 #import "MEGAAssetsPickerController.h"
 #import "MEGAGenericRequestDelegate.h"
+#import "MEGAChatGenericRequestDelegate.h"
 #import "MEGAReachabilityManager.h"
 
 #import <QuickLook/QuickLook.h>
@@ -21,3 +22,23 @@
 #import "UIFont+MNZCategory.h"
 #import "SAMKeychain.h"
 #import "MEGALoginRequestDelegate.h"
+#import "LocalizationSystem.h"
+#import "MEGAConstants.h"
+#import "AppDelegate.h"
+#import "UIApplication+MNZCategory.h"
+#import "Helper.h"
+#import "UIFont+MNZCategory.h"
+#import "UIImageView+MNZCategory.h"
+#import "UIScrollView+EmptyDataSet.h"
+
+#import "ContactLinkQRViewController.h"
+#import "DevicePermissionsHelper.h"
+#import "VENTokenField.h"
+
+#import "MEGAContactLinkCreateRequestDelegate.h"
+#import "MEGAInviteContactRequestDelegate.h"
+#import "InitialLaunchViewController.h"
+#import "UIDevice+MNZCategory.h"
+#import "CreateAccountViewController.h"
+#import "UpgradeTableViewController.h"
+#import "OnboardingViewController.h"

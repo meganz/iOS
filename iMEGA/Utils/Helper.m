@@ -1345,6 +1345,11 @@ static MEGAIndexer *indexer;
     //Set default order on logout
     [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"SortOrderType"];
     [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"OfflineSortOrderType"];
+    
+    [NSUserDefaults.standardUserDefaults removeObjectForKey:@"lastDateAddPhoneNumberShowed"];
+    [NSUserDefaults.standardUserDefaults removeObjectForKey:@"ContactsOnMega"];
+    [NSUserDefaults.standardUserDefaults removeObjectForKey:@"lastDateContactsOnMegaRequested"];
+    
     [[NSUserDefaults standardUserDefaults] synchronize];
 
     NSUserDefaults *sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];
@@ -1354,6 +1359,7 @@ static MEGAIndexer *indexer;
     [sharedUserDefaults removeObjectForKey:@"useHttpsOnly"];
     [sharedUserDefaults removeObjectForKey:@"IsChatEnabled"];
     [sharedUserDefaults removeObjectForKey:@"logging"];
+
     [sharedUserDefaults synchronize];
 }
 
