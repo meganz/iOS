@@ -5005,14 +5005,6 @@
 			path = AttributeOperations;
 			sourceTree = "<group>";
 		};
-		BFE0C0AB23DF804400A32F17 /* Recovered References */ = {
-			isa = PBXGroup;
-			children = (
-				BFD23CF2236A64FB005D4A1E /* String+Additions.swift */,
-			);
-			name = "Recovered References";
-			sourceTree = "<group>";
-		};
 		E84CDAFE1A7292AA003F4C77 /* Links */ = {
 			isa = PBXGroup;
 			children = (
