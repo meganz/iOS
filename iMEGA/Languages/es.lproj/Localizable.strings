@@ -825,7 +825,7 @@
 /* An alert title where the user provided the incorrect Recovery Key. */
 "invalidRecoveryKey"="Clave de recuperación incorrecta";
 /* Text of the alert after opening the recovery link to reset pass being logged. */
-"youRecoveryKeyIsGoingTo"="Tu Clave de recuperación se utilizará para establecer una nueva contraseña. Por favor, introduce tu nueva contraseña.";
+"youRecoveryKeyIsGoingTo"="Tu Clave de recuperación se utilizará para establecer una nueva contraseña. Introduce tu nueva contraseña.";
 /*  */
 "yourPasswordHasBeenReset"="Has restablecido tu contraseña. Por favor accede a tu cuenta.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
@@ -1864,6 +1864,8 @@
 "Tap and hold %@ to record, release to send"="Mantén pulsado %@ para grabar, suelta para enviar";
 /* Message shown when there is an ongoing call and the user tries to record a voice message */
 "It is not possible to record voice messages while there is a call in progress"="No es posible grabar mensajes de voz si hay una llamada en curso.";
+/* Label indicating that a voice clip is being recorded. String as short as possible. */
+"Recording..."="Grabando...";
 /* Text to inform the user there is an active call and is not participating */
 "Ongoing Call"="Llamada en curso";
 /* Message shown when there is an ongoing call and the user tries to play an audio or video */
@@ -1999,4 +2001,4 @@
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
 "Include location tags"="Incluir etiquetas de ubicación";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
-"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them.";
+"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="Si activas esta opción, se subirá información sobre dónde se tomaron tus fotos y vídeos, así que ten cuidado al compartirlos.";

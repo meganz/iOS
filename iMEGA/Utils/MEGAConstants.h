@@ -5,6 +5,8 @@
 
 extern NSString * const MEGAiOSAppUserAgent;
 extern NSString * const MEGAiOSAppKey;
+extern NSString * const MEGAPasswordService;
+extern NSString * const MEGAPasswordName;
 
 extern NSString * const MEGAGroupIdentifier;
 
@@ -83,3 +85,9 @@ extern NSString * const MEGAUIActivityTypeSendToChat;
 #pragma mark - Background Task completion.
 
 extern NSString * const MEGAAllUsersNicknameLoaded;
+
+#pragma mark - MEGA Affiliate program
+
+extern NSString * const MEGALastPublicHandleAccessed;
+extern NSString * const MEGALastPublicTypeAccessed;
+extern NSString * const MEGALastPublicTimestampAccessed;

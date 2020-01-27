@@ -25,15 +25,12 @@ class AddNickNameViewController: UIViewController {
     private var genericRequestDelegate: MEGAGenericRequestDelegate {
         let genericRequestDelegate = MEGAGenericRequestDelegate {
             _, error in
-            guard let error = error else {
-                return
-            }
             
             if error.type != .apiOk {
                 self.user?.mnz_nickname = self.nickname
                 self.updateHandler(withNickname: self.nickname)
             }
-        }!
+        }
         return genericRequestDelegate
     }
     
