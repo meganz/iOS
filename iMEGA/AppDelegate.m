@@ -5,7 +5,6 @@
 #import <Photos/Photos.h>
 #import <PushKit/PushKit.h>
 #import <QuickLook/QuickLook.h>
-#import <SafariServices/SafariServices.h>
 #import <UserNotifications/UserNotifications.h>
 
 #import "LTHPasscodeViewController.h"
@@ -1423,14 +1422,7 @@ void uncaughtExceptionHandler(NSException *exception) {
             break;
             
         case EventAccountBlocked:
-            if (event.number == 700) {
-                if (![UIApplication.mnz_visibleViewController isKindOfClass:VerifyEmailViewController.class] && ![UIApplication.mnz_visibleViewController isKindOfClass:SFSafariViewController.class]) {
-                    VerifyEmailViewController *verifyEmailVC = [[UIStoryboard storyboardWithName:@"VerifyEmail" bundle:nil] instantiateViewControllerWithIdentifier:@"VerifyEmailViewController"];
-                    [UIApplication.mnz_presentingViewController presentViewController:verifyEmailVC animated:YES completion:nil];
-                }
-            } else {
-                [api handleAccountBlockedEvent:event];
-            }
+            [self handleAccountBlockedEvent:event];
             break;
             
         case EventNodesCurrent:
@@ -1471,6 +1463,8 @@ void uncaughtExceptionHandler(NSException *exception) {
             
         case EventStorageSumChanged:
             [MEGASdkManager.sharedMEGASdk mnz_setShouldRequestAccountDetails:YES];
+            break;
+            
         default:
             break;
     }
