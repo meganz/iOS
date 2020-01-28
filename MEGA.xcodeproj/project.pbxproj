@@ -924,7 +924,6 @@
 		B68BAEC6221DEB4E00FF6FCD /* SavedIdentifierParser.m in Sources */ = {isa = PBXBuildFile; fileRef = B68BAEC5221DEB4E00FF6FCD /* SavedIdentifierParser.m */; };
 		B68C42C8216DA9CF003C5A50 /* MEGAOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B68C42C6216DA9CE003C5A50 /* MEGAOperation.m */; };
 		B68C42CB216DAA85003C5A50 /* CameraUploadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B68C42CA216DAA85003C5A50 /* CameraUploadOperation.m */; };
-		B695E57D2327574800D12B9E /* MEGASdk+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B695E57C2327574800D12B9E /* MEGASdk+Additions.swift */; };
 		B695E58023275A4E00D12B9E /* MEGAFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B695E57F23275A4E00D12B9E /* MEGAFunctions.swift */; };
 		B6998320228E73BC0021BE31 /* BackgroundRefreshPerformer.m in Sources */ = {isa = PBXBuildFile; fileRef = B699831F228E73BC0021BE31 /* BackgroundRefreshPerformer.m */; };
 		B69983222294E1EC0021BE31 /* SMSNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B69983212294E1EC0021BE31 /* SMSNavigationViewController.swift */; };
@@ -2261,7 +2260,6 @@
 		B68C42C7216DA9CE003C5A50 /* MEGAOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAOperation.h; sourceTree = "<group>"; };
 		B68C42C9216DAA85003C5A50 /* CameraUploadOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraUploadOperation.h; sourceTree = "<group>"; };
 		B68C42CA216DAA85003C5A50 /* CameraUploadOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CameraUploadOperation.m; sourceTree = "<group>"; };
-		B695E57C2327574800D12B9E /* MEGASdk+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGASdk+Additions.swift"; sourceTree = "<group>"; };
 		B695E57F23275A4E00D12B9E /* MEGAFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAFunctions.swift; sourceTree = "<group>"; };
 		B699831E228E73BC0021BE31 /* BackgroundRefreshPerformer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BackgroundRefreshPerformer.h; sourceTree = "<group>"; };
 		B699831F228E73BC0021BE31 /* BackgroundRefreshPerformer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BackgroundRefreshPerformer.m; sourceTree = "<group>"; };
@@ -3394,7 +3392,6 @@
 				BF0BBEFC230627BE001FD542 /* UIViewController+MNZCategory.h */,
 				BF0BBEFD230627BE001FD542 /* UIViewController+MNZCategory.m */,
 				B619C6BA230E49920095791B /* String+Additions.swift */,
-				B695E57C2327574800D12B9E /* MEGASdk+Additions.swift */,
 				8330A9F222F41F470059B39C /* Array+Additions.swift */,
 				83FA7B502386197B00887630 /* UserDefaults+Additions.swift */,
 			);
@@ -5602,7 +5599,6 @@
 				83C570DE22E5BFCF00216896 /* Constants.swift in Sources */,
 				41A4204F1C4EA02C002E192E /* MEGALogger.m in Sources */,
 				B6D176872236F16600098084 /* ImageExporter.m in Sources */,
-				B695E57D2327574800D12B9E /* MEGASdk+Additions.swift in Sources */,
 				B658D3CF218FBC47004C0D64 /* UploadOperationFactory.m in Sources */,
 				5B7B4CA21EE5AC1200DA6A8D /* MEGAInviteContactRequestDelegate.m in Sources */,
 				B66709902228BCE90015E050 /* PHFetchOptions+CameraUpload.m in Sources */,
