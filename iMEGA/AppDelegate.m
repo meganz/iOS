@@ -685,8 +685,12 @@
 
 - (void)manageLink:(NSURL *)url {
     if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
-        if (![LTHPasscodeViewController doesPasscodeExist] && isFetchNodesDone) {
-            [self showLink:url];
+        if (![LTHPasscodeViewController doesPasscodeExist]) {
+            if ([UIApplication.mnz_visibleViewController isKindOfClass:VerifyEmailViewController.class] && [url.absoluteString containsString:@"emailverify"]) {
+                [self showLink:url];
+            } else if (isFetchNodesDone) {
+                [self showLink:url];
+            }
         }
     } else {
         [self showLink:url];
@@ -696,9 +700,13 @@
 - (void)showLink:(NSURL *)url {
     if (!MEGALinkManager.linkURL) return;
     
-    [self dismissPresentedViewsAndDo:^{
+    if ([UIApplication.mnz_visibleViewController isKindOfClass:VerifyEmailViewController.class] && [url.absoluteString containsString:@"emailverify"]) {
         [MEGALinkManager processLinkURL:url];
-    }];
+    } else {
+        [self dismissPresentedViewsAndDo:^{
+            [MEGALinkManager processLinkURL:url];
+        }];
+    }
 }
 
 - (void)dismissPresentedViewsAndDo:(void (^)(void))completion {
@@ -1414,7 +1422,7 @@ void uncaughtExceptionHandler(NSException *exception) {
             break;
             
         case EventAccountBlocked:
-            [api handleAccountBlockedEvent:event];
+            [self handleAccountBlockedEvent:event];
             break;
             
         case EventNodesCurrent:
@@ -1455,6 +1463,8 @@ void uncaughtExceptionHandler(NSException *exception) {
             
         case EventStorageSumChanged:
             [MEGASdkManager.sharedMEGASdk mnz_setShouldRequestAccountDetails:YES];
+            break;
+            
         default:
             break;
     }
