@@ -22,7 +22,6 @@ class VerifyEmailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-
         NotificationCenter.default.addObserver(self, selector: #selector(checkIfBlocked), name:
             UIApplication.willEnterForegroundNotification, object: nil)
         configureUI()
@@ -38,11 +37,15 @@ class VerifyEmailViewController: UIViewController {
         updateUI()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        addGradientBackground()
+    }
+    
     //MARK: Private
 
     func configureUI() {
         localizeLabels()
-        addGradientBackground()
         boldenText()
         updateUI()
     }
@@ -79,8 +82,8 @@ class VerifyEmailViewController: UIViewController {
         let bottomStringComponents = bottomString.components(separatedBy: "[/S]")
         guard let textToBolden = bottomStringComponents.first, let textRegular = bottomStringComponents.last else { return }
         
-        let attributtedString = NSMutableAttributedString(string: textToBolden, attributes: [NSAttributedString.Key.font: UIFont.mnz_SFUISemiBold(withSize: 16)!])
-        let regularlString = NSAttributedString(string: textRegular, attributes: [NSAttributedString.Key.font: UIFont.mnz_SFUIRegular(withSize: 16)!])
+        let attributtedString = NSMutableAttributedString(string: textToBolden, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16, weight: .semibold)])
+        let regularlString = NSAttributedString(string: textRegular, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16, weight: .regular)])
         attributtedString.append(regularlString)
         
         bottomDescriptionLabel.attributedText = attributtedString
@@ -91,39 +94,37 @@ class VerifyEmailViewController: UIViewController {
         customModal.modalPresentationStyle = .overCurrentContext
         
         customModal.image = UIImage(named: "lockedAccounts")
-        customModal.viewTitle = NSLocalizedString("Locked Accounts", comment: "Title of a helping view about locked accounts")
-        customModal.detail = NSLocalizedString("It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.", comment: "Locked accounts description text by an external data breach. This text is 1 of 2 paragraph of a description.") + "\n\n" + NSLocalizedString("Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.", comment: "Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description.")
-        customModal.dismissButtonTitle = NSLocalizedString("close", comment: "A button label. The button allows the user to close the conversation.")
+        customModal.viewTitle = AMLocalizedString("Locked Accounts", "Title of a helping view about locked accounts")
+        customModal.detail = AMLocalizedString("It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.", "Locked accounts description text by an external data breach. This text is 1 of 2 paragraph of a description.") + "\n\n" + AMLocalizedString("Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.", "Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description.")
+        customModal.dismissButtonTitle = AMLocalizedString("close", "A button label. The button allows the user to close the conversation.")
         
         present(customModal, animated: true, completion: nil)
     }
     
     func localizeLabels() {
-        topDescriptionLabel.text = NSLocalizedString("Your account has been temporarily suspended for your safety.", comment: "Text describing account suspended state to the user")
-        bottomDescriptionLabel.text = NSLocalizedString("[S]Please verify your email[/S] and follow its steps to unlock your account.", comment: "Text indicating the user next step to unlock suspended account. Please leave [S], [/S] as it is which is used to bolden the text.")
-        resendButton.setTitle(NSLocalizedString("resend", comment: "A button to resend the email confirmation."), for: .normal)
-        logoutButton.setTitle(NSLocalizedString("logoutLabel", comment: "Title of the button which logs out from your account."), for: .normal)
-        hintButton.setTitle(NSLocalizedString("Why am I seeing this?", comment: "Text for button to open an helping view"), for: .normal)
-        hintLabel.text = NSLocalizedString("Email sent", comment: "Text to notify user an email has been sent")
+        topDescriptionLabel.text = AMLocalizedString("Your account has been temporarily suspended for your safety.", "Text describing account suspended state to the user")
+        bottomDescriptionLabel.text = AMLocalizedString("[S]Please verify your email[/S] and follow its steps to unlock your account.", "Text indicating the user next step to unlock suspended account. Please leave [S], [/S] as it is which is used to bolden the text.")
+        resendButton.setTitle(AMLocalizedString("resend", "A button to resend the email confirmation."), for: .normal)
+        logoutButton.setTitle(AMLocalizedString("logoutLabel", "Title of the button which logs out from your account."), for: .normal)
+        hintButton.setTitle(AMLocalizedString("Why am I seeing this?", "Text for button to open an helping view"), for: .normal)
+        hintLabel.text = AMLocalizedString("Email sent", "Text to notify user an email has been sent")
     }
     
     @objc func checkIfBlocked() {
         let whyAmIBlockedRequestDelegate = MEGAGenericRequestDelegate.init { (request, error) in
             if error.type == .apiOk && request.number == 0 {
-                
-                let rootNode = MEGASdkManager.sharedMEGASdk()?.rootNode
-                
-                if (rootNode == nil) {
+                                
+                if (MEGASdkManager.sharedMEGASdk().rootNode == nil) {
                     guard let session = SAMKeychain.password(forService: "MEGA", account: "sessionV3") else { return }
                     let loginRequestDelegate = MEGALoginRequestDelegate.init()
-                    MEGASdkManager.sharedMEGASdk()?.fastLogin(withSession: session, delegate: loginRequestDelegate)
+                    MEGASdkManager.sharedMEGASdk().fastLogin(withSession: session, delegate: loginRequestDelegate)
                 }
                 
                 self.presentedViewController?.dismiss(animated: true, completion: nil)
                 self.dismiss(animated: true, completion: nil)
             }
         }
-        MEGASdkManager.sharedMEGASdk()?.whyAmIBlocked(with: whyAmIBlockedRequestDelegate)
+        MEGASdkManager.sharedMEGASdk().whyAmIBlocked(with: whyAmIBlockedRequestDelegate)
     }
     
     //MARK: Actions
@@ -140,10 +141,10 @@ class VerifyEmailViewController: UIViewController {
                 if error.type == .apiOk || error.type == .apiEArgs {
                     self.hintLabel.isHidden = false
                 } else {
-                    SVProgressHUD.showError(withStatus: NSLocalizedString(error.name, comment: ""))
+                    SVProgressHUD.showError(withStatus: AMLocalizedString(error.name, ""))
                 }
             }
-            MEGASdkManager.sharedMEGASdk()?.resendVerificationEmail(with: resendVerificationEmailDelegate)
+            MEGASdkManager.sharedMEGASdk().resendVerificationEmail(with: resendVerificationEmailDelegate)
         }
     }
     

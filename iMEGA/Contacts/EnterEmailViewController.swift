@@ -210,8 +210,7 @@ extension EnterEmailViewController: VENTokenFieldDelegate {
 // MARK: - CNContactPickerDelegate
 extension EnterEmailViewController: CNContactPickerDelegate {
     func contactPicker(_ picker: CNContactPickerViewController, didSelect contactProperty: CNContactProperty) {
-        guard let emailProperty = contactProperty.contact.emailAddresses.first?.value else { return }
-        let email = emailProperty as String
+        guard let email = contactProperty.contact.emailAddresses.first?.value as String? else { return }
         if email.mnz_isValidEmail() {
             if !tokens.contains(email) {
                 tokens.append(email)
