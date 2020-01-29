@@ -956,7 +956,7 @@
 /* %1 will be replaced by a numeric value and %2 will be 'days' or 'months', for example (Expires in [S]10[/S] days) */
 "bonusExpiresIn"="(Bonus expires in [S]%1[/S] %2)";
 /* Add Phone Number title  */
-"Add Phone Number" = "Add Phone Number";
+"Add Phone Number"="Add Phone Number";
 /* Achievement explanation for add phone number */
 "You have received %1$s storage space and %2$s transfer quota for verifying your phone number."="You have received %1$s storage space and %2$s transfer quota for verifying your phone number.";
 /* Free storage description to encourage users to add phone number to their accounts */
@@ -1957,13 +1957,13 @@
 /* Detailed explanation of why the user should give permission to contacts */
 "MEGA needs access to your contacts to help you connect with other people on MEGA."="MEGA needs access to your contacts to help you connect with other people on MEGA.";
 /* Title encouraging the user to check who of its contacts are using MEGA */
-"See who's already on MEGA"="See who's already on MEGA";
+"See who's already on MEGA"="See who’s already on MEGA";
 /* Title showing the user how many of his contacts are using MEGA */
 "[X] contacts found on MEGA"="[X] contacts found on MEGA";
 /* Title showing the user that one of his contacts are using MEGA */
 "1 contact found on MEGA"="1 contact found on MEGA";
 /* Text indicating the user to perform an action to grant some permission */
-"Enable Access"="Enable Access";
+"Enable Access"="Allow Access";
 /* Text indicating the user to open the device settings for MEGA */
 "Open Settings"="Open Settings";
 /* Text encouraging the user to invite contacts to MEGA */
@@ -2067,7 +2067,7 @@
 /* Label tell user to enter received txt to below input boxes */
 "Please type the verification code sent to"="Please type the verification code sent to";
 /* Text message to remind user to resend verification code */
-"You didn't receive a code?"="You didn't receive a code?";
+"You didn't receive a code?"="You didn’t receive a code?";
 /* Message shown when verify phone number successfully */
 "Your phone number has been verified successfully"="Your phone number has been verified successfully";
 /* Text describing account suspended state to the user */
