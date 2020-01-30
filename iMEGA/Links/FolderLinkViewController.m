@@ -316,14 +316,7 @@
     }]];
     
     [decryptionAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"decrypt", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        NSString *linkString;
-        NSString *key = decryptionAlertController.textFields.firstObject.text;
-        if ([[key substringToIndex:1] isEqualToString:@"!"]) {
-            linkString = self.publicLinkString;
-        } else {
-            linkString = [self.publicLinkString stringByAppendingString:@"!"];
-        }
-        linkString = [linkString stringByAppendingString:key];
+        NSString *linkString = [MEGALinkManager buildPublicLink:self.publicLinkString withKey:decryptionAlertController.textFields.firstObject.text isFolder:YES];
         
         isValidatingDecryptionKey = YES;
         
@@ -922,7 +915,9 @@
 #pragma mark - MEGAGlobalDelegate
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
-    [self reloadUI];
+    if ([nodeList mnz_shouldProcessOnNodesUpdateForParentNode:self.parentNode childNodesArray:self.nodesArray]) {
+        [self reloadUI];
+    }
 }
 
 #pragma mark - MEGARequestDelegate
@@ -1011,8 +1006,9 @@
             
             isFetchNodesDone = YES;
             
-            [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithUnsignedLongLong:request.nodeHandle] forKey:@"kLastPublicHandleAccessed"];
-            [[NSUserDefaults standardUserDefaults] setDouble:[NSDate date].timeIntervalSince1970 forKey:@"kLastPublicTimestampAccessed"];
+            [NSUserDefaults.standardUserDefaults setObject:[NSNumber numberWithUnsignedLongLong:request.nodeHandle] forKey:MEGALastPublicHandleAccessed];
+            [NSUserDefaults.standardUserDefaults setInteger:AffiliateTypeFileFolder forKey:MEGALastPublicTypeAccessed];
+            [NSUserDefaults.standardUserDefaults setDouble:NSDate.date.timeIntervalSince1970 forKey:MEGALastPublicTimestampAccessed];
             
             [self reloadUI];
             

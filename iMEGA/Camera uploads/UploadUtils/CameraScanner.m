@@ -8,7 +8,6 @@
 #import "LivePhotoScanner.h"
 #import "PHFetchOptions+CameraUpload.h"
 #import "PHFetchResult+CameraUpload.h"
-#import "MEGAConstants.h"
 #import "AssetFetchResult.h"
 
 @interface CameraScanner () <PHPhotoLibraryChangeObserver>
@@ -90,13 +89,11 @@
                     [self insertUploadRecordsForAssets:newAssets shouldCheckExistence:NO];
                     [CameraUploadRecordManager.shared saveChangesIfNeededWithError:&error];
                     
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadStatsChangedNotification object:nil];
-                    });
+                    [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadStatsChangedNotification object:nil];
                 }
             }
             
-            if (CameraUploadManager.isLivePhotoSupported && [mediaTypes containsObject:@(PHAssetMediaTypeImage)]) {
+            if (CameraUploadManager.shouldScanLivePhotosForVideos && [mediaTypes containsObject:@(PHAssetMediaTypeImage)]) {
                 [self.livePhotoScanner scanLivePhotosWithError:&error];
             }
             
@@ -155,13 +152,13 @@
             
             [CameraUploadRecordManager.shared.backgroundContext performBlockAndWait:^{
                 [self insertUploadRecordsForAssets:newAssets shouldCheckExistence:YES];
-                [self.livePhotoScanner scanLivePhotosInAssets:newAssets];
+                if (CameraUploadManager.shouldScanLivePhotosForVideos) {
+                    [self.livePhotoScanner scanLivePhotosInAssets:newAssets];
+                }
                 [CameraUploadRecordManager.shared saveChangesIfNeededWithError:nil];
             }];
             
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadStatsChangedNotification object:nil];
-            });
+            [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadStatsChangedNotification object:nil];
             
             [self.delegate cameraScanner:self didObserveNewAssets:newAssets];
         }

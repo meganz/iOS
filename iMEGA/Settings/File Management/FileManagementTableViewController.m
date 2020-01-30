@@ -58,6 +58,7 @@
     self.fileVersionsLabel.text = AMLocalizedString(@"File versions", @"Settings preference title to show file versions info of the account");
     long long totalNumberOfVersions = [[[MEGASdkManager sharedMEGASdk] mnz_accountDetails] numberOfVersionFilesForHandle:[[[MEGASdkManager sharedMEGASdk] rootNode] handle]];
     self.fileVersionsDetailLabel.text = [NSString stringWithFormat:@"%lld", totalNumberOfVersions];
+    [MEGASdkManager.sharedMEGASdk getAccountDetailsWithDelegate:self];
     
     self.deleteOldVersionsLabel.text = AMLocalizedString(@"Delete previous versions", @"Text of a button which deletes all historical versions of files in the users entire account.");
     
@@ -68,20 +69,20 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
 }
 
 - (void)reloadUI {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-        unsigned long long offlineSize = [Helper sizeOfFolderAtPath:NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject];
+        unsigned long long offlineSize = [NSFileManager.defaultManager mnz_sizeOfFolderAtPath:NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject];
         self.offlineSizeString = [Helper memoryStyleStringFromByteCount:offlineSize];
         self.offlineSizeString = [self formatStringFromByteCountFormatter:self.offlineSizeString];
         
-        unsigned long long thumbnailsSize = [Helper sizeOfFolderAtPath:[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"]];
-        unsigned long long previewsSize = [Helper sizeOfFolderAtPath:[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"previewsV3"]];
-        unsigned long long temporaryDirectory = [Helper sizeOfFolderAtPath:NSTemporaryDirectory()];
-        unsigned long long cacheSize = thumbnailsSize + previewsSize + temporaryDirectory;
+        unsigned long long thumbnailsSize = [NSFileManager.defaultManager mnz_sizeOfFolderAtPath:[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"]];
+        unsigned long long previewsSize = [NSFileManager.defaultManager mnz_sizeOfFolderAtPath:[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"previewsV3"]];
+        unsigned long long temporaryDirectory = [NSFileManager.defaultManager mnz_sizeOfFolderAtPath:NSTemporaryDirectory()];
+        unsigned long long groupDirectory = [NSFileManager.defaultManager mnz_groupSharedDirectorySize];
+        unsigned long long cacheSize = thumbnailsSize + previewsSize + temporaryDirectory + groupDirectory;
         
         self.cacheSizeString = [Helper memoryStyleStringFromByteCount:cacheSize];
         self.cacheSizeString = [self formatStringFromByteCountFormatter:self.cacheSizeString];
@@ -90,7 +91,14 @@
             [self.tableView reloadData];
         });
     });
-    
+}
+
+- (void)removeGroupSharedDirectoryContents {
+    //Remove only the contents of some folders located inside of the group shared directory. The 'GroupSupport' directory contents are not deleted because is where the SDK databases are located.
+    NSString *groupSharedDirectoryPath = [NSFileManager.defaultManager containerURLForSecurityApplicationGroupIdentifier:MEGAGroupIdentifier].path;
+    [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:[groupSharedDirectoryPath stringByAppendingPathComponent:MEGAExtensionLogsFolder]];
+    [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:[groupSharedDirectoryPath stringByAppendingPathComponent:MEGAFileExtensionStorageFolder]];
+    [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:[groupSharedDirectoryPath stringByAppendingPathComponent:MEGAShareExtensionStorageFolder]];
 }
 
 #pragma mark - Private
@@ -229,6 +237,8 @@
                 [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:thumbnailsPathString];
                 [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:previewsPathString];
                 [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:NSTemporaryDirectory()];
+                [self removeGroupSharedDirectoryContents];
+                
                 dispatch_async(dispatch_get_main_queue(), ^(void){
                     [SVProgressHUD dismiss];
                     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
@@ -251,7 +261,7 @@
             [deleteAllFileVersionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"no", nil) style:UIAlertActionStyleCancel handler:nil]];
             [deleteAllFileVersionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"yes", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-                    [[MEGASdkManager sharedMEGASdk] removeVersions];
+                    [MEGASdkManager.sharedMEGASdk removeVersionsWithDelegate:self];
                 }
             }]];
             
@@ -290,6 +300,20 @@
         if (!error.type || error.type == MEGAErrorTypeApiENoent) {
             self.fileVersioningSwitch.on = self.fileVersioningEnabled = !request.flag;
             
+            [self.tableView reloadData];
+        }
+    }
+    
+    if (request.type == MEGARequestTypeRemoveVersions) {
+        if (!error.type) {
+            [MEGASdkManager.sharedMEGASdk getAccountDetailsWithDelegate:self];
+        }
+    }
+    
+    if (request.type == MEGARequestTypeAccountDetails) {
+        if (!error.type) {
+            long long totalNumberOfVersions = [MEGASdkManager.sharedMEGASdk.mnz_accountDetails numberOfVersionFilesForHandle:MEGASdkManager.sharedMEGASdk.rootNode.handle];
+            self.fileVersionsDetailLabel.text = [NSString stringWithFormat:@"%lld", totalNumberOfVersions];
             [self.tableView reloadData];
         }
     }

@@ -7,9 +7,10 @@
 #import "MEGASdk+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
+#import "MEGAShowPasswordReminderRequestDelegate.h"
+#import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UpgradeTableViewController.h"
-#import "MEGAShowPasswordReminderRequestDelegate.h"
 
 @interface MyAccountViewController () <MEGAPurchasePricingDelegate, MEGARequestDelegate> {
     BOOL isAccountDetailsAvailable;
@@ -100,13 +101,13 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    long long thumbsSize = [Helper sizeOfFolderAtPath:[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"]];
-    long long previewsSize = [Helper sizeOfFolderAtPath:[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"previewsV3"]];
-    long long offlineSize = [Helper sizeOfFolderAtPath:NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject];
+    unsigned long long thumbsSize = [NSFileManager.defaultManager mnz_sizeOfFolderAtPath:[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"]];
+    unsigned long long previewsSize = [NSFileManager.defaultManager mnz_sizeOfFolderAtPath:[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"previewsV3"]];
+    unsigned long long offlineSize = [NSFileManager.defaultManager mnz_sizeOfFolderAtPath:NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject];
     
-    localSize = [NSNumber numberWithLongLong:(thumbsSize + previewsSize + offlineSize)];
+    localSize = @(thumbsSize + previewsSize + offlineSize + [NSFileManager.defaultManager mnz_groupSharedDirectorySize]);
     
-    NSString *stringFromByteCount = [Helper memoryStyleStringFromByteCount:localSize.longLongValue];
+    NSString *stringFromByteCount = [Helper memoryStyleStringFromByteCount:localSize.unsignedLongLongValue];
     self.localUsedSpaceLabel.attributedText = [self textForSizeLabels:stringFromByteCount];
     
     [self setupWithAccountDetails];
@@ -191,7 +192,7 @@
         
         switch (accountDetails.type) {
             case MEGAAccountTypeFree: {
-                self.proStatusLabel.text = AMLocalizedString(@"free", @"Text relative to the MEGA account level. UPPER CASE");
+                self.proStatusLabel.text = AMLocalizedString(@"Free", @"Label to indicate that the current user has a Free account.");
                 self.proStatusLabel.textColor = [UIColor mnz_green31B500];
                 
                 self.proExpiryDateLabelHeightLayoutConstraint.constant = 0;

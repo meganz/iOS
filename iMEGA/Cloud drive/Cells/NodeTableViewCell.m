@@ -58,21 +58,8 @@
         self.moreButton.hidden = NO;
     }
     
-    if (node.isExported) {
-        if (isDownloaded) {
-            self.upImageView.image = [UIImage imageNamed:@"linked"];
-            self.middleImageView.image = nil;
-            self.downImageView.image = [Helper downloadedArrowImage];
-        } else {
-            self.upImageView.image = nil;
-            self.middleImageView.image = [UIImage imageNamed:@"linked"];
-            self.downImageView.image = nil;
-        }
-    } else {
-        self.upImageView.image = nil;
-        self.middleImageView.image = (isDownloaded) ? [Helper downloadedArrowImage] : nil;
-        self.downImageView.image = nil;
-    }
+    self.middleImageView.hidden = !isDownloaded;
+    self.linkImageView.hidden = !node.isExported;
     
     if (node.hasThumbnail) {
         NSString *thumbnailFilePath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
@@ -96,8 +83,15 @@
     if (!node.name.mnz_isVideoPathExtension) {
         self.thumbnailPlayImageView.hidden = YES;
     }
+        
+    if (node.isTakenDown) {
+        self.nameLabel.attributedText = [node mnz_attributedTakenDownNameWithHeight:self.nameLabel.font.capHeight];
+        self.nameLabel.textColor = UIColor.mnz_redMain;
+    } else {
+        self.nameLabel.text = node.name;
+        self.nameLabel.textColor = UIColor.mnz_black333333;
+    }
     
-    self.nameLabel.text = node.name;
     if (node.isFile) {
         self.infoLabel.text = self.recentActionBucket ? [NSString stringWithFormat:@"%@ • %@", [Helper sizeForNode:node api:MEGASdkManager.sharedMEGASdk], node.creationTime.mnz_formattedHourAndMinutes] : [Helper sizeAndDateForNode:node api:api];
         self.versionedImageView.hidden = ![[MEGASdkManager sharedMEGASdk] hasVersionsForNode:node];

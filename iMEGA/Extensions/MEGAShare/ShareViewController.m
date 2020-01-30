@@ -67,10 +67,10 @@
     
     NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
 
-    self.sharedUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"];
+    self.sharedUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:MEGAGroupIdentifier];
     if ([self.sharedUserDefaults boolForKey:@"logging"]) {
         NSFileManager *fileManager = [NSFileManager defaultManager];
-        NSString *logsPath = [[[fileManager containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"] URLByAppendingPathComponent:@"logs"] path];
+        NSString *logsPath = [[[fileManager containerURLForSecurityApplicationGroupIdentifier:MEGAGroupIdentifier] URLByAppendingPathComponent:MEGAExtensionLogsFolder] path];
         if (![fileManager fileExistsAtPath:logsPath]) {
             [fileManager createDirectoryAtPath:logsPath withIntermediateDirectories:NO attributes:nil error:nil];
         }
@@ -386,7 +386,7 @@
 }
 
 - (IBAction)openMegaTouchUpInside:(id)sender {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"mega://#loginrequired"]];
+    [UIApplication.sharedApplication openURL:[NSURL URLWithString:@"mega://#loginrequired"] options:@{} completionHandler:nil];
 }
 
 - (void)loginToMEGA {
@@ -472,7 +472,7 @@
         MEGALogError(@"Failed to locate/create NSApplicationSupportDirectory with error: %@", error);
     }
     
-    NSURL *groupSupportURL = [[fileManager containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"] URLByAppendingPathComponent:@"GroupSupport"];
+    NSURL *groupSupportURL = [[fileManager containerURLForSecurityApplicationGroupIdentifier:MEGAGroupIdentifier] URLByAppendingPathComponent:MEGAExtensionGroupSupportFolder];
     if (![fileManager fileExistsAtPath:groupSupportURL.path]) {
         [fileManager createDirectoryAtURL:groupSupportURL withIntermediateDirectories:NO attributes:nil error:nil];
     }
@@ -536,17 +536,17 @@ void uncaughtExceptionHandler(NSException *exception) {
     self.unsupportedAssets = self.alreadyInDestinationAssets = 0;
     
     // This ordered array is needed because the allKeys properties of the classSupport dictionary are unordered, and the order here is determining
-    NSArray<NSString *> *typeIdentifiers = @[(NSString *)kUTTypeGIF,
+    NSArray<NSString *> *typeIdentifiers = @[(NSString *)kUTTypeFileURL,
+                                             (NSString *)kUTTypeGIF,
                                              (NSString *)kUTTypeImage,
                                              (NSString *)kUTTypeMovie,
-                                             (NSString *)kUTTypeFileURL,
                                              (NSString *)kUTTypeURL,
                                              (NSString *)kUTTypeVCard,
                                              (NSString *)kUTTypePlainText,
                                              (NSString *)kUTTypeData];
     
-    NSDictionary<NSString *, NSArray<Class> *> *classesSupported = @{(NSString *)kUTTypeGIF : @[NSData.class, NSURL.class],
-                                                                     (NSString *)kUTTypeImage : @[UIImage.class, NSData.class, NSURL.class],
+    NSDictionary<NSString *, NSArray<Class> *> *classesSupported = @{(NSString *)kUTTypeGIF : @[NSURL.class, NSData.class],
+                                                                     (NSString *)kUTTypeImage : @[NSURL.class, UIImage.class, NSData.class],
                                                                      (NSString *)kUTTypeMovie : @[NSURL.class],
                                                                      (NSString *)kUTTypeFileURL : @[NSURL.class],
                                                                      (NSString *)kUTTypeURL : @[NSURL.class],
@@ -830,7 +830,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 - (NSString *)shareExtensionStorage {
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSString *storagePath = [[[fileManager containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"] URLByAppendingPathComponent:@"Share Extension Storage"] path];
+    NSString *storagePath = [[[fileManager containerURLForSecurityApplicationGroupIdentifier:MEGAGroupIdentifier] URLByAppendingPathComponent:MEGAShareExtensionStorageFolder] path];
     if (![fileManager fileExistsAtPath:storagePath]) {
         [fileManager createDirectoryAtPath:storagePath withIntermediateDirectories:NO attributes:nil error:nil];
     }

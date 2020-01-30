@@ -2,7 +2,6 @@
 #import "CameraUploadCompletionManager.h"
 #import "PutNodeOperation.h"
 #import "AttributeUploadManager.h"
-#import "MEGAConstants.h"
 #import "NSURL+CameraUpload.h"
 #import "NodesFetchListenerOperation.h"
 #import "CameraUploadManager+Settings.h"
@@ -202,9 +201,7 @@
         [CameraUploadRecordManager.shared refaultObject:record];
         
         if (status == CameraAssetUploadStatusDone) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadStatsChangedNotification object:nil];
-            });
+            [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadStatsChangedNotification object:nil];
         }
     }];
 }

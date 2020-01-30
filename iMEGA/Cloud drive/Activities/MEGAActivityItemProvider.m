@@ -26,7 +26,7 @@
 
 - (id)item {
     NSString *activityType = [self activityType];
-    BOOL activityValue = !([activityType isEqualToString:@"OpenInActivity"] || [activityType isEqualToString:@"GetLinkActivity"] || [activityType isEqualToString:@"RemoveLinkActivity"] || [activityType isEqualToString:@"ShareFolderActivity"] || [activityType isEqualToString:@"SaveToCameraRollActivity"] || [activityType isEqualToString:@"RemoveSharingActivity"] || [activityType isEqualToString:@"SendToChatActivity"]);
+    BOOL activityValue = !([activityType isEqualToString:MEGAUIActivityTypeOpenIn] || [activityType isEqualToString:MEGAUIActivityTypeGetLink] || [activityType isEqualToString:MEGAUIActivityTypeRemoveLink] || [activityType isEqualToString:MEGAUIActivityTypeShareFolder] || [activityType isEqualToString:MEGAUIActivityTypeSaveToCameraRoll] || [activityType isEqualToString:MEGAUIActivityTypeRemoveSharing] || [activityType isEqualToString:MEGAUIActivityTypeSendToChat]);
     if (activityValue) {
         if (self.node.isExported) {
             self.link = self.node.publicLink;
@@ -53,7 +53,7 @@
         return [NSURL URLWithString:self.link];
     }
     
-    if ([activityType isEqualToString:@"OpenInActivity"] || [activityType isEqualToString:@"GetLinkActivity"] || [activityType isEqualToString:@"RemoveLinkActivity"] || [activityType isEqualToString:@"ShareFolderActivity"] || [activityType isEqualToString:@"SaveToCameraRollActivity"] || [activityType isEqualToString:@"RemoveSharingActivity"]) {
+    if ([activityType isEqualToString:MEGAUIActivityTypeOpenIn] || [activityType isEqualToString:MEGAUIActivityTypeGetLink] || [activityType isEqualToString:MEGAUIActivityTypeRemoveLink] || [activityType isEqualToString:MEGAUIActivityTypeShareFolder] || [activityType isEqualToString:MEGAUIActivityTypeSaveToCameraRoll] || [activityType isEqualToString:MEGAUIActivityTypeRemoveSharing]) {
 
         return nil;
     }

@@ -15,6 +15,7 @@
 #import "OpenInActivity.h"
 #import "SortByTableViewController.h"
 #import "MEGAStore.h"
+#import "MEGA-Swift.h"
 #import "MEGAAVViewController.h"
 #import "MEGAQLPreviewController.h"
 #import "OfflineTableViewViewController.h"
@@ -22,6 +23,7 @@
 #import "LayoutView.h"
 #import "NodeCollectionViewCell.h"
 #import "OfflineTableViewCell.h"
+#import "UIViewController+MNZCategory.h"
 
 static NSString *kFileName = @"kFileName";
 static NSString *kIndex = @"kIndex";
@@ -43,7 +45,6 @@ static NSString *kisDirectory = @"kisDirectory";
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *activityBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *deleteBarButtonItem;
-@property (nonatomic) id<UIViewControllerPreviewing> previewingContext;
 
 @property (nonatomic, strong) NSMutableArray *offlineMultimediaFiles;
 @property (nonatomic, strong) NSMutableArray *offlineItems;
@@ -73,7 +74,6 @@ static NSString *kisDirectory = @"kisDirectory";
         [self.navigationItem setTitle:self.folderPathFromOffline.lastPathComponent];
     }
     
-    self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
     self.navigationItem.rightBarButtonItem = self.moreBarButtonItem;
     
     self.definesPresentationContext = YES;
@@ -83,6 +83,10 @@ static NSString *kisDirectory = @"kisDirectory";
     self.searchController.delegate = self;
     
     self.moreBarButtonItem.accessibilityLabel = AMLocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
+    
+    if (@available(iOS 13.0, *)) {
+        [self configPreviewingRegistration];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -94,9 +98,9 @@ static NSString *kisDirectory = @"kisDirectory";
     [[MEGASdkManager sharedMEGASdkFolder] retryPendingConnections];
     
     // If the user has activated the logs, then they are imported to the offline section from the shared sandbox:
-    if ([[[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"] boolForKey:@"logging"]) {
+    if ([[NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier] boolForKey:@"logging"]) {
         NSFileManager *fileManager = [NSFileManager defaultManager];
-        NSString *logsPath = [[[fileManager containerURLForSecurityApplicationGroupIdentifier:@"group.mega.ios"] URLByAppendingPathComponent:@"logs"] path];
+        NSString *logsPath = [[[fileManager containerURLForSecurityApplicationGroupIdentifier:MEGAGroupIdentifier] URLByAppendingPathComponent:MEGAExtensionLogsFolder] path];
         if ([fileManager fileExistsAtPath:logsPath]) {
             NSString *documentProviderLog = @"MEGAiOS.docExt.log";
             NSString *fileProviderLog = @"MEGAiOS.fileExt.log";
@@ -149,16 +153,7 @@ static NSString *kisDirectory = @"kisDirectory";
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
-    if ([self.traitCollection respondsToSelector:@selector(forceTouchCapability)]) {
-        if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) {
-            if (!self.previewingContext) {
-                self.previewingContext = [self registerForPreviewingWithDelegate:self sourceView:self.view];
-            }
-        } else {
-            [self unregisterForPreviewingWithContext:self.previewingContext];
-            self.previewingContext = nil;
-        }
-    }
+    [self configPreviewingRegistration];
 }
 
 - (void)willTransitionToTraitCollection:(UITraitCollection *)newCollection withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
@@ -332,7 +327,7 @@ static NSString *kisDirectory = @"kisDirectory";
             [self.offlineItems addObject:tempDictionary];
             
             if (!isDirectory) {
-                if (!fileName.mnz_isMultimediaPathExtension) {
+                if (!fileName.mnz_isMultimediaPathExtension && !fileName.mnz_isWebCodePathExtension) {
                     offsetIndex++;
                 }
             }
@@ -385,7 +380,7 @@ static NSString *kisDirectory = @"kisDirectory";
                         offsetIndex++;
                         [self.offlineFiles addObject:[fileURL path]];                        
                     }
-                } else {
+                } else if (!fileName.mnz_isWebCodePathExtension) {
                     offsetIndex++;
                     [self.offlineFiles addObject:[fileURL path]];
                 }
@@ -401,6 +396,8 @@ static NSString *kisDirectory = @"kisDirectory";
         }
     }
     
+    self.moreBarButtonItem.enabled = self.offlineSortedItems.count > 0;
+
     [self updateNavigationBarTitle];
     
     [self reloadData];
@@ -595,6 +592,13 @@ static NSString *kisDirectory = @"kisDirectory";
     return numberOfRows;
 }
 
+- (MEGANavigationController *)webCodeViewControllerWithFilePath:(NSString *)filePath {
+    WebCodeViewController *webCodeVC = [WebCodeViewController.alloc initWithFilePath:filePath];
+    MEGANavigationController *navigationController = [MEGANavigationController.alloc initWithRootViewController:webCodeVC];
+    [navigationController addLeftDismissButtonWithText:AMLocalizedString(@"ok", nil)];
+    return navigationController;
+}
+
 #pragma mark - IBActions
 
 - (IBAction)editTapped:(UIBarButtonItem *)sender {
@@ -785,6 +789,9 @@ static NSString *kisDirectory = @"kisDirectory";
                 [self.offlineCollectionView.collectionView deselectItemAtIndexPath:indexPath animated:YES];
                 break;
         }
+    } else if (self.previewDocumentPath.mnz_isWebCodePathExtension) {
+        MEGANavigationController *navigationController = [self webCodeViewControllerWithFilePath:self.previewDocumentPath];
+        [self presentViewController:navigationController animated:YES completion:nil];
     } else {
         MEGAQLPreviewController *previewController = [self qlPreviewControllerForIndexPath:indexPath];
         [self presentViewController:previewController animated:YES completion:nil];
@@ -821,7 +828,6 @@ static NSString *kisDirectory = @"kisDirectory";
             [self.toolbar setAlpha:1.0];
         }];
     } else {
-        self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
         self.navigationItem.rightBarButtonItem = self.moreBarButtonItem;
         self.allItemsSelected = NO;
         self.selectedItems = nil;
@@ -1067,6 +1073,8 @@ static NSString *kisDirectory = @"kisDirectory";
         [self.offlineTableView.tableView deselectRowAtIndexPath:indexPath animated:YES];
         
         return navigationController;
+    } else if (self.previewDocumentPath.mnz_isWebCodePathExtension) {
+        return [self webCodeViewControllerWithFilePath:self.previewDocumentPath];
     } else {
         return [self qlPreviewControllerForIndexPath:indexPath];
     }

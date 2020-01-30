@@ -15,14 +15,18 @@
 #import "CloudDriveViewController.h"
 #import "MainTabBarController.h"
 #import "SearchInPdfViewController.h"
+#import "MEGALinkManager.h"
 
 #import "MEGANode+MNZCategory.h"
+#import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 #import "MEGAStore.h"
 #import "MEGAQLPreviewController.h"
+#import "MEGA-Swift.h"
+#import "UIView+MNZCategory.h"
 
-@interface PreviewDocumentViewController () <QLPreviewControllerDataSource, QLPreviewControllerDelegate, MEGATransferDelegate, UICollectionViewDelegate, UICollectionViewDataSource, CustomActionViewControllerDelegate, NodeInfoViewControllerDelegate, SearchInPdfViewControllerProtocol> {
+@interface PreviewDocumentViewController () <QLPreviewControllerDataSource, QLPreviewControllerDelegate, MEGATransferDelegate, UICollectionViewDelegate, UICollectionViewDataSource, CustomActionViewControllerDelegate, NodeInfoViewControllerDelegate, SearchInPdfViewControllerProtocol, UIGestureRecognizerDelegate, PDFViewDelegate> {
     MEGATransfer *previewDocumentTransfer;
 }
 
@@ -225,6 +229,24 @@
     }
 }
 
+- (void)presentMEGAQlPreviewController {
+    MEGAQLPreviewController *previewController = [[MEGAQLPreviewController alloc] initWithFilePath:previewDocumentTransfer.path];
+    
+    [self dismissViewControllerAnimated:YES completion:^{
+        [UIApplication.mnz_presentingViewController presentViewController:previewController animated:YES completion:nil];
+    }];
+}
+
+- (void)presentWebCodeViewController {
+    WebCodeViewController *webCodeVC = [WebCodeViewController.alloc initWithFilePath:previewDocumentTransfer.path];
+    MEGANavigationController *navigationController = [MEGANavigationController.alloc initWithRootViewController:webCodeVC];
+    [navigationController addLeftDismissButtonWithText:AMLocalizedString(@"ok", nil)];
+    
+    [self dismissViewControllerAnimated:YES completion:^{
+        [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:nil];
+    }];
+}
+
 #pragma mark - QLPreviewControllerDataSource
 
 - (NSInteger)numberOfPreviewItemsInPreviewController:(QLPreviewController *)controller {
@@ -274,24 +296,20 @@
     }
     
     if (self.isViewLoaded && self.view.window) {
-        if (@available(iOS 11.0, *)) {
-            if ([transfer.path.pathExtension isEqualToString:@"pdf"]) {
-                [self loadPdfKit:[NSURL fileURLWithPath:transfer.path]];
+        if (transfer.path.mnz_isWebCodePathExtension) {
+            [self presentWebCodeViewController];
+        } else {
+            if (@available(iOS 11.0, *)) {
+                if ([transfer.path.pathExtension isEqualToString:@"pdf"]) {
+                    [self loadPdfKit:[NSURL fileURLWithPath:transfer.path]];
+                } else {
+                    [self presentMEGAQlPreviewController];
+                }
             } else {
                 [self presentMEGAQlPreviewController];
             }
-        } else {
-            [self presentMEGAQlPreviewController];
         }
     }
-}
-
-- (void)presentMEGAQlPreviewController {
-    MEGAQLPreviewController *previewController = [[MEGAQLPreviewController alloc] initWithFilePath:previewDocumentTransfer.path];
-    
-    [self dismissViewControllerAnimated:YES completion:^{
-        [UIApplication.mnz_presentingViewController presentViewController:previewController animated:YES completion:nil];
-    }];
 }
 
 #pragma mark - CustomActionViewControllerDelegate
@@ -320,7 +338,11 @@
         }
             
         case MegaNodeActionTypeCopy:
+            [node mnz_copyInViewController:self];
+            break;
         case MegaNodeActionTypeMove:
+            [node mnz_moveInViewController:self];
+            break;
         case MegaNodeActionTypeImport:
             if ([MEGAReachabilityManager isReachableHUDIfNot]) {
                 MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
@@ -328,15 +350,7 @@
                 
                 BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
                 browserVC.selectedNodesArray = @[node];
-                BrowserAction browserAction;
-                if (action == MegaNodeActionTypeCopy) {
-                    browserAction = BrowserActionCopy;
-                } else if (action == BrowserActionMove) {
-                    browserAction = BrowserActionMove;
-                } else {
-                    browserAction = BrowserActionImport;
-                }
-                [browserVC setBrowserAction:browserAction];
+                browserVC.browserAction = BrowserActionImport;
             }
             break;
             
@@ -360,34 +374,7 @@
 
 - (void)presentParentNode:(MEGANode *)node {
     [self dismissViewControllerAnimated:YES completion:^{
-        UIViewController *visibleViewController = UIApplication.mnz_presentingViewController;
-        if ([visibleViewController isKindOfClass:MainTabBarController.class]) {
-            NSArray *parentTreeArray = node.mnz_parentTreeArray;
-            
-            MainTabBarController *mainTBC = (MainTabBarController *)visibleViewController;
-            UINavigationController *navigationController = (UINavigationController *)(mainTBC.selectedViewController);
-            [navigationController popToRootViewControllerAnimated:NO];
-            
-            for (MEGANode *node in parentTreeArray) {
-                CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-                cloudDriveVC.parentNode = node;
-                [navigationController pushViewController:cloudDriveVC animated:NO];
-            }
-            
-            switch (node.type) {
-                case MEGANodeTypeFolder:
-                case MEGANodeTypeRubbish: {
-                    CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-                    cloudDriveVC.parentNode = node;
-                    [navigationController pushViewController:cloudDriveVC animated:NO];
-                    break;
-                }
-                    
-                default:
-                    break;
-            }
-            
-        }
+        [node navigateToParentAndPresent];
     }];
 }
 
@@ -405,6 +392,7 @@
 - (void)loadPdfKit:(NSURL *)url {
     if (!self.pdfView.document) {
         self.pdfView.hidden = NO;
+        self.pdfView.delegate = self;
         self.activityIndicator.hidden = YES;
         self.progressView.hidden = YES;
         self.imageView.hidden = YES;
@@ -413,13 +401,21 @@
         [self setToolbarItems:@[self.thumbnailBarButtonItem, flexibleItem, self.searchBarButtonItem, flexibleItem, self.openInBarButtonItem] animated:YES];
         [self.navigationController setToolbarHidden:NO animated:YES];
         self.navigationItem.rightBarButtonItem = self.node ? self.moreBarButtonItem : nil;
-
+        
         UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTapGesture:)];
+        doubleTap.delegate = self;
         doubleTap.numberOfTapsRequired = 2;
+        
+        if (@available(iOS 13.0, *)) {
+            UIGestureRecognizer *defaultDoubleTapGesture = [self.pdfView mnz_firstTapGestureWithNumberOfTaps:2];
+            [defaultDoubleTapGesture requireGestureRecognizerToFail:doubleTap];
+        }
+        
         [self.pdfView addGestureRecognizer:doubleTap];
         
         UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapGesture:)];
         singleTap.numberOfTapsRequired = 1;
+        singleTap.delegate = self;
         [singleTap requireGestureRecognizerToFail:doubleTap];
         [self.pdfView addGestureRecognizer:singleTap];
         
@@ -464,6 +460,21 @@
         [self.navigationController setNavigationBarHidden:YES animated:YES];
         [self.navigationController setToolbarHidden:YES animated:YES];
     }
+}
+
+#pragma mark - UIGestureRecognizerDelegate
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(nonnull UIGestureRecognizer *)otherGestureRecognizer {
+    return YES;
+}
+
+
+#pragma mark - PDFViewDelegate
+
+- (void)PDFViewWillClickOnLink:(PDFView *)sender withURL:(NSURL *)url {
+    
+    MEGALinkManager.linkURL = url;
+    [MEGALinkManager processLinkURL:url];
 }
 
 #pragma mark - CollectionViewDelegate

@@ -1,18 +1,18 @@
 
 #import "VideoUploadsTableViewController.h"
 #import "CameraUploadManager+Settings.h"
-#import "MEGAConstants.h"
 
 typedef NS_ENUM(NSUInteger, VideoUploadsSection) {
     VideoUploadsSectionFeatureSwitch,
     VideoUploadsSectionFormat,
     VideoUploadsSectionQuality,
-    VideoUploadsSectionTotalCount
+    VideoUploadsSectionCount
 };
 
-typedef NS_ENUM(NSUInteger, VideoUploadsFormatRow) {
-    VideoUploadsFormatRowHEVC,
-    VideoUploadsFormatRowH264
+typedef NS_ENUM(NSUInteger, VideoUploadsSectionFormatRow) {
+    VideoUploadsSectionFormatRowHEVC,
+    VideoUploadsSectionFormatRowH264,
+    VideoUploadsSectionFormatRowCount
 };
 
 @interface VideoUploadsTableViewController ()
@@ -107,9 +107,9 @@ typedef NS_ENUM(NSUInteger, VideoUploadsFormatRow) {
     if (CameraUploadManager.isVideoUploadEnabled) {
         if (CameraUploadManager.isHEVCFormatSupported) {
             if (CameraUploadManager.shouldConvertHEVCVideo) {
-                numberOfSections = VideoUploadsSectionTotalCount;
+                numberOfSections = VideoUploadsSectionCount;
             } else {
-                numberOfSections = VideoUploadsSectionTotalCount - 1;
+                numberOfSections = VideoUploadsSectionCount - 1;
             }
         } else {
             numberOfSections = 1;
@@ -128,7 +128,7 @@ typedef NS_ENUM(NSUInteger, VideoUploadsFormatRow) {
             numberOfRows = 1;
             break;
         case VideoUploadsSectionFormat:
-            numberOfRows = 2;
+            numberOfRows = VideoUploadsSectionFormatRowCount;
             break;
         case VideoUploadsSectionQuality:
             numberOfRows = 1;
@@ -144,7 +144,7 @@ typedef NS_ENUM(NSUInteger, VideoUploadsFormatRow) {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     if (indexPath.section == VideoUploadsSectionFormat) {
-        CameraUploadManager.convertHEVCVideo = indexPath.row == VideoUploadsFormatRowH264;
+        CameraUploadManager.convertHEVCVideo = indexPath.row == VideoUploadsSectionFormatRowH264;
         [self configUI];
     }
 }
