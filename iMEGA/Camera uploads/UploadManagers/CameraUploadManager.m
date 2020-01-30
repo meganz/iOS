@@ -5,7 +5,6 @@
 #import "MEGASdkManager.h"
 #import "UploadOperationFactory.h"
 #import "AttributeUploadManager.h"
-#import "MEGAConstants.h"
 #import "CameraUploadManager+Settings.h"
 #import "UploadRecordsCollator.h"
 #import "BackgroundUploadMonitor.h"
@@ -22,15 +21,12 @@
 #import "CameraUploadConcurrentCountCalculator.h"
 #import "BackgroundUploadingTaskMonitor.h"
 #import "NSError+CameraUpload.h"
-#import "CameraUploadStore.h"
 
 static const NSTimeInterval MinimumBackgroundRefreshInterval = 3 * 3600;
 static const NSTimeInterval LoadMediaInfoTimeout = 60 * 15;
 
 static const NSUInteger PhotoUploadBatchCount = 5;
 static const NSUInteger VideoUploadBatchCount = 1;
-
-static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
 
 @interface CameraUploadManager () <CameraScannerDelegate>
 
@@ -94,6 +90,10 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
 #pragma mark - setup when app launches
 
 - (void)setupCameraUploadWhenApplicationLaunches {
+    if (CameraUploadManager.hasMigratedToCameraUploadsV2) {
+        [CameraUploadManager configDefaultSettingsForCameraUploadV2];
+    }
+    
     [AttributeUploadManager.shared collateLocalAttributes];
     
     if (CameraUploadManager.isCameraUploadEnabled) {
@@ -118,22 +118,10 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
 
 #pragma mark - manage operation queues
 
-- (void)initializeCameraUploadQueues {
-    _photoUploadOperationQueue = [[NSOperationQueue alloc] init];
-    _photoUploadOperationQueue.name = @"photoUploadOperationQueue";
-    _photoUploadOperationQueue.qualityOfService = NSQualityOfServiceUtility;
-    _photoUploadOperationQueue.maxConcurrentOperationCount = [self.concurrentCountCalculator calculatePhotoUploadConcurrentCount];
-    
-    _videoUploadOperationQueue = [[NSOperationQueue alloc] init];
-    _videoUploadOperationQueue.name = @"videoUploadOperationQueue";
-    _videoUploadOperationQueue.qualityOfService = NSQualityOfServiceBackground;
-    _videoUploadOperationQueue.maxConcurrentOperationCount = [self.concurrentCountCalculator calculateVideoUploadConcurrentCount];
-}
-
-- (void)resetCameraUploadQueues {
-    [self cancelAllPendingOperations];
-    self.photoUploadOperationQueue = nil;
-    self.videoUploadOperationQueue = nil;
+- (void)setupCameraUploadQueues {
+    self.photoUploadOperationQueue.maxConcurrentOperationCount = [self.concurrentCountCalculator calculatePhotoUploadConcurrentCount];
+    self.videoUploadOperationQueue.maxConcurrentOperationCount = [self.concurrentCountCalculator calculateVideoUploadConcurrentCount];
+    [self unsuspendCameraUploadQueues];
 }
 
 - (void)cancelVideoUploadOperations {
@@ -180,6 +168,26 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
 }
 
 #pragma mark - properties
+
+- (NSOperationQueue *)photoUploadOperationQueue {
+    if (_photoUploadOperationQueue == nil) {
+        _photoUploadOperationQueue = [[NSOperationQueue alloc] init];
+        _photoUploadOperationQueue.name = @"photoUploadOperationQueue";
+        _photoUploadOperationQueue.qualityOfService = NSQualityOfServiceUtility;
+    }
+    
+    return _photoUploadOperationQueue;
+}
+
+- (NSOperationQueue *)videoUploadOperationQueue {
+    if (_videoUploadOperationQueue == nil) {
+        _videoUploadOperationQueue = [[NSOperationQueue alloc] init];
+        _videoUploadOperationQueue.name = @"videoUploadOperationQueue";
+        _videoUploadOperationQueue.qualityOfService = NSQualityOfServiceBackground;
+    }
+    
+    return _videoUploadOperationQueue;
+}
 
 - (CameraUploadNodeLoader *)cameraUploadNodeLoader {
     if (_cameraUploadNodeLoader) {
@@ -414,9 +422,7 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
     [self.backgroundUploadingTaskMonitor startMonitoringBackgroundUploadingTasks];
     
     MEGALogDebug(@"[Camera Upload] start uploading photos with current photo operation count %lu", (unsigned long)self.photoUploadOperationQueue.operationCount);
-    if (self.photoUploadOperationQueue.operationCount < PhotoUploadBatchCount * MaximumPhotoUploadBatchCountMultiplier) {
-        [self uploadAssetsForMediaType:PHAssetMediaTypeImage concurrentCount:PhotoUploadBatchCount];
-    }
+    [self uploadAssetsForMediaType:PHAssetMediaTypeImage concurrentCount:PhotoUploadBatchCount];
 }
 
 - (void)startVideoUploadIfNeeded {
@@ -431,7 +437,7 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
     }
     
     if (!(self.mediaInfoLoader.isMediaInfoLoaded && self.isNodeTreeCurrent && self.cameraUploadNode != nil)) {
-        MEGALogDebug(@"[Camera Upload] can not upload videos due to the dependency on media info and camera uplaod node issues");
+        MEGALogDebug(@"[Camera Upload] can not upload videos due to the dependency on media info and camera upload node issues");
         return;
     }
     
@@ -466,9 +472,7 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
             });
         } else {
             [self startVideoUploadIfNeeded];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadStatsChangedNotification object:nil];
-            });
+            [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadStatsChangedNotification object:nil];
         }
     }];
 }
@@ -535,13 +539,15 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
             }
             
             if ([error.domain isEqualToString:CameraUploadErrorDomain]) {
-                if (error.code == CameraUploadErrorEmptyLocalIdentifier || error.code == CameraUploadErrorNoMediaAssetFetched) {
+                if (error.code == CameraUploadErrorEmptyLocalIdentifier ||
+                    error.code == CameraUploadErrorNoMediaAssetFetched ||
+                    error.code == CameraUploadErrorDisabledMediaSubtype) {
                     [CameraUploadRecordManager.shared deleteUploadRecord:record error:nil];
+                    [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadStatsChangedNotification object:nil];
                 } else {
                     [CameraUploadRecordManager.shared updateUploadRecord:record withStatus:CameraAssetUploadStatusFailed error:nil];
                 }
             }
-            
             [self uploadNextAssetForMediaType:mediaType];
         }
     }
@@ -579,20 +585,23 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
 #pragma mark - enable camera upload
 
 - (void)enableCameraUpload {
-    if (CameraUploadManager.isCameraUploadEnabled) {
-        return;
-    }
-    
     CameraUploadManager.cameraUploadEnabled = YES;
     [self initializeCameraUpload];
     [TransferSessionManager.shared restorePhotoSessionsWithCompletion:^(NSArray<NSURLSessionUploadTask *> * _Nonnull uploadTasks) {
         [self.uploadRecordsCollator collateUploadingPhotoRecordsByUploadTasks:uploadTasks];
     }];
+    
+    if (CameraUploadManager.isVideoUploadEnabled) {
+        [TransferSessionManager.shared restoreVideoSessionsWithCompletion:^(NSArray<NSURLSessionUploadTask *> * _Nonnull uploadTasks) {
+            [self.uploadRecordsCollator collateUploadingVideoRecordsByUploadTasks:uploadTasks];
+        }];
+    }
+    
     [self startCameraUploadIfNeeded];
 }
 
 - (void)initializeCameraUpload {
-    [self initializeCameraUploadQueues];
+    [self setupCameraUploadQueues];
     [self registerNotificationsForUpload];
     [self startBackgroundUploadIfPossible];
     [CameraUploadManager enableBackgroundRefreshIfNeeded];
@@ -600,10 +609,6 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
 }
 
 - (void)enableVideoUpload {
-    if (CameraUploadManager.isVideoUploadEnabled) {
-        return;
-    }
-    
     CameraUploadManager.videoUploadEnabled = YES;
     [TransferSessionManager.shared restoreVideoSessionsWithCompletion:^(NSArray<NSURLSessionUploadTask *> * _Nonnull uploadTasks) {
         [self.uploadRecordsCollator collateUploadingVideoRecordsByUploadTasks:uploadTasks];
@@ -614,13 +619,9 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
 #pragma mark - disable camera upload
 
 - (void)disableCameraUpload {
-    if (!CameraUploadManager.isCameraUploadEnabled) {
-        return;
-    }
-    
     CameraUploadManager.cameraUploadEnabled = NO;
-    [self disableVideoUpload];
-    [self resetCameraUploadQueues];
+    [self stopVideoUpload];
+    [self cancelAllPendingOperations];
     [self unregisterNotificationsForUpload];
     [self.diskSpaceDetector stopDetectingPhotoUpload];
     [self.concurrentCountCalculator stopCalculatingConcurrentCount];
@@ -634,11 +635,11 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
 }
 
 - (void)disableVideoUpload {
-    if (!CameraUploadManager.isVideoUploadEnabled) {
-        return;
-    }
-    
     CameraUploadManager.videoUploadEnabled = NO;
+    [self stopVideoUpload];
+}
+
+- (void)stopVideoUpload {
     [self cancelVideoUploadOperations];
     [self.diskSpaceDetector stopDetectingVideoUpload];
     _videoUploadPaused = NO;
@@ -799,7 +800,7 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
 
 - (void)didReceiveApplicationWillTerminateNotification {
     MEGALogDebug(@"[Camera Upload] app will terminate");
-    [self resetCameraUploadQueues];
+    [self cancelAllPendingOperations];
 }
 
 - (void)didReceiveStorageOverQuotaNotification:(NSNotification *)notification {
@@ -846,10 +847,10 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
     BOOL hasReachedMaximumCount = [notification.userInfo[MEGAHasUploadingTasksReachedMaximumCountUserInfoKey] boolValue];
     NSUInteger currentUploadingCount = [notification.userInfo[MEGACurrentUploadingTasksCountUserInfoKey] unsignedIntegerValue];
     if (hasReachedMaximumCount) {
-        MEGALogDebug(@"[Camera Upload] suspend upload queues with current uplaoding tasks count %lu", (unsigned long)currentUploadingCount);
+        MEGALogDebug(@"[Camera Upload] suspend upload queues with current uploading tasks count %lu", (unsigned long)currentUploadingCount);
         [self suspendCameraUploadQueues];
     } else {
-        MEGALogDebug(@"[Camera Upload] unsuspend upload queues with current uplaoding tasks count %lu", (unsigned long)currentUploadingCount);
+        MEGALogDebug(@"[Camera Upload] unsuspend upload queues with current uploading tasks count %lu", (unsigned long)currentUploadingCount);
         [self unsuspendCameraUploadQueues];
     }
 }
@@ -867,11 +868,6 @@ static const NSUInteger MaximumPhotoUploadBatchCountMultiplier = 2;
     _cameraUploadNode = nil;
     [AttributeUploadManager.shared cancelAllAttributesUpload];
     [CameraUploadRecordManager.shared resetDataContext];
-    NSError *error;
-    [CameraUploadStore.shared.storeStack deleteStoreWithError:&error];
-    if (error) {
-        MEGALogError(@"[Camera Upload] error when to delete camera upload store after logout %@", error);
-    }
     [NSFileManager.defaultManager mnz_removeItemAtPath:NSURL.mnz_cameraUploadURL.path];
 }
 

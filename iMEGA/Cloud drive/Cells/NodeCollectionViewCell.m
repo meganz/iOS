@@ -5,6 +5,7 @@
 
 #import "Helper.h"
 #import "MEGAGetThumbnailRequestDelegate.h"
+#import "MEGANode+MNZCategory.h"
 #import "MEGASdkManager.h"
 #import "UIImageView+MNZCategory.h"
 
@@ -40,8 +41,14 @@
         [self.thumbnailIconView mnz_imageForNode:node];
         self.thumbnailImageView.hidden = YES;
     }
-        
-    self.nameLabel.text = node.name;
+    
+    if (node.isTakenDown) {
+        self.nameLabel.attributedText = [node mnz_attributedTakenDownNameWithHeight:self.nameLabel.font.capHeight];
+        self.nameLabel.textColor = UIColor.mnz_redMain;
+    } else {
+        self.nameLabel.text = node.name;
+    }
+    
     if (!node.name.mnz_isVideoPathExtension) {
         self.thumbnailPlayImageView.hidden = YES;
     }

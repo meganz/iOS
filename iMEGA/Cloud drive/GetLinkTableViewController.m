@@ -54,6 +54,7 @@
 @property (nonatomic) MEGAPasswordLinkRequestDelegate *passwordLinkDelegate;
 
 @property (nonatomic) NSString *currentPassword;
+@property (nonatomic) NSDate *currentExpiryDate;
 
 @end
 
@@ -179,13 +180,19 @@
     } else {
         self.expireSwitch.on = YES;
         self.expireDateSetLabel.hidden = NO;
-        NSDate *date = [NSDate.alloc initWithTimeIntervalSince1970:earliestExpirationTime];
-        self.expireDateSetLabel.text = date.mnz_formattedDateMediumStyle;
+        self.currentExpiryDate = [NSDate.alloc initWithTimeIntervalSince1970:earliestExpirationTime];
+        self.expireDateSetLabel.text = self.currentExpiryDate.mnz_formattedDateMediumStyle;
     }
 }
 
 - (void)showDatePicker {
     [self.tableView beginUpdates];
+    
+    if (self.currentExpiryDate != self.expireDatePicker.date) {
+        self.expireDateSetLabel.text = self.expireDatePicker.date.mnz_formattedDateMediumStyle;
+        self.expireDateSetSaveButton.enabled = YES;
+        self.expireDateSetSaveButton.hidden = NO;
+    }
     
     self.expireDatePicker.hidden = NO;
     self.expireDatePicker.alpha = 0.0f;
@@ -231,9 +238,19 @@
 }
 
 - (void)processLink:(NSString *)fullLink {
-    NSArray *components = [fullLink componentsSeparatedByString:@"!"];
-    NSString *link = [NSString stringWithFormat:@"%@!%@", components.firstObject, components[1]];
-    NSString *key = components[2];
+    NSArray *components;
+    NSString *link;
+    NSString *key;
+    
+    if ([fullLink containsString:@"file"] || [fullLink containsString:@"folder"]) {//New format file/folder links
+        components = [fullLink componentsSeparatedByString:@"#"];
+        link = components[0];
+        key = components[1];
+    } else {
+        components = [fullLink componentsSeparatedByString:@"!"];
+        link = [NSString stringWithFormat:@"%@!%@", components.firstObject, components[1]];
+        key = components[2];
+    }
     
     [self.fullLinks addObject:fullLink];
     [self.links addObject:link];
@@ -255,11 +272,22 @@
 - (IBAction)expireSwitchChanged:(UISwitch *)sender {
     self.expireDateSetLabel.hidden = !sender.isOn;
     self.expireDateSetSaveButton.hidden = !sender.isOn;
+    self.expireDateSetSaveButton.enabled = sender.isOn;
     
     if (sender.isOn) {
         self.expireDateSetLabel.text = self.expireDatePicker.date.mnz_formattedDateMediumStyle;
         [self showDatePicker];
     } else {
+        [self.fullLinks removeAllObjects];
+        [self.links removeAllObjects];
+        [self.keys removeAllObjects];
+        self.pending = self.nodesToExport.count;
+        for (MEGANode *node in self.nodesToExport) {
+            [MEGASdkManager.sharedMEGASdk exportNode:node expireTime:[NSDate dateWithTimeIntervalSince1970:0] delegate:self.exportDelegate];
+        }
+        
+        self.currentExpiryDate = [NSDate dateWithTimeIntervalSince1970:0];
+        
         [self hideDatePicker];
     }
     
@@ -269,8 +297,8 @@
 - (IBAction)expireDateChanged:(UIDatePicker *)sender {
     self.expireDateSetLabel.text = sender.date.mnz_formattedDateMediumStyle;
     
-    self.expireDateSetSaveButton.enabled = YES;
-    self.expireDateSetSaveButton.hidden = NO;
+    self.expireDateSetSaveButton.enabled = (self.links.count > 1) ? YES : !(sender.date == self.currentExpiryDate);
+    self.expireDateSetSaveButton.hidden = (self.links.count > 1) ? NO : (sender.date == self.currentExpiryDate);
 }
 
 - (IBAction)passwordProtectionSwitchChanged:(UISwitch *)sender {
@@ -311,6 +339,13 @@
 }
 
 - (IBAction)expireDateSaveButtonTouchUpInside:(UIButton *)sender {
+    if ((self.links.count == 1) && (self.expireDatePicker.date == self.currentExpiryDate)) {
+        return;
+    }
+    
+    [self.fullLinks removeAllObjects];
+    [self.links removeAllObjects];
+    [self.keys removeAllObjects];
     self.pending = self.nodesToExport.count;
     for (MEGANode *node in self.nodesToExport) {
         [MEGASdkManager.sharedMEGASdk exportNode:node expireTime:self.expireDatePicker.date delegate:self.exportDelegate];

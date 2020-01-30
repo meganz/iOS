@@ -22,13 +22,16 @@
 #import "SaveToCameraRollActivity.h"
 
 #import "MEGANode+MNZCategory.h"
+#import "MEGANodeList+MNZCategory.h"
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
 #import "UIColor+MNZCategory.h"
 #import "UIDevice+MNZCategory.h"
 
-@interface MEGAPhotoBrowserViewController () <UIScrollViewDelegate, UIViewControllerTransitioningDelegate, MEGAPhotoBrowserPickerDelegate, PieChartViewDelegate, PieChartViewDataSource, CustomActionViewControllerDelegate, NodeInfoViewControllerDelegate>
+static const CGFloat GapBetweenPages = 10.0;
+
+@interface MEGAPhotoBrowserViewController () <UIScrollViewDelegate, UIViewControllerTransitioningDelegate, MEGAPhotoBrowserPickerDelegate, PieChartViewDelegate, PieChartViewDataSource, CustomActionViewControllerDelegate, NodeInfoViewControllerDelegate, MEGADelegate>
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
@@ -39,6 +42,7 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *customActionsButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *leftToolbarItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *rightToolbarItem;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *scrollViewTrailingConstraint;
 
 @property (nonatomic) NSCache<NSNumber *, UIScrollView *> *imageViewsCache;
 @property (nonatomic) NSUInteger currentIndex;
@@ -48,7 +52,6 @@
 @property (nonatomic) CGRect panGestureInitialFrame;
 @property (nonatomic, getter=isInterfaceHidden) BOOL interfaceHidden;
 @property (nonatomic) CGFloat playButtonSize;
-@property (nonatomic) CGFloat gapBetweenPages;
 @property (nonatomic) double transferProgress;
 @property (nonatomic) BOOL needsReload;
 
@@ -105,7 +108,7 @@
     self.scrollView.tag = 1;
     self.transitioningDelegate = self;
     self.playButtonSize = 100.0f;
-    self.gapBetweenPages = 10.0f;
+    self.scrollViewTrailingConstraint.constant = GapBetweenPages;
     
     self.pieChartView.delegate = self;
     self.pieChartView.datasource = self;
@@ -138,6 +141,8 @@
     if (@available(iOS 11.0, *)) {} else {
         self.navigationBar.tintColor = UIColor.mnz_redMain;
     }
+    
+    [[MEGASdkManager sharedMEGASdk] addMEGADelegate:self];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -152,12 +157,54 @@
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    
+    // Main image
+    UIImageView *placeholderCurrentImageView = self.placeholderCurrentImageView;
+    [self.view addSubview:placeholderCurrentImageView];
+    placeholderCurrentImageView.frame = self.view.bounds;
+    
+    // Activity indicator if main image is not yet loaded.
+    UIActivityIndicatorView *activityIndicatorView = nil;
+    if (placeholderCurrentImageView.image == nil) {
+        activityIndicatorView = [self addActivityIndicatorToView:self.view];
+    }
+    
+    // If it is video play icon.
+    UIImageView *placeholderPlayImageView = self.placeholderPlayImageView;
+    if (placeholderPlayImageView != nil) {
+        [self.view addSubview:placeholderPlayImageView];
+        placeholderPlayImageView.center = CGPointMake(self.view.bounds.size.width/2,
+                                                      self.view.bounds.size.height/2.0);
+        // Top and bottom bar needs to be visible.
+        [self.view sendSubviewToBack:placeholderPlayImageView];
+    }
+    
+    // Top and bottom bar needs to be visible.
+    [self.view sendSubviewToBack:placeholderCurrentImageView];
+    
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
         if (!self.presentedViewController) {
             [self.view layoutIfNeeded];
             [self reloadUI];
+            
+            // The scrollview animation is not aligning with placeholderImageView animation.
+            // So hiding the scroll when the animation is in progress.
+            self.scrollView.hidden = YES;
+            CGPoint center = CGPointMake(size.width/2, size.height/2.0);
+            
+            [UIView animateWithDuration:context.transitionDuration
+                             animations:^{
+                                 placeholderCurrentImageView.frame = CGRectMake(0, 0, size.width, size.height);
+                                 placeholderPlayImageView.center = center;
+                                 activityIndicatorView.center = center;
+                             }];
         }
     } completion:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
+        self.scrollView.hidden = NO;
+        [activityIndicatorView removeFromSuperview];
+        [placeholderPlayImageView removeFromSuperview];
+        [placeholderCurrentImageView removeFromSuperview];
+
         if (self.presentedViewController) {
             self.needsReload = YES;
         }
@@ -169,10 +216,18 @@
     [self airplayClear];
     self.secondWindow.hidden = YES;
     self.secondWindow = nil;
+    
+    [[MEGASdkManager sharedMEGASdk] removeMEGADelegate:self];
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
     return UIInterfaceOrientationMaskAll;
+}
+
+#pragma mark - Status bar
+
+- (BOOL)prefersStatusBarHidden {
+    return self.isInterfaceHidden;
 }
 
 #pragma mark - UI
@@ -187,7 +242,6 @@
     self.imageViewsCache = [[NSCache<NSNumber *, UIScrollView *> alloc] init];
     self.imageViewsCache.countLimit = 1000;
     
-    self.scrollView.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.width + self.gapBetweenPages, self.view.frame.size.height);
     self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width * self.mediaNodes.count, self.scrollView.frame.size.height);
     
     if (self.currentIndex >= self.mediaNodes.count) {
@@ -201,7 +255,7 @@
     }
     
     [self loadNearbyImagesFromIndex:self.currentIndex];
-    self.scrollView.contentOffset = CGPointMake(self.currentIndex * (self.view.frame.size.width + self.gapBetweenPages), 0);
+    self.scrollView.contentOffset = CGPointMake(self.currentIndex * CGRectGetWidth(self.scrollView.frame), 0);
     [self reloadTitle];
     [self airplayDisplayCurrentImage];
     if ([self.delegate respondsToSelector:@selector(photoBrowser:didPresentNode:)]) {
@@ -285,7 +339,7 @@
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     if (scrollView.tag == 1) {
-        NSInteger newIndex = (scrollView.contentOffset.x + self.gapBetweenPages) / scrollView.frame.size.width;
+        NSInteger newIndex = (scrollView.contentOffset.x + GapBetweenPages) / scrollView.frame.size.width;
         if (newIndex != self.currentIndex && newIndex < self.mediaNodes.count) {
             self.currentIndex = newIndex;
             [self resetZooms];
@@ -298,7 +352,6 @@
                 [self.delegate photoBrowser:self didPresentNodeAtIndex:self.currentIndex];
             }
         }
-        [self fixFrames];
     }
 }
 
@@ -308,7 +361,7 @@
             self.pieChartView.alpha = 0.0f;
         }
         
-        NSUInteger newIndex = floor(scrollView.contentOffset.x + self.gapBetweenPages) / scrollView.frame.size.width;
+        NSUInteger newIndex = floor(scrollView.contentOffset.x + GapBetweenPages) / scrollView.frame.size.width;
         if (newIndex != self.currentIndex && newIndex < self.mediaNodes.count) {
             [self reloadTitleForIndex:newIndex];
             [self loadNearbyImagesFromIndex:newIndex];
@@ -507,11 +560,12 @@
     }
 }
 
-- (void)addActivityIndicatorToView:(UIView *)view {
+- (UIActivityIndicatorView *)addActivityIndicatorToView:(UIView *)view {
     UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     activityIndicator.frame = CGRectMake((view.frame.size.width-activityIndicator.frame.size.width)/2, (view.frame.size.height-activityIndicator.frame.size.height)/2, activityIndicator.frame.size.width, activityIndicator.frame.size.height);
     [activityIndicator startAnimating];
     [view addSubview:activityIndicator];
+    return activityIndicator;
 }
 
 - (void)removeActivityIndicatorsFromView:(UIView *)view {
@@ -558,19 +612,6 @@
     view.frame = frame;
 }
 
-- (void)fixFrames {
-    if (@available(iOS 10.0, *)) {} else {
-        NSUInteger initialIndex = self.currentIndex == 0 ? 0 : self.currentIndex - 1;
-        NSUInteger finalIndex = self.currentIndex >= self.mediaNodes.count - 1 ? self.mediaNodes.count - 1 : self.currentIndex + 1;
-        for (NSUInteger i = initialIndex; i <= finalIndex; i++) {
-            UIScrollView *zoomableView = [self.imageViewsCache objectForKey:@(i)];
-            if (zoomableView) {
-                zoomableView.frame = CGRectMake(self.scrollView.frame.size.width * i, 0.0f, self.view.frame.size.width, self.view.frame.size.height);
-            }
-        }
-    }
-}
-
 #pragma mark - IBActions
 
 - (IBAction)didPressCloseButton:(UIBarButtonItem *)sender {
@@ -613,6 +654,7 @@
             pickerVC.mediaNodes = self.mediaNodes;
             pickerVC.delegate = self;
             pickerVC.api = self.api;
+            pickerVC.modalPresentationStyle = UIModalPresentationFullScreen;
             [self presentViewController:pickerVC animated:YES completion:nil];
             
             break;
@@ -755,6 +797,8 @@
             self.statusBarBackground.layer.opacity = self.navigationBar.layer.opacity = self.toolbar.layer.opacity = 0.0f;
             self.interfaceHidden = YES;
         }
+        
+        [self setNeedsStatusBarAppearanceUpdate];
     }];
 }
 
@@ -995,36 +1039,72 @@
     [self toggleTransparentInterfaceForDismissal:YES];
 
     [self dismissViewControllerAnimated:YES completion:^{
-        UIViewController *visibleViewController = UIApplication.mnz_presentingViewController;
-        if ([visibleViewController isKindOfClass:MainTabBarController.class]) {
-            NSArray *parentTreeArray = node.mnz_parentTreeArray;
-
-            MainTabBarController *mainTBC = (MainTabBarController *)visibleViewController;
-            UINavigationController *navigationController = (UINavigationController *)(mainTBC.selectedViewController);
-            [navigationController popToRootViewControllerAnimated:NO];
-            
-            for (MEGANode *node in parentTreeArray) {
-                CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-                cloudDriveVC.parentNode = node;
-                [navigationController pushViewController:cloudDriveVC animated:NO];
-            }
-            
-            switch (node.type) {
-                case MEGANodeTypeFolder:
-                case MEGANodeTypeRubbish: {
-                    CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-                    cloudDriveVC.parentNode = node;
-                    [navigationController pushViewController:cloudDriveVC animated:NO];
-                    break;
-                }
-                    
-                default:
-                    break;
-            }
-
-        }
+        [node navigateToParentAndPresent];
     }];
 }
 
+#pragma mark - MEGADelegate
+
+- (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
+    if (nodeList) {
+        NSArray<MEGANode *> *updatedNodesArray = nodeList.mnz_nodesArrayFromNodeList;
+        NSMutableArray<MEGANode *> *nodesToRemoveArray = NSMutableArray.new;
+        
+        for (MEGANode *node in updatedNodesArray) {
+            for (MEGANode *mediaNode in self.mediaNodes) {
+                if (node.handle == mediaNode.handle) {
+                    if ([node hasChangedType:MEGANodeChangeTypeRemoved] || [node hasChangedType:MEGANodeChangeTypeParent]) {
+                        if ([self.mediaNodes indexOfObject:mediaNode] < self.currentIndex) {
+                            self.currentIndex--;
+                        }
+                        [nodesToRemoveArray addObject:mediaNode];
+                    }
+                }
+            }
+        }
+        
+        if (nodesToRemoveArray.count) {
+            [self.mediaNodes removeObjectsInArray:nodesToRemoveArray];
+            if (self.mediaNodes.count) {
+                if (self.currentIndex >= self.mediaNodes.count) {
+                    self.currentIndex = self.mediaNodes.count - 1;
+                }
+                [self reloadUI];
+            } else {
+                [self dismissViewControllerAnimated:YES completion:nil];
+            }
+        }
+    } else {
+        [self reloadUI];
+    }
+}
+
+#pragma mark - Private methods.
+
+- (UIImageView *)placeholderCurrentImageView {
+    UIScrollView *zoomableView = [self.imageViewsCache objectForKey:@(self.currentIndex)];
+    FLAnimatedImageView *animatedImageView  = zoomableView.subviews.firstObject;
+    
+    UIImageView *imageview = UIImageView.new;
+    imageview.backgroundColor = self.view.backgroundColor;
+    imageview.image = animatedImageView.image;
+    imageview.contentMode = animatedImageView.contentMode;
+    
+    return imageview;
+}
+
+- (nullable UIImageView *)placeholderPlayImageView {
+    if (self.mediaNodes.count > self.currentIndex) {
+        MEGANode *node = self.mediaNodes[self.currentIndex];
+        if (node.name.mnz_isVideoPathExtension) {
+            UIImageView *imageview = [UIImageView.alloc initWithFrame:CGRectMake(0, 0, self.playButtonSize, self.playButtonSize)];
+     imageview.image = [UIImage imageNamed: node.mnz_isPlayable ? @"blackPlayButton" : @"blackCrossedPlayButton"];
+            
+            return imageview;
+        }
+    }
+
+    return nil;
+}
 
 @end

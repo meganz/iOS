@@ -24,6 +24,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self configUIAppearance];
+    
     if (self.image) {
         self.imageView.image = self.image;
         if (self.shouldRoundImage) {
@@ -51,7 +54,12 @@
         self.detailLabel.text = self.detail;
     }
     
-    [self.firstButton setTitle:self.firstButtonTitle forState:UIControlStateNormal];
+    if (self.firstButtonTitle) {
+        [self.firstButton setTitle:self.firstButtonTitle forState:UIControlStateNormal];
+    } else {
+        self.firstButton.hidden = YES;
+    }
+    
     if (self.dismissButtonTitle) {
         [self.dismissButton setTitle:self.dismissButtonTitle forState:UIControlStateNormal];
     } else {
@@ -77,6 +85,12 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [self fadeInBackgroundCompletion:nil];
+}
+
+- (void)configUIAppearance {
+    self.firstButton.titleLabel.numberOfLines = 2;
+    self.firstButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+    self.firstButton.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
 }
 
 #pragma mark - Private

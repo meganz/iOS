@@ -19,7 +19,11 @@
 - (void)mnz_removeSharing;
 - (void)mnz_copyToGalleryFromTemporaryPath:(NSString *)path;
 - (void)mnz_restore;
+- (void)mnz_removeLink;
 - (void)mnz_saveToPhotosWithApi:(MEGASdk *)api;
+- (void)mnz_sendToChatInViewController:(UIViewController *)viewController;
+- (void)mnz_moveInViewController:(UIViewController *)viewController;
+- (void)mnz_copyInViewController:(UIViewController *)viewController;
 
 #pragma mark - File links
 
@@ -34,6 +38,7 @@
 - (BOOL)mnz_isRestorable;
 - (BOOL)mnz_isPlayable;
 - (NSString *)mnz_temporaryPathForDownloadCreatingDirectories:(BOOL)creatingDirectories;
+- (NSAttributedString *)mnz_attributedTakenDownNameWithHeight:(CGFloat)height;
 
 #pragma mark - Versions
 

@@ -28,8 +28,6 @@
 "attention"="주목";
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
 "cameraPermissions"="설정에서 MEGA 앱에 카메라 접근 권한을 주세요";
-/* Alert message to notify that MEGA video calls needs the Camera permission and the call will end*/
-"cameraPermissionsInCall"="설정에서 MEGA 앱이 카메라에 접근할 수 있도록 해주세요. 앱이 재시작되므로 통화가 종료됩니다.";
 /* Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it */
 "microphonePermissions"="설정에서 MEGA 앱이 마이크에 접근할 수 있도록 해주세요";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
@@ -38,6 +36,8 @@
 "emptyFolderMessage"="빈 폴더를 다운로드할 수 없습니다";
 /* Message shown when the user clicks on a confirm account link that has already been used  */
 "accountAlreadyConfirmed"="당신의 계정은 활성화되었습니다. 로그인 하세요.";
+/* */
+"Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="확인 링크가 더 이상 유효하지 않습니다. 당신의 계정이 이미 활성화되었거나 등록을 취소했을 수 있습니다.";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="유효하지 않은 링크";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -50,12 +50,18 @@
 "decrypt"="해독";
 /* Alert title shown when you have written a decryption key not valid */
 "decryptionKeyNotValid"="잘못된 해독 키";
+/* This dialog message is used on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link. */
+"To access this link, you will need its password."="이 링크에 접근하려면, 비밀번호가 필요합니다.";
+/* This dialog message is used on the Password Decrypt dialog as an instruction for the user. */
+"If you do not have the password, contact the creator of the link."="비밀번호가 없으면, 링크를 만든 사람에게 연락하세요.";
+/* This placeholder text is used on the Password Decrypt dialog as an instruction for the user. */
+"Enter the password"="비밀번호를 입력하세요";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="로그아웃됨";
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOutFromAnotherLocation"="다른 위치에서 이 장치가 로그아웃 되었습니다";
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
-"sslUnverified_alertTitle"="MEGA가 SSL을 통하여 안전하게 연결할 수 없습니다. 추가 요구사항이 있는 공개 WiFi에 연결되어 있을 수 있습니다.";
+"sslUnverified_alertTitle"="MEGA가 SSL을 통하여 안전하게 연결할 수 없습니다. 추가적인 요구사항이 있는 공개 와이파이에 접속했을 수 있습니다.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
 "theContentIsNotAvailableForThisAccount"="접근하려는 항목은 이 계정에서 이용할 수 없습니다. 모바일 웹 클라이언트와 같은 계정으로 로그인하세요.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
@@ -114,12 +120,16 @@
 "passwordStrong"="이 비밀번호는 대부분의 정교한 무한 대입 공격을 버틸 것입니다. 확실히 기억해두세요.";
 /*  */
 "agreeWithTheMEGATermsOfService"="나는 MEGA의 <a href=\"terms\">이용약관</a>에 동의합니다";
+/* This text is displayed in the account creation screen with a checkbox. User will have to tick the checkbox before proceeding on to create an account */
+"agreeWithLosingPasswordYouLoseData"="[S]만약 내가 비밀번호를 잊으면, 내 데이터를 잃는다는 것을[/S] 이해하였습니다. 자세한 사항은 <a href=\"terms\">MEGA의 종단간 암호화</a>를 읽어보세요.";
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="올바른 이름을 입력하세요";
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="비밀번호가 일치하지 않습니다";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
 "termsCheckboxUnselected"="MEGA에 계정을 등록하려면 이용 약관에 동의해야합니다.";
+/* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown  */
+"termsForLosingPasswordCheckboxUnselected"="비밀번호를 잊는 것에 대한 위험성을 이해하였다는데에 동의해야합니다";
 /* Error text shown when the users tries to create an account with an email already in use */
 "emailAlreadyRegistered"="이 이메일 주소는 이미 MEGA에 가입되어 있습니다.";
 /* Title shown just after doing some action that requires confirming the action by an email */
@@ -215,7 +225,7 @@
 /* Success message shown when you remove a contact request */
 "requestDeleted"="요청 삭제됨";
 /* Title shown when there's no pending contact requests */
-"noRequestPending"="보류중인 요청 없음";
+"noRequestPending"="대기중인 요청 없음";
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="일시정지된 전송";
 /* Title shown when the there is not any transfer and they are not paused */
@@ -284,34 +294,20 @@
 "uploadFrom"="다음에서 들여오기...";
 /* Message shown when the user selects a file from another cloud storage provider that's already uploaded. "[A] = {name of the original file} already uploaded with name [B] = {name of the file in MEGA}" */
 "fileExistAlertController_Message"="[A]는 이미 [B]로 업로드 되었습니다";
-/* Message shown when you try to upload one photo or video that is already uploaded in the current folder. “Already uploaded with name {File name} */
-"fileAlreadyExistMessage"="이 파일은 %@이라는 이름으로 이미 업로드 되었습니다";
 /* Message shown when you try to upload some photos or/and videos that are already uploaded in the current folder */
 "filesAlreadyExistMessage"="선택된 파일 %d개가 이미 이 폴더에 업로드 되었습니다.";
 /* Message shown when a upload starts */
 "uploadStarted_Message"="업로드가 시작되었습니다";
-/* Alert title shown when you are seeing the details of a file and you moved it to the Rubbish Bin from another location */
-"fileMovedToTheRubbishBin_alertTitle"="이 파일은 휴지통으로 이동되었습니다";
-/* Alert title shown when you are seeing the details of a folder and you moved it to the Rubbish Bin from another location */
-"folderMovedToTheRubbishBin_alertTitle"="이 폴더는 휴지통으로 이동되었습니다";
-/* Alert title shown when you are seeing the details of a file and you moved it from another location */
-"fileMoved_alertTitle"="이 파일이 이동되었습니다";
-/* Alert title shown when you are seeing the details of a folder and you moved it from another location */
-"folderMoved_alertTitle"="이 폴더가 이동되었습니다";
 /* Alert title shown when you are seeing the details of a file and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFile_alertTitle"="이 파일에 더 이상 접근 권한이 없습니다";
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFolder_alertTitle"="이 폴더에 더 이상 접근 권한이 없습니다";
 /* The text is shown as an option on the details of a file or folder */
 "saveForOffline"="오프라인용으로 저장";
-/* List option shown on the details of a file or folder */
-"savedForOffline"="오프라인으로 저장됨";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
 "folderInboxError"="수신함 라벨은 Apple에 의해 사용이 예약되었습니다.";
 /* Title shown under the action that allows you to save an image to your camera roll */
 "saveImage"="이미지 저장";
-/* Title shown under the action that allows you to save several images to your camera roll */
-"saveImages"="이미지 저장";
 /* Title shown under the action that allows you to get a link to file or folder */
 "getLink"="링크 얻기";
 /* Title shown under the action that allows you to get several links to files and/or folders */
@@ -388,8 +384,6 @@
 "linksRemoved"="링크 삭제됨";
 /* Title show when a file is being downloaded */
 "downloading"="다운로드중";
-/* Message shown when you tap on the cancel button of an active transfer */
-"cancelDownloadAlertViewText"="다운로드를 취소하시겠습니까?";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
 "selectDestination"="목적지 선택";
 /* Text of the button for user to select files in MEGA. */
@@ -482,18 +476,12 @@
 "fileImported"="파일 들여옴";
 /* Message shown when some files have been imported */
 "filesImported"="들여온 파일";
-/* Error message shown when you have used more MEGA storage than you can */
-"quotaExceeded"="할당량 초과";
-/* Alert title shown when the user is overquota */
-"overquotaAlert_title"="할당량 초과 경고!";
-/* Alert message shown when the user is overquota */
-"overquotaAlert_message"="계정의 저장 한도를 초과할 수 있어, 작업이 허가되지 않았습니다. 계정을 업그레이드 하시겠습니까?";
 /* Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos */
 "selectTitle"="항목 선택";
 /* Button title that skips the current action */
 "skipButton"="넘기기";
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
-"automaticallyBackupYourPhotos"="자동으로 클라우드 드라이브에 사진 백업";
+"Automatically backup your photos and videos to the Cloud Drive."="자동으로 당신의 사진과 동영상을 클라우드 드라이브에 백업합니다.";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="카메라 업로드 활성화";
 /* Success message shown when Camera Uploads has been enabled */
@@ -504,6 +492,14 @@
 "cameraUploadsPendingFile"="업로드 진행중, 파일 1개 대기중";
 /* Message shown while uploading files. Plural. */
 "cameraUploadsPendingFiles"="업로드 진행중, 파일 %lu개 대기중";
+/* Message shown when camera upload paused because of no WiFi. Singular. */
+"Upload paused because of no WiFi, 1 file pending"="WiFi 연결이 없어서 업로드가 일시정지되었습니다, 파일 1개 보류중";
+/* Message shown when camera upload paused because of no WiFi. Plural. */
+"Upload paused because of no WiFi, %lu files pending"="WiFi 연결이 없어서 업로드가 일시정지되었습니다, 파일 %lu개 보류중";
+/* Message shown the pending video file when photos uploaded and video upload is not enabled. Singular. */
+"Photos uploaded, video uploads are off, 1 video not uploaded"="사진이 업로드 되었습니다, 동영상 업로드는 꺼져있습니다; 1개의 동영상이 업로드 되지 않았습니다.";
+/* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
+"Photos uploaded, video uploads are off, %lu videos not uploaded"="사진이 업로드 되었습니다, 동영상 업로드는 꺼져있습니다; %lu개의 동영상이 업로드 되지 않았습니다.";
 /* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
 "indexOfTotalFile"="파일 %2$d개 중 %1$d개";
 /* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
@@ -514,10 +510,6 @@
 "itemsSelected"="%lu 항목 선택됨";
 /* Title shown when multiselection is enable in chat tabs, and the user has more than one item selected. */
 "xSelected"="%d개 선택됨";
-/* Alert title displayed when Camera Uploads will be disabled because of unexpected errors */
-"cameraUploadsWillBeDisabled"="카메라 업로드가 해제됩니다";
-/* Message shown when you have Camera Uploads enabled and your device don't have enough space to make it work */
-"cameraUploadsDisabled_alertView_message"="장치에 충분한 공간이 없어서, 카메라 업로드가 해제됩니다.";
 /* Title of the Offline section */
 "offline"="오프라인";
 /* Title of the Contacts section */
@@ -527,7 +519,7 @@
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
 "foldersShared"="%d개의 폴더";
 /* Item menu option to add a contact writting his/her email */
-"addFromEmail"="이메일을 입력하세요";
+"addFromEmail"="이메일 주소를 입력하세요";
 /* Title of Shared Items section */
 "sharedItems"="공유된 항목";
 /* Title of the tab bar item for the Shared Items section */
@@ -536,8 +528,6 @@
 "incoming"="들어옴";
 /* Title of the "Outgoing" Shared Items. */
 "outgoing"="나감";
-/* Text shown to explain that you have shared a folder with one contact */
-"sharedWithOneContact"="1명의 연락처와 공유됨";
 /* Text shown to explain with how many contacts you have shared a folder */
 "sharedWithXContacts"="%d 명의 연락처와 공유됨";
 /* Message shown when you have changed the permissions of a shared folder */
@@ -558,8 +548,6 @@
 "shareRemoved"="공유가 올바르게 삭제되었습니다";
 /* Message shown when some shares have been removed */
 "sharesRemoved"="공유가 제거됨";
-/* Text shown next to name of the "Owner" of the folder that is being shared */
-"owner"="소유자";
 /* Title of the view where you see with who you have shared a folder */
 "sharedWith"="공유된 사람";
 /* Item menu option to add a contact through your device app Contacts */
@@ -570,18 +558,12 @@
 "contactEmail"="연락처 이메일";
 /* Button title to 'Add' the contact to your contacts list */
 "addContactButton"="추가";
-/* Success message shown when a contact has been invited */
-"requestSent"="요청 발송됨";
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="당신의 이메일을 추가할 필요는 없습니다";
-/* Add contacts and share dialog error message when user try to add already existing email address. */
-"alreadyHaveAContactWithThatEmailAddress"="이 이메일 주소의 연락처가 이미 있습니다";
 /* Success message shown when a contact has been invited */
 "theUserHasBeenInvited"="[X]님이 초대되었으며 수락되면 당신의 연락처 목록에 나타날 것입니다.";
 /* Success message shown when some contacts have been invited */
 "theUsersHaveBeenInvited"="이용자들이 초대되었으며 수락되면 당신의 연락처 목록에 나타날 것입니다.";
-/* Error message shown when it hasn't been posible to add a contact */
-"addContactError"="연락처 추가 실패";
 /* Alert title shown when you want to remove one or more contacts */
 "removeUserTitle"="연락처 삭제";
 /* Alert confirmation message shown when you want to remove one contact from your contacts list */
@@ -594,8 +576,6 @@
 "removedContact"="연락처 %@ 삭제됨";
 /* Label shown when a contact request is pending */
 "pending"="대기중";
-/* Alert title shown when you add a contact from your device and the selected one doesn't have an email. */
-"contactWithoutEmail"="연락처가 이메일이 없습니다";
 /* Button title of the action that allows to leave a shared folder */
 "leaveFolder"="떠나기";
 /* Alert message shown when the user tap on the leave share action for one inshare */
@@ -656,12 +636,82 @@
 "on"="켬";
 /* Header to explain that 'Upload videos', 'Use cellular connection' and 'Only when charging' are options of the Camera Uploads */
 "options"="옵션";
+/* A hint to show one option is recommended by MEGA */
+"(Recommended)"="(권장)";
+/* Header to introduce how to deal with HEIC format photos in Camera Uplaod */
+"SAVE HEIC PHOTOS AS"="HEIC 사진을 다음으로 저장";
+/* Footer for HEIC format section */
+"We recommend JPG, as its the most compatible format for photos."="우리는 가장 호환성이 좋은 형식인, JPG를 추천합니다.";
+/* Header to introduce how to deal with HEVC format videos in Camera Uplaod */
+"SAVE HEVC VIDEOS AS"="HEVC 동영상을 다음으로 저장";
+/* Footer for HEVC format section */
+"We recommend H.264, as its the most compatible format for videos."="우리는 가장 호환성이 좋은 형식인, H.264를 추천합니다.";
+/* Footer for video compression quality */
+"Compression quality when to transcode HEVC videos to H.264 format."="HEVC 동영상을 H.264 형식으로 변환할 때 압축 품질.";
 /* Option title to enable upload videos with Camera Uploads */
 "uploadVideosLabel"="동영상 업로드";
-/* Option title to enable Camera Uploads only when the device is charging */
-"onlyWhenChargingLabel"="충전중일 때만";
-/* Footer text to explain the Camera Uploads functionality */
-"cameraUploads_footer"="활성화하면, 사진과 동영상이 업로드됩니다.";
+/* Footer text for Camera Upload switch section when camera upload is disabled */
+"When enabled, photos will be uploaded."="활성화하면, 사진이 업로드 됩니다.";
+/* Footer text for Camera Upload switch section when only photos upload is enabled */
+"Photos will be uploaded to Camera Uploads folder."="사진이 카메라 업로드 폴더에 업로드 됩니다.";
+/* Footer text for Camera Upload switch section when photos and videos upload is enabled */
+"Photos and videos will be uploaded to Camera Uploads folder."="사진과 동영상이 카메라 업로드 폴더에 업로드 됩니다.";
+/* Title to show for upload in background */
+"Upload in Background"="백그라운드에서 업로드";
+/* Title for the location based background upload message */
+"Enable location services for background upload"="백그라운드 업로드를 위해 위치 서비스를 활성화";
+/* Message for the location based background upload when the location data access is not denied by users */
+"MEGA can periodically start camera uploads in background when your location changes."="MEGA는 당신의 위치가 변경될 때 백그라운드에서 주기적으로 카메라 업로드를 시작할 수 있습니다.";
+/* Message for the location based background upload when the location data access is denied by users */
+"Please select “Always” at your Location page in Settings, then MEGA can periodically start camera uploads in background when your location changes."="MEGA는 당신의 위치가 변경될 때 백그라운드에서 주기적으로 카메라 업로드를 시작할 수 있도록, 설정의 위치 페이지에서 \"항상\"을 선택해주세요.";
+/* Title for turn on a feature */
+"Turn On"="켜기";
+/* Title for turn on a feature in settings */
+"Turn On in Settings"="설정에서 켜기";
+/* Footer for video uploads switch section when enabled */
+"Videos will be uploaded to the Camera Uploads folder."="동영상이 카메라 업로드 폴더에 업로드 됩니다.";
+/* Footer for video uploads switch section when disabled */
+"When enabled, videos will be uploaded."="활성화하면, 동영상이 업로드 됩니다.";
+/* Title for new camera upload feature */
+"New Camera Upload!"="새 카메라 업로드 옵션!";
+/* A messge for camera upload v2 migration */
+"Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="이제 HEIC/HEVC 사진과 동영상을 널리 호환되는 JPEG/H.264 형식으로 변환하도록 선택할 수 있습니다.";
+/* Title for an action to use most compatible formats */
+"Use Most Compatible Formats"="가장 잘 호환되는 형식 사용";
+/* Title for custom settings */
+"Custom Settings"="개별 설정";
+/* Title to show when device local storage is full */
+"%@ Storage Full"="%@ 저장소 가득 참";
+/* Detail for local storage full situation */
+"You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="앞으로의 카메라 업로드를 위한 공간이 충분하지 않습니다. 불필요한 앱, 동영상 또는 음악을 삭제함으로써 공간을 확보하세요. %@에서 저장소를 관리할 수 있습니다";
+/* Navigation path for Storage settings in iOS */
+"Settings > General > %@ Storage"="설정 > 일반 > %@ 저장소";
+/* Title of the switch to config whether to upload videos for Live Photos */
+"Upload videos for Live Photos"="라이브 포토용 동영상 업로드";
+/* Title of the switch to config whether to upload all burst photos */
+"Upload all burst photos"="모든 연사 사진 업로드";
+/* Title of the switch to config whether to upload Hidden Album */
+"Upload Hidden Album"="숨긴 앨범 업로드";
+/* Footer description when upload videos for Live Photos is enabled */
+"The video and the photo in each Live Photo will be uploaded."="라이브 포토의 사진과 동영상 버전이 업로드됩니다.";
+/* Footer description when upload videos for Live Photos is disabled */
+"Only the photo in each Live Photo will be uploaded."="라이브 포토의 사진 버전만 업로드됩니다.";
+/* Footer description when upload all burst photos is enabled */
+"All the photos from your burst photo sequences will be uploaded."="연속 촬영의 모든 사진이 업로드 됩니다.";
+/* Footer description when upload all burst photos is disabled */
+"Only the representative photos from your burst photo sequences will be uploaded."="연속 촬영의 가장 좋아하는 사진만 업로드 됩니다.";
+/* Footer description when upload Hidden Album is enabled */
+"The Hidden Album is where you hide photos or videos in your device Photos app."="숨긴 앨범은 기기의 사진 앱에서 숨긴 사진 또는 동영상입니다.";
+/* Title of the switch to config whether to upload Shared Albums */
+"Upload Shared Albums"="공유된 앨범 업로드";
+/* Footer description for Upload Shared Albums title when option enabled */
+"Shared Albums from your device's Photos app will be uploaded."="기기의 사진 앱의 공유된 앨범이 업로드될 것입니다";
+/* Footer description for Upload Shared Albums title when option disabled */
+"Shared Albums from your device's Photos app will not be uploaded."="기기의 사진 앱의 공유된 앨범이 업로드되지 않을 것입니다";
+/* Title of the switch to config whether to upload synced albums */
+"Upload albums synced from iTunes"="iTunes에서 동기화된 앨범 업로드";
+/* Footer description for upload synced albums title */
+"Synced albums are where you sync photos or videos to your device's Photos app from iTunes."="동기화된 앨범은 당신의 기기의 사진 앱이 iTunes에서 공기화한 사진 또는 동영상이 저장되는 곳입니다.";
 /* App means “Application” */
 "App version"="앱 버전";
 /* Title of the label where the SDK version is shown */
@@ -680,10 +730,6 @@
 "exportMasterKeyFooter"="복구 키를 내보내고 안전한 장소에 보관하는 것은 데이터 손실 없이 새 비밀번호를 설정할 수 있도록 해줍니다.";
 /* Question button to present a view where it's explained what is the Recovery Key */
 "whyDoINeedARecoveryKey"="왜 복구 키가 필요한가요?";
-/* Detailed explanation of how the master encryption key (now renamed "Recovery Key") works, and why it is important to remember your password. */
-"masterKey_firstParagraph"="당신의 데이터는 우리가 당신의 비밀번호와 함께 암호화하여 저장한 마스터 암호화 키 (복구 키)로 시작하는 일련의 해독 과정을 통해서만 읽을 수 있습니다. 이것은 비밀번호를 잃어버리면, 복구 키를 더 이상 해독할 수 없다는 뜻이고, 더 이상 당신의 데이터를 해독할 수 없다는 뜻입니다.";
-/*  */
-"masterKey_thirdParagraph"="외부 공격자가 당신의 키만으로 계정에 접근할 수는 없습니다. 비밀번호 재설정은 당신의 이메일에 대한 접근과 키 모두를 요구합니다.";
 /* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
 "recoveryKeyCopiedToClipboard"="복구 키가 클립보드로 복사되었습니다. 안전한 곳에 보관하세요.";
 /* Alert title shown when you have exported your MEGA Recovery Key */
@@ -760,8 +806,6 @@
 "filesFolderRemovedToRubbishBinMessage"="MEGA에서 파일 %d개와 폴더 1개가 삭제됨";
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
 "filesFoldersRemovedToRubbishBinMessage"="MEGA에서 파일 [A]개와 폴더 [B]개가 삭제됨";
-/* Hint text to suggest that the user have to write his/her current password */
-"currentPassword"="현재 비밀번호";
 /* Hint text to suggest that the user have to write the new password on it */
 "newPassword"="새 비밀번호";
 /* Hint text where the user have to re-write the new password to confirm it */
@@ -859,8 +903,6 @@
 "downloadInUppercaseTransfers"="다운로드 전송";
 /* Title of My Account section. There you can see your account details */
 "myAccount"="내 계정";
-/* Button title that shows the different MEGA PRO plans to which you can upgrade. (String as short as possible) */
-"buyPRO"="PRO 구입";
 /* Caption of a button to upgrade the account to Pro status */
 "upgrade"="업그레이드";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
@@ -895,8 +937,6 @@
 "storageQuota"="저장공간 할당량";
 /* The header/title of a block/section which contains information about the user's used/available transfer allowance for their account. */
 "transferQuota"="전송 할당량";
-/* The user's achieved base quota */
-"accountBaseQuota"="계정 기본 할당량";
 /* achievement type */
 "registrationBonus"="가입 보너스";
 /* Message shown on the achievements dialog for achieved achievements, %1 is replaced with e.g. 20 GB */
@@ -915,6 +955,22 @@
 "xDaysLeft"="%1일 남음";
 /* %1 will be replaced by a numeric value and %2 will be 'days' or 'months', for example (Expires in [S]10[/S] days) */
 "bonusExpiresIn"="([S]%1[/S] %2 후 보너스 만료)";
+/* Add Phone Number title  */
+"Add Phone Number"="Add Phone Number";
+/* Achievement explanation for add phone number */
+"You have received %1$s storage space and %2$s transfer quota for verifying your phone number."="전화번호를 인증하여서 %1$s의 무료 저장 공간과 %2$s의 전송 할당량을 받았습니다.";
+/* Free storage description to encourage users to add phone number to their accounts */
+"Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."="Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA.";
+/* Description to encourage users to add phone number to their accounts when there are not achievements */
+"Add your phone number to MEGA. This makes it easier for your contacts to find you on MEGA."="MEGA에 전화번호를 추가하세요. 이것은 당신의 지인들이 당신을 MEGA에서 더 쉽게 찾도록 해줍니다.";
+/* Description to unblock account by verifying phone number */
+"Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account."="당신의 계정은 잠재적 남용을 방지하기 위해 일시적으로 정지되었습니다. 계정을 해제하려면 전화번호를 인증하세요.";
+/* Verify your account title */
+"Verify Your Account"="Verify Your Account";
+/* Add your phone number title */
+"Add Your Phone Number"="Add Your Phone Number";
+/* Choose Your Country title */
+"Choose Your Country"="Choose Your Country";
 /* Used to display the number of months a plan was purchased for e.g. 3 months, 6 months. */
 "months"="개월";
 /*  */
@@ -937,8 +993,6 @@
 "firstName"="이름";
 /* Hint text for the last name (Placeholder) */
 "lastName"="성";
-/* Button title that goes to the section Usage where you can see how your MEGA space is used */
-"usage"="사용량";
 /* Title for "Local" used space. */
 "localLabel"="로컬";
 /* Title for "Used" MEGA space. */
@@ -947,14 +1001,12 @@
 "availableLabel"="이용가능";
 /* title of the My Account screen */
 "accountType"="계정 유형:";
-/* Text relative to the MEGA account level. UPPER CASE */
-"free"="무료";
+/* Label to indicate that the current user has a Free account. */
+"Free"="무료";
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="%@에 만기";
 /* Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible). */
 "Renews on"="재결제일";
-/* Button title for the section where you can see the 'Purchase history' related to your account */
-"purchaseHistory"="결제 기록";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="들어오는 공유";
 /* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
@@ -967,12 +1019,10 @@
 "upgradeAccount"="계정 업그레이드";
 /*  */
 "chooseYourAccountType"="계정 유형을 선택하세요";
-/* Text shown under the button 'Skip' to explain that you can upgrade your account later in the section 'My Account'. */
-"youCanUpgradeLaterInMyAccount"="나중에 내 계정에서 업그레이드할 수 있습니다";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]클라우드 드라이브가 거의 찼습니다.[/S] PRO 계정으로 [A]지금 업그레이드[/A]하고 [S]최대 8 TB (8192 GB)[/S]의 클라우드 저장 공간을 받으세요.";
+"cloudDriveIsAlmostFull"="[S]클라우드 드라이브가 거의 찼습니다.[/S] PRO 계정으로 [A]지금 업그레이드[/A]하고 [S]최대 %@ TB (%@ GB)[/S]의 클라우드 저장 공간을 받으세요.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]계정이 가득 찼습니다.[/S] PRO 계정으로 [A]지금 업그레이드[/A]하고 [S]최대 8 TB (8192 GB)[/S]의 클라우드 저장 공간을 얻으세요.";
+"cloudDriveIsFull"="[S]클라우드 드라이브가 가득 찼습니다.[/S] PRO 계정으로 [A]지금 업그레이드[/A]하고 [S]최대 %@ TB (%@ GB)[/S]의 클라우드 저장 공간을 얻으세요.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="저장소";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
@@ -1053,10 +1103,6 @@
 "Start chatting securely with your contacts using end-to-end encryption"="종단간 암호화를 통하여 당신의 연락처와 안전하게 대화를 시작하세요";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
 "enable"="활성화";
-/* Text button shown when an option is enabled, to allow to disable it. String as sort as possible. */
-"disable"="비활성화";
-/* Conversations section */
-"conversations"="대화";
 /* A button on a dialog which invites a contact to join MEGA. */
 "invite"="초대";
 /* A log message in a chat to indicate that the message has been deleted by the user. */
@@ -1089,6 +1135,8 @@
 "voiceAndVideoCalls"="음성과 영상 통화";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
 "useMobileData"="모바일 데이터 사용";
+/* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for videos. */
+"Use Mobile Data for Videos"="동영상에 모바일 데이터 사용";
 /* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
 "autoAway"="자동 부재중";
 /* */
@@ -1111,22 +1159,22 @@
 "away"="자리 비움";
 /*  */
 "busy"="바쁨";
-/* title of the contact properties screen */
-"contactInfo"="연락처 정보";
 /*  */
 "notifications"="알림";
 /* Title to perform the action of sending a message to a contact. */
 "sendMessage"="메시지 보내기";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
 "verifyCredentials"="개인정보 인증";
+/* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
+"verify"="인증";
+/* Button title */
+"verified"="확인됨";
 /* A button title to delete the history of a chat. */
 "clearChatHistory"="대화 기록 삭제";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="이 대화의 모든 메시지 기록을 삭제하시겠습니까?";
 /* 'Next' button in a dialog */
 "continue"="계속";
-/* Button title that allows the user to close a chat. */
-"closeChat"="대화 닫기";
 /* Title of the incoming shared folders of a user. */
 "sharedFolders"="공유된 폴더";
 /* Label title above the fingerprint credentials of a user's contact. A credential in this case is a stored piece of information representing the identity of the contact */
@@ -1141,18 +1189,10 @@
 "approve"="승인";
 /* start a chat/conversation */
 "startConversation"="대화 시작";
-/* Title of a menu button which allows users to start a conversation creating a 'Group' chat. */
-"group"="단체";
-/* Title of section where you can see the chat group information and the options that you can do with it. Like 'Notifications' or 'Leave Group' and also the participants of the group */
-"groupInfo"="단체 정보";
 /* Label title for a group chat */
 "groupChat"="단체 대화";
 /* The title of a menu button which allows users to rename a group chat. */
 "renameGroup"="그룹 이름 변경";
-/* Title of the action that allows you to change the avatar of a group chat. */
-"changeGroupAvatar"="단체 아바타 변경";
-/* Text used as hint to give the user information to write a name for the group chat. */
-"enterGroupName"="그룹 이름을 입력하세요";
 /* A button label. The button allows the user to leave the group conversation. */
 "leave"="떠나기";
 /* Top menu option which opens more menu options in a context menu. */
@@ -1165,8 +1205,6 @@
 "close"="닫기";
 /* Alert text that explains what means confirming the action 'Leave' */
 "youWillNoLongerHaveAccessToThisConversation"="당신은 더 이상 이 대화에 접근할 수 없습니다";
-/* A button label. The button allows the user to leave the conversation. */
-"leaveChat"="대화 나가기";
 /* Button title that allows the user to leave a group chat. */
 "leaveGroup"="단체 떠나기";
 /* Label to describe the section where you can see the participants of a group chat */
@@ -1177,8 +1215,6 @@
 "standard"="기본";
 /* A button title which removes a participant from a chat. */
 "removeParticipant"="참가자 제거";
-/* Chat conversation header with user %@. Please leave %@ as it is. */
-"conversationWith"="%@님과 대화";
 /* Title show above the name of the persons with whom you're chatting */
 "chattingWith"="대화중인 사람";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
@@ -1205,16 +1241,12 @@
 "deleteMessage"="메시지 삭제";
 /*  */
 "fromCloudDrive"="클라우드 드라이브에서";
-/*  */
-"fromDevice"="장치에서";
 /* referring to a contact in the contact list of the user */
 "contact"="연락처";
 /* A button label. The button sends contact information to a user in the conversation. */
 "sendContact"="연락처 보내기";
 /* */
 "done"="완료";
-/* Button label for sending file attachments through the chat to another user. */
-"sendFiles"="파일 보내기";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "enableRichUrlPreviews"="Rich URL 미리보기 활성화";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
@@ -1313,7 +1345,7 @@
 /* Label to show that an error related with an Incomplete SDK operation. */
 "Incomplete"="완료되지 않음";
 /* Label to show that an error related with the decryption process of a node occurs during a SDK operation. */
-"Invalid key/Decryption error"="잘못된 키/해독 오류";
+"Invalid key/Decryption error"="해독 오류";
 /* Label to show that an error related with a bad session ID occurs during a SDK operation. */
 "Bad session ID"="세션 ID 오류";
 /* Label to show that an error related with a blocked account occurs during a SDK operation. */
@@ -1348,7 +1380,7 @@
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph4"="MEGA는 모든 가입 회원에게 넉넉한 50 GB의 무료 저장소를 보너스 도전 과제와 함께 제공하며, 더 높은 제한을 가진 유료 요금제를 제공합니다:";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph5"="PRO LITE 구독권: 매달 €4.99 (US$4.99) 또는 매해 €49.99 (US$49.99)에 200 GB의 저장 공간과 매달 1 TB의 전송 할당량을 드립니다.\nPRO I 구독권: 매달 €9.99 (US$9.99) 또는 매해 €99.99 (US$99.99)에 1 TB의 저장 공간과 매달 2 TB의 전송 할당량을 드립니다.\nPRO II 구독권: 매달 €19.99 (US$19.99) 또는 매해 €199.99 (US$199.99)에 4 TB의 저장 공간과 매달 8 TB의 전송 할당량을 드립니다.\nPRO III 구독권: 매달 €29.99 (US$29.99) 또는 매해 €299.99 (US$299.99)에 8 TB의 저장 공간과 매달 16 TB의 전송 할당량을 드립니다.";
+"generalDescriptionParagraph5"="PRO LITE 구독권: 매달 €4.99 (US$4.99) 또는 매해 €49.99 (US$49.99)에 400 GB의 저장 공간과 매달 1 TB의 전송 할당량을 드립니다.\nPRO I 구독권: 매달 €9.99 (US$9.99) 또는 매해 €99.99 (US$99.99)에 2 TB의 저장 공간과 매달 2 TB의 전송 할당량을 드립니다.\nPRO II 구독권: 매달 €19.99 (US$19.99) 또는 매해 €199.99 (US$199.99)에 8 TB의 저장 공간과 매달 8 TB의 전송 할당량을 드립니다.\nPRO III 구독권: 매달 €29.99 (US$29.99) 또는 매해 €299.99 (US$299.99)에 16 TB의 저장 공간과 매달 16 TB의 전송 할당량을 드립니다.";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph6"="자세한 정보는, 우리의 웹사이트를 확인하세요: https://mega.nz/\n이용 약관: https://mega.nz/terms\n개인정보 처리방침: https://mega.nz/privacy";
@@ -1391,7 +1423,7 @@
 /* Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible. */
 "autoAccept"="자동 승인";
 /* Footer that explains the way Auto-Accept works for QR codes */
-"autoAcceptFooter"="당신의 QR 코드를 스캔한 연락처는 자동으로 연락처 목록에 추가됩니다.";
+"autoAcceptFooter"="당신의 QR 코드를 스캔한 MEGA 이용자는 자동으로 연락처 목록에 추가됩니다.";
 /* Action to reset the current valid QR code of the user */
 "resetQrCode"="QR 코드 초기화";
 /* Footer that explains what would happen if the user resets his/her QR code */
@@ -1420,8 +1452,6 @@
 "totalSize"="총 크기";
 /* Refers to the type of a file or folder. */
 "type"="형식";
-/* Title of the incoming shared folders of a user in singular */
-"sharedFolder"="공유된 폴더";
 /* Label for what a selection contains. For example: "Contains: 3 folders & 13 files". (no need to put the colon punctuation in the translation) */
 "contains"="포함된 항목";
 /* A label for any 'Modified' text or title. For example to show the modification date of a file/folder. */
@@ -1509,7 +1539,7 @@
 /* When an active call of user A with user B had failed */
 "callFailed"="통화 실패";
 /* When an active call of user A with user B had ended */
-"callEnded"="통화 종료.";
+"callEnded"="통화 종료됨.";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="시간: %@";
 /* */
@@ -1623,7 +1653,7 @@
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="마이크와 카메라 활성화";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
-"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="음성 메모를 전송하고 암호화된 음성과 영상 통화를 하려면, MEGA가 당신의 카메라와 마이크에 접근할 수 있도록 허용해주세요";
+"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="음성 메시지를 전송하고 암호화된 음성과 영상 통화를 하려면, MEGA가 당신의 카메라와 마이크에 접근할 수 있도록 허용해주세요";
 /* Title label that explains that the user is going to be asked for the notifications permission */
 "Enable Notifications"="알림 활성화";
 /* Detailed explanation of why the user should give permission to deliver notifications */
@@ -1635,7 +1665,7 @@
 /* Title of the option to enable or disable file versioning on Settings section */
 "File versioning"="파일 버전 기록";
 /* Subtitle of the option to enable or disable file versioning on Settings section */
-"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="당신의 계정 전체에 대해 파일 버전 기록을 활성화하거나 비활성화합니다.\n연락처가 이것을 활성화했다면 공유된 폴더에서 계속해서 파일 버전을 받게 됩니다.";
+"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="계정 전체에 대한 파일 버전 기록을 활성화하거나 비활성화합니다.\n파일 버전 기록을 해제하면 지인이 공유된 폴더에 새로운 버전을 만드는 것을 막을 수 없습니다.";
 /* A confirmation message when the user chooses to disable file versioning. */
 "When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="파일 버전 기록이 해제되면, 파일이 업데이트되면 현재 버전이 새 버전 으로 교체됩니다 (그리고 파일의 변경점의 기록되지 않습니다).파일 버전 기록을 해제하시겠습니까?";
 /* Settings preference title to show file versions info of the account */
@@ -1694,22 +1724,18 @@
 "To create a chat link you must name the group."="대화 링크를 생성하려면 그룹 이름을 지어야합니다.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
 "Chat Link"="대화 링크";
-/* Message shown when there is an active chat link that can be deleted */
-"Delete Chat Link"="대화 링크 삭제";
 /* Button text in public chat previews that allows the user to join the chat */
 "Join"="참여";
 /* Text shown in a notification to let the user know that has joined a public chat room after login or account creation */
 "You have joined %@"="%@에 참여하셨습니다";
 /* Users previewing a public chat */
 "Observers"="참관인";
-/* Alert message shown while deleting a chat link, warning about the consequences */
-"This conversation will no longer be accessible through the link you are about to delete."="대화 링크가 삭제되면 그것을 통하여 이 대화에 참여할 수 없게 됩니다.";
 /* Management message shown in a chat when the user %@ enables the 'Encrypted Key Rotation' */
 "%@ enabled Encrypted Key Rotation"="%@님이 암호화 키 순환을 활성화하였습니다.";
 /* Management message shown in a chat when the user %@ creates a public link for the chat */
-"%@ created a public link for the chat."="%@님이 대화의 대화 링크를 생성하였습니다.";
+"%@ created a public link for the chat."="%@님이 대화 링크를 생성하였습니다.";
 /* Management message shown in a chat when the user %@ removes a public link for the chat */
-"%@ removed a public link for the chat."="%@님이 대화의 대화 링크를 삭제하였습니다.";
+"%@ removed a public link for the chat."="%@님이 대화 링크를 삭제하였습니다.";
 /* Management message shown in a chat when the user %@ joined it from a public chat link */
 "%@ joined the group chat."="%@님이 단체 대화에 참여하였습니다.";
 /* Message show when a call cannot be established because there are too many participants in the group call */
@@ -1852,6 +1878,8 @@
 "Tap and hold %@ to record, release to send"="녹음하려면 %@ 버튼을 누르고, 전송하려면 떼세요";
 /* Message shown when there is an ongoing call and the user tries to record a voice message */
 "It is not possible to record voice messages while there is a call in progress"="통화가 진행중이면 음성 메시지를 녹음할 수 없습니다.";
+/* Label indicating that a voice clip is being recorded. String as short as possible. */
+"Recording..."="녹음중...";
 /* Text to inform the user there is an active call and is not participating */
 "Ongoing Call"="진행중인 통화";
 /* Message shown when there is an ongoing call and the user tries to play an audio or video */
@@ -1886,8 +1914,6 @@
 "%1 Images and 1 Video"="이미지 %1개와 동영상 1개";
 /* Title for multiple images and multiple videos in recents section */
 "%1 Images and %2 Videos"="이미지 %1개와 동영상 %2개";
-/* Tooltip message shown on recents section. Please see the attached image. */
-"Modified on %1 at %2"="수정일 %1 %2";
 /* Title for a recent action shown in the webclient, see the attached image for context. */
 "%1 modified by %3"="%1 편집자: %3";
 /* Title for a recent action shown in the webclient, see the attached image for context. Please ensure that the `%2 more` is inside the [A] tag as this will become a toggle to show the hidden content. */
@@ -1911,7 +1937,7 @@
 /* Title of a dialog in which we request access to a specific permission, like the Location Services */
 "Please allow access"="접근을 허용해주세요";
 /* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
-"Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="당신의 기기의 개인정보 보호 섹션으로 가세요. 위치 서비스를 활성화하고 MEGA를 앱 사용중 또는 항상으로 설정해주세요.";
+"Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="당신의 기기의 개인정보 보호 섹션으로 가세요. 위치 서비스를 활성화하고 MEGA를 앱을 사용중일 때 또는 항상으로 설정해주세요.";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
 "MEGA accesses your location when you elect to share it with your contacts."="당신이 당신의 지인들과 위치를 공유하기로 선택하였을 때 MEGA는 당신의 위치에 접근합니다.";
 /* Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
@@ -1919,8 +1945,140 @@
 /* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */
 "Turn Mobile Data on"="모바일 데이터 켜기";
 /* Extra information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
-"You can turn on mobile data for this app in Settings."="이 앱에 대한 모바일 데이터를 설정에서 켤 수 있습니다.";
+"You can turn on mobile data for this app in Settings."="장치의 설정에서 이 앱에 대한 모바일 데이터를 켤 수 있습니다.";
 /* title of the alert dialog when the user is changing the API URL to staging */
 "Change to a test server?"="테스트 서버로 변경할까요?";
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="테스트 서버로 변경하시겠습니까? 당신의 계정이 복구할 수 없는 문제를 겪을 수 있습니다.";
+/* Title label that explains that the user is going to be asked for the contacts permission */
+"Enable Access to Contacts"="Enable Access to Contacts";
+/* Detailed explanation of why the user should give permission to contacts */
+"MEGA needs access to your contacts to help you connect with other people on MEGA."="MEGA에 있는 다른 사람들과 당신을 연결하기 위해서는 당신의 연락처에 대한 접근이 필요합니다.";
+/* Title encouraging the user to check who of its contacts are using MEGA */
+"See who's already on MEGA"="See who’s already on MEGA";
+/* Title showing the user how many of his contacts are using MEGA */
+"[X] contacts found on MEGA"="[X] contacts found on MEGA";
+/* Title showing the user that one of his contacts are using MEGA */
+"1 contact found on MEGA"="1 contact found on MEGA";
+/* Text indicating the user to perform an action to grant some permission */
+"Enable Access"="접근 허용";
+/* Text indicating the user to open the device settings for MEGA */
+"Open Settings"="Open Settings";
+/* Text encouraging the user to invite contacts to MEGA */
+"Invite contacts and start chatting securely with MEGA’s encrypted chat."="지인을 초대하고 MEGA의 암호화된 대화로 안전하게 대화를 시작하세요.";
+/* Text showing the user how many contacts would be invited */
+"Invite [X] contacts"="Invite [X] contacts";
+/* Text showing the user how to write more than one email in order to invite them to MEGA */
+"Tap space to enter multiple emails"="Tap space to enter multiple emails";
+/* Text used as a section title or similar */
+"Enter Email"="Enter Email";
+/* Text used as view title showing the user the phone contacts using MEGA */
+"On MEGA"="MEGA에서";
+/* Text used as a section title or similar showing the user the phone contacts using MEGA */
+"CONTACTS ON MEGA"="CONTACTS ON MEGA";
+/* Text to send as SMS message to user contacts inviting them to MEGA */
+"Hi, Have encrypted conversations on Mega with me and get 50GB free storage."="Hi, Have encrypted conversations on Mega with me and get 50GB free storage.";
+/* Destination folder name of chat files */
+"My chat files"="내 대화 파일";
+/* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
+"Require passcode"="비밀번호 필요";
+/* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
+"Immediately"="즉시";
+/* Popup notification text on mouse-over of taken down file. */
+"This file has been the subject of a takedown notice."="이 파일은 게시 중단 통보 대상입니다.";
+/* Popup notification text on mouse-over taken down folder. */
+"This folder has been the subject of a takedown notice."="이 폴더는 게시 중단 통보 대상입니다.";
+/* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
+"Dispute Takedown"="게시중단 이의제기";
+/* Title of the "Links" Shared Items. */
+"Links"="링크";
+/* Title for empty state view of "Links" in Shared Items. */
+"No Public Links"="공개 링크 없음";
+/* Text indicating to the user the action that will be executed on tap. */
+"Manage Share"="공유 관리";
+/* Title of the screen that shows the users with whom the user can share a folder */
+"Share with"="다른 사람과 공유";
+/* Chat Notifications DND: Option that does not deactivate DND automatically */
+"Until I Turn it On Again"="내가 다시 켜기 전까지";
+/* Chat Notifications DND: Option that deactivates DND after 30 minutes */
+"30 minutes"="30분";
+/* Chat Notifications DND: Option that deactivates DND after 1 hour */
+"1 hour"="1시간";
+/* Chat Notifications DND: Option that deactivates DND after 6 hours */
+"6 hours"="6시간";
+/* Chat Notifications DND: Option that deactivates DND after 24 hours */
+"24 hours"="24시간";
+/* Chat Notifications DND: Title bar message for the dnd activate options */
+"Mute chat Notifications for"="대화 알림 끄기";
+/* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
+"Muted forever"="영구적으로 차단";
+/* Chat Notifications DND: Remaining time left to deactivate DND - 1 minute left */
+"1 minute left"="1분 남음";
+/* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 minute left */
+"%d minutes left"="%d분 남음";
+/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour left */
+"1 hour left"="1시간 남음";
+/* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 hour left */
+"%d hours left"="%d시간 남음";
+/* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
+"Chat Notifications"="대화 알림";
+/* Chat settings: This text appears with the Do Not Disturb switch */
+"Do Not Disturb"="방해금지";
+/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, 1 minute left */
+"1 hour, 1 minute left"="1시간, 1분 남음";
+/* Chat Notifications DND: Remaining time left to deactivate DND - X hours, X minutes left */
+"%d hours, %d minutes left"="%d시간, %d분 남음";
+/* Chat Notifications DND: Remaining time left to deactivate DND - X hours, 1 minute left */
+"%d hours, 1 minute left"="%d시간, 1분 남음";
+/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, X minutes left */
+"1 hour, %d minutes left"="1시간, %d분 남음";
+/* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
+"Reconnecting..."="재접속중...";
+/* Title shown when the user reconnect in a call. */
+"You are back!"="돌아왔습니다.";
+/* Subtitle of chat screen when the chat is inactive */
+"Inactive chat"="활성화되지 않은 대화";
+/* Error message shown when the user tries to open a file with an unsupported encoding */
+"It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="이 파일이 UTF-8 또는 ISO/IEC 8859-1로 기록되지 않아서, 내용을 가져올 수 없었습니다.";
+/* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
+"Include location tags"="위치 태그 포함";
+/* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
+"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="활성화되면, 사진과 동영상이 어디서 촬영되었는지에 대한 정보가 업로드됩니다, 공유할 때 주의하세요.";
+/* Text emncouraging the user to add contacts in MEGA */
+"Invite contact now"="Invite contact now";
+/* Text showing the user one contact would be invited */
+"Invite 1 contact"="Invite 1 contact";
+/* Error message if user click next button without enter a valid phone number */
+"Please enter a valid phone number"="Please enter a valid phone number";
+/* Error message that will show to user when user reached the sms verification daily limit */
+"You have reached the daily limit"="일일 한도에 도달하였습니다";
+/* Error message that will show to user when user entered invalid verification code */
+"Wrong code. Please try again or resend."="잘못된 코드. 다시 시도하거나 재발송하세요.";
+/* Error message that will show to user when host detected that the mobile number has been registered already */
+"This number is already associated with a Mega account"="This number is already associated with a Mega account";
+/* Country label for a button, title, etc. */
+"Country"="국가";
+/* Error message that will show to user its account is already verified */
+"Your account is already verified"="Your account is already verified";
+/* Place holder for enter mobile number field */
+"Your phone number"="당신의 전화번호";
+/* Label tell user to enter received txt to below input boxes */
+"Please type the verification code sent to"="다음으로 전송된 코드를 입력하세요";
+/* Text message to remind user to resend verification code */
+"You didn't receive a code?"="코드를 받지 못했나요?";
+/* Message shown when verify phone number successfully */
+"Your phone number has been verified successfully"="전화번호가 성공적으로 인증되었습니다";
+/* Text describing account suspended state to the user */
+"Your account has been temporarily suspended for your safety."="Your account has been temporarily suspended for your safety.";
+/* Text indicating the user next step to unlock suspended account. Please leave [S], [/S] as it is which is used to bolden the text. */
+"[S]Please verify your email[/S] and follow its steps to unlock your account."="[S]Please verify your email[/S] and follow its steps to unlock your account.";
+/* Text for button to open an helping view */
+"Why am I seeing this?"="이게 왜 보여지나요?";
+/* Text to notify user an email has been sent */
+"Email sent"="이메일 발송됨";
+/* Title of a helping view about locked accounts */
+"Locked Accounts"="잠긴 계정들";
+/* Locked accounts description text by an external data breach. This text is 1 of 2 paragraph of a description. */
+"It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="MEGA와 다른 서비스들에서 같은 비밀번호를 이용하고 있고, 다른 서비스들 중 한 곳에서 데이터 유출이 발생했을 가능성이 있습니다.";
+/* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
+"Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="당신의 비밀번호가 유출되어서 MEGA 계정뿐만 아니라 당신의 계정에 접속하려는 나쁜 사람들에게 이용되고 있습니다.";

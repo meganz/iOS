@@ -5,6 +5,10 @@
 #import "SVProgressHUD.h"
 #import "UIApplication+MNZCategory.h"
 
+@interface MEGAPurchase ()
+@property (nonatomic, strong) NSArray *iOSProductIdentifiers;
+@end
+
 @implementation MEGAPurchase
 
 + (MEGAPurchase *)sharedInstance {
@@ -28,13 +32,19 @@
 - (void)requestProducts {
     MEGALogDebug(@"[StoreKit] Request %ld products:", (long)self.pricing.products);
     if ([SKPaymentQueue canMakePayments]) {
-        NSMutableSet *productIdentifieres = [[NSMutableSet alloc] initWithCapacity:self.pricing.products];
+        NSMutableArray *productIdentifieres = [NSMutableArray.alloc initWithCapacity:self.pricing.products];
         for (NSInteger i = 0; i < self.pricing.products; i++) {
-            MEGALogDebug(@"[StoreKit] Product \"%@\"", [self.pricing iOSIDAtProductIndex:i]);
-            [productIdentifieres addObject:[self.pricing iOSIDAtProductIndex:i]];
+            NSString *productId = [self.pricing iOSIDAtProductIndex:i];
+            MEGALogDebug(@"[StoreKit] Product \"%@\"", productId);
+            if (productId.length) {
+                [productIdentifieres addObject:productId];
+            } else {
+                MEGALogWarning(@"Product identifier \"%@\" (account type \"%@\") does not exist in the App Store, not need to request its information", productId, [MEGAAccountDetails stringForAccountType:[self.pricing proLevelAtProductIndex:i]]);
+            }
         }
         _products = [[NSMutableArray alloc] initWithCapacity:productIdentifieres.count];
-        SKProductsRequest *prodRequest = [[SKProductsRequest alloc] initWithProductIdentifiers:productIdentifieres];
+        self.iOSProductIdentifiers = [productIdentifieres copy];
+        SKProductsRequest *prodRequest = [[SKProductsRequest alloc] initWithProductIdentifiers:[NSSet setWithArray:self.iOSProductIdentifiers]];
         prodRequest.delegate = self;
         [prodRequest start];
         
@@ -79,6 +89,10 @@
     }
 }
 
+- (NSUInteger)pricingProductIndexForProduct:(SKProduct *)product {
+    return [self.iOSProductIdentifiers indexOfObject:product.productIdentifier];
+}
+
 #pragma mark - SKProductsRequestDelegate Methods
 
 - (void)productsRequest:(SKProductsRequest *)request didReceiveResponse:(SKProductsResponse *)response {
@@ -116,15 +130,16 @@
             case SKPaymentTransactionStatePurchasing:
                 break;
                 
-            case SKPaymentTransactionStatePurchased:
+            case SKPaymentTransactionStatePurchased: {
                 MEGALogDebug(@"[StoreKit] Date: %@\nIdentifier: %@\n\t-Original Date: %@\n\t-Original Identifier: %@", transaction.transactionDate, transaction.transactionIdentifier, transaction.originalTransaction.transactionDate, transaction.originalTransaction.transactionIdentifier);
                 
-                NSTimeInterval lastPublicTimestampAccessed = [[NSUserDefaults standardUserDefaults] doubleForKey:@"kLastPublicTimestampAccessed"];
-                if ([NSDate date].timeIntervalSince1970 - lastPublicTimestampAccessed <= SECONDS_IN_DAY) {
-                    uint64_t lastPublicHandleAccessed = [[[NSUserDefaults standardUserDefaults] objectForKey:@"kLastPublicHandleAccessed"] unsignedLongLongValue];
-                    [[MEGASdkManager sharedMEGASdk] submitPurchase:MEGAPaymentMethodItunes receipt:[receiptData base64EncodedStringWithOptions:0] lastPublicHandle:lastPublicHandleAccessed delegate:self];
+                NSTimeInterval lastPublicTimestampAccessed = [NSUserDefaults.standardUserDefaults doubleForKey:MEGALastPublicTimestampAccessed];
+                uint64_t lastPublicHandleAccessed = [[NSUserDefaults.standardUserDefaults objectForKey:MEGALastPublicHandleAccessed] unsignedLongLongValue];
+                NSInteger lastPublicTypeAccessed = [NSUserDefaults.standardUserDefaults integerForKey:MEGALastPublicTypeAccessed];
+                if (lastPublicTimestampAccessed && lastPublicHandleAccessed && lastPublicTypeAccessed) {
+                    [MEGASdkManager.sharedMEGASdk submitPurchase:MEGAPaymentMethodItunes receipt:[receiptData base64EncodedStringWithOptions:0] lastPublicHandle:lastPublicHandleAccessed lastPublicHandleType:lastPublicTypeAccessed lastAccessTimestamp:(uint64_t)lastPublicTimestampAccessed delegate:self];
                 } else {
-                    [[MEGASdkManager sharedMEGASdk] submitPurchase:MEGAPaymentMethodItunes receipt:[receiptData base64EncodedStringWithOptions:0] delegate:self];
+                    [MEGASdkManager.sharedMEGASdk submitPurchase:MEGAPaymentMethodItunes receipt:[receiptData base64EncodedStringWithOptions:0] delegate:self];
                 }
                 
                 [_delegate successfulPurchase:self restored:NO];
@@ -133,6 +148,7 @@
                 [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
 
                 break;
+            }
                 
             case SKPaymentTransactionStateRestored:
                 MEGALogDebug(@"[StoreKit] Date: %@\nIdentifier: %@\n\t-Original Date: %@\n\t-Original Identifier: %@", transaction.transactionDate, transaction.transactionIdentifier, transaction.originalTransaction.transactionDate, transaction.originalTransaction.transactionIdentifier);
@@ -205,4 +221,3 @@
 }
 
 @end
-

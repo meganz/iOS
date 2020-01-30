@@ -18,9 +18,9 @@
 #import "BrowserViewController.h"
 #import "CameraUploadManager.h"
 #import "CameraUploadManager+Settings.h"
-#import "MEGAConstants.h"
 #import "CustomModalAlertViewController.h"
 #import "UploadStats.h"
+#import "UIViewController+MNZCategory.h"
 @import StoreKit;
 @import Photos;
 
@@ -30,8 +30,6 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 @interface PhotosViewController () <UICollectionViewDelegateFlowLayout, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAPhotoBrowserDelegate> {
     BOOL allNodesSelected;
 }
-
-@property (nonatomic) id<UIViewControllerPreviewing> previewingContext;
 
 @property (nonatomic, strong) MEGANode *parentNode;
 @property (nonatomic, strong) MEGANodeList *nodeList;
@@ -84,7 +82,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     
     self.selectedItemsDictionary = [[NSMutableDictionary alloc] init];
     
-    self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
+    self.editBarButtonItem.title = AMLocalizedString(@"select", @"Caption of a button to select files");
     
     [self.view addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)]];
     
@@ -92,6 +90,10 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     self.cellSize = [self.photosCollectionView mnz_calculateCellSizeForInset:self.cellInset];
     
     self.currentState = MEGACameraUploadsStateLoading;
+    
+    if (@available(iOS 13.0, *)) {
+        [self configPreviewingRegistration];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -106,7 +108,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
 
     self.editBarButtonItem.enabled = MEGAReachabilityManager.isReachable;
-    [self reloadPhotosView];
+    [self reloadUI];
     [self reloadHeader];
 }
 
@@ -167,16 +169,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
-    if ([self.traitCollection respondsToSelector:@selector(forceTouchCapability)]) {
-        if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) {
-            if (!self.previewingContext) {
-                self.previewingContext = [self registerForPreviewingWithDelegate:self sourceView:self.view];
-            }
-        } else {
-            [self unregisterForPreviewingWithContext:self.previewingContext];
-            self.previewingContext = nil;
-        }
-    }
+    [self configPreviewingRegistration];
 }
 
 #pragma mark - uploads state
@@ -228,9 +221,17 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     
     NSString *progressText;
     if (uploadStats.pendingFilesCount == 1) {
-        progressText = AMLocalizedString(@"cameraUploadsPendingFile", @"Message shown while uploading files. Singular.");
+        if (CameraUploadManager.isCameraUploadPausedBecauseOfNoWiFiConnection) {
+            progressText = AMLocalizedString(@"Upload paused because of no WiFi, 1 file pending", nil);
+        } else {
+            progressText = AMLocalizedString(@"cameraUploadsPendingFile", @"Message shown while uploading files. Singular.");
+        }
     } else {
-        progressText = [NSString stringWithFormat:AMLocalizedString(@"cameraUploadsPendingFiles", @"Message shown while uploading files. Plural."), uploadStats.pendingFilesCount];
+        if (CameraUploadManager.isCameraUploadPausedBecauseOfNoWiFiConnection) {
+            progressText = [NSString stringWithFormat:AMLocalizedString(@"Upload paused because of no WiFi, %lu files pending", nil), uploadStats.pendingFilesCount];
+        } else {
+            progressText = [NSString stringWithFormat:AMLocalizedString(@"cameraUploadsPendingFiles", @"Message shown while uploading files. Plural."), uploadStats.pendingFilesCount];
+        }
     }
     self.photosUploadedLabel.text = progressText;
 }
@@ -318,7 +319,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 
 #pragma mark - Private
 
-- (void)reloadPhotosView {
+- (void)reloadUI {
     MEGALogDebug(@"[Camera Upload] reload photos collection view");
     NSMutableDictionary *photosByMonthYearDictionary = [NSMutableDictionary new];
     
@@ -390,8 +391,10 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 #pragma mark - notifications
 
 - (void)didReceiveCameraUploadStatsChangedNotification {
-    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(reloadHeader) object:nil];
-    [self performSelector:@selector(reloadHeader) withObject:nil afterDelay:HeaderStateViewReloadTimeDelay];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(reloadHeader) object:nil];
+        [self performSelector:@selector(reloadHeader) withObject:nil afterDelay:HeaderStateViewReloadTimeDelay];
+    });
 }
 
 - (void)didReceiveInternetConnectionChangedNotification {
@@ -481,7 +484,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
             [self.toolbar setAlpha:1.0];
         }];
     } else {
-        self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
+        self.editBarButtonItem.title = AMLocalizedString(@"select", @"Caption of a button to select files");
         
         allNodesSelected = NO;
         self.navigationItem.title = AMLocalizedString(@"cameraUploadsLabel", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options");
@@ -988,12 +991,10 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 #pragma mark - MEGAGlobalDelegate
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
-    if (![nodeList mnz_containsNodeWithParentFolderName:MEGACameraUploadsNodeName] && ![nodeList mnz_containsNodeWithRestoreFolderName:MEGACameraUploadsNodeName]) {
-        return;
+    if ([nodeList mnz_shouldProcessOnNodesUpdateForParentNode:self.parentNode childNodesArray:self.nodeList.mnz_nodesArrayFromNodeList]) {
+        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(reloadUI) object:nil];
+        [self performSelector:@selector(reloadUI) withObject:nil afterDelay:PhotosViewReloadTimeDelay];
     }
-    
-    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(reloadPhotosView) object:nil];
-    [self performSelector:@selector(reloadPhotosView) withObject:nil afterDelay:PhotosViewReloadTimeDelay];
 }
 
 @end

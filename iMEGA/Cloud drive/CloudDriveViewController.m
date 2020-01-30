@@ -28,12 +28,14 @@
 #import "MEGAShareRequestDelegate.h"
 #import "MEGAStore.h"
 #import "NSMutableArray+MNZCategory.h"
+#import "NSURL+MNZCategory.h"
 #import "UITextField+MNZCategory.h"
 
 #import "BrowserViewController.h"
 #import "CloudDriveTableViewController.h"
 #import "CloudDriveCollectionViewController.h"
 #import "ContactsViewController.h"
+#import "CopyrightWarningViewController.h"
 #import "CustomActionViewController.h"
 #import "CustomModalAlertViewController.h"
 #import "MEGAAssetsPickerController.h"
@@ -46,9 +48,13 @@
 #import "PhotosViewController.h"
 #import "PreviewDocumentViewController.h"
 #import "RecentsViewController.h"
+#import "SearchOperation.h"
 #import "SortByTableViewController.h"
 #import "SharedItemsViewController.h"
 #import "UpgradeTableViewController.h"
+#import "UIViewController+MNZCategory.h"
+
+static const NSTimeInterval kSearchTimeDelay = .5;
 
 @interface CloudDriveViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, CustomActionViewControllerDelegate, NodeInfoViewControllerDelegate, UITextFieldDelegate, UISearchControllerDelegate> {
     
@@ -81,14 +87,14 @@
 
 @property (nonatomic, strong) NSMutableArray *cloudImages;
 
-@property (nonatomic) id<UIViewControllerPreviewing> previewingContext;
-
 @property (nonatomic, strong) CloudDriveTableViewController *cdTableView;
 @property (nonatomic, strong) CloudDriveCollectionViewController *cdCollectionView;
 @property (nonatomic, strong) RecentsViewController *recentsVC;
 
 @property (nonatomic, assign) LayoutMode layoutView;
 @property (nonatomic, assign) BOOL shouldDetermineLayout;
+@property (strong, nonatomic) NSOperationQueue *searchQueue;
+@property (strong, nonatomic) MEGACancelToken *cancelToken;
 
 @end
 
@@ -148,8 +154,18 @@
     
     [self.view addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)]];
     
+    [self.cloudDriveButton setTitle:AMLocalizedString(@"cloudDrive", @"Title for the cloud drive section") forState:UIControlStateNormal];
     [self.recentsButton setTitle:AMLocalizedString(@"Recents", @"Title for the recents section") forState:UIControlStateNormal];
     self.moreBarButtonItem.accessibilityLabel = AMLocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
+    
+    _searchQueue = NSOperationQueue.new;
+    self.searchQueue.name = @"searchQueue";
+    self.searchQueue.qualityOfService = NSQualityOfServiceUserInteractive;
+    self.searchQueue.maxConcurrentOperationCount = 1;
+    
+    if (@available(iOS 13.0, *)) {
+        [self configPreviewingRegistration];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -216,16 +232,7 @@
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
-    if ([self.traitCollection respondsToSelector:@selector(forceTouchCapability)]) {
-        if (self.traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) {
-            if (!self.previewingContext) {
-                self.previewingContext = [self registerForPreviewingWithDelegate:self sourceView:self.view];
-            }
-        } else {
-            [self unregisterForPreviewingWithContext:self.previewingContext];
-            self.previewingContext = nil;
-        }
-    }
+    [self configPreviewingRegistration];
 }
 
 #pragma mark - Layout
@@ -277,12 +284,12 @@
     [self.cdCollectionView.view removeFromSuperview];
     [self.cdCollectionView removeFromParentViewController];
     self.cdCollectionView = nil;
-
+    
     self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
     self.searchController.hidesNavigationBarDuringPresentation = NO;
     self.searchController.delegate = self;
     self.layoutView = LayoutModeList;
-
+    
     self.cdTableView = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveTableID"];
     [self addChildViewController:self.cdTableView];
     self.cdTableView.view.frame = self.containerView.bounds;
@@ -306,7 +313,7 @@
     self.searchController.hidesNavigationBarDuringPresentation = NO;
     self.searchController.delegate = self;
     self.layoutView = LayoutModeThumbnail;
-
+    
     self.cdCollectionView = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveCollectionID"];
     self.cdCollectionView.cloudDrive = self;
     [self addChildViewController:self.cdCollectionView];
@@ -411,11 +418,7 @@
                                                              style:UIPreviewActionStyleDefault
                                                            handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
                                                                CloudDriveViewController *cloudDriveVC = (CloudDriveViewController *)previewViewController;
-                                                               MEGANavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
-                                                               BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
-                                                               browserVC.selectedNodesArray = @[cloudDriveVC.parentNode];
-                                                               browserVC.browserAction = BrowserActionCopy;
-                                                               [rootViewController presentViewController:navigationController animated:YES completion:nil];
+                                                               [cloudDriveVC.parentNode mnz_copyInViewController:rootViewController];
                                                            }];
     
     NSString *deletePreviewActionTitle;
@@ -524,12 +527,7 @@
                                                                      style:UIPreviewActionStyleDefault
                                                                    handler:^(UIPreviewAction * _Nonnull action, UIViewController * _Nonnull previewViewController) {
                                                                        CloudDriveViewController *cloudDriveVC = (CloudDriveViewController *)previewViewController;
-                                                                       MEGANavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
-                                                                       BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
-                                                                       browserVC.selectedNodesArray = @[cloudDriveVC.parentNode];
-                                                                       browserVC.browserAction = BrowserActionMove;
-                                                                       
-                                                                       [rootViewController presentViewController:navigationController animated:YES completion:nil];
+                                                                       [cloudDriveVC.parentNode mnz_moveInViewController:rootViewController];
                                                                    }];
             
             if (self.displayMode == DisplayModeCloudDrive) {
@@ -567,7 +565,7 @@
 - (void)longPress:(UILongPressGestureRecognizer *)longPressGestureRecognizer {
     UIView *view = self.cdTableView ? self.cdTableView.tableView : self.cdCollectionView.collectionView;
     CGPoint touchPoint = [longPressGestureRecognizer locationInView:view];
-
+    
     NSIndexPath *indexPath;
     
     if (self.layoutView == LayoutModeList) {
@@ -777,35 +775,57 @@
     }
 }
 
+#pragma mark - Public
+
+- (void)didSelectNode:(MEGANode *)node {
+    if (node.isTakenDown) {
+        NSString *alertMessage = node.isFolder ? AMLocalizedString(@"This folder has been the subject of a takedown notice.", @"Popup notification text on mouse-over taken down folder.") : AMLocalizedString(@"This file has been the subject of a takedown notice.", @"Popup notification text on mouse-over of taken down file.");
+        
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"openButton", @"Button title to trigger the action of opening the file without downloading or opening it.") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            node.isFolder ? [self openFolderNode:node] : [self openFileNode:node];
+        }]];
+        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"Dispute Takedown", @"File Manager -> Context menu item for taken down file or folder, for dispute takedown.") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [[NSURL URLWithString:MEGADisputeURL] mnz_presentSafariViewController];
+        }]];
+        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+        
+        [self presentViewController:alertController animated:YES completion:nil];
+    } else {
+        node.isFolder ? [self openFolderNode:node] : [self openFileNode:node];
+    }
+}
+
 #pragma mark - Private
 
+
+- (MEGASortOrderType)sortOrdertype {
+    //Sort configuration by default is "default ascending"
+    if (![[NSUserDefaults standardUserDefaults] integerForKey:@"SortOrderType"]) {
+        [[NSUserDefaults standardUserDefaults] setInteger:MEGASortOrderTypeDefaultAsc forKey:@"SortOrderType"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+    return [[NSUserDefaults standardUserDefaults] integerForKey:@"SortOrderType"];
+}
+
 - (void)reloadUI {
+    
     switch (self.displayMode) {
         case DisplayModeCloudDrive: {
             if (!self.parentNode) {
                 self.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
             }
-            
             [self updateNavigationBarTitle];
+            self.nodes = [[MEGASdkManager sharedMEGASdk] childrenForParent:self.parentNode order:[self sortOrdertype]];
             
-            //Sort configuration by default is "default ascending"
-            if (![[NSUserDefaults standardUserDefaults] integerForKey:@"SortOrderType"]) {
-                [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"SortOrderType"];
-                [[NSUserDefaults standardUserDefaults] synchronize];
-            }
-            
-            MEGASortOrderType sortOrderType = [[NSUserDefaults standardUserDefaults] integerForKey:@"SortOrderType"];
-            
-            self.nodes = [[MEGASdkManager sharedMEGASdk] childrenForParent:self.parentNode order:sortOrderType];
-
             break;
         }
             
         case DisplayModeRubbishBin: {
             [self updateNavigationBarTitle];
+            self.nodes = [[MEGASdkManager sharedMEGASdk] childrenForParent:self.parentNode order:[self sortOrdertype]];
+            self.moreMinimizedBarButtonItem.enabled = self.nodes.size.integerValue > 0;
             
-            self.nodes = [[MEGASdkManager sharedMEGASdk] childrenForParent:self.parentNode];
-
             break;
         }
             
@@ -991,7 +1011,7 @@
             self.editBarButtonItem.enabled = boolValue;
             break;
         }
-        
+            
         case DisplayModeRecents: {
             self.moreRecentsBarButtonItem.enabled = boolValue;
             break;
@@ -1129,14 +1149,14 @@
         NSDate *lastEncourageUpgradeDate = [[NSUserDefaults standardUserDefaults] objectForKey:@"lastEncourageUpgradeDate"];
         if (lastEncourageUpgradeDate) {
             NSInteger week = [[NSCalendar currentCalendar] components:NSCalendarUnitWeekOfYear
-                                                              fromDate:lastEncourageUpgradeDate
-                                                                toDate:[NSDate date]
-                                                               options:NSCalendarWrapComponents].weekOfYear;
+                                                             fromDate:lastEncourageUpgradeDate
+                                                               toDate:[NSDate date]
+                                                              options:NSCalendarWrapComponents].weekOfYear;
             if (week < 1) {
                 return;
             }
         }
-        MEGAAccountDetails *accountDetails = [[MEGASdkManager sharedMEGASdk] mnz_accountDetails];                
+        MEGAAccountDetails *accountDetails = [[MEGASdkManager sharedMEGASdk] mnz_accountDetails];
         if (accountDetails && (arc4random_uniform(20) == 0)) { // 5 % of the times
             [self showUpgradeTVC];
             alreadyPresented = YES;
@@ -1163,7 +1183,7 @@
         static BOOL alreadyPresented = NO;
         if (!alreadyPresented && [[MEGASdkManager sharedMEGASdk] mnz_accountDetails] && [[MEGASdkManager sharedMEGASdk] mnz_isProAccount]) {
             alreadyPresented = YES;
-            NSUserDefaults *sharedUserDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"];
+            NSUserDefaults *sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];
             NSDate *rateUsDate = [sharedUserDefaults objectForKey:@"rateUsDate"];
             if (rateUsDate) {
                 NSInteger weeks = [[NSCalendar currentCalendar] components:NSCalendarUnitWeekOfYear
@@ -1254,9 +1274,57 @@
     return numberOfRows;
 }
 
+- (void)search {
+    if (self.searchController.searchBar.text.length >= kMinimumLettersToStartTheSearch) {
+        NSString *text = self.searchController.searchBar.text;
+        [SVProgressHUD show];
+        [self.searchNodesArray removeAllObjects];
+        self.cancelToken = MEGACancelToken.alloc.init;
+        SearchOperation *searchOperation = [SearchOperation.alloc initWithParentNode:self.parentNode text:text cancelToken:self.cancelToken completion:^(NSArray <MEGANode *> *nodesFound) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.searchNodesArray = [NSMutableArray arrayWithArray:nodesFound];
+                [SVProgressHUD dismiss];
+                [self reloadData];
+                self.cancelToken = nil;
+            });
+        }];
+        [self.searchQueue addOperation:searchOperation];
+    } else {
+        [self reloadData];
+    }
+}
+
+- (void)cancelSearchIfNeeded {
+    if (self.searchQueue.operationCount) {
+        [self.cancelToken cancelWithNewValue:YES];
+        [self.searchQueue cancelAllOperations];
+    }
+}
+
+- (void)openFileNode:(MEGANode *)node {
+    if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
+        [self showNode:node];
+    } else {
+        [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO];
+    }
+}
+
+- (void)openFolderNode:(MEGANode *)node {
+    CloudDriveViewController *cloudDriveVC = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+    cloudDriveVC.parentNode = node;
+    cloudDriveVC.hideSelectorView = YES;
+    
+    if (self.displayMode == DisplayModeRubbishBin) {
+        cloudDriveVC.displayMode = self.displayMode;
+    }
+    
+    [self.navigationController pushViewController:cloudDriveVC animated:YES];
+}
+
 #pragma mark - IBActions
 
 - (IBAction)recentsTouchUpInside:(UIButton *)sender {
+    [self cancelSearchIfNeeded];
     if (sender.selected) {
         return;
     }
@@ -1323,7 +1391,7 @@
 
 - (IBAction)selectAllAction:(UIBarButtonItem *)sender {
     [self.selectedNodesArray removeAllObjects];
-
+    
     if (!self.allNodesSelected) {
         MEGANode *n = nil;
         NSInteger nodeListSize = self.nodes.size.integerValue;
@@ -1518,7 +1586,7 @@
 
 - (void)setViewEditing:(BOOL)editing {
     [self updateNavigationBarTitle];
-
+    
     if (editing) {
         self.editBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
         self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
@@ -1543,7 +1611,6 @@
             [self.toolbar setAlpha:1.0];
         }];
     } else {
-        self.editBarButtonItem.title = AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected");
         [self setNavigationBarButtonItems];
         self.allNodesSelected = NO;
         self.selectedNodesArray = nil;
@@ -1583,6 +1650,14 @@
 
 - (IBAction)shareAction:(UIBarButtonItem *)sender {
     UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:self.selectedNodesArray sender:self.shareBarButtonItem];
+    __weak __typeof__(self) weakSelf = self;
+    activityVC.completionWithItemsHandler = ^(UIActivityType  _Nullable activityType, BOOL completed, NSArray * _Nullable returnedItems, NSError * _Nullable activityError) {
+        if (completed && !activityError) {
+            if ([activityType isEqualToString:MEGAUIActivityTypeRemoveLink]) {
+                [weakSelf setEditMode:NO];
+            }
+        }
+    };
     [self presentViewController:activityVC animated:YES completion:nil];
 }
 
@@ -1785,20 +1860,13 @@
 #pragma mark - UISearchResultsUpdating
 
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
-    NSString *searchString = searchController.searchBar.text;
-    [self.searchNodesArray removeAllObjects];
-
-    if ([searchString isEqualToString:@""]) {
-        self.searchNodesArray = [NSMutableArray arrayWithArray:self.nodesArray];
+    if (self.searchController.searchBar.text.length >= kMinimumLettersToStartTheSearch) {
+        [self cancelSearchIfNeeded];
+        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(search) object:nil];
+        [self performSelector:@selector(search) withObject:nil afterDelay:kSearchTimeDelay];
     } else {
-        MEGANodeList *allNodeList = [[MEGASdkManager sharedMEGASdk] nodeListSearchForNode:self.parentNode searchString:searchString recursive:YES];
-        
-        for (NSInteger i = 0; i < [allNodeList.size integerValue]; i++) {
-            MEGANode *n = [allNodeList nodeAtIndex:i];
-            [self.searchNodesArray addObject:n];
-        }
+        [self reloadData];
     }
-    [self reloadData];
 }
 
 #pragma mark - UIDocumentPickerDelegate
@@ -1888,11 +1956,18 @@
 #pragma mark - MEGAGlobalDelegate
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
-    if (self.nodes.size.unsignedIntegerValue == 0) {
-        self.shouldDetermineLayout = YES;
+    BOOL shouldProcessOnNodesUpdate = NO; //DisplayModeRecents
+    if (self.displayMode == DisplayModeRubbishBin || self.cloudDriveButton.isSelected) {
+        shouldProcessOnNodesUpdate = [nodeList mnz_shouldProcessOnNodesUpdateForParentNode:self.parentNode childNodesArray:self.nodes.mnz_nodesArrayFromNodeList];
     }
-    [self.nodesIndexPathMutableDictionary removeAllObjects];
-    [self reloadUI];
+    
+    if (shouldProcessOnNodesUpdate) {
+        if (self.nodes.size.unsignedIntegerValue == 0) {
+            self.shouldDetermineLayout = YES;
+        }
+        [self.nodesIndexPathMutableDictionary removeAllObjects];
+        [self reloadUI];
+    }
 }
 
 #pragma mark - MEGATransferDelegate
@@ -1983,6 +2058,23 @@
         }
             break;
             
+        case MegaNodeActionTypeShareFolder: {
+            MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsNavigationControllerID"];
+            ContactsViewController *contactsVC = navigationController.viewControllers.firstObject;
+            contactsVC.nodesArray = @[node];
+            contactsVC.contactsMode = ContactsModeShareFoldersWith;
+            [self presentViewController:navigationController animated:YES completion:nil];
+            break;
+        }
+            
+        case MegaNodeActionTypeManageShare: {
+            ContactsViewController *contactsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsViewControllerID"];
+            contactsVC.node = node;
+            contactsVC.contactsMode = ContactsModeFolderSharedWith;
+            [self.navigationController pushViewController:contactsVC animated:YES];
+            break;
+        }
+            
         case MegaNodeActionTypeFileInfo:
             [self showNodeInfo:node];
             break;
@@ -1991,8 +2083,18 @@
             [node mnz_leaveSharingInViewController:self];
             break;
             
-        case MegaNodeActionTypeRemoveLink:
+        case MegaNodeActionTypeGetLink:
+        case MegaNodeActionTypeManageLink: {
+            if (MEGAReachabilityManager.isReachableHUDIfNot) {
+                [CopyrightWarningViewController presentGetLinkViewControllerForNodes:@[node] inViewController:UIApplication.mnz_presentingViewController];
+            }
             break;
+        }
+            
+        case MegaNodeActionTypeRemoveLink: {
+            [node mnz_removeLink];
+            break;
+        }
             
         case MegaNodeActionTypeMoveToRubbishBin:
             [node mnz_moveToTheRubbishBinInViewController:self];
@@ -2014,6 +2116,10 @@
             [node mnz_saveToPhotosWithApi:[MEGASdkManager sharedMEGASdk]];
             break;
             
+        case MegaNodeActionTypeSendToChat:
+            [node mnz_sendToChatInViewController:self];
+            break;
+            
         default:
             break;
     }
@@ -2022,33 +2128,7 @@
 #pragma mark - NodeInfoViewControllerDelegate
 
 - (void)presentParentNode:(MEGANode *)node {
-    
-    if (self.searchController.isActive) {
-        NSArray *parentTreeArray = node.mnz_parentTreeArray;
-        
-        //Created a reference to self.navigationController because if the presented view is not the root controller and search is active, the 'popToRootViewControllerAnimated' makes nil the self.navigationController and therefore the parentTreeArray nodes can't be pushed
-        UINavigationController *navigation = self.navigationController;
-        [navigation popToRootViewControllerAnimated:NO];
-        
-        for (MEGANode *node in parentTreeArray) {
-            CloudDriveViewController *cloudDriveVC = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-            cloudDriveVC.parentNode = node;
-            [navigation pushViewController:cloudDriveVC animated:NO];
-        }
-        
-        switch (node.type) {
-            case MEGANodeTypeFolder:
-            case MEGANodeTypeRubbish: {
-                CloudDriveViewController *cloudDriveVC = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-                cloudDriveVC.parentNode = node;
-                [navigation pushViewController:cloudDriveVC animated:NO];
-                break;
-            }
-                
-            default:
-                break;
-        }
-    }
+    [node navigateToParentAndPresent];
 }
 
 @end

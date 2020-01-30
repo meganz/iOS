@@ -84,7 +84,7 @@
         NSString *selectedLanguage = [Helper languageID:indexPath.row];
         [[LocalizationSystem sharedLocalSystem] setLanguage:selectedLanguage];
         [[MEGASdkManager sharedMEGASdk] setLanguageCode:selectedLanguage];
-        [[[NSUserDefaults alloc] initWithSuiteName:@"group.mega.ios"] setObject:selectedLanguage forKey:@"languageCode"];
+        [[NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier] setObject:selectedLanguage forKey:@"languageCode"];
         
         // Schedule a notification to make it easy to reopen MEGA:
         NSString *notificationText = AMLocalizedString(@"languageRestartNotification", @"Text shown in a notification to make it easy for the user to restart the app after the language is changed");
@@ -92,34 +92,20 @@
             exit(0);
         } else {
             [DevicePermissionsHelper notificationsPermissionWithCompletionHandler:^(BOOL granted) {
-                if (@available(iOS 10.0, *)) {
-                    if (granted) {
-                        UNMutableNotificationContent *content = [UNMutableNotificationContent new];
-                        content.body = notificationText;
-                        content.sound = UNNotificationSound.defaultSound;
-                        UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:1
-                                                                                                                        repeats:NO];
-                        NSString *identifier = @"nz.mega";
-                        UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:identifier
-                                                                                              content:content trigger:trigger];
-                        [UNUserNotificationCenter.currentNotificationCenter addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
-                            exit(0);
-                        }];
-                    } else {
+                if (granted) {
+                    UNMutableNotificationContent *content = [UNMutableNotificationContent new];
+                    content.body = notificationText;
+                    content.sound = UNNotificationSound.defaultSound;
+                    UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:1
+                                                                                                                    repeats:NO];
+                    NSString *identifier = @"nz.mega";
+                    UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:identifier
+                                                                                          content:content trigger:trigger];
+                    [UNUserNotificationCenter.currentNotificationCenter addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
                         exit(0);
-                    }
+                    }];
                 } else {
-                    UILocalNotification* localNotification = [[UILocalNotification alloc] init];
-                    localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:1];
-                    localNotification.alertBody = notificationText;
-                    localNotification.timeZone = NSTimeZone.defaultTimeZone;
-                    [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
-                    // The exit must be called some time after the previous method is called, because there is no way to
-                    // know when the notification is properly scheduled, and calling exit inmediatley causes to not have
-                    // it shown:
-                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                        exit(0);
-                    });
+                    exit(0);
                 }
             }];
         }

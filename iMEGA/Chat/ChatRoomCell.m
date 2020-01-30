@@ -27,12 +27,10 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     
-    if (@available(iOS 10.0, *)) {
-        self.chatTitle.adjustsFontForContentSizeCategory = YES;
-        self.chatLastMessage.adjustsFontForContentSizeCategory = YES;
-        self.chatLastTime.adjustsFontForContentSizeCategory = YES;
-        self.unreadCount.adjustsFontForContentSizeCategory = YES;
-    }
+    self.chatTitle.adjustsFontForContentSizeCategory = YES;
+    self.chatLastMessage.adjustsFontForContentSizeCategory = YES;
+    self.chatLastTime.adjustsFontForContentSizeCategory = YES;
+    self.unreadCount.adjustsFontForContentSizeCategory = YES;
     self.twoDaysAgo = [NSCalendar.currentCalendar dateByAddingUnit:NSCalendarUnitDay value:-2 toDate:NSDate.date options:0];
 }
 
@@ -448,7 +446,8 @@
                 }
             }
             
-            self.chatLastMessage.text = senderString ? [NSString stringWithFormat:@"%@: %@",senderString, item.lastMessage] : item.lastMessage;
+            NSString *lastMessage = [NSAttributedString mnz_attributedStringFromMessage:item.lastMessage font:[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1] color:UIColor.blackColor].string;
+            self.chatLastMessage.text = senderString ? [NSString stringWithFormat:@"%@: %@",senderString, lastMessage] : lastMessage;
             break;
         }
     }

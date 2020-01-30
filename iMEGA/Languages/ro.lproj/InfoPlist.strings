@@ -1,5 +1,5 @@
 /* Microphone usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
-"NSMicrophoneUsageDescription"="MEGA accesează microfonul când capturezi un videoclip, când efectuezi un apel în interiorul aplicației sau când înregistrezi notițe vocale.";
+"NSMicrophoneUsageDescription"="MEGA îți accesează microfonul când capturezi un videoclip, când efectuezi un apel sau când înregistrezi mesaje vocale în aplicație.";
 /* Camera usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSCameraUsageDescription"="MEGA accesează camera când capturezi un videoclip, o fotografie sau când efectuezi un apel în interiorul aplicației.";
 /* Photo library usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
@@ -9,7 +9,7 @@
 /* Write-only access to the user’s photo library description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSPhotoLibraryAddUsageDescription"="MEGA necesită acces la biblioteca foto pentru a adăuga fotografii și videoclipuri în galeria dispozitivului";
 /* Face ID usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
-"NSFaceIDUsageDescription"="MEGA accesează Face ID pentru a-ți permite să deblochezi cu ușurință codul de trecere al aplicației când activezi această opțiune.";
+"NSFaceIDUsageDescription"="MEGA accesează Face ID pentru a-ți permite să deblochezi cu ușurință codul de acces al aplicației când activezi această opțiune.";
 /* Label for any 'Search' button, link, etc. - (String as short as possible). */
 "quickActionSearchString"="Caută";
 /*  */

@@ -1,9 +1,9 @@
 
 #import "LivePhotoUploadOperation.h"
 #import "PHAsset+CameraUpload.h"
-#import "MEGAConstants.h"
 #import "CameraUploadOperation+Utils.h"
 #import "PHAssetResource+CameraUpload.h"
+#import "CameraUploadManager+Settings.h"
 @import Photos;
 @import CoreServices;
 
@@ -25,7 +25,7 @@ static NSString * const LivePhotoVideoResourceExportName = @"livePhotoVideoResou
     }
     
     if (self.isCancelled) {
-        [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
+        [self finishOperationWithStatus:CameraAssetUploadStatusCancelled];
         return;
     }
     
@@ -34,16 +34,11 @@ static NSString * const LivePhotoVideoResourceExportName = @"livePhotoVideoResou
 
 - (void)requestLivePhotoResource {
     if (self.isCancelled) {
-        [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
+        [self finishOperationWithStatus:CameraAssetUploadStatusCancelled];
         return;
     }
     
-    NSArray *livePhotoSearchTypes;
-    if (@available(iOS 10.0, *)) {
-        livePhotoSearchTypes = @[@(PHAssetResourceTypeFullSizePairedVideo), @(PHAssetResourceTypePairedVideo), @(PHAssetResourceTypeAdjustmentBasePairedVideo)];
-    } else {
-        livePhotoSearchTypes = @[@(PHAssetResourceTypePairedVideo)];
-    }
+    NSArray *livePhotoSearchTypes = @[@(PHAssetResourceTypeFullSizePairedVideo), @(PHAssetResourceTypePairedVideo), @(PHAssetResourceTypeAdjustmentBasePairedVideo)];
     
     PHAssetResource *videoResource = [self.uploadInfo.asset searchAssetResourceByTypes:livePhotoSearchTypes];
     if (videoResource) {
@@ -51,7 +46,7 @@ static NSString * const LivePhotoVideoResourceExportName = @"livePhotoVideoResou
         [self exportAssetResource:videoResource toURL:videoURL];
     } else {
         MEGALogError(@"[Camera Upload] %@ can not find the video resource in live photo", self);
-        [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
+        [self finishOperationWithStatus:CameraAssetUploadStatusFailed];
     }
 }
 
@@ -61,7 +56,7 @@ static NSString * const LivePhotoVideoResourceExportName = @"livePhotoVideoResou
     [super assetResource:resource didExportToURL:URL];
     
     if (self.isCancelled) {
-        [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
+        [self finishOperationWithStatus:CameraAssetUploadStatusCancelled];
         return;
     }
     
@@ -75,12 +70,15 @@ static NSString * const LivePhotoVideoResourceExportName = @"livePhotoVideoResou
     session.outputURL = self.uploadInfo.fileURL;
     session.canPerformMultiplePassesOverSourceMediaData = YES;
     session.shouldOptimizeForNetworkUse = YES;
-    session.metadataItemFilter = [AVMetadataItemFilter metadataItemFilterForSharing];
+    
+    if (!CameraUploadManager.shouldIncludeGPSTags) {
+        session.metadataItemFilter = [AVMetadataItemFilter metadataItemFilterForSharing];
+    }
     
     __weak __typeof__(self) weakSelf = self;
     [session exportAsynchronouslyWithCompletionHandler:^{
         if (weakSelf.isCancelled) {
-            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
+            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusCancelled];
             return;
         }
         
@@ -91,14 +89,14 @@ static NSString * const LivePhotoVideoResourceExportName = @"livePhotoVideoResou
                 break;
             case AVAssetExportSessionStatusCancelled:
                 MEGALogDebug(@"[Camera Upload] %@ video exporting got cancelled", weakSelf);
-                [weakSelf finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
+                [weakSelf finishOperationWithStatus:CameraAssetUploadStatusCancelled];
                 break;
             case AVAssetExportSessionStatusFailed:
                 MEGALogError(@"[Camera Upload] %@ error when to export video %@", weakSelf, session.error)
                 if ([session.error.domain isEqualToString:AVFoundationErrorDomain] && session.error.code == AVErrorDiskFull) {
                     [weakSelf finishUploadWithNoEnoughDiskSpace];
                 } else {
-                    [weakSelf finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
+                    [weakSelf finishOperationWithStatus:CameraAssetUploadStatusFailed];
                 }
                 break;
             default:

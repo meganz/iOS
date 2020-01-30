@@ -103,8 +103,7 @@
                 break;
                 
             case MEGAErrorTypeApiEBlocked:
-                message = AMLocalizedString(@"accountBlocked", @"Error message when trying to login and the account is suspended");
-                break;
+                return;
                 
             case MEGAErrorTypeApiEMFARequired:
                 if (self.errorCompletion) self.errorCompletion(error);
@@ -137,9 +136,13 @@
         launchVC.delegate = (id<LaunchViewControllerDelegate>)UIApplication.sharedApplication.delegate;
         UIWindow *window = UIApplication.sharedApplication.delegate.window;
         [UIView transitionWithView:window duration:0.5 options:(UIViewAnimationOptionTransitionCrossDissolve | UIViewAnimationOptionAllowAnimatedContent) animations:^{
-            [window.rootViewController dismissViewControllerAnimated:NO completion:^{
+            if (window.rootViewController.presentedViewController) {
+                [window.rootViewController dismissViewControllerAnimated:NO completion:^{
+                    window.rootViewController = launchVC;
+                }];
+            } else {
                 window.rootViewController = launchVC;
-            }];
+            }
         } completion:nil];
     }
 }

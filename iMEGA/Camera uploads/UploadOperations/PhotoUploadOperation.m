@@ -3,7 +3,6 @@
 #import "NSFileManager+MNZCategory.h"
 #import "CameraUploadManager+Settings.h"
 #import "PHAsset+CameraUpload.h"
-#import "MEGAConstants.h"
 #import "ImageExportManager.h"
 #import "CameraUploadOperation+Utils.h"
 @import CoreServices;
@@ -29,7 +28,7 @@ static NSString * const PhotoExportTempName = @"photoExportTemp";
     }
     
     if (self.isCancelled) {
-        [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
+        [self finishOperationWithStatus:CameraAssetUploadStatusCancelled];
         return;
     }
     
@@ -40,7 +39,7 @@ static NSString * const PhotoExportTempName = @"photoExportTemp";
 
 - (void)requestImageData {
     if (self.isCancelled) {
-        [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
+        [self finishOperationWithStatus:CameraAssetUploadStatusCancelled];
         return;
     }
     
@@ -52,11 +51,12 @@ static NSString * const PhotoExportTempName = @"photoExportTemp";
     options.progressHandler = ^(double progress, NSError * _Nullable error, BOOL * _Nonnull stop, NSDictionary * _Nullable info) {
         if (weakSelf.isCancelled) {
             *stop = YES;
-            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
+            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusCancelled];
         }
         
         if (error) {
             MEGALogError(@"[Camera Upload] %@ error when to download images from iCloud: %@", weakSelf, error);
+            *stop = YES;
             [weakSelf handleCloudDownloadError:error];
         }
     };
@@ -67,20 +67,20 @@ static NSString * const PhotoExportTempName = @"photoExportTemp";
         }
         
         if (weakSelf.isCancelled) {
-            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
+            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusCancelled];
             return;
         }
         
         NSError *error = info[PHImageErrorKey];
         if (error) {
             MEGALogError(@"[Camera Upload] %@ error when to request photo %@", weakSelf, error);
-            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
+            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusFailed];
             return;
         }
         
         if ([info[PHImageCancelledKey] boolValue]) {
             MEGALogDebug(@"[Camera Upload] %@ photo request is cancelled", weakSelf);
-            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
+            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusCancelled];
             return;
         }
         
@@ -90,13 +90,13 @@ static NSString * const PhotoExportTempName = @"photoExportTemp";
 
 - (void)processImageData:(NSData *)imageData dataUTI:(NSString *)dataUTI dataInfo:(NSDictionary *)dataInfo {
     if (self.isCancelled) {
-        [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
+        [self finishOperationWithStatus:CameraAssetUploadStatusCancelled];
         return;
     }
     
     if (imageData == nil) {
         MEGALogError(@"[Camera Upload] %@ the requested image data is empty", self);
-        [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
+        [self finishOperationWithStatus:CameraAssetUploadStatusFailed];
         return;
     }
     
@@ -107,7 +107,7 @@ static NSString * const PhotoExportTempName = @"photoExportTemp";
     
     NSURL *imageURL = [self.uploadInfo.directoryURL URLByAppendingPathComponent:PhotoExportTempName];
     if (![imageData writeToURL:imageURL atomically:YES]) {
-        [self finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
+        [self finishOperationWithStatus:CameraAssetUploadStatusFailed];
         return;
     }
     
@@ -124,7 +124,7 @@ static NSString * const PhotoExportTempName = @"photoExportTemp";
 
 - (void)exportImageAtURL:(NSURL *)URL dataUTI:(NSString *)dataUTI dataInfo:(NSDictionary *)dataInfo {
     if (self.isCancelled) {
-        [self finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
+        [self finishOperationWithStatus:CameraAssetUploadStatusCancelled];
         return;
     }
     
@@ -138,9 +138,9 @@ static NSString * const PhotoExportTempName = @"photoExportTemp";
     }
     
     __weak __typeof__(self) weakSelf = self;
-    [ImageExportManager.shared exportImageAtURL:URL dataTypeUTI:dataUTI toURL:self.uploadInfo.fileURL outputTypeUTI:outputTypeUTI shouldStripGPSInfo:YES completion:^(BOOL succeeded) {
+    [ImageExportManager.shared exportImageAtURL:URL dataTypeUTI:dataUTI toURL:self.uploadInfo.fileURL outputTypeUTI:outputTypeUTI shouldStripGPSInfo:!CameraUploadManager.shouldIncludeGPSTags completion:^(BOOL succeeded) {
         if (weakSelf.isCancelled) {
-            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusCancelled shouldUploadNextAsset:NO];
+            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusCancelled];
             return;
         }
         
@@ -149,7 +149,7 @@ static NSString * const PhotoExportTempName = @"photoExportTemp";
             [weakSelf handleProcessedFileWithMediaType:PHAssetMediaTypeImage];
         } else {
             MEGALogError(@"[Camera Upload] %@ error when to export image to file %@", weakSelf, weakSelf.uploadInfo.fileName);
-            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusFailed shouldUploadNextAsset:YES];
+            [weakSelf finishOperationWithStatus:CameraAssetUploadStatusFailed];
         }
     }];
 }

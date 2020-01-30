@@ -4,10 +4,12 @@
 #import "MOAssetUploadErrorPerLogin+CoreDataClass.h"
 #import "LocalFileNameGenerator.h"
 #import "SavedIdentifierParser.h"
-#import "CameraUploadStore.h"
+#import "MEGAConstants.h"
+#import "NSURL+CameraUpload.h"
+#import "MEGAStoreStack.h"
 
-static const NSUInteger MaximumUploadRetryPerLaunchCount = 20;
-static const NSUInteger MaximumUploadRetryPerLoginCount = 800;
+static const NSUInteger MaximumUploadRetryPerLaunchCount = 7;
+static const NSUInteger MaximumUploadRetryPerLoginCount = 7 * 77;
 
 @interface CameraUploadRecordManager ()
 
@@ -15,6 +17,7 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 800;
 @property (strong, nonatomic) LocalFileNameGenerator *fileNameCoordinator;
 @property (strong, nonatomic) dispatch_queue_t serialQueueForContext;
 @property (strong, nonatomic) dispatch_queue_t serialQueueForFileCoordinator;
+@property (strong, nonatomic) MEGAStoreStack *storeStack;
 
 @end
 
@@ -35,16 +38,14 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 800;
     if (self) {
         _serialQueueForContext = dispatch_queue_create("nz.mega.cameraUpload.recordManager.context", DISPATCH_QUEUE_SERIAL);
         _serialQueueForFileCoordinator = dispatch_queue_create("nz.mega.cameraUpload.recordManager.coordinator", DISPATCH_QUEUE_SERIAL);
+        
+        _storeStack = [[MEGAStoreStack alloc] initWithModelName:@"CameraUpload" storeURL:[NSURL.mnz_cameraUploadURL URLByAppendingPathComponent:@"CameraUpload.sqlite"]];
     }
     
     return self;
 }
 
 - (LocalFileNameGenerator *)fileNameCoordinator {
-    if (_fileNameCoordinator) {
-        return _fileNameCoordinator;
-    }
-    
     dispatch_sync(self.serialQueueForFileCoordinator, ^{
         if (self->_fileNameCoordinator == nil) {
             self->_fileNameCoordinator = [[LocalFileNameGenerator alloc] initWithBackgroundContext:self.backgroundContext];
@@ -55,13 +56,9 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 800;
 }
 
 - (NSManagedObjectContext *)backgroundContext {
-    if (_backgroundContext) {
-        return _backgroundContext;
-    }
-
     dispatch_sync(self.serialQueueForContext, ^{
         if (self->_backgroundContext == nil) {
-            self->_backgroundContext = [CameraUploadStore.shared.storeStack newBackgroundContext];
+            self->_backgroundContext = [self.storeStack newBackgroundContext];
             self->_backgroundContext.undoManager = nil;
         }
     });
@@ -75,6 +72,12 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 800;
     }];
     _backgroundContext = nil;
     _fileNameCoordinator = nil;
+    
+    NSError *error;
+    [self.storeStack deleteStoreWithError:&error];
+    if (error) {
+        MEGALogError(@"[Camera Upload] error when to delete camera upload store after logout %@", error);
+    }
 }
 
 #pragma mark - access properties of record
@@ -304,6 +307,8 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 800;
                 record.errorPerLogin = [self createErrorRecordPerLoginForLocalIdentifier:record.localIdentifier];
             }
             record.errorPerLogin.errorCount = @(record.errorPerLogin.errorCount.unsignedIntegerValue + 1);
+            
+            MEGALogInfo(@"[Camera Upload] %@ upload failed with error per launch count: %@, error per login count: %@", record, record.errorPerLaunch.errorCount, record.errorPerLogin.errorCount);
         } else if (status == CameraAssetUploadStatusDone) {
             MOAssetUploadErrorPerLaunch *errorPerLaunch = [record errorPerLaunch];
             if (errorPerLaunch) {
@@ -317,6 +322,10 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 800;
         }
         
         [self.backgroundContext save:&coreDataError];
+        
+        if (record.errorPerLaunch.errorCount.unsignedIntegerValue > MaximumUploadRetryPerLaunchCount || record.errorPerLogin.errorCount.unsignedIntegerValue > MaximumUploadRetryPerLaunchCount) {
+            [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadStatsChangedNotification object:nil];
+        }
     }];
     
     if (error != NULL) {

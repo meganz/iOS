@@ -20,25 +20,22 @@
 #import "UIImage+MNZCategory.h"
 #import "UpgradeTableViewController.h"
 #import "UsageViewController.h"
+#import "MEGA-Swift.h"
 
 @interface MyAccountHallViewController () <UITableViewDataSource, UITableViewDelegate, MEGAPurchasePricingDelegate, MEGAGlobalDelegate, MEGARequestDelegate>
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *buyPROBarButtonItem;
 
 @property (weak, nonatomic) IBOutlet UIView *profileView;
-
 @property (weak, nonatomic) IBOutlet UILabel *viewAndEditProfileLabel;
 @property (weak, nonatomic) IBOutlet UIButton *viewAndEditProfileButton;
 @property (weak, nonatomic) IBOutlet UIImageView *viewAndEditProfileDisclosureImageView;
-
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIView *addPhoneNumberView;
+@property (weak, nonatomic) IBOutlet UILabel *addPhoneNumberTitle;
+@property (weak, nonatomic) IBOutlet UILabel *addPhoneNumberDescription;
 
 @property (strong, nonatomic) NSNumberFormatter *numberFormatter;
-@property (strong, nonatomic) NSNumber *cloudDriveSize;
-@property (strong, nonatomic) NSNumber *rubbishBinSize;
-@property (strong, nonatomic) NSNumber *incomingSharesSize;
-@property (strong, nonatomic) NSNumber *usedStorage;
-@property (strong, nonatomic) NSNumber *maxStorage;
 
 @end
 
@@ -70,7 +67,7 @@
         CGSize qrImageSie = self.qrCodeImageView.frame.size;
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
             NSString *destination = [NSString stringWithFormat:@"https://mega.nz/C!%@", [MEGASdk base64HandleForHandle:request.nodeHandle]];
-            UIImage *image = [UIImage mnz_qrImageWithDotsFromString:destination withSize:qrImageSie color:UIColor.mnz_redMain];
+            UIImage *image = [UIImage mnz_qrImageFromString:destination withSize:qrImageSie color:UIColor.mnz_redMain];
             dispatch_async(dispatch_get_main_queue(), ^{
                 self.qrCodeImageView.image = image;
                 self.avatarImageView.layer.borderColor = [UIColor whiteColor].CGColor;
@@ -84,6 +81,9 @@
     [[MEGAPurchase sharedInstance] setPricingsDelegate:self];
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    self.addPhoneNumberView.hidden = YES;
+    
+    [self configAddPhoneNumberTexts];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -92,12 +92,18 @@
     [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     
+    
+    if (MEGASdkManager.sharedMEGASdk.mnz_shouldRequestAccountDetails) {
+        [MEGASdkManager.sharedMEGASdk getAccountDetails];
+    }
     [self reloadUI];
     self.buyPROBarButtonItem.enabled = [MEGAPurchase sharedInstance].products.count;
     
     if (self.navigationController.isNavigationBarHidden) {
         [self.navigationController setNavigationBarHidden:NO animated:YES];
     }
+    
+    [self configAddPhoneNumberView];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -108,30 +114,38 @@
 
 #pragma mark - Private
 
+- (void)configAddPhoneNumberTexts {
+    self.addPhoneNumberTitle.text = AMLocalizedString(@"Add Your Phone Number", nil);
+
+    if (!MEGASdkManager.sharedMEGASdk.isAchievementsEnabled) {
+        self.addPhoneNumberDescription.text = AMLocalizedString(@"Add your phone number to MEGA. This makes it easier for your contacts to find you on MEGA.", nil);
+    } else {
+        [MEGASdkManager.sharedMEGASdk getAccountAchievementsWithDelegate:[[MEGAGenericRequestDelegate alloc] initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
+            if (error.type == MEGAErrorTypeApiOk) {
+                NSString *storageText = [Helper memoryStyleStringFromByteCount:[request.megaAchievementsDetails classStorageForClassId:MEGAAchievementAddPhone]];
+                self.addPhoneNumberDescription.text = [NSString stringWithFormat:AMLocalizedString(@"Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA.", nil), storageText];
+            }
+        }]];
+    }
+}
+
+- (void)configAddPhoneNumberView {
+    if (MEGASdkManager.sharedMEGASdk.smsVerifiedPhoneNumber != nil || MEGASdkManager.sharedMEGASdk.smsAllowedState != SMSStateOptInAndUnblock) {
+        self.addPhoneNumberView.hidden = YES;
+    } else {
+        if (self.addPhoneNumberView.isHidden) {
+            [UIView animateWithDuration:.75 animations:^{
+                self.addPhoneNumberView.hidden = NO;
+            }];
+        }
+    }
+}
+
 - (void)reloadUI {
     self.nameLabel.text = [[[MEGASdkManager sharedMEGASdk] myUser] mnz_fullName];
     [self setUserAvatar];
     
     [self.tableView reloadData];
-}
-
-- (void)initializeStorageInfo {
-    MEGAAccountDetails *accountDetails = [[MEGASdkManager sharedMEGASdk] mnz_accountDetails];
-    
-    self.cloudDriveSize = [accountDetails storageUsedForHandle:[[[MEGASdkManager sharedMEGASdk] rootNode] handle]];
-    self.rubbishBinSize = [accountDetails storageUsedForHandle:[[[MEGASdkManager sharedMEGASdk] rubbishNode] handle]];
-    
-    MEGANodeList *incomingShares = [[MEGASdkManager sharedMEGASdk] inShares];
-    NSUInteger count = incomingShares.size.unsignedIntegerValue;
-    long long incomingSharesSizeLongLong = 0;
-    for (NSUInteger i = 0; i < count; i++) {
-        MEGANode *node = [incomingShares nodeAtIndex:i];
-        incomingSharesSizeLongLong += [[[MEGASdkManager sharedMEGASdk] sizeForNode:node] longLongValue];
-    }
-    self.incomingSharesSize = [NSNumber numberWithLongLong:incomingSharesSizeLongLong];
-    
-    self.usedStorage = accountDetails.storageUsed;
-    self.maxStorage = accountDetails.storageMax;
 }
 
 - (void)openAchievements {
@@ -170,6 +184,12 @@
 - (IBAction)viewAndEditProfileTouchUpInside:(UIButton *)sender {
     MyAccountViewController *myAccountVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"MyAccountViewControllerID"];
     [self.navigationController pushViewController:myAccountVC animated:YES];
+}
+
+- (IBAction)didTapAddPhoneNumberView {
+    SMSNavigationViewController *smsNavigationController = [[SMSNavigationViewController alloc] initWithRootViewController:[SMSVerificationViewController instantiateWith:SMSVerificationTypeAddPhoneNumber]];
+    smsNavigationController.modalPresentationStyle = UIModalPresentationFullScreen;
+    [self presentViewController:smsNavigationController animated:YES completion:nil];
 }
 
 #pragma mark - UITableViewDataSource
@@ -306,12 +326,7 @@
     switch (indexPath.row) {
         case 0: { // Used Storage
             if ([[MEGASdkManager sharedMEGASdk] mnz_accountDetails]) {
-                if (!self.cloudDriveSize || !self.rubbishBinSize || !self.incomingSharesSize || !self.usedStorage || !self.maxStorage) {
-                    [self initializeStorageInfo];
-                }
-                NSArray *sizesArray = @[self.cloudDriveSize, self.rubbishBinSize, self.incomingSharesSize, self.usedStorage, self.maxStorage];
                 UsageViewController *usageVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UsageViewControllerID"];
-                usageVC.sizesArray = sizesArray;
                 [self.navigationController pushViewController:usageVC animated:YES];
             } else {
                 MEGALogError(@"Account details unavailable");
@@ -388,7 +403,6 @@
             if (error.type) {
                 return;
             }
-            
             [self reloadUI];
             
             break;

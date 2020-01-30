@@ -4,7 +4,6 @@
 #import "SavedIdentifierParser.h"
 #import "PHAsset+CameraUpload.h"
 #import "PHFetchResult+CameraUpload.h"
-#import "MEGAConstants.h"
 #import "PHFetchOptions+CameraUpload.h"
 
 @implementation LivePhotoScanner
@@ -68,9 +67,7 @@
                 
                 [CameraUploadRecordManager.shared saveChangesIfNeededWithError:&coreDataError];
                 
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadStatsChangedNotification object:nil];
-                });
+                [NSNotificationCenter.defaultCenter postNotificationName:MEGACameraUploadStatsChangedNotification object:nil];
             }
         }
     }];

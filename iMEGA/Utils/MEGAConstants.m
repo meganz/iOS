@@ -5,6 +5,10 @@
 
 NSString * const MEGAiOSAppUserAgent = @"MEGAiOS";
 NSString * const MEGAiOSAppKey = @"EVtjzb7R";
+NSString * const MEGAPasswordService = @"MEGA";
+NSString * const MEGAPasswordName = @"sessionV3";
+
+NSString * const MEGAGroupIdentifier = @"group.mega.ios";
 
 #pragma mark - global notifications
 
@@ -55,3 +59,31 @@ NSString * const JPGFormat = @"JPG";
 NSString * const HEICFormat = @"HEIC";
 NSString * const HEVCFormat = @"HEVC";
 NSString * const H264Format = @"H.264";
+
+#pragma mark - MEGA URLS
+
+NSString * const MEGADisputeURL = @"https://mega.nz/dispute";
+
+#pragma mark - Group Shared Directory
+
+NSString * const MEGAShareExtensionStorageFolder = @"Share Extension Storage";
+NSString * const MEGAFileExtensionStorageFolder = @"File Provider Storage";
+NSString * const MEGAExtensionLogsFolder = @"logs";
+NSString * const MEGAExtensionGroupSupportFolder = @"GroupSupport";
+NSString * const MEGAExtensionCacheFolder = @"Library/Cache/";
+
+#pragma mark - MEGA Activity Types
+
+NSString * const MEGAUIActivityTypeGetLink = @"MEGAUIActivityTypeGetLink";
+NSString * const MEGAUIActivityTypeOpenIn = @"MEGAUIActivityTypeOpenIn";
+NSString * const MEGAUIActivityTypeRemoveLink = @"MEGAUIActivityTypeRemoveLink";
+NSString * const MEGAUIActivityTypeRemoveSharing = @"MEGAUIActivityTypeRemoveSharing";
+NSString * const MEGAUIActivityTypeShareFolder = @"MEGAUIActivityTypeShareFolder";
+NSString * const MEGAUIActivityTypeSaveToCameraRoll = @"MEGAUIActivityTypeSaveToCameraRoll";
+NSString * const MEGAUIActivityTypeSendToChat = @"MEGAUIActivityTypeSendToChat";
+
+#pragma mark - MEGA Affiliate program
+
+NSString * const MEGALastPublicHandleAccessed = @"kLastPublicHandleAccessed";
+NSString * const MEGALastPublicTypeAccessed = @"kLastPublicTypeAccessed";
+NSString * const MEGALastPublicTimestampAccessed = @"kLastPublicTimestampAccessed";
