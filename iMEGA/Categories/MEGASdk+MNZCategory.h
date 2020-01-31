@@ -1,5 +1,9 @@
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface MEGASdk (MNZCategory)
+
+#pragma mark - properties
 
 @property (nonatomic, setter=mnz_setAccountDetails:) MEGAAccountDetails *mnz_accountDetails;
 @property (nonatomic, readonly) BOOL mnz_isProAccount;
@@ -19,3 +23,5 @@
 - (void)getMyChatFilesFolderWithCompletion:(void(^)(MEGANode *myChatFilesNode))completion;
 
 @end
+
+NS_ASSUME_NONNULL_END
