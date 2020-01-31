@@ -955,6 +955,22 @@
 "xDaysLeft"="%1 dni pozostało";
 /* %1 will be replaced by a numeric value and %2 will be 'days' or 'months', for example (Expires in [S]10[/S] days) */
 "bonusExpiresIn"="(Bonus wygasa za [S]%1[/S] %2)";
+/* Add Phone Number title  */
+"Add Phone Number"="Add Phone Number";
+/* Achievement explanation for add phone number */
+"You have received %1$s storage space and %2$s transfer quota for verifying your phone number."="Otrzymałeś %1$s przestrzeni dyskowej i %2$s limitu transferu na weryfikację twojego numeru telefonu.";
+/* Free storage description to encourage users to add phone number to their accounts */
+"Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."="Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA.";
+/* Description to encourage users to add phone number to their accounts when there are not achievements */
+"Add your phone number to MEGA. This makes it easier for your contacts to find you on MEGA."="Dodaj swój numer telefonu do MEGA. Ułatwia to kontaktom znalezienie Cię w MEGA.";
+/* Description to unblock account by verifying phone number */
+"Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account."="Twoje konto zostało tymczasowo zawieszone z powodu potencjalnego nadużycia. Sprawdź swój numer telefonu, aby odblokować konto.";
+/* Verify your account title */
+"Verify Your Account"="Verify Your Account";
+/* Add your phone number title */
+"Add Your Phone Number"="Add Your Phone Number";
+/* Choose Your Country title */
+"Choose Your Country"="Choose Your Country";
 /* Used to display the number of months a plan was purchased for e.g. 3 months, 6 months. */
 "months"="miesiące";
 /*  */
@@ -1085,8 +1101,6 @@
 "noConversations"="Brak rozmów";
 /* Empty Conversations description */
 "Start chatting securely with your contacts using end-to-end encryption"="Zacznij czatować bezpiecznie ze swoimi kontaktami za pomocą szyfrowania end-to-end";
-/* Title show when the chat is disabled */
-"chatIsDisabled"="Czat jest zablokowany";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
 "enable"="Odblokuj";
 /* A button on a dialog which invites a contact to join MEGA. */
@@ -1865,7 +1879,7 @@
 /* Message shown when there is an ongoing call and the user tries to record a voice message */
 "It is not possible to record voice messages while there is a call in progress"="Nie można nagrywać wiadomości głosowych podczas trwającego połączenia.";
 /* Label indicating that a voice clip is being recorded. String as short as possible. */
-"Recording..."="Recording…";
+"Recording..."="Nagrywanie…";
 /* Text to inform the user there is an active call and is not participating */
 "Ongoing Call"="Trwające połączenie";
 /* Message shown when there is an ongoing call and the user tries to play an audio or video */
@@ -1936,6 +1950,34 @@
 "Change to a test server?"="Przejdź na serwer testowy?";
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Czy na pewno chcesz przejść na serwer testowy? Na Twoim koncie mogą wystąpić nieodwracalne problemy";
+/* Title label that explains that the user is going to be asked for the contacts permission */
+"Enable Access to Contacts"="Enable Access to Contacts";
+/* Detailed explanation of why the user should give permission to contacts */
+"MEGA needs access to your contacts to help you connect with other people on MEGA."="MEGA potrzebuje dostępu do twoich kontaktów, aby móc łączyć się z innymi osobami w MEGA.";
+/* Title encouraging the user to check who of its contacts are using MEGA */
+"See who's already on MEGA"="See who’s already on MEGA";
+/* Title showing the user how many of his contacts are using MEGA */
+"[X] contacts found on MEGA"="[X] contacts found on MEGA";
+/* Title showing the user that one of his contacts are using MEGA */
+"1 contact found on MEGA"="1 contact found on MEGA";
+/* Text indicating the user to perform an action to grant some permission */
+"Enable Access"="Umożliwić dostęp";
+/* Text indicating the user to open the device settings for MEGA */
+"Open Settings"="Open Settings";
+/* Text encouraging the user to invite contacts to MEGA */
+"Invite contacts and start chatting securely with MEGA’s encrypted chat."="Zaproś kontakty i zacznij bezpiecznie rozmawiać za pomocą szyfrowanego czatu MEGA.";
+/* Text showing the user how many contacts would be invited */
+"Invite [X] contacts"="Invite [X] contacts";
+/* Text showing the user how to write more than one email in order to invite them to MEGA */
+"Tap space to enter multiple emails"="Tap space to enter multiple emails";
+/* Text used as a section title or similar */
+"Enter Email"="Enter Email";
+/* Text used as view title showing the user the phone contacts using MEGA */
+"On MEGA"="Na MEGA";
+/* Text used as a section title or similar showing the user the phone contacts using MEGA */
+"CONTACTS ON MEGA"="CONTACTS ON MEGA";
+/* Text to send as SMS message to user contacts inviting them to MEGA */
+"Hi, Have encrypted conversations on Mega with me and get 50GB free storage."="Hi, Have encrypted conversations on Mega with me and get 50GB free storage.";
 /* Destination folder name of chat files */
 "My chat files"="Moje pliki czatu";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
@@ -2002,3 +2044,41 @@
 "Include location tags"="Dołącz tagi lokalizacji";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
 "If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="Jeśli ta opcja jest włączona, będziesz przesyłać informacje o tym, gdzie zostały zrobione Twoje zdjęcia i filmy, więc zachowaj ostrożność, udostępniając je.";
+/* Text emncouraging the user to add contacts in MEGA */
+"Invite contact now"="Invite contact now";
+/* Text showing the user one contact would be invited */
+"Invite 1 contact"="Invite 1 contact";
+/* Error message if user click next button without enter a valid phone number */
+"Please enter a valid phone number"="Please enter a valid phone number";
+/* Error message that will show to user when user reached the sms verification daily limit */
+"You have reached the daily limit"="Osiągnąłeś dzienny limit";
+/* Error message that will show to user when user entered invalid verification code */
+"Wrong code. Please try again or resend."="Niepoprawny kod. Spróbuj ponownie lub wyślij ponownie.";
+/* Error message that will show to user when host detected that the mobile number has been registered already */
+"This number is already associated with a Mega account"="This number is already associated with a Mega account";
+/* Country label for a button, title, etc. */
+"Country"="Kraj";
+/* Error message that will show to user its account is already verified */
+"Your account is already verified"="Your account is already verified";
+/* Place holder for enter mobile number field */
+"Your phone number"="Twój numer telefonu";
+/* Label tell user to enter received txt to below input boxes */
+"Please type the verification code sent to"="Wpisz kod weryfikacyjny wysłany na adres";
+/* Text message to remind user to resend verification code */
+"You didn't receive a code?"="Nie otrzymałeś kodu?";
+/* Message shown when verify phone number successfully */
+"Your phone number has been verified successfully"="Twój numer telefonu został pomyślnie zweryfikowany";
+/* Text describing account suspended state to the user */
+"Your account has been temporarily suspended for your safety."="Your account has been temporarily suspended for your safety.";
+/* Text indicating the user next step to unlock suspended account. Please leave [S], [/S] as it is which is used to bolden the text. */
+"[S]Please verify your email[/S] and follow its steps to unlock your account."="[S]Please verify your email[/S] and follow its steps to unlock your account.";
+/* Text for button to open an helping view */
+"Why am I seeing this?"="Dlaczego to widzę?";
+/* Text to notify user an email has been sent */
+"Email sent"="Email został wysłany";
+/* Title of a helping view about locked accounts */
+"Locked Accounts"="Zablokowane konta";
+/* Locked accounts description text by an external data breach. This text is 1 of 2 paragraph of a description. */
+"It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="Możliwe, że używasz tego samego hasła do konta MEGA co do innych usług i że co najmniej jedna z tych innych usług doznała naruszenia danych.";
+/* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
+"Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="Twoje hasło wyciekło i jest obecnie wykorzystywane przez złych aktorów do logowania się na twoje konta, w tym między innymi na twoje konto MEGA.";
