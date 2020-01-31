@@ -287,7 +287,7 @@
                         [actions addObject:[self actionShare]];
                     }
                     
-                    if (self.node.isFile && [NSUserDefaults.standardUserDefaults boolForKey:@"IsChatEnabled"]) {
+                    if (self.node.isFile) {
                         [actions addObject:[self actionSendToChat]];
                     }
                     

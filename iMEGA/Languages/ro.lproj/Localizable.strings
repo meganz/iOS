@@ -1101,8 +1101,6 @@
 "noConversations"="Nicio conversație";
 /* Empty Conversations description */
 "Start chatting securely with your contacts using end-to-end encryption"="Începe să chatuiești în siguranță cu contactele tale folosind criptarea capăt-la-capăt";
-/* Title show when the chat is disabled */
-"chatIsDisabled"="Chatul este dezactivat";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
 "enable"="Activează";
 /* A button on a dialog which invites a contact to join MEGA. */

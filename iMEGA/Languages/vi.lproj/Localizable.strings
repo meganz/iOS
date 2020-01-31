@@ -1101,8 +1101,6 @@
 "noConversations"="Không có Cuộc Trò Chuyện nào";
 /* Empty Conversations description */
 "Start chatting securely with your contacts using end-to-end encryption"="Mở một cuộc trò chuyện với các tên liên lạc nằm trong danh sách, với tính bảo mật tối ưu";
-/* Title show when the chat is disabled */
-"chatIsDisabled"="Chát bị tắt";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
 "enable"="Bật";
 /* A button on a dialog which invites a contact to join MEGA. */
