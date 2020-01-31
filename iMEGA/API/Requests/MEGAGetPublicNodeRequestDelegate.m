@@ -27,8 +27,9 @@
     [super onRequestFinish:api request:request error:error];
     
     if (error.type == MEGAErrorTypeApiOk && self.savePublicHandle && request.publicNode) {
-        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithUnsignedLongLong:request.publicNode.handle] forKey:@"kLastPublicHandleAccessed"];
-        [[NSUserDefaults standardUserDefaults] setDouble:[NSDate date].timeIntervalSince1970 forKey:@"kLastPublicTimestampAccessed"];
+        [NSUserDefaults.standardUserDefaults setObject:[NSNumber numberWithUnsignedLongLong:request.publicNode.handle] forKey:MEGALastPublicHandleAccessed];
+        [NSUserDefaults.standardUserDefaults setInteger:AffiliateTypeFileFolder forKey:MEGALastPublicTypeAccessed];
+        [NSUserDefaults.standardUserDefaults setDouble:NSDate.date.timeIntervalSince1970 forKey:MEGALastPublicTimestampAccessed];
     }
     
     if (self.completion) {

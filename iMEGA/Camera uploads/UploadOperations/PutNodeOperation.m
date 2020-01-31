@@ -52,13 +52,13 @@
         [self finishOperation];
     }];
     
-    
+    NSString *originalFingerPrint = [self.uploadInfo.originalFingerprint isEqualToString:self.uploadInfo.fingerprint] ? nil : self.uploadInfo.originalFingerprint;
     NSString *serverUniqueFileName = [self.uploadInfo.fileName mnz_sequentialFileNameInParentNode:self.uploadInfo.parentNode];
     [MEGASdkManager.sharedMEGASdk completeBackgroundMediaUpload:self.uploadInfo.mediaUpload
                                                        fileName:serverUniqueFileName
                                                      parentNode:self.uploadInfo.parentNode
                                                     fingerprint:self.uploadInfo.fingerprint
-                                            originalFingerprint:self.uploadInfo.originalFingerprint
+                                            originalFingerprint:originalFingerPrint
                                               binaryUploadToken:self.transferToken
                                                        delegate:delegate];
 }

@@ -25,7 +25,7 @@
 #pragma mark - IBActions
 
 - (IBAction)openMegaTouchUpInside:(id)sender {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"mega://#loginrequired"]];
+    [UIApplication.sharedApplication openURL:[NSURL URLWithString:@"mega://#loginrequired"] options:@{} completionHandler:nil];
 }
 
 - (IBAction)cancel:(UIBarButtonItem *)sender {

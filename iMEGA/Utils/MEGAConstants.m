@@ -5,6 +5,8 @@
 
 NSString * const MEGAiOSAppUserAgent = @"MEGAiOS";
 NSString * const MEGAiOSAppKey = @"EVtjzb7R";
+NSString * const MEGAPasswordService = @"MEGA";
+NSString * const MEGAPasswordName = @"sessionV3";
 
 NSString * const MEGAGroupIdentifier = @"group.mega.ios";
 
@@ -79,3 +81,9 @@ NSString * const MEGAUIActivityTypeRemoveSharing = @"MEGAUIActivityTypeRemoveSha
 NSString * const MEGAUIActivityTypeShareFolder = @"MEGAUIActivityTypeShareFolder";
 NSString * const MEGAUIActivityTypeSaveToCameraRoll = @"MEGAUIActivityTypeSaveToCameraRoll";
 NSString * const MEGAUIActivityTypeSendToChat = @"MEGAUIActivityTypeSendToChat";
+
+#pragma mark - MEGA Affiliate program
+
+NSString * const MEGALastPublicHandleAccessed = @"kLastPublicHandleAccessed";
+NSString * const MEGALastPublicTypeAccessed = @"kLastPublicTypeAccessed";
+NSString * const MEGALastPublicTimestampAccessed = @"kLastPublicTimestampAccessed";

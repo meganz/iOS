@@ -191,29 +191,20 @@ static NSString *nodeToPresentBase64Handle;
                             [SVProgressHUD showSuccessWithStatus:notificationText];
                         } else {
                             [DevicePermissionsHelper notificationsPermissionWithCompletionHandler:^(BOOL granted) {
-                                if (@available(iOS 10.0, *)) {
-                                    if (granted) {
-                                        UNMutableNotificationContent *content = [UNMutableNotificationContent new];
-                                        content.body = notificationText;
-                                        content.sound = UNNotificationSound.defaultSound;
-                                        content.userInfo = @{@"chatId" : @(chatId)};
-                                        UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:1 repeats:NO];
-                                        UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:identifier content:content trigger:trigger];
-                                        [UNUserNotificationCenter.currentNotificationCenter addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
-                                            if (error) {
-                                                [SVProgressHUD showSuccessWithStatus:notificationText];
-                                            }
-                                        }];
-                                    } else {
-                                        [SVProgressHUD showSuccessWithStatus:notificationText];
-                                    }
+                                if (granted) {
+                                    UNMutableNotificationContent *content = [UNMutableNotificationContent new];
+                                    content.body = notificationText;
+                                    content.sound = UNNotificationSound.defaultSound;
+                                    content.userInfo = @{@"chatId" : @(chatId)};
+                                    UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:1 repeats:NO];
+                                    UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:identifier content:content trigger:trigger];
+                                    [UNUserNotificationCenter.currentNotificationCenter addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
+                                        if (error) {
+                                            [SVProgressHUD showSuccessWithStatus:notificationText];
+                                        }
+                                    }];
                                 } else {
-                                    UILocalNotification* localNotification = [[UILocalNotification alloc] init];
-                                    localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:1];
-                                    localNotification.alertBody = notificationText;
-                                    localNotification.timeZone = NSTimeZone.defaultTimeZone;
-                                    localNotification.userInfo = @{@"chatId" : @(chatId)};
-                                    [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+                                    [SVProgressHUD showSuccessWithStatus:notificationText];
                                 }
                             }];
                         }
@@ -304,6 +295,13 @@ static NSString *nodeToPresentBase64Handle;
 }
 
 #pragma mark - Manage MEGA links
+
++ (NSString *)buildPublicLink:(NSString *)link withKey:(NSString *)key isFolder:(BOOL)isFolder {
+    NSString *stringWithoutSymbols = [[link stringByReplacingOccurrencesOfString:@"#" withString:@""] stringByReplacingOccurrencesOfString:@"!" withString:@""];
+    NSString *publicHandle = [stringWithoutSymbols substringFromIndex:stringWithoutSymbols.length - 8];
+    
+    return [MEGASdkManager.sharedMEGASdk buildPublicLinkForHandle:publicHandle key:key isFolder:isFolder];
+}
 
 + (void)processLinkURL:(NSURL *)url {
     if (!url) {
@@ -628,6 +626,10 @@ static NSString *nodeToPresentBase64Handle;
     MEGAContactLinkQueryRequestDelegate *delegate = [[MEGAContactLinkQueryRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
         NSString *fullName = [NSString stringWithFormat:@"%@ %@", request.name, request.text];
         [MEGALinkManager presentInviteModalForEmail:request.email fullName:fullName contactLinkHandle:request.nodeHandle image:request.file];
+        
+        [NSUserDefaults.standardUserDefaults setObject:[NSNumber numberWithUnsignedLongLong:request.nodeHandle] forKey:MEGALastPublicHandleAccessed];
+        [NSUserDefaults.standardUserDefaults setInteger:AffiliateTypeContact forKey:MEGALastPublicTypeAccessed];
+        [NSUserDefaults.standardUserDefaults setDouble:NSDate.date.timeIntervalSince1970 forKey:MEGALastPublicTimestampAccessed];
     } onError:^(MEGAError *error) {
         [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"linkNotValid", @"Message shown when the user clicks on an link that is not valid")];
     }];
@@ -729,6 +731,10 @@ static NSString *nodeToPresentBase64Handle;
         } else {
             [MEGALinkManager createChatAndShow:request.chatHandle publicChatLink:chatLinkUrl];
         }
+        
+        [NSUserDefaults.standardUserDefaults setObject:[NSNumber numberWithUnsignedLongLong:request.chatHandle] forKey:MEGALastPublicHandleAccessed];
+        [NSUserDefaults.standardUserDefaults setInteger:AffiliateTypeChat forKey:MEGALastPublicTypeAccessed];
+        [NSUserDefaults.standardUserDefaults setDouble:NSDate.date.timeIntervalSince1970 forKey:MEGALastPublicTimestampAccessed];
         
         [SVProgressHUD dismiss];
     }];
