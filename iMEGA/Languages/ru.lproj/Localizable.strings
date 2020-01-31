@@ -1101,8 +1101,6 @@
 "noConversations"="Нет разговоров";
 /* Empty Conversations description */
 "Start chatting securely with your contacts using end-to-end encryption"="Начните безопасное общение со своими контактами благодаря сквозному шифрованию.";
-/* Title show when the chat is disabled */
-"chatIsDisabled"="Чат отключён";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
 "enable"="Включить";
 /* A button on a dialog which invites a contact to join MEGA. */

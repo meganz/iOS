@@ -31,9 +31,7 @@ class InviteContactViewController: UIViewController {
         }
         MEGASdkManager.sharedMEGASdk().contactLinkCreateRenew(false, delegate: contactLinkCreateDelegate)
         
-        if UserDefaults.standard.bool(forKey: "IsChatEnabled") {
-            createContactsOnMegaChild()
-        }
+        createContactsOnMegaChild()
         
         if !MFMessageComposeViewController.canSendText() {
             addFromContactsLabel.textColor = UIColor.mnz_gray8F8F8F()

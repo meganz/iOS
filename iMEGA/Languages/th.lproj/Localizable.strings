@@ -1101,8 +1101,6 @@
 "noConversations"="ไม่มีการสนทนา";
 /* Empty Conversations description */
 "Start chatting securely with your contacts using end-to-end encryption"="เริ่มแชทอย่างปลอดภัยกับผู้ติดต่อของคุณโดยใช้การเข้ารหัสแบบต้นทางถึงปลายทาง";
-/* Title show when the chat is disabled */
-"chatIsDisabled"="แชทถูกปิดใช้งาน";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
 "enable"="เปิดการใช้งาน";
 /* A button on a dialog which invites a contact to join MEGA. */
