@@ -140,10 +140,6 @@
 "Confirm account"="Confirm account";
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
 "passwordWrong"="Wrong password";
-/* Warning title shown when you try to confirm an account but you are logged in with another one */
-"alreadyLoggedInAlertTitle"="You are logged in with another account";
-/* Warning message shown when you try to confirm an account but you are logged in with another one */
-"alreadyLoggedInAlertMessage"="If you agree, the current account will be logged out and all Offline data will be erased. Do you want to continue?";
 /* Error shown when the user tries to change his mail to one that is already used */
 "emailAlreadyInUse"="Error. This email address is already in use.";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
@@ -2044,6 +2040,8 @@
 "Include location tags"="Include location tags";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
 "If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them.";
+/* Error message shown when opening a link with an account that not corresponds to the link */
+"This link is not related to this account. Please log in with the correct account."="This link is not related to this account. Please log in with the correct account.";
 /* Text emncouraging the user to add contacts in MEGA */
 "Invite contact now"="Invite contact now";
 /* Text showing the user one contact would be invited */
