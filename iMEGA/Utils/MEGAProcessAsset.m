@@ -203,7 +203,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
 
     switch (imageQuality) {
         case ChatImageUploadQualityAuto:
-            if (self.toShareThroughChat && ![EGAReachabilityManager.isReachableViaWiFi) {
+            if (self.toShareThroughChat && !MEGAReachabilityManager.isReachableViaWiFi) {
                 [self compressedImageAsset:asset options:options];
             } else {
                 [self requestImageForAsset:asset options:options];
