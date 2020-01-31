@@ -560,8 +560,6 @@
 "addContactButton"="추가";
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="당신의 이메일을 추가할 필요는 없습니다";
-/* Add contacts and share dialog error message when user try to add already existing email address. */
-"alreadyHaveAContactWithThatEmailAddress"="이 이메일 주소의 연락처가 이미 있습니다";
 /* Success message shown when a contact has been invited */
 "theUserHasBeenInvited"="[X]님이 초대되었으며 수락되면 당신의 연락처 목록에 나타날 것입니다.";
 /* Success message shown when some contacts have been invited */
@@ -957,6 +955,22 @@
 "xDaysLeft"="%1일 남음";
 /* %1 will be replaced by a numeric value and %2 will be 'days' or 'months', for example (Expires in [S]10[/S] days) */
 "bonusExpiresIn"="([S]%1[/S] %2 후 보너스 만료)";
+/* Add Phone Number title  */
+"Add Phone Number"="Add Phone Number";
+/* Achievement explanation for add phone number */
+"You have received %1$s storage space and %2$s transfer quota for verifying your phone number."="전화번호를 인증하여서 %1$s의 무료 저장 공간과 %2$s의 전송 할당량을 받았습니다.";
+/* Free storage description to encourage users to add phone number to their accounts */
+"Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."="Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA.";
+/* Description to encourage users to add phone number to their accounts when there are not achievements */
+"Add your phone number to MEGA. This makes it easier for your contacts to find you on MEGA."="MEGA에 전화번호를 추가하세요. 이것은 당신의 지인들이 당신을 MEGA에서 더 쉽게 찾도록 해줍니다.";
+/* Description to unblock account by verifying phone number */
+"Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account."="당신의 계정은 잠재적 남용을 방지하기 위해 일시적으로 정지되었습니다. 계정을 해제하려면 전화번호를 인증하세요.";
+/* Verify your account title */
+"Verify Your Account"="Verify Your Account";
+/* Add your phone number title */
+"Add Your Phone Number"="Add Your Phone Number";
+/* Choose Your Country title */
+"Choose Your Country"="Choose Your Country";
 /* Used to display the number of months a plan was purchased for e.g. 3 months, 6 months. */
 "months"="개월";
 /*  */
@@ -987,8 +1001,8 @@
 "availableLabel"="이용가능";
 /* title of the My Account screen */
 "accountType"="계정 유형:";
-/* Text relative to the MEGA account level. UPPER CASE */
-"free"="무료";
+/* Label to indicate that the current user has a Free account. */
+"Free"="무료";
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="%@에 만기";
 /* Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible). */
@@ -1006,9 +1020,9 @@
 /*  */
 "chooseYourAccountType"="계정 유형을 선택하세요";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]클라우드 드라이브가 거의 찼습니다.[/S] PRO 계정으로 [A]지금 업그레이드[/A]하고 [S]최대 8 TB (8192 GB)[/S]의 클라우드 저장 공간을 받으세요.";
+"cloudDriveIsAlmostFull"="[S]클라우드 드라이브가 거의 찼습니다.[/S] PRO 계정으로 [A]지금 업그레이드[/A]하고 [S]최대 %@ TB (%@ GB)[/S]의 클라우드 저장 공간을 받으세요.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]계정이 가득 찼습니다.[/S] PRO 계정으로 [A]지금 업그레이드[/A]하고 [S]최대 8 TB (8192 GB)[/S]의 클라우드 저장 공간을 얻으세요.";
+"cloudDriveIsFull"="[S]클라우드 드라이브가 가득 찼습니다.[/S] PRO 계정으로 [A]지금 업그레이드[/A]하고 [S]최대 %@ TB (%@ GB)[/S]의 클라우드 저장 공간을 얻으세요.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="저장소";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
@@ -1087,8 +1101,6 @@
 "noConversations"="대화 없음";
 /* Empty Conversations description */
 "Start chatting securely with your contacts using end-to-end encryption"="종단간 암호화를 통하여 당신의 연락처와 안전하게 대화를 시작하세요";
-/* Title show when the chat is disabled */
-"chatIsDisabled"="대화가 비활성화됨";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
 "enable"="활성화";
 /* A button on a dialog which invites a contact to join MEGA. */
@@ -1153,6 +1165,10 @@
 "sendMessage"="메시지 보내기";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
 "verifyCredentials"="개인정보 인증";
+/* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
+"verify"="인증";
+/* Button title */
+"verified"="확인됨";
 /* A button title to delete the history of a chat. */
 "clearChatHistory"="대화 기록 삭제";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
@@ -1364,7 +1380,7 @@
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph4"="MEGA는 모든 가입 회원에게 넉넉한 50 GB의 무료 저장소를 보너스 도전 과제와 함께 제공하며, 더 높은 제한을 가진 유료 요금제를 제공합니다:";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph5"="PRO LITE 구독권: 매달 €4.99 (US$4.99) 또는 매해 €49.99 (US$49.99)에 200 GB의 저장 공간과 매달 1 TB의 전송 할당량을 드립니다.\nPRO I 구독권: 매달 €9.99 (US$9.99) 또는 매해 €99.99 (US$99.99)에 1 TB의 저장 공간과 매달 2 TB의 전송 할당량을 드립니다.\nPRO II 구독권: 매달 €19.99 (US$19.99) 또는 매해 €199.99 (US$199.99)에 4 TB의 저장 공간과 매달 8 TB의 전송 할당량을 드립니다.\nPRO III 구독권: 매달 €29.99 (US$29.99) 또는 매해 €299.99 (US$299.99)에 8 TB의 저장 공간과 매달 16 TB의 전송 할당량을 드립니다.";
+"generalDescriptionParagraph5"="PRO LITE 구독권: 매달 €4.99 (US$4.99) 또는 매해 €49.99 (US$49.99)에 400 GB의 저장 공간과 매달 1 TB의 전송 할당량을 드립니다.\nPRO I 구독권: 매달 €9.99 (US$9.99) 또는 매해 €99.99 (US$99.99)에 2 TB의 저장 공간과 매달 2 TB의 전송 할당량을 드립니다.\nPRO II 구독권: 매달 €19.99 (US$19.99) 또는 매해 €199.99 (US$199.99)에 8 TB의 저장 공간과 매달 8 TB의 전송 할당량을 드립니다.\nPRO III 구독권: 매달 €29.99 (US$29.99) 또는 매해 €299.99 (US$299.99)에 16 TB의 저장 공간과 매달 16 TB의 전송 할당량을 드립니다.";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph6"="자세한 정보는, 우리의 웹사이트를 확인하세요: https://mega.nz/\n이용 약관: https://mega.nz/terms\n개인정보 처리방침: https://mega.nz/privacy";
@@ -1407,7 +1423,7 @@
 /* Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible. */
 "autoAccept"="자동 승인";
 /* Footer that explains the way Auto-Accept works for QR codes */
-"autoAcceptFooter"="당신의 QR 코드를 스캔한 연락처는 자동으로 연락처 목록에 추가됩니다.";
+"autoAcceptFooter"="당신의 QR 코드를 스캔한 MEGA 이용자는 자동으로 연락처 목록에 추가됩니다.";
 /* Action to reset the current valid QR code of the user */
 "resetQrCode"="QR 코드 초기화";
 /* Footer that explains what would happen if the user resets his/her QR code */
@@ -1523,7 +1539,7 @@
 /* When an active call of user A with user B had failed */
 "callFailed"="통화 실패";
 /* When an active call of user A with user B had ended */
-"callEnded"="통화 종료.";
+"callEnded"="통화 종료됨.";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="시간: %@";
 /* */
@@ -1649,7 +1665,7 @@
 /* Title of the option to enable or disable file versioning on Settings section */
 "File versioning"="파일 버전 기록";
 /* Subtitle of the option to enable or disable file versioning on Settings section */
-"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="당신의 계정 전체에 대해 파일 버전 기록을 활성화하거나 비활성화합니다.\n연락처가 이것을 활성화했다면 공유된 폴더에서 계속해서 파일 버전을 받게 됩니다.";
+"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="계정 전체에 대한 파일 버전 기록을 활성화하거나 비활성화합니다.\n파일 버전 기록을 해제하면 지인이 공유된 폴더에 새로운 버전을 만드는 것을 막을 수 없습니다.";
 /* A confirmation message when the user chooses to disable file versioning. */
 "When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="파일 버전 기록이 해제되면, 파일이 업데이트되면 현재 버전이 새 버전 으로 교체됩니다 (그리고 파일의 변경점의 기록되지 않습니다).파일 버전 기록을 해제하시겠습니까?";
 /* Settings preference title to show file versions info of the account */
@@ -1862,6 +1878,8 @@
 "Tap and hold %@ to record, release to send"="녹음하려면 %@ 버튼을 누르고, 전송하려면 떼세요";
 /* Message shown when there is an ongoing call and the user tries to record a voice message */
 "It is not possible to record voice messages while there is a call in progress"="통화가 진행중이면 음성 메시지를 녹음할 수 없습니다.";
+/* Label indicating that a voice clip is being recorded. String as short as possible. */
+"Recording..."="녹음중...";
 /* Text to inform the user there is an active call and is not participating */
 "Ongoing Call"="진행중인 통화";
 /* Message shown when there is an ongoing call and the user tries to play an audio or video */
@@ -1932,6 +1950,34 @@
 "Change to a test server?"="테스트 서버로 변경할까요?";
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="테스트 서버로 변경하시겠습니까? 당신의 계정이 복구할 수 없는 문제를 겪을 수 있습니다.";
+/* Title label that explains that the user is going to be asked for the contacts permission */
+"Enable Access to Contacts"="Enable Access to Contacts";
+/* Detailed explanation of why the user should give permission to contacts */
+"MEGA needs access to your contacts to help you connect with other people on MEGA."="MEGA에 있는 다른 사람들과 당신을 연결하기 위해서는 당신의 연락처에 대한 접근이 필요합니다.";
+/* Title encouraging the user to check who of its contacts are using MEGA */
+"See who's already on MEGA"="See who’s already on MEGA";
+/* Title showing the user how many of his contacts are using MEGA */
+"[X] contacts found on MEGA"="[X] contacts found on MEGA";
+/* Title showing the user that one of his contacts are using MEGA */
+"1 contact found on MEGA"="1 contact found on MEGA";
+/* Text indicating the user to perform an action to grant some permission */
+"Enable Access"="접근 허용";
+/* Text indicating the user to open the device settings for MEGA */
+"Open Settings"="Open Settings";
+/* Text encouraging the user to invite contacts to MEGA */
+"Invite contacts and start chatting securely with MEGA’s encrypted chat."="지인을 초대하고 MEGA의 암호화된 대화로 안전하게 대화를 시작하세요.";
+/* Text showing the user how many contacts would be invited */
+"Invite [X] contacts"="Invite [X] contacts";
+/* Text showing the user how to write more than one email in order to invite them to MEGA */
+"Tap space to enter multiple emails"="Tap space to enter multiple emails";
+/* Text used as a section title or similar */
+"Enter Email"="Enter Email";
+/* Text used as view title showing the user the phone contacts using MEGA */
+"On MEGA"="MEGA에서";
+/* Text used as a section title or similar showing the user the phone contacts using MEGA */
+"CONTACTS ON MEGA"="CONTACTS ON MEGA";
+/* Text to send as SMS message to user contacts inviting them to MEGA */
+"Hi, Have encrypted conversations on Mega with me and get 50GB free storage."="Hi, Have encrypted conversations on Mega with me and get 50GB free storage.";
 /* Destination folder name of chat files */
 "My chat files"="내 대화 파일";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
@@ -1948,8 +1994,6 @@
 "Links"="링크";
 /* Title for empty state view of "Links" in Shared Items. */
 "No Public Links"="공개 링크 없음";
-/* Text to indicate that the user will leave an incoming shared folder. */
-"Leave Share"="공유 떠나기";
 /* Text indicating to the user the action that will be executed on tap. */
 "Manage Share"="공유 관리";
 /* Title of the screen that shows the users with whom the user can share a folder */
@@ -1996,3 +2040,45 @@
 "Inactive chat"="활성화되지 않은 대화";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
 "It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="이 파일이 UTF-8 또는 ISO/IEC 8859-1로 기록되지 않아서, 내용을 가져올 수 없었습니다.";
+/* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
+"Include location tags"="위치 태그 포함";
+/* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
+"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="활성화되면, 사진과 동영상이 어디서 촬영되었는지에 대한 정보가 업로드됩니다, 공유할 때 주의하세요.";
+/* Text emncouraging the user to add contacts in MEGA */
+"Invite contact now"="Invite contact now";
+/* Text showing the user one contact would be invited */
+"Invite 1 contact"="Invite 1 contact";
+/* Error message if user click next button without enter a valid phone number */
+"Please enter a valid phone number"="Please enter a valid phone number";
+/* Error message that will show to user when user reached the sms verification daily limit */
+"You have reached the daily limit"="일일 한도에 도달하였습니다";
+/* Error message that will show to user when user entered invalid verification code */
+"Wrong code. Please try again or resend."="잘못된 코드. 다시 시도하거나 재발송하세요.";
+/* Error message that will show to user when host detected that the mobile number has been registered already */
+"This number is already associated with a Mega account"="This number is already associated with a Mega account";
+/* Country label for a button, title, etc. */
+"Country"="국가";
+/* Error message that will show to user its account is already verified */
+"Your account is already verified"="Your account is already verified";
+/* Place holder for enter mobile number field */
+"Your phone number"="당신의 전화번호";
+/* Label tell user to enter received txt to below input boxes */
+"Please type the verification code sent to"="다음으로 전송된 코드를 입력하세요";
+/* Text message to remind user to resend verification code */
+"You didn't receive a code?"="코드를 받지 못했나요?";
+/* Message shown when verify phone number successfully */
+"Your phone number has been verified successfully"="전화번호가 성공적으로 인증되었습니다";
+/* Text describing account suspended state to the user */
+"Your account has been temporarily suspended for your safety."="Your account has been temporarily suspended for your safety.";
+/* Text indicating the user next step to unlock suspended account. Please leave [S], [/S] as it is which is used to bolden the text. */
+"[S]Please verify your email[/S] and follow its steps to unlock your account."="[S]Please verify your email[/S] and follow its steps to unlock your account.";
+/* Text for button to open an helping view */
+"Why am I seeing this?"="이게 왜 보여지나요?";
+/* Text to notify user an email has been sent */
+"Email sent"="이메일 발송됨";
+/* Title of a helping view about locked accounts */
+"Locked Accounts"="잠긴 계정들";
+/* Locked accounts description text by an external data breach. This text is 1 of 2 paragraph of a description. */
+"It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="MEGA와 다른 서비스들에서 같은 비밀번호를 이용하고 있고, 다른 서비스들 중 한 곳에서 데이터 유출이 발생했을 가능성이 있습니다.";
+/* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
+"Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="당신의 비밀번호가 유출되어서 MEGA 계정뿐만 아니라 당신의 계정에 접속하려는 나쁜 사람들에게 이용되고 있습니다.";

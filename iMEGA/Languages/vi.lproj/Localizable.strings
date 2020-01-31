@@ -43,7 +43,7 @@
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="Nhập mã giải khóa";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertMessage"="Để có thể truy cập vào thư mục hay tệp tin này, bạn cần phải có mã key Giải Khóa. Nếu bạn không có key, xin liên hệ trực tiếp với người sử hữu mục này.";
+"decryptionKeyAlertMessage"="To access this folder/file, you will need its Decryption key. If you do not have the key, contact the creator of the link.";
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="Mã giải khóa";
 /* Button title to try to decrypt the link */
@@ -121,7 +121,7 @@
 /*  */
 "agreeWithTheMEGATermsOfService"="Tôi đồng ý với <a href=\"terms\">Điều Khoản Dịch Vụ</a> của MEGA";
 /* This text is displayed in the account creation screen with a checkbox. User will have to tick the checkbox before proceeding on to create an account */
-"agreeWithLosingPasswordYouLoseData"="I understand that [S]if I lose my password, I may lose my data.[/S] Read more about <a href=\"terms\">MEGA’s end-to-end encryption</a>";
+"agreeWithLosingPasswordYouLoseData"="I understand that [S]if I lose my password, I may lose my data.[/S] Read more about <a href=\"terms\">MEGA’s end-to-end encryption</a>.";
 /* Error text shown when you have not entered a correct name */
 "nameInvalidFormat"="Xin nhập một tên hợp lệ";
 /* Error text shown when you have not written the same password */
@@ -560,8 +560,6 @@
 "addContactButton"="Thêm";
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="Không cần phải nhập chính email của mình vào danh bạ";
-/* Add contacts and share dialog error message when user try to add already existing email address. */
-"alreadyHaveAContactWithThatEmailAddress"="Bạn đã có tên liên lạc với địa chỉ email đó rồi";
 /* Success message shown when a contact has been invited */
 "theUserHasBeenInvited"="Người dùng [X] đã được mời và sẽ xuất hiện trong danh bạ của quý vị khi họ chấp nhận y/c đó.";
 /* Success message shown when some contacts have been invited */
@@ -957,6 +955,22 @@
 "xDaysLeft"="Còn lại %1 ngày";
 /* %1 will be replaced by a numeric value and %2 will be 'days' or 'months', for example (Expires in [S]10[/S] days) */
 "bonusExpiresIn"="(Phần thưởng hết hạn trong [S]%1[/S] %2)";
+/* Add Phone Number title  */
+"Add Phone Number"="Add Phone Number";
+/* Achievement explanation for add phone number */
+"You have received %1$s storage space and %2$s transfer quota for verifying your phone number."="You have received %1$s storage space and %2$s transfer quota for verifying your phone number.";
+/* Free storage description to encourage users to add phone number to their accounts */
+"Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."="Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA.";
+/* Description to encourage users to add phone number to their accounts when there are not achievements */
+"Add your phone number to MEGA. This makes it easier for your contacts to find you on MEGA."="Add your phone number to MEGA. This makes it easier for your contacts to find you on MEGA.";
+/* Description to unblock account by verifying phone number */
+"Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account."="Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.";
+/* Verify your account title */
+"Verify Your Account"="Verify Your Account";
+/* Add your phone number title */
+"Add Your Phone Number"="Add Your Phone Number";
+/* Choose Your Country title */
+"Choose Your Country"="Choose Your Country";
 /* Used to display the number of months a plan was purchased for e.g. 3 months, 6 months. */
 "months"="tháng";
 /*  */
@@ -987,8 +1001,8 @@
 "availableLabel"="Không Gian Trống";
 /* title of the My Account screen */
 "accountType"="Hạng Tài Khoản";
-/* Text relative to the MEGA account level. UPPER CASE */
-"free"="MIễN PHÍ";
+/* Label to indicate that the current user has a Free account. */
+"Free"="Miễn phí";
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="hết hạn vào %@";
 /* Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible). */
@@ -1006,9 +1020,9 @@
 /*  */
 "chooseYourAccountType"="Chọn hạng tài khoản";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]Ổ Mây sắp đầy.[/S] [A]Nâng cấp lên[/A] hạng PRO ngay để nhận [S]tới 8 TB (8192 GB)[/S] để lưu trữ dữ liệu.";
+"cloudDriveIsAlmostFull"="[S]Your Cloud Drive is almost full.[/S] [A]Upgrade now[/A] to a PRO account and get [S]up to %@ TB (%@ GB)[/S] of cloud storage space.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]Tài khoản đã hết không gian lưu trữ.[/S] [A]Nâng cấp ngay[/A] lên hạng PRO và nhận lên [S]đến 8 TB (8192 GB)[/S] không gian lưu trữ.";
+"cloudDriveIsFull"="[S]Your Cloud Drive is full.[/S] [A]Upgrade now[/A] to a PRO account and get [S]up to %@ TB (%@ GB)[/S] of cloud storage space.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Lưu trữ";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
@@ -1087,8 +1101,6 @@
 "noConversations"="Không có Cuộc Trò Chuyện nào";
 /* Empty Conversations description */
 "Start chatting securely with your contacts using end-to-end encryption"="Mở một cuộc trò chuyện với các tên liên lạc nằm trong danh sách, với tính bảo mật tối ưu";
-/* Title show when the chat is disabled */
-"chatIsDisabled"="Chát bị tắt";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
 "enable"="Bật";
 /* A button on a dialog which invites a contact to join MEGA. */
@@ -1153,6 +1165,10 @@
 "sendMessage"="Gửi Tin Nhắn";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
 "verifyCredentials"="Xác Minh Chứng Thực";
+/* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
+"verify"="Xác thực";
+/* Button title */
+"verified"="Đã xác thực";
 /* A button title to delete the history of a chat. */
 "clearChatHistory"="Dọn Lịch Sử Tin Nhắn";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
@@ -1523,7 +1539,7 @@
 /* When an active call of user A with user B had failed */
 "callFailed"="Cuộc gọi thất bại";
 /* When an active call of user A with user B had ended */
-"callEnded"="Cuộc gọi kết thúc.";
+"callEnded"="Cuộc gọi chấm dứt.";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="Thời lượng: %@";
 /* */
@@ -1862,6 +1878,8 @@
 "Tap and hold %@ to record, release to send"="Chạm và giữ %@ để ghi âm, thả ra để gửi";
 /* Message shown when there is an ongoing call and the user tries to record a voice message */
 "It is not possible to record voice messages while there is a call in progress"="It is not possible to record voice messages while there is a call in progress.";
+/* Label indicating that a voice clip is being recorded. String as short as possible. */
+"Recording..."="Recording…";
 /* Text to inform the user there is an active call and is not participating */
 "Ongoing Call"="Cuộc Gọi Đang Diễn Ra";
 /* Message shown when there is an ongoing call and the user tries to play an audio or video */
@@ -1932,6 +1950,34 @@
 "Change to a test server?"="Đổi sang máy chủ thử nghiệm?";
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Bạn có chắc muốn chuyển sang máy chủ thử nghiệm? Tài khoản có thể sẽ gặp các vấn đề không thể phục hồi";
+/* Title label that explains that the user is going to be asked for the contacts permission */
+"Enable Access to Contacts"="Enable Access to Contacts";
+/* Detailed explanation of why the user should give permission to contacts */
+"MEGA needs access to your contacts to help you connect with other people on MEGA."="MEGA needs access to your contacts to help you connect with other people on MEGA.";
+/* Title encouraging the user to check who of its contacts are using MEGA */
+"See who's already on MEGA"="See who’s already on MEGA";
+/* Title showing the user how many of his contacts are using MEGA */
+"[X] contacts found on MEGA"="[X] contacts found on MEGA";
+/* Title showing the user that one of his contacts are using MEGA */
+"1 contact found on MEGA"="1 contact found on MEGA";
+/* Text indicating the user to perform an action to grant some permission */
+"Enable Access"="Cho phép Truy Cập";
+/* Text indicating the user to open the device settings for MEGA */
+"Open Settings"="Open Settings";
+/* Text encouraging the user to invite contacts to MEGA */
+"Invite contacts and start chatting securely with MEGA’s encrypted chat."="Mời thêm tên liên lạc và để bắt đầu trò chuyện thông qua MEGA và được bảo mật mạnh mẽ.";
+/* Text showing the user how many contacts would be invited */
+"Invite [X] contacts"="Invite [X] contacts";
+/* Text showing the user how to write more than one email in order to invite them to MEGA */
+"Tap space to enter multiple emails"="Tap space to enter multiple emails";
+/* Text used as a section title or similar */
+"Enter Email"="Enter Email";
+/* Text used as view title showing the user the phone contacts using MEGA */
+"On MEGA"="Trên mạng MEGA";
+/* Text used as a section title or similar showing the user the phone contacts using MEGA */
+"CONTACTS ON MEGA"="CONTACTS ON MEGA";
+/* Text to send as SMS message to user contacts inviting them to MEGA */
+"Hi, Have encrypted conversations on Mega with me and get 50GB free storage."="Hi, Have encrypted conversations on Mega with me and get 50GB free storage.";
 /* Destination folder name of chat files */
 "My chat files"="Tệp tôi gửi trong chát";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
@@ -1948,8 +1994,6 @@
 "Links"="Links";
 /* Title for empty state view of "Links" in Shared Items. */
 "No Public Links"="Không có Liên Kết Công Khai nào";
-/* Text to indicate that the user will leave an incoming shared folder. */
-"Leave Share"="Trả lại về chủ sở hữu";
 /* Text indicating to the user the action that will be executed on tap. */
 "Manage Share"="Manage share";
 /* Title of the screen that shows the users with whom the user can share a folder */
@@ -1996,3 +2040,45 @@
 "Inactive chat"="Cuộc chát bất hoạt động";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
 "It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1.";
+/* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
+"Include location tags"="Include location tags";
+/* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
+"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them.";
+/* Text emncouraging the user to add contacts in MEGA */
+"Invite contact now"="Invite contact now";
+/* Text showing the user one contact would be invited */
+"Invite 1 contact"="Invite 1 contact";
+/* Error message if user click next button without enter a valid phone number */
+"Please enter a valid phone number"="Please enter a valid phone number";
+/* Error message that will show to user when user reached the sms verification daily limit */
+"You have reached the daily limit"="You have reached the daily limit";
+/* Error message that will show to user when user entered invalid verification code */
+"Wrong code. Please try again or resend."="Wrong code. Please try again or resend.";
+/* Error message that will show to user when host detected that the mobile number has been registered already */
+"This number is already associated with a Mega account"="This number is already associated with a Mega account";
+/* Country label for a button, title, etc. */
+"Country"="Quốc gia";
+/* Error message that will show to user its account is already verified */
+"Your account is already verified"="Your account is already verified";
+/* Place holder for enter mobile number field */
+"Your phone number"="Số điện thoại của bạn";
+/* Label tell user to enter received txt to below input boxes */
+"Please type the verification code sent to"="Please type the verification code sent to";
+/* Text message to remind user to resend verification code */
+"You didn't receive a code?"="You didn’t receive a code?";
+/* Message shown when verify phone number successfully */
+"Your phone number has been verified successfully"="Your phone number has been verified successfully";
+/* Text describing account suspended state to the user */
+"Your account has been temporarily suspended for your safety."="Your account has been temporarily suspended for your safety.";
+/* Text indicating the user next step to unlock suspended account. Please leave [S], [/S] as it is which is used to bolden the text. */
+"[S]Please verify your email[/S] and follow its steps to unlock your account."="[S]Please verify your email[/S] and follow its steps to unlock your account.";
+/* Text for button to open an helping view */
+"Why am I seeing this?"="Why am I seeing this?";
+/* Text to notify user an email has been sent */
+"Email sent"="Email đã được gửi";
+/* Title of a helping view about locked accounts */
+"Locked Accounts"="Locked Accounts";
+/* Locked accounts description text by an external data breach. This text is 1 of 2 paragraph of a description. */
+"It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.";
+/* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
+"Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.";

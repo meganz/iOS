@@ -316,7 +316,7 @@
     }]];
     
     [decryptionAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"decrypt", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        NSString *linkString = [Helper buildPublicLink:self.publicLinkString withKey:decryptionAlertController.textFields.firstObject.text isFolder:YES];
+        NSString *linkString = [MEGALinkManager buildPublicLink:self.publicLinkString withKey:decryptionAlertController.textFields.firstObject.text isFolder:YES];
         
         isValidatingDecryptionKey = YES;
         
@@ -1006,8 +1006,9 @@
             
             isFetchNodesDone = YES;
             
-            [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithUnsignedLongLong:request.nodeHandle] forKey:@"kLastPublicHandleAccessed"];
-            [[NSUserDefaults standardUserDefaults] setDouble:[NSDate date].timeIntervalSince1970 forKey:@"kLastPublicTimestampAccessed"];
+            [NSUserDefaults.standardUserDefaults setObject:[NSNumber numberWithUnsignedLongLong:request.nodeHandle] forKey:MEGALastPublicHandleAccessed];
+            [NSUserDefaults.standardUserDefaults setInteger:AffiliateTypeFileFolder forKey:MEGALastPublicTypeAccessed];
+            [NSUserDefaults.standardUserDefaults setDouble:NSDate.date.timeIntervalSince1970 forKey:MEGALastPublicTimestampAccessed];
             
             [self reloadUI];
             

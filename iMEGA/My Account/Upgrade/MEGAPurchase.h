@@ -17,6 +17,7 @@
 
 - (void)purchaseProduct:(SKProduct *)product;
 - (void)restorePurchase;
+- (NSUInteger)pricingProductIndexForProduct:(SKProduct *)product;
 
 @end
 
