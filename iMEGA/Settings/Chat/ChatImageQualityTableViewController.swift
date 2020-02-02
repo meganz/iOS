@@ -21,12 +21,15 @@ class ChatImageQualityTableViewController: UITableViewController {
         case 0:
             cell.textLabel?.text = NSLocalizedString("Automatic", comment: "Label indicating that Send smaller size images through cellular networks and original size images through wifi")
             cell.detailTextLabel?.text = NSLocalizedString("Send smaller size images through cellular networks and original size images through wifi", comment: "Description of Automatic Image Quality option")
+
         case 1:
             cell.textLabel?.text = NSLocalizedString("High", comment: "High")
             cell.detailTextLabel?.text = NSLocalizedString("Send original size, increased quality images", comment: "Description of High Image Quality option")
+
         case 2:
             cell.textLabel?.text = NSLocalizedString("Optimised", comment: "Optimised")
             cell.detailTextLabel?.text = NSLocalizedString("Send smaller size images optimised for lower data consumption", comment: "Description of Optimised Image Quality option")
+        
         default:
             return cell
         }
@@ -39,6 +42,4 @@ class ChatImageQualityTableViewController: UITableViewController {
         UserDefaults.standard.set(indexPath.row, forKey: "chatImageQuality")
         tableView.reloadData()
     }
-  
-
 }
