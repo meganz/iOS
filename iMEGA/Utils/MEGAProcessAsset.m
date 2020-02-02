@@ -209,13 +209,15 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
                 [self requestImageForAsset:asset options:options];
             }
             break;
+            
         case ChatImageUploadQualityHigh:
             [self requestImageForAsset:asset options:options];
-
             break;
+            
         case ChatImageUploadQualityOptimised:
             [self compressedImageAsset:asset options:options];
             break;
+            
         default:
             [self requestImageForAsset:asset options:options];
             break;
