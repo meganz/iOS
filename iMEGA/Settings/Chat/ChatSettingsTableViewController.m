@@ -193,7 +193,7 @@
         footerTitle = AMLocalizedString(@"richPreviewsFooter", @"Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers.");
     }
 
-    if (section == 3) {
+    if (section == 2) {
         ChatImageUploadQuality imageQuality = [NSUserDefaults.standardUserDefaults integerForKey:@"chatImageQuality"];
         switch (imageQuality) {
             case ChatImageUploadQualityAuto:
@@ -212,7 +212,7 @@
                 break;
         }
     }
-    if (section == 4) {
+    if (section == 3) {
         footerTitle = AMLocalizedString(@"qualityOfVideosUploadedToAChat", @"Footer text to explain the meaning of the functionaly 'Video quality' for videos uploaded to a chat.");
     }
     return footerTitle;
