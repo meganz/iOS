@@ -21,6 +21,8 @@
 /* "Size" of the file or folder you are sharing */
 "size"="ขนาด";
 /*  */
+"Quality"="Quality";
+/*  */
 "folder"="โฟลเดอร์";
 /* Error message shown when there's no camera available on the device */
 "noCamera"="กล้องถ่ายรูปยังไม่พร้อมใช้งาน";
@@ -140,10 +142,6 @@
 "Confirm account"="ยืนยันบัญชี";
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
 "passwordWrong"="รหัสผ่านไม่ถูกต้อง";
-/* Warning title shown when you try to confirm an account but you are logged in with another one */
-"alreadyLoggedInAlertTitle"="คุณได้เข้าสู่ระบบด้วยบัญชีอื่น";
-/* Warning message shown when you try to confirm an account but you are logged in with another one */
-"alreadyLoggedInAlertMessage"="ถ้าคุณเห็นด้วย บัญชีปัจจุบันของคุณจะออกจากระบบและข้อมูลออฟไลน์ทั้งหมดจะถูกลบเช่นเดียวกัน คุณต้องการที่จะดำเนินการต่อหรือไม่";
 /* Error shown when the user tries to change his mail to one that is already used */
 "emailAlreadyInUse"="ผิดพลาด ชื่อบัญชีนี้ได้ถูกใช้งานไปแล้ว";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
@@ -956,21 +954,21 @@
 /* %1 will be replaced by a numeric value and %2 will be 'days' or 'months', for example (Expires in [S]10[/S] days) */
 "bonusExpiresIn"="(โบนัสจะหมดอายุใน [S]%1[/S] %2)";
 /* Add Phone Number title  */
-"Add Phone Number"="Add Phone Number";
+"Add Phone Number"="เพิ่มหมายเลขโทรศัพท์";
 /* Achievement explanation for add phone number */
 "You have received %1$s storage space and %2$s transfer quota for verifying your phone number."="คุณได้รับพื้นที่เก็บข้อมูล %1$s และโควต้าการถ่ายโอน %2$s สำหรับการยืนยันหมายเลขโทรศัพท์ของคุณ";
 /* Free storage description to encourage users to add phone number to their accounts */
-"Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."="Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA.";
+"Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."="รับ %@ ฟรีเมื่อคุณเพิ่มหมายเลขโทรศัพท์ จะช่วยทำให้ผู้ติดต่อของคุณหาคุณเจอได้ง่ายขึ้นใน MEGA";
 /* Description to encourage users to add phone number to their accounts when there are not achievements */
 "Add your phone number to MEGA. This makes it easier for your contacts to find you on MEGA."="เพิ่มหมายเลขโทรศัพท์ของคุณใน MEGA สิ่งนี้ทำให้ผู้ติดต่อของคุณ สามารถหาคุณเจอได้ง่ายขึ้นใน MEGA";
 /* Description to unblock account by verifying phone number */
 "Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account."="บัญชีของคุณถูกระงับชั่วคราวเนื่องจากอาจมีการละเมิด กรุณายืนยันหมายเลขโทรศัพท์เพื่อปลดล็อกบัญชีของคุณ";
 /* Verify your account title */
-"Verify Your Account"="Verify Your Account";
+"Verify Your Account"="ตรวจสอบบัญชีของคุณ";
 /* Add your phone number title */
-"Add Your Phone Number"="Add Your Phone Number";
+"Add Your Phone Number"="เพิ่มหมายเลขโทรศัพท์ของคุณ";
 /* Choose Your Country title */
-"Choose Your Country"="Choose Your Country";
+"Choose Your Country"="เลือกประเทศของคุณ";
 /* Used to display the number of months a plan was purchased for e.g. 3 months, 6 months. */
 "months"="เดือน";
 /*  */
@@ -1180,7 +1178,7 @@
 /* Label title above the fingerprint credentials of a user's contact. A credential in this case is a stored piece of information representing the identity of the contact */
 "contactCredentials"="ข้อมูลรับรองการติดต่อ";
 /* "Verify user" dialog description */
-"thisIsBestDoneInRealLife"="สิ่งนี้ดีที่สุดในชีวิตจริงแล้ว นั่นคือการให้เห็นหน้ากัน ถ้าคุณมีช่องทางอื่น เช่น การตรวจสอบแล้วยืนยัน OTR หรือ PGP คุณอาจจะใช้งานได้";
+"thisIsBestDoneInRealLife"="สิ่งนี้ทำได้ดีที่สุดในชีวิตจริงได้โดยการประชุมแบบเห็นหน้า หากคุณมีช่องทางที่ได้รับการตรวจสอบแล้ว เช่น OTR ที่ตรวจสอบแล้วหรือ PGP คุณอาจใช้ช่องดังกล่าวได้";
 /* Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity */
 "yourCredentials"="ข้อมูลรับรองของคุณ";
 /* Button to reset the password */
@@ -1659,7 +1657,7 @@
 /* Detailed explanation of why the user should give permission to deliver notifications */
 "We would like to send you notifications so you receive new messages on your device instantly."="เราต้องการส่งการแจ้งเตือนเพื่อให้คุณได้รับข้อความใหม่บนอุปกรณ์ของคุณทันที";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
-"Allow Access"="อนุญาตให้เข้าถึง";
+"Allow Access"="เปิดใช้งานการเข้าถึง";
 /* A section header which contains the file management settings. These settings allow users to remove duplicate files etc. */
 "File Management"="การจัดการไฟล์";
 /* Title of the option to enable or disable file versioning on Settings section */
@@ -1951,33 +1949,33 @@
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="คุณแน่ใจหรือไม่ว่าต้องการเปลี่ยนไปใช้เซิร์ฟเวอร์ทดสอบ บัญชีของคุณอาจประสบปัญหาไม่สามารถกู้คืนได้";
 /* Title label that explains that the user is going to be asked for the contacts permission */
-"Enable Access to Contacts"="Enable Access to Contacts";
+"Enable Access to Contacts"="เปิดใช้งานการเข้าถึงผู้ติดต่อ";
 /* Detailed explanation of why the user should give permission to contacts */
 "MEGA needs access to your contacts to help you connect with other people on MEGA."="MEGA ต้องการเข้าถึงผู้ติดต่อของคุณ เพื่อช่วยคุณเชื่อมต่อกับผู้อื่นใน MEGA";
 /* Title encouraging the user to check who of its contacts are using MEGA */
-"See who's already on MEGA"="See who’s already on MEGA";
+"See who's already on MEGA"="ดูว่าใครอยู่ใน MEGA แล้ว";
 /* Title showing the user how many of his contacts are using MEGA */
-"[X] contacts found on MEGA"="[X] contacts found on MEGA";
+"[X] contacts found on MEGA"="พบผู้ติดต่อ [X] รายการใน MEGA";
 /* Title showing the user that one of his contacts are using MEGA */
-"1 contact found on MEGA"="1 contact found on MEGA";
+"1 contact found on MEGA"="พบผู้ติดต่อ 1 รายการใน MEGA";
 /* Text indicating the user to perform an action to grant some permission */
-"Enable Access"="อนุญาตให้เข้าถึง";
+"Enable Access"="เปิดใช้งานการเข้าถึง";
 /* Text indicating the user to open the device settings for MEGA */
-"Open Settings"="Open Settings";
+"Open Settings"="เปิดการตั้งค่า";
 /* Text encouraging the user to invite contacts to MEGA */
 "Invite contacts and start chatting securely with MEGA’s encrypted chat."="เชิญผู้ติดต่อและเริ่มแชทอย่างปลอดภัยด้วยการแชทที่เข้ารหัสของ MEGA";
 /* Text showing the user how many contacts would be invited */
-"Invite [X] contacts"="Invite [X] contacts";
+"Invite [X] contacts"="เชิญผู้ติดต่อ [X] คน";
 /* Text showing the user how to write more than one email in order to invite them to MEGA */
-"Tap space to enter multiple emails"="Tap space to enter multiple emails";
+"Tap space to enter multiple emails"="ใช้เว้นวรรค เพื่อกรอกอีเมลหลายรายการ";
 /* Text used as a section title or similar */
-"Enter Email"="Enter Email";
+"Enter Email"="กรอกอีเมล";
 /* Text used as view title showing the user the phone contacts using MEGA */
 "On MEGA"="บน MEGA";
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
-"CONTACTS ON MEGA"="CONTACTS ON MEGA";
+"CONTACTS ON MEGA"="ผู้ติดต่อใน MEGA";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"Hi, Have encrypted conversations on Mega with me and get 50GB free storage."="Hi, Have encrypted conversations on Mega with me and get 50GB free storage.";
+"Hi, Have encrypted conversations on Mega with me and get 50GB free storage."="สวัสดี! มาร่วมสนทนาอย่างปลอดภัยบน MEGA กับฉันและรับพื้นที่เก็บข้อมูลฟรีสูงสุด 50GB";
 /* Destination folder name of chat files */
 "My chat files"="ไฟล์แชทของฉัน";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
@@ -2044,22 +2042,24 @@
 "Include location tags"="รวมแท็กตำแหน่งที่ตั้ง";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
 "If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="หากเปิดใช้งาน คุณจะอัปโหลดข้อมูลเกี่ยวกับตำแหน่งที่ถ่ายภาพและวิดีโอของคุณ ดังนั้นโปรดระมัดระวังถ้าคุณจะแชร์ตำแหน่งที่ตั้ง";
+/* Error message shown when opening a link with an account that not corresponds to the link */
+"This link is not related to this account. Please log in with the correct account."="ลิงก์นี้ไม่เกี่ยวข้องกับบัญชีนี้ กรุณาเข้าสู่ระบบด้วยบัญชีที่ถูกต้อง";
 /* Text emncouraging the user to add contacts in MEGA */
-"Invite contact now"="Invite contact now";
+"Invite contact now"="เชิญผู้ติดต่อตอนนี้";
 /* Text showing the user one contact would be invited */
-"Invite 1 contact"="Invite 1 contact";
+"Invite 1 contact"="เชิญผู้ติดต่อ 1 คน";
 /* Error message if user click next button without enter a valid phone number */
-"Please enter a valid phone number"="Please enter a valid phone number";
+"Please enter a valid phone number"="กรุณากรอกหมายเลขโทรศัพท์ให้ถูกต้อง";
 /* Error message that will show to user when user reached the sms verification daily limit */
 "You have reached the daily limit"="คุณถึงขีดจำกัดรายวันแล้ว";
 /* Error message that will show to user when user entered invalid verification code */
 "Wrong code. Please try again or resend."="รหัสไม่ถูกต้อง กรุณาลองใหม่หรือส่งอีกครั้ง";
 /* Error message that will show to user when host detected that the mobile number has been registered already */
-"This number is already associated with a Mega account"="This number is already associated with a Mega account";
+"This number is already associated with a Mega account"="หมายเลขนี้เชื่อมโยงกับบัญชี MEGA แล้ว";
 /* Country label for a button, title, etc. */
 "Country"="ประเทศ";
 /* Error message that will show to user its account is already verified */
-"Your account is already verified"="Your account is already verified";
+"Your account is already verified"="บัญชีของคุณได้รับการตรวจสอบแล้ว";
 /* Place holder for enter mobile number field */
 "Your phone number"="หมายเลขโทรศัพท์ของคุณ";
 /* Label tell user to enter received txt to below input boxes */
@@ -2067,11 +2067,11 @@
 /* Text message to remind user to resend verification code */
 "You didn't receive a code?"="คุณไม่ได้รับรหัสใช่ไหม";
 /* Message shown when verify phone number successfully */
-"Your phone number has been verified successfully"="ยืนยันหมายเลขโทรศัพท์ของคุณเรียบร้อยแล้ว";
+"Your phone number has been verified successfully"="ตรวจสอบหมายเลขโทรศัพท์ของคุณเรียบร้อยแล้ว";
 /* Text describing account suspended state to the user */
-"Your account has been temporarily suspended for your safety."="Your account has been temporarily suspended for your safety.";
+"Your account has been temporarily suspended for your safety."="บัญชีถูกระงับชั่วคราวเพื่อความปลอดภัยของคุณ";
 /* Text indicating the user next step to unlock suspended account. Please leave [S], [/S] as it is which is used to bolden the text. */
-"[S]Please verify your email[/S] and follow its steps to unlock your account."="[S]Please verify your email[/S] and follow its steps to unlock your account.";
+"[S]Please verify your email[/S] and follow its steps to unlock your account."="[S]กรุณาตรวจสอบอีเมล[/S]และทำตามขั้นตอนเพื่อปลดล็อกบัญชีของคุณ";
 /* Text for button to open an helping view */
 "Why am I seeing this?"="ทำไมฉันเห็นสิ่งนี้";
 /* Text to notify user an email has been sent */
@@ -2082,3 +2082,7 @@
 "It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="เป็นไปได้ว่าคุณกำลังใช้รหัสผ่านเดียวกันสำหรับบัญชี MEGA ของคุณสำหรับบริการอื่น ๆ และอย่างน้อยหนึ่งในบริการอื่น ๆ เหล่านี้ได้รับความเสียหายจากข้อมูล";
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="รหัสผ่านของคุณรั่วไหลและกำลังถูกใช้โดยผู้ไม่หวังดีเพื่อเข้าสู่บัญชีของคุณ รวมไปถึง การไม่จำกัดบัญชี MEGA ของคุณ";
+/* Setting title for Doc scan view */
+"Save Settings"="Save Settings";
+/* file type title, used in changing the export format of scaned doc */
+"File Type"="File Type";

@@ -21,6 +21,8 @@
 /* "Size" of the file or folder you are sharing */
 "size"="الحجم";
 /*  */
+"Quality"="Quality";
+/*  */
 "folder"="المجلد";
 /* Error message shown when there's no camera available on the device */
 "noCamera"="لا يوجد كاميرا متاحة";
@@ -140,10 +142,6 @@
 "Confirm account"="أكّد الحساب";
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
 "passwordWrong"="كلمة مرور خاطئة";
-/* Warning title shown when you try to confirm an account but you are logged in with another one */
-"alreadyLoggedInAlertTitle"="مسجل دخولك بحساب آخر";
-/* Warning message shown when you try to confirm an account but you are logged in with another one */
-"alreadyLoggedInAlertMessage"="إذا وافقت، سيتم تسجيل خروج الحساب الحالي بها وسوف يتم مسح جميع البيانات دون اتصال. هل تريد الاستمرار؟";
 /* Error shown when the user tries to change his mail to one that is already used */
 "emailAlreadyInUse"="خطأ. عنوان هذا البريد الإلكتروني هو حاليا مأخوذ.";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
@@ -481,7 +479,7 @@
 /* Button title that skips the current action */
 "skipButton"="تخطى";
 /* Text shown to explain what means 'Enable Camera Uploads'. The 'Cloud Drive' is the MEGA section, so please keep consistency */
-"Automatically backup your photos and videos to the Cloud Drive."="Automatically backup your photos and videos to your Cloud Drive.";
+"Automatically backup your photos and videos to the Cloud Drive."="عمل نسخ احتياطية من الصور ومقاطع الفيديو تلقائياً إلى السواقة السحابية.";
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="تفعيل تحميلات الكاميرا";
 /* Success message shown when Camera Uploads has been enabled */
@@ -497,9 +495,9 @@
 /* Message shown when camera upload paused because of no WiFi. Plural. */
 "Upload paused because of no WiFi, %lu files pending"="Upload paused due to no Wi-Fi connection, %lu files pending";
 /* Message shown the pending video file when photos uploaded and video upload is not enabled. Singular. */
-"Photos uploaded, video uploads are off, 1 video not uploaded"="Photos uploaded, video uploads are off; 1 video not uploaded";
+"Photos uploaded, video uploads are off, 1 video not uploaded"="تم تحميل الصور، تحميلات الفيديو متوقفة؛ 1 فيديو لم يتم تحميله";
 /* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
-"Photos uploaded, video uploads are off, %lu videos not uploaded"="Photos uploaded, video uploads are off; %lu videos not uploaded";
+"Photos uploaded, video uploads are off, %lu videos not uploaded"="تم تحميل الصور، تحميلات الفيديو متوقفة، ؛ %lu فيديو لم يتم تحميلها";
 /* Singular, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 1 file. */
 "indexOfTotalFile"="%1$d من %2$d ملف";
 /* Plural, please do not change the placeholders as they will be replaced by numbers. e.g. 1 of 3 files. */
@@ -637,7 +635,7 @@
 /* Header to explain that 'Upload videos', 'Use cellular connection' and 'Only when charging' are options of the Camera Uploads */
 "options"="الخيارات";
 /* A hint to show one option is recommended by MEGA */
-"(Recommended)"="(Recommended)";
+"(Recommended)"="(موصى به)";
 /* Header to introduce how to deal with HEIC format photos in Camera Uplaod */
 "SAVE HEIC PHOTOS AS"="Save HEIC photos as";
 /* Footer for HEIC format section */
@@ -956,21 +954,21 @@
 /* %1 will be replaced by a numeric value and %2 will be 'days' or 'months', for example (Expires in [S]10[/S] days) */
 "bonusExpiresIn"="(الإضافة تنتهي في [S]%1[/S]  %2)";
 /* Add Phone Number title  */
-"Add Phone Number"="Add Phone Number";
+"Add Phone Number"="Add phone number";
 /* Achievement explanation for add phone number */
 "You have received %1$s storage space and %2$s transfer quota for verifying your phone number."="You have received %1$s storage space and %2$s transfer quota for verifying your phone number.";
 /* Free storage description to encourage users to add phone number to their accounts */
-"Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."="Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA.";
+"Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."="Get %@ free when you add your phone number. This makes it easier for your contacts to find you on MEGA.";
 /* Description to encourage users to add phone number to their accounts when there are not achievements */
 "Add your phone number to MEGA. This makes it easier for your contacts to find you on MEGA."="Add your phone number to MEGA. This makes it easier for your contacts to find you on MEGA.";
 /* Description to unblock account by verifying phone number */
 "Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account."="Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.";
 /* Verify your account title */
-"Verify Your Account"="Verify Your Account";
+"Verify Your Account"="تأكيد حسابك";
 /* Add your phone number title */
-"Add Your Phone Number"="Add Your Phone Number";
+"Add Your Phone Number"="اضف رقم هاتفك";
 /* Choose Your Country title */
-"Choose Your Country"="Choose Your Country";
+"Choose Your Country"="اختر دولتك";
 /* Used to display the number of months a plan was purchased for e.g. 3 months, 6 months. */
 "months"="شهور";
 /*  */
@@ -1659,7 +1657,7 @@
 /* Detailed explanation of why the user should give permission to deliver notifications */
 "We would like to send you notifications so you receive new messages on your device instantly."="نحن نرغب بارسال اخطارات اليك حتى تتمكن من استقبال الرسائل على جهازك بشكل فوري.";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
-"Allow Access"="السماح بالوصول";
+"Allow Access"="تمكين الوصول";
 /* A section header which contains the file management settings. These settings allow users to remove duplicate files etc. */
 "File Management"="إدارة الملف";
 /* Title of the option to enable or disable file versioning on Settings section */
@@ -1875,9 +1873,9 @@
 /* Text shown in the chat toolbar while the user is recording a voice clip. The < character should be > in RTL languages. */
 "< Slide to cancel"="< إزلق للإلغاء";
 /* Tooltip shown when the user presses but does not hold the microphone icon to send a voice clip */
-"Tap and hold %@ to record, release to send"="Tap and hold %@ to record, release to send";
+"Tap and hold %@ to record, release to send"="انقر مطولاً على %@ للتسجيل، ثم حرر للإرسال";
 /* Message shown when there is an ongoing call and the user tries to record a voice message */
-"It is not possible to record voice messages while there is a call in progress"="It is not possible to record voice messages while there is a call in progress.";
+"It is not possible to record voice messages while there is a call in progress"="لا يمكن تسجيل الرسائل الصوتية أثناء وجود مكالمة جارية.";
 /* Label indicating that a voice clip is being recorded. String as short as possible. */
 "Recording..."="Recording…";
 /* Text to inform the user there is an active call and is not participating */
@@ -1935,33 +1933,33 @@
 /* In some cases, a user may try to get the link for a chat room, but if such is not set by an operator - it would say "not link available" and not auto create it. */
 "No chat link available."="لا يوجد رابط محادثة متاح";
 /* Title of a dialog in which we request access to a specific permission, like the Location Services */
-"Please allow access"="Please allow access";
+"Please allow access"="يرجى السماح بالوصول";
 /* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
-"Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="Please go to the Privacy section in your device’s Settings. Enable Location Services and set MEGA to While Using the App or Always.";
+"Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="يرجى الانتقال إلى قسم الخصوصية في إعدادات جهازك. تمكين خدمات الموقع وضبط ميغا MEGA إلى أثناء استخدام التطبيق أو دائماً.";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
 "MEGA accesses your location when you elect to share it with your contacts."="تقوم ميغا MEGA بأخذ موقعك عندما تختار مشاركته مع جهات الاتصال الخاصة بك.";
 /* Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
-"Mobile Data is turned off"="Mobile Data is turned off";
+"Mobile Data is turned off"="تم إيقاف تشغيل بيانات الجوال";
 /* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */
-"Turn Mobile Data on"="Turn Mobile Data on";
+"Turn Mobile Data on"="تشغيل بيانات الجوال";
 /* Extra information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
-"You can turn on mobile data for this app in Settings."="You can turn on mobile data for this App in the device’s Settings.";
+"You can turn on mobile data for this app in Settings."="يمكنك تشغيل بيانات الجوال لهذا التطبيق من خلال إعدادات الجهاز.";
 /* title of the alert dialog when the user is changing the API URL to staging */
 "Change to a test server?"="التغيير الى مخدم الاختبارات؟";
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="هل أنت متأكد من رغبتك بالانتقال الى المخدم التجريبي؟ من الممكن ان يتعرض حسابك لمشاكل غير قابلة للإصلاح.";
 /* Title label that explains that the user is going to be asked for the contacts permission */
-"Enable Access to Contacts"="Enable Access to Contacts";
+"Enable Access to Contacts"="Enable access to contacts";
 /* Detailed explanation of why the user should give permission to contacts */
 "MEGA needs access to your contacts to help you connect with other people on MEGA."="MEGA needs access to your contacts to help you connect with other people on MEGA.";
 /* Title encouraging the user to check who of its contacts are using MEGA */
-"See who's already on MEGA"="See who’s already on MEGA";
+"See who's already on MEGA"="See who is already on MEGA";
 /* Title showing the user how many of his contacts are using MEGA */
 "[X] contacts found on MEGA"="[X] contacts found on MEGA";
 /* Title showing the user that one of his contacts are using MEGA */
 "1 contact found on MEGA"="1 contact found on MEGA";
 /* Text indicating the user to perform an action to grant some permission */
-"Enable Access"="السماح بالوصول";
+"Enable Access"="تمكين الوصول";
 /* Text indicating the user to open the device settings for MEGA */
 "Open Settings"="Open Settings";
 /* Text encouraging the user to invite contacts to MEGA */
@@ -1977,7 +1975,7 @@
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
 "CONTACTS ON MEGA"="CONTACTS ON MEGA";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"Hi, Have encrypted conversations on Mega with me and get 50GB free storage."="Hi, Have encrypted conversations on Mega with me and get 50GB free storage.";
+"Hi, Have encrypted conversations on Mega with me and get 50GB free storage."="Hi! Have secure conversations on MEGA with me and get up to 50GB free storage.";
 /* Destination folder name of chat files */
 "My chat files"="ملفات المحادثة الخاصة بي";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
@@ -2044,18 +2042,20 @@
 "Include location tags"="Include location tags";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
 "If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them.";
+/* Error message shown when opening a link with an account that not corresponds to the link */
+"This link is not related to this account. Please log in with the correct account."="هذا الرابط لا يعود لهذا الحساب. يرجى تسجيل الدخول باستخدام الحساب الصحيح.";
 /* Text emncouraging the user to add contacts in MEGA */
-"Invite contact now"="Invite contact now";
+"Invite contact now"="Invite contacts now";
 /* Text showing the user one contact would be invited */
 "Invite 1 contact"="Invite 1 contact";
 /* Error message if user click next button without enter a valid phone number */
-"Please enter a valid phone number"="Please enter a valid phone number";
+"Please enter a valid phone number"="يرجى تقديم رقم هاتف صالح.";
 /* Error message that will show to user when user reached the sms verification daily limit */
 "You have reached the daily limit"="You have reached the daily limit";
 /* Error message that will show to user when user entered invalid verification code */
 "Wrong code. Please try again or resend."="Wrong code. Please try again or resend.";
 /* Error message that will show to user when host detected that the mobile number has been registered already */
-"This number is already associated with a Mega account"="This number is already associated with a Mega account";
+"This number is already associated with a Mega account"="This number is already associated with a MEGA account.";
 /* Country label for a button, title, etc. */
 "Country"="الدولة";
 /* Error message that will show to user its account is already verified */
@@ -2082,3 +2082,7 @@
 "It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.";
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.";
+/* Setting title for Doc scan view */
+"Save Settings"="Save Settings";
+/* file type title, used in changing the export format of scaned doc */
+"File Type"="File Type";

@@ -21,6 +21,8 @@
 /* "Size" of the file or folder you are sharing */
 "size"="Розмір";
 /*  */
+"Quality"="Quality";
+/*  */
 "folder"="Тека";
 /* Error message shown when there's no camera available on the device */
 "noCamera"="Немає доступної камери";
@@ -140,10 +142,6 @@
 "Confirm account"="Підтвердити акаунт";
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
 "passwordWrong"="Невірний пароль";
-/* Warning title shown when you try to confirm an account but you are logged in with another one */
-"alreadyLoggedInAlertTitle"="Ви увійшли в інший обліковий запис";
-/* Warning message shown when you try to confirm an account but you are logged in with another one */
-"alreadyLoggedInAlertMessage"="Якщо ви згодні, відбудеться вихід з вашого поточного акаунту і всі локальні дані буде стерто. Бажаєте продовжити?";
 /* Error shown when the user tries to change his mail to one that is already used */
 "emailAlreadyInUse"="Помилка. Ця е-пошта вже використовується.";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
@@ -956,21 +954,21 @@
 /* %1 will be replaced by a numeric value and %2 will be 'days' or 'months', for example (Expires in [S]10[/S] days) */
 "bonusExpiresIn"="(Бонус спливає через [S]%1[/S] %2)";
 /* Add Phone Number title  */
-"Add Phone Number"="Add Phone Number";
+"Add Phone Number"="Add phone number";
 /* Achievement explanation for add phone number */
 "You have received %1$s storage space and %2$s transfer quota for verifying your phone number."="You have received %1$s storage space and %2$s transfer quota for verifying your phone number.";
 /* Free storage description to encourage users to add phone number to their accounts */
-"Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."="Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA.";
+"Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."="Get %@ free when you add your phone number. This makes it easier for your contacts to find you on MEGA.";
 /* Description to encourage users to add phone number to their accounts when there are not achievements */
 "Add your phone number to MEGA. This makes it easier for your contacts to find you on MEGA."="Add your phone number to MEGA. This makes it easier for your contacts to find you on MEGA.";
 /* Description to unblock account by verifying phone number */
 "Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account."="Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.";
 /* Verify your account title */
-"Verify Your Account"="Verify Your Account";
+"Verify Your Account"="Verify your account";
 /* Add your phone number title */
-"Add Your Phone Number"="Add Your Phone Number";
+"Add Your Phone Number"="Add your phone number";
 /* Choose Your Country title */
-"Choose Your Country"="Choose Your Country";
+"Choose Your Country"="Choose your country";
 /* Used to display the number of months a plan was purchased for e.g. 3 months, 6 months. */
 "months"="місяці(ів)";
 /*  */
@@ -1659,7 +1657,7 @@
 /* Detailed explanation of why the user should give permission to deliver notifications */
 "We would like to send you notifications so you receive new messages on your device instantly."="We would like to send you notifications so you receive new messages on your device instantly.";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
-"Allow Access"="Allow Access";
+"Allow Access"="Enable access";
 /* A section header which contains the file management settings. These settings allow users to remove duplicate files etc. */
 "File Management"="Управління файлами";
 /* Title of the option to enable or disable file versioning on Settings section */
@@ -1951,17 +1949,17 @@
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Are you sure you want to change to a test server? Your account may suffer irrecoverable problems";
 /* Title label that explains that the user is going to be asked for the contacts permission */
-"Enable Access to Contacts"="Enable Access to Contacts";
+"Enable Access to Contacts"="Enable access to contacts";
 /* Detailed explanation of why the user should give permission to contacts */
 "MEGA needs access to your contacts to help you connect with other people on MEGA."="MEGA needs access to your contacts to help you connect with other people on MEGA.";
 /* Title encouraging the user to check who of its contacts are using MEGA */
-"See who's already on MEGA"="See who’s already on MEGA";
+"See who's already on MEGA"="See who is already on MEGA";
 /* Title showing the user how many of his contacts are using MEGA */
 "[X] contacts found on MEGA"="[X] contacts found on MEGA";
 /* Title showing the user that one of his contacts are using MEGA */
 "1 contact found on MEGA"="1 contact found on MEGA";
 /* Text indicating the user to perform an action to grant some permission */
-"Enable Access"="Allow Access";
+"Enable Access"="Enable access";
 /* Text indicating the user to open the device settings for MEGA */
 "Open Settings"="Open Settings";
 /* Text encouraging the user to invite contacts to MEGA */
@@ -1977,7 +1975,7 @@
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
 "CONTACTS ON MEGA"="CONTACTS ON MEGA";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"Hi, Have encrypted conversations on Mega with me and get 50GB free storage."="Hi, Have encrypted conversations on Mega with me and get 50GB free storage.";
+"Hi, Have encrypted conversations on Mega with me and get 50GB free storage."="Hi! Have secure conversations on MEGA with me and get up to 50GB free storage.";
 /* Destination folder name of chat files */
 "My chat files"="My chat files";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
@@ -2044,18 +2042,20 @@
 "Include location tags"="Include location tags";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
 "If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them.";
+/* Error message shown when opening a link with an account that not corresponds to the link */
+"This link is not related to this account. Please log in with the correct account."="This link is not related to this account. Please log in with the correct account.";
 /* Text emncouraging the user to add contacts in MEGA */
-"Invite contact now"="Invite contact now";
+"Invite contact now"="Invite contacts now";
 /* Text showing the user one contact would be invited */
 "Invite 1 contact"="Invite 1 contact";
 /* Error message if user click next button without enter a valid phone number */
-"Please enter a valid phone number"="Please enter a valid phone number";
+"Please enter a valid phone number"="Будь ласка, вкажіть правильний номер телефону.";
 /* Error message that will show to user when user reached the sms verification daily limit */
 "You have reached the daily limit"="You have reached the daily limit";
 /* Error message that will show to user when user entered invalid verification code */
 "Wrong code. Please try again or resend."="Wrong code. Please try again or resend.";
 /* Error message that will show to user when host detected that the mobile number has been registered already */
-"This number is already associated with a Mega account"="This number is already associated with a Mega account";
+"This number is already associated with a Mega account"="This number is already associated with a MEGA account.";
 /* Country label for a button, title, etc. */
 "Country"="Країна";
 /* Error message that will show to user its account is already verified */
@@ -2082,3 +2082,7 @@
 "It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.";
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.";
+/* Setting title for Doc scan view */
+"Save Settings"="Save Settings";
+/* file type title, used in changing the export format of scaned doc */
+"File Type"="File Type";
