@@ -611,7 +611,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             if (userStatus == MEGAChatStatusInvalid) {
                 self.navigationStatusView.hidden = YES;
             } else {
-                self.navigationStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:userStatus];
+                self.lastChatRoomStateColor = self.navigationStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:userStatus];
                 self.navigationStatusView.hidden = NO;
             }
         }
@@ -1004,8 +1004,10 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     
     self.openMessageHeaderView.chattingWithLabel.text = AMLocalizedString(@"chattingWith", @"Title show above the name of the persons with whom you're chatting");
     self.openMessageHeaderView.conversationWithLabel.text = [self participantsNames];
-    self.openMessageHeaderView.onlineStatusLabel.text = self.lastChatRoomStateString;
-    self.openMessageHeaderView.onlineStatusView.backgroundColor = self.lastChatRoomStateColor;
+    if (self.lastChatRoomStateString != AMLocalizedString(@"Tap here for info", @"Subtitle shown in a chat to inform where to tap to enter in the chat details view")) {
+        self.openMessageHeaderView.onlineStatusLabel.text = self.lastChatRoomStateString;
+        self.openMessageHeaderView.onlineStatusView.backgroundColor = self.lastChatRoomStateColor;
+    }
     self.openMessageHeaderView.conversationWithAvatar.image = self.chatRoom.isGroup ? nil : self.peerAvatar;
     self.openMessageHeaderView.introductionLabel.text = AMLocalizedString(@"chatIntroductionMessage", @"Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server.");
     
@@ -1037,6 +1039,8 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 - (void)hideTapForInfoLabel {
     [self.tapForInfoTimer invalidate];
     [self customNavigationBarLabel];
+    self.openMessageHeaderView.onlineStatusView.backgroundColor = self.lastChatRoomStateColor;
+    self.openMessageHeaderView.onlineStatusLabel.text = self.lastChatRoomStateString;
 }
 
 - (void)setupMenuController:(UIMenuController *)menuController {
