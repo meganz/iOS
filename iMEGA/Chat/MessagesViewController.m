@@ -594,8 +594,9 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 - (void)customNavigationBarLabel {
     if (self.selectingMessages) {
         self.inputToolbar.hidden = YES;
-
-        UILabel *label = [Helper customNavigationBarLabelWithTitle:[NSString stringWithFormat:AMLocalizedString(@"xSelected", nil), self.selectedMessages.count] subtitle:@""];
+        
+        NSString *title = (self.selectedMessages.count == 1) ? AMLocalizedString(@"1 selected", @"Title shown when multiselection is enabled and only one item has been selected.") : [NSString stringWithFormat:AMLocalizedString(@"xSelected", @"Title shown when multiselection is enabled and the user has more than one item selected."), self.selectedMessages.count];
+        UILabel *label = [Helper customNavigationBarLabelWithTitle:title subtitle:@""];
         
         [self.navigationItem setTitleView:label];
         self.navigationItem.hidesBackButton = YES;
