@@ -28,6 +28,7 @@
 #import "UIApplication+MNZCategory.h"
 #import "UIColor+MNZCategory.h"
 #import "UIDevice+MNZCategory.h"
+#import "MEGA-Swift.h"
 
 static const CGFloat GapBetweenPages = 10.0;
 
@@ -807,8 +808,7 @@ static const CGFloat GapBetweenPages = 10.0;
 - (void)playVideo:(UIButton *)sender {
     MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
     if (node.mnz_isPlayable) {
-        MEGAHandleList *chatRoomIDsWithCallInProgress = [MEGASdkManager.sharedMEGAChatSdk chatCallsWithState:MEGAChatCallStatusInProgress];
-        if (chatRoomIDsWithCallInProgress.size > 0) {
+        if (MEGASdkManager.sharedMEGAChatSdk.mnz_existsActiveCall) {
             [Helper cannotPlayContentDuringACallAlert];
         } else {
             UIViewController *playerVC = [node mnz_viewControllerForNodeInFolderLink:(self.api == [MEGASdkManager sharedMEGASdkFolder])];
