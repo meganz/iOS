@@ -105,8 +105,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 @property (nonatomic) JSQMessagesAvatarImageFactory *avatarImageFactory;
 @property (nonatomic) NSMutableDictionary *avatarImages;
 
-@property (nonatomic) NSString *lastChatRoomStateString;
-@property (nonatomic) UIColor *lastChatRoomStateColor;
 @property (nonatomic) UIImage *peerAvatar;
 
 @property (nonatomic) NSInteger unreadMessages;
@@ -183,8 +181,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     self.avatarImageFactory = [[JSQMessagesAvatarImageFactory alloc] initWithDiameter:kAvatarImageDiameter];
     self.avatarImages = NSMutableDictionary.new;
     
-    _lastChatRoomStateString = @"";
-    _lastChatRoomStateColor = UIColor.whiteColor;
     if (self.chatRoom.isGroup) {
         self.peerAvatar = [UIImage imageForName:self.chatRoom.title.uppercaseString size:CGSizeMake(80.0f, 80.0f) backgroundColor:UIColor.mnz_gray999999 textColor:UIColor.whiteColor font:[UIFont mnz_SFUIRegularWithSize:40.0f]];
     } else {
@@ -513,7 +509,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     self.navigationStatusView.layer.cornerRadius = 5;
     self.navigationStatusView.layer.borderColor = UIColor.whiteColor.CGColor;
     self.navigationStatusView.layer.borderWidth = 1;
-    self.navigationStatusView.backgroundColor = UIColor.mnz_green00BFA5;
     
     self.navigationSubtitleLabel = [[UILabel alloc] init];
     self.navigationSubtitleLabel.font = [UIFont mnz_SFUIRegularWithSize:12];
@@ -611,7 +606,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             if (userStatus == MEGAChatStatusInvalid) {
                 self.navigationStatusView.hidden = YES;
             } else {
-                self.lastChatRoomStateColor = self.navigationStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:userStatus];
+                self.navigationStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:userStatus];
                 self.navigationStatusView.hidden = NO;
             }
         }
@@ -651,6 +646,12 @@ static NSMutableSet<NSString *> *tapForInfoSet;
                     self.navigationSubtitleLabel.hidden = NO;
                 }
             }
+            
+            //Configure open message header that uses navigation bar info
+            if (self.openMessageHeaderView) {
+                self.openMessageHeaderView.onlineStatusView.backgroundColor = self.navigationStatusView.backgroundColor;
+                self.openMessageHeaderView.onlineStatusLabel.text = chatRoomState;
+            }
         }
         
         UITapGestureRecognizer *titleTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(chatRoomTitleDidTap)];
@@ -676,8 +677,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             
             [self.navigationItem setTitleView:self.navigationTitleLabel];
         }
-        
-        self.lastChatRoomStateString = chatRoomState;
     }
     
     [self updateCollectionViewInsets];
@@ -1004,10 +1003,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     
     self.openMessageHeaderView.chattingWithLabel.text = AMLocalizedString(@"chattingWith", @"Title show above the name of the persons with whom you're chatting");
     self.openMessageHeaderView.conversationWithLabel.text = [self participantsNames];
-    if (self.lastChatRoomStateString != AMLocalizedString(@"Tap here for info", @"Subtitle shown in a chat to inform where to tap to enter in the chat details view")) {
-        self.openMessageHeaderView.onlineStatusLabel.text = self.lastChatRoomStateString;
-        self.openMessageHeaderView.onlineStatusView.backgroundColor = self.lastChatRoomStateColor;
-    }
     self.openMessageHeaderView.conversationWithAvatar.image = self.chatRoom.isGroup ? nil : self.peerAvatar;
     self.openMessageHeaderView.introductionLabel.text = AMLocalizedString(@"chatIntroductionMessage", @"Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server.");
     
@@ -1039,8 +1034,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 - (void)hideTapForInfoLabel {
     [self.tapForInfoTimer invalidate];
     [self customNavigationBarLabel];
-    self.openMessageHeaderView.onlineStatusView.backgroundColor = self.lastChatRoomStateColor;
-    self.openMessageHeaderView.onlineStatusLabel.text = self.lastChatRoomStateString;
 }
 
 - (void)setupMenuController:(UIMenuController *)menuController {
@@ -1203,11 +1196,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     [self updateNavigationBarButtonsState];
 
     [self customNavigationBarLabel];
-    
-    if (self.openMessageHeaderView) {
-        self.openMessageHeaderView.onlineStatusLabel.text = self.lastChatRoomStateString;
-        self.openMessageHeaderView.onlineStatusView.backgroundColor = self.lastChatRoomStateColor;
-    }
 }
 
 - (void)showOrHideJumpToBottom {
@@ -3291,11 +3279,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     
     if ([self.chatRoom peerHandleAtIndex:0] == userHandle && onlineStatus != MEGAChatStatusInvalid) {
         [self customNavigationBarLabel];
-        
-        if (self.openMessageHeaderView) {
-            self.openMessageHeaderView.onlineStatusLabel.text = self.lastChatRoomStateString;
-            self.openMessageHeaderView.onlineStatusView.backgroundColor = self.lastChatRoomStateColor;
-        }
     }
 }
 
