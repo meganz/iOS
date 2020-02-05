@@ -130,7 +130,7 @@
 }
 
 - (void)configAddPhoneNumberView {
-    if (MEGASdkManager.sharedMEGASdk.hasVerifiedPhoneNumber || MEGASdkManager.sharedMEGASdk.smsAllowedState != SMSStateOptInAndUnblock) {
+    if (MEGASdkManager.sharedMEGASdk.smsVerifiedPhoneNumber != nil || MEGASdkManager.sharedMEGASdk.smsAllowedState != SMSStateOptInAndUnblock) {
         self.addPhoneNumberView.hidden = YES;
     } else {
         if (self.addPhoneNumberView.isHidden) {

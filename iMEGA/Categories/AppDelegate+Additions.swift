@@ -1,3 +1,7 @@
+
+import Foundation
+import SafariServices
+
 extension AppDelegate {
     @objc func showAddPhoneNumberIfNeeded() {
         let visibleViewController = UIApplication.mnz_visibleViewController()
@@ -9,11 +13,12 @@ extension AppDelegate {
             visibleViewController is CreateAccountViewController ||
             visibleViewController is UpgradeTableViewController ||
             visibleViewController is OnboardingViewController ||
-            visibleViewController is UIAlertController { return }
+            visibleViewController is UIAlertController ||
+            visibleViewController is VerifyEmailViewController { return }
+
+        if MEGASdkManager.sharedMEGASdk().smsAllowedState() != .optInAndUnblock { return }
         
-        if MEGASdkManager.sharedMEGASdk()?.smsAllowedState() != .optInAndUnblock { return }
-        
-        guard !MEGASdkManager.sharedMEGASdk().hasVerifiedPhoneNumber else { return }
+        if MEGASdkManager.sharedMEGASdk().smsVerifiedPhoneNumber() != nil { return }
         
         if let lastDateAddPhoneNumberShowed = UserDefaults.standard.value(forKey: "lastDateAddPhoneNumberShowed") {
             guard let days = Calendar.current.dateComponents([.day], from: lastDateAddPhoneNumberShowed as! Date, to: Date()).day else { return }
@@ -65,6 +70,33 @@ extension AppDelegate {
         }
 
         MEGASdkManager.sharedMEGASdk().getUserAttributeType(.alias, delegate: requestDelegate)
+    }
+    
+    @objc func handleAccountBlockedEvent(_ event: MEGAEvent) {
+        guard let suspensionType = AccountSuspensionType(rawValue: event.number) else { return }
+        
+        if suspensionType == .smsVerification && MEGASdkManager.sharedMEGASdk().smsAllowedState() != .notAllowed {
+            if UIApplication.mnz_presentingViewController() is SMSNavigationViewController {
+                return
+            }
+            
+            let smsNavigationController = SMSNavigationViewController(rootViewController: SMSVerificationViewController.instantiate(with: .UnblockAccount))
+            smsNavigationController.modalPresentationStyle = .fullScreen
+            UIApplication.mnz_presentingViewController()?.present(smsNavigationController, animated: true, completion: nil)
+        } else if suspensionType == .emailVerification {
+            if UIApplication.mnz_visibleViewController() is VerifyEmailViewController || UIApplication.mnz_visibleViewController() is SFSafariViewController {
+                return
+            }
+            
+            let verifyEmailVC = UIStoryboard(name: "VerifyEmail", bundle: nil).instantiateViewController(withIdentifier: "VerifyEmailViewControllerID")
+            UIApplication.mnz_presentingViewController()?.present(verifyEmailVC, animated: true, completion: nil)
+        } else {
+            let alert = UIAlertController(title: AMLocalizedString("error"), message: AMLocalizedString("accountBlocked", "Error message when trying to login and the account is blocked"), preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: AMLocalizedString("ok"), style: .cancel) { _ in
+                MEGASdkManager.sharedMEGASdk().logout()
+            })
+            UIApplication.mnz_presentingViewController()?.present(alert, animated: true, completion: nil)
+        }
     }
 }
 

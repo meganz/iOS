@@ -93,19 +93,7 @@
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
-    if (@available(iOS 13.0, *)) {
-        [self configPreviewingRegistration];
-    }
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
-    
-    self.tabBarController.tabBar.hidden = NO;
-    
-    [self customNavigationBarLabel];
     
     MEGAUserList *users = [[MEGASdkManager sharedMEGASdk] contacts];
     self.usersWithoutChatArray = [[NSMutableArray alloc] init];
@@ -117,42 +105,41 @@
         }
     }
     
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
-        
-        switch (self.chatRoomsType) {
-            case ChatRoomsTypeDefault:
-                self.chatListItemList = [[MEGASdkManager sharedMEGAChatSdk] chatListItems];
-                self.archivedChatListItemList = [[MEGASdkManager sharedMEGAChatSdk] archivedChatListItems];
-                self.addBarButtonItem.enabled = [MEGAReachabilityManager isReachable];
-                break;
-                
-            case ChatRoomsTypeArchived:
-                self.contactsOnMegaEmptyStateView.hidden = YES;
-                self.chatListItemList = [[MEGASdkManager sharedMEGAChatSdk] archivedChatListItems];
-                self.navigationItem.rightBarButtonItem = nil;
-                break;
-        }
-
-        if (self.chatListItemList.size) {
-            [self reorderList];
+    switch (self.chatRoomsType) {
+        case ChatRoomsTypeDefault:
+            self.chatListItemList = [[MEGASdkManager sharedMEGAChatSdk] chatListItems];
+            self.archivedChatListItemList = [[MEGASdkManager sharedMEGAChatSdk] archivedChatListItems];
+            self.addBarButtonItem.enabled = [MEGAReachabilityManager isReachable];
+            break;
             
-            [self updateChatIdIndexPathDictionary];
-            
-            if (!self.tableView.tableHeaderView) {
-                self.tableView.tableHeaderView = self.searchController.searchBar;
-            }
-        } else {
-            self.tableView.tableHeaderView = nil;
-        }
+        case ChatRoomsTypeArchived:
+            self.chatListItemList = [[MEGASdkManager sharedMEGAChatSdk] archivedChatListItems];
+            self.navigationItem.rightBarButtonItem = nil;
+            break;
+    }
+    
+    if (self.chatListItemList.size) {
+        [self reorderList];
         
+        [self updateChatIdIndexPathDictionary];
+        
+        if (!self.tableView.tableHeaderView) {
+            self.tableView.tableHeaderView = self.searchController.searchBar;
+        }
     } else {
-        self.addBarButtonItem.enabled = NO;
         self.tableView.tableHeaderView = nil;
     }
     
     [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
     [[MEGASdkManager sharedMEGAChatSdk] addChatCallDelegate:self];
-    [[MEGAReachabilityManager sharedManager] retryPendingConnections];
+    
+    if (@available(iOS 13.0, *)) {
+        [self configPreviewingRegistration];
+    }
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     
     if (self.chatRoomOnGoingCall) {
         self.timer = [NSTimer timerWithTimeInterval:1.0f target:self selector:@selector(updateDuration) userInfo:nil repeats:YES];
@@ -173,7 +160,13 @@
         }
     }
     
-    [self.tableView reloadData];
+    self.tabBarController.tabBar.hidden = NO;
+    [self customNavigationBarLabel];
+
+    [[MEGAReachabilityManager sharedManager] retryPendingConnections];
+    if ([[MEGASdkManager sharedMEGAChatSdk] initState] == MEGAChatInitOnlineSession) {
+        [self reloadData];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -200,22 +193,6 @@
     }
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
-    
-    [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-    
-    [self.chatListItemArray removeAllObjects];
-    [self.chatIdIndexPathDictionary removeAllObjects];
-    [self.tableView reloadData];
-}
-
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
@@ -240,6 +217,7 @@
 }
 
 - (void)dealloc {
+    [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
     [[MEGASdkManager sharedMEGAChatSdk] removeChatCallDelegate:self];
 }
 
@@ -252,22 +230,14 @@
             text = AMLocalizedString(@"noResults", @"Title shown when you make a search and there is 'No Results'");
         }
     } else {
-        if (![[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
-            if ([MEGAReachabilityManager isReachable]) {
-                text = AMLocalizedString(@"chatIsDisabled", @"Title show when you enter on the chat tab and the chat is disabled");
-            } else {
-                text = AMLocalizedString(@"noInternetConnection",  @"Text shown on the app when you don't have connection to the internet or when you have lost it");
-            }
-        } else {
-            switch (self.chatRoomsType) {
-                case ChatRoomsTypeDefault:
-                    text = AMLocalizedString(@"noConversations", @"Empty Conversations section");
-                    break;
-                    
-                case ChatRoomsTypeArchived:
-                    text = AMLocalizedString(@"noArchivedChats", @"Title of empty state view for archived chats.");
-                    break;
-            }
+        switch (self.chatRoomsType) {
+            case ChatRoomsTypeDefault:
+                text = AMLocalizedString(@"noConversations", @"Empty Conversations section");
+                break;
+                
+            case ChatRoomsTypeArchived:
+                text = AMLocalizedString(@"noArchivedChats", @"Title of empty state view for archived chats.");
+                break;
         }
     }
     
@@ -280,15 +250,13 @@
     if (self.searchController.isActive) {
         text = @"";
     } else {
-        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
-            switch (self.chatRoomsType) {
-                case ChatRoomsTypeDefault:
-                    text = AMLocalizedString(@"Start chatting securely with your contacts using end-to-end encryption", @"Empty Conversations description");
-                    break;
-                    
-                case ChatRoomsTypeArchived:
-                    break;
-            }
+        switch (self.chatRoomsType) {
+            case ChatRoomsTypeDefault:
+                text = AMLocalizedString(@"Start chatting securely with your contacts using end-to-end encryption", @"Empty Conversations description");
+                break;
+                
+            case ChatRoomsTypeArchived:
+                break;
         }
     }
     
@@ -326,9 +294,7 @@
 - (NSAttributedString *)buttonTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
     NSString *text = @"";
     if ([MEGAReachabilityManager isReachable]) {
-        if (![[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
-            text = AMLocalizedString(@"enable", @"Text button shown when the chat is disabled and if tapped the chat will be enabled");
-        } else if (!self.searchController.isActive) {
+        if (!self.searchController.isActive) {
             switch (self.chatRoomsType) {
                 case ChatRoomsTypeDefault:
                     text = AMLocalizedString(@"New Chat Link", @"Text button for init a group chat with link.");
@@ -372,10 +338,8 @@
     UIImageView *skeletonImageView = nil;
     
     if ([MEGAReachabilityManager isReachable]) {
-        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
-            if ([[MEGASdkManager sharedMEGAChatSdk] initState] == MEGAChatInitWaitingNewSession || [[MEGASdkManager sharedMEGAChatSdk] initState] == MEGAChatInitNoCache) {
-                skeletonImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"chatListLoading"]];
-            }
+        if ([[MEGASdkManager sharedMEGAChatSdk] initState] == MEGAChatInitWaitingNewSession || [[MEGASdkManager sharedMEGAChatSdk] initState] == MEGAChatInitNoCache) {
+            skeletonImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"chatListLoading"]];
         }
     }
     
@@ -385,48 +349,36 @@
 #pragma mark - DZNEmptyDataSetDelegate
 
 - (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
-    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
-        ChatSettingsTableViewController *chatSettingsTVC = [[UIStoryboard storyboardWithName:@"ChatSettings" bundle:nil] instantiateViewControllerWithIdentifier:@"ChatSettingsTableViewControllerID"];
-        [self.navigationController pushViewController:chatSettingsTVC animated:YES];
-    } else {
-        MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsNavigationControllerID"];        
-        [navigationController addLeftDismissButtonWithText:AMLocalizedString(@"cancel", nil)];
-        ContactsViewController *contactsVC = navigationController.viewControllers.firstObject;
-        contactsVC.contactsMode = ContactsModeChatNamingGroup;
-        contactsVC.getChatLinkEnabled = YES;
-        [self blockCompletionsForCreateChatInContacts:contactsVC];
+    MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsNavigationControllerID"];
+    [navigationController addLeftDismissButtonWithText:AMLocalizedString(@"cancel", nil)];
+    ContactsViewController *contactsVC = navigationController.viewControllers.firstObject;
+    contactsVC.contactsMode = ContactsModeChatNamingGroup;
+    contactsVC.getChatLinkEnabled = YES;
+    [self blockCompletionsForCreateChatInContacts:contactsVC];
 
-        [self presentViewController:navigationController animated:YES completion:nil];
-    }
+    [self presentViewController:navigationController animated:YES completion:nil];
 }
 
 - (void)emptyDataSetWillAppear:(UIScrollView *)scrollView {
-    if ([NSUserDefaults.standardUserDefaults boolForKey:@"IsChatEnabled"]) {
-        if (!self.searchController.active) {
-               self.searchController.searchBar.hidden = YES;
-               if (self.archivedChatListItemList.size) {
-                   self.archivedChatEmptyStateTitle.text = AMLocalizedString(@"archivedChats", @"Title of archived chats button");
-                   self.archivedChatEmptyStateCount.text = [NSString stringWithFormat:@"%tu", self.archivedChatListItemList.size];
-                   self.archivedChatEmptyState.hidden = NO;
-               }
-               if (self.chatRoomsType == ChatRoomsTypeDefault) {
-                   if ([CNContactStore authorizationStatusForEntityType:CNEntityTypeContacts] == CNAuthorizationStatusAuthorized) {
-                       if (self.contactsOnMegaCount) {//[X] contacts found on MEGA
-                           self.contactsOnMegaEmptyStateTitle.text = self.contactsOnMegaCount == 1 ? AMLocalizedString(@"1 contact found on MEGA", @"Title showing the user one of his contacts are using MEGA") : [AMLocalizedString(@"[X] contacts found on MEGA", @"Title showing the user how many of his contacts are using MEGA") stringByReplacingOccurrencesOfString:@"[X]" withString:[NSString stringWithFormat:@"%tu", self.contactsOnMegaCount]];
-                       } else {
-                           self.contactsOnMegaEmptyStateTitle.text = AMLocalizedString(@"Invite contact now", @"Text emncouraging the user to add contacts in MEGA");
-                       }
-                       self.contactsOnMegaEmptyStateView.hidden = NO;
-                   } else {
-                       self.contactsOnMegaEmptyStateTitle.text = AMLocalizedString(@"See who's already on MEGA", @"Title encouraging the user to check who of its contacts are using MEGA");
-                       self.contactsOnMegaEmptyStateView.hidden = NO;
-                   }
-               }
-           }
-    } else {
-        if (MEGAReachabilityManager.isReachable) {
-            self.contactsOnMegaEmptyStateTitle.text = AMLocalizedString(@"Invite contact now", @"Text emncouraging the user to add contacts in MEGA");
-            self.contactsOnMegaEmptyStateView.hidden = NO;
+    if (!self.searchController.active) {
+        self.searchController.searchBar.hidden = YES;
+        if (self.archivedChatListItemList.size) {
+            self.archivedChatEmptyStateTitle.text = AMLocalizedString(@"archivedChats", @"Title of archived chats button");
+            self.archivedChatEmptyStateCount.text = [NSString stringWithFormat:@"%tu", self.archivedChatListItemList.size];
+            self.archivedChatEmptyState.hidden = NO;
+        }
+        if (self.chatRoomsType == ChatRoomsTypeDefault) {
+            if ([CNContactStore authorizationStatusForEntityType:CNEntityTypeContacts] == CNAuthorizationStatusAuthorized) {
+                if (self.contactsOnMegaCount) {//[X] contacts found on MEGA
+                    self.contactsOnMegaEmptyStateTitle.text = self.contactsOnMegaCount == 1 ? AMLocalizedString(@"1 contact found on MEGA", @"Title showing the user one of his contacts are using MEGA") : [AMLocalizedString(@"[X] contacts found on MEGA", @"Title showing the user how many of his contacts are using MEGA") stringByReplacingOccurrencesOfString:@"[X]" withString:[NSString stringWithFormat:@"%tu", self.contactsOnMegaCount]];
+                } else {
+                    self.contactsOnMegaEmptyStateTitle.text = AMLocalizedString(@"Invite contact now", @"Text emncouraging the user to add contacts in MEGA");
+                }
+                self.contactsOnMegaEmptyStateView.hidden = NO;
+            } else {
+                self.contactsOnMegaEmptyStateTitle.text = AMLocalizedString(@"See who's already on MEGA", @"Title encouraging the user to check who of its contacts are using MEGA");
+                self.contactsOnMegaEmptyStateView.hidden = NO;
+            }
         }
     }
 }
@@ -678,7 +630,16 @@
     }
 }
 
+- (void)reloadData {
+    self.chatListItemList = self.chatRoomsType == ChatRoomsTypeDefault ? [[MEGASdkManager sharedMEGAChatSdk] chatListItems] : [[MEGASdkManager sharedMEGAChatSdk] archivedChatListItems];
+    self.archivedChatListItemList = [[MEGASdkManager sharedMEGAChatSdk] archivedChatListItems];
+    [self reorderList];
+    [self.tableView reloadData];
+}
+
 - (void)reorderList {
+    [self.chatListItemArray removeAllObjects];
+    
     for (NSUInteger i = 0; i < self.chatListItemList.size ; i++) {
         MEGAChatListItem *chatListItem = [self.chatListItemList chatListItemAtIndex:i];
         [self.chatListItemArray addObject:chatListItem];
@@ -935,7 +896,7 @@
 }
 
 - (IBAction)openContactsOnMega:(id)sender {
-    if (([CNContactStore authorizationStatusForEntityType:CNEntityTypeContacts] == CNAuthorizationStatusAuthorized && self.contactsOnMegaCount== 0) || ![NSUserDefaults.standardUserDefaults boolForKey:@"IsChatEnabled"]) {
+    if ([CNContactStore authorizationStatusForEntityType:CNEntityTypeContacts] == CNAuthorizationStatusAuthorized && self.contactsOnMegaCount == 0) {
         InviteContactViewController *inviteContacts = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"InviteContactViewControllerID"];
         [self.navigationController pushViewController:inviteContacts animated:YES];
     } else {
@@ -1293,22 +1254,8 @@
 - (void)onChatConnectionStateUpdate:(MEGAChatSdk *)api chatId:(uint64_t)chatId newState:(int)newState {
     // INVALID_HANDLE = ~(uint64_t)0
     if (chatId == ~(uint64_t)0 && newState == MEGAChatConnectionOnline) {
-        self.chatListItemArray = [NSMutableArray new];
-
-        switch (self.chatRoomsType) {
-            case ChatRoomsTypeDefault:
-                self.chatListItemList = [[MEGASdkManager sharedMEGAChatSdk] chatListItems];
-                self.archivedChatListItemList = [[MEGASdkManager sharedMEGAChatSdk] archivedChatListItems];
-                break;
-                
-            case ChatRoomsTypeArchived:
-                self.chatListItemList = [[MEGASdkManager sharedMEGAChatSdk] archivedChatListItems];
-                break;
-        }
-        
         // Now it's safe to trigger a reordering of the list:
-        [self reorderList];
-        [self.tableView reloadData];
+        [self reloadData];
     }
     [self customNavigationBarLabel];
 }

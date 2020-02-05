@@ -473,30 +473,26 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
 }
 
 - (void)sendMessageToContact {
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
-        if (self.contactDetailsMode == ContactDetailsModeDefault || self.contactDetailsMode == ContactDetailsModeFromGroupChat) {
-            if (self.chatRoom) {
-                [self openChatRoomWithChatId:self.chatRoom.chatId];
-            } else {
-                MEGAChatPeerList *peerList = [[MEGAChatPeerList alloc] init];
-                [peerList addPeerWithHandle:self.userHandle privilege:MEGAChatRoomPrivilegeStandard];
-                MEGAChatCreateChatGroupRequestDelegate *createChatGroupRequestDelegate = [[MEGAChatCreateChatGroupRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
-                    self.chatRoom = chatRoom;
-                    [self openChatRoomWithChatId:self.chatRoom.chatId];
-                }];
-                [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:NO peers:peerList delegate:createChatGroupRequestDelegate];
-            }
+    if (self.contactDetailsMode == ContactDetailsModeDefault || self.contactDetailsMode == ContactDetailsModeFromGroupChat) {
+        if (self.chatRoom) {
+            [self openChatRoomWithChatId:self.chatRoom.chatId];
         } else {
-            NSUInteger viewControllersCount = self.navigationController.viewControllers.count;
-            UIViewController *previousViewController = viewControllersCount >= 2 ? self.navigationController.viewControllers[viewControllersCount - 2] : nil;
-            if (previousViewController && [previousViewController isKindOfClass:MessagesViewController.class]) {
-                [self.navigationController popViewControllerAnimated:YES];
-            } else {
-                [self openChatRoomWithChatId:self.chatRoom.chatId];
-            }
+            MEGAChatPeerList *peerList = [[MEGAChatPeerList alloc] init];
+            [peerList addPeerWithHandle:self.userHandle privilege:MEGAChatRoomPrivilegeStandard];
+            MEGAChatCreateChatGroupRequestDelegate *createChatGroupRequestDelegate = [[MEGAChatCreateChatGroupRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
+                self.chatRoom = chatRoom;
+                [self openChatRoomWithChatId:chatRoom.chatId];
+            }];
+            [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:NO peers:peerList delegate:createChatGroupRequestDelegate];
         }
     } else {
-        [SVProgressHUD showImage:[UIImage imageNamed:@"hudWarning"] status:AMLocalizedString(@"chatIsDisabled", @"Title show when the chat is disabled")];
+        NSUInteger viewControllersCount = self.navigationController.viewControllers.count;
+        UIViewController *previousViewController = viewControllersCount >= 2 ? self.navigationController.viewControllers[viewControllersCount - 2] : nil;
+        if (previousViewController && [previousViewController isKindOfClass:MessagesViewController.class]) {
+            [self.navigationController popViewControllerAnimated:YES];
+        } else {
+            [self openChatRoomWithChatId:self.chatRoom.chatId];
+        }
     }
 }
 

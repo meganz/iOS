@@ -220,7 +220,7 @@
     if (selectedItems == 0) {
         navigationTitle = AMLocalizedString(@"selectDestination", @"Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them.");
     } else {
-        navigationTitle = [NSString stringWithFormat:AMLocalizedString(@"xSelected", @"Title shown when multiselection is enable in chat tabs, and the user has more than one item selected."), selectedItems];
+        navigationTitle = (selectedItems == 1) ? AMLocalizedString(@"1 selected", @"Title shown when multiselection is enabled and only one item has been selected.") : [NSString stringWithFormat:AMLocalizedString(@"xSelected", @"Title shown when multiselection is enabled and the user has more than one item selected."), selectedItems];
     }
     
     self.navigationItem.title = navigationTitle;
