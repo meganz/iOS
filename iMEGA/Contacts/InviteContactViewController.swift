@@ -31,9 +31,7 @@ class InviteContactViewController: UIViewController {
         }
         MEGASdkManager.sharedMEGASdk().contactLinkCreateRenew(false, delegate: contactLinkCreateDelegate)
         
-        if UserDefaults.standard.bool(forKey: "IsChatEnabled") {
-            createContactsOnMegaChild()
-        }
+        createContactsOnMegaChild()
         
         if !MFMessageComposeViewController.canSendText() {
             addFromContactsLabel.textColor = UIColor.mnz_gray8F8F8F()
@@ -101,11 +99,13 @@ extension InviteContactViewController: CNContactPickerDelegate {
         picker.dismiss(animated: true) {
             let composeVC = MFMessageComposeViewController()
             composeVC.messageComposeDelegate = self
-            guard let phone = (contactProperty.value as AnyObject).stringValue else { return }
-            
-            composeVC.recipients = [phone]
-            composeVC.body = AMLocalizedString("Hi, Have encrypted conversations on Mega with me and get 50GB free storage.", "Text to send as SMS message to user contacts inviting them to MEGA") + " " + self.userLink
-            self.present(composeVC, animated: true, completion: nil)
+            if let phoneNumber = contactProperty.value as? CNPhoneNumber {
+                composeVC.recipients = [phoneNumber.stringValue]
+                composeVC.body = AMLocalizedString("Hi, Have encrypted conversations on Mega with me and get 50GB free storage.", "Text to send as SMS message to user contacts inviting them to MEGA") + " " + self.userLink
+                self.present(composeVC, animated: true, completion: nil)
+            } else {
+                SVProgressHUD.showError(withStatus: "error")
+            }
         }
     }
 }

@@ -211,31 +211,20 @@
         
         isAccountFirstLogin = NO;
         
-        if ([[NSUserDefaults standardUserDefaults] objectForKey:@"IsChatEnabled"] == nil) {
-            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"IsChatEnabled"];
-            [sharedUserDefaults setBool:YES forKey:@"IsChatEnabled"];
-            [[NSUserDefaults standardUserDefaults] synchronize];
+        if ([MEGASdkManager sharedMEGAChatSdk] == nil) {
+            [MEGASdkManager createSharedMEGAChatSdk];
         } else {
-            BOOL isChatEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"];
-            [sharedUserDefaults setBool:isChatEnabled forKey:@"IsChatEnabled"];
+            [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
         }
         
-        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
-            if ([MEGASdkManager sharedMEGAChatSdk] == nil) {
-                [MEGASdkManager createSharedMEGAChatSdk];
-            } else {
-                [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
-            }
-            
-            MEGAChatInit chatInit = [MEGASdkManager.sharedMEGAChatSdk initKarereWithSid:sessionV3];
-            if (chatInit == MEGAChatInitError) {
-                MEGALogError(@"Init Karere with session failed");
-                NSString *message = [NSString stringWithFormat:@"Error (%ld) initializing the chat", (long)chatInit];
-                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:message preferredStyle:UIAlertControllerStyleAlert];
-                [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-                [[MEGASdkManager sharedMEGAChatSdk] logout];
-                [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
-            }
+        MEGAChatInit chatInit = [MEGASdkManager.sharedMEGAChatSdk initKarereWithSid:sessionV3];
+        if (chatInit == MEGAChatInitError) {
+            MEGALogError(@"Init Karere with session failed");
+            NSString *message = [NSString stringWithFormat:@"Error (%ld) initializing the chat", (long)chatInit];
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:message preferredStyle:UIAlertControllerStyleAlert];
+            [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+            [[MEGASdkManager sharedMEGAChatSdk] logout];
+            [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
         }
         
         MEGALoginRequestDelegate *loginRequestDelegate = [[MEGALoginRequestDelegate alloc] init];
@@ -686,8 +675,12 @@
 
 - (void)manageLink:(NSURL *)url {
     if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
-        if (![LTHPasscodeViewController doesPasscodeExist] && isFetchNodesDone) {
-            [self showLink:url];
+        if (![LTHPasscodeViewController doesPasscodeExist]) {
+            if ([UIApplication.mnz_visibleViewController isKindOfClass:VerifyEmailViewController.class] && [url.absoluteString containsString:@"emailverify"]) {
+                [self showLink:url];
+            } else if (isFetchNodesDone) {
+                [self showLink:url];
+            }
         }
     } else {
         [self showLink:url];
@@ -697,9 +690,13 @@
 - (void)showLink:(NSURL *)url {
     if (!MEGALinkManager.linkURL) return;
     
-    [self dismissPresentedViewsAndDo:^{
+    if ([UIApplication.mnz_visibleViewController isKindOfClass:VerifyEmailViewController.class] && [url.absoluteString containsString:@"emailverify"]) {
         [MEGALinkManager processLinkURL:url];
-    }];
+    } else {
+        [self dismissPresentedViewsAndDo:^{
+            [MEGALinkManager processLinkURL:url];
+        }];
+    }
 }
 
 - (void)dismissPresentedViewsAndDo:(void (^)(void))completion {
@@ -1422,7 +1419,7 @@ void uncaughtExceptionHandler(NSException *exception) {
             break;
             
         case EventAccountBlocked:
-            [api handleAccountBlockedEvent:event];
+            [self handleAccountBlockedEvent:event];
             break;
             
         case EventNodesCurrent:
@@ -1463,6 +1460,8 @@ void uncaughtExceptionHandler(NSException *exception) {
             
         case EventStorageSumChanged:
             [MEGASdkManager.sharedMEGASdk mnz_setShouldRequestAccountDetails:YES];
+            break;
+            
         default:
             break;
     }
@@ -1659,21 +1658,15 @@ void uncaughtExceptionHandler(NSException *exception) {
             [self requestContactsFullname];
             [self fetchContactsNickname];
             
-            if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"] || isAccountFirstLogin) {
-                [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self.mainTBC];
-                
-                MEGAChatNotificationDelegate *chatNotificationDelegate = MEGAChatNotificationDelegate.new;
-                [MEGASdkManager.sharedMEGAChatSdk addChatNotificationDelegate:chatNotificationDelegate];
-                
-                if ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground) {
-                    [[MEGASdkManager sharedMEGAChatSdk] connectInBackground];
-                } else {
-                    [[MEGASdkManager sharedMEGAChatSdk] connect];
-                }
-                if (isAccountFirstLogin) {
-                    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"IsChatEnabled"];
-                    [[NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier] setBool:YES forKey:@"IsChatEnabled"];
-                }
+            [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self.mainTBC];
+            
+            MEGAChatNotificationDelegate *chatNotificationDelegate = MEGAChatNotificationDelegate.new;
+            [[MEGASdkManager sharedMEGAChatSdk] addChatNotificationDelegate:chatNotificationDelegate];
+            
+            if ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground) {
+                [[MEGASdkManager sharedMEGAChatSdk] connectInBackground];
+            } else {
+                [[MEGASdkManager sharedMEGAChatSdk] connect];
             }
             
             if (!isAccountFirstLogin) {
@@ -1694,7 +1687,7 @@ void uncaughtExceptionHandler(NSException *exception) {
             
             [[MEGASdkManager sharedMEGASdk] getAccountDetails];
 
-            if ([NSUserDefaults.standardUserDefaults boolForKey:@"IsChatEnabled"] && ![ContactsOnMegaManager.shared areContactsOnMegaRequestedWithinDays:7]) {
+            if (![ContactsOnMegaManager.shared areContactsOnMegaRequestedWithinDays:7]) {
                 [ContactsOnMegaManager.shared configureContactsOnMegaWithCompletion:nil];
             } else {
                 [ContactsOnMegaManager.shared loadContactsOnMegaFromLocal];

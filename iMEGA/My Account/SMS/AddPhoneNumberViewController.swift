@@ -28,7 +28,7 @@ class AddPhoneNumberViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if MEGASdkManager.sharedMEGASdk().hasVerifiedPhoneNumber {
+        if MEGASdkManager.sharedMEGASdk().smsVerifiedPhoneNumber() != nil {
            dismiss(animated: true, completion: nil)
         }
     }
