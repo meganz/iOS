@@ -38,7 +38,7 @@ class AddNickNameViewController: UIViewController {
         super.viewDidLoad()
         
         title = "Set Nickname".localized()
-        cancelBarButtonItem.title = "Cancel".localized()
+        cancelBarButtonItem.title = "cancel".localized()
         saveBarButtonItem.title = "save".localized()
         nicknameLabel.text = "Alias/ Nickname".localized()
     }
@@ -90,9 +90,7 @@ class AddNickNameViewController: UIViewController {
             return
         }
         
-        MEGASdkManager.sharedMEGASdk()?.setUserAlias(newNickname,
-                                                     forHandle: user.handle,
-                                                     delegate: genericRequestDelegate)
+        MEGASdkManager.sharedMEGASdk().setUserAlias(newNickname, forHandle: user.handle, delegate: genericRequestDelegate)
         user.mnz_nickname = newNickname
         updateHandler(withNickname: newNickname)
         dismissViewController()
