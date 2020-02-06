@@ -66,9 +66,10 @@
 }
 
 - (void)invalidateTimerAPI_EAGAIN {
-    [self.timerAPI_EAGAIN invalidate];
-    
-    self.label.text = @"";
+    if (self.timerAPI_EAGAIN.isValid) {
+        [self.timerAPI_EAGAIN invalidate];
+        self.label.text = @"";
+    }
 }
 
 - (void)showWaitingReason {
