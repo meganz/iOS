@@ -75,8 +75,8 @@
 - (void)saveContext:(NSManagedObjectContext *)context {
     [context performBlockAndWait:^{
         NSError *error = nil;
-        if ([context hasChanges] && ![context save:&error]) {
-            MEGALogError(@"Unresolved error %@, %@", error, [error userInfo]);
+        if (context.hasChanges && ![context save:&error]) {
+            MEGALogError(@"Unresolved error %@, %@", error, error.userInfo);
             abort();
         }
         
@@ -165,11 +165,7 @@
 
 #pragma mark - MOUser entity
 
-- (void)insertUserWithUserHandle:(uint64_t)userHandle
-                       firstname:(NSString *)firstname
-                        lastname:(NSString *)lastname
-                        nickname:(NSString *)nickname
-                           email:(NSString *)email {
+- (void)insertUserWithUserHandle:(uint64_t)userHandle firstname:(NSString *)firstname lastname:(NSString *)lastname nickname:(NSString *)nickname email:(NSString *)email {
     NSString *base64userHandle = [MEGASdk base64HandleForUserHandle:userHandle];
     
     if (!base64userHandle) return;
@@ -216,11 +212,8 @@
     }
 }
 
-- (void)updateUserWithUserHandle:(uint64_t)userHandle
-                        nickname:(NSString *)nickname
-                         context:(NSManagedObjectContext *)context {
+- (void)updateUserWithUserHandle:(uint64_t)userHandle nickname:(NSString *)nickname context:(NSManagedObjectContext *)context {
     MOUser *moUser;
-    
     if (context != nil) {
         moUser = [self fetchUserWithUserHandle:userHandle context:context];
     } else {
@@ -230,7 +223,7 @@
     if (moUser) {
         moUser.nickname = nickname;
         MEGALogDebug(@"Save context - update nickname: %@", nickname);
-        if (context == nil && [NSThread isMainThread]) {
+        if (context == nil && NSThread.isMainThread) {
             [self saveContext];
         }
     }
@@ -257,7 +250,7 @@
 }
 
 - (void)updateUserWithEmail:(NSString *)email nickname:(NSString *)nickname {
-    MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithEmail:email];
+    MOUser *moUser = [MEGAStore.shareInstance fetchUserWithEmail:email];
 
     if (moUser) {
         moUser.nickname = nickname;

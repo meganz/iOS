@@ -976,15 +976,14 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         if (peerName.length == 0) {
             NSString *peerFirstname = [self.chatRoom peerFirstnameAtIndex:i];
             
-            if (peerFirstname.length > 0 && ![[peerFirstname stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""]) {
+            if (peerFirstname.length > 0 && ![[peerFirstname stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceCharacterSet] isEqualToString:@""]) {
                 peerName = peerFirstname;
             } else {
                 NSString *peerLastname = [self.chatRoom peerLastnameAtIndex:i];
-                if (peerLastname.length > 0 && ![[peerLastname stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""]) {
+                if (peerLastname.length > 0 && ![[peerLastname stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceCharacterSet] isEqualToString:@""]) {
                     peerName = peerLastname;
                 }
             }
-
         }
         
         if (!peerName.length) {

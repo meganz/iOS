@@ -2357,7 +2357,6 @@
 		BF1574AD2373AB8C0095B283 /* MEGAChatRoom+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAChatRoom+Additions.swift"; sourceTree = "<group>"; };
 		BF69E5162374F3720031913D /* AppDelegate+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Additions.swift"; sourceTree = "<group>"; };
 		BFD23CCD236255A5005D4A1E /* AddNickNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNickNameViewController.swift; sourceTree = "<group>"; };
-		BFD23CF2236A64FB005D4A1E /* String+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Additions.swift"; sourceTree = "<group>"; };
 		E803CB651D5336F100F81A36 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E803CB681D53374A00F81A36 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E80C760E1DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GroupChatDetailsViewTableViewCell.h; path = Chat/GroupChatDetailsViewTableViewCell.h; sourceTree = "<group>"; };
@@ -2639,7 +2638,6 @@
 				B6CED48C22B8AC70009C4861 /* MEGAUnitTests */,
 				418851EE1A66826800FDBA15 /* Frameworks */,
 				1373618B1A6664C300B740E8 /* Products */,
-				BFE0C0AB23DF804400A32F17 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -2660,6 +2658,7 @@
 			children = (
 				137361911A6664C300B740E8 /* AppDelegate.h */,
 				137361921A6664C300B740E8 /* AppDelegate.m */,
+				BF69E5162374F3720031913D /* AppDelegate+Additions.swift */,
 				41840EE81E811CD600D8308D /* MEGAApplication.h */,
 				41840EE91E811CD600D8308D /* MEGAApplication.m */,
 				E8C289F91BF65B2200F7A034 /* Launch */,
@@ -3399,7 +3398,6 @@
 				BF0BBEFC230627BE001FD542 /* UIViewController+MNZCategory.h */,
 				BF0BBEFD230627BE001FD542 /* UIViewController+MNZCategory.m */,
 				BF1574AD2373AB8C0095B283 /* MEGAChatRoom+Additions.swift */,
-				BF69E5162374F3720031913D /* AppDelegate+Additions.swift */,
 				B619C6BA230E49920095791B /* String+Additions.swift */,
 				8330A9F222F41F470059B39C /* Array+Additions.swift */,
 				83FA7B502386197B00887630 /* UserDefaults+Additions.swift */,

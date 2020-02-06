@@ -105,20 +105,14 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
     self.videoLabel.text = AMLocalizedString(@"Video", @"Title of the button in the contact info screen to start a video call").lowercaseString;
         
     self.userNickname = self.user.mnz_nickname;
+    self.userName = self.user.mnz_fullName;
     
-    if (self.userName == nil) {
-        self.userName = self.user.mnz_fullName;
-    }
-    
-    [self configureNameLabel:self.nameOrNicknameLabel];
-    [self configureNameLabel:self.optionalNameLabel];
+    [self configureShadowInLayer:self.nameOrNicknameLabel.layer];
+    [self configureShadowInLayer:self.optionalNameLabel.layer];
     [self updateUserDetails];
     
     self.emailLabel.text = self.userEmail;
-    self.emailLabel.layer.shadowOffset = CGSizeMake(0, 1);
-    self.emailLabel.layer.shadowColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.2].CGColor;
-    self.emailLabel.layer.shadowRadius = 2.0;
-    self.emailLabel.layer.shadowOpacity = 1;
+    [self configureShadowInLayer:self.emailLabel.layer];
     
     MEGAChatStatus userStatus = [MEGASdkManager.sharedMEGAChatSdk userOnlineStatus:self.user.handle];
     if (userStatus != MEGAChatStatusInvalid) {
@@ -126,16 +120,10 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
             [MEGASdkManager.sharedMEGAChatSdk requestLastGreen:self.user.handle];
         }
         self.statusLabel.text = [NSString chatStatusString:userStatus];
-        self.statusLabel.layer.shadowOffset = CGSizeMake(0, 1);
-        self.statusLabel.layer.shadowColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.2].CGColor;
-        self.statusLabel.layer.shadowRadius = 2.0;
-        self.statusLabel.layer.shadowOpacity = 1;
+        [self configureShadowInLayer:self.statusLabel.layer];
         
         self.onlineStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:[MEGASdkManager.sharedMEGAChatSdk userOnlineStatus:self.user.handle]];
-        self.onlineStatusView.layer.shadowOffset = CGSizeMake(0, 1);
-        self.onlineStatusView.layer.shadowColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.2].CGColor;
-        self.onlineStatusView.layer.shadowOpacity = 1;
-        self.onlineStatusView.layer.shadowRadius = 2;
+        [self configureShadowInLayer:self.onlineStatusView.layer];
         self.onlineStatusView.layer.borderWidth = 1;
         self.onlineStatusView.layer.borderColor = UIColor.whiteColor.CGColor;
     } else {
@@ -207,9 +195,9 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
 - (ContactTableViewCell *)cellForNicknameWithIndexPath:(NSIndexPath *)indexPath {
     ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
     cell.avatarImageView.image = [UIImage imageNamed:@"setNickname"];
-    cell.nameLabel.text = AMLocalizedString(@"Set Nickname", nil);
-    cell.nameLabel.font = [UIFont mnz_SFUIRegularWithSize:15.0f];
+    cell.nameLabel.text = AMLocalizedString(@"Set Nickname", @"Contact details screen: Set the alias(nickname) for a user");
     cell.nameLabel.textColor = UIColor.mnz_black333333;
+    
     return cell;
 }
 
@@ -217,25 +205,22 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
     ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsPermissionsTypeID" forIndexPath:indexPath];
     cell.avatarImageView.image = [UIImage imageNamed:@"verifyCredentials"];
     cell.nameLabel.text = AMLocalizedString(@"verifyCredentials", @"Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials.");
-    cell.nameLabel.font = [UIFont systemFontOfSize:15.0];
     cell.nameLabel.textColor = UIColor.mnz_black333333;
     cell.permissionsLabel.text = [MEGASdkManager.sharedMEGASdk areCredentialsVerifiedOfUser:self.user] ? AMLocalizedString(@"verified", @"Button title") : @"";
+    
     return cell;
 }
 
 - (ContactTableViewCell *)cellForAddAndRemoveContactWithIndexPath:(NSIndexPath *)indexPath {
     ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
-    
     if (self.user.visibility == MEGAUserVisibilityVisible) { //Remove Contact
         cell.avatarImageView.image = [UIImage imageNamed:@"delete"];
         cell.nameLabel.text = AMLocalizedString(@"removeUserTitle", @"Alert title shown when you want to remove one or more contacts");
-        cell.nameLabel.font = [UIFont mnz_SFUIRegularWithSize:15.0f];
         cell.nameLabel.textColor = UIColor.mnz_redMain;
     } else { //Add contact
         cell.avatarImageView.image = [UIImage imageNamed:@"add"];
         cell.avatarImageView.tintColor = UIColor.mnz_gray777777;
         cell.nameLabel.text = AMLocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email");
-        cell.nameLabel.font = [UIFont mnz_SFUIRegularWithSize:15.0f];
     }
     
     return cell;
@@ -261,8 +246,8 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
     ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
     cell.avatarImageView.image = [UIImage imageNamed:@"clearChatHistory"];
     cell.nameLabel.text = AMLocalizedString(@"clearChatHistory", @"A button title to delete the history of a chat.");
-    cell.nameLabel.font = [UIFont mnz_SFUIRegularWithSize:15.0f];
     cell.userInteractionEnabled = cell.avatarImageView.userInteractionEnabled = cell.nameLabel.enabled = self.user.visibility == MEGAUserVisibilityVisible && MEGAReachabilityManager.isReachable && [MEGASdkManager.sharedMEGAChatSdk chatConnectionState:self.chatRoom.chatId] == MEGAChatConnectionOnline;
+    
     return cell;
 }
 
@@ -271,28 +256,25 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
     cell.avatarImageView.image = self.chatRoom.isArchived ? [UIImage imageNamed:@"unArchiveChat"] : [UIImage imageNamed:@"archiveChat_gray"];
     cell.nameLabel.text = self.chatRoom.isArchived ? AMLocalizedString(@"unarchiveChat", @"The title of the dialog to unarchive an archived chat.") : AMLocalizedString(@"archiveChat", @"Title of button to archive chats.");
     cell.nameLabel.textColor = self.chatRoom.isArchived ? UIColor.mnz_redMain : UIColor.mnz_black333333;
-    cell.nameLabel.font = [UIFont mnz_SFUIRegularWithSize:15.0f];
     cell.userInteractionEnabled = cell.avatarImageView.userInteractionEnabled = cell.nameLabel.enabled = MEGAReachabilityManager.isReachable && [MEGASdkManager.sharedMEGAChatSdk chatConnectionState:self.chatRoom.chatId] == MEGAChatConnectionOnline;
+    
     return cell;
 }
 
-- (ContactTableViewCell *)cellForAddParticipantToContactWithIndexPath:(NSIndexPath *)indexPath {
-    // Add participant as contact
+- (ContactTableViewCell *)cellForAddParticipantAsContactWithIndexPath:(NSIndexPath *)indexPath {
     ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
     cell.avatarImageView.image = [UIImage imageNamed:@"add"];
     cell.avatarImageView.tintColor = UIColor.mnz_gray777777;
     cell.nameLabel.text = AMLocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email");
-    cell.nameLabel.font = [UIFont mnz_SFUIRegularWithSize:15.0f];
     cell.userInteractionEnabled = cell.avatarImageView.userInteractionEnabled = cell.nameLabel.enabled = MEGAReachabilityManager.isReachable;
+    
     return cell;
 }
 
 - (ContactTableViewCell *)cellForSetPermissionWithIndexPath:(NSIndexPath *)indexPath  {
-    //Set permission
     ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsPermissionsTypeID" forIndexPath:indexPath];
     cell.avatarImageView.image = [UIImage imageNamed:@"readWritePermissions"];
     cell.nameLabel.text = AMLocalizedString(@"permissions", @"Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder");
-    cell.nameLabel.font = [UIFont mnz_SFUIRegularWithSize:15.0f];
     MEGAChatRoomPrivilege privilege = [self.groupChatRoom peerPrivilegeByHandle:self.userHandle];
     switch (privilege) {
         case MEGAChatRoomPrivilegeUnknown:
@@ -313,17 +295,17 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
     }
     
     cell.userInteractionEnabled = cell.avatarImageView.userInteractionEnabled = cell.nameLabel.enabled = MEGAReachabilityManager.isReachable && [MEGASdkManager.sharedMEGAChatSdk chatConnectionState:self.groupChatRoom.chatId] == MEGAChatConnectionOnline;
+    
     return cell;
 }
 
 - (ContactTableViewCell *)cellForRemoveParticipantWithIndexPath:(NSIndexPath *)indexPath {
-    //Remove participant
     ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
     cell.avatarImageView.image = [UIImage imageNamed:@"delete"];
     cell.nameLabel.text = AMLocalizedString(@"removeParticipant", @"A button title which removes a participant from a chat.");
-    cell.nameLabel.font = [UIFont mnz_SFUIRegularWithSize:15.0f];
     cell.nameLabel.textColor = UIColor.mnz_redMain;
     cell.userInteractionEnabled = cell.avatarImageView.userInteractionEnabled = cell.nameLabel.enabled = MEGAReachabilityManager.isReachable && [MEGASdkManager.sharedMEGAChatSdk chatConnectionState:self.groupChatRoom.chatId] == MEGAChatConnectionOnline;
+    
     return cell;
 }
 
@@ -711,11 +693,11 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
     [self presentViewController:editNicknameAlertController animated:YES completion:nil];
 }
 
-- (void)configureNameLabel:(UILabel *)label {
-    label.layer.shadowOffset = CGSizeMake(0, 1);
-    label.layer.shadowColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.2].CGColor;
-    label.layer.shadowRadius = 2.0;
-    label.layer.shadowOpacity = 1;
+- (void)configureShadowInLayer:(CALayer *)layer {
+    layer.shadowOffset = CGSizeMake(0, 1);
+    layer.shadowColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.2].CGColor;
+    layer.shadowRadius = 2.0;
+    layer.shadowOpacity = 1;
 }
 
 - (nullable NSArray<NSNumber *> *)sectionsForTableView {
@@ -742,26 +724,17 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
 
 - (NSArray<NSNumber *> *)sectionsForContactModeDefault {
     if (self.userNickname.length > 0) {
-        return [self addSharedFoldersSectionIfNeededToSections:@[@(ContactDetailsSectionAddAndRemoveContact),
-                                                                 @(ContactDetailsSectionVerifyCredentials)]];
+        return [self addSharedFoldersSectionIfNeededToSections:@[@(ContactDetailsSectionAddAndRemoveContact), @(ContactDetailsSectionVerifyCredentials)]];
     } else {
-        return [self addSharedFoldersSectionIfNeededToSections:@[ @(ContactDetailsSectionSetNickname),
-                                                                  @(ContactDetailsSectionVerifyCredentials),
-                                                                  @(ContactDetailsSectionAddAndRemoveContact)
-                                                                  ]];
+        return [self addSharedFoldersSectionIfNeededToSections:@[@(ContactDetailsSectionSetNickname), @(ContactDetailsSectionVerifyCredentials), @(ContactDetailsSectionAddAndRemoveContact)]];
     }
 }
 
 - (NSArray<NSNumber *> *)sectionsForContactFromChat {
     if (self.userNickname.length > 0) {
-        return [self addSharedFoldersSectionIfNeededToSections:@[ @(ContactDetailsSectionClearChatHistory),
-                                                                  @(ContactDetailsSectionArchiveChat)
-                                                                  ]];
+        return [self addSharedFoldersSectionIfNeededToSections:@[@(ContactDetailsSectionClearChatHistory), @(ContactDetailsSectionArchiveChat)]];
     } else {
-        return [self addSharedFoldersSectionIfNeededToSections:@[ @(ContactDetailsSectionSetNickname),
-                                                                  @(ContactDetailsSectionClearChatHistory),
-                                                                  @(ContactDetailsSectionArchiveChat)
-                                                                  ]];
+        return [self addSharedFoldersSectionIfNeededToSections:@[@(ContactDetailsSectionSetNickname), @(ContactDetailsSectionClearChatHistory), @(ContactDetailsSectionArchiveChat)]];
     }
 }
 
@@ -777,10 +750,8 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
     }
     
     MEGAChatRoomPrivilege peerPrivilege = [self.groupChatRoom peerPrivilegeByHandle:self.userHandle];
-    if (self.groupChatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator
-        || peerPrivilege >= MEGAChatRoomPrivilegeRo) {
-        [sections addObjectsFromArray:@[@(ContactDetailsSectionSetPermission),
-                                        @(ContactDetailsSectionRemoveParticipant)]];
+    if (self.groupChatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator || peerPrivilege >= MEGAChatRoomPrivilegeRo) {
+        [sections addObjectsFromArray:@[@(ContactDetailsSectionSetPermission), @(ContactDetailsSectionRemoveParticipant)]];
     }
     
     return [sections copy];
@@ -886,40 +857,39 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
     ContactTableViewCell *cell;
     
     switch (self.contactDetailsSections[indexPath.section].intValue) {
-        case ContactDetailsSectionSetNickname: // Set nickname cell
+        case ContactDetailsSectionSetNickname:
             cell = [self cellForNicknameWithIndexPath:indexPath];
             break;
             
-        case ContactDetailsSectionVerifyCredentials: // Verify user credentials
+        case ContactDetailsSectionVerifyCredentials:
             cell = [self cellForVerifyCredentialsWithIndexPath:indexPath];
             break;
             
-        case ContactDetailsSectionAddAndRemoveContact: // Add and remove contact cell.
+        case ContactDetailsSectionAddAndRemoveContact:
             cell = [self cellForAddAndRemoveContactWithIndexPath:indexPath];
             break;
             
-        case ContactDetailsSectionSharedFolders: { //Shared folders
+        case ContactDetailsSectionSharedFolders:
             cell = [self cellForSharedFoldersWithIndexPath:indexPath];
             break;
-        }
             
-        case ContactDetailsSectionClearChatHistory: //Clear Chat History
+        case ContactDetailsSectionClearChatHistory:
             cell = [self cellForClearChatHistoryWithIndexPath:indexPath];
             break;
             
-        case ContactDetailsSectionArchiveChat: //Archive chat
+        case ContactDetailsSectionArchiveChat:
             cell = [self cellForArchiveChatWithIndexPath:indexPath];
             break;
             
-        case ContactDetailsSectionAddParticipantToContact: // Add participant to your contacts
-            cell = [self cellForAddParticipantToContactWithIndexPath:indexPath];
+        case ContactDetailsSectionAddParticipantToContact:
+            cell = [self cellForAddParticipantAsContactWithIndexPath:indexPath];
             break;
             
-        case ContactDetailsSectionSetPermission: // Set permission
+        case ContactDetailsSectionSetPermission:
             cell = [self cellForSetPermissionWithIndexPath:indexPath];
             break;
             
-        case ContactDetailsSectionRemoveParticipant: // Remove the participant
+        case ContactDetailsSectionRemoveParticipant:
             cell = [self cellForRemoveParticipantWithIndexPath:indexPath];
             break;
             

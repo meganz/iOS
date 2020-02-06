@@ -857,18 +857,13 @@
 
 - (void)addNicknamesLoadedNotification {
     __weak typeof(self) weakself = self;
-    [NSNotificationCenter.defaultCenter addObserverForName:MEGAAllUsersNicknameLoaded
-                                                    object:nil
-                                                     queue:NSOperationQueue.mainQueue
-                                                usingBlock:^(NSNotification * _Nonnull note) {
-                                                    [weakself.tableView reloadData];
-                                                }];
+    [NSNotificationCenter.defaultCenter addObserverForName:MEGAAllUsersNicknameLoaded object:nil queue:NSOperationQueue.mainQueue usingBlock:^(NSNotification * _Nonnull note) {
+        [weakself.tableView reloadData];
+    }];
 }
 
 - (void)removeNicknamesLoadedNotification {
-    [NSNotificationCenter.defaultCenter removeObserver:self
-                                                  name:MEGAAllUsersNicknameLoaded
-                                                object:nil];
+    [NSNotificationCenter.defaultCenter removeObserver:self name:MEGAAllUsersNicknameLoaded object:nil];
 }
 
 #pragma mark - IBActions
