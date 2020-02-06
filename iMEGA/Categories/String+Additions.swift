@@ -20,10 +20,6 @@ extension String {
         return base64
     }
     
-    func localized(comment: String = "") -> String {
-        return NSLocalizedString(self, comment: comment)
-    }
-    
     var mnz_isDecimalNumber: Bool {
         return CharacterSet.decimalDigits.isSuperset(of: CharacterSet(charactersIn: self))
     }

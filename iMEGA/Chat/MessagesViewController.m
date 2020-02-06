@@ -973,7 +973,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     for (NSUInteger i = 0; i < self.chatRoom.peerCount; i++) {
         NSString *peerName = [self.chatRoom userNicknameAtIndex:i];
         
-        if (peerName.length == 0) {
+        if (!peerName.mnz_isEmpty) {
             NSString *peerFirstname = [self.chatRoom peerFirstnameAtIndex:i];
             
             if (peerFirstname.length > 0 && ![[peerFirstname stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceCharacterSet] isEqualToString:@""]) {
@@ -2236,7 +2236,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         
         if (self.chatRoom.isGroup && !message.isManagementMessage) {
             NSString *nickname = [self.chatRoom userNicknameForUserHandle:message.userHandle];
-            NSString *fullname = (nickname.length > 0) ? nickname : [self.chatRoom peerFullnameByHandle:message.userHandle];
+            NSString *fullname = (!nickname.mnz_isEmpty) ? nickname : [self.chatRoom peerFullnameByHandle:message.userHandle];
             if (!fullname.length) {
                 fullname = [self.chatRoom peerEmailByHandle:message.userHandle];
                 if (!fullname) {

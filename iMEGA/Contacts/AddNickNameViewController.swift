@@ -37,10 +37,12 @@ class AddNickNameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "Set Nickname".localized()
-        cancelBarButtonItem.title = "cancel".localized()
-        saveBarButtonItem.title = "save".localized()
-        nicknameLabel.text = "Alias/ Nickname".localized()
+        title = NSLocalizedString("Set Nickname",
+                                  comment: "Contact details screen: Set the alias(nickname) for a user")
+        cancelBarButtonItem.title = NSLocalizedString("cancel", comment: "Cancels the add nickname screen")
+        saveBarButtonItem.title = NSLocalizedString("save", comment: "Saves the new nickname")
+        nicknameLabel.text = NSLocalizedString("Alias/ Nickname",
+                                               comment: "Add nickname screen: This text appears above the alias(nickname) entry")
     }
     
     override func viewWillAppear(_ animated: Bool) {
