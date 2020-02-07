@@ -1,78 +1,43 @@
-# Customise this file, documentation can be found here:
-# https://github.com/fastlane/fastlane/tree/master/fastlane/docs
-# All available actions: https://docs.fastlane.tools/actions
-# can also be listed using the `fastlane actions` command
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
 
-# Change the syntax highlighting to Ruby
-# All lines starting with a # are ignored when running `fastlane`
-
-# If you want to automatically update fastlane if a new version is available:
+# Uncomment the line if you want fastlane to automatically update itself
 # update_fastlane
 
-# This is the minimum version number required.
-# Update this, if you use features of a newer version
-fastlane_version "2.28.3"
-
-default_platform :ios
+default_platform(:ios)
 
 platform :ios do
-  before_all do
-    # ENV["SLACK_URL"] = "https://hooks.slack.com/services/..."
-    
-    
-  end
-
-  desc "Runs all the tests"
-  lane :test do
-    scan
-  end
-
-  desc "Submit a new Beta Build to Apple TestFlight"
-  desc "This will also make sure the profile is up to date"
+  desc "Push a new beta build to TestFlight"
   lane :beta do
-    # match(type: "appstore") # more information: https://codesigning.guide
-    gym(
-      export_method: 'ad-hoc',
+    increment_build_number(xcodeproj: "MEGA.xcodeproj")
+    build_app(
+      workspace: "iMEGA.xcworkspace",
+      scheme: "MEGA",
+      export_method: "development",
       export_options: {
-        iCloudContainerEnvironment: "Production"
+        iCloudContainerEnvironment: "Development"
       }
-    ) # Build your app - more options available
-    #pilot
+    )
+    
 
-    # sh "your_script.sh"
-    # You can also use other beta testing services here (run `fastlane actions`)
-  end
+    appcenter_upload(
+      api_token: "b25c907bbfa0795f61cd11b807f2ed4be64ef2d6",
+      owner_name: "hl-mega.co.nz",
+      app_name: "megatest",
+      ipa: "./MEGA.ipa",
+      destinations: "Collaborators",
+      destination_type: "group",
 
-  desc "Deploy a new version to the App Store"
-  lane :release do
-    # match(type: "appstore")
-    # snapshot
-    gym # Build your app - more options available
-    deliver(force: true)
-    # frameit
-  end
-
-  # You can define as many lanes as you want
-
-  after_all do |lane|
-    # This block is called, only if the executed lane was successful
-
-    # slack(
-    #   message: "Successfully deployed new App Update."
-    # )
-  end
-
-  error do |lane, exception|
-    # slack(
-    #   message: exception.message,
-    #   success: false
-    # )
+      release_notes:`git log --pretty=format:%B%cI -1`
+    )
   end
 end
-
-
-# More information about multiple platforms in fastlane: https://github.com/fastlane/fastlane/blob/master/fastlane/docs/Platforms.md
-# All available actions: https://docs.fastlane.tools/actions
-
-# fastlane reports which actions are used
-# No personal data is recorded. Learn more at https://github.com/fastlane/enhancer
