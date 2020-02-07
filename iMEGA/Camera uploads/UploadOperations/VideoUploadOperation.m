@@ -124,9 +124,9 @@
     if (CameraUploadManager.isHEVCFormatSupported && CameraUploadManager.shouldConvertHEVCVideo && asset.mnz_containsHEVCCodec) {
         [self transcodeHEVCVideoAsset:asset];
     } else if ([asset isKindOfClass:[AVURLAsset class]]) {
-        [self exportAsset:asset withPreset:AVAssetExportPresetPassthrough outputFileType:AVFileTypeMPEG4 outputFileExtension:MEGAMP4FileExtension];
+        [self exportAsset:asset withPreset:AVAssetExportPresetPassthrough outputFileType:AVFileTypeMPEG4 outputFileExtension:MEGAMP4FileExtension enableExportOptions:YES];
     } else if ([asset isKindOfClass:[AVComposition class]]) {
-        [self exportAsset:asset withPreset:AVAssetExportPresetHighestQuality outputFileType:AVFileTypeMPEG4 outputFileExtension:MEGAMP4FileExtension];
+        [self exportAsset:asset withPreset:AVAssetExportPresetHighestQuality outputFileType:AVFileTypeMPEG4 outputFileExtension:MEGAMP4FileExtension enableExportOptions:YES];
     } else {
         MEGALogError(@"[Camera Upload] %@ request video asset failed", self);
         [self finishOperationWithStatus:CameraAssetUploadStatusFailed];
@@ -150,10 +150,10 @@
             break;
     }
     
-    [self exportAsset:asset withPreset:preset outputFileType:AVFileTypeMPEG4 outputFileExtension:MEGAMP4FileExtension];
+    [self exportAsset:asset withPreset:preset outputFileType:AVFileTypeMPEG4 outputFileExtension:MEGAMP4FileExtension enableExportOptions:YES];
 }
 
-- (void)exportAsset:(AVAsset *)asset withPreset:(NSString *)preset outputFileType:(AVFileType)outputFileType outputFileExtension:(NSString *)extension {
+- (void)exportAsset:(AVAsset *)asset withPreset:(NSString *)preset outputFileType:(AVFileType)outputFileType outputFileExtension:(NSString *)extension enableExportOptions:(BOOL)exportOptionsEnabled {
     if (self.isCancelled) {
         [self finishOperationWithStatus:CameraAssetUploadStatusCancelled];
         return;
@@ -169,9 +169,15 @@
             AVAssetExportSession *session = [AVAssetExportSession exportSessionWithAsset:asset presetName:preset];
             self.exportSession = session;
             session.outputFileType = outputFileType;
-            session.canPerformMultiplePassesOverSourceMediaData = YES;
-            session.shouldOptimizeForNetworkUse = YES;
-            session.metadataItemFilter = [AVMetadataItemFilter metadataItemFilterForSharing];
+            
+            if (!CameraUploadManager.shouldIncludeGPSTags) {
+                session.metadataItemFilter = [AVMetadataItemFilter metadataItemFilterForSharing];
+            }
+            
+            if (exportOptionsEnabled) {
+                session.canPerformMultiplePassesOverSourceMediaData = YES;
+                session.shouldOptimizeForNetworkUse = YES;
+            }
             
             self.uploadInfo.fileName = [self mnz_generateLocalFileNamewithExtension:extension];
             session.outputURL = self.uploadInfo.fileURL;
@@ -196,6 +202,9 @@
                         MEGALogError(@"[Camera Upload] %@ error when to export video %@", weakSelf, session.error)
                         if ([session.error.domain isEqualToString:AVFoundationErrorDomain] && session.error.code == AVErrorDiskFull) {
                             [weakSelf finishUploadWithNoEnoughDiskSpace];
+                        } else if (exportOptionsEnabled) {
+                            MEGALogDebug(@"[Camera Upload] %@ export options enabled, Now try disabling export options and try exporting", weakSelf);
+                            [weakSelf exportAsset:asset withPreset:preset outputFileType:outputFileType outputFileExtension:extension enableExportOptions:NO];
                         } else {
                             [weakSelf finishOperationWithStatus:CameraAssetUploadStatusFailed];
                         }

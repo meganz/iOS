@@ -210,11 +210,9 @@ static NSMutableSet<NSString *> *tapForInfoSet;
                                                  name:UIApplicationDidBecomeActiveNotification
                                                object:nil];
     
-    if (@available(iOS 10.0, *)) {
-        [[UNUserNotificationCenter currentNotificationCenter] removeDeliveredNotificationsWithIdentifiers:@[[MEGASdk base64HandleForUserHandle:self.chatRoom.chatId]]];
-        [[UNUserNotificationCenter currentNotificationCenter] removePendingNotificationRequestsWithIdentifiers:@[[MEGASdk base64HandleForUserHandle:self.chatRoom.chatId]]];
-        self.collectionView.prefetchingEnabled = NO;
-    }
+    [[UNUserNotificationCenter currentNotificationCenter] removeDeliveredNotificationsWithIdentifiers:@[[MEGASdk base64HandleForUserHandle:self.chatRoom.chatId]]];
+    [[UNUserNotificationCenter currentNotificationCenter] removePendingNotificationRequestsWithIdentifiers:@[[MEGASdk base64HandleForUserHandle:self.chatRoom.chatId]]];
+    self.collectionView.prefetchingEnabled = NO;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
     
@@ -596,8 +594,9 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 - (void)customNavigationBarLabel {
     if (self.selectingMessages) {
         self.inputToolbar.hidden = YES;
-
-        UILabel *label = [Helper customNavigationBarLabelWithTitle:[NSString stringWithFormat:AMLocalizedString(@"xSelected", nil), self.selectedMessages.count] subtitle:@""];
+        
+        NSString *title = (self.selectedMessages.count == 1) ? AMLocalizedString(@"1 selected", @"Title shown when multiselection is enabled and only one item has been selected.") : [NSString stringWithFormat:AMLocalizedString(@"xSelected", @"Title shown when multiselection is enabled and the user has more than one item selected."), self.selectedMessages.count];
+        UILabel *label = [Helper customNavigationBarLabelWithTitle:title subtitle:@""];
         
         [self.navigationItem setTitleView:label];
         self.navigationItem.hidesBackButton = YES;
@@ -759,10 +758,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         groupCallVC.videoCall = videoCall;
         groupCallVC.chatRoom = self.chatRoom;
         groupCallVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-
-        if (@available(iOS 10.0, *)) {
-            groupCallVC.megaCallManager = [(MainTabBarController *)UIApplication.sharedApplication.keyWindow.rootViewController megaCallManager];
-        }
+        groupCallVC.megaCallManager = [(MainTabBarController *)UIApplication.sharedApplication.keyWindow.rootViewController megaCallManager];
         [self presentViewController:groupCallVC animated:YES completion:nil];
     } else {
         CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
@@ -770,10 +766,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         callVC.videoCall = videoCall;
         callVC.callType = active ? CallTypeActive : CallTypeOutgoing;
         callVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-        
-        if (@available(iOS 10.0, *)) {
-            callVC.megaCallManager = [(MainTabBarController *)UIApplication.sharedApplication.keyWindow.rootViewController megaCallManager];
-        }
+        callVC.megaCallManager = [(MainTabBarController *)UIApplication.sharedApplication.keyWindow.rootViewController megaCallManager];
         [self presentViewController:callVC animated:YES completion:nil];
     }
 }
@@ -2701,7 +2694,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
                         }
                     }
                     
-                    MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:[MEGASdkManager sharedMEGASdk] displayMode:DisplayModeSharedItem presentingNode:nil preferredIndex:[reverseArray indexOfObject:message]];
+                    MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:[MEGASdkManager sharedMEGASdk] displayMode:DisplayModeChatAttachment presentingNode:nil preferredIndex:[reverseArray indexOfObject:message]];
                     photoBrowserVC.delegate = self;
                     
                     [self.navigationController presentViewController:photoBrowserVC animated:YES completion:nil];

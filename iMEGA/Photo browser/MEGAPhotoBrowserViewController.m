@@ -157,12 +157,54 @@ static const CGFloat GapBetweenPages = 10.0;
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    
+    // Main image
+    UIImageView *placeholderCurrentImageView = self.placeholderCurrentImageView;
+    [self.view addSubview:placeholderCurrentImageView];
+    placeholderCurrentImageView.frame = self.view.bounds;
+    
+    // Activity indicator if main image is not yet loaded.
+    UIActivityIndicatorView *activityIndicatorView = nil;
+    if (placeholderCurrentImageView.image == nil) {
+        activityIndicatorView = [self addActivityIndicatorToView:self.view];
+    }
+    
+    // If it is video play icon.
+    UIImageView *placeholderPlayImageView = self.placeholderPlayImageView;
+    if (placeholderPlayImageView != nil) {
+        [self.view addSubview:placeholderPlayImageView];
+        placeholderPlayImageView.center = CGPointMake(self.view.bounds.size.width/2,
+                                                      self.view.bounds.size.height/2.0);
+        // Top and bottom bar needs to be visible.
+        [self.view sendSubviewToBack:placeholderPlayImageView];
+    }
+    
+    // Top and bottom bar needs to be visible.
+    [self.view sendSubviewToBack:placeholderCurrentImageView];
+    
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
         if (!self.presentedViewController) {
             [self.view layoutIfNeeded];
             [self reloadUI];
+            
+            // The scrollview animation is not aligning with placeholderImageView animation.
+            // So hiding the scroll when the animation is in progress.
+            self.scrollView.hidden = YES;
+            CGPoint center = CGPointMake(size.width/2, size.height/2.0);
+            
+            [UIView animateWithDuration:context.transitionDuration
+                             animations:^{
+                                 placeholderCurrentImageView.frame = CGRectMake(0, 0, size.width, size.height);
+                                 placeholderPlayImageView.center = center;
+                                 activityIndicatorView.center = center;
+                             }];
         }
     } completion:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
+        self.scrollView.hidden = NO;
+        [activityIndicatorView removeFromSuperview];
+        [placeholderPlayImageView removeFromSuperview];
+        [placeholderCurrentImageView removeFromSuperview];
+
         if (self.presentedViewController) {
             self.needsReload = YES;
         }
@@ -310,7 +352,6 @@ static const CGFloat GapBetweenPages = 10.0;
                 [self.delegate photoBrowser:self didPresentNodeAtIndex:self.currentIndex];
             }
         }
-        [self fixFrames];
     }
 }
 
@@ -519,11 +560,12 @@ static const CGFloat GapBetweenPages = 10.0;
     }
 }
 
-- (void)addActivityIndicatorToView:(UIView *)view {
+- (UIActivityIndicatorView *)addActivityIndicatorToView:(UIView *)view {
     UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     activityIndicator.frame = CGRectMake((view.frame.size.width-activityIndicator.frame.size.width)/2, (view.frame.size.height-activityIndicator.frame.size.height)/2, activityIndicator.frame.size.width, activityIndicator.frame.size.height);
     [activityIndicator startAnimating];
     [view addSubview:activityIndicator];
+    return activityIndicator;
 }
 
 - (void)removeActivityIndicatorsFromView:(UIView *)view {
@@ -568,19 +610,6 @@ static const CGFloat GapBetweenPages = 10.0;
     frame.origin.x = MAX(frame.origin.x + (zoomableView.frame.size.width - (view.frame.size.width * scale)) / 2, 0);
     frame.origin.y = MAX(frame.origin.y + (zoomableView.frame.size.height - (view.frame.size.height * scale)) / 2, 0);
     view.frame = frame;
-}
-
-- (void)fixFrames {
-    if (@available(iOS 10.0, *)) {} else {
-        NSUInteger initialIndex = self.currentIndex == 0 ? 0 : self.currentIndex - 1;
-        NSUInteger finalIndex = self.currentIndex >= self.mediaNodes.count - 1 ? self.mediaNodes.count - 1 : self.currentIndex + 1;
-        for (NSUInteger i = initialIndex; i <= finalIndex; i++) {
-            UIScrollView *zoomableView = [self.imageViewsCache objectForKey:@(i)];
-            if (zoomableView) {
-                zoomableView.frame = CGRectMake(self.scrollView.frame.size.width * i, 0.0f, self.view.frame.size.width, self.view.frame.size.height);
-            }
-        }
-    }
 }
 
 #pragma mark - IBActions
@@ -1048,6 +1077,34 @@ static const CGFloat GapBetweenPages = 10.0;
     } else {
         [self reloadUI];
     }
+}
+
+#pragma mark - Private methods.
+
+- (UIImageView *)placeholderCurrentImageView {
+    UIScrollView *zoomableView = [self.imageViewsCache objectForKey:@(self.currentIndex)];
+    FLAnimatedImageView *animatedImageView  = zoomableView.subviews.firstObject;
+    
+    UIImageView *imageview = UIImageView.new;
+    imageview.backgroundColor = self.view.backgroundColor;
+    imageview.image = animatedImageView.image;
+    imageview.contentMode = animatedImageView.contentMode;
+    
+    return imageview;
+}
+
+- (nullable UIImageView *)placeholderPlayImageView {
+    if (self.mediaNodes.count > self.currentIndex) {
+        MEGANode *node = self.mediaNodes[self.currentIndex];
+        if (node.name.mnz_isVideoPathExtension) {
+            UIImageView *imageview = [UIImageView.alloc initWithFrame:CGRectMake(0, 0, self.playButtonSize, self.playButtonSize)];
+     imageview.image = [UIImage imageNamed: node.mnz_isPlayable ? @"blackPlayButton" : @"blackCrossedPlayButton"];
+            
+            return imageview;
+        }
+    }
+
+    return nil;
 }
 
 @end
