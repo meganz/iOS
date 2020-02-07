@@ -77,7 +77,7 @@
     UIImage *avatarImage = [UIImage imageForName:self.chatRoom.title.uppercaseString size:avatarSize backgroundColor:[UIColor mnz_gray999999] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:(avatarSize.width/2.0f)]];
     self.avatarImageView.image = avatarImage;
     
-    if (self.chatRoom.peerCount == 0) {
+    if (self.chatRoom.ownPrivilege < MEGAChatRoomPrivilegeRo) {
         self.participantsLabel.text = AMLocalizedString(@"Inactive chat", @"Subtitle of chat screen when the chat is inactive");
     } else {
         NSInteger peers = self.chatRoom.peerCount + (!self.chatRoom.isPreview ? 1 : 0);
