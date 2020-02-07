@@ -34,12 +34,12 @@
     [super viewDidLoad];
     
     if (!CLLocationManager.locationServicesEnabled || CLLocationManager.authorizationStatus == kCLAuthorizationStatusDenied || CLLocationManager.authorizationStatus == kCLAuthorizationStatusRestricted) {
-        NSString *message = [[AMLocalizedString(@"MEGA accesses your location when you elect to share it with your contacts.", @"Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed.") stringByAppendingString:@"\n\n"] stringByAppendingString:AMLocalizedString(@"Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always.", @"Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA")];
+        NSString *message = [[AMLocalizedString(@"NSLocationAlwaysAndWhenInUseUsageDescription", @"Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed.") stringByAppendingString:@"\n\n"] stringByAppendingString:AMLocalizedString(@"Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always.", @"Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA")];
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"Please allow access", @"Title of a dialog in which we request access to a specific permission, like the Location Services") message:message preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *notNow = [UIAlertAction actionWithTitle:AMLocalizedString(@"notNow", @"Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers.") style:UIAlertActionStyleCancel handler:nil];
         [alertController addAction:notNow];
         UIAlertAction *settings = [UIAlertAction actionWithTitle:AMLocalizedString(@"settingsTitle", @"Title of the Settings section") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+            [UIApplication.sharedApplication openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString] options:@{} completionHandler:nil];
         }];
         [alertController addAction:settings];
         [self presentViewController:alertController animated:YES completion:nil];

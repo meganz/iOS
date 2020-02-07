@@ -21,6 +21,8 @@
 /* "Size" of the file or folder you are sharing */
 "size"="Rozmiar";
 /*  */
+"Quality"="Quality";
+/*  */
 "folder"="Katalog";
 /* Error message shown when there's no camera available on the device */
 "noCamera"="Brak dostępu do kamery";
@@ -43,7 +45,7 @@
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="Wprowadź klucz deszyfrujący";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertMessage"="Aby uzyskać dostęp do tego katalogu/pliku, wymagany jest klucz deszyfrujący. Jeżeli go nie posiadasz, skontaktuj się z autorem linka.";
+"decryptionKeyAlertMessage"="Aby uzyskać dostęp do tego folderu / pliku, będziesz potrzebować jego klucza deszyfrowania. Jeśli nie masz klucza, skontaktuj się z twórcą linku.";
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="Klucz deszyfrowania";
 /* Button title to try to decrypt the link */
@@ -140,10 +142,6 @@
 "Confirm account"="Potwierdź konto";
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
 "passwordWrong"="Błędne hasło";
-/* Warning title shown when you try to confirm an account but you are logged in with another one */
-"alreadyLoggedInAlertTitle"="Jesteś zalogowany na inne konto";
-/* Warning message shown when you try to confirm an account but you are logged in with another one */
-"alreadyLoggedInAlertMessage"="Jeżeli wyrażasz zgodę, to zostaniesz wylogowany z obecnego konta i wszystkie dane offline zostaną usunięte. Czy chcesz kontynuować?";
 /* Error shown when the user tries to change his mail to one that is already used */
 "emailAlreadyInUse"="Błąd: Ten adres email jest już używany.";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
@@ -560,8 +558,6 @@
 "addContactButton"="Dodaj";
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="Nie ma potrzeby podawania własnego adresu email";
-/* Add contacts and share dialog error message when user try to add already existing email address. */
-"alreadyHaveAContactWithThatEmailAddress"="Już posiadasz kontakt z tym adresem email";
 /* Success message shown when a contact has been invited */
 "theUserHasBeenInvited"="Użytkownik [X] został zaproszony i pojawi się na liście Twoich kontaktów po akceptacji zaproszenia.";
 /* Success message shown when some contacts have been invited */
@@ -827,7 +823,7 @@
 /* An alert title where the user provided the incorrect Recovery Key. */
 "invalidRecoveryKey"="Klucz jest nieprawidłowy";
 /* Text of the alert after opening the recovery link to reset pass being logged. */
-"youRecoveryKeyIsGoingTo"="Twój klucz zostanie użyty aby zresetować Twoje hasło. Wprowadź nowe hasło.";
+"youRecoveryKeyIsGoingTo"="Twój klucz zapasowy zostanie użyty do zresetowania hasła. Proszę podać nowe hasło.";
 /*  */
 "yourPasswordHasBeenReset"="Hasło zostało zresetowane pomyślnie. Zaloguj się teraz do konta.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
@@ -957,6 +953,22 @@
 "xDaysLeft"="%1 dni pozostało";
 /* %1 will be replaced by a numeric value and %2 will be 'days' or 'months', for example (Expires in [S]10[/S] days) */
 "bonusExpiresIn"="(Bonus wygasa za [S]%1[/S] %2)";
+/* Add Phone Number title  */
+"Add Phone Number"="Dodaj numer telefonu";
+/* Achievement explanation for add phone number */
+"You have received %1$s storage space and %2$s transfer quota for verifying your phone number."="Otrzymałeś %1$s przestrzeni dyskowej i %2$s limitu transferu na weryfikację twojego numeru telefonu.";
+/* Free storage description to encourage users to add phone number to their accounts */
+"Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."="Uzyskaj %@ za darmo, dodając swój numer telefonu. Ułatwia to kontaktom znalezienie Cię w MEGA.";
+/* Description to encourage users to add phone number to their accounts when there are not achievements */
+"Add your phone number to MEGA. This makes it easier for your contacts to find you on MEGA."="Dodaj swój numer telefonu do MEGA. Ułatwia to kontaktom znalezienie Cię w MEGA.";
+/* Description to unblock account by verifying phone number */
+"Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account."="Twoje konto zostało tymczasowo zawieszone z powodu potencjalnego nadużycia. Sprawdź swój numer telefonu, aby odblokować konto.";
+/* Verify your account title */
+"Verify Your Account"="Zweryfikuj swoje konto";
+/* Add your phone number title */
+"Add Your Phone Number"="Dodaj swój numer telefonu";
+/* Choose Your Country title */
+"Choose Your Country"="Wybierz swój kraj";
 /* Used to display the number of months a plan was purchased for e.g. 3 months, 6 months. */
 "months"="miesiące";
 /*  */
@@ -987,8 +999,8 @@
 "availableLabel"="Dostępne";
 /* title of the My Account screen */
 "accountType"="Rodzaj konta";
-/* Text relative to the MEGA account level. UPPER CASE */
-"free"="ZA DARMO";
+/* Label to indicate that the current user has a Free account. */
+"Free"="Darmowe";
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="wygasa w %@";
 /* Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible). */
@@ -1006,9 +1018,9 @@
 /*  */
 "chooseYourAccountType"="Wybierz rodzaj konta";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]Cloud Drive jest prawie pełny.[/S] [A]Zaktualizuj teraz [/A] do konta PRO i uzyskaj [S]do 8 TB (8192 GB)[/S] przestrzeni dyskowej w chmurze.";
+"cloudDriveIsAlmostFull"="[S]Twój dysk w chmurze jest prawie pełny.[/S] [A] Uaktualnij teraz[/A] do konta PRO i uzyskaj [S]do %@ TB (%@ GB)[/S] miejsca w chmurze.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]Twoje konto jest pełne.[/S] [A]Zaktualizuj teraz[/A] do konta PRO i uzyskaj[S] do 8 TB (8192 GB)[/S] miejsca w chmurze.";
+"cloudDriveIsFull"="[S]Twój dysk w chmurze jest pełny.[/S] [A] Uaktualnij teraz[/A] do konta PRO i uzyskaj [S]do %@ TB (%@ GB)[/S] miejsca w chmurze.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Pojemności";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
@@ -1087,8 +1099,6 @@
 "noConversations"="Brak rozmów";
 /* Empty Conversations description */
 "Start chatting securely with your contacts using end-to-end encryption"="Zacznij czatować bezpiecznie ze swoimi kontaktami za pomocą szyfrowania end-to-end";
-/* Title show when the chat is disabled */
-"chatIsDisabled"="Czat jest zablokowany";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
 "enable"="Odblokuj";
 /* A button on a dialog which invites a contact to join MEGA. */
@@ -1153,6 +1163,10 @@
 "sendMessage"="Wyślij wiadomość";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
 "verifyCredentials"="Zweryfikuj uprawnienia";
+/* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
+"verify"="Weryfikacja";
+/* Button title */
+"verified"="Zweryfikowany";
 /* A button title to delete the history of a chat. */
 "clearChatHistory"="Wyczyść historię czatu.";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
@@ -1364,7 +1378,7 @@
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph4"="MEGA oferuje hojne 50 GB bezpłatnej przestrzeni dyskowej dla wszystkich zarejestrowanych użytkowników z premiowymi osiągnięciami i oferuje płatne plany o znacznie wyższych limitach:";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph5"="Subskrypcja PRO LITE: €4.99 (US$4.99) na miesiąc lub €49.99 (US$49.99) na rok otrzymasz 200 GB powierzchni i 1 TB na transfer plików miesięcznie.\nSubskrypcja PRO I : €9.99 (US$9.99) na miesiąc lub €99.99 (US$99.99) na rok otrzymasz 1 TB powierzchni i 2 TB na transfer plików miesięcznie.\nSubskrypcja PRO II: €19.99 (US$19.99) na miesiąc lub €199.99 (US$199.99) na rok otrzymasz 4 TB powierzchni i 8 TB na transfer plików miesięcznie.\nSubskrypcja PRO III: €29.99 (US$29.99) na miesiąc lub €299.99 (US$299.99) na rok otrzymasz 8 TB powierzchni and 16 TB na transfer plików miesięcznie.";
+"generalDescriptionParagraph5"="Subskrypcja PRO LITE: €4,99 (US$4,99) miesięcznie lub €49,99 (US$49,99) rocznie daje 200 GB przestrzeni dyskowej i 1 TB limitu transferu miesięcznie.\nSubskrypcja PRO I: €9,99 (US$9,99) miesięcznie lub €99,99 (US$99,99) rocznie daje 1 TB przestrzeni dyskowej i 2 TB limitu transferu miesięcznie. Subskrypcja\nPRO II: €19,99 (US$19,99) miesięcznie lub €199,99 (US$199,99) za rok daje 4 TB przestrzeni dyskowej i 8 TB limitu transferu miesięcznie. Subskrypcja\nPRO III: €29,99 (US$29,99) miesięcznie lub €299,99 (US$299,99) rocznie daje 8 TB przestrzeni dyskowej i 16 TB limitu transferu na miesiąc.";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph6"="Po więcej informacji przejdź do strony: https://mega.nz/\nRegulamin: https://mega.nz/terms\nPolityka prywatności: https://mega.nz/privacy";
@@ -1407,7 +1421,7 @@
 /* Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible. */
 "autoAccept"="Auto-akceptacja";
 /* Footer that explains the way Auto-Accept works for QR codes */
-"autoAcceptFooter"="Kontakty, które zeskanuj Twój kod QR zostaną automatycznie dodane do listy Twoich kontaktów.";
+"autoAcceptFooter"="Użytkownicy MEGA, którzy skanują Twój kod QR, zostaną automatycznie dodani do Twojej listy kontaktów.";
 /* Action to reset the current valid QR code of the user */
 "resetQrCode"="Zresetuj QR kod";
 /* Footer that explains what would happen if the user resets his/her QR code */
@@ -1643,7 +1657,7 @@
 /* Detailed explanation of why the user should give permission to deliver notifications */
 "We would like to send you notifications so you receive new messages on your device instantly."="Chcemy wysyłać Ci powiadomienia, aby natychmiast otrzymywać nowe wiadomości na Twoim urządzeniu.";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
-"Allow Access"="Umożliwić dostęp";
+"Allow Access"="Włącz dostęp";
 /* A section header which contains the file management settings. These settings allow users to remove duplicate files etc. */
 "File Management"="Zarządzanie plikami";
 /* Title of the option to enable or disable file versioning on Settings section */
@@ -1862,6 +1876,8 @@
 "Tap and hold %@ to record, release to send"="Dotknij i przytrzymaj %@, aby nagrać, zwolnij, aby wysłać";
 /* Message shown when there is an ongoing call and the user tries to record a voice message */
 "It is not possible to record voice messages while there is a call in progress"="Nie można nagrywać wiadomości głosowych podczas trwającego połączenia.";
+/* Label indicating that a voice clip is being recorded. String as short as possible. */
+"Recording..."="Nagrywanie…";
 /* Text to inform the user there is an active call and is not participating */
 "Ongoing Call"="Trwające połączenie";
 /* Message shown when there is an ongoing call and the user tries to play an audio or video */
@@ -1932,6 +1948,34 @@
 "Change to a test server?"="Przejdź na serwer testowy?";
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Czy na pewno chcesz przejść na serwer testowy? Na Twoim koncie mogą wystąpić nieodwracalne problemy";
+/* Title label that explains that the user is going to be asked for the contacts permission */
+"Enable Access to Contacts"="Włącz dostęp do kontaktów";
+/* Detailed explanation of why the user should give permission to contacts */
+"MEGA needs access to your contacts to help you connect with other people on MEGA."="MEGA potrzebuje dostępu do twoich kontaktów, aby móc łączyć się z innymi osobami w MEGA.";
+/* Title encouraging the user to check who of its contacts are using MEGA */
+"See who's already on MEGA"="Zobacz, kto jest już na MEGA";
+/* Title showing the user how many of his contacts are using MEGA */
+"[X] contacts found on MEGA"="[X] kontakty znaleziono w MEGA";
+/* Title showing the user that one of his contacts are using MEGA */
+"1 contact found on MEGA"="Znaleziono 1 kontakt na MEGA";
+/* Text indicating the user to perform an action to grant some permission */
+"Enable Access"="Włącz dostęp";
+/* Text indicating the user to open the device settings for MEGA */
+"Open Settings"="Otwórz ustawienia";
+/* Text encouraging the user to invite contacts to MEGA */
+"Invite contacts and start chatting securely with MEGA’s encrypted chat."="Zaproś kontakty i zacznij bezpiecznie rozmawiać za pomocą szyfrowanego czatu MEGA.";
+/* Text showing the user how many contacts would be invited */
+"Invite [X] contacts"="Zaproś [X] kontakty";
+/* Text showing the user how to write more than one email in order to invite them to MEGA */
+"Tap space to enter multiple emails"="Klknij spację, aby wprowadzić wiele wiadomości e-mail";
+/* Text used as a section title or similar */
+"Enter Email"="Wpisz adres email";
+/* Text used as view title showing the user the phone contacts using MEGA */
+"On MEGA"="Na MEGA";
+/* Text used as a section title or similar showing the user the phone contacts using MEGA */
+"CONTACTS ON MEGA"="KONTAKTY NA MEGA";
+/* Text to send as SMS message to user contacts inviting them to MEGA */
+"Hi, Have encrypted conversations on Mega with me and get 50GB free storage."="Cześć! Nawiąż ze mną bezpieczne rozmowy na temat MEGA i uzyskaj do 50 GB bezpłatnej przestrzeni dyskowej.";
 /* Destination folder name of chat files */
 "My chat files"="Moje pliki czatu";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
@@ -1948,8 +1992,6 @@
 "Links"="Linki";
 /* Title for empty state view of "Links" in Shared Items. */
 "No Public Links"="Brak linków publicznych";
-/* Text to indicate that the user will leave an incoming shared folder. */
-"Leave Share"="Pozostaw";
 /* Text indicating to the user the action that will be executed on tap. */
 "Manage Share"="Zarządzaj udziałem";
 /* Title of the screen that shows the users with whom the user can share a folder */
@@ -1996,3 +2038,51 @@
 "Inactive chat"="Nieaktywny czat";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
 "It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="Nie można było uzyskać zawartości tego pliku, ponieważ nie jest on zakodowany ani w UTF-8, ani w ISO / IEC 8859-1.";
+/* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
+"Include location tags"="Dołącz tagi lokalizacji";
+/* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
+"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="Jeśli ta opcja jest włączona, będziesz przesyłać informacje o tym, gdzie zostały zrobione Twoje zdjęcia i filmy, więc zachowaj ostrożność, udostępniając je.";
+/* Error message shown when opening a link with an account that not corresponds to the link */
+"This link is not related to this account. Please log in with the correct account."="Ten link nie jest powiązany z tym kontem. Zaloguj się na właściwe konto.";
+/* Text emncouraging the user to add contacts in MEGA */
+"Invite contact now"="Zaproś kontakty";
+/* Text showing the user one contact would be invited */
+"Invite 1 contact"="Zaproś 1 kontakt";
+/* Error message if user click next button without enter a valid phone number */
+"Please enter a valid phone number"="Podaj poprawny numer telefonu.";
+/* Error message that will show to user when user reached the sms verification daily limit */
+"You have reached the daily limit"="Osiągnąłeś dzienny limit";
+/* Error message that will show to user when user entered invalid verification code */
+"Wrong code. Please try again or resend."="Niepoprawny kod. Spróbuj ponownie lub wyślij ponownie.";
+/* Error message that will show to user when host detected that the mobile number has been registered already */
+"This number is already associated with a Mega account"="Ten numer jest już powiązany z kontem MEGA.";
+/* Country label for a button, title, etc. */
+"Country"="Kraj";
+/* Error message that will show to user its account is already verified */
+"Your account is already verified"="Twoje konto jest już zweryfikowane";
+/* Place holder for enter mobile number field */
+"Your phone number"="Twój numer telefonu";
+/* Label tell user to enter received txt to below input boxes */
+"Please type the verification code sent to"="Wpisz kod weryfikacyjny wysłany na adres";
+/* Text message to remind user to resend verification code */
+"You didn't receive a code?"="Nie otrzymałeś kodu?";
+/* Message shown when verify phone number successfully */
+"Your phone number has been verified successfully"="Twój numer telefonu został pomyślnie zweryfikowany";
+/* Text describing account suspended state to the user */
+"Your account has been temporarily suspended for your safety."="Twoje konto zostało tymczasowo zawieszone ze względów bezpieczeństwa.";
+/* Text indicating the user next step to unlock suspended account. Please leave [S], [/S] as it is which is used to bolden the text. */
+"[S]Please verify your email[/S] and follow its steps to unlock your account."="[S]Zweryfikuj swój adres e-mail[/S] i postępuj zgodnie z instrukcjami, aby odblokować konto.";
+/* Text for button to open an helping view */
+"Why am I seeing this?"="Dlaczego to widzę?";
+/* Text to notify user an email has been sent */
+"Email sent"="Email został wysłany";
+/* Title of a helping view about locked accounts */
+"Locked Accounts"="Zablokowane konta";
+/* Locked accounts description text by an external data breach. This text is 1 of 2 paragraph of a description. */
+"It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="Możliwe, że używasz tego samego hasła do konta MEGA co do innych usług i że co najmniej jedna z tych innych usług doznała naruszenia danych.";
+/* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
+"Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="Twoje hasło wyciekło i jest obecnie wykorzystywane przez złych aktorów do logowania się na twoje konta, w tym między innymi na twoje konto MEGA.";
+/* Setting title for Doc scan view */
+"Save Settings"="Save Settings";
+/* file type title, used in changing the export format of scaned doc */
+"File Type"="File Type";
