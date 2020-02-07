@@ -654,34 +654,27 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
 }
 
 - (void)showEditOrRemoveAlertOptions {
-    UIAlertController *editNicknameAlertController = [UIAlertController alertControllerWithTitle:nil
-                                                                                         message:nil
-                                                                                  preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertController *editNicknameAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
-    UIAlertAction *cancelAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil)
-                                                                style:UIAlertActionStyleCancel
-                                                              handler:nil];
+    UIAlertAction *cancelAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil];
     [cancelAlertAction mnz_setTitleTextColor:UIColor.mnz_redMain];
     [editNicknameAlertController addAction:cancelAlertAction];
     
-    UIAlertAction *editNicknameAlertAction = [UIAlertAction actionWithTitle: AMLocalizedString(@"edit",nil)
-                                                                      style:UIAlertActionStyleDefault
-                                                                    handler:^(UIAlertAction *action) {
-                                                                        [self showNickNameViewContoller];
-                                                                    }];
+    UIAlertAction *editNicknameAlertAction = [UIAlertAction actionWithTitle: AMLocalizedString(@"edit",@"Caption of a button to edit the files that are selected") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self showNickNameViewContoller];
+    }];
     [editNicknameAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
     [editNicknameAlertController addAction:editNicknameAlertAction];
     
-    UIAlertAction *removeNicknameAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"remove", nil)
-                                                                        style:UIAlertActionStyleDefault
-                                                                      handler:^(UIAlertAction *action) {
-                                                                          [MEGASdkManager.sharedMEGASdk setUserAlias:nil
-                                                                                                           forHandle:self.user.handle];
-                                                                          self.userNickname = nil;
-                                                                          self.user.mnz_nickname = nil;
-                                                                          [self updateUserDetails];
-                                                                          [self.tableView reloadData];
-                                                                      }];
+    UIAlertAction *removeNicknameAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"remove", @"Title for the action that allows to remove a file or folder") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        if (MEGAReachabilityManager.isReachableHUDIfNot) {
+            [MEGASdkManager.sharedMEGASdk setUserAlias:nil forHandle:self.user.handle];
+            self.userNickname = nil;
+            self.user.mnz_nickname = nil;
+            [self updateUserDetails];
+            [self.tableView reloadData];
+        }
+    }];
     [editNicknameAlertController addAction:removeNicknameAlertAction];
     
     if (UIDevice.currentDevice.iPadDevice) {

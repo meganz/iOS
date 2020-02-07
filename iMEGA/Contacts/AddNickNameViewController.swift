@@ -22,27 +22,15 @@ class AddNickNameViewController: UIViewController {
         }
     }
     
-    private var genericRequestDelegate: MEGAGenericRequestDelegate {
-        let genericRequestDelegate = MEGAGenericRequestDelegate {
-            _, error in
-            
-            if error.type != .apiOk {
-                self.user?.mnz_nickname = self.nickname
-                self.updateHandler(withNickname: self.nickname)
-            }
-        }
-        return genericRequestDelegate
-    }
+    // MARK:- Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = NSLocalizedString("Set Nickname",
-                                  comment: "Contact details screen: Set the alias(nickname) for a user")
+        title = NSLocalizedString("Set Nickname", comment: "Contact details screen: Set the alias(nickname) for a user")
         cancelBarButtonItem.title = NSLocalizedString("cancel", comment: "Cancels the add nickname screen")
         saveBarButtonItem.title = NSLocalizedString("save", comment: "Saves the new nickname")
-        nicknameLabel.text = NSLocalizedString("Alias/ Nickname",
-                                               comment: "Add nickname screen: This text appears above the alias(nickname) entry")
+        nicknameLabel.text = NSLocalizedString("Alias/ Nickname", comment: "Add nickname screen: This text appears above the alias(nickname) entry")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -65,7 +53,9 @@ class AddNickNameViewController: UIViewController {
     
     
     @IBAction func saveTapped(_ sender: UIBarButtonItem) {
-        saveNickname()
+        if MEGAReachabilityManager.isReachableHUDIfNot() {
+            saveNickname()
+        }
     }
     
     @IBAction func nicknameEdited(_ sender: UITextField) {
@@ -92,10 +82,17 @@ class AddNickNameViewController: UIViewController {
             return
         }
         
+        let genericRequestDelegate = MEGAGenericRequestDelegate { request, error in
+            if error.type == .apiOk {
+                self.user?.mnz_nickname = newNickname
+                self.updateHandler(withNickname: newNickname)
+            } else {
+                SVProgressHUD.showError(withStatus: request.requestString + " " + error.name)
+            }
+            
+            self.dismissViewController()
+        }
         MEGASdkManager.sharedMEGASdk().setUserAlias(newNickname, forHandle: user.handle, delegate: genericRequestDelegate)
-        user.mnz_nickname = newNickname
-        updateHandler(withNickname: newNickname)
-        dismissViewController()
     }
     
     private func dismissViewController() {
