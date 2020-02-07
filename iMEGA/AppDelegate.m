@@ -1336,7 +1336,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                 if (moUser) {
                     [[MEGAStore shareInstance] updateUserWithUserHandle:user.handle email:user.email];
                 } else {
-                    [[MEGAStore shareInstance] insertUserWithUserHandle:user.handle firstname:nil lastname:nil email:user.email];
+                    [MEGAStore.shareInstance insertUserWithUserHandle:user.handle firstname:nil lastname:nil nickname:nil email:user.email];
                 }
             }
             
@@ -1354,6 +1354,9 @@ void uncaughtExceptionHandler(NSException *exception) {
                     }
                     if ([user hasChangedType:MEGAUserChangeTypeLastname]) {
                         [[MEGASdkManager sharedMEGASdk] getUserAttributeType:MEGAUserAttributeLastname];
+                    }
+                    if ([user hasChangedType:MEGAUserChangeTypeUserAlias]) {
+                        [self fetchContactsNickname];
                     }
                     if ([user hasChangedType:MEGAUserChangeTypeRichPreviews]) {
                         [NSUserDefaults.standardUserDefaults removeObjectForKey:@"richLinks"];
@@ -1648,6 +1651,7 @@ void uncaughtExceptionHandler(NSException *exception) {
             
             [self requestUserName];
             [self requestContactsFullname];
+            [self fetchContactsNickname];
             
             [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self.mainTBC];
             
@@ -1701,7 +1705,15 @@ void uncaughtExceptionHandler(NSException *exception) {
             break;
             
         case MEGARequestTypeGetAttrUser: {
-            MEGAUser *user = (request.email == nil) ? [[MEGASdkManager sharedMEGASdk] myUser] : [api contactForEmail:request.email];
+            MEGAUser *user;
+            MEGAUser *me = MEGASdkManager.sharedMEGASdk.myUser;
+            
+            if (me.handle == request.nodeHandle) {
+                user = me;
+            } else if (request.email.length > 0) {
+                user = [api contactForEmail:request.email];
+            }
+                        
             if (user) {
                 MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithUserHandle:user.handle];
                 if (moUser) {
@@ -1714,14 +1726,14 @@ void uncaughtExceptionHandler(NSException *exception) {
                     }
                 } else {
                     if (request.paramType == MEGAUserAttributeFirstname) {
-                        [[MEGAStore shareInstance] insertUserWithUserHandle:user.handle firstname:request.text lastname:nil email:user.email];
+                        [MEGAStore.shareInstance insertUserWithUserHandle:user.handle firstname:request.text lastname:nil nickname:nil email:user.email];
                     }
                     
                     if (request.paramType == MEGAUserAttributeLastname) {
-                        [[MEGAStore shareInstance] insertUserWithUserHandle:user.handle firstname:nil lastname:request.text email:user.email];
+                        [MEGAStore.shareInstance insertUserWithUserHandle:user.handle firstname:nil lastname:request.text nickname:nil email:user.email];
                     }
                 }
-            } else {
+            } else if (request.email.length > 0) {
                 MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithEmail:request.email];
                 if (moUser) {
                     if (request.paramType == MEGAUserAttributeFirstname && ![request.text isEqualToString:moUser.firstname]) {
@@ -1733,13 +1745,15 @@ void uncaughtExceptionHandler(NSException *exception) {
                     }
                 } else {
                     if (request.paramType == MEGAUserAttributeFirstname) {
-                        [[MEGAStore shareInstance] insertUserWithUserHandle:[MEGASdk handleForBase64UserHandle:request.email] firstname:request.text lastname:nil email:request.email];
+                        [MEGAStore.shareInstance insertUserWithUserHandle:[MEGASdk handleForBase64UserHandle:request.email] firstname:request.text lastname:nil nickname:nil email:request.email];
                     }
                     
                     if (request.paramType == MEGAUserAttributeLastname) {
-                        [[MEGAStore shareInstance] insertUserWithUserHandle:[MEGASdk handleForBase64UserHandle:request.email] firstname:nil lastname:request.text email:request.email];
+                        [MEGAStore.shareInstance insertUserWithUserHandle:[MEGASdk handleForBase64UserHandle:request.email] firstname:nil lastname:request.text nickname:nil email:request.email];
                     }
                 }
+            } else if (request.paramType == MEGAUserAttributeAlias) {
+                [MEGAStore.shareInstance updateUserWithUserHandle:user.handle nickname:request.name context:nil];
             }
             break;
         }
@@ -1766,7 +1780,7 @@ void uncaughtExceptionHandler(NSException *exception) {
             if (moUser) {
                 [[MEGAStore shareInstance] updateUserWithUserHandle:request.nodeHandle email:request.email];
             } else {
-                [[MEGAStore shareInstance] insertUserWithUserHandle:request.nodeHandle firstname:nil lastname:nil email:request.email];
+                [MEGAStore.shareInstance insertUserWithUserHandle:request.nodeHandle firstname:nil lastname:nil nickname:nil email:request.email];
             }
             break;
         }
