@@ -13,6 +13,8 @@
 # Uncomment the line if you want fastlane to automatically update itself
 # update_fastlane
 
+APPCENTER_API_TOKEN = ENV["appcenter_api_token"]
+
 default_platform(:ios)
 
 platform :ios do
@@ -30,7 +32,7 @@ platform :ios do
     
 
     appcenter_upload(
-      api_token: "b25c907bbfa0795f61cd11b807f2ed4be64ef2d6",
+      api_token: APPCENTER_API_TOKEN,
       owner_name: "hl-mega.co.nz",
       app_name: "megatest",
       ipa: "./MEGA.ipa",
