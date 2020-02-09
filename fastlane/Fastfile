@@ -39,7 +39,7 @@ platform :ios do
       destinations: "Collaborators",
       destination_type: "group",
 
-      release_notes:`git log --pretty=format:%B%cI -1`
+      release_notes:`git log --pretty=format:%B%cI -10`
     )
   end
 end
