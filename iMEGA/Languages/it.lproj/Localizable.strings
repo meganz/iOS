@@ -278,6 +278,8 @@
 "choosePhotoVideo"="Scegli";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="Scatta";
+/* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
+"Scan Document"="Scansiona documento";
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="Nuova Cartella";
 /* Hint text shown on the create folder alert. */
@@ -506,7 +508,9 @@
 "oneItemSelected"="%lu item selezionato";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
 "itemsSelected"="%lu items selezionati";
-/* Title shown when multiselection is enable in chat tabs, and the user has more than one item selected. */
+/* String shown when multi selection is enabled and only one item has been selected. */
+"1 selected"="1 selected";
+/* String shown when multi selection is enabled and the user has more than one item selected. */
 "xSelected"="%d selezionati";
 /* Title of the Offline section */
 "offline"="Offline";
@@ -962,7 +966,7 @@
 /* Description to encourage users to add phone number to their accounts when there are not achievements */
 "Add your phone number to MEGA. This makes it easier for your contacts to find you on MEGA."="Aggiungi il tuo numero di telefono. Ciò renderà più facile per te trovare i tuoi contatti della tua rubrica su MEGA.";
 /* Description to unblock account by verifying phone number */
-"Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account."="Il tuo account è stato temporaneamente sospeso a causa di un potenziale abuso. Per favore, verifica il tuo numero di telefono per sbloccare il tuo account.";
+"Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account."="Il tuo account è stato temporaneamente bloccato a causa di un potenziale abuso. Per favore, verifica il tuo numero di telefono per sbloccare il tuo account.";
 /* Verify your account title */
 "Verify Your Account"="Verifica il tuo account";
 /* Add your phone number title */
@@ -1937,7 +1941,7 @@
 /* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
 "Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="Per favore, vai nella sezione Privacy delle Impostazioni del tuo dispositivo. Attiva i Servizi di Localizzazione ed imposta MEGA in Mentre usi l'app o Sempre.";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
-"MEGA accesses your location when you elect to share it with your contacts."="MEGA accede alla tua posizione quando scegli di condividerla con i tuoi contatti.";
+"NSLocationAlwaysAndWhenInUseUsageDescription"="MEGA accesses your location when you share it with your contacts in chat or when you enable ”Upload in Background” for Camera Uploads so your photos and videos are uploaded when your location changes.";
 /* Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
 "Mobile Data is turned off"="La Connessione dati è spenta";
 /* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */
@@ -2036,6 +2040,10 @@
 "You are back!"="Sei tornato.";
 /* Subtitle of chat screen when the chat is inactive */
 "Inactive chat"="Chat inattiva";
+/* Contact details screen: Set the alias(nickname) for a user */
+"Set Nickname"="Imposta un nickname";
+/* Add nickname screen: This text appears above the alias(nickname) entry */
+"Alias/ Nickname"="Alias/ Nickname";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
 "It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="Non è stato possibile ottenere il contenuto di questo file, in quanto non è codificato in UTF-8 né ISO/IEC 8859-1.";
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
@@ -2069,9 +2077,9 @@
 /* Message shown when verify phone number successfully */
 "Your phone number has been verified successfully"="Il tuo numero di telefono è stato verificato con successo";
 /* Text describing account suspended state to the user */
-"Your account has been temporarily suspended for your safety."="Il tuo account è stato temporaneamente sospeso per la tua sicurezza.";
+"Your account has been temporarily suspended for your safety."="Il tuo account è stato temporaneamente bloccato per la tua sicurezza.";
 /* Text indicating the user next step to unlock suspended account. Please leave [S], [/S] as it is which is used to bolden the text. */
-"[S]Please verify your email[/S] and follow its steps to unlock your account."="[S]Per favore, verifica il tuo indirizzo email[/S] e segui le istruzioni per sbloccare il tuo account.";
+"[S]Please verify your email[/S] and follow its steps to unlock your account."="[S]Per favore, verifica la tua email[/S] e segui le istruzioni nell'email di MEGA per sbloccare il tuo account.";
 /* Text for button to open an helping view */
 "Why am I seeing this?"="Perché sto vedendo questo?";
 /* Text to notify user an email has been sent */
@@ -2085,4 +2093,6 @@
 /* Setting title for Doc scan view */
 "Save Settings"="Save Settings";
 /* file type title, used in changing the export format of scaned doc */
-"File Type"="File Type";
+"File Type"="Tipo di file";
+/* export Quality Option for Scan document */
+"best"="Best";
