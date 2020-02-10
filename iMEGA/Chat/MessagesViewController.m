@@ -2131,7 +2131,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 }
 
 - (BOOL)canRecordAudio {
-    return !MEGASdkManager.sharedMEGAChatSdk.mnz_existsActiveCall
+    return !MEGASdkManager.sharedMEGAChatSdk.mnz_existsActiveCall;
 }
 
 #pragma mark - JSQMessages CollectionView DataSource
