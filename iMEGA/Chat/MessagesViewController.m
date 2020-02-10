@@ -1477,7 +1477,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             }
             if (call.status == MEGAChatCallStatusInProgress) {
                 [self configureTopBannerButtonForInProgressCall:call];
-            }  else if (self.chatRoom.group || call.status == MEGAChatCallStatusRequestSent) {
+            }  else if (call.status == MEGAChatCallStatusUserNoPresent || call.status == MEGAChatCallStatusRequestSent || call.status == MEGAChatCallStatusRingIn) {
                 [self configureTopBannerButtonForActiveCall:call];
             }
             [self showTopBannerButton];
