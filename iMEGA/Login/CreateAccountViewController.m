@@ -80,11 +80,9 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     self.lastNameInputView.inputTextField.returnKeyType = UIReturnKeyNext;
     self.lastNameInputView.inputTextField.delegate = self;
     self.lastNameInputView.inputTextField.tag = LastNameTextFieldTag;
-    if (@available(iOS 10.0, *)) {
-        self.firstNameInputView.inputTextField.textContentType = UITextContentTypeGivenName;
-        self.lastNameInputView.inputTextField.textContentType = UITextContentTypeFamilyName;
-    }
-    
+    self.firstNameInputView.inputTextField.textContentType = UITextContentTypeGivenName;
+    self.lastNameInputView.inputTextField.textContentType = UITextContentTypeFamilyName;
+
     self.emailInputView.inputTextField.returnKeyType = UIReturnKeyNext;
     self.emailInputView.inputTextField.delegate = self;
     self.emailInputView.inputTextField.tag = EmailTextFieldTag;

@@ -287,7 +287,7 @@
                         [actions addObject:[self actionShare]];
                     }
                     
-                    if (self.node.isFile && [NSUserDefaults.standardUserDefaults boolForKey:@"IsChatEnabled"]) {
+                    if (self.node.isFile) {
                         [actions addObject:[self actionSendToChat]];
                     }
                     
@@ -310,6 +310,13 @@
                     [actions addObject:[self actionDownload]];
                     [actions addObject:[self actionRevertVersion]];
                     [actions addObject:[self actionRemove]];
+                } else if (self.displayMode == DisplayModeChatAttachment) {
+                    [actions addObject:[self actionFileInfo]];
+                    if (self.node.isFile && (self.node.name.mnz_imagePathExtension || (self.node.name.mnz_videoPathExtension && self.node.mnz_isPlayable))) {
+                        [actions addObject:[self actionSaveToPhotos]];
+                    }
+                    [actions addObject:[self actionDownload]];
+                    [actions addObject:[self actionShare]];
                 } else {
                     [actions addObject:[self actionFileInfo]];
                     if (self.node.isFile && (self.node.name.mnz_imagePathExtension || (self.node.name.mnz_videoPathExtension && self.node.mnz_isPlayable))) {

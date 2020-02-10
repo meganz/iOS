@@ -103,8 +103,7 @@
                 break;
                 
             case MEGAErrorTypeApiEBlocked:
-                message = AMLocalizedString(@"accountBlocked", @"Error message when trying to login and the account is suspended");
-                break;
+                return;
                 
             case MEGAErrorTypeApiEMFARequired:
                 if (self.errorCompletion) self.errorCompletion(error);

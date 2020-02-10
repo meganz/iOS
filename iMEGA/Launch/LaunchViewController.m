@@ -76,6 +76,7 @@
     
     if (request.type == MEGARequestTypeFetchNodes) {
         [self.delegate setupFinished];
+        [self.delegate readyToShowRecommendations];
     }
 }
 

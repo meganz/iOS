@@ -2,6 +2,7 @@
 #import "DevicePermissionsHelper.h"
 
 #import <AVFoundation/AVFoundation.h>
+#import <Contacts/Contacts.h>
 #import <Photos/Photos.h>
 #import <UserNotifications/UserNotifications.h>
 
@@ -55,26 +56,25 @@
 }
 
 + (void)notificationsPermissionWithCompletionHandler:(void (^)(BOOL granted))handler {
-    if (@available(iOS 10.0, *)) {
-        [UNUserNotificationCenter.currentNotificationCenter requestAuthorizationWithOptions:(UNAuthorizationOptionBadge | UNAuthorizationOptionSound | UNAuthorizationOptionAlert) completionHandler:^(BOOL granted, NSError * _Nullable error) {
-            if (handler) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    handler(granted);
-                });
-            }
-        }];
-    } else {
-        #pragma clang diagnostic push
-        #pragma clang diagnostic ignored "-Wdeprecated-declarations"
-        [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound categories:nil]];
-        #pragma clang diagnostic pop
+    [UNUserNotificationCenter.currentNotificationCenter requestAuthorizationWithOptions:(UNAuthorizationOptionBadge | UNAuthorizationOptionSound | UNAuthorizationOptionAlert) completionHandler:^(BOOL granted, NSError * _Nullable error) {
         if (handler) {
-            handler(NO);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                handler(granted);
+            });
         }
-    }
+    }];
 }
 
-
++ (void)contactsPermissionWithCompletionHandler:(void (^)(BOOL granted))handler {
+    CNContactStore *contactStore = CNContactStore.new;
+    [contactStore requestAccessForEntityType:CNEntityTypeContacts completionHandler:^(BOOL granted, NSError * _Nullable error) {
+        if (handler) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                handler(granted);
+            });
+        }
+    }];
+}
 
 #pragma mark - Alerts
 
@@ -187,22 +187,22 @@
 
 + (BOOL)shouldAskForNotificationsPermissions {
     __block BOOL shouldAskForNotificationsPermissions = NO;
-    if (@available(iOS 10.0, *)) {
-        dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
-        [UNUserNotificationCenter.currentNotificationCenter getNotificationSettingsWithCompletionHandler:^(UNNotificationSettings * _Nonnull settings) {
-            if (settings.authorizationStatus == UNAuthorizationStatusNotDetermined) {
-                shouldAskForNotificationsPermissions = YES;
-            }
-            dispatch_semaphore_signal(semaphore);
-        }];
-        double delayInSeconds = 10.0;
-        dispatch_time_t waitTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-        dispatch_semaphore_wait(semaphore, waitTime);
-    } else {
-        shouldAskForNotificationsPermissions = !UIApplication.sharedApplication.isRegisteredForRemoteNotifications;
-    }
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+    [UNUserNotificationCenter.currentNotificationCenter getNotificationSettingsWithCompletionHandler:^(UNNotificationSettings * _Nonnull settings) {
+        if (settings.authorizationStatus == UNAuthorizationStatusNotDetermined) {
+            shouldAskForNotificationsPermissions = YES;
+        }
+        dispatch_semaphore_signal(semaphore);
+    }];
+    double delayInSeconds = 10.0;
+    dispatch_time_t waitTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_semaphore_wait(semaphore, waitTime);
     
     return shouldAskForNotificationsPermissions;
+}
+
++ (BOOL)shouldAskForContactsPermissions {
+    return [CNContactStore authorizationStatusForEntityType:CNEntityTypeContacts] == CNAuthorizationStatusNotDetermined;
 }
 
 + (BOOL)shouldSetupPermissions {
@@ -210,8 +210,9 @@
     BOOL shouldAskForVideoPermissions = self.shouldAskForVideoPermissions;
     BOOL shouldAskForPhotosPermissions = self.shouldAskForPhotosPermissions;
     BOOL shouldAskForNotificationsPermissions = self.shouldAskForNotificationsPermissions;
-    
-    return shouldAskForAudioPermissions || shouldAskForVideoPermissions || shouldAskForPhotosPermissions || shouldAskForNotificationsPermissions;
+    BOOL shouldAskForContactsPermissions = self.shouldAskForContactsPermissions;
+
+    return shouldAskForAudioPermissions || shouldAskForVideoPermissions || shouldAskForPhotosPermissions || shouldAskForNotificationsPermissions || shouldAskForContactsPermissions;
 }
 
 + (BOOL)isAudioPermissionAuthorizedOrNotDetermined {

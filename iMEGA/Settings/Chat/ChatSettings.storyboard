@@ -16,55 +16,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <sections>
-                            <tableViewSection id="ccU-TU-haZ" userLabel="CHAT">
-                                <cells>
-                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="0NW-mg-L5E" userLabel="Chat Table View Cell">
-                                        <rect key="frame" x="0.0" y="18" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="0NW-mg-L5E" id="5xf-Nc-a57">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chat" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FY1-wX-1My">
-                                                    <rect key="frame" x="16" y="12" width="36.5" height="20"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="8ys-wU-1hr">
-                                                    <rect key="frame" x="310" y="6.5" width="51" height="31"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="49" id="Iv3-ua-6qC"/>
-                                                    </constraints>
-                                                    <connections>
-                                                        <action selector="chatValueChanged:" destination="er2-Fn-lfg" eventType="valueChanged" id="Bxa-No-uHL"/>
-                                                    </connections>
-                                                </switch>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="8ys-wU-1hr" firstAttribute="trailing" secondItem="5xf-Nc-a57" secondAttribute="trailingMargin" id="9Bc-Vs-fdI"/>
-                                                <constraint firstItem="FY1-wX-1My" firstAttribute="centerY" secondItem="5xf-Nc-a57" secondAttribute="centerY" id="USr-rH-Nmm"/>
-                                                <constraint firstItem="FY1-wX-1My" firstAttribute="leading" secondItem="5xf-Nc-a57" secondAttribute="leadingMargin" id="iGh-4i-O22"/>
-                                                <constraint firstItem="FY1-wX-1My" firstAttribute="leading" secondItem="5xf-Nc-a57" secondAttribute="leadingMargin" id="pKe-Md-Goe"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="8ys-wU-1hr" secondAttribute="trailing" id="rm7-NW-KHE"/>
-                                                <constraint firstItem="8ys-wU-1hr" firstAttribute="centerY" secondItem="5xf-Nc-a57" secondAttribute="centerY" id="vVF-l4-QbO"/>
-                                                <constraint firstItem="8ys-wU-1hr" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="FY1-wX-1My" secondAttribute="trailing" constant="8" id="yRc-J7-mov"/>
-                                            </constraints>
-                                            <variation key="default">
-                                                <mask key="constraints">
-                                                    <exclude reference="iGh-4i-O22"/>
-                                                    <exclude reference="9Bc-Vs-fdI"/>
-                                                </mask>
-                                            </variation>
-                                        </tableViewCellContentView>
-                                        <color key="backgroundColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
                             <tableViewSection id="nF9-NJ-UPV" userLabel="STATUS">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="dmC-l2-KSe" detailTextLabel="ryg-f2-PvZ" style="IBUITableViewCellStyleValue1" id="uCX-Dg-3hz" userLabel="Status Table View Cell">
-                                        <rect key="frame" x="0.0" y="97.5" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="35" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uCX-Dg-3hz" id="xoE-BN-Rq5">
                                             <rect key="frame" x="0.0" y="0.0" width="348" height="44"/>
@@ -93,7 +48,7 @@
                             <tableViewSection footerTitle="Enhance the MEGAchat experience. URL content will be retrieved without end-to-end encryption." id="vGa-mh-a18" userLabel="RICH PREVIEWS">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="cL9-c1-YGJ" userLabel="Use mobile data Table View Cell">
-                                        <rect key="frame" x="0.0" y="177" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="99" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="cL9-c1-YGJ" id="IfR-nI-PY0">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -138,7 +93,7 @@
                             <tableViewSection id="ehf-F0-uHn" userLabel="VIDEO QUALITY">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="PvF-TJ-KqG" detailTextLabel="waA-RD-zxW" style="IBUITableViewCellStyleValue1" id="crP-PW-TFd" userLabel="Video quality Table View Cell">
-                                        <rect key="frame" x="0.0" y="285" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="199" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="crP-PW-TFd" id="3H2-oO-cLL">
                                             <rect key="frame" x="0.0" y="0.0" width="348" height="44"/>
@@ -177,8 +132,6 @@
                         <barButtonItem key="backBarButtonItem" title=" " id="4km-6t-WFt"/>
                     </navigationItem>
                     <connections>
-                        <outlet property="chatLabel" destination="FY1-wX-1My" id="EfD-Gu-OjV"/>
-                        <outlet property="chatSwitch" destination="8ys-wU-1hr" id="1l9-KQ-PEE"/>
                         <outlet property="richPreviewsLabel" destination="fkD-bH-uof" id="dsH-N0-b3O"/>
                         <outlet property="richPreviewsSwitch" destination="bKk-pd-RXW" id="5kK-zG-Npw"/>
                         <outlet property="statusLabel" destination="dmC-l2-KSe" id="eps-kf-BPw"/>
