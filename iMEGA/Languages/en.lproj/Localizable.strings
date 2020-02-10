@@ -21,6 +21,8 @@
 /* "Size" of the file or folder you are sharing */
 "size"="Size";
 /*  */
+"Quality"="Quality";
+/*  */
 "folder"="Folder";
 /* Error message shown when there's no camera available on the device */
 "noCamera"="No camera available";
@@ -43,7 +45,7 @@
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="Enter decryption key";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertMessage"="To access this folder/file, you will need its Decryption key. If you do not have the key, please contact the creator of the link.";
+"decryptionKeyAlertMessage"="To access this folder/file, you will need its Decryption key. If you do not have the key, contact the creator of the link.";
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="Decryption key";
 /* Button title to try to decrypt the link */
@@ -140,10 +142,6 @@
 "Confirm account"="Confirm account";
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
 "passwordWrong"="Wrong password";
-/* Warning title shown when you try to confirm an account but you are logged in with another one */
-"alreadyLoggedInAlertTitle"="You are logged in with another account";
-/* Warning message shown when you try to confirm an account but you are logged in with another one */
-"alreadyLoggedInAlertMessage"="If you agree, the current account will be logged out and all Offline data will be erased. Do you want to continue?";
 /* Error shown when the user tries to change his mail to one that is already used */
 "emailAlreadyInUse"="Error. This email address is already in use.";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
@@ -560,10 +558,6 @@
 "addContactButton"="Add";
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="There’s no need to add your own email address";
-/* Add contacts and share dialog error message when user try to add already existing email address. */
-"alreadyHaveAContactWithThatEmailAddress"="You already have a contact with that email address";
-/* Add contacts and share dialog error message when user try to add already existing email address. */
-"invitationAlreadySentToContactBefore"="The invitation to contact %@ has been sent before and can be consulted in the Sent Requests tab.";
 /* Success message shown when a contact has been invited */
 "theUserHasBeenInvited"="The user [X] has been invited and will appear in your contact list once accepted.";
 /* Success message shown when some contacts have been invited */
@@ -829,7 +823,7 @@
 /* An alert title where the user provided the incorrect Recovery Key. */
 "invalidRecoveryKey"="Invalid Recovery Key";
 /* Text of the alert after opening the recovery link to reset pass being logged. */
-"youRecoveryKeyIsGoingTo"="Your Recovery Key is going to be used to reset your password. Please, enter your new password.";
+"youRecoveryKeyIsGoingTo"="Your Recovery Key is going to be used to reset your password. Please enter your new password.";
 /*  */
 "yourPasswordHasBeenReset"="Your password has been reset successfully. Please log into your account now.";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
@@ -959,6 +953,22 @@
 "xDaysLeft"="%1 days left";
 /* %1 will be replaced by a numeric value and %2 will be 'days' or 'months', for example (Expires in [S]10[/S] days) */
 "bonusExpiresIn"="(Bonus expires in [S]%1[/S] %2)";
+/* Add Phone Number title  */
+"Add Phone Number"="Add phone number";
+/* Achievement explanation for add phone number */
+"You have received %1$s storage space and %2$s transfer quota for verifying your phone number."="You have received %1$s storage space and %2$s transfer quota for verifying your phone number.";
+/* Free storage description to encourage users to add phone number to their accounts */
+"Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."="Get %@ free when you add your phone number. This makes it easier for your contacts to find you on MEGA.";
+/* Description to encourage users to add phone number to their accounts when there are not achievements */
+"Add your phone number to MEGA. This makes it easier for your contacts to find you on MEGA."="Add your phone number to MEGA. This makes it easier for your contacts to find you on MEGA.";
+/* Description to unblock account by verifying phone number */
+"Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account."="Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account.";
+/* Verify your account title */
+"Verify Your Account"="Verify your account";
+/* Add your phone number title */
+"Add Your Phone Number"="Add your phone number";
+/* Choose Your Country title */
+"Choose Your Country"="Choose your country";
 /* Used to display the number of months a plan was purchased for e.g. 3 months, 6 months. */
 "months"="months";
 /*  */
@@ -1089,8 +1099,6 @@
 "noConversations"="No Conversations";
 /* Empty Conversations description */
 "Start chatting securely with your contacts using end-to-end encryption"="Start chatting securely with your contacts using end-to-end encryption";
-/* Title show when the chat is disabled */
-"chatIsDisabled"="Chat is disabled";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
 "enable"="Enable";
 /* A button on a dialog which invites a contact to join MEGA. */
@@ -1155,6 +1163,10 @@
 "sendMessage"="Send Message";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
 "verifyCredentials"="Verify Credentials";
+/* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
+"verify"="Verify";
+/* Button title */
+"verified"="Verified";
 /* A button title to delete the history of a chat. */
 "clearChatHistory"="Clear Chat History";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
@@ -1409,7 +1421,7 @@
 /* Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible. */
 "autoAccept"="Auto-Accept";
 /* Footer that explains the way Auto-Accept works for QR codes */
-"autoAcceptFooter"="Contacts that scan your QR Code will be automatically added to your contact list.";
+"autoAcceptFooter"="MEGA users who scan your QR code will be automatically added to your contact list.";
 /* Action to reset the current valid QR code of the user */
 "resetQrCode"="Reset QR Code";
 /* Footer that explains what would happen if the user resets his/her QR code */
@@ -1645,7 +1657,7 @@
 /* Detailed explanation of why the user should give permission to deliver notifications */
 "We would like to send you notifications so you receive new messages on your device instantly."="We would like to send you notifications so you receive new messages on your device instantly.";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
-"Allow Access"="Allow Access";
+"Allow Access"="Enable access";
 /* A section header which contains the file management settings. These settings allow users to remove duplicate files etc. */
 "File Management"="File Management";
 /* Title of the option to enable or disable file versioning on Settings section */
@@ -1671,7 +1683,7 @@
 /* A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days. */
 "Remove files older than"="Remove files older than";
 /* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
-"Days"="days";
+"Days"="Days";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
 "The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="The Rubbish Bin is cleared for you automatically. The minimum period is 7 days and the maximum period is 30 days.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
@@ -1864,6 +1876,8 @@
 "Tap and hold %@ to record, release to send"="Tap and hold %@ to record, release to send";
 /* Message shown when there is an ongoing call and the user tries to record a voice message */
 "It is not possible to record voice messages while there is a call in progress"="It is not possible to record voice messages while there is a call in progress.";
+/* Label indicating that a voice clip is being recorded. String as short as possible. */
+"Recording..."="Recording…";
 /* Text to inform the user there is an active call and is not participating */
 "Ongoing Call"="Ongoing Call";
 /* Message shown when there is an ongoing call and the user tries to play an audio or video */
@@ -1934,6 +1948,34 @@
 "Change to a test server?"="Change to a test server?";
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Are you sure you want to change to a test server? Your account may suffer irrecoverable problems";
+/* Title label that explains that the user is going to be asked for the contacts permission */
+"Enable Access to Contacts"="Enable access to contacts";
+/* Detailed explanation of why the user should give permission to contacts */
+"MEGA needs access to your contacts to help you connect with other people on MEGA."="MEGA needs access to your contacts to help you connect with other people on MEGA.";
+/* Title encouraging the user to check who of its contacts are using MEGA */
+"See who's already on MEGA"="See who is already on MEGA";
+/* Title showing the user how many of his contacts are using MEGA */
+"[X] contacts found on MEGA"="[X] contacts found on MEGA";
+/* Title showing the user that one of his contacts are using MEGA */
+"1 contact found on MEGA"="1 contact found on MEGA";
+/* Text indicating the user to perform an action to grant some permission */
+"Enable Access"="Enable access";
+/* Text indicating the user to open the device settings for MEGA */
+"Open Settings"="Open Settings";
+/* Text encouraging the user to invite contacts to MEGA */
+"Invite contacts and start chatting securely with MEGA’s encrypted chat."="Invite contacts and start chatting securely with MEGA’s encrypted chat.";
+/* Text showing the user how many contacts would be invited */
+"Invite [X] contacts"="Invite [X] contacts";
+/* Text showing the user how to write more than one email in order to invite them to MEGA */
+"Tap space to enter multiple emails"="Tap space to enter multiple emails";
+/* Text used as a section title or similar */
+"Enter Email"="Enter Email";
+/* Text used as view title showing the user the phone contacts using MEGA */
+"On MEGA"="On MEGA";
+/* Text used as a section title or similar showing the user the phone contacts using MEGA */
+"CONTACTS ON MEGA"="CONTACTS ON MEGA";
+/* Text to send as SMS message to user contacts inviting them to MEGA */
+"Hi, Have encrypted conversations on Mega with me and get 50GB free storage."="Hi! Have secure conversations on MEGA with me and get up to 50GB free storage.";
 /* Destination folder name of chat files */
 "My chat files"="My chat files";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
@@ -1950,8 +1992,6 @@
 "Links"="Links";
 /* Title for empty state view of "Links" in Shared Items. */
 "No Public Links"="No Public Links";
-/* Text to indicate that the user will leave an incoming shared folder. */
-"Leave Share"="Leave share";
 /* Text indicating to the user the action that will be executed on tap. */
 "Manage Share"="Manage share";
 /* Title of the screen that shows the users with whom the user can share a folder */
@@ -1998,3 +2038,51 @@
 "Inactive chat"="Inactive chat";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
 "It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1.";
+/* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
+"Include location tags"="Include location tags";
+/* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
+"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them.";
+/* Error message shown when opening a link with an account that not corresponds to the link */
+"This link is not related to this account. Please log in with the correct account."="This link is not related to this account. Please log in with the correct account.";
+/* Text emncouraging the user to add contacts in MEGA */
+"Invite contact now"="Invite contacts now";
+/* Text showing the user one contact would be invited */
+"Invite 1 contact"="Invite 1 contact";
+/* Error message if user click next button without enter a valid phone number */
+"Please enter a valid phone number"="Please supply a valid phone number.";
+/* Error message that will show to user when user reached the sms verification daily limit */
+"You have reached the daily limit"="You have reached the daily limit";
+/* Error message that will show to user when user entered invalid verification code */
+"Wrong code. Please try again or resend."="Wrong code. Please try again or resend.";
+/* Error message that will show to user when host detected that the mobile number has been registered already */
+"This number is already associated with a Mega account"="This number is already associated with a MEGA account.";
+/* Country label for a button, title, etc. */
+"Country"="Country";
+/* Error message that will show to user its account is already verified */
+"Your account is already verified"="Your account is already verified";
+/* Place holder for enter mobile number field */
+"Your phone number"="Your phone number";
+/* Label tell user to enter received txt to below input boxes */
+"Please type the verification code sent to"="Please type the verification code sent to";
+/* Text message to remind user to resend verification code */
+"You didn't receive a code?"="You didn’t receive a code?";
+/* Message shown when verify phone number successfully */
+"Your phone number has been verified successfully"="Your phone number has been verified successfully";
+/* Text describing account suspended state to the user */
+"Your account has been temporarily suspended for your safety."="Your account has been temporarily suspended for your safety.";
+/* Text indicating the user next step to unlock suspended account. Please leave [S], [/S] as it is which is used to bolden the text. */
+"[S]Please verify your email[/S] and follow its steps to unlock your account."="[S]Please verify your email[/S] and follow its steps to unlock your account.";
+/* Text for button to open an helping view */
+"Why am I seeing this?"="Why am I seeing this?";
+/* Text to notify user an email has been sent */
+"Email sent"="Email sent";
+/* Title of a helping view about locked accounts */
+"Locked Accounts"="Locked Accounts";
+/* Locked accounts description text by an external data breach. This text is 1 of 2 paragraph of a description. */
+"It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.";
+/* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
+"Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.";
+/* Setting title for Doc scan view */
+"Save Settings"="Save Settings";
+/* file type title, used in changing the export format of scaned doc */
+"File Type"="File Type";

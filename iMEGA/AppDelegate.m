@@ -13,6 +13,7 @@
 
 #import "Helper.h"
 #import "DevicePermissionsHelper.h"
+#import "MEGA-Swift.h"
 #import "MEGAApplication.h"
 #import "MEGAIndexer.h"
 #import "MEGALinkManager.h"
@@ -73,7 +74,6 @@
 @property (nonatomic, strong) UIView *privacyView;
 
 @property (nonatomic, strong) NSString *quickActionType;
-@property (nonatomic, strong) NSString *messageForSuspendedAccount;
 
 @property (nonatomic, strong) UIAlertController *API_ESIDAlertController;
 
@@ -110,6 +110,15 @@
 
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
+    
+    [SAMKeychain setAccessibilityType:kSecAttrAccessibleAfterFirstUnlock];
+    
+    NSError *error;
+    [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3" error:&error];
+    if (error.code == errSecInteractionNotAllowed) {
+        exit(0);
+    }
+
 #ifdef DEBUG
     [MEGASdk setLogLevel:MEGALogLevelMax];
     [MEGAChatSdk setCatchException:false];
@@ -168,8 +177,6 @@
     
     self.backgroundTaskMutableDictionary = [[NSMutableDictionary alloc] init];
     
-    [SAMKeychain setAccessibilityType:kSecAttrAccessibleAfterFirstUnlock];
-    
     NSString *sessionV3 = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
     
     //Clear keychain (session) and delete passcode on first run in case of reinstallation
@@ -204,35 +211,24 @@
         
         isAccountFirstLogin = NO;
         
-        if ([[NSUserDefaults standardUserDefaults] objectForKey:@"IsChatEnabled"] == nil) {
-            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"IsChatEnabled"];
-            [sharedUserDefaults setBool:YES forKey:@"IsChatEnabled"];
-            [[NSUserDefaults standardUserDefaults] synchronize];
+        if ([MEGASdkManager sharedMEGAChatSdk] == nil) {
+            [MEGASdkManager createSharedMEGAChatSdk];
         } else {
-            BOOL isChatEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"];
-            [sharedUserDefaults setBool:isChatEnabled forKey:@"IsChatEnabled"];
+            [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
         }
         
-        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"]) {
-            if ([MEGASdkManager sharedMEGAChatSdk] == nil) {
-                [MEGASdkManager createSharedMEGAChatSdk];
-            } else {
-                [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
-            }
-            
-            MEGAChatInit chatInit = [[MEGASdkManager sharedMEGAChatSdk] initKarereWithSid:sessionV3];
-            if (chatInit == MEGAChatInitError) {
-                MEGALogError(@"Init Karere with session failed");
-                NSString *message = [NSString stringWithFormat:@"Error (%ld) initializing the chat", (long)chatInit];
-                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:message preferredStyle:UIAlertControllerStyleAlert];
-                [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-                [[MEGASdkManager sharedMEGAChatSdk] logout];
-                [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
-            }
+        MEGAChatInit chatInit = [MEGASdkManager.sharedMEGAChatSdk initKarereWithSid:sessionV3];
+        if (chatInit == MEGAChatInitError) {
+            MEGALogError(@"Init Karere with session failed");
+            NSString *message = [NSString stringWithFormat:@"Error (%ld) initializing the chat", (long)chatInit];
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:message preferredStyle:UIAlertControllerStyleAlert];
+            [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
+            [[MEGASdkManager sharedMEGAChatSdk] logout];
+            [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
         }
         
         MEGALoginRequestDelegate *loginRequestDelegate = [[MEGALoginRequestDelegate alloc] init];
-        [[MEGASdkManager sharedMEGASdk] fastLoginWithSession:sessionV3 delegate:loginRequestDelegate];
+        [MEGASdkManager.sharedMEGASdk fastLoginWithSession:sessionV3 delegate:loginRequestDelegate];
         
         if ([MEGAReachabilityManager isReachable]) {
             LaunchViewController *launchVC = [[UIStoryboard storyboardWithName:@"Launch" bundle:nil] instantiateViewControllerWithIdentifier:@"LaunchViewControllerID"];
@@ -342,7 +338,8 @@
     
     MEGAHandleList *chatRoomIDsWithCallInProgress = [MEGASdkManager.sharedMEGAChatSdk chatCallsWithState:MEGAChatCallStatusInProgress];
     MEGAHandleList *chatRoomIDsWithCallRequestSent = [MEGASdkManager.sharedMEGAChatSdk chatCallsWithState:MEGAChatCallStatusRequestSent];
-    if (self.wasAppSuspended && (chatRoomIDsWithCallInProgress.size == 0) && (chatRoomIDsWithCallRequestSent.size == 0)) {
+    MEGAHandleList *chatRoomIDsWithCallJoining = [MEGASdkManager.sharedMEGAChatSdk chatCallsWithState:MEGAChatCallStatusJoining];
+    if (self.wasAppSuspended && (chatRoomIDsWithCallInProgress.size == 0) && (chatRoomIDsWithCallRequestSent.size == 0) && (chatRoomIDsWithCallJoining.size == 0)) {
         //If the app has been suspended, we assume that the sockets have been closed, so we have to reconnect.
         [[MEGAReachabilityManager sharedManager] reconnect];
     } else {
@@ -402,11 +399,6 @@
     [self manageLink:url];
     
     return YES;
-}
-
-- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings {
-    MEGALogDebug(@"[App Lifecycle] Application did register user notification settings");
-    [application registerForRemoteNotifications];
 }
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
@@ -582,15 +574,6 @@
     [self.indexer stopIndexing];
 }
 
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
-    MEGALogDebug(@"[App Lifecycle] Application did receive remote notification");
-    
-    if (application.applicationState == UIApplicationStateInactive) {
-        _megatype = [[userInfo objectForKey:@"megatype"] unsignedIntegerValue];
-        [self openTabBasedOnNotificationMegatype];
-    }
-}
-
 - (void)application:(UIApplication *)application handleEventsForBackgroundURLSession:(NSString *)identifier completionHandler:(void (^)(void))completionHandler {
     MEGALogDebug(@"[App Lifecycle] application handle events for background session: %@", identifier);
     [TransferSessionManager.shared saveSessionCompletion:completionHandler forIdentifier:identifier];
@@ -641,8 +624,12 @@
 
 - (void)manageLink:(NSURL *)url {
     if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
-        if (![LTHPasscodeViewController doesPasscodeExist] && isFetchNodesDone) {
-            [self showLink:url];
+        if (![LTHPasscodeViewController doesPasscodeExist]) {
+            if ([UIApplication.mnz_visibleViewController isKindOfClass:VerifyEmailViewController.class] && [url.absoluteString containsString:@"emailverify"]) {
+                [self showLink:url];
+            } else if (isFetchNodesDone) {
+                [self showLink:url];
+            }
         }
     } else {
         [self showLink:url];
@@ -652,9 +639,13 @@
 - (void)showLink:(NSURL *)url {
     if (!MEGALinkManager.linkURL) return;
     
-    [self dismissPresentedViewsAndDo:^{
+    if ([UIApplication.mnz_visibleViewController isKindOfClass:VerifyEmailViewController.class] && [url.absoluteString containsString:@"emailverify"]) {
         [MEGALinkManager processLinkURL:url];
-    }];
+    } else {
+        [self dismissPresentedViewsAndDo:^{
+            [MEGALinkManager processLinkURL:url];
+        }];
+    }
 }
 
 - (void)dismissPresentedViewsAndDo:(void (^)(void))completion {
@@ -969,19 +960,14 @@ void uncaughtExceptionHandler(NSException *exception) {
         groupCallVC.videoCall = self.videoCall;
         groupCallVC.chatRoom = self.chatRoom;
         groupCallVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-        
-        if (@available(iOS 10.0, *)) {
-            groupCallVC.megaCallManager = [self.mainTBC megaCallManager];
-        }
+        groupCallVC.megaCallManager = [self.mainTBC megaCallManager];
         [self.mainTBC presentViewController:groupCallVC animated:YES completion:nil];
     } else {
         CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
         callVC.chatRoom = self.chatRoom;
         callVC.videoCall = self.videoCall;
         callVC.callType = CallTypeOutgoing;
-        if (@available(iOS 10.0, *)) {
-            callVC.megaCallManager = [self.mainTBC megaCallManager];
-        }
+        callVC.megaCallManager = [self.mainTBC megaCallManager];
         [self.mainTBC presentViewController:callVC animated:YES completion:nil];
     }
     self.chatRoom = nil;
@@ -1206,22 +1192,20 @@ void uncaughtExceptionHandler(NSException *exception) {
         
         if (!DevicePermissionsHelper.shouldAskForNotificationsPermissions) {
             [DevicePermissionsHelper notificationsPermissionWithCompletionHandler:^(BOOL granted) {
-                if (@available(iOS 10.0, *)) {
-                    if (granted && !DevicePermissionsHelper.shouldAskForAudioPermissions) {
-                        [DevicePermissionsHelper audioPermissionModal:NO forIncomingCall:YES withCompletionHandler:^(BOOL granted) {
-                            if (!granted) {
-                                UNMutableNotificationContent *content = [UNMutableNotificationContent new];
-                                content.body = AMLocalizedString(@"Incoming call", @"notification subtitle of incoming calls");
-                                content.sound = [UNNotificationSound soundNamed:@"incoming_voice_video_call_iOS9.mp3"];
-                                UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:1 repeats:NO];
-                                NSString *identifier = @"Incoming call";
-                                UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:identifier
-                                                                                                      content:content
-                                                                                                      trigger:trigger];
-                                [UNUserNotificationCenter.currentNotificationCenter addNotificationRequest:request withCompletionHandler:nil];
-                            }
-                        }];
-                    }
+                if (granted && !DevicePermissionsHelper.shouldAskForAudioPermissions) {
+                    [DevicePermissionsHelper audioPermissionModal:NO forIncomingCall:YES withCompletionHandler:^(BOOL granted) {
+                        if (!granted) {
+                            UNMutableNotificationContent *content = [UNMutableNotificationContent new];
+                            content.body = AMLocalizedString(@"Incoming call", @"notification subtitle of incoming calls");
+                            content.sound = [UNNotificationSound soundNamed:@"incoming_voice_video_call_iOS9.mp3"];
+                            UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:1 repeats:NO];
+                            NSString *identifier = @"Incoming call";
+                            UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:identifier
+                                                                                                  content:content
+                                                                                                  trigger:trigger];
+                            [UNUserNotificationCenter.currentNotificationCenter addNotificationRequest:request withCompletionHandler:nil];
+                        }
+                    }];
                 }
             }];
         }
@@ -1268,18 +1252,14 @@ void uncaughtExceptionHandler(NSException *exception) {
     completionHandler(UNNotificationPresentationOptionAlert | UNNotificationPresentationOptionSound);
 }
 
-- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
-    if (@available(iOS 10, *)) {} else {
-        if ([[UIApplication sharedApplication] applicationState] != UIApplicationStateActive) {
-            [self.mainTBC openChatRoomNumber:notification.userInfo[@"chatId"]];
-        }
-    }
-}
-
 #pragma mark - LaunchViewControllerDelegate
 
 - (void)setupFinished {
     [self showMainTabBar];
+}
+
+- (void)readyToShowRecommendations {
+    [self showAddPhoneNumberIfNeeded];
 }
 
 #pragma mark - MEGAPurchasePricingDelegate
@@ -1306,7 +1286,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                 if (moUser) {
                     [[MEGAStore shareInstance] updateUserWithUserHandle:user.handle email:user.email];
                 } else {
-                    [[MEGAStore shareInstance] insertUserWithUserHandle:user.handle firstname:nil lastname:nil email:user.email];
+                    [MEGAStore.shareInstance insertUserWithUserHandle:user.handle firstname:nil lastname:nil nickname:nil email:user.email];
                 }
             }
             
@@ -1324,6 +1304,9 @@ void uncaughtExceptionHandler(NSException *exception) {
                     }
                     if ([user hasChangedType:MEGAUserChangeTypeLastname]) {
                         [[MEGASdkManager sharedMEGASdk] getUserAttributeType:MEGAUserAttributeLastname];
+                    }
+                    if ([user hasChangedType:MEGAUserChangeTypeUserAlias]) {
+                        [self fetchContactsNickname];
                     }
                     if ([user hasChangedType:MEGAUserChangeTypeRichPreviews]) {
                         [NSUserDefaults.standardUserDefaults removeObjectForKey:@"richLinks"];
@@ -1374,13 +1357,14 @@ void uncaughtExceptionHandler(NSException *exception) {
 }
 
 - (void)onEvent:(MEGASdk *)api event:(MEGAEvent *)event {
+    MEGALogDebug(@"on event type %lu, number %lu", event.type, event.number);
     switch (event.type) {
         case EventChangeToHttps:
             [[NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier] setBool:YES forKey:@"useHttpsOnly"];
             break;
             
         case EventAccountBlocked:
-            _messageForSuspendedAccount = event.text;
+            [self handleAccountBlockedEvent:event];
             break;
             
         case EventNodesCurrent:
@@ -1416,11 +1400,13 @@ void uncaughtExceptionHandler(NSException *exception) {
         case EventMiscFlagsReady:
             MEGALogDebug(@"Apple VoIP push status: %d", api.appleVoipPushEnabled);
             [NSUserDefaults.standardUserDefaults setBool:api.appleVoipPushEnabled forKey:@"VoIP_messages"];
-            
+            [self showAddPhoneNumberIfNeeded];
             break;
             
         case EventStorageSumChanged:
             [MEGASdkManager.sharedMEGASdk mnz_setShouldRequestAccountDetails:YES];
+            break;
+            
         default:
             break;
     }
@@ -1483,6 +1469,8 @@ void uncaughtExceptionHandler(NSException *exception) {
 }
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
+    MEGALogDebug(@"onRequestFinish, request type: %ld, error type: %ldd", (long)request.type, (long)error.type)
+    
     if ([error type]) {
         switch ([error type]) {
             case MEGAErrorTypeApiEArgs: {
@@ -1559,27 +1547,11 @@ void uncaughtExceptionHandler(NSException *exception) {
                     [self.sslKeyPinningController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"openBrowser", @"Button title to allow the user open the default browser") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                         self.sslKeyPinningController = nil;
                         NSURL *url = [NSURL URLWithString:@"https://www.mega.nz"];
-                        
-                        if (@available(iOS 10.0, *)) {
-                            [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:NULL];
-                        } else {
-                            [[UIApplication sharedApplication] openURL:url];
-                        }
+                        [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:NULL];
                     }]];
                     
                     [UIApplication.mnz_presentingViewController presentViewController:self.sslKeyPinningController animated:YES completion:nil];
                 }
-                break;
-            }
-                
-            case MEGAErrorTypeApiEBlocked: {
-                if ([request type] == MEGARequestTypeLogin || [request type] == MEGARequestTypeFetchNodes) {
-                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:AMLocalizedString(@"accountBlocked", @"Error message when trying to login and the account is blocked") preferredStyle:UIAlertControllerStyleAlert];
-                    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-                    [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
-                    [api logout];
-                }
-                
                 break;
             }
                 
@@ -1629,22 +1601,17 @@ void uncaughtExceptionHandler(NSException *exception) {
             
             [self requestUserName];
             [self requestContactsFullname];
+            [self fetchContactsNickname];
             
-            if ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"] || isAccountFirstLogin) {
-                [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self.mainTBC];
-                
-                MEGAChatNotificationDelegate *chatNotificationDelegate = MEGAChatNotificationDelegate.new;
-                [MEGASdkManager.sharedMEGAChatSdk addChatNotificationDelegate:chatNotificationDelegate];
-                
-                if ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground) {
-                    [[MEGASdkManager sharedMEGAChatSdk] connectInBackground];
-                } else {
-                    [[MEGASdkManager sharedMEGAChatSdk] connect];
-                }
-                if (isAccountFirstLogin) {
-                    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"IsChatEnabled"];
-                    [[NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier] setBool:YES forKey:@"IsChatEnabled"];
-                }
+            [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self.mainTBC];
+            
+            MEGAChatNotificationDelegate *chatNotificationDelegate = MEGAChatNotificationDelegate.new;
+            [[MEGASdkManager sharedMEGAChatSdk] addChatNotificationDelegate:chatNotificationDelegate];
+            
+            if ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground) {
+                [[MEGASdkManager sharedMEGAChatSdk] connectInBackground];
+            } else {
+                [[MEGASdkManager sharedMEGAChatSdk] connect];
             }
             
             if (!isAccountFirstLogin) {
@@ -1664,7 +1631,13 @@ void uncaughtExceptionHandler(NSException *exception) {
             });
             
             [[MEGASdkManager sharedMEGASdk] getAccountDetails];
-            
+
+            if (![ContactsOnMegaManager.shared areContactsOnMegaRequestedWithinDays:7]) {
+                [ContactsOnMegaManager.shared configureContactsOnMegaWithCompletion:nil];
+            } else {
+                [ContactsOnMegaManager.shared loadContactsOnMegaFromLocal];
+            }
+
             break;
         }
             
@@ -1673,12 +1646,6 @@ void uncaughtExceptionHandler(NSException *exception) {
             [self showOnboarding];
             
             [[MEGASdkManager sharedMEGASdk] mnz_setAccountDetails:nil];
-            
-            if (self.messageForSuspendedAccount) {
-                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:self.messageForSuspendedAccount preferredStyle:UIAlertControllerStyleAlert];
-                [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-                [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
-            }
             break;
         }
             
@@ -1688,7 +1655,15 @@ void uncaughtExceptionHandler(NSException *exception) {
             break;
             
         case MEGARequestTypeGetAttrUser: {
-            MEGAUser *user = (request.email == nil) ? [[MEGASdkManager sharedMEGASdk] myUser] : [api contactForEmail:request.email];
+            MEGAUser *user;
+            MEGAUser *me = MEGASdkManager.sharedMEGASdk.myUser;
+            
+            if (me.handle == request.nodeHandle) {
+                user = me;
+            } else if (request.email.length > 0) {
+                user = [api contactForEmail:request.email];
+            }
+                        
             if (user) {
                 MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithUserHandle:user.handle];
                 if (moUser) {
@@ -1701,14 +1676,14 @@ void uncaughtExceptionHandler(NSException *exception) {
                     }
                 } else {
                     if (request.paramType == MEGAUserAttributeFirstname) {
-                        [[MEGAStore shareInstance] insertUserWithUserHandle:user.handle firstname:request.text lastname:nil email:user.email];
+                        [MEGAStore.shareInstance insertUserWithUserHandle:user.handle firstname:request.text lastname:nil nickname:nil email:user.email];
                     }
                     
                     if (request.paramType == MEGAUserAttributeLastname) {
-                        [[MEGAStore shareInstance] insertUserWithUserHandle:user.handle firstname:nil lastname:request.text email:user.email];
+                        [MEGAStore.shareInstance insertUserWithUserHandle:user.handle firstname:nil lastname:request.text nickname:nil email:user.email];
                     }
                 }
-            } else {
+            } else if (request.email.length > 0) {
                 MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithEmail:request.email];
                 if (moUser) {
                     if (request.paramType == MEGAUserAttributeFirstname && ![request.text isEqualToString:moUser.firstname]) {
@@ -1720,13 +1695,15 @@ void uncaughtExceptionHandler(NSException *exception) {
                     }
                 } else {
                     if (request.paramType == MEGAUserAttributeFirstname) {
-                        [[MEGAStore shareInstance] insertUserWithUserHandle:[MEGASdk handleForBase64UserHandle:request.email] firstname:request.text lastname:nil email:request.email];
+                        [MEGAStore.shareInstance insertUserWithUserHandle:[MEGASdk handleForBase64UserHandle:request.email] firstname:request.text lastname:nil nickname:nil email:request.email];
                     }
                     
                     if (request.paramType == MEGAUserAttributeLastname) {
-                        [[MEGAStore shareInstance] insertUserWithUserHandle:[MEGASdk handleForBase64UserHandle:request.email] firstname:nil lastname:request.text email:request.email];
+                        [MEGAStore.shareInstance insertUserWithUserHandle:[MEGASdk handleForBase64UserHandle:request.email] firstname:nil lastname:request.text nickname:nil email:request.email];
                     }
                 }
+            } else if (request.paramType == MEGAUserAttributeAlias) {
+                [MEGAStore.shareInstance updateUserWithUserHandle:user.handle nickname:request.name context:nil];
             }
             break;
         }
@@ -1753,7 +1730,7 @@ void uncaughtExceptionHandler(NSException *exception) {
             if (moUser) {
                 [[MEGAStore shareInstance] updateUserWithUserHandle:request.nodeHandle email:request.email];
             } else {
-                [[MEGAStore shareInstance] insertUserWithUserHandle:request.nodeHandle firstname:nil lastname:nil email:request.email];
+                [MEGAStore.shareInstance insertUserWithUserHandle:request.nodeHandle firstname:nil lastname:nil nickname:nil email:request.email];
             }
             break;
         }

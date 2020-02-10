@@ -123,27 +123,21 @@
         } else if (indexPath.row == 1) {
             imageView.image = [UIImage imageNamed:@"sendMessage"];
             label.text = AMLocalizedString(@"sendToContact", nil);
-            label.enabled = cell.userInteractionEnabled = [self.sharedUserDefaults boolForKey:@"IsChatEnabled"] && self.isChatReady;
+            label.enabled = cell.userInteractionEnabled = self.isChatReady;
             
-            if ([self.sharedUserDefaults boolForKey:@"IsChatEnabled"]) {
-                if (self.isChatReady) {
-                    cell.tintColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
-                    cell.accessoryView = nil;
-                    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-                } else {
-                    cell.tintColor = [[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection] colorWithAlphaComponent:0.5];
-                    
-                    UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-                    if (@available(iOS 13.0, *)) {
-                        activityIndicator.color = (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) ? UIColor.whiteColor : [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
-                    }
-                    [activityIndicator startAnimating];
-                    cell.accessoryView = activityIndicator;
-                }
-            } else {
+            if (self.isChatReady) {
                 cell.tintColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
                 cell.accessoryView = nil;
-                cell.accessoryType = UITableViewCellAccessoryNone;
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            } else {
+                cell.tintColor = [[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection] colorWithAlphaComponent:0.5];
+                
+                UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+                if (@available(iOS 13.0, *)) {
+                    activityIndicator.color = (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) ? UIColor.whiteColor : [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
+                }
+                [activityIndicator startAnimating];
+                cell.accessoryView = activityIndicator;
             }
         }
     } else if (indexPath.section == 1) {

@@ -169,9 +169,6 @@
     }
     
     AchievementsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
-    if (cell == nil) {
-        cell = [[AchievementsTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
-    }
     
     if (indexPath.row == 0 && self.haveReferralBonuses) {
         cell.titleLabel.text = AMLocalizedString(@"referralBonuses", @"achievement type");
@@ -200,6 +197,11 @@
                 
             case MEGAAchievementMobileInstall: {
                 cell.titleLabel.text = AMLocalizedString(@"installOurMobileApp", @"");
+                break;
+            }
+                
+            case MEGAAchievementAddPhone: {
+                cell.titleLabel.text = AMLocalizedString(@"Add Phone Number", nil);
                 break;
             }
                 

@@ -26,6 +26,11 @@
                 message = AMLocalizedString(@"emailAlreadyRegistered", @"Error text shown when the users tries to create an account with an email already in use");
                 break;
                 
+            case MEGAErrorTypeApiEFailed:
+                title = @"";
+                message = AMLocalizedString(@"emailAddressChangeAlreadyRequested", @"Error message shown when you try to change your account email to one that you already requested.");
+                break;
+                
             default:
                 title = AMLocalizedString(@"error", nil);
                 message = [NSString stringWithFormat:@"%@ %@", request.requestString, error.name];

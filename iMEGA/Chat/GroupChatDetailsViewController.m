@@ -20,6 +20,7 @@
 #import "MEGAGlobalDelegate.h"
 #import "MEGAArchiveChatRequestDelegate.h"
 #import "MEGAChatGenericRequestDelegate.h"
+#import "MEGAStore.h"
 
 @interface GroupChatDetailsViewController () <MEGAChatRequestDelegate, MEGAChatDelegate, MEGAGlobalDelegate>
 
@@ -77,7 +78,7 @@
     UIImage *avatarImage = [UIImage imageForName:self.chatRoom.title.uppercaseString size:avatarSize backgroundColor:[UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection] textColor:UIColor.whiteColor font:[UIFont systemFontOfSize:(avatarSize.width/2.0f)]];
     self.avatarImageView.image = avatarImage;
     
-    if (self.chatRoom.peerCount == 0) {
+    if (self.chatRoom.ownPrivilege < MEGAChatRoomPrivilegeRo) {
         self.participantsLabel.text = AMLocalizedString(@"Inactive chat", @"Subtitle of chat screen when the chat is inactive");
     } else {
         NSInteger peers = self.chatRoom.peerCount + (!self.chatRoom.isPreview ? 1 : 0);
@@ -484,7 +485,8 @@
                 peerEmail = [[MEGASdkManager sharedMEGAChatSdk] myEmail];
                 privilege = self.chatRoom.ownPrivilege;
             } else {
-                peerFullname = [self.chatRoom peerFullnameByHandle:handle];
+                MOUser *user = [MEGAStore.shareInstance fetchUserWithUserHandle:handle];
+                peerFullname = user.nickname ?: [self.chatRoom peerFullnameByHandle:handle];
                 peerEmail = [self.chatRoom peerEmailByHandle:handle];
                 privilege = [self.chatRoom peerPrivilegeAtIndex:index];
             }

@@ -14,7 +14,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *cameraUploadsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *cameraUploadsDetailLabel;
 @property (weak, nonatomic) IBOutlet UILabel *chatLabel;
-@property (weak, nonatomic) IBOutlet UILabel *chatDetailLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *passcodeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *passcodeDetailLabel;
@@ -79,7 +78,6 @@
     self.cameraUploadsLabel.text = AMLocalizedString(@"cameraUploadsLabel", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options");
     self.cameraUploadsDetailLabel.text = CameraUploadManager.isCameraUploadEnabled ? AMLocalizedString(@"on", nil) : AMLocalizedString(@"off", nil);
     self.chatLabel.text = AMLocalizedString(@"chat", @"Chat section header");
-    self.chatDetailLabel.text = ([[NSUserDefaults standardUserDefaults] boolForKey:@"IsChatEnabled"] ? AMLocalizedString(@"on", nil) : AMLocalizedString(@"off", nil));
     
     self.passcodeLabel.text = AMLocalizedString(@"passcode", nil);
     self.passcodeDetailLabel.text = ([LTHPasscodeViewController doesPasscodeExist] ? AMLocalizedString(@"on", nil) : AMLocalizedString(@"off", nil));
@@ -99,7 +97,7 @@
 }
 
 - (void)updateUI {
-    self.cameraUploadsDetailLabel.textColor = self.chatDetailLabel.textColor = self.passcodeDetailLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
+    self.cameraUploadsDetailLabel.textColor = self.passcodeDetailLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
     
     self.tableView.separatorColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
     self.tableView.backgroundColor = [UIColor mnz_settingsBackgroundForTraitCollection:self.traitCollection];
