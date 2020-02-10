@@ -1533,8 +1533,14 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 }
 
 - (IBAction)joinActiveCall:(id)sender {
-    [self.timer invalidate];
-    [self openCallViewWithVideo:NO active:YES];
+    [DevicePermissionsHelper audioPermissionModal:YES forIncomingCall:NO withCompletionHandler:^(BOOL granted) {
+        if (granted) {
+            [self.timer invalidate];
+            [self openCallViewWithVideo:NO active:YES];
+        } else {
+            [DevicePermissionsHelper alertAudioPermissionForIncomingCall:NO];
+        }
+    }];
 }
 
 #pragma mark - Gesture recognizer
