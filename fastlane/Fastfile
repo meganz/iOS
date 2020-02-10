@@ -15,31 +15,85 @@
 
 APPCENTER_API_TOKEN = ENV["appcenter_api_token"]
 
+# Directories
+FASTLANE_DIR    = File.expand_path(File.dirname(File.dirname(__FILE__)))
+BUILD_DIR       = File.expand_path('build')
+
+# Build
+PROJECT             = "MEGA.xcodeproj"
+WORKSPACE           = "iMEGA.xcworkspace"
+SCHEME              = 'MEGA'
+CONFIG              = ENV["CONFIG"] || "Debug"
+
+# Bundle ID
+BUNDLE_ID_APPSTORE  = 'mega.ios'
+
+#Apple Store
+FASTLAN_ITC_TEAM_ID   = 'T9RH74Y7L9'
+FASTLAN_ITC_TEAM_NAME = 'Mega Limited'
+
 default_platform(:ios)
 
 platform :ios do
-  desc "Push a new beta build to TestFlight"
-  lane :beta do
-    increment_build_number(xcodeproj: "MEGA.xcodeproj")
+  desc "build a new build version to appcenter"
+  lane :build do |options|
+    increment_build_number(
+      build_number: options[:BUILD_NUMBER],
+      xcodeproj: PROJECT
+    )
+
     build_app(
       workspace: "iMEGA.xcworkspace",
       scheme: "MEGA",
       export_method: "development",
+      output_directory: BUILD_DIR,
       export_options: {
         iCloudContainerEnvironment: "Development"
       }
     )
-    
+  end
 
+  desc "build a app store release version"
+  lane :build_release do |options|
+
+    increment_build_number(
+      build_number: options[:BUILD_NUMBER],
+      xcodeproj: PROJECT
+    )
+
+    gym(
+      workspace: WORKSPACE,
+      scheme: SCHEME_PROD,
+      export_method: 'app-store',
+      output_name: "MEGA",
+      output_directory: BUILD_DIR,
+      configuration: 'Release',
+      export_options: {
+        iCloudContainerEnvironment: "Production"
+      }
+    )
+
+    deliver(
+      username: "hl@mega.co.nz",
+      submit_for_review: false,
+      ipa: "#{REPORTS_DIR}/MEGA.ipa",
+      app_identifier: BUNDLE_ID_APPSTORE,
+      team_id: FASTLAN_ITC_TEAM_ID,
+      force: true
+    )
+  end
+
+  desc "upload to appcenter"
+  lane :upload do |options|
     appcenter_upload(
       api_token: APPCENTER_API_TOKEN,
       owner_name: "hl-mega.co.nz",
       app_name: "megatest",
-      ipa: "./MEGA.ipa",
+      ipa: "#{BUILD_DIR}/MEGA.ipa",
       destinations: "Collaborators",
       destination_type: "group",
-
       release_notes:`git log --pretty=format:%B%cI -10`
     )
   end
+
 end
