@@ -1,4 +1,6 @@
 def clearnProject() {
+        sh "git clean -f"
+
 }
 
 def injectEnvironments(Closure body) {
@@ -27,6 +29,7 @@ stage('download depedency') {
     node {
         injectEnvironments({
             sh "git submodule update --init --recursive"
+            sh "export PATH=/Applications/MEGAcmd.app/Contents/MacOS:$PATH"
             sh "mega-get https://mega.nz/#!CjwkmYTB!gIJrmV5cR3Nk4ZTYTY-89aVYEioD-RU_vAOMPZsfcdA $WORKSPACE/iMEGA/Vendor/SDK/bindings/ios/3rdparty/"
         })
     }
@@ -35,7 +38,7 @@ stage('download depedency') {
 stage('unzip depedency') {
     node {
         injectEnvironments({
-            sh "unzip $WORKSPACE/iMEGA/Vendor/SDK/bindings/ios/3rdparty/wrtc.zip -d $WORKSPACE/iMEGA/Vendor/SDK/bindings/ios/3rdparty/"
+            sh "unzip -o $WORKSPACE/iMEGA/Vendor/SDK/bindings/ios/3rdparty/wrtc.zip -d $WORKSPACE/iMEGA/Vendor/SDK/bindings/ios/3rdparty/"
         })
     }
 }
@@ -46,7 +49,6 @@ stage('Initial Build') {
             dir("iMEGA/Vendor/Karere/src/") {
                 sh "cmake -P genDbSchema.cmake"
             }
-            sh "bundle install"
         })
     }
 }
@@ -54,7 +56,7 @@ stage('Initial Build') {
 stage('build ipa') {
     node {
         injectEnvironments({
-            sh "bundle exec fastlane build BUILD_NUMBER:$BUILD_NUMBER appcenter_api_token:$appcenter_api_token"
+            sh "fastlane build BUILD_NUMBER:$BUILD_NUMBER appcenter_api_token:$appcenter_api_token"
         })
     }
 }
@@ -63,7 +65,7 @@ stage('deploy to appcenter') {
     node {
         injectEnvironments({
             retry(3) {
-                sh "bundle exec fastlane upload ENV:DEV"
+                sh "fastlane upload ENV:DEV"
             }
         })
     }
