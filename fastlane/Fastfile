@@ -14,6 +14,9 @@
 # update_fastlane
 
 APPCENTER_API_TOKEN = ENV["appcenter_api_token"]
+APPCENTER_OWNER_NAME = ENV["appcenter_owner_name"]
+APPCENTER_APP_NAME = ENV["appcenter_app_name"]
+APPCENTER_DESTINATIONS = ENV["appcenter_destinations"]
 
 # Directories
 FASTLANE_DIR    = File.expand_path(File.dirname(File.dirname(__FILE__)))
@@ -87,10 +90,10 @@ platform :ios do
   lane :upload do |options|
     appcenter_upload(
       api_token: APPCENTER_API_TOKEN,
-      owner_name: "hl-mega.co.nz",
-      app_name: "megatest",
+      owner_name: APPCENTER_OWNER_NAME,
+      app_name: APPCENTER_APP_NAME,
       ipa: "#{BUILD_DIR}/MEGA.ipa",
-      destinations: "Collaborators",
+      destinations: APPCENTER_DESTINATIONS,
       destination_type: "group",
       release_notes:`git log --pretty=format:%B%cI -10`
     )
