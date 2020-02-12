@@ -1348,7 +1348,8 @@ static MEGAIndexer *indexer;
     [NSUserDefaults.standardUserDefaults removeObjectForKey:@"lastDateAddPhoneNumberShowed"];
     [NSUserDefaults.standardUserDefaults removeObjectForKey:@"ContactsOnMega"];
     [NSUserDefaults.standardUserDefaults removeObjectForKey:@"lastDateContactsOnMegaRequested"];
-    
+    [NSUserDefaults.standardUserDefaults removeObjectForKey:@"twoFactorAuthenticationAlreadySuggested"];
+
     [[NSUserDefaults standardUserDefaults] synchronize];
 
     NSUserDefaults *sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];
