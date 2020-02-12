@@ -5,6 +5,10 @@
 #import "CopyableLabel.h"
 #import "UIApplication+MNZCategory.h"
 #import "UIImage+GKContact.h"
+#import "MEGAGenericRequestDelegate.h"
+#import "SVProgressHUD.h"
+#import "EnablingTwoFactorAuthenticationViewController.h"
+#import "MEGASdkManager.h"
 
 @interface CustomModalAlertViewController ()
 
@@ -91,6 +95,48 @@
     self.firstButton.titleLabel.numberOfLines = 2;
     self.firstButton.titleLabel.textAlignment = NSTextAlignmentCenter;
     self.firstButton.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+}
+
+#pragma mark - Public
+
+- (void)configureForTwoFactorAuthenticationRequestedByUser:(BOOL)requestedByUser {
+    self.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+    self.image = [UIImage imageNamed:@"2FASetup"];
+    self.viewTitle = AMLocalizedString(@"whyYouDoNeedTwoFactorAuthentication", @"Title shown when you start the process to enable Two-Factor Authentication");
+    self.detail = AMLocalizedString(@"whyYouDoNeedTwoFactorAuthenticationDescription", @"Description text of the dialog displayed to start setup the Two-Factor Authentication");
+    self.firstButtonTitle = AMLocalizedString(@"beginSetup", @"Button title to start the setup of a feature. For example 'Begin Setup' for Two-Factor Authentication");
+    if (requestedByUser) {
+        self.dismissButtonTitle = AMLocalizedString(@"cancel", @"");
+    } else {
+        self.dismissButtonTitle = AMLocalizedString(@"notNow", @"Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers.");
+    }
+    
+    __weak typeof(CustomModalAlertViewController) *weakCustom = self;
+    
+    self.firstCompletion = ^{
+        MEGAGenericRequestDelegate *delegate = [MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
+            if (error.type) {
+                [SVProgressHUD showErrorWithStatus:error.name];
+                return;
+            }
+            
+            [SVProgressHUD dismiss];
+            EnablingTwoFactorAuthenticationViewController *enablingTwoFactorAuthenticationTVC = [[UIStoryboard storyboardWithName:@"TwoFactorAuthentication" bundle:nil] instantiateViewControllerWithIdentifier:@"EnablingTwoFactorAuthenticationViewControllerID"];
+            enablingTwoFactorAuthenticationTVC.seed = request.text; //Returns the Base32 secret code needed to configure multi-factor authentication.
+            enablingTwoFactorAuthenticationTVC.hidesBottomBarWhenPushed = YES;
+            
+            [UIApplication.mnz_visibleViewController.navigationController pushViewController:enablingTwoFactorAuthenticationTVC animated:YES];
+        }];
+        
+        [weakCustom dismissViewControllerAnimated:YES completion:^{
+            [SVProgressHUD show];
+            [MEGASdkManager.sharedMEGASdk multiFactorAuthGetCodeWithDelegate:delegate];
+        }];
+    };
+    
+    self.dismissCompletion = ^{
+        [weakCustom dismissViewControllerAnimated:YES completion:nil];
+    };
 }
 
 #pragma mark - Private
