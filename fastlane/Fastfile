@@ -17,6 +17,9 @@ APPCENTER_API_TOKEN = ENV["appcenter_api_token"]
 APPCENTER_OWNER_NAME = ENV["appcenter_owner_name"]
 APPCENTER_APP_NAME = ENV["appcenter_app_name"]
 APPCENTER_DESTINATIONS = ENV["appcenter_destinations"]
+APPCENTER_SLACK_URL = ENV["appcenter_slack_url"]
+APPCENTER_SLACK_CHANNEL_NAME = ENV["appcenter_slack_channel_name"]
+
 
 # Directories
 FASTLANE_DIR    = File.expand_path(File.dirname(File.dirname(__FILE__)))
@@ -96,6 +99,19 @@ platform :ios do
       destinations: APPCENTER_DESTINATIONS,
       destination_type: "group",
       release_notes:`git log --pretty=format:%B%cI -10`
+    )
+
+    slack(
+      message: "🎉App successfully released!",
+      channel: APPCENTER_SLACK_CHANNEL_NAME,
+      success: true,       
+      payload: {  
+        "App link" => lane_context[SharedValues::APPCENTER_DOWNLOAD_LINK],
+        "Build information" => lane_context[SharedValues::APPCENTER_BUILD_INFORMATION],
+        "Build Date" => Time.new.to_s,
+        "Built by" => "Jenkins",
+       },
+       slack_url: APPCENTER_SLACK_CHANNEL_NAME
     )
   end
 
