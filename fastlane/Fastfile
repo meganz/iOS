@@ -38,6 +38,10 @@ BUNDLE_ID_APPSTORE  = 'mega.ios'
 FASTLAN_ITC_TEAM_ID   = 'T9RH74Y7L9'
 FASTLAN_ITC_TEAM_NAME = 'Mega Limited'
 
+def build_appcenter_release_url(id)
+  return "https://appcenter.ms/orgs/#{APPCENTER_OWNER_NAME}/apps/#{APPCENTER_APP_NAME}/distribute/releases/#{id}"
+end
+
 default_platform(:ios)
 
 platform :ios do
@@ -114,12 +118,10 @@ platform :ios do
       channel: APPCENTER_SLACK_CHANNEL_NAME,
       success: true,       
       payload: {  
-        "App link" => lane_context[SharedValues::APPCENTER_DOWNLOAD_LINK],
-        "Build information" => lane_context[SharedValues::APPCENTER_BUILD_INFORMATION]["release_notes"],
-        "Build Date" => Time.new.to_s,
-        "Built by" => "Jenkins",
-       },
-       slack_url: APPCENTER_SLACK_URL
+        "App link" => build_appcenter_release_url(lane_context[SharedValues::APPCENTER_BUILD_INFORMATION]["id"]),
+        "Build Number" => lane_context[SharedValues::APPCENTER_BUILD_INFORMATION]["version"],
+      },
+      slack_url: APPCENTER_SLACK_URL
     )
   end
 
