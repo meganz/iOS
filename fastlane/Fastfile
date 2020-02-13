@@ -114,12 +114,14 @@ platform :ios do
     )
 
     slack(
-      message: "🎉App successfully released!",
+      message: "🎉New version available!",
       channel: APPCENTER_SLACK_CHANNEL_NAME,
-      success: true,       
+      success: true, 
+      default_payloads: [:git_branch, :git_author],      
       payload: {  
         "App link" => build_appcenter_release_url(lane_context[SharedValues::APPCENTER_BUILD_INFORMATION]["id"]),
         "Build Number" => lane_context[SharedValues::APPCENTER_BUILD_INFORMATION]["version"],
+        "Release Notes" => lane_context[SharedValues::APPCENTER_BUILD_INFORMATION]["release_notes"]
       },
       slack_url: APPCENTER_SLACK_URL
     )
