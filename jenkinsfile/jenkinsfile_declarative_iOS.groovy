@@ -54,7 +54,7 @@ pipeline {
             }
         }
 
-        stage('Runing CMake') {
+        stage('Running CMake') {
             steps {
                 injectEnvironments({
                     dir("iMEGA/Vendor/Karere/src/") {
@@ -67,7 +67,7 @@ pipeline {
         stage('Generating Executable (IPA)') {
             steps {
                 injectEnvironments({
-                    sh "fastlane build BUILD_NUMBER:$BUILD_NUMBER appcenter_api_token:$appcenter_api_token"
+                    sh "fastlane build_using_development BUILD_NUMBER:$BUILD_NUMBER appcenter_api_token:$appcenter_api_token"
                 })
             }
         }
@@ -76,7 +76,7 @@ pipeline {
             steps {
                 injectEnvironments({
                     retry(3) {
-                        sh "fastlane upload ENV:DEV"
+                        sh "fastlane upload_to_appcenter ENV:DEV"
                     }
                 })
             }

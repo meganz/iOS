@@ -20,23 +20,13 @@ APPCENTER_DESTINATIONS = ENV["appcenter_destinations"]
 APPCENTER_SLACK_URL = ENV["appcenter_slack_url"]
 APPCENTER_SLACK_CHANNEL_NAME = ENV["appcenter_slack_channel_name"]
 
-
 # Directories
-FASTLANE_DIR    = File.expand_path(File.dirname(File.dirname(__FILE__)))
 BUILD_DIR       = File.expand_path('build')
 
 # Build
 PROJECT             = "MEGA.xcodeproj"
 WORKSPACE           = "iMEGA.xcworkspace"
 SCHEME              = 'MEGA'
-CONFIG              = ENV["CONFIG"] || "Debug"
-
-# Bundle ID
-BUNDLE_ID_APPSTORE  = 'mega.ios'
-
-#Apple Store
-FASTLAN_ITC_TEAM_ID   = 'T9RH74Y7L9'
-FASTLAN_ITC_TEAM_NAME = 'Mega Limited'
 
 def build_appcenter_release_url(id)
   return "https://appcenter.ms/orgs/#{APPCENTER_OWNER_NAME}/apps/#{APPCENTER_APP_NAME}/distribute/releases/#{id}"
@@ -45,16 +35,17 @@ end
 default_platform(:ios)
 
 platform :ios do
-  desc "build a new build version to appcenter"
-  lane :build do |options|
+  
+  desc "Build App using development certificate for Appcenter"
+  lane :build_using_development do |options|
     increment_build_number(
       build_number: options[:BUILD_NUMBER],
       xcodeproj: PROJECT
     )
 
-    build_app(
-      workspace: "iMEGA.xcworkspace",
-      scheme: "MEGA",
+    gym(
+      workspace: WORKSPACE,
+      scheme: SCHEME,
       export_method: "development",
       output_directory: BUILD_DIR,
       export_options: {
@@ -63,38 +54,9 @@ platform :ios do
     )
   end
 
-  desc "build a app store release version"
-  lane :build_release do |options|
-
-    increment_build_number(
-      build_number: options[:BUILD_NUMBER],
-      xcodeproj: PROJECT
-    )
-
-    gym(
-      workspace: WORKSPACE,
-      scheme: SCHEME_PROD,
-      export_method: 'app-store',
-      output_name: "MEGA",
-      output_directory: BUILD_DIR,
-      configuration: 'Release',
-      export_options: {
-        iCloudContainerEnvironment: "Production"
-      }
-    )
-
-    deliver(
-      username: "hl@mega.co.nz",
-      submit_for_review: false,
-      ipa: "#{REPORTS_DIR}/MEGA.ipa",
-      app_identifier: BUNDLE_ID_APPSTORE,
-      team_id: FASTLAN_ITC_TEAM_ID,
-      force: true
-    )
-  end
-
-  desc "upload to appcenter"
-  lane :upload do |options|
+  desc "Upload to Appcenter"
+  lane :upload_to_appcenter do |options|
+    # Get the 20 latest commints from the current branch.
     changelog_from_git_commits(
       commits_count: 20,  
       pretty: "- (%ae) %s",
@@ -103,6 +65,7 @@ platform :ios do
       merge_commit_filtering: "exclude_merges"
     )
 
+    # Upload the IPA to Appcenter.
     appcenter_upload(
       api_token: APPCENTER_API_TOKEN,
       owner_name: APPCENTER_OWNER_NAME,
@@ -113,6 +76,7 @@ platform :ios do
       release_notes: lane_context[SharedValues::FL_CHANGELOG]
     )
 
+    # Send a Slack message to the channel with the build information.
     slack(
       message: "🎉New version available!",
       channel: APPCENTER_SLACK_CHANNEL_NAME,
@@ -127,6 +91,27 @@ platform :ios do
     )
   end
 
-  
+  desc "build a app store release version"
+  lane :build_release do |options|
+
+    increment_build_number(
+      build_number: options[:BUILD_NUMBER],
+      xcodeproj: PROJECT
+    )
+
+    gym(
+      workspace: WORKSPACE,
+      scheme: SCHEME,
+      export_method: 'app-store',
+      output_name: "MEGA",
+      output_directory: BUILD_DIR,
+      configuration: 'Release',
+      export_options: {
+        iCloudContainerEnvironment: "Production"
+      }
+    )
+
+    pilot(ipa: "#{BUILD_DIR}/MEGA.ipa")
+  end
 
 end
