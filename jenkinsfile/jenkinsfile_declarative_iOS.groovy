@@ -9,12 +9,8 @@ def callSlack(String buildResult) {
         slackSend color: "warning", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} was unstable"
     }
     else {
-        slackSend color: "danger", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} its resulat was unclear"	
+        slackSend color: "danger", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} its result was unclear"	
     }
-}
-
-def clearnProject() {
-    sh "git clean -f"
 }
 
 def injectEnvironments(Closure body) {
@@ -31,7 +27,7 @@ pipeline {
    agent any
 
    stages {
-      stage('checkout submodule') {
+      stage('Submodule update') {
          steps {
             injectEnvironments({
               sh "git submodule update --init --recursive"
@@ -39,25 +35,26 @@ pipeline {
         }
       }
 
-        stage('download depedency') {
+        stage('Downloading dependencies') {
             steps {
                 injectEnvironments({
-                    sh "git submodule update --init --recursive"
                     sh "mega-get https://mega.nz/#!CjwkmYTB!gIJrmV5cR3Nk4ZTYTY-89aVYEioD-RU_vAOMPZsfcdA $WORKSPACE/iMEGA/Vendor/SDK/bindings/ios/3rdparty/"
                 })
             }
         }
 
 
-        stage('unzip depedency') {
+        stage('Unzipping dependencies and moving files/folders to appropriate path') {
             steps {
                 injectEnvironments({
                     sh "unzip -o $WORKSPACE/iMEGA/Vendor/SDK/bindings/ios/3rdparty/wrtc.zip -d $WORKSPACE/iMEGA/Vendor/SDK/bindings/ios/3rdparty/"
+                     sh "mv $WORKSPACE/iMEGA/Vendor/SDK/bindings/ios/3rdparty/wrtc/* $WORKSPACE/iMEGA/Vendor/SDK/bindings/ios/3rdparty/"
+                    sh "rm -rf $WORKSPACE/iMEGA/Vendor/sdk/bindings/ios/3rdparty/wrtc"
                 })
             }
         }
 
-        stage('Initial Build') {
+        stage('Runing CMake') {
             steps {
                 injectEnvironments({
                     dir("iMEGA/Vendor/Karere/src/") {
@@ -67,15 +64,15 @@ pipeline {
             }
         }
 
-        stage('build ipa') {
+        stage('Generating Executable (IPA)') {
             steps {
                 injectEnvironments({
                     sh "fastlane build BUILD_NUMBER:$BUILD_NUMBER appcenter_api_token:$appcenter_api_token"
                 })
             }
         }
-
-        stage('deploy to appcenter') {
+        
+        stage('Deploying executable (IPA) to Appcenter') {
             steps {
                 injectEnvironments({
                     retry(3) {
@@ -85,10 +82,14 @@ pipeline {
             }
         }
    }
-
+   
     post {
         always { 
             callSlack(currentBuild.currentResult)
+        }
+
+        cleanup{
+            deleteDir()
         }
     }
 }
