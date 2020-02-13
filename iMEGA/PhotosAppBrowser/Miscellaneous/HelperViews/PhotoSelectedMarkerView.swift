@@ -5,6 +5,7 @@ class PhotoSelectedMarkerView: UIView {
     
     private let outerCircleInsetValue: CGFloat = 4
     private let innerCircleInsetValue: CGFloat = 5
+    private let labelInset: CGFloat = 2
     private let labelInsetFactor: CGFloat = 0.28
 
     // Outer circle ring
@@ -14,7 +15,7 @@ class PhotoSelectedMarkerView: UIView {
         
         layer.fillColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0)
         layer.strokeColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-        layer.lineWidth = 2
+        layer.lineWidth = 1.65
         
         layer.shadowRadius = 1
         layer.shadowOpacity = 0.3
@@ -36,17 +37,18 @@ class PhotoSelectedMarkerView: UIView {
     
     // Center label
     private lazy var label: UILabel = {
-       let label = UILabel(frame: bounds)
+        let label = UILabel()
         label.textAlignment = .center
         label.textColor = .white
-        label.font = UIFont.systemFont(ofSize: 17)
+        label.baselineAdjustment = .alignCenters
+        label.font = UIFont.systemFont(ofSize: 17, weight: .medium)
+        label.adjustsFontSizeToFitWidth = true
         return label
     }()
     
     var text: String? {
         didSet {
             label.text = text
-            label.sizeToFit()
         }
     }
     
@@ -76,7 +78,8 @@ class PhotoSelectedMarkerView: UIView {
         
         createPath(circleLayer: outerCircle, insetValue: outerCircleInsetValue)
         createPath(circleLayer: innerCircle, insetValue: innerCircleInsetValue)
-        label.center = CGPoint(x: bounds.midX, y: bounds.midY)
+        label.frame = bounds.insetBy(dx: labelInset + innerCircleInsetValue,
+                                     dy: labelInset + innerCircleInsetValue)
     }
     
     // MARK:- Private methods.
