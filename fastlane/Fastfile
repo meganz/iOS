@@ -91,6 +91,14 @@ platform :ios do
 
   desc "upload to appcenter"
   lane :upload do |options|
+    changelog_from_git_commits(
+      commits_count: 20,  
+      pretty: "- (%ae) %s",
+      date_format: "short",
+      match_lightweight_tag: false,
+      merge_commit_filtering: "exclude_merges"
+    )
+
     appcenter_upload(
       api_token: APPCENTER_API_TOKEN,
       owner_name: APPCENTER_OWNER_NAME,
@@ -98,7 +106,7 @@ platform :ios do
       ipa: "#{BUILD_DIR}/MEGA.ipa",
       destinations: APPCENTER_DESTINATIONS,
       destination_type: "group",
-      release_notes:`git log --pretty=format:%B%cI -10`
+      release_notes: lane_context[SharedValues::FL_CHANGELOG]
     )
 
     slack(
@@ -107,12 +115,14 @@ platform :ios do
       success: true,       
       payload: {  
         "App link" => lane_context[SharedValues::APPCENTER_DOWNLOAD_LINK],
-        "Build information" => lane_context[SharedValues::APPCENTER_BUILD_INFORMATION],
+        "Build information" => lane_context[SharedValues::APPCENTER_BUILD_INFORMATION]["release_notes"],
         "Build Date" => Time.new.to_s,
         "Built by" => "Jenkins",
        },
-       slack_url: APPCENTER_SLACK_CHANNEL_NAME
+       slack_url: APPCENTER_SLACK_URL
     )
   end
+
+  
 
 end
