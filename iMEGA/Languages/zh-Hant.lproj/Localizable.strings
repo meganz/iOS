@@ -278,6 +278,8 @@
 "choosePhotoVideo"="選擇";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="拍攝";
+/* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
+"Scan Document"="掃描文件";
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="新增資料夾";
 /* Hint text shown on the create folder alert. */
@@ -506,7 +508,9 @@
 "oneItemSelected"="已選中 %lu 個項目";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
 "itemsSelected"="已選中 %lu 個項目";
-/* Title shown when multiselection is enable in chat tabs, and the user has more than one item selected. */
+/* String shown when multi selection is enabled and only one item has been selected. */
+"1 selected"="1 selected";
+/* String shown when multi selection is enabled and the user has more than one item selected. */
 "xSelected"="已選擇%d個";
 /* Title of the Offline section */
 "offline"="離線";
@@ -962,7 +966,7 @@
 /* Description to encourage users to add phone number to their accounts when there are not achievements */
 "Add your phone number to MEGA. This makes it easier for your contacts to find you on MEGA."="將您的手機門號加到MEGA。這可以讓您的聯絡人更容易的在MEGA上找到您。";
 /* Description to unblock account by verifying phone number */
-"Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account."="因為潛在的濫用，您的帳號已被暫停使用。請驗證您的電話號碼以將您的帳號解鎖。";
+"Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account."="因為潛在的濫用，您的帳號已被暫停封鎖。請驗證您的電話號碼來解鎖您的帳號。";
 /* Verify your account title */
 "Verify Your Account"="驗證您的帳戶";
 /* Add your phone number title */
@@ -1937,7 +1941,7 @@
 /* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
 "Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="請到您裝置設定的隱私權選項。啟用定位服務並設定MEGA為「使用App期間」或「永遠」。";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
-"MEGA accesses your location when you elect to share it with your contacts."="此位置將使用點對點加密MEGA平台以外的第三方地圖供應商開啟。";
+"NSLocationAlwaysAndWhenInUseUsageDescription"="MEGA accesses your location when you share it with your contacts in chat or when you enable ”Upload in Background” for Camera Uploads so your photos and videos are uploaded when your location changes.";
 /* Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
 "Mobile Data is turned off"="行動數據已關閉";
 /* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */
@@ -2036,6 +2040,10 @@
 "You are back!"="你回來了。";
 /* Subtitle of chat screen when the chat is inactive */
 "Inactive chat"="不活躍的聊天";
+/* Contact details screen: Set the alias(nickname) for a user */
+"Set Nickname"="設定暱稱";
+/* Add nickname screen: This text appears above the alias(nickname) entry */
+"Alias/ Nickname"="Alias/ Nickname";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
 "It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="無法獲得此檔案的內容，因為它並不是以UTF-8或ISO/IEC 8859-1進行編碼。";
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
@@ -2069,9 +2077,9 @@
 /* Message shown when verify phone number successfully */
 "Your phone number has been verified successfully"="您的手機號碼已成功驗證";
 /* Text describing account suspended state to the user */
-"Your account has been temporarily suspended for your safety."="為了安全起見，您的帳戶已被暫時停用。";
+"Your account has been temporarily suspended for your safety."="為了安全起見，您的帳戶已暫時被封鎖。";
 /* Text indicating the user next step to unlock suspended account. Please leave [S], [/S] as it is which is used to bolden the text. */
-"[S]Please verify your email[/S] and follow its steps to unlock your account."="[S]請驗證您的電子郵件[/S]並且按照步驟解鎖您的帳戶。";
+"[S]Please verify your email[/S] and follow its steps to unlock your account."="[S]請驗證您的電子郵件[/S]，並按照MEGA信件裡的步驟解鎖您的帳戶。";
 /* Text for button to open an helping view */
 "Why am I seeing this?"="為什麼我會看到這個？";
 /* Text to notify user an email has been sent */
@@ -2085,4 +2093,6 @@
 /* Setting title for Doc scan view */
 "Save Settings"="Save Settings";
 /* file type title, used in changing the export format of scaned doc */
-"File Type"="File Type";
+"File Type"="檔案類型";
+/* export Quality Option for Scan document */
+"best"="Best";
