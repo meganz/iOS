@@ -75,9 +75,6 @@
 - (void)showWaitingReason {
     NSString *message;
     switch (MEGASdkManager.sharedMEGASdk.waiting) {
-        case RetryNone:
-            break;
-            
         case RetryConnectivity:
             message = AMLocalizedString(@"unableToReachMega", @"Message shown when the app is waiting for the server to complete a request due to connectivity issue.");
             break;
@@ -92,12 +89,6 @@
             
         case RetryRateLimit:
             message = AMLocalizedString(@"tooManyRequest", @"Message shown when the app is waiting for the server to complete a request due to a rate limit (error -4).");
-            break;
-            
-        case RetryLocalLock:
-            break;
-            
-        case RetryUnknown:
             break;
             
         default:
