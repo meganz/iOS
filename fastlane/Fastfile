@@ -28,9 +28,11 @@ PROJECT             = "MEGA.xcodeproj"
 WORKSPACE           = "iMEGA.xcworkspace"
 SCHEME              = 'MEGA'
 
+
 def build_appcenter_release_url(id)
   return "https://appcenter.ms/orgs/#{APPCENTER_OWNER_NAME}/apps/#{APPCENTER_APP_NAME}/distribute/releases/#{id}"
 end
+
 
 default_platform(:ios)
 
@@ -43,15 +45,32 @@ platform :ios do
       xcodeproj: PROJECT
     )
 
-    gym(
-      workspace: WORKSPACE,
-      scheme: SCHEME,
-      export_method: "development",
-      output_directory: BUILD_DIR,
-      export_options: {
-        iCloudContainerEnvironment: "Development"
-      }
-    )
+    begin
+      gym(
+        workspace: WORKSPACE,
+        scheme: SCHEME,
+        export_method: "development",
+        output_directory: BUILD_DIR,
+        export_options: {
+          iCloudContainerEnvironment: "Development"
+        }
+      )
+    rescue => exception
+      slack(
+        message: "Error occured!",
+        success: false,
+        channel: APPCENTER_SLACK_CHANNEL_NAME,
+        slack_url: APPCENTER_SLACK_URL,
+        attachment_properties: {
+            fields: [
+                {
+                    title: "Error message",
+                    value: exception
+                }
+            ]
+        }
+      )
+    end
   end
 
   desc "Upload to Appcenter"
@@ -73,7 +92,8 @@ platform :ios do
       ipa: "#{BUILD_DIR}/MEGA.ipa",
       destinations: APPCENTER_DESTINATIONS,
       destination_type: "group",
-      release_notes: lane_context[SharedValues::FL_CHANGELOG]
+      release_notes: lane_context[SharedValues::FL_CHANGELOG],
+      notify_testers: true
     )
 
     # Send a Slack message to the channel with the build information.
