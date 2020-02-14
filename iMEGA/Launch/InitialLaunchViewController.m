@@ -57,7 +57,7 @@
         [self centerLabels];
         self.titleLabel.hidden = self.descriptionLabel.hidden = NO;
         self.setupButton.hidden = self.skipButton.hidden = NO;
-        self.activityIndicatorView.hidden = YES;
+        [self.activityIndicatorView stopAnimating];
         self.logoMoved = YES;
     }];
 }
