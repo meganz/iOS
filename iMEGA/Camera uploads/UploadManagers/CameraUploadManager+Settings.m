@@ -117,7 +117,7 @@ static const NSTimeInterval BoardingScreenShowUpMinimumInterval = 30 * 24 * 3600
 }
 
 + (BOOL)shouldIncludeGPSTags {
-    return [NSUserDefaults.standardUserDefaults boolForKey:IncludeGPSTags]
+    return [NSUserDefaults.standardUserDefaults boolForKey:IncludeGPSTags];
 }
 
 + (void)setIncludeGPSTags:(BOOL)includeGPSTags {

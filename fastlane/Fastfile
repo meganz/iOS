@@ -45,32 +45,15 @@ platform :ios do
       xcodeproj: PROJECT
     )
 
-    begin
-      gym(
-        workspace: WORKSPACE,
-        scheme: SCHEME,
-        export_method: "development",
-        output_directory: BUILD_DIR,
-        export_options: {
-          iCloudContainerEnvironment: "Development"
-        }
-      )
-    rescue => exception
-      slack(
-        message: "Error occured!",
-        success: false,
-        channel: APPCENTER_SLACK_CHANNEL_NAME,
-        slack_url: APPCENTER_SLACK_URL,
-        attachment_properties: {
-            fields: [
-                {
-                    title: "Error message",
-                    value: exception
-                }
-            ]
-        }
-      )
-    end
+    gym(
+      workspace: WORKSPACE,
+      scheme: SCHEME,
+      export_method: "development",
+      output_directory: BUILD_DIR,
+      export_options: {
+        iCloudContainerEnvironment: "Development"
+      }
+    )
   end
 
   desc "Upload to Appcenter"
