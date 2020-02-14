@@ -39,7 +39,6 @@
 #import "ContactsViewController.h"
 #import "CustomModalAlertViewController.h"
 #import "GroupCallViewController.h"
-#import "InitialLaunchViewController.h"
 #import "LaunchViewController.h"
 #import "MainTabBarController.h"
 #import "MEGAAssetsPickerController.h"
@@ -65,9 +64,6 @@
 @interface AppDelegate () <PKPushRegistryDelegate, UIApplicationDelegate, UNUserNotificationCenterDelegate, LTHPasscodeViewControllerDelegate, LaunchViewControllerDelegate, MEGAApplicationDelegate, MEGAChatDelegate, MEGAChatRequestDelegate, MEGAGlobalDelegate, MEGAPurchasePricingDelegate, MEGARequestDelegate, MEGATransferDelegate> {
     BOOL isAccountFirstLogin;
     BOOL isFetchNodesDone;
-    
-    BOOL isFirstFetchNodesRequestUpdate;
-    NSTimer *timerAPI_EAGAIN;
 }
 
 @property (nonatomic, strong) UIView *privacyView;
@@ -750,58 +746,6 @@
     return quickActionManaged;
 }
 
-- (void)startTimerAPI_EAGAIN {
-    timerAPI_EAGAIN = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(showServersTooBusy) userInfo:nil repeats:NO];
-}
-
-- (void)invalidateTimerAPI_EAGAIN {
-    [timerAPI_EAGAIN invalidate];
-    
-    if ([self.window.rootViewController isKindOfClass:[LaunchViewController class]]) {
-        LaunchViewController *launchVC = (LaunchViewController *)self.window.rootViewController;
-        launchVC.label.text = @"";
-    }
-}
-
-- (void)showServersTooBusy {
-    if ([self.window.rootViewController isKindOfClass:[LaunchViewController class]]) {
-        LaunchViewController *launchVC = (LaunchViewController *)self.window.rootViewController;
-        NSString *message;
-        switch ([[MEGASdkManager sharedMEGASdk] waiting]) {
-            case RetryNone:
-                break;
-
-            case RetryConnectivity:
-                message = AMLocalizedString(@"unableToReachMega", @"Message shown when the app is waiting for the server to complete a request due to connectivity issue.");
-                break;
-                
-            case RetryServersBusy:
-                message = AMLocalizedString(@"serversAreTooBusy", @"Message shown when the app is waiting for the server to complete a request due to a HTTP error 500.");
-                break;
-                
-            case RetryApiLock:
-                message = AMLocalizedString(@"takingLongerThanExpected", @"Message shown when the app is waiting for the server to complete a request due to an API lock (error -3).");
-                break;
-                
-            case RetryRateLimit:
-                message = AMLocalizedString(@"tooManyRequest", @"Message shown when the app is waiting for the server to complete a request due to a rate limit (error -4).");
-                break;
-                
-            case RetryLocalLock:
-                break;
-                
-            case RetryUnknown:
-                break;
-                
-            default:
-                break;
-        }
-        launchVC.label.text = message;
-        
-        MEGALogDebug(@"The SDK is waiting to complete a request, reason: %lu", (unsigned long)[[MEGASdkManager sharedMEGASdk] waiting]);
-    }
-}
-
 - (void)requestUserName {
     if (![[MEGAStore shareInstance] fetchUserWithUserHandle:[[[MEGASdkManager sharedMEGASdk] myUser] handle]]) {
         [[MEGASdkManager sharedMEGASdk] getUserAttributeType:MEGAUserAttributeFirstname];
@@ -1467,17 +1411,6 @@ void uncaughtExceptionHandler(NSException *exception) {
 - (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
     switch ([request type]) {
             
-        case MEGARequestTypeLogin:
-        case MEGARequestTypeFetchNodes: {
-            if ([self.window.rootViewController isKindOfClass:[LaunchViewController class]]) {
-                isFirstFetchNodesRequestUpdate = YES;
-                LaunchViewController *launchVC = (LaunchViewController *)self.window.rootViewController;
-                [launchVC.activityIndicatorView setHidden:NO];
-                [launchVC.activityIndicatorView startAnimating];
-            }
-            break;
-        }
-            
         case MEGARequestTypeLogout: {
             if (MEGALinkManager.urlType == URLTypeCancelAccountLink) {
                 return;
@@ -1491,30 +1424,6 @@ void uncaughtExceptionHandler(NSException *exception) {
             
         default:
             break;
-    }
-}
-
-- (void)onRequestUpdate:(MEGASdk *)api request:(MEGARequest *)request {
-    if ([request type] == MEGARequestTypeFetchNodes){
-        if ([self.window.rootViewController isKindOfClass:[LaunchViewController class]]) {
-            [self invalidateTimerAPI_EAGAIN];
-            
-            LaunchViewController *launchVC = (LaunchViewController *)self.window.rootViewController;
-            float progress = [[request transferredBytes] floatValue] / [[request totalBytes] floatValue];
-            
-            if (isFirstFetchNodesRequestUpdate) {
-                [launchVC.activityIndicatorView stopAnimating];
-                [launchVC.activityIndicatorView setHidden:YES];
-                isFirstFetchNodesRequestUpdate = NO;
-                
-                [launchVC.logoImageView.layer addSublayer:launchVC.circularShapeLayer];
-                launchVC.circularShapeLayer.strokeStart = 0.0f;
-            }
-            
-            if (progress > 0 && progress <= 1.0) {
-                launchVC.circularShapeLayer.strokeEnd = progress;
-            }
-        }
     }
 }
 
@@ -1614,8 +1523,6 @@ void uncaughtExceptionHandler(NSException *exception) {
     
     switch ([request type]) {
         case MEGARequestTypeLogin: {
-            [self invalidateTimerAPI_EAGAIN];
-            
             if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
                 isAccountFirstLogin = NO;
                 isFetchNodesDone = NO;
@@ -1636,7 +1543,6 @@ void uncaughtExceptionHandler(NSException *exception) {
         case MEGARequestTypeFetchNodes: {
             [[SKPaymentQueue defaultQueue] addTransactionObserver:[MEGAPurchase sharedInstance]];
             [[MEGASdkManager sharedMEGASdk] enableTransferResumption];
-            [self invalidateTimerAPI_EAGAIN];
             
             if ([[NSUserDefaults standardUserDefaults] boolForKey:@"TransfersPaused"]) {
                 [[MEGASdkManager sharedMEGASdk] pauseTransfers:YES];
@@ -1790,30 +1696,7 @@ void uncaughtExceptionHandler(NSException *exception) {
     }
 }
 
-- (void)onRequestTemporaryError:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-    switch ([request type]) {
-        case MEGARequestTypeLogin:
-        case MEGARequestTypeFetchNodes: {
-            if (!timerAPI_EAGAIN.isValid) {
-                [self startTimerAPI_EAGAIN];
-            }
-            break;
-        }
-            
-        default:
-            break;
-    }
-}
-
 #pragma mark - MEGAChatRequestDelegate
-
-- (void)onChatRequestStart:(MEGAChatSdk *)api request:(MEGAChatRequest *)request {
-    if ([self.window.rootViewController isKindOfClass:[LaunchViewController class]] && request.type == MEGAChatRequestTypeConnect) {
-        LaunchViewController *launchVC = (LaunchViewController *)self.window.rootViewController;
-        [launchVC.activityIndicatorView setHidden:NO];
-        [launchVC.activityIndicatorView startAnimating];
-    }
-}
 
 - (void)onChatRequestFinish:(MEGAChatSdk *)api request:(MEGAChatRequest *)request error:(MEGAChatError *)error {
     if (request.type == MEGAChatRequestTypeSetBackgroundStatus && request.flag) {
