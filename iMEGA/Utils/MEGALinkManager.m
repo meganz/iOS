@@ -25,7 +25,6 @@
 #import "MEGAChatGenericRequestDelegate.h"
 #import "MEGAContactLinkQueryRequestDelegate.h"
 #import "MEGAGetPublicNodeRequestDelegate.h"
-#import "MEGAGenericRequestDelegate.h"
 #import "MEGAInviteContactRequestDelegate.h"
 #import "MEGANavigationController.h"
 #import "MEGANode+MNZCategory.h"
@@ -339,19 +338,10 @@ static NSString *nodeToPresentBase64Handle;
         case URLTypeConfirmationLink:
         case URLTypeNewSignUpLink: {
             if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
-                UIAlertController *alreadyLoggedInAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"alreadyLoggedInAlertTitle", @"Warning title shown when you try to confirm an account but you are logged in with another one") message:AMLocalizedString(@"alreadyLoggedInAlertMessage", @"Warning message shown when you try to confirm an account but you are logged in with another one") preferredStyle:UIAlertControllerStyleAlert];
-                [alreadyLoggedInAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                    [MEGALinkManager resetLinkAndURLType];
-                }]];
-                
-                [alreadyLoggedInAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
-                    MEGAGenericRequestDelegate *logoutRequestDelegate = [[MEGAGenericRequestDelegate alloc] initWithCompletion:^(MEGARequest *request, MEGAError *error) {
-                        if (error.type) return;
-                        MEGAQuerySignupLinkRequestDelegate *querySignupLinkRequestDelegate = [[MEGAQuerySignupLinkRequestDelegate alloc] initWithCompletion:nil urlType:MEGALinkManager.urlType];
-                        [[MEGASdkManager sharedMEGASdk] querySignupLink:url.mnz_MEGAURL delegate:querySignupLinkRequestDelegate];
-                    }];
-                    [[MEGASdkManager sharedMEGASdk] logoutWithDelegate:logoutRequestDelegate];
-                }]];
+                [MEGALinkManager resetLinkAndURLType];
+
+                UIAlertController *alreadyLoggedInAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:AMLocalizedString(@"This link is not related to this account. Please log in with the correct account.", @"Error message shown when opening a link with an account that not corresponds to the link") preferredStyle:UIAlertControllerStyleAlert];
+                [alreadyLoggedInAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDestructive handler:nil]];
                 
                 [UIApplication.mnz_visibleViewController presentViewController:alreadyLoggedInAlertController animated:YES completion:nil];
             } else {
@@ -626,6 +616,10 @@ static NSString *nodeToPresentBase64Handle;
     MEGAContactLinkQueryRequestDelegate *delegate = [[MEGAContactLinkQueryRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
         NSString *fullName = [NSString stringWithFormat:@"%@ %@", request.name, request.text];
         [MEGALinkManager presentInviteModalForEmail:request.email fullName:fullName contactLinkHandle:request.nodeHandle image:request.file];
+        
+        [NSUserDefaults.standardUserDefaults setObject:[NSNumber numberWithUnsignedLongLong:request.nodeHandle] forKey:MEGALastPublicHandleAccessed];
+        [NSUserDefaults.standardUserDefaults setInteger:AffiliateTypeContact forKey:MEGALastPublicTypeAccessed];
+        [NSUserDefaults.standardUserDefaults setDouble:NSDate.date.timeIntervalSince1970 forKey:MEGALastPublicTimestampAccessed];
     } onError:^(MEGAError *error) {
         [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"linkNotValid", @"Message shown when the user clicks on an link that is not valid")];
     }];
@@ -727,6 +721,10 @@ static NSString *nodeToPresentBase64Handle;
         } else {
             [MEGALinkManager createChatAndShow:request.chatHandle publicChatLink:chatLinkUrl];
         }
+        
+        [NSUserDefaults.standardUserDefaults setObject:[NSNumber numberWithUnsignedLongLong:request.chatHandle] forKey:MEGALastPublicHandleAccessed];
+        [NSUserDefaults.standardUserDefaults setInteger:AffiliateTypeChat forKey:MEGALastPublicTypeAccessed];
+        [NSUserDefaults.standardUserDefaults setDouble:NSDate.date.timeIntervalSince1970 forKey:MEGALastPublicTimestampAccessed];
         
         [SVProgressHUD dismiss];
     }];
