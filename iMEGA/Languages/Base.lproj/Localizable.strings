@@ -2002,6 +2002,10 @@
 "If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them.";
 /* Used in Photos app browser view to send the photos from the view to the cloud. */
 "Send (%d)" = "Send (%d)";
+/* Used in Photos app browser view to upload the photos from the view to the cloud. */
+"Upload (%d)" = "Upload (%d)";
+/* Used in Photos app browser album listing screen. */
+"Albums" = "Albums";
 /* Used in Photos app browser carousel view to unselect a selected photo. */
 "Unselect" = "Unselect";
 /* Used in Photos app browser. Shown when there are no photos or videos in the Photos app. */

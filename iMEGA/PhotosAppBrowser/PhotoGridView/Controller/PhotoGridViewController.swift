@@ -13,11 +13,19 @@ class PhotoGridViewController: UIViewController {
     let album: Album
     let completionBlock: AlbumsTableViewController.CompletionBlock
     
+    let selectionActionText: String
+    let selectionActionDisabledText: String
+    
     // MARK:- Initializers.
     
-    init(album: Album, completionBlock: @escaping AlbumsTableViewController.CompletionBlock) {
+    init(album: Album,
+         selectionActionText: String,
+         selectionActionDisabledText: String,
+         completionBlock: @escaping AlbumsTableViewController.CompletionBlock) {
         self.album = album
         self.completionBlock = completionBlock
+        self.selectionActionText = selectionActionText
+        self.selectionActionDisabledText = selectionActionDisabledText
         super.init(nibName: "PhotoGridViewController", bundle: Bundle.main)
     }
     
@@ -74,6 +82,8 @@ class PhotoGridViewController: UIViewController {
         let photoCarousalViewController = PhotoCarouselViewController(album: album,
                                                                       selectedPhotoIndexPath: indexPath,
                                                                       selectedAssets: selectedAssets,
+                                                                      selectionActionText: selectionActionText,
+                                                                      selectionActionDisabledText: selectionActionDisabledText,
                                                                       delegate: self)
         navigationController?.pushViewController(photoCarousalViewController, animated: true)
     }
@@ -81,7 +91,7 @@ class PhotoGridViewController: UIViewController {
     private func updateBottomView() {
         if let assetsCount = dataSource?.selectedAssets.count,
             (assetsCount > 0) {
-            sendBarButton?.title = String(format: "Send (%d)".localized(), assetsCount)
+            sendBarButton?.title = String(format: selectionActionText, assetsCount)
         }
         
         if navigationController?.topViewController == self {
@@ -133,7 +143,7 @@ class PhotoGridViewController: UIViewController {
     }
     
     private func addToolbar() {
-        sendBarButton = UIBarButtonItem(title: "send".localized(), style: .plain, target: self, action: #selector(sendButtonTapped))
+        sendBarButton = UIBarButtonItem(title: selectionActionDisabledText, style: .plain, target: self, action: #selector(sendButtonTapped))
         let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
         toolbarItems = [spacer, sendBarButton!]
     }

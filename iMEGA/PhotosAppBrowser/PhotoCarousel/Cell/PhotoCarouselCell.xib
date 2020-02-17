@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PhotoCarouselCell" id="gTV-IL-0wX" customClass="PhotoCarouselCell" customModule="PhotosAlbum" customModuleProvider="target">
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PhotoCarouselCell" id="gTV-IL-0wX" customClass="PhotoCarouselCell" customModule="MEGA" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="768" height="1080"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -24,15 +26,15 @@
                             <constraint firstAttribute="width" constant="768" id="fqe-YY-cCO"/>
                         </constraints>
                     </imageView>
-                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qru-JI-BE2" customClass="PhotoSelectedMarkerView" customModule="PhotosAlbum" customModuleProvider="target">
-                        <rect key="frame" x="718" y="0.0" width="50" height="50"/>
+                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qru-JI-BE2" customClass="PhotoSelectedMarkerView" customModule="MEGA" customModuleProvider="target">
+                        <rect key="frame" x="731" y="0.0" width="37" height="37"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="50" id="ZAx-Nj-NlW"/>
-                            <constraint firstAttribute="width" constant="50" id="pqH-AB-9Ex"/>
+                            <constraint firstAttribute="height" constant="37" id="ZAx-Nj-NlW"/>
+                            <constraint firstAttribute="width" constant="37" id="pqH-AB-9Ex"/>
                         </constraints>
                     </view>
-                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q8I-AG-KvZ" customClass="PhotoCarouselVideoIcon" customModule="PhotosAlbum" customModuleProvider="target">
+                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q8I-AG-KvZ" customClass="PhotoCarouselVideoIcon" customModule="MEGA" customModuleProvider="target">
                         <rect key="frame" x="349" y="505" width="70" height="70"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>

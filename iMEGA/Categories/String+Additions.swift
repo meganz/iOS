@@ -3,6 +3,6 @@ import Foundation
 
 extension String {
     func localized(comment: String = "") -> String {
-        return NSLocalizedString(self, comment: comment)
+        return LocalizationSystem.sharedLocal()!.localizedString(forKey: self, value: comment)
     }
 }

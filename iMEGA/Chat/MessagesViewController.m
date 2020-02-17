@@ -1431,6 +1431,28 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     [self presentViewController:userAlertController animated:YES completion:nil];
 }
 
+- (void)loadPhotoAppBrowserViewController {
+    __weak typeof(self) weakself = self;
+    AlbumsTableViewController *albumTableViewController = [AlbumsTableViewController.alloc
+                                                           initWithSelectionActionText:AMLocalizedString(@"Send (%d)",
+                                                                                                         @"Used in Photos app browser view to send the photos from the view to the cloud.")
+                                                           selectionActionDisabledText:AMLocalizedString(@"send", @"Used in Photos app browser view as a disabled action when there is no assets selected")
+                                                           completionBlock:^(NSArray<PHAsset *> * _Nonnull assets) {
+        if (assets.count > 0) {
+            [weakself uploadChatAssets:assets];
+        }
+    }];
+    MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:albumTableViewController];
+    [self presentViewController:navigationController animated:YES completion:nil];
+}
+
+- (void)uploadChatAssets:(NSArray<PHAsset *> *)assets {
+    MEGALogDebug(@"[Chat] Did press send button to attach assets %@", assets);
+    [MEGASdkManager.sharedMEGASdk getMyChatFilesFolderWithCompletion:^(MEGANode *myChatFilesNode) {
+        [self uploadAssets:assets toParentNode:myChatFilesNode];
+    }];
+}
+
 #pragma mark - TopBannerButton
 
 - (void)createTopBannerButton {
@@ -1898,10 +1920,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 }
 
 - (void)messagesInputToolbar:(MEGAInputToolbar *)toolbar didPressSendButton:(UIButton *)sender toAttachAssets:(NSArray<PHAsset *> *)assets {
-    MEGALogDebug(@"[Chat] Did press send button to attach assets %@", assets);
-    [MEGASdkManager.sharedMEGASdk getMyChatFilesFolderWithCompletion:^(MEGANode *myChatFilesNode) {
-        [self uploadAssets:assets toParentNode:myChatFilesNode];
-    }];
+    [self uploadChatAssets:assets];
 }
 
 - (void)messagesInputToolbar:(MEGAInputToolbar *)toolbar didPressNotHeldRecordButton:(UIButton *)sender {
@@ -2050,6 +2069,10 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 
             break;
         }
+            
+        case MEGAChatAccessoryButtonImage:
+            [self loadPhotoAppBrowserViewController];
+            break;
             
         default:
             break;
