@@ -24,7 +24,6 @@
 
 #import "MEGAUser+MNZCategory.h"
 
-#import "MEGAAssetsPickerController.h"
 #import "MEGAChatGenericRequestDelegate.h"
 #import "MEGAContactLinkCreateRequestDelegate.h"
 #import "MEGAConstants.h"
