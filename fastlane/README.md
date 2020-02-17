@@ -16,21 +16,21 @@ or alternatively using `brew cask install fastlane`
 
 # Available Actions
 ## iOS
-### ios build
+### ios build_using_development
 ```
-fastlane ios build
+fastlane ios build_using_development
 ```
-build a new build version to appcenter
+Build App using development certificate for Appcenter
+### ios upload_to_appcenter
+```
+fastlane ios upload_to_appcenter
+```
+Upload to Appcenter
 ### ios build_release
 ```
 fastlane ios build_release
 ```
 build a app store release version
-### ios upload
-```
-fastlane ios upload
-```
-upload to appcenter
 
 ----
 
