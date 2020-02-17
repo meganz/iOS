@@ -859,7 +859,11 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 }
 
 - (void)loadPhotoAlbumBrowser {
-    AlbumsTableViewController *albumTableViewController = [AlbumsTableViewController.alloc initWithCompletionBlock:^(NSArray<PHAsset *> * _Nonnull assets) {
+    AlbumsTableViewController *albumTableViewController = [AlbumsTableViewController.alloc
+                                                           initWithSelectionActionText:AMLocalizedString(@"Upload (%d)",
+                                                                                                         @"Used in Photos app browser view to send the photos from the view to the cloud.")
+                                                           selectionActionDisabledText:AMLocalizedString(@"upload", @"Used in Photos app browser view as a disabled action when there is no assets selected")
+                                                           completionBlock:^(NSArray<PHAsset *> * _Nonnull assets) {
         if (assets.count > 0) {
             for (PHAsset *asset in assets) {
                 [[MEGAStore shareInstance] insertUploadTransferWithLocalIdentifier:asset.localIdentifier

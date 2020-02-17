@@ -26,6 +26,9 @@ class PhotoCarouselViewController: UIViewController {
         }
     }
     
+    private let selectionActionText: String
+    private let selectionActionDisabledText: String
+    
     private var selectDeselectBarButtonItem: UIBarButtonItem?
     private var sendBarButtonItem: UIBarButtonItem?
     
@@ -33,7 +36,7 @@ class PhotoCarouselViewController: UIViewController {
     private var collectionViewDelegate: PhotoCarouselDelegate?
     
     private var senderBarButtonText: String {
-        return selectedAssets.count > 0 ? String(format: "Send (%d)".localized(), selectedAssets.count) : "send".localized()
+        return selectedAssets.count > 0 ? String(format: selectionActionText, selectedAssets.count) : selectionActionDisabledText
     }
     
     private lazy var titleLabel: UILabel = {
@@ -52,11 +55,15 @@ class PhotoCarouselViewController: UIViewController {
     init(album: Album,
          selectedPhotoIndexPath: IndexPath,
          selectedAssets: [PHAsset],
+         selectionActionText: String,
+         selectionActionDisabledText: String,
          delegate: PhotoCarouselViewControllerDelegate) {
         
         self.album = album
         self.selectedPhotoIndexPath = selectedPhotoIndexPath
         self.selectedAssets = selectedAssets
+        self.selectionActionText = selectionActionText
+        self.selectionActionDisabledText = selectionActionDisabledText
         self.delegate = delegate
         
         super.init(nibName: "PhotoCarouselViewController", bundle: Bundle.main)
@@ -153,15 +160,23 @@ class PhotoCarouselViewController: UIViewController {
     
     private func updateSelectDeselectButtonTitle(withSelectedAsset asset: PHAsset) {
         if selectedAssets.contains(asset) {
-            selectDeselectBarButtonItem?.title = "Unselect".localized()
+            selectDeselectBarButtonItem?.title = "Unselect".localized(comment: "Used in Photos app browser carousel view to unselect a selected photo.")
         } else {
-            selectDeselectBarButtonItem?.title = "select".localized()
+            selectDeselectBarButtonItem?.title = "select".localized(comment: "Used in Photos app browser carousel view to select a photo.")
         }
     }
         
     private func addToolbar() {
-        let sendBarButtonItem = UIBarButtonItem(title: senderBarButtonText, style: .plain, target: self, action: #selector(sendBarButtonTapped))
-        let selectDeselectBarButtonItem = UIBarButtonItem(title: "select".localized(), style: .plain, target: self, action: #selector(selectBarButtonTapped))
+        let sendBarButtonItem = UIBarButtonItem(title: senderBarButtonText,
+                                                style: .plain,
+                                                target: self,
+                                                action: #selector(sendBarButtonTapped))
+        let selectDeselectBarButtonItem = UIBarButtonItem(
+            title: "select".localized(comment: "Used in Photos app browser carousel view to select a photo."),
+            style: .plain,
+            target: self,
+            action: #selector(selectBarButtonTapped)
+        )
         
         sendBarButtonItem.isEnabled = selectedAssets.count > 0
         let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)

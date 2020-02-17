@@ -6,13 +6,19 @@ class AlbumsTableViewController: UITableViewController {
     var albumsDataSource: AlbumsTableViewDataSource?
     var albumsDelegate: AlbumsTableViewDelegate?
     let albums = Albums()
+    let selectionActionText: String
+    let selectionActionDisabledText: String
     let completionBlock: AlbumsTableViewController.CompletionBlock
     
     typealias CompletionBlock = ([PHAsset]) -> Void
     
     // MARK:- Initializers.
     
-    @objc init(completionBlock: @escaping ([PHAsset]) -> Void) {
+    @objc init(selectionActionText: String,
+               selectionActionDisabledText: String,
+               completionBlock: @escaping ([PHAsset]) -> Void) {
+        self.selectionActionText = selectionActionText
+        self.selectionActionDisabledText = selectionActionDisabledText
         self.completionBlock = completionBlock
         super.init(nibName: nil, bundle: nil)
     }
@@ -26,7 +32,7 @@ class AlbumsTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "Albums".localized()
+        title = "Albums".localized(comment: "Used in Photos app browser album listing screen.")
         tableView.register(UINib(nibName: "AlbumTableViewCell", bundle: nil),
                            forCellReuseIdentifier: "AlbumTableViewCell")
         tableView.rowHeight = 110.0
@@ -56,7 +62,10 @@ class AlbumsTableViewController: UITableViewController {
     // MARK:- Private methods.
     
     private func showDetail(album: Album) {
-        let gridViewController = PhotoGridViewController(album: album, completionBlock: completionBlock)
+        let gridViewController = PhotoGridViewController(album: album,
+                                                         selectionActionText: selectionActionText,
+                                                         selectionActionDisabledText: selectionActionDisabledText,
+                                                         completionBlock: completionBlock)
         navigationController?.pushViewController(gridViewController, animated: true)
     }
     
@@ -64,7 +73,7 @@ class AlbumsTableViewController: UITableViewController {
         let label = UILabel()
         label.textAlignment = .center
         label.font = UIFont.preferredFont(forTextStyle: .body)
-        label.text = "No Photos or Videos".localized()
+        label.text = "No Photos or Videos".localized(comment: "Used in Photos app browser. Shown when there are no photos or videos in the Photos app.")
         view.addSubview(label)
         
         label.translatesAutoresizingMaskIntoConstraints = false
