@@ -61,7 +61,7 @@ platform :ios do
     # Get the 20 latest commints from the current branch.
     changelog_from_git_commits(
       commits_count: 20,  
-      pretty: "- (%ae) %s",
+      pretty: "- %s",
       date_format: "short",
       match_lightweight_tag: false,
       merge_commit_filtering: "exclude_merges"
