@@ -67,7 +67,7 @@ pipeline {
         stage('Generating Executable (IPA)') {
             steps {
                 injectEnvironments({
-                    sh "fastlane build_using_development BUILD_NUMBER:$BUILD_NUMBER appcenter_api_token:$appcenter_api_token"
+                    sh "fastlane build_using_development BUILD_NUMBER:$BUILD_NUMBER"
                 })
             }
         }
