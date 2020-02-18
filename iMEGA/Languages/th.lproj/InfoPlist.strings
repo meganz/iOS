@@ -5,11 +5,11 @@
 /* Photo library usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSPhotoLibraryUsageDescription"="MEGA เข้าถึงรูปภาพ/วิดีโอของคุณเมื่อคุณอัปโหลด แชร์ผ่านแชทและเปิดใช้งานการอัปโหลดจากกล้อง";
 /* Contacts Usage Description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
-"NSContactsUsageDescription"="MEGA จะเข้าถึงที่อยู่ติดต่อของคุณเมื่อคุณเลือกบางส่วนเพื่อบันทึก/ส่งออก";
+"NSContactsUsageDescription"="MEGA จะเข้าถึงผู้ติดต่อของคุณเมื่อคุณเลือกบางคนเพื่อบันทึก/ส่งออกและเพื่อช่วยให้คุณเชื่อมต่อกับผู้อื่นใน MEGA ได้";
 /* Write-only access to the user’s photo library description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSPhotoLibraryAddUsageDescription"="MEGA ต้องการเข้าถึงไลบรารีรูปภาพของคุณเพื่อเพิ่มรูปภาพและวิดีโอลงในแกลเลอรีอุปกรณ์ของคุณ";
 /* Face ID usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
-"NSFaceIDUsageDescription"="MEGA เข้าถึง Face ID เพื่อให้คุณสามารถปลดล็อกรหัสผ่านของแอปได้อย่างง่ายดายเมื่อคุณเปิดใช้งานตัวเลือกนี้";
+"NSFaceIDUsageDescription"="MEGA เข้าถึง Face ID เพื่อให้คุณสามารถปลดล็อกรหัสของแอปได้อย่างง่ายดายเมื่อคุณเปิดใช้งานตัวเลือกนี้";
 /* Label for any 'Search' button, link, etc. - (String as short as possible). */
 "quickActionSearchString"="ค้นหา";
 /*  */
@@ -17,4 +17,4 @@
 /* Title of the Offline section */
 "quickActionOfflineString"="ออฟไลน์";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
-"NSLocationWhenInUseUsageDescription"="MEGA accesses your location when you elect to share it with your contacts.";
+"NSLocationAlwaysAndWhenInUseUsageDescription"="MEGA accesses your location when you share it with your contacts in chat or when you enable ”Upload in Background” for Camera Uploads so your photos and videos are uploaded when your location changes.";

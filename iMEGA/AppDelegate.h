@@ -6,4 +6,6 @@
 @property (strong, nonatomic) UIWindow *window;
 @property (nonatomic, strong) MEGACallManager *megaCallManager;
 
+- (void)showOnboarding;
+
 @end

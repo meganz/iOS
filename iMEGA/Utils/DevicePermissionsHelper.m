@@ -2,6 +2,7 @@
 #import "DevicePermissionsHelper.h"
 
 #import <AVFoundation/AVFoundation.h>
+#import <Contacts/Contacts.h>
 #import <Photos/Photos.h>
 #import <UserNotifications/UserNotifications.h>
 
@@ -65,7 +66,16 @@
     }];
 }
 
-
++ (void)contactsPermissionWithCompletionHandler:(void (^)(BOOL granted))handler {
+    CNContactStore *contactStore = CNContactStore.new;
+    [contactStore requestAccessForEntityType:CNEntityTypeContacts completionHandler:^(BOOL granted, NSError * _Nullable error) {
+        if (handler) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                handler(granted);
+            });
+        }
+    }];
+}
 
 #pragma mark - Alerts
 
@@ -192,13 +202,18 @@
     return shouldAskForNotificationsPermissions;
 }
 
++ (BOOL)shouldAskForContactsPermissions {
+    return [CNContactStore authorizationStatusForEntityType:CNEntityTypeContacts] == CNAuthorizationStatusNotDetermined;
+}
+
 + (BOOL)shouldSetupPermissions {
     BOOL shouldAskForAudioPermissions = self.shouldAskForAudioPermissions;
     BOOL shouldAskForVideoPermissions = self.shouldAskForVideoPermissions;
     BOOL shouldAskForPhotosPermissions = self.shouldAskForPhotosPermissions;
     BOOL shouldAskForNotificationsPermissions = self.shouldAskForNotificationsPermissions;
-    
-    return shouldAskForAudioPermissions || shouldAskForVideoPermissions || shouldAskForPhotosPermissions || shouldAskForNotificationsPermissions;
+    BOOL shouldAskForContactsPermissions = self.shouldAskForContactsPermissions;
+
+    return shouldAskForAudioPermissions || shouldAskForVideoPermissions || shouldAskForPhotosPermissions || shouldAskForNotificationsPermissions || shouldAskForContactsPermissions;
 }
 
 + (BOOL)isAudioPermissionAuthorizedOrNotDetermined {
