@@ -1184,7 +1184,7 @@ void uncaughtExceptionHandler(NSException *exception) {
     MEGALogDebug(@"Did receive incoming push with payload: %@", [payload dictionaryPayload]);
     
     // Call
-    if ([[UIApplication sharedApplication] applicationState] == UIApplicationStateBackground && [[[payload dictionaryPayload] objectForKey:@"megatype"] integerValue] == 4) {
+    if ([[payload.dictionaryPayload objectForKey:@"megatype"] integerValue] == 4) {
         if (self.megaProviderDelegate == nil) {            
             _megaCallManager = MEGACallManager.new;
             _megaProviderDelegate = [MEGAProviderDelegate.alloc initWithMEGACallManager:self.megaCallManager];
