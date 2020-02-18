@@ -639,6 +639,7 @@
     self.chatListItemList = self.chatRoomsType == ChatRoomsTypeDefault ? [[MEGASdkManager sharedMEGAChatSdk] chatListItems] : [[MEGASdkManager sharedMEGAChatSdk] archivedChatListItems];
     self.archivedChatListItemList = [[MEGASdkManager sharedMEGAChatSdk] archivedChatListItems];
     [self reorderList];
+    [self updateChatIdIndexPathDictionary];
     [self.tableView reloadData];
 }
 
