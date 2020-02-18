@@ -1,17 +1,3 @@
-def callSlack(String buildResult) {
-    if ( buildResult == "SUCCESS" ) {
-        slackSend color: "good", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} was successful"
-    }
-    else if( buildResult == "FAILURE" ) { 
-        slackSend color: "danger", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} was failed"
-    }
-    else if( buildResult == "UNSTABLE" ) { 
-        slackSend color: "warning", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} was unstable"
-    }
-    else {
-        slackSend color: "danger", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} its result was unclear"	
-    }
-}
 
 def injectEnvironments(Closure body) {
     withEnv([
@@ -71,23 +57,9 @@ pipeline {
                 })
             }
         }
-        
-        stage('Deploying executable (IPA) to Appcenter') {
-            steps {
-                injectEnvironments({
-                    retry(3) {
-                        sh "fastlane upload_to_appcenter ENV:DEV"
-                    }
-                })
-            }
-        }
    }
    
     post {
-        always { 
-            callSlack(currentBuild.currentResult)
-        }
-
         cleanup{
             deleteDir()
         }
