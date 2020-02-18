@@ -1,6 +1,7 @@
 
 import UIKit
 import Photos
+import AVKit
 
 // MARK:- PhotoCarouselViewControllerDelegate.
 
@@ -138,7 +139,34 @@ class PhotoCarouselViewController: UIViewController {
     }
     
     func didSelectIndex(index: Int) {
-        selectBarButtonTapped()
+        let asset = album.asset(atIndex: index)
+        if asset.mediaType == .video {
+            SVProgressHUD.setDefaultMaskType(.clear)
+            SVProgressHUD.show()
+            
+            PHCachingImageManager().requestAVAsset(forVideo: asset, options: nil) { (videoAsset, audioMix, info) in
+                SVProgressHUD.dismiss()
+
+                if let info = info,
+                    let error = info[PHImageErrorKey] as? NSError {
+                    let alertController = UIAlertController(title: nil,
+                                                            message: error.localizedDescription,
+                                                            preferredStyle: .alert)
+                    alertController.addAction(UIAlertAction(title: "ok".localized(), style: .cancel, handler: nil))
+                    self.present(alertController, animated: true, completion: nil)
+                    MEGALogError("[Photo Carousel View] unable to play video \(error.localizedDescription)")
+                    return
+                }
+
+                guard let videoAsset = videoAsset as? AVURLAsset,
+                    let playerViewController = MEGAAVViewController(url: videoAsset.url) else {
+                        MEGALogError("[Photo Carousel View] error while creating player view controller.")
+                        return
+                }
+
+                self.present(playerViewController, animated: true, completion: nil)
+            }
+        }
     }
     
     // MARK:- Private methods.
