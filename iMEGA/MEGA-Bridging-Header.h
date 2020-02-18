@@ -43,4 +43,3 @@
 #import "InitialLaunchViewController.h"
 #import "OnboardingViewController.h"
 #import "UpgradeTableViewController.h"
-#import "MEGAAVViewController.h"
