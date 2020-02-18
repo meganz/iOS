@@ -144,32 +144,49 @@ class PhotoCarouselViewController: UIViewController {
             SVProgressHUD.setDefaultMaskType(.clear)
             SVProgressHUD.show()
             
-            PHCachingImageManager().requestAVAsset(forVideo: asset, options: nil) { (videoAsset, audioMix, info) in
-                SVProgressHUD.dismiss()
-
-                if let info = info,
-                    let error = info[PHImageErrorKey] as? NSError {
-                    let alertController = UIAlertController(title: nil,
-                                                            message: error.localizedDescription,
-                                                            preferredStyle: .alert)
-                    alertController.addAction(UIAlertAction(title: "ok".localized(), style: .cancel, handler: nil))
-                    self.present(alertController, animated: true, completion: nil)
-                    MEGALogError("[Photo Carousel View] unable to play video \(error.localizedDescription)")
-                    return
-                }
-
-                guard let videoAsset = videoAsset as? AVURLAsset,
-                    let playerViewController = MEGAAVViewController(url: videoAsset.url) else {
-                        MEGALogError("[Photo Carousel View] error while creating player view controller.")
+            let options = PHVideoRequestOptions()
+            options.isNetworkAccessAllowed = true
+            
+            PHCachingImageManager().requestPlayerItem(forVideo: asset, options: options) { [weak self] (playerItem, info) in
+                DispatchQueue.main.async {
+                    SVProgressHUD.dismiss()
+                    
+                    if let info = info,
+                        let error = info[PHImageErrorKey] as? NSError {
+                        let alertController = UIAlertController(title: nil,
+                                                                message: error.localizedDescription,
+                                                                preferredStyle: .alert)
+                        alertController.addAction(UIAlertAction(title: "ok".localized(), style: .cancel, handler: nil))
+                        self?.present(alertController, animated: true, completion: nil)
+                        MEGALogError("[Photo Carousel View] unable to play video \(error.localizedDescription)")
                         return
+                    }
+                    
+                    let playerViewController = AVPlayerViewController()
+                    playerViewController.player = AVPlayer(playerItem: playerItem)
+                    self?.present(playerViewController, animated: true) {
+                        self?.loaded(playerViewController: playerViewController)
+                    }
                 }
-
-                self.present(playerViewController, animated: true, completion: nil)
             }
         }
     }
     
     // MARK:- Private methods.
+    
+    private func loaded(playerViewController: AVPlayerViewController) {
+        playerViewController.player?.play()
+        
+        let center = NotificationCenter.default
+        var token: NSObjectProtocol?
+        
+        token = center.addObserver(forName: NSNotification.Name.AVPlayerItemDidPlayToEndTime,
+                                   object: nil,
+                                   queue: OperationQueue.main) { _ in
+                                    playerViewController.dismissView()
+                                    center.removeObserver(token!)
+        }
+    }
     
     @objc private func sendBarButtonTapped() {
         delegate?.sendButtonTapped()
