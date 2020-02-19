@@ -2043,7 +2043,7 @@
 /* Contact details screen: Set the alias(nickname) for a user */
 "Set Nickname"="Alias definieren";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
-"Alias/ Nickname"="Alias/ Nickname";
+"Alias/ Nickname"="Aliasname";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
 "It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="Diese Datei ist weder UTF-8, noch ISO/IEC 8859-1-kodiert.";
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
@@ -2071,7 +2071,7 @@
 /* Place holder for enter mobile number field */
 "Your phone number"="Ihre Mobilnummer";
 /* Label tell user to enter received txt to below input boxes */
-"Please type the verification code sent to"="Please type the verification code sent to";
+"Please type the verification code sent to"="Please enter the verification code sent to";
 /* Text message to remind user to resend verification code */
 "You didn't receive a code?"="You didn’t receive a code?";
 /* Message shown when verify phone number successfully */

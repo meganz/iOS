@@ -453,7 +453,7 @@ static const void *richTitleTagKey = &richTitleTagKey;
     
     MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithUserHandle:handle];
     if (moUser) {
-        if (!moUser.nickname.mnz_isEmpty) {
+        if (moUser.nickname && !moUser.nickname.mnz_isEmpty) {
             fullName = moUser.nickname;
         } else {
             fullName = moUser.fullName;
