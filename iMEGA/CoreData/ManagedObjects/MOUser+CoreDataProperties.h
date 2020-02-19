@@ -8,6 +8,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSString *firstname;
 @property (nullable, nonatomic, retain) NSString *lastname;
 @property (nullable, nonatomic, retain) NSString *email;
+@property (nullable, nonatomic, retain) NSString *nickname;
 
 @end
 

@@ -21,18 +21,20 @@
 #import "UIImage+MNZCategory.h"
 #import "UpgradeTableViewController.h"
 #import "UsageViewController.h"
+#import "MEGA-Swift.h"
 
 @interface MyAccountHallViewController () <UITableViewDataSource, UITableViewDelegate, MEGAPurchasePricingDelegate, MEGAGlobalDelegate, MEGARequestDelegate>
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *buyPROBarButtonItem;
 
 @property (weak, nonatomic) IBOutlet UIView *profileView;
-
 @property (weak, nonatomic) IBOutlet UILabel *viewAndEditProfileLabel;
 @property (weak, nonatomic) IBOutlet UIButton *viewAndEditProfileButton;
 @property (weak, nonatomic) IBOutlet UIImageView *viewAndEditProfileDisclosureImageView;
-
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIView *addPhoneNumberView;
+@property (weak, nonatomic) IBOutlet UILabel *addPhoneNumberTitle;
+@property (weak, nonatomic) IBOutlet UILabel *addPhoneNumberDescription;
 
 @property (strong, nonatomic) NSNumberFormatter *numberFormatter;
 
@@ -106,6 +108,9 @@
     if (@available(iOS 11.0, *)) {
         self.avatarImageView.accessibilityIgnoresInvertColors = YES;
     }
+    self.addPhoneNumberView.hidden = YES;
+    
+    [self configAddPhoneNumberTexts];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -124,6 +129,8 @@
     if (self.navigationController.isNavigationBarHidden) {
         [self.navigationController setNavigationBarHidden:NO animated:YES];
     }
+    
+    [self configAddPhoneNumberView];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -134,6 +141,33 @@
 }
 
 #pragma mark - Private
+
+- (void)configAddPhoneNumberTexts {
+    self.addPhoneNumberTitle.text = AMLocalizedString(@"Add Your Phone Number", nil);
+
+    if (!MEGASdkManager.sharedMEGASdk.isAchievementsEnabled) {
+        self.addPhoneNumberDescription.text = AMLocalizedString(@"Add your phone number to MEGA. This makes it easier for your contacts to find you on MEGA.", nil);
+    } else {
+        [MEGASdkManager.sharedMEGASdk getAccountAchievementsWithDelegate:[[MEGAGenericRequestDelegate alloc] initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
+            if (error.type == MEGAErrorTypeApiOk) {
+                NSString *storageText = [Helper memoryStyleStringFromByteCount:[request.megaAchievementsDetails classStorageForClassId:MEGAAchievementAddPhone]];
+                self.addPhoneNumberDescription.text = [NSString stringWithFormat:AMLocalizedString(@"Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA.", nil), storageText];
+            }
+        }]];
+    }
+}
+
+- (void)configAddPhoneNumberView {
+    if (MEGASdkManager.sharedMEGASdk.smsVerifiedPhoneNumber != nil || MEGASdkManager.sharedMEGASdk.smsAllowedState != SMSStateOptInAndUnblock) {
+        self.addPhoneNumberView.hidden = YES;
+    } else {
+        if (self.addPhoneNumberView.isHidden) {
+            [UIView animateWithDuration:.75 animations:^{
+                self.addPhoneNumberView.hidden = NO;
+            }];
+        }
+    }
+}
 
 - (void)reloadUI {
     self.nameLabel.text = [[[MEGASdkManager sharedMEGASdk] myUser] mnz_fullName];
@@ -189,6 +223,12 @@
 - (IBAction)viewAndEditProfileTouchUpInside:(UIButton *)sender {
     ProfileViewController *profileViewController = [[UIStoryboard storyboardWithName:@"Profile" bundle:nil] instantiateViewControllerWithIdentifier:@"ProfileViewControllerID"];
     [self.navigationController pushViewController:profileViewController animated:YES];
+}
+
+- (IBAction)didTapAddPhoneNumberView {
+    SMSNavigationViewController *smsNavigationController = [[SMSNavigationViewController alloc] initWithRootViewController:[SMSVerificationViewController instantiateWith:SMSVerificationTypeAddPhoneNumber]];
+    smsNavigationController.modalPresentationStyle = UIModalPresentationFullScreen;
+    [self presentViewController:smsNavigationController animated:YES completion:nil];
 }
 
 #pragma mark - UITableViewDataSource
