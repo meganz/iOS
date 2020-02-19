@@ -3,8 +3,8 @@ import UIKit
 import Photos
 
 class AlbumsTableViewDataSource: NSObject, UITableViewDataSource {
-    let albums: Albums
-    let imageManager = PHCachingImageManager.default()
+    private let albums: Albums
+    private let imageManager = PHCachingImageManager.default()
     
     // MARK:- Initializer.
     
