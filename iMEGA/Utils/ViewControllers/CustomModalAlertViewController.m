@@ -111,7 +111,7 @@
         self.dismissButtonTitle = AMLocalizedString(@"notNow", @"Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers.");
     }
     
-    __weak typeof(CustomModalAlertViewController) *weakCustom = self;
+    __weak __typeof(self) weakCustom = self;
     
     self.firstCompletion = ^{
         MEGAGenericRequestDelegate *delegate = [MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
