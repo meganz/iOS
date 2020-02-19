@@ -713,7 +713,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 - (void)updateNavigationBarButtonsState {
     MEGAChatConnection chatConnection = [[MEGASdkManager sharedMEGAChatSdk] chatConnectionState:self.chatRoom.chatId];
     
-    if (self.chatRoom.ownPrivilege < MEGAChatRoomPrivilegeStandard || chatConnection != MEGAChatConnectionOnline || !MEGAReachabilityManager.isReachable || self.chatRoom.peerCount == 0 || self.inputToolbarState >= InputToolbarStateRecordingUnlocked) {
+    if (self.chatRoom.ownPrivilege < MEGAChatRoomPrivilegeStandard || chatConnection != MEGAChatConnectionOnline || !MEGAReachabilityManager.isReachable || self.chatRoom.peerCount == 0 || self.inputToolbarState >= InputToolbarStateRecordingUnlocked || [MEGASdkManager.sharedMEGAChatSdk hasCallInChatRoom:self.chatRoom.chatId]) {
         self.audioCallBarButtonItem.enabled = self.videoCallBarButtonItem.enabled = NO;
         return;
     }
@@ -1198,6 +1198,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     [self updateNavigationBarButtonsState];
 
     [self customNavigationBarLabel];
+    [self checkIfChatHasActiveCall];
 }
 
 - (void)showOrHideJumpToBottom {
@@ -1462,11 +1463,14 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 
 - (void)checkIfChatHasActiveCall {
     if (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeStandard) {
-        if ([[MEGASdkManager sharedMEGAChatSdk] hasCallInChatRoom:self.chatRoom.chatId]) {
+        if ([[MEGASdkManager sharedMEGAChatSdk] hasCallInChatRoom:self.chatRoom.chatId] && MEGAReachabilityManager.isReachable) {
             MEGAChatCall *call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
+            if (!self.chatRoom.isGroup && call.status == MEGAChatCallStatusDestroyed) {
+                return;
+            }
             if (call.status == MEGAChatCallStatusInProgress) {
                 [self configureTopBannerButtonForInProgressCall:call];
-            }  else if (self.chatRoom.group || call.status == MEGAChatCallStatusRequestSent) {
+            }  else if (call.status == MEGAChatCallStatusUserNoPresent || call.status == MEGAChatCallStatusRequestSent || call.status == MEGAChatCallStatusRingIn) {
                 [self configureTopBannerButtonForActiveCall:call];
             }
             [self showTopBannerButton];
@@ -1522,8 +1526,14 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 }
 
 - (IBAction)joinActiveCall:(id)sender {
-    [self.timer invalidate];
-    [self openCallViewWithVideo:NO active:YES];
+    [DevicePermissionsHelper audioPermissionModal:YES forIncomingCall:NO withCompletionHandler:^(BOOL granted) {
+        if (granted) {
+            [self.timer invalidate];
+            [self openCallViewWithVideo:NO active:YES];
+        } else {
+            [DevicePermissionsHelper alertAudioPermissionForIncomingCall:NO];
+        }
+    }];
 }
 
 #pragma mark - Gesture recognizer
