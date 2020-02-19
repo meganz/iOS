@@ -7,7 +7,7 @@ class PhotoGridViewDataSource: NSObject {
     let collectionView: UICollectionView
     var selectedAssets: [PHAsset]
     typealias SelectionHandler = (PHAsset, IndexPath, CGSize, CGPoint) -> Void
-    let selectionHandler: SelectionHandler
+    private let selectionHandler: SelectionHandler
     
     // MARK:- Initializer.
 

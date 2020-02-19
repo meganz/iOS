@@ -2,7 +2,7 @@
 import UIKit
 
 class AlbumsTableViewDelegate: NSObject, UITableViewDelegate {
-    let tapHandler: (Album) -> Void
+    private let tapHandler: (Album) -> Void
     
     // MARK:- Initializer.
 

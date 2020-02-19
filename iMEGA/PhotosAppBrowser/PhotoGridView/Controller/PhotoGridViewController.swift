@@ -5,16 +5,16 @@ import Photos
 class PhotoGridViewController: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
-    var sendBarButton: UIBarButtonItem?
+    private var sendBarButton: UIBarButtonItem?
     
-    var dataSource: PhotoGridViewDataSource?
-    var delegate: PhotoGridViewDelegate?
+    private var dataSource: PhotoGridViewDataSource?
+    private var delegate: PhotoGridViewDelegate?
     
-    let album: Album
-    let completionBlock: AlbumsTableViewController.CompletionBlock
+    private let album: Album
+    private let completionBlock: AlbumsTableViewController.CompletionBlock
     
-    let selectionActionText: String
-    let selectionActionDisabledText: String
+    private let selectionActionText: String
+    private let selectionActionDisabledText: String
     
     // MARK:- Initializers.
     

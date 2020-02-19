@@ -2,8 +2,8 @@
 import UIKit
 
 class PhotoGridViewDelegate: NSObject {
-    let collectionView: UICollectionView
-    let cellsPerRow: () -> Int
+    private let collectionView: UICollectionView
+    private let cellsPerRow: () -> Int
     
     // MARK:- Initializer.
     

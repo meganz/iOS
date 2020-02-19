@@ -3,12 +3,12 @@ import UIKit
 import Photos
 
 class AlbumsTableViewController: UITableViewController {
-    var albumsDataSource: AlbumsTableViewDataSource?
-    var albumsDelegate: AlbumsTableViewDelegate?
-    let albums = Albums()
-    let selectionActionText: String
-    let selectionActionDisabledText: String
-    let completionBlock: AlbumsTableViewController.CompletionBlock
+    private var albumsDataSource: AlbumsTableViewDataSource?
+    private var albumsDelegate: AlbumsTableViewDelegate?
+    private let albums = Albums()
+    private let selectionActionText: String
+    private let selectionActionDisabledText: String
+    private let completionBlock: AlbumsTableViewController.CompletionBlock
     
     typealias CompletionBlock = ([PHAsset]) -> Void
     
