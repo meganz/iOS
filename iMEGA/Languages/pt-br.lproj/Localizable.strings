@@ -301,7 +301,7 @@
 /* Alert title shown when you are seeing the details of a folder and you are not able to access it anymore because it has been removed or moved from the shared folder where it used to be */
 "youNoLongerHaveAccessToThisFolder_alertTitle"="Você não tem acesso a esta pasta";
 /* The text is shown as an option on the details of a file or folder */
-"saveForOffline"="Salvo para uso offline";
+"saveForOffline"="Salvar para uso offline";
 /* Error message shown when a user tries to download a folder with the name Inbox on the main directory of the offline section */
 "folderInboxError"="A etiqueda desta caixa de entrada é de uso reservado pela Apple.";
 /* Title shown under the action that allows you to save an image to your camera roll */
@@ -2036,6 +2036,10 @@
 "You are back!"="Você voltou.";
 /* Subtitle of chat screen when the chat is inactive */
 "Inactive chat"="Chat inativo";
+/* Contact details screen: Set the alias(nickname) for a user */
+"Set Nickname"="Definir apelido";
+/* Add nickname screen: This text appears above the alias(nickname) entry */
+"Alias/ Nickname"="Apelido";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
 "It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="Não foi possível obter o conteúdo deste arquivo, pois ele não está codificado em UTF-8 ou ISO/IEC 8859-1.";
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
