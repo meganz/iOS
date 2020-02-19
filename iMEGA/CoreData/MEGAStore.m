@@ -33,6 +33,12 @@
     return self.storeStack.viewContext;
 }
 
+- (NSManagedObjectContext *)childPrivateQueueContext {
+    NSManagedObjectContext *context = [NSManagedObjectContext.alloc initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+    context.parentContext = self.managedObjectContext;
+    return context;
+}
+
 - (NSURL *)storeURL {
     NSString *dbName = @"MEGACD.sqlite";
     NSError *error;
@@ -64,6 +70,20 @@
         MEGALogError(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }
+}
+
+- (void)saveContext:(NSManagedObjectContext *)context {
+    [context performBlockAndWait:^{
+        NSError *error = nil;
+        if (context.hasChanges && ![context save:&error]) {
+            MEGALogError(@"Unresolved error %@, %@", error, error.userInfo);
+            abort();
+        }
+        
+        if (context.parentContext != nil) {
+            [self saveContext:context.parentContext];
+        }
+    }];
 }
 
 #pragma mark - MOOfflineNode entity
@@ -145,7 +165,7 @@
 
 #pragma mark - MOUser entity
 
-- (void)insertUserWithUserHandle:(uint64_t)userHandle firstname:(NSString *)firstname lastname:(NSString *)lastname email:(NSString *)email {
+- (void)insertUserWithUserHandle:(uint64_t)userHandle firstname:(NSString *)firstname lastname:(NSString *)lastname nickname:(NSString *)nickname email:(NSString *)email {
     NSString *base64userHandle = [MEGASdk base64HandleForUserHandle:userHandle];
     
     if (!base64userHandle) return;
@@ -155,6 +175,7 @@
     moUser.firstname        = firstname;
     moUser.lastname         = lastname;
     moUser.email            = email;
+    moUser.nickname         = nickname;
     
     MEGALogDebug(@"Save context - insert user: %@", moUser.description);
     
@@ -191,6 +212,23 @@
     }
 }
 
+- (void)updateUserWithUserHandle:(uint64_t)userHandle nickname:(NSString *)nickname context:(NSManagedObjectContext *)context {
+    MOUser *moUser;
+    if (context != nil) {
+        moUser = [self fetchUserWithUserHandle:userHandle context:context];
+    } else {
+        moUser = [self fetchUserWithUserHandle:userHandle];
+    }
+
+    if (moUser) {
+        moUser.nickname = nickname;
+        MEGALogDebug(@"Save context - update nickname: %@", nickname);
+        if (context == nil && NSThread.isMainThread) {
+            [self saveContext];
+        }
+    }
+}
+
 - (void)updateUserWithEmail:(NSString *)email firstname:(NSString *)firstname {
     MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithEmail:email];
     
@@ -211,17 +249,31 @@
     }
 }
 
+- (void)updateUserWithEmail:(NSString *)email nickname:(NSString *)nickname {
+    MOUser *moUser = [MEGAStore.shareInstance fetchUserWithEmail:email];
+
+    if (moUser) {
+        moUser.nickname = nickname;
+        MEGALogDebug(@"Save context - update nickname: %@", nickname);
+        [self saveContext];
+    }
+}
+
 - (MOUser *)fetchUserWithUserHandle:(uint64_t)userHandle {
-    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"User" inManagedObjectContext:self.managedObjectContext];
+    return [self fetchUserWithUserHandle:userHandle context:self.managedObjectContext];
+}
+
+- (MOUser *)fetchUserWithUserHandle:(uint64_t)userHandle context:(NSManagedObjectContext *)context {
+    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"User" inManagedObjectContext:context];
     
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSFetchRequest *request = [NSFetchRequest.alloc init];
     [request setEntity:entityDescription];
     
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"base64userHandle == %@", [MEGASdk base64HandleForUserHandle:userHandle]];
     [request setPredicate:predicate];
     
     NSError *error;
-    NSArray *array = [self.managedObjectContext executeFetchRequest:request error:&error];
+    NSArray *array = [context executeFetchRequest:request error:&error];
     
     return [array firstObject];
 }

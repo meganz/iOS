@@ -2,6 +2,7 @@
 #import "DevicePermissionsHelper.h"
 
 #import <AVFoundation/AVFoundation.h>
+#import <Contacts/Contacts.h>
 #import <Photos/Photos.h>
 #import <UserNotifications/UserNotifications.h>
 
@@ -65,7 +66,16 @@
     }];
 }
 
-
++ (void)contactsPermissionWithCompletionHandler:(void (^)(BOOL granted))handler {
+    CNContactStore *contactStore = CNContactStore.new;
+    [contactStore requestAccessForEntityType:CNEntityTypeContacts completionHandler:^(BOOL granted, NSError * _Nullable error) {
+        if (handler) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                handler(granted);
+            });
+        }
+    }];
+}
 
 #pragma mark - Alerts
 
@@ -92,7 +102,7 @@
 + (void)alertPermissionWithTitle:(NSString *)title message:(NSString *)message completionHandler:(void (^)(void))handler {
     UIAlertController *permissionsAlertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
     
-    [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"Not Now", nil) style:UIAlertActionStyleCancel handler:nil]];
+    [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"notNow", @"Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers.") style:UIAlertActionStyleCancel handler:nil]];
     [permissionsAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"settingsTitle", @"Title of the Settings section") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         if (handler) {
             handler();
@@ -192,13 +202,18 @@
     return shouldAskForNotificationsPermissions;
 }
 
++ (BOOL)shouldAskForContactsPermissions {
+    return [CNContactStore authorizationStatusForEntityType:CNEntityTypeContacts] == CNAuthorizationStatusNotDetermined;
+}
+
 + (BOOL)shouldSetupPermissions {
     BOOL shouldAskForAudioPermissions = self.shouldAskForAudioPermissions;
     BOOL shouldAskForVideoPermissions = self.shouldAskForVideoPermissions;
     BOOL shouldAskForPhotosPermissions = self.shouldAskForPhotosPermissions;
     BOOL shouldAskForNotificationsPermissions = self.shouldAskForNotificationsPermissions;
-    
-    return shouldAskForAudioPermissions || shouldAskForVideoPermissions || shouldAskForPhotosPermissions || shouldAskForNotificationsPermissions;
+    BOOL shouldAskForContactsPermissions = self.shouldAskForContactsPermissions;
+
+    return shouldAskForAudioPermissions || shouldAskForVideoPermissions || shouldAskForPhotosPermissions || shouldAskForNotificationsPermissions || shouldAskForContactsPermissions;
 }
 
 + (BOOL)isAudioPermissionAuthorizedOrNotDetermined {

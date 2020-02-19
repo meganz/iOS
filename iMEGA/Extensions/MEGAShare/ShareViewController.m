@@ -36,9 +36,6 @@
 
 @property (nonatomic) UINavigationController *loginRequiredNC;
 @property (nonatomic) LaunchViewController *launchVC;
-@property (nonatomic, getter=isFirstFetchNodesRequestUpdate) BOOL firstFetchNodesRequestUpdate;
-@property (nonatomic, getter=isFirstAPI_EAGAIN) BOOL firstAPI_EAGAIN;
-@property (nonatomic) NSTimer *timerAPI_EAGAIN;
 
 @property (nonatomic) NSString *session;
 @property (nonatomic) UIView *privacyView;
@@ -292,24 +289,22 @@
 #pragma mark - Login and Setup
 
 - (void)initChatAndStartLogging {
-    if ([self.sharedUserDefaults boolForKey:@"IsChatEnabled"]) {
-        if (![MEGASdkManager sharedMEGAChatSdk]) {
-            [MEGASdkManager createSharedMEGAChatSdk];
+    if (![MEGASdkManager sharedMEGAChatSdk]) {
+        [MEGASdkManager createSharedMEGAChatSdk];
+    }
+    
+    MEGAChatInit chatInit = [[MEGASdkManager sharedMEGAChatSdk] initState];
+    if (chatInit == MEGAChatInitNotDone) {
+        chatInit = [[MEGASdkManager sharedMEGAChatSdk] initKarereWithSid:self.session];
+        if (chatInit == MEGAChatInitWaitingNewSession || chatInit == MEGAChatInitOfflineSession) {
+            [[MEGASdkManager sharedMEGAChatSdk] resetClientId];
         }
-        
-        MEGAChatInit chatInit = [[MEGASdkManager sharedMEGAChatSdk] initState];
-        if (chatInit == MEGAChatInitNotDone) {
-            chatInit = [[MEGASdkManager sharedMEGAChatSdk] initKarereWithSid:self.session];
-            if (chatInit == MEGAChatInitWaitingNewSession || chatInit == MEGAChatInitOfflineSession) {
-                [[MEGASdkManager sharedMEGAChatSdk] resetClientId];
-            }
-            if (chatInit == MEGAChatInitError) {
-                MEGALogError(@"Init Karere with session failed");
-                [[MEGASdkManager sharedMEGAChatSdk] logout];
-            }
-        } else {
-            [[MEGAReachabilityManager sharedManager] reconnect];
+        if (chatInit == MEGAChatInitError) {
+            MEGALogError(@"Init Karere with session failed");
+            [[MEGASdkManager sharedMEGAChatSdk] logout];
         }
+    } else {
+        [[MEGAReachabilityManager sharedManager] reconnect];
     }
 }
 
@@ -428,20 +423,6 @@
         self.passcodePresented = YES;
         self.passcodeToBePresented = NO;
     }
-}
-
-- (void)startTimerAPI_EAGAIN {
-    self.timerAPI_EAGAIN = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(showServersTooBusy) userInfo:nil repeats:NO];
-}
-
-- (void)invalidateTimerAPI_EAGAIN {
-    [self.timerAPI_EAGAIN invalidate];
-    
-    self.launchVC.label.text = @"";
-}
-
-- (void)showServersTooBusy {
-    self.launchVC.label.text = AMLocalizedString(@"takingLongerThanExpected", @"Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in");
 }
 
 - (void)fakeModalPresentation {
@@ -937,55 +918,14 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 #pragma mark - MEGARequestDelegate
 
-- (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
-    switch ([request type]) {
-        case MEGARequestTypeLogin:
-        case MEGARequestTypeFetchNodes: {
-            self.launchVC.activityIndicatorView.hidden = NO;
-            [self.launchVC.activityIndicatorView startAnimating];
-            
-            self.firstAPI_EAGAIN = YES;
-            self.firstFetchNodesRequestUpdate = YES;
-            break;
-        }
-            
-        default:
-            break;
-    }
-}
-
-- (void)onRequestUpdate:(MEGASdk *)api request:(MEGARequest *)request {
-    if (request.type == MEGARequestTypeFetchNodes) {
-        [self invalidateTimerAPI_EAGAIN];
-        
-        float progress = (request.transferredBytes.floatValue / request.totalBytes.floatValue);
-        
-        if (self.isFirstFetchNodesRequestUpdate) {
-            [self.launchVC.activityIndicatorView stopAnimating];
-            self.launchVC.activityIndicatorView.hidden = YES;
-            
-            [self.launchVC.logoImageView.layer addSublayer:self.launchVC.circularShapeLayer];
-            self.launchVC.circularShapeLayer.strokeStart = 0.0f;
-        }
-        
-        if (progress > 0 && progress <= 1.0) {
-            self.launchVC.circularShapeLayer.strokeEnd = progress;
-        }
-    }
-}
-
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     switch ([request type]) {
         case MEGARequestTypeLogin: {
-            [self invalidateTimerAPI_EAGAIN];
-            
             [api fetchNodesWithDelegate:self];
             break;
         }
             
         case MEGARequestTypeFetchNodes: {
-            [self invalidateTimerAPI_EAGAIN];
-            
             self.fetchNodesDone = YES;
             [self.launchVC.view removeFromSuperview];
             [[MEGASdkManager sharedMEGAChatSdk] connectInBackground];
@@ -998,22 +938,6 @@ void uncaughtExceptionHandler(NSException *exception) {
                 [self performAttachNodeHandle:request.nodeHandle];
             } else {
                 [self onePendingLess];
-            }
-            break;
-        }
-            
-        default:
-            break;
-    }
-}
-
-- (void)onRequestTemporaryError:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-    switch (request.type) {
-        case MEGARequestTypeLogin:
-        case MEGARequestTypeFetchNodes: {
-            if (self.isFirstAPI_EAGAIN) {
-                [self startTimerAPI_EAGAIN];
-                self.firstAPI_EAGAIN = NO;
             }
             break;
         }
