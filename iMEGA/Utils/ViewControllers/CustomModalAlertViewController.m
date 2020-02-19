@@ -59,6 +59,7 @@
     } else {
         self.firstButton.hidden = YES;
     }
+    
     if (self.dismissButtonTitle) {
         [self.dismissButton setTitle:self.dismissButtonTitle forState:UIControlStateNormal];
     } else {

@@ -13,6 +13,7 @@
 #import "MEGASDKManager.h"
 #import "MEGAStartDownloadTransferDelegate.h"
 #import "NSString+MNZCategory.h"
+#import "MEGA-Swift.h"
 
 NSNotificationName kVoiceClipsShouldPauseNotification = @"kVoiceClipsShouldPauseNotification";
 
@@ -248,7 +249,7 @@ NSNotificationName kVoiceClipsShouldPauseNotification = @"kVoiceClipsShouldPause
     [NSNotificationCenter.defaultCenter removeObserver:self name:AVAudioSessionRouteChangeNotification object:nil];
     [NSNotificationCenter.defaultCenter removeObserver:self name:UIDeviceProximityStateDidChangeNotification object:nil];
     
-    if ([MEGASdkManager.sharedMEGAChatSdk chatCallsWithState:MEGAChatCallStatusInProgress].size > 0) {
+    if (MEGASdkManager.sharedMEGAChatSdk.mnz_existsActiveCall) {
         if (self.shouldRevertSpeaker) {
             [AVAudioSession.sharedInstance mnz_setSpeakerEnabled:NO];
             self.revertSpeaker = NO;

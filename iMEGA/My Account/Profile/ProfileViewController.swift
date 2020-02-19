@@ -420,21 +420,18 @@ extension ProfileViewController: UITableViewDelegate {
         if changeType == .email {
             switch twoFactorAuthStatus {
             case .Unknown:
-                 guard let delegate = MEGAGenericRequestDelegate(completion: { (request, error) in
-                    self.twoFactorAuthStatus = request!.flag ? .Enabled : .Disabled
+                 guard let myEmail = MEGASdkManager.sharedMEGASdk().myEmail else {
+                    return
+                 }
+                 MEGASdkManager.sharedMEGASdk().multiFactorAuthCheck(withEmail: myEmail, delegate: MEGAGenericRequestDelegate(completion: { (request, error) in
+                    self.twoFactorAuthStatus = request.flag ? .Enabled : .Disabled
                     self.tableView.reloadRows(at: [IndexPath(row: 2, section: 0)], with: .automatic)
                     if self.navigationController?.children.count != 2 {
                         return
                     }
-                    changePasswordViewController.isTwoFactorAuthenticationEnabled = request!.flag
+                    changePasswordViewController.isTwoFactorAuthenticationEnabled = request.flag
                     self.navigationController?.pushViewController(changePasswordViewController, animated: true)
-                 }) else {
-                    return
-                 }
-                 guard let myEmail = MEGASdkManager.sharedMEGASdk().myEmail else {
-                    return
-                 }
-                 MEGASdkManager.sharedMEGASdk().multiFactorAuthCheck(withEmail: myEmail, delegate: delegate)
+                 }))
                  twoFactorAuthStatus = .Querying
                  tableView.reloadRows(at: [IndexPath(row: 2, section: 0)], with: .automatic)
             case .Querying:
