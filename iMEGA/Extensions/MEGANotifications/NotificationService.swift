@@ -97,7 +97,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
             
             let delegate = MEGAGenericRequestDelegate { (request, error) in
                 // TODO: Handle thumbnail
-            }!
+            }
             MEGASdkManager.sharedMEGASdk()?.getThumbnailNode(node, destinationFilePath: destinationFilePath, delegate: delegate)
         }
     }
@@ -252,13 +252,13 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
     
     static func loginToMEGA() {
         let loginDelegate = MEGAGenericRequestDelegate { (request, error) in
-            if error?.type != .apiOk {
-                print("Login error \(error!)")
+            if error.type != .apiOk {
+                print("Login error \(error)")
                 return
             }
             
             MEGASdkManager.sharedMEGAChatSdk()?.connectInBackground()
-        }!
+        }
         MEGASdkManager.sharedMEGASdk()?.fastLogin(withSession: session, delegate: loginDelegate)
     }
     
