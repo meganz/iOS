@@ -34,7 +34,7 @@ extension AppDelegate {
     
     @objc func showEnableTwoFactorAuthenticationIfNeeded() {
         if UserDefaults.standard.bool(forKey: "twoFactorAuthenticationAlreadySuggested") {
-            return //Two Factor Authentication suggested
+            return
         }
         
         MEGASdkManager.sharedMEGASdk().multiFactorAuthCheck(withEmail: MEGASdkManager.sharedMEGASdk().myEmail ?? "", delegate: MEGAGenericRequestDelegate.init(completion: { (request, error) in
@@ -42,7 +42,7 @@ extension AppDelegate {
                 return //Two Factor Authentication Enabled
             }
             
-            let enable2FACustomModalAlert = CustomModalAlertViewController.init()
+            let enable2FACustomModalAlert = CustomModalAlertViewController()
             enable2FACustomModalAlert.configureForTwoFactorAuthenticationRequested(byUser: false)
 
             UIApplication.mnz_presentingViewController()?.present(enable2FACustomModalAlert, animated: true, completion: nil)
@@ -116,4 +116,3 @@ extension AppDelegate {
         }
     }
 }
-
