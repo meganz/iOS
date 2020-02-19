@@ -718,8 +718,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         return;
     }
     
-    MEGAHandleList *chatRoomIDsWithCallInProgress = [MEGASdkManager.sharedMEGAChatSdk chatCallsWithState:MEGAChatCallStatusInProgress];
-    if (chatRoomIDsWithCallInProgress.size > 0) {
+    if (MEGASdkManager.sharedMEGAChatSdk.mnz_existsActiveCall) {
         self.audioCallBarButtonItem.enabled = self.videoCallBarButtonItem.enabled = NO;
         return;
     }
@@ -2134,6 +2133,10 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     });
 }
 
+- (BOOL)canRecordAudio {
+    return !MEGASdkManager.sharedMEGAChatSdk.mnz_existsActiveCall;
+}
+
 #pragma mark - JSQMessages CollectionView DataSource
 
 - (NSString *)senderId {
@@ -3369,7 +3372,9 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 - (void)onChatCallUpdate:(MEGAChatSdk *)api call:(MEGAChatCall *)call {
     switch (call.status) {
         case MEGAChatCallStatusUserNoPresent:
+        case MEGAChatCallStatusRequestSent:
             [self configureTopBannerButtonForActiveCall:call];
+            [self updateNavigationBarButtonsState];
             break;
             
         case MEGAChatCallStatusInProgress:
