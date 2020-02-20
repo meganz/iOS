@@ -43,7 +43,7 @@ extension AppDelegate {
             }
             
             let enable2FACustomModalAlert = CustomModalAlertViewController()
-            enable2FACustomModalAlert.configureForTwoFactorAuthenticationRequested(byUser: false)
+            enable2FACustomModalAlert.configureForTwoFactorAuthentication(requestedByUser: false)
 
             UIApplication.mnz_presentingViewController()?.present(enable2FACustomModalAlert, animated: true, completion: nil)
             

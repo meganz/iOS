@@ -17,8 +17,4 @@
 @property (nonatomic) NSString *dismissButtonTitle;
 @property (nonatomic) NSString *link;
 
-#pragma mark - Public
-
-- (void)configureForTwoFactorAuthenticationRequestedByUser:(BOOL)requestedByUser;
-
 @end
