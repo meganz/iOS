@@ -1,15 +1,12 @@
 
 #import "SetupTwoFactorAuthenticationTableViewController.h"
 
-#import "SVProgressHUD.h"
-
 #import "UIApplication+MNZCategory.h"
 
 #import "CustomModalAlertViewController.h"
-#import "EnablingTwoFactorAuthenticationViewController.h"
 #import "MEGASdkManager.h"
 #import "MEGAMultiFactorAuthCheckRequestDelegate.h"
-#import "TwoFactorAuthentication.h"
+#import "MEGA-Swift.h"
 #import "TwoFactorAuthenticationViewController.h"
 
 @interface SetupTwoFactorAuthenticationTableViewController ()
@@ -55,7 +52,7 @@
         [self.navigationController pushViewController:twoFactorAuthenticationVC animated:YES];
     } else {
         CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
-        [customModalAlertVC configureForTwoFactorAuthenticationRequestedByUser:YES];
+        [customModalAlertVC configureForTwoFactorAuthenticationWithRequestedByUser:true];
         
         [UIApplication.mnz_presentingViewController presentViewController:customModalAlertVC animated:YES completion:nil];
     }
