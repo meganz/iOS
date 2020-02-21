@@ -51,3 +51,4 @@
 #import "MEGAImagePickerController.h"
 #import "OnboardingViewController.h"
 #import "UpgradeTableViewController.h"
+#import "LoginViewcontroller.h"
