@@ -193,6 +193,15 @@
     }
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+
+    if (self.chatRoomsType == ChatRoomsTypeArchived) {
+        [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
+        [[MEGASdkManager sharedMEGAChatSdk] removeChatCallDelegate:self];
+    }
+}
+
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
@@ -214,11 +223,6 @@
             }
         }
     } completion:nil];
-}
-
-- (void)dealloc {
-    [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
-    [[MEGASdkManager sharedMEGAChatSdk] removeChatCallDelegate:self];
 }
 
 #pragma mark - DZNEmptyDataSetSource
@@ -362,6 +366,7 @@
 - (void)emptyDataSetWillAppear:(UIScrollView *)scrollView {
     if (!self.searchController.active) {
         self.searchController.searchBar.hidden = YES;
+        self.archivedChatListItemList = MEGASdkManager.sharedMEGAChatSdk.archivedChatListItems;
         if (self.archivedChatListItemList.size) {
             self.archivedChatEmptyStateTitle.text = AMLocalizedString(@"archivedChats", @"Title of archived chats button");
             self.archivedChatEmptyStateCount.text = [NSString stringWithFormat:@"%tu", self.archivedChatListItemList.size];
@@ -634,6 +639,7 @@
     self.chatListItemList = self.chatRoomsType == ChatRoomsTypeDefault ? [[MEGASdkManager sharedMEGAChatSdk] chatListItems] : [[MEGASdkManager sharedMEGAChatSdk] archivedChatListItems];
     self.archivedChatListItemList = [[MEGASdkManager sharedMEGAChatSdk] archivedChatListItems];
     [self reorderList];
+    [self updateChatIdIndexPathDictionary];
     [self.tableView reloadData];
 }
 
