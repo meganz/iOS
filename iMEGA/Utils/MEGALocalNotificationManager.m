@@ -1,6 +1,8 @@
 
 #import "MEGALocalNotificationManager.h"
 
+#import "LocalizationSystem.h"
+
 #ifndef MNZ_APP_EXTENSION
 #import "Helper.h"
 #import "MEGAGetThumbnailRequestDelegate.h"
@@ -146,10 +148,10 @@
         }
         body = [NSString stringWithFormat:@"🎙 %@", durationString];
     } else if (self.message.containsMeta.type == MEGAChatContainsMetaTypeGeolocation) {
-        body = [NSString stringWithFormat:@"📍 %@", NSLocalizedString(@"Pinned Location", @"Text shown in location-type messages")];
+        body = [NSString stringWithFormat:@"📍 %@", AMLocalizedString(@"Pinned Location", @"Text shown in location-type messages")];
     } else {
         if (self.message.isEdited) {
-            body = [NSString stringWithFormat:@"%@ (%@)", self.message.content, NSLocalizedString(@"edited", nil)];
+            body = [NSString stringWithFormat:@"%@ (%@)", self.message.content, AMLocalizedString(@"edited", nil)];
         } else {
             body = self.message.content;
         }
