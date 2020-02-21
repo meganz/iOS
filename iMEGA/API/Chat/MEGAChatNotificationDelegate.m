@@ -15,7 +15,7 @@
     
     [UIApplication sharedApplication].applicationIconBadgeNumber = api.unreadChats;
     
-    if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
+    if ([UIApplication sharedApplication].applicationState != UIApplicationStateBackground) {
         if ([UIApplication.mnz_visibleViewController isKindOfClass:[MessagesViewController class]] && message.status != MEGAChatMessageStatusSeen) {
             MessagesViewController *messagesVC = (MessagesViewController *) UIApplication.mnz_visibleViewController;
             if (messagesVC.chatRoom.chatId == chatId) {
@@ -26,13 +26,8 @@
         MEGAChatRoom *chatRoom = [api chatRoomForChatId:chatId];
         if (chatRoom && message) {
             MEGALocalNotificationManager *localNotificationManager = [[MEGALocalNotificationManager alloc] initWithChatRoom:chatRoom message:message silent:YES];
-            [localNotificationManager proccessNotification];
+            [localNotificationManager processNotification];
         }
-    } else {
-        MOMessage *mMessage = [[MEGAStore shareInstance] fetchMessageWithChatId:chatId messageId:message.messageId];
-        MEGAChatRoom *chatRoom = [api chatRoomForChatId:chatId];
-        MEGALocalNotificationManager *localNotificationManager = [[MEGALocalNotificationManager alloc] initWithChatRoom:chatRoom message:message silent:mMessage ? NO : YES];
-        [localNotificationManager proccessNotification];
     }
 }
 
