@@ -292,24 +292,22 @@
 #pragma mark - Login and Setup
 
 - (void)initChatAndStartLogging {
-    if ([self.sharedUserDefaults boolForKey:@"IsChatEnabled"]) {
-        if (![MEGASdkManager sharedMEGAChatSdk]) {
-            [MEGASdkManager createSharedMEGAChatSdk];
+    if (![MEGASdkManager sharedMEGAChatSdk]) {
+        [MEGASdkManager createSharedMEGAChatSdk];
+    }
+    
+    MEGAChatInit chatInit = [[MEGASdkManager sharedMEGAChatSdk] initState];
+    if (chatInit == MEGAChatInitNotDone) {
+        chatInit = [[MEGASdkManager sharedMEGAChatSdk] initKarereWithSid:self.session];
+        if (chatInit == MEGAChatInitWaitingNewSession || chatInit == MEGAChatInitOfflineSession) {
+            [[MEGASdkManager sharedMEGAChatSdk] resetClientId];
         }
-        
-        MEGAChatInit chatInit = [[MEGASdkManager sharedMEGAChatSdk] initState];
-        if (chatInit == MEGAChatInitNotDone) {
-            chatInit = [[MEGASdkManager sharedMEGAChatSdk] initKarereWithSid:self.session];
-            if (chatInit == MEGAChatInitWaitingNewSession || chatInit == MEGAChatInitOfflineSession) {
-                [[MEGASdkManager sharedMEGAChatSdk] resetClientId];
-            }
-            if (chatInit == MEGAChatInitError) {
-                MEGALogError(@"Init Karere with session failed");
-                [[MEGASdkManager sharedMEGAChatSdk] logout];
-            }
-        } else {
-            [[MEGAReachabilityManager sharedManager] reconnect];
+        if (chatInit == MEGAChatInitError) {
+            MEGALogError(@"Init Karere with session failed");
+            [[MEGASdkManager sharedMEGAChatSdk] logout];
         }
+    } else {
+        [[MEGAReachabilityManager sharedManager] reconnect];
     }
 }
 
