@@ -5,7 +5,7 @@
 /* Photo library usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSPhotoLibraryUsageDescription"="MEGA îți accesează fotografiile/videoclipurile când le încarci, le partajezi prin chat și când Încărcări cameră este activat.";
 /* Contacts Usage Description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
-"NSContactsUsageDescription"="MEGA îți accesează contactele atunci când selectezi unele dintre ele pentru salvare/exportare.";
+"NSContactsUsageDescription"="MEGA îți accesează contactele atunci când selectezi unele dintre ele pentru salvare/exportare și pentru a te ajuta să te conectezi cu alte persoane de pe MEGA.";
 /* Write-only access to the user’s photo library description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSPhotoLibraryAddUsageDescription"="MEGA necesită acces la biblioteca foto pentru a adăuga fotografii și videoclipuri în galeria dispozitivului";
 /* Face ID usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
@@ -17,4 +17,4 @@
 /* Title of the Offline section */
 "quickActionOfflineString"="Offline";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
-"NSLocationWhenInUseUsageDescription"="MEGA îți accesează locația atunci când alegi să o partajezi cu contactele tale.";
+"NSLocationAlwaysAndWhenInUseUsageDescription"="MEGA accesses your location when you share it with your contacts in chat or when you enable ”Upload in Background” for Camera Uploads so your photos and videos are uploaded when your location changes.";
