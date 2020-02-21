@@ -6,10 +6,11 @@
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <Photos/Photos.h>
 
+#import "LocalizationSystem.h"
+
 #import "NSDate+DateTools.h"
 
 #import "NSDate+MNZCategory.h"
-#import "MEGASdkManager.h"
 #import "MEGAUser+MNZCategory.h"
 
 static NSString* const A = @"[A]";

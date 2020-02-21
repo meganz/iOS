@@ -35,8 +35,9 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         bestAttemptContent?.categoryIdentifier = "nz.mega.chat.message"
         
         if let message = MEGASdkManager.sharedMEGAChatSdk()?.message(forChat: chatId, messageId: msgId) {
-            generateNotification(with: message, immediately: false)
-            postNotification(withError: nil)
+            if generateNotification(with: message, immediately: false) {
+                postNotification(withError: nil)
+            }
             return
         } else {
             MEGASdkManager.sharedMEGAChatSdk()?.add(self as MEGAChatNotificationDelegate)
@@ -52,8 +53,8 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
     
     override func serviceExtensionTimeWillExpire() {
         if let message = MEGASdkManager.sharedMEGAChatSdk()?.message(forChat: chatId, messageId: msgId) {
-            generateNotification(with: message, immediately: true)
-            postNotification(withError: nil)
+            let error = !generateNotification(with: message, immediately: true)
+            postNotification(withError: error ? "No chat room for message" : nil)
         } else {
             postNotification(withError: "Service Extension time will expire")
         }
@@ -61,12 +62,12 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
     
     // MARK: Private
     
-    func generateNotification(with message: MEGAChatMessage, immediately: Bool) {
+    func generateNotification(with message: MEGAChatMessage, immediately: Bool) -> Bool {
         guard let chatRoom = MEGASdkManager.sharedMEGAChatSdk()?.chatRoom(forChatId: chatId) else {
-            return
+            return false
         }
         let notificationManager = MEGALocalNotificationManager(chatRoom: chatRoom, message: message, silent: false)
-        bestAttemptContent?.userInfo = ["chatId" : chatId!]
+        bestAttemptContent?.userInfo = ["chatId" : chatId!, "msgId" : msgId!]
         bestAttemptContent?.body = notificationManager.bodyString()
         bestAttemptContent?.sound = UNNotificationSound.default
         bestAttemptContent?.title = chatRoom.title
@@ -75,31 +76,37 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         }
         
         if immediately {
-            return
+            return true
         }
         
         if message.type == .attachment {
             guard let nodeList = message.nodeList else {
-                return
+                return true
             }
             if nodeList.size?.intValue != 1 {
-                return
+                return true
             }
-            guard let node = nodeList.node(at: 1) else {
-                return
+            guard let node = nodeList.node(at: 0) else {
+                return true
             }
             if !node.hasThumbnail() {
-                return
+                return true
             }
             guard let destinationFilePath = path(for: node, in: "thumbnailsV3") else {
-                return
+                return true
             }
             
             let delegate = MEGAGenericRequestDelegate { (request, error) in
-                // TODO: Handle thumbnail
+                if let notificationAttachment = notificationManager.notificationAttachment(for: request.file, withIdentifier: node.base64Handle) {
+                    self.bestAttemptContent?.attachments = [notificationAttachment]
+                    self.postNotification(withError: nil)
+                }
             }
             MEGASdkManager.sharedMEGASdk()?.getThumbnailNode(node, destinationFilePath: destinationFilePath, delegate: delegate)
+            return false
         }
+        
+        return true
     }
     
     func postNotification(withError error: String?) {
@@ -270,8 +277,9 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
             return
         }
         
-        generateNotification(with: message, immediately: false)
-        postNotification(withError: nil)
+        if generateNotification(with: message, immediately: false) {
+            postNotification(withError: nil)
+        }
     }
 
 }
