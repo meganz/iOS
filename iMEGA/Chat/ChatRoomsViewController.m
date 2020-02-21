@@ -802,24 +802,30 @@
 #pragma mark - IBActions
 
 - (IBAction)joinActiveCall:(id)sender {
-    [self.timer invalidate];
-    if (self.chatRoomOnGoingCall.isGroup) {
-        GroupCallViewController *groupCallVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupCallViewControllerID"];
-        groupCallVC.callType = CallTypeActive;
-        groupCallVC.videoCall = NO;
-        groupCallVC.chatRoom = self.chatRoomOnGoingCall;
-        groupCallVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-        groupCallVC.megaCallManager = [(MainTabBarController *)UIApplication.sharedApplication.keyWindow.rootViewController megaCallManager];
-        [self presentViewController:groupCallVC animated:YES completion:nil];
-    } else {
-        CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
-        callVC.chatRoom = self.chatRoomOnGoingCall;
-        callVC.videoCall = NO;
-        callVC.callType = CallTypeActive;
-        callVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-        callVC.megaCallManager = [(MainTabBarController *)UIApplication.sharedApplication.keyWindow.rootViewController megaCallManager];
-        [self presentViewController:callVC animated:YES completion:nil];
-    }
+    [DevicePermissionsHelper audioPermissionModal:YES forIncomingCall:NO withCompletionHandler:^(BOOL granted) {
+        if (granted) {
+            [self.timer invalidate];
+            if (self.chatRoomOnGoingCall.isGroup) {
+                GroupCallViewController *groupCallVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupCallViewControllerID"];
+                groupCallVC.callType = CallTypeActive;
+                groupCallVC.videoCall = NO;
+                groupCallVC.chatRoom = self.chatRoomOnGoingCall;
+                groupCallVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+                groupCallVC.megaCallManager = [(MainTabBarController *)UIApplication.sharedApplication.keyWindow.rootViewController megaCallManager];
+                [self presentViewController:groupCallVC animated:YES completion:nil];
+            } else {
+                CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
+                callVC.chatRoom = self.chatRoomOnGoingCall;
+                callVC.videoCall = NO;
+                callVC.callType = CallTypeActive;
+                callVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+                callVC.megaCallManager = [(MainTabBarController *)UIApplication.sharedApplication.keyWindow.rootViewController megaCallManager];
+                [self presentViewController:callVC animated:YES completion:nil];
+            }
+        } else {
+            [DevicePermissionsHelper alertAudioPermissionForIncomingCall:NO];
+        }
+    }];
 }
 
 - (IBAction)openArchivedChats:(id)sender {
