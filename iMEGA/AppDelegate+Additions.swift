@@ -14,7 +14,9 @@ extension AppDelegate {
             visibleViewController is UpgradeTableViewController ||
             visibleViewController is OnboardingViewController ||
             visibleViewController is UIAlertController ||
-            visibleViewController is VerifyEmailViewController { return }
+            visibleViewController is VerifyEmailViewController ||
+            visibleViewController is LoginViewController ||
+            visibleViewController is SFSafariViewController { return }
 
         if MEGASdkManager.sharedMEGASdk().smsAllowedState() != .optInAndUnblock { return }
         
