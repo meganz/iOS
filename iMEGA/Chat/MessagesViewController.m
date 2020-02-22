@@ -2241,7 +2241,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         
         if (self.chatRoom.isGroup && !message.isManagementMessage) {
             NSString *nickname = [self.chatRoom userNicknameForUserHandle:message.userHandle];
-            NSString *fullname = (!nickname.mnz_isEmpty) ? nickname : [self.chatRoom peerFullnameByHandle:message.userHandle];
+            NSString *fullname = (nickname && !nickname.mnz_isEmpty) ? nickname : [self.chatRoom peerFullnameByHandle:message.userHandle];
             if (!fullname.length) {
                 fullname = [self.chatRoom peerEmailByHandle:message.userHandle];
                 if (!fullname) {
