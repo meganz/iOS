@@ -1569,6 +1569,7 @@ void uncaughtExceptionHandler(NSException *exception) {
             
             if (!isAccountFirstLogin) {
                 [self showMainTabBar];
+                [self showEnableTwoFactorAuthenticationIfNeeded];
             }
             
             NSUserDefaults *sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];
