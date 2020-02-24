@@ -1881,7 +1881,7 @@
 /* Message shown when there is an ongoing call and the user tries to record a voice message */
 "It is not possible to record voice messages while there is a call in progress"="Tidak mungkin merekam pesan suara saat ada panggilan yang sedang berlangsung.";
 /* Label indicating that a voice clip is being recorded. String as short as possible. */
-"Recording..."="Recording…";
+"Recording..."="Rekaman…";
 /* Text to inform the user there is an active call and is not participating */
 "Ongoing Call"="Panggilan yang sedang berlangsung";
 /* Message shown when there is an ongoing call and the user tries to play an audio or video */
@@ -2043,13 +2043,13 @@
 /* Contact details screen: Set the alias(nickname) for a user */
 "Set Nickname"="Setel Nama Panggilan";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
-"Alias/ Nickname"="Alias/ Nickname";
+"Alias/ Nickname"="Alias / Nama Panggilan";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
 "It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="Tidak mungkin mendapatkan konten file ini, karena tidak dikodekan dalam UTF-8 atau ISO / IEC 8859-1.";
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
 "Include location tags"="Sertakan tag lokasi";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
-"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them.";
+"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="Jika diaktifkan, Anda akan mengunggah informasi tentang tempat foto dan video Anda diambil, jadi berhati-hatilah saat membagikannya.";
 /* Error message shown when opening a link with an account that not corresponds to the link */
 "This link is not related to this account. Please log in with the correct account."="Link ini tidak terkait dengan akun ini. Silahkan masuk dengan akun yang benar.";
 /* Text emncouraging the user to add contacts in MEGA */

@@ -713,13 +713,12 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 - (void)updateNavigationBarButtonsState {
     MEGAChatConnection chatConnection = [[MEGASdkManager sharedMEGAChatSdk] chatConnectionState:self.chatRoom.chatId];
     
-    if (self.chatRoom.ownPrivilege < MEGAChatRoomPrivilegeStandard || chatConnection != MEGAChatConnectionOnline || !MEGAReachabilityManager.isReachable || self.chatRoom.peerCount == 0 || self.inputToolbarState >= InputToolbarStateRecordingUnlocked) {
+    if (self.chatRoom.ownPrivilege < MEGAChatRoomPrivilegeStandard || chatConnection != MEGAChatConnectionOnline || !MEGAReachabilityManager.isReachable || self.chatRoom.peerCount == 0 || self.inputToolbarState >= InputToolbarStateRecordingUnlocked || [MEGASdkManager.sharedMEGAChatSdk hasCallInChatRoom:self.chatRoom.chatId]) {
         self.audioCallBarButtonItem.enabled = self.videoCallBarButtonItem.enabled = NO;
         return;
     }
     
-    MEGAHandleList *chatRoomIDsWithCallInProgress = [MEGASdkManager.sharedMEGAChatSdk chatCallsWithState:MEGAChatCallStatusInProgress];
-    if (chatRoomIDsWithCallInProgress.size > 0) {
+    if (MEGASdkManager.sharedMEGAChatSdk.mnz_existsActiveCall) {
         self.audioCallBarButtonItem.enabled = self.videoCallBarButtonItem.enabled = NO;
         return;
     }
@@ -1198,6 +1197,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     [self updateNavigationBarButtonsState];
 
     [self customNavigationBarLabel];
+    [self checkIfChatHasActiveCall];
 }
 
 - (void)showOrHideJumpToBottom {
@@ -1462,11 +1462,14 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 
 - (void)checkIfChatHasActiveCall {
     if (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeStandard) {
-        if ([[MEGASdkManager sharedMEGAChatSdk] hasCallInChatRoom:self.chatRoom.chatId]) {
+        if ([[MEGASdkManager sharedMEGAChatSdk] hasCallInChatRoom:self.chatRoom.chatId] && MEGAReachabilityManager.isReachable) {
             MEGAChatCall *call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
+            if (!self.chatRoom.isGroup && call.status == MEGAChatCallStatusDestroyed) {
+                return;
+            }
             if (call.status == MEGAChatCallStatusInProgress) {
                 [self configureTopBannerButtonForInProgressCall:call];
-            }  else if (self.chatRoom.group || call.status == MEGAChatCallStatusRequestSent) {
+            }  else if (call.status == MEGAChatCallStatusUserNoPresent || call.status == MEGAChatCallStatusRequestSent || call.status == MEGAChatCallStatusRingIn) {
                 [self configureTopBannerButtonForActiveCall:call];
             }
             [self showTopBannerButton];
@@ -1522,8 +1525,14 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 }
 
 - (IBAction)joinActiveCall:(id)sender {
-    [self.timer invalidate];
-    [self openCallViewWithVideo:NO active:YES];
+    [DevicePermissionsHelper audioPermissionModal:YES forIncomingCall:NO withCompletionHandler:^(BOOL granted) {
+        if (granted) {
+            [self.timer invalidate];
+            [self openCallViewWithVideo:NO active:YES];
+        } else {
+            [DevicePermissionsHelper alertAudioPermissionForIncomingCall:NO];
+        }
+    }];
 }
 
 #pragma mark - Gesture recognizer
@@ -2124,6 +2133,10 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     });
 }
 
+- (BOOL)canRecordAudio {
+    return !MEGASdkManager.sharedMEGAChatSdk.mnz_existsActiveCall;
+}
+
 #pragma mark - JSQMessages CollectionView DataSource
 
 - (NSString *)senderId {
@@ -2228,7 +2241,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         
         if (self.chatRoom.isGroup && !message.isManagementMessage) {
             NSString *nickname = [self.chatRoom userNicknameForUserHandle:message.userHandle];
-            NSString *fullname = (!nickname.mnz_isEmpty) ? nickname : [self.chatRoom peerFullnameByHandle:message.userHandle];
+            NSString *fullname = (nickname && !nickname.mnz_isEmpty) ? nickname : [self.chatRoom peerFullnameByHandle:message.userHandle];
             if (!fullname.length) {
                 fullname = [self.chatRoom peerEmailByHandle:message.userHandle];
                 if (!fullname) {
@@ -3359,7 +3372,9 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 - (void)onChatCallUpdate:(MEGAChatSdk *)api call:(MEGAChatCall *)call {
     switch (call.status) {
         case MEGAChatCallStatusUserNoPresent:
+        case MEGAChatCallStatusRequestSent:
             [self configureTopBannerButtonForActiveCall:call];
+            [self updateNavigationBarButtonsState];
             break;
             
         case MEGAChatCallStatusInProgress:

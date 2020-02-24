@@ -59,4 +59,17 @@
     return ret;
 }
 
+- (BOOL)mnz_isBluetoothAudioRouteAvailable {
+    __block BOOL isBluetoothAudioRouteAvailable = NO;
+    [AVAudioSession.sharedInstance.availableInputs enumerateObjectsUsingBlock:^(AVAudioSessionPortDescription *description, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([@[AVAudioSessionPortBluetoothA2DP, AVAudioSessionPortBluetoothLE, AVAudioSessionPortBluetoothHFP] containsObject:description.portType]) {
+            isBluetoothAudioRouteAvailable = YES;
+            *stop = YES;
+        }
+    }];
+    
+    MEGALogDebug(@"[AVAudioSession] Is there any bluetooth audio available? %@", isBluetoothAudioRouteAvailable ? @"YES" : @"NO");
+    return isBluetoothAudioRouteAvailable;
+}
+
 @end
