@@ -39,6 +39,7 @@
 #import "CreateAccountViewController.h"
 #import "CustomModalAlertViewController.h"
 #import "DevicePermissionsHelper.h"
+#import "EnablingTwoFactorAuthenticationViewController.h"
 #import "GradientView.h"
 #import "InitialLaunchViewController.h"
 #import "OnboardingViewController.h"
