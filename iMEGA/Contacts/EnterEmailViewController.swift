@@ -132,6 +132,7 @@ class EnterEmailViewController: UIViewController {
             weakSelf?.tokens.removeAll()
             weakSelf?.tokenField.reloadData()
             weakSelf?.disableInviteContactsButton()
+            weakSelf?.navigationController?.popViewController(animated: true)
         }
         tokens.forEach { (email) in
             MEGASdkManager.sharedMEGASdk().inviteContact(withEmail: email, message: "", action: MEGAInviteAction.add, delegate: inviteContactRequestDelegate)
