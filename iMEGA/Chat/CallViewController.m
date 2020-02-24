@@ -254,8 +254,7 @@
 }
 
 - (void)didWirelessRoutesAvailableChange:(NSNotification *)notification {
-    MPVolumeView* volumeView = (MPVolumeView*)notification.object;
-    if (volumeView.areWirelessRoutesAvailable) {
+    if (AVAudioSession.sharedInstance.mnz_isBluetoothAudioRouteAvailable) {
         self.volumeContainerView.hidden = NO;
         self.enableDisableSpeaker.hidden = YES;
     } else {
@@ -342,8 +341,13 @@
 }
 
 - (void)updateAudioOutputImage {
-    self.volumeContainerView.hidden = !self.mpVolumeView.areWirelessRoutesAvailable;
-    self.enableDisableSpeaker.hidden = !self.volumeContainerView.hidden;
+    if (AVAudioSession.sharedInstance.mnz_isBluetoothAudioRouteAvailable) {
+        self.volumeContainerView.hidden = NO;
+        self.enableDisableSpeaker.hidden = YES;
+    } else {
+        self.enableDisableSpeaker.hidden = NO;
+        self.volumeContainerView.hidden = YES;
+    }
     
     if ([AVAudioSession.sharedInstance mnz_isOutputEqualToPortType:AVAudioSessionPortBuiltInReceiver] || [AVAudioSession.sharedInstance mnz_isOutputEqualToPortType:AVAudioSessionPortHeadphones]) {
         self.enableDisableSpeaker.selected = NO;
