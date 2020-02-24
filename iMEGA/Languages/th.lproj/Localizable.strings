@@ -119,7 +119,7 @@
 /* Label displayed during checking the strength of the password introduced. Represents Strong security */
 "strong"="คาดเดาได้ยากมาก";
 /*  */
-"passwordStrong"="รหัสผ่านนี้จะสามารถป้องกันการโจมตีแบบ brute-force ที่มีความซับซ้อนได้ กรุณาตรวจสอบอีกครั้งว่าคุณจะสามารถจำรหัสผ่านเหล่านี้ได้";
+"passwordStrong"="รหัสผ่านนี้จะสามารถป้องกันการโจมตีแบบ Brute-Force ที่มีความซับซ้อนได้ กรุณาตรวจสอบอีกครั้งว่าคุณจะสามารถจำรหัสผ่านเหล่านี้ได้";
 /*  */
 "agreeWithTheMEGATermsOfService"="ฉันเห็นด้วยกับ<a href=\"terms\">เงื่อนไขการให้บริการ</a>ของ MEGA";
 /* This text is displayed in the account creation screen with a checkbox. User will have to tick the checkbox before proceeding on to create an account */
@@ -2090,6 +2090,24 @@
 "It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="เป็นไปได้ว่าคุณกำลังใช้รหัสผ่านเดียวกันสำหรับบัญชี MEGA ของคุณสำหรับบริการอื่น ๆ และอย่างน้อยหนึ่งในบริการอื่น ๆ เหล่านี้ได้รับความเสียหายจากข้อมูล";
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="รหัสผ่านของคุณรั่วไหลและกำลังถูกใช้โดยผู้ไม่หวังดีเพื่อเข้าสู่บัญชีของคุณ รวมไปถึง การไม่จำกัดบัญชี MEGA ของคุณ";
+/* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
+"MEGA CAMERA UPLOADS FOLDER"="โฟลเดอร์อัปโหลดจากกล้องของแอป MEGA";
+/* Action button text of folder selection screen for camera uploads */
+"Select Folder"="เลือกโฟลเดอร์";
+/* Title of the folder selection screen for camera uploads */
+"Choose Folder"="เลือกโฟลเดอร์";
+/* Label used near to the option selected to encode the images uploaded to a chat (Low, Medium, Original) */
+"Image quality"="คุณภาพของรูป";
+/* Title of Image Quality option */
+"Automatic"="อัตโนมัติ";
+/* Description of Automatic Image Quality option */
+"Send smaller size images through cellular networks and original size images through wifi"="Send smaller size images through cellular networks and original size images through wifi";
+/* Title of Image Quality option */
+"Optimised"="ปรับให้เหมาะสม";
+/* Description of Optimised Image Quality option */
+"Send smaller size images optimised for lower data consumption"="ส่งรูปภาพขนาดเล็กลงโดยการปรับให้เหมาะสมเพื่อลดการใช้ข้อมูล";
+/* Description of High Image Quality option */
+"Send original size, increased quality images"="Send original size, increased quality images";
 /* Setting title for Doc scan view */
 "Save Settings"="Save Settings";
 /* file type title, used in changing the export format of scaned doc */

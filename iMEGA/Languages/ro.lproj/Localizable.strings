@@ -2090,6 +2090,24 @@
 "It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="Este posibil să folosești aceeași parolă pentru contul tău MEGA ca și pentru alte servicii și că cel puțin unul dintre aceste alte servicii a suferit o încălcare a securității datelor.";
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="Parola ta s-a scurs și acum este folosită de persoane rău-intenționate pentru a se autentifica în conturile tale, inclusiv, dar nu numai, în contul tău MEGA.";
+/* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
+"MEGA CAMERA UPLOADS FOLDER"="MEGA CAMERA UPLOADS FOLDER";
+/* Action button text of folder selection screen for camera uploads */
+"Select Folder"="Select Folder";
+/* Title of the folder selection screen for camera uploads */
+"Choose Folder"="Alege un folder";
+/* Label used near to the option selected to encode the images uploaded to a chat (Low, Medium, Original) */
+"Image quality"="Image quality";
+/* Title of Image Quality option */
+"Automatic"="Automat";
+/* Description of Automatic Image Quality option */
+"Send smaller size images through cellular networks and original size images through wifi"="Send smaller size images through cellular networks and original size images through wifi";
+/* Title of Image Quality option */
+"Optimised"="Optimised";
+/* Description of Optimised Image Quality option */
+"Send smaller size images optimised for lower data consumption"="Send smaller size images optimised for lower data consumption";
+/* Description of High Image Quality option */
+"Send original size, increased quality images"="Send original size, increased quality images";
 /* Setting title for Doc scan view */
 "Save Settings"="Save Settings";
 /* file type title, used in changing the export format of scaned doc */
