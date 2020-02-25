@@ -92,7 +92,11 @@ class EnterEmailViewController: UIViewController {
     
     func enableInviteContactsButton() {
         inviteContactsButton.backgroundColor = UIColor.mnz_green00BFA5()
-        let inviteContactsString = tokens.count == 1 ? AMLocalizedString("Invite 1 contact", "Text showing the user one contact would be invited").replacingOccurrences(of: "[X]", with: String(tokens.count)) : AMLocalizedString("Invite [X] contacts", "Text showing the user how many contacts would be invited").replacingOccurrences(of: "[X]", with: String(tokens.count))
+        let inputText = tokenField.inputText()!
+        let tokensNumber = tokens.count + (inputText.mnz_isValidEmail() ? 1 : 0)
+        let inviteContactsString = tokensNumber == 1 ?
+            AMLocalizedString("Invite 1 contact", "Text showing the user one contact would be invited").replacingOccurrences(of: "[X]", with: String(tokensNumber)) :
+            AMLocalizedString("Invite [X] contacts", "Text showing the user how many contacts would be invited").replacingOccurrences(of: "[X]", with: String(tokensNumber))
         inviteContactsButton.setTitle(inviteContactsString, for: .normal)
     }
     
@@ -123,6 +127,15 @@ class EnterEmailViewController: UIViewController {
     
     // MARK: Actions
     @IBAction func inviteContactsTapped(_ sender: UIButton) {
+        let inputText = tokenField.inputText()!
+        if inputText.mnz_isValidEmail() {
+            tokenField.inputTextFieldTextColor = UIColor.mnz_black333333()
+            instructionsLabel.text = AMLocalizedString("Tap space to enter multiple emails", "Text showing the user how to write more than one email in order to invite them to MEGA")
+            instructionsLabel.textColor = UIColor.mnz_gray999999()
+            tokens.append(inputText)
+            tokenField.reloadData()
+        }
+        
         guard MEGAReachabilityManager.isReachableHUDIfNot(), tokens.count > 0 else {
             return
         }
@@ -201,6 +214,16 @@ extension EnterEmailViewController: VENTokenFieldDelegate {
         if tokens.count == 0 {
             disableInviteContactsButton()
         }
+    }
+    
+    func tokenField(_ tokenField: VENTokenField, didChangeText text: String?) {
+        if text!.mnz_isValidEmail() {
+            tokenField.inputTextFieldTextColor = UIColor.mnz_black333333()
+            instructionsLabel.text = AMLocalizedString("Tap space to enter multiple emails", "Text showing the user how to write more than one email in order to invite them to MEGA")
+            instructionsLabel.textColor = UIColor.mnz_gray999999()
+            enableInviteContactsButton()
+        }
+        print(text!)
     }
     
     func tokenField(_ tokenField: VENTokenField, didChangeContentHeight height: CGFloat) {
