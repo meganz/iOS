@@ -34,8 +34,6 @@ pipeline {
             steps {
                 injectEnvironments({
                     sh "unzip -o $WORKSPACE/iMEGA/Vendor/SDK/bindings/ios/3rdparty/3rdparty.zip -d $WORKSPACE/iMEGA/Vendor/SDK/bindings/ios/3rdparty/"
-                    sh "mv $WORKSPACE/iMEGA/Vendor/SDK/bindings/ios/3rdparty/3rdparty/* $WORKSPACE/iMEGA/Vendor/SDK/bindings/ios/3rdparty/"
-                    sh "rm -rf $WORKSPACE/iMEGA/Vendor/sdk/bindings/ios/3rdparty/3rdparty"
                 })
             }
         }
