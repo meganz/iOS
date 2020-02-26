@@ -67,9 +67,11 @@
 
 #pragma mark - delete store
 
-- (void)deleteStoreWithError:(NSError *__autoreleasing  _Nullable *)error {
-    [_persistentContainer.persistentStoreCoordinator destroyPersistentStoreAtURL:[self storeURL] withType:NSSQLiteStoreType options:nil error:error];
+- (BOOL)deleteStoreWithError:(NSError * _Nullable)error {
+    BOOL persistentStoreDestroyed = [self.persistentContainer.persistentStoreCoordinator destroyPersistentStoreAtURL:self.storeURL withType:NSSQLiteStoreType options:nil error:&error];
     _persistentContainer = nil;
+    
+    return persistentStoreDestroyed;
 }
 
 @end
