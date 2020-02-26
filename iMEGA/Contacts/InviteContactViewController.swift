@@ -95,7 +95,7 @@ class InviteContactViewController: UIViewController {
 // MARK: - CNContactPickerDelegate
 extension InviteContactViewController: CNContactPickerDelegate {
     func contactPicker(_ picker: CNContactPickerViewController, didSelect contactProperty: CNContactProperty) {
-        print(contactProperty)
+        MEGALogDebug("\(contactProperty)")
         picker.dismiss(animated: true) {
             let composeVC = MFMessageComposeViewController()
             composeVC.messageComposeDelegate = self
