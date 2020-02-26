@@ -10,6 +10,10 @@ NSString * const MEGAPasswordName = @"sessionV3";
 
 NSString * const MEGAGroupIdentifier = @"group.mega.ios";
 
+NSString * const MEGAPasscodeLogoutAfterTenFailedAttemps = @"IsEraseAllLocalDataEnabled";
+
+uint64_t const MEGAInvalidHandle = ~(uint64_t)0;
+
 #pragma mark - global notifications
 
 NSString * const MEGALogoutNotification = @"nz.mega.logout";

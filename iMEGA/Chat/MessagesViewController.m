@@ -1363,7 +1363,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 }
 
 - (void)showOptionsForPeerWithHandle:(uint64_t)userHandle senderView:(UIView *)senderView {
-    if (userHandle == [MEGASdkManager sharedMEGASdk].myUser.handle || userHandle == ~(uint64_t)0) {
+    if (userHandle == MEGASdkManager.sharedMEGASdk.myUser.handle || userHandle == MEGAInvalidHandle) {
         return;
     }
     
