@@ -217,13 +217,14 @@ extension EnterEmailViewController: VENTokenFieldDelegate {
     }
     
     func tokenField(_ tokenField: VENTokenField, didChangeText text: String?) {
-        if text!.mnz_isValidEmail() {
+        if text!.mnz_isValidEmail() || tokens.count > 0 {
             tokenField.inputTextFieldTextColor = UIColor.mnz_black333333()
             instructionsLabel.text = AMLocalizedString("Tap space to enter multiple emails", "Text showing the user how to write more than one email in order to invite them to MEGA")
             instructionsLabel.textColor = UIColor.mnz_gray999999()
             enableInviteContactsButton()
+        } else {
+            disableInviteContactsButton()
         }
-        print(text!)
     }
     
     func tokenField(_ tokenField: VENTokenField, didChangeContentHeight height: CGFloat) {
