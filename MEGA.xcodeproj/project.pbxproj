@@ -475,7 +475,6 @@
 		83C570E522E5BFCF00216896 /* PhoneNumberMetadata.xml in Resources */ = {isa = PBXBuildFile; fileRef = 83C570D222E5BFCF00216896 /* PhoneNumberMetadata.xml */; };
 		83C570E622E5BFCF00216896 /* PhoneNumberMetadata.json in Resources */ = {isa = PBXBuildFile; fileRef = 83C570D322E5BFCF00216896 /* PhoneNumberMetadata.json */; };
 		83C570E722E5BFCF00216896 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 83C570D422E5BFCF00216896 /* README.md */; };
-		83C570E822E5BFCF00216896 /* update.sh in Resources */ = {isa = PBXBuildFile; fileRef = 83C570D522E5BFCF00216896 /* update.sh */; };
 		83C570E922E5BFCF00216896 /* NSRegularExpression+Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C570D722E5BFCF00216896 /* NSRegularExpression+Swift.swift */; };
 		83C570EA22E5BFCF00216896 /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C570D822E5BFCF00216896 /* Formatter.swift */; };
 		83C570EB22E5BFCF00216896 /* MetadataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C570D922E5BFCF00216896 /* MetadataManager.swift */; };
@@ -5433,7 +5432,6 @@
 				5B5FBDDF20BD8CB2000EE35B /* TwoFactorAuthentication.storyboard in Resources */,
 				A841E63E20CAB477005E1D1B /* MEGAMessageCallManagementView.xib in Resources */,
 				417279331DB663FA001AC818 /* JSQMessagesAssets.bundle in Resources */,
-				83C570E822E5BFCF00216896 /* update.sh in Resources */,
 				9462A1811FDFFD4800008F32 /* MEGAToolbarTextContentView.xib in Resources */,
 				831844BD22C4D62E00E4C401 /* ContactsPermissionBottomView.xib in Resources */,
 				7795677921C80D36002B6227 /* Onboarding.storyboard in Resources */,
