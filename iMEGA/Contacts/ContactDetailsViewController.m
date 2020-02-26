@@ -34,7 +34,7 @@
 #import "MEGA-Swift.h"
 
 typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
-    ContactDetailsSectionSetNickname = 0,
+    ContactDetailsSectionNickname = 0,
     ContactDetailsSectionVerifyCredentials,
     ContactDetailsSectionAddAndRemoveContact,
     ContactDetailsSectionSharedFolders,
@@ -195,7 +195,11 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
 - (ContactTableViewCell *)cellForNicknameWithIndexPath:(NSIndexPath *)indexPath {
     ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
     cell.avatarImageView.image = [UIImage imageNamed:@"setNickname"];
-    cell.nameLabel.text = AMLocalizedString(@"Set Nickname", @"Contact details screen: Set the alias(nickname) for a user");
+    
+    cell.nameLabel.text = self.userNickname.length == 0 ?
+    AMLocalizedString(@"Set Nickname", @"Contact details screen: Set the alias(nickname) for a user") :
+    AMLocalizedString(@"Edit/Remove Nickname", @"Contact details screen: Edit/Remove the alias(nickname) for a user");
+    
     cell.nameLabel.textColor = UIColor.mnz_black333333;
     
     return cell;
@@ -715,19 +719,11 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
 }
 
 - (NSArray<NSNumber *> *)sectionsForContactModeDefault {
-    if (self.userNickname.length > 0) {
-        return [self addSharedFoldersSectionIfNeededToSections:@[@(ContactDetailsSectionAddAndRemoveContact), @(ContactDetailsSectionVerifyCredentials)]];
-    } else {
-        return [self addSharedFoldersSectionIfNeededToSections:@[@(ContactDetailsSectionSetNickname), @(ContactDetailsSectionVerifyCredentials), @(ContactDetailsSectionAddAndRemoveContact)]];
-    }
+    return [self addSharedFoldersSectionIfNeededToSections:@[@(ContactDetailsSectionNickname), @(ContactDetailsSectionVerifyCredentials), @(ContactDetailsSectionAddAndRemoveContact)]];
 }
 
 - (NSArray<NSNumber *> *)sectionsForContactFromChat {
-    if (self.userNickname.length > 0) {
-        return [self addSharedFoldersSectionIfNeededToSections:@[@(ContactDetailsSectionClearChatHistory), @(ContactDetailsSectionArchiveChat)]];
-    } else {
-        return [self addSharedFoldersSectionIfNeededToSections:@[@(ContactDetailsSectionSetNickname), @(ContactDetailsSectionClearChatHistory), @(ContactDetailsSectionArchiveChat)]];
-    }
+    return [self addSharedFoldersSectionIfNeededToSections:@[@(ContactDetailsSectionNickname), @(ContactDetailsSectionClearChatHistory), @(ContactDetailsSectionArchiveChat)]];
 }
 
 - (NSArray<NSNumber *> *)sectionsForContactFromGroupChat {
@@ -736,9 +732,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
     if (self.shouldAllowToAddContact) { // User not in contact list
         [sections addObject:@(ContactDetailsSectionAddParticipantToContact)];
     } else { // user in contact list
-        if (self.userNickname.length == 0) { // user does not have nickname
-            [sections addObject:@(ContactDetailsSectionSetNickname)];
-        }
+        [sections addObject:@(ContactDetailsSectionNickname)];
     }
     
     MEGAChatRoomPrivilege peerPrivilege = [self.groupChatRoom peerPrivilegeByHandle:self.userHandle];
@@ -824,15 +818,6 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
     }
 }
 
-- (IBAction)changeNickname:(UITapGestureRecognizer *)sender {
-    if (self.userNickname == nil || [self shouldAllowToAddContact]) {
-        return;
-    }
-    
-    [self showEditOrRemoveAlertOptions];
-}
-
-
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -848,7 +833,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
     ContactTableViewCell *cell;
     
     switch (self.contactDetailsSections[indexPath.section].intValue) {
-        case ContactDetailsSectionSetNickname:
+        case ContactDetailsSectionNickname:
             cell = [self cellForNicknameWithIndexPath:indexPath];
             break;
             
@@ -933,8 +918,12 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     switch (self.contactDetailsSections[indexPath.section].intValue) {
-        case ContactDetailsSectionSetNickname:
-            [self showNickNameViewContoller];
+        case ContactDetailsSectionNickname:
+            if (self.userNickname != nil) {
+                [self showEditOrRemoveAlertOptions];
+            } else {
+                [self showNickNameViewContoller];
+            }
             break;
             
         case ContactDetailsSectionVerifyCredentials:
