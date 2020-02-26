@@ -10,6 +10,10 @@ extern NSString * const MEGAPasswordName;
 
 extern NSString * const MEGAGroupIdentifier;
 
+extern NSString * const MEGAPasscodeLogoutAfterTenFailedAttemps;
+
+extern uint64_t const MEGAInvalidHandle;
+
 #pragma mark - global notifications
 
 extern NSString * const MEGALogoutNotification;

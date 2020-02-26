@@ -4,7 +4,6 @@
 #import "MOAssetUploadErrorPerLogin+CoreDataClass.h"
 #import "LocalFileNameGenerator.h"
 #import "SavedIdentifierParser.h"
-#import "MEGAConstants.h"
 #import "NSURL+CameraUpload.h"
 #import "MEGAStoreStack.h"
 

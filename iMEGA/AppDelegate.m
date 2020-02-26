@@ -229,7 +229,7 @@
             } completion:nil];
         } else {
             if ([LTHPasscodeViewController doesPasscodeExist]) {
-                if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled]) {
+                if ([NSUserDefaults.standardUserDefaults boolForKey:MEGAPasscodeLogoutAfterTenFailedAttemps]) {
                     [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
                 }
                 
@@ -431,8 +431,7 @@
                 MEGALogDebug(@"Email %@", self.email);
                 uint64_t userHandle = [[MEGASdkManager sharedMEGAChatSdk] userHandleByEmail:self.email];
                 
-                // INVALID_HANDLE = ~(uint64_t)0
-                if (userHandle == ~(uint64_t)0) {
+                if (userHandle == MEGAInvalidHandle) {
                     MEGALogDebug(@"Can't start a call because %@ is not your contact", self.email);
                     if (isFetchNodesDone) {
                         [self presentInviteContactCustomAlertViewController];
@@ -766,7 +765,7 @@
             [self.window setRootViewController:_mainTBC];
             
             if ([LTHPasscodeViewController doesPasscodeExist]) {
-                if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled]) {
+                if ([NSUserDefaults.standardUserDefaults boolForKey:MEGAPasscodeLogoutAfterTenFailedAttemps]) {
                     [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
                 }
                 
@@ -1091,7 +1090,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 }
 
 - (void)maxNumberOfFailedAttemptsReached {
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled]) {
+    if ([NSUserDefaults.standardUserDefaults boolForKey:MEGAPasscodeLogoutAfterTenFailedAttemps]) {
         [[MEGASdkManager sharedMEGASdk] logout];
     }
 }
@@ -1220,7 +1219,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                 [[MEGAStore shareInstance] insertMessage:msgId chatId:chatId];
             }
         } else if (silent) {
-            [[MEGASdkManager sharedMEGAChatSdk] pushReceivedWithBeep:NO chatId:~(uint64_t)0];
+            [MEGASdkManager.sharedMEGAChatSdk pushReceivedWithBeep:NO chatId:MEGAInvalidHandle];
         }
     }
 }
@@ -1737,8 +1736,8 @@ void uncaughtExceptionHandler(NSException *exception) {
     if (self.chatRoom.chatId == chatId && newState == MEGAChatConnectionOnline) {
         [self performCall];
     }
-    // INVALID_HANDLE = ~(uint64_t)0
-    if (chatId == ~(uint64_t)0 && newState == MEGAChatConnectionOnline) {
+    
+    if (chatId == MEGAInvalidHandle && newState == MEGAChatConnectionOnline) {
         [MEGAReachabilityManager sharedManager].chatRoomListState = MEGAChatRoomListStateOnline;
     } else if (newState >= MEGAChatConnectionLogging) {
         [MEGAReachabilityManager sharedManager].chatRoomListState = MEGAChatRoomListStateInProgress;

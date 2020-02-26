@@ -185,7 +185,7 @@
         // Common scenario, present the browser after passcode.
         [[LTHPasscodeViewController sharedUser] setDelegate:self];
         if ([LTHPasscodeViewController doesPasscodeExist]) {
-            if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled]) {
+            if ([NSUserDefaults.standardUserDefaults boolForKey:MEGAPasscodeLogoutAfterTenFailedAttemps]) {
                 [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
             }
             [self presentPasscode];
@@ -423,7 +423,7 @@
 }
 
 - (void)maxNumberOfFailedAttemptsReached {
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled]) {
+    if ([NSUserDefaults.standardUserDefaults boolForKey:MEGAPasscodeLogoutAfterTenFailedAttemps]) {
         [[MEGASdkManager sharedMEGASdk] logout];
     }
 }
