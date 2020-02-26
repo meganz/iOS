@@ -210,8 +210,10 @@ extension EnterEmailViewController: VENTokenFieldDelegate {
         tokenField.reloadData()
         
         instructionsLabel.text = AMLocalizedString("Tap space to enter multiple emails", "Text showing the user how to write more than one email in order to invite them to MEGA")
-
-        if tokens.count == 0 {
+        
+        if tokens.count > 0 {
+            enableInviteContactsButton()
+        } else {
             disableInviteContactsButton()
         }
     }
