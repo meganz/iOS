@@ -337,7 +337,6 @@ static NSString *kisDirectory = @"kisDirectory";
     //Sort configuration by default is "default ascending"
     if (![[NSUserDefaults standardUserDefaults] integerForKey:@"OfflineSortOrderType"]) {
         [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"OfflineSortOrderType"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
     }
     
     MEGASortOrderType sortOrderType = [[NSUserDefaults standardUserDefaults] integerForKey:@"OfflineSortOrderType"];

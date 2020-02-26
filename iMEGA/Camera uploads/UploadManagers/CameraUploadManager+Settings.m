@@ -29,35 +29,6 @@ static const NSTimeInterval BoardingScreenShowUpMinimumInterval = 30 * 24 * 3600
 
 @implementation CameraUploadManager (Settings)
 
-#pragma mark - setting cleanups
-
-+ (void)clearLocalSettings {
-    [NSUserDefaults.standardUserDefaults removeObjectForKey:IsCameraUploadsEnabledKey];
-    [NSUserDefaults.standardUserDefaults removeObjectForKey:HasMigratedToCameraUploadsV2Key];
-    [NSUserDefaults.standardUserDefaults removeObjectForKey:BoardingScreenLastShowedDateKey];
-    [NSUserDefaults.standardUserDefaults removeObjectForKey:IncludeGPSTags];
-    [self clearCameraSettings];
-}
-
-+ (void)clearCameraSettings {
-    [NSUserDefaults.standardUserDefaults removeObjectForKey:IsCellularAllowedKey];
-    [NSUserDefaults.standardUserDefaults removeObjectForKey:ShouldConvertHEICPhotoKey];
-    [NSUserDefaults.standardUserDefaults removeObjectForKey:IsLocationBasedBackgroundUploadAllowedKey];
-    [NSUserDefaults.standardUserDefaults removeObjectForKey:IsVideoUploadsEnabledKey];
-    [NSUserDefaults.standardUserDefaults removeObjectForKey:UploadHiddenAlbumKey];
-    [NSUserDefaults.standardUserDefaults removeObjectForKey:UploadAllBurstAssetsKey];
-    [NSUserDefaults.standardUserDefaults removeObjectForKey:UploadVideosForLivePhotosKey];
-    [NSUserDefaults.standardUserDefaults removeObjectForKey:UploadSharedAlbumsKey];
-    [NSUserDefaults.standardUserDefaults removeObjectForKey:UploadSyncedAlbumsKey];
-    [self clearVideoSettings];
-}
-
-+ (void)clearVideoSettings {
-    [NSUserDefaults.standardUserDefaults removeObjectForKey:ShouldConvertHEVCVideoKey];
-    [NSUserDefaults.standardUserDefaults removeObjectForKey:HEVCToH264CompressionQualityKey];
-    [NSUserDefaults.standardUserDefaults removeObjectForKey:IsCellularForVideosAllowedKey];
-}
-
 #pragma mark - camera settings
 
 + (BOOL)isCameraUploadEnabled {

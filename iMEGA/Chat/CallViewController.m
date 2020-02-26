@@ -337,7 +337,6 @@
 - (void)deleteActiveCallFlags {
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"oneOnOneCallLocalVideo"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"oneOnOneCallLocalAudio"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (void)updateAudioOutputImage {
@@ -431,7 +430,7 @@
     
     [[NSUserDefaults standardUserDefaults] setBool:!self.localVideoImageView.hidden forKey:@"oneOnOneCallLocalVideo"];
     [[NSUserDefaults standardUserDefaults] setBool:self.muteUnmuteMicrophone.selected forKey:@"oneOnOneCallLocalAudio"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    
     [self.timer invalidate];
     
     [self dismissViewControllerAnimated:YES completion:nil];

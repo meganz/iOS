@@ -1968,7 +1968,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
                             [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
                         } else {
                             [NSUserDefaults.standardUserDefaults setBool:NO forKey:@"isSaveMediaCapturedToGalleryEnabled"];
-                            [NSUserDefaults.standardUserDefaults synchronize];
                             [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
                         }
                     }];
