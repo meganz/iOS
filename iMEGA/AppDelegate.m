@@ -181,7 +181,6 @@
         [Helper clearSession];
         [Helper deletePasscode];
         [[NSUserDefaults standardUserDefaults] setValue:@"1strun" forKey:kFirstRun];
-        [[NSUserDefaults standardUserDefaults] synchronize];
     }
     
     [self setupAppearance];
@@ -191,8 +190,6 @@
     _presentInviteContactVCLater = NO;
     
     if (sessionV3) {
-        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"TabsOrderInTabBar"];
-        
         NSUserDefaults *sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];
         if (![sharedUserDefaults boolForKey:@"extensions"]) {
             [SAMKeychain deletePasswordForService:@"MEGA" account:@"sessionV3"];

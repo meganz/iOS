@@ -280,7 +280,6 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
                          videoQuality = videoQualityNumber.unsignedIntegerValue;
                      } else {
                          [[NSUserDefaults standardUserDefaults] setObject:@(ChatVideoUploadQualityMedium) forKey:@"ChatVideoQuality"];
-                         [[NSUserDefaults standardUserDefaults] synchronize];
                          videoQuality = ChatVideoUploadQualityMedium;
                      }
                      
@@ -346,7 +345,6 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
                      videoQuality = videoQualityNumber.unsignedIntegerValue;
                  } else {
                      [[NSUserDefaults standardUserDefaults] setObject:@(ChatVideoUploadQualityMedium) forKey:@"ChatVideoQuality"];
-                     [[NSUserDefaults standardUserDefaults] synchronize];
                      videoQuality = ChatVideoUploadQualityMedium;
                  }
                  
@@ -401,7 +399,6 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
             videoQuality = videoQualityNumber.unsignedIntegerValue;
         } else {
             [[NSUserDefaults standardUserDefaults] setObject:@(ChatVideoUploadQualityMedium) forKey:@"ChatVideoQuality"];
-            [[NSUserDefaults standardUserDefaults] synchronize];
             videoQuality = ChatVideoUploadQualityMedium;
         }
         
