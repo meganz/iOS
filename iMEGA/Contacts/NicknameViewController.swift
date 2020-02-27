@@ -1,24 +1,26 @@
 
 import UIKit
 
-class AddNickNameViewController: UIViewController {
+class NicknameViewController: UIViewController {
 
     @IBOutlet weak var cancelBarButtonItem: UIBarButtonItem!
     @IBOutlet weak var saveBarButtonItem: UIBarButtonItem!
     
     @IBOutlet weak var nicknameLabel: UILabel!
     @IBOutlet weak var nicknameTextField: UITextField!
-    
+    @IBOutlet weak var removeNicknameButtonView: UIView!
+    @IBOutlet weak var removeNicknameButton: UIButton!
+
     @objc var user: MEGAUser?
     @objc var nicknameChangedHandler: ((String?) -> Void)?
     @objc var nickname: String? {
         didSet {
-            guard let nickname = nickname,
-                let nicknameTextField = nicknameTextField else {
+            guard isViewLoaded else {
                 return
             }
             
             nicknameTextField.text = nickname
+            removeNicknameButtonView.isHidden = (nickname == nil)
         }
     }
     
@@ -27,7 +29,12 @@ class AddNickNameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = AMLocalizedString("Set Nickname", "Contact details screen: Set the alias(nickname) for a user")
+        title = (nickname != nil) ?
+            AMLocalizedString("Edit Nickname", "Contact details screen: Set the alias(nickname) for a user") :
+            AMLocalizedString("Set Nickname", "Contact details screen: Set the alias(nickname) for a user")
+        removeNicknameButtonView.isHidden = (nickname == nil)
+        removeNicknameButton.setTitle(AMLocalizedString("Remove Nickname", "Edit nickname screen: Remove nickname button title"),
+                                      for: .normal)
         cancelBarButtonItem.title = AMLocalizedString("cancel", "Cancels the add nickname screen")
         saveBarButtonItem.title = AMLocalizedString("save", "Saves the new nickname")
         nicknameLabel.text = AMLocalizedString("Alias/ Nickname", "Add nickname screen: This text appears above the alias(nickname) entry")
@@ -57,27 +64,47 @@ class AddNickNameViewController: UIViewController {
         }
     }
     
+    @IBAction func removeNicknameTapped(_ sender: UIButton) {
+        if MEGAReachabilityManager.isReachableHUDIfNot() {
+            nicknameTextField.text = nil
+            save(nickname: nil)
+        }
+    }
+    
+    // MARK:- Orientation method.
+
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        if UIDevice.current.iPhone4X || UIDevice.current.iPhone5X {
+            return [.portrait, .portraitUpsideDown]
+        }
+        
+        return .all
+    }
+    
     // MARK:- Private methods.
     
     private func saveNickname() {
         guard let nicknameTextFieldText = nicknameTextField.text,
-            let user = user else {
-            return
-        }
-        
-        guard nickname != nicknameTextFieldText else {
+            nickname != nicknameTextFieldText else {
             dismissViewController()
             return
         }
         
         let newNickname = nicknameTextFieldText.trim
+        save(nickname: newNickname)
+    }
+    
+    private func save(nickname: String?) {
+        guard let user = user else {
+            return
+        }
         
         let genericRequestDelegate = MEGAGenericRequestDelegate { request, error in
             SVProgressHUD.dismiss()
             
             if error.type == .apiOk {
-                self.user?.mnz_nickname = newNickname
-                self.updateHandler(withNickname: newNickname)
+                self.user?.mnz_nickname = nickname
+                self.updateHandler(withNickname: nickname)
             } else {
                 SVProgressHUD.showError(withStatus: request.requestString + " " + error.name)
             }
@@ -86,7 +113,7 @@ class AddNickNameViewController: UIViewController {
         }
         
         SVProgressHUD.show()
-        MEGASdkManager.sharedMEGASdk().setUserAlias(newNickname, forHandle: user.handle, delegate: genericRequestDelegate)
+        MEGASdkManager.sharedMEGASdk().setUserAlias(nickname, forHandle: user.handle, delegate: genericRequestDelegate)
     }
     
     private func dismissViewController() {
@@ -101,7 +128,7 @@ class AddNickNameViewController: UIViewController {
     }
 }
 
-extension AddNickNameViewController: UITextFieldDelegate {
+extension NicknameViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         saveNickname()
