@@ -198,7 +198,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
     
     cell.nameLabel.text = self.userNickname.length == 0 ?
     AMLocalizedString(@"Set Nickname", @"Contact details screen: Set the alias(nickname) for a user") :
-    AMLocalizedString(@"Edit/Remove Nickname", @"Contact details screen: Edit/Remove the alias(nickname) for a user");
+    AMLocalizedString(@"Edit Nickname", @"Contact details screen: Edit the alias(nickname) for a user");
     
     cell.nameLabel.textColor = UIColor.mnz_black333333;
     
@@ -635,7 +635,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Contacts" bundle:nil];
     UINavigationController *navigationController = [storyboard instantiateViewControllerWithIdentifier:@"AddNickNameNavigationControllerID"];
     
-    AddNickNameViewController *nicknameViewController = navigationController.viewControllers.firstObject;
+    NicknameViewController *nicknameViewController = navigationController.viewControllers.firstObject;
     
     nicknameViewController.user = self.user;
     nicknameViewController.nickname = self.userNickname;
@@ -654,39 +654,6 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
     BOOL isNicknamePresent = self.userNickname.length > 0;
     self.nameOrNicknameLabel.text = isNicknamePresent ? self.userNickname : self.userName;
     self.optionalNameLabel.text = isNicknamePresent ? self.userName : nil;
-}
-
-- (void)showEditOrRemoveAlertOptions {
-    UIAlertController *editNicknameAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    
-    UIAlertAction *cancelAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil];
-    [cancelAlertAction mnz_setTitleTextColor:UIColor.mnz_redMain];
-    [editNicknameAlertController addAction:cancelAlertAction];
-    
-    UIAlertAction *editNicknameAlertAction = [UIAlertAction actionWithTitle: AMLocalizedString(@"edit",@"Caption of a button to edit the files that are selected") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [self showNickNameViewContoller];
-    }];
-    [editNicknameAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
-    [editNicknameAlertController addAction:editNicknameAlertAction];
-    
-    UIAlertAction *removeNicknameAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"remove", @"Title for the action that allows to remove a file or folder") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        if (MEGAReachabilityManager.isReachableHUDIfNot) {
-            [MEGASdkManager.sharedMEGASdk setUserAlias:nil forHandle:self.user.handle];
-            self.userNickname = nil;
-            self.user.mnz_nickname = nil;
-            [self updateUserDetails];
-            [self.tableView reloadData];
-        }
-    }];
-    [editNicknameAlertController addAction:removeNicknameAlertAction];
-    
-    if (UIDevice.currentDevice.iPadDevice) {
-        editNicknameAlertController.modalPresentationStyle = UIModalPresentationPopover;
-        editNicknameAlertController.popoverPresentationController.sourceView = self.nameOrNicknameLabel;
-        editNicknameAlertController.popoverPresentationController.sourceRect = self.nameOrNicknameLabel.bounds;
-    }
-    
-    [self presentViewController:editNicknameAlertController animated:YES completion:nil];
 }
 
 - (void)configureShadowInLayer:(CALayer *)layer {
@@ -919,11 +886,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
     
     switch (self.contactDetailsSections[indexPath.section].intValue) {
         case ContactDetailsSectionNickname:
-            if (self.userNickname != nil) {
-                [self showEditOrRemoveAlertOptions];
-            } else {
-                [self showNickNameViewContoller];
-            }
+            [self showNickNameViewContoller];
             break;
             
         case ContactDetailsSectionVerifyCredentials:
