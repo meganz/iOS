@@ -28,17 +28,20 @@ git submodule update --init --recursive
 
 2. Clone this repo.
 
-3. Download the prebuilt third party dependencies from this link: https://mega.nz/#!BUtgzAQL!rf6stzMWq-RJ9u9-l8jeYZ0kSd07fwSDSG3P3Uj9Mx0.
+3. Download the prebuilt third party dependencies by using script `download_3rdparty.sh`
+MEGACmd is also required in order to download the dependencies
+https://mega.nz/cmd
+```
+ sh ./download_3rdparty.sh    
+```
 
-4. Uncompress that file and move the folders `webrtc` , `include` and `lib` into `iMEGA/Vendor/sdk/bindings/ios/3rdparty`.
+4. Open `iMEGA.xcworkspace`.
 
-5. Open `iMEGA.xcworkspace`.
+5. Make sure the `MEGA` target is selected.
 
-6. Make sure the `MEGA` target is selected.
+6. Build and run (⌘R).
 
-7. Build and run (⌘R).
-
-8. Enjoy!
+7. Enjoy!
 
 If you want to build the third party dependencies by yourself: 
 - Open a terminal in the directory `iMEGA/sdk/bindings/ios/3rdparty`. 
