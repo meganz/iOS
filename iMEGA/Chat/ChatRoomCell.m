@@ -325,6 +325,7 @@
                     break;
                     
                 default:
+                    privilige = @"";
                     break;
             }
             wasChangedToBy = [wasChangedToBy stringByReplacingOccurrencesOfString:@"[B]" withString:privilige];
