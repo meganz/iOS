@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSManagedObjectContext *)newBackgroundContext;
 
-- (BOOL)deleteStoreWithError:(NSError * _Nullable)error;
+- (void)deleteStore;
 
 @end
 
