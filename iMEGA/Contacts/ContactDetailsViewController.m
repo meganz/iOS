@@ -4,6 +4,7 @@
 
 #import "Helper.h"
 #import "UIAlertAction+MNZCategory.h"
+#import "UIImage+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "MEGAInviteContactRequestDelegate.h"
@@ -229,11 +230,11 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
 - (ContactTableViewCell *)cellForSharedFoldersWithIndexPath:(NSIndexPath *)indexPath  {
     ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsSharedFolderTypeID" forIndexPath:indexPath];
     MEGANode *node = [self.incomingNodeListForUser nodeAtIndex:indexPath.row];
-    cell.avatarImageView.image = [Helper incomingFolderImage];
+    cell.avatarImageView.image = UIImage.mnz_incomingFolderImage;
     cell.nameLabel.text = node.name;
     cell.shareLabel.text = [Helper filesAndFoldersInFolderNode:node api:MEGASdkManager.sharedMEGASdk];
     MEGAShareType shareType = [MEGASdkManager.sharedMEGASdk accessLevelForNode:node];
-    cell.permissionsImageView.image = [Helper permissionsButtonImageForShareType:shareType];
+    cell.permissionsImageView.image = [UIImage mnz_permissionsButtonImageForShareType:shareType];
     
     if (self.contactDetailsMode == ContactDetailsModeFromChat) {
         cell.userInteractionEnabled = cell.avatarImageView.userInteractionEnabled = cell.nameLabel.enabled = MEGAReachabilityManager.isReachable;

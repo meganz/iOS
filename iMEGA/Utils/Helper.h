@@ -27,21 +27,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSDictionary *)fileTypesDictionary;
 
-+ (UIImage *)genericImage;
-+ (UIImage *)folderImage;
-+ (UIImage *)folderCameraUploadsImage;
-+ (UIImage *)incomingFolderImage;
-+ (UIImage *)outgoingFolderImage;
-+ (UIImage *)defaultPhotoImage;
-
-+ (UIImage *)downloadedArrowImage;
-+ (UIImage *)downloadingTransferImage;
-+ (UIImage *)uploadingTransferImage;
-+ (UIImage *)downloadQueuedTransferImage;
-+ (UIImage *)uploadQueuedTransferImage;
-
-+ (UIImage *)permissionsButtonImageForShareType:(MEGAShareType)shareType;
-
 #pragma mark - Paths
 
 + (NSString *)pathForOffline;
