@@ -21,6 +21,7 @@
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIAlertAction+MNZCategory.h"
+#import "UIImage+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 #import "UITextField+MNZCategory.h"
 #import "UIViewController+MNZCategory.h"
@@ -1214,7 +1215,7 @@
                         cell.nameLabel.text = user.email;
                     }
                     MEGAShare *share = self.outSharesForNodeMutableArray[indexPath.row - 1];
-                    cell.permissionsImageView.image = [Helper permissionsButtonImageForShareType:share.access];
+                    cell.permissionsImageView.image = [UIImage mnz_permissionsButtonImageForShareType:share.access];
                 }
             } else if (indexPath.section == 1) {
                 cell = [tableView dequeueReusableCellWithIdentifier:@"ContactPermissionsEmailTableViewCellID" forIndexPath:indexPath];
