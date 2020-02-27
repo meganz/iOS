@@ -29,6 +29,7 @@
 #import "UIApplication+MNZCategory.h"
 #import "UIColor+MNZCategory.h"
 #import "UIDevice+MNZCategory.h"
+#import "MEGA-Swift.h"
 
 static const CGFloat GapBetweenPages = 10.0;
 
@@ -625,7 +626,10 @@ static const CGFloat GapBetweenPages = 10.0;
 
 - (IBAction)didPressActionsButton:(UIBarButtonItem *)sender {
     CustomActionViewController *actionController = [[CustomActionViewController alloc] init];
-    [self.mediaNodes setObject:[MEGASdkManager.sharedMEGASdk nodeForHandle:[self.mediaNodes objectAtIndex:self.currentIndex].handle] atIndexedSubscript:self.currentIndex];
+    MEGANode *node = [MEGASdkManager.sharedMEGASdk nodeForHandle:[self.mediaNodes objectAtIndex:self.currentIndex].handle];
+    if (node) {
+        [self.mediaNodes setObject:node atIndexedSubscript:self.currentIndex];
+    }
     actionController.node = [self.mediaNodes objectAtIndex:self.currentIndex];
     actionController.actionDelegate = self;
     actionController.actionSender = sender;
@@ -809,8 +813,7 @@ static const CGFloat GapBetweenPages = 10.0;
 - (void)playVideo:(UIButton *)sender {
     MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
     if (node.mnz_isPlayable) {
-        MEGAHandleList *chatRoomIDsWithCallInProgress = [MEGASdkManager.sharedMEGAChatSdk chatCallsWithState:MEGAChatCallStatusInProgress];
-        if (chatRoomIDsWithCallInProgress.size > 0) {
+        if (MEGASdkManager.sharedMEGAChatSdk.mnz_existsActiveCall) {
             [Helper cannotPlayContentDuringACallAlert];
         } else {
             UIViewController *playerVC = [node mnz_viewControllerForNodeInFolderLink:(self.api == [MEGASdkManager sharedMEGASdkFolder])];

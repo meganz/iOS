@@ -2090,6 +2090,24 @@
 "It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="您的MEGA帐户使用的密码可能与其他服务使用的密码相同，并且这些其他服务中至少有一项服务的数据已遭泄露。";
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="您的密码遭到泄露（包括且不限于MEGA帐户），您的帐户正在被他人登录和使用。";
+/* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
+"MEGA CAMERA UPLOADS FOLDER"="MEGA相机上传文件夹";
+/* Action button text of folder selection screen for camera uploads */
+"Select Folder"="选择文件夹";
+/* Title of the folder selection screen for camera uploads */
+"Choose Folder"="选择文件夹";
+/* Label used near to the option selected to encode the images uploaded to a chat (Low, Medium, Original) */
+"Image quality"="图片质量";
+/* Title of Image Quality option */
+"Automatic"="自动";
+/* Description of Automatic Image Quality option */
+"Send smaller size images through cellular networks and original size images through wifi"="Send smaller size images through cellular networks and original size images through wifi";
+/* Title of Image Quality option */
+"Optimised"="优化";
+/* Description of Optimised Image Quality option */
+"Send smaller size images optimised for lower data consumption"="发送较小尺寸的图片，优化以降低数据消耗";
+/* Description of High Image Quality option */
+"Send original size, increased quality images"="Send original size, increased quality images";
 /* Setting title for Doc scan view */
 "Save Settings"="Save Settings";
 /* file type title, used in changing the export format of scaned doc */

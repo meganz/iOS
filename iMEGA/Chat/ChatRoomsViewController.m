@@ -194,6 +194,15 @@
     }
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+
+    if (self.chatRoomsType == ChatRoomsTypeArchived) {
+        [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
+        [[MEGASdkManager sharedMEGAChatSdk] removeChatCallDelegate:self];
+    }
+}
+
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
@@ -215,11 +224,6 @@
             }
         }
     } completion:nil];
-}
-
-- (void)dealloc {
-    [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
-    [[MEGASdkManager sharedMEGAChatSdk] removeChatCallDelegate:self];
 }
 
 #pragma mark - DZNEmptyDataSetSource
@@ -363,6 +367,7 @@
 - (void)emptyDataSetWillAppear:(UIScrollView *)scrollView {
     if (!self.searchController.active) {
         self.searchController.searchBar.hidden = YES;
+        self.archivedChatListItemList = MEGASdkManager.sharedMEGAChatSdk.archivedChatListItems;
         if (self.archivedChatListItemList.size) {
             self.archivedChatEmptyStateTitle.text = AMLocalizedString(@"archivedChats", @"Title of archived chats button");
             self.archivedChatEmptyStateCount.text = [NSString stringWithFormat:@"%tu", self.archivedChatListItemList.size];
@@ -635,6 +640,7 @@
     self.chatListItemList = self.chatRoomsType == ChatRoomsTypeDefault ? [[MEGASdkManager sharedMEGAChatSdk] chatListItems] : [[MEGASdkManager sharedMEGAChatSdk] archivedChatListItems];
     self.archivedChatListItemList = [[MEGASdkManager sharedMEGAChatSdk] archivedChatListItems];
     [self reorderList];
+    [self updateChatIdIndexPathDictionary];
     [self.tableView reloadData];
 }
 
@@ -803,24 +809,30 @@
 #pragma mark - IBActions
 
 - (IBAction)joinActiveCall:(id)sender {
-    [self.timer invalidate];
-    if (self.chatRoomOnGoingCall.isGroup) {
-        GroupCallViewController *groupCallVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupCallViewControllerID"];
-        groupCallVC.callType = CallTypeActive;
-        groupCallVC.videoCall = NO;
-        groupCallVC.chatRoom = self.chatRoomOnGoingCall;
-        groupCallVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-        groupCallVC.megaCallManager = [(AppDelegate *)UIApplication.sharedApplication.delegate megaCallManager];
-        [self presentViewController:groupCallVC animated:YES completion:nil];
-    } else {
-        CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
-        callVC.chatRoom = self.chatRoomOnGoingCall;
-        callVC.videoCall = NO;
-        callVC.callType = CallTypeActive;
-        callVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-        callVC.megaCallManager = [(AppDelegate *)UIApplication.sharedApplication.delegate megaCallManager];
-        [self presentViewController:callVC animated:YES completion:nil];
-    }
+    [DevicePermissionsHelper audioPermissionModal:YES forIncomingCall:NO withCompletionHandler:^(BOOL granted) {
+        if (granted) {
+            [self.timer invalidate];
+            if (self.chatRoomOnGoingCall.isGroup) {
+                GroupCallViewController *groupCallVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupCallViewControllerID"];
+                groupCallVC.callType = CallTypeActive;
+                groupCallVC.videoCall = NO;
+                groupCallVC.chatRoom = self.chatRoomOnGoingCall;
+                groupCallVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+                groupCallVC.megaCallManager = [(AppDelegate *)UIApplication.sharedApplication.delegate megaCallManager];
+                [self presentViewController:groupCallVC animated:YES completion:nil];
+            } else {
+                CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
+                callVC.chatRoom = self.chatRoomOnGoingCall;
+                callVC.videoCall = NO;
+                callVC.callType = CallTypeActive;
+                callVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+                callVC.megaCallManager = [(AppDelegate *)UIApplication.sharedApplication.delegate megaCallManager];
+                [self presentViewController:callVC animated:YES completion:nil];
+            }
+        } else {
+            [DevicePermissionsHelper alertAudioPermissionForIncomingCall:NO];
+        }
+    }];
 }
 
 - (IBAction)openArchivedChats:(id)sender {
