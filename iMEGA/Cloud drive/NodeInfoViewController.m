@@ -227,6 +227,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell;
     if (indexPath.section == 0) {
         NodePropertyTableViewCell *propertyCell = [self.tableView dequeueReusableCellWithIdentifier:@"nodePropertyCell" forIndexPath:indexPath];
         propertyCell.keyLabel.text = [self.nodeProperties objectAtIndex:indexPath.row].title;
@@ -235,30 +236,29 @@
             propertyCell.valueLabel.textColor = UIColor.mnz_green00BFA5;
         }
         
-        return propertyCell;
+        cell = propertyCell;
     } else if (indexPath.section == 1) {
         if ([[MEGASdkManager sharedMEGASdk] hasVersionsForNode:self.node] && ([[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.node] != MEGAShareTypeAccessOwner)) {
-            return [self versionCellForIndexPath:indexPath];
+            cell = [self versionCellForIndexPath:indexPath];
         } else {
             switch (indexPath.row) {
                 case 0: {
                     if (self.node.isFolder) {
-                        return [self sharedFolderCellForIndexPath:indexPath];
+                        cell = [self sharedFolderCellForIndexPath:indexPath];
                     } else {
-                        return [self linkCellForIndexPath:indexPath];
+                        cell = [self linkCellForIndexPath:indexPath];
                     }
                 }
                     
                 case 1:
-                    return [self linkCellForIndexPath:indexPath];
-                    
-                default:
-                    return nil;
+                    cell = [self linkCellForIndexPath:indexPath];
             }
         }
     } else {
-        return [self versionCellForIndexPath:indexPath];
+        cell = [self versionCellForIndexPath:indexPath];
     }
+    
+    return cell;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {

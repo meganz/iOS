@@ -73,7 +73,7 @@
             
             case kCTCellularDataRestrictedStateUnknown:
             case kCTCellularDataNotRestricted:
-                [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:NSLocalizedString(@"noInternetConnection", @"Text shown on the app when you don't have connection to the internet or when you have lost it")];
+                [SVProgressHUD showImage:[UIImage imageNamed:@"hudForbidden"] status:AMLocalizedString(@"noInternetConnection", @"Text shown on the app when you don't have connection to the internet or when you have lost it")];
                 break;
         }
     }
