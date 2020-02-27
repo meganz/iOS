@@ -29,15 +29,7 @@ class NicknameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = (nickname != nil) ?
-            AMLocalizedString("Edit Nickname", "Contact details screen: Set the alias(nickname) for a user") :
-            AMLocalizedString("Set Nickname", "Contact details screen: Set the alias(nickname) for a user")
-        removeNicknameButtonView.isHidden = (nickname == nil)
-        removeNicknameButton.setTitle(AMLocalizedString("Remove Nickname", "Edit nickname screen: Remove nickname button title"),
-                                      for: .normal)
-        cancelBarButtonItem.title = AMLocalizedString("cancel", "Cancels the add nickname screen")
-        saveBarButtonItem.title = AMLocalizedString("save", "Saves the new nickname")
-        nicknameLabel.text = AMLocalizedString("Alias/ Nickname", "Add nickname screen: This text appears above the alias(nickname) entry")
+        configureUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -48,6 +40,12 @@ class NicknameViewController: UIViewController {
         }
         
         nicknameTextField.becomeFirstResponder()
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        updateUI()
     }
     
     // MARK:- IBActions
@@ -125,6 +123,24 @@ class NicknameViewController: UIViewController {
         if let nicknameChangedHandler = self.nicknameChangedHandler {
             nicknameChangedHandler(nickname)
         }
+    }
+    
+    private func configureUI() {
+        title = (nickname != nil) ?
+            AMLocalizedString("Edit Nickname", "Contact details screen: Set the alias(nickname) for a user") :
+            AMLocalizedString("Set Nickname", "Contact details screen: Set the alias(nickname) for a user")
+        removeNicknameButtonView.isHidden = (nickname == nil)
+        removeNicknameButton.setTitle(AMLocalizedString("Remove Nickname", "Edit nickname screen: Remove nickname button title"),
+                                      for: .normal)
+        cancelBarButtonItem.title = AMLocalizedString("cancel", "Cancels the add nickname screen")
+        saveBarButtonItem.title = AMLocalizedString("save", "Saves the new nickname")
+        nicknameLabel.text = AMLocalizedString("Alias/ Nickname", "Add nickname screen: This text appears above the alias(nickname) entry")
+        
+        updateUI()
+    }
+    
+    private func updateUI() {
+        removeNicknameButton.setTitleColor(UIColor.mnz_redMain(), for: .normal)
     }
 }
 
