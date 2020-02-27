@@ -1305,7 +1305,7 @@ static MEGAIndexer *indexer;
         }
     }
     
-    [MEGAStore.shareInstance.storeStack deleteStoreWithError:nil];
+    [MEGAStore.shareInstance.storeStack deleteStore];
     
     // Delete files saved by extensions
     NSString *extensionGroup = [NSFileManager.defaultManager containerURLForSecurityApplicationGroupIdentifier:MEGAGroupIdentifier].path;
