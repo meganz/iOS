@@ -276,7 +276,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
                  if ([self hasFreeSpaceOnDiskForWriteFile:fileSize]) {
                      NSNumber *videoQualityNumber = [[NSUserDefaults standardUserDefaults] objectForKey:@"ChatVideoQuality"];
                      ChatVideoUploadQuality videoQuality;
-                     if (videoQualityNumber) {
+                     if (videoQualityNumber != nil) {
                          videoQuality = videoQualityNumber.unsignedIntegerValue;
                      } else {
                          [[NSUserDefaults standardUserDefaults] setObject:@(ChatVideoUploadQualityMedium) forKey:@"ChatVideoQuality"];
@@ -342,7 +342,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
                  [NSFileManager.defaultManager mnz_removeItemAtPath:filePath];
                  NSNumber *videoQualityNumber = [[NSUserDefaults standardUserDefaults] objectForKey:@"ChatVideoQuality"];
                  ChatVideoUploadQuality videoQuality;
-                 if (videoQualityNumber) {
+                 if (videoQualityNumber != nil) {
                      videoQuality = videoQualityNumber.unsignedIntegerValue;
                  } else {
                      [[NSUserDefaults standardUserDefaults] setObject:@(ChatVideoUploadQualityMedium) forKey:@"ChatVideoQuality"];
@@ -397,7 +397,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
     if ([self hasFreeSpaceOnDiskForWriteFile:fileSize]) {
         NSNumber *videoQualityNumber = [[NSUserDefaults standardUserDefaults] objectForKey:@"ChatVideoQuality"];
         ChatVideoUploadQuality videoQuality;
-        if (videoQualityNumber) {
+        if (videoQualityNumber != nil) {
             videoQuality = videoQualityNumber.unsignedIntegerValue;
         } else {
             [[NSUserDefaults standardUserDefaults] setObject:@(ChatVideoUploadQualityMedium) forKey:@"ChatVideoQuality"];
