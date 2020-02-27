@@ -333,7 +333,7 @@
 /* String already exists: 367, but we need to split paragraphs. */
 "copyrightMessagePart1"="MEGA respecte le droit d’auteur d’autrui et exige que les utilisateurs du service nuagique de MEGA se conforment aux lois sur le droit d’auteur.";
 /* String already exists: 367, but we need to split paragraphs */
-"copyrightMessagePart2"="Il vous est strictement interdit d’utiliser le service nuagique de MEGA pour enfreindre le droit d’auteur. Vous ne pouvez pas téléverser, télécharger, stocker, partager, afficher, lire en continu, distribuer, envoyer par courriel, créer de liens vers, transmettre ou proposer de quelque façon des fichiers, des données ou du contenu qui enfreignent le droit d’auteur ou autre droit de propriété de quelque personne ou entité.";
+"copyrightMessagePart2"="Il vous est strictement interdit d’utiliser le service nuagique de MEGA pour enfreindre le droit d’auteur. Vous ne pouvez pas téléverser, télécharger, stocker, partager, afficher, diffuser en continu, distribuer, envoyer par courriel, créer de liens vers, transmettre ou proposer de quelque façon des fichiers, des données ou du contenu qui enfreignent le droit d’auteur ou autre droit de propriété de quelque personne ou entité.";
 /* button caption text that the user clicks when he agrees */
 "agree"="Accepter";
 /* button caption text that the user clicks when he disagrees */
@@ -1134,7 +1134,7 @@
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "richPreviewsFooter"="Améliorez l’expérience MEGAchat. Le contenu des URL sera récupéré sans chiffrement de bout en bout.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
-"voiceAndVideoCalls"="Appels vocaux et vidéos";
+"voiceAndVideoCalls"="Appels vocaux et vidéo";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
 "useMobileData"="Utiliser les données mobiles";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for videos. */
@@ -1631,15 +1631,15 @@
 /* Title shown in a page of the on boarding screens explaining that the chat is encrypted */
 "Encrypted chat"="Dialogue en ligne chiffré";
 /* Description shown in a page of the onboarding screens explaining the chat feature */
-"Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive."="Le dialogue en ligne est entièrement chiffré et offre des appels voix, des appels vidéo, une messagerie de groupe et le partage de fichiers tous intégrés à votre disque nuagique.";
+"Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive."="Le dialogue en ligne est entièrement chiffré et offre des appels vocaux et vidéo, une messagerie de groupe et le partage de fichiers, tous intégrés à votre disque nuagique.";
 /* Title shown in a page of the on boarding screens explaining that the user can add contacts to chat and colaborate */
-"Create your Network"="Créer votre réseau";
+"Create your Network"="Créez votre réseau";
 /* Description shown in a page of the onboarding screens explaining contacts */
-"Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA"="Ajoutez des contacts, créez un réseau, collaborez et faites des appels voix ou vidéo sans jamais quitter MEGA";
+"Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA"="Ajoutez des contacts, créez un réseau, collaborez et faites des appels vocaux ou vidéo sans jamais quitter MEGA";
 /* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
 "Your Photos in the Cloud"="Vos photos dans le nuage";
 /* Description shown in a page of the onboarding screens explaining the camera uploads feature */
-"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="Téléversements de l’appareil photo est une fonction essentielle de tout appareil mobile et nous nous en occupons pour vous. Créez votre compte maintenant.";
+"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="Le téléversement de l’appareil photo est une fonction essentielle de tout appareil mobile et nous nous en occupons pour vous. Créez votre compte maintenant.";
 /* Button which triggers the initial setup */
 "Setup MEGA"="Configurer MEGA";
 /* Detailed explanation of why the user should give some permissions to MEGA */
@@ -1655,11 +1655,11 @@
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="Activer le microphone et l’appareil photo";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
-"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="Afin d’envoyer des messages vocaux et faire des appels voix et vidéo chiffrés, autorisez MEGA à accéder à votre appareil photo et à votre microphone";
+"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="Afin d’envoyer des messages vocaux et faire des appels vocaux et vidéo chiffrés, autorisez MEGA à accéder à votre appareil photo et à votre microphone";
 /* Title label that explains that the user is going to be asked for the notifications permission */
 "Enable Notifications"="Activer les notifications";
 /* Detailed explanation of why the user should give permission to deliver notifications */
-"We would like to send you notifications so you receive new messages on your device instantly."="Nous vous enverrons des notifications afin que vous receviez instantanément sur votre appareil les nouveaux messages.";
+"We would like to send you notifications so you receive new messages on your device instantly."="Nous vous enverrons des notifications afin que vous receviez les nouveaux messages instantanément sur votre appareil.";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
 "Allow Access"="Autoriser l’accès";
 /* A section header which contains the file management settings. These settings allow users to remove duplicate files etc. */
@@ -2090,6 +2090,24 @@
 "It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="Il est possible que vous utilisiez le même mot de passe pour votre compte MEGA que pour d’autres services et qu’au moins l’un de ses services ait souffert d’une atteinte à la protection des données.";
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="Votre mot de passe a été divulgué et est maintenant utilisé par des personnes malveillantes pour se connecter à vos comptes dont, mais sans s’y limiter, à votre compte MEGA.";
+/* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
+"MEGA CAMERA UPLOADS FOLDER"="DOSSIER MEGA DES TÉLÉVERSEMENTS DE L’APPAREIL PHOTO";
+/* Action button text of folder selection screen for camera uploads */
+"Select Folder"="Sélectionner un dossier";
+/* Title of the folder selection screen for camera uploads */
+"Choose Folder"="Choisir un dossier";
+/* Label used near to the option selected to encode the images uploaded to a chat (Low, Medium, Original) */
+"Image quality"="Qualité des images";
+/* Title of Image Quality option */
+"Automatic"="Automatique";
+/* Description of Automatic Image Quality option */
+"Send smaller size images through cellular networks and original size images through wifi"="Send smaller size images through cellular networks and original size images through wifi";
+/* Title of Image Quality option */
+"Optimised"="Optimisée";
+/* Description of Optimised Image Quality option */
+"Send smaller size images optimised for lower data consumption"="Envoyer des images de plus petite taille, optimisées pour une consommation réduite de données";
+/* Description of High Image Quality option */
+"Send original size, increased quality images"="Send original size, increased quality images";
 /* Setting title for Doc scan view */
 "Save Settings"="Save Settings";
 /* file type title, used in changing the export format of scaned doc */
