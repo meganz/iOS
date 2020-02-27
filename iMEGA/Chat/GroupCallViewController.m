@@ -1096,8 +1096,7 @@
                         [self destroyChatSession:chatSession];
                         break;
                         
-                    case MEGAChatSessionStatusInvalid:
-                        MEGALogDebug(@"MEGAChatSessionStatusInvalid");
+                    default:
                         break;
                 }
             }
