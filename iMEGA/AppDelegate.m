@@ -1719,10 +1719,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 - (void)onChatInitStateUpdate:(MEGAChatSdk *)api newState:(MEGAChatInit)newState {
     MEGALogInfo(@"onChatInitStateUpdate new state: %td", newState);
     if (newState == MEGAChatInitError) {
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:@"Chat disabled (Init error). Enable chat in More -> Settings -> Chat" preferredStyle:UIAlertControllerStyleAlert];
-        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
         [[MEGASdkManager sharedMEGAChatSdk] logout];
-        [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
     }
     if (newState == MEGAChatInitOnlineSession) {
         [self copyDatabasesForExtensions];

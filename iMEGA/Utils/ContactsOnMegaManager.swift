@@ -19,6 +19,7 @@ struct ContactOnMega: Codable {
     var state = ContactsOnMegaState.unknown
     var contactsOnMega = [ContactOnMega]()
     var deviceContactsChunked = [[[String:String]]]()
+    var contactsOnMegaDictionary = [UInt64:String]()
 
     var completionWhenReady : (() -> Void)?
 
@@ -98,7 +99,9 @@ struct ContactOnMega: Codable {
             contactsOnMega.removeAll()
             UserDefaults.standard.removeObject(forKey: "ContactsOnMega")
             
-            getDeviceContacts()
+            DispatchQueue.global(qos: .background).async {
+                self.getDeviceContacts()
+            }
         } else {
             MEGALogDebug("Device Contact Permission not granted")
         }
@@ -143,8 +146,6 @@ struct ContactOnMega: Codable {
     }
     
     private func getContactsOnMega() {
-        var contactsOnMegaDictionary = [UInt64:String]()
-
         let getRegisteredContactsDelegate = MEGAGenericRequestDelegate.init { (request, error) in
             if error.type == .apiOk {
                 request.stringTableArray.forEach({ (contactOnMega) in
@@ -152,7 +153,7 @@ struct ContactOnMega: Codable {
                     guard let deviceContacts = self.deviceContactsChunked.first else { return }
                     for deviceContact in deviceContacts {
                         if let contactName = deviceContact[contactOnMega[0]] { //Get contactOnMega device name and save it to fetch email later
-                            contactsOnMegaDictionary[userHandle] = contactName
+                            self.contactsOnMegaDictionary[userHandle] = contactName
                             break
                         }
                     }
@@ -167,7 +168,7 @@ struct ContactOnMega: Codable {
             }
 
             if self.deviceContactsChunked.count == 0 {
-                self.fetchContactsOnMegaEmails(contactsOnMegaDictionary)
+                self.fetchContactsOnMegaEmails(self.contactsOnMegaDictionary)
             } else {
                 self.getContactsOnMega()
             }
@@ -197,6 +198,7 @@ struct ContactOnMega: Codable {
     }
     
     private func contactsFetched() {
+        UserDefaults.standard.set(Date(), forKey: "lastDateContactsOnMegaRequested")
         self.state = .ready
         guard let completion = completionWhenReady else { return }
         completion()
@@ -205,8 +207,6 @@ struct ContactOnMega: Codable {
     
     private func persistContactsOnMega() {
         UserDefaults.standard.setStructArray(contactsOnMega, forKey: "ContactsOnMega")
-        UserDefaults.standard.set(Date(), forKey: "lastDateContactsOnMegaRequested")
-
         contactsFetched()
     }
 }
