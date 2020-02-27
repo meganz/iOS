@@ -510,6 +510,7 @@
 		837A88C520B45C11007B55D1 /* SendToViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 837A88C420B45C11007B55D1 /* SendToViewController.m */; };
 		837C4F88235DFFA600FFE177 /* VerifyEmail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 837C4F87235DFFA600FFE177 /* VerifyEmail.storyboard */; };
 		837C4F8A235DFFBA00FFE177 /* VerifyEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837C4F89235DFFBA00FFE177 /* VerifyEmailViewController.swift */; };
+		838633A623FED61D00CDB6A5 /* CustomModalAlertViewController+TwoFactorAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838633A523FED61D00CDB6A5 /* CustomModalAlertViewController+TwoFactorAuthentication.swift */; };
 		8394CFA3211AE24100A1634A /* GroupCallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8394CFA2211AE24100A1634A /* GroupCallViewController.m */; };
 		8394CFB8211B1AFD00A1634A /* GroupCallCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8394CFB7211B1AFD00A1634A /* GroupCallCollectionViewCell.m */; };
 		839D5A9721C25A7D00FAE757 /* GridFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 839D5A9621C25A7D00FAE757 /* GridFlowLayout.m */; };
@@ -1803,6 +1804,7 @@
 		837A88C420B45C11007B55D1 /* SendToViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = SendToViewController.m; path = Chat/SendToViewController.m; sourceTree = "<group>"; };
 		837C4F87235DFFA600FFE177 /* VerifyEmail.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = VerifyEmail.storyboard; sourceTree = "<group>"; };
 		837C4F89235DFFBA00FFE177 /* VerifyEmailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyEmailViewController.swift; sourceTree = "<group>"; };
+		838633A523FED61D00CDB6A5 /* CustomModalAlertViewController+TwoFactorAuthentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomModalAlertViewController+TwoFactorAuthentication.swift"; sourceTree = "<group>"; };
 		8394CFA1211AE24100A1634A /* GroupCallViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GroupCallViewController.h; path = Chat/GroupCallViewController.h; sourceTree = "<group>"; };
 		8394CFA2211AE24100A1634A /* GroupCallViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = GroupCallViewController.m; path = Chat/GroupCallViewController.m; sourceTree = "<group>"; };
 		8394CFA4211AE5B700A1634A /* CallType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CallType.h; sourceTree = "<group>"; };
@@ -4419,6 +4421,7 @@
 				5B134B8E1F86260A000E367E /* HelpModalViewController.xib */,
 				83747B1E20ADD16C00BC1AED /* MEGAQLPreviewController.h */,
 				83747B1D20ADD16C00BC1AED /* MEGAQLPreviewController.m */,
+				838633A523FED61D00CDB6A5 /* CustomModalAlertViewController+TwoFactorAuthentication.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -6225,6 +6228,7 @@
 				415226951A692ECC00EC7BB6 /* MainTabBarController.m in Sources */,
 				41DC6F721D54E7080081832C /* NSFileManager+MNZCategory.m in Sources */,
 				41D21E5F1D01AEC3002E6296 /* CTAssetPlayButton.m in Sources */,
+				838633A623FED61D00CDB6A5 /* CustomModalAlertViewController+TwoFactorAuthentication.swift in Sources */,
 				A86B9F5E2316D6AB00F35E7A /* FLEXGlobalsTableViewController.m in Sources */,
 				8394CFB8211B1AFD00A1634A /* GroupCallCollectionViewCell.m in Sources */,
 				A89629781FACEAF800F02F7A /* MEGAProviderDelegate.m in Sources */,
@@ -6772,7 +6776,7 @@
 				CODE_SIGN_ENTITLEMENTS = MEGA.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 184;
+				CURRENT_PROJECT_VERSION = 185;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				ENABLE_BITCODE = NO;
@@ -6805,7 +6809,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 4.9;
+				MARKETING_VERSION = 4.9.1;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios;
 				PRODUCT_NAME = MEGA;
@@ -6829,7 +6833,7 @@
 				CODE_SIGN_ENTITLEMENTS = MEGA.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 184;
+				CURRENT_PROJECT_VERSION = 185;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -6859,7 +6863,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 4.9;
+				MARKETING_VERSION = 4.9.1;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios;
 				PRODUCT_NAME = MEGA;
@@ -6975,7 +6979,7 @@
 				CODE_SIGN_ENTITLEMENTS = iMEGA/Extensions/MEGAPickerFileProvider/MEGAPickerFileProvider.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 184;
+				CURRENT_PROJECT_VERSION = 185;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				GCC_PREFIX_HEADER = "iMEGA/Extensions/MEGAPickerFileProvider/MEGAPickerFileProvider-PrefixHeader.pch";
@@ -6994,7 +6998,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 4.9;
+				MARKETING_VERSION = 4.9.1;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPickerFileProvider;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -7013,7 +7017,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 184;
+				CURRENT_PROJECT_VERSION = 185;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				GCC_PREFIX_HEADER = "iMEGA/Extensions/MEGAPickerFileProvider/MEGAPickerFileProvider-PrefixHeader.pch";
@@ -7032,7 +7036,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 4.9;
+				MARKETING_VERSION = 4.9.1;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPickerFileProvider;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -7051,7 +7055,7 @@
 				CODE_SIGN_ENTITLEMENTS = iMEGA/Extensions/MEGAPicker/MEGAPicker.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 184;
+				CURRENT_PROJECT_VERSION = 185;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -7080,7 +7084,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 4.9;
+				MARKETING_VERSION = 4.9.1;
 				OTHER_CFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -7101,7 +7105,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 184;
+				CURRENT_PROJECT_VERSION = 185;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -7128,7 +7132,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 4.9;
+				MARKETING_VERSION = 4.9.1;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -7146,7 +7150,7 @@
 				CODE_SIGN_ENTITLEMENTS = iMEGA/Extensions/MEGAShare/MEGAShare.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 184;
+				CURRENT_PROJECT_VERSION = 185;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -7175,7 +7179,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 4.9;
+				MARKETING_VERSION = 4.9.1;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAShare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -7194,7 +7198,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 184;
+				CURRENT_PROJECT_VERSION = 185;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -7221,7 +7225,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 4.9;
+				MARKETING_VERSION = 4.9.1;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAShare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
