@@ -3,6 +3,7 @@
 #define MEGANotifications_Bridging_Header_h
 
 #import "SAMKeychain.h"
+#import "LocalizationSystem.h"
 
 #import "MEGAChatGenericRequestDelegate.h"
 #import "MEGAConstants.h"

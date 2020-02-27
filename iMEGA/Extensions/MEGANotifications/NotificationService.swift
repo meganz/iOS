@@ -120,8 +120,8 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         }
         
         if let errorString = error {
-            print(errorString)
-            bestAttemptContent.body = NSLocalizedString("You may have new messages", comment: "Content of the notification when there is unknown activity on the Chat")
+            MEGALogError(errorString)
+            bestAttemptContent.body = AMLocalizedString("You may have new messages", "Content of the notification when there is unknown activity on the Chat")
             bestAttemptContent.sound = nil
         }
         
@@ -160,25 +160,25 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         let fileManager = FileManager.default
         
         guard let applicationSupportDirectoryURL = try? fileManager.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true) else {
-            print("Failed to locate/create .applicationSupportDirectory.")
+            MEGALogError("Failed to locate/create .applicationSupportDirectory.")
             return
         }
         
         guard let groupContainerURL = fileManager.containerURL(forSecurityApplicationGroupIdentifier: MEGAGroupIdentifier) else {
-            print("No groupContainerURL")
+            MEGALogError("No groupContainerURL")
             return
         }
         
         let groupSupportURL = groupContainerURL.appendingPathComponent(MEGAExtensionGroupSupportFolder)
         if !fileManager.fileExists(atPath: groupSupportURL.path) {
-            print("No groupSupportURL")
+            MEGALogError("No groupSupportURL")
             return
         }
         
         guard let incomingDate = try? newestMegaclientModificationDateForDirectory(at: groupSupportURL),
             let extensionDate = try? newestMegaclientModificationDateForDirectory(at: applicationSupportDirectoryURL)
             else {
-                print("Exception in newestMegaclientModificationDateForDirectory")
+                MEGALogError("Exception in newestMegaclientModificationDateForDirectory")
                 return
         }
         
@@ -189,7 +189,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         guard let applicationSupportContent = try? fileManager.contentsOfDirectory(atPath: applicationSupportDirectoryURL.path),
             let groupSupportPathContent = try? fileManager.contentsOfDirectory(atPath: groupSupportURL.path)
             else {
-                print("Error enumerating groupSupportPathContent")
+                MEGALogError("Error enumerating groupSupportPathContent")
                 return
         }
         
@@ -207,7 +207,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
                 do {
                     try fileManager.copyItem(at: sourceURL, to: destinationURL)
                 } catch {
-                    print("Copy item at path failed with error: \(error)")
+                    MEGALogError("Copy item at path failed with error: \(error)")
                 }
             }
         }
@@ -260,7 +260,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
     static func loginToMEGA() {
         let loginDelegate = MEGAGenericRequestDelegate { (request, error) in
             if error.type != .apiOk {
-                print("Login error \(error)")
+                MEGALogError("Login error \(error)")
                 return
             }
             
@@ -273,7 +273,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
     
     func onChatNotification(_ api: MEGAChatSdk, chatId: UInt64, message: MEGAChatMessage) {
         if chatId != self.chatId || message.messageId != self.msgId {
-            print("onChatNotification for a different message")
+            MEGALogWarning("onChatNotification for a different message")
             return
         }
         
