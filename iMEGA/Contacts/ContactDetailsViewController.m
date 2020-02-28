@@ -533,7 +533,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
     callVC.videoCall = videoCall;
     callVC.callType = active ? CallTypeActive : CallTypeOutgoing;
     callVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-    callVC.megaCallManager = [(AppDelegate *)UIApplication.sharedApplication.delegate megaCallManager];
+    callVC.megaCallManager = ((AppDelegate *)UIApplication.sharedApplication.delegate).megaCallManager;
     [self presentViewController:callVC animated:YES completion:nil];
 }
 

@@ -71,7 +71,7 @@
 
 - (void)addCallWithCallId:(uint64_t)callId uuid:(NSUUID *)uuid {
     MEGALogDebug(@"[CallKit] Add call with callid %@ and uuid %@", [MEGASdk base64HandleForUserHandle:callId], uuid);
-    [self.callsDictionary setObject:@(callId) forKey:uuid];
+    self.callsDictionary[uuid] = @(callId);
     [self printAllCalls];
 }
 
