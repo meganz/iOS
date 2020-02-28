@@ -596,8 +596,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
         return;
     }
     
-    MEGAHandleList *chatRoomIDsWithCallInProgress = [MEGASdkManager.sharedMEGAChatSdk chatCallsWithState:MEGAChatCallStatusInProgress];
-    if (chatRoomIDsWithCallInProgress.size > 0) {
+    if (MEGASdkManager.sharedMEGAChatSdk.mnz_existsActiveCall) {
         self.callButton.enabled = self.videoCallButton.enabled = NO;
         return;
     }
@@ -800,8 +799,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
 }
 
 - (IBAction)startAudioVideoCallTouchUpInside:(UIButton *)sender {
-    MEGAHandleList *chatRoomIDsWithCallInProgress = [MEGASdkManager.sharedMEGAChatSdk chatCallsWithState:MEGAChatCallStatusInProgress];
-    if (chatRoomIDsWithCallInProgress.size == 0) {
+    if (!MEGASdkManager.sharedMEGAChatSdk.mnz_existsActiveCall) {
         [DevicePermissionsHelper audioPermissionModal:YES forIncomingCall:NO withCompletionHandler:^(BOOL granted) {
             if (granted) {
                 if (sender.tag) {

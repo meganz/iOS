@@ -6,6 +6,8 @@
 #pragma mark - Lifecycle
 
 - (void)viewDidLoad {
+    [super viewDidLoad];
+    
     __weak MEGANavigationController *weakSelf = self;
     
     if ([self respondsToSelector:@selector(interactivePopGestureRecognizer)]) {

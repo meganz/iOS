@@ -14,7 +14,9 @@ extension AppDelegate {
             visibleViewController is UpgradeTableViewController ||
             visibleViewController is OnboardingViewController ||
             visibleViewController is UIAlertController ||
-            visibleViewController is VerifyEmailViewController { return }
+            visibleViewController is VerifyEmailViewController ||
+            visibleViewController is LoginViewController ||
+            visibleViewController is SFSafariViewController { return }
 
         if MEGASdkManager.sharedMEGASdk().smsAllowedState() != .optInAndUnblock { return }
         
@@ -30,6 +32,25 @@ extension AppDelegate {
         let addPhoneNumberController = UIStoryboard(name: "SMSVerification", bundle: nil).instantiateViewController(withIdentifier: "AddPhoneNumberViewControllerID")
         addPhoneNumberController.modalPresentationStyle = .fullScreen
         UIApplication.mnz_presentingViewController()?.present(addPhoneNumberController, animated: true, completion: nil)
+    }
+    
+    @objc func showEnableTwoFactorAuthenticationIfNeeded() {
+        if UserDefaults.standard.bool(forKey: "twoFactorAuthenticationAlreadySuggested") {
+            return
+        }
+        
+        MEGASdkManager.sharedMEGASdk().multiFactorAuthCheck(withEmail: MEGASdkManager.sharedMEGASdk().myEmail ?? "", delegate: MEGAGenericRequestDelegate.init(completion: { (request, error) in
+            if request.flag {
+                return //Two Factor Authentication Enabled
+            }
+            
+            let enable2FACustomModalAlert = CustomModalAlertViewController()
+            enable2FACustomModalAlert.configureForTwoFactorAuthentication(requestedByUser: false)
+
+            UIApplication.mnz_presentingViewController()?.present(enable2FACustomModalAlert, animated: true, completion: nil)
+            
+            UserDefaults.standard.set(true, forKey: "twoFactorAuthenticationAlreadySuggested")
+        }))
     }
     
     @objc func fetchContactsNickname() {
@@ -97,4 +118,3 @@ extension AppDelegate {
         }
     }
 }
-

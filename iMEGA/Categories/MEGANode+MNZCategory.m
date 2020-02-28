@@ -34,6 +34,7 @@
 #import "PreviewDocumentViewController.h"
 #import "SharedItemsViewController.h"
 #import "SendToViewController.h"
+#import "MEGA-Swift.h"
 
 @implementation MEGANode (MNZCategory)
 
@@ -91,8 +92,7 @@
 }
 
 - (void)mnz_openNodeInNavigationController:(UINavigationController *)navigationController folderLink:(BOOL)isFolderLink {
-    MEGAHandleList *chatRoomIDsWithCallInProgress = [MEGASdkManager.sharedMEGAChatSdk chatCallsWithState:MEGAChatCallStatusInProgress];
-    if (self.name.mnz_isMultimediaPathExtension && chatRoomIDsWithCallInProgress.size > 0) {
+    if (self.name.mnz_isMultimediaPathExtension && MEGASdkManager.sharedMEGAChatSdk.mnz_existsActiveCall) {
         [Helper cannotPlayContentDuringACallAlert];
     } else {
         UIViewController *viewController = [self mnz_viewControllerForNodeInFolderLink:isFolderLink];

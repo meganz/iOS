@@ -302,8 +302,13 @@
                 MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"TwoFactorAuthentication" bundle:nil] instantiateViewControllerWithIdentifier:@"EnabledTwoFactorAuthenticationNavigationControllerID"];
                 
                 [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:nil];
-                
-                [self.navigationController popToViewController:self.navigationController.viewControllers[3] animated:YES];
+
+                //Go back to the enable Two-Factor Authentication view or to the Cloud Drive
+                if (self.navigationController.viewControllers.count > 3) {
+                    [self.navigationController popToViewController:self.navigationController.viewControllers[3] animated:YES];
+                } else {
+                    [self.navigationController popToRootViewControllerAnimated:YES];
+                }
             } else {
                 UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"twoFactorAuthenticationDisabled", @"A message on a dialog to say that 2FA has been successfully disabled.") message:nil preferredStyle:UIAlertControllerStyleAlert];
                 

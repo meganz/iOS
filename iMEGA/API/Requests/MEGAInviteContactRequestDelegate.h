@@ -6,7 +6,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface MEGAInviteContactRequestDelegate : MEGABaseRequestDelegate
 
 - (instancetype)initWithNumberOfRequests:(NSUInteger)numberOfRequests;
-- (instancetype)initWithNumberOfRequests:(NSUInteger)numberOfRequests presentSuccessOver:(UIViewController *)viewController completion:(void (^)(void))completion;
+- (instancetype)initWithNumberOfRequests:(NSUInteger)numberOfRequests presentSuccessOver:(UIViewController *)viewController completion:(void (^ _Nullable)(void))completion;
 
 @end
 

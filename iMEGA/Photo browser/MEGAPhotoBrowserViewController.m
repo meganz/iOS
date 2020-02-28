@@ -11,6 +11,7 @@
 #import "Helper.h"
 #import "MainTabBarController.h"
 #import "MEGAActivityItemProvider.h"
+#import "CopyrightWarningViewController.h"
 #import "MEGAGetPreviewRequestDelegate.h"
 #import "MEGAGetThumbnailRequestDelegate.h"
 #import "MEGANavigationController.h"
@@ -27,6 +28,7 @@
 #import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
 #import "UIDevice+MNZCategory.h"
+#import "MEGA-Swift.h"
 
 static const CGFloat GapBetweenPages = 10.0;
 
@@ -637,6 +639,10 @@ static const CGFloat GapBetweenPages = 10.0;
 
 - (IBAction)didPressActionsButton:(UIBarButtonItem *)sender {
     CustomActionViewController *actionController = [[CustomActionViewController alloc] init];
+    MEGANode *node = [MEGASdkManager.sharedMEGASdk nodeForHandle:[self.mediaNodes objectAtIndex:self.currentIndex].handle];
+    if (node) {
+        [self.mediaNodes setObject:node atIndexedSubscript:self.currentIndex];
+    }
     actionController.node = [self.mediaNodes objectAtIndex:self.currentIndex];
     actionController.actionDelegate = self;
     actionController.actionSender = sender;
@@ -820,8 +826,7 @@ static const CGFloat GapBetweenPages = 10.0;
 - (void)playVideo:(UIButton *)sender {
     MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
     if (node.mnz_isPlayable) {
-        MEGAHandleList *chatRoomIDsWithCallInProgress = [MEGASdkManager.sharedMEGAChatSdk chatCallsWithState:MEGAChatCallStatusInProgress];
-        if (chatRoomIDsWithCallInProgress.size > 0) {
+        if (MEGASdkManager.sharedMEGAChatSdk.mnz_existsActiveCall) {
             [Helper cannotPlayContentDuringACallAlert];
         } else {
             UIViewController *playerVC = [node mnz_viewControllerForNodeInFolderLink:(self.api == [MEGASdkManager sharedMEGASdkFolder])];
@@ -1037,6 +1042,22 @@ static const CGFloat GapBetweenPages = 10.0;
             
         case MegaNodeActionTypeSaveToPhotos:
             [node mnz_saveToPhotosWithApi:self.api];
+            break;
+            
+        case MegaNodeActionTypeGetLink:
+        case MegaNodeActionTypeManageLink: {
+            if (MEGAReachabilityManager.isReachableHUDIfNot) {
+                [CopyrightWarningViewController presentGetLinkViewControllerForNodes:@[node] inViewController:UIApplication.mnz_presentingViewController];
+            }
+            break;
+        }
+            
+        case MegaNodeActionTypeRemoveLink:
+            [node mnz_removeLink];
+            break;
+            
+        case MegaNodeActionTypeSendToChat:
+            [node mnz_sendToChatInViewController:self];
             break;
             
         default:

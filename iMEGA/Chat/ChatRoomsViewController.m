@@ -194,6 +194,15 @@
     }
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+
+    if (self.chatRoomsType == ChatRoomsTypeArchived) {
+        [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
+        [[MEGASdkManager sharedMEGAChatSdk] removeChatCallDelegate:self];
+    }
+}
+
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
@@ -215,11 +224,6 @@
             }
         }
     } completion:nil];
-}
-
-- (void)dealloc {
-    [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
-    [[MEGASdkManager sharedMEGAChatSdk] removeChatCallDelegate:self];
 }
 
 #pragma mark - DZNEmptyDataSetSource
@@ -244,24 +248,24 @@
 - (void)emptyDataSetWillAppear:(UIScrollView *)scrollView {
     if (!self.searchController.active) {
         self.searchController.searchBar.hidden = YES;
+        self.archivedChatListItemList = MEGASdkManager.sharedMEGAChatSdk.archivedChatListItems;
         if (self.archivedChatListItemList.size) {
             self.archivedChatEmptyStateTitle.text = AMLocalizedString(@"archivedChats", @"Title of archived chats button");
             self.archivedChatEmptyStateCount.text = [NSString stringWithFormat:@"%tu", self.archivedChatListItemList.size];
             self.archivedChatEmptyState.hidden = NO;
         }
-    }
-    
-    if (self.chatRoomsType == ChatRoomsTypeDefault) {
-        if ([CNContactStore authorizationStatusForEntityType:CNEntityTypeContacts] == CNAuthorizationStatusAuthorized) {
-            if (self.contactsOnMegaCount) {//[X] contacts found on MEGA
-                self.contactsOnMegaEmptyStateTitle.text = self.contactsOnMegaCount == 1 ? AMLocalizedString(@"1 contact found on MEGA", @"Title showing the user one of his contacts are using MEGA") : [AMLocalizedString(@"[X] contacts found on MEGA", @"Title showing the user how many of his contacts are using MEGA") stringByReplacingOccurrencesOfString:@"[X]" withString:[NSString stringWithFormat:@"%tu", self.contactsOnMegaCount]];
+        if (self.chatRoomsType == ChatRoomsTypeDefault) {
+            if ([CNContactStore authorizationStatusForEntityType:CNEntityTypeContacts] == CNAuthorizationStatusAuthorized) {
+                if (self.contactsOnMegaCount) {//[X] contacts found on MEGA
+                    self.contactsOnMegaEmptyStateTitle.text = self.contactsOnMegaCount == 1 ? AMLocalizedString(@"1 contact found on MEGA", @"Title showing the user one of his contacts are using MEGA") : [AMLocalizedString(@"[X] contacts found on MEGA", @"Title showing the user how many of his contacts are using MEGA") stringByReplacingOccurrencesOfString:@"[X]" withString:[NSString stringWithFormat:@"%tu", self.contactsOnMegaCount]];
+                } else {
+                    self.contactsOnMegaEmptyStateTitle.text = AMLocalizedString(@"Invite contact now", @"Text emncouraging the user to add contacts in MEGA");
+                }
+                self.contactsOnMegaEmptyStateView.hidden = NO;
             } else {
-                self.contactsOnMegaEmptyStateTitle.text = AMLocalizedString(@"Invite contact now", @"Text emncouraging the user to add contacts in MEGA");
+                self.contactsOnMegaEmptyStateTitle.text = AMLocalizedString(@"See who's already on MEGA", @"Title encouraging the user to check who of its contacts are using MEGA");
+                self.contactsOnMegaEmptyStateView.hidden = NO;
             }
-            self.contactsOnMegaEmptyStateView.hidden = NO;
-        } else {
-            self.contactsOnMegaEmptyStateTitle.text = AMLocalizedString(@"See who's already on MEGA", @"Title encouraging the user to check who of its contacts are using MEGA");
-            self.contactsOnMegaEmptyStateView.hidden = NO;
         }
     }
 }
@@ -270,9 +274,8 @@
     if (!self.searchController.active) {
         self.searchController.searchBar.hidden = NO;
         if (!self.archivedChatEmptyState.hidden) {
-            self.archivedChatEmptyState.hidden  = YES;
+            self.archivedChatEmptyState.hidden = YES;
         }
-        
         if (!self.contactsOnMegaEmptyStateView.hidden) {
             self.contactsOnMegaEmptyStateView.hidden = YES;
         }
@@ -614,6 +617,7 @@
     self.chatListItemList = self.chatRoomsType == ChatRoomsTypeDefault ? [[MEGASdkManager sharedMEGAChatSdk] chatListItems] : [[MEGASdkManager sharedMEGAChatSdk] archivedChatListItems];
     self.archivedChatListItemList = [[MEGASdkManager sharedMEGAChatSdk] archivedChatListItems];
     [self reorderList];
+    [self updateChatIdIndexPathDictionary];
     [self.tableView reloadData];
 }
 
@@ -782,24 +786,30 @@
 #pragma mark - IBActions
 
 - (IBAction)joinActiveCall:(id)sender {
-    [self.timer invalidate];
-    if (self.chatRoomOnGoingCall.isGroup) {
-        GroupCallViewController *groupCallVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupCallViewControllerID"];
-        groupCallVC.callType = CallTypeActive;
-        groupCallVC.videoCall = NO;
-        groupCallVC.chatRoom = self.chatRoomOnGoingCall;
-        groupCallVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-        groupCallVC.megaCallManager = [(MainTabBarController *)UIApplication.sharedApplication.keyWindow.rootViewController megaCallManager];
-        [self presentViewController:groupCallVC animated:YES completion:nil];
-    } else {
-        CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
-        callVC.chatRoom = self.chatRoomOnGoingCall;
-        callVC.videoCall = NO;
-        callVC.callType = CallTypeActive;
-        callVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-        callVC.megaCallManager = [(MainTabBarController *)UIApplication.sharedApplication.keyWindow.rootViewController megaCallManager];
-        [self presentViewController:callVC animated:YES completion:nil];
-    }
+    [DevicePermissionsHelper audioPermissionModal:YES forIncomingCall:NO withCompletionHandler:^(BOOL granted) {
+        if (granted) {
+            [self.timer invalidate];
+            if (self.chatRoomOnGoingCall.isGroup) {
+                GroupCallViewController *groupCallVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupCallViewControllerID"];
+                groupCallVC.callType = CallTypeActive;
+                groupCallVC.videoCall = NO;
+                groupCallVC.chatRoom = self.chatRoomOnGoingCall;
+                groupCallVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+                groupCallVC.megaCallManager = [(MainTabBarController *)UIApplication.sharedApplication.keyWindow.rootViewController megaCallManager];
+                [self presentViewController:groupCallVC animated:YES completion:nil];
+            } else {
+                CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
+                callVC.chatRoom = self.chatRoomOnGoingCall;
+                callVC.videoCall = NO;
+                callVC.callType = CallTypeActive;
+                callVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+                callVC.megaCallManager = [(MainTabBarController *)UIApplication.sharedApplication.keyWindow.rootViewController megaCallManager];
+                [self presentViewController:callVC animated:YES completion:nil];
+            }
+        } else {
+            [DevicePermissionsHelper alertAudioPermissionForIncomingCall:NO];
+        }
+    }];
 }
 
 - (IBAction)openArchivedChats:(id)sender {
