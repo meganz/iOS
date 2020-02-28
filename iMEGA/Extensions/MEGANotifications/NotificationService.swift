@@ -124,6 +124,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         }
         
         // Note: As soon as we call the contentHandler, no content can be retrieved from notification center.
+        bestAttemptContent.badge = MEGASdkManager.sharedMEGAChatSdk()?.unreadChats as NSNumber?
         contentHandler(bestAttemptContent)
     }
     
