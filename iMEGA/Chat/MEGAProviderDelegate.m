@@ -368,15 +368,15 @@
             
         case MEGAChatCallStatusRingIn: {
             if (![self.missedCallsDictionary objectForKey:@(call.chatId)]) {
-                [self.missedCallsDictionary setObject:call forKey:@(call.chatId)];
+                self.missedCallsDictionary[@(call.chatId)] = call;
                 [DevicePermissionsHelper audioPermissionModal:YES forIncomingCall:YES withCompletionHandler:^(BOOL granted) {
                     if (granted) {
                         if (call.hasVideoInitialCall) {
                             [DevicePermissionsHelper videoPermissionWithCompletionHandler:^(BOOL granted) {
-                                [self reportIncomingCallOrUpdate:call];;
+                                [self reportIncomingCallOrUpdate:call];
                             }];
                         } else {
-                            [self reportIncomingCallOrUpdate:call];;
+                            [self reportIncomingCallOrUpdate:call];
                         }
                     } else {
                         [DevicePermissionsHelper alertAudioPermissionForIncomingCall:YES];
