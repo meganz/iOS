@@ -41,13 +41,12 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
             return
         } else {
             MEGASdkManager.sharedMEGAChatSdk()?.add(self as MEGAChatNotificationDelegate)
-            let delegate = MEGAChatGenericRequestDelegate { [weak self] (request, error) in
+            MEGASdkManager.sharedMEGAChatSdk()?.pushReceived(withBeep: true, chatId: chatId, delegate: MEGAChatGenericRequestDelegate { [weak self] request, error in
                 if error.type != .MEGAChatErrorTypeOk {
-                    self!.postNotification(withError: "Error in pushReceived \(error)")
+                    self?.postNotification(withError: "Error in pushReceived \(error)")
                     return
                 }
-            }
-            MEGASdkManager.sharedMEGAChatSdk()?.pushReceived(withBeep: true, chatId: chatId, delegate: delegate)
+            })
         }
     }
     
@@ -60,7 +59,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         }
     }
     
-    // MARK: Private
+    // MARK: - Private
     
     func generateNotification(with message: MEGAChatMessage, immediately: Bool) -> Bool {
         guard let chatRoom = MEGASdkManager.sharedMEGAChatSdk()?.chatRoom(forChatId: chatId) else {
@@ -96,13 +95,12 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
                 return true
             }
             
-            let delegate = MEGAGenericRequestDelegate { (request, error) in
+            MEGASdkManager.sharedMEGASdk()?.getThumbnailNode(node, destinationFilePath: destinationFilePath, delegate: MEGAGenericRequestDelegate { [weak self] request, error in
                 if let notificationAttachment = notificationManager.notificationAttachment(for: request.file, withIdentifier: node.base64Handle) {
-                    self.bestAttemptContent?.attachments = [notificationAttachment]
-                    self.postNotification(withError: nil)
+                    self?.bestAttemptContent?.attachments = [notificationAttachment]
+                    self?.postNotification(withError: nil)
                 }
-            }
-            MEGASdkManager.sharedMEGASdk()?.getThumbnailNode(node, destinationFilePath: destinationFilePath, delegate: delegate)
+            })
             return false
         }
         
@@ -142,7 +140,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         }
     }
 
-    // MARK: Lean init, login and connect
+    // MARK: - Lean init, login and connect
     
     static func initExtensionProcess() {
         guard let tempSession = SAMKeychain.password(forService: "MEGA", account: "sessionV3") else {
@@ -258,18 +256,17 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
     }
     
     static func loginToMEGA() {
-        let loginDelegate = MEGAGenericRequestDelegate { (request, error) in
+        MEGASdkManager.sharedMEGASdk()?.fastLogin(withSession: session, delegate: MEGAGenericRequestDelegate { request, error in
             if error.type != .apiOk {
                 MEGALogError("Login error \(error)")
                 return
             }
             
             MEGASdkManager.sharedMEGAChatSdk()?.connectInBackground()
-        }
-        MEGASdkManager.sharedMEGASdk()?.fastLogin(withSession: session, delegate: loginDelegate)
+        })
     }
     
-    // MARK: MEGAChatNotificationDelegate
+    // MARK: - MEGAChatNotificationDelegate
     
     func onChatNotification(_ api: MEGAChatSdk, chatId: UInt64, message: MEGAChatMessage) {
         if chatId != self.chatId || message.messageId != self.msgId {
