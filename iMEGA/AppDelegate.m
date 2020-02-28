@@ -1181,13 +1181,13 @@ void uncaughtExceptionHandler(NSException *exception) {
     MEGALogDebug(@"Did receive incoming push with payload: %@", [payload dictionaryPayload]);
     
     // Call
-    if ([[payload.dictionaryPayload objectForKey:@"megatype"] integerValue] == 4) {
+    if ([payload.dictionaryPayload[@"megatype"] integerValue] == 4) {
         if (self.megaProviderDelegate == nil) {            
             _megaCallManager = MEGACallManager.new;
             _megaProviderDelegate = [MEGAProviderDelegate.alloc initWithMEGACallManager:self.megaCallManager];
         }
-        NSString *chatIdB64 = [[payload.dictionaryPayload objectForKey:@"megadata"] objectForKey:@"chatid"];
-        NSString *callIdB64 = [[payload.dictionaryPayload objectForKey:@"megadata"] objectForKey:@"callid"];
+        NSString *chatIdB64 = payload.dictionaryPayload[@"megadata"][@"chatid"];
+        NSString *callIdB64 = payload.dictionaryPayload[@"megadata"][@"callid"];
         uint64_t chatId = [MEGASdk handleForBase64UserHandle:chatIdB64];
         uint64_t callId = [MEGASdk handleForBase64UserHandle:callIdB64];
         
