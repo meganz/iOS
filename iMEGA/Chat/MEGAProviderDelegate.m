@@ -20,7 +20,7 @@
 
 @interface MEGAProviderDelegate () <MEGAChatCallDelegate>
 
-@property (nonatomic, copy) MEGACallManager *megaCallManager;
+@property (nonatomic, strong) MEGACallManager *megaCallManager;
 @property (nonatomic, strong) CXProvider *provider;
 
 @property (strong, nonatomic) AVAudioPlayer *player;
@@ -52,8 +52,8 @@
     
     [MEGASdkManager.sharedMEGAChatSdk addChatCallDelegate:self];
     
-    _missedCallsDictionary = NSMutableDictionary.new;
-    _currentNotifications = NSMutableArray.new;
+    self.missedCallsDictionary = NSMutableDictionary.new;
+    self.currentNotifications = NSMutableArray.new;
     
     return self;
 }
