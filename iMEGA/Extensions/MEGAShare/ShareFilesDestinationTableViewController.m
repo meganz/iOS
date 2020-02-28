@@ -140,7 +140,7 @@
                 cell.accessoryView = activityIndicator;
             }
         }
-    } else if (indexPath.section == 1) {
+    } else {
         cell = [self.tableView dequeueReusableCellWithIdentifier:@"fileCell" forIndexPath:indexPath];
         if (!cell) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"fileCell"];

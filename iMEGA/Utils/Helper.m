@@ -927,7 +927,7 @@ static MEGAIndexer *indexer;
     return activityVC;
 }
 
-+ (UIActivityViewController *)activityViewControllerForNodes:(NSArray *)nodesArray sender:(id)sender {
++ (UIActivityViewController *)activityViewControllerForNodes:(NSArray *)nodesArray sender:(id _Nullable)sender {
     NSMutableArray *activityItemsMutableArray = [[NSMutableArray alloc] init];
     NSMutableArray *activitiesMutableArray = [[NSMutableArray alloc] init];
     
@@ -1227,7 +1227,7 @@ static MEGAIndexer *indexer;
         }
     }
     
-    [MEGAStore.shareInstance.storeStack deleteStoreWithError:nil];
+    [MEGAStore.shareInstance.storeStack deleteStore];
     
     // Delete files saved by extensions
     NSString *extensionGroup = [NSFileManager.defaultManager containerURLForSecurityApplicationGroupIdentifier:MEGAGroupIdentifier].path;
@@ -1270,7 +1270,8 @@ static MEGAIndexer *indexer;
     [NSUserDefaults.standardUserDefaults removeObjectForKey:@"lastDateAddPhoneNumberShowed"];
     [NSUserDefaults.standardUserDefaults removeObjectForKey:@"ContactsOnMega"];
     [NSUserDefaults.standardUserDefaults removeObjectForKey:@"lastDateContactsOnMegaRequested"];
-    
+    [NSUserDefaults.standardUserDefaults removeObjectForKey:@"twoFactorAuthenticationAlreadySuggested"];
+
     [[NSUserDefaults standardUserDefaults] synchronize];
 
     NSUserDefaults *sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];
@@ -1291,7 +1292,7 @@ static MEGAIndexer *indexer;
     }
 }
 
-+ (void)showExportMasterKeyInView:(UIViewController *)viewController completion:(void (^ __nullable)(void))completion {
++ (void)showExportMasterKeyInView:(UIViewController *)viewController completion:(void (^ _Nullable)(void))completion {
     NSString *documentsDirectory = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
     NSString *masterKeyFilePath = [documentsDirectory stringByAppendingPathComponent:@"RecoveryKey.txt"];
     
