@@ -343,8 +343,8 @@
                 }
             }
         }
-        NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"mnz_fullName" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
-        self.visibleUsersArray = [NSMutableArray arrayWithArray:[usersArray sortedArrayUsingDescriptors:@[sort]]];
+        
+        self.visibleUsersArray = [[usersArray sortedArrayUsingComparator:self.userSortComparator] mutableCopy];
     }
     
     [self.tableView reloadData];
@@ -372,6 +372,26 @@
         [self addSearchBarController];
     }
 }
+
+- (NSComparator)userSortComparator {
+    return ^NSComparisonResult(MEGAUser *a, MEGAUser *b) {
+        
+        NSString *aNickname = a.mnz_nickname;
+        NSString *bNickname = b.mnz_nickname;
+
+        if (aNickname == nil && bNickname != nil) {
+            return NSOrderedDescending;
+        } else if (bNickname == nil && aNickname != nil) {
+            return NSOrderedAscending;
+        }
+        
+        NSString *aUserName = (aNickname != nil && !aNickname.mnz_isEmpty) ? aNickname : a.mnz_fullName;
+        NSString *bUserName = (bNickname != nil && !bNickname.mnz_isEmpty) ? bNickname : b.mnz_fullName;
+
+        return [aUserName compare:bUserName options:NSCaseInsensitiveSearch];
+    };
+}
+
 
 - (void)internetConnectionChanged {
     BOOL boolValue = MEGAReachabilityManager.isReachable;
@@ -1795,7 +1815,11 @@
         if ([searchString isEqualToString:@""]) {
             [self.searchVisibleUsersArray removeAllObjects];
         } else {
-            NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"SELF.mnz_fullName contains[c] %@", searchString];
+            NSPredicate *fullnamePredicate = [NSPredicate predicateWithFormat:@"SELF.mnz_fullName contains[c] %@", searchString];
+            NSPredicate *nicknamePredicate = [NSPredicate predicateWithFormat:@"SELF.mnz_nickname contains[c] %@", searchString];
+            NSPredicate *emailPredicate = [NSPredicate predicateWithFormat:@"SELF.email contains[c] %@", searchString];
+            NSPredicate *resultPredicate = [NSCompoundPredicate orPredicateWithSubpredicates:@[fullnamePredicate, nicknamePredicate, emailPredicate]];
+
             self.searchVisibleUsersArray = [self.visibleUsersArray filteredArrayUsingPredicate:resultPredicate].mutableCopy;
         }
     }
