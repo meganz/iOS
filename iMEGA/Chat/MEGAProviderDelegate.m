@@ -447,7 +447,7 @@
                     UNMutableNotificationContent *content = [UNMutableNotificationContent new];
                     content.title = chatRoom.title;
                     content.body = notificationText;
-                    content.sound = [UNNotificationSound defaultSound];
+                    content.sound = UNNotificationSound.defaultSound;
                     content.userInfo = @{@"missedAudioCalls" : @(missedAudioCalls),
                                          @"missedVideoCalls" : @(missedVideoCalls),
                                          @"chatId" : @(call.chatId)

@@ -1183,8 +1183,8 @@ void uncaughtExceptionHandler(NSException *exception) {
     // Call
     if ([payload.dictionaryPayload[@"megatype"] integerValue] == 4) {
         if (self.megaProviderDelegate == nil) {            
-            _megaCallManager = MEGACallManager.new;
-            _megaProviderDelegate = [MEGAProviderDelegate.alloc initWithMEGACallManager:self.megaCallManager];
+            self.megaCallManager = MEGACallManager.new;
+            self.megaProviderDelegate = [MEGAProviderDelegate.alloc initWithMEGACallManager:self.megaCallManager];
         }
         NSString *chatIdB64 = payload.dictionaryPayload[@"megadata"][@"chatid"];
         NSString *callIdB64 = payload.dictionaryPayload[@"megadata"][@"callid"];
