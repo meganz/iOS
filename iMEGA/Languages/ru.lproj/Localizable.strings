@@ -146,6 +146,8 @@
 "emailAlreadyInUse"="Ошибка. Этот адрес уже используется.";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Нужно освободить больше места";
+/* Message shown when you try to downlonad files bigger than the available memory. */
+"MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device."="MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device.";
 /* Title for the file link view */
 "fileLink"="Ссылка на файл";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
@@ -629,7 +631,7 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="Политика конфиденциальности";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
-"termsOfServicesLabel"="условиями предоставления услуг";
+"termsOfServicesLabel"="Условия предоставления услуг";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
 "dataProtectionRegulationLabel"="Data Protection Regulation";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
@@ -684,6 +686,8 @@
 "Custom Settings"="Пользовательские настройки";
 /* Title to show when device local storage is full */
 "%@ Storage Full"="Хранилище %@ заполнено";
+/* Title to show when device local storage is almost full */
+"Device Storage Almost Full"="Device Storage Almost Full";
 /* Detail for local storage full situation */
 "You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="У вас недостаточно места для дальнейшей загрузки с камеры. Освободите место, удалив ненужные приложения, видео или музыку. Вы можете управлять хранилищем в %@";
 /* Navigation path for Storage settings in iOS */
@@ -2042,6 +2046,10 @@
 "Inactive chat"="Неактивный чат";
 /* Contact details screen: Set the alias(nickname) for a user */
 "Set Nickname"="Задать псевдоним";
+/* Contact details screen: Edit the alias(nickname) for a user */
+"Edit Nickname"="Edit Nickname";
+/* Edit nickname screen: Remove nickname button title */
+"Remove Nickname"="Remove Nickname";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
 "Alias/ Nickname"="Псевдоним / Никнейм";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
