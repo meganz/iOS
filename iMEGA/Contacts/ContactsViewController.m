@@ -379,12 +379,6 @@
         NSString *aNickname = a.mnz_nickname;
         NSString *bNickname = b.mnz_nickname;
 
-        if (aNickname == nil && bNickname != nil) {
-            return NSOrderedDescending;
-        } else if (bNickname == nil && aNickname != nil) {
-            return NSOrderedAscending;
-        }
-        
         NSString *aUserName = (aNickname != nil && !aNickname.mnz_isEmpty) ? aNickname : a.mnz_fullName;
         NSString *bUserName = (bNickname != nil && !bNickname.mnz_isEmpty) ? bNickname : b.mnz_fullName;
 
