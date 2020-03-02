@@ -181,6 +181,9 @@
         [Helper clearSession];
         [Helper deletePasscode];
         [[NSUserDefaults standardUserDefaults] setValue:@"1strun" forKey:kFirstRun];
+        if (@available(iOS 12.0, *)) {} else {
+            [NSUserDefaults.standardUserDefaults synchronize];
+        }
     }
     
     [self setupAppearance];
@@ -306,6 +309,10 @@
     if (self.backgroundTaskMutableDictionary.count == 0) {
         self.appSuspended = YES;
         MEGALogDebug(@"App suspended property = YES.");
+    }
+    
+    if (@available(iOS 12.0, *)) {} else {
+        [NSUserDefaults.standardUserDefaults synchronize];
     }
     
     if (self.privacyView == nil) {
