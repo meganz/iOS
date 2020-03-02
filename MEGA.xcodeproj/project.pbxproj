@@ -977,7 +977,7 @@
 		BF0BBEFE230627BE001FD542 /* UIViewController+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0BBEFD230627BE001FD542 /* UIViewController+MNZCategory.m */; };
 		BF1574AE2373AB8C0095B283 /* MEGAChatRoom+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1574AD2373AB8C0095B283 /* MEGAChatRoom+Additions.swift */; };
 		BF69E5172374F3720031913D /* AppDelegate+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF69E5162374F3720031913D /* AppDelegate+Additions.swift */; };
-		BFD23CCE236255A5005D4A1E /* AddNickNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD23CCD236255A5005D4A1E /* AddNickNameViewController.swift */; };
+		BFD23CCE236255A5005D4A1E /* NicknameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD23CCD236255A5005D4A1E /* NicknameViewController.swift */; };
 		BFE54778231F0F27007FB8F6 /* UIViewController+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0BBEFD230627BE001FD542 /* UIViewController+MNZCategory.m */; };
 		BFE54779231F0F29007FB8F6 /* UIViewController+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0BBEFD230627BE001FD542 /* UIViewController+MNZCategory.m */; };
 		E803CB641D5336F100F81A36 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E803CB661D5336F100F81A36 /* InfoPlist.strings */; };
@@ -2362,7 +2362,7 @@
 		BF0BBEFD230627BE001FD542 /* UIViewController+MNZCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+MNZCategory.m"; sourceTree = "<group>"; };
 		BF1574AD2373AB8C0095B283 /* MEGAChatRoom+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAChatRoom+Additions.swift"; sourceTree = "<group>"; };
 		BF69E5162374F3720031913D /* AppDelegate+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Additions.swift"; sourceTree = "<group>"; };
-		BFD23CCD236255A5005D4A1E /* AddNickNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNickNameViewController.swift; sourceTree = "<group>"; };
+		BFD23CCD236255A5005D4A1E /* NicknameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewController.swift; sourceTree = "<group>"; };
 		E803CB651D5336F100F81A36 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E803CB681D53374A00F81A36 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E80C760E1DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GroupChatDetailsViewTableViewCell.h; path = Chat/GroupChatDetailsViewTableViewCell.h; sourceTree = "<group>"; };
@@ -2872,7 +2872,7 @@
 				E85EB30C1DF58EBA0066AC68 /* VerifyCredentialsViewController.m */,
 				775652D5203AD2FC009E7EC8 /* ContactLinkQRViewController.h */,
 				775652D6203AD2FC009E7EC8 /* ContactLinkQRViewController.m */,
-				BFD23CCD236255A5005D4A1E /* AddNickNameViewController.swift */,
+				BFD23CCD236255A5005D4A1E /* NicknameViewController.swift */,
 				8320213522B78D530057D96F /* ContactsOnMegaViewController.swift */,
 				8312D72B22BCE38A00C13BCB /* InviteContactViewController.swift */,
 				8311208722C0CD69006F6E36 /* EnterEmailViewController.swift */,
@@ -5794,7 +5794,7 @@
 				B6998320228E73BC0021BE31 /* BackgroundRefreshPerformer.m in Sources */,
 				A815EE1923630BB2009B8D59 /* WebCodeViewController.swift in Sources */,
 				E889C9E91B566EC400ECEFDF /* UsageViewController.m in Sources */,
-				BFD23CCE236255A5005D4A1E /* AddNickNameViewController.swift in Sources */,
+				BFD23CCE236255A5005D4A1E /* NicknameViewController.swift in Sources */,
 				A86B9F3D2316D6AB00F35E7A /* FLEXNetworkRecorder.m in Sources */,
 				417279511DB663FA001AC818 /* JSQMessagesCollectionViewCellIncoming.m in Sources */,
 				A86B9F252316D6AB00F35E7A /* FLEXTableViewController.m in Sources */,
