@@ -4,7 +4,6 @@
 
 #import "MEGACallManager.h"
 
-@class MEGAChatCall;
 
 @interface MEGAProviderDelegate : NSObject <CXProviderDelegate>
 
