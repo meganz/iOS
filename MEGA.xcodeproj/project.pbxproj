@@ -457,6 +457,7 @@
 		837C4F88235DFFA600FFE177 /* VerifyEmail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 837C4F87235DFFA600FFE177 /* VerifyEmail.storyboard */; };
 		837C4F8A235DFFBA00FFE177 /* VerifyEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837C4F89235DFFBA00FFE177 /* VerifyEmailViewController.swift */; };
 		838633A623FED61D00CDB6A5 /* CustomModalAlertViewController+TwoFactorAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838633A523FED61D00CDB6A5 /* CustomModalAlertViewController+TwoFactorAuthentication.swift */; };
+		83889EC0240D0CB400125670 /* CountryCodePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83889EBF240D0CB300125670 /* CountryCodePickerViewController.swift */; };
 		8394CFA3211AE24100A1634A /* GroupCallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8394CFA2211AE24100A1634A /* GroupCallViewController.m */; };
 		8394CFB8211B1AFD00A1634A /* GroupCallCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8394CFB7211B1AFD00A1634A /* GroupCallCollectionViewCell.m */; };
 		839D5A9721C25A7D00FAE757 /* GridFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 839D5A9621C25A7D00FAE757 /* GridFlowLayout.m */; };
@@ -1738,6 +1739,7 @@
 		837C4F87235DFFA600FFE177 /* VerifyEmail.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = VerifyEmail.storyboard; sourceTree = "<group>"; };
 		837C4F89235DFFBA00FFE177 /* VerifyEmailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyEmailViewController.swift; sourceTree = "<group>"; };
 		838633A523FED61D00CDB6A5 /* CustomModalAlertViewController+TwoFactorAuthentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomModalAlertViewController+TwoFactorAuthentication.swift"; sourceTree = "<group>"; };
+		83889EBF240D0CB300125670 /* CountryCodePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryCodePickerViewController.swift; sourceTree = "<group>"; };
 		8394CFA1211AE24100A1634A /* GroupCallViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GroupCallViewController.h; path = Chat/GroupCallViewController.h; sourceTree = "<group>"; };
 		8394CFA2211AE24100A1634A /* GroupCallViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = GroupCallViewController.m; path = Chat/GroupCallViewController.m; sourceTree = "<group>"; };
 		8394CFA4211AE5B700A1634A /* CallType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CallType.h; sourceTree = "<group>"; };
@@ -4073,6 +4075,7 @@
 		83C570C922E5BFCF00216896 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				83889EBF240D0CB300125670 /* CountryCodePickerViewController.swift */,
 				83C570CA22E5BFCF00216896 /* TextField.swift */,
 			);
 			path = UI;
@@ -5648,6 +5651,7 @@
 				A86B9F6C2316D6AB00F35E7A /* FLEXOSLogController.m in Sources */,
 				417279411DB663FA001AC818 /* JSQAudioMediaViewAttributes.m in Sources */,
 				B68C42C8216DA9CF003C5A50 /* MEGAOperation.m in Sources */,
+				83889EC0240D0CB400125670 /* CountryCodePickerViewController.swift in Sources */,
 				4172793D1DB663FA001AC818 /* JSQMessagesMediaViewBubbleImageMasker.m in Sources */,
 				A815FCE41FE1795C0075AC29 /* MEGAChatCreateChatGroupRequestDelegate.m in Sources */,
 				41D21E6C1D01AEC3002E6296 /* CTAssetsPickerAccessDeniedView.m in Sources */,
