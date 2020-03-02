@@ -2,7 +2,6 @@
 
 #import "SVProgressHUD.h"
 
-#import "AppDelegate.h"
 #import "Helper.h"
 #import "UIAlertAction+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
@@ -26,7 +25,6 @@
 #import "DevicePermissionsHelper.h"
 #import "DisplayMode.h"
 #import "GradientView.h"
-#import "MainTabBarController.h"
 #import "MessagesViewController.h"
 #import "NodeInfoViewController.h"
 #import "SharedItemsTableViewCell.h"

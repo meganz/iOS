@@ -6,7 +6,6 @@
 #import "UIScrollView+EmptyDataSet.h"
 #import "UIApplication+MNZCategory.h"
 
-#import "AppDelegate.h"
 #import "DevicePermissionsHelper.h"
 #import "Helper.h"
 #import "MEGAChatChangeGroupNameRequestDelegate.h"
@@ -28,7 +27,6 @@
 #import "ContactsViewController.h"
 #import "GroupCallViewController.h"
 #import "GroupChatDetailsViewController.h"
-#import "MainTabBarController.h"
 #import "MessagesViewController.h"
 
 @interface ChatRoomsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAChatDelegate, UIScrollViewDelegate, MEGAChatCallDelegate, UISearchControllerDelegate>
