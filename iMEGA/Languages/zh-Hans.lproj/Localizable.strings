@@ -146,6 +146,8 @@
 "emailAlreadyInUse"="错误。此邮箱已被使用。";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="您的设备内存不足";
+/* Message shown when you try to downlonad files bigger than the available memory. */
+"MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device."="MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device.";
 /* Title for the file link view */
 "fileLink"="文件链接";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
@@ -279,7 +281,7 @@
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="拍摄";
 /* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
-"Scan Document"="Scan Document";
+"Scan Document"="扫描文档";
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="新增文件夹";
 /* Hint text shown on the create folder alert. */
@@ -684,6 +686,8 @@
 "Custom Settings"="自定义设置";
 /* Title to show when device local storage is full */
 "%@ Storage Full"="%@储存空间已满";
+/* Title to show when device local storage is almost full */
+"Device Storage Almost Full"="Device Storage Almost Full";
 /* Detail for local storage full situation */
 "You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="您没有足够的存储空间用于相机上传。请删除一些不必要的应用、视频和音乐以释放空间。您可在%@管理您的储存空间。";
 /* Navigation path for Storage settings in iOS */
@@ -966,7 +970,7 @@
 /* Description to encourage users to add phone number to their accounts when there are not achievements */
 "Add your phone number to MEGA. This makes it easier for your contacts to find you on MEGA."="添加手机号到您的MEGA帐户，您的联系人即可轻松在MEGA上找到您。";
 /* Description to unblock account by verifying phone number */
-"Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account."="您的帐户由于滥用行为已被暂时停用。请通过验证手机号解锁您的帐户。";
+"Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account."="由于滥用行为，您的帐户已被暂时锁定。请通过验证手机号解锁帐户。";
 /* Verify your account title */
 "Verify Your Account"="验证您的帐户";
 /* Add your phone number title */
@@ -1378,7 +1382,7 @@
 /* Paragraph 3 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph3"="此加密方式也代表我们无法存取或重新设定您的密码，因此您必须牢牢记住它(除非您有备份还原金钥)，否则您将无法存取您所储存的文件。";
 /* Paragraph between 3rd and 4th of the general description of MEGA shown on the iOS App Store, part of Android string 17769 */
-"generalDescriptionVideoChat"="End-to-end user-encrypted MEGA video chat allows for total privacy, and has been available through the browser since 2016. It has been extended to our mobile app, with chat history accessible across multiple devices. Users can also easily add files to a chat from their MEGA Cloud Drive.";
+"generalDescriptionVideoChat"="终端至终端加密保护的MEGA视频聊天为您的聊天提供完全的隐私，自2016年来一直通过浏览器使用。它已扩展到我们的移动应用程序，并可在多个设备上访问聊天记录。用户还能轻松地从MEGA云盘向聊天添加文件。";
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph4"="注册用户只要参与奖励计划即可获得50GB免费储存空间，亦可付费获得更多配额：";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
@@ -2042,6 +2046,10 @@
 "Inactive chat"="非活跃聊天";
 /* Contact details screen: Set the alias(nickname) for a user */
 "Set Nickname"="设置昵称";
+/* Contact details screen: Edit the alias(nickname) for a user */
+"Edit Nickname"="Edit Nickname";
+/* Edit nickname screen: Remove nickname button title */
+"Remove Nickname"="Remove Nickname";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
 "Alias/ Nickname"="别名/昵称";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
@@ -2077,7 +2085,7 @@
 /* Message shown when verify phone number successfully */
 "Your phone number has been verified successfully"="您的手机号已成功验证";
 /* Text describing account suspended state to the user */
-"Your account has been temporarily suspended for your safety."="为了确保帐户安全，您的帐户已被暂时停用。";
+"Your account has been temporarily suspended for your safety."="为了确保安全，您的帐户已被暂时锁定。";
 /* Text indicating the user next step to unlock suspended account. Please leave [S], [/S] as it is which is used to bolden the text. */
 "[S]Please verify your email[/S] and follow its steps to unlock your account."="[S]请验证您的邮箱[/S]并按照MEGA邮件中步骤解锁您的帐户。";
 /* Text for button to open an helping view */
@@ -2111,6 +2119,6 @@
 /* Setting title for Doc scan view */
 "Save Settings"="Save Settings";
 /* file type title, used in changing the export format of scaned doc */
-"File Type"="File Type";
+"File Type"="文件类型";
 /* export Quality Option for Scan document */
 "best"="Best";
