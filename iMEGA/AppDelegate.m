@@ -807,11 +807,6 @@
         }
     }
     
-    if (isAccountFirstLogin) {
-        [self registerForVoIPNotifications];
-        [self registerForNotifications];
-    }
-    
     [self openTabBasedOnNotificationMegatype];
     
     if (self.presentInviteContactVCLater) {
