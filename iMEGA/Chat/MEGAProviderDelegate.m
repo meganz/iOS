@@ -169,11 +169,12 @@
         MEGALogDebug(@"[CallKit] Call already reported, update the information");
         [self.provider reportCallWithUUID:call.uuid updated:update];
     } else {
+        __weak __typeof__(self) weakSelf = self;
         [self.provider reportNewIncomingCallWithUUID:call.uuid update:update completion:^(NSError * _Nullable error) {
             if (error) {
                 MEGALogError(@"[CallKit] Report new incoming call failed with error: %@", error);
             } else {
-                [self.megaCallManager addCall:call];
+                [weakSelf.megaCallManager addCall:call];
             }
         }];
     }
@@ -193,15 +194,16 @@
     update.supportsUngrouping = NO;
     update.supportsDTMF = NO;
     update.hasVideo = hasVideo;
+    __weak __typeof__(self) weakSelf = self;
     [self.provider reportNewIncomingCallWithUUID:uuid update:update completion:^(NSError * _Nullable error) {
         if (error) {
             MEGALogError(@"[CallKit] Report new incoming call failed with error: %@", error);
         } else {
             MEGAChatCall *call = [MEGASdkManager.sharedMEGAChatSdk chatCallForCallId:callId];
             if (call) {
-                [self.megaCallManager addCall:call];
+                [weakSelf.megaCallManager addCall:call];
             } else {
-                [self.megaCallManager addCallWithCallId:callId uuid:uuid];
+                [weakSelf.megaCallManager addCallWithCallId:callId uuid:uuid];
             }
         }
     }];
