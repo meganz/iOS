@@ -146,6 +146,8 @@
 "emailAlreadyInUse"="エラー。入力したメールアドレスは既に使用されています。";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="デバイス上にスペースを作って下さい。";
+/* Message shown when you try to downlonad files bigger than the available memory. */
+"MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device."="MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device.";
 /* Title for the file link view */
 "fileLink"="ファイルリンク";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
@@ -684,6 +686,8 @@
 "Custom Settings"="カスタム設定";
 /* Title to show when device local storage is full */
 "%@ Storage Full"="%@ストレージがいっぱいです";
+/* Title to show when device local storage is almost full */
+"Device Storage Almost Full"="Device Storage Almost Full";
 /* Detail for local storage full situation */
 "You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="それ以上のカメラアップロード用のストレージが十分ではありません。不要なアプリ、動画、音楽を削除してスペースを解放してください。%@でストレージを管理できます。";
 /* Navigation path for Storage settings in iOS */
@@ -2042,6 +2046,10 @@
 "Inactive chat"="非アクティブなチャット";
 /* Contact details screen: Set the alias(nickname) for a user */
 "Set Nickname"="ニックネームを設定";
+/* Contact details screen: Edit the alias(nickname) for a user */
+"Edit Nickname"="Edit Nickname";
+/* Edit nickname screen: Remove nickname button title */
+"Remove Nickname"="Remove Nickname";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
 "Alias/ Nickname"="エイリアス/ニックネーム";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
