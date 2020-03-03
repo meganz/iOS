@@ -59,6 +59,8 @@
 #import "TransferSessionManager.h"
 #import "BackgroundRefreshPerformer.h"
 
+#import "MEGAProviderDelegate.h"
+
 #define kFirstRun @"FirstRun"
 
 @interface AppDelegate () <PKPushRegistryDelegate, UIApplicationDelegate, UNUserNotificationCenterDelegate, LTHPasscodeViewControllerDelegate, LaunchViewControllerDelegate, MEGAApplicationDelegate, MEGAChatDelegate, MEGAChatRequestDelegate, MEGAGlobalDelegate, MEGAPurchasePricingDelegate, MEGARequestDelegate, MEGATransferDelegate> {
@@ -98,6 +100,7 @@
 
 @property (strong, nonatomic) dispatch_queue_t indexSerialQueue;
 @property (strong, nonatomic) BackgroundRefreshPerformer *backgroundRefreshPerformer;
+@property (nonatomic, strong) MEGAProviderDelegate *megaProviderDelegate;
 
 @end
 
@@ -951,14 +954,14 @@ void uncaughtExceptionHandler(NSException *exception) {
         groupCallVC.videoCall = self.videoCall;
         groupCallVC.chatRoom = self.chatRoom;
         groupCallVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-        groupCallVC.megaCallManager = [self.mainTBC megaCallManager];
+        groupCallVC.megaCallManager = self.megaCallManager;
         [self.mainTBC presentViewController:groupCallVC animated:YES completion:nil];
     } else {
         CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
         callVC.chatRoom = self.chatRoom;
         callVC.videoCall = self.videoCall;
         callVC.callType = CallTypeOutgoing;
-        callVC.megaCallManager = [self.mainTBC megaCallManager];
+        callVC.megaCallManager = self.megaCallManager;
         [self.mainTBC presentViewController:callVC animated:YES completion:nil];
     }
     self.chatRoom = nil;
@@ -1178,8 +1181,17 @@ void uncaughtExceptionHandler(NSException *exception) {
     MEGALogDebug(@"Did receive incoming push with payload: %@", [payload dictionaryPayload]);
     
     // Call
-    if ([[UIApplication sharedApplication] applicationState] == UIApplicationStateBackground && [[[payload dictionaryPayload] objectForKey:@"megatype"] integerValue] == 4) {
-        [self beginBackgroundTaskWithName:@"VoIP"];
+    if ([payload.dictionaryPayload[@"megatype"] integerValue] == 4) {
+        if (self.megaProviderDelegate == nil) {            
+            self.megaCallManager = MEGACallManager.new;
+            self.megaProviderDelegate = [MEGAProviderDelegate.alloc initWithMEGACallManager:self.megaCallManager];
+        }
+        NSString *chatIdB64 = payload.dictionaryPayload[@"megadata"][@"chatid"];
+        NSString *callIdB64 = payload.dictionaryPayload[@"megadata"][@"callid"];
+        uint64_t chatId = [MEGASdk handleForBase64UserHandle:chatIdB64];
+        uint64_t callId = [MEGASdk handleForBase64UserHandle:callIdB64];
+        
+        [self.megaProviderDelegate reportIncomingCallWithCallId:callId chatId:chatId];
         
         if (!DevicePermissionsHelper.shouldAskForNotificationsPermissions) {
             [DevicePermissionsHelper notificationsPermissionWithCompletionHandler:^(BOOL granted) {
