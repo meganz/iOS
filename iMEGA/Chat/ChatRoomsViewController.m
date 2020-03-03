@@ -27,7 +27,6 @@
 #import "ContactsViewController.h"
 #import "GroupCallViewController.h"
 #import "GroupChatDetailsViewController.h"
-#import "MainTabBarController.h"
 #import "MessagesViewController.h"
 
 @interface ChatRoomsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAChatDelegate, UIScrollViewDelegate, MEGAChatCallDelegate, UISearchControllerDelegate>
@@ -817,7 +816,7 @@
                 groupCallVC.videoCall = NO;
                 groupCallVC.chatRoom = self.chatRoomOnGoingCall;
                 groupCallVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-                groupCallVC.megaCallManager = [(MainTabBarController *)UIApplication.sharedApplication.keyWindow.rootViewController megaCallManager];
+                groupCallVC.megaCallManager = ((AppDelegate *)UIApplication.sharedApplication.delegate).megaCallManager;
                 [self presentViewController:groupCallVC animated:YES completion:nil];
             } else {
                 CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
@@ -825,7 +824,7 @@
                 callVC.videoCall = NO;
                 callVC.callType = CallTypeActive;
                 callVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-                callVC.megaCallManager = [(MainTabBarController *)UIApplication.sharedApplication.keyWindow.rootViewController megaCallManager];
+                callVC.megaCallManager = ((AppDelegate *)UIApplication.sharedApplication.delegate).megaCallManager;
                 [self presentViewController:callVC animated:YES completion:nil];
             }
         } else {
