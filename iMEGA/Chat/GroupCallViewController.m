@@ -806,14 +806,8 @@
             [weakSelf dismissViewControllerAnimated:YES completion:nil];
         } else {
             weakSelf.call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:weakSelf.chatRoom.chatId];
-            
-            NSUUID *uuid = [[NSUUID alloc] init];
-            weakSelf.call.uuid = uuid;
             [weakSelf.megaCallManager addCall:weakSelf.call];
-            
-            uint64_t peerHandle = [weakSelf.chatRoom peerHandleAtIndex:0];
-            NSString *peerEmail = [weakSelf.chatRoom peerEmailByHandle:peerHandle];
-            [weakSelf.megaCallManager startCall:weakSelf.call email:peerEmail];
+            [weakSelf.megaCallManager startCall:weakSelf.call];
             
             [self.collectionView reloadData];
             MEGALogDebug(@"[Group Call] Reload data %s", __PRETTY_FUNCTION__);
