@@ -889,7 +889,6 @@
 		A88BFFED1F0A56B80081BCE3 /* libKarere.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFEC1F0A56B80081BCE3 /* libKarere.a */; };
 		A88BFFEE1F0A56C60081BCE3 /* libKarere.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFEC1F0A56B80081BCE3 /* libKarere.a */; };
 		A88BFFEF1F0A56CB0081BCE3 /* libKarere.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFEC1F0A56B80081BCE3 /* libKarere.a */; };
-		A89629721FACE30900F02F7A /* MEGAChatCall+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = A89629711FACE30900F02F7A /* MEGAChatCall+MNZCategory.m */; };
 		A89629751FACE78B00F02F7A /* MEGACallManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A89629741FACE78B00F02F7A /* MEGACallManager.m */; };
 		A89629781FACEAF800F02F7A /* MEGAProviderDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A89629771FACEAF800F02F7A /* MEGAProviderDelegate.m */; };
 		A89D2A9D23CE2B3E00AD5488 /* SAMKeychain.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A89D2A9C23CE2B3E00AD5488 /* SAMKeychain.bundle */; };
@@ -2202,8 +2201,6 @@
 		A88BFFCE1F0A52E90081BCE3 /* libsodium.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libsodium.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libsodium.a; sourceTree = "<group>"; };
 		A88BFFE81F0A55E20081BCE3 /* libMEGASDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMEGASDK.a; sourceTree = "<group>"; };
 		A88BFFEC1F0A56B80081BCE3 /* libKarere.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libKarere.a; sourceTree = "<group>"; };
-		A89629701FACE30900F02F7A /* MEGAChatCall+MNZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MEGAChatCall+MNZCategory.h"; sourceTree = "<group>"; };
-		A89629711FACE30900F02F7A /* MEGAChatCall+MNZCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "MEGAChatCall+MNZCategory.m"; sourceTree = "<group>"; };
 		A89629731FACE78B00F02F7A /* MEGACallManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MEGACallManager.h; path = Chat/MEGACallManager.h; sourceTree = "<group>"; };
 		A89629741FACE78B00F02F7A /* MEGACallManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGACallManager.m; path = Chat/MEGACallManager.m; sourceTree = "<group>"; };
 		A89629761FACEAF800F02F7A /* MEGAProviderDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MEGAProviderDelegate.h; path = Chat/MEGAProviderDelegate.h; sourceTree = "<group>"; };
@@ -3478,8 +3475,6 @@
 				4115D6431E718B1F004BB0FF /* UIImage+MNZCategory.m */,
 				942F4FD61F500A8F001FC4AC /* MEGASdk+MNZCategory.h */,
 				942F4FD71F500A8F001FC4AC /* MEGASdk+MNZCategory.m */,
-				A89629701FACE30900F02F7A /* MEGAChatCall+MNZCategory.h */,
-				A89629711FACE30900F02F7A /* MEGAChatCall+MNZCategory.m */,
 				A815FCE81FE2AD080075AC29 /* UIApplication+MNZCategory.h */,
 				A815FCE91FE2AD080075AC29 /* UIApplication+MNZCategory.m */,
 				949086861FD5482E002B12BD /* NSAttributedString+MNZCategory.h */,
@@ -6055,7 +6050,6 @@
 				774FA6642090F5A20061DD85 /* MEGADialogMediaItem.m in Sources */,
 				417279571DB663FA001AC818 /* JSQMessagesLabel.m in Sources */,
 				B61B815822D6D9D900B97F51 /* CameraUploadAdvancedOptionsViewController.m in Sources */,
-				A89629721FACE30900F02F7A /* MEGAChatCall+MNZCategory.m in Sources */,
 				5B1F74D42126E30C00F09A16 /* AwaitingEmailConfirmationView.m in Sources */,
 				410AD3C11C883AA900BF939E /* MEGAAVViewController.m in Sources */,
 				A86B9F672316D6AB00F35E7A /* FLEXFileBrowserTableViewController.m in Sources */,
