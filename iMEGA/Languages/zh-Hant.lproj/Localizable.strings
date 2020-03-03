@@ -146,6 +146,8 @@
 "emailAlreadyInUse"="發生錯誤，此電子信箱已被使用。";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="您的設備內存不足";
+/* Message shown when you try to downlonad files bigger than the available memory. */
+"MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device."="MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device.";
 /* Title for the file link view */
 "fileLink"="檔案鏈接";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
@@ -684,6 +686,8 @@
 "Custom Settings"="自訂設定";
 /* Title to show when device local storage is full */
 "%@ Storage Full"="%@儲存空間已滿";
+/* Title to show when device local storage is almost full */
+"Device Storage Almost Full"="Device Storage Almost Full";
 /* Detail for local storage full situation */
 "You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="您沒有足夠的儲存空間來進一步做相機上傳。請刪除不需要的app、影片或音樂以釋放空間。您可以在%@管理您的儲存空間。";
 /* Navigation path for Storage settings in iOS */
@@ -1378,7 +1382,7 @@
 /* Paragraph 3 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph3"="此加密方式也代表我們無法存取或重新設定您的密碼，因此您必須牢牢記住它 (除非您有備份還原金鑰)，否則您將無法存取您所儲存的檔案。";
 /* Paragraph between 3rd and 4th of the general description of MEGA shown on the iOS App Store, part of Android string 17769 */
-"generalDescriptionVideoChat"="End-to-end user-encrypted MEGA video chat allows for total privacy, and has been available through the browser since 2016. It has been extended to our mobile app, with chat history accessible across multiple devices. Users can also easily add files to a chat from their MEGA Cloud Drive.";
+"generalDescriptionVideoChat"="點對點用戶加密技術的MEGA視訊聊天提供完整的隱私，2016年之後的瀏覽器都有支援。它也延伸至我們的手機應用程式，可以在多個裝置上查詢聊天記錄。用戶還可以輕鬆地將他們自己MEGA雲端硬碟的檔案添加到聊天室窗裡。";
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph4"="MEGA提供超大的50GB免費儲存空間給已註冊的使用者們，也有許多獎勵挑戰等著大家，另外，您也可以選擇使用更高級的付費方案：";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
@@ -2042,6 +2046,10 @@
 "Inactive chat"="不活躍的聊天";
 /* Contact details screen: Set the alias(nickname) for a user */
 "Set Nickname"="設定暱稱";
+/* Contact details screen: Edit the alias(nickname) for a user */
+"Edit Nickname"="Edit Nickname";
+/* Edit nickname screen: Remove nickname button title */
+"Remove Nickname"="Remove Nickname";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
 "Alias/ Nickname"="別名 / 暱稱";
 /* Error message shown when the user tries to open a file with an unsupported encoding */

@@ -971,7 +971,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     for (NSUInteger i = 0; i < self.chatRoom.peerCount; i++) {
         NSString *peerName = [self.chatRoom userNicknameAtIndex:i];
         
-        if (!peerName.mnz_isEmpty) {
+        if (peerName.mnz_isEmpty) {
             NSString *peerFirstname = [self.chatRoom peerFirstnameAtIndex:i];
             
             if (peerFirstname.length > 0 && ![[peerFirstname stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceCharacterSet] isEqualToString:@""]) {

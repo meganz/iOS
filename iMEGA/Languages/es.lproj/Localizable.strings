@@ -146,6 +146,8 @@
 "emailAlreadyInUse"="Error. Este correo electrónico ya está asociado a una cuenta de MEGA.";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Tienes que liberar espacio";
+/* Message shown when you try to downlonad files bigger than the available memory. */
+"MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device."="MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device.";
 /* Title for the file link view */
 "fileLink"="Enlace del Archivo";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
@@ -684,6 +686,8 @@
 "Custom Settings"="Ajustes personalizados";
 /* Title to show when device local storage is full */
 "%@ Storage Full"="Almacenamiento %@ lleno";
+/* Title to show when device local storage is almost full */
+"Device Storage Almost Full"="Device Storage Almost Full";
 /* Detail for local storage full situation */
 "You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="No tienes almacenamiento suficiente para más subidas de la cámara. Libera espacio eliminando aplicaciones que no utilizas, videos o música. Puedes gestionar tu almacenamiento en %@";
 /* Navigation path for Storage settings in iOS */
@@ -2042,6 +2046,10 @@
 "Inactive chat"="Chat inactivo";
 /* Contact details screen: Set the alias(nickname) for a user */
 "Set Nickname"="Elige un alias";
+/* Contact details screen: Edit the alias(nickname) for a user */
+"Edit Nickname"="Edit Nickname";
+/* Edit nickname screen: Remove nickname button title */
+"Remove Nickname"="Remove Nickname";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
 "Alias/ Nickname"="Alias";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
@@ -2091,21 +2099,21 @@
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="Tu contraseña se ha filtrado y está siendo utilizada por terceros para iniciar sesión en tus cuentas, incluida, entre otras, tu cuenta de MEGA.";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
-"MEGA CAMERA UPLOADS FOLDER"="MEGA CAMERA UPLOADS FOLDER";
+"MEGA CAMERA UPLOADS FOLDER"="CARPETA DE LAS SÚBIDAS DE LA CAMARA";
 /* Action button text of folder selection screen for camera uploads */
-"Select Folder"="Select Folder";
+"Select Folder"="Seleccionar carpeta";
 /* Title of the folder selection screen for camera uploads */
 "Choose Folder"="Seleccionar carpeta";
 /* Label used near to the option selected to encode the images uploaded to a chat (Low, Medium, Original) */
-"Image quality"="Image quality";
+"Image quality"="Calidad de imagen";
 /* Title of Image Quality option */
 "Automatic"="Automática";
 /* Description of Automatic Image Quality option */
 "Send smaller size images through cellular networks and original size images through wifi"="Send smaller size images through cellular networks and original size images through wifi";
 /* Title of Image Quality option */
-"Optimised"="Optimised";
+"Optimised"="Optimizada";
 /* Description of Optimised Image Quality option */
-"Send smaller size images optimised for lower data consumption"="Send smaller size images optimised for lower data consumption";
+"Send smaller size images optimised for lower data consumption"="Envía imágenes de menor tamaño optimizadas para un menor consumo de datos.";
 /* Description of High Image Quality option */
 "Send original size, increased quality images"="Send original size, increased quality images";
 /* Setting title for Doc scan view */
