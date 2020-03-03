@@ -138,7 +138,8 @@
 - (void)configureCellForUser:(MEGAUser *)user {
     self.privateChatImageView.hidden = YES;
     
-    self.chatTitle.text = [user mnz_fullName];
+    NSString *userNickname = user.mnz_nickname;
+    self.chatTitle.text = (userNickname != nil && !userNickname.mnz_isEmpty) ? userNickname : user.mnz_fullName;
     self.chatLastMessage.text = AMLocalizedString(@"noConversationHistory", @"Information if there are no history messages in current chat conversation");
     
     [self.avatarImageView mnz_setImageForUserHandle:user.handle name:[user mnz_fullName]];

@@ -32,13 +32,8 @@ class NicknameViewController: UIViewController {
         configureUI()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        if let nickname = nickname {
-            nicknameTextField.text = nickname
-        }
-        
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         nicknameTextField.becomeFirstResponder()
     }
     
@@ -126,6 +121,10 @@ class NicknameViewController: UIViewController {
     }
     
     private func configureUI() {
+        if let nickname = nickname {
+            nicknameTextField.text = nickname
+        }
+        
         title = (nickname != nil) ?
             AMLocalizedString("Edit Nickname", "Contact details screen: Set the alias(nickname) for a user") :
             AMLocalizedString("Set Nickname", "Contact details screen: Set the alias(nickname) for a user")
