@@ -473,7 +473,7 @@
     }
     
     if (!actionAuthor) {
-        MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:item.chatId];
+        MEGAChatRoom *chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:item.chatId];
         actionAuthor = [chatRoom peerFullnameByHandle:item.lastMessageSender];
     }
 
