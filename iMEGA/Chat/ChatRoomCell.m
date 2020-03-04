@@ -303,7 +303,8 @@
             if (fullNameReceiveAction.length == 0) {
                 MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithUserHandle:item.lastMessageHandle];
                 if (moUser) {
-                    fullNameReceiveAction = moUser.fullName;
+                    NSString *userName = (moUser.nickname != nil && !moUser.nickname.mnz_isEmpty) ? moUser.nickname : moUser.fullName;
+                    fullNameReceiveAction = userName;
                 } else {
                     fullNameReceiveAction = @"";
                 }
@@ -343,7 +344,8 @@
             if (fullNameReceiveAction.length == 0) {
                 MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithUserHandle:item.lastMessageHandle];
                 if (moUser) {
-                    fullNameReceiveAction = moUser.fullName;
+                    NSString *userName = (moUser.nickname != nil && !moUser.nickname.mnz_isEmpty) ? moUser.nickname : moUser.fullName;
+                    fullNameReceiveAction = userName;
                 } else {
                     fullNameReceiveAction = @"";
                 }
