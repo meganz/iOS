@@ -83,7 +83,8 @@
         MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithEmail:email];
         if (moUser) {
             [cell.avatarImageView mnz_setImageForUserHandle:~(uint64_t)0 name:moUser.fullName];
-            cell.titleLabel.text = moUser.fullName;
+            NSString *userName = (moUser.nickname != nil && !moUser.nickname.mnz_isEmpty) ? moUser.nickname : moUser.fullName;
+            cell.titleLabel.text = userName;
         } else {
             [cell.avatarImageView mnz_setImageForUserHandle:~(uint64_t)0];
             cell.titleLabel.text = @"";
