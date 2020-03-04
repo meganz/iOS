@@ -468,14 +468,15 @@
     if (item.lastMessageSender == [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
         actionAuthor = [[MEGASdkManager sharedMEGAChatSdk] myFullname];
     } else {
-        MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:item.chatId];
-        actionAuthor = [chatRoom peerFullnameByHandle:item.lastMessageSender];
+        MOUser *user = [MEGAStore.shareInstance fetchUserWithUserHandle:item.lastMessageSender];
+        actionAuthor = (user.nickname != nil && !user.nickname.mnz_isEmpty) ? user.nickname : user.fullName;
     }
     
     if (!actionAuthor) {
-        actionAuthor = [[[MEGAStore shareInstance] fetchUserWithUserHandle:item.lastMessageSender] fullName];
+        MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:item.chatId];
+        actionAuthor = [chatRoom peerFullnameByHandle:item.lastMessageSender];
     }
-    
+
     return actionAuthor ? actionAuthor : @"?";
 }
 
