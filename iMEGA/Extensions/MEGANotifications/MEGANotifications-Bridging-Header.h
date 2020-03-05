@@ -13,5 +13,6 @@
 #import "MEGAGenericRequestDelegate.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
+#import "MEGAStore.h"
 
 #endif /* MEGANotifications_Bridging_Header_h */
