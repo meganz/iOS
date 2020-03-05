@@ -7,7 +7,7 @@ protocol SMSCountriesTableViewControllerDelegate: AnyObject {
 
 class SMSCountriesTableViewController: UITableViewController {
     
-    lazy var searchController = UISearchController(searchResultsController: nil)
+    private var searchController = UISearchController(searchResultsController: nil)
 
     private let countryCellReuseId = "countryCell"
     
@@ -114,6 +114,8 @@ extension SMSCountriesTableViewController {
         delegate?.countriesTableViewController(self, didSelectCountry: smsCountry(for: indexPath))
     }
 }
+
+// MARK: - UISearchResultsUpdating
 
 extension SMSCountriesTableViewController: UISearchResultsUpdating {
 
