@@ -918,6 +918,10 @@
 		A8E10D8021A5677900ACD42F /* ShareLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E10D7E21A5677900ACD42F /* ShareLocationViewController.m */; };
 		A8EC55B41F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8EC55B31F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.m */; };
 		A8F0A1C7217898F600575C57 /* MEGALocalNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F0A1C6217898F600575C57 /* MEGALocalNotificationManager.m */; };
+		A8F0A1D82178A73300575C57 /* MOMessage+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F0A1D42178A73300575C57 /* MOMessage+CoreDataClass.m */; };
+		A8F0A1D92178A73300575C57 /* MOMessage+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F0A1D72178A73300575C57 /* MOMessage+CoreDataProperties.m */; };
+		A8F0A1DA2178B41900575C57 /* MOMessage+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F0A1D42178A73300575C57 /* MOMessage+CoreDataClass.m */; };
+		A8F0A1DC2178B43300575C57 /* MOMessage+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F0A1D42178A73300575C57 /* MOMessage+CoreDataClass.m */; };
 		A8F1381C21D3ABF2003C7364 /* LocationSearchTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F1381B21D3ABF2003C7364 /* LocationSearchTableViewController.m */; };
 		A8F1381F21D3F8B0003C7364 /* LocationSearchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F1381E21D3F8AF003C7364 /* LocationSearchTableViewCell.m */; };
 		A8F2629A1FA8F7C3000B2768 /* incoming_voice_video_call.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A8F262991FA8F7C2000B2768 /* incoming_voice_video_call.mp3 */; };
@@ -2234,6 +2238,10 @@
 		A8EC55B31F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGAGetPreviewRequestDelegate.m; path = API/Requests/MEGAGetPreviewRequestDelegate.m; sourceTree = "<group>"; };
 		A8F0A1C5217898F600575C57 /* MEGALocalNotificationManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGALocalNotificationManager.h; sourceTree = "<group>"; };
 		A8F0A1C6217898F600575C57 /* MEGALocalNotificationManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGALocalNotificationManager.m; sourceTree = "<group>"; };
+		A8F0A1D42178A73300575C57 /* MOMessage+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MOMessage+CoreDataClass.m"; sourceTree = "<group>"; };
+		A8F0A1D52178A73300575C57 /* MOMessage+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MOMessage+CoreDataProperties.h"; sourceTree = "<group>"; };
+		A8F0A1D62178A73300575C57 /* MOMessage+CoreDataClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MOMessage+CoreDataClass.h"; sourceTree = "<group>"; };
+		A8F0A1D72178A73300575C57 /* MOMessage+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MOMessage+CoreDataProperties.m"; sourceTree = "<group>"; };
 		A8F1381A21D3ABF2003C7364 /* LocationSearchTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LocationSearchTableViewController.h; path = Chat/LocationSearchTableViewController.h; sourceTree = "<group>"; };
 		A8F1381B21D3ABF2003C7364 /* LocationSearchTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = LocationSearchTableViewController.m; path = Chat/LocationSearchTableViewController.m; sourceTree = "<group>"; };
 		A8F1381D21D3F8AE003C7364 /* LocationSearchTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LocationSearchTableViewCell.h; path = Chat/LocationSearchTableViewCell.h; sourceTree = "<group>"; };
@@ -3549,6 +3557,10 @@
 				831D61A2218738D20038F5B8 /* MOFolderLayout+CoreDataClass.h */,
 				831D61A3218738D20038F5B8 /* MOFolderLayout+CoreDataClass.m */,
 				831D61A4218738D20038F5B8 /* MOFolderLayout+CoreDataProperties.m */,
+				A8F0A1D52178A73300575C57 /* MOMessage+CoreDataProperties.h */,
+				A8F0A1D62178A73300575C57 /* MOMessage+CoreDataClass.h */,
+				A8F0A1D42178A73300575C57 /* MOMessage+CoreDataClass.m */,
+				A8F0A1D72178A73300575C57 /* MOMessage+CoreDataProperties.m */,
 				8361358C21074C5D002FA3CC /* MOUploadTransfer+CoreDataProperties.h */,
 				8361358D21074C5D002FA3CC /* MOUploadTransfer+CoreDataClass.h */,
 				8361358E21074C5D002FA3CC /* MOUploadTransfer+CoreDataClass.m */,
@@ -6045,6 +6057,7 @@
 				B6E19B352175852E00882F74 /* AssetUploadInfo.m in Sources */,
 				A86B9F742316D6AB00F35E7A /* FLEXMultiColumnTableView.m in Sources */,
 				41D21DF21D01AE89002E6296 /* NSLayoutConstraint+PureLayout.m in Sources */,
+				A8F0A1D82178A73300575C57 /* MOMessage+CoreDataClass.m in Sources */,
 				A810CF3020C157BC00A6C6C5 /* FLAnimatedImageView.m in Sources */,
 				E8F791801BC5754A00C58676 /* OpenInActivity.m in Sources */,
 				774FA6642090F5A20061DD85 /* MEGADialogMediaItem.m in Sources */,
@@ -6211,6 +6224,7 @@
 				946BD1331FEBBE4E00B76785 /* MEGAToolbarSelectedAssets.m in Sources */,
 				A841E64120CE6681005E1D1B /* MEGACallManagementMediaItem.m in Sources */,
 				41AC33A81A926C27005118AF /* HeaderCollectionReusableView.m in Sources */,
+				A8F0A1D92178A73300575C57 /* MOMessage+CoreDataProperties.m in Sources */,
 				E8B519271AC9CD8000BB7324 /* TransferTableViewCell.m in Sources */,
 				4172793C1DB663FA001AC818 /* JSQMessagesBubbleImageFactory.m in Sources */,
 				B645164B2231C199001680BC /* PHFetchResult+CameraUpload.m in Sources */,
@@ -6436,6 +6450,7 @@
 				5B2E78CE1FA0C3450096C9BE /* MEGACreateFolderRequestDelegate.m in Sources */,
 				5B0568FA220C19BF0099BF74 /* ItemCollectionViewCell.m in Sources */,
 				94624CFD1F50517700D52504 /* MEGAExportRequestDelegate.m in Sources */,
+				A8F0A1DA2178B41900575C57 /* MOMessage+CoreDataClass.m in Sources */,
 				9432294C1EDD9CE9007DB542 /* NSFileManager+MNZCategory.m in Sources */,
 				8361359121074C5D002FA3CC /* MOUploadTransfer+CoreDataClass.m in Sources */,
 			);
@@ -6491,6 +6506,7 @@
 				831D61A8218738EC0038F5B8 /* MOFolderLayout+CoreDataClass.m in Sources */,
 				8361359221074C5D002FA3CC /* MOUploadTransfer+CoreDataClass.m in Sources */,
 				A81F2C6A1F334FB2008600A5 /* MEGAProcessAsset.m in Sources */,
+				A8F0A1DC2178B43300575C57 /* MOMessage+CoreDataClass.m in Sources */,
 				943F8B281EF283D300AFD89F /* UIDevice+MNZCategory.m in Sources */,
 				77F0522122CB8BA800032138 /* MEGAGenericRequestDelegate.m in Sources */,
 				A836581B21020FB9005E616F /* ItemListViewController.m in Sources */,
