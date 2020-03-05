@@ -497,4 +497,37 @@
     return array.firstObject;
 }
 
+#pragma mark - MOMessage entity
+
+- (void)insertMessage:(uint64_t)messageId chatId:(uint64_t)chatId {
+    MOMessage *mMessage = [NSEntityDescription insertNewObjectForEntityForName:@"MOMessage" inManagedObjectContext:self.managedObjectContext];
+    mMessage.chatId = [NSNumber numberWithUnsignedLongLong:chatId];
+    mMessage.messageId = [NSNumber numberWithUnsignedLongLong:messageId];
+    
+    MEGALogDebug(@"Save context - insert MOMessage with chat %@ and message %@", [MEGASdk base64HandleForUserHandle:chatId], [MEGASdk base64HandleForUserHandle:messageId]);
+    
+    [self saveContext];
+}
+
+- (void)deleteMessage:(MOMessage *)message {
+    [self.managedObjectContext deleteObject:message];
+    
+    MEGALogDebug(@"Save context - remove MOMessage with chat %@ and message %@", [MEGASdk base64HandleForUserHandle:message.chatId.unsignedLongLongValue],[MEGASdk base64HandleForUserHandle:message.messageId.unsignedLongLongValue]);
+    
+    [self saveContext];
+}
+
+- (MOUploadTransfer *)fetchMessageWithChatId:(uint64_t)chatId messageId:(uint64_t)messageId {
+    NSFetchRequest *request = [MOMessage fetchRequest];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"chatId == %llu AND messageId == %llu", chatId, messageId];
+    request.predicate = predicate;
+    
+    NSError *error;
+    NSArray *array = [self.managedObjectContext executeFetchRequest:request error:&error];
+    
+    return array.firstObject;
+    
+}
+
 @end
