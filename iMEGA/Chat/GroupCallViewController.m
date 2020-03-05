@@ -23,6 +23,7 @@
 #import "MEGAChatStartCallRequestDelegate.h"
 #import "MEGAGroupCallPeer.h"
 #import "MEGASdkManager.h"
+#import "MEGA-Swift.h"
 
 #define kSmallPeersLayout 7
 
@@ -902,7 +903,12 @@
     MEGAGroupCallPeer *remoteUser = [[MEGAGroupCallPeer alloc] initWithSession:chatSession];
     remoteUser.video = CallPeerVideoUnknown;
     remoteUser.audio = CallPeerAudioUnknown;
-    remoteUser.name = [self.chatRoom peerFullnameByHandle:chatSession.peerId];
+    
+    NSString *userName = [self.chatRoom userDisplayNameForUserHandle:chatSession.peerId];
+    if (userName.length == 0) {
+        userName = [self.chatRoom peerFullnameByHandle:chatSession.peerId];
+    }
+    remoteUser.name = userName;
     
     [self.peersInCall insertObject:remoteUser atIndex:0];
     
@@ -912,7 +918,7 @@
         [self.collectionView reloadData];
     }
     
-    [self showToastMessage:[NSString stringWithFormat:AMLocalizedString(@"%@ joined the call.", @"Message to inform the local user that someone has joined the current group call"), [self.chatRoom peerFullnameByHandle:chatSession.peerId]] color:@"#00BFA5" shouldHide:YES];
+    [self showToastMessage:[NSString stringWithFormat:AMLocalizedString(@"%@ joined the call.", @"Message to inform the local user that someone has joined the current group call"), userName] color:@"#00BFA5" shouldHide:YES];
     [self updateParticipants];
 }
 
@@ -940,7 +946,8 @@
             }
         }
         
-        [self showToastMessage:[NSString stringWithFormat:AMLocalizedString(@"%@ left the call.", @"Message to inform the local user that someone has left the current group call"), [self.chatRoom peerFullnameByHandle:chatSession.peerId]] color:@"#00BFA5" shouldHide:YES];
+        NSString *userName = [self.chatRoom userDisplayNameForUserHandle:chatSession.peerId];
+        [self showToastMessage:[NSString stringWithFormat:AMLocalizedString(@"%@ left the call.", @"Message to inform the local user that someone has left the current group call"), userName] color:@"#00BFA5" shouldHide:YES];
         [self updateParticipants];
     } else {
         MEGALogDebug(@"GROUPCALL session destroyed for peer %llu not found", chatSession.peerId);

@@ -53,7 +53,7 @@
                 
                 if (self.chatRoom.isGroup) {
                     MOUser *user = [[MEGAStore shareInstance] fetchUserWithUserHandle:self.message.userHandle];
-                    content.subtitle = (user.nickname != nil && !user.nickname.mnz_isEmpty) ? user.nickname : user.fullName;
+                    content.subtitle = user.displayName;
                 }
                 
                 NSString *body;
