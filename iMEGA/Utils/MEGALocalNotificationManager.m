@@ -54,6 +54,11 @@
                     content.subtitle = [self subtitle];
                 }
                 
+                content.threadIdentifier = [MEGASdk base64HandleForUserHandle:self.chatRoom.chatId] ?: @"";
+                if (@available(iOS 12.0, *)) {
+                    content.summaryArgument = self.chatRoom.title;
+                }
+                
                 UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:1 repeats:NO];
                 NSString *identifier = [NSString stringWithFormat:@"%@%@", [MEGASdk base64HandleForUserHandle:self.chatRoom.chatId], [MEGASdk base64HandleForUserHandle:self.message.messageId]];
                 

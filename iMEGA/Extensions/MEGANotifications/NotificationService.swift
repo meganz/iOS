@@ -82,6 +82,12 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
             bestAttemptContent?.subtitle = notificationManager.subtitle()
         }
         
+        let chatIdBase64 = MEGASdk.base64Handle(forUserHandle: chatId) ?? ""
+        bestAttemptContent?.threadIdentifier = chatIdBase64
+        if #available(iOS 12.0, *) {
+            bestAttemptContent?.summaryArgument = chatRoom.title
+        }
+        
         if immediately {
             return true
         }
