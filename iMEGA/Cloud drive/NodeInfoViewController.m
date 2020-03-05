@@ -248,6 +248,7 @@
                     } else {
                         cell = [self linkCellForIndexPath:indexPath];
                     }
+                    break;
                 }
                     
                 case 1:
