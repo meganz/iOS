@@ -37,6 +37,11 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         
         bestAttemptContent?.categoryIdentifier = "nz.mega.chat.message"
         
+        if let moMessage = MEGAStore.shareInstance()?.fetchMessage(withChatId: chatId, messageId: msgId) {
+            MEGAStore.shareInstance()?.delete(moMessage)
+            postNotification(withError: "Already notified")
+        }
+        
         if let message = MEGASdkManager.sharedMEGAChatSdk()?.message(forChat: chatId, messageId: msgId) {
             if generateNotification(with: message, immediately: false) {
                 postNotification(withError: nil)
@@ -124,6 +129,10 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
             MEGALogError(errorString)
             bestAttemptContent.body = AMLocalizedString("You may have new messages", "Content of the notification when there is unknown activity on the Chat")
             bestAttemptContent.sound = nil
+        } else {
+            if let msgId = msgId, let chatId = chatId {
+                MEGAStore.shareInstance()?.insertMessage(msgId, chatId: chatId)
+            }
         }
         
         // Note: As soon as we call the contentHandler, no content can be retrieved from notification center.

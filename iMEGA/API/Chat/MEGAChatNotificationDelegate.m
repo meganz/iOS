@@ -15,6 +15,13 @@
     
     [UIApplication sharedApplication].applicationIconBadgeNumber = api.unreadChats;
     
+    MOMessage *moMessage = [MEGAStore.shareInstance fetchMessageWithChatId:chatId messageId:message.messageId];
+    if (moMessage) {
+        [MEGAStore.shareInstance deleteMessage:moMessage];
+        MEGALogDebug(@"Already notified")
+        return;
+    }
+    
     if (UIApplication.sharedApplication.applicationState != UIApplicationStateBackground) {
         if ([UIApplication.mnz_visibleViewController isKindOfClass:[MessagesViewController class]] && message.status != MEGAChatMessageStatusSeen) {
             MessagesViewController *messagesVC = (MessagesViewController *) UIApplication.mnz_visibleViewController;
