@@ -96,7 +96,14 @@ class NicknameViewController: UIViewController {
             SVProgressHUD.dismiss()
             
             if error.type == .apiOk {
-                self.user?.mnz_nickname = nickname
+                if let user = self.user {
+                    NotificationCenter.default.post(name: NSNotification.Name.MEGContactNicknameChange,
+                                                    object: nil,
+                                                    userInfo: ["user" : user])
+                    
+                    user.mnz_nickname = nickname
+                }
+                
                 self.updateHandler(withNickname: nickname)
             } else {
                 SVProgressHUD.showError(withStatus: request.requestString + " " + error.name)

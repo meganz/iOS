@@ -208,6 +208,21 @@ static NSMutableSet<NSString *> *tapForInfoSet;
                                                  name:UIApplicationDidBecomeActiveNotification
                                                object:nil];
     
+    // Notified when the contact nickname is changed.
+    __weak typeof(self) weakself = self;
+    [NSNotificationCenter.defaultCenter addObserverForName:MEGContactNicknameChangeNotification
+                                                    object:nil
+                                                     queue:NSOperationQueue.mainQueue
+                                                usingBlock:^(NSNotification * _Nonnull note) {
+                                                    MEGAUser *user = note.userInfo[@"user"];
+                                                    if (user != nil && [weakself isAParticipant:user]) {
+                                                        [weakself.avatarImages removeObjectForKey:@(user.handle)];
+                                                        // Need to recalculate the size for the data and reload.
+                                                        [weakself.collectionView.collectionViewLayout invalidateLayout];
+                                                        [weakself.collectionView reloadData];
+                                                    }
+    }];
+    
     [[UNUserNotificationCenter currentNotificationCenter] removeDeliveredNotificationsWithIdentifiers:@[[MEGASdk base64HandleForUserHandle:self.chatRoom.chatId]]];
     [[UNUserNotificationCenter currentNotificationCenter] removePendingNotificationRequestsWithIdentifiers:@[[MEGASdk base64HandleForUserHandle:self.chatRoom.chatId]]];
     self.collectionView.prefetchingEnabled = NO;
@@ -998,6 +1013,21 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     return participantsNames;
 }
 
+- (BOOL)isAParticipant:(MEGAUser *)user {
+    BOOL isUserAParticipant = NO;
+    
+    for (NSUInteger i = 0; i < self.chatRoom.peerCount; i++) {
+        uint64_t userHandle = [self.chatRoom peerHandleAtIndex:i];
+        
+        if (userHandle == user.handle) {
+            isUserAParticipant = YES;
+            break;
+        }
+    }
+    
+    return isUserAParticipant;
+}
+
 - (void)setChatOpenMessageForIndexPath:(NSIndexPath *)indexPath {
     if (self.openMessageHeaderView == nil) {
         self.openMessageHeaderView = [self.collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"MEGAOpenMessageHeaderViewID" forIndexPath:indexPath];
@@ -1368,7 +1398,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         return;
     }
     
-    NSString *userName = [self.chatRoom peerFullnameByHandle:userHandle];
+    NSString *userName = [self.chatRoom userDisplayNameForUserHandle:userHandle];
     NSString *userEmail = [self.chatRoom peerEmailByHandle:userHandle];
     
     if (!userEmail) {
@@ -2241,13 +2271,9 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         NSMutableAttributedString *topCellAttributed = [[NSMutableAttributedString alloc] init];
         
         if (self.chatRoom.isGroup && !message.isManagementMessage) {
-            NSString *nickname = [self.chatRoom userNicknameForUserHandle:message.userHandle];
-            NSString *fullname = (nickname && !nickname.mnz_isEmpty) ? nickname : [self.chatRoom peerFullnameByHandle:message.userHandle];
+            NSString *fullname = [self.chatRoom userDisplayNameForUserHandle:message.userHandle];
             if (!fullname.length) {
-                fullname = [self.chatRoom peerEmailByHandle:message.userHandle];
-                if (!fullname) {
-                    fullname = @"";
-                }
+                fullname = @"";
             }
             NSAttributedString *fullnameAttributed = [[NSAttributedString alloc] initWithString:[fullname stringByAppendingString:@"   "] attributes:@{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1], NSForegroundColorAttributeName:UIColor.grayColor}];
             [topCellAttributed appendAttributedString:fullnameAttributed];

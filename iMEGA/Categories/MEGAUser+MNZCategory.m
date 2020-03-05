@@ -3,6 +3,7 @@
 
 #import "Helper.h"
 #import "MEGAStore.h"
+#import "NSString+MNZCategory.h"
 
 @implementation MEGAUser (MNZCategory)
 
@@ -24,6 +25,11 @@
     [MEGAStore.shareInstance updateUserWithUserHandle:self.handle
                                                nickname:mnz_nickname
                                               context:nil];
+}
+
+- (NSString *)mnz_displayName {
+    MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithUserHandle:self.handle];
+    return moUser.displayName;
 }
 
 @end
