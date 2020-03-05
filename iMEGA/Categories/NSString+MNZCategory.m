@@ -11,6 +11,7 @@
 #import "NSDate+DateTools.h"
 
 #import "NSDate+MNZCategory.h"
+#import "MEGASdkManager.h"
 #import "MEGAUser+MNZCategory.h"
 
 static NSString* const A = @"[A]";

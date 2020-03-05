@@ -1,8 +1,6 @@
 
 #import <Foundation/Foundation.h>
 
-#import "MEGASdkManager.h"
-
 typedef NS_ENUM (NSInteger, MEGAChatStatus);
 typedef NS_ENUM(NSInteger, MEGAChatMessageEndCallReason);
 
