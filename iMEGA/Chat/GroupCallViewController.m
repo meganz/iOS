@@ -905,9 +905,6 @@
     remoteUser.audio = CallPeerAudioUnknown;
     
     NSString *userName = [self.chatRoom userDisplayNameForUserHandle:chatSession.peerId];
-    if (userName.length == 0) {
-        userName = [self.chatRoom peerFullnameByHandle:chatSession.peerId];
-    }
     remoteUser.name = userName;
     
     [self.peersInCall insertObject:remoteUser atIndex:0];
