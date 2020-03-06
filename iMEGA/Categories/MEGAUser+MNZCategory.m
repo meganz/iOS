@@ -28,7 +28,7 @@
 }
 
 - (NSString *)mnz_displayName {
-    MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithUserHandle:self.handle];
+    MOUser *moUser = [MEGAStore.shareInstance fetchUserWithUserHandle:self.handle];
     return moUser.displayName;
 }
 
