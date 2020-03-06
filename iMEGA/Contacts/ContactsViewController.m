@@ -375,14 +375,7 @@
 
 - (NSComparator)userSortComparator {
     return ^NSComparisonResult(MEGAUser *a, MEGAUser *b) {
-        
-        NSString *aNickname = a.mnz_nickname;
-        NSString *bNickname = b.mnz_nickname;
-
-        NSString *aUserName = (aNickname != nil && !aNickname.mnz_isEmpty) ? aNickname : a.mnz_fullName;
-        NSString *bUserName = (bNickname != nil && !bNickname.mnz_isEmpty) ? bNickname : b.mnz_fullName;
-
-        return [aUserName compare:bUserName options:NSCaseInsensitiveSearch];
+        return [a.mnz_displayName compare:b.mnz_displayName options:NSCaseInsensitiveSearch];
     };
 }
 
@@ -1204,7 +1197,7 @@
         [self.indexPathsMutableDictionary setObject:indexPath forKey:base64Handle];
         
         ContactTableViewCell *cell;
-        NSString *userName = user.mnz_nickname ? : user.mnz_fullName;
+        NSString *userName = user.mnz_displayName;
         
         if (user.handle == MEGASdkManager.sharedMEGASdk.myUser.handle) {
             userName = [userName stringByAppendingString:[NSString stringWithFormat:@" (%@)", AMLocalizedString(@"me", @"The title for my message in a chat. The message was sent from yourself.")]];
