@@ -147,9 +147,9 @@
             if (userAlert.email) {
                 headingLabel.hidden = NO;
                 MOUser *user = [[MEGAStore shareInstance] fetchUserWithEmail:userAlert.email];
-                if (user && (user.firstname || user.lastname || user.nickname)) {
-                    NSString *userName = (user.nickname != nil && !user.nickname.mnz_isEmpty) ? user.nickname : user.fullName;
-                    headingLabel.text = [NSString stringWithFormat:@"%@ (%@)", userName, user.email];
+                NSString *displayName = user.displayName;
+                if (displayName.length > 0) {
+                    headingLabel.text = [NSString stringWithFormat:@"%@ (%@)", displayName, user.email];
                 } else {
                     headingLabel.text = userAlert.email;
                 }

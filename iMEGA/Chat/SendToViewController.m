@@ -175,18 +175,14 @@
             MEGAChatListItem *chatListItem = a;
             first = chatListItem.title;
         } else if ([a isKindOfClass:MEGAUser.class]) {
-            MEGAUser *user = a;
-            NSString *nickname = user.mnz_nickname;
-            first = (nickname != nil && !nickname.mnz_isEmpty) ? nickname : user.mnz_fullName;
+            first = ((MEGAUser *)a).mnz_displayName;
         }
         
         if ([b isKindOfClass:MEGAChatListItem.class]) {
             MEGAChatListItem *chatListItem = b;
             second = chatListItem.title;
         } else if ([b isKindOfClass:MEGAUser.class]) {
-            MEGAUser *user = b;
-            NSString *nickname = user.mnz_nickname;
-            second = (nickname != nil && !nickname.mnz_isEmpty) ? nickname : user.mnz_fullName;
+            second = ((MEGAUser *)b).mnz_displayName;
         }
         
         return [first compare:second options:NSCaseInsensitiveSearch];
@@ -645,9 +641,7 @@
             cell.onlineStatusView.hidden = YES;
         }
         
-        NSString *userNickname = user.mnz_nickname;
-        NSString *userName = (userNickname != nil && !userNickname.mnz_isEmpty) ? userNickname : user.mnz_fullName;
-        cell.nameLabel.text = userName ? userName : user.email;
+        cell.nameLabel.text = user.mnz_displayName;
         cell.shareLabel.text = user.email;
         
         [cell.avatarImageView mnz_setImageForUserHandle:user.handle];

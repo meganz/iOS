@@ -6,10 +6,10 @@
 #ifndef MNZ_APP_EXTENSION
 #import "Helper.h"
 #import "MEGAGetThumbnailRequestDelegate.h"
-#import "MEGAStore.h"
 #endif
 
 #import "MEGASdkManager.h"
+#import "MEGAStore.h"
 #import "NSString+MNZCategory.h"
 
 @interface MEGALocalNotificationManager ()
@@ -169,14 +169,8 @@
 }
 
 - (NSString *)subtitle {
-    NSString *subtitle = [self.chatRoom peerFullnameByHandle:self.message.userHandle];
-    if (!subtitle.length) {
-        subtitle = [self.chatRoom peerEmailByHandle:self.message.userHandle];
-        if (!subtitle) {
-            subtitle = @"";
-        }
-    }
-    return subtitle;
+    MOUser *user = [MEGAStore.shareInstance fetchUserWithUserHandle:self.message.userHandle];
+    return user.displayName;
 }
 
 - (nullable UNNotificationAttachment *)notificationAttachmentFor:(NSString *)file withIdentifier:(NSString *)identifier {

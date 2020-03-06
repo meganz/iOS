@@ -531,7 +531,6 @@
 		83B841682051913C00E5AC69 /* MEGAGetThumbnailRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A820DA3B1F0E5BDC00F1F832 /* MEGAGetThumbnailRequestDelegate.m */; };
 		83BC4F1D216B72E800000D30 /* MEGAGroupCallPeer.m in Sources */ = {isa = PBXBuildFile; fileRef = 83BC4F1C216B72E800000D30 /* MEGAGroupCallPeer.m */; };
 		83C570DE22E5BFCF00216896 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C570C822E5BFCF00216896 /* Constants.swift */; };
-		83C570DF22E5BFCF00216896 /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C570CA22E5BFCF00216896 /* TextField.swift */; };
 		83C570E022E5BFCF00216896 /* PhoneNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C570CB22E5BFCF00216896 /* PhoneNumber.swift */; };
 		83C570E122E5BFCF00216896 /* RegexManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C570CC22E5BFCF00216896 /* RegexManager.swift */; };
 		83C570E222E5BFCF00216896 /* MetadataTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C570CD22E5BFCF00216896 /* MetadataTypes.swift */; };
@@ -899,6 +898,7 @@
 		A88BFFED1F0A56B80081BCE3 /* libKarere.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFEC1F0A56B80081BCE3 /* libKarere.a */; };
 		A88BFFEE1F0A56C60081BCE3 /* libKarere.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFEC1F0A56B80081BCE3 /* libKarere.a */; };
 		A88BFFEF1F0A56CB0081BCE3 /* libKarere.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88BFFEC1F0A56B80081BCE3 /* libKarere.a */; };
+		A893322A24127B1B0088E588 /* MOUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 417B5AAD1DEC792400A193D5 /* MOUser.m */; };
 		A89629751FACE78B00F02F7A /* MEGACallManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A89629741FACE78B00F02F7A /* MEGACallManager.m */; };
 		A89629781FACEAF800F02F7A /* MEGAProviderDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A89629771FACEAF800F02F7A /* MEGAProviderDelegate.m */; };
 		A89D2A9D23CE2B3E00AD5488 /* SAMKeychain.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A89D2A9C23CE2B3E00AD5488 /* SAMKeychain.bundle */; };
@@ -1832,7 +1832,6 @@
 		83BC4F1B216B72E800000D30 /* MEGAGroupCallPeer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MEGAGroupCallPeer.h; path = Chat/Model/MEGAGroupCallPeer.h; sourceTree = "<group>"; };
 		83BC4F1C216B72E800000D30 /* MEGAGroupCallPeer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MEGAGroupCallPeer.m; path = Chat/Model/MEGAGroupCallPeer.m; sourceTree = "<group>"; };
 		83C570C822E5BFCF00216896 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		83C570CA22E5BFCF00216896 /* TextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
 		83C570CB22E5BFCF00216896 /* PhoneNumber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhoneNumber.swift; sourceTree = "<group>"; };
 		83C570CC22E5BFCF00216896 /* RegexManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegexManager.swift; sourceTree = "<group>"; };
 		83C570CD22E5BFCF00216896 /* MetadataTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetadataTypes.swift; sourceTree = "<group>"; };
@@ -4202,7 +4201,6 @@
 			isa = PBXGroup;
 			children = (
 				83C570C822E5BFCF00216896 /* Constants.swift */,
-				83C570C922E5BFCF00216896 /* UI */,
 				83C570CB22E5BFCF00216896 /* PhoneNumber.swift */,
 				83C570CC22E5BFCF00216896 /* RegexManager.swift */,
 				83C570CD22E5BFCF00216896 /* MetadataTypes.swift */,
@@ -4219,14 +4217,6 @@
 			);
 			name = PhoneNumberKit;
 			path = Vendor/PhoneNumberKit/PhoneNumberKit;
-			sourceTree = "<group>";
-		};
-		83C570C922E5BFCF00216896 /* UI */ = {
-			isa = PBXGroup;
-			children = (
-				83C570CA22E5BFCF00216896 /* TextField.swift */,
-			);
-			path = UI;
 			sourceTree = "<group>";
 		};
 		83C570D022E5BFCF00216896 /* Resources */ = {
@@ -6161,7 +6151,6 @@
 				A8E10D8021A5677900ACD42F /* ShareLocationViewController.m in Sources */,
 				4172794F1DB663FA001AC818 /* JSQMessagesCollectionView.m in Sources */,
 				411C8B6B1DECBD87006A0D8C /* MEGAUser+MNZCategory.m in Sources */,
-				83C570DF22E5BFCF00216896 /* TextField.swift in Sources */,
 				836AEDE52018AD1F00868FC7 /* PasswordView.m in Sources */,
 				A86B9F5D2316D6AB00F35E7A /* FLEXGlobalsEntry.m in Sources */,
 				836E74C42099DC82005E2317 /* MEGAChatChangeGroupNameRequestDelegate.m in Sources */,
@@ -6388,6 +6377,7 @@
 				7794AF16231FDE0A0039C1D2 /* MEGAReachabilityManager.m in Sources */,
 				7794AEE1231E5BC00039C1D2 /* MEGAConstants.m in Sources */,
 				77B9FEE623C6025B0002D0CD /* MEGAChatGenericRequestDelegate.m in Sources */,
+				A893322A24127B1B0088E588 /* MOUser.m in Sources */,
 				774941DF2410EADA00FC5CB6 /* MOChatDraft+CoreDataClass.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -6844,7 +6834,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 4.9.1;
+				MARKETING_VERSION = 4.9.2;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios;
 				PRODUCT_NAME = MEGA;
@@ -6898,7 +6888,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 4.9.1;
+				MARKETING_VERSION = 4.9.2;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios;
 				PRODUCT_NAME = MEGA;
@@ -6944,7 +6934,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = 4.9;
+				MARKETING_VERSION = 4.9.2;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				OTHER_LDFLAGS = "-ObjC";
@@ -6990,7 +6980,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = 4.9;
+				MARKETING_VERSION = 4.9.2;
 				MTL_FAST_MATH = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGANotifications;
