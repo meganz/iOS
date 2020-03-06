@@ -91,3 +91,7 @@ NSString * const MEGAAllUsersNicknameLoaded = @"MEGAAllUsersNicknameLoaded";
 NSString * const MEGALastPublicHandleAccessed = @"kLastPublicHandleAccessed";
 NSString * const MEGALastPublicTypeAccessed = @"kLastPublicTypeAccessed";
 NSString * const MEGALastPublicTimestampAccessed = @"kLastPublicTimestampAccessed";
+
+#pragma mark - MEGA Contact Nickname change Notification
+
+NSString * const MEGContactNicknameChangeNotification = @"MEGAContactNicknameChangeNotification";

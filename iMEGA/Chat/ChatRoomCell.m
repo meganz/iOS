@@ -138,8 +138,7 @@
 - (void)configureCellForUser:(MEGAUser *)user {
     self.privateChatImageView.hidden = YES;
     
-    NSString *userNickname = user.mnz_nickname;
-    self.chatTitle.text = (userNickname != nil && !userNickname.mnz_isEmpty) ? userNickname : user.mnz_fullName;
+    self.chatTitle.text = user.mnz_displayName;
     self.chatLastMessage.text = AMLocalizedString(@"noConversationHistory", @"Information if there are no history messages in current chat conversation");
     
     [self.avatarImageView mnz_setImageForUserHandle:user.handle name:[user mnz_fullName]];
@@ -298,16 +297,8 @@
         case MEGAChatMessageTypePrivilegeChange: {
             NSString *fullNameDidAction = [self actionAuthorNameInChatListItem:item];
             MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:item.chatId];
-            NSString *fullNameReceiveAction = [chatRoom peerFullnameByHandle:item.lastMessageHandle];
             
-            if (fullNameReceiveAction.length == 0) {
-                MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithUserHandle:item.lastMessageHandle];
-                if (moUser) {
-                    fullNameReceiveAction = (moUser.nickname != nil && !moUser.nickname.mnz_isEmpty) ? moUser.nickname : moUser.fullName;
-                } else {
-                    fullNameReceiveAction = @"";
-                }
-            }
+            NSString *fullNameReceiveAction = [self userDisplayNameForHandle:item.lastMessageHandle chatRoom:chatRoom];
             
             NSString *wasChangedToBy = AMLocalizedString(@"wasChangedToBy", @"A log message in a chat to display that a participant's permission was changed and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the permission name (such as Moderator or Read-only) and [C] will be replaced with the person who did it. Please keep the [A], [B] and [C] placeholders, they will be replaced at runtime. For example: Alice Jones was changed to Moderator by John Smith.");
             wasChangedToBy = [wasChangedToBy stringByReplacingOccurrencesOfString:@"[A]" withString:fullNameReceiveAction];
@@ -338,16 +329,8 @@
         case MEGAChatMessageTypeAlterParticipants: {
             NSString *fullNameDidAction = [self actionAuthorNameInChatListItem:item];
             MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:item.chatId];
-            NSString *fullNameReceiveAction = [chatRoom peerFullnameByHandle:item.lastMessageHandle];
             
-            if (fullNameReceiveAction.length == 0) {
-                MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithUserHandle:item.lastMessageHandle];
-                if (moUser) {
-                    fullNameReceiveAction = (moUser.nickname != nil && !moUser.nickname.mnz_isEmpty) ? moUser.nickname : moUser.fullName;
-                } else {
-                    fullNameReceiveAction = @"";
-                }
-            }
+            NSString *fullNameReceiveAction = [self userDisplayNameForHandle:item.lastMessageHandle chatRoom:chatRoom];
             
             switch (item.lastMessagePriv) {
                 case -1: {
@@ -468,16 +451,28 @@
     if (item.lastMessageSender == [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
         actionAuthor = [[MEGASdkManager sharedMEGAChatSdk] myFullname];
     } else {
-        MOUser *user = [MEGAStore.shareInstance fetchUserWithUserHandle:item.lastMessageSender];
-        actionAuthor = (user.nickname != nil && !user.nickname.mnz_isEmpty) ? user.nickname : user.fullName;
-    }
-    
-    if (!actionAuthor) {
         MEGAChatRoom *chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:item.chatId];
-        actionAuthor = [chatRoom peerFullnameByHandle:item.lastMessageSender];
+        actionAuthor = [self userDisplayNameForHandle:item.lastMessageSender chatRoom:chatRoom];
     }
 
     return actionAuthor ? actionAuthor : @"?";
+}
+
+- (NSString *)userDisplayNameForHandle:(uint64_t)handle chatRoom:(MEGAChatRoom *)chatRoom {
+    NSString *userDisplayName = @"";
+    MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithUserHandle:handle];
+    NSString *storedDisplayName = moUser.displayName;
+    
+    if (storedDisplayName.length > 0) {
+        userDisplayName = storedDisplayName;
+    } else {
+        NSString *fullName = [chatRoom peerFullnameByHandle:handle];
+        if (fullName.length > 0) {
+            userDisplayName = fullName;
+        }
+    }
+    
+    return userDisplayName;
 }
 
 @end
