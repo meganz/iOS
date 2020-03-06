@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - Utils
 
 - (NSString *)bodyString;
-- (NSString *)subtitle;
+- (NSString *)displayName;
 - (nullable UNNotificationAttachment *)notificationAttachmentFor:(NSString *)file withIdentifier:(NSString *)identifier;
 
 @end

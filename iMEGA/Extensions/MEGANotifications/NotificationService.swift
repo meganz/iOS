@@ -77,15 +77,21 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         bestAttemptContent?.userInfo = ["chatId" : chatId, "msgId" : message.messageId]
         bestAttemptContent?.body = notificationManager.bodyString()
         bestAttemptContent?.sound = UNNotificationSound.default
-        bestAttemptContent?.title = chatRoom.title
         if chatRoom.isGroup {
-            bestAttemptContent?.subtitle = notificationManager.subtitle()
+            bestAttemptContent?.title = chatRoom.title
+            bestAttemptContent?.subtitle = notificationManager.displayName()
+        } else {
+            bestAttemptContent?.title = notificationManager.displayName()
         }
         
         let chatIdBase64 = MEGASdk.base64Handle(forUserHandle: chatId) ?? ""
         bestAttemptContent?.threadIdentifier = chatIdBase64
         if #available(iOS 12.0, *) {
-            bestAttemptContent?.summaryArgument = chatRoom.title
+            if chatRoom.isGroup {
+                bestAttemptContent?.summaryArgument = chatRoom.title
+            } else {
+                bestAttemptContent?.summaryArgument = notificationManager.displayName()
+            }
         }
         
         if immediately {

@@ -51,7 +51,7 @@
                 content.sound = nil;
                 content.body = [self bodyString];
                 if (self.chatRoom.isGroup) {
-                    content.subtitle = [self subtitle];
+                    content.subtitle = [self displayName];
                 }
                 
                 content.threadIdentifier = [MEGASdk base64HandleForUserHandle:self.chatRoom.chatId] ?: @"";
@@ -168,7 +168,7 @@
     return body;
 }
 
-- (NSString *)subtitle {
+- (NSString *)displayName {
     MOUser *user = [MEGAStore.shareInstance fetchUserWithUserHandle:self.message.userHandle];
     return user.displayName;
 }
