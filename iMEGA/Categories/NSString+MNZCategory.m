@@ -176,7 +176,7 @@ static NSString* const B = @"[B]";
     return unitString;
 }
 
-- (NSString*)mnz_stringBetweenString:(NSString*)start andString:(NSString*)end {
+- (NSString *_Nullable)mnz_stringBetweenString:(NSString*)start andString:(NSString*)end {
     NSScanner* scanner = [NSScanner scannerWithString:self];
     [scanner setCharactersToBeSkipped:nil];
     [scanner scanUpToString:start intoString:NULL];
@@ -267,7 +267,7 @@ static NSString* const B = @"[B]";
     return missedString;
 }
 
-+ (NSString *)chatStatusString:(MEGAChatStatus)onlineStatus {
++ (NSString * _Nullable)chatStatusString:(MEGAChatStatus)onlineStatus {
     NSString *onlineStatusString;
     switch (onlineStatus) {
         case MEGAChatStatusOffline:
@@ -294,13 +294,15 @@ static NSString* const B = @"[B]";
     return onlineStatusString;
 }
 
-+ (NSString *)mnz_stringByEndCallReason:(MEGAChatMessageEndCallReason)endCallReason userHandle:(uint64_t)userHandle duration:(NSInteger)duration {
++ (NSString *)mnz_stringByEndCallReason:(MEGAChatMessageEndCallReason)endCallReason userHandle:(uint64_t)userHandle duration:(NSNumber * _Nullable)duration {
     NSString *endCallReasonString;
     switch (endCallReason) {
         case MEGAChatMessageEndCallReasonEnded: {
-            NSString *durationString = [NSString stringWithFormat:AMLocalizedString(@"duration", @"Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc)"), [NSString mnz_stringFromCallDuration:duration]];
-            NSString *callEnded = AMLocalizedString(@"callEnded", @"When an active call of user A with user B had ended");
-            endCallReasonString = [NSString stringWithFormat:@"%@ %@", callEnded, durationString];
+            endCallReasonString = AMLocalizedString(@"callEnded", @"When an active call of user A with user B had ended");
+            if (duration) {
+                NSString *durationString = [NSString stringWithFormat:AMLocalizedString(@"duration", @"Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc)"), [NSString mnz_stringFromCallDuration:duration.integerValue]];
+                endCallReasonString = [NSString stringWithFormat:@"%@ %@", endCallReasonString, durationString];
+            }
             break;
         }
             
@@ -709,7 +711,7 @@ static NSString* const B = @"[B]";
     return [trimmedSelf substringToIndex:end].uppercaseString;
 }
 
-- (NSString *)mnz_coordinatesOfPhotoOrVideo {
+- (NSString * _Nullable)mnz_coordinatesOfPhotoOrVideo {
     if (self.mnz_isImagePathExtension) {
         NSURL *fileURL;
         if ([self containsString:@"/tmp/"]) {
