@@ -146,6 +146,8 @@
 "emailAlreadyInUse"="错误。此邮箱已被使用。";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="您的设备内存不足";
+/* Message shown when you try to downlonad files bigger than the available memory. */
+"MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device."="MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device.";
 /* Title for the file link view */
 "fileLink"="文件链接";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
@@ -278,6 +280,8 @@
 "choosePhotoVideo"="选择";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="拍摄";
+/* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
+"Scan Document"="扫描文档";
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="新增文件夹";
 /* Hint text shown on the create folder alert. */
@@ -506,7 +510,9 @@
 "oneItemSelected"="已选中%lu 个项目";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
 "itemsSelected"="已选中%lu 个项目";
-/* Title shown when multiselection is enable in chat tabs, and the user has more than one item selected. */
+/* String shown when multi selection is enabled and only one item has been selected. */
+"1 selected"="1 selected";
+/* String shown when multi selection is enabled and the user has more than one item selected. */
 "xSelected"="已选%d个项目";
 /* Title of the Offline section */
 "offline"="离线";
@@ -680,6 +686,8 @@
 "Custom Settings"="自定义设置";
 /* Title to show when device local storage is full */
 "%@ Storage Full"="%@储存空间已满";
+/* Title to show when device local storage is almost full */
+"Device Storage Almost Full"="Device Storage Almost Full";
 /* Detail for local storage full situation */
 "You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="您没有足够的存储空间用于相机上传。请删除一些不必要的应用、视频和音乐以释放空间。您可在%@管理您的储存空间。";
 /* Navigation path for Storage settings in iOS */
@@ -962,7 +970,7 @@
 /* Description to encourage users to add phone number to their accounts when there are not achievements */
 "Add your phone number to MEGA. This makes it easier for your contacts to find you on MEGA."="添加手机号到您的MEGA帐户，您的联系人即可轻松在MEGA上找到您。";
 /* Description to unblock account by verifying phone number */
-"Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account."="您的帐户由于滥用行为已被暂时停用。请通过验证手机号解锁您的帐户。";
+"Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account."="由于滥用行为，您的帐户已被暂时锁定。请通过验证手机号解锁帐户。";
 /* Verify your account title */
 "Verify Your Account"="验证您的帐户";
 /* Add your phone number title */
@@ -1374,7 +1382,7 @@
 /* Paragraph 3 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph3"="此加密方式也代表我们无法存取或重新设定您的密码，因此您必须牢牢记住它(除非您有备份还原金钥)，否则您将无法存取您所储存的文件。";
 /* Paragraph between 3rd and 4th of the general description of MEGA shown on the iOS App Store, part of Android string 17769 */
-"generalDescriptionVideoChat"="End-to-end user-encrypted MEGA video chat allows for total privacy, and has been available through the browser since 2016. It has been extended to our mobile app, with chat history accessible across multiple devices. Users can also easily add files to a chat from their MEGA Cloud Drive.";
+"generalDescriptionVideoChat"="终端至终端加密保护的MEGA视频聊天为您的聊天提供完全的隐私，自2016年来一直通过浏览器使用。它已扩展到我们的移动应用程序，并可在多个设备上访问聊天记录。用户还能轻松地从MEGA云盘向聊天添加文件。";
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph4"="注册用户只要参与奖励计划即可获得50GB免费储存空间，亦可付费获得更多配额：";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
@@ -1937,7 +1945,7 @@
 /* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
 "Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="请转到设备的“设置”中的“隐私”部分。启用定位服务并将MEGA设置为使用App时开启或者始终开启。";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
-"MEGA accesses your location when you elect to share it with your contacts."="当您选择与联系人共享时，MEGA会访问您的位置。";
+"NSLocationAlwaysAndWhenInUseUsageDescription"="MEGA accesses your location when you share it with your contacts in chat or when you enable ”Upload in Background” for Camera Uploads so your photos and videos are uploaded when your location changes.";
 /* Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
 "Mobile Data is turned off"="移动数据已关闭";
 /* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */
@@ -2036,6 +2044,14 @@
 "You are back!"="已重连。";
 /* Subtitle of chat screen when the chat is inactive */
 "Inactive chat"="非活跃聊天";
+/* Contact details screen: Set the alias(nickname) for a user */
+"Set Nickname"="设置昵称";
+/* Contact details screen: Edit the alias(nickname) for a user */
+"Edit Nickname"="Edit Nickname";
+/* Edit nickname screen: Remove nickname button title */
+"Remove Nickname"="Remove Nickname";
+/* Add nickname screen: This text appears above the alias(nickname) entry */
+"Alias/ Nickname"="别名/昵称";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
 "It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="该文件未使用UTF-8或ISO/IEC 8859-1进行编码，无法读取文件内容。";
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
@@ -2069,9 +2085,9 @@
 /* Message shown when verify phone number successfully */
 "Your phone number has been verified successfully"="您的手机号已成功验证";
 /* Text describing account suspended state to the user */
-"Your account has been temporarily suspended for your safety."="为了确保帐户安全，您的帐户已被暂时停用。";
+"Your account has been temporarily suspended for your safety."="为了确保安全，您的帐户已被暂时锁定。";
 /* Text indicating the user next step to unlock suspended account. Please leave [S], [/S] as it is which is used to bolden the text. */
-"[S]Please verify your email[/S] and follow its steps to unlock your account."="[S]验证您的邮箱[/S]并根据步骤解锁您的帐户";
+"[S]Please verify your email[/S] and follow its steps to unlock your account."="[S]请验证您的邮箱[/S]并按照MEGA邮件中步骤解锁您的帐户。";
 /* Text for button to open an helping view */
 "Why am I seeing this?"="为什么我的帐户被停用？";
 /* Text to notify user an email has been sent */
@@ -2082,7 +2098,27 @@
 "It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="您的MEGA帐户使用的密码可能与其他服务使用的密码相同，并且这些其他服务中至少有一项服务的数据已遭泄露。";
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="您的密码遭到泄露（包括且不限于MEGA帐户），您的帐户正在被他人登录和使用。";
+/* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
+"MEGA CAMERA UPLOADS FOLDER"="MEGA相机上传文件夹";
+/* Action button text of folder selection screen for camera uploads */
+"Select Folder"="选择文件夹";
+/* Title of the folder selection screen for camera uploads */
+"Choose Folder"="选择文件夹";
+/* Label used near to the option selected to encode the images uploaded to a chat (Low, Medium, Original) */
+"Image quality"="图片质量";
+/* Title of Image Quality option */
+"Automatic"="自动";
+/* Description of Automatic Image Quality option */
+"Send smaller size images through cellular networks and original size images through wifi"="Send smaller size images through cellular networks and original size images through wifi";
+/* Title of Image Quality option */
+"Optimised"="优化";
+/* Description of Optimised Image Quality option */
+"Send smaller size images optimised for lower data consumption"="发送较小尺寸的图片，优化以降低数据消耗";
+/* Description of High Image Quality option */
+"Send original size, increased quality images"="Send original size, increased quality images";
 /* Setting title for Doc scan view */
 "Save Settings"="Save Settings";
 /* file type title, used in changing the export format of scaned doc */
-"File Type"="File Type";
+"File Type"="文件类型";
+/* export Quality Option for Scan document */
+"best"="Best";

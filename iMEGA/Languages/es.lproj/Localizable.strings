@@ -146,6 +146,8 @@
 "emailAlreadyInUse"="Error. Este correo electrónico ya está asociado a una cuenta de MEGA.";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Tienes que liberar espacio";
+/* Message shown when you try to downlonad files bigger than the available memory. */
+"MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device."="MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device.";
 /* Title for the file link view */
 "fileLink"="Enlace del Archivo";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
@@ -278,6 +280,8 @@
 "choosePhotoVideo"="Seleccionar";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="Capturar";
+/* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
+"Scan Document"="Escanear documento";
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="Nueva carpeta";
 /* Hint text shown on the create folder alert. */
@@ -506,7 +510,9 @@
 "oneItemSelected"="%lu elemento seleccionado";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
 "itemsSelected"="%lu elementos seleccionados";
-/* Title shown when multiselection is enable in chat tabs, and the user has more than one item selected. */
+/* String shown when multi selection is enabled and only one item has been selected. */
+"1 selected"="1 selected";
+/* String shown when multi selection is enabled and the user has more than one item selected. */
 "xSelected"="%d seleccionados";
 /* Title of the Offline section */
 "offline"="Sin conexión";
@@ -680,6 +686,8 @@
 "Custom Settings"="Ajustes personalizados";
 /* Title to show when device local storage is full */
 "%@ Storage Full"="Almacenamiento %@ lleno";
+/* Title to show when device local storage is almost full */
+"Device Storage Almost Full"="Device Storage Almost Full";
 /* Detail for local storage full situation */
 "You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="No tienes almacenamiento suficiente para más subidas de la cámara. Libera espacio eliminando aplicaciones que no utilizas, videos o música. Puedes gestionar tu almacenamiento en %@";
 /* Navigation path for Storage settings in iOS */
@@ -954,7 +962,7 @@
 /* %1 will be replaced by a numeric value and %2 will be 'days' or 'months', for example (Expires in [S]10[/S] days) */
 "bonusExpiresIn"="(El bono expira en [S]%1[/S] %2)";
 /* Add Phone Number title  */
-"Add Phone Number"="Añadir el número de teléfono";
+"Add Phone Number"="Añadir número de teléfono";
 /* Achievement explanation for add phone number */
 "You have received %1$s storage space and %2$s transfer quota for verifying your phone number."="Has recibido %1$s de espacio de almacenamiento y%2$s de cuota de transferencia por haber confirmado tu número de teléfono.";
 /* Free storage description to encourage users to add phone number to their accounts */
@@ -962,7 +970,7 @@
 /* Description to encourage users to add phone number to their accounts when there are not achievements */
 "Add your phone number to MEGA. This makes it easier for your contacts to find you on MEGA."="Añade tu número de teléfono a MEGA. Esto hará que tus contactos te encuentren de manera más fácil en MEGA.";
 /* Description to unblock account by verifying phone number */
-"Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account."="Tu cuenta ha sido temporalmente suspendida debido a un posible mal uso de la misma. Confirma tu número de teléfono para desbloquear tu cuenta.";
+"Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account."="Tu cuenta ha sido bloqueada temporalmente debido a un posible mal uso de la misma. Confirma tu número de teléfono para desbloquear tu cuenta.";
 /* Verify your account title */
 "Verify Your Account"="Confirma tu cuenta";
 /* Add your phone number title */
@@ -1220,7 +1228,7 @@
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
 "confidentialityExplanation"="[S]Confidencialidad.[/S] Solo el autor y los destinatarios receptores pueden descifrar y leer el contenido.";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
-"authenticityExplanation"="[S]Autenticidad.[/S] El sistema asegura que los datos recibidos proceden del remitente que aparece, y que su contenido no ha sido manipulado durante la transmisión.";
+"authenticityExplanation"="[S]Autenticidad.[/S] El sistema se asegura de que los datos recibidos procedan del remitente que aparece, y que su contenido no haya sido manipulado durante la transmisión.";
 /* Alert message shown when a chat does not exist */
 "chatNotFound"="Chat no encontrado";
 /* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
@@ -1937,7 +1945,7 @@
 /* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
 "Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="Ve a la sección Privacidad en los Ajustes de tu dispositivo. Activa la Localización y configura MEGA en \"Cuando se use la app\" o \"Siempre\".";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
-"MEGA accesses your location when you elect to share it with your contacts."="MEGA accederá a tu ubicación cuando elijas compartirla con tus contactos.";
+"NSLocationAlwaysAndWhenInUseUsageDescription"="MEGA accesses your location when you share it with your contacts in chat or when you enable ”Upload in Background” for Camera Uploads so your photos and videos are uploaded when your location changes.";
 /* Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
 "Mobile Data is turned off"="Los datos móviles están desactivados";
 /* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */
@@ -1955,25 +1963,25 @@
 /* Title encouraging the user to check who of its contacts are using MEGA */
 "See who's already on MEGA"="Ver quiénes están ya en MEGA";
 /* Title showing the user how many of his contacts are using MEGA */
-"[X] contacts found on MEGA"="[X] contacts found on MEGA";
+"[X] contacts found on MEGA"="[X] contactos encontrados en MEGA";
 /* Title showing the user that one of his contacts are using MEGA */
-"1 contact found on MEGA"="1 contact found on MEGA";
+"1 contact found on MEGA"="1 contacto encontrado en MEGA";
 /* Text indicating the user to perform an action to grant some permission */
 "Enable Access"="Permite acceso";
 /* Text indicating the user to open the device settings for MEGA */
-"Open Settings"="Open Settings";
+"Open Settings"="Abrir los ajustes";
 /* Text encouraging the user to invite contacts to MEGA */
 "Invite contacts and start chatting securely with MEGA’s encrypted chat."="Invita a contactos y chatea de forma segura con el chat cifrado de MEGA.";
 /* Text showing the user how many contacts would be invited */
-"Invite [X] contacts"="Invite [X] contacts";
+"Invite [X] contacts"="Invitar a [X] contactos";
 /* Text showing the user how to write more than one email in order to invite them to MEGA */
-"Tap space to enter multiple emails"="Tap space to enter multiple emails";
+"Tap space to enter multiple emails"="Inserta un espacio para añadir múltiples correos";
 /* Text used as a section title or similar */
-"Enter Email"="Enter Email";
+"Enter Email"="Añadir correo electrónico";
 /* Text used as view title showing the user the phone contacts using MEGA */
 "On MEGA"="En MEGA";
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
-"CONTACTS ON MEGA"="CONTACTS ON MEGA";
+"CONTACTS ON MEGA"="CONTACTOS CON CUENTA EN MEGA";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
 "Hi, Have encrypted conversations on Mega with me and get 50GB free storage."="¡Hola! Chatea conmigo en MEGA de forma segura y obtén hasta 50 GB de almacenamiento gratuito.";
 /* Destination folder name of chat files */
@@ -2036,6 +2044,14 @@
 "You are back!"="Has vuelto.";
 /* Subtitle of chat screen when the chat is inactive */
 "Inactive chat"="Chat inactivo";
+/* Contact details screen: Set the alias(nickname) for a user */
+"Set Nickname"="Elige un alias";
+/* Contact details screen: Edit the alias(nickname) for a user */
+"Edit Nickname"="Edit Nickname";
+/* Edit nickname screen: Remove nickname button title */
+"Remove Nickname"="Remove Nickname";
+/* Add nickname screen: This text appears above the alias(nickname) entry */
+"Alias/ Nickname"="Alias";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
 "It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="No se puede obtener el contenido de este archivo, ya que no está codificado ni en UTF-8 ni en ISO/IEC 8859-1.";
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
@@ -2069,9 +2085,9 @@
 /* Message shown when verify phone number successfully */
 "Your phone number has been verified successfully"="Tu número de teléfono ha sido confirmado";
 /* Text describing account suspended state to the user */
-"Your account has been temporarily suspended for your safety."="Your account has been temporarily suspended for your safety.";
+"Your account has been temporarily suspended for your safety."="Tu cuenta ha sido bloqueada temporalmente por seguridad.";
 /* Text indicating the user next step to unlock suspended account. Please leave [S], [/S] as it is which is used to bolden the text. */
-"[S]Please verify your email[/S] and follow its steps to unlock your account."="[S]Confirma tu correo[/S] y sigue los pasos que te indicamos para desbloquear tu cuenta.";
+"[S]Please verify your email[/S] and follow its steps to unlock your account."="Para desbloquear tu cuenta [S]Confirma tu dirección de correo electrónico[/S] siguiendo los pasos del correo de MEGA que te envíamos a tu bandeja de entrada.";
 /* Text for button to open an helping view */
 "Why am I seeing this?"="¿Por qué estoy viendo esto?";
 /* Text to notify user an email has been sent */
@@ -2082,7 +2098,27 @@
 "It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="Es posible que estés utilizando la misma contraseña para tu cuenta de MEGA y para otros servicios, y que al menos uno de estos otros servicios haya sufrido una violación de datos.";
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="Tu contraseña se ha filtrado y está siendo utilizada por terceros para iniciar sesión en tus cuentas, incluida, entre otras, tu cuenta de MEGA.";
+/* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
+"MEGA CAMERA UPLOADS FOLDER"="CARPETA DE LAS SÚBIDAS DE LA CAMARA";
+/* Action button text of folder selection screen for camera uploads */
+"Select Folder"="Seleccionar carpeta";
+/* Title of the folder selection screen for camera uploads */
+"Choose Folder"="Seleccionar carpeta";
+/* Label used near to the option selected to encode the images uploaded to a chat (Low, Medium, Original) */
+"Image quality"="Calidad de imagen";
+/* Title of Image Quality option */
+"Automatic"="Automática";
+/* Description of Automatic Image Quality option */
+"Send smaller size images through cellular networks and original size images through wifi"="Send smaller size images through cellular networks and original size images through wifi";
+/* Title of Image Quality option */
+"Optimised"="Optimizada";
+/* Description of Optimised Image Quality option */
+"Send smaller size images optimised for lower data consumption"="Envía imágenes de menor tamaño optimizadas para un menor consumo de datos.";
+/* Description of High Image Quality option */
+"Send original size, increased quality images"="Send original size, increased quality images";
 /* Setting title for Doc scan view */
 "Save Settings"="Save Settings";
 /* file type title, used in changing the export format of scaned doc */
-"File Type"="File Type";
+"File Type"="Tipo de archivo";
+/* export Quality Option for Scan document */
+"best"="Best";

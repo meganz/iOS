@@ -131,6 +131,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    [self addNicknamesLoadedNotification];
 
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
@@ -145,6 +146,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+    [self removeNicknamesLoadedNotification];
 
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
     [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
@@ -341,8 +343,8 @@
                 }
             }
         }
-        NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"mnz_fullName" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
-        self.visibleUsersArray = [NSMutableArray arrayWithArray:[usersArray sortedArrayUsingDescriptors:@[sort]]];
+        
+        self.visibleUsersArray = [[usersArray sortedArrayUsingComparator:self.userSortComparator] mutableCopy];
     }
     
     [self.tableView reloadData];
@@ -370,6 +372,13 @@
         [self addSearchBarController];
     }
 }
+
+- (NSComparator)userSortComparator {
+    return ^NSComparisonResult(MEGAUser *a, MEGAUser *b) {
+        return [a.mnz_displayName compare:b.mnz_displayName options:NSCaseInsensitiveSearch];
+    };
+}
+
 
 - (void)internetConnectionChanged {
     BOOL boolValue = MEGAReachabilityManager.isReachable;
@@ -853,6 +862,17 @@
     }
 }
 
+- (void)addNicknamesLoadedNotification {
+    __weak typeof(self) weakself = self;
+    [NSNotificationCenter.defaultCenter addObserverForName:MEGAAllUsersNicknameLoaded object:nil queue:NSOperationQueue.mainQueue usingBlock:^(NSNotification * _Nonnull note) {
+        [weakself.tableView reloadData];
+    }];
+}
+
+- (void)removeNicknamesLoadedNotification {
+    [NSNotificationCenter.defaultCenter removeObserver:self name:MEGAAllUsersNicknameLoaded object:nil];
+}
+
 #pragma mark - IBActions
 
 - (IBAction)selectAllAction:(UIBarButtonItem *)sender {
@@ -1177,7 +1197,7 @@
         [self.indexPathsMutableDictionary setObject:indexPath forKey:base64Handle];
         
         ContactTableViewCell *cell;
-        NSString *userName = user.mnz_fullName;
+        NSString *userName = user.mnz_displayName;
         
         if (user.handle == MEGASdkManager.sharedMEGASdk.myUser.handle) {
             userName = [userName stringByAppendingString:[NSString stringWithFormat:@" (%@)", AMLocalizedString(@"me", @"The title for my message in a chat. The message was sent from yourself.")]];
@@ -1782,7 +1802,11 @@
         if ([searchString isEqualToString:@""]) {
             [self.searchVisibleUsersArray removeAllObjects];
         } else {
-            NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"SELF.mnz_fullName contains[c] %@", searchString];
+            NSPredicate *fullnamePredicate = [NSPredicate predicateWithFormat:@"SELF.mnz_fullName contains[c] %@", searchString];
+            NSPredicate *nicknamePredicate = [NSPredicate predicateWithFormat:@"SELF.mnz_nickname contains[c] %@", searchString];
+            NSPredicate *emailPredicate = [NSPredicate predicateWithFormat:@"SELF.email contains[c] %@", searchString];
+            NSPredicate *resultPredicate = [NSCompoundPredicate orPredicateWithSubpredicates:@[fullnamePredicate, nicknamePredicate, emailPredicate]];
+
             self.searchVisibleUsersArray = [self.visibleUsersArray filteredArrayUsingPredicate:resultPredicate].mutableCopy;
         }
     }

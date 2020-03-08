@@ -82,8 +82,16 @@ extern NSString * const MEGAUIActivityTypeShareFolder;
 extern NSString * const MEGAUIActivityTypeSaveToCameraRoll;
 extern NSString * const MEGAUIActivityTypeSendToChat;
 
+#pragma mark - Background Task completion.
+
+extern NSString * const MEGAAllUsersNicknameLoaded;
+
 #pragma mark - MEGA Affiliate program
 
 extern NSString * const MEGALastPublicHandleAccessed;
 extern NSString * const MEGALastPublicTypeAccessed;
 extern NSString * const MEGALastPublicTimestampAccessed;
+
+#pragma mark - MEGA Contact Nickname change Notification
+
+extern NSString * const MEGContactNicknameChangeNotification;
