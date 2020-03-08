@@ -6,5 +6,6 @@
 @dynamic firstname;
 @dynamic lastname;
 @dynamic email;
+@dynamic nickname;
 
 @end
