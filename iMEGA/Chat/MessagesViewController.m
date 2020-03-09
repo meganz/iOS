@@ -3040,7 +3040,11 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             case MEGAChatMessageTypePublicHandleDelete:
             case MEGAChatMessageTypeSetPrivateMode: {
                 if (!message.isDeleted) {
-                    [self.loadingMessages insertObject:message atIndex:0];
+                    if(message.status == MEGAChatMessageStatusSending || message.status == MEGAChatMessageStatusSendingManual) {
+                        [self.loadingMessages addObject:message];
+                    } else {
+                        [self.loadingMessages insertObject:message atIndex:0];
+                    }
                 }
                 break;
             }
