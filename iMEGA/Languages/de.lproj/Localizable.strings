@@ -962,7 +962,7 @@
 /* %1 will be replaced by a numeric value and %2 will be 'days' or 'months', for example (Expires in [S]10[/S] days) */
 "bonusExpiresIn"="(Bonus noch [S]%1[/S] %2 gültig)";
 /* Add Phone Number title  */
-"Add Phone Number"="Add phone number";
+"Add Phone Number"="Add Phone Number";
 /* Achievement explanation for add phone number */
 "You have received %1$s storage space and %2$s transfer quota for verifying your phone number."="You have received %1$s storage space and %2$s transfer quota for verifying your phone number.";
 /* Free storage description to encourage users to add phone number to their accounts */
@@ -1628,6 +1628,8 @@
 "Save in Photos"="In Photos speichern";
 /* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Die aus der App heraus aufgenommenen Fotos und Videos werden auch in den lokalen Mediendateien gespeichert.";
+/* Settings section title where you can enable the option to 'Spotlight search' */
+"Spotlight Search"="Spotlight Search";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="Sie sind der alleinige Inhaber Ihrer Schlüsel";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -1691,7 +1693,7 @@
 /* A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days. */
 "Remove files older than"="Automatische Löschung nach";
 /* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
-"Days"="Days";
+"Days"="Tag(en)";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
 "The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="Die Leerung des Papierkorbs erfolgt automatisch. Die Aufbewahrungsfrist beträgt zwischen sieben und 30 Tagen.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
@@ -1957,7 +1959,7 @@
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Auf den Testserver wechseln? Dies ist mit erheblichen Risiken behaftet.";
 /* Title label that explains that the user is going to be asked for the contacts permission */
-"Enable Access to Contacts"="Enable access to contacts";
+"Enable Access to Contacts"="Enable Access to Contacts";
 /* Detailed explanation of why the user should give permission to contacts */
 "MEGA needs access to your contacts to help you connect with other people on MEGA."="MEGA needs access to your contacts to help you connect with other people on MEGA.";
 /* Title encouraging the user to check who of its contacts are using MEGA */
@@ -1966,8 +1968,6 @@
 "[X] contacts found on MEGA"="[X] contacts found on MEGA";
 /* Title showing the user that one of his contacts are using MEGA */
 "1 contact found on MEGA"="1 contact found on MEGA";
-/* Text indicating the user to perform an action to grant some permission */
-"Enable Access"="Zugriff freigeben";
 /* Text indicating the user to open the device settings for MEGA */
 "Open Settings"="Open Settings";
 /* Text encouraging the user to invite contacts to MEGA */
@@ -2109,7 +2109,7 @@
 /* Title of Image Quality option */
 "Automatic"="Automatisch";
 /* Description of Automatic Image Quality option */
-"Send smaller size images through cellular networks and original size images through wifi"="Send smaller size images through cellular networks and original size images through wifi";
+"Send smaller size images through cellular networks and original size images through wifi"="Send smaller size images through cellular networks and original size images through Wi-Fi";
 /* Title of Image Quality option */
 "Optimised"="Optimiert";
 /* Description of Optimised Image Quality option */

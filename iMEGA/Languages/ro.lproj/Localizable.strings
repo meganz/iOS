@@ -1270,7 +1270,7 @@
 /* Alert message shown when the user perform logout and has files in the Offline directory */
 "allFilesSavedForOfflineWillBeDeletedFromYourDevice"="Toate fișierele salvate pentru offline vor fi șterse de pe dispozitiv. Continui spre deconectare?";
 /* Title shown when you almost had used your available transfer quota. */
-"depletedTransferQuota_title"="Cotă de transfer epuizată";
+"depletedTransferQuota_title"="Cotă de transfer insuficientă";
 /* Description shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_message"="Descărcarea în coadă depășește cota de transfer actuală disponibilă pentru contul tău și, prin urmare, poate fi întreruptă.";
 /* Button title to see the available pro plans in MEGA */
@@ -1628,6 +1628,8 @@
 "Save in Photos"="Salvează în Fotografii";
 /* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Salvează o copie a imaginilor și videoclipurilor realizate din aplicația MEGA în biblioteca media a dispozitivului.";
+/* Settings section title where you can enable the option to 'Spotlight search' */
+"Spotlight Search"="Spotlight Search";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="Tu deții cheile";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -1691,7 +1693,7 @@
 /* A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days. */
 "Remove files older than"="Elimină fișierele mai vechi de";
 /* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
-"Days"="Zile";
+"Days"="zile";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
 "The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="Coșul de gunoi este golit pentru tine automat. Perioada minimă este de 7 zile și perioada maximă este de 30 de zile.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
@@ -1966,8 +1968,6 @@
 "[X] contacts found on MEGA"="[X] contacte găsite pe MEGA";
 /* Title showing the user that one of his contacts are using MEGA */
 "1 contact found on MEGA"="1 contact găsit pe MEGA";
-/* Text indicating the user to perform an action to grant some permission */
-"Enable Access"="Activează accesul";
 /* Text indicating the user to open the device settings for MEGA */
 "Open Settings"="Deschide Configurări";
 /* Text encouraging the user to invite contacts to MEGA */
@@ -2109,7 +2109,7 @@
 /* Title of Image Quality option */
 "Automatic"="Automat";
 /* Description of Automatic Image Quality option */
-"Send smaller size images through cellular networks and original size images through wifi"="Send smaller size images through cellular networks and original size images through wifi";
+"Send smaller size images through cellular networks and original size images through wifi"="Send smaller size images through cellular networks and original size images through Wi-Fi";
 /* Title of Image Quality option */
 "Optimised"="Optimizată";
 /* Description of Optimised Image Quality option */
