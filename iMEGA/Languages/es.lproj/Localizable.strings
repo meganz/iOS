@@ -529,9 +529,9 @@
 /* Title of the tab bar item for the Shared Items section */
 "shared"="Compartido";
 /* Title of the "Incoming" Shared Items. */
-"incoming"="Entrante";
+"incoming"="Conmigo";
 /* Title of the "Outgoing" Shared Items. */
-"outgoing"="Saliente";
+"outgoing"="Por mí";
 /* Text shown to explain with how many contacts you have shared a folder */
 "sharedWithXContacts"="Compartida con %d contactos";
 /* Message shown when you have changed the permissions of a shared folder */
@@ -1270,7 +1270,7 @@
 /* Alert message shown when the user perform logout and has files in the Offline directory */
 "allFilesSavedForOfflineWillBeDeletedFromYourDevice"="Todo los archivos en Sin conexión serán eliminados de tu dispositivo. ¿Seguro que quieres continuar?";
 /* Title shown when you almost had used your available transfer quota. */
-"depletedTransferQuota_title"="Cuota de transferencia agotada";
+"depletedTransferQuota_title"="Cuota de transferencia insuficiente";
 /* Description shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_message"="Las descargas en cola superan la cuota de transferencia disponible para tu dirección IP y por lo tanto podrían interrumpirse.";
 /* Button title to see the available pro plans in MEGA */
@@ -1628,6 +1628,8 @@
 "Save in Photos"="Guardar en Fotos";
 /* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Guarda una copia de las imágenes y de los videos capturados desde la aplicación de MEGA en la galería del dispositivo.";
+/* Settings section title where you can enable the option to 'Spotlight search' */
+"Spotlight Search"="Spotlight Search";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="Tú tienes las claves";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -1691,7 +1693,7 @@
 /* A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days. */
 "Remove files older than"="Eliminar archivos anteriores a";
 /* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
-"Days"="Días";
+"Days"="días";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
 "The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="La Papelera se vacía de forma automática. El período mínimo es de 7 días y el máximo es de 30 días.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
@@ -1966,8 +1968,6 @@
 "[X] contacts found on MEGA"="[X] contactos encontrados en MEGA";
 /* Title showing the user that one of his contacts are using MEGA */
 "1 contact found on MEGA"="1 contacto encontrado en MEGA";
-/* Text indicating the user to perform an action to grant some permission */
-"Enable Access"="Permite acceso";
 /* Text indicating the user to open the device settings for MEGA */
 "Open Settings"="Abrir los ajustes";
 /* Text encouraging the user to invite contacts to MEGA */
@@ -2109,7 +2109,7 @@
 /* Title of Image Quality option */
 "Automatic"="Automática";
 /* Description of Automatic Image Quality option */
-"Send smaller size images through cellular networks and original size images through wifi"="Send smaller size images through cellular networks and original size images through wifi";
+"Send smaller size images through cellular networks and original size images through wifi"="Send smaller size images through cellular networks and original size images through Wi-Fi";
 /* Title of Image Quality option */
 "Optimised"="Optimizada";
 /* Description of Optimised Image Quality option */

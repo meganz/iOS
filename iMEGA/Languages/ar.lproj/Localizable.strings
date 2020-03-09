@@ -1628,6 +1628,8 @@
 "Save in Photos"="احفظ مع الصور";
 /* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="احفظ نسخة من الصور والفيديوهات المأخوذة من تطبيق MEGA في مكتبة الوسائط على جهازك.";
+/* Settings section title where you can enable the option to 'Spotlight search' */
+"Spotlight Search"="Spotlight Search";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="انت تحتفظ بالمفتاح";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -1691,7 +1693,7 @@
 /* A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days. */
 "Remove files older than"="أزل الملفات الأكبر من";
 /* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
-"Days"="يوم";
+"Days"="أيام";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
 "The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="سيتم افراغ سلة المحذوفات بشكل أتوماتيكي. أقصر مدة يمكن تحديدها هي 7 أيام وأطول مدة هي 30 يوم.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
@@ -1966,8 +1968,6 @@
 "[X] contacts found on MEGA"="[X] جهات اتصال وجدت على ميغا MEGA";
 /* Title showing the user that one of his contacts are using MEGA */
 "1 contact found on MEGA"="تم العثور على جهة اتصال واحدة على ميغا MEGA";
-/* Text indicating the user to perform an action to grant some permission */
-"Enable Access"="تمكين الوصول";
 /* Text indicating the user to open the device settings for MEGA */
 "Open Settings"="أفتح الإعدادات";
 /* Text encouraging the user to invite contacts to MEGA */
@@ -2109,7 +2109,7 @@
 /* Title of Image Quality option */
 "Automatic"="تلقائي";
 /* Description of Automatic Image Quality option */
-"Send smaller size images through cellular networks and original size images through wifi"="Send smaller size images through cellular networks and original size images through wifi";
+"Send smaller size images through cellular networks and original size images through wifi"="Send smaller size images through cellular networks and original size images through Wi-Fi";
 /* Title of Image Quality option */
 "Optimised"="الأمثل";
 /* Description of Optimised Image Quality option */

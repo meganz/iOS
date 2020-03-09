@@ -45,7 +45,7 @@
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="Inserisci la chiave di decrittazione";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertMessage"="To access this folder/file, you will need its Decryption key. If you do not have the key, contact the creator of the link.";
+"decryptionKeyAlertMessage"="Per accedere, avrai bisogno della Chiave di Decriptazione. Se non la hai, contatta il creatore del link.";
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="Chiave di decrittazione";
 /* Button title to try to decrypt the link */
@@ -1270,7 +1270,7 @@
 /* Alert message shown when the user perform logout and has files in the Offline directory */
 "allFilesSavedForOfflineWillBeDeletedFromYourDevice"="Tutti i file salvati in Offline saranno cancellati dal tuo dispositivo. Continuare?";
 /* Title shown when you almost had used your available transfer quota. */
-"depletedTransferQuota_title"="Banda di trasferimento esaurita";
+"depletedTransferQuota_title"="Banda di trasferimento insufficiente";
 /* Description shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_message"="Il tuo download messo in coda supera la banda di trasferimento disponibile per il tuo account e potrebbe interrompersi.";
 /* Button title to see the available pro plans in MEGA */
@@ -1628,6 +1628,8 @@
 "Save in Photos"="Salva nella Galleria";
 /* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Salva una copia delle immagini e dei video fatti dall'app di MEGA nella Galleria del tuo dispositivo.";
+/* Settings section title where you can enable the option to 'Spotlight search' */
+"Spotlight Search"="Spotlight Search";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="Tu hai le chiavi";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -1691,7 +1693,7 @@
 /* A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days. */
 "Remove files older than"="Rimuovi file più vecchi di";
 /* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
-"Days"="Giorni";
+"Days"="giorni";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
 "The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="Il Cestino viene svuotato per te automaticamente. Il periodo minimo è di 7 giorni ed il periodo massimo è di 30 giorni.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
@@ -1957,7 +1959,7 @@
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Sei sicuro di voler cambiare con un server di test? Il tuo account potrebbe avere dei problemi incurabili";
 /* Title label that explains that the user is going to be asked for the contacts permission */
-"Enable Access to Contacts"="Attiva l'accesso alla rubrica";
+"Enable Access to Contacts"="Enable Access to Contacts";
 /* Detailed explanation of why the user should give permission to contacts */
 "MEGA needs access to your contacts to help you connect with other people on MEGA."="MEGA ha bisogno di accedere ai tuoi contatti per poterti connettere ad altre persone su MEGA.";
 /* Title encouraging the user to check who of its contacts are using MEGA */
@@ -1966,8 +1968,6 @@
 "[X] contacts found on MEGA"="[X] contatti trovati su MEGA";
 /* Title showing the user that one of his contacts are using MEGA */
 "1 contact found on MEGA"="1 contatto trovato su MEGA";
-/* Text indicating the user to perform an action to grant some permission */
-"Enable Access"="Attiva accesso";
 /* Text indicating the user to open the device settings for MEGA */
 "Open Settings"="Apri le Impostazioni";
 /* Text encouraging the user to invite contacts to MEGA */
@@ -2109,7 +2109,7 @@
 /* Title of Image Quality option */
 "Automatic"="Automatico";
 /* Description of Automatic Image Quality option */
-"Send smaller size images through cellular networks and original size images through wifi"="Send smaller size images through cellular networks and original size images through wifi";
+"Send smaller size images through cellular networks and original size images through wifi"="Invia immagini di dimensione minore tramite la connessione dati e immagini a dimensione originale tramite il Wi-Fi";
 /* Title of Image Quality option */
 "Optimised"="Ottimizzata";
 /* Description of Optimised Image Quality option */

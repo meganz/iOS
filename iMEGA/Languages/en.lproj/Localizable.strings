@@ -962,7 +962,7 @@
 /* %1 will be replaced by a numeric value and %2 will be 'days' or 'months', for example (Expires in [S]10[/S] days) */
 "bonusExpiresIn"="(Bonus expires in [S]%1[/S] %2)";
 /* Add Phone Number title  */
-"Add Phone Number"="Add phone number";
+"Add Phone Number"="Add Phone Number";
 /* Achievement explanation for add phone number */
 "You have received %1$s storage space and %2$s transfer quota for verifying your phone number."="You have received %1$s storage space and %2$s transfer quota for verifying your phone number.";
 /* Free storage description to encourage users to add phone number to their accounts */
@@ -972,11 +972,11 @@
 /* Description to unblock account by verifying phone number */
 "Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account."="Your account has been locked temporarily due to potential abuse. Please verify your phone number to unlock your account.";
 /* Verify your account title */
-"Verify Your Account"="Verify your account";
+"Verify Your Account"="Verify Your Account";
 /* Add your phone number title */
-"Add Your Phone Number"="Add your phone number";
+"Add Your Phone Number"="Add Your Phone Number";
 /* Choose Your Country title */
-"Choose Your Country"="Choose your country";
+"Choose Your Country"="Choose Your Country";
 /* Used to display the number of months a plan was purchased for e.g. 3 months, 6 months. */
 "months"="months";
 /*  */
@@ -1270,7 +1270,7 @@
 /* Alert message shown when the user perform logout and has files in the Offline directory */
 "allFilesSavedForOfflineWillBeDeletedFromYourDevice"="All files saved for Offline will be deleted from your device. Proceed to logout?";
 /* Title shown when you almost had used your available transfer quota. */
-"depletedTransferQuota_title"="Depleted transfer quota";
+"depletedTransferQuota_title"="Insufficient transfer quota";
 /* Description shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_message"="Your queued download exceeds the current transfer quota available for your account and may therefore be interrupted.";
 /* Button title to see the available pro plans in MEGA */
@@ -1628,6 +1628,8 @@
 "Save in Photos"="Save in Photos";
 /* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Save a copy of the images and videos taken from the MEGA app in your device’s media library.";
+/* Settings section title where you can enable the option to 'Spotlight search' */
+"Spotlight Search"="Spotlight Search";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="You hold the keys";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -1665,7 +1667,7 @@
 /* Detailed explanation of why the user should give permission to deliver notifications */
 "We would like to send you notifications so you receive new messages on your device instantly."="We would like to send you notifications so you receive new messages on your device instantly.";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
-"Allow Access"="Enable access";
+"Allow Access"="Allow Access";
 /* A section header which contains the file management settings. These settings allow users to remove duplicate files etc. */
 "File Management"="File Management";
 /* Title of the option to enable or disable file versioning on Settings section */
@@ -1691,7 +1693,7 @@
 /* A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days. */
 "Remove files older than"="Remove files older than";
 /* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
-"Days"="Days";
+"Days"="days";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
 "The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="The Rubbish Bin is cleared for you automatically. The minimum period is 7 days and the maximum period is 30 days.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
@@ -1957,7 +1959,7 @@
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Are you sure you want to change to a test server? Your account may suffer irrecoverable problems";
 /* Title label that explains that the user is going to be asked for the contacts permission */
-"Enable Access to Contacts"="Enable access to contacts";
+"Enable Access to Contacts"="Enable Access to Contacts";
 /* Detailed explanation of why the user should give permission to contacts */
 "MEGA needs access to your contacts to help you connect with other people on MEGA."="MEGA needs access to your contacts to help you connect with other people on MEGA.";
 /* Title encouraging the user to check who of its contacts are using MEGA */
@@ -1966,8 +1968,6 @@
 "[X] contacts found on MEGA"="[X] contacts found on MEGA";
 /* Title showing the user that one of his contacts are using MEGA */
 "1 contact found on MEGA"="1 contact found on MEGA";
-/* Text indicating the user to perform an action to grant some permission */
-"Enable Access"="Enable access";
 /* Text indicating the user to open the device settings for MEGA */
 "Open Settings"="Open Settings";
 /* Text encouraging the user to invite contacts to MEGA */
@@ -2109,7 +2109,7 @@
 /* Title of Image Quality option */
 "Automatic"="Automatic";
 /* Description of Automatic Image Quality option */
-"Send smaller size images through cellular networks and original size images through wifi"="Send smaller size images through cellular networks and original size images through wifi";
+"Send smaller size images through cellular networks and original size images through wifi"="Send smaller size images through cellular networks and original size images through Wi-Fi";
 /* Title of Image Quality option */
 "Optimised"="Optimised";
 /* Description of Optimised Image Quality option */

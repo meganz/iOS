@@ -1270,7 +1270,7 @@
 /* Alert message shown when the user perform logout and has files in the Offline directory */
 "allFilesSavedForOfflineWillBeDeletedFromYourDevice"="您储存之所有离线文件将会被从您的设备中删除。确定要登出吗？";
 /* Title shown when you almost had used your available transfer quota. */
-"depletedTransferQuota_title"="流量不足";
+"depletedTransferQuota_title"="传输流量不足";
 /* Description shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_message"="您进程中的下载已超出您帐户目前可用的流量，因此有可能会被中断。";
 /* Button title to see the available pro plans in MEGA */
@@ -1628,6 +1628,8 @@
 "Save in Photos"="保存至照片";
 /* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="将MEGA应用程序中拍摄的照片与视频的副本保存在您设备的媒体资料库中。";
+/* Settings section title where you can enable the option to 'Spotlight search' */
+"Spotlight Search"="Spotlight Search";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="您持有这把密钥";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -1966,8 +1968,6 @@
 "[X] contacts found on MEGA"="已发现[X]个联系人";
 /* Title showing the user that one of his contacts are using MEGA */
 "1 contact found on MEGA"="已发现1个联系人";
-/* Text indicating the user to perform an action to grant some permission */
-"Enable Access"="开启访问权限";
 /* Text indicating the user to open the device settings for MEGA */
 "Open Settings"="打开设置";
 /* Text encouraging the user to invite contacts to MEGA */
@@ -2109,7 +2109,7 @@
 /* Title of Image Quality option */
 "Automatic"="自动";
 /* Description of Automatic Image Quality option */
-"Send smaller size images through cellular networks and original size images through wifi"="Send smaller size images through cellular networks and original size images through wifi";
+"Send smaller size images through cellular networks and original size images through wifi"="使用蜂窝网络时发送较小尺寸图片，使用Wi-Fi时发送原始图片";
 /* Title of Image Quality option */
 "Optimised"="优化";
 /* Description of Optimised Image Quality option */
