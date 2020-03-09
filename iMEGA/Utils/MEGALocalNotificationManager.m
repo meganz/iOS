@@ -170,7 +170,7 @@
 
 - (NSString *)displayName {
     MOUser *user = [MEGAStore.shareInstance fetchUserWithUserHandle:self.message.userHandle];
-    return user.displayName;
+    return user ? user.displayName : [self.chatRoom peerFullnameByHandle:self.message.userHandle];
 }
 
 - (nullable UNNotificationAttachment *)notificationAttachmentFor:(NSString *)file withIdentifier:(NSString *)identifier {
