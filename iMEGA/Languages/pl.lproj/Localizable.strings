@@ -146,6 +146,8 @@
 "emailAlreadyInUse"="Błąd: Ten adres email jest już używany.";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Zwiększ dostępną, wolną pamięć na urządzeniu";
+/* Message shown when you try to downlonad files bigger than the available memory. */
+"MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device."="MEGA potrzebuje minimum %@. Zwolnij trochę miejsca, usuwając nieużywane aplikacje lub duże pliki wideo w galerii. Możesz także zarządzać tym, co MEGA przechowuje na twoim urządzeniu.";
 /* Title for the file link view */
 "fileLink"="Link";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
@@ -509,7 +511,7 @@
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
 "itemsSelected"="%lu elementów zaznaczone";
 /* String shown when multi selection is enabled and only one item has been selected. */
-"1 selected"="1 selected";
+"1 selected"="1 wybrany";
 /* String shown when multi selection is enabled and the user has more than one item selected. */
 "xSelected"="%d wybrano";
 /* Title of the Offline section */
@@ -684,6 +686,8 @@
 "Custom Settings"="Własne ustawienia";
 /* Title to show when device local storage is full */
 "%@ Storage Full"="%@ zajętości dysku";
+/* Title to show when device local storage is almost full */
+"Device Storage Almost Full"="Pamięć urządzenia prawie pełna";
 /* Detail for local storage full situation */
 "You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="Nie masz wystarczającej ilości miejsca na dalsze przesyłanie z kamery.  Zwolnij miejsce, usuwając niepotrzebne aplikacje, filmy lub muzykę.  Możesz zarządzać swoją pamięcią w %@";
 /* Navigation path for Storage settings in iOS */
@@ -1266,7 +1270,7 @@
 /* Alert message shown when the user perform logout and has files in the Offline directory */
 "allFilesSavedForOfflineWillBeDeletedFromYourDevice"="Wszystkie dane offline zostaną usunięte. Czy chcesz kontynuować?";
 /* Title shown when you almost had used your available transfer quota. */
-"depletedTransferQuota_title"="Wykorzystany limit transferu";
+"depletedTransferQuota_title"="Niewystarczająca wielkość transferu";
 /* Description shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_message"="Twoje zakolejkowane pobrania przekraczają dostępny limit transferu przypisany do Twojego konta. Proces pobierania może zostać przerwany.";
 /* Button title to see the available pro plans in MEGA */
@@ -1624,6 +1628,8 @@
 "Save in Photos"="Zapisz w zdjęciach";
 /* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Zapisz kopię zdjęć i filmów pobranych z aplikacji MEGA w bibliotece multimediów urządzenia.";
+/* Settings section title where you can enable the option to 'Spotlight search' */
+"Spotlight Search"="Wyszukiwanie Spotlight";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="Ty przechowujesz klucze";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -1661,7 +1667,7 @@
 /* Detailed explanation of why the user should give permission to deliver notifications */
 "We would like to send you notifications so you receive new messages on your device instantly."="Chcemy wysyłać Ci powiadomienia, aby natychmiast otrzymywać nowe wiadomości na Twoim urządzeniu.";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
-"Allow Access"="Włącz dostęp";
+"Allow Access"="Udostępnik";
 /* A section header which contains the file management settings. These settings allow users to remove duplicate files etc. */
 "File Management"="Zarządzanie plikami";
 /* Title of the option to enable or disable file versioning on Settings section */
@@ -1687,7 +1693,7 @@
 /* A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days. */
 "Remove files older than"="Usuń pliki starsze niż";
 /* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
-"Days"="Dni";
+"Days"="dni";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
 "The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="Kosz na śmieci jest automatycznie sprawdzany. Minimalny okres wynosi 7 dni, a maksymalny okres 30 dni.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
@@ -1941,7 +1947,7 @@
 /* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
 "Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="Przejdź do sekcji Prywatność w Ustawieniach urządzenia.  Włącz usługi lokalizacji i ustaw MEGA na Podczas korzystania z aplikacji lub Zawsze.";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
-"NSLocationAlwaysAndWhenInUseUsageDescription"="MEGA accesses your location when you share it with your contacts in chat or when you enable ”Upload in Background” for Camera Uploads so your photos and videos are uploaded when your location changes.";
+"NSLocationAlwaysAndWhenInUseUsageDescription"="MEGA uzyskuje dostęp do Twojej lokalizacji, gdy udostępniasz ją swoim kontaktom na czacie lub gdy włączasz opcję „Prześlij w tle” dla Przesyłania z aparatu, aby Twoje zdjęcia i filmy były przesyłane, gdy zmieni się Twoja lokalizacja.";
 /* Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
 "Mobile Data is turned off"="Dane mobilne są wyłączone";
 /* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */
@@ -1962,8 +1968,6 @@
 "[X] contacts found on MEGA"="[X] kontakty znaleziono w MEGA";
 /* Title showing the user that one of his contacts are using MEGA */
 "1 contact found on MEGA"="Znaleziono 1 kontakt na MEGA";
-/* Text indicating the user to perform an action to grant some permission */
-"Enable Access"="Włącz dostęp";
 /* Text indicating the user to open the device settings for MEGA */
 "Open Settings"="Otwórz ustawienia";
 /* Text encouraging the user to invite contacts to MEGA */
@@ -2042,8 +2046,12 @@
 "Inactive chat"="Nieaktywny czat";
 /* Contact details screen: Set the alias(nickname) for a user */
 "Set Nickname"="Ustaw pseudonim";
+/* Contact details screen: Edit the alias(nickname) for a user */
+"Edit Nickname"="Edytuj nazwę użytkownika";
+/* Edit nickname screen: Remove nickname button title */
+"Remove Nickname"="Usuń nazwę użytkowniika";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
-"Alias/ Nickname"="Alias/ Nickname";
+"Alias/ Nickname"="Alias / pseudonim";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
 "It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="Nie można było uzyskać zawartości tego pliku, ponieważ nie jest on zakodowany ani w UTF-8, ani w ISO / IEC 8859-1.";
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
@@ -2071,7 +2079,7 @@
 /* Place holder for enter mobile number field */
 "Your phone number"="Twój numer telefonu";
 /* Label tell user to enter received txt to below input boxes */
-"Please type the verification code sent to"="Wpisz kod weryfikacyjny wysłany na adres";
+"Please type the verification code sent to"="Wprowadź kod weryfikacyjny wysłany na adres";
 /* Text message to remind user to resend verification code */
 "You didn't receive a code?"="Nie otrzymałeś kodu?";
 /* Message shown when verify phone number successfully */
@@ -2090,9 +2098,27 @@
 "It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="Możliwe, że używasz tego samego hasła do konta MEGA co do innych usług i że co najmniej jedna z tych innych usług doznała naruszenia danych.";
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="Twoje hasło wyciekło i jest obecnie wykorzystywane przez złych aktorów do logowania się na twoje konta, w tym między innymi na twoje konto MEGA.";
+/* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
+"MEGA CAMERA UPLOADS FOLDER"="FOLDER DO PRZESYŁANIA ZDJĘĆ";
+/* Action button text of folder selection screen for camera uploads */
+"Select Folder"="Wybierz katalog";
+/* Title of the folder selection screen for camera uploads */
+"Choose Folder"="Wybierz katalog";
+/* Label used near to the option selected to encode the images uploaded to a chat (Low, Medium, Original) */
+"Image quality"="Jakość obrazu";
+/* Title of Image Quality option */
+"Automatic"="Automatyczny";
+/* Description of Automatic Image Quality option */
+"Send smaller size images through cellular networks and original size images through wifi"="Wysyłaj obrazy o mniejszych rozmiarach przez sieci komórkowe i obrazy o oryginalnych rozmiarach przez Wi-Fi";
+/* Title of Image Quality option */
+"Optimised"="Zoptymalizowany";
+/* Description of Optimised Image Quality option */
+"Send smaller size images optimised for lower data consumption"="Wysyłaj obrazy o mniejszych rozmiarach zoptymalizowane pod kątem mniejszego zużycia danych";
+/* Description of High Image Quality option */
+"Send original size, increased quality images"="Wyślij oryginalny rozmiar, obrazy o podwyższonej jakości";
 /* Setting title for Doc scan view */
-"Save Settings"="Save Settings";
+"Save Settings"="Zapisz ustawienia";
 /* file type title, used in changing the export format of scaned doc */
 "File Type"="Rodzaj";
 /* export Quality Option for Scan document */
-"best"="Best";
+"best"="Najlepsze";

@@ -7,13 +7,16 @@ protocol SMSCountriesTableViewControllerDelegate: AnyObject {
 
 class SMSCountriesTableViewController: UITableViewController {
     
+    private var searchController = UISearchController(searchResultsController: nil)
+
     private let countryCellReuseId = "countryCell"
     
     private var countryCallingCodeDict: [String: MEGAStringList]
     private var collation = UILocalizedIndexedCollation.current()
     
     private lazy var countrySections = buildCountrySections()
-    
+    private lazy var filteredCountries: [SMSCountry] = []
+
     private weak var delegate: SMSCountriesTableViewControllerDelegate?
     
     init(countryCallingCodeDict: [String: MEGAStringList], delegate: SMSCountriesTableViewControllerDelegate? = nil) {
@@ -31,6 +34,17 @@ class SMSCountriesTableViewController: UITableViewController {
         
         title = AMLocalizedString("Choose Your Country")
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: countryCellReuseId)
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.backgroundColor = .clear
+        if #available(iOS 11.0, *) {
+            navigationItem.searchController = searchController
+        } else {
+            tableView.tableHeaderView = searchController.searchBar
+            searchController.searchBar.barTintColor = .white
+            tableView.contentOffset = CGPoint(x: 0, y: searchController.searchBar.frame.height)
+        }
+        definesPresentationContext = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -59,32 +73,37 @@ class SMSCountriesTableViewController: UITableViewController {
             collation.sortedArray(from: $0, collationStringSelector: #selector(getter: SMSCountry.countryLocalizedName)) as? [SMSCountry]
         }
     }
+    
+    func smsCountry(for indexPath: IndexPath) -> SMSCountry {
+        isSearching ? filteredCountries[indexPath.row] : countrySections[indexPath.section][indexPath.row]
+    }
+
 }
 
 // MARK: - UITableViewDataSource, UITableViewDelegate
 
 extension SMSCountriesTableViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return collation.sectionTitles.count
+        return isSearching ? 1 : collation.sectionTitles.count
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return countrySections[section].count
+        return isSearching ? filteredCountries.count : countrySections[section].count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: countryCellReuseId, for: indexPath)
-        let country = countrySections[indexPath.section][indexPath.row]
+        let country = smsCountry(for: indexPath)
         cell.textLabel?.text = country.displayName
         return cell
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return collation.sectionTitles[section]
+        return isSearching ? nil : collation.sectionTitles[section]
     }
     
     override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
-        return collation.sectionIndexTitles
+        return isSearching ? nil : collation.sectionIndexTitles
     }
     
     override func tableView(_ tableView: UITableView, sectionForSectionIndexTitle title: String, at index: Int) -> Int {
@@ -92,6 +111,28 @@ extension SMSCountriesTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        delegate?.countriesTableViewController(self, didSelectCountry: countrySections[indexPath.section][indexPath.row])
+        delegate?.countriesTableViewController(self, didSelectCountry: smsCountry(for: indexPath))
+    }
+}
+
+// MARK: - UISearchResultsUpdating
+
+extension SMSCountriesTableViewController: UISearchResultsUpdating {
+
+    var isSearching: Bool {
+        searchController.isActive && !isSearchBarEmpty
+    }
+
+    var isSearchBarEmpty: Bool {
+        searchController.searchBar.text?.isEmpty ?? true
+    }
+
+    public func updateSearchResults(for searchController: UISearchController) {
+        let searchText = searchController.searchBar.text ?? ""
+        filteredCountries = countrySections.joined().filter({ country in
+            country.displayName.lowercased().contains(searchText.lowercased())
+        })
+        
+        tableView.reloadData()
     }
 }

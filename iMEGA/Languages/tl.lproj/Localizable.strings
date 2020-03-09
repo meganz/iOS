@@ -146,6 +146,8 @@
 "emailAlreadyInUse"="Error. Ginagamit na ang email address na ito.";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Kailangang magbawas upang mabakante ang inyong device.";
+/* Message shown when you try to downlonad files bigger than the available memory. */
+"MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device."="MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device.";
 /* Title for the file link view */
 "fileLink"="Link ng file";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
@@ -684,6 +686,8 @@
 "Custom Settings"="Custom Settings";
 /* Title to show when device local storage is full */
 "%@ Storage Full"="%@ Puno na ang Storage";
+/* Title to show when device local storage is almost full */
+"Device Storage Almost Full"="Device Storage Almost Full";
 /* Detail for local storage full situation */
 "You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="Wala ka nang sapat na storage para sa camera uploads. Mag delete ng hindi kailangan na apps, videos o music upang makakuwa ng space. Pwede mong ayusin ang iyong storage sa %@";
 /* Navigation path for Storage settings in iOS */
@@ -958,7 +962,7 @@
 /* %1 will be replaced by a numeric value and %2 will be 'days' or 'months', for example (Expires in [S]10[/S] days) */
 "bonusExpiresIn"="(Mag-eexpire ang bonus sa loob ng [S]%1[/S] %2)";
 /* Add Phone Number title  */
-"Add Phone Number"="Add phone number";
+"Add Phone Number"="Add Phone Number";
 /* Achievement explanation for add phone number */
 "You have received %1$s storage space and %2$s transfer quota for verifying your phone number."="You have received %1$s storage space and %2$s transfer quota for verifying your phone number.";
 /* Free storage description to encourage users to add phone number to their accounts */
@@ -968,11 +972,11 @@
 /* Description to unblock account by verifying phone number */
 "Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account."="Your account has been locked temporarily due to potential abuse. Please verify your phone number to unlock your account.";
 /* Verify your account title */
-"Verify Your Account"="Verify your account";
+"Verify Your Account"="Verify Your Account";
 /* Add your phone number title */
-"Add Your Phone Number"="Add your phone number";
+"Add Your Phone Number"="Add Your Phone Number";
 /* Choose Your Country title */
-"Choose Your Country"="Choose your country";
+"Choose Your Country"="Choose Your Country";
 /* Used to display the number of months a plan was purchased for e.g. 3 months, 6 months. */
 "months"="buwan";
 /*  */
@@ -1624,6 +1628,8 @@
 "Save in Photos"="I-save sa Library";
 /* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Magtabi ng copy ng images at videos na nakuha sa MEGA app ng inyong media library sa device mo";
+/* Settings section title where you can enable the option to 'Spotlight search' */
+"Spotlight Search"="Spotlight Search";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="Hawak mo ang susi";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -1661,7 +1667,7 @@
 /* Detailed explanation of why the user should give permission to deliver notifications */
 "We would like to send you notifications so you receive new messages on your device instantly."="Gusto naming magpadala ng notifications para mareceive ang bagong messages sa iyong device kaagad.";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
-"Allow Access"="Enable access";
+"Allow Access"="Allow Access";
 /* A section header which contains the file management settings. These settings allow users to remove duplicate files etc. */
 "File Management"="File Management";
 /* Title of the option to enable or disable file versioning on Settings section */
@@ -1687,7 +1693,7 @@
 /* A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days. */
 "Remove files older than"="Tanggalin ang files na lagpas";
 /* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
-"Days"="Mga Araw";
+"Days"="araw";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
 "The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="The Rubbish Bin is cleared for you automatically. The minimum period is 7 days and the maximum period is 30 days.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
@@ -1953,7 +1959,7 @@
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Are you sure you want to change to a test server? Your account may suffer irrecoverable problems";
 /* Title label that explains that the user is going to be asked for the contacts permission */
-"Enable Access to Contacts"="Enable access to contacts";
+"Enable Access to Contacts"="Enable Access to Contacts";
 /* Detailed explanation of why the user should give permission to contacts */
 "MEGA needs access to your contacts to help you connect with other people on MEGA."="MEGA needs access to your contacts to help you connect with other people on MEGA.";
 /* Title encouraging the user to check who of its contacts are using MEGA */
@@ -1962,8 +1968,6 @@
 "[X] contacts found on MEGA"="[X] contacts found on MEGA";
 /* Title showing the user that one of his contacts are using MEGA */
 "1 contact found on MEGA"="1 contact found on MEGA";
-/* Text indicating the user to perform an action to grant some permission */
-"Enable Access"="Enable access";
 /* Text indicating the user to open the device settings for MEGA */
 "Open Settings"="Open Settings";
 /* Text encouraging the user to invite contacts to MEGA */
@@ -2042,8 +2046,12 @@
 "Inactive chat"="Inactive chat";
 /* Contact details screen: Set the alias(nickname) for a user */
 "Set Nickname"="Itakda ang palayaw";
+/* Contact details screen: Edit the alias(nickname) for a user */
+"Edit Nickname"="Edit Nickname";
+/* Edit nickname screen: Remove nickname button title */
+"Remove Nickname"="Remove Nickname";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
-"Alias/ Nickname"="Alias/ Nickname";
+"Alias/ Nickname"="Alias / Palayaw";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
 "It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1.";
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
@@ -2071,7 +2079,7 @@
 /* Place holder for enter mobile number field */
 "Your phone number"="Your phone number";
 /* Label tell user to enter received txt to below input boxes */
-"Please type the verification code sent to"="Please type the verification code sent to";
+"Please type the verification code sent to"="Please enter the verification code sent to";
 /* Text message to remind user to resend verification code */
 "You didn't receive a code?"="You didn’t receive a code?";
 /* Message shown when verify phone number successfully */
@@ -2090,6 +2098,24 @@
 "It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.";
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.";
+/* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
+"MEGA CAMERA UPLOADS FOLDER"="MEGA CAMERA UPLOADS FOLDER";
+/* Action button text of folder selection screen for camera uploads */
+"Select Folder"="Select Folder";
+/* Title of the folder selection screen for camera uploads */
+"Choose Folder"="Pumili ng Folder";
+/* Label used near to the option selected to encode the images uploaded to a chat (Low, Medium, Original) */
+"Image quality"="Image quality";
+/* Title of Image Quality option */
+"Automatic"="Automatik";
+/* Description of Automatic Image Quality option */
+"Send smaller size images through cellular networks and original size images through wifi"="Send smaller size images through cellular networks and original size images through Wi-Fi";
+/* Title of Image Quality option */
+"Optimised"="Optimised";
+/* Description of Optimised Image Quality option */
+"Send smaller size images optimised for lower data consumption"="Send smaller size images optimised for lower data consumption";
+/* Description of High Image Quality option */
+"Send original size, increased quality images"="Send original size, increased quality images";
 /* Setting title for Doc scan view */
 "Save Settings"="Save Settings";
 /* file type title, used in changing the export format of scaned doc */

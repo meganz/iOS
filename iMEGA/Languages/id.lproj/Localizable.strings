@@ -146,6 +146,8 @@
 "emailAlreadyInUse"="Gagal. Alamat email ini telah terpakai.";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Anda harus mengosongkan tempat pada perangkat anda";
+/* Message shown when you try to downlonad files bigger than the available memory. */
+"MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device."="MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device.";
 /* Title for the file link view */
 "fileLink"="Pranala berkas";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
@@ -281,7 +283,7 @@
 /* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
 "Scan Document"="Scan Document";
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
-"newFolder"="Folder baru";
+"newFolder"="Folder Baru";
 /* Hint text shown on the create folder alert. */
 "newFolderMessage"="Nama folder baru";
 /* Title button for the create folder alert.  */
@@ -629,7 +631,7 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="Kebijakan Privasi";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
-"termsOfServicesLabel"="persyaratan layanan";
+"termsOfServicesLabel"="Persyaratan Layanan";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
 "dataProtectionRegulationLabel"="Data Protection Regulation";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
@@ -684,6 +686,8 @@
 "Custom Settings"="Pengaturan Kustom";
 /* Title to show when device local storage is full */
 "%@ Storage Full"="%@ Penyimpanan Penuh";
+/* Title to show when device local storage is almost full */
+"Device Storage Almost Full"="Device Storage Almost Full";
 /* Detail for local storage full situation */
 "You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="Anda tidak memiliki cukup penyimpanan untuk unggahan kamera lebih lanjut. Kosongkan ruang dengan menghapus aplikasi, video, atau musik yang tidak dibutuhkan. Anda dapat mengelola penyimpanan Anda di %@";
 /* Navigation path for Storage settings in iOS */
@@ -962,7 +966,7 @@
 /* Achievement explanation for add phone number */
 "You have received %1$s storage space and %2$s transfer quota for verifying your phone number."="Anda telah menerima ruang penyimpanan %1$s dan kuota transfer %2$s untuk memverifikasi nomor telepon Anda.";
 /* Free storage description to encourage users to add phone number to their accounts */
-"Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."="Get %@ free when you add your phone number. This makes it easier for your contacts to find you on MEGA.";
+"Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."="Dapatkan %@ gratis saat anda menambahkan nomor telepon anda. Ini memudahkan kontak anda untuk menemukan anda di MEGA.";
 /* Description to encourage users to add phone number to their accounts when there are not achievements */
 "Add your phone number to MEGA. This makes it easier for your contacts to find you on MEGA."="Tambahkan nomor telepon Anda ke MEGA. Ini memudahkan kontak Anda untuk menemukan Anda di MEGA.";
 /* Description to unblock account by verifying phone number */
@@ -1624,6 +1628,8 @@
 "Save in Photos"="Simpan dalam Foto";
 /* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Simpan salinan gambar dan video yang diambil dari aplikasi MEGA di pustaka media perangkat Anda.";
+/* Settings section title where you can enable the option to 'Spotlight search' */
+"Spotlight Search"="Spotlight Search";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="Anda memegang kunci";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -1687,7 +1693,7 @@
 /* A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days. */
 "Remove files older than"="Hapus file lebih lama dari";
 /* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
-"Days"="Hari";
+"Days"="hari";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
 "The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="Tempat Sampah dibersihkan untuk Anda secara otomatis. Periode minimum adalah 7 hari dan periode maksimum adalah 30 hari.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
@@ -1881,7 +1887,7 @@
 /* Message shown when there is an ongoing call and the user tries to record a voice message */
 "It is not possible to record voice messages while there is a call in progress"="Tidak mungkin merekam pesan suara saat ada panggilan yang sedang berlangsung.";
 /* Label indicating that a voice clip is being recorded. String as short as possible. */
-"Recording..."="Recording…";
+"Recording..."="Rekaman…";
 /* Text to inform the user there is an active call and is not participating */
 "Ongoing Call"="Panggilan yang sedang berlangsung";
 /* Message shown when there is an ongoing call and the user tries to play an audio or video */
@@ -1959,27 +1965,25 @@
 /* Title encouraging the user to check who of its contacts are using MEGA */
 "See who's already on MEGA"="Lihat siapa yang sudah ada di MEGA";
 /* Title showing the user how many of his contacts are using MEGA */
-"[X] contacts found on MEGA"="[X] contacts found on MEGA";
+"[X] contacts found on MEGA"="[X] kontak ditemukan di MEGA";
 /* Title showing the user that one of his contacts are using MEGA */
-"1 contact found on MEGA"="1 contact found on MEGA";
-/* Text indicating the user to perform an action to grant some permission */
-"Enable Access"="Aktifkan akses";
+"1 contact found on MEGA"="1 kontak ditemukan di MEGA";
 /* Text indicating the user to open the device settings for MEGA */
-"Open Settings"="Open Settings";
+"Open Settings"="Buka Pengaturan";
 /* Text encouraging the user to invite contacts to MEGA */
 "Invite contacts and start chatting securely with MEGA’s encrypted chat."="Undang kontak dan mulailah mengobrol dengan aman dengan obrolan terenkripsi MEGA.";
 /* Text showing the user how many contacts would be invited */
-"Invite [X] contacts"="Invite [X] contacts";
+"Invite [X] contacts"="Undang kontak [X]";
 /* Text showing the user how to write more than one email in order to invite them to MEGA */
-"Tap space to enter multiple emails"="Tap space to enter multiple emails";
+"Tap space to enter multiple emails"="Ketuk ruang untuk memasukkan banyak email";
 /* Text used as a section title or similar */
-"Enter Email"="Enter Email";
+"Enter Email"="Masukan Email";
 /* Text used as view title showing the user the phone contacts using MEGA */
 "On MEGA"="Pada MEGA";
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
-"CONTACTS ON MEGA"="CONTACTS ON MEGA";
+"CONTACTS ON MEGA"="KONTAK DI MEGA";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"Hi, Have encrypted conversations on Mega with me and get 50GB free storage."="Hi! Have secure conversations on MEGA with me and get up to 50GB free storage.";
+"Hi, Have encrypted conversations on Mega with me and get 50GB free storage."="Hai! Miliki percakapan aman di MEGA dengan saya dan dapatkan penyimpanan gratis hingga 50GB.";
 /* Destination folder name of chat files */
 "My chat files"="File obrolan saya";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
@@ -2042,20 +2046,24 @@
 "Inactive chat"="Obrolan tidak aktif";
 /* Contact details screen: Set the alias(nickname) for a user */
 "Set Nickname"="Setel Nama Panggilan";
+/* Contact details screen: Edit the alias(nickname) for a user */
+"Edit Nickname"="Edit Nickname";
+/* Edit nickname screen: Remove nickname button title */
+"Remove Nickname"="Remove Nickname";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
-"Alias/ Nickname"="Alias/ Nickname";
+"Alias/ Nickname"="Alias / Nama Panggilan";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
 "It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="Tidak mungkin mendapatkan konten file ini, karena tidak dikodekan dalam UTF-8 atau ISO / IEC 8859-1.";
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
 "Include location tags"="Sertakan tag lokasi";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
-"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them.";
+"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="Jika diaktifkan, Anda akan mengunggah informasi tentang tempat foto dan video Anda diambil, jadi berhati-hatilah saat membagikannya.";
 /* Error message shown when opening a link with an account that not corresponds to the link */
 "This link is not related to this account. Please log in with the correct account."="Link ini tidak terkait dengan akun ini. Silahkan masuk dengan akun yang benar.";
 /* Text emncouraging the user to add contacts in MEGA */
-"Invite contact now"="Invite contacts now";
+"Invite contact now"="Undang kontak sekarang";
 /* Text showing the user one contact would be invited */
-"Invite 1 contact"="Invite 1 contact";
+"Invite 1 contact"="Undang 1 kontak";
 /* Error message if user click next button without enter a valid phone number */
 "Please enter a valid phone number"="Harap berikan nomor telfon yang valid.";
 /* Error message that will show to user when user reached the sms verification daily limit */
@@ -2067,7 +2075,7 @@
 /* Country label for a button, title, etc. */
 "Country"="Negara";
 /* Error message that will show to user its account is already verified */
-"Your account is already verified"="Your account is already verified";
+"Your account is already verified"="Akun anda sudah diverifikasi";
 /* Place holder for enter mobile number field */
 "Your phone number"="Nomor telepon Anda";
 /* Label tell user to enter received txt to below input boxes */
@@ -2077,9 +2085,9 @@
 /* Message shown when verify phone number successfully */
 "Your phone number has been verified successfully"="Nomor telepon Anda telah berhasil diverifikasi";
 /* Text describing account suspended state to the user */
-"Your account has been temporarily suspended for your safety."="Your account has been temporarily locked for your safety.";
+"Your account has been temporarily suspended for your safety."="Akun anda telah dikunci sementara untuk keselamatan anda.";
 /* Text indicating the user next step to unlock suspended account. Please leave [S], [/S] as it is which is used to bolden the text. */
-"[S]Please verify your email[/S] and follow its steps to unlock your account."="[S]Please verify your email address[/S] and follow the steps in MEGA’s email to unlock your account.";
+"[S]Please verify your email[/S] and follow its steps to unlock your account."="[S]Harap verifikasi alamat email anda[/S] dan ikuti langkah-langkah dalam email MEGA untuk membuka kunci akun anda.";
 /* Text for button to open an helping view */
 "Why am I seeing this?"="Mengapa saya melihat ini?";
 /* Text to notify user an email has been sent */
@@ -2090,9 +2098,27 @@
 "It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="Ada kemungkinan bahwa Anda menggunakan kata sandi yang sama untuk akun MEGA Anda seperti untuk layanan lain, dan bahwa setidaknya salah satu dari layanan lain ini telah mengalami pelanggaran data.";
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="Kata sandi Anda bocor dan sekarang digunakan oleh aktor jahat untuk masuk ke akun Anda, termasuk, namun tidak terbatas pada, akun MEGA Anda.";
+/* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
+"MEGA CAMERA UPLOADS FOLDER"="FOLDER UPLOAD KAMERA MEGA";
+/* Action button text of folder selection screen for camera uploads */
+"Select Folder"="Pilih Folder";
+/* Title of the folder selection screen for camera uploads */
+"Choose Folder"="Pilih Folder";
+/* Label used near to the option selected to encode the images uploaded to a chat (Low, Medium, Original) */
+"Image quality"="Kualitas gambar";
+/* Title of Image Quality option */
+"Automatic"="Otomatis";
+/* Description of Automatic Image Quality option */
+"Send smaller size images through cellular networks and original size images through wifi"="Send smaller size images through cellular networks and original size images through Wi-Fi";
+/* Title of Image Quality option */
+"Optimised"="Dioptimalkan";
+/* Description of Optimised Image Quality option */
+"Send smaller size images optimised for lower data consumption"="Kirim gambar berukuran lebih kecil yang dioptimalkan untuk konsumsi data yang lebih rendah";
+/* Description of High Image Quality option */
+"Send original size, increased quality images"="Send original size, increased quality images";
 /* Setting title for Doc scan view */
 "Save Settings"="Save Settings";
 /* file type title, used in changing the export format of scaned doc */
-"File Type"="File Type";
+"File Type"="Jenis File";
 /* export Quality Option for Scan document */
 "best"="Best";

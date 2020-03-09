@@ -1,16 +1,17 @@
 
 #import <Foundation/Foundation.h>
-#import "MEGAChatCall+MNZCategory.h"
+
+@class MEGAChatCall;
 
 @interface MEGACallManager : NSObject
 
-- (void)startCall:(MEGAChatCall *)call email:(NSString *)email;
+- (void)startCall:(MEGAChatCall *)call;
 - (void)endCall:(MEGAChatCall *)call;
 
 - (void)addCall:(MEGAChatCall *)call;
-- (void)removeCallByUUID:(NSUUID *)uuid;
+- (void)addCallWithCallId:(uint64_t)callId uuid:(NSUUID *)uuid;
+- (void)removeCall:(MEGAChatCall *)call;
 - (void)removeAllCalls;
-- (MEGAChatCall *)callForUUID:(NSUUID *)uuid;
-- (NSUUID *)UUIDForCall:(MEGAChatCall *)call;
+- (uint64_t)callForUUID:(NSUUID *)uuid;
 
 @end

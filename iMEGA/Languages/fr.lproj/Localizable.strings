@@ -146,6 +146,8 @@
 "emailAlreadyInUse"="Erreur. Cette adresse courriel est déjà utilisée.";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Vous devez libérer de l'espace sur votre appareil";
+/* Message shown when you try to downlonad files bigger than the available memory. */
+"MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device."="MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device.";
 /* Title for the file link view */
 "fileLink"="Lien du fichier";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
@@ -333,7 +335,7 @@
 /* String already exists: 367, but we need to split paragraphs. */
 "copyrightMessagePart1"="MEGA respecte le droit d’auteur d’autrui et exige que les utilisateurs du service nuagique de MEGA se conforment aux lois sur le droit d’auteur.";
 /* String already exists: 367, but we need to split paragraphs */
-"copyrightMessagePart2"="Il vous est strictement interdit d’utiliser le service nuagique de MEGA pour enfreindre le droit d’auteur. Vous ne pouvez pas téléverser, télécharger, stocker, partager, afficher, lire en continu, distribuer, envoyer par courriel, créer de liens vers, transmettre ou proposer de quelque façon des fichiers, des données ou du contenu qui enfreignent le droit d’auteur ou autre droit de propriété de quelque personne ou entité.";
+"copyrightMessagePart2"="Il vous est strictement interdit d’utiliser le service nuagique de MEGA pour enfreindre le droit d’auteur. Vous ne pouvez pas téléverser, télécharger, stocker, partager, afficher, diffuser en continu, distribuer, envoyer par courriel, créer de liens vers, transmettre ou proposer de quelque façon des fichiers, des données ou du contenu qui enfreignent le droit d’auteur ou autre droit de propriété de quelque personne ou entité.";
 /* button caption text that the user clicks when he agrees */
 "agree"="Accepter";
 /* button caption text that the user clicks when he disagrees */
@@ -684,6 +686,8 @@
 "Custom Settings"="Paramètres personnalisés";
 /* Title to show when device local storage is full */
 "%@ Storage Full"="L’espace de stockage du %@ est plein";
+/* Title to show when device local storage is almost full */
+"Device Storage Almost Full"="Device Storage Almost Full";
 /* Detail for local storage full situation */
 "You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="Vous manquez d’espace de stockage pour d’autres téléversements de l’appareil photo. Libérez de l’espace en supprimant des applis, des vidéos ou de la musique inutilisées. Vous pouvez gérer votre espace de stockage dans %@";
 /* Navigation path for Storage settings in iOS */
@@ -1134,7 +1138,7 @@
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "richPreviewsFooter"="Améliorez l’expérience MEGAchat. Le contenu des URL sera récupéré sans chiffrement de bout en bout.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
-"voiceAndVideoCalls"="Appels vocaux et vidéos";
+"voiceAndVideoCalls"="Appels vocaux et vidéo";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
 "useMobileData"="Utiliser les données mobiles";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for videos. */
@@ -1266,7 +1270,7 @@
 /* Alert message shown when the user perform logout and has files in the Offline directory */
 "allFilesSavedForOfflineWillBeDeletedFromYourDevice"="Tous les fichiers enregistrés hors ligne seront supprimés de votre appareil. Poursuivre la déconnexion ?";
 /* Title shown when you almost had used your available transfer quota. */
-"depletedTransferQuota_title"="Le quota de transfert est épuisé";
+"depletedTransferQuota_title"="Le quota de transfert est insuffisant";
 /* Description shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_message"="Votre téléchargement en attente dépasse le quota de transfert actuel disponible de votre compte et pourrait par conséquent être interrompu.";
 /* Button title to see the available pro plans in MEGA */
@@ -1624,6 +1628,8 @@
 "Save in Photos"="Enregistrer dans Photos";
 /* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Enregistrer dans la médiathèque de votre appareil un exemplaire des images et des vidéos prises avec l’appli MEGA.";
+/* Settings section title where you can enable the option to 'Spotlight search' */
+"Spotlight Search"="Spotlight Search";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="Vous détenez les clés";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -1631,15 +1637,15 @@
 /* Title shown in a page of the on boarding screens explaining that the chat is encrypted */
 "Encrypted chat"="Dialogue en ligne chiffré";
 /* Description shown in a page of the onboarding screens explaining the chat feature */
-"Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive."="Le dialogue en ligne est entièrement chiffré et offre des appels voix, des appels vidéo, une messagerie de groupe et le partage de fichiers tous intégrés à votre disque nuagique.";
+"Fully encrypted chat with voice and video calls, group messaging and file sharing integration with your Cloud Drive."="Le dialogue en ligne est entièrement chiffré et offre des appels vocaux et vidéo, une messagerie de groupe et le partage de fichiers, tous intégrés à votre disque nuagique.";
 /* Title shown in a page of the on boarding screens explaining that the user can add contacts to chat and colaborate */
-"Create your Network"="Créer votre réseau";
+"Create your Network"="Créez votre réseau";
 /* Description shown in a page of the onboarding screens explaining contacts */
-"Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA"="Ajoutez des contacts, créez un réseau, collaborez et faites des appels voix ou vidéo sans jamais quitter MEGA";
+"Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA"="Ajoutez des contacts, créez un réseau, collaborez et faites des appels vocaux ou vidéo sans jamais quitter MEGA";
 /* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
 "Your Photos in the Cloud"="Vos photos dans le nuage";
 /* Description shown in a page of the onboarding screens explaining the camera uploads feature */
-"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="Téléversements de l’appareil photo est une fonction essentielle de tout appareil mobile et nous nous en occupons pour vous. Créez votre compte maintenant.";
+"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="Le téléversement de l’appareil photo est une fonction essentielle de tout appareil mobile et nous nous en occupons pour vous. Créez votre compte maintenant.";
 /* Button which triggers the initial setup */
 "Setup MEGA"="Configurer MEGA";
 /* Detailed explanation of why the user should give some permissions to MEGA */
@@ -1655,11 +1661,11 @@
 /* Title label that explains that the user is going to be asked for the microphone and camera permission */
 "Enable Microphone and Camera"="Activer le microphone et l’appareil photo";
 /* Detailed explanation of why the user should give permission to access to the camera and the microphone */
-"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="Afin d’envoyer des messages vocaux et faire des appels voix et vidéo chiffrés, autorisez MEGA à accéder à votre appareil photo et à votre microphone";
+"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone"="Afin d’envoyer des messages vocaux et faire des appels vocaux et vidéo chiffrés, autorisez MEGA à accéder à votre appareil photo et à votre microphone";
 /* Title label that explains that the user is going to be asked for the notifications permission */
 "Enable Notifications"="Activer les notifications";
 /* Detailed explanation of why the user should give permission to deliver notifications */
-"We would like to send you notifications so you receive new messages on your device instantly."="Nous vous enverrons des notifications afin que vous receviez instantanément sur votre appareil les nouveaux messages.";
+"We would like to send you notifications so you receive new messages on your device instantly."="Nous vous enverrons des notifications afin que vous receviez les nouveaux messages instantanément sur votre appareil.";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
 "Allow Access"="Autoriser l’accès";
 /* A section header which contains the file management settings. These settings allow users to remove duplicate files etc. */
@@ -1962,8 +1968,6 @@
 "[X] contacts found on MEGA"="[X] contacts ont été trouvés sur MEGA";
 /* Title showing the user that one of his contacts are using MEGA */
 "1 contact found on MEGA"="1 contact a été trouvé sur MEGA";
-/* Text indicating the user to perform an action to grant some permission */
-"Enable Access"="Autoriser l’accès";
 /* Text indicating the user to open the device settings for MEGA */
 "Open Settings"="Ouvrir les réglages";
 /* Text encouraging the user to invite contacts to MEGA */
@@ -1979,7 +1983,7 @@
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
 "CONTACTS ON MEGA"="CONTACTS SUR MEGA";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"Hi, Have encrypted conversations on Mega with me and get 50GB free storage."="Bonjour. Converse avec moi en toute sécurité sur MEGA et obtiens jusqu’à 50 Go d’espace de stockage gratuits. %1$s";
+"Hi, Have encrypted conversations on Mega with me and get 50GB free storage."="Bonjour. Conversez avec moi en toute sécurité sur MEGA et obtenez jusqu’à 50 Go d’espace de stockage gratuits.";
 /* Destination folder name of chat files */
 "My chat files"="Mes fichiers de dialogue en ligne";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
@@ -2042,8 +2046,12 @@
 "Inactive chat"="La conversation est inactive";
 /* Contact details screen: Set the alias(nickname) for a user */
 "Set Nickname"="Définir un pseudonyme";
+/* Contact details screen: Edit the alias(nickname) for a user */
+"Edit Nickname"="Edit Nickname";
+/* Edit nickname screen: Remove nickname button title */
+"Remove Nickname"="Remove Nickname";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
-"Alias/ Nickname"="Alias/ Nickname";
+"Alias/ Nickname"="Alias/pseudonyme";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
 "It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="Il n’a pas été possible d’obtenir le contenu de ce fichier, car il n’est codé ni en UTF-8 ni en ISO/IEC 8859-1.";
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
@@ -2090,6 +2098,24 @@
 "It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="Il est possible que vous utilisiez le même mot de passe pour votre compte MEGA que pour d’autres services et qu’au moins l’un de ses services ait souffert d’une atteinte à la protection des données.";
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="Votre mot de passe a été divulgué et est maintenant utilisé par des personnes malveillantes pour se connecter à vos comptes dont, mais sans s’y limiter, à votre compte MEGA.";
+/* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
+"MEGA CAMERA UPLOADS FOLDER"="DOSSIER MEGA DES TÉLÉVERSEMENTS DE L’APPAREIL PHOTO";
+/* Action button text of folder selection screen for camera uploads */
+"Select Folder"="Sélectionner un dossier";
+/* Title of the folder selection screen for camera uploads */
+"Choose Folder"="Choisir un dossier";
+/* Label used near to the option selected to encode the images uploaded to a chat (Low, Medium, Original) */
+"Image quality"="Qualité des images";
+/* Title of Image Quality option */
+"Automatic"="Automatique";
+/* Description of Automatic Image Quality option */
+"Send smaller size images through cellular networks and original size images through wifi"="Envoyer des images de plus petite taille par le réseau cellulaire et des images de taille originale par le Wi-Fi";
+/* Title of Image Quality option */
+"Optimised"="Optimisée";
+/* Description of Optimised Image Quality option */
+"Send smaller size images optimised for lower data consumption"="Envoyer des images de plus petite taille, optimisées pour une consommation réduite de données";
+/* Description of High Image Quality option */
+"Send original size, increased quality images"="Send original size, increased quality images";
 /* Setting title for Doc scan view */
 "Save Settings"="Save Settings";
 /* file type title, used in changing the export format of scaned doc */
