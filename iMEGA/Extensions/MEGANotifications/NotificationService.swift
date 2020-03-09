@@ -168,6 +168,8 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
     // MARK: - Lean init, login and connect
     
     static func initExtensionProcess() {
+        setupLogging()
+        
         guard let session = SAMKeychain.password(forService: "MEGA", account: "sessionV3") else {
             return
         }
@@ -176,6 +178,38 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         copyDatabasesFromMainApp()
         initChat()
         loginToMEGA(with: session)
+    }
+    
+    static func setupLogging() {
+        NSSetUncaughtExceptionHandler { (exception) in
+            MEGALogError("Exception name: \(exception.name)\nreason: \(String(describing: exception.reason))\nuser info: \(String(describing: exception.userInfo))\n")
+            MEGALogError("Stack trace: \(exception.callStackSymbols)")
+        }
+        
+        if let sharedUserDefaults = UserDefaults.init(suiteName: MEGAGroupIdentifier) {
+            if sharedUserDefaults.bool(forKey: "logging") {
+                guard let logsFolderURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: MEGAGroupIdentifier)?.appendingPathComponent(MEGAExtensionLogsFolder) else {
+                    return
+                }
+                if !FileManager.default.fileExists(atPath: logsFolderURL.path) {
+                    do {
+                        try FileManager.default.createDirectory(atPath: logsFolderURL.path, withIntermediateDirectories: false, attributes: nil)
+                    } catch {
+                        MEGALogError("Error creating logs directory: \(error)")
+                        return
+                    }
+                }
+                let logsPath = logsFolderURL.appendingPathComponent("MEGAiOS.NSE.log").path
+                MEGALogger.shared()?.startLogging(toFile: logsPath)
+#if DEBUG
+                MEGASdk.setLogLevel(.max)
+                MEGAChatSdk.setCatchException(false)
+#else
+                MEGASdk.setLogLevel(.fatal)
+#endif
+                MEGASdk.setLogToConsole(true)
+            }
+        }
     }
     
     // As part of the lean init, a cache is required. It will not be generated from scratch.

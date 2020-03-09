@@ -14,5 +14,6 @@
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
 #import "MEGAStore.h"
+#import "MEGALogger.h"
 
 #endif /* MEGANotifications_Bridging_Header_h */
