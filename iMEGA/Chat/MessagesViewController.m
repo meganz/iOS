@@ -1752,7 +1752,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             [self.selectedMessages removeObject:message];
         } else {
             NSUInteger index = [self.selectedMessages indexOfObject:message inSortedRange:(NSRange){0, self.selectedMessages.count} options:NSBinarySearchingInsertionIndex usingComparator:^NSComparisonResult(MEGAChatMessage *obj1, MEGAChatMessage *obj2) {
-                return [obj1.date compare:obj2.date];
+                return [@(obj1.messageIndex) compare:@(obj2.messageIndex)];
             }];
             [self.selectedMessages insertObject:message atIndex:index];
         }
