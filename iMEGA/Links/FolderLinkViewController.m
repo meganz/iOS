@@ -28,13 +28,12 @@
 #import "LinkOption.h"
 #import "UnavailableLinkView.h"
 
-@interface FolderLinkViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchResultsUpdating, UISearchDisplayDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, CustomActionViewControllerDelegate, UISearchControllerDelegate> {
-    
-    BOOL isLoginDone;
-    BOOL isFetchNodesDone;
-    BOOL isFolderLinkNotValid;
-    BOOL isValidatingDecryptionKey;
-}
+@interface FolderLinkViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, CustomActionViewControllerDelegate, UISearchControllerDelegate>
+
+@property (nonatomic, getter=isLoginDone) BOOL loginDone;
+@property (nonatomic, getter=isFetchNodesDone) BOOL fetchNodesDone;
+@property (nonatomic, getter=isFolderLinkNotValid) BOOL folderLinkNotValid;
+@property (nonatomic, getter=isValidatingDecryptionKey) BOOL validatingDecryptionKey;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *closeBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
@@ -78,8 +77,8 @@
 
     self.definesPresentationContext = YES;
     
-    isLoginDone = NO;
-    isFetchNodesDone = NO;
+    self.loginDone = NO;
+    self.fetchNodesDone = NO;
     
     NSString *thumbsDirectory = [Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"];
     NSError *error;
@@ -158,7 +157,7 @@
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
     
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        if (isFetchNodesDone) {
+        if (self.isFetchNodesDone) {
             [self setNavigationBarTitleLabel];
         }
         
@@ -216,7 +215,7 @@
             self.navigationItem.title= (self.selectedNodesArray.count == 1) ? [NSString stringWithFormat:AMLocalizedString(@"oneItemSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo"), self.selectedNodesArray.count] : [NSString stringWithFormat:AMLocalizedString(@"itemsSelected", @"Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo"), self.selectedNodesArray.count];
         }
     } else {
-        if (self.parentNode.name && !isFolderLinkNotValid) {
+        if (self.parentNode.name && !self.isFolderLinkNotValid) {
             UILabel *label = [Helper customNavigationBarLabelWithTitle:self.parentNode.name subtitle:AMLocalizedString(@"folderLink", nil)];
             label.frame = CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44);
             self.navigationItem.titleView = label;
@@ -290,7 +289,7 @@
 }
 
 - (void)showLinkNotValid {
-    isFolderLinkNotValid = YES;
+    self.folderLinkNotValid = YES;
     
     [self disableUIItems];
     
@@ -316,16 +315,9 @@
     }]];
     
     [decryptionAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"decrypt", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        NSString *linkString;
-        NSString *key = decryptionAlertController.textFields.firstObject.text;
-        if ([[key substringToIndex:1] isEqualToString:@"!"]) {
-            linkString = self.publicLinkString;
-        } else {
-            linkString = [self.publicLinkString stringByAppendingString:@"!"];
-        }
-        linkString = [linkString stringByAppendingString:key];
+        NSString *linkString = [MEGALinkManager buildPublicLink:self.publicLinkString withKey:decryptionAlertController.textFields.firstObject.text isFolder:YES];
         
-        isValidatingDecryptionKey = YES;
+        self.validatingDecryptionKey = YES;
         
         [[MEGASdkManager sharedMEGASdkFolder] loginToFolderLink:linkString delegate:self];
     }]];
@@ -336,7 +328,7 @@
 }
 
 - (void)showDecryptionKeyNotValidAlert {
-    isValidatingDecryptionKey = NO;
+    self.validatingDecryptionKey = NO;
     
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"decryptionKeyNotValid", nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
     [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
@@ -626,7 +618,7 @@
         if (self.searchController.isActive) {
             numberOfRows = self.searchNodesArray.count;
         } else {
-            if (isFolderLinkNotValid) {
+            if (self.isFolderLinkNotValid) {
                 numberOfRows = 0;
             } else {
                 numberOfRows = self.nodeList.size.integerValue;
@@ -826,8 +818,8 @@
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
     NSString *text;
     if ([MEGAReachabilityManager isReachable]) {
-        if (!isFetchNodesDone && self.isFolderRootNode) {
-            if (isFolderLinkNotValid) {
+        if (!self.isFetchNodesDone && self.isFolderRootNode) {
+            if (self.isFolderLinkNotValid) {
                 text = AMLocalizedString(@"linkNotValid", nil);
             } else {
                 text = @"";
@@ -860,8 +852,8 @@
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
     
     if ([MEGAReachabilityManager isReachable]) {
-        if (!isFetchNodesDone && self.isFolderRootNode) {
-            if (isFolderLinkNotValid) {
+        if (!self.isFetchNodesDone && self.isFolderRootNode) {
+            if (self.isFolderLinkNotValid) {
                 return [UIImage imageNamed:@"invalidFolderLink"];
             }
             return nil;
@@ -895,7 +887,7 @@
 
 - (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
     if ([MEGAReachabilityManager isReachable]) {
-        if (!isFetchNodesDone && self.isFolderRootNode && !isFolderLinkNotValid) {
+        if (!self.isFetchNodesDone && self.isFolderRootNode && !self.isFolderLinkNotValid) {
             return nil;
         }
     }
@@ -932,7 +924,7 @@
 - (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
     switch ([request type]) {
         case MEGARequestTypeLogin: {
-            isFolderLinkNotValid = NO;
+            self.folderLinkNotValid = NO;
             break;
         }
             
@@ -951,7 +943,7 @@
         switch (error.type) {
             case MEGAErrorTypeApiEArgs: {
                 if (request.type == MEGARequestTypeLogin) {
-                    if (isValidatingDecryptionKey) { //If the user have written the key
+                    if (self.isValidatingDecryptionKey) { //If the user have written the key
                         [self showDecryptionKeyNotValidAlert];
                     } else {
                         [self showLinkNotValid];
@@ -990,8 +982,8 @@
     
     switch (request.type) {
         case MEGARequestTypeLogin: {
-            isLoginDone = YES;
-            isFetchNodesDone = NO;
+            self.loginDone = YES;
+            self.fetchNodesDone = NO;
             [api fetchNodes];
             break;
         }
@@ -1003,7 +995,7 @@
                 
                 [SVProgressHUD dismiss];
                 
-                if (isValidatingDecryptionKey) { //Link without key, after entering a bad one
+                if (self.isValidatingDecryptionKey) { //Link without key, after entering a bad one
                     [self showDecryptionKeyNotValidAlert];
                 } else { //Link with invalid key
                     [self showLinkNotValid];
@@ -1011,10 +1003,11 @@
                 return;
             }
             
-            isFetchNodesDone = YES;
+            self.fetchNodesDone = YES;
             
-            [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithUnsignedLongLong:request.nodeHandle] forKey:@"kLastPublicHandleAccessed"];
-            [[NSUserDefaults standardUserDefaults] setDouble:[NSDate date].timeIntervalSince1970 forKey:@"kLastPublicTimestampAccessed"];
+            [NSUserDefaults.standardUserDefaults setObject:[NSNumber numberWithUnsignedLongLong:request.nodeHandle] forKey:MEGALastPublicHandleAccessed];
+            [NSUserDefaults.standardUserDefaults setInteger:AffiliateTypeFileFolder forKey:MEGALastPublicTypeAccessed];
+            [NSUserDefaults.standardUserDefaults setDouble:NSDate.date.timeIntervalSince1970 forKey:MEGALastPublicTimestampAccessed];
             
             [self reloadUI];
             
@@ -1031,8 +1024,8 @@
         }
             
         case MEGARequestTypeLogout: {
-            isLoginDone = NO;
-            isFetchNodesDone = NO;
+            self.loginDone = NO;
+            self.fetchNodesDone = NO;
             break;
         }
             

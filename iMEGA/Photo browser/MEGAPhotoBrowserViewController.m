@@ -11,6 +11,7 @@
 #import "Helper.h"
 #import "MainTabBarController.h"
 #import "MEGAActivityItemProvider.h"
+#import "CopyrightWarningViewController.h"
 #import "MEGAGetPreviewRequestDelegate.h"
 #import "MEGAGetThumbnailRequestDelegate.h"
 #import "MEGANavigationController.h"
@@ -28,6 +29,7 @@
 #import "UIApplication+MNZCategory.h"
 #import "UIColor+MNZCategory.h"
 #import "UIDevice+MNZCategory.h"
+#import "MEGA-Swift.h"
 
 static const CGFloat GapBetweenPages = 10.0;
 
@@ -157,12 +159,54 @@ static const CGFloat GapBetweenPages = 10.0;
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    
+    // Main image
+    UIImageView *placeholderCurrentImageView = self.placeholderCurrentImageView;
+    [self.view addSubview:placeholderCurrentImageView];
+    placeholderCurrentImageView.frame = self.view.bounds;
+    
+    // Activity indicator if main image is not yet loaded.
+    UIActivityIndicatorView *activityIndicatorView = nil;
+    if (placeholderCurrentImageView.image == nil) {
+        activityIndicatorView = [self addActivityIndicatorToView:self.view];
+    }
+    
+    // If it is video play icon.
+    UIImageView *placeholderPlayImageView = self.placeholderPlayImageView;
+    if (placeholderPlayImageView != nil) {
+        [self.view addSubview:placeholderPlayImageView];
+        placeholderPlayImageView.center = CGPointMake(self.view.bounds.size.width/2,
+                                                      self.view.bounds.size.height/2.0);
+        // Top and bottom bar needs to be visible.
+        [self.view sendSubviewToBack:placeholderPlayImageView];
+    }
+    
+    // Top and bottom bar needs to be visible.
+    [self.view sendSubviewToBack:placeholderCurrentImageView];
+    
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
         if (!self.presentedViewController) {
             [self.view layoutIfNeeded];
             [self reloadUI];
+            
+            // The scrollview animation is not aligning with placeholderImageView animation.
+            // So hiding the scroll when the animation is in progress.
+            self.scrollView.hidden = YES;
+            CGPoint center = CGPointMake(size.width/2, size.height/2.0);
+            
+            [UIView animateWithDuration:context.transitionDuration
+                             animations:^{
+                                 placeholderCurrentImageView.frame = CGRectMake(0, 0, size.width, size.height);
+                                 placeholderPlayImageView.center = center;
+                                 activityIndicatorView.center = center;
+                             }];
         }
     } completion:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
+        self.scrollView.hidden = NO;
+        [activityIndicatorView removeFromSuperview];
+        [placeholderPlayImageView removeFromSuperview];
+        [placeholderCurrentImageView removeFromSuperview];
+
         if (self.presentedViewController) {
             self.needsReload = YES;
         }
@@ -310,7 +354,6 @@ static const CGFloat GapBetweenPages = 10.0;
                 [self.delegate photoBrowser:self didPresentNodeAtIndex:self.currentIndex];
             }
         }
-        [self fixFrames];
     }
 }
 
@@ -519,11 +562,12 @@ static const CGFloat GapBetweenPages = 10.0;
     }
 }
 
-- (void)addActivityIndicatorToView:(UIView *)view {
+- (UIActivityIndicatorView *)addActivityIndicatorToView:(UIView *)view {
     UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     activityIndicator.frame = CGRectMake((view.frame.size.width-activityIndicator.frame.size.width)/2, (view.frame.size.height-activityIndicator.frame.size.height)/2, activityIndicator.frame.size.width, activityIndicator.frame.size.height);
     [activityIndicator startAnimating];
     [view addSubview:activityIndicator];
+    return activityIndicator;
 }
 
 - (void)removeActivityIndicatorsFromView:(UIView *)view {
@@ -570,19 +614,6 @@ static const CGFloat GapBetweenPages = 10.0;
     view.frame = frame;
 }
 
-- (void)fixFrames {
-    if (@available(iOS 10.0, *)) {} else {
-        NSUInteger initialIndex = self.currentIndex == 0 ? 0 : self.currentIndex - 1;
-        NSUInteger finalIndex = self.currentIndex >= self.mediaNodes.count - 1 ? self.mediaNodes.count - 1 : self.currentIndex + 1;
-        for (NSUInteger i = initialIndex; i <= finalIndex; i++) {
-            UIScrollView *zoomableView = [self.imageViewsCache objectForKey:@(i)];
-            if (zoomableView) {
-                zoomableView.frame = CGRectMake(self.scrollView.frame.size.width * i, 0.0f, self.view.frame.size.width, self.view.frame.size.height);
-            }
-        }
-    }
-}
-
 #pragma mark - IBActions
 
 - (IBAction)didPressCloseButton:(UIBarButtonItem *)sender {
@@ -595,6 +626,10 @@ static const CGFloat GapBetweenPages = 10.0;
 
 - (IBAction)didPressActionsButton:(UIBarButtonItem *)sender {
     CustomActionViewController *actionController = [[CustomActionViewController alloc] init];
+    MEGANode *node = [MEGASdkManager.sharedMEGASdk nodeForHandle:[self.mediaNodes objectAtIndex:self.currentIndex].handle];
+    if (node) {
+        [self.mediaNodes setObject:node atIndexedSubscript:self.currentIndex];
+    }
     actionController.node = [self.mediaNodes objectAtIndex:self.currentIndex];
     actionController.actionDelegate = self;
     actionController.actionSender = sender;
@@ -778,8 +813,7 @@ static const CGFloat GapBetweenPages = 10.0;
 - (void)playVideo:(UIButton *)sender {
     MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
     if (node.mnz_isPlayable) {
-        MEGAHandleList *chatRoomIDsWithCallInProgress = [MEGASdkManager.sharedMEGAChatSdk chatCallsWithState:MEGAChatCallStatusInProgress];
-        if (chatRoomIDsWithCallInProgress.size > 0) {
+        if (MEGASdkManager.sharedMEGAChatSdk.mnz_existsActiveCall) {
             [Helper cannotPlayContentDuringACallAlert];
         } else {
             UIViewController *playerVC = [node mnz_viewControllerForNodeInFolderLink:(self.api == [MEGASdkManager sharedMEGASdkFolder])];
@@ -997,6 +1031,22 @@ static const CGFloat GapBetweenPages = 10.0;
             [node mnz_saveToPhotosWithApi:self.api];
             break;
             
+        case MegaNodeActionTypeGetLink:
+        case MegaNodeActionTypeManageLink: {
+            if (MEGAReachabilityManager.isReachableHUDIfNot) {
+                [CopyrightWarningViewController presentGetLinkViewControllerForNodes:@[node] inViewController:UIApplication.mnz_presentingViewController];
+            }
+            break;
+        }
+            
+        case MegaNodeActionTypeRemoveLink:
+            [node mnz_removeLink];
+            break;
+            
+        case MegaNodeActionTypeSendToChat:
+            [node mnz_sendToChatInViewController:self];
+            break;
+            
         default:
             break;
     }
@@ -1048,6 +1098,34 @@ static const CGFloat GapBetweenPages = 10.0;
     } else {
         [self reloadUI];
     }
+}
+
+#pragma mark - Private methods.
+
+- (UIImageView *)placeholderCurrentImageView {
+    UIScrollView *zoomableView = [self.imageViewsCache objectForKey:@(self.currentIndex)];
+    FLAnimatedImageView *animatedImageView  = zoomableView.subviews.firstObject;
+    
+    UIImageView *imageview = UIImageView.new;
+    imageview.backgroundColor = self.view.backgroundColor;
+    imageview.image = animatedImageView.image;
+    imageview.contentMode = animatedImageView.contentMode;
+    
+    return imageview;
+}
+
+- (nullable UIImageView *)placeholderPlayImageView {
+    if (self.mediaNodes.count > self.currentIndex) {
+        MEGANode *node = self.mediaNodes[self.currentIndex];
+        if (node.name.mnz_isVideoPathExtension) {
+            UIImageView *imageview = [UIImageView.alloc initWithFrame:CGRectMake(0, 0, self.playButtonSize, self.playButtonSize)];
+     imageview.image = [UIImage imageNamed: node.mnz_isPlayable ? @"blackPlayButton" : @"blackCrossedPlayButton"];
+            
+            return imageview;
+        }
+    }
+
+    return nil;
 }
 
 @end

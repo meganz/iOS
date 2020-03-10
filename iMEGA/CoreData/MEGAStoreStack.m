@@ -3,7 +3,6 @@
 
 @interface MEGAStoreStack ()
 
-@property (strong, nonatomic) NSManagedObjectContext *viewContext;
 @property (strong, nonatomic) NSPersistentStoreCoordinator *storeCoordinator;
 @property (strong, nonatomic) NSPersistentContainer *persistentContainer;
 
@@ -23,7 +22,7 @@
     return self;
 }
 
-#pragma mark - persistent container for iOS 10 and above
+#pragma mark - persistent container
 
 - (NSPersistentContainer *)persistentContainer {
     if (_persistentContainer == nil) {
@@ -56,77 +55,24 @@
     return container;
 }
 
-#pragma mark - store coordinator for iOS 9
-
-- (NSPersistentStoreCoordinator *)storeCoordinator {
-    if (_storeCoordinator == nil) {
-        _storeCoordinator = [self newStoreCoordinatorForiOSBelow10];
-    }
-    
-    return _storeCoordinator;
-}
-
-- (NSPersistentStoreCoordinator *)newStoreCoordinatorForiOSBelow10 {
-    NSURL *modelURL = [NSBundle.mainBundle URLForResource:self.modelName withExtension:@"momd"];
-    NSManagedObjectModel *model = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
-    NSError *error = nil;
-    NSPersistentStoreCoordinator *coordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:model];
-    NSDictionary *options = @{NSMigratePersistentStoresAutomaticallyOption : @YES,
-                              NSInferMappingModelAutomaticallyOption : @YES};
-    if (![coordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:self.storeURL options:options error:&error]) {
-        MEGALogError(@"error when to create core data stack %@", error);
-        abort();
-    }
-    
-    return coordinator;
-}
-
 #pragma mark - managed object contexts
 
 - (NSManagedObjectContext *)viewContext {
-    if (@available(iOS 10.0, *)) {
-        return self.persistentContainer.viewContext;
-    } else {
-        if (_viewContext == nil) {
-            _viewContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
-            _viewContext.persistentStoreCoordinator = self.storeCoordinator;
-        }
-        
-        return _viewContext;
-    }
+    return self.persistentContainer.viewContext;
 }
 
 - (NSManagedObjectContext *)newBackgroundContext {
-    if (@available(iOS 10.0, *)) {
-        return self.persistentContainer.newBackgroundContext;
-    } else {
-        NSManagedObjectContext *context = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
-        [context performBlockAndWait:^{
-            context.persistentStoreCoordinator = self.storeCoordinator;
-        }];
-        return context;
-    }
+    return self.persistentContainer.newBackgroundContext;
 }
 
 #pragma mark - delete store
 
-- (void)deleteStoreWithError:(NSError *__autoreleasing  _Nullable *)error {
-    NSPersistentStoreCoordinator *coordinator;
-    if (@available(iOS 10.0, *)) {
-        coordinator = _persistentContainer.persistentStoreCoordinator;
-    } else {
-        coordinator = _storeCoordinator;
+- (void)deleteStore {
+    NSError *error;
+    if (![self.persistentContainer.persistentStoreCoordinator destroyPersistentStoreAtURL:self.storeURL withType:NSSQLiteStoreType options:nil error:&error]) {
+        MEGALogError(@"[Camera Upload] error when deleting camera upload store %@", error);
     }
-    
-    [_viewContext reset];
-    
-    [coordinator destroyPersistentStoreAtURL:[self storeURL] withType:NSSQLiteStoreType options:nil error:error];
-    if (@available(iOS 10.0, *)) {
-        _persistentContainer = nil;
-    } else {
-        _viewContext = nil;
-        _storeCoordinator = nil;
-    }
+    _persistentContainer = nil;
 }
 
 @end

@@ -1,6 +1,6 @@
 
 #import "DocumentPickerViewController.h"
-
+#import <PureLayout/PureLayout.h>
 #import "LTHPasscodeViewController.h"
 #import "SAMKeychain.h"
 #import "SVProgressHUD.h"
@@ -21,9 +21,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *openButton;
 
 @property (nonatomic) LaunchViewController *launchVC;
-@property (nonatomic, getter=isFirstFetchNodesRequestUpdate) BOOL firstFetchNodesRequestUpdate;
-@property (nonatomic, getter=isFirstAPI_EAGAIN) BOOL firstAPI_EAGAIN;
-@property (nonatomic) NSTimer *timerAPI_EAGAIN;
 
 @property (nonatomic) NSString *session;
 @property (nonatomic) UIView *privacyView;
@@ -255,14 +252,13 @@
 - (void)presentDocumentPicker {
     if (!self.pickerPresented) {
         UIStoryboard *cloudStoryboard = [UIStoryboard storyboardWithName:@"Cloud" bundle:[NSBundle bundleForClass:BrowserViewController.class]];
-        MEGANavigationController *navigationController = [cloudStoryboard instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
-        BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
+        BrowserViewController *browserVC = [cloudStoryboard instantiateViewControllerWithIdentifier:@"BrowserViewControllerID"];
         browserVC.browserAction = BrowserActionDocumentProvider;
         browserVC.browserViewControllerDelegate = self;
-        
-        [self addChildViewController:navigationController];
-        [navigationController.view setFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height)];
-        [self.view addSubview:navigationController.view];
+        [self addChildViewController:browserVC];
+        [self.view addSubview:browserVC.view];
+        [browserVC didMoveToParentViewController:self];
+        [browserVC.view autoPinEdgesToSuperviewEdges];
         self.pickerPresented = YES;
     }
     if (self.launchVC) {
@@ -283,20 +279,6 @@
         [self presentViewController:passcodeVC animated:NO completion:nil];
         self.passcodePresented = YES;
     }
-}
-
-- (void)startTimerAPI_EAGAIN {
-    self.timerAPI_EAGAIN = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(showServersTooBusy) userInfo:nil repeats:NO];
-}
-
-- (void)invalidateTimerAPI_EAGAIN {
-    [self.timerAPI_EAGAIN invalidate];
-    
-    self.launchVC.label.text = @"";
-}
-
-- (void)showServersTooBusy {
-    self.launchVC.label.text = AMLocalizedString(@"takingLongerThanExpected", @"Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in");
 }
 
 - (void)copyDatabasesFromMainApp {
@@ -391,75 +373,16 @@
 
 #pragma mark - MEGARequestDelegate
 
-- (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
-    switch ([request type]) {
-        case MEGARequestTypeLogin:
-        case MEGARequestTypeFetchNodes: {
-            self.launchVC.activityIndicatorView.hidden = NO;
-            [self.launchVC.activityIndicatorView startAnimating];
-            
-            self.firstAPI_EAGAIN = YES;
-            self.firstFetchNodesRequestUpdate = YES;
-            break;
-        }
-            
-        default:
-            break;
-    }
-}
-
-- (void)onRequestUpdate:(MEGASdk *)api request:(MEGARequest *)request {
-    if (request.type == MEGARequestTypeFetchNodes) {
-        [self invalidateTimerAPI_EAGAIN];
-        
-        float progress = (request.transferredBytes.floatValue / request.totalBytes.floatValue);
-        
-        if (self.isFirstFetchNodesRequestUpdate) {
-            [self.launchVC.activityIndicatorView stopAnimating];
-            self.launchVC.activityIndicatorView.hidden = YES;
-        
-            [self.launchVC.logoImageView.layer addSublayer:self.launchVC.circularShapeLayer];
-            self.launchVC.circularShapeLayer.strokeStart = 0.0f;
-        }
-        
-        if (progress > 0 && progress <= 1.0) {
-            self.launchVC.circularShapeLayer.strokeEnd = progress;
-        }
-    }
-}
-
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     switch ([request type]) {
         case MEGARequestTypeLogin: {
-            [self invalidateTimerAPI_EAGAIN];
-            
             [api fetchNodesWithDelegate:self];
             break;
         }
             
-        case MEGARequestTypeFetchNodes: {
-            [self invalidateTimerAPI_EAGAIN];
-            
+        case MEGARequestTypeFetchNodes:
             [self presentDocumentPicker];
             break;
-        }
-            
-        default: {
-            break;
-        }
-    }
-}
-
-- (void)onRequestTemporaryError:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-    switch (request.type) {
-        case MEGARequestTypeLogin:
-        case MEGARequestTypeFetchNodes: {
-            if (self.isFirstAPI_EAGAIN) {
-                [self startTimerAPI_EAGAIN];
-                self.firstAPI_EAGAIN = NO;
-            }
-            break;
-        }
             
         default:
             break;

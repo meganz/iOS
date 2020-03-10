@@ -20,6 +20,8 @@
 #import "MEGAGlobalDelegate.h"
 #import "MEGAArchiveChatRequestDelegate.h"
 #import "MEGAChatGenericRequestDelegate.h"
+#import "MEGAStore.h"
+#import "MEGA-Swift.h"
 
 #import "MEGA-Swift.h"
 
@@ -83,7 +85,7 @@
     UIImage *avatarImage = [UIImage imageForName:self.chatRoom.title.uppercaseString size:avatarSize backgroundColor:[UIColor mnz_gray999999] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:(avatarSize.width/2.0f)]];
     self.avatarImageView.image = avatarImage;
     
-    if (self.chatRoom.peerCount == 0) {
+    if (self.chatRoom.ownPrivilege < MEGAChatRoomPrivilegeRo) {
         self.participantsLabel.text = AMLocalizedString(@"Inactive chat", @"Subtitle of chat screen when the chat is inactive");
     } else {
         NSInteger peers = self.chatRoom.peerCount + (!self.chatRoom.isPreview ? 1 : 0);
@@ -142,8 +144,16 @@
     
     [archiveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         MEGAArchiveChatRequestDelegate *archiveChatRequesDelegate = [[MEGAArchiveChatRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
-            self.chatRoom = chatRoom;
-            [self.tableView reloadData];
+            if (chatRoom.isArchived) {
+                if (self.navigationController.childViewControllers.count >= 3) {
+                    NSUInteger MessagesVCIndex = self.navigationController.childViewControllers.count - 2;
+                    [MEGASdkManager.sharedMEGAChatSdk closeChatRoom:chatRoom.chatId delegate:self.navigationController.childViewControllers[MessagesVCIndex]];
+                }
+                [self.navigationController popToRootViewControllerAnimated:YES];
+            } else {
+                self.chatRoom = chatRoom;
+                [self.tableView reloadData];
+            }
         }];
         [[MEGASdkManager sharedMEGAChatSdk] archiveChat:self.chatRoom.chatId archive:!self.chatRoom.isArchived delegate:archiveChatRequesDelegate];
     }]];
@@ -497,7 +507,7 @@
                 peerEmail = [[MEGASdkManager sharedMEGAChatSdk] myEmail];
                 privilege = self.chatRoom.ownPrivilege;
             } else {
-                peerFullname = [self.chatRoom peerFullnameByHandle:handle];
+                peerFullname = [self.chatRoom userDisplayNameForUserHandle:handle];
                 peerEmail = [self.chatRoom peerEmailByHandle:handle];
                 privilege = [self.chatRoom peerPrivilegeAtIndex:index];
             }

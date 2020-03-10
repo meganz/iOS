@@ -422,11 +422,9 @@
     cell.nameLabel.text = node.name;
     
     MEGAUser *user = [MEGASdkManager.sharedMEGASdk contactForEmail:userEmail];
-    NSString *userName = user.mnz_fullName ? user.mnz_fullName : userEmail;
-    
-    NSString *infoLabelText = userName;
-    cell.infoLabel.text = infoLabelText;
-    
+    NSString *userDisplayName = user.mnz_displayName;
+    cell.infoLabel.text = (userDisplayName != nil) ? userDisplayName : userEmail;
+
     [cell.permissionsButton setImage:[Helper permissionsButtonImageForShareType:share.access] forState:UIControlStateNormal];
     cell.permissionsButton.hidden = NO;
 
@@ -468,7 +466,8 @@
         userName = [NSString stringWithFormat:AMLocalizedString(@"sharedWithXContacts", nil), outSharesCount];
     } else {
         MEGAUser *user = [MEGASdkManager.sharedMEGASdk contactForEmail:[outSharesMutableArray.firstObject user]];
-        userName = user.mnz_fullName ? user.mnz_fullName : user.email;
+        NSString *userDisplayName = user.mnz_displayName;
+        userName = (userDisplayName != nil) ? userDisplayName : user.email;
     }
     
     cell.permissionsButton.hidden = YES;
@@ -486,7 +485,11 @@
 - (NodeTableViewCell *)linkSharedCellAtIndexPath:(NSIndexPath *)indexPath forNode:(MEGANode *)node {
     NodeTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"nodeCell" forIndexPath:indexPath];
     [cell configureCellForNode:node delegate:self api:MEGASdkManager.sharedMEGASdk];
+    //We are on the Shared Items - Links tab, no need to show any icon next to the thumbnail.
+    cell.linkImageView.hidden = YES;
+    
     [self configureSelectionForCell:cell atIndexPath:indexPath forNode:node];
+    
     return cell;
 }
 
@@ -1087,24 +1090,27 @@
 - (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
     MEGANode *node = [self nodeAtIndexPath:indexPath];
     if (self.incomingButton.selected) {
-        UIContextualAction *shareAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:AMLocalizedString(@"Leave Share", @"Text to indicate that the user will leave an incoming shared folder.") handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+        UIContextualAction *shareAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
             [node mnz_leaveSharingInViewController:self];
             [self setEditing:NO animated:YES];
         }];
+        shareAction.image = [UIImage imageNamed:@"leaveShareGesture"];
         shareAction.backgroundColor = [UIColor colorWithRed:0.95 green:0.05 blue:0.08 alpha:1];
         return [UISwipeActionsConfiguration configurationWithActions:@[shareAction]];
     } else if (self.outgoingButton.selected) {
-        UIContextualAction *shareAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:AMLocalizedString(@"removeSharing", @"Alert title shown on the Shared Items section when you want to remove 1 share") handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+        UIContextualAction *shareAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
             [node mnz_removeSharing];
             [self setEditing:NO animated:YES];
         }];
+        shareAction.image = [UIImage imageNamed:@"removeShareGesture"];
         shareAction.backgroundColor = [UIColor colorWithRed:0.95 green:0.05 blue:0.08 alpha:1];
         return [UISwipeActionsConfiguration configurationWithActions:@[shareAction]];
     } else if (self.linksButton.selected) {
-        UIContextualAction *removeLinkAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:AMLocalizedString(@"removeLink", @"Message shown when there is an active link that can be removed or disabled") handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+        UIContextualAction *removeLinkAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
             [node mnz_removeLink];
             [self setEditing:NO animated:YES];
         }];
+        removeLinkAction.image = [UIImage imageNamed:@"removeLinkGesture"];
         removeLinkAction.backgroundColor = [UIColor colorWithRed:0.95 green:0.05 blue:0.08 alpha:1];
         return [UISwipeActionsConfiguration configurationWithActions:@[removeLinkAction]];
     } else {
@@ -1368,7 +1374,7 @@
     
     if (direction == MGSwipeDirectionRightToLeft) {
         if (self.incomingButton.selected) {
-            MGSwipeButton *shareButton = [MGSwipeButton buttonWithTitle:AMLocalizedString(@"Leave Share", @"Text to indicate that the user will leave an incoming shared folder.") icon:nil backgroundColor:[UIColor colorWithRed:0.95 green:0.05 blue:0.08 alpha:1] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
+            MGSwipeButton *shareButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"leaveShareGesture"] backgroundColor:[UIColor colorWithRed:0.95 green:0.05 blue:0.08 alpha:1] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
                 [node mnz_leaveSharingInViewController:self];
                 return YES;
             }];
@@ -1376,7 +1382,7 @@
             
             return @[shareButton];
         } else if (self.outgoingButton.selected) {
-            MGSwipeButton *shareButton = [MGSwipeButton buttonWithTitle:AMLocalizedString(@"removeSharing", @"Alert title shown on the Shared Items section when you want to remove 1 share") icon:nil backgroundColor:[UIColor colorWithRed:0.95 green:0.05 blue:0.08 alpha:1] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
+            MGSwipeButton *shareButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"removeShareGesture"] backgroundColor:[UIColor colorWithRed:0.95 green:0.05 blue:0.08 alpha:1] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
                 [node mnz_removeSharing];
                 return YES;
             }];
@@ -1384,7 +1390,7 @@
             
             return @[shareButton];
         } else if (self.linksButton.selected) {
-            MGSwipeButton *removeLinkButton = [MGSwipeButton buttonWithTitle:AMLocalizedString(@"removeLink", @"Message shown when there is an active link that can be removed or disabled") icon:nil backgroundColor:[UIColor colorWithRed:0.95 green:0.05 blue:0.08 alpha:1] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
+            MGSwipeButton *removeLinkButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"removeLinkGesture"] backgroundColor:[UIColor colorWithRed:0.95 green:0.05 blue:0.08 alpha:1] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
                 [node mnz_removeLink];
                 return YES;
             }];

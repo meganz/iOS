@@ -21,6 +21,8 @@
 /* "Size" of the file or folder you are sharing */
 "size"="大小";
 /*  */
+"Quality"="Quality";
+/*  */
 "folder"="文件夹";
 /* Error message shown when there's no camera available on the device */
 "noCamera"="无可用的相机";
@@ -43,7 +45,7 @@
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="请输入解密金钥";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
-"decryptionKeyAlertMessage"="要进入此文件夹/文件，您需要它的解密密钥。如果没有密钥，请联系此链接的创建者。";
+"decryptionKeyAlertMessage"="需要解密密钥才能访问该文件夹/文件。如果您没有密钥，需联系链接创建者。";
 /* Hint text to suggest that the user has to write the decryption key */
 "decryptionKey"="解密密钥";
 /* Button title to try to decrypt the link */
@@ -140,14 +142,12 @@
 "Confirm account"="确认账户";
 /* Error text shown when you introduce a wrong password on the confirmation proccess */
 "passwordWrong"="错误密码";
-/* Warning title shown when you try to confirm an account but you are logged in with another one */
-"alreadyLoggedInAlertTitle"="您已经使用其他账户登录了";
-/* Warning message shown when you try to confirm an account but you are logged in with another one */
-"alreadyLoggedInAlertMessage"="如果您同意，当前的账户将被登出并且所有离线数据将被删除。是否要继续？";
 /* Error shown when the user tries to change his mail to one that is already used */
 "emailAlreadyInUse"="错误。此邮箱已被使用。";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="您的设备内存不足";
+/* Message shown when you try to downlonad files bigger than the available memory. */
+"MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device."="MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device.";
 /* Title for the file link view */
 "fileLink"="文件链接";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
@@ -280,6 +280,8 @@
 "choosePhotoVideo"="选择";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="拍摄";
+/* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
+"Scan Document"="扫描文档";
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="新增文件夹";
 /* Hint text shown on the create folder alert. */
@@ -508,7 +510,9 @@
 "oneItemSelected"="已选中%lu 个项目";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
 "itemsSelected"="已选中%lu 个项目";
-/* Title shown when multiselection is enable in chat tabs, and the user has more than one item selected. */
+/* String shown when multi selection is enabled and only one item has been selected. */
+"1 selected"="1 selected";
+/* String shown when multi selection is enabled and the user has more than one item selected. */
 "xSelected"="已选%d个项目";
 /* Title of the Offline section */
 "offline"="离线";
@@ -519,7 +523,7 @@
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
 "foldersShared"="%d 个文件夹";
 /* Item menu option to add a contact writting his/her email */
-"addFromEmail"="输入邮箱地址";
+"addFromEmail"="输入电子邮箱地址";
 /* Title of Shared Items section */
 "sharedItems"="共享文件";
 /* Title of the tab bar item for the Shared Items section */
@@ -560,8 +564,6 @@
 "addContactButton"="新增";
 /* Add contacts and share dialog error message when user try to add your own email address */
 "noNeedToAddYourOwnEmailAddress"="您无须增加个人的电子邮件";
-/* Add contacts and share dialog error message when user try to add already existing email address. */
-"alreadyHaveAContactWithThatEmailAddress"="您已有一个使用该电子邮件的连络人";
 /* Success message shown when a contact has been invited */
 "theUserHasBeenInvited"="用户[X]已被邀请。该邀请被接受后，他将会出现在您的联系人列表中。";
 /* Success message shown when some contacts have been invited */
@@ -684,6 +686,8 @@
 "Custom Settings"="自定义设置";
 /* Title to show when device local storage is full */
 "%@ Storage Full"="%@储存空间已满";
+/* Title to show when device local storage is almost full */
+"Device Storage Almost Full"="Device Storage Almost Full";
 /* Detail for local storage full situation */
 "You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="您没有足够的存储空间用于相机上传。请删除一些不必要的应用、视频和音乐以释放空间。您可在%@管理您的储存空间。";
 /* Navigation path for Storage settings in iOS */
@@ -735,7 +739,7 @@
 /* Message of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported. */
 "recoveryKeyCopiedToClipboard"="恢复秘钥已复制到剪贴板。请妥善保管。";
 /* Alert title shown when you have exported your MEGA Recovery Key */
-"masterKeyExported"="恢复金匙已导出";
+"masterKeyExported"="恢复秘钥已导出";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
 "masterKeyExported_alertMessage"="还原金钥已以RecoveryKey.txt(还原金钥文字档)汇出至离线模式中。注意：您登出后它将会被删除，请将其存放于安全之处。";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
@@ -827,7 +831,7 @@
 /* An alert title where the user provided the incorrect Recovery Key. */
 "invalidRecoveryKey"="恢复密钥无效";
 /* Text of the alert after opening the recovery link to reset pass being logged. */
-"youRecoveryKeyIsGoingTo"="还原金钥将被用于重设您的密码。请输入您的新密码。";
+"youRecoveryKeyIsGoingTo"="您的恢复密钥将用于重置您的密码。请输入您的新密码。";
 /*  */
 "yourPasswordHasBeenReset"="密码已重置。请立即登入账户。";
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
@@ -957,6 +961,22 @@
 "xDaysLeft"="剩下%1天";
 /* %1 will be replaced by a numeric value and %2 will be 'days' or 'months', for example (Expires in [S]10[/S] days) */
 "bonusExpiresIn"="(奖励将于[S]%1[/S] %2 内到期)";
+/* Add Phone Number title  */
+"Add Phone Number"="添加手机号";
+/* Achievement explanation for add phone number */
+"You have received %1$s storage space and %2$s transfer quota for verifying your phone number."="您已通过验证手机号获得%1$s的存储空间和%2$s的传输流量。";
+/* Free storage description to encourage users to add phone number to their accounts */
+"Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."="添加手机号即可免费获得%@，您的联系人也可轻松在MEGA上找到您。";
+/* Description to encourage users to add phone number to their accounts when there are not achievements */
+"Add your phone number to MEGA. This makes it easier for your contacts to find you on MEGA."="添加手机号到您的MEGA帐户，您的联系人即可轻松在MEGA上找到您。";
+/* Description to unblock account by verifying phone number */
+"Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account."="由于滥用行为，您的帐户已被暂时锁定。请通过验证手机号解锁帐户。";
+/* Verify your account title */
+"Verify Your Account"="验证您的帐户";
+/* Add your phone number title */
+"Add Your Phone Number"="添加您的手机号";
+/* Choose Your Country title */
+"Choose Your Country"="选择您的国家";
 /* Used to display the number of months a plan was purchased for e.g. 3 months, 6 months. */
 "months"="个月";
 /*  */
@@ -964,7 +984,7 @@
 /* Label to show that an error related with expiration occurs during a SDK operation. */
 "expired"="已过期";
 /* Title of the button which logs out from your account. */
-"logoutLabel"="注销";
+"logoutLabel"="登出";
 /* String shown when you are logging out of your account. */
 "loggingOut"="正在登出";
 /* Button to remove avatar. Try to keep the text short (as in English) */
@@ -987,8 +1007,8 @@
 "availableLabel"="可用";
 /* title of the My Account screen */
 "accountType"="账号类型:";
-/* Text relative to the MEGA account level. UPPER CASE */
-"free"="免费";
+/* Label to indicate that the current user has a Free account. */
+"Free"="免费";
 /* Text that shows the expiry date of the account PRO level */
 "expiresOn"="到%@ 过期";
 /* Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible). */
@@ -1006,9 +1026,9 @@
 /*  */
 "chooseYourAccountType"="选择您的账号类型";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. Please leave the [S], [/S], [A], [/A] placeholders as they are. */
-"cloudDriveIsAlmostFull"="[S]您的云盘几乎已满。[/S] [A]立即升级[/A]至PRO帐户，可获得[S]最高8TB (8192GB)[/S]的云储存空间。";
+"cloudDriveIsAlmostFull"="[S]您的云盘空间几乎已满。[/S] [A]立即升级[/A]到PRO帐户并获得[S]最高%@ TB (%@ GB)[/S]的云存储空间。";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
-"cloudDriveIsFull"="[S]您的帐户空间已满。[/S] [A]立即升级[/A]至PRO帐户，可获得[S]最高8TB (8192GB)[/S]的云储存空间。";
+"cloudDriveIsFull"="[S]您的云盘空间已满。[/S] [A]立即升级[/A]到PRO帐户并获得[S]最高%@ TB (%@ GB)[/S]的云存储空间。";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="储存空间";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
@@ -1087,8 +1107,6 @@
 "noConversations"="无对话(已清空)";
 /* Empty Conversations description */
 "Start chatting securely with your contacts using end-to-end encryption"="开始使用端到端加密安全的与您的联系人进行聊天";
-/* Title show when the chat is disabled */
-"chatIsDisabled"="聊天功能已停用";
 /* Text button shown when the chat is disabled and if tapped the chat will be enabled */
 "enable"="启用";
 /* A button on a dialog which invites a contact to join MEGA. */
@@ -1153,6 +1171,10 @@
 "sendMessage"="发送信息";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
 "verifyCredentials"="确认凭证";
+/* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
+"verify"="确认";
+/* Button title */
+"verified"="已验证";
 /* A button title to delete the history of a chat. */
 "clearChatHistory"="清空对话记录";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
@@ -1248,7 +1270,7 @@
 /* Alert message shown when the user perform logout and has files in the Offline directory */
 "allFilesSavedForOfflineWillBeDeletedFromYourDevice"="您储存之所有离线文件将会被从您的设备中删除。确定要登出吗？";
 /* Title shown when you almost had used your available transfer quota. */
-"depletedTransferQuota_title"="流量不足";
+"depletedTransferQuota_title"="传输流量不足";
 /* Description shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_message"="您进程中的下载已超出您帐户目前可用的流量，因此有可能会被中断。";
 /* Button title to see the available pro plans in MEGA */
@@ -1360,11 +1382,11 @@
 /* Paragraph 3 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph3"="此加密方式也代表我们无法存取或重新设定您的密码，因此您必须牢牢记住它(除非您有备份还原金钥)，否则您将无法存取您所储存的文件。";
 /* Paragraph between 3rd and 4th of the general description of MEGA shown on the iOS App Store, part of Android string 17769 */
-"generalDescriptionVideoChat"="End-to-end user-encrypted MEGA video chat allows for total privacy, and has been available through the browser since 2016. It has been extended to our mobile app, with chat history accessible across multiple devices. Users can also easily add files to a chat from their MEGA Cloud Drive.";
+"generalDescriptionVideoChat"="终端至终端加密保护的MEGA视频聊天为您的聊天提供完全的隐私，自2016年来一直通过浏览器使用。它已扩展到我们的移动应用程序，并可在多个设备上访问聊天记录。用户还能轻松地从MEGA云盘向聊天添加文件。";
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph4"="注册用户只要参与奖励计划即可获得50GB免费储存空间，亦可付费获得更多配额：";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
-"generalDescriptionParagraph5"="PRO LITE订阅：每月€4.99（$4.99）或每年€49.99（$49.99），每月为您提供每月200GB的存储空间和1TB的传输配额。\nPRO I订阅：每月€9.99（$9.99）或每年€99.99（$99.99），每月为您提供1TB的存储空间和2TB的传输配额。\nPRO II订阅：每月€19.99（$19.99）或每年€199.99（$199.99），每月为您提供4TB的存储空间和8TB的传输配额。[BR]PRO III订阅：每月€29.99（$29.99）或每年€299.99（$299.99），每月为您提供8TB的存储空间和16TB的传输配额。";
+"generalDescriptionParagraph5"="PRO LITE订阅：每月€4.99 (USD$4.99)或每年€49.99 (USD$49.99)，您会获得每月400GB的存储空间和1TB的传输流量。\nPRO I订阅：每月€9.99 (USD$9.99)或每年€99.99 (USD$99.99)，您会获得每月2TB的存储空间和2TB的传输流量。\nPRO II订阅：每月€19.99 (USD$19.99)或每年€199.99 (USD$199.99)，您会获得每月8TB的存储空间和8TB的传输流量。\nPRO III订阅：每月€29.99 (USD$29.99)或每年€299.99 (USD$299.99)，您会获得每月16TB的存储空间和16TB的传输流量。";
 /* Between paragraph 5 and 6 we have to put the string with the 'autorenewableDescription' key */
 /* Paragraph 6 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
 "generalDescriptionParagraph6"="欲了解更多信息，请浏览我们的网站：https://mega.nz/\n服务条款：https://mega.nz/terms\n隐私政策：https://mega.nz/privacy";
@@ -1407,7 +1429,7 @@
 /* Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible. */
 "autoAccept"="自动接受";
 /* Footer that explains the way Auto-Accept works for QR codes */
-"autoAcceptFooter"="扫描二维码码的联系人会自动添加到您的联系人列表中。";
+"autoAcceptFooter"="通过扫描二维码添加的用户会自动添加到您的联系人列表";
 /* Action to reset the current valid QR code of the user */
 "resetQrCode"="重置二维码";
 /* Footer that explains what would happen if the user resets his/her QR code */
@@ -1489,7 +1511,7 @@
 /* Used as a message in the "Password reminder" dialog that is shown when the user enters his password, clicks confirm and his password is correct. */
 "passwordAccepted"="密码已确认";
 /* A dialog title to export the Recovery Key for the current user. */
-"exportRecoveryKey"="导出恢复金匙";
+"exportRecoveryKey"="导出恢复密钥";
 /* Title to confirm that you want to logout */
 "proceedToLogout"="继续登出";
 /* Used as a message in the "Password reminder" dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data.  */
@@ -1523,7 +1545,7 @@
 /* When an active call of user A with user B had failed */
 "callFailed"="通话失败";
 /* When an active call of user A with user B had ended */
-"callEnded"="通话结束";
+"callEnded"="呼叫结束。";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="时长：%@";
 /* */
@@ -1606,6 +1628,8 @@
 "Save in Photos"="保存至照片";
 /* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="将MEGA应用程序中拍摄的照片与视频的副本保存在您设备的媒体资料库中。";
+/* Settings section title where you can enable the option to 'Spotlight search' */
+"Spotlight Search"="Spotlight Search";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="您持有这把密钥";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -1643,13 +1667,13 @@
 /* Detailed explanation of why the user should give permission to deliver notifications */
 "We would like to send you notifications so you receive new messages on your device instantly."="我们将向您发送通知，以便您立即在设备上收到新消息。";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
-"Allow Access"="允许访问";
+"Allow Access"="开启访问权限";
 /* A section header which contains the file management settings. These settings allow users to remove duplicate files etc. */
 "File Management"="文件管理";
 /* Title of the option to enable or disable file versioning on Settings section */
 "File versioning"="文件版本";
 /* Subtitle of the option to enable or disable file versioning on Settings section */
-"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="启用或禁用整个帐户的文件版本控制。如果您的联系人已启用此功能，\n您仍可以从共享文件夹接收文件版本。";
+"Enable or disable file versioning for your entire account.[Br]You may still receive file versions from shared folders if your contacts have this enabled."="为整个帐户启用或禁用文件版本功能。\n禁用文件版本功能不会阻止您的联系人在共享文件夹中创建新版本。";
 /* A confirmation message when the user chooses to disable file versioning. */
 "When file versioning is disabled, the current version will be replaced with the new version once a file is updated (and your changes to the file will no longer be recorded). Are you sure you want to disable file versioning?"="当文件版本控制被禁用时，一旦文件被更新，当前版本将被替换为新版本（并且不再记录对文件的更改）。您确定要禁用文件版本控制吗？";
 /* Settings preference title to show file versions info of the account */
@@ -1862,6 +1886,8 @@
 "Tap and hold %@ to record, release to send"="按住%@说话，松开发送";
 /* Message shown when there is an ongoing call and the user tries to record a voice message */
 "It is not possible to record voice messages while there is a call in progress"="正在进行通话时，无法录制语音留言。";
+/* Label indicating that a voice clip is being recorded. String as short as possible. */
+"Recording..."="正在录音……";
 /* Text to inform the user there is an active call and is not participating */
 "Ongoing Call"="正在进行通话";
 /* Message shown when there is an ongoing call and the user tries to play an audio or video */
@@ -1921,7 +1947,7 @@
 /* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
 "Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="请转到设备的“设置”中的“隐私”部分。启用定位服务并将MEGA设置为使用App时开启或者始终开启。";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
-"MEGA accesses your location when you elect to share it with your contacts."="当您选择与联系人共享时，MEGA会访问您的位置。";
+"NSLocationAlwaysAndWhenInUseUsageDescription"="MEGA accesses your location when you share it with your contacts in chat or when you enable ”Upload in Background” for Camera Uploads so your photos and videos are uploaded when your location changes.";
 /* Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
 "Mobile Data is turned off"="移动数据已关闭";
 /* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */
@@ -1932,6 +1958,32 @@
 "Change to a test server?"="更改为测试服务器？";
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="您确定要更改为测试服务器吗？ 您的帐户可能会遇到无法解决的问题";
+/* Title label that explains that the user is going to be asked for the contacts permission */
+"Enable Access to Contacts"="允许访问联系人";
+/* Detailed explanation of why the user should give permission to contacts */
+"MEGA needs access to your contacts to help you connect with other people on MEGA."="与其他人建立联系前，MEGA需访问您的联系人";
+/* Title encouraging the user to check who of its contacts are using MEGA */
+"See who's already on MEGA"="看看谁在用MEGA";
+/* Title showing the user how many of his contacts are using MEGA */
+"[X] contacts found on MEGA"="已发现[X]个联系人";
+/* Title showing the user that one of his contacts are using MEGA */
+"1 contact found on MEGA"="已发现1个联系人";
+/* Text indicating the user to open the device settings for MEGA */
+"Open Settings"="打开设置";
+/* Text encouraging the user to invite contacts to MEGA */
+"Invite contacts and start chatting securely with MEGA’s encrypted chat."="邀请联系人并开始加密聊天。";
+/* Text showing the user how many contacts would be invited */
+"Invite [X] contacts"="邀请[X]个联系人";
+/* Text showing the user how to write more than one email in order to invite them to MEGA */
+"Tap space to enter multiple emails"="按空格键添加更多邮箱";
+/* Text used as a section title or similar */
+"Enter Email"="输入电子邮件地址";
+/* Text used as view title showing the user the phone contacts using MEGA */
+"On MEGA"="于MEGA上";
+/* Text used as a section title or similar showing the user the phone contacts using MEGA */
+"CONTACTS ON MEGA"="MEGA联系人";
+/* Text to send as SMS message to user contacts inviting them to MEGA */
+"Hi, Have encrypted conversations on Mega with me and get 50GB free storage."="嗨！和我一起使用MEGA，并获得最高50GB的免费存储空间。";
 /* Destination folder name of chat files */
 "My chat files"="我的聊天文件";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
@@ -1948,8 +2000,6 @@
 "Links"="链接";
 /* Title for empty state view of "Links" in Shared Items. */
 "No Public Links"="无公共链接";
-/* Text to indicate that the user will leave an incoming shared folder. */
-"Leave Share"="离开共享";
 /* Text indicating to the user the action that will be executed on tap. */
 "Manage Share"="管理共享";
 /* Title of the screen that shows the users with whom the user can share a folder */
@@ -1991,8 +2041,84 @@
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
 "Reconnecting..."="正在重连中……";
 /* Title shown when the user reconnect in a call. */
-"You are back!"="已重连！";
+"You are back!"="已重连。";
 /* Subtitle of chat screen when the chat is inactive */
 "Inactive chat"="非活跃聊天";
+/* Contact details screen: Set the alias(nickname) for a user */
+"Set Nickname"="设置昵称";
+/* Contact details screen: Edit the alias(nickname) for a user */
+"Edit Nickname"="Edit Nickname";
+/* Edit nickname screen: Remove nickname button title */
+"Remove Nickname"="Remove Nickname";
+/* Add nickname screen: This text appears above the alias(nickname) entry */
+"Alias/ Nickname"="别名/昵称";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
-"It was not possible to obtain the content of this file, that is not encoded in either UTF-8 or ISO/IEC 8859-1."="It was not possible to obtain the content of this file, that is not encoded in either UTF-8 or ISO/IEC 8859-1.";
+"It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="该文件未使用UTF-8或ISO/IEC 8859-1进行编码，无法读取文件内容。";
+/* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
+"Include location tags"="分享位置标签";
+/* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
+"If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="开启后，您的相关照片和视频的拍摄地点信息将会上传，分享前请谨慎选择。";
+/* Error message shown when opening a link with an account that not corresponds to the link */
+"This link is not related to this account. Please log in with the correct account."="此链接未关联该帐户。请登录正确的MEGA帐户。";
+/* Text emncouraging the user to add contacts in MEGA */
+"Invite contact now"="立即邀请联系人";
+/* Text showing the user one contact would be invited */
+"Invite 1 contact"="邀请1个联系人";
+/* Error message if user click next button without enter a valid phone number */
+"Please enter a valid phone number"="请填写正确的电话号码。";
+/* Error message that will show to user when user reached the sms verification daily limit */
+"You have reached the daily limit"="您已达到每日限额";
+/* Error message that will show to user when user entered invalid verification code */
+"Wrong code. Please try again or resend."="验证码错误。请再试一次或重新发送。";
+/* Error message that will show to user when host detected that the mobile number has been registered already */
+"This number is already associated with a Mega account"="该手机号已关联了一个MEGA帐户";
+/* Country label for a button, title, etc. */
+"Country"="国家";
+/* Error message that will show to user its account is already verified */
+"Your account is already verified"="您的帐户已验证";
+/* Place holder for enter mobile number field */
+"Your phone number"="您的手机号码";
+/* Label tell user to enter received txt to below input boxes */
+"Please type the verification code sent to"="请输入验证码，已发送至";
+/* Text message to remind user to resend verification code */
+"You didn't receive a code?"="收不到验证码？";
+/* Message shown when verify phone number successfully */
+"Your phone number has been verified successfully"="您的手机号已成功验证";
+/* Text describing account suspended state to the user */
+"Your account has been temporarily suspended for your safety."="为了确保安全，您的帐户已被暂时锁定。";
+/* Text indicating the user next step to unlock suspended account. Please leave [S], [/S] as it is which is used to bolden the text. */
+"[S]Please verify your email[/S] and follow its steps to unlock your account."="[S]请验证您的邮箱[/S]并按照MEGA邮件中步骤解锁您的帐户。";
+/* Text for button to open an helping view */
+"Why am I seeing this?"="为什么我的帐户被停用？";
+/* Text to notify user an email has been sent */
+"Email sent"="邮件已发送";
+/* Title of a helping view about locked accounts */
+"Locked Accounts"="帐户已锁";
+/* Locked accounts description text by an external data breach. This text is 1 of 2 paragraph of a description. */
+"It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="您的MEGA帐户使用的密码可能与其他服务使用的密码相同，并且这些其他服务中至少有一项服务的数据已遭泄露。";
+/* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
+"Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="您的密码遭到泄露（包括且不限于MEGA帐户），您的帐户正在被他人登录和使用。";
+/* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
+"MEGA CAMERA UPLOADS FOLDER"="MEGA相机上传文件夹";
+/* Action button text of folder selection screen for camera uploads */
+"Select Folder"="选择文件夹";
+/* Title of the folder selection screen for camera uploads */
+"Choose Folder"="选择文件夹";
+/* Label used near to the option selected to encode the images uploaded to a chat (Low, Medium, Original) */
+"Image quality"="图片质量";
+/* Title of Image Quality option */
+"Automatic"="自动";
+/* Description of Automatic Image Quality option */
+"Send smaller size images through cellular networks and original size images through wifi"="使用蜂窝网络时发送较小尺寸图片，使用Wi-Fi时发送原始图片";
+/* Title of Image Quality option */
+"Optimised"="优化";
+/* Description of Optimised Image Quality option */
+"Send smaller size images optimised for lower data consumption"="发送较小尺寸的图片，优化以降低数据消耗";
+/* Description of High Image Quality option */
+"Send original size, increased quality images"="Send original size, increased quality images";
+/* Setting title for Doc scan view */
+"Save Settings"="Save Settings";
+/* file type title, used in changing the export format of scaned doc */
+"File Type"="文件类型";
+/* export Quality Option for Scan document */
+"best"="Best";

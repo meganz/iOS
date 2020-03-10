@@ -21,14 +21,14 @@
 
 - (NSFileCoordinator *)fileCoordinator {
     NSFileCoordinator *fileCoordinator = [[NSFileCoordinator alloc] init];
-    [fileCoordinator setPurposeIdentifier:[self providerIdentifier]];
+    [fileCoordinator setPurposeIdentifier:NSFileProviderManager.defaultManager.providerIdentifier];
     return fileCoordinator;
 }
 
 - (instancetype)init {
     self = [super init];
     if (self) {
-        [self.fileCoordinator coordinateWritingItemAtURL:self.documentStorageURL options:0 error:nil byAccessor:^(NSURL *newURL) {
+        [self.fileCoordinator coordinateWritingItemAtURL:NSFileProviderManager.defaultManager.documentStorageURL options:0 error:nil byAccessor:^(NSURL *newURL) {
             // ensure the documentStorageURL actually exists
             NSError *error = nil;
             [[NSFileManager defaultManager] createDirectoryAtURL:newURL withIntermediateDirectories:YES attributes:nil error:&error];
@@ -41,10 +41,11 @@
     // Should call + writePlaceholderAtURL:withMetadata:error: with the placeholder URL, then call the completion handler with the error if applicable.
     NSString *fileName = [url lastPathComponent];
     
-    NSURL *placeholderURL = [NSFileProviderExtension placeholderURLForURL:[self.documentStorageURL URLByAppendingPathComponent:fileName]];
+    NSURL *placeholderURL = [NSFileProviderManager placeholderURLForURL:[NSFileProviderManager.defaultManager.documentStorageURL URLByAppendingPathComponent:fileName]];
     
     NSUInteger fileSize = [[[NSFileManager defaultManager] attributesOfItemAtPath:url.path error:nil][NSFileSize] unsignedIntegerValue];
     NSDictionary *metadata = @{NSURLFileSizeKey : @(fileSize)};
+    // There is a warning in the following line, will be addressed when we support the new Files.app:
     [NSFileProviderExtension writePlaceholderAtURL:placeholderURL withMetadata:metadata error:NULL];
     
     if (completionHandler) {
