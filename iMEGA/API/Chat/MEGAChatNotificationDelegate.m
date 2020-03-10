@@ -11,14 +11,14 @@
 #pragma mark - MEGAChatNotificationDelegate
 
 - (void)onChatNotification:(MEGAChatSdk *)api chatId:(uint64_t)chatId message:(MEGAChatMessage *)message {
-    MEGALogDebug(@"On chat %@ notification message %@", [MEGASdk base64HandleForUserHandle:chatId], message);
+    MEGALogDebug(@"[Chat notification] On chat %@ notification message %@", [MEGASdk base64HandleForUserHandle:chatId], message);
     
     [UIApplication sharedApplication].applicationIconBadgeNumber = api.unreadChats;
     
     MOMessage *moMessage = [MEGAStore.shareInstance fetchMessageWithChatId:chatId messageId:message.messageId];
     if (moMessage) {
         [MEGAStore.shareInstance deleteMessage:moMessage];
-        MEGALogDebug(@"Already notified")
+        MEGALogDebug(@"[Chat notification] Already notified")
         return;
     }
     
@@ -26,7 +26,7 @@
         if ([UIApplication.mnz_visibleViewController isKindOfClass:[MessagesViewController class]] && message.status != MEGAChatMessageStatusSeen) {
             MessagesViewController *messagesVC = (MessagesViewController *) UIApplication.mnz_visibleViewController;
             if (messagesVC.chatRoom.chatId == chatId) {
-                MEGALogDebug(@"The chat room %@ is opened, ignore notification", [MEGASdk base64HandleForHandle:chatId]);
+                MEGALogDebug(@"[Chat notification] The chat room %@ is opened, ignore notification", [MEGASdk base64HandleForHandle:chatId]);
                 return;
             }
         }
