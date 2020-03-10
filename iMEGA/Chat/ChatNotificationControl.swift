@@ -10,7 +10,8 @@ import UIKit
     // MARK:- Interface methods.
 
     @objc func configure(cell: ChatNotificationControlCellProtocol, chatId: Int64) {
-        cell.nameLabel?.text = "Chat Notifications".localized()
+        
+        cell.nameLabel?.text = AMLocalizedString("Chat Notifications", "Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch")
         
         cell.notificationsSwitch?.isEnabled = isNotificationSettingsLoaded()
         cell.notificationsSwitch?.setOn(!isChatDNDEnabled(chatId: chatId), animated: false)
