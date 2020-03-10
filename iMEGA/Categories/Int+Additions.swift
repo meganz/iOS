@@ -7,26 +7,26 @@ extension Int {
         
         if hoursLeft > 0 && minutesLeft > 0 {
             if hoursLeft > 1 && minutesLeft > 1 {
-                return String(format: "%d hours, %d minutes left".localized(), hoursLeft, minutesLeft)
+                return String(format: AMLocalizedString("%d hours, %d minutes left", "Chat Notifications DND: Remaining time left to deactivate DND - X hours, X minutes left"), hoursLeft, minutesLeft)
             } else if hoursLeft > 1 && minutesLeft == 1 {
-                return String(format: "%d hours, 1 minute left".localized(), hoursLeft)
+                return String(format: AMLocalizedString("%d hours, 1 minute left", "Chat Notifications DND: Remaining time left to deactivate DND - X hours, 1 minute left"), hoursLeft)
             } else if hoursLeft == 1 && minutesLeft > 1 {
-                return String(format: "1 hour, %d minutes left".localized(), minutesLeft)
+                return String(format: AMLocalizedString("1 hour, %d minutes left", "Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, X minutes left"), minutesLeft)
             } else {
-                return "1 hour, 1 minute left".localized()
+                return AMLocalizedString("1 hour, 1 minute left", "Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, 1 minute left")
             }
         } else if hoursLeft > 0 {
             if (hoursLeft == 1) {
-                return "1 hour left".localized()
+                return AMLocalizedString("1 hour left", "Chat Notifications DND: Remaining time left to deactivate DND - 1 hour left")
             } else {
-                let timeLeftFormatString = "%d hours left".localized()
+                let timeLeftFormatString = AMLocalizedString("%d hours left", "Chat Notifications DND: Remaining time left to deactivate DND - more than 1 hour left")
                 return String(format: timeLeftFormatString, hoursLeft) ;
             }
         } else if minutesLeft > 0 {
             if (minutesLeft == 1) {
-                return "1 minute left".localized()
+                return AMLocalizedString("1 minute left", "Chat Notifications DND: Remaining time left to deactivate DND - 1 minute left")
             } else {
-                let timeLeftFormatString = "%d minutes left".localized()
+                let timeLeftFormatString = AMLocalizedString("%d minutes left", "Chat Notifications DND: Remaining time left to deactivate DND - more than 1 minute left")
                 return String(format: timeLeftFormatString, minutesLeft) ;
             }
         }

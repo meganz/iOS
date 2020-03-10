@@ -25,11 +25,6 @@ class PushNotificationControl: NSObject {
     
     private var pushNotificationSettingsDelegate: MEGAGenericRequestDelegate {
         return MEGAGenericRequestDelegate { [weak self] request, error in
-            guard let error = error,
-                let request = request else {
-                    return
-            }
-            
             if error.type == .apiENoent {
                 self?.pushNotificationSettings = MEGAPushNotificationSettings()
             } else if error.type == .apiOk {
@@ -38,7 +33,7 @@ class PushNotificationControl: NSObject {
             
             self?.delegate?.tableView?.reloadData()
             self?.hideProgress()
-        }!
+        }
     }
     
     weak var delegate: PushNotificationControlProtocol?
@@ -63,7 +58,7 @@ class PushNotificationControl: NSObject {
 extension PushNotificationControl {
     func string(from timeLeft: Int64) -> String? {
         if timeLeft == 0 {
-            return "Muted forever".localized()
+            return AMLocalizedString("Muted forever", "Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch")
         } else {
             let remainingTime = Int(ceil(Double(timeLeft) - NSDate().timeIntervalSince1970))
             return remainingTime.timeLeftString()

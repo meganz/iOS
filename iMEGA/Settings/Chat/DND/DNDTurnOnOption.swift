@@ -10,26 +10,26 @@ enum DNDTurnOnOption: TimeInterval {
     private var localizedTitle: String {
         switch self {
         case .forever:
-            return "Until I Turn it On Again".localized()
+            return AMLocalizedString("Until I Turn it On Again", "Chat Notifications DND: Option that does not deactivate DND automatically")
         case .thirtyMinutes:
-            return "30 minutes".localized()
+            return AMLocalizedString("30 minutes", "Chat Notifications DND: Option that deactivates DND after 30 minutes")
         case .oneHour:
-            return "1 hour".localized()
+            return AMLocalizedString("1 hour")
         case .sixHours:
-            return "6 hours".localized()
+            return AMLocalizedString("6 hours")
         case .twentyFourHours:
-            return "24 hours".localized()
+            return AMLocalizedString("24 hours")
         }
     }
     
     static func alertController(delegate: DNDTurnOnAlertControllerAction,
                                 identifier: Int64?) -> UIAlertController {
-        let alertMessage = "Mute chat Notifications for".localized()
+        let alertMessage = AMLocalizedString("Mute chat Notifications for", "Chat Notifications DND: Title bar message for the dnd activate options")
         let alertController = UIAlertController(title: nil,
                                                 message: alertMessage,
                                                 preferredStyle: .actionSheet)
         
-        let cancelString = "cancel".localized()
+        let cancelString = AMLocalizedString("cancel")
         alertController.addAction(UIAlertAction(title: cancelString,
                                                 style: .cancel,
                                                 handler: delegate.cancelAction))
