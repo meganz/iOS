@@ -79,7 +79,7 @@
                                     UNNotificationRequest *notificationRequest = [UNNotificationRequest requestWithIdentifier:identifier content:content trigger:trigger];
                                     [center addNotificationRequest:notificationRequest withCompletionHandler:^(NSError * _Nullable error) {
                                         if (error) {
-                                            MEGALogError(@"Add NotificationRequest failed with error: %@", error);
+                                            MEGALogError(@"[Chat notification] Add NotificationRequest failed with error: %@", error);
                                         } else {
                                             [MEGAStore.shareInstance insertMessage:self.message.messageId chatId:self.chatRoom.chatId];
                                         }
@@ -95,7 +95,7 @@
                     UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:identifier content:content trigger:trigger];
                     [center addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
                         if (error) {
-                            MEGALogError(@"Add NotificationRequest failed with error: %@", error);
+                            MEGALogError(@"[Chat notification] Add NotificationRequest failed with error: %@", error);
                         } else {
                             [MEGAStore.shareInstance insertMessage:self.message.messageId chatId:self.chatRoom.chatId];
                         }
@@ -180,13 +180,13 @@
         NSURL *fileURL = [NSURL fileURLWithPath:jpgPath];
         UNNotificationAttachment *notificationAttachment = [UNNotificationAttachment attachmentWithIdentifier:identifier URL:fileURL options:nil error:&error];
         if (error) {
-            MEGALogError(@"Error creating notification attachment %@", error);
+            MEGALogError(@"[Chat notification] Error creating notification attachment %@", error);
             return nil;
         } else {
             return notificationAttachment;
         }
     } else {
-        MEGALogError(@"Create symbolic link at path failed %@", error);
+        MEGALogError(@"[Chat notification] Create symbolic link at path failed %@", error);
         return nil;
     }
 }

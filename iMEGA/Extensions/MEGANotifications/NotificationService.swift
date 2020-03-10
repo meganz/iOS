@@ -22,6 +22,8 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
             }
         }
         
+        MEGALogInfo("Push received: request identifier: \(request.identifier)\n user info: \(request.content.userInfo)")
+        
         guard let megadataDictionary = bestAttemptContent?.userInfo["megadata"] as? [String : String],
             let chatIdBase64 = megadataDictionary["chatid"],
             let msgIdBase64 = megadataDictionary["msgid"]
