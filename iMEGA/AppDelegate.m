@@ -176,6 +176,11 @@
     self.backgroundTaskMutableDictionary = [[NSMutableDictionary alloc] init];
     
     NSString *sessionV3 = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
+
+    if (self.megaProviderDelegate == nil) {
+        self.megaCallManager = MEGACallManager.new;
+        self.megaProviderDelegate = [MEGAProviderDelegate.alloc initWithMEGACallManager:self.megaCallManager];
+    }
     
     //Clear keychain (session) and delete passcode on first run in case of reinstallation
     if (![[NSUserDefaults standardUserDefaults] objectForKey:kFirstRun]) {
