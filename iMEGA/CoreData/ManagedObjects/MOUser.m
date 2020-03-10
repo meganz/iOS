@@ -42,4 +42,12 @@
     return firstname;
 }
 
+- (NSString *)displayName {
+    if (self.nickname != nil && !self.nickname.mnz_isEmpty) {
+        return self.nickname;
+    }
+    
+    return self.fullName;
+}
+
 @end

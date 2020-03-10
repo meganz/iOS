@@ -30,7 +30,7 @@
     return self;
 }
 
-- (instancetype)initWithNumberOfRequests:(NSUInteger)numberOfRequests presentSuccessOver:(UIViewController *)viewController completion:(void (^)(void))completion {
+- (instancetype)initWithNumberOfRequests:(NSUInteger)numberOfRequests presentSuccessOver:(UIViewController *)viewController completion:(void (^ _Nullable)(void))completion {
     self = [super init];
     if (self) {
         _numberOfRequests = numberOfRequests;
@@ -63,7 +63,31 @@
                 break;
                 
             case MEGAErrorTypeApiEExist: {
-                [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"alreadyHaveAContactWithThatEmailAddress", @"Add contacts and share dialog error message when user try to add already existing email address.")];
+                MEGAUser *user = [api contactForEmail:request.email];
+                if (user && user.visibility == MEGAUserVisibilityVisible) {
+                    
+                    [SVProgressHUD showErrorWithStatus:({
+                        [AMLocalizedString(@"alreadyAContact", @"Error message displayed when trying to invite a contact who is already added.") stringByReplacingOccurrencesOfString:@"%s" withString:request.email];
+                    })];
+                    
+                } else {
+                    BOOL isInOutgoingContactRequest = NO;
+                    MEGAContactRequestList *outgoingContactRequestList = [api outgoingContactRequests];
+                    for (NSInteger i = 0; i < outgoingContactRequestList.size.integerValue; i++) {
+                        MEGAContactRequest *contactRequest = [outgoingContactRequestList contactRequestAtIndex:i];
+                        if ([request.email isEqualToString:contactRequest.targetEmail]) {
+                            isInOutgoingContactRequest = YES;
+                            break;
+                        }
+                    }
+                    if (isInOutgoingContactRequest) {
+                        [SVProgressHUD showErrorWithStatus:({
+                            [AMLocalizedString(@"theUserHasBeenInvited", @"Success message shown when a contact has been invited") stringByReplacingOccurrencesOfString:@"[X]" withString:request.email];
+                        })];
+                    }
+                    
+                }
+                
                 break;
             }
                 

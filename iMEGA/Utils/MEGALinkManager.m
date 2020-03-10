@@ -25,7 +25,6 @@
 #import "MEGAChatGenericRequestDelegate.h"
 #import "MEGAContactLinkQueryRequestDelegate.h"
 #import "MEGAGetPublicNodeRequestDelegate.h"
-#import "MEGAGenericRequestDelegate.h"
 #import "MEGAInviteContactRequestDelegate.h"
 #import "MEGANavigationController.h"
 #import "MEGANode+MNZCategory.h"
@@ -191,29 +190,20 @@ static NSString *nodeToPresentBase64Handle;
                             [SVProgressHUD showSuccessWithStatus:notificationText];
                         } else {
                             [DevicePermissionsHelper notificationsPermissionWithCompletionHandler:^(BOOL granted) {
-                                if (@available(iOS 10.0, *)) {
-                                    if (granted) {
-                                        UNMutableNotificationContent *content = [UNMutableNotificationContent new];
-                                        content.body = notificationText;
-                                        content.sound = UNNotificationSound.defaultSound;
-                                        content.userInfo = @{@"chatId" : @(chatId)};
-                                        UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:1 repeats:NO];
-                                        UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:identifier content:content trigger:trigger];
-                                        [UNUserNotificationCenter.currentNotificationCenter addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
-                                            if (error) {
-                                                [SVProgressHUD showSuccessWithStatus:notificationText];
-                                            }
-                                        }];
-                                    } else {
-                                        [SVProgressHUD showSuccessWithStatus:notificationText];
-                                    }
+                                if (granted) {
+                                    UNMutableNotificationContent *content = [UNMutableNotificationContent new];
+                                    content.body = notificationText;
+                                    content.sound = UNNotificationSound.defaultSound;
+                                    content.userInfo = @{@"chatId" : @(chatId)};
+                                    UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:1 repeats:NO];
+                                    UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:identifier content:content trigger:trigger];
+                                    [UNUserNotificationCenter.currentNotificationCenter addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
+                                        if (error) {
+                                            [SVProgressHUD showSuccessWithStatus:notificationText];
+                                        }
+                                    }];
                                 } else {
-                                    UILocalNotification* localNotification = [[UILocalNotification alloc] init];
-                                    localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:1];
-                                    localNotification.alertBody = notificationText;
-                                    localNotification.timeZone = NSTimeZone.defaultTimeZone;
-                                    localNotification.userInfo = @{@"chatId" : @(chatId)};
-                                    [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+                                    [SVProgressHUD showSuccessWithStatus:notificationText];
                                 }
                             }];
                         }
@@ -305,6 +295,13 @@ static NSString *nodeToPresentBase64Handle;
 
 #pragma mark - Manage MEGA links
 
++ (NSString *)buildPublicLink:(NSString *)link withKey:(NSString *)key isFolder:(BOOL)isFolder {
+    NSString *stringWithoutSymbols = [[link stringByReplacingOccurrencesOfString:@"#" withString:@""] stringByReplacingOccurrencesOfString:@"!" withString:@""];
+    NSString *publicHandle = [stringWithoutSymbols substringFromIndex:stringWithoutSymbols.length - 8];
+    
+    return [MEGASdkManager.sharedMEGASdk buildPublicLinkForHandle:publicHandle key:key isFolder:isFolder];
+}
+
 + (void)processLinkURL:(NSURL *)url {
     if (!url) {
         return;
@@ -341,19 +338,10 @@ static NSString *nodeToPresentBase64Handle;
         case URLTypeConfirmationLink:
         case URLTypeNewSignUpLink: {
             if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
-                UIAlertController *alreadyLoggedInAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"alreadyLoggedInAlertTitle", @"Warning title shown when you try to confirm an account but you are logged in with another one") message:AMLocalizedString(@"alreadyLoggedInAlertMessage", @"Warning message shown when you try to confirm an account but you are logged in with another one") preferredStyle:UIAlertControllerStyleAlert];
-                [alreadyLoggedInAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                    [MEGALinkManager resetLinkAndURLType];
-                }]];
-                
-                [alreadyLoggedInAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
-                    MEGAGenericRequestDelegate *logoutRequestDelegate = [[MEGAGenericRequestDelegate alloc] initWithCompletion:^(MEGARequest *request, MEGAError *error) {
-                        if (error.type) return;
-                        MEGAQuerySignupLinkRequestDelegate *querySignupLinkRequestDelegate = [[MEGAQuerySignupLinkRequestDelegate alloc] initWithCompletion:nil urlType:MEGALinkManager.urlType];
-                        [[MEGASdkManager sharedMEGASdk] querySignupLink:url.mnz_MEGAURL delegate:querySignupLinkRequestDelegate];
-                    }];
-                    [[MEGASdkManager sharedMEGASdk] logoutWithDelegate:logoutRequestDelegate];
-                }]];
+                [MEGALinkManager resetLinkAndURLType];
+
+                UIAlertController *alreadyLoggedInAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:AMLocalizedString(@"This link is not related to this account. Please log in with the correct account.", @"Error message shown when opening a link with an account that not corresponds to the link") preferredStyle:UIAlertControllerStyleAlert];
+                [alreadyLoggedInAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDestructive handler:nil]];
                 
                 [UIApplication.mnz_visibleViewController presentViewController:alreadyLoggedInAlertController animated:YES completion:nil];
             } else {
@@ -504,9 +492,8 @@ static NSString *nodeToPresentBase64Handle;
 
 + (void)showEncryptedLinkAlert:(NSString *)encryptedLinkURLString {
     MEGAPasswordLinkRequestDelegate *delegate = [[MEGAPasswordLinkRequestDelegate alloc] initForDecryptionWithCompletion:^(MEGARequest *request) {
-        NSString *url = [NSString stringWithFormat:@"mega://%@", [[request.text componentsSeparatedByString:@"/"] lastObject]];
-        MEGALinkManager.linkURL = [NSURL URLWithString:url];
-        [MEGALinkManager processLinkURL:[NSURL URLWithString:url]];
+        MEGALinkManager.linkURL = [NSURL URLWithString:request.text];
+        [MEGALinkManager processLinkURL:[NSURL URLWithString:request.text]];
     } onError:^(MEGARequest *request) {
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"To access this link, you will need its password.", @"This dialog message is used on the Password Decrypt dialog. The link is a password protected link so the user needs to enter the password to decrypt the link.") message:nil preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
@@ -629,6 +616,10 @@ static NSString *nodeToPresentBase64Handle;
     MEGAContactLinkQueryRequestDelegate *delegate = [[MEGAContactLinkQueryRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
         NSString *fullName = [NSString stringWithFormat:@"%@ %@", request.name, request.text];
         [MEGALinkManager presentInviteModalForEmail:request.email fullName:fullName contactLinkHandle:request.nodeHandle image:request.file];
+        
+        [NSUserDefaults.standardUserDefaults setObject:[NSNumber numberWithUnsignedLongLong:request.nodeHandle] forKey:MEGALastPublicHandleAccessed];
+        [NSUserDefaults.standardUserDefaults setInteger:AffiliateTypeContact forKey:MEGALastPublicTypeAccessed];
+        [NSUserDefaults.standardUserDefaults setDouble:NSDate.date.timeIntervalSince1970 forKey:MEGALastPublicTimestampAccessed];
     } onError:^(MEGAError *error) {
         [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"linkNotValid", @"Message shown when the user clicks on an link that is not valid")];
     }];
@@ -730,6 +721,10 @@ static NSString *nodeToPresentBase64Handle;
         } else {
             [MEGALinkManager createChatAndShow:request.chatHandle publicChatLink:chatLinkUrl];
         }
+        
+        [NSUserDefaults.standardUserDefaults setObject:[NSNumber numberWithUnsignedLongLong:request.chatHandle] forKey:MEGALastPublicHandleAccessed];
+        [NSUserDefaults.standardUserDefaults setInteger:AffiliateTypeChat forKey:MEGALastPublicTypeAccessed];
+        [NSUserDefaults.standardUserDefaults setDouble:NSDate.date.timeIntervalSince1970 forKey:MEGALastPublicTimestampAccessed];
         
         [SVProgressHUD dismiss];
     }];

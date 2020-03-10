@@ -109,23 +109,18 @@
         } else if (indexPath.row == 1) {
             imageView.image = [UIImage imageNamed:@"sendMessage"];
             label.text = AMLocalizedString(@"sendToContact", nil);
-            label.enabled = cell.userInteractionEnabled = [self.sharedUserDefaults boolForKey:@"IsChatEnabled"] && self.isChatReady;
+            label.enabled = cell.userInteractionEnabled = self.isChatReady;
             
-            if ([self.sharedUserDefaults boolForKey:@"IsChatEnabled"]) {
-                if (self.isChatReady) {
-                    cell.accessoryView = nil;
-                    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-                } else {
-                    UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-                    [activityIndicator startAnimating];
-                    cell.accessoryView = activityIndicator;
-                }
-            } else {
+            if (self.isChatReady) {
                 cell.accessoryView = nil;
-                cell.accessoryType = UITableViewCellAccessoryNone;
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            } else {
+                UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+                [activityIndicator startAnimating];
+                cell.accessoryView = activityIndicator;
             }
         }
-    } else if (indexPath.section == 1) {
+    } else {
         cell = [self.tableView dequeueReusableCellWithIdentifier:@"fileCell" forIndexPath:indexPath];
         if (!cell) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"fileCell"];
