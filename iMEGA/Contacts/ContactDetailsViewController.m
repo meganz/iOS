@@ -33,7 +33,8 @@
 #import "MEGA-Swift.h"
 
 typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
-    ContactDetailsSectionNickname = 0,
+    ContactDetailsSectionDonotDisturb = 0,
+    ContactDetailsSectionNickname,
     ContactDetailsSectionVerifyCredentials,
     ContactDetailsSectionAddAndRemoveContact,
     ContactDetailsSectionSharedFolders,
@@ -195,6 +196,15 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
 }
 
 #pragma mark - Private - Table view cells
+
+- (ContactTableViewCell *)cellForDNDWithIndexPath:(NSIndexPath *)indexPath {
+    ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsNotificationsTypeID"];
+    cell.nameLabel.font = [UIFont mnz_SFUIRegularWithSize:15.0f];
+    [self.chatNotificationControl configureWithCell:(id<ChatNotificationControlCellProtocol>)cell
+                                             chatId:self.chatRoom.chatId];
+    cell.delegate = self;
+    return cell;
+}
 
 - (ContactTableViewCell *)cellForNicknameWithIndexPath:(NSIndexPath *)indexPath {
     ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
@@ -635,15 +645,6 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
     }
 }
 
-- (ContactTableViewCell *)chatNotificationTableviewCell {
-    ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsNotificationsTypeID"];
-    cell.nameLabel.font = [UIFont mnz_SFUIRegularWithSize:15.0f];
-    [self.chatNotificationControl configureWithCell:(id<ChatNotificationControlCellProtocol>)cell
-                                             chatId:self.chatRoom.chatId];
-    cell.delegate = self;
-    return cell;
-}
-
 - (void)showNickNameViewContoller {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Contacts" bundle:nil];
     UINavigationController *navigationController = [storyboard instantiateViewControllerWithIdentifier:@"AddNickNameNavigationControllerID"];
@@ -699,7 +700,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
 }
 
 - (NSArray<NSNumber *> *)sectionsForContactModeDefault {
-    return [self addSharedFoldersSectionIfNeededToSections:@[@(ContactDetailsSectionNickname), @(ContactDetailsSectionVerifyCredentials), @(ContactDetailsSectionAddAndRemoveContact)]];
+    return [self addSharedFoldersSectionIfNeededToSections:@[@(ContactDetailsSectionDonotDisturb), @(ContactDetailsSectionNickname), @(ContactDetailsSectionVerifyCredentials), @(ContactDetailsSectionAddAndRemoveContact)]];
 }
 
 - (NSArray<NSNumber *> *)sectionsForContactFromChat {
@@ -707,7 +708,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
         return [self addSharedFoldersSectionIfNeededToSections:@[@(ContactDetailsSectionClearChatHistory), @(ContactDetailsSectionArchiveChat)]];
     }
     
-    return [self addSharedFoldersSectionIfNeededToSections:@[@(ContactDetailsSectionNickname), @(ContactDetailsSectionClearChatHistory), @(ContactDetailsSectionArchiveChat)]];
+    return [self addSharedFoldersSectionIfNeededToSections:@[@(ContactDetailsSectionDonotDisturb), @(ContactDetailsSectionNickname), @(ContactDetailsSectionClearChatHistory), @(ContactDetailsSectionArchiveChat)]];
 }
 
 - (NSArray<NSNumber *> *)sectionsForContactFromGroupChat {
@@ -817,6 +818,10 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
     ContactTableViewCell *cell;
     
     switch (self.contactDetailsSections[indexPath.section].intValue) {
+        case ContactDetailsSectionDonotDisturb:
+            cell = [self cellForDNDWithIndexPath:indexPath];
+            break;
+            
         case ContactDetailsSectionNickname:
             cell = [self cellForNicknameWithIndexPath:indexPath];
             break;
@@ -880,7 +885,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if (section == 0 || [self isSharedFolderSection:section]) {
         return 24;
-    } else if (self.contactDetailsMode == ContactDetailsModeFromChat && section == 1) {
+    } else if (self.contactDetailsSections[section].intValue == ContactDetailsSectionDonotDisturb) {
         NSString *timeRemainingString = [self.chatNotificationControl
                                          timeRemainingForDNDDeactivationStringWithChatId:self.chatRoom.chatId];
         if (timeRemainingString.length > 0) {
@@ -892,18 +897,14 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
-    if ((self.contactDetailsMode == ContactDetailsModeFromChat
-         || self.contactDetailsMode == ContactDetailsModeDefault)
-        && section == 0) {
+    if (self.contactDetailsSections[section].intValue == ContactDetailsSectionDonotDisturb) {
         return [self.chatNotificationControl timeRemainingForDNDDeactivationStringWithChatId:self.chatRoom.chatId];
     }
     
     return nil;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    if ((self.contactDetailsMode == ContactDetailsModeFromChat
-         || self.contactDetailsMode == ContactDetailsModeDefault)
-        && section == 0) {
+    if (self.contactDetailsSections[section].intValue == ContactDetailsSectionDonotDisturb) {
         return UITableViewAutomaticDimension;
     }
     
