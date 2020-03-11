@@ -119,7 +119,7 @@
 /* Label displayed during checking the strength of the password introduced. Represents Strong security */
 "strong"="คาดเดาได้ยากมาก";
 /*  */
-"passwordStrong"="รหัสผ่านนี้จะสามารถป้องกันการโจมตีแบบ brute-force ที่มีความซับซ้อนได้ กรุณาตรวจสอบอีกครั้งว่าคุณจะสามารถจำรหัสผ่านเหล่านี้ได้";
+"passwordStrong"="รหัสผ่านนี้จะสามารถป้องกันการโจมตีแบบ Brute-Force ที่มีความซับซ้อนได้ กรุณาตรวจสอบอีกครั้งว่าคุณจะสามารถจำรหัสผ่านเหล่านี้ได้";
 /*  */
 "agreeWithTheMEGATermsOfService"="ฉันเห็นด้วยกับ<a href=\"terms\">เงื่อนไขการให้บริการ</a>ของ MEGA";
 /* This text is displayed in the account creation screen with a checkbox. User will have to tick the checkbox before proceeding on to create an account */
@@ -146,6 +146,8 @@
 "emailAlreadyInUse"="ผิดพลาด ชื่อบัญชีนี้ได้ถูกใช้งานไปแล้ว";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="คุณจำเป็นต้องเพิ่มพื้นที่ว่างบนอุปกรณ์ของคุณ";
+/* Message shown when you try to downlonad files bigger than the available memory. */
+"MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device."="MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device.";
 /* Title for the file link view */
 "fileLink"="การเชื่อมโยงของไฟล์";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
@@ -682,6 +684,8 @@
 "Custom Settings"="การตั้งค่าที่กำหนดเอง";
 /* Title to show when device local storage is full */
 "%@ Storage Full"="พื้นที่จัดเก็บข้อมูลของ %@ เต็มแล้ว";
+/* Title to show when device local storage is almost full */
+"Device Storage Almost Full"="Device Storage Almost Full";
 /* Detail for local storage full situation */
 "You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="คุณมีพื้นที่เก็บข้อมูลไม่เพียงพอสำหรับการอัปโหลดของกล้องเพิ่มเติม เพิ่มพื้นที่ว่างโดยการลบแอป วิดีโอหรือเพลงที่ไม่จำเป็น คุณสามารถจัดการที่เก็บข้อมูลของคุณใน %@";
 /* Navigation path for Storage settings in iOS */
@@ -1622,6 +1626,8 @@
 "Save in Photos"="บันทึกในรูปภาพ";
 /* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="บันทึกสำเนาของรูปภาพและวิดีโอที่ถ่ายจากแอป MEGA ในไลบรารีสื่อของอุปกรณ์";
+/* Settings section title where you can enable the option to 'Spotlight search' */
+"Spotlight Search"="Spotlight Search";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="คุณคือผู้ถือกุญแจ";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -1960,8 +1966,6 @@
 "[X] contacts found on MEGA"="พบผู้ติดต่อ [X] รายการใน MEGA";
 /* Title showing the user that one of his contacts are using MEGA */
 "1 contact found on MEGA"="พบผู้ติดต่อ 1 รายการใน MEGA";
-/* Text indicating the user to perform an action to grant some permission */
-"Enable Access"="เปิดใช้งานการเข้าถึง";
 /* Text indicating the user to open the device settings for MEGA */
 "Open Settings"="เปิดการตั้งค่า";
 /* Text encouraging the user to invite contacts to MEGA */
@@ -2040,6 +2044,10 @@
 "Inactive chat"="แชทที่ไม่ได้ใช้งาน";
 /* Contact details screen: Set the alias(nickname) for a user */
 "Set Nickname"="ตั้งชื่อเล่น";
+/* Contact details screen: Edit the alias(nickname) for a user */
+"Edit Nickname"="Edit Nickname";
+/* Edit nickname screen: Remove nickname button title */
+"Remove Nickname"="Remove Nickname";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
 "Alias/ Nickname"="นามแฝง / ชื่อเล่น";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
@@ -2088,6 +2096,24 @@
 "It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="เป็นไปได้ว่าคุณกำลังใช้รหัสผ่านเดียวกันสำหรับบัญชี MEGA ของคุณสำหรับบริการอื่น ๆ และอย่างน้อยหนึ่งในบริการอื่น ๆ เหล่านี้ได้รับความเสียหายจากข้อมูล";
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="รหัสผ่านของคุณรั่วไหลและกำลังถูกใช้โดยผู้ไม่หวังดีเพื่อเข้าสู่บัญชีของคุณ รวมไปถึง การไม่จำกัดบัญชี MEGA ของคุณ";
+/* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
+"MEGA CAMERA UPLOADS FOLDER"="โฟลเดอร์อัปโหลดจากกล้องของแอป MEGA";
+/* Action button text of folder selection screen for camera uploads */
+"Select Folder"="เลือกโฟลเดอร์";
+/* Title of the folder selection screen for camera uploads */
+"Choose Folder"="เลือกโฟลเดอร์";
+/* Label used near to the option selected to encode the images uploaded to a chat (Low, Medium, Original) */
+"Image quality"="คุณภาพของรูป";
+/* Title of Image Quality option */
+"Automatic"="อัตโนมัติ";
+/* Description of Automatic Image Quality option */
+"Send smaller size images through cellular networks and original size images through wifi"="Send smaller size images through cellular networks and original size images through Wi-Fi";
+/* Title of Image Quality option */
+"Optimised"="ปรับให้เหมาะสม";
+/* Description of Optimised Image Quality option */
+"Send smaller size images optimised for lower data consumption"="ส่งรูปภาพขนาดเล็กลงโดยการปรับให้เหมาะสมเพื่อลดการใช้ข้อมูล";
+/* Description of High Image Quality option */
+"Send original size, increased quality images"="Send original size, increased quality images";
 /* Setting title for Doc scan view */
 "Save Settings"="Save Settings";
 /* file type title, used in changing the export format of scaned doc */

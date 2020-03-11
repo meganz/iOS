@@ -30,7 +30,7 @@
     return self;
 }
 
-- (instancetype)initWithNumberOfRequests:(NSUInteger)numberOfRequests presentSuccessOver:(UIViewController *)viewController completion:(void (^)(void))completion {
+- (instancetype)initWithNumberOfRequests:(NSUInteger)numberOfRequests presentSuccessOver:(UIViewController *)viewController completion:(void (^ _Nullable)(void))completion {
     self = [super init];
     if (self) {
         _numberOfRequests = numberOfRequests;

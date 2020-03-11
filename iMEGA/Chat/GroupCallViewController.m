@@ -23,6 +23,7 @@
 #import "MEGAChatStartCallRequestDelegate.h"
 #import "MEGAGroupCallPeer.h"
 #import "MEGASdkManager.h"
+#import "MEGA-Swift.h"
 
 #define kSmallPeersLayout 7
 
@@ -516,8 +517,7 @@
 }
 
 - (void)didWirelessRoutesAvailableChange:(NSNotification *)notification {
-    MPVolumeView* volumeView = (MPVolumeView*)notification.object;
-    if (volumeView.areWirelessRoutesAvailable) {
+    if (AVAudioSession.sharedInstance.mnz_isBluetoothAudioRouteAvailable) {
         self.volumeContainerView.hidden = NO;
         self.enableDisableSpeaker.hidden = YES;
     } else {
@@ -807,14 +807,8 @@
             [weakSelf dismissViewControllerAnimated:YES completion:nil];
         } else {
             weakSelf.call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:weakSelf.chatRoom.chatId];
-            
-            NSUUID *uuid = [[NSUUID alloc] init];
-            weakSelf.call.uuid = uuid;
             [weakSelf.megaCallManager addCall:weakSelf.call];
-            
-            uint64_t peerHandle = [weakSelf.chatRoom peerHandleAtIndex:0];
-            NSString *peerEmail = [weakSelf.chatRoom peerEmailByHandle:peerHandle];
-            [weakSelf.megaCallManager startCall:weakSelf.call email:peerEmail];
+            [weakSelf.megaCallManager startCall:weakSelf.call];
             
             [self.collectionView reloadData];
             MEGALogDebug(@"[Group Call] Reload data %s", __PRETTY_FUNCTION__);
@@ -879,8 +873,13 @@
 }
 
 - (void)updateAudioOutputImage {
-    self.volumeContainerView.hidden = !self.mpVolumeView.areWirelessRoutesAvailable;
-    self.enableDisableSpeaker.hidden = !self.volumeContainerView.hidden;
+    if (AVAudioSession.sharedInstance.mnz_isBluetoothAudioRouteAvailable) {
+        self.volumeContainerView.hidden = NO;
+        self.enableDisableSpeaker.hidden = YES;
+    } else {
+        self.enableDisableSpeaker.hidden = NO;
+        self.volumeContainerView.hidden = YES;
+    }
     
     if ([AVAudioSession.sharedInstance mnz_isOutputEqualToPortType:AVAudioSessionPortBuiltInReceiver] || [AVAudioSession.sharedInstance mnz_isOutputEqualToPortType:AVAudioSessionPortHeadphones]) {
         self.enableDisableSpeaker.selected = NO;
@@ -904,7 +903,9 @@
     MEGAGroupCallPeer *remoteUser = [[MEGAGroupCallPeer alloc] initWithSession:chatSession];
     remoteUser.video = CallPeerVideoUnknown;
     remoteUser.audio = CallPeerAudioUnknown;
-    remoteUser.name = [self.chatRoom peerFullnameByHandle:chatSession.peerId];
+    
+    NSString *userName = [self.chatRoom userDisplayNameForUserHandle:chatSession.peerId];
+    remoteUser.name = userName;
     
     [self.peersInCall insertObject:remoteUser atIndex:0];
     
@@ -914,7 +915,7 @@
         [self.collectionView reloadData];
     }
     
-    [self showToastMessage:[NSString stringWithFormat:AMLocalizedString(@"%@ joined the call.", @"Message to inform the local user that someone has joined the current group call"), [self.chatRoom peerFullnameByHandle:chatSession.peerId]] color:@"#00BFA5" shouldHide:YES];
+    [self showToastMessage:[NSString stringWithFormat:AMLocalizedString(@"%@ joined the call.", @"Message to inform the local user that someone has joined the current group call"), userName] color:@"#00BFA5" shouldHide:YES];
     [self updateParticipants];
 }
 
@@ -942,7 +943,8 @@
             }
         }
         
-        [self showToastMessage:[NSString stringWithFormat:AMLocalizedString(@"%@ left the call.", @"Message to inform the local user that someone has left the current group call"), [self.chatRoom peerFullnameByHandle:chatSession.peerId]] color:@"#00BFA5" shouldHide:YES];
+        NSString *userName = [self.chatRoom userDisplayNameForUserHandle:chatSession.peerId];
+        [self showToastMessage:[NSString stringWithFormat:AMLocalizedString(@"%@ left the call.", @"Message to inform the local user that someone has left the current group call"), userName] color:@"#00BFA5" shouldHide:YES];
         [self updateParticipants];
     } else {
         MEGALogDebug(@"GROUPCALL session destroyed for peer %llu not found", chatSession.peerId);
@@ -1092,8 +1094,7 @@
                         [self destroyChatSession:chatSession];
                         break;
                         
-                    case MEGAChatSessionStatusInvalid:
-                        MEGALogDebug(@"MEGAChatSessionStatusInvalid");
+                    default:
                         break;
                 }
             }
