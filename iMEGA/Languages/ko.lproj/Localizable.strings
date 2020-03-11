@@ -146,6 +146,8 @@
 "emailAlreadyInUse"="오류. 이 이메일 주소는 이미 사용중입니다.";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="장치에 여유 공간이 필요합니다";
+/* Message shown when you try to downlonad files bigger than the available memory. */
+"MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device."="MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device.";
 /* Title for the file link view */
 "fileLink"="파일 링크";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
@@ -682,6 +684,8 @@
 "Custom Settings"="개별 설정";
 /* Title to show when device local storage is full */
 "%@ Storage Full"="%@ 저장소 가득 참";
+/* Title to show when device local storage is almost full */
+"Device Storage Almost Full"="Device Storage Almost Full";
 /* Detail for local storage full situation */
 "You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="앞으로의 카메라 업로드를 위한 공간이 충분하지 않습니다. 불필요한 앱, 동영상 또는 음악을 삭제함으로써 공간을 확보하세요. %@에서 저장소를 관리할 수 있습니다";
 /* Navigation path for Storage settings in iOS */
@@ -1622,6 +1626,8 @@
 "Save in Photos"="사진에 저장";
 /* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="MEGA 앱에서 촬영한 이미지 또는 동영상의 사본을 기기의 미디어 라이브러리에 저장합니다.";
+/* Settings section title where you can enable the option to 'Spotlight search' */
+"Spotlight Search"="Spotlight Search";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="당신이 열쇠를 갖습니다";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -1960,8 +1966,6 @@
 "[X] contacts found on MEGA"="[X]명의 지인을 MEGA에서 발견함";
 /* Title showing the user that one of his contacts are using MEGA */
 "1 contact found on MEGA"="1명의 지인을 MEGA에서 발견함";
-/* Text indicating the user to perform an action to grant some permission */
-"Enable Access"="접근 허용";
 /* Text indicating the user to open the device settings for MEGA */
 "Open Settings"="설정 열기";
 /* Text encouraging the user to invite contacts to MEGA */
@@ -2040,6 +2044,10 @@
 "Inactive chat"="활성화되지 않은 대화";
 /* Contact details screen: Set the alias(nickname) for a user */
 "Set Nickname"="별명 설정";
+/* Contact details screen: Edit the alias(nickname) for a user */
+"Edit Nickname"="Edit Nickname";
+/* Edit nickname screen: Remove nickname button title */
+"Remove Nickname"="Remove Nickname";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
 "Alias/ Nickname"="가명 / 별명";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
@@ -2088,6 +2096,24 @@
 "It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="MEGA와 다른 서비스들에서 같은 비밀번호를 이용하고 있고, 다른 서비스들 중 한 곳에서 데이터 유출이 발생했을 가능성이 있습니다.";
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="당신의 비밀번호가 유출되어서 MEGA 계정뿐만 아니라 당신의 계정에 접속하려는 나쁜 사람들에게 이용되고 있습니다.";
+/* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
+"MEGA CAMERA UPLOADS FOLDER"="MEGA 카메라 업로드 폴더";
+/* Action button text of folder selection screen for camera uploads */
+"Select Folder"="폴더 선택";
+/* Title of the folder selection screen for camera uploads */
+"Choose Folder"="폴더 선택";
+/* Label used near to the option selected to encode the images uploaded to a chat (Low, Medium, Original) */
+"Image quality"="사진 품질";
+/* Title of Image Quality option */
+"Automatic"="자동";
+/* Description of Automatic Image Quality option */
+"Send smaller size images through cellular networks and original size images through wifi"="셀룰러 네트워크를 통해서는 작은 크기의 이미지를 보내고 Wi-Fi를 통해서는 원본 크기의 이미지를 보냅니다";
+/* Title of Image Quality option */
+"Optimised"="최적화";
+/* Description of Optimised Image Quality option */
+"Send smaller size images optimised for lower data consumption"="작은 크기의 이미지는 적은 데이터 소비에 최적화되어 있습니다";
+/* Description of High Image Quality option */
+"Send original size, increased quality images"="Send original size, increased quality images";
 /* Setting title for Doc scan view */
 "Save Settings"="Save Settings";
 /* file type title, used in changing the export format of scaned doc */

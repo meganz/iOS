@@ -1,12 +1,15 @@
 
 #import "MEGALocalNotificationManager.h"
 
-#import <UserNotifications/UserNotifications.h>
+#import "LocalizationSystem.h"
 
+#ifndef MNZ_APP_EXTENSION
 #import "Helper.h"
 #import "MEGAGetThumbnailRequestDelegate.h"
-#import "MEGAStore.h"
+#endif
+
 #import "MEGASdkManager.h"
+#import "MEGAStore.h"
 #import "NSString+MNZCategory.h"
 
 @interface MEGALocalNotificationManager ()
@@ -31,11 +34,9 @@
     return self;
 }
 
-- (void)proccessNotification {
-    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"VoIP_messages"]) {
-        MEGALogDebug(@"Apple VoIP push disabled");
-        return;
-    }
+#ifndef MNZ_APP_EXTENSION
+
+- (void)processNotification {
     if (self.message.status == MEGAChatMessageStatusNotSeen) {
         if  (self.message.type == MEGAChatMessageTypeNormal || self.message.type == MEGAChatMessageTypeContact || self.message.type == MEGAChatMessageTypeAttachment || self.message.containsMeta.type == MEGAChatContainsMetaTypeGeolocation || self.message.type == MEGAChatMessageTypeVoiceClip) {
             if (self.message.deleted) {
@@ -45,110 +46,58 @@
                 
                 UNMutableNotificationContent *content = [UNMutableNotificationContent new];
                 content.categoryIdentifier = @"nz.mega.chat.message";
-                content.userInfo = @{@"chatId" : @(self.chatRoom.chatId)};
+                content.userInfo = @{@"chatId" : @(self.chatRoom.chatId), @"msgId" : @(self.message.messageId)};
                 content.title = self.chatRoom.title;
+                content.sound = nil;
+                content.body = [self bodyString];
+                if (self.chatRoom.isGroup) {
+                    content.subtitle = [self displayName];
+                }
+                
+                content.threadIdentifier = [MEGASdk base64HandleForUserHandle:self.chatRoom.chatId] ?: @"";
+                if (@available(iOS 12.0, *)) {
+                    content.summaryArgument = self.chatRoom.title;
+                }
                 
                 UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:1 repeats:NO];
                 NSString *identifier = [NSString stringWithFormat:@"%@%@", [MEGASdk base64HandleForUserHandle:self.chatRoom.chatId], [MEGASdk base64HandleForUserHandle:self.message.messageId]];
                 
-                if (self.chatRoom.isGroup) {
-                    MOUser *user = [[MEGAStore shareInstance] fetchUserWithUserHandle:self.message.userHandle];
-                    content.subtitle = user.fullName;
-                }
-                
-                NSString *body;
                 BOOL waitForThumbnail = NO;
-                if (self.message.type == MEGAChatMessageTypeContact) {
-                    if (self.message.usersCount == 1) {
-                        body = [NSString stringWithFormat:@"👤 %@", [self.message userNameAtIndex:0]];
-                    } else {
-                        body = [self.message userNameAtIndex:0];
-                        for (NSUInteger i = 1; i < self.message.usersCount; i++) {
-                            body = [body stringByAppendingString:[NSString stringWithFormat:@", %@", [self.message userNameAtIndex:i]]];
-                        }
-                    }
-                } else if (self.message.type == MEGAChatMessageTypeAttachment) {
+                if (self.message.type == MEGAChatMessageTypeAttachment) {
                     MEGANodeList *nodeList = self.message.nodeList;
                     if (nodeList) {
                         if (nodeList.size.integerValue == 1) {
                             MEGANode *node = [nodeList nodeAtIndex:0];
-                            
                             if (node.hasThumbnail) {
-                                if (node.name.mnz_isVideoPathExtension) {
-                                    body = [NSString stringWithFormat:@"📹 %@", node.name];
-                                } else if (node.name.mnz_isImagePathExtension) {
-                                    body = [NSString stringWithFormat:@"📷 %@", node.name];
-                                } else {
-                                    body = [NSString stringWithFormat:@"📄 %@", node.name];
-                                }
-                                
                                 waitForThumbnail = YES;
                                 NSString *thumbnailFilePath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
                                 MEGAGetThumbnailRequestDelegate *getThumbnailRequestDelegate = [[MEGAGetThumbnailRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
-                                    NSError *error;
-                                    if (![[NSFileManager defaultManager] createSymbolicLinkAtPath:[request.file stringByAppendingPathExtension:@"jpg"] withDestinationPath:request.file error:&error]) {
-                                        MEGALogError(@"Create symbolic link at path failed %@", error);
-                                    }
-                                    NSURL *fileURL = [NSURL fileURLWithPath:[request.file stringByAppendingPathExtension:@"jpg"]];
-                                    UNNotificationAttachment *notificationAttachment = [UNNotificationAttachment attachmentWithIdentifier:node.base64Handle URL:fileURL options:nil error:&error];
-                                    
-                                    content.body = body;
-                                    
-                                    if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
-                                        content.sound = nil;
-                                    } else {
-                                        content.sound = self.isSilent ? nil : [UNNotificationSound defaultSound];
-                                    }
-                                    
-                                    if (!error) {
+                                    UNNotificationAttachment *notificationAttachment = [self notificationAttachmentFor:request.file withIdentifier:node.base64Handle];
+                                    if (notificationAttachment) {
                                         content.attachments = @[notificationAttachment];
                                     }
                                     UNNotificationRequest *notificationRequest = [UNNotificationRequest requestWithIdentifier:identifier content:content trigger:trigger];
                                     [center addNotificationRequest:notificationRequest withCompletionHandler:^(NSError * _Nullable error) {
                                         if (error) {
-                                            MEGALogError(@"Add NotificationRequest failed with error: %@", error);
+                                            MEGALogError(@"[Chat notification] Add NotificationRequest failed with error: %@", error);
+                                        } else {
+                                            [MEGAStore.shareInstance insertMessage:self.message.messageId chatId:self.chatRoom.chatId];
                                         }
                                     }];
                                 }];
                                 [[MEGASdkManager sharedMEGASdk] getThumbnailNode:node destinationFilePath:thumbnailFilePath delegate:getThumbnailRequestDelegate];
-                            } else {
-                                body = [NSString stringWithFormat:@"📄 %@", node.name];
                             }
                         }
                     }
-                } else if (self.message.type == MEGAChatMessageTypeVoiceClip) {
-                    NSString *durationString;
-                    if (self.message.nodeList && self.message.nodeList.size.integerValue == 1) {
-                        MEGANode *node = [self.message.nodeList nodeAtIndex:0];
-                        NSTimeInterval duration = node.duration > 0 ? node.duration : 0;
-                        durationString = [NSString mnz_stringFromTimeInterval:duration];
-                    } else {
-                        durationString = @"00:00";
-                    }
-                    body = [NSString stringWithFormat:@"🎙 %@", durationString];
-                } else if (self.message.containsMeta.type == MEGAChatContainsMetaTypeGeolocation) {
-                    body = [NSString stringWithFormat:@"📍 %@", AMLocalizedString(@"Pinned Location", @"Text shown in location-type messages")];
-                } else {
-                    body = self.message.content;
                 }
                 
                 if (!waitForThumbnail) {
-                    if (self.message.isEdited) {
-                        content.body = [NSString stringWithFormat:@"%@ %@", self.message.content, AMLocalizedString(@"edited", nil)];
-                        content.sound = nil;
-                    } else {
-                        content.body = body;
-                        content.sound = self.isSilent ? nil : [UNNotificationSound defaultSound];
-                    }
-                    
-                    if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
-                        content.sound = nil;
-                    }
-                    
                     UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:identifier content:content trigger:trigger];
                     [center addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
                         if (error) {
-                            MEGALogError(@"Add NotificationRequest failed with error: %@", error);
+                            MEGALogError(@"[Chat notification] Add NotificationRequest failed with error: %@", error);
+                        } else {
+                            [MEGAStore.shareInstance insertMessage:self.message.messageId chatId:self.chatRoom.chatId];
                         }
                     }];
                 }
@@ -160,10 +109,85 @@
     } else {
         [self removePendingAndDeliveredNotificationForMessage];
     }
+}
+
+#endif
+
+#pragma mark - Utils
+
+- (NSString *)bodyString {
+    NSString *body;
     
-    MOMessage *mMessage = [[MEGAStore shareInstance] fetchMessageWithChatId:self.chatRoom.chatId messageId:self.message.messageId];
-    if (mMessage) {
-        [[MEGAStore shareInstance] deleteMessage:mMessage];
+    if (self.message.type == MEGAChatMessageTypeContact) {
+        if (self.message.usersCount == 1) {
+            body = [NSString stringWithFormat:@"👤 %@", [self.message userNameAtIndex:0]];
+        } else {
+            body = [self.message userNameAtIndex:0];
+            for (NSUInteger i = 1; i < self.message.usersCount; i++) {
+                body = [body stringByAppendingString:[NSString stringWithFormat:@", %@", [self.message userNameAtIndex:i]]];
+            }
+        }
+    } else if (self.message.type == MEGAChatMessageTypeAttachment) {
+        MEGANodeList *nodeList = self.message.nodeList;
+        if (nodeList) {
+            if (nodeList.size.integerValue == 1) {
+                MEGANode *node = [nodeList nodeAtIndex:0];
+                if (node.hasThumbnail) {
+                    if (node.name.mnz_isVideoPathExtension) {
+                        body = [NSString stringWithFormat:@"📹 %@", node.name];
+                    } else if (node.name.mnz_isImagePathExtension) {
+                        body = [NSString stringWithFormat:@"📷 %@", node.name];
+                    } else {
+                        body = [NSString stringWithFormat:@"📄 %@", node.name];
+                    }
+                } else {
+                    body = [NSString stringWithFormat:@"📄 %@", node.name];
+                }
+            }
+        }
+    } else if (self.message.type == MEGAChatMessageTypeVoiceClip) {
+        NSString *durationString;
+        if (self.message.nodeList && self.message.nodeList.size.integerValue == 1) {
+            MEGANode *node = [self.message.nodeList nodeAtIndex:0];
+            NSTimeInterval duration = node.duration > 0 ? node.duration : 0;
+            durationString = [NSString mnz_stringFromTimeInterval:duration];
+        } else {
+            durationString = @"00:00";
+        }
+        body = [NSString stringWithFormat:@"🎙 %@", durationString];
+    } else if (self.message.containsMeta.type == MEGAChatContainsMetaTypeGeolocation) {
+        body = [NSString stringWithFormat:@"📍 %@", AMLocalizedString(@"Pinned Location", @"Text shown in location-type messages")];
+    } else {
+        if (self.message.isEdited) {
+            body = [NSString stringWithFormat:@"%@ (%@)", self.message.content, AMLocalizedString(@"edited", nil)];
+        } else {
+            body = self.message.content;
+        }
+    }
+    
+    return body;
+}
+
+- (NSString *)displayName {
+    MOUser *user = [MEGAStore.shareInstance fetchUserWithUserHandle:self.message.userHandle];
+    return user ? user.displayName : [self.chatRoom peerFullnameByHandle:self.message.userHandle];
+}
+
+- (nullable UNNotificationAttachment *)notificationAttachmentFor:(NSString *)file withIdentifier:(NSString *)identifier {
+    NSString *jpgPath = [file stringByAppendingPathExtension:@"jpg"];
+    NSError *error;
+    if ([NSFileManager.defaultManager createSymbolicLinkAtPath:jpgPath withDestinationPath:file error:&error]) {
+        NSURL *fileURL = [NSURL fileURLWithPath:jpgPath];
+        UNNotificationAttachment *notificationAttachment = [UNNotificationAttachment attachmentWithIdentifier:identifier URL:fileURL options:nil error:&error];
+        if (error) {
+            MEGALogError(@"[Chat notification] Error creating notification attachment %@", error);
+            return nil;
+        } else {
+            return notificationAttachment;
+        }
+    } else {
+        MEGALogError(@"[Chat notification] Create symbolic link at path failed %@", error);
+        return nil;
     }
 }
 
@@ -172,18 +196,18 @@
 - (void)removeAllPendingAndDeliveredNotificationsForChatRoom {
     UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
     [center getDeliveredNotificationsWithCompletionHandler:^(NSArray<UNNotification *> *notifications) {
-        NSString *base64ChatId = [MEGASdk base64HandleForUserHandle:self.chatRoom.chatId];
         for (UNNotification *notification in notifications) {
-            if ([notification.request.identifier containsString:base64ChatId]) {
+            NSNumber *chatId = notification.request.content.userInfo[@"chatId"];
+            if ([chatId isEqualToNumber:@(self.chatRoom.chatId)]) {
                 [center removeDeliveredNotificationsWithIdentifiers:@[notification.request.identifier]];
             }
         }
     }];
     
     [center getPendingNotificationRequestsWithCompletionHandler:^(NSArray<UNNotificationRequest *> * _Nonnull requests) {
-        NSString *base64ChatId = [MEGASdk base64HandleForUserHandle:self.chatRoom.chatId];
         for (UNNotificationRequest *request in requests) {
-            if ([request.identifier containsString:base64ChatId]) {
+            NSNumber *chatId = request.content.userInfo[@"chatId"];
+            if ([chatId isEqualToNumber:@(self.chatRoom.chatId)]) {
                 [center removePendingNotificationRequestsWithIdentifiers:@[request.identifier]];
             }
         }
@@ -193,9 +217,10 @@
 - (void)removePendingAndDeliveredNotificationForMessage {
     UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
     [center getDeliveredNotificationsWithCompletionHandler:^(NSArray<UNNotification *> *notifications) {
-        NSString *notificationIdentifier = [NSString stringWithFormat:@"%@%@", [MEGASdk base64HandleForUserHandle:self.chatRoom.chatId], [MEGASdk base64HandleForUserHandle:self.message.messageId]];
         for (UNNotification *notification in notifications) {
-            if ([notificationIdentifier isEqualToString:notification.request.identifier]) {
+            NSNumber *chatId = notification.request.content.userInfo[@"chatId"];
+            NSNumber *msgId = notification.request.content.userInfo[@"msgId"];
+            if ([chatId isEqualToNumber:@(self.chatRoom.chatId)] && [msgId isEqualToNumber:@(self.message.messageId)]) {
                 [center removeDeliveredNotificationsWithIdentifiers:@[notification.request.identifier]];
                 break;
             }
@@ -203,9 +228,10 @@
     }];
     
     [center getPendingNotificationRequestsWithCompletionHandler:^(NSArray<UNNotificationRequest *> * _Nonnull requests) {
-        NSString *notificationIdentifier = [NSString stringWithFormat:@"%@%@", [MEGASdk base64HandleForUserHandle:self.chatRoom.chatId], [MEGASdk base64HandleForUserHandle:self.message.messageId]];
         for (UNNotificationRequest *request in requests) {
-            if ([notificationIdentifier isEqualToString:request.identifier]) {
+            NSNumber *chatId = request.content.userInfo[@"chatId"];
+            NSNumber *msgId = request.content.userInfo[@"msgId"];
+            if ([chatId isEqualToNumber:@(self.chatRoom.chatId)] && [msgId isEqualToNumber:@(self.message.messageId)]) {
                 [center removePendingNotificationRequestsWithIdentifiers:@[request.identifier]];
                 break;
             }

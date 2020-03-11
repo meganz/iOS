@@ -11,6 +11,7 @@
 #import "UIImageView+MNZCategory.h"
 
 #import "AchievementsTableViewCell.h"
+#import "NSString+MNZCategory.h"
 
 @interface ReferralBonusesTableViewController () <UITableViewDataSource>
 
@@ -76,12 +77,12 @@
     
     if (user) {
         [cell.avatarImageView mnz_setImageForUserHandle:user.handle];
-        cell.titleLabel.text = user.mnz_fullName;
+        cell.titleLabel.text = user.mnz_displayName;
     } else {
         MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithEmail:email];
         if (moUser) {
             [cell.avatarImageView mnz_setImageForUserHandle:~(uint64_t)0 name:moUser.fullName];
-            cell.titleLabel.text = moUser.fullName;
+            cell.titleLabel.text = moUser.displayName;
         } else {
             [cell.avatarImageView mnz_setImageForUserHandle:~(uint64_t)0];
             cell.titleLabel.text = @"";
