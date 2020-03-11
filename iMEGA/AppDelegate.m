@@ -176,11 +176,6 @@
     self.backgroundTaskMutableDictionary = [[NSMutableDictionary alloc] init];
     
     NSString *sessionV3 = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
-
-    if (self.megaProviderDelegate == nil) {
-        self.megaCallManager = MEGACallManager.new;
-        self.megaProviderDelegate = [MEGAProviderDelegate.alloc initWithMEGACallManager:self.megaCallManager];
-    }
     
     //Clear keychain (session) and delete passcode on first run in case of reinstallation
     if (![[NSUserDefaults standardUserDefaults] objectForKey:kFirstRun]) {
@@ -219,6 +214,8 @@
         } else {
             [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
         }
+        
+        [self initProviderDelegate];
         
         MEGAChatInit chatInit = [MEGASdkManager.sharedMEGAChatSdk initKarereWithSid:sessionV3];
         if (chatInit == MEGAChatInitError) {
@@ -1030,6 +1027,13 @@ void uncaughtExceptionHandler(NSException *exception) {
     [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:nil];
 }
 
+- (void)initProviderDelegate {
+    if (self.megaProviderDelegate == nil) {
+        self.megaCallManager = MEGACallManager.new;
+        self.megaProviderDelegate = [MEGAProviderDelegate.alloc initWithMEGACallManager:self.megaCallManager];
+    }
+}
+
 - (void)presentUpgradeViewControllerTitle:(NSString *)title detail:(NSString *)detail image:(UIImage *)image {
     if (!self.isUpgradeVCPresented && ![UIApplication.mnz_visibleViewController isKindOfClass:UpgradeTableViewController.class] && ![UIApplication.mnz_visibleViewController isKindOfClass:ProductDetailViewController.class]) {
         CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
@@ -1182,10 +1186,6 @@ void uncaughtExceptionHandler(NSException *exception) {
     
     // Call
     if ([payload.dictionaryPayload[@"megatype"] integerValue] == 4) {
-        if (self.megaProviderDelegate == nil) {            
-            self.megaCallManager = MEGACallManager.new;
-            self.megaProviderDelegate = [MEGAProviderDelegate.alloc initWithMEGACallManager:self.megaCallManager];
-        }
         NSString *chatIdB64 = payload.dictionaryPayload[@"megadata"][@"chatid"];
         NSString *callIdB64 = payload.dictionaryPayload[@"megadata"][@"callid"];
         uint64_t chatId = [MEGASdk handleForBase64UserHandle:chatIdB64];
@@ -1516,6 +1516,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                 }
             }
                         
+            [self initProviderDelegate];
             [self registerForVoIPNotifications];
             [self registerForNotifications];
             [[MEGASdkManager sharedMEGASdk] fetchNodes];
@@ -1692,7 +1693,8 @@ void uncaughtExceptionHandler(NSException *exception) {
     
     if (request.type == MEGAChatRequestTypeLogout) {
         [MEGASdkManager destroySharedMEGAChatSdk];
-        
+        self.megaProviderDelegate = nil;
+        self.megaCallManager = nil;
         [self.mainTBC setBadgeValueForChats];
     }
     
