@@ -3292,6 +3292,11 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             }
             break;
             
+        case MEGAChatRoomChangeTypeOwnPriv:
+            [self customNavigationBarLabel];
+            [self updateNavigationBarButtonsState];
+            break;
+            
         case MEGAChatRoomChangeTypeUserStopTyping: {
             if (chat.userTypingHandle != api.myUserHandle) {
                 [self removeUserHandleFromTypingIndicator:[NSNumber numberWithUnsignedLongLong:chat.userTypingHandle]];
