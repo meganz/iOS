@@ -21,5 +21,6 @@ xcuserdata/
 !*.xcworkspace/contents.xcworkspacedata
 /*.gcno
 
-
+## Fastlane
 Gemfile.lock
+fastlane/report.xml
