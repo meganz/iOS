@@ -104,7 +104,10 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
     self.videoLabel.text = AMLocalizedString(@"Video", @"Title of the button in the contact info screen to start a video call").lowercaseString;
         
     self.userNickname = self.user.mnz_nickname;
-    self.userName = self.user.mnz_fullName;
+    
+    if (self.userName.length == 0) {
+        self.userName = self.user.mnz_fullName;
+    }
     
     [self configureShadowInLayer:self.nameOrNicknameLabel.layer];
     [self configureShadowInLayer:self.optionalNameLabel.layer];
