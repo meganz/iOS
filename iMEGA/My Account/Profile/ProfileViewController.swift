@@ -319,7 +319,7 @@ extension ProfileViewController: UITableViewDataSource {
             if indexPath.row == 0 {
                 switch accountType {
                 case .free:
-                    cell.accountTypeLabel.text = AMLocalizedString("free", "Text relative to the MEGA account level. UPPER CASE")
+                    cell.accountTypeLabel.text = AMLocalizedString("Free", "Text relative to the MEGA account level. UPPER CASE")
                 case .proI:
                     cell.accountTypeLabel.text = "Pro I"
                     cell.accountTypeLabel.textColor = UIColor.mnz_redProI()
