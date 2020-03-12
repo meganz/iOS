@@ -1,4 +1,3 @@
-
 import Contacts
 
 struct ContactOnMega: Codable {
@@ -8,25 +7,25 @@ struct ContactOnMega: Codable {
 }
 
 @objc class ContactsOnMegaManager: NSObject {
-    
+
     enum ContactsOnMegaState {
         case unknown
         case fetching
         case ready
         case error
     }
-    
+
     var state = ContactsOnMegaState.unknown
     var contactsOnMega = [ContactOnMega]()
-    var deviceContactsChunked = [[[String:String]]]()
-    var contactsOnMegaDictionary = [UInt64:String]()
+    var deviceContactsChunked = [[[String: String]]]()
+    var contactsOnMegaDictionary = [UInt64: String]()
 
     var completionWhenReady : (() -> Void)?
 
     @objc static let shared = ContactsOnMegaManager()
-    
+
     private override init() {}
-    
+
     @objc func contactsOnMegaCount() -> NSInteger {
         if state == .ready {
             return contactsOnMegaFiltered().count
@@ -34,7 +33,7 @@ struct ContactOnMega: Codable {
             return 0
         }
     }
-    
+
     func fetchContactsOnMega() -> [ContactOnMega]? {
         if state == .ready {
             return contactsOnMegaFiltered()
@@ -52,7 +51,7 @@ struct ContactOnMega: Codable {
         for i in 0 ..< outgoingContactRequestList.size.intValue {
             contactEmailsToFilter.append(outgoingContactRequestList.contactRequest(at: i)?.targetEmail ?? "")
         }
-        
+
         //Get all visible contacts emails
         let userContacts = MEGASdkManager.sharedMEGASdk().contacts()
         for j in 0 ..< userContacts.size.intValue {
@@ -62,7 +61,7 @@ struct ContactOnMega: Codable {
                 }
             }
         }
-        
+
         //Filter ContactsOnMEGA from API with outgoing contact request and visible contacts
         if contactEmailsToFilter.count > 0 {
             for contact in contactsOnMega {
@@ -75,7 +74,7 @@ struct ContactOnMega: Codable {
             return contactsOnMega
         }
     }
-    
+
     @objc func areContactsOnMegaRequestedWithin(days: Int) -> Bool {
         guard let lastDateContactsOnMegaRequested = UserDefaults.standard.value(forKey: "lastDateContactsOnMegaRequested"), let daysSinceLastRequest = Calendar.current.dateComponents([.day], from: lastDateContactsOnMegaRequested as! Date, to: Date()).day else {
             return false
@@ -83,12 +82,12 @@ struct ContactOnMega: Codable {
 
         return daysSinceLastRequest < days
     }
-    
+
     @objc func loadContactsOnMegaFromLocal() {
         contactsOnMega = UserDefaults.standard.structArrayData(ContactOnMega.self, forKey: "ContactsOnMega")
         contactsFetched()
     }
-    
+
     @objc func configureContactsOnMega(completion: (() -> Void)?) {
         if CNContactStore.authorizationStatus(for: .contacts) == .authorized {
             completionWhenReady = completion
@@ -98,7 +97,7 @@ struct ContactOnMega: Codable {
 
             contactsOnMega.removeAll()
             UserDefaults.standard.removeObject(forKey: "ContactsOnMega")
-            
+
             DispatchQueue.global(qos: .background).async {
                 self.getDeviceContacts()
             }
@@ -106,9 +105,9 @@ struct ContactOnMega: Codable {
             MEGALogDebug("Device Contact Permission not granted")
         }
     }
-    
+
     private func getDeviceContacts() {
-        var deviceContacts = [[String:String]]()
+        var deviceContacts = [[String: String]]()
         let contactsStore = CNContactStore()
 
         let keysToFetch = [CNContactFamilyNameKey, CNContactGivenNameKey, CNContactPhoneNumbersKey] as [CNKeyDescriptor]
@@ -116,7 +115,7 @@ struct ContactOnMega: Codable {
         let predicate = CNContact.predicateForContactsInContainer(withIdentifier: contactsStore.defaultContainerIdentifier())
         do {
             let phoneNumberKit = PhoneNumberKit()
-            
+
             let contacts = try contactsStore.unifiedContacts(matching: predicate, keysToFetch: keysToFetch)
             contacts.forEach { (contact) in
                 for label in contact.phoneNumbers {
@@ -125,14 +124,13 @@ struct ContactOnMega: Codable {
                         let formatedNumber = phoneNumberKit.format(phoneNumber, toType: .e164)
                         let name = contact.givenName + " " + contact.familyName
 
-                        deviceContacts.append([formatedNumber:name])
-                    }
-                    catch {
+                        deviceContacts.append([formatedNumber: name])
+                    } catch {
                         MEGALogError("Device contact number parser error " + label.value.stringValue)
                     }
                 }
             }
-            
+
             if deviceContacts.count == 0 {
                 contactsFetched()
             } else {
@@ -144,7 +142,7 @@ struct ContactOnMega: Codable {
             MEGALogError("Error fetching user contacts: " + error.localizedDescription)
         }
     }
-    
+
     private func getContactsOnMega() {
         let getRegisteredContactsDelegate = MEGAGenericRequestDelegate.init { (request, error) in
             if error.type == .apiOk {
@@ -173,18 +171,18 @@ struct ContactOnMega: Codable {
                 self.getContactsOnMega()
             }
         }
-        
+
         guard let firstChunkOfContacts = deviceContactsChunked.first else { return }
         MEGASdkManager.sharedMEGASdk().getRegisteredContacts(firstChunkOfContacts, delegate: getRegisteredContactsDelegate)
     }
-    
-    private func fetchContactsOnMegaEmails(_ contactsOnMegaDictionary: [UInt64:String]) {
+
+    private func fetchContactsOnMegaEmails(_ contactsOnMegaDictionary: [UInt64: String]) {
         var contactsCount = contactsOnMegaDictionary.count
         if contactsCount == 0 {
             contactsFetched()
         }
         contactsOnMegaDictionary.forEach { (contactOnMega) in
-            let emailRequestDelegate = MEGAChatGenericRequestDelegate.init(completion: { (request, error) in
+            let emailRequestDelegate = MEGAChatGenericRequestDelegate.init(completion: { (request, _) in
                 if request.text != MEGASdkManager.sharedMEGASdk()?.myEmail {
                     self.contactsOnMega.append(ContactOnMega(handle: contactOnMega.key, email: request.text, name: contactOnMega.value))
                 }
@@ -196,7 +194,7 @@ struct ContactOnMega: Codable {
             MEGASdkManager.sharedMEGAChatSdk().userEmail(byUserHandle: contactOnMega.key, delegate: emailRequestDelegate)
         }
     }
-    
+
     private func contactsFetched() {
         UserDefaults.standard.set(Date(), forKey: "lastDateContactsOnMegaRequested")
         self.state = .ready
@@ -204,7 +202,7 @@ struct ContactOnMega: Codable {
         completion()
         completionWhenReady = nil
     }
-    
+
     private func persistContactsOnMega() {
         UserDefaults.standard.setStructArray(contactsOnMega, forKey: "ContactsOnMega")
         contactsFetched()
