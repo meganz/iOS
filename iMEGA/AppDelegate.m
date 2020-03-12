@@ -1663,6 +1663,8 @@ void uncaughtExceptionHandler(NSException *exception) {
                 user = me;
             } else if (request.email.length > 0) {
                 user = [api contactForEmail:request.email];
+            } else if (request.email == nil) {
+                user = me;
             }
                         
             if (user) {
