@@ -110,7 +110,16 @@ extension AppDelegate {
             let verifyEmailVC = UIStoryboard(name: "VerifyEmail", bundle: nil).instantiateViewController(withIdentifier: "VerifyEmailViewControllerID")
             UIApplication.mnz_presentingViewController().present(verifyEmailVC, animated: true, completion: nil)
         } else {
-            let alert = UIAlertController(title: AMLocalizedString("error"), message: AMLocalizedString("accountBlocked", "Error message when trying to login and the account is blocked"), preferredStyle: .alert)
+            var message: String
+            if suspensionType == .businessDisabled {
+                message = AMLocalizedString("Your account has been disabled by your administrator. Please contact your business account administrator for further details.", "Error message appears to sub-users of a business account when they try to login and they are disabled.")
+            } else if suspensionType == .businessRemoved {
+                message = AMLocalizedString("Your account has been removed by your administrator. Please contact your business account administrator for further details.", "An error message which appears to sub-users of a business account when they try to login and they are deleted.")
+            } else {
+                message = AMLocalizedString("accountBlocked", "Error message when trying to login and the account is blocked")
+            }
+            
+            let alert = UIAlertController(title: AMLocalizedString("error"), message:message, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: AMLocalizedString("ok"), style: .cancel) { _ in
                 MEGASdkManager.sharedMEGASdk().logout()
             })
