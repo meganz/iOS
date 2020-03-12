@@ -153,7 +153,7 @@
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
     [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
     
-    if (self.isMovingToParentViewController) {
+    if (self.isMovingFromParentViewController) {
         [MEGASdkManager.sharedMEGASdk removeMEGARequestDelegate:self];
     }
 }

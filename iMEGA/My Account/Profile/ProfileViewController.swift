@@ -491,6 +491,9 @@ extension ProfileViewController: MEGARequestDelegate {
             avatarImageView.mnz_setImageAvatarOrColor(forUserHandle: myUser.handle)
             configureGestures()
             
+        case .MEGARequestTypeGetUserEmail:
+            emailLabel.text = request.email
+            
         default:
             break;
         }
