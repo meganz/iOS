@@ -1,12 +1,18 @@
 import UIKit
 
+class ActionSheetAction: NSObject {
+    @objc var title: String?
+    @objc var image: UIImage?
+    @objc var action = { }
+}
+
 class ActionSheetViewController: UIViewController {
 
     var didSetupConstraints = false
     var tableView = UITableView.newAutoLayout()
     var headerView: UIView?
 
-    @objc var actions: [Any] = []
+    @objc var actions: [ActionSheetAction] = []
     @objc var headerTitle: String?
 
     // MARK: - View controller behavior
@@ -15,7 +21,12 @@ class ActionSheetViewController: UIViewController {
         super.viewDidLoad()
 
         // background view
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(ActionSheetViewController.tapGestureDidRecognize(_:)))
+        view.addGestureRecognizer(tapRecognizer)
+    }
 
+    @objc func tapGestureDidRecognize(_ gesture: UITapGestureRecognizer) {
+        self.dismiss(animated: true, completion: nil)
     }
 
 }
@@ -38,14 +49,15 @@ extension ActionSheetViewController {
         tableView.tableFooterView = UIView()
         tableView.delegate = self
         tableView.dataSource = self
-
+        tableView.bounces = false
         view.addSubview(tableView)
         view.setNeedsUpdateConstraints()
     }
 
     override func updateViewConstraints() {
         if !didSetupConstraints {
-            tableView.autoSetDimension(.height, toSize: 500)
+            let height = CGFloat(actions.count * 50 + 50)
+            tableView.autoSetDimension(.height, toSize: height)
             tableView.autoPinEdge(toSuperviewEdge: .bottom)
             tableView.autoPinEdge(toSuperviewEdge: .left)
             tableView.autoPinEdge(toSuperviewEdge: .right)
@@ -65,20 +77,31 @@ extension ActionSheetViewController: UITableViewDelegate {
             // Dragging up
         }
     }
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        print(scrollView.contentOffset.y)
+    }
 }
 
 extension ActionSheetViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return actions.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
-        cell.textLabel?.text = "123"
+        let action = actions[indexPath.row]
+        cell.textLabel?.text = action.title
         return cell
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 50
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        self.dismiss(animated: true, completion: nil)
     }
+
 }
