@@ -4,8 +4,11 @@ class ActionSheetViewController: UIViewController {
 
     var didSetupConstraints = false
     var tableView = UITableView.newAutoLayout()
-    var headerView = UIView.newAutoLayout()
-  
+    var headerView: UIView?
+
+    @objc var actions: [Any] = []
+    @objc var headerTitle: String?
+
     // MARK: - View controller behavior
 
     override func viewDidLoad() {
@@ -23,10 +26,19 @@ extension ActionSheetViewController {
         view = UIView()
         view.backgroundColor = .clear
 
+        headerView = UIView(frame: CGRect(x: 0, y: 0, width: 200, height: 50))
+        headerView?.backgroundColor = .red
+        let title = UILabel()
+        title.text = headerTitle
+        title.sizeToFit()
+        headerView?.addSubview(title)
+        title.autoCenterInSuperview()
+
+        tableView.tableHeaderView = headerView
         tableView.tableFooterView = UIView()
         tableView.delegate = self
         tableView.dataSource = self
-        
+
         view.addSubview(tableView)
         view.setNeedsUpdateConstraints()
     }
@@ -37,7 +49,7 @@ extension ActionSheetViewController {
             tableView.autoPinEdge(toSuperviewEdge: .bottom)
             tableView.autoPinEdge(toSuperviewEdge: .left)
             tableView.autoPinEdge(toSuperviewEdge: .right)
-            
+
             didSetupConstraints = true
         }
         super.updateViewConstraints()
@@ -47,9 +59,9 @@ extension ActionSheetViewController {
 extension ActionSheetViewController: UITableViewDelegate {
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         let actualPosition = scrollView.panGestureRecognizer.translation(in: scrollView.superview)
-        if (actualPosition.y > 0){
+        if actualPosition.y > 0 {
             // Dragging down
-        }else{
+        } else {
             // Dragging up
         }
     }
@@ -65,7 +77,7 @@ extension ActionSheetViewController: UITableViewDataSource {
         cell.textLabel?.text = "123"
         return cell
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
