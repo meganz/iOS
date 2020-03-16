@@ -20,7 +20,7 @@
 "passcode"="Passcode";
 /* "Size" of the file or folder you are sharing */
 "size"="Size";
-/*  */
+/* Quality title, used in changing the export quality of scaned doc */
 "Quality"="Quality";
 /*  */
 "folder"="Folder";
@@ -2122,3 +2122,9 @@
 "File Type"="File Type";
 /* export Quality Option for Scan document */
 "best"="Best";
+/* Description of why the user should give permission to contacts */
+"Easily discover contacts from your address book on MEGA."="Easily discover contacts from your address book on MEGA.";
+/* Detailed description of why the user should give permission to contacts */
+"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA will not use this data for any other purpose and will never interact with your contacts without your consent.";
+/* Title label that explains that the user is going to be asked for the contacts permission */
+"Enable Access to Your Address Book"="Enable Access to Your Address Book";

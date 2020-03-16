@@ -20,8 +20,8 @@
 "passcode"="パスコード";
 /* "Size" of the file or folder you are sharing */
 "size"="サイズ";
-/*  */
-"Quality"="Quality";
+/* Quality title, used in changing the export quality of scaned doc */
+"Quality"="品質";
 /*  */
 "folder"="フォルダ";
 /* Error message shown when there's no camera available on the device */
@@ -1277,8 +1277,8 @@
 "seePlans"="計画を参照";
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
 "dismiss"="終了する";
-/* Notification text body shown when you have received a new chat message */
-"newMessage"="新しいメッセージ";
+/* Content of the notification when there is unknown activity on the Chat */
+"You may have new messages"="新しいメッセージがあるかもしれません";
 /* Notification text body shown when you have received a contact request */
 "contactRequest"="コンタクト要求";
 /* Notification text body shown when you have received a new shared folder */
@@ -2122,3 +2122,9 @@
 "File Type"="ファイルの種類";
 /* export Quality Option for Scan document */
 "best"="最高";
+/* Description of why the user should give permission to contacts */
+"Easily discover contacts from your address book on MEGA."="Easily discover contacts from your address book on MEGA.";
+/* Detailed description of why the user should give permission to contacts */
+"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA will not use this data for any other purpose and will never interact with your contacts without your consent.";
+/* Title label that explains that the user is going to be asked for the contacts permission */
+"Enable Access to Your Address Book"="Enable Access to Your Address Book";
