@@ -786,6 +786,8 @@
         } else {
             [self initDataSource];
             weakSelf.call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:weakSelf.chatRoom.chatId];
+            [weakSelf.megaCallManager addCall:weakSelf.call];
+            [weakSelf.megaCallManager startCall:weakSelf.call];
             if (self.call.numParticipants >= kSmallPeersLayout) {
                 [self showSpinner];
                 [self configureUserOnFocus:self.peersInCall.firstObject manual:NO];
