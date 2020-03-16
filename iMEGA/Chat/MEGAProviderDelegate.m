@@ -154,14 +154,7 @@
     
     MEGAChatRoom *chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:call.chatId];
 
-    CXCallUpdate *update = CXCallUpdate.new;
-    update.remoteHandle = [CXHandle.alloc initWithType:CXHandleTypeGeneric value:[MEGASdk base64HandleForUserHandle:chatRoom.chatId]];
-    update.localizedCallerName = chatRoom.title;
-    update.supportsHolding = NO;
-    update.supportsGrouping = NO;
-    update.supportsUngrouping = NO;
-    update.supportsDTMF = NO;
-    update.hasVideo = call.hasVideoInitialCall;
+    CXCallUpdate *update = [self callUpdateWithValue:[MEGASdk base64HandleForUserHandle:chatRoom.chatId] localizedCallerName:chatRoom.title hasVideo:call.hasVideoInitialCall];
         
     uint64_t callId = [self.megaCallManager callForUUID:call.uuid];
     
@@ -186,14 +179,8 @@
                                   uuid:(NSUUID *)uuid
                                 callId:(uint64_t)callId {
     
-    CXCallUpdate *update = CXCallUpdate.new;
-    update.remoteHandle = [CXHandle.alloc initWithType:CXHandleTypeGeneric value:value];
-    update.localizedCallerName = callerName;
-    update.supportsHolding = NO;
-    update.supportsGrouping = NO;
-    update.supportsUngrouping = NO;
-    update.supportsDTMF = NO;
-    update.hasVideo = hasVideo;
+    CXCallUpdate *update = [self callUpdateWithValue:value localizedCallerName:callerName hasVideo:hasVideo];
+    
     __weak __typeof__(self) weakSelf = self;
     [self.provider reportNewIncomingCallWithUUID:uuid update:update completion:^(NSError * _Nullable error) {
         if (error) {
@@ -207,6 +194,19 @@
             }
         }
     }];
+}
+
+- (CXCallUpdate *)callUpdateWithValue:(NSString *)value localizedCallerName:(NSString *)name hasVideo:(BOOL)hasVideo {
+    CXCallUpdate *update = CXCallUpdate.new;
+    update.remoteHandle = [CXHandle.alloc initWithType:CXHandleTypeGeneric value:value];
+    update.localizedCallerName = name;
+    update.supportsHolding = NO;
+    update.supportsGrouping = NO;
+    update.supportsUngrouping = NO;
+    update.supportsDTMF = NO;
+    update.hasVideo = hasVideo;
+    
+    return update;
 }
 
 #pragma mark - CXProviderDelegate
@@ -227,6 +227,9 @@
     MEGALogDebug(@"[CallKit] Provider perform start call: %@, uuid: %@", call, action.callUUID);
     
     if (call) {
+        MEGAChatRoom *chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:call.chatId];
+        CXCallUpdate *update = [self callUpdateWithValue:[MEGASdk base64HandleForUserHandle:chatRoom.chatId] localizedCallerName:chatRoom.title hasVideo:call.hasVideoInitialCall];
+        [provider reportCallWithUUID:call.uuid updated:update];
         [action fulfill];
         [self disablePasscodeIfNeeded];
     } else {
