@@ -20,7 +20,7 @@
 "passcode"="Passcode";
 /* "Size" of the file or folder you are sharing */
 "size"="Size";
-/*  */
+/* Quality title, used in changing the export quality of scaned doc */
 "Quality"="Quality";
 /*  */
 "folder"="Folder";
