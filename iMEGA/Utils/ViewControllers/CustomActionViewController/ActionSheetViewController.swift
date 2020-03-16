@@ -11,6 +11,7 @@ class ActionSheetViewController: UIViewController {
     var didSetupConstraints = false
     var tableView = UITableView.newAutoLayout()
     var headerView: UIView?
+    var backgroundView = UIView.newAutoLayout()
 
     @objc var actions: [ActionSheetAction] = []
     @objc var headerTitle: String?
@@ -22,7 +23,19 @@ class ActionSheetViewController: UIViewController {
 
         // background view
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(ActionSheetViewController.tapGestureDidRecognize(_:)))
-        view.addGestureRecognizer(tapRecognizer)
+        backgroundView.addGestureRecognizer(tapRecognizer)
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        let cornerLayer = CAShapeLayer()
+        cornerLayer.frame = tableView.bounds
+        let path = UIBezierPath(roundedRect: tableView.bounds, byRoundingCorners: [.topLeft, .topRight], cornerRadii: CGSize(width: 20, height: 20)).cgPath
+        cornerLayer.path = path
+        tableView.clipsToBounds = true
+        tableView.layer.mask = cornerLayer
+
     }
 
     @objc func tapGestureDidRecognize(_ gesture: UITapGestureRecognizer) {
@@ -37,8 +50,12 @@ extension ActionSheetViewController {
         view = UIView()
         view.backgroundColor = .clear
 
+        backgroundView.backgroundColor = .init(white: 0, alpha: 0.8)
+        view.addSubview(backgroundView)
+
         headerView = UIView(frame: CGRect(x: 0, y: 0, width: 200, height: 50))
-        headerView?.backgroundColor = .red
+        headerView?.backgroundColor = .white
+
         let title = UILabel()
         title.text = headerTitle
         title.sizeToFit()
@@ -47,6 +64,7 @@ extension ActionSheetViewController {
 
         tableView.tableHeaderView = headerView
         tableView.tableFooterView = UIView()
+        //        tableView.backgroundColor = .clear
         tableView.delegate = self
         tableView.dataSource = self
         tableView.bounces = false
@@ -56,11 +74,18 @@ extension ActionSheetViewController {
 
     override func updateViewConstraints() {
         if !didSetupConstraints {
-            let height = CGFloat(actions.count * 50 + 50)
+
+            backgroundView.autoPinEdgesToSuperviewEdges()
+
+            var bottomHeight = 0
+            if #available(iOS 11.0, *) {
+                bottomHeight = Int(view.safeAreaInsets.bottom)
+            }
+            let height = CGFloat(actions.count * 60 + 50 + bottomHeight)
             tableView.autoSetDimension(.height, toSize: height)
             tableView.autoPinEdge(toSuperviewEdge: .bottom)
-            tableView.autoPinEdge(toSuperviewEdge: .left)
-            tableView.autoPinEdge(toSuperviewEdge: .right)
+            tableView.autoPinEdge(toSuperviewSafeArea: .left)
+            tableView.autoPinEdge(toSuperviewSafeArea: .right)
 
             didSetupConstraints = true
         }
@@ -92,11 +117,12 @@ extension ActionSheetViewController: UITableViewDataSource {
         let cell = UITableViewCell()
         let action = actions[indexPath.row]
         cell.textLabel?.text = action.title
+        cell.imageView?.image = action.image
         return cell
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50
+        return 60
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
