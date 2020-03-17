@@ -58,6 +58,10 @@
     return self;
 }
 
+- (void)invalidateProvider {
+    [self.provider invalidate];
+}
+
 - (void)reportIncomingCallWithCallId:(uint64_t)callId chatId:(uint64_t)chatId {
     MEGALogDebug(@"[CallKit] Report incoming call with callid %@ and chatid %@", [MEGASdk base64HandleForUserHandle:callId], [MEGASdk base64HandleForUserHandle:chatId]);
     
