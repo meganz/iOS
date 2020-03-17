@@ -175,11 +175,6 @@
     self.backgroundTaskMutableDictionary = [[NSMutableDictionary alloc] init];
     
     NSString *sessionV3 = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
-
-    if (self.megaProviderDelegate == nil) {
-        self.megaCallManager = MEGACallManager.new;
-        self.megaProviderDelegate = [MEGAProviderDelegate.alloc initWithMEGACallManager:self.megaCallManager];
-    }
     
     //Clear keychain (session) and delete passcode on first run in case of reinstallation
     if (![[NSUserDefaults standardUserDefaults] objectForKey:kFirstRun]) {
@@ -188,7 +183,9 @@
         [Helper clearSession];
         [Helper deletePasscode];
         [[NSUserDefaults standardUserDefaults] setValue:@"1strun" forKey:kFirstRun];
-        [[NSUserDefaults standardUserDefaults] synchronize];
+        if (@available(iOS 12.0, *)) {} else {
+            [NSUserDefaults.standardUserDefaults synchronize];
+        }
     }
     
     [self setupAppearance];
@@ -198,8 +195,6 @@
     _presentInviteContactVCLater = NO;
     
     if (sessionV3) {
-        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"TabsOrderInTabBar"];
-        
         NSUserDefaults *sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];
         if (![sharedUserDefaults boolForKey:@"extensions"]) {
             [SAMKeychain deletePasswordForService:@"MEGA" account:@"sessionV3"];
@@ -218,6 +213,8 @@
         } else {
             [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
         }
+        
+        [self initProviderDelegate];
         
         MEGAChatInit chatInit = [MEGASdkManager.sharedMEGAChatSdk initKarereWithSid:sessionV3];
         if (chatInit == MEGAChatInitError) {
@@ -239,7 +236,7 @@
             } completion:nil];
         } else {
             if ([LTHPasscodeViewController doesPasscodeExist]) {
-                if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled]) {
+                if ([NSUserDefaults.standardUserDefaults boolForKey:MEGAPasscodeLogoutAfterTenFailedAttemps]) {
                     [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
                 }
                 
@@ -316,6 +313,10 @@
     if (self.backgroundTaskMutableDictionary.count == 0) {
         self.appSuspended = YES;
         MEGALogDebug(@"App suspended property = YES.");
+    }
+    
+    if (@available(iOS 12.0, *)) {} else {
+        [NSUserDefaults.standardUserDefaults synchronize];
     }
     
     if (self.privacyView == nil) {
@@ -441,8 +442,7 @@
                 MEGALogDebug(@"Email %@", self.email);
                 uint64_t userHandle = [[MEGASdkManager sharedMEGAChatSdk] userHandleByEmail:self.email];
                 
-                // INVALID_HANDLE = ~(uint64_t)0
-                if (userHandle == ~(uint64_t)0) {
+                if (userHandle == MEGAInvalidHandle) {
                     MEGALogDebug(@"Can't start a call because %@ is not your contact", self.email);
                     if (isFetchNodesDone) {
                         [self presentInviteContactCustomAlertViewController];
@@ -776,7 +776,7 @@
             [self.window setRootViewController:_mainTBC];
             
             if ([LTHPasscodeViewController doesPasscodeExist]) {
-                if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled]) {
+                if ([NSUserDefaults.standardUserDefaults boolForKey:MEGAPasscodeLogoutAfterTenFailedAttemps]) {
                     [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
                 }
                 
@@ -1029,6 +1029,13 @@ void uncaughtExceptionHandler(NSException *exception) {
     [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:nil];
 }
 
+- (void)initProviderDelegate {
+    if (self.megaProviderDelegate == nil) {
+        self.megaCallManager = MEGACallManager.new;
+        self.megaProviderDelegate = [MEGAProviderDelegate.alloc initWithMEGACallManager:self.megaCallManager];
+    }
+}
+
 - (void)presentUpgradeViewControllerTitle:(NSString *)title detail:(NSString *)detail image:(UIImage *)image {
     if (!self.isUpgradeVCPresented && ![UIApplication.mnz_visibleViewController isKindOfClass:UpgradeTableViewController.class] && ![UIApplication.mnz_visibleViewController isKindOfClass:ProductDetailViewController.class]) {
         CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
@@ -1096,7 +1103,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 }
 
 - (void)maxNumberOfFailedAttemptsReached {
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled]) {
+    if ([NSUserDefaults.standardUserDefaults boolForKey:MEGAPasscodeLogoutAfterTenFailedAttemps]) {
         [[MEGASdkManager sharedMEGASdk] logout];
     }
 }
@@ -1181,10 +1188,6 @@ void uncaughtExceptionHandler(NSException *exception) {
     
     // Call
     if ([payload.dictionaryPayload[@"megatype"] integerValue] == 4) {
-        if (self.megaProviderDelegate == nil) {            
-            self.megaCallManager = MEGACallManager.new;
-            self.megaProviderDelegate = [MEGAProviderDelegate.alloc initWithMEGACallManager:self.megaCallManager];
-        }
         NSString *chatIdB64 = payload.dictionaryPayload[@"megadata"][@"chatid"];
         NSString *callIdB64 = payload.dictionaryPayload[@"megadata"][@"callid"];
         uint64_t chatId = [MEGASdk handleForBase64UserHandle:chatIdB64];
@@ -1515,6 +1518,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                 }
             }
                         
+            [self initProviderDelegate];
             [self registerForVoIPNotifications];
             [self registerForNotifications];
             [[MEGASdkManager sharedMEGASdk] fetchNodes];
@@ -1691,7 +1695,9 @@ void uncaughtExceptionHandler(NSException *exception) {
     
     if (request.type == MEGAChatRequestTypeLogout) {
         [MEGASdkManager destroySharedMEGAChatSdk];
-        
+        [self.megaProviderDelegate invalidateProvider];
+        self.megaProviderDelegate = nil;
+        self.megaCallManager = nil;
         [self.mainTBC setBadgeValueForChats];
     }
     
@@ -1721,8 +1727,8 @@ void uncaughtExceptionHandler(NSException *exception) {
     if (self.chatRoom.chatId == chatId && newState == MEGAChatConnectionOnline) {
         [self performCall];
     }
-    // INVALID_HANDLE = ~(uint64_t)0
-    if (chatId == ~(uint64_t)0 && newState == MEGAChatConnectionOnline) {
+    
+    if (chatId == MEGAInvalidHandle && newState == MEGAChatConnectionOnline) {
         [MEGAReachabilityManager sharedManager].chatRoomListState = MEGAChatRoomListStateOnline;
     } else if (newState >= MEGAChatConnectionLogging) {
         [MEGAReachabilityManager sharedManager].chatRoomListState = MEGAChatRoomListStateInProgress;
