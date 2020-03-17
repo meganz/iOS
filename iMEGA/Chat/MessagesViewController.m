@@ -2246,7 +2246,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     BOOL showDayMonthYear = NO;
     if (indexPath.item == 0) {
         showDayMonthYear = YES;
-    } else if (indexPath.item - 1 > 0) {
+    } else if (indexPath.item - 1 >= 0) {
         MEGAChatMessage *previousMessage = [self.messages objectAtIndex:(indexPath.item -1)];
         showDayMonthYear = [self showDateBetweenMessage:message previousMessage:previousMessage];
     }
@@ -2656,7 +2656,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     BOOL showDayMonthYear = NO;
     if (indexPath.item == 0) {
         showDayMonthYear = YES;
-    } else if (indexPath.item - 1 > 0) {
+    } else if (indexPath.item - 1 >= 0) {
         MEGAChatMessage *previousMessage = [self.messages objectAtIndex:(indexPath.item - 1)];
         showDayMonthYear = [self showDateBetweenMessage:message previousMessage:previousMessage];
     }

@@ -2373,11 +2373,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c30-F4-pDu" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <searchDisplayController id="Imn-o7-d7k">
-                    <connections>
-                        <outlet property="delegate" destination="Sqd-Fy-LKX" id="tII-hk-WIw"/>
-                    </connections>
-                </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="4143.4782608695659" y="1152.717391304348"/>
         </scene>
