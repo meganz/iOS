@@ -67,8 +67,11 @@
 
 #pragma mark - delete store
 
-- (void)deleteStoreWithError:(NSError *__autoreleasing  _Nullable *)error {
-    [_persistentContainer.persistentStoreCoordinator destroyPersistentStoreAtURL:[self storeURL] withType:NSSQLiteStoreType options:nil error:error];
+- (void)deleteStore {
+    NSError *error;
+    if (![self.persistentContainer.persistentStoreCoordinator destroyPersistentStoreAtURL:self.storeURL withType:NSSQLiteStoreType options:nil error:&error]) {
+        MEGALogError(@"[Camera Upload] error when deleting camera upload store %@", error);
+    }
     _persistentContainer = nil;
 }
 
