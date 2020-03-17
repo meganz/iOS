@@ -30,6 +30,9 @@
         [NSUserDefaults.standardUserDefaults setObject:[NSNumber numberWithUnsignedLongLong:request.publicNode.handle] forKey:MEGALastPublicHandleAccessed];
         [NSUserDefaults.standardUserDefaults setInteger:AffiliateTypeFileFolder forKey:MEGALastPublicTypeAccessed];
         [NSUserDefaults.standardUserDefaults setDouble:NSDate.date.timeIntervalSince1970 forKey:MEGALastPublicTimestampAccessed];
+        if (@available(iOS 12.0, *)) {} else {
+            [NSUserDefaults.standardUserDefaults synchronize];
+        }
     }
     
     if (self.completion) {

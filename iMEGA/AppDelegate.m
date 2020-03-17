@@ -185,7 +185,9 @@
         [Helper clearSession];
         [Helper deletePasscode];
         [[NSUserDefaults standardUserDefaults] setValue:@"1strun" forKey:kFirstRun];
-        [[NSUserDefaults standardUserDefaults] synchronize];
+        if (@available(iOS 12.0, *)) {} else {
+            [NSUserDefaults.standardUserDefaults synchronize];
+        }
     }
     
     [self setupAppearance];
@@ -195,8 +197,6 @@
     _presentInviteContactVCLater = NO;
     
     if (sessionV3) {
-        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"TabsOrderInTabBar"];
-        
         NSUserDefaults *sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];
         if (![sharedUserDefaults boolForKey:@"extensions"]) {
             [SAMKeychain deletePasswordForService:@"MEGA" account:@"sessionV3"];
@@ -238,7 +238,7 @@
             } completion:nil];
         } else {
             if ([LTHPasscodeViewController doesPasscodeExist]) {
-                if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled]) {
+                if ([NSUserDefaults.standardUserDefaults boolForKey:MEGAPasscodeLogoutAfterTenFailedAttemps]) {
                     [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
                 }
                 
@@ -315,6 +315,10 @@
     if (self.backgroundTaskMutableDictionary.count == 0) {
         self.appSuspended = YES;
         MEGALogDebug(@"App suspended property = YES.");
+    }
+    
+    if (@available(iOS 12.0, *)) {} else {
+        [NSUserDefaults.standardUserDefaults synchronize];
     }
     
     if (self.privacyView == nil) {
@@ -442,8 +446,7 @@
                 MEGALogDebug(@"Email %@", self.email);
                 uint64_t userHandle = [[MEGASdkManager sharedMEGAChatSdk] userHandleByEmail:self.email];
                 
-                // INVALID_HANDLE = ~(uint64_t)0
-                if (userHandle == ~(uint64_t)0) {
+                if (userHandle == MEGAInvalidHandle) {
                     MEGALogDebug(@"Can't start a call because %@ is not your contact", self.email);
                     if (isFetchNodesDone) {
                         [self presentInviteContactCustomAlertViewController];
@@ -777,7 +780,7 @@
             [self.window setRootViewController:_mainTBC];
             
             if ([LTHPasscodeViewController doesPasscodeExist]) {
-                if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled]) {
+                if ([NSUserDefaults.standardUserDefaults boolForKey:MEGAPasscodeLogoutAfterTenFailedAttemps]) {
                     [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
                 }
                 
@@ -1151,7 +1154,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 }
 
 - (void)maxNumberOfFailedAttemptsReached {
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled]) {
+    if ([NSUserDefaults.standardUserDefaults boolForKey:MEGAPasscodeLogoutAfterTenFailedAttemps]) {
         [[MEGASdkManager sharedMEGASdk] logout];
     }
 }
@@ -1788,8 +1791,8 @@ void uncaughtExceptionHandler(NSException *exception) {
     if (self.chatRoom.chatId == chatId && newState == MEGAChatConnectionOnline) {
         [self performCall];
     }
-    // INVALID_HANDLE = ~(uint64_t)0
-    if (chatId == ~(uint64_t)0 && newState == MEGAChatConnectionOnline) {
+    
+    if (chatId == MEGAInvalidHandle && newState == MEGAChatConnectionOnline) {
         [MEGAReachabilityManager sharedManager].chatRoomListState = MEGAChatRoomListStateOnline;
     } else if (newState >= MEGAChatConnectionLogging) {
         [MEGAReachabilityManager sharedManager].chatRoomListState = MEGAChatRoomListStateInProgress;

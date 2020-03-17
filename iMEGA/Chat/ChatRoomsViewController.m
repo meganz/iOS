@@ -1267,8 +1267,7 @@
 }
 
 - (void)onChatConnectionStateUpdate:(MEGAChatSdk *)api chatId:(uint64_t)chatId newState:(int)newState {
-    // INVALID_HANDLE = ~(uint64_t)0
-    if (chatId == ~(uint64_t)0 && newState == MEGAChatConnectionOnline) {
+    if (chatId == MEGAInvalidHandle && newState == MEGAChatConnectionOnline) {
         // Now it's safe to trigger a reordering of the list:
         [self reloadData];
     }
