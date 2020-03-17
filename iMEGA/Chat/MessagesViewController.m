@@ -1394,7 +1394,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 }
 
 - (void)showOptionsForPeerWithHandle:(uint64_t)userHandle senderView:(UIView *)senderView {
-    if (userHandle == [MEGASdkManager sharedMEGASdk].myUser.handle || userHandle == ~(uint64_t)0) {
+    if (userHandle == MEGASdkManager.sharedMEGASdk.myUser.handle || userHandle == MEGAInvalidHandle) {
         return;
     }
     
@@ -1999,7 +1999,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
                             [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
                         } else {
                             [NSUserDefaults.standardUserDefaults setBool:NO forKey:@"isSaveMediaCapturedToGalleryEnabled"];
-                            [NSUserDefaults.standardUserDefaults synchronize];
                             [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
                         }
                     }];
