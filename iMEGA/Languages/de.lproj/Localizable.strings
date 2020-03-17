@@ -20,7 +20,7 @@
 "passcode"="Passcode";
 /* "Size" of the file or folder you are sharing */
 "size"="Größe";
-/*  */
+/* Quality title, used in changing the export quality of scaned doc */
 "Quality"="Quality";
 /*  */
 "folder"="Ordner";
@@ -1275,8 +1275,8 @@
 "seePlans"="Verfügbare PRO-Stufen";
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
 "dismiss"="Später";
-/* Notification text body shown when you have received a new chat message */
-"newMessage"="Neue Nachricht";
+/* Content of the notification when there is unknown activity on the Chat */
+"You may have new messages"="Sie haben neue Nachrichten";
 /* Notification text body shown when you have received a contact request */
 "contactRequest"="Kontaktersuchen";
 /* Notification text body shown when you have received a new shared folder */
@@ -2120,3 +2120,9 @@
 "File Type"="File Type";
 /* export Quality Option for Scan document */
 "best"="Best";
+/* Description of why the user should give permission to contacts */
+"Easily discover contacts from your address book on MEGA."="Easily discover contacts from your address book on MEGA.";
+/* Detailed description of why the user should give permission to contacts */
+"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA will not use this data for any other purpose and will never interact with your contacts without your consent.";
+/* Title label that explains that the user is going to be asked for the contacts permission */
+"Enable Access to Your Address Book"="Enable Access to Your Address Book";
