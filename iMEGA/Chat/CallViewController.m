@@ -46,7 +46,6 @@
 
 @property (strong, nonatomic) AVAudioPlayer *player;
 
-@property NSUUID *currentCallUUID;
 @property (assign, nonatomic) NSInteger initDuration;
 
 @property (assign, nonatomic, getter=isSpeakerEnabled) BOOL speakerEnabled;
@@ -81,15 +80,8 @@
                 self.call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
 
                 self.statusCallLabel.text = AMLocalizedString(@"calling...", @"Label shown when you call someone (outgoing call), before the call starts.");
-                
-                NSUUID *uuid = [[NSUUID alloc] init];
-                self.call.uuid = uuid;
-                self.currentCallUUID = uuid;
                 [self.megaCallManager addCall:self.call];
-                
-                uint64_t peerHandle = [self.chatRoom peerHandleAtIndex:0];
-                NSString *peerEmail = [self.chatRoom peerEmailByHandle:peerHandle];
-                [self.megaCallManager startCall:self.call email:peerEmail];
+                [self.megaCallManager startCall:self.call];
             }
         }];
         
@@ -254,8 +246,7 @@
 }
 
 - (void)didWirelessRoutesAvailableChange:(NSNotification *)notification {
-    MPVolumeView* volumeView = (MPVolumeView*)notification.object;
-    if (volumeView.areWirelessRoutesAvailable) {
+    if (AVAudioSession.sharedInstance.mnz_isBluetoothAudioRouteAvailable) {
         self.volumeContainerView.hidden = NO;
         self.enableDisableSpeaker.hidden = YES;
     } else {
@@ -338,12 +329,19 @@
 - (void)deleteActiveCallFlags {
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"oneOnOneCallLocalVideo"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"oneOnOneCallLocalAudio"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    if (@available(iOS 12.0, *)) {} else {
+        [NSUserDefaults.standardUserDefaults synchronize];
+    }
 }
 
 - (void)updateAudioOutputImage {
-    self.volumeContainerView.hidden = !self.mpVolumeView.areWirelessRoutesAvailable;
-    self.enableDisableSpeaker.hidden = !self.volumeContainerView.hidden;
+    if (AVAudioSession.sharedInstance.mnz_isBluetoothAudioRouteAvailable) {
+        self.volumeContainerView.hidden = NO;
+        self.enableDisableSpeaker.hidden = YES;
+    } else {
+        self.enableDisableSpeaker.hidden = NO;
+        self.volumeContainerView.hidden = YES;
+    }
     
     if ([AVAudioSession.sharedInstance mnz_isOutputEqualToPortType:AVAudioSessionPortBuiltInReceiver] || [AVAudioSession.sharedInstance mnz_isOutputEqualToPortType:AVAudioSessionPortHeadphones]) {
         self.enableDisableSpeaker.selected = NO;
@@ -427,7 +425,10 @@
     
     [[NSUserDefaults standardUserDefaults] setBool:!self.localVideoImageView.hidden forKey:@"oneOnOneCallLocalVideo"];
     [[NSUserDefaults standardUserDefaults] setBool:self.muteUnmuteMicrophone.selected forKey:@"oneOnOneCallLocalAudio"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    if (@available(iOS 12.0, *)) {} else {
+        [NSUserDefaults.standardUserDefaults synchronize];
+    }
+    
     [self.timer invalidate];
     
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -512,24 +513,13 @@
     MEGALogDebug(@"onChatCallUpdate %@", call);
     
     if (self.call.callId == call.callId) {
-        if (self.currentCallUUID) {
-            call.uuid = self.currentCallUUID;
-        }
         self.call = call;
     } else if (self.call.chatId == call.chatId) {
         MEGALogInfo(@"Two calls at same time in same chat.");
-        //Put the same UUID to the call that is going to replace the current one
-        if (self.currentCallUUID) {
-            call.uuid = self.currentCallUUID;
-            [self.megaCallManager addCall:call];
-        }
-
         self.call = call;
     } else {
         return;
     }
-    
-    
     
     if ([call hasChangedForType:MEGAChatCallChangeTypeLocalAVFlags]) {
         self.muteUnmuteMicrophone.selected = !call.hasLocalAudio;

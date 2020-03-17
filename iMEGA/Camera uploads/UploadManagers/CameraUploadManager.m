@@ -863,7 +863,6 @@ static const NSUInteger VideoUploadBatchCount = 1;
 - (void)didReceiveLogoutNotification:(NSNotification *)notification {
     MEGALogDebug(@"[Camera Upload] logout notification %@", notification);
     [self disableCameraUpload];
-    [CameraUploadManager clearLocalSettings];
     _isNodeTreeCurrent = NO;
     _cameraUploadNode = nil;
     [AttributeUploadManager.shared cancelAllAttributesUpload];

@@ -20,7 +20,7 @@
 "passcode"="Código de acceso";
 /* "Size" of the file or folder you are sharing */
 "size"="Tamaño";
-/*  */
+/* Quality title, used in changing the export quality of scaned doc */
 "Quality"="Quality";
 /*  */
 "folder"="Carpeta";
@@ -146,6 +146,8 @@
 "emailAlreadyInUse"="Error. Este correo electrónico ya está asociado a una cuenta de MEGA.";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Tienes que liberar espacio";
+/* Message shown when you try to downlonad files bigger than the available memory. */
+"MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device."="MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device.";
 /* Title for the file link view */
 "fileLink"="Enlace del Archivo";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
@@ -177,7 +179,7 @@
 /* */
 "folderLinkUnavailableText1"="Esto puede deberse a las siguientes razones:";
 /* */
-"folderLinkUnavailableText2"="El enlace de la carpeta ha sido eliminado por infringir nuestros Términos de servicio.";
+"folderLinkUnavailableText2"="El enlace de la carpeta ha sido eliminado por infringir nuestros Términos de servicio y/o condiciones de uso.";
 /* */
 "folderLinkUnavailableText3"="Enlace inválido - el enlace al que está intentando acceder no existe";
 /* */
@@ -509,7 +511,7 @@
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
 "itemsSelected"="%lu elementos seleccionados";
 /* String shown when multi selection is enabled and only one item has been selected. */
-"1 selected"="1 selected";
+"1 selected"="1 seleccionado";
 /* String shown when multi selection is enabled and the user has more than one item selected. */
 "xSelected"="%d seleccionados";
 /* Title of the Offline section */
@@ -527,9 +529,9 @@
 /* Title of the tab bar item for the Shared Items section */
 "shared"="Compartido";
 /* Title of the "Incoming" Shared Items. */
-"incoming"="Entrante";
+"incoming"="Conmigo";
 /* Title of the "Outgoing" Shared Items. */
-"outgoing"="Saliente";
+"outgoing"="Por mí";
 /* Text shown to explain with how many contacts you have shared a folder */
 "sharedWithXContacts"="Compartida con %d contactos";
 /* Message shown when you have changed the permissions of a shared folder */
@@ -684,6 +686,8 @@
 "Custom Settings"="Ajustes personalizados";
 /* Title to show when device local storage is full */
 "%@ Storage Full"="Almacenamiento %@ lleno";
+/* Title to show when device local storage is almost full */
+"Device Storage Almost Full"="Device Storage Almost Full";
 /* Detail for local storage full situation */
 "You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="No tienes almacenamiento suficiente para más subidas de la cámara. Libera espacio eliminando aplicaciones que no utilizas, videos o música. Puedes gestionar tu almacenamiento en %@";
 /* Navigation path for Storage settings in iOS */
@@ -1224,7 +1228,7 @@
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
 "confidentialityExplanation"="[S]Confidencialidad.[/S] Solo el autor y los destinatarios receptores pueden descifrar y leer el contenido.";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
-"authenticityExplanation"="[S]Autenticidad.[/S] El sistema asegura que los datos recibidos proceden del remitente que aparece, y que su contenido no ha sido manipulado durante la transmisión.";
+"authenticityExplanation"="[S]Autenticidad.[/S] El sistema se asegura de que los datos recibidos procedan del remitente que aparece, y que su contenido no haya sido manipulado durante la transmisión.";
 /* Alert message shown when a chat does not exist */
 "chatNotFound"="Chat no encontrado";
 /* A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime. */
@@ -1266,15 +1270,15 @@
 /* Alert message shown when the user perform logout and has files in the Offline directory */
 "allFilesSavedForOfflineWillBeDeletedFromYourDevice"="Todo los archivos en Sin conexión serán eliminados de tu dispositivo. ¿Seguro que quieres continuar?";
 /* Title shown when you almost had used your available transfer quota. */
-"depletedTransferQuota_title"="Cuota de transferencia agotada";
+"depletedTransferQuota_title"="Cuota de transferencia insuficiente";
 /* Description shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_message"="Las descargas en cola superan la cuota de transferencia disponible para tu dirección IP y por lo tanto podrían interrumpirse.";
 /* Button title to see the available pro plans in MEGA */
 "seePlans"="Ver planes";
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
 "dismiss"="Descartar";
-/* Notification text body shown when you have received a new chat message */
-"newMessage"="Nuevo mensaje";
+/* Content of the notification when there is unknown activity on the Chat */
+"You may have new messages"="Podrías tener mensajes nuevos";
 /* Notification text body shown when you have received a contact request */
 "contactRequest"="Solicitud de contacto";
 /* Notification text body shown when you have received a new shared folder */
@@ -1624,6 +1628,8 @@
 "Save in Photos"="Guardar en Fotos";
 /* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Guarda una copia de las imágenes y de los videos capturados desde la aplicación de MEGA en la galería del dispositivo.";
+/* Settings section title where you can enable the option to 'Spotlight search' */
+"Spotlight Search"="Spotlight Search";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="Tú tienes las claves";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -1687,7 +1693,7 @@
 /* A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days. */
 "Remove files older than"="Eliminar archivos anteriores a";
 /* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
-"Days"="Días";
+"Days"="días";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
 "The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="La Papelera se vacía de forma automática. El período mínimo es de 7 días y el máximo es de 30 días.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
@@ -1962,8 +1968,6 @@
 "[X] contacts found on MEGA"="[X] contactos encontrados en MEGA";
 /* Title showing the user that one of his contacts are using MEGA */
 "1 contact found on MEGA"="1 contacto encontrado en MEGA";
-/* Text indicating the user to perform an action to grant some permission */
-"Enable Access"="Permite acceso";
 /* Text indicating the user to open the device settings for MEGA */
 "Open Settings"="Abrir los ajustes";
 /* Text encouraging the user to invite contacts to MEGA */
@@ -2042,6 +2046,10 @@
 "Inactive chat"="Chat inactivo";
 /* Contact details screen: Set the alias(nickname) for a user */
 "Set Nickname"="Elige un alias";
+/* Contact details screen: Edit the alias(nickname) for a user */
+"Edit Nickname"="Edit Nickname";
+/* Edit nickname screen: Remove nickname button title */
+"Remove Nickname"="Remove Nickname";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
 "Alias/ Nickname"="Alias";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
@@ -2090,9 +2098,33 @@
 "It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="Es posible que estés utilizando la misma contraseña para tu cuenta de MEGA y para otros servicios, y que al menos uno de estos otros servicios haya sufrido una violación de datos.";
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="Tu contraseña se ha filtrado y está siendo utilizada por terceros para iniciar sesión en tus cuentas, incluida, entre otras, tu cuenta de MEGA.";
+/* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
+"MEGA CAMERA UPLOADS FOLDER"="CARPETA DE LAS SÚBIDAS DE LA CAMARA";
+/* Action button text of folder selection screen for camera uploads */
+"Select Folder"="Seleccionar carpeta";
+/* Title of the folder selection screen for camera uploads */
+"Choose Folder"="Seleccionar carpeta";
+/* Label used near to the option selected to encode the images uploaded to a chat (Low, Medium, Original) */
+"Image quality"="Calidad de imagen";
+/* Title of Image Quality option */
+"Automatic"="Automática";
+/* Description of Automatic Image Quality option */
+"Send smaller size images through cellular networks and original size images through wifi"="Envía las imágenes de menor tamaño con los datos móviles y las de tamaño original con Wi-Fi";
+/* Title of Image Quality option */
+"Optimised"="Optimizada";
+/* Description of Optimised Image Quality option */
+"Send smaller size images optimised for lower data consumption"="Envía imágenes de menor tamaño optimizadas para un menor consumo de datos.";
+/* Description of High Image Quality option */
+"Send original size, increased quality images"="Send original size, increased quality images";
 /* Setting title for Doc scan view */
-"Save Settings"="Save Settings";
+"Save Settings"="Guardar ajustes";
 /* file type title, used in changing the export format of scaned doc */
 "File Type"="Tipo de archivo";
 /* export Quality Option for Scan document */
 "best"="Best";
+/* Description of why the user should give permission to contacts */
+"Easily discover contacts from your address book on MEGA."="Easily discover contacts from your address book on MEGA.";
+/* Detailed description of why the user should give permission to contacts */
+"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA will not use this data for any other purpose and will never interact with your contacts without your consent.";
+/* Title label that explains that the user is going to be asked for the contacts permission */
+"Enable Access to Your Address Book"="Enable Access to Your Address Book";

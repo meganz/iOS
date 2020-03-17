@@ -927,7 +927,7 @@ static MEGAIndexer *indexer;
     return activityVC;
 }
 
-+ (UIActivityViewController *)activityViewControllerForNodes:(NSArray *)nodesArray sender:(id)sender {
++ (UIActivityViewController *)activityViewControllerForNodes:(NSArray *)nodesArray sender:(id _Nullable)sender {
     NSMutableArray *activityItemsMutableArray = [[NSMutableArray alloc] init];
     NSMutableArray *activitiesMutableArray = [[NSMutableArray alloc] init];
     
@@ -1305,7 +1305,7 @@ static MEGAIndexer *indexer;
         }
     }
     
-    [MEGAStore.shareInstance.storeStack deleteStoreWithError:nil];
+    [MEGAStore.shareInstance.storeStack deleteStore];
     
     // Delete files saved by extensions
     NSString *extensionGroup = [NSFileManager.defaultManager containerURLForSecurityApplicationGroupIdentifier:MEGAGroupIdentifier].path;
@@ -1331,32 +1331,14 @@ static MEGAIndexer *indexer;
     [[Helper downloadingNodes] removeAllObjects];
     [[Helper uploadingNodes] removeAllObjects];
     
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"agreedCopywriteWarning"];
-    
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"TransfersPaused"];
-    
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"IsSavePhotoToGalleryEnabled"];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"IsSaveVideoToGalleryEnabled"];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"ChatVideoQuality"];
-    
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"logging"];
+    [NSUserDefaults.standardUserDefaults removePersistentDomainForName:NSBundle.mainBundle.bundleIdentifier];
 
     //Set default order on logout
     [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"SortOrderType"];
     [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"OfflineSortOrderType"];
-    
-    [NSUserDefaults.standardUserDefaults removeObjectForKey:@"lastDateAddPhoneNumberShowed"];
-    [NSUserDefaults.standardUserDefaults removeObjectForKey:@"ContactsOnMega"];
-    [NSUserDefaults.standardUserDefaults removeObjectForKey:@"lastDateContactsOnMegaRequested"];
-    
-    [[NSUserDefaults standardUserDefaults] synchronize];
 
     NSUserDefaults *sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];
-    [sharedUserDefaults removeObjectForKey:@"extensions"];
-    [sharedUserDefaults removeObjectForKey:@"extensions-passcode"];
-    [sharedUserDefaults removeObjectForKey:@"treeCompleted"];
-    [sharedUserDefaults removeObjectForKey:@"useHttpsOnly"];
-    [sharedUserDefaults synchronize];
+    [sharedUserDefaults removePersistentDomainForName:MEGAGroupIdentifier];
 }
 
 + (void)deletePasscode {
@@ -1369,7 +1351,7 @@ static MEGAIndexer *indexer;
     }
 }
 
-+ (void)showExportMasterKeyInView:(UIViewController *)viewController completion:(void (^ __nullable)(void))completion {
++ (void)showExportMasterKeyInView:(UIViewController *)viewController completion:(void (^ _Nullable)(void))completion {
     NSString *documentsDirectory = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
     NSString *masterKeyFilePath = [documentsDirectory stringByAppendingPathComponent:@"RecoveryKey.txt"];
     

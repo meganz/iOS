@@ -4,14 +4,14 @@
 #import "MEGAChatMessage.h"
 #import "MEGAIndexer.h"
 
-#define kIsEraseAllLocalDataEnabled @"IsEraseAllLocalDataEnabled"
-
 typedef NS_OPTIONS(NSUInteger, NodesAre) {
     NodesAreFiles    = 1 << 0,
     NodesAreFolders  = 1 << 1,
     NodesAreExported = 1 << 2,
     NodesAreOutShares = 1 << 3
 };
+
+NS_ASSUME_NONNULL_BEGIN
 
 @interface Helper : NSObject
 
@@ -86,7 +86,7 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 
 + (void)importNode:(MEGANode *)node toShareWithCompletion:(void (^)(MEGANode *node))completion;
 + (UIActivityViewController *)activityViewControllerForChatMessages:(NSArray<MEGAChatMessage *> *)messages sender:(id)sender;
-+ (UIActivityViewController *)activityViewControllerForNodes:(NSArray *)nodesArray sender:(id)sender;
++ (UIActivityViewController *)activityViewControllerForNodes:(NSArray *)nodesArray sender:(id _Nullable)sender;
 
 + (void)setIndexer:(MEGAIndexer* )megaIndexer;
 
@@ -111,7 +111,7 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 + (UISearchController *)customSearchControllerWithSearchResultsUpdaterDelegate:(id<UISearchResultsUpdating>)searchResultsUpdaterDelegate searchBarDelegate:(id<UISearchBarDelegate>)searchBarDelegate;
 + (void)resetSearchControllerFrame:(UISearchController *)searchController;
 
-+ (void)showExportMasterKeyInView:(UIViewController *)viewController completion:(void (^ __nullable)(void))completion;
++ (void)showExportMasterKeyInView:(UIViewController *)viewController completion:(void (^ _Nullable)(void))completion;
 + (void)showMasterKeyCopiedAlert;
 
 #pragma mark - Manage session
@@ -128,5 +128,7 @@ typedef NS_OPTIONS(NSUInteger, NodesAre) {
 #pragma mark - Log
 
 + (void)enableOrDisableLog;
+
+NS_ASSUME_NONNULL_END
 
 @end

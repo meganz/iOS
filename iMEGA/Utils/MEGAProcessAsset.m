@@ -276,11 +276,10 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
                  if ([self hasFreeSpaceOnDiskForWriteFile:fileSize]) {
                      NSNumber *videoQualityNumber = [[NSUserDefaults standardUserDefaults] objectForKey:@"ChatVideoQuality"];
                      ChatVideoUploadQuality videoQuality;
-                     if (videoQualityNumber) {
+                     if (videoQualityNumber != nil) {
                          videoQuality = videoQualityNumber.unsignedIntegerValue;
                      } else {
                          [[NSUserDefaults standardUserDefaults] setObject:@(ChatVideoUploadQualityMedium) forKey:@"ChatVideoQuality"];
-                         [[NSUserDefaults standardUserDefaults] synchronize];
                          videoQuality = ChatVideoUploadQualityMedium;
                      }
                      
@@ -342,11 +341,10 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
                  [NSFileManager.defaultManager mnz_removeItemAtPath:filePath];
                  NSNumber *videoQualityNumber = [[NSUserDefaults standardUserDefaults] objectForKey:@"ChatVideoQuality"];
                  ChatVideoUploadQuality videoQuality;
-                 if (videoQualityNumber) {
+                 if (videoQualityNumber != nil) {
                      videoQuality = videoQualityNumber.unsignedIntegerValue;
                  } else {
                      [[NSUserDefaults standardUserDefaults] setObject:@(ChatVideoUploadQualityMedium) forKey:@"ChatVideoQuality"];
-                     [[NSUserDefaults standardUserDefaults] synchronize];
                      videoQuality = ChatVideoUploadQualityMedium;
                  }
                  
@@ -397,11 +395,10 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
     if ([self hasFreeSpaceOnDiskForWriteFile:fileSize]) {
         NSNumber *videoQualityNumber = [[NSUserDefaults standardUserDefaults] objectForKey:@"ChatVideoQuality"];
         ChatVideoUploadQuality videoQuality;
-        if (videoQualityNumber) {
+        if (videoQualityNumber != nil) {
             videoQuality = videoQualityNumber.unsignedIntegerValue;
         } else {
             [[NSUserDefaults standardUserDefaults] setObject:@(ChatVideoUploadQualityMedium) forKey:@"ChatVideoQuality"];
-            [[NSUserDefaults standardUserDefaults] synchronize];
             videoQuality = ChatVideoUploadQualityMedium;
         }
         
@@ -694,18 +691,15 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
     SDAVAssetExportSession *encoder = [[SDAVAssetExportSession alloc] initWithAsset:avAsset];
     encoder.outputFileType = AVFileTypeMPEG4;
     encoder.outputURL = [NSURL fileURLWithPath:filePath];
-    encoder.videoSettings = @
-    {
-    AVVideoCodecKey:AVVideoCodecH264,
-    AVVideoWidthKey:@(videoSize.width),
-    AVVideoHeightKey:@(videoSize.height),
-    AVVideoCompressionPropertiesKey:@
-        {
-        AVVideoAverageBitRateKey:@(bps),
-        AVVideoAverageNonDroppableFrameRateKey:@(fps),
-        AVVideoProfileLevelKey:AVVideoProfileLevelH264BaselineAutoLevel,
-        },
-    };
+    if (@available(iOS 11.0, *)) {
+        encoder.videoSettings = @{AVVideoCodecKey:AVVideoCodecTypeH264, AVVideoWidthKey:@(videoSize.width), AVVideoHeightKey:@(videoSize.height), AVVideoCompressionPropertiesKey:@{AVVideoAverageBitRateKey:@(bps), AVVideoAverageNonDroppableFrameRateKey:@(fps), AVVideoProfileLevelKey:AVVideoProfileLevelH264BaselineAutoLevel, }, };
+    } else {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+        encoder.videoSettings = @{AVVideoCodecKey:AVVideoCodecH264, AVVideoWidthKey:@(videoSize.width), AVVideoHeightKey:@(videoSize.height), AVVideoCompressionPropertiesKey:@{AVVideoAverageBitRateKey:@(bps), AVVideoAverageNonDroppableFrameRateKey:@(fps), AVVideoProfileLevelKey:AVVideoProfileLevelH264BaselineAutoLevel, }, };
+#pragma clang diagnostic pop
+    }
+    
     encoder.audioSettings = @
     {
     AVFormatIDKey:@(kAudioFormatMPEG4AAC),

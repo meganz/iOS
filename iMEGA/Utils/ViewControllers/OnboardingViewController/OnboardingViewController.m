@@ -204,6 +204,9 @@
                     
                 case OnboardingViewTypeNotificationsPermission: {
                     [DevicePermissionsHelper notificationsPermissionWithCompletionHandler:^(BOOL granted) {
+                        if (granted) {
+                            [UIApplication.sharedApplication registerForRemoteNotifications];
+                        }
                         [self nextPageOrDismiss];
                     }];
                     break;
