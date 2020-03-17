@@ -123,6 +123,10 @@
     }
     
     [self.tableView registerNib:[UINib nibWithNibName:@"ContactsHeaderFooterView" bundle:nil] forHeaderFooterViewReuseIdentifier:@"ContactsHeaderFooterView"];
+    
+    if (self.contactsMode == ContactsModeChatNamingGroup) {
+        self.enterGroupNameTextField.placeholder = AMLocalizedString(@"Enter group name", @"Title of the dialog shown when the user it is creating a chat link and the chat has not title");
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -343,8 +347,8 @@
                 }
             }
         }
-        NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"mnz_fullName" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
-        self.visibleUsersArray = [NSMutableArray arrayWithArray:[usersArray sortedArrayUsingDescriptors:@[sort]]];
+        
+        self.visibleUsersArray = [[usersArray sortedArrayUsingComparator:self.userSortComparator] mutableCopy];
     }
     
     [self.tableView reloadData];
@@ -372,6 +376,13 @@
         [self addSearchBarController];
     }
 }
+
+- (NSComparator)userSortComparator {
+    return ^NSComparisonResult(MEGAUser *a, MEGAUser *b) {
+        return [a.mnz_displayName compare:b.mnz_displayName options:NSCaseInsensitiveSearch];
+    };
+}
+
 
 - (void)internetConnectionChanged {
     BOOL boolValue = MEGAReachabilityManager.isReachable;
@@ -1190,7 +1201,7 @@
         [self.indexPathsMutableDictionary setObject:indexPath forKey:base64Handle];
         
         ContactTableViewCell *cell;
-        NSString *userName = user.mnz_nickname ? : user.mnz_fullName;
+        NSString *userName = user.mnz_displayName;
         
         if (user.handle == MEGASdkManager.sharedMEGASdk.myUser.handle) {
             userName = [userName stringByAppendingString:[NSString stringWithFormat:@" (%@)", AMLocalizedString(@"me", @"The title for my message in a chat. The message was sent from yourself.")]];
@@ -1795,7 +1806,11 @@
         if ([searchString isEqualToString:@""]) {
             [self.searchVisibleUsersArray removeAllObjects];
         } else {
-            NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"SELF.mnz_fullName contains[c] %@", searchString];
+            NSPredicate *fullnamePredicate = [NSPredicate predicateWithFormat:@"SELF.mnz_fullName contains[c] %@", searchString];
+            NSPredicate *nicknamePredicate = [NSPredicate predicateWithFormat:@"SELF.mnz_nickname contains[c] %@", searchString];
+            NSPredicate *emailPredicate = [NSPredicate predicateWithFormat:@"SELF.email contains[c] %@", searchString];
+            NSPredicate *resultPredicate = [NSCompoundPredicate orPredicateWithSubpredicates:@[fullnamePredicate, nicknamePredicate, emailPredicate]];
+
             self.searchVisibleUsersArray = [self.visibleUsersArray filteredArrayUsingPredicate:resultPredicate].mutableCopy;
         }
     }

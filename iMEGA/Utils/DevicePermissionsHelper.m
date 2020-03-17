@@ -147,6 +147,9 @@
     
     permissionsModal.firstCompletion = ^{
         [self notificationsPermissionWithCompletionHandler:^(BOOL granted) {
+            if (granted) {
+                [UIApplication.sharedApplication registerForRemoteNotifications];
+            }
             [weakPermissionsModal dismissViewControllerAnimated:YES completion:nil];
         }];
     };

@@ -56,7 +56,7 @@
 #ifdef DEBUG
             MEGALogInfo(@"[Search] \"%@\" canceled", self.text);
 #else
-            MEGALogInfo(@"[Search] canceled", self.text);
+            MEGALogInfo(@"[Search] canceled");
 #endif
             self.completion(nil);
         } else {

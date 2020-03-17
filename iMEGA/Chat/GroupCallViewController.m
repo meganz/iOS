@@ -23,6 +23,7 @@
 #import "MEGAChatStartCallRequestDelegate.h"
 #import "MEGAGroupCallPeer.h"
 #import "MEGASdkManager.h"
+#import "MEGA-Swift.h"
 
 #define kSmallPeersLayout 7
 
@@ -419,7 +420,10 @@
     [self removeAllVideoListeners];
     [[NSUserDefaults standardUserDefaults] setBool:self.localPeer.video forKey:@"groupCallLocalVideo"];
     [[NSUserDefaults standardUserDefaults] setBool:self.localPeer.audio forKey:@"groupCallLocalAudio"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    if (@available(iOS 12.0, *)) {} else {
+        [NSUserDefaults.standardUserDefaults synchronize];
+    }
+    
     [self.timer invalidate];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -516,8 +520,7 @@
 }
 
 - (void)didWirelessRoutesAvailableChange:(NSNotification *)notification {
-    MPVolumeView* volumeView = (MPVolumeView*)notification.object;
-    if (volumeView.areWirelessRoutesAvailable) {
+    if (AVAudioSession.sharedInstance.mnz_isBluetoothAudioRouteAvailable) {
         self.volumeContainerView.hidden = NO;
         self.enableDisableSpeaker.hidden = YES;
     } else {
@@ -732,7 +735,9 @@
 - (void)deleteActiveCallFlags {
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"groupCallLocalVideo"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"groupCallLocalAudio"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    if (@available(iOS 12.0, *)) {} else {
+        [NSUserDefaults.standardUserDefaults synchronize];
+    }
 }
 
 - (void)configureInitialUI {
@@ -782,6 +787,8 @@
         } else {
             [self initDataSource];
             weakSelf.call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:weakSelf.chatRoom.chatId];
+            [weakSelf.megaCallManager addCall:weakSelf.call];
+            [weakSelf.megaCallManager startCall:weakSelf.call];
             if (self.call.numParticipants >= kSmallPeersLayout) {
                 [self showSpinner];
                 [self configureUserOnFocus:self.peersInCall.firstObject manual:NO];
@@ -803,14 +810,8 @@
             [weakSelf dismissViewControllerAnimated:YES completion:nil];
         } else {
             weakSelf.call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:weakSelf.chatRoom.chatId];
-            
-            NSUUID *uuid = [[NSUUID alloc] init];
-            weakSelf.call.uuid = uuid;
             [weakSelf.megaCallManager addCall:weakSelf.call];
-            
-            uint64_t peerHandle = [weakSelf.chatRoom peerHandleAtIndex:0];
-            NSString *peerEmail = [weakSelf.chatRoom peerEmailByHandle:peerHandle];
-            [weakSelf.megaCallManager startCall:weakSelf.call email:peerEmail];
+            [weakSelf.megaCallManager startCall:weakSelf.call];
             
             [self.collectionView reloadData];
             MEGALogDebug(@"[Group Call] Reload data %s", __PRETTY_FUNCTION__);
@@ -875,8 +876,13 @@
 }
 
 - (void)updateAudioOutputImage {
-    self.volumeContainerView.hidden = !self.mpVolumeView.areWirelessRoutesAvailable;
-    self.enableDisableSpeaker.hidden = !self.volumeContainerView.hidden;
+    if (AVAudioSession.sharedInstance.mnz_isBluetoothAudioRouteAvailable) {
+        self.volumeContainerView.hidden = NO;
+        self.enableDisableSpeaker.hidden = YES;
+    } else {
+        self.enableDisableSpeaker.hidden = NO;
+        self.volumeContainerView.hidden = YES;
+    }
     
     if ([AVAudioSession.sharedInstance mnz_isOutputEqualToPortType:AVAudioSessionPortBuiltInReceiver] || [AVAudioSession.sharedInstance mnz_isOutputEqualToPortType:AVAudioSessionPortHeadphones]) {
         self.enableDisableSpeaker.selected = NO;
@@ -897,7 +903,9 @@
     MEGAGroupCallPeer *remoteUser = [[MEGAGroupCallPeer alloc] initWithSession:chatSession];
     remoteUser.video = CallPeerVideoUnknown;
     remoteUser.audio = CallPeerAudioUnknown;
-    remoteUser.name = [self.chatRoom peerFullnameByHandle:chatSession.peerId];
+    
+    NSString *userName = [self.chatRoom userDisplayNameForUserHandle:chatSession.peerId];
+    remoteUser.name = userName;
     
     [self.peersInCall insertObject:remoteUser atIndex:0];
     
@@ -1096,11 +1104,11 @@
 
                 switch (call.callCompositionChange) {
                     case MEGAChatCallCompositionChangePeerRemoved:
-                        [self showToastMessage:[NSString stringWithFormat:AMLocalizedString(@"%@ left the call.", @"Message to inform the local user that someone has left the current group call"), [self.chatRoom peerFullnameByHandle:call.peeridCallCompositionChange]] color:@"#00BFA5" shouldHide:YES];
+                        [self showToastMessage:[NSString stringWithFormat:AMLocalizedString(@"%@ left the call.", @"Message to inform the local user that someone has left the current group call"), [self.chatRoom userDisplayNameForUserHandle:call.peeridCallCompositionChange]] color:@"#00BFA5" shouldHide:YES];
                         break;
                         
                     case MEGAChatCallCompositionChangePeerAdded:
-                        [self showToastMessage:[NSString stringWithFormat:AMLocalizedString(@"%@ joined the call.", @"Message to inform the local user that someone has joined the current group call"), [self.chatRoom peerFullnameByHandle:call.peeridCallCompositionChange]] color:@"#00BFA5" shouldHide:YES];
+                        [self showToastMessage:[NSString stringWithFormat:AMLocalizedString(@"%@ joined the call.", @"Message to inform the local user that someone has joined the current group call"), [self.chatRoom userDisplayNameForUserHandle:call.peeridCallCompositionChange]] color:@"#00BFA5" shouldHide:YES];
                         break;
                         
                     default:

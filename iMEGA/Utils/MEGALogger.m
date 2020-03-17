@@ -1,6 +1,8 @@
 
 #import "MEGALogger.h"
 
+#import "UIDevice+MNZCategory.h"
+
 #import "NSFileManager+MNZCategory.h"
 
 @implementation MEGALogger
@@ -29,7 +31,9 @@ static MEGALogger *_megaLogger = nil;
     [MEGAChatSdk setLogLevel:MEGAChatLogLevelMax];
     
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"logging"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    if (@available(iOS 12.0, *)) {} else {
+        [NSUserDefaults.standardUserDefaults synchronize];
+    }
     
     [[NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier] setBool:YES forKey:@"logging"];
     
@@ -46,24 +50,27 @@ static MEGALogger *_megaLogger = nil;
     [self stopLoggingToFile:[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"MEGAiOS.docExt.log"]];
     [self stopLoggingToFile:[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"MEGAiOS.fileExt.log"]];
     [self stopLoggingToFile:[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"MEGAiOS.shareExt.log"]];
+    [self stopLoggingToFile:[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"MEGAiOS.NSE.log"]];
     // Also remove logs in the shared sandbox:
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSString *logsPath = [[[fileManager containerURLForSecurityApplicationGroupIdentifier:MEGAGroupIdentifier] URLByAppendingPathComponent:MEGAExtensionLogsFolder] path];
     [self stopLoggingToFile:[logsPath stringByAppendingPathComponent:@"MEGAiOS.docExt.log"]];
     [self stopLoggingToFile:[logsPath stringByAppendingPathComponent:@"MEGAiOS.fileExt.log"]];
     [self stopLoggingToFile:[logsPath stringByAppendingPathComponent:@"MEGAiOS.shareExt.log"]];
-    
+    [self stopLoggingToFile:[logsPath stringByAppendingPathComponent:@"MEGAiOS.NSE.log"]];
+
 #ifndef DEBUG
     [MEGASdk setLogLevel:MEGALogLevelFatal];
     [MEGAChatSdk setLogLevel:MEGAChatLogLevelFatal];
 #endif
     
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"logging"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    if (@available(iOS 12.0, *)) {} else {
+        [NSUserDefaults.standardUserDefaults synchronize];
+    }
     
     NSUserDefaults *sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];
     [sharedUserDefaults setBool:NO forKey:@"logging"];
-    [sharedUserDefaults synchronize];
 }
 
 - (void)stopLoggingToFile:(NSString *)logFilePath {

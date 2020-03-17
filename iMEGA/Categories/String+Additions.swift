@@ -20,6 +20,11 @@ extension String {
         return base64
     }
     
+    var trim: String? {
+        let trimmedString = trimmingCharacters(in: .whitespacesAndNewlines)
+        return trimmedString.count > 0 ? trimmedString : nil
+    }
+    
     var mnz_isDecimalNumber: Bool {
         return CharacterSet.decimalDigits.isSuperset(of: CharacterSet(charactersIn: self))
     }

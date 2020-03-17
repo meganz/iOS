@@ -20,8 +20,8 @@
 "passcode"="密碼";
 /* "Size" of the file or folder you are sharing */
 "size"="大小";
-/*  */
-"Quality"="Quality";
+/* Quality title, used in changing the export quality of scaned doc */
+"Quality"="品質";
 /*  */
 "folder"="資料夾";
 /* Error message shown when there's no camera available on the device */
@@ -146,6 +146,8 @@
 "emailAlreadyInUse"="發生錯誤，此電子信箱已被使用。";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="您的設備內存不足";
+/* Message shown when you try to downlonad files bigger than the available memory. */
+"MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device."="MEGA最少需要%@安裝空間。請刪除您不再使用的app或相簿裡較大的影片檔案以釋放一些空間。您也可以管理MEGA在您裝置上儲存的資料。";
 /* Title for the file link view */
 "fileLink"="檔案鏈接";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
@@ -509,7 +511,7 @@
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
 "itemsSelected"="已選中 %lu 個項目";
 /* String shown when multi selection is enabled and only one item has been selected. */
-"1 selected"="1 selected";
+"1 selected"="已選取1個";
 /* String shown when multi selection is enabled and the user has more than one item selected. */
 "xSelected"="已選擇%d個";
 /* Title of the Offline section */
@@ -684,6 +686,8 @@
 "Custom Settings"="自訂設定";
 /* Title to show when device local storage is full */
 "%@ Storage Full"="%@儲存空間已滿";
+/* Title to show when device local storage is almost full */
+"Device Storage Almost Full"="裝置儲存空間幾乎已滿";
 /* Detail for local storage full situation */
 "You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="您沒有足夠的儲存空間來進一步做相機上傳。請刪除不需要的app、影片或音樂以釋放空間。您可以在%@管理您的儲存空間。";
 /* Navigation path for Storage settings in iOS */
@@ -958,7 +962,7 @@
 /* %1 will be replaced by a numeric value and %2 will be 'days' or 'months', for example (Expires in [S]10[/S] days) */
 "bonusExpiresIn"="(獎勵將於 [S]%1[/S] %2 內到期)";
 /* Add Phone Number title  */
-"Add Phone Number"="新增電話號碼";
+"Add Phone Number"="加入您的電話號碼";
 /* Achievement explanation for add phone number */
 "You have received %1$s storage space and %2$s transfer quota for verifying your phone number."="因為您驗證了您的手機門號，您已獲得%1$s免費儲存空間以及%2$s傳輸配額。";
 /* Free storage description to encourage users to add phone number to their accounts */
@@ -970,7 +974,7 @@
 /* Verify your account title */
 "Verify Your Account"="驗證您的帳戶";
 /* Add your phone number title */
-"Add Your Phone Number"="填入您的手機號碼";
+"Add Your Phone Number"="加入您的電話號碼";
 /* Choose Your Country title */
 "Choose Your Country"="選擇您的國家";
 /* Used to display the number of months a plan was purchased for e.g. 3 months, 6 months. */
@@ -1273,8 +1277,8 @@
 "seePlans"="參看方案";
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
 "dismiss"="解除";
-/* Notification text body shown when you have received a new chat message */
-"newMessage"="新訊息";
+/* Content of the notification when there is unknown activity on the Chat */
+"You may have new messages"="您可能有新的訊息";
 /* Notification text body shown when you have received a contact request */
 "contactRequest"="聯絡人邀請";
 /* Notification text body shown when you have received a new shared folder */
@@ -1378,7 +1382,7 @@
 /* Paragraph 3 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph3"="此加密方式也代表我們無法存取或重新設定您的密碼，因此您必須牢牢記住它 (除非您有備份還原金鑰)，否則您將無法存取您所儲存的檔案。";
 /* Paragraph between 3rd and 4th of the general description of MEGA shown on the iOS App Store, part of Android string 17769 */
-"generalDescriptionVideoChat"="End-to-end user-encrypted MEGA video chat allows for total privacy, and has been available through the browser since 2016. It has been extended to our mobile app, with chat history accessible across multiple devices. Users can also easily add files to a chat from their MEGA Cloud Drive.";
+"generalDescriptionVideoChat"="點對點用戶加密技術的MEGA視訊聊天提供完整的隱私，2016年之後的瀏覽器都有支援。它也延伸至我們的手機應用程式，可以在多個裝置上查詢聊天記錄。用戶還可以輕鬆地將他們自己MEGA雲端硬碟的檔案添加到聊天室窗裡。";
 /* Paragraph 4 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. */
 "generalDescriptionParagraph4"="MEGA提供超大的50GB免費儲存空間給已註冊的使用者們，也有許多獎勵挑戰等著大家，另外，您也可以選擇使用更高級的付費方案：";
 /* Paragraph 5 of the general description of MEGA shown on the apps stores in Android, iOS and Windows Phone. Please keep the multiple line format. */
@@ -1624,6 +1628,8 @@
 "Save in Photos"="儲存於照片中";
 /* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="在您設備的媒體庫中保存於MEGA應用程式中拍攝的圖像和影片的副本。";
+/* Settings section title where you can enable the option to 'Spotlight search' */
+"Spotlight Search"="Spotlight搜尋";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="您握有鑰匙";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -1661,7 +1667,7 @@
 /* Detailed explanation of why the user should give permission to deliver notifications */
 "We would like to send you notifications so you receive new messages on your device instantly."="我們希望向您發送通知，以便您能在設備上收到最新消息。";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
-"Allow Access"="啟用存取權限";
+"Allow Access"="允許存取";
 /* A section header which contains the file management settings. These settings allow users to remove duplicate files etc. */
 "File Management"="檔案管理";
 /* Title of the option to enable or disable file versioning on Settings section */
@@ -1941,7 +1947,7 @@
 /* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
 "Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="請到您裝置設定的隱私權選項。啟用定位服務並設定MEGA為「使用App期間」或「永遠」。";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
-"NSLocationAlwaysAndWhenInUseUsageDescription"="MEGA accesses your location when you share it with your contacts in chat or when you enable ”Upload in Background” for Camera Uploads so your photos and videos are uploaded when your location changes.";
+"NSLocationAlwaysAndWhenInUseUsageDescription"="當您分享位置給聊天中的聯絡人或啟用「相機上傳」的「在背景中上傳」功能時，MEGA會存取您的位置，以便在位置變更時上傳照片和影片。";
 /* Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
 "Mobile Data is turned off"="行動數據已關閉";
 /* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */
@@ -1953,7 +1959,7 @@
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="您確定要更改為測試伺服器？您的帳戶可能會遇到無法恢復的問題。";
 /* Title label that explains that the user is going to be asked for the contacts permission */
-"Enable Access to Contacts"="啟用對聯絡人的存取";
+"Enable Access to Contacts"="啟用存取聯絡人";
 /* Detailed explanation of why the user should give permission to contacts */
 "MEGA needs access to your contacts to help you connect with other people on MEGA."="MEGA需要存取您的聯絡人以協助您與MEGA上的其他人聯繫。";
 /* Title encouraging the user to check who of its contacts are using MEGA */
@@ -1962,8 +1968,6 @@
 "[X] contacts found on MEGA"="在MEGA上找到[X]個聯絡人";
 /* Title showing the user that one of his contacts are using MEGA */
 "1 contact found on MEGA"="在MEGA上找到1個聯絡人";
-/* Text indicating the user to perform an action to grant some permission */
-"Enable Access"="啟用存取權限";
 /* Text indicating the user to open the device settings for MEGA */
 "Open Settings"="開啟設定";
 /* Text encouraging the user to invite contacts to MEGA */
@@ -2042,6 +2046,10 @@
 "Inactive chat"="不活躍的聊天";
 /* Contact details screen: Set the alias(nickname) for a user */
 "Set Nickname"="設定暱稱";
+/* Contact details screen: Edit the alias(nickname) for a user */
+"Edit Nickname"="編輯暱稱";
+/* Edit nickname screen: Remove nickname button title */
+"Remove Nickname"="移除暱稱";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
 "Alias/ Nickname"="別名 / 暱稱";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
@@ -2090,9 +2098,33 @@
 "It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="這有可能是您MEGA帳戶所使用的密碼與在其它網站上所使用的密碼相同，而且這些網站當中至少有一個遭遇資料外洩。";
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="您的密碼已洩漏並且現在被不肖人士拿來登入您的帳戶，包括但不限於您的MEGA帳戶。";
+/* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
+"MEGA CAMERA UPLOADS FOLDER"="MEGA相機上傳資料夾";
+/* Action button text of folder selection screen for camera uploads */
+"Select Folder"="選擇資料夾";
+/* Title of the folder selection screen for camera uploads */
+"Choose Folder"="選擇資料夾";
+/* Label used near to the option selected to encode the images uploaded to a chat (Low, Medium, Original) */
+"Image quality"="影像品質";
+/* Title of Image Quality option */
+"Automatic"="自動";
+/* Description of Automatic Image Quality option */
+"Send smaller size images through cellular networks and original size images through wifi"="通過行動網路傳送較小尺寸的圖像，並透過Wi-Fi傳送原始尺寸的圖像";
+/* Title of Image Quality option */
+"Optimised"="最佳化";
+/* Description of Optimised Image Quality option */
+"Send smaller size images optimised for lower data consumption"="傳送優化過的較小尺寸圖像以降低數據消耗";
+/* Description of High Image Quality option */
+"Send original size, increased quality images"="傳送原始尺寸，增加影像品質";
 /* Setting title for Doc scan view */
-"Save Settings"="Save Settings";
+"Save Settings"="儲存設定";
 /* file type title, used in changing the export format of scaned doc */
 "File Type"="檔案類型";
 /* export Quality Option for Scan document */
-"best"="Best";
+"best"="最好的";
+/* Description of why the user should give permission to contacts */
+"Easily discover contacts from your address book on MEGA."="Easily discover contacts from your address book on MEGA.";
+/* Detailed description of why the user should give permission to contacts */
+"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA will not use this data for any other purpose and will never interact with your contacts without your consent.";
+/* Title label that explains that the user is going to be asked for the contacts permission */
+"Enable Access to Your Address Book"="Enable Access to Your Address Book";
