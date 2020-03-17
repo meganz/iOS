@@ -20,3 +20,7 @@ xcuserdata/
 !*.xcodeproj/xcshareddata/
 !*.xcworkspace/contents.xcworkspacedata
 /*.gcno
+
+## Fastlane
+Gemfile.lock
+fastlane/report.xml
