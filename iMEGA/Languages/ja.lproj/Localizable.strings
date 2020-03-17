@@ -20,8 +20,8 @@
 "passcode"="パスコード";
 /* "Size" of the file or folder you are sharing */
 "size"="サイズ";
-/*  */
-"Quality"="Quality";
+/* Quality title, used in changing the export quality of scaned doc */
+"Quality"="品質";
 /*  */
 "folder"="フォルダ";
 /* Error message shown when there's no camera available on the device */
@@ -146,6 +146,8 @@
 "emailAlreadyInUse"="エラー。入力したメールアドレスは既に使用されています。";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="デバイス上にスペースを作って下さい。";
+/* Message shown when you try to downlonad files bigger than the available memory. */
+"MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device."="MEGAには最低%@が必要です。使用しなくなったアプリやギャラリー内の大きな動画ファイルを削除して、スペースを確保してください。MEGAがあなたの端末に保存するものを管理することもできます。";
 /* Title for the file link view */
 "fileLink"="ファイルリンク";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
@@ -509,7 +511,7 @@
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
 "itemsSelected"="アイテム%luこ選択";
 /* String shown when multi selection is enabled and only one item has been selected. */
-"1 selected"="1 selected";
+"1 selected"="1つ選択されました";
 /* String shown when multi selection is enabled and the user has more than one item selected. */
 "xSelected"="%d件が選択されました";
 /* Title of the Offline section */
@@ -684,6 +686,8 @@
 "Custom Settings"="カスタム設定";
 /* Title to show when device local storage is full */
 "%@ Storage Full"="%@ストレージがいっぱいです";
+/* Title to show when device local storage is almost full */
+"Device Storage Almost Full"="端末ストレージがほぼ満杯です";
 /* Detail for local storage full situation */
 "You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="それ以上のカメラアップロード用のストレージが十分ではありません。不要なアプリ、動画、音楽を削除してスペースを解放してください。%@でストレージを管理できます。";
 /* Navigation path for Storage settings in iOS */
@@ -968,11 +972,11 @@
 /* Description to unblock account by verifying phone number */
 "Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account."="不正使用の可能性があるため、あなたのアカウントは一時的にロックされています。アカウントのロックを解除するには、電話番号を検証してください。";
 /* Verify your account title */
-"Verify Your Account"="アカウントを検証する";
+"Verify Your Account"="あなたのアカウントを検証";
 /* Add your phone number title */
 "Add Your Phone Number"="あなたの電話番号を追加";
 /* Choose Your Country title */
-"Choose Your Country"="あなたの国を選択してください";
+"Choose Your Country"="あなたの国を選択";
 /* Used to display the number of months a plan was purchased for e.g. 3 months, 6 months. */
 "months"="か月";
 /*  */
@@ -1266,15 +1270,15 @@
 /* Alert message shown when the user perform logout and has files in the Offline directory */
 "allFilesSavedForOfflineWillBeDeletedFromYourDevice"="オフライン用に保存されたファイルはすべて、端末から削除されます。ログアウトに進みますか？　";
 /* Title shown when you almost had used your available transfer quota. */
-"depletedTransferQuota_title"="転送容量が枯渇しました";
+"depletedTransferQuota_title"="転送容量が不十分です";
 /* Description shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_message"="あなたのキューに入れられたダウンロードは、あなたのアカウントで利用可能な現在の転送容量を超えているため、中断される可能性があります。";
 /* Button title to see the available pro plans in MEGA */
 "seePlans"="計画を参照";
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
 "dismiss"="終了する";
-/* Notification text body shown when you have received a new chat message */
-"newMessage"="新しいメッセージ";
+/* Content of the notification when there is unknown activity on the Chat */
+"You may have new messages"="新しいメッセージがあるかもしれません";
 /* Notification text body shown when you have received a contact request */
 "contactRequest"="コンタクト要求";
 /* Notification text body shown when you have received a new shared folder */
@@ -1624,6 +1628,8 @@
 "Save in Photos"="写真に保存";
 /* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="MEGAアプリから取得した画像と動画のコピーをあなたの端末のメディアライブラリに保存します。";
+/* Settings section title where you can enable the option to 'Spotlight search' */
+"Spotlight Search"="スポットライト検索";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="あなたがキーを持っています";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -1661,7 +1667,7 @@
 /* Detailed explanation of why the user should give permission to deliver notifications */
 "We would like to send you notifications so you receive new messages on your device instantly."="あなたに通知を送信し、新しいメッセージを瞬時に端末で受信いただけるようにしたいと思います。";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
-"Allow Access"="アクセスを有効にする";
+"Allow Access"="アクセスを許可";
 /* A section header which contains the file management settings. These settings allow users to remove duplicate files etc. */
 "File Management"="ファイル管理";
 /* Title of the option to enable or disable file versioning on Settings section */
@@ -1941,7 +1947,7 @@
 /* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
 "Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="端末の「設定」の「プライバシー」セクションに移動してください。位置情報サービスを有効にし、MEGAを「アプリの使用中」または「常に」に設定します。";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
-"NSLocationAlwaysAndWhenInUseUsageDescription"="MEGA accesses your location when you share it with your contacts in chat or when you enable ”Upload in Background” for Camera Uploads so your photos and videos are uploaded when your location changes.";
+"NSLocationAlwaysAndWhenInUseUsageDescription"="MEGAは、チャットで連絡先と共有したり、場所が変更されたときに写真や動画がアップロードされるように　カメラアップロードの「バックグラウンドでアップロード」を有効にした際に、あなたの現在地にアクセスします。";
 /* Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
 "Mobile Data is turned off"="モバイルデータがオフになっています";
 /* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */
@@ -1962,8 +1968,6 @@
 "[X] contacts found on MEGA"="MEGAで[X]件の連絡先が見つかりました";
 /* Title showing the user that one of his contacts are using MEGA */
 "1 contact found on MEGA"="MEGAで1件の連絡先が見つかりました";
-/* Text indicating the user to perform an action to grant some permission */
-"Enable Access"="アクセスを有効にする";
 /* Text indicating the user to open the device settings for MEGA */
 "Open Settings"="設定を開く";
 /* Text encouraging the user to invite contacts to MEGA */
@@ -2042,6 +2046,10 @@
 "Inactive chat"="非アクティブなチャット";
 /* Contact details screen: Set the alias(nickname) for a user */
 "Set Nickname"="ニックネームを設定";
+/* Contact details screen: Edit the alias(nickname) for a user */
+"Edit Nickname"="ニックネームを編集";
+/* Edit nickname screen: Remove nickname button title */
+"Remove Nickname"="ニックネームを削除";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
 "Alias/ Nickname"="エイリアス/ニックネーム";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
@@ -2101,16 +2109,22 @@
 /* Title of Image Quality option */
 "Automatic"="自動";
 /* Description of Automatic Image Quality option */
-"Send smaller size images through cellular networks and original size images through wifi"="Send smaller size images through cellular networks and original size images through wifi";
+"Send smaller size images through cellular networks and original size images through wifi"="セルラーネットワークを介してより小さいサイズの画像を送信したり、Wi-Fiを介して元のサイズの画像を送信します。";
 /* Title of Image Quality option */
 "Optimised"="最適化";
 /* Description of Optimised Image Quality option */
 "Send smaller size images optimised for lower data consumption"="データ消費低減用に最適化された小さいサイズの画像を送信します";
 /* Description of High Image Quality option */
-"Send original size, increased quality images"="Send original size, increased quality images";
+"Send original size, increased quality images"="元のサイズ、品質を上げた画像を送信します";
 /* Setting title for Doc scan view */
-"Save Settings"="Save Settings";
+"Save Settings"="設定を保存";
 /* file type title, used in changing the export format of scaned doc */
 "File Type"="ファイルの種類";
 /* export Quality Option for Scan document */
-"best"="Best";
+"best"="最高";
+/* Description of why the user should give permission to contacts */
+"Easily discover contacts from your address book on MEGA."="Easily discover contacts from your address book on MEGA.";
+/* Detailed description of why the user should give permission to contacts */
+"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA will not use this data for any other purpose and will never interact with your contacts without your consent.";
+/* Title label that explains that the user is going to be asked for the contacts permission */
+"Enable Access to Your Address Book"="Enable Access to Your Address Book";

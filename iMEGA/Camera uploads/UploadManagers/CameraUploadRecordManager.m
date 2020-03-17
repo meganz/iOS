@@ -72,11 +72,7 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 7 * 77;
     _backgroundContext = nil;
     _fileNameCoordinator = nil;
     
-    NSError *error;
-    [self.storeStack deleteStoreWithError:&error];
-    if (error) {
-        MEGALogError(@"[Camera Upload] error when to delete camera upload store after logout %@", error);
-    }
+    [self.storeStack deleteStore];
 }
 
 #pragma mark - access properties of record

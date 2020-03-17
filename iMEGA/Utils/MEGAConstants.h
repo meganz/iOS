@@ -95,3 +95,7 @@ extern NSString * const MEGAAllUsersNicknameLoaded;
 extern NSString * const MEGALastPublicHandleAccessed;
 extern NSString * const MEGALastPublicTypeAccessed;
 extern NSString * const MEGALastPublicTimestampAccessed;
+
+#pragma mark - MEGA Contact Nickname change Notification
+
+extern NSString * const MEGContactNicknameChangeNotification;

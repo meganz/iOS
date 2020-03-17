@@ -18,6 +18,7 @@
 #import "NotificationTableViewCell.h"
 #import "SharedItemsViewController.h"
 #import "UIColor+MNZCategory.h"
+#import "NSString+MNZCategory.h"
 
 @interface NotificationsTableViewController () <DZNEmptyDataSetDelegate, DZNEmptyDataSetSource, MEGAGlobalDelegate>
 
@@ -146,8 +147,9 @@
             if (userAlert.email) {
                 headingLabel.hidden = NO;
                 MOUser *user = [[MEGAStore shareInstance] fetchUserWithEmail:userAlert.email];
-                if (user && (user.firstname || user.lastname)) {
-                    headingLabel.text = [NSString stringWithFormat:@"%@ (%@)", user.fullName, user.email];
+                NSString *displayName = user.displayName;
+                if (displayName.length > 0) {
+                    headingLabel.text = [NSString stringWithFormat:@"%@ (%@)", displayName, user.email];
                 } else {
                     headingLabel.text = userAlert.email;
                 }

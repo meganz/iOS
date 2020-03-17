@@ -20,8 +20,8 @@
 "passcode"="رمز المرور";
 /* "Size" of the file or folder you are sharing */
 "size"="الحجم";
-/*  */
-"Quality"="Quality";
+/* Quality title, used in changing the export quality of scaned doc */
+"Quality"="جودة";
 /*  */
 "folder"="المجلد";
 /* Error message shown when there's no camera available on the device */
@@ -146,6 +146,8 @@
 "emailAlreadyInUse"="خطأ. عنوان هذا البريد الإلكتروني هو حاليا مأخوذ.";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="تحتاج إلى إفراغ المزيد من مساحة جهازك";
+/* Message shown when you try to downlonad files bigger than the available memory. */
+"MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device."="MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device.";
 /* Title for the file link view */
 "fileLink"="رابط الملف";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
@@ -509,7 +511,7 @@
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
 "itemsSelected"="%lu عناصر مختارة";
 /* String shown when multi selection is enabled and only one item has been selected. */
-"1 selected"="1 selected";
+"1 selected"="تم اختيار 1";
 /* String shown when multi selection is enabled and the user has more than one item selected. */
 "xSelected"="%d مختارة";
 /* Title of the Offline section */
@@ -684,6 +686,8 @@
 "Custom Settings"="إعدادات مخصصة";
 /* Title to show when device local storage is full */
 "%@ Storage Full"="%@ مساحة التخزين ممتلئة";
+/* Title to show when device local storage is almost full */
+"Device Storage Almost Full"="Device Storage Almost Full";
 /* Detail for local storage full situation */
 "You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="ليس لديك مساحة تخزين كافية لترفيعات الكاميرا إضافية. حرر المساحة عن طريق حذف التطبيقات أو مقاطع الفيديو أو الموسيقى غير الضرورية. يمكنك إدارة مساحة التخزين الخاص بك في %@";
 /* Navigation path for Storage settings in iOS */
@@ -1266,15 +1270,15 @@
 /* Alert message shown when the user perform logout and has files in the Offline directory */
 "allFilesSavedForOfflineWillBeDeletedFromYourDevice"="سيتم حذف جميع الملفات التي تم حفظها في وضع عدم الاتصال من جهازك. هل تريد متابعة تسجيل الخروج؟";
 /* Title shown when you almost had used your available transfer quota. */
-"depletedTransferQuota_title"="حصص النقل المستنفدة";
+"depletedTransferQuota_title"="حجم التراسل المتاح غير كافي";
 /* Description shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_message"="تحميلاتك المصفوفة تخطت حصة النقل المتوفرة لدى حسابك وربما يسبب لك انقطاع في التحميلات.";
 /* Button title to see the available pro plans in MEGA */
 "seePlans"="مشاهدة الباقات";
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
 "dismiss"="رفض";
-/* Notification text body shown when you have received a new chat message */
-"newMessage"="رسالة جديدة";
+/* Content of the notification when there is unknown activity on the Chat */
+"You may have new messages"="قد يكون وصلك رسائل جديدة";
 /* Notification text body shown when you have received a contact request */
 "contactRequest"="طلب جهة اتصال";
 /* Notification text body shown when you have received a new shared folder */
@@ -1624,6 +1628,8 @@
 "Save in Photos"="احفظ مع الصور";
 /* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="احفظ نسخة من الصور والفيديوهات المأخوذة من تطبيق MEGA في مكتبة الوسائط على جهازك.";
+/* Settings section title where you can enable the option to 'Spotlight search' */
+"Spotlight Search"="Spotlight Search";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="انت تحتفظ بالمفتاح";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -1661,7 +1667,7 @@
 /* Detailed explanation of why the user should give permission to deliver notifications */
 "We would like to send you notifications so you receive new messages on your device instantly."="نحن نرغب بارسال اخطارات اليك حتى تتمكن من استقبال الرسائل على جهازك بشكل فوري.";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
-"Allow Access"="تمكين الوصول";
+"Allow Access"="السماح بالوصول";
 /* A section header which contains the file management settings. These settings allow users to remove duplicate files etc. */
 "File Management"="إدارة الملف";
 /* Title of the option to enable or disable file versioning on Settings section */
@@ -1687,7 +1693,7 @@
 /* A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days. */
 "Remove files older than"="أزل الملفات الأكبر من";
 /* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
-"Days"="يوم";
+"Days"="أيام";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
 "The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="سيتم افراغ سلة المحذوفات بشكل أتوماتيكي. أقصر مدة يمكن تحديدها هي 7 أيام وأطول مدة هي 30 يوم.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
@@ -1962,8 +1968,6 @@
 "[X] contacts found on MEGA"="[X] جهات اتصال وجدت على ميغا MEGA";
 /* Title showing the user that one of his contacts are using MEGA */
 "1 contact found on MEGA"="تم العثور على جهة اتصال واحدة على ميغا MEGA";
-/* Text indicating the user to perform an action to grant some permission */
-"Enable Access"="تمكين الوصول";
 /* Text indicating the user to open the device settings for MEGA */
 "Open Settings"="أفتح الإعدادات";
 /* Text encouraging the user to invite contacts to MEGA */
@@ -2042,6 +2046,10 @@
 "Inactive chat"="المحادثات الغير نشطة";
 /* Contact details screen: Set the alias(nickname) for a user */
 "Set Nickname"="تعيين اسم مستعار";
+/* Contact details screen: Edit the alias(nickname) for a user */
+"Edit Nickname"="Edit Nickname";
+/* Edit nickname screen: Remove nickname button title */
+"Remove Nickname"="Remove Nickname";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
 "Alias/ Nickname"="الاسم المستعار / اللقب";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
@@ -2101,7 +2109,7 @@
 /* Title of Image Quality option */
 "Automatic"="تلقائي";
 /* Description of Automatic Image Quality option */
-"Send smaller size images through cellular networks and original size images through wifi"="Send smaller size images through cellular networks and original size images through wifi";
+"Send smaller size images through cellular networks and original size images through wifi"="أرسل صوراً أصغر حجماً عبر شبكات هاتف المحمول وصوراً بالحجم الأصلي عبر الشبكات اللاسلكية Wi-Fi";
 /* Title of Image Quality option */
 "Optimised"="الأمثل";
 /* Description of Optimised Image Quality option */
@@ -2109,8 +2117,14 @@
 /* Description of High Image Quality option */
 "Send original size, increased quality images"="Send original size, increased quality images";
 /* Setting title for Doc scan view */
-"Save Settings"="Save Settings";
+"Save Settings"="احفظ الإعدادات";
 /* file type title, used in changing the export format of scaned doc */
 "File Type"="نوع الملف";
 /* export Quality Option for Scan document */
 "best"="Best";
+/* Description of why the user should give permission to contacts */
+"Easily discover contacts from your address book on MEGA."="Easily discover contacts from your address book on MEGA.";
+/* Detailed description of why the user should give permission to contacts */
+"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA will not use this data for any other purpose and will never interact with your contacts without your consent.";
+/* Title label that explains that the user is going to be asked for the contacts permission */
+"Enable Access to Your Address Book"="Enable Access to Your Address Book";
