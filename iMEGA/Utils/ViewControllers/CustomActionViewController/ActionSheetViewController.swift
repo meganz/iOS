@@ -13,7 +13,7 @@ class ActionSheetViewController: UIViewController {
     var headerView: UIView?
     var backgroundView = UIView.newAutoLayout()
     var top: NSLayoutConstraint?
-    
+
     @objc var actions: [ActionSheetAction] = []
     @objc var headerTitle: String?
 
@@ -25,9 +25,6 @@ class ActionSheetViewController: UIViewController {
         // background view
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(ActionSheetViewController.tapGestureDidRecognize(_:)))
         backgroundView.addGestureRecognizer(tapRecognizer)
-        
-        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(ActionSheetViewController.dragViewMoved(_:)))
-        view.addGestureRecognizer(panGesture)
     }
 
     override func viewDidLayoutSubviews() {
@@ -42,17 +39,6 @@ class ActionSheetViewController: UIViewController {
 
     @objc func tapGestureDidRecognize(_ gesture: UITapGestureRecognizer) {
         self.dismiss(animated: true, completion: nil)
-    }
-    
-    @objc func dragViewMoved(_ gesture: UIPanGestureRecognizer) {
-        if gesture.state == .changed {
-            let translation = gesture.translation(in: tableView)
-            top?.constant = max(top!.constant + translation.y, 0)
-            if Int(top!.constant) <= 0 {
-                tableView.isScrollEnabled = true
-            }
-            gesture.setTranslation(.zero, in: view)
-        }
     }
 
 }
@@ -81,7 +67,7 @@ extension ActionSheetViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.bounces = true
-  
+
         view.addSubview(tableView)
         view.setNeedsUpdateConstraints()
     }
@@ -95,7 +81,7 @@ extension ActionSheetViewController {
             if #available(iOS 11.0, *) {
                 bottomHeight = Int(view.safeAreaInsets.bottom)
             }
-            
+
             let height = CGFloat(actions.count * 60 + 50 + bottomHeight)
             if height < 200 {
                 top = tableView.autoSetDimension(.height, toSize: height)
@@ -115,25 +101,16 @@ extension ActionSheetViewController {
 }
 
 extension ActionSheetViewController: UITableViewDelegate {
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        let actualPosition = scrollView.panGestureRecognizer.translation(in: scrollView.superview)
-        top?.constant = max(top!.constant + actualPosition.y, 0)
-
-        if actualPosition.y > 0 {
-            // Dragging down
-//                top?.constant = max(top!.constant + actualPosition.y, 0)
-        } else {
-            // Dragging up
-        }
-    }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        print(scrollView.contentOffset.y)
         if scrollView.contentOffset.y < 0 {
             top?.constant = max(top!.constant - scrollView.contentOffset.y, 0)
-
+        } else {
+            if top?.constant != 0 {
+                top?.constant = max(top!.constant - scrollView.contentOffset.y, 0)
+                scrollView.setContentOffset(.zero, animated: false)
+            }
         }
-
     }
 }
 
