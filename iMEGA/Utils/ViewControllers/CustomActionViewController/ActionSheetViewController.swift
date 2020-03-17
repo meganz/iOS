@@ -82,17 +82,15 @@ extension ActionSheetViewController {
                 bottomHeight = Int(view.safeAreaInsets.bottom)
             }
 
+            tableView.autoPinEdge(toSuperviewEdge: .bottom)
+            tableView.autoPinEdge(toSuperviewEdge: .left)
+            tableView.autoPinEdge(toSuperviewEdge: .right)
+            
             let height = CGFloat(actions.count * 60 + 50 + bottomHeight)
             if height < 200 {
                 top = tableView.autoSetDimension(.height, toSize: height)
-                tableView.autoPinEdge(toSuperviewEdge: .bottom)
-                tableView.autoPinEdge(toSuperviewSafeArea: .left)
-                tableView.autoPinEdge(toSuperviewSafeArea: .right)
             } else {
-                top = tableView.autoPinEdge(.top, to: .top, of: view, withOffset: 200)
-                tableView.autoPinEdge(toSuperviewEdge: .left)
-                tableView.autoPinEdge(toSuperviewEdge: .bottom)
-                tableView.autoPinEdge(toSuperviewEdge: .right)
+                top = tableView.autoPinEdge(toSuperviewSafeArea: .top, withInset: 200)
             }
             didSetupConstraints = true
         }
