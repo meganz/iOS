@@ -123,6 +123,10 @@
     }
     
     [self.tableView registerNib:[UINib nibWithNibName:@"ContactsHeaderFooterView" bundle:nil] forHeaderFooterViewReuseIdentifier:@"ContactsHeaderFooterView"];
+    
+    if (self.contactsMode == ContactsModeChatNamingGroup) {
+        self.enterGroupNameTextField.placeholder = AMLocalizedString(@"Enter group name", @"Title of the dialog shown when the user it is creating a chat link and the chat has not title");
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {

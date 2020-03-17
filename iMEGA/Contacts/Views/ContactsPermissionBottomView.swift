@@ -22,7 +22,7 @@ class ContactsPermissionBottomView: UITableViewHeaderFooterView {
     
     func configureForRequestingPermission(action: @escaping completion) {
         subtitleLabel.text = AMLocalizedString("MEGA needs access to your contacts to help you connect with other people on MEGA.", "Detailed explanation of why the user should give permission to contacts")
-        enableButton.setTitle(AMLocalizedString("Enable Access", "Text indicating the user to perform an action to grant some permission"), for: .normal)
+        enableButton.setTitle(AMLocalizedString("Allow Access", "Button which triggers a request for a specific permission, that have been explained to the user beforehand"), for: .normal)
         enableButtonAction = action
         contentView.layoutSubviews()
     }
