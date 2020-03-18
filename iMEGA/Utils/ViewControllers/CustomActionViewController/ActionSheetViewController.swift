@@ -27,16 +27,6 @@ class ActionSheetViewController: UIViewController {
         backgroundView.addGestureRecognizer(tapRecognizer)
     }
 
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-
-        let cornerLayer = CAShapeLayer()
-        cornerLayer.frame = tableView.bounds
-        let path = UIBezierPath(roundedRect: tableView.bounds, byRoundingCorners: [.topLeft, .topRight], cornerRadii: CGSize(width: 20, height: 20)).cgPath
-        cornerLayer.path = path
-
-    }
-
     @objc func tapGestureDidRecognize(_ gesture: UITapGestureRecognizer) {
         self.dismiss(animated: true, completion: nil)
     }
@@ -61,7 +51,6 @@ extension ActionSheetViewController {
         headerView?.addSubview(title)
         title.autoCenterInSuperview()
 
-        tableView.tableHeaderView = headerView
         tableView.tableFooterView = UIView()
         tableView.isScrollEnabled = true
         tableView.delegate = self
@@ -85,12 +74,12 @@ extension ActionSheetViewController {
             tableView.autoPinEdge(toSuperviewEdge: .bottom)
             tableView.autoPinEdge(toSuperviewEdge: .left)
             tableView.autoPinEdge(toSuperviewEdge: .right)
-            
+
             let height = CGFloat(actions.count * 60 + 50 + bottomHeight)
             if height < 200 {
                 top = tableView.autoSetDimension(.height, toSize: height)
             } else {
-                top = tableView.autoPinEdge(toSuperviewSafeArea: .top, withInset: 200)
+                top = tableView.autoPinEdge(toSuperviewSafeArea: .top, withInset: view.bounds.height * 0.5)
             }
             didSetupConstraints = true
         }
@@ -101,8 +90,10 @@ extension ActionSheetViewController {
 extension ActionSheetViewController: UITableViewDelegate {
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView.contentOffset.y < 0 {
+        if scrollView.contentOffset.y <= 0 {
             top?.constant = max(top!.constant - scrollView.contentOffset.y, 0)
+            scrollView.setContentOffset(.zero, animated: false)
+
         } else {
             if top?.constant != 0 {
                 top?.constant = max(top!.constant - scrollView.contentOffset.y, 0)
@@ -110,11 +101,77 @@ extension ActionSheetViewController: UITableViewDelegate {
             }
         }
     }
+
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        var constant = CGFloat()
+
+        let offset = scrollView.panGestureRecognizer.translation(in: view).y
+        if offset > 0 {
+            print("down")
+            if offset > 20 {
+                constant = CGFloat(self.view.bounds.height * 0.5)
+            }
+
+        } else {
+            if abs(offset) > 20 {
+                if CGFloat(view.bounds.height * 0.5) > top!.constant {
+                    constant = CGFloat(0)
+                }
+            }
+
+            print("up")
+        }
+        print(scrollView.panGestureRecognizer.translation(in: view).y)
+
+        top?.constant = constant
+        UIView.animate(withDuration: 0.2) {
+            self.view.layoutIfNeeded()
+        }
+
+    }
+
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        var constant = CGFloat()
+        if decelerate {
+            return
+        }
+        let offset = scrollView.panGestureRecognizer.translation(in: view).y
+        if offset > 0 {
+            print("down")
+            if offset > 20 {
+                if CGFloat(view.bounds.height * 0.5) < top!.constant {
+                    dismiss(animated: true, completion: nil)
+                    return
+                } else {
+                    constant = CGFloat(self.view.bounds.height * 0.5)
+
+                }
+            }
+        } else {
+            if abs(offset) > 20 {
+                if CGFloat(view.bounds.height * 0.5) > top!.constant {
+                    constant = CGFloat(0)
+                }
+            }
+            print("up")
+        }
+        print(scrollView.panGestureRecognizer.translation(in: view).y)
+
+        top?.constant = constant
+        UIView.animate(withDuration: 0.2) {
+            self.view.layoutIfNeeded()
+        }
+
+    }
 }
 
 extension ActionSheetViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return actions.count
+    }
+
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return headerView
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
