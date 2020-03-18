@@ -208,18 +208,10 @@ extension ContactsOnMegaViewController: UITableViewDelegate {
 extension ContactsOnMegaViewController: DZNEmptyDataSetSource {
     func image(forEmptyDataSet scrollView: UIScrollView) -> UIImage? {
         if (MEGAReachabilityManager.isReachable()) {
-            if (self.searchController.isActive ) {
-                if (self.searchController.searchBar.text!.count > 0) {
-                    return UIImage(named: "searchEmptyState")
-                } else {
-                    return nil
-                }
+            if (self.searchController.isActive && self.searchController.searchBar.text!.count > 0) {
+                return UIImage(named: "searchEmptyState")
             } else {
-                if UIDevice.current.iPhone4X || UIDevice.current.iPhone5X {
-                    return nil
-                } else {
-                    return UIImage(named: "contactsEmptyState")
-                }
+                return nil
             }
         } else {
             return UIImage(named: "noInternetEmptyState")
@@ -228,27 +220,14 @@ extension ContactsOnMegaViewController: DZNEmptyDataSetSource {
     
     func title(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
         if (MEGAReachabilityManager.isReachable()) {
-            if (self.searchController.isActive ) {
-                if (self.searchController.searchBar.text!.count > 0) {
-                    return NSAttributedString(string: AMLocalizedString("noResults", "Title shown when you make a search and there is 'No Results'"))
-                } else {
-                    return nil
-                }
+            if (self.searchController.isActive && self.searchController.searchBar.text!.count > 0) {
+                return NSAttributedString(string: AMLocalizedString("noResults", "Title shown when you make a search and there is 'No Results'"))
             } else {
-                return NSAttributedString(string: AMLocalizedString("contactsEmptyState_title", "Title shown when the Contacts section is empty, when you have not added any contact."))
+                return nil
             }
         } else {
             return NSAttributedString(string: AMLocalizedString("noInternetConnection", "No Internet Connection"))
         }
-    }
-
-    func description(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
-        if (MEGAReachabilityManager.isReachable()) {
-            if (!self.searchController.isActive) {
-                return NSAttributedString(string: AMLocalizedString("Invite contacts and start chatting securely with MEGA’s encrypted chat.", "Text encouraging the user to invite contacts to MEGA"))
-            }
-        }
-        return nil
     }
 }
 
