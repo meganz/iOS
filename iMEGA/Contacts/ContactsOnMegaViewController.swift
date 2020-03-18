@@ -38,6 +38,10 @@ import UIKit
         self.tableView.layoutIfNeeded()
         tableView.reloadData()
         searchFixedView.isHidden = inviteContactView.isHidden || contacts().count == 0 || CNContactStore.authorizationStatus(for: CNEntityType.contacts) != CNAuthorizationStatus.authorized
+        
+        if ContactsOnMegaManager.shared.state == ContactsOnMegaManager.ContactsOnMegaState.fetching {
+            SVProgressHUD.show()
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -46,6 +50,14 @@ import UIKit
         //Fix to avoid ContactsPermissionBottomView button not being rendered correctly in small screens and iOS10
         if CNContactStore.authorizationStatus(for: CNEntityType.contacts) != CNAuthorizationStatus.authorized {
             tableView.reloadData()
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        if SVProgressHUD.isVisible() {
+            SVProgressHUD.dismiss()
         }
     }
     
@@ -147,15 +159,18 @@ extension ContactsOnMegaViewController: UITableViewDelegate {
                 return UIView(frame: .zero)
             }
             bottomView.configureForRequestingPermission ( action: {
+                SVProgressHUD.show()
                 DevicePermissionsHelper.contactsPermission { (granted) in
                     if granted {
                         ContactsOnMegaManager.shared.configureContactsOnMega(completion: {
                             self.contactsOnMega = ContactsOnMegaManager.shared.fetchContactsOnMega() ?? []
                             tableView.reloadData()
                             self.searchFixedView.isHidden = self.inviteContactView.isHidden
+                            SVProgressHUD.dismiss()
                         })
                     } else {
                         tableView.reloadData()
+                        SVProgressHUD.dismiss()
                     }
                 }
             })
