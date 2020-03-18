@@ -70,6 +70,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Utils
 
++ (MEGASortOrderType)sortTypeFor:(id)object;
++ (MEGASortOrderType)defaultSortType;
+
 + (NSString *)memoryStyleStringFromByteCount:(long long)byteCount;
 
 + (void)changeApiURL;

@@ -44,4 +44,6 @@
 #import "InitialLaunchViewController.h"
 #import "OnboardingViewController.h"
 #import "UpgradeTableViewController.h"
-#import "LoginViewcontroller.h"
+#import "LoginViewController.h"
+#import "SelectableTableViewCell.h"
+#import "SortByTableViewController.h"

@@ -10,6 +10,11 @@ NSString * const MEGAPasswordName = @"sessionV3";
 
 NSString * const MEGAGroupIdentifier = @"group.mega.ios";
 
+NSString * const MEGASortingPreference = @"MEGASortingPreference";
+NSString * const MEGASortingPreferenceType = @"SortOrderType";
+
+NSString * const MEGAViewModePreference = @"MEGAViewModePreference";
+
 #pragma mark - global notifications
 
 NSString * const MEGALogoutNotification = @"nz.mega.logout";

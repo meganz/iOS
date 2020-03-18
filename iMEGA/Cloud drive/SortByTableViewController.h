@@ -2,6 +2,7 @@
 
 @interface SortByTableViewController : UITableViewController
 
-@property (nonatomic, assign, getter=isOffline) BOOL offline;
+@property (nonatomic) MEGANode *node;
+@property (nonatomic) NSString *path;
 
 @end

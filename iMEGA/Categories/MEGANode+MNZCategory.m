@@ -34,7 +34,6 @@
 #import "PreviewDocumentViewController.h"
 #import "SharedItemsViewController.h"
 #import "SendToViewController.h"
-#import "MEGA-Swift.h"
 
 @implementation MEGANode (MNZCategory)
 
@@ -340,6 +339,10 @@
                 void (^completion)(void) = nil;
                 if (![viewController isKindOfClass:MEGAPhotoBrowserViewController.class]) {
                     completion = ^{
+                        if (self.isFolder) {
+                            [MEGAStore.shareInstance deleteCloudAppearancePreferenceWithHandle:self.handle];
+                        }
+                        
                         [viewController dismissViewControllerAnimated:YES completion:nil];
                     };
                 }

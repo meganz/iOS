@@ -23,6 +23,14 @@
 #import "MEGAStore.h"
 #import "MEGAUser+MNZCategory.h"
 
+#ifdef MNZ_SHARE_EXTENSION
+#import "MEGAShare-Swift.h"
+#elif MNZ_PICKER_EXTENSION
+#import "MEGAPicker-Swift.h"
+#else
+#import "MEGA-Swift.h"
+#endif
+
 #import "GetLinkActivity.h"
 #import "NodeTableViewCell.h"
 #import "OpenInActivity.h"
@@ -658,6 +666,36 @@ static MEGAIndexer *indexer;
 
 #pragma mark - Utils
 
++ (MEGASortOrderType)sortTypeFor:(id)object {
+    MEGASortOrderType sortType;
+    SortingPreference sortingPreference = [NSUserDefaults.standardUserDefaults integerForKey:MEGASortingPreference];
+    if (sortingPreference == SortingPreferencePerFolder) {
+        if ([object isKindOfClass:MEGANode.class]) {
+            MEGANode *node = (MEGANode *)object;
+            CloudAppearancePreference *cloudAppearancePreference = [MEGAStore.shareInstance fetchCloudAppearancePreferenceWithHandle:node.handle];
+            sortType = cloudAppearancePreference ? cloudAppearancePreference.sortType.integerValue : MEGASortOrderTypeDefaultAsc;
+        } else if ([object isKindOfClass:NSString.class]) {
+            NSString *offlinePath = (NSString *)object;
+            OfflineAppearancePreference *offlineAppearancePreference = [MEGAStore.shareInstance fetchOfflineAppearancePreferenceWithPath:offlinePath];
+            sortType = offlineAppearancePreference ? offlineAppearancePreference.sortType.integerValue : MEGASortOrderTypeDefaultAsc;
+        } else {
+            sortType = MEGASortOrderTypeDefaultAsc;
+        }
+    } else {
+        MEGASortOrderType currentSortType = [NSUserDefaults.standardUserDefaults integerForKey:MEGASortingPreferenceType];
+        sortType = currentSortType ? currentSortType : Helper.defaultSortType;
+    }
+    
+    return sortType;
+}
+
++ (MEGASortOrderType)defaultSortType {
+    [NSUserDefaults.standardUserDefaults setInteger:MEGASortOrderTypeDefaultAsc forKey:MEGASortingPreferenceType];
+    [NSUserDefaults.standardUserDefaults synchronize];
+    
+    return MEGASortOrderTypeDefaultAsc;
+}
+
 + (NSString *)memoryStyleStringFromByteCount:(long long)byteCount {
     static NSByteCountFormatter *byteCountFormatter = nil;
     static dispatch_once_t onceToken;
@@ -1262,10 +1300,6 @@ static MEGAIndexer *indexer;
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"ChatVideoQuality"];
     
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"logging"];
-
-    //Set default order on logout
-    [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"SortOrderType"];
-    [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"OfflineSortOrderType"];
     
     [NSUserDefaults.standardUserDefaults removeObjectForKey:@"lastDateAddPhoneNumberShowed"];
     [NSUserDefaults.standardUserDefaults removeObjectForKey:@"ContactsOnMega"];

@@ -29,6 +29,72 @@
 	</array>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIcons</key>
+	<dict>
+		<key>CFBundleAlternateIcons</key>
+		<dict>
+			<key>altIconDay</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>altIconDay</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<string>NO</string>
+			</dict>
+			<key>altIconMinimal</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>altIconMinimal</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<string>NO</string>
+			</dict>
+			<key>altIconNight</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>altIconNight</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<string>NO</string>
+			</dict>
+		</dict>
+	</dict>
+	<key>CFBundleIcons~ipad</key>
+	<dict>
+		<key>CFBundleAlternateIcons</key>
+		<dict>
+			<key>altIconDay</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>altIconDay</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<string>NO</string>
+			</dict>
+			<key>altIconMinimal</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>altIconMinimal</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<string>NO</string>
+			</dict>
+			<key>altIconNight</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>altIconNight</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<string>NO</string>
+			</dict>
+		</dict>
+	</dict>
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>

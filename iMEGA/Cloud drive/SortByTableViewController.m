@@ -1,14 +1,19 @@
-#import "SortByTableViewController.h"
-#import "Helper.h"
 
-@interface SortByTableViewController () {
-    NSArray *sortByArray;
-}
+#import "SortByTableViewController.h"
+
+#import "Helper.h"
+#import "MEGA-Swift.h"
+
+@interface SortByTableViewController ()
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *saveBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
 
+@property (nonatomic) NSArray *sortByArray;
+
+@property (nonatomic) SortingPreference sortingPreference;
 @property (nonatomic) MEGASortOrderType sortType;
+@property (nonatomic) MEGASortOrderType selectedSortType;
 
 @end
 
@@ -24,18 +29,20 @@
     [self.cancelBarButtonItem setTitle:AMLocalizedString(@"cancel", nil)];
     [self.saveBarButtonItem setTitle:AMLocalizedString(@"save", @"Save")];
     
-    if (!self.isOffline) {
-        self.sortType = [[NSUserDefaults standardUserDefaults] integerForKey:@"SortOrderType"];
+    if (self.node) {
+        self.sortingPreference = [NSUserDefaults.standardUserDefaults integerForKey:MEGASortingPreference];
+        self.sortType = [Helper sortTypeFor:self.node];
+    } else if (self.path) {
+        self.sortingPreference = [NSUserDefaults.standardUserDefaults integerForKey:MEGASortingPreference];
+        self.sortType = [Helper sortTypeFor:self.path];
     } else {
-        self.sortType = [[NSUserDefaults standardUserDefaults] integerForKey:@"OfflineSortOrderType"];
+        self.sortingPreference = SortingPreferenceSameForAll;
+        MEGASortOrderType currentSortType = [NSUserDefaults.standardUserDefaults integerForKey:MEGASortingPreferenceType];
+        self.sortType = currentSortType ? currentSortType : Helper.defaultSortType;
     }
+    self.selectedSortType = self.sortType;
     
-    sortByArray = @[AMLocalizedString(@"nameAscending", nil), AMLocalizedString(@"nameDescending", nil), AMLocalizedString(@"largest", nil), AMLocalizedString(@"smallest", nil), AMLocalizedString(@"newest", nil), AMLocalizedString(@"oldest", nil)];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    self.sortByArray = @[AMLocalizedString(@"nameAscending", @"Sort by option (1/6). This one orders the files alphabethically"), AMLocalizedString(@"nameDescending", @"Sort by option (2/6). This one arranges the files on reverse alphabethical order"), AMLocalizedString(@"largest", @"Sort by option (3/6). This one order the files by its size, in this case from bigger to smaller size"), AMLocalizedString(@"smallest", @"Sort by option (4/6). This one order the files by its size, in this case from smaller to bigger size"), AMLocalizedString(@"newest", @"Sort by option (5/6). This one order the files by its modification date, newer first"), AMLocalizedString(@"oldest", @"Sort by option (6/6). This one order the files by its modification date, older first")];
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
@@ -45,9 +52,7 @@
 #pragma mark - Private
 
 - (MEGASortOrderType)orderTypeForRow:(NSInteger)row {
-    
     MEGASortOrderType sortOrderType;
-    
     switch (row) {
         case 0: //Name (ascending)
             sortOrderType = MEGASortOrderTypeDefaultAsc;
@@ -76,9 +81,7 @@
 }
 
 - (NSString *)imageNameForRow:(NSInteger)row {
-    
     NSString *imageName;
-    
     switch (row) {
         case 0: //Name (ascending)
             imageName = @"ascending";
@@ -111,19 +114,34 @@
 }
 
 - (IBAction)saveAction:(UIBarButtonItem *)sender {
-    if (!self.isOffline) {
-        [[NSUserDefaults standardUserDefaults] setInteger:self.sortType forKey:@"SortOrderType"];
-    } else {
-        [[NSUserDefaults standardUserDefaults] setInteger:self.sortType forKey:@"OfflineSortOrderType"];
+    if (self.selectedSortType != self.sortType) {
+        if (self.sortingPreference == SortingPreferencePerFolder) {
+            if (self.node) {
+                [MEGAStore.shareInstance insertOrUpdateCloudSortTypeWithHandle:self.node.handle sortType:self.selectedSortType];
+            } else if (self.path) {
+                [MEGAStore.shareInstance insertOrUpdateOfflineSortTypeWithPath:self.path sortType:self.selectedSortType];
+            }
+            
+            [NSNotificationCenter.defaultCenter postNotificationName:MEGASortingPreference object:self userInfo:@{MEGASortingPreference : @(self.sortingPreference), MEGASortingPreferenceType : @(self.selectedSortType)}];
+        } else {
+            self.sortingPreference = SortingPreferenceSameForAll;
+            [NSUserDefaults.standardUserDefaults setInteger:self.sortingPreference forKey:MEGASortingPreference];
+            [NSUserDefaults.standardUserDefaults setInteger:self.selectedSortType forKey:MEGASortingPreferenceType];
+            if (@available(iOS 12.0, *)) {} else {
+                [NSUserDefaults.standardUserDefaults synchronize];
+            }
+            
+            [NSNotificationCenter.defaultCenter postNotificationName:MEGASortingPreference object:self userInfo:@{MEGASortingPreference : @(self.sortingPreference), MEGASortingPreferenceType : @(self.selectedSortType)}];
+        }
     }
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [sortByArray count];
+    return self.sortByArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -133,9 +151,9 @@
     }
     
     [cell.imageView setImage:[UIImage imageNamed:[self imageNameForRow:indexPath.row]]];
-    [cell.textLabel setText:[sortByArray objectAtIndex:indexPath.row]];
+    cell.textLabel.text = self.sortByArray[indexPath.row];
     
-    if (self.sortType == [self orderTypeForRow:indexPath.row]) {
+    if (self.selectedSortType == [self orderTypeForRow:indexPath.row]) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     } else {
         cell.accessoryType = UITableViewCellAccessoryNone;
@@ -147,10 +165,14 @@
 #pragma mark - UITableViewDelegate 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    self.sortType = [self orderTypeForRow:indexPath.row];
-    
-    [self.tableView reloadData];
+    MEGASortOrderType justSelectedSortType = [self orderTypeForRow:indexPath.row];
+    if (justSelectedSortType != self.selectedSortType) {
+        self.selectedSortType = justSelectedSortType;
+        
+        [self.tableView reloadData];
+    }
 }
 
 @end

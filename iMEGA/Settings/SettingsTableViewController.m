@@ -20,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *securityOptionsLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *fileManagementLabel;
+@property (weak, nonatomic) IBOutlet UILabel *appearanceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *advancedLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *aboutLabel;
@@ -84,6 +85,7 @@
     self.securityOptionsLabel.text = AMLocalizedString(@"securityOptions", @"Title of the Settings section where you can configure security details of your MEGA account");
     
     self.fileManagementLabel.text = AMLocalizedString(@"File Management", @"A section header which contains the file management settings. These settings allow users to remove duplicate files etc.");
+    self.appearanceLabel.text = AMLocalizedString(@"Appearance", @"Title of one of the Settings sections where you can customise the 'Appearance' of the app.");
     self.advancedLabel.text = AMLocalizedString(@"advanced", @"Title of one of the Settings sections where you can configure 'Advanced' options");
     
     self.aboutLabel.text = AMLocalizedString(@"about", @"Title of one of the Settings sections where you can see things 'About' the app");
@@ -115,7 +117,7 @@
     switch (indexPath.section) {
         case 0: //Camera Uploads, Chat
         case 1: //Pascode, Security Options
-        case 2: //File management - Advanced
+        case 2: //File management - Appearance - Advanced
         case 3: //About, Language
         case 4: //Help
             break;

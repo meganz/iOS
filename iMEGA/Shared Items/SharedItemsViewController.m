@@ -28,7 +28,6 @@
 #import "NodeInfoViewController.h"
 #import "NodeTableViewCell.h"
 #import "SharedItemsTableViewCell.h"
-#import "SortByTableViewController.h"
 
 @interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, MGSwipeTableCellDelegate, NodeInfoViewControllerDelegate, CustomActionViewControllerDelegate> {
     BOOL allNodesSelected;
