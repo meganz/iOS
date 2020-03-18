@@ -166,14 +166,6 @@
     if ([[MEGASdkManager sharedMEGAChatSdk] initState] == MEGAChatInitOnlineSession) {
         [self reloadData];
     }
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    
-    if ([DevicePermissionsHelper shouldAskForNotificationsPermissions]) {
-        [DevicePermissionsHelper modalNotificationsPermission];
-    }
     
     self.chatRoomOnGoingCall = nil;
     MEGAHandleList *chatRoomIDsWithCallInProgress = [MEGASdkManager.sharedMEGAChatSdk chatCallsWithState:MEGAChatCallStatusInProgress];
@@ -189,6 +181,16 @@
         if (!self.chatRoomOnGoingCall && self.topBannerButtonTopConstraint.constant == 0) {
             [self hideTopBannerButton];
         }
+    } else {
+        [self hideTopBannerButton];
+    }
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    if ([DevicePermissionsHelper shouldAskForNotificationsPermissions]) {
+        [DevicePermissionsHelper modalNotificationsPermission];
     }
 }
 
@@ -1267,8 +1269,7 @@
 }
 
 - (void)onChatConnectionStateUpdate:(MEGAChatSdk *)api chatId:(uint64_t)chatId newState:(int)newState {
-    // INVALID_HANDLE = ~(uint64_t)0
-    if (chatId == ~(uint64_t)0 && newState == MEGAChatConnectionOnline) {
+    if (chatId == MEGAInvalidHandle && newState == MEGAChatConnectionOnline) {
         // Now it's safe to trigger a reordering of the list:
         [self reloadData];
     }

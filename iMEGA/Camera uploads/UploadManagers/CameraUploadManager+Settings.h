@@ -61,8 +61,6 @@ typedef NS_ENUM(NSUInteger, CameraUploadVideoQuality) {
 
 #pragma mark - clear local settings
 
-+ (void)clearLocalSettings;
-
 + (void)enableAdvancedSettingsForUpgradingUserIfNeeded;
 
 @end
