@@ -526,7 +526,7 @@
     [self saveContext:context];
 }
 
-- (MOUploadTransfer *)fetchMessageWithChatId:(uint64_t)chatId messageId:(uint64_t)messageId {
+- (MOMessage *)fetchMessageWithChatId:(uint64_t)chatId messageId:(uint64_t)messageId {
     NSFetchRequest *request = [MOMessage fetchRequest];
     
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"chatId == %llu AND messageId == %llu", chatId, messageId];
