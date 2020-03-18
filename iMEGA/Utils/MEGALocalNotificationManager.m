@@ -78,11 +78,13 @@
                                     }
                                     UNNotificationRequest *notificationRequest = [UNNotificationRequest requestWithIdentifier:identifier content:content trigger:trigger];
                                     [center addNotificationRequest:notificationRequest withCompletionHandler:^(NSError * _Nullable error) {
-                                        if (error) {
-                                            MEGALogError(@"[Chat notification] Add NotificationRequest failed with error: %@", error);
-                                        } else {
-                                            [MEGAStore.shareInstance insertMessage:self.message.messageId chatId:self.chatRoom.chatId];
-                                        }
+                                        dispatch_async(dispatch_get_main_queue(), ^{
+                                            if (error) {
+                                                MEGALogError(@"[Chat notification] Add NotificationRequest failed with error: %@", error);
+                                            } else {
+                                                [MEGAStore.shareInstance insertMessage:self.message.messageId chatId:self.chatRoom.chatId];
+                                            }
+                                        });
                                     }];
                                 }];
                                 [[MEGASdkManager sharedMEGASdk] getThumbnailNode:node destinationFilePath:thumbnailFilePath delegate:getThumbnailRequestDelegate];
@@ -94,11 +96,13 @@
                 if (!waitForThumbnail) {
                     UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:identifier content:content trigger:trigger];
                     [center addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
-                        if (error) {
-                            MEGALogError(@"[Chat notification] Add NotificationRequest failed with error: %@", error);
-                        } else {
-                            [MEGAStore.shareInstance insertMessage:self.message.messageId chatId:self.chatRoom.chatId];
-                        }
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            if (error) {
+                                MEGALogError(@"[Chat notification] Add NotificationRequest failed with error: %@", error);
+                            } else {
+                                [MEGAStore.shareInstance insertMessage:self.message.messageId chatId:self.chatRoom.chatId];
+                            }
+                        });
                     }];
                 }
             }
