@@ -27,7 +27,6 @@
 #import "MEGASdk+MNZCategory.h"
 #import "MEGAStore.h"
 #import "MEGATransfer+MNZCategory.h"
-#import "MEGA-Swift.h"
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "NSURL+MNZCategory.h"

@@ -10,6 +10,11 @@ extern NSString * const MEGAPasswordName;
 
 extern NSString * const MEGAGroupIdentifier;
 
+extern NSString * const MEGASortingPreference;
+extern NSString * const MEGASortingPreferenceType;
+
+extern NSString * const MEGAViewModePreference;
+
 #pragma mark - global notifications
 
 extern NSString * const MEGALogoutNotification;

@@ -19,7 +19,7 @@
 #import "MEGASdkManager.h"
 #import "MEGAUser+MNZCategory.h"
 
-#ifdef MNZ_APP_EXTENSION
+#ifdef MNZ_SHARE_EXTENSION
 #import "MEGAShare-Swift.h"
 #else
 #import "MEGA-Swift.h"
@@ -146,7 +146,7 @@
     
     if (@available(iOS 13.0, *)) {
         if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-#ifdef MNZ_APP_EXTENSION
+#ifdef MNZ_SHARE_EXTENSION
             [ExtensionAppearanceManager setupAppearance:self.traitCollection];
             [ExtensionAppearanceManager invalidateViews];
 #else
