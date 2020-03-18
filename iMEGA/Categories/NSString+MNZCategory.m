@@ -296,11 +296,11 @@ static NSString* const B = @"[B]";
     return onlineStatusString;
 }
 
-+ (NSString *)mnz_stringByEndCallReason:(MEGAChatMessageEndCallReason)endCallReason userHandle:(uint64_t)userHandle duration:(NSNumber * _Nullable)duration {
++ (NSString *)mnz_stringByEndCallReason:(MEGAChatMessageEndCallReason)endCallReason userHandle:(uint64_t)userHandle duration:(NSNumber * _Nullable)duration isGroup:(BOOL)isGroup {
     NSString *endCallReasonString;
     switch (endCallReason) {
         case MEGAChatMessageEndCallReasonEnded: {
-            endCallReasonString = AMLocalizedString(@"callEnded", @"When an active call of user A with user B had ended");
+            endCallReasonString = isGroup ? AMLocalizedString(@"Group call ended.", @"When an active goup call is ended") : AMLocalizedString(@"callEnded", @"When an active call of user A with user B had ended");
             if (duration) {
                 NSString *durationString = [NSString stringWithFormat:AMLocalizedString(@"duration", @"Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc)"), [NSString mnz_stringFromCallDuration:duration.integerValue]];
                 endCallReasonString = [NSString stringWithFormat:@"%@ %@", endCallReasonString, durationString];

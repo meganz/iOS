@@ -63,8 +63,7 @@
         if (self.message.type == MEGAChatMessageTypeCallEnded) {
             callView.callImageView.image = [UIImage mnz_imageByEndCallReason:self.message.termCode userHandle:self.message.userHandle];
             MEGAChatRoom *chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:self.message.chatId];
-            NSNumber *duration = chatRoom.group ? nil : @(self.message.duration);
-            callView.callLabel.text = [NSString mnz_stringByEndCallReason:self.message.termCode userHandle:self.message.userHandle duration:duration];
+            callView.callLabel.text = [NSString mnz_stringByEndCallReason:self.message.termCode userHandle:self.message.userHandle duration:@(self.message.duration) isGroup:chatRoom.isGroup];
         } else { // MEGAChatMessageTypeCallStarted
             callView.callImageView.image = [UIImage imageNamed:@"callWithXIncoming"];
             callView.callLabel.text = AMLocalizedString(@"Call Started", @"Text to inform the user there is an active call and is participating");

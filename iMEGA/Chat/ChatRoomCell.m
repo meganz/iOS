@@ -383,7 +383,7 @@
             NSArray *array = [item.lastMessage componentsSeparatedByString:separator];
             NSNumber *duration = item.group ? nil : @([array.firstObject integerValue]);
             MEGAChatMessageEndCallReason endCallReason = [[array objectAtIndex:1] integerValue];
-            NSString *lastMessage = [NSString mnz_stringByEndCallReason:endCallReason userHandle:item.lastMessageSender duration:duration];
+            NSString *lastMessage = [NSString mnz_stringByEndCallReason:endCallReason userHandle:item.lastMessageSender duration:duration isGroup:item.isGroup];
             self.chatLastMessage.text = lastMessage;
             break;
         }

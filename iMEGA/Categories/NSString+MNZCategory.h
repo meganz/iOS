@@ -30,7 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSString *)mnz_stringByMissedAudioCalls:(NSInteger)missedAudioCalls andMissedVideoCalls:(NSInteger)missedVideoCalls;
 
 + (NSString * _Nullable)chatStatusString:(MEGAChatStatus)onlineStatus;
-+ (NSString *)mnz_stringByEndCallReason:(MEGAChatMessageEndCallReason)endCallReason userHandle:(uint64_t)userHandle duration:(NSNumber * _Nullable)duration;
++ (NSString *)mnz_stringByEndCallReason:(MEGAChatMessageEndCallReason)endCallReason userHandle:(uint64_t)userHandle duration:(NSNumber * _Nullable)duration isGroup:(BOOL)isGroup;
 
 - (BOOL)mnz_isValidEmail;
 

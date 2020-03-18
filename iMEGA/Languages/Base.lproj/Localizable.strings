@@ -1546,6 +1546,8 @@
 "callFailed"="Call failed";
 /* When an active call of user A with user B had ended */
 "callEnded"="Call ended.";
+/* When an active goup call is ended */
+"Group call ended."="Group call ended.";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="Duration: %@";
 /* */
