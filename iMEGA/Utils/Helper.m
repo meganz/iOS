@@ -1209,33 +1209,14 @@ static MEGAIndexer *indexer;
     [[Helper downloadingNodes] removeAllObjects];
     [[Helper uploadingNodes] removeAllObjects];
     
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"agreedCopywriteWarning"];
-    
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"TransfersPaused"];
-    
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"IsSavePhotoToGalleryEnabled"];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"IsSaveVideoToGalleryEnabled"];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"ChatVideoQuality"];
-    
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"logging"];
+    [NSUserDefaults.standardUserDefaults removePersistentDomainForName:NSBundle.mainBundle.bundleIdentifier];
 
     //Set default order on logout
     [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"SortOrderType"];
     [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"OfflineSortOrderType"];
-    
-    [NSUserDefaults.standardUserDefaults removeObjectForKey:@"lastDateAddPhoneNumberShowed"];
-    [NSUserDefaults.standardUserDefaults removeObjectForKey:@"ContactsOnMega"];
-    [NSUserDefaults.standardUserDefaults removeObjectForKey:@"lastDateContactsOnMegaRequested"];
-    [NSUserDefaults.standardUserDefaults removeObjectForKey:@"twoFactorAuthenticationAlreadySuggested"];
-
-    [[NSUserDefaults standardUserDefaults] synchronize];
 
     NSUserDefaults *sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];
-    [sharedUserDefaults removeObjectForKey:@"extensions"];
-    [sharedUserDefaults removeObjectForKey:@"extensions-passcode"];
-    [sharedUserDefaults removeObjectForKey:@"treeCompleted"];
-    [sharedUserDefaults removeObjectForKey:@"useHttpsOnly"];
-    [sharedUserDefaults synchronize];
+    [sharedUserDefaults removePersistentDomainForName:MEGAGroupIdentifier];
 }
 
 + (void)deletePasscode {

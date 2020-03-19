@@ -26,7 +26,6 @@
 #import "DevicePermissionsHelper.h"
 #import "DisplayMode.h"
 #import "GradientView.h"
-#import "MainTabBarController.h"
 #import "MessagesViewController.h"
 #import "NodeInfoViewController.h"
 #import "SharedItemsTableViewCell.h"
@@ -35,7 +34,7 @@
 #import "MEGA-Swift.h"
 
 typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
-    ContactDetailsSectionSetNickname = 0,
+    ContactDetailsSectionNickname = 0,
     ContactDetailsSectionVerifyCredentials,
     ContactDetailsSectionAddAndRemoveContact,
     ContactDetailsSectionSharedFolders,
@@ -106,7 +105,10 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
     self.videoLabel.text = AMLocalizedString(@"Video", @"Title of the button in the contact info screen to start a video call").lowercaseString;
         
     self.userNickname = self.user.mnz_nickname;
-    self.userName = self.user.mnz_fullName;
+    
+    if (self.userName.length == 0) {
+        self.userName = self.user.mnz_fullName;
+    }
     
     [self configureShadowInLayer:self.nameOrNicknameLabel.layer];
     [self configureShadowInLayer:self.optionalNameLabel.layer];
@@ -196,7 +198,11 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
 - (ContactTableViewCell *)cellForNicknameWithIndexPath:(NSIndexPath *)indexPath {
     ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
     cell.avatarImageView.image = [UIImage imageNamed:@"setNickname"];
-    cell.nameLabel.text = AMLocalizedString(@"Set Nickname", @"Contact details screen: Set the alias(nickname) for a user");
+    
+    cell.nameLabel.text = self.userNickname.length == 0 ?
+    AMLocalizedString(@"Set Nickname", @"Contact details screen: Set the alias(nickname) for a user") :
+    AMLocalizedString(@"Edit Nickname", @"Contact details screen: Edit the alias(nickname) for a user");
+    
     cell.nameLabel.textColor = UIColor.mnz_black333333;
     
     return cell;
@@ -533,7 +539,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
     callVC.videoCall = videoCall;
     callVC.callType = active ? CallTypeActive : CallTypeOutgoing;
     callVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-    callVC.megaCallManager = [(MainTabBarController *)UIApplication.sharedApplication.keyWindow.rootViewController megaCallManager];
+    callVC.megaCallManager = ((AppDelegate *)UIApplication.sharedApplication.delegate).megaCallManager;
     [self presentViewController:callVC animated:YES completion:nil];
 }
 
@@ -632,7 +638,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Contacts" bundle:nil];
     UINavigationController *navigationController = [storyboard instantiateViewControllerWithIdentifier:@"AddNickNameNavigationControllerID"];
     
-    AddNickNameViewController *nicknameViewController = navigationController.viewControllers.firstObject;
+    NicknameViewController *nicknameViewController = navigationController.viewControllers.firstObject;
     
     nicknameViewController.user = self.user;
     nicknameViewController.nickname = self.userNickname;
@@ -651,39 +657,6 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
     BOOL isNicknamePresent = self.userNickname.length > 0;
     self.nameOrNicknameLabel.text = isNicknamePresent ? self.userNickname : self.userName;
     self.optionalNameLabel.text = isNicknamePresent ? self.userName : nil;
-}
-
-- (void)showEditOrRemoveAlertOptions {
-    UIAlertController *editNicknameAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    
-    UIAlertAction *cancelAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil];
-    [cancelAlertAction mnz_setTitleTextColor:UIColor.mnz_redMain];
-    [editNicknameAlertController addAction:cancelAlertAction];
-    
-    UIAlertAction *editNicknameAlertAction = [UIAlertAction actionWithTitle: AMLocalizedString(@"edit",@"Caption of a button to edit the files that are selected") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [self showNickNameViewContoller];
-    }];
-    [editNicknameAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
-    [editNicknameAlertController addAction:editNicknameAlertAction];
-    
-    UIAlertAction *removeNicknameAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"remove", @"Title for the action that allows to remove a file or folder") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        if (MEGAReachabilityManager.isReachableHUDIfNot) {
-            [MEGASdkManager.sharedMEGASdk setUserAlias:nil forHandle:self.user.handle];
-            self.userNickname = nil;
-            self.user.mnz_nickname = nil;
-            [self updateUserDetails];
-            [self.tableView reloadData];
-        }
-    }];
-    [editNicknameAlertController addAction:removeNicknameAlertAction];
-    
-    if (UIDevice.currentDevice.iPadDevice) {
-        editNicknameAlertController.modalPresentationStyle = UIModalPresentationPopover;
-        editNicknameAlertController.popoverPresentationController.sourceView = self.nameOrNicknameLabel;
-        editNicknameAlertController.popoverPresentationController.sourceRect = self.nameOrNicknameLabel.bounds;
-    }
-    
-    [self presentViewController:editNicknameAlertController animated:YES completion:nil];
 }
 
 - (void)configureShadowInLayer:(CALayer *)layer {
@@ -716,19 +689,15 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
 }
 
 - (NSArray<NSNumber *> *)sectionsForContactModeDefault {
-    if (self.userNickname.length > 0) {
-        return [self addSharedFoldersSectionIfNeededToSections:@[@(ContactDetailsSectionAddAndRemoveContact), @(ContactDetailsSectionVerifyCredentials)]];
-    } else {
-        return [self addSharedFoldersSectionIfNeededToSections:@[@(ContactDetailsSectionSetNickname), @(ContactDetailsSectionVerifyCredentials), @(ContactDetailsSectionAddAndRemoveContact)]];
-    }
+    return [self addSharedFoldersSectionIfNeededToSections:@[@(ContactDetailsSectionNickname), @(ContactDetailsSectionVerifyCredentials), @(ContactDetailsSectionAddAndRemoveContact)]];
 }
 
 - (NSArray<NSNumber *> *)sectionsForContactFromChat {
-    if (self.userNickname.length > 0) {
+    if (self.shouldAllowToAddContact) {
         return [self addSharedFoldersSectionIfNeededToSections:@[@(ContactDetailsSectionClearChatHistory), @(ContactDetailsSectionArchiveChat)]];
-    } else {
-        return [self addSharedFoldersSectionIfNeededToSections:@[@(ContactDetailsSectionSetNickname), @(ContactDetailsSectionClearChatHistory), @(ContactDetailsSectionArchiveChat)]];
     }
+    
+    return [self addSharedFoldersSectionIfNeededToSections:@[@(ContactDetailsSectionNickname), @(ContactDetailsSectionClearChatHistory), @(ContactDetailsSectionArchiveChat)]];
 }
 
 - (NSArray<NSNumber *> *)sectionsForContactFromGroupChat {
@@ -737,9 +706,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
     if (self.shouldAllowToAddContact) { // User not in contact list
         [sections addObject:@(ContactDetailsSectionAddParticipantToContact)];
     } else { // user in contact list
-        if (self.userNickname.length == 0) { // user does not have nickname
-            [sections addObject:@(ContactDetailsSectionSetNickname)];
-        }
+        [sections addObject:@(ContactDetailsSectionNickname)];
     }
     
     MEGAChatRoomPrivilege peerPrivilege = [self.groupChatRoom peerPrivilegeByHandle:self.userHandle];
@@ -825,15 +792,6 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
     }
 }
 
-- (IBAction)changeNickname:(UITapGestureRecognizer *)sender {
-    if (self.userNickname == nil || [self shouldAllowToAddContact]) {
-        return;
-    }
-    
-    [self showEditOrRemoveAlertOptions];
-}
-
-
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -849,7 +807,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
     ContactTableViewCell *cell;
     
     switch (self.contactDetailsSections[indexPath.section].intValue) {
-        case ContactDetailsSectionSetNickname:
+        case ContactDetailsSectionNickname:
             cell = [self cellForNicknameWithIndexPath:indexPath];
             break;
             
@@ -934,7 +892,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     switch (self.contactDetailsSections[indexPath.section].intValue) {
-        case ContactDetailsSectionSetNickname:
+        case ContactDetailsSectionNickname:
             [self showNickNameViewContoller];
             break;
             

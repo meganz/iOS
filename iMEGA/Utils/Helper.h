@@ -4,8 +4,6 @@
 #import "MEGAChatMessage.h"
 #import "MEGAIndexer.h"
 
-#define kIsEraseAllLocalDataEnabled @"IsEraseAllLocalDataEnabled"
-
 typedef NS_OPTIONS(NSUInteger, NodesAre) {
     NodesAreFiles    = 1 << 0,
     NodesAreFolders  = 1 << 1,

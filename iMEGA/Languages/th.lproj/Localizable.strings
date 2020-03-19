@@ -20,7 +20,7 @@
 "passcode"="รหัส";
 /* "Size" of the file or folder you are sharing */
 "size"="ขนาด";
-/*  */
+/* Quality title, used in changing the export quality of scaned doc */
 "Quality"="Quality";
 /*  */
 "folder"="โฟลเดอร์";
@@ -146,6 +146,8 @@
 "emailAlreadyInUse"="ผิดพลาด ชื่อบัญชีนี้ได้ถูกใช้งานไปแล้ว";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="คุณจำเป็นต้องเพิ่มพื้นที่ว่างบนอุปกรณ์ของคุณ";
+/* Message shown when you try to downlonad files bigger than the available memory. */
+"MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device."="MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device.";
 /* Title for the file link view */
 "fileLink"="การเชื่อมโยงของไฟล์";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
@@ -684,6 +686,8 @@
 "Custom Settings"="การตั้งค่าที่กำหนดเอง";
 /* Title to show when device local storage is full */
 "%@ Storage Full"="พื้นที่จัดเก็บข้อมูลของ %@ เต็มแล้ว";
+/* Title to show when device local storage is almost full */
+"Device Storage Almost Full"="Device Storage Almost Full";
 /* Detail for local storage full situation */
 "You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="คุณมีพื้นที่เก็บข้อมูลไม่เพียงพอสำหรับการอัปโหลดของกล้องเพิ่มเติม เพิ่มพื้นที่ว่างโดยการลบแอป วิดีโอหรือเพลงที่ไม่จำเป็น คุณสามารถจัดการที่เก็บข้อมูลของคุณใน %@";
 /* Navigation path for Storage settings in iOS */
@@ -1273,8 +1277,8 @@
 "seePlans"="ดูแผนการ";
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
 "dismiss"="ละทิ้ง";
-/* Notification text body shown when you have received a new chat message */
-"newMessage"="ข้อความใหม่";
+/* Content of the notification when there is unknown activity on the Chat */
+"You may have new messages"="คุณอาจมีข้อความใหม่";
 /* Notification text body shown when you have received a contact request */
 "contactRequest"="คำขอติดต่อ";
 /* Notification text body shown when you have received a new shared folder */
@@ -1624,6 +1628,8 @@
 "Save in Photos"="บันทึกในรูปภาพ";
 /* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="บันทึกสำเนาของรูปภาพและวิดีโอที่ถ่ายจากแอป MEGA ในไลบรารีสื่อของอุปกรณ์";
+/* Settings section title where you can enable the option to 'Spotlight search' */
+"Spotlight Search"="Spotlight Search";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="คุณคือผู้ถือกุญแจ";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -1962,8 +1968,6 @@
 "[X] contacts found on MEGA"="พบผู้ติดต่อ [X] รายการใน MEGA";
 /* Title showing the user that one of his contacts are using MEGA */
 "1 contact found on MEGA"="พบผู้ติดต่อ 1 รายการใน MEGA";
-/* Text indicating the user to perform an action to grant some permission */
-"Enable Access"="เปิดใช้งานการเข้าถึง";
 /* Text indicating the user to open the device settings for MEGA */
 "Open Settings"="เปิดการตั้งค่า";
 /* Text encouraging the user to invite contacts to MEGA */
@@ -2042,6 +2046,10 @@
 "Inactive chat"="แชทที่ไม่ได้ใช้งาน";
 /* Contact details screen: Set the alias(nickname) for a user */
 "Set Nickname"="ตั้งชื่อเล่น";
+/* Contact details screen: Edit the alias(nickname) for a user */
+"Edit Nickname"="Edit Nickname";
+/* Edit nickname screen: Remove nickname button title */
+"Remove Nickname"="Remove Nickname";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
 "Alias/ Nickname"="นามแฝง / ชื่อเล่น";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
@@ -2101,7 +2109,7 @@
 /* Title of Image Quality option */
 "Automatic"="อัตโนมัติ";
 /* Description of Automatic Image Quality option */
-"Send smaller size images through cellular networks and original size images through wifi"="Send smaller size images through cellular networks and original size images through wifi";
+"Send smaller size images through cellular networks and original size images through wifi"="Send smaller size images through cellular networks and original size images through Wi-Fi";
 /* Title of Image Quality option */
 "Optimised"="ปรับให้เหมาะสม";
 /* Description of Optimised Image Quality option */
@@ -2114,3 +2122,9 @@
 "File Type"="ประเภทไฟล์";
 /* export Quality Option for Scan document */
 "best"="Best";
+/* Description of why the user should give permission to contacts */
+"Easily discover contacts from your address book on MEGA."="Easily discover contacts from your address book on MEGA.";
+/* Detailed description of why the user should give permission to contacts */
+"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA will not use this data for any other purpose and will never interact with your contacts without your consent.";
+/* Title label that explains that the user is going to be asked for the contacts permission */
+"Enable Access to Your Address Book"="Enable Access to Your Address Book";
