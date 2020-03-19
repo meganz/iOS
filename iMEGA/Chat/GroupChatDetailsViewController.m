@@ -21,6 +21,7 @@
 #import "MEGAArchiveChatRequestDelegate.h"
 #import "MEGAChatGenericRequestDelegate.h"
 #import "MEGAStore.h"
+#import "MEGA-Swift.h"
 
 @interface GroupChatDetailsViewController () <MEGAChatRequestDelegate, MEGAChatDelegate, MEGAGlobalDelegate>
 
@@ -485,8 +486,7 @@
                 peerEmail = [[MEGASdkManager sharedMEGAChatSdk] myEmail];
                 privilege = self.chatRoom.ownPrivilege;
             } else {
-                MOUser *user = [MEGAStore.shareInstance fetchUserWithUserHandle:handle];
-                peerFullname = user.nickname ?: [self.chatRoom peerFullnameByHandle:handle];
+                peerFullname = [self.chatRoom userDisplayNameForUserHandle:handle];
                 peerEmail = [self.chatRoom peerEmailByHandle:handle];
                 privilege = [self.chatRoom peerPrivilegeAtIndex:index];
             }

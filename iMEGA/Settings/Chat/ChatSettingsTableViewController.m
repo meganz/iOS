@@ -133,7 +133,6 @@
         videoQuality = videoQualityNumber.unsignedIntegerValue;
     } else {
         [[NSUserDefaults standardUserDefaults] setObject:@(ChatVideoUploadQualityMedium) forKey:@"ChatVideoQuality"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
         videoQuality = ChatVideoUploadQualityMedium;
     }
     

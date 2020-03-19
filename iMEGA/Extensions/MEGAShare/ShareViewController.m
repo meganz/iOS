@@ -375,7 +375,7 @@
 
 - (void)presentPasscode {
     if (!self.passcodePresented) {
-        if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled]) {
+        if ([NSUserDefaults.standardUserDefaults boolForKey:MEGAPasscodeLogoutAfterTenFailedAttemps]) {
             [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
         }
         
@@ -968,7 +968,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 }
 
 - (void)maxNumberOfFailedAttemptsReached {
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled]) {
+    if ([NSUserDefaults.standardUserDefaults boolForKey:MEGAPasscodeLogoutAfterTenFailedAttemps]) {
         [[MEGASdkManager sharedMEGASdk] logout];
     }
 }

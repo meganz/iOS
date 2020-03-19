@@ -279,8 +279,7 @@
     MEGALogInfo(@"onChatConnectionStateUpdate: %@, new state: %d", [MEGASdk base64HandleForUserHandle:chatId], newState);
     BOOL shouldReload = NO;
     
-    // INVALID_HANDLE = ~(uint64_t)0
-    if (chatId == ~(uint64_t)0 && newState == MEGAChatConnectionOnline) {
+    if (chatId == MEGAInvalidHandle && newState == MEGAChatConnectionOnline) {
         if (!self.isChatReady) {
             self.chatReady = YES;
             shouldReload = YES;

@@ -430,11 +430,9 @@
     cell.nameLabel.text = node.name;
     
     MEGAUser *user = [MEGASdkManager.sharedMEGASdk contactForEmail:userEmail];
-    NSString *userName = user.mnz_fullName ? user.mnz_fullName : userEmail;
-    
-    NSString *infoLabelText = userName;
-    cell.infoLabel.text = infoLabelText;
-    
+    NSString *userDisplayName = user.mnz_displayName;
+    cell.infoLabel.text = (userDisplayName != nil) ? userDisplayName : userEmail;
+
     [cell.permissionsButton setImage:[Helper permissionsButtonImageForShareType:share.access] forState:UIControlStateNormal];
     cell.permissionsButton.hidden = NO;
 
@@ -476,7 +474,8 @@
         userName = [NSString stringWithFormat:AMLocalizedString(@"sharedWithXContacts", nil), outSharesCount];
     } else {
         MEGAUser *user = [MEGASdkManager.sharedMEGASdk contactForEmail:[outSharesMutableArray.firstObject user]];
-        userName = user.mnz_fullName ? user.mnz_fullName : user.email;
+        NSString *userDisplayName = user.mnz_displayName;
+        userName = (userDisplayName != nil) ? userDisplayName : user.email;
     }
     
     cell.permissionsButton.hidden = YES;

@@ -15,6 +15,10 @@ extern NSString * const MEGASortingPreferenceType;
 
 extern NSString * const MEGAViewModePreference;
 
+extern NSString * const MEGAPasscodeLogoutAfterTenFailedAttemps;
+
+extern uint64_t const MEGAInvalidHandle;
+
 #pragma mark - global notifications
 
 extern NSString * const MEGALogoutNotification;
@@ -96,3 +100,7 @@ extern NSString * const MEGAAllUsersNicknameLoaded;
 extern NSString * const MEGALastPublicHandleAccessed;
 extern NSString * const MEGALastPublicTypeAccessed;
 extern NSString * const MEGALastPublicTimestampAccessed;
+
+#pragma mark - MEGA Contact Nickname change Notification
+
+extern NSString * const MEGContactNicknameChangeNotification;

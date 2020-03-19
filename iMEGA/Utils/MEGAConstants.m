@@ -15,6 +15,10 @@ NSString * const MEGASortingPreferenceType = @"SortOrderType";
 
 NSString * const MEGAViewModePreference = @"MEGAViewModePreference";
 
+NSString * const MEGAPasscodeLogoutAfterTenFailedAttemps = @"IsEraseAllLocalDataEnabled";
+
+uint64_t const MEGAInvalidHandle = ~(uint64_t)0;
+
 #pragma mark - global notifications
 
 NSString * const MEGALogoutNotification = @"nz.mega.logout";
@@ -96,3 +100,7 @@ NSString * const MEGAAllUsersNicknameLoaded = @"MEGAAllUsersNicknameLoaded";
 NSString * const MEGALastPublicHandleAccessed = @"kLastPublicHandleAccessed";
 NSString * const MEGALastPublicTypeAccessed = @"kLastPublicTypeAccessed";
 NSString * const MEGALastPublicTimestampAccessed = @"kLastPublicTimestampAccessed";
+
+#pragma mark - MEGA Contact Nickname change Notification
+
+NSString * const MEGContactNicknameChangeNotification = @"MEGAContactNicknameChangeNotification";

@@ -8,7 +8,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageViewLeadingConstraint;
+@property (weak, nonatomic) IBOutlet UILabel *optionalLabel;
 
 @end
 
@@ -88,35 +88,33 @@
             break;
             
         case OnboardingViewTypePhotosPermission:
-            self.imageViewLeadingConstraint.active = NO;
             self.imageView.image = [UIImage imageNamed:@"photosPermission"];
-            self.imageView.contentMode = UIViewContentModeScaleAspectFit;
+            self.imageView.contentMode = UIViewContentModeCenter;
             self.titleLabel.text = AMLocalizedString(@"Allow Access to Photos", @"Title label that explains that the user is going to be asked for the photos permission");
             self.descriptionLabel.text = AMLocalizedString(@"Please give the MEGA App permission to access Photos to share photos and videos.", @"Detailed explanation of why the user should give permission to access to the photos");
             break;
             
         case OnboardingViewTypeMicrophoneAndCameraPermissions:
-            self.imageViewLeadingConstraint.active = NO;
             self.imageView.image = [UIImage imageNamed:@"groupChat"];
-            self.imageView.contentMode = UIViewContentModeScaleAspectFit;
+            self.imageView.contentMode = UIViewContentModeCenter;
             self.titleLabel.text = AMLocalizedString(@"Enable Microphone and Camera", @"Title label that explains that the user is going to be asked for the microphone and camera permission");
             self.descriptionLabel.text = AMLocalizedString(@"To make encrypted voice and video calls, allow MEGA access to your Camera and Microphone", @"Detailed explanation of why the user should give permission to access to the camera and the microphone");
             break;
      
         case OnboardingViewTypeNotificationsPermission:
-            self.imageViewLeadingConstraint.active = NO;
             self.imageView.image = [UIImage imageNamed:@"micAndCamPermission"];
-            self.imageView.contentMode = UIViewContentModeScaleAspectFit;
+            self.imageView.contentMode = UIViewContentModeCenter;
             self.titleLabel.text = AMLocalizedString(@"Enable Notifications", @"Title label that explains that the user is going to be asked for the notifications permission");
             self.descriptionLabel.text = AMLocalizedString(@"We would like to send you notifications so you receive new messages on your device instantly.", @"Detailed explanation of why the user should give permission to deliver notifications");
             break;
             
         case OnboardingViewTypeContactsPermission:
-            self.imageViewLeadingConstraint.active = NO;
             self.imageView.image = [UIImage imageNamed:@"access contact"];
-            self.imageView.contentMode = UIViewContentModeScaleAspectFit;
-            self.titleLabel.text = AMLocalizedString(@"Enable Access to Contacts", @"Title label that explains that the user is going to be asked for the contacts permission ");
-            self.descriptionLabel.text = AMLocalizedString(@"MEGA needs access to your contacts to help you connect with other people on MEGA.", @"Detailed explanation of why the user should give permission to contactsDetailed explanation of why the user should give permission to contacts");
+            self.imageView.contentMode = UIViewContentModeCenter;
+            self.titleLabel.text = AMLocalizedString(@"Enable Access to Your Address Book", @"Title label that explains that the user is going to be asked for the contacts permission ");
+            self.descriptionLabel.text = AMLocalizedString(@"Easily discover contacts from your address book on MEGA.", @"Detailed explanation of why the user should give permission to contactsDetailed explanation of why the user should give permission to contacts");
+            self.optionalLabel.text = AMLocalizedString(@"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent.", @"Detailed explanation about MEGA not using the contacts data without permision ");
+            self.optionalLabel.hidden = NO;
             break;
     }
 }
