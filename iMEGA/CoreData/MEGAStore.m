@@ -65,7 +65,7 @@
 }
 
 - (void)saveContext {
-    if ([NSThread mainThread]) {
+    if ([NSThread isMainThread]) {
         NSError *error = nil;
         if ([self.managedObjectContext hasChanges] && ![self.managedObjectContext save:&error]) {
             MEGALogError(@"Unresolved error %@, %@", error, [error userInfo]);
