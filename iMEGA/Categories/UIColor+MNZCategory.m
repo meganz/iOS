@@ -191,6 +191,40 @@
     }
 }
 
++ (UIColor *)mnz_notificationSeenBackgroundForTraitCollection:(UITraitCollection *)traitCollection {
+    if (@available(iOS 13.0, *)) {
+        switch (traitCollection.userInterfaceStyle) {
+            case UIUserInterfaceStyleUnspecified:
+            case UIUserInterfaceStyleLight: {
+                return UIColor.mnz_grayFAFAFA;
+            }
+                
+            case UIUserInterfaceStyleDark: {
+                return [UIColor colorFromHexString:@"1C1C1E"];
+            }
+        }
+    } else {
+        return UIColor.mnz_grayFAFAFA;
+    }
+}
+
++ (UIColor *)mnz_notificationUnseenBackgroundForTraitCollection:(UITraitCollection *)traitCollection {
+    if (@available(iOS 13.0, *)) {
+        switch (traitCollection.userInterfaceStyle) {
+            case UIUserInterfaceStyleUnspecified:
+            case UIUserInterfaceStyleLight: {
+                return UIColor.whiteColor;
+            }
+                
+            case UIUserInterfaceStyleDark: {
+                return [UIColor colorFromHexString:@"2C2C2E"];
+            }
+        }
+    } else {
+        return UIColor.whiteColor;
+    }
+}
+
 #pragma mark - Black
 
 + (UIColor *)mnz_black000000_01 {

@@ -45,6 +45,7 @@
     self.boldFont = [UIFont boldSystemFontOfSize:14.0f];
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    self.tableView.separatorColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -68,6 +69,17 @@
     [super viewDidDisappear:animated];
     
     [[MEGASdkManager sharedMEGASdk] acknowledgeUserAlerts];
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            self.tableView.separatorColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
+            [self.tableView reloadData];
+        }
+    }
 }
 
 #pragma mark - Private
@@ -383,13 +395,14 @@
     [self configureTypeLabel:cell.typeLabel forType:userAlert.type];
     if (userAlert.isSeen) {
         cell.theNewView.hidden = YES;
-        cell.backgroundColor = UIColor.mnz_grayFAFAFA;
+        cell.backgroundColor = [UIColor mnz_notificationSeenBackgroundForTraitCollection:self.traitCollection];
     } else {
         cell.theNewView.hidden = NO;
-        cell.backgroundColor = UIColor.whiteColor;
+        cell.backgroundColor = [UIColor mnz_notificationUnseenBackgroundForTraitCollection:self.traitCollection];
     }
     [self configureHeadingLabel:cell.headingLabel forAlert:userAlert];
     [self configureContentLabel:cell.contentLabel forAlert:userAlert];
+    cell.dateLabel.textColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
     cell.dateLabel.text = [self.dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:[userAlert timestampAtIndex:0]]];
     
     return cell;
