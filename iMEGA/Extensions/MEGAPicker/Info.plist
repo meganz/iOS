@@ -40,5 +40,7 @@
 		<key>NSExtensionPointIdentifier</key>
 		<string>com.apple.fileprovider-ui</string>
 	</dict>
+	<key>UIUserInterfaceStyle</key>
+	<string>Light</string>
 </dict>
 </plist>
