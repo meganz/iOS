@@ -20,6 +20,22 @@ class ActionSheetViewController: UIViewController {
     @objc var actions: [ActionSheetAction] = []
     @objc var headerTitle: String?
 
+    // MARK: - Private properties
+    fileprivate var isPresenting = false
+
+    // MARK: - ActionController initializers
+
+    public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        transitioningDelegate = self
+        modalPresentationStyle = .custom
+    }
+
+    public required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        transitioningDelegate = self
+        modalPresentationStyle = .custom
+    }
     // MARK: - View controller behavior
 
     override func viewDidLoad() {
@@ -39,7 +55,7 @@ class ActionSheetViewController: UIViewController {
 // MARK: PureLayout Implementation
 extension ActionSheetViewController {
     override func loadView() {
-        view = UIView()
+        super.loadView()
         view.backgroundColor = .clear
 
         backgroundView.backgroundColor = .init(white: 0, alpha: 0.8)
@@ -61,29 +77,26 @@ extension ActionSheetViewController {
         tableView.bounces = true
 
         view.addSubview(tableView)
+
+        backgroundView.autoPinEdgesToSuperviewEdges()
+
+        var bottomHeight = 0
+        if #available(iOS 11.0, *) {
+            bottomHeight = Int(view.safeAreaInsets.bottom)
+        }
+
+        tableView.autoPinEdge(toSuperviewEdge: .bottom)
+        tableView.autoPinEdge(toSuperviewEdge: .left)
+        tableView.autoPinEdge(toSuperviewEdge: .right)
+
+        top = tableView.autoPinEdge(toSuperviewSafeArea: .top, withInset: CGFloat(view.bounds.height))
+
         view.setNeedsUpdateConstraints()
     }
 
     override func updateViewConstraints() {
         if !didSetupConstraints {
 
-            backgroundView.autoPinEdgesToSuperviewEdges()
-
-            var bottomHeight = 0
-            if #available(iOS 11.0, *) {
-                bottomHeight = Int(view.safeAreaInsets.bottom)
-            }
-
-            tableView.autoPinEdge(toSuperviewEdge: .bottom)
-            tableView.autoPinEdge(toSuperviewEdge: .left)
-            tableView.autoPinEdge(toSuperviewEdge: .right)
-
-            let height = CGFloat(actions.count * 60 + 50 + bottomHeight)
-            if height < layoutThreshold {
-                top = tableView.autoSetDimension(.height, toSize: height)
-            } else {
-                top = tableView.autoPinEdge(toSuperviewSafeArea: .top, withInset: layoutThreshold)
-            }
             didSetupConstraints = true
         }
         super.updateViewConstraints()
@@ -143,7 +156,7 @@ extension ActionSheetViewController: UITableViewDelegate {
             print("down")
             if offset > 20 {
                 if layoutThreshold < top!.constant {
-                    dismiss(animated: true, completion: nil)
+                    self.dismiss(animated: true, completion: nil)
                     return
                 } else {
                     constant = CGFloat(self.view.bounds.height * 0.3)
@@ -165,6 +178,36 @@ extension ActionSheetViewController: UITableViewDelegate {
             self.view.layoutIfNeeded()
         }
 
+    }
+
+    open func presentView(_ presentedView: UIView, presentingView: UIView, animationDuration: Double, completion: ((_ completed: Bool) -> Void)?) {
+        self.view.layoutIfNeeded()
+
+        top = tableView.autoPinEdge(toSuperviewSafeArea: .top, withInset: layoutThreshold)
+        backgroundView.alpha = 0
+
+        UIView.animate(withDuration: animationDuration,
+                       animations: { [weak self] in
+                        self?.backgroundView.alpha = 1.0
+                        self?.view.layoutIfNeeded()
+
+            },
+                       completion: { finished in
+                        completion?(finished)
+        })
+    }
+
+    open func dismissView(_ presentedView: UIView, presentingView: UIView, animationDuration: Double, completion: ((_ completed: Bool) -> Void)?) {
+        top?.constant = CGFloat(view.bounds.height)
+        UIView.animate(withDuration: animationDuration,
+                       animations: { [weak self] in
+                        self?.backgroundView.alpha = 0
+                        self?.view.layoutIfNeeded()
+
+            },
+                       completion: { _ in
+                        completion?(true)
+        })
     }
 }
 
@@ -194,4 +237,45 @@ extension ActionSheetViewController: UITableViewDataSource {
         self.dismiss(animated: true, completion: nil)
     }
 
+}
+
+extension ActionSheetViewController: UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate {
+    open func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
+        let containerView = transitionContext.containerView
+
+        let fromViewController = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from)!
+        let fromView = fromViewController.view
+
+        let toViewController = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to)!
+        let toView = toViewController.view
+
+        if isPresenting {
+            toView?.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+            containerView.addSubview(toView!)
+
+            transitionContext.completeTransition(true)
+            presentView(toView!, presentingView: fromView!, animationDuration: TimeInterval(0.3), completion: nil)
+        } else {
+            dismissView(fromView!, presentingView: toView!, animationDuration: TimeInterval(0.3)) { completed in
+                if completed {
+                    fromView?.removeFromSuperview()
+                }
+                transitionContext.completeTransition(completed)
+            }
+        }
+    }
+
+    open func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
+        return isPresenting ? 0 : TimeInterval(0.3)
+    }
+
+    open func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        isPresenting = true
+        return self
+    }
+
+    open func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        isPresenting = false
+        return self
+    }
 }
