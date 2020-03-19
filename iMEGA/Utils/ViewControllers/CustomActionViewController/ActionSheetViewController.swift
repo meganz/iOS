@@ -61,7 +61,7 @@ extension ActionSheetViewController {
         backgroundView.backgroundColor = .init(white: 0, alpha: 0.8)
         view.addSubview(backgroundView)
 
-        headerView = UIView(frame: CGRect(x: 0, y: 0, width: 200, height: 50))
+        headerView = UIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 50))
         headerView?.backgroundColor = .white
 
         let title = UILabel()
@@ -70,6 +70,7 @@ extension ActionSheetViewController {
         headerView?.addSubview(title)
         title.autoCenterInSuperview()
 
+        //        tableView.tableHeaderView = headerView
         tableView.tableFooterView = UIView()
         tableView.isScrollEnabled = true
         tableView.delegate = self
@@ -79,11 +80,6 @@ extension ActionSheetViewController {
         view.addSubview(tableView)
 
         backgroundView.autoPinEdgesToSuperviewEdges()
-
-        var bottomHeight = 0
-        if #available(iOS 11.0, *) {
-            bottomHeight = Int(view.safeAreaInsets.bottom)
-        }
 
         tableView.autoPinEdge(toSuperviewEdge: .bottom)
         tableView.autoPinEdge(toSuperviewEdge: .left)
@@ -183,7 +179,16 @@ extension ActionSheetViewController: UITableViewDelegate {
     open func presentView(_ presentedView: UIView, presentingView: UIView, animationDuration: Double, completion: ((_ completed: Bool) -> Void)?) {
         self.view.layoutIfNeeded()
 
-        top = tableView.autoPinEdge(toSuperviewSafeArea: .top, withInset: layoutThreshold)
+        var bottomHeight = 0
+        if #available(iOS 11.0, *) {
+            bottomHeight = Int(view.safeAreaInsets.bottom)
+        }
+        let height = CGFloat(actions.count * 60 + 50 + bottomHeight)
+        if height < view.bounds.height - layoutThreshold {
+            top = tableView.autoPinEdge(toSuperviewSafeArea: .top, withInset: CGFloat(view.bounds.height - height))
+        } else {
+            top = tableView.autoPinEdge(toSuperviewSafeArea: .top, withInset: layoutThreshold)
+        }
         backgroundView.alpha = 0
 
         UIView.animate(withDuration: animationDuration,
