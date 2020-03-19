@@ -300,10 +300,14 @@ static NSString* const B = @"[B]";
     NSString *endCallReasonString;
     switch (endCallReason) {
         case MEGAChatMessageEndCallReasonEnded: {
-            endCallReasonString = isGroup ? AMLocalizedString(@"Group call ended.", @"When an active goup call is ended") : AMLocalizedString(@"callEnded", @"When an active call of user A with user B had ended");
-            if (duration) {
-                NSString *durationString = [NSString stringWithFormat:AMLocalizedString(@"duration", @"Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc)"), [NSString mnz_stringFromCallDuration:duration.integerValue]];
-                endCallReasonString = [NSString stringWithFormat:@"%@ %@", endCallReasonString, durationString];
+            if (isGroup) {
+                if (duration) {
+                    endCallReasonString = [[AMLocalizedString(@"[A]Group call ended[/A][C]. Duration: [/C]", @"When an active goup call is ended (with duration)") stringByReplacingOccurrencesOfString:@"[/C]" withString:[NSString mnz_stringFromCallDuration:duration.integerValue]] mnz_removeWebclientFormatters];
+                } else {
+                    endCallReasonString = AMLocalizedString(@"Group call ended", @"When an active goup call is ended");
+                }
+            } else {
+                endCallReasonString = [NSString stringWithFormat:@"%@ %@", AMLocalizedString(@"callEnded", @"When an active call of user A with user B had ended"), [NSString stringWithFormat:AMLocalizedString(@"duration", @"Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc)"), [NSString mnz_stringFromCallDuration:duration.integerValue]]];
             }
             break;
         }
@@ -373,6 +377,8 @@ static NSString* const B = @"[B]";
     string = [string stringByReplacingOccurrencesOfString:@"[/A]" withString:@""];
     string = [string stringByReplacingOccurrencesOfString:@"[S]" withString:@""];
     string = [string stringByReplacingOccurrencesOfString:@"[/S]" withString:@""];
+    string = [string stringByReplacingOccurrencesOfString:@"[C]" withString:@""];
+    string = [string stringByReplacingOccurrencesOfString:@"[/C]" withString:@""];
     string = [string stringByReplacingOccurrencesOfString:@"<a href=\"terms\">" withString:@""];
     string = [string stringByReplacingOccurrencesOfString:@"<a href='terms'>" withString:@""];
     string = [string stringByReplacingOccurrencesOfString:@"</a>" withString:@""];
