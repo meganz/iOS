@@ -1247,6 +1247,7 @@
         } 
         
         [cell.avatarImageView mnz_setImageForUserHandle:user.handle name:cell.nameLabel.text];
+        cell.verifiedImageView.hidden = ![MEGASdkManager.sharedMEGASdk areCredentialsVerifiedOfUser:user];
         
         if (self.tableView.isEditing) {
             // Check if selectedNodesArray contains the current node in the tableView
