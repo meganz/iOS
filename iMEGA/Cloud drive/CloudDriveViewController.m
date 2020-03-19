@@ -803,7 +803,6 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     //Sort configuration by default is "default ascending"
     if (![[NSUserDefaults standardUserDefaults] integerForKey:@"SortOrderType"]) {
         [[NSUserDefaults standardUserDefaults] setInteger:MEGASortOrderTypeDefaultAsc forKey:@"SortOrderType"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
     }
     return [[NSUserDefaults standardUserDefaults] integerForKey:@"SortOrderType"];
 }
@@ -1068,7 +1067,6 @@ static const NSTimeInterval kSearchTimeDelay = .5;
                         [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
                     } else {
                         [NSUserDefaults.standardUserDefaults setBool:NO forKey:@"isSaveMediaCapturedToGalleryEnabled"];
-                        [NSUserDefaults.standardUserDefaults synchronize];
                         [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
                     }
                 }];

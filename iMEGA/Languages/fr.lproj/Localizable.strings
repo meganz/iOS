@@ -20,8 +20,8 @@
 "passcode"="Code d’accès";
 /* "Size" of the file or folder you are sharing */
 "size"="Taille";
-/*  */
-"Quality"="Quality";
+/* Quality title, used in changing the export quality of scaned doc */
+"Quality"="Qualité";
 /*  */
 "folder"="Dossier";
 /* Error message shown when there's no camera available on the device */
@@ -121,7 +121,7 @@
 /*  */
 "passwordStrong"="Ce mot de passe résistera à la plupart des attaques en force sophistiquées. Veuillez vous assurer de vous en souvenir.";
 /*  */
-"agreeWithTheMEGATermsOfService"="J’accepte les <a href='terms'>conditions générales d’utilisation</a> de MEGA";
+"agreeWithTheMEGATermsOfService"="J’accepte les <a href=\"terms\">Conditions générales d’utilisation</a> de MEGA";
 /* This text is displayed in the account creation screen with a checkbox. User will have to tick the checkbox before proceeding on to create an account */
 "agreeWithLosingPasswordYouLoseData"="Je comprends que [S]si je perds mon mot de passe, je pourrais perdre mes données[/S]. En apprendre davantage sur le <a href=\"terms\">chiffrement de bout en bout de MEGA</a>.";
 /* Error text shown when you have not entered a correct name */
@@ -129,7 +129,7 @@
 /* Error text shown when you have not written the same password */
 "passwordsDoNotMatch"="Les mots de passe ne correspondent pas";
 /* Error text shown when you don't have selected the checkbox to agree with the Terms of Service */
-"termsCheckboxUnselected"="Vous devez accepter les conditions générales d’utilisation pour ouvrir un compte sur MEGA.";
+"termsCheckboxUnselected"="Vous devez accepter les Conditions générales d’utilisation pour ouvrir un compte sur MEGA.";
 /* This error is shown in the account creation page. User has to agree to the terms and conditions. If the user does not agree to the losing password results in data loss condition then this error is shown  */
 "termsForLosingPasswordCheckboxUnselected"="Vous devez attester que vous comprenez le danger que représente la perte de votre mot de passe";
 /* Error text shown when the users tries to create an account with an email already in use */
@@ -147,7 +147,7 @@
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Vous devez libérer de l'espace sur votre appareil";
 /* Message shown when you try to downlonad files bigger than the available memory. */
-"MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device."="MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device.";
+"MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device."="MEGA a besoin d’au moins %@. Libérez de l’espace en supprimant les applis que vous n’utilisez plus ou les fichiers vidéo volumineux dans votre galerie. Vous pouvez aussi gérer ce que MEGA enregistre sur votre appareil.";
 /* Title for the file link view */
 "fileLink"="Lien du fichier";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
@@ -511,9 +511,9 @@
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
 "itemsSelected"="%lu éléments sont sélectionnés";
 /* String shown when multi selection is enabled and only one item has been selected. */
-"1 selected"="1 selected";
+"1 selected"="1 est sélectionné";
 /* String shown when multi selection is enabled and the user has more than one item selected. */
-"xSelected"="%d sélectionnés";
+"xSelected"="%d sont sélectionnés";
 /* Title of the Offline section */
 "offline"="Hors ligne";
 /* Title of the Contacts section */
@@ -687,7 +687,7 @@
 /* Title to show when device local storage is full */
 "%@ Storage Full"="L’espace de stockage du %@ est plein";
 /* Title to show when device local storage is almost full */
-"Device Storage Almost Full"="Device Storage Almost Full";
+"Device Storage Almost Full"="La mémoire de l’appareil est presque pleine";
 /* Detail for local storage full situation */
 "You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="Vous manquez d’espace de stockage pour d’autres téléversements de l’appareil photo. Libérez de l’espace en supprimant des applis, des vidéos ou de la musique inutilisées. Vous pouvez gérer votre espace de stockage dans %@";
 /* Navigation path for Storage settings in iOS */
@@ -976,7 +976,7 @@
 /* Add your phone number title */
 "Add Your Phone Number"="Ajouter votre numéro de téléphone";
 /* Choose Your Country title */
-"Choose Your Country"="Sélectionnez votre pays";
+"Choose Your Country"="Choisir votre pays";
 /* Used to display the number of months a plan was purchased for e.g. 3 months, 6 months. */
 "months"="mois";
 /*  */
@@ -1072,7 +1072,7 @@
 /* "Yearly" subscriptions */
 "yearly"="Annuel";
 /* Alert title shown when a selected plan is not available at that moment on the App store */
-"productNotAvailable"="Cet élément d’achat intégré n’est pas proposé dans la logithèque App Store pour l’instant. Veuillez ressayer ultérieurement.";
+"productNotAvailable"="Cet élément d’achat intégré n’est pas proposé dans le magasin App Store pour l’instant. Veuillez ressayer ultérieurement.";
 /* Alert title shown when the user has purchase correctly some plan */
 "thankYou_title"="Merci";
 /* Alert message shown when a purchase was restored succesfully */
@@ -1116,7 +1116,7 @@
 /* The title for my message in a chat. The message was sent from yourself. */
 "me"="Moi";
 /* A log message in a chat conversation to tell the reader that a participant [A] was removed from the group chat by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the group chat by Frank. */
-"wasRemovedFromTheGroupChatBy"="[A] a été retiré de la conversation de groupe par [B].";
+"wasRemovedFromTheGroupChatBy"="[A] a été exclu de la conversation de groupe par [B].";
 /* A log message in the chat conversation to tell the reader that a participant [A] left the group chat. For example: Alice left the group chat. */
 "leftTheGroupChat"="[A] a quitté la conversation de groupe";
 /* A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank. */
@@ -1270,15 +1270,15 @@
 /* Alert message shown when the user perform logout and has files in the Offline directory */
 "allFilesSavedForOfflineWillBeDeletedFromYourDevice"="Tous les fichiers enregistrés hors ligne seront supprimés de votre appareil. Poursuivre la déconnexion ?";
 /* Title shown when you almost had used your available transfer quota. */
-"depletedTransferQuota_title"="Le quota de transfert est épuisé";
+"depletedTransferQuota_title"="Le quota de transfert est insuffisant";
 /* Description shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_message"="Votre téléchargement en attente dépasse le quota de transfert actuel disponible de votre compte et pourrait par conséquent être interrompu.";
 /* Button title to see the available pro plans in MEGA */
 "seePlans"="Voir les abonnements";
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
 "dismiss"="Fermer";
-/* Notification text body shown when you have received a new chat message */
-"newMessage"="Nouveau message";
+/* Content of the notification when there is unknown activity on the Chat */
+"You may have new messages"="Vous pourriez avoir de nouveaux messages";
 /* Notification text body shown when you have received a contact request */
 "contactRequest"="Demande de contact";
 /* Notification text body shown when you have received a new shared folder */
@@ -1308,7 +1308,7 @@
 /* Label in chat rooms that indicates how many messages are unread. Plural and as short as possible. */
 "unreadMessages"="%lu messages non lus";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="Les abonnements sont renouvelés automatiquement pour les périodes d’abonnement successives de même durée et au même prix que la période initiale choisie. Vous pouvez désactiver le renouvellement automatique de votre abonnement MEGA PRO, au plus tard 24 heures avant l’échéance de votre prochain paiement, dans la page des réglages de votre compte iTunes. Pour gérer vos abonnements, cliquez simplement sur l’icône de la logithèque App Store sur votre appareil, connectez-vous en bas de la page avec votre identifiant Apple (si ce n’est pas déjà fait) et cliquez sur Afficher l’identifiant Apple. Vous atteindrez la page de votre compte où vous trouverez Gérer vers le bas. Ensuite, vous pourrez sélectionner votre abonnement MEGA PRO et visualiser votre date prévue de renouvellement, choisir un autre type d’abonnement, ou activer/ désactiver le renouvellement automatique de votre abonnement.";
+"autorenewableDescription"="Les abonnements sont renouvelés automatiquement pour les périodes d’abonnement successives de même durée et au même prix que la période initiale choisie. Vous pouvez désactiver le renouvellement automatique de votre abonnement MEGA PRO, au plus tard 24 heures avant l’échéance de votre prochain paiement, dans la page des réglages de votre compte iTunes. Pour gérer vos abonnements, cliquez simplement sur l’icône du magasin App Store sur votre appareil, connectez-vous en bas de la page avec votre identifiant Apple (si ce n’est pas déjà fait) et cliquez sur Afficher l’identifiant Apple. Vous atteindrez la page de votre compte où vous trouverez Gérer vers le bas. Ensuite, vous pourrez sélectionner votre abonnement MEGA PRO et visualiser votre date prévue de renouvellement, choisir un autre type d’abonnement, ou activer/ désactiver le renouvellement automatique de votre abonnement.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Ouvrez MEGA et connectez-vous pour continuer";
 /* Label in login screen to inform about the chat initialization proccess */
@@ -1628,6 +1628,8 @@
 "Save in Photos"="Enregistrer dans Photos";
 /* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Enregistrer dans la médiathèque de votre appareil un exemplaire des images et des vidéos prises avec l’appli MEGA.";
+/* Settings section title where you can enable the option to 'Spotlight search' */
+"Spotlight Search"="Recherche Spotlight";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="Vous détenez les clés";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -1727,7 +1729,7 @@
 /* Footer text to explain what means 'Encrypted Key Rotation' */
 "Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages."="La rotation de la clé est un peu plus sécurisée, mais elle ne vous permet pas de créer un lien de conversation et les nouveaux participants ne verront pas les anciens messages.";
 /* Shown as an error message when the user selects "create chat link", but haven't entered a title for the newly created room */
-"To create a chat link you must name the group."="Pour créer un lien de conversation, vous devez nommer le groupe.";
+"To create a chat link you must name the group."="Pour créer un lien de conversation, vous devez donner un nom au groupe.";
 /* Label shown in a cell where you can enable a switch to get a chat link */
 "Chat Link"="Lien de conversation";
 /* Button text in public chat previews that allows the user to join the chat */
@@ -1945,7 +1947,7 @@
 /* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
 "Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="Veuillez vous rendre dans la section Confidentialité des réglages de votre appareil. Activez le service de localisation et définissez MEGA à Quand l’appli est active ou à Toujours.";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
-"NSLocationAlwaysAndWhenInUseUsageDescription"="MEGA accesses your location when you share it with your contacts in chat or when you enable ”Upload in Background” for Camera Uploads so your photos and videos are uploaded when your location changes.";
+"NSLocationAlwaysAndWhenInUseUsageDescription"="MEGA accède à votre emplacement quand vous le partagez avec vos contacts dans une conversation ou quand vous activez « Téléverser en arrière-plan » pour Téléversements de l’appareil photo, afin que vos photos et vidéos soient téléversées quand votre emplacement géographique change.";
 /* Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
 "Mobile Data is turned off"="Les données mobiles sont désactivées";
 /* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */
@@ -1957,7 +1959,7 @@
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Voulez-vous vraiment changer pour un serveur de test ? Votre compte pourrait subir des problèmes irrécupérables";
 /* Title label that explains that the user is going to be asked for the contacts permission */
-"Enable Access to Contacts"="Permettre l’accès aux contacts";
+"Enable Access to Contacts"="Autoriser l’accès aux contacts";
 /* Detailed explanation of why the user should give permission to contacts */
 "MEGA needs access to your contacts to help you connect with other people on MEGA."="MEGA a besoin d’accéder à vos contacts pour vous aider à vous connecter à d’autres personnes sur MEGA.";
 /* Title encouraging the user to check who of its contacts are using MEGA */
@@ -1966,8 +1968,6 @@
 "[X] contacts found on MEGA"="[X] contacts ont été trouvés sur MEGA";
 /* Title showing the user that one of his contacts are using MEGA */
 "1 contact found on MEGA"="1 contact a été trouvé sur MEGA";
-/* Text indicating the user to perform an action to grant some permission */
-"Enable Access"="Autoriser l’accès";
 /* Text indicating the user to open the device settings for MEGA */
 "Open Settings"="Ouvrir les réglages";
 /* Text encouraging the user to invite contacts to MEGA */
@@ -2047,9 +2047,9 @@
 /* Contact details screen: Set the alias(nickname) for a user */
 "Set Nickname"="Définir un pseudonyme";
 /* Contact details screen: Edit the alias(nickname) for a user */
-"Edit Nickname"="Edit Nickname";
+"Edit Nickname"="Modifier le pseudonyme";
 /* Edit nickname screen: Remove nickname button title */
-"Remove Nickname"="Remove Nickname";
+"Remove Nickname"="Supprimer le pseudonyme";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
 "Alias/ Nickname"="Alias/pseudonyme";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
@@ -2109,16 +2109,22 @@
 /* Title of Image Quality option */
 "Automatic"="Automatique";
 /* Description of Automatic Image Quality option */
-"Send smaller size images through cellular networks and original size images through wifi"="Send smaller size images through cellular networks and original size images through wifi";
+"Send smaller size images through cellular networks and original size images through wifi"="Envoyer des images de plus petite taille par le réseau cellulaire et des images de taille originale par le Wi-Fi";
 /* Title of Image Quality option */
 "Optimised"="Optimisée";
 /* Description of Optimised Image Quality option */
 "Send smaller size images optimised for lower data consumption"="Envoyer des images de plus petite taille, optimisées pour une consommation réduite de données";
 /* Description of High Image Quality option */
-"Send original size, increased quality images"="Send original size, increased quality images";
+"Send original size, increased quality images"="Envoyer la taille originale. Les images sont de meilleure qualité";
 /* Setting title for Doc scan view */
-"Save Settings"="Save Settings";
+"Save Settings"="Enregistrer les paramètres";
 /* file type title, used in changing the export format of scaned doc */
 "File Type"="Type de fichier";
 /* export Quality Option for Scan document */
-"best"="Best";
+"best"="La meilleure";
+/* Description of why the user should give permission to contacts */
+"Easily discover contacts from your address book on MEGA."="Easily discover contacts from your address book on MEGA.";
+/* Detailed description of why the user should give permission to contacts */
+"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA will not use this data for any other purpose and will never interact with your contacts without your consent.";
+/* Title label that explains that the user is going to be asked for the contacts permission */
+"Enable Access to Your Address Book"="Enable Access to Your Address Book";
