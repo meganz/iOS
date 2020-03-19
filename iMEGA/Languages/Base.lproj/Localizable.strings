@@ -1547,7 +1547,9 @@
 /* When an active call of user A with user B had ended */
 "callEnded"="Call ended.";
 /* When an active goup call is ended */
-"Group call ended."="Group call ended.";
+"Group call ended"="Group call ended";
+/* When an active goup call is ended, shows the duration */
+"[A]Group call ended[/A][C]. Duration: [/C]"="[A]Group call ended[/A][C]. Duration: [/C]";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="Duration: %@";
 /* */
