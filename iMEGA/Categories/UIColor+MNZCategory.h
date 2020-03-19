@@ -25,6 +25,9 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus);
 + (UIColor *)mnz_settingsBackgroundForTraitCollection:(UITraitCollection *)traitCollection;
 + (UIColor *)mnz_settingsDetailsBackgroundForTraitCollection:(UITraitCollection *)traitCollection;
 
++ (UIColor *)mnz_notificationSeenBackgroundForTraitCollection:(UITraitCollection *)traitCollection;
++ (UIColor *)mnz_notificationUnseenBackgroundForTraitCollection:(UITraitCollection *)traitCollection;
+
 #pragma mark - Black
 
 + (UIColor *)mnz_black000000_01;
@@ -50,12 +53,15 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus);
 
 + (UIColor *)mnz_turquoiseForTraitCollection:(UITraitCollection *)traitCollection;
 
+// This is used for the Contacts label in notifications and will stay the same for light and dark
 + (UIColor *)mnz_green00897B;
 + (UIColor *)mnz_green31B500;
 
 #pragma mark - Orange
 
+// This is used for the Incoming & Outgoing label in notifications and will stay the same for light and dark
 + (UIColor *)mnz_orangeFFA500;
+// This is used for the Incoming & Outgoing label in notifications and will stay the same for light and dark
 + (UIColor *)mnz_orangeFFD300;
 
 #pragma mark - Red
