@@ -8,6 +8,9 @@ class ActionSheetAction: NSObject {
 
 class ActionSheetViewController: UIViewController {
 
+    var layoutThreshold: CGFloat {
+        return CGFloat(self.view.bounds.height * 0.3)
+    }
     var didSetupConstraints = false
     var tableView = UITableView.newAutoLayout()
     var headerView: UIView?
@@ -76,10 +79,10 @@ extension ActionSheetViewController {
             tableView.autoPinEdge(toSuperviewEdge: .right)
 
             let height = CGFloat(actions.count * 60 + 50 + bottomHeight)
-            if height < 200 {
+            if height < layoutThreshold {
                 top = tableView.autoSetDimension(.height, toSize: height)
             } else {
-                top = tableView.autoPinEdge(toSuperviewSafeArea: .top, withInset: view.bounds.height * 0.5)
+                top = tableView.autoPinEdge(toSuperviewSafeArea: .top, withInset: layoutThreshold)
             }
             didSetupConstraints = true
         }
@@ -109,12 +112,12 @@ extension ActionSheetViewController: UITableViewDelegate {
         if offset > 0 {
             print("down")
             if offset > 20 {
-                constant = CGFloat(self.view.bounds.height * 0.5)
+                constant = CGFloat(self.view.bounds.height * 0.3)
             }
 
         } else {
             if abs(offset) > 20 {
-                if CGFloat(view.bounds.height * 0.5) > top!.constant {
+                if layoutThreshold > top!.constant {
                     constant = CGFloat(0)
                 }
             }
@@ -139,17 +142,17 @@ extension ActionSheetViewController: UITableViewDelegate {
         if offset > 0 {
             print("down")
             if offset > 20 {
-                if CGFloat(view.bounds.height * 0.5) < top!.constant {
+                if layoutThreshold < top!.constant {
                     dismiss(animated: true, completion: nil)
                     return
                 } else {
-                    constant = CGFloat(self.view.bounds.height * 0.5)
+                    constant = CGFloat(self.view.bounds.height * 0.3)
 
                 }
             }
         } else {
             if abs(offset) > 20 {
-                if CGFloat(view.bounds.height * 0.5) > top!.constant {
+                if layoutThreshold > top!.constant {
                     constant = CGFloat(0)
                 }
             }
