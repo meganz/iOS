@@ -28,6 +28,7 @@
 #import "ContactTableViewCell.h"
 #import "ChatRoomCell.h"
 #import "ItemListViewController.h"
+#import "NSString+MNZCategory.h"
 
 @interface SendToViewController () <UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, UISearchControllerDelegate, ItemListViewControllerDelegate, UIGestureRecognizerDelegate>
 
@@ -206,16 +207,14 @@
             MEGAChatListItem *chatListItem = a;
             first = chatListItem.title;
         } else if ([a isKindOfClass:MEGAUser.class]) {
-            MEGAUser *user = a;
-            first = user.mnz_fullName;
+            first = ((MEGAUser *)a).mnz_displayName;
         }
         
         if ([b isKindOfClass:MEGAChatListItem.class]) {
             MEGAChatListItem *chatListItem = b;
             second = chatListItem.title;
         } else if ([b isKindOfClass:MEGAUser.class]) {
-            MEGAUser *user = b;
-            second = user.mnz_fullName;
+            second = ((MEGAUser *)b).mnz_displayName;
         }
         
         return [first compare:second options:NSCaseInsensitiveSearch];
@@ -610,7 +609,11 @@
             NSPredicate *chatPredicate = [NSPredicate predicateWithFormat:@"SELF.title contains[c] %@", searchString];
             self.searchedGroupChatsMutableArray = [[self.groupChatsMutableArray filteredArrayUsingPredicate:chatPredicate] mutableCopy];
             
-            NSPredicate *usersPredicate = [NSPredicate predicateWithFormat:@"SELF.mnz_fullName contains[c] %@", searchString];
+            NSPredicate *fullnamePredicate = [NSPredicate predicateWithFormat:@"SELF.mnz_fullName contains[c] %@", searchString];
+            NSPredicate *nicknamePredicate = [NSPredicate predicateWithFormat:@"SELF.mnz_nickname contains[c] %@", searchString];
+            NSPredicate *emailPredicate = [NSPredicate predicateWithFormat:@"SELF.email contains[c] %@", searchString];
+            NSPredicate *usersPredicate = [NSCompoundPredicate orPredicateWithSubpredicates:@[fullnamePredicate, nicknamePredicate, emailPredicate]];
+            
             self.searchedUsersMutableArray = [[self.visibleUsersMutableArray filteredArrayUsingPredicate:usersPredicate] mutableCopy];
             
             [self updateMainSearchArray];
@@ -670,8 +673,7 @@
             cell.onlineStatusView.hidden = YES;
         }
         
-        NSString *userName = user.mnz_fullName;
-        cell.nameLabel.text = userName ? userName : user.email;
+        cell.nameLabel.text = user.mnz_displayName;
         cell.shareLabel.text = user.email;
         
         [cell.avatarImageView mnz_setImageForUserHandle:user.handle];

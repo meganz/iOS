@@ -75,14 +75,14 @@
         [self.simplePasscodeSwitch setOn:[[LTHPasscodeViewController sharedUser] isSimple]];
         [self.biometricsSwitch setOn:[[LTHPasscodeViewController sharedUser] allowUnlockWithBiometrics]];
         
-        if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled]) {
+        if ([NSUserDefaults.standardUserDefaults boolForKey:MEGAPasscodeLogoutAfterTenFailedAttemps]) {
             [self.eraseLocalDataSwitch setOn:YES];
             [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
         } else {
             [self.eraseLocalDataSwitch setOn:NO];
             
             if (!wasPasscodeAlreadyEnabled) {
-                [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kIsEraseAllLocalDataEnabled];
+                [NSUserDefaults.standardUserDefaults setBool:YES forKey:MEGAPasscodeLogoutAfterTenFailedAttemps];
                 [self.eraseLocalDataSwitch setOn:YES];
                 [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
                 wasPasscodeAlreadyEnabled = YES;
@@ -124,7 +124,7 @@
 }
 
 - (void)eraseLocalData {
-    BOOL eraseLocalDataEnaled = [[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled];
+    BOOL eraseLocalDataEnaled = [NSUserDefaults.standardUserDefaults boolForKey:MEGAPasscodeLogoutAfterTenFailedAttemps];
     
     if (eraseLocalDataEnaled) {
         [self.eraseLocalDataSwitch setOn:YES];
@@ -155,9 +155,9 @@
 }
 
 - (IBAction)eraseLocalDataSwitchValueChanged:(UISwitch *)sender {
-    BOOL isEraseLocalData = ![[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled];
+    BOOL isEraseLocalData = ![NSUserDefaults.standardUserDefaults boolForKey:MEGAPasscodeLogoutAfterTenFailedAttemps];
     
-    [[NSUserDefaults standardUserDefaults] setBool:isEraseLocalData forKey:kIsEraseAllLocalDataEnabled];
+    [NSUserDefaults.standardUserDefaults setBool:isEraseLocalData forKey:MEGAPasscodeLogoutAfterTenFailedAttemps];
     if (isEraseLocalData) {
         [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
         [self.eraseLocalDataSwitch setOn:YES animated:YES];

@@ -117,8 +117,6 @@
         default:
             break;
     }
-    
-    [[NSUserDefaults standardUserDefaults] synchronize];
         
     SelectableTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
     cell.redCheckmarkImageView.hidden = NO;

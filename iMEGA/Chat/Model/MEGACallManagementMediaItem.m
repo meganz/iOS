@@ -2,6 +2,8 @@
 #import "MEGACallManagementMediaItem.h"
 #import "MEGAMessageCallManagementView.h"
 
+#import "MEGAChatMessage+MNZCategory.h"
+#import "MEGASDKManager.h"
 #import "NSString+MNZCategory.h"
 #import "UIImage+MNZCategory.h"
 
@@ -60,7 +62,8 @@
         
         if (self.message.type == MEGAChatMessageTypeCallEnded) {
             callView.callImageView.image = [UIImage mnz_imageByEndCallReason:self.message.termCode userHandle:self.message.userHandle];
-            callView.callLabel.text = [NSString mnz_stringByEndCallReason:self.message.termCode userHandle:self.message.userHandle duration:self.message.duration];
+            MEGAChatRoom *chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:self.message.chatId];
+            callView.callLabel.text = [NSString mnz_stringByEndCallReason:self.message.termCode userHandle:self.message.userHandle duration:@(self.message.duration) isGroup:chatRoom.isGroup];
         } else { // MEGAChatMessageTypeCallStarted
             callView.callImageView.image = [UIImage imageNamed:@"callWithXIncoming"];
             callView.callLabel.text = AMLocalizedString(@"Call Started", @"Text to inform the user there is an active call and is participating");
