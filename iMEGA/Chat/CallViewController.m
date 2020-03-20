@@ -158,7 +158,7 @@
     
     [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
     
-    self.mpVolumeView = [[MPVolumeView alloc] initWithFrame:self.enableDisableSpeaker.bounds];
+    self.mpVolumeView = [[MPVolumeView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 60.0f, 60.0f)];
     self.mpVolumeView.showsVolumeSlider = NO;
     [self.volumeContainerView addSubview:self.mpVolumeView];
     
