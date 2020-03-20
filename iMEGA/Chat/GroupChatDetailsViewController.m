@@ -480,7 +480,6 @@
             NSString *peerFullname;
             NSString *peerEmail;
             MEGAChatRoomPrivilege privilege;
-            BOOL verified = NO;
             if (handle == [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
                 NSString *myFullname = [[MEGASdkManager sharedMEGAChatSdk] myFullname];
                 peerFullname = [NSString stringWithFormat:@"%@ (%@)", myFullname, AMLocalizedString(@"me", @"The title for my message in a chat. The message was sent from yourself.")];
@@ -491,7 +490,7 @@
                 peerEmail = [self.chatRoom peerEmailByHandle:handle];
                 privilege = [self.chatRoom peerPrivilegeAtIndex:index];
                 MEGAUser *user = [MEGASdkManager.sharedMEGASdk contactForEmail:base64Handle];
-                verified = [MEGASdkManager.sharedMEGASdk areCredentialsVerifiedOfUser:user];
+                cell.verifiedImageView.hidden = ![MEGASdkManager.sharedMEGASdk areCredentialsVerifiedOfUser:user];
             }
             
             BOOL isNameEmpty = [[peerFullname stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""];
@@ -527,7 +526,6 @@
             }
             [cell.permissionsButton setImage:permissionsImage forState:UIControlStateNormal];
             cell.permissionsButton.tag = indexPath.row;
-            cell.verifiedImageView.hidden = !verified;
             break;
         }
             
