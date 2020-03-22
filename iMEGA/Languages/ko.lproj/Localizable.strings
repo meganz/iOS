@@ -1546,6 +1546,10 @@
 "callFailed"="통화 실패";
 /* When an active call of user A with user B had ended */
 "callEnded"="통화 종료됨.";
+/* When an active goup call is ended */
+"Group call ended"="그룹 통화 종료됨";
+/* When an active goup call is ended, shows the duration */
+"[A]Group call ended[/A][C]. Duration: [/C]"="[A]단체 통화 종료[/A][C]. 통화 시간: [/C]";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="시간: %@";
 /* */
@@ -1959,9 +1963,11 @@
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="테스트 서버로 변경하시겠습니까? 당신의 계정이 복구할 수 없는 문제를 겪을 수 있습니다.";
 /* Title label that explains that the user is going to be asked for the contacts permission */
-"Enable Access to Contacts"="연락처에 접근 허용";
+"Enable Access to Your Address Book"="Enable Access to Your Address Book";
 /* Detailed explanation of why the user should give permission to contacts */
-"MEGA needs access to your contacts to help you connect with other people on MEGA."="MEGA에 있는 다른 사람들과 당신을 연결하기 위해서는 당신의 연락처에 대한 접근이 필요합니다.";
+"Easily discover contacts from your address book on MEGA."="Easily discover contacts from your address book on MEGA.";
+/* Detailed explanation about MEGA not using the contacts data without permision */
+"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA will not use this data for any other purpose and will never interact with your contacts without your consent.";
 /* Title encouraging the user to check who of its contacts are using MEGA */
 "See who's already on MEGA"="누가 MEGA를 사용중인지 보기";
 /* Title showing the user how many of his contacts are using MEGA */
@@ -2126,5 +2132,5 @@
 "Easily discover contacts from your address book on MEGA."="Easily discover contacts from your address book on MEGA.";
 /* Detailed description of why the user should give permission to contacts */
 "MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA will not use this data for any other purpose and will never interact with your contacts without your consent.";
-/* Title label that explains that the user is going to be asked for the contacts permission */
-"Enable Access to Your Address Book"="Enable Access to Your Address Book";
+/* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
+"Enter group name"="그룹 이름을 입력하세요";
