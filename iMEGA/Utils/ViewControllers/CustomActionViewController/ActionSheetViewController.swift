@@ -61,7 +61,7 @@ extension ActionSheetViewController {
         backgroundView.backgroundColor = .init(white: 0, alpha: 0.8)
         view.addSubview(backgroundView)
 
-        headerView = UIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 50))
+        headerView = UIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 30))
         headerView?.backgroundColor = .white
 
         let title = UILabel()
@@ -70,7 +70,7 @@ extension ActionSheetViewController {
         headerView?.addSubview(title)
         title.autoCenterInSuperview()
 
-        //        tableView.tableHeaderView = headerView
+        tableView.tableHeaderView = headerView
         tableView.tableFooterView = UIView()
         tableView.isScrollEnabled = true
         tableView.delegate = self
@@ -186,6 +186,7 @@ extension ActionSheetViewController: UITableViewDelegate {
         let height = CGFloat(actions.count * 60 + 50 + bottomHeight)
         if height < view.bounds.height - layoutThreshold {
             top = tableView.autoPinEdge(toSuperviewSafeArea: .top, withInset: CGFloat(view.bounds.height - height))
+            tableView.isScrollEnabled = false
         } else {
             top = tableView.autoPinEdge(toSuperviewSafeArea: .top, withInset: layoutThreshold)
         }
@@ -219,10 +220,6 @@ extension ActionSheetViewController: UITableViewDelegate {
 extension ActionSheetViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return actions.count
-    }
-
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return headerView
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
