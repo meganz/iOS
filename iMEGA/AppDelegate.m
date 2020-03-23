@@ -1490,7 +1490,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                     
                     [self.sslKeyPinningController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"openBrowser", @"Button title to allow the user open the default browser") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                         self.sslKeyPinningController = nil;
-                        NSURL *url = [NSURL URLWithString:@"https://www.mega.nz"];
+                        NSURL *url = [NSURL URLWithString:@"https://mega.nz"];
                         [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:NULL];
                     }]];
                     
