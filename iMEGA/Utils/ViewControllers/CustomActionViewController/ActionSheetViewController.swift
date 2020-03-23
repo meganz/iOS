@@ -65,18 +65,16 @@ extension ActionSheetViewController {
         headerView = UIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 50))
         headerView?.backgroundColor = .white
 
-
         indicator.layer.cornerRadius = 3
         indicator.clipsToBounds = true
         indicator.backgroundColor = UIColor(red: 4/255, green: 4/255, blue: 15/255, alpha: 0.15)
-        headerView?.addSubview(indicator)
-//        headerView?.layer.cornerRadius = 16
-        indicator.autoAlignAxis(toSuperviewAxis: .vertical)
         indicator.isHidden = true
+        headerView?.addSubview(indicator)
+        indicator.autoAlignAxis(toSuperviewAxis: .vertical)
         indicator.autoSetDimension(.height, toSize: 6)
         indicator.autoSetDimension(.width, toSize: 36)
         indicator.autoPinEdge(toSuperviewEdge: .top, withInset: CGFloat(6))
-        
+
         let title = UILabel()
         title.text = headerTitle
         title.sizeToFit()
@@ -97,7 +95,6 @@ extension ActionSheetViewController {
         tableView.autoPinEdge(toSuperviewEdge: .bottom)
         tableView.autoPinEdge(toSuperviewEdge: .left)
         tableView.autoPinEdge(toSuperviewEdge: .right)
-
         top = tableView.autoPinEdge(toSuperviewSafeArea: .top, withInset: CGFloat(view.bounds.height))
 
         view.setNeedsUpdateConstraints()
@@ -162,7 +159,6 @@ extension ActionSheetViewController: UITableViewDelegate {
         }
         let offset = scrollView.panGestureRecognizer.translation(in: view).y
         if offset > 0 {
-            print("down")
             if offset > 20 {
                 if layoutThreshold < top!.constant {
                     self.dismiss(animated: true, completion: nil)
@@ -178,7 +174,6 @@ extension ActionSheetViewController: UITableViewDelegate {
                     constant = CGFloat(0)
                 }
             }
-            print("up")
         }
         print(scrollView.panGestureRecognizer.translation(in: view).y)
 
