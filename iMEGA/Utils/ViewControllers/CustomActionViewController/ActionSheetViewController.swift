@@ -14,7 +14,7 @@ class ActionSheetViewController: UIViewController {
     var didSetupConstraints = false
     var tableView = UITableView.newAutoLayout()
     var headerView: UIView?
-    var indicator: UIView?
+    var indicator = UIView(frame: CGRect(x: 0, y: 0, width: 36, height: 6))
     var backgroundView = UIView.newAutoLayout()
     var top: NSLayoutConstraint?
 
@@ -65,12 +65,14 @@ extension ActionSheetViewController {
         headerView = UIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 50))
         headerView?.backgroundColor = .white
 
-        let indicator = UIView(frame: CGRect(x: 0, y: 0, width: 36, height: 6))
+
         indicator.layer.cornerRadius = 3
         indicator.clipsToBounds = true
         indicator.backgroundColor = UIColor(red: 4/255, green: 4/255, blue: 15/255, alpha: 0.15)
         headerView?.addSubview(indicator)
+//        headerView?.layer.cornerRadius = 16
         indicator.autoAlignAxis(toSuperviewAxis: .vertical)
+        indicator.isHidden = true
         indicator.autoSetDimension(.height, toSize: 6)
         indicator.autoSetDimension(.width, toSize: 36)
         indicator.autoPinEdge(toSuperviewEdge: .top, withInset: CGFloat(6))
@@ -88,7 +90,6 @@ extension ActionSheetViewController {
         tableView.dataSource = self
         tableView.bounces = true
         tableView.layer.cornerRadius = 16
-        tableView.clipsToBounds = true
         view.addSubview(tableView)
 
         backgroundView.autoPinEdgesToSuperviewEdges()
@@ -195,13 +196,14 @@ extension ActionSheetViewController: UITableViewDelegate {
         if #available(iOS 11.0, *) {
             bottomHeight = Int(view.safeAreaInsets.bottom)
         }
-        let height = CGFloat(actions.count * 60 + 50 + bottomHeight)
+        let height = CGFloat(actions.count * 60 + 70 + bottomHeight)
         if height < view.bounds.height - layoutThreshold {
             top = tableView.autoPinEdge(toSuperviewSafeArea: .top, withInset: CGFloat(view.bounds.height - height))
             tableView.isScrollEnabled = false
-            indicator?.isHidden = true
+            indicator.isHidden = true
         } else {
             top = tableView.autoPinEdge(toSuperviewSafeArea: .top, withInset: layoutThreshold)
+            indicator.isHidden = false
         }
         backgroundView.alpha = 0
 
