@@ -739,9 +739,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 }
 
 - (NSArray<NSNumber *> *)rowsForNicknameAndVeriry {
-    NSMutableArray *rows = [NSMutableArray arrayWithCapacity:2];
-    [rows addObjectsFromArray:@[@(ContactDetailsRowNickname), @(ContactDetailsRowVerifyCredentials)]];
-    return [rows copy];
+    return @[@(ContactDetailsRowNickname), @(ContactDetailsRowVerifyCredentials)];
 }
 
 #pragma mark - IBActions
@@ -815,8 +813,8 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     if ([self isSharedFolderSection:section]) {
         rowsInSection = self.incomingNodeListForUser.size.integerValue;
     } else if (section == ContactDetailsSectionNicknameVerifyCredentials) {
-        rowsInSection = 2;
         self.contactDetailsRows = [self rowsForNicknameAndVeriry];
+        rowsInSection = self.contactDetailsRows.count;
     } else {
         rowsInSection = 1;
     }
