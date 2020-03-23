@@ -2,9 +2,6 @@
 import Foundation
 
 extension String {
-    func localized(comment: String = "") -> String {
-        return LocalizationSystem.sharedLocal()!.localizedString(forKey: self, value: comment)
-    }
     
     var base64Decoded: String? {
         guard let data = Data(base64Encoded: self) else { return nil }
