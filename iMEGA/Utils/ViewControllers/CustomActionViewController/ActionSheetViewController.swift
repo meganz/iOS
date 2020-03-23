@@ -14,6 +14,7 @@ class ActionSheetViewController: UIViewController {
     var didSetupConstraints = false
     var tableView = UITableView.newAutoLayout()
     var headerView: UIView?
+    var indicator: UIView?
     var backgroundView = UIView.newAutoLayout()
     var top: NSLayoutConstraint?
 
@@ -61,9 +62,19 @@ extension ActionSheetViewController {
         backgroundView.backgroundColor = .init(white: 0, alpha: 0.8)
         view.addSubview(backgroundView)
 
-        headerView = UIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 30))
+        headerView = UIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 50))
         headerView?.backgroundColor = .white
 
+        let indicator = UIView(frame: CGRect(x: 0, y: 0, width: 36, height: 6))
+        indicator.layer.cornerRadius = 3
+        indicator.clipsToBounds = true
+        indicator.backgroundColor = UIColor(red: 4/255, green: 4/255, blue: 15/255, alpha: 0.15)
+        headerView?.addSubview(indicator)
+        indicator.autoAlignAxis(toSuperviewAxis: .vertical)
+        indicator.autoSetDimension(.height, toSize: 6)
+        indicator.autoSetDimension(.width, toSize: 36)
+        indicator.autoPinEdge(toSuperviewEdge: .top, withInset: CGFloat(6))
+        
         let title = UILabel()
         title.text = headerTitle
         title.sizeToFit()
@@ -76,7 +87,8 @@ extension ActionSheetViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.bounces = true
-
+        tableView.layer.cornerRadius = 16
+        tableView.clipsToBounds = true
         view.addSubview(tableView)
 
         backgroundView.autoPinEdgesToSuperviewEdges()
@@ -187,6 +199,7 @@ extension ActionSheetViewController: UITableViewDelegate {
         if height < view.bounds.height - layoutThreshold {
             top = tableView.autoPinEdge(toSuperviewSafeArea: .top, withInset: CGFloat(view.bounds.height - height))
             tableView.isScrollEnabled = false
+            indicator?.isHidden = true
         } else {
             top = tableView.autoPinEdge(toSuperviewSafeArea: .top, withInset: layoutThreshold)
         }
