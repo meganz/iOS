@@ -32,7 +32,7 @@ class AlbumsTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "Albums".localized(comment: "Used in Photos app browser album listing screen.")
+        title = AMLocalizedString("Albums", "Used in Photos app browser album listing screen.")
         tableView.register(UINib(nibName: "AlbumTableViewCell", bundle: nil),
                            forCellReuseIdentifier: "AlbumTableViewCell")
         tableView.rowHeight = 110.0
@@ -73,7 +73,7 @@ class AlbumsTableViewController: UITableViewController {
         let label = UILabel()
         label.textAlignment = .center
         label.font = UIFont.preferredFont(forTextStyle: .body)
-        label.text = "No Photos or Videos".localized(comment: "Used in Photos app browser. Shown when there are no photos or videos in the Photos app.")
+        label.text = AMLocalizedString("No Photos or Videos", "Used in Photos app browser. Shown when there are no photos or videos in the Photos app.")
         view.addSubview(label)
         
         label.translatesAutoresizingMaskIntoConstraints = false
