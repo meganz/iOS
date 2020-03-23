@@ -82,7 +82,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 
 @property (strong, nonatomic) NSString *userNickname;
 @property (strong, nonatomic) NSArray<NSNumber *> *contactDetailsSections;
-@property (strong, nonatomic) NSArray<NSNumber *> *contactDetailsRows; // Used for section with more than 1 row
+@property (strong, nonatomic, readonly) NSArray<NSNumber *> *rowsForNicknameAndVerify;
 
 @end
 
@@ -738,7 +738,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     return (user == nil || user.visibility != MEGAUserVisibilityVisible);
 }
 
-- (NSArray<NSNumber *> *)rowsForNicknameAndVeriry {
+- (NSArray<NSNumber *> *)rowsForNicknameAndVerify {
     return @[@(ContactDetailsRowNickname), @(ContactDetailsRowVerifyCredentials)];
 }
 
@@ -813,8 +813,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     if ([self isSharedFolderSection:section]) {
         rowsInSection = self.incomingNodeListForUser.size.integerValue;
     } else if (section == ContactDetailsSectionNicknameVerifyCredentials) {
-        self.contactDetailsRows = [self rowsForNicknameAndVeriry];
-        rowsInSection = self.contactDetailsRows.count;
+        rowsInSection = self.rowsForNicknameAndVerify.count;
     } else {
         rowsInSection = 1;
     }
@@ -826,7 +825,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     
     switch (self.contactDetailsSections[indexPath.section].intValue) {
         case ContactDetailsSectionNicknameVerifyCredentials:
-            switch (self.contactDetailsRows[indexPath.row].intValue) {
+            switch (self.rowsForNicknameAndVerify[indexPath.row].intValue) {
                 case ContactDetailsRowNickname:
                     cell = [self cellForNicknameWithIndexPath:indexPath];
                     break;
@@ -918,7 +917,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     
     switch (self.contactDetailsSections[indexPath.section].intValue) {
         case ContactDetailsSectionNicknameVerifyCredentials:
-            switch (self.contactDetailsRows[indexPath.row].intValue) {
+            switch (self.rowsForNicknameAndVerify[indexPath.row].intValue) {
                 case ContactDetailsRowNickname:
                     [self showNickNameViewContoller];
                     break;
