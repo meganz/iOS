@@ -10,9 +10,9 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus);
 + (UIColor *)mnz_mainBarsColorForTraitCollection:(UITraitCollection *)traitCollection;
 
 + (UIColor *)mnz_background;
++ (UIColor *)mnz_secondaryBackgroundForTraitCollection:(UITraitCollection *)traitCollection;
 
 + (UIColor *)mnz_accountViewsBackgroundColorForTraitCollection:(UITraitCollection *)traitCollection;
-+ (UIColor *)mnz_inputsBackgroundColorForTraitCollection:(UITraitCollection *)traitCollection;
 
 + (UIColor *)mnz_label;
 
@@ -70,9 +70,6 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus);
 
 + (UIColor *)mnz_redMain;
 + (UIColor *)mnz_redError;
-+ (UIColor *)mnz_redProI;
-+ (UIColor *)mnz_redProII;
-+ (UIColor *)mnz_redProIII;
 
 #pragma mark - White
 

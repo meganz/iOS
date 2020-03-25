@@ -348,7 +348,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     [self.lastNameInputView updateUI];
     [self.emailInputView updateUI];
     [self.passwordView updateUI];
-    self.passwordStrengthIndicatorContainerView.backgroundColor = [UIColor mnz_inputsBackgroundColorForTraitCollection:self.traitCollection];
+    self.passwordStrengthIndicatorContainerView.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
     [self.retypePasswordView updateUI];
     
     [self setTermsOfServiceAttributedTitle];

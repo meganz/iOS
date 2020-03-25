@@ -3,12 +3,16 @@
 
 #import "MEGANavigationController.h"
 #import "MEGAPurchase.h"
+#import "MEGA-Swift.h"
+
 #import "ProductDetailTableViewCell.h"
 #import "UIApplication+MNZCategory.h"
 
 @interface ProductDetailViewController () <MEGAPurchaseDelegate, UITableViewDataSource, UITableViewDelegate> {
     BOOL isPurchased;
 }
+
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property (weak, nonatomic) IBOutlet UIView *headerView;
 @property (weak, nonatomic) IBOutlet UIImageView *crestImageView;
@@ -25,15 +29,17 @@
 
 @implementation ProductDetailViewController
 
+#pragma mark - Lifecycle
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     switch (_megaAccountType) {
         case MEGAAccountTypeLite:
             [_crestImageView setImage:[UIImage imageNamed:@"white_crest_LITE"]];
-            [_headerView setBackgroundColor:[UIColor mnz_orangeFFA500]];
+            self.headerView.backgroundColor = UIColor.mnz_proLITE;
             [self setTitle:@"LITE"];
-            self.selectMembershiptLabel.textColor = [UIColor mnz_orangeFFA500];
+            self.selectMembershiptLabel.textColor = UIColor.mnz_proLITE;
             break;
             
         case MEGAAccountTypeProI:
@@ -73,6 +79,8 @@
     self.bandwidthLabel.text = AMLocalizedString(@"transferQuota", @"Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'.");
     [_selectMembershiptLabel setText:AMLocalizedString(@"selectMembership", nil)];
     [_save17Label setText:AMLocalizedString(@"save17", nil)];
+    
+    [self updateUI];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -87,7 +95,29 @@
     [[MEGAPurchase sharedInstance] setDelegate:nil];
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateUI];
+            
+            [self.tableView reloadData];
+        }
+    }
+}
+
 #pragma mark - Private
+
+- (void)updateUI {
+    self.tableView.separatorColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
+    
+    self.storageLabel.textColor = self.storageSizeLabel.textColor = self.bandwidthLabel.textColor = self.bandwidthSizeLabel.textColor = UIColor.whiteColor;
+    
+    self.selectMembershiptLabel.textColor = UIColor.mnz_proLITE;
+    
+    self.save17Label.textColor = [UIColor mnz_redMainForTraitCollection:self.traitCollection];
+}
 
 - (void)restore{
     [[MEGAPurchase sharedInstance] restorePurchase];

@@ -104,7 +104,7 @@
             __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;
             customModalAlertVC.firstCompletion = ^{
                 [weakCustom dismissViewControllerAnimated:YES completion:^{
-                    UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
+                    UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"UpgradeAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeTableViewControllerID"];
                     MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
                     
                     [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];

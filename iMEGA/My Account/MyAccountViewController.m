@@ -8,6 +8,7 @@
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
 #import "MEGAShowPasswordReminderRequestDelegate.h"
+#import "MEGA-Swift.h"
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UpgradeTableViewController.h"
@@ -195,7 +196,6 @@
         switch (accountDetails.type) {
             case MEGAAccountTypeFree: {
                 self.proStatusLabel.text = AMLocalizedString(@"Free", @"Label to indicate that the current user has a Free account.");
-                self.proStatusLabel.textColor = [UIColor mnz_green31B500];
                 
                 self.proExpiryDateLabelHeightLayoutConstraint.constant = 0;
                 break;
@@ -203,35 +203,30 @@
                 
             case MEGAAccountTypeLite: {
                 self.proStatusLabel.text = [NSString stringWithFormat:@"PRO LITE"];
-                self.proStatusLabel.textColor = [UIColor mnz_orangeFFA500];
-                self.proExpiryDateLabel.text = renewsExpiresString;
                 break;
             }
                 
             case MEGAAccountTypeProI: {
                 self.proStatusLabel.text = [NSString stringWithFormat:@"PRO I"];
-                self.proStatusLabel.textColor = UIColor.mnz_redProI;
-                self.proExpiryDateLabel.text = renewsExpiresString;
                 break;
             }
                 
             case MEGAAccountTypeProII: {
                 self.proStatusLabel.text = [NSString stringWithFormat:@"PRO II"];
-                self.proStatusLabel.textColor = UIColor.mnz_redProII;
-                self.proExpiryDateLabel.text = renewsExpiresString;
                 break;
             }
                 
             case MEGAAccountTypeProIII: {
                 self.proStatusLabel.text = [NSString stringWithFormat:@"PRO III"];
-                self.proStatusLabel.textColor = UIColor.mnz_redProIII;
-                self.proExpiryDateLabel.text = renewsExpiresString;
                 break;
             }
                 
             default:
                 break;
         }
+        
+        self.proStatusLabel.textColor = [UIColor mnz_colorWithProLevel:accountDetails.type];
+        self.proExpiryDateLabel.text = renewsExpiresString;
     } else {
         MEGALogError(@"Account details unavailable");
     }
@@ -245,7 +240,7 @@
 
 - (IBAction)buyPROTouchUpInside:(UIButton *)sender {
     if ([[MEGASdkManager sharedMEGASdk] mnz_accountDetails]) {
-        UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
+        UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"UpgradeAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeTableViewControllerID"];
         upgradeTVC.hideSkipButton = YES;
         
         [self.navigationController pushViewController:upgradeTVC animated:YES];

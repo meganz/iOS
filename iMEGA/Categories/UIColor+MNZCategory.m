@@ -40,6 +40,23 @@
     }
 }
 
++ (UIColor *)mnz_secondaryBackgroundForTraitCollection:(UITraitCollection *)traitCollection {
+    if (@available(iOS 13.0, *)) {
+        switch (traitCollection.userInterfaceStyle) {
+            case UIUserInterfaceStyleUnspecified:
+            case UIUserInterfaceStyleLight: {
+                return UIColor.whiteColor;
+            }
+                
+            case UIUserInterfaceStyleDark: {
+                return UIColor.secondarySystemBackgroundColor;
+            }
+        }
+    } else {
+        return UIColor.whiteColor;
+    }
+}
+
 + (UIColor *)mnz_accountViewsBackgroundColorForTraitCollection:(UITraitCollection *)traitCollection {
     if (@available(iOS 13.0, *)) {
         switch (traitCollection.userInterfaceStyle) {
@@ -58,27 +75,6 @@
         }
     } else {
         return UIColor.mnz_grayF7F7F7;
-    }
-}
-
-+ (UIColor *)mnz_inputsBackgroundColorForTraitCollection:(UITraitCollection *)traitCollection {
-    if (@available(iOS 13.0, *)) {
-        switch (traitCollection.userInterfaceStyle) {
-            case UIUserInterfaceStyleUnspecified:
-            case UIUserInterfaceStyleLight: {
-                return UIColor.whiteColor;
-            }
-                
-            case UIUserInterfaceStyleDark: {
-                if (traitCollection.accessibilityContrast == UIAccessibilityContrastHigh) {
-                    return [UIColor colorFromHexString:@"2C2C2E"];
-                } else {
-                    return [UIColor colorFromHexString:@"1C1C1E"];
-                }
-            }
-        }
-    } else {
-        return UIColor.whiteColor;
     }
 }
 
@@ -200,7 +196,7 @@
             }
                 
             case UIUserInterfaceStyleDark: {
-                return [UIColor colorFromHexString:@"1C1C1E"];
+                return UIColor.secondarySystemBackgroundColor;
             }
         }
     } else {
@@ -217,7 +213,7 @@
             }
                 
             case UIUserInterfaceStyleDark: {
-                return [UIColor colorFromHexString:@"2C2C2E"];
+                return UIColor.tertiarySystemBackgroundColor;
             }
         }
     } else {
@@ -456,33 +452,10 @@
     }
 }
 
-+ (UIColor *)mnz_redProI {
-    return [UIColor mnz_redE13339];
-}
-
-+ (UIColor *)mnz_redProII {
-    return [UIColor mnz_redDC191F];
-}
-
-+ (UIColor *)mnz_redProIII {
-    return [UIColor mnz_redD90007];
-}
-
 + (UIColor *)mnz_redF30C14 {
     return [UIColor colorWithRed:243.0f / 255.0f green:12.0f / 255.0f blue:20.0f / 255.0f alpha:1.0f];
 }
 
-+ (UIColor *)mnz_redD90007 {
-    return [UIColor colorWithRed:217.0/255.0 green:0.0 blue:7.0/255.0 alpha:1.0];
-}
-
-+ (UIColor *)mnz_redE13339 {
-    return [UIColor colorWithRed:225.0/255.0 green:51.0/255.0 blue:57.0/255.0 alpha:1.0];
-}
-
-+ (UIColor *)mnz_redDC191F {
-    return [UIColor colorWithRed:220.0/255.0 green:25.0/255.0 blue:31.0/255.0 alpha:1.0];
-}
 
 #pragma mark - White
 

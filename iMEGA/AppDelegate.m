@@ -972,7 +972,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 }
 
 - (void)showChooseAccountType {
-    UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
+    UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"UpgradeAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeTableViewControllerID"];
     MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
     upgradeTVC.chooseAccountType = YES;
     
@@ -1003,7 +1003,7 @@ void uncaughtExceptionHandler(NSException *exception) {
             [weakCustom dismissViewControllerAnimated:YES completion:^{
                 self.upgradeVCPresented = NO;
                 if ([MEGAPurchase sharedInstance].products.count > 0) {
-                    UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
+                    UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"UpgradeAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeTableViewControllerID"];
                     MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
                     
                     [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:nil];

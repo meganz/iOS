@@ -70,8 +70,7 @@ class AppearanceManager: NSObject {
         UICollectionView.appearance().backgroundColor = UIColor.mnz_background()
         UIButton.appearance(whenContainedInInstancesOf: [UICollectionViewCell.self]).tintColor = UIColor.mnz_tertiaryGray(for: traitCollection)
         
-        UIToolbar.appearance().barTintColor = UIColor.mnz_mainBarsColor(for: traitCollection)
-        UIToolbar.appearance().tintColor = UIColor.mnz_primaryGray(for: traitCollection)
+        self.setupToolbar(traitCollection)
         
         self.setupThirdPartyAppereance(traitCollection)
     }
@@ -115,6 +114,21 @@ class AppearanceManager: NSObject {
                 view.removeFromSuperview()
                 window.addSubview(view)
             }
+        }
+    }
+    
+    // MARK: - Private
+    
+    private class func setupToolbar(_ traitCollection: UITraitCollection) {
+        if #available(iOS 13, *) {
+            let toolbarAppearance = UIToolbarAppearance.init()
+            toolbarAppearance.configureWithDefaultBackground()
+            toolbarAppearance.backgroundColor = UIColor.mnz_mainBarsColor(for: traitCollection)
+            UIToolbar.appearance().standardAppearance = toolbarAppearance
+        } else {
+            UIToolbar.appearance().backgroundColor = UIColor.mnz_mainBarsColor(for: traitCollection)
+            UIToolbar.appearance().barTintColor = UIColor.mnz_mainBarsColor(for: traitCollection)
+            UIToolbar.appearance().tintColor = UIColor.mnz_primaryGray(for: traitCollection)
         }
     }
 }
