@@ -178,6 +178,7 @@
 }
 
 - (void)showEmptyStateViewWithTitle:(NSString *)title text:(NSString *)text {
+    self.moreBarButtonItem.enabled = self.downloadBarButtonItem.enabled = self.importBarButtonItem.enabled = NO;
     UnavailableLinkView *unavailableLinkView = [[[NSBundle mainBundle] loadNibNamed:@"UnavailableLinkView" owner:self options: nil] firstObject];
     unavailableLinkView.frame = self.view.bounds;
     unavailableLinkView.imageView.image = [UIImage imageNamed:@"invalidFileLink"];
