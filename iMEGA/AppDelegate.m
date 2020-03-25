@@ -61,8 +61,6 @@
 
 #import "MEGAProviderDelegate.h"
 
-#define kFirstRun @"FirstRun"
-
 @interface AppDelegate () <PKPushRegistryDelegate, UIApplicationDelegate, UNUserNotificationCenterDelegate, LTHPasscodeViewControllerDelegate, LaunchViewControllerDelegate, MEGAApplicationDelegate, MEGAChatDelegate, MEGAChatRequestDelegate, MEGAGlobalDelegate, MEGAPurchasePricingDelegate, MEGARequestDelegate, MEGATransferDelegate> {
     BOOL isAccountFirstLogin;
     BOOL isFetchNodesDone;
@@ -178,12 +176,12 @@
     NSString *sessionV3 = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
     
     //Clear keychain (session) and delete passcode on first run in case of reinstallation
-    if (![[NSUserDefaults standardUserDefaults] objectForKey:kFirstRun]) {
+    if (![NSUserDefaults.standardUserDefaults objectForKey:MEGAFirstRun]) {
         sessionV3 = nil;
         [Helper clearEphemeralSession];
         [Helper clearSession];
         [Helper deletePasscode];
-        [[NSUserDefaults standardUserDefaults] setValue:@"1strun" forKey:kFirstRun];
+        [NSUserDefaults.standardUserDefaults setValue:MEGAFirstRunValue forKey:MEGAFirstRun];
         if (@available(iOS 12.0, *)) {} else {
             [NSUserDefaults.standardUserDefaults synchronize];
         }

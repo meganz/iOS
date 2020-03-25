@@ -1211,9 +1211,14 @@ static MEGAIndexer *indexer;
     
     [NSUserDefaults.standardUserDefaults removePersistentDomainForName:NSBundle.mainBundle.bundleIdentifier];
 
-    //Set default order on logout
+    //Set default values on logout
     [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"SortOrderType"];
     [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"OfflineSortOrderType"];
+    
+    [NSUserDefaults.standardUserDefaults setValue:MEGAFirstRunValue forKey:MEGAFirstRun];
+    if (@available(iOS 12.0, *)) {} else {
+        [NSUserDefaults.standardUserDefaults synchronize];
+    }
 
     NSUserDefaults *sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];
     [sharedUserDefaults removePersistentDomainForName:MEGAGroupIdentifier];
