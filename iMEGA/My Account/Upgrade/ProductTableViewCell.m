@@ -2,6 +2,12 @@
 
 @implementation ProductTableViewCell
 
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    
+    [self setupCell];
+}
+
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
     
@@ -14,10 +20,22 @@
     [super setHighlighted:highlighted animated:animated];
     
     if (highlighted) {
-        self.upperLineView.backgroundColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
         self.productNameView.backgroundColor = self.productPriceLabel.textColor;
-        self.underLineView.backgroundColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
     }
+}
+
+- (void)prepareForReuse {
+    [super prepareForReuse];
+
+    [self setupCell];
+}
+
+#pragma mark - Private
+
+- (void)setupCell {
+    self.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
+    
+    self.productNameLabel.textColor = UIColor.whiteColor;
 }
 
 @end

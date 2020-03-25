@@ -74,7 +74,7 @@
     
     self.iconImageView.tintColor = self.topLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
     self.inputTextField.textColor = UIColor.mnz_label;
-    self.backgroundColor = [UIColor mnz_inputsBackgroundColorForTraitCollection:self.traitCollection];
+    self.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
 }
 
 #pragma mark - IBInspectables
