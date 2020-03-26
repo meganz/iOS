@@ -1356,12 +1356,19 @@
     
     switch (self.contactsMode) {
         case ContactsModeDefault: {
+            MEGAUser *user = [self userAtIndexPath:indexPath];
+            
+            if (!user) {
+                [SVProgressHUD showErrorWithStatus:@"Invalid user"];
+                return;
+            }
+            
             if (self.searchController.isActive) {
                 [self.searchController dismissViewControllerAnimated:YES completion:^{
-                    [self showContactDetailsAtIndexPath:indexPath];
+                    [self showContactDetailsForUser:user];
                 }];
             } else {
-                [self showContactDetailsAtIndexPath:indexPath];
+                [self showContactDetailsForUser:user];
             }
             break;
         }
@@ -1979,14 +1986,7 @@
 
 #pragma mark - Show contact details
 
-- (void)showContactDetailsAtIndexPath:(NSIndexPath *)indexPath {
-    MEGAUser *user = [self userAtIndexPath:indexPath];
-    
-    if (!user) {
-        [SVProgressHUD showErrorWithStatus:@"Invalid user"];
-        return;
-    }
-    
+- (void)showContactDetailsForUser:(MEGAUser *)user {
     ContactDetailsViewController *contactDetailsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactDetailsViewControllerID"];
     contactDetailsVC.contactDetailsMode = ContactDetailsModeDefault;
     contactDetailsVC.userEmail = user.email;
