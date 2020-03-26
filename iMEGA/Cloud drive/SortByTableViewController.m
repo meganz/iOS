@@ -116,7 +116,6 @@
     } else {
         [[NSUserDefaults standardUserDefaults] setInteger:self.sortType forKey:@"OfflineSortOrderType"];
     }
-    [[NSUserDefaults standardUserDefaults] synchronize];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

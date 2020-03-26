@@ -11,4 +11,6 @@
 
 - (void)reportIncomingCallWithCallId:(uint64_t)callId chatId:(uint64_t)chatId;
 
+- (void)invalidateProvider;
+
 @end

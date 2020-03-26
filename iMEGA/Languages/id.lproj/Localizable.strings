@@ -20,7 +20,7 @@
 "passcode"="Passcode";
 /* "Size" of the file or folder you are sharing */
 "size"="Ukuran";
-/*  */
+/* Quality title, used in changing the export quality of scaned doc */
 "Quality"="Quality";
 /*  */
 "folder"="Folder";
@@ -1277,8 +1277,8 @@
 "seePlans"="Lihat rencana";
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
 "dismiss"="Hilangkan";
-/* Notification text body shown when you have received a new chat message */
-"newMessage"="Pesan baru";
+/* Content of the notification when there is unknown activity on the Chat */
+"You may have new messages"="Anda mungkin memiliki pesan baru";
 /* Notification text body shown when you have received a contact request */
 "contactRequest"="Permintaan kontak";
 /* Notification text body shown when you have received a new shared folder */
@@ -1546,6 +1546,10 @@
 "callFailed"="Panggilan gagal";
 /* When an active call of user A with user B had ended */
 "callEnded"="Panggilan berakhir.";
+/* When an active goup call is ended */
+"Group call ended"="Panggilan grup berakhir";
+/* When an active goup call is ended, shows the duration */
+"[A]Group call ended[/A][C]. Duration: [/C]"="[A]Group call ended[/A][C]. Duration: [/C]";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="Durasi: %@";
 /* */
@@ -1959,9 +1963,11 @@
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Anda yakin ingin berganti ke server uji? Akun Anda mungkin mengalami masalah yang tidak dapat diperbaiki";
 /* Title label that explains that the user is going to be asked for the contacts permission */
-"Enable Access to Contacts"="Aktifkan akses ke kontak";
+"Enable Access to Your Address Book"="Enable Access to Your Address Book";
 /* Detailed explanation of why the user should give permission to contacts */
-"MEGA needs access to your contacts to help you connect with other people on MEGA."="MEGA membutuhkan akses ke kontak Anda untuk membantu Anda terhubung dengan orang lain di MEGA.";
+"Easily discover contacts from your address book on MEGA."="Easily discover contacts from your address book on MEGA.";
+/* Detailed explanation about MEGA not using the contacts data without permision */
+"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA will not use this data for any other purpose and will never interact with your contacts without your consent.";
 /* Title encouraging the user to check who of its contacts are using MEGA */
 "See who's already on MEGA"="Lihat siapa yang sudah ada di MEGA";
 /* Title showing the user how many of his contacts are using MEGA */
@@ -2122,3 +2128,9 @@
 "File Type"="Jenis File";
 /* export Quality Option for Scan document */
 "best"="Best";
+/* Description of why the user should give permission to contacts */
+"Easily discover contacts from your address book on MEGA."="Easily discover contacts from your address book on MEGA.";
+/* Detailed description of why the user should give permission to contacts */
+"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA will not use this data for any other purpose and will never interact with your contacts without your consent.";
+/* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
+"Enter group name"="Masukan nama grup";

@@ -20,8 +20,8 @@
 "passcode"="パスコード";
 /* "Size" of the file or folder you are sharing */
 "size"="サイズ";
-/*  */
-"Quality"="Quality";
+/* Quality title, used in changing the export quality of scaned doc */
+"Quality"="品質";
 /*  */
 "folder"="フォルダ";
 /* Error message shown when there's no camera available on the device */
@@ -1277,8 +1277,8 @@
 "seePlans"="計画を参照";
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
 "dismiss"="終了する";
-/* Notification text body shown when you have received a new chat message */
-"newMessage"="新しいメッセージ";
+/* Content of the notification when there is unknown activity on the Chat */
+"You may have new messages"="新しいメッセージがあるかもしれません";
 /* Notification text body shown when you have received a contact request */
 "contactRequest"="コンタクト要求";
 /* Notification text body shown when you have received a new shared folder */
@@ -1546,6 +1546,10 @@
 "callFailed"="通話に失敗しました";
 /* When an active call of user A with user B had ended */
 "callEnded"="通話が終了しました。";
+/* When an active goup call is ended */
+"Group call ended"="グループ通話が終了しました";
+/* When an active goup call is ended, shows the duration */
+"[A]Group call ended[/A][C]. Duration: [/C]"="[A]グループ通話が終了しました[/A][C]。通話時間：[/C]";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="通話時間：%@";
 /* */
@@ -1959,9 +1963,11 @@
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="テストサーバーに変更してもよろしいですか？　アカウントに回復不能な問題が発生する可能性があります";
 /* Title label that explains that the user is going to be asked for the contacts permission */
-"Enable Access to Contacts"="連絡先へのアクセスを有効にする";
+"Enable Access to Your Address Book"="Enable Access to Your Address Book";
 /* Detailed explanation of why the user should give permission to contacts */
-"MEGA needs access to your contacts to help you connect with other people on MEGA."="MEGAは、あなたがMEGAで他の人々とつながるのをご支援するために、あなたの連絡先にアクセスする必要があります。";
+"Easily discover contacts from your address book on MEGA."="Easily discover contacts from your address book on MEGA.";
+/* Detailed explanation about MEGA not using the contacts data without permision */
+"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA will not use this data for any other purpose and will never interact with your contacts without your consent.";
 /* Title encouraging the user to check who of its contacts are using MEGA */
 "See who's already on MEGA"="すでにMEGAにいる人を確認";
 /* Title showing the user how many of his contacts are using MEGA */
@@ -2122,3 +2128,9 @@
 "File Type"="ファイルの種類";
 /* export Quality Option for Scan document */
 "best"="最高";
+/* Description of why the user should give permission to contacts */
+"Easily discover contacts from your address book on MEGA."="Easily discover contacts from your address book on MEGA.";
+/* Detailed description of why the user should give permission to contacts */
+"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA will not use this data for any other purpose and will never interact with your contacts without your consent.";
+/* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
+"Enter group name"="グループ名を入力";
