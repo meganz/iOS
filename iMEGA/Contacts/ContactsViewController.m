@@ -92,6 +92,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *noContactsDescriptionLabel;
 @property (weak, nonatomic) IBOutlet UIButton *inviteContactButton;
 
+@property (strong, nonatomic) MEGAUser *detailUser;
+
 @end
 
 @implementation ContactsViewController
@@ -1357,16 +1359,18 @@
     switch (self.contactsMode) {
         case ContactsModeDefault: {
             MEGAUser *user = [self userAtIndexPath:indexPath];
+            
             if (!user) {
                 [SVProgressHUD showErrorWithStatus:@"Invalid user"];
                 return;
             }
-            ContactDetailsViewController *contactDetailsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactDetailsViewControllerID"];
-            contactDetailsVC.contactDetailsMode = ContactDetailsModeDefault;
-            contactDetailsVC.userEmail = user.email;
-            contactDetailsVC.userName = user.mnz_fullName;
-            contactDetailsVC.userHandle = user.handle;
-            [self.navigationController pushViewController:contactDetailsVC animated:YES];
+            
+            if (self.searchController.isActive) {
+                self.detailUser = user;
+                self.searchController.active = NO;
+            } else {
+                [self showContactDetailsForUser:user];
+            }
             break;
         }
             
@@ -1800,6 +1804,13 @@
     }
 }
 
+- (void)didDismissSearchController:(UISearchController *)searchController {
+    if (self.detailUser != nil) {
+        [self showContactDetailsForUser:self.detailUser];
+        self.detailUser = nil;
+    }
+}
+
 #pragma mark - UISearchResultsUpdating
 
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
@@ -1979,6 +1990,17 @@
 
 - (void)emailForScannedQR:(NSString *)email {
     [self inviteEmailToShareFolder:email];
+}
+
+#pragma mark - Show contact details
+
+- (void)showContactDetailsForUser:(MEGAUser *)user {
+    ContactDetailsViewController *contactDetailsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactDetailsViewControllerID"];
+    contactDetailsVC.contactDetailsMode = ContactDetailsModeDefault;
+    contactDetailsVC.userEmail = user.email;
+    contactDetailsVC.userName = user.mnz_fullName;
+    contactDetailsVC.userHandle = user.handle;
+    [self.navigationController pushViewController:contactDetailsVC animated:YES];
 }
 
 @end
