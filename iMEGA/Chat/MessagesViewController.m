@@ -1460,7 +1460,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     __weak typeof(self) weakself = self;
     AlbumsTableViewController *albumTableViewController = [AlbumsTableViewController.alloc
                                                            initWithSelectionActionText:AMLocalizedString(@"Send (%d)",
-                                                                                                         @"Used in Photos app browser view to send the photos from the view to the cloud.")
+                                                                                                         @"Used in Photos app browser view to send the photos from the view to the chat.")
                                                            selectionActionDisabledText:AMLocalizedString(@"send", @"Used in Photos app browser view as a disabled action when there is no assets selected")
                                                            completionBlock:^(NSArray<PHAsset *> * _Nonnull assets) {
         if (assets.count > 0) {
