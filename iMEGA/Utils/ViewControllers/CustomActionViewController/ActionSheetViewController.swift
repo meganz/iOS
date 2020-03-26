@@ -129,7 +129,6 @@ extension ActionSheetViewController: UITableViewDelegate {
 
         let offset = scrollView.panGestureRecognizer.translation(in: view).y
         if offset > 0 {
-            print("down")
             if offset > 20 {
                 constant = CGFloat(self.view.bounds.height * 0.3)
             }
@@ -140,16 +139,12 @@ extension ActionSheetViewController: UITableViewDelegate {
                     constant = CGFloat(0)
                 }
             }
-
-            print("up")
         }
-        print(scrollView.panGestureRecognizer.translation(in: view).y)
 
         top?.constant = constant
         UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()
         }
-
     }
 
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
@@ -175,7 +170,6 @@ extension ActionSheetViewController: UITableViewDelegate {
                 }
             }
         }
-        print(scrollView.panGestureRecognizer.translation(in: view).y)
 
         top?.constant = constant
         UIView.animate(withDuration: 0.2) {
@@ -289,5 +283,15 @@ extension ActionSheetViewController: UIViewControllerAnimatedTransitioning, UIVi
     open func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         isPresenting = false
         return self
+    }
+}
+
+extension ActionSheetViewController: UIPopoverPresentationControllerDelegate {
+    func prepareForPopoverPresentation(_ popoverPresentationController: UIPopoverPresentationController) {
+        let height = CGFloat(actions.count * 60 + 50)
+        top?.constant = CGFloat(0)
+        tableView.isScrollEnabled = false
+        backgroundView.backgroundColor = .clear
+        self.preferredContentSize = CGSize(width: 320, height: height)
     }
 }
