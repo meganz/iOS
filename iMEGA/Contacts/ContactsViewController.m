@@ -92,6 +92,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *noContactsDescriptionLabel;
 @property (weak, nonatomic) IBOutlet UIButton *inviteContactButton;
 
+@property (strong, nonatomic) MEGAUser *detailUser;
+
 @end
 
 @implementation ContactsViewController
@@ -1364,9 +1366,8 @@
             }
             
             if (self.searchController.isActive) {
-                [self.searchController dismissViewControllerAnimated:YES completion:^{
-                    [self showContactDetailsForUser:user];
-                }];
+                self.detailUser = user;
+                self.searchController.active = NO;
             } else {
                 [self showContactDetailsForUser:user];
             }
@@ -1800,6 +1801,13 @@
         default:
             searchController.searchBar.showsCancelButton = YES;
             break;
+    }
+}
+
+- (void)didDismissSearchController:(UISearchController *)searchController {
+    if (self.detailUser != nil) {
+        [self showContactDetailsForUser:self.detailUser];
+        self.detailUser = nil;
     }
 }
 
