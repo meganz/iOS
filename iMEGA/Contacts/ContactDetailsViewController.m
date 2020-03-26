@@ -85,6 +85,9 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 @property (strong, nonatomic) NSArray<NSNumber *> *contactDetailsSections;
 @property (strong, nonatomic, readonly) NSArray<NSNumber *> *rowsForNicknameAndVerify;
 
+@property (nonatomic, getter=shouldWaitForChatConnectivity) BOOL waitForChatConnectivity;
+@property (nonatomic, getter=isVideoCall) BOOL videoCall;
+
 @end
 
 @implementation ContactDetailsViewController
@@ -528,7 +531,13 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
         [peerList addPeerWithHandle:self.userHandle privilege:MEGAChatRoomPrivilegeStandard];
         MEGAChatCreateChatGroupRequestDelegate *createChatGroupRequestDelegate = [[MEGAChatCreateChatGroupRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
             self.chatRoom = chatRoom;
-            [self openCallViewWithVideo:video active:NO];
+            MEGAChatConnection chatConnection = [MEGASdkManager.sharedMEGAChatSdk chatConnectionState:self.chatRoom.chatId];
+            if (chatConnection == MEGAChatConnectionOnline) {
+                [self openCallViewWithVideo:video active:NO];
+            } else {
+                self.waitForChatConnectivity = YES;
+                self.videoCall = video;
+            }
         }];
         [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:NO peers:peerList delegate:createChatGroupRequestDelegate];
     }
@@ -1028,6 +1037,9 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     if (self.chatRoom.chatId == chatId) {
         [self updateCallButtonsState];
         [self.tableView reloadData];
+        if (self.shouldWaitForChatConnectivity && newState == MEGAChatConnectionOnline) {
+            [self openCallViewWithVideo:self.isVideoCall active:NO];
+        }
     } else if (self.groupChatRoom.chatId == chatId) {
         [self.tableView reloadData];
     }
