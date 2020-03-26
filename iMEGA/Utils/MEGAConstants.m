@@ -7,8 +7,14 @@ NSString * const MEGAiOSAppUserAgent = @"MEGAiOS";
 NSString * const MEGAiOSAppKey = @"EVtjzb7R";
 NSString * const MEGAPasswordService = @"MEGA";
 NSString * const MEGAPasswordName = @"sessionV3";
+NSString * const MEGAFirstRun = @"FirstRun";
+NSString * const MEGAFirstRunValue = @"1strun";
 
 NSString * const MEGAGroupIdentifier = @"group.mega.ios";
+
+NSString * const MEGAPasscodeLogoutAfterTenFailedAttemps = @"IsEraseAllLocalDataEnabled";
+
+uint64_t const MEGAInvalidHandle = ~(uint64_t)0;
 
 #pragma mark - global notifications
 

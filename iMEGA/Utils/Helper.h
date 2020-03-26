@@ -4,8 +4,6 @@
 #import "MEGAChatMessage.h"
 #import "MEGAIndexer.h"
 
-#define kIsEraseAllLocalDataEnabled @"IsEraseAllLocalDataEnabled"
-
 typedef NS_OPTIONS(NSUInteger, NodesAre) {
     NodesAreFiles    = 1 << 0,
     NodesAreFolders  = 1 << 1,
@@ -26,21 +24,6 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - Images
 
 + (NSDictionary *)fileTypesDictionary;
-
-+ (UIImage *)genericImage;
-+ (UIImage *)folderImage;
-+ (UIImage *)folderCameraUploadsImage;
-+ (UIImage *)incomingFolderImage;
-+ (UIImage *)outgoingFolderImage;
-+ (UIImage *)defaultPhotoImage;
-
-+ (UIImage *)downloadedArrowImage;
-+ (UIImage *)downloadingTransferImage;
-+ (UIImage *)uploadingTransferImage;
-+ (UIImage *)downloadQueuedTransferImage;
-+ (UIImage *)uploadQueuedTransferImage;
-
-+ (UIImage *)permissionsButtonImageForShareType:(MEGAShareType)shareType;
 
 #pragma mark - Paths
 

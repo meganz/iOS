@@ -7,8 +7,14 @@ extern NSString * const MEGAiOSAppUserAgent;
 extern NSString * const MEGAiOSAppKey;
 extern NSString * const MEGAPasswordService;
 extern NSString * const MEGAPasswordName;
+extern NSString * const MEGAFirstRun;
+extern NSString * const MEGAFirstRunValue;
 
 extern NSString * const MEGAGroupIdentifier;
+
+extern NSString * const MEGAPasscodeLogoutAfterTenFailedAttemps;
+
+extern uint64_t const MEGAInvalidHandle;
 
 #pragma mark - global notifications
 

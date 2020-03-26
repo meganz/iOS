@@ -21,6 +21,7 @@
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIAlertAction+MNZCategory.h"
+#import "UIImage+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 #import "UITextField+MNZCategory.h"
 #import "UIViewController+MNZCategory.h"
@@ -123,6 +124,10 @@
     }
     
     [self.tableView registerNib:[UINib nibWithNibName:@"ContactsHeaderFooterView" bundle:nil] forHeaderFooterViewReuseIdentifier:@"ContactsHeaderFooterView"];
+    
+    if (self.contactsMode == ContactsModeChatNamingGroup) {
+        self.enterGroupNameTextField.placeholder = AMLocalizedString(@"Enter group name", @"Title of the dialog shown when the user it is creating a chat link and the chat has not title");
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -1221,7 +1226,7 @@
                         cell.nameLabel.text = user.email;
                     }
                     MEGAShare *share = self.outSharesForNodeMutableArray[indexPath.row - 1];
-                    cell.permissionsImageView.image = [Helper permissionsButtonImageForShareType:share.access];
+                    cell.permissionsImageView.image = [UIImage mnz_permissionsButtonImageForShareType:share.access];
                 }
             } else if (indexPath.section == 1) {
                 cell = [tableView dequeueReusableCellWithIdentifier:@"ContactPermissionsEmailTableViewCellID" forIndexPath:indexPath];
@@ -1243,6 +1248,7 @@
         } 
         
         [cell.avatarImageView mnz_setImageForUserHandle:user.handle name:cell.nameLabel.text];
+        cell.verifiedImageView.hidden = ![MEGASdkManager.sharedMEGASdk areCredentialsVerifiedOfUser:user];
         
         if (self.tableView.isEditing) {
             // Check if selectedNodesArray contains the current node in the tableView

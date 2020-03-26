@@ -12,6 +12,7 @@
 #import "NSMutableArray+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIAlertAction+MNZCategory.h"
+#import "UIImage+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 #import "UITextField+MNZCategory.h"
 #import "UIViewController+MNZCategory.h"
@@ -675,7 +676,7 @@
     } else if (self.incomingButton.selected) {
         MEGAShare *share = [self.shares shareAtIndex:indexPath.row];
         cell.infoLabel.text = [share user];
-        [cell.cancelButton setImage:[Helper permissionsButtonImageForShareType:shareType] forState:UIControlStateNormal];
+        [cell.cancelButton setImage:[UIImage mnz_permissionsButtonImageForShareType:shareType] forState:UIControlStateNormal];
     }
     
     if (@available(iOS 11.0, *)) {
