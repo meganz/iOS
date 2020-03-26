@@ -1356,17 +1356,13 @@
     
     switch (self.contactsMode) {
         case ContactsModeDefault: {
-            MEGAUser *user = [self userAtIndexPath:indexPath];
-            if (!user) {
-                [SVProgressHUD showErrorWithStatus:@"Invalid user"];
-                return;
+            if (self.searchController.isActive) {
+                [self.searchController dismissViewControllerAnimated:YES completion:^{
+                    [self showContactDetailsAtIndexPath:indexPath];
+                }];
+            } else {
+                [self showContactDetailsAtIndexPath:indexPath];
             }
-            ContactDetailsViewController *contactDetailsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactDetailsViewControllerID"];
-            contactDetailsVC.contactDetailsMode = ContactDetailsModeDefault;
-            contactDetailsVC.userEmail = user.email;
-            contactDetailsVC.userName = user.mnz_fullName;
-            contactDetailsVC.userHandle = user.handle;
-            [self.navigationController pushViewController:contactDetailsVC animated:YES];
             break;
         }
             
@@ -1979,6 +1975,24 @@
 
 - (void)emailForScannedQR:(NSString *)email {
     [self inviteEmailToShareFolder:email];
+}
+
+#pragma mark - Show contact details
+
+- (void)showContactDetailsAtIndexPath:(NSIndexPath *)indexPath {
+    MEGAUser *user = [self userAtIndexPath:indexPath];
+    
+    if (!user) {
+        [SVProgressHUD showErrorWithStatus:@"Invalid user"];
+        return;
+    }
+    
+    ContactDetailsViewController *contactDetailsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactDetailsViewControllerID"];
+    contactDetailsVC.contactDetailsMode = ContactDetailsModeDefault;
+    contactDetailsVC.userEmail = user.email;
+    contactDetailsVC.userName = user.mnz_fullName;
+    contactDetailsVC.userHandle = user.handle;
+    [self.navigationController pushViewController:contactDetailsVC animated:YES];
 }
 
 @end
