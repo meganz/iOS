@@ -13,7 +13,15 @@ class ActionSheetCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
-    func configureCell() {
-
+    func configureCell(action: ActionSheetAction) {
+        textLabel?.text = action.title
+        detailTextLabel?.text = action.detail
+        imageView?.image = action.image
+        switch action.type {
+        case .default: break
+        case .cancel, .destructive:
+            textLabel?.textColor = .systemRed
+        default: break
+        }
     }
 }
