@@ -725,7 +725,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     }
     
     MEGAChatRoomPrivilege peerPrivilege = [self.groupChatRoom peerPrivilegeByHandle:self.userHandle];
-    if (self.groupChatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator || peerPrivilege >= MEGAChatRoomPrivilegeRo) {
+    if (self.groupChatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator && peerPrivilege >= MEGAChatRoomPrivilegeRo) {
         [sections addObjectsFromArray:@[@(ContactDetailsSectionSetPermission), @(ContactDetailsSectionRemoveParticipant)]];
     }
     
