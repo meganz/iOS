@@ -9,9 +9,9 @@
 #import "MyAccountHallViewController.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGAUserAlertList+MNZCategory.h"
-#import "MessagesViewController.h"
 #import "UIApplication+MNZCategory.h"
 #import "MainTabBarController+CameraUpload.h"
+#import "MEGA-Swift.h"
 
 @interface MainTabBarController () <UITabBarControllerDelegate, MEGAGlobalDelegate>
 
@@ -258,9 +258,9 @@
     MEGALogInfo(@"onChatListItemUpdate %@", item);
     if (item.changes == MEGAChatListItemChangeTypeUnreadCount) {
         [self setBadgeValueForChats];
-        if ([[self.selectedViewController visibleViewController] isKindOfClass:[MessagesViewController class]]) {
-            MessagesViewController *messagesViewController = (MessagesViewController *)[self.selectedViewController visibleViewController];
-            [messagesViewController updateUnreadLabel];
+        if ([[self.selectedViewController visibleViewController] isKindOfClass:[ChatViewController class]]) {
+            ChatViewController *chatViewController = (ChatViewController *)[self.selectedViewController visibleViewController];
+            [chatViewController updateUnreadLabel];
         }        
     } else if (item.changes == MEGAChatListItemChangeTypeArchived && item.unreadCount) {
         [UIApplication sharedApplication].applicationIconBadgeNumber = api.unreadChats;

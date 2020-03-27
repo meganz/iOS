@@ -5,6 +5,7 @@
 #import "MEGAStore.h"
 #import "MessagesViewController.h"
 #import "UIApplication+MNZCategory.h"
+#import "MEGA-Swift.h"
 
 @implementation MEGAChatNotificationDelegate
 
@@ -24,8 +25,8 @@
     
     if (UIApplication.sharedApplication.applicationState != UIApplicationStateBackground) {
         if ([UIApplication.mnz_visibleViewController isKindOfClass:[MessagesViewController class]] && message.status != MEGAChatMessageStatusSeen) {
-            MessagesViewController *messagesVC = (MessagesViewController *) UIApplication.mnz_visibleViewController;
-            if (messagesVC.chatRoom.chatId == chatId) {
+            ChatViewController *chatViewController = (ChatViewController *) UIApplication.mnz_visibleViewController;
+            if (chatViewController.chatRoom.chatId == chatId) {
                 MEGALogDebug(@"[Chat notification] The chat room %@ is opened, ignore notification", [MEGASdk base64HandleForHandle:chatId]);
                 return;
             }

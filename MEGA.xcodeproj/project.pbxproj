@@ -120,7 +120,6 @@
 		41BADDAD1A8E1659008408B3 /* NSString+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BADDAC1A8E1659008408B3 /* NSString+MNZCategory.m */; };
 		41BADDAF1A8E28FD008408B3 /* Photos.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41BADDAE1A8E28FD008408B3 /* Photos.storyboard */; };
 		41BADDB61A8E2E92008408B3 /* PhotosViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BADDB51A8E2E92008408B3 /* PhotosViewController.m */; };
-		41CD14701DB150F600E545BC /* MessagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41CD146F1DB150F600E545BC /* MessagesViewController.m */; };
 		41D14F6E1B85F6D40005A27A /* ProductDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D14F6D1B85F6D40005A27A /* ProductDetailViewController.m */; };
 		41D14F711B8603AF0005A27A /* ProductDetailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D14F701B8603AF0005A27A /* ProductDetailTableViewCell.m */; };
 		41D1E0BB1B58F0B800982830 /* MOOfflineNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D1E0BA1B58F0B800982830 /* MOOfflineNode.m */; };
@@ -1047,6 +1046,7 @@
 		BFE54779231F0F29007FB8F6 /* UIViewController+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0BBEFD230627BE001FD542 /* UIViewController+MNZCategory.m */; };
 		BFE6DBF8242D879D00E2E5B4 /* MessageKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFE6DBF7242D879D00E2E5B4 /* MessageKit.framework */; };
 		BFE6DBF9242D879D00E2E5B4 /* MessageKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BFE6DBF7242D879D00E2E5B4 /* MessageKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		BFE6DBFC242DBA4A00E2E5B4 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE6DBFB242DBA4A00E2E5B4 /* ChatViewController.swift */; };
 		E803CB641D5336F100F81A36 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E803CB661D5336F100F81A36 /* InfoPlist.strings */; };
 		E80C76101DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E80C760F1DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.m */; };
 		E81616731A8397B5002EFDD7 /* FolderLinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E81616721A8397B5002EFDD7 /* FolderLinkViewController.m */; };
@@ -2446,6 +2446,7 @@
 		BF69E5162374F3720031913D /* AppDelegate+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Additions.swift"; sourceTree = "<group>"; };
 		BFD23CCD236255A5005D4A1E /* NicknameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewController.swift; sourceTree = "<group>"; };
 		BFE6DBF7242D879D00E2E5B4 /* MessageKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MessageKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BFE6DBFB242DBA4A00E2E5B4 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		E803CB651D5336F100F81A36 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E803CB681D53374A00F81A36 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E80C760E1DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GroupChatDetailsViewTableViewCell.h; path = Chat/GroupChatDetailsViewTableViewCell.h; sourceTree = "<group>"; };
@@ -3746,6 +3747,7 @@
 				419A02741DACE848000B9DC9 /* ChatRoomCell.m */,
 				41CD146E1DB150F600E545BC /* MessagesViewController.h */,
 				41CD146F1DB150F600E545BC /* MessagesViewController.m */,
+				BFE6DBFB242DBA4A00E2E5B4 /* ChatViewController.swift */,
 				5B20F4A01EFA9629007E0A34 /* ChatAttachedNodesViewController.h */,
 				5B20F4A11EFA9629007E0A34 /* ChatAttachedNodesViewController.m */,
 				5B39DAA01EF916D900BC2319 /* ChatAttachedContactsViewController.h */,
@@ -5965,6 +5967,7 @@
 				4131997C1BD7BD5D002CD6EA /* DTTimePeriodGroup.m in Sources */,
 				830EF9A420062F3800FAA947 /* DevicePermissionsHelper.m in Sources */,
 				831FBEA220EF697200AC1B91 /* MEGAArchiveChatRequestDelegate.m in Sources */,
+				BFE6DBFC242DBA4A00E2E5B4 /* ChatViewController.swift in Sources */,
 				77F1DBDC2056A9DF005D5F0E /* MEGAContactLinkCreateRequestDelegate.m in Sources */,
 				5BDE180C1F500EE000CD9F82 /* MyAccountBaseViewController.m in Sources */,
 				41EAAE4D1D06B49400622FAF /* UICollectionView+CTAssetsPickerController.m in Sources */,
@@ -6260,7 +6263,6 @@
 				A86B9F802316D6AB00F35E7A /* FLEXUtility.m in Sources */,
 				4172794B1DB663FA001AC818 /* JSQMessagesBubbleImage.m in Sources */,
 				A8F1381C21D3ABF2003C7364 /* LocationSearchTableViewController.m in Sources */,
-				41CD14701DB150F600E545BC /* MessagesViewController.m in Sources */,
 				777615AF2175D87D00A7796D /* InputView.m in Sources */,
 				A8F6C5F31FAB3FD3001E274D /* MEGAChatEnableDisableAudioRequestDelegate.m in Sources */,
 				413199771BD7BD5D002CD6EA /* DTConstants.m in Sources */,

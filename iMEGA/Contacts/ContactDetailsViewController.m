@@ -26,7 +26,6 @@
 #import "DevicePermissionsHelper.h"
 #import "DisplayMode.h"
 #import "GradientView.h"
-#import "MessagesViewController.h"
 #import "NodeInfoViewController.h"
 #import "SharedItemsTableViewCell.h"
 #import "VerifyCredentialsViewController.h"
@@ -462,9 +461,9 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 }
 
 - (void)openChatRoomWithChatId:(uint64_t)chatId {
-    MessagesViewController *messagesVC = [[MessagesViewController alloc] init];
-    messagesVC.chatRoom                = self.chatRoom;
-    [self.navigationController pushViewController:messagesVC animated:YES];
+    ChatViewController *chatViewController = [ChatViewController.alloc init];
+    chatViewController.chatRoom = self.chatRoom;
+    [self.navigationController pushViewController:chatViewController animated:YES];
 }
 
 - (void)sendMessageToContact {
@@ -483,7 +482,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     } else {
         NSUInteger viewControllersCount = self.navigationController.viewControllers.count;
         UIViewController *previousViewController = viewControllersCount >= 2 ? self.navigationController.viewControllers[viewControllersCount - 2] : nil;
-        if (previousViewController && [previousViewController isKindOfClass:MessagesViewController.class]) {
+        if (previousViewController && [previousViewController isKindOfClass:ChatViewController.class]) {
             [self.navigationController popViewControllerAnimated:YES];
         } else {
             [self openChatRoomWithChatId:self.chatRoom.chatId];

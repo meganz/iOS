@@ -1,4 +1,4 @@
-
+/*
 #import "JSQMessages.h"
 
 #import "MEGASdkManager.h"
@@ -15,3 +15,4 @@
 - (void)showOptionsForPeerWithHandle:(uint64_t)userHandle senderView:(UIView *)senderView;
 
 @end
+*/

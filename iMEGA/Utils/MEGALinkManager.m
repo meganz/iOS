@@ -34,8 +34,8 @@
 #import "MEGAQuerySignupLinkRequestDelegate.h"
 #import "MEGAQueryRecoveryLinkRequestDelegate.h"
 #import "MEGASdkManager.h"
-#import "MessagesViewController.h"
 #import "UnavailableLinkView.h"
+#import "MEGA-Swift.h"
 
 static NSURL *linkURL;
 static NSURL *secondaryLinkURL;
@@ -753,9 +753,9 @@ static NSString *nodeToPresentBase64Handle;
 }
 
 + (void)createChatAndShow:(uint64_t)chatId publicChatLink:(NSURL *)publicChatLink {
-    MessagesViewController *messagesVC = [[MessagesViewController alloc] init];
-    messagesVC.chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatId];
-    messagesVC.publicChatLink = publicChatLink;
+    ChatViewController *chatViewController = [ChatViewController.alloc init];
+    chatViewController.chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatId];
+    chatViewController.publicChatLink = publicChatLink;
     
     UIViewController *rootViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
     if ([rootViewController isKindOfClass:MainTabBarController.class]) {
@@ -764,39 +764,39 @@ static NSString *nodeToPresentBase64Handle;
         
         if (mainTBC.presentedViewController) {
             [mainTBC dismissViewControllerAnimated:NO completion:^{
-                [MEGALinkManager pushChat:messagesVC tabBar:mainTBC];
+                [MEGALinkManager pushChat:chatViewController tabBar:mainTBC];
             }];
         } else {
-            [MEGALinkManager pushChat:messagesVC tabBar:mainTBC];
+            [MEGALinkManager pushChat:chatViewController tabBar:mainTBC];
         }
     } else {
         if ([UIApplication.mnz_visibleViewController isKindOfClass:MessagesViewController.class]) {
-            MessagesViewController *currentMessagesVC = (MessagesViewController *)UIApplication.mnz_visibleViewController;
-            if (currentMessagesVC.chatRoom.chatId == messagesVC.chatRoom.chatId) {
+            ChatViewController *currentChatViewController = (ChatViewController *)UIApplication.mnz_visibleViewController;
+            if (currentChatViewController.chatRoom.chatId == chatViewController.chatRoom.chatId) {
                 [SVProgressHUD dismiss];
                 return;
             }
         }
-        MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:messagesVC];
+        MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:chatViewController];
         [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
     }
 }
 
-+ (void)pushChat:(MessagesViewController *)messagesVC tabBar:(MainTabBarController *)mainTBC {
++ (void)pushChat:(ChatViewController *)chatViewController tabBar:(MainTabBarController *)mainTBC {
     UINavigationController *chatNC = mainTBC.selectedViewController;
     
     for (UIViewController *viewController in chatNC.viewControllers) {
-        if ([viewController isKindOfClass:MessagesViewController.class]) {
-            MessagesViewController *currentMessagesVC = (MessagesViewController *)viewController;
-            if (currentMessagesVC.chatRoom.chatId == messagesVC.chatRoom.chatId) {
+        if ([viewController isKindOfClass:ChatViewController.class]) {
+            ChatViewController *currentChatViewController = (ChatViewController *)viewController;
+            if (currentChatViewController.chatRoom.chatId == chatViewController.chatRoom.chatId) {
                 return;
             } else {
-                [[MEGASdkManager sharedMEGAChatSdk] closeChatRoom:currentMessagesVC.chatRoom.chatId delegate:currentMessagesVC];
+                [[MEGASdkManager sharedMEGAChatSdk] closeChatRoom:currentChatViewController.chatRoom.chatId delegate:currentChatViewController];
             }
         }
     }
     
-    [chatNC pushViewController:messagesVC animated:YES];
+    [chatNC pushViewController:chatViewController animated:YES];
     
     NSMutableArray *viewControllers = chatNC.viewControllers.mutableCopy;
     NSInteger limit = chatNC.viewControllers.count - 2;
@@ -817,8 +817,8 @@ static NSString *nodeToPresentBase64Handle;
         return;
     }
     
-    MessagesViewController *messagesVC = (MessagesViewController *)UIApplication.mnz_visibleViewController;
-    [messagesVC showOptionsForPeerWithHandle:[MEGASdk handleForBase64UserHandle:base64UserHandle] senderView:nil];
+    ChatViewController *chatViewController = (ChatViewController *)UIApplication.mnz_visibleViewController;
+    [chatViewController showOptionsForPeerWithHandle:[MEGASdk handleForBase64UserHandle:base64UserHandle] senderView:nil];
 }
 
 @end
