@@ -5,7 +5,18 @@ class ActionSheetAction: NSObject {
     @objc var detail: String?
     @objc var image: UIImage?
     @objc var action = { }
-    @objc var type: UIAlertAction.Style = .default
+    @objc var style: UIAlertAction.Style = .default
+    
+    override init() {
+
+    }
+
+    public init(title: String?, detail: String?, style: UIAlertAction.Style, handler: (() -> Void)? = nil) {
+        self.title = title
+        self.detail = detail
+        self.style = style
+        self.action = handler ?? {}
+    }
 }
 
 class ActionSheetViewController: UIViewController {
@@ -15,7 +26,7 @@ class ActionSheetViewController: UIViewController {
     }
     var didSetupConstraints = false
     var tableView = UITableView.newAutoLayout()
-    var headerView: UIView?
+    var headerView = UIView(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
     var indicator = UIView(frame: CGRect(x: 0, y: 0, width: 36, height: 6))
     var backgroundView = UIView.newAutoLayout()
     var top: NSLayoutConstraint?
@@ -64,14 +75,11 @@ extension ActionSheetViewController {
         backgroundView.backgroundColor = .init(white: 0, alpha: 0.8)
         view.addSubview(backgroundView)
 
-        headerView = UIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 50))
-        headerView?.backgroundColor = .white
-
         indicator.layer.cornerRadius = 3
         indicator.clipsToBounds = true
         indicator.backgroundColor = UIColor(red: 4/255, green: 4/255, blue: 15/255, alpha: 0.15)
         indicator.isHidden = true
-        headerView?.addSubview(indicator)
+        headerView.addSubview(indicator)
         indicator.autoAlignAxis(toSuperviewAxis: .vertical)
         indicator.autoSetDimension(.height, toSize: 6)
         indicator.autoSetDimension(.width, toSize: 36)
@@ -80,10 +88,13 @@ extension ActionSheetViewController {
         let title = UILabel()
         title.text = headerTitle
         title.sizeToFit()
-        headerView?.addSubview(title)
+        headerView.addSubview(title)
         title.autoCenterInSuperview()
 
-        tableView.tableHeaderView = (headerTitle != nil) ? headerView : nil
+        if headerTitle == nil {
+            headerView.frame = CGRect(x: 0, y: 0, width: 320, height: 10)
+        }
+        tableView.tableHeaderView = headerView
         tableView.tableFooterView = UIView()
         tableView.isScrollEnabled = true
         tableView.delegate = self
@@ -246,7 +257,7 @@ extension ActionSheetViewController: UITableViewDataSource {
         tableView.deselectRow(at: indexPath, animated: true)
         let action = actions[indexPath.row]
         self.dismiss(animated: true, completion: {
-            if action.type != .cancel {
+            if action.style != .cancel {
                 action.action()
             }
         })

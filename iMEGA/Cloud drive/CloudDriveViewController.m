@@ -1421,124 +1421,90 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 }
 
 - (IBAction)moreAction:(UIBarButtonItem *)sender {
-    UIAlertController *moreAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    [moreAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
-    
-    UIAlertAction *uploadAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"upload", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [self presentUploadAlertController];
-    }];
-    [uploadAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
-    [moreAlertController addAction:uploadAlertAction];
-    
-    UIAlertAction *newFolderAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"newFolder", @"Menu option from the `Add` section that allows you to create a 'New Folder'") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        UIAlertController *newFolderAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"newFolder", @"Menu option from the `Add` section that allows you to create a 'New Folder'") message:nil preferredStyle:UIAlertControllerStyleAlert];
-        
-        [newFolderAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-            textField.placeholder = AMLocalizedString(@"newFolderMessage", @"Hint text shown on the create folder alert.");
-            [textField addTarget:self action:@selector(newFolderAlertTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
-            textField.shouldReturnCompletion = ^BOOL(UITextField *textField) {
-                return (!textField.text.mnz_isEmpty && !textField.text.mnz_containsInvalidChars);
-            };
-        }];
-        
-        [newFolderAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
-        
-        UIAlertAction *createFolderAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"createFolderButton", @"Title button for the create folder alert.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-                UITextField *textField = [[newFolderAlertController textFields] firstObject];
-                MEGANodeList *childrenNodeList = [[MEGASdkManager sharedMEGASdk] nodeListSearchForNode:self.parentNode searchString:textField.text recursive:NO];
-                if ([childrenNodeList mnz_existsFolderWithName:textField.text]) {
-                    [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"There is already a folder with the same name", @"A tooltip message which is shown when a folder name is duplicated during renaming or creation.")];
-                } else {
-                    MEGACreateFolderRequestDelegate *createFolderRequestDelegate = [[MEGACreateFolderRequestDelegate alloc] initWithCompletion:nil];
-                    [[MEGASdkManager sharedMEGASdk] createFolderWithName:textField.text parent:self.parentNode delegate:createFolderRequestDelegate];
-                }
-            }
-        }];
-        createFolderAlertAction.enabled = NO;
-        [newFolderAlertController addAction:createFolderAlertAction];
-        
-        [self presentViewController:newFolderAlertController animated:YES completion:nil];
-    }];
-    [newFolderAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
-    [moreAlertController addAction:newFolderAlertAction];
-    
-    if ([self numberOfRows]) {
-        NSString *changeViewTitle = (self.layoutView == LayoutModeList) ? AMLocalizedString(@"Thumbnail view", @"Text shown for switching from list view to thumbnail view.") : AMLocalizedString(@"List view", @"Text shown for switching from thumbnail view to list view.");
-        UIAlertAction *changeViewAlertAction = [UIAlertAction actionWithTitle:changeViewTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            [self changeLayoutMode];
-        }];
-        [changeViewAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
-        [moreAlertController addAction:changeViewAlertAction];
-    }
-    
-    UIAlertAction *sortByAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"sortTitle", @"Section title of the 'Sort by'") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [self presentSortByViewController];
-    }];
-    [sortByAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
-    [moreAlertController addAction:sortByAlertAction];
-    
-    UIAlertAction *selectAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"select", @"Button that allows you to select a given folder") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        BOOL enableEditing = self.cdTableView ? !self.cdTableView.tableView.isEditing : !self.cdCollectionView.collectionView.allowsMultipleSelection;
-        [self setEditMode:enableEditing];
-    }];
-    [selectAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
-    [moreAlertController addAction:selectAlertAction];
-    
-    UIAlertAction *rubbishBinAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"rubbishBinLabel", @"Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin'") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-        cloudDriveVC.parentNode = [[MEGASdkManager sharedMEGASdk] rubbishNode];
-        cloudDriveVC.displayMode = DisplayModeRubbishBin;
-        cloudDriveVC.title = AMLocalizedString(@"rubbishBinLabel", @"Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin'");
-        [self.navigationController pushViewController:cloudDriveVC animated:YES];
-    }];
-    [rubbishBinAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
-    [moreAlertController addAction:rubbishBinAlertAction];
-    
     ActionSheetViewController *vc =ActionSheetViewController.new;
     vc.modalPresentationStyle = UIModalPresentationOverFullScreen;
-    vc.headerTitle = @"test title";
     
     vc.actions = @[
         ({
             ActionSheetAction *action = ActionSheetAction.new;
-            action.title = @"123";
-            action.image = [UIImage imageNamed:@"restore"];
+            action.title = AMLocalizedString(@"upload", @"");
             action.action = ^{
-                NSLog(@"123");
-            };
-            action.type = UIAlertActionStyleDestructive;
-            action;
-        }),
-        ({
-            ActionSheetAction *action = ActionSheetAction.new;
-            action.title = @"456";
-            action.image = [UIImage imageNamed:@"selected"];
-
-            action.action = ^{
-                NSLog(@"456");
+                [self presentUploadAlertController];
             };
             action;
         }),
         ({
             ActionSheetAction *action = ActionSheetAction.new;
-            action.title = @"456";
+            action.title = AMLocalizedString(@"newFolder", @"Menu option from the `Add` section that allows you to create a 'New Folder'");
             action.action = ^{
-                NSLog(@"456");
+                UIAlertController *newFolderAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"newFolder", @"Menu option from the `Add` section that allows you to create a 'New Folder'") message:nil preferredStyle:UIAlertControllerStyleAlert];
+                
+                [newFolderAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+                    textField.placeholder = AMLocalizedString(@"newFolderMessage", @"Hint text shown on the create folder alert.");
+                    [textField addTarget:self action:@selector(newFolderAlertTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+                    textField.shouldReturnCompletion = ^BOOL(UITextField *textField) {
+                        return (!textField.text.mnz_isEmpty && !textField.text.mnz_containsInvalidChars);
+                    };
+                }];
+                
+                [newFolderAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+                
+                UIAlertAction *createFolderAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"createFolderButton", @"Title button for the create folder alert.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+                        UITextField *textField = [[newFolderAlertController textFields] firstObject];
+                        MEGANodeList *childrenNodeList = [[MEGASdkManager sharedMEGASdk] nodeListSearchForNode:self.parentNode searchString:textField.text recursive:NO];
+                        if ([childrenNodeList mnz_existsFolderWithName:textField.text]) {
+                            [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"There is already a folder with the same name", @"A tooltip message which is shown when a folder name is duplicated during renaming or creation.")];
+                        } else {
+                            MEGACreateFolderRequestDelegate *createFolderRequestDelegate = [[MEGACreateFolderRequestDelegate alloc] initWithCompletion:nil];
+                            [[MEGASdkManager sharedMEGASdk] createFolderWithName:textField.text parent:self.parentNode delegate:createFolderRequestDelegate];
+                        }
+                    }
+                }];
+                createFolderAlertAction.enabled = NO;
+                [newFolderAlertController addAction:createFolderAlertAction];
+                
+                [self presentViewController:newFolderAlertController animated:YES completion:nil];
+            };
+            action;
+        }),
+        ({
+            ActionSheetAction *action = ActionSheetAction.new;
+            action.title = (self.layoutView == LayoutModeList) ? AMLocalizedString(@"Thumbnail view", @"Text shown for switching from list view to thumbnail view.") : AMLocalizedString(@"List view", @"Text shown for switching from thumbnail view to list view.");
+            action.action = ^{
+                [self changeLayoutMode];
             };
             action;
         }),
         ({
                ActionSheetAction *action = ActionSheetAction.new;
-               action.title = @"456";
-               action.image = [UIImage imageNamed:@"selected"];
-
+               action.title = AMLocalizedString(@"sortTitle", @"Section title of the 'Sort by'");
                action.action = ^{
-                   NSLog(@"456");
+                   [self presentSortByViewController];
                };
                action;
            }),
-      
+        ({
+            ActionSheetAction *action = ActionSheetAction.new;
+            action.title = AMLocalizedString(@"select", @"Button that allows you to select a given folder");
+            action.action = ^{
+                BOOL enableEditing = self.cdTableView ? !self.cdTableView.tableView.isEditing : !self.cdCollectionView.collectionView.allowsMultipleSelection;
+                [self setEditMode:enableEditing];
+            };
+            action;
+        }),
+        ({
+                 ActionSheetAction *action = ActionSheetAction.new;
+                 action.title = AMLocalizedString(@"rubbishBinLabel", @"Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin'");
+                 action.action = ^{
+                     CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
+                     cloudDriveVC.parentNode = [[MEGASdkManager sharedMEGASdk] rubbishNode];
+                     cloudDriveVC.displayMode = DisplayModeRubbishBin;
+                     cloudDriveVC.title = AMLocalizedString(@"rubbishBinLabel", @"Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin'");
+                     [self.navigationController pushViewController:cloudDriveVC animated:YES];
+                 };
+                 action;
+             }),
     ];
     
     [self presentFromMoreBarButtonItemTheAlertController:vc];

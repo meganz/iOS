@@ -17,7 +17,7 @@ class ActionSheetCell: UITableViewCell {
         textLabel?.text = action.title
         detailTextLabel?.text = action.detail
         imageView?.image = action.image
-        switch action.type {
+        switch action.style {
         case .default: break
         case .cancel, .destructive:
             textLabel?.textColor = .systemRed
