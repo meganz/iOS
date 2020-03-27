@@ -17,6 +17,7 @@
 		2F98BF4E237B5AE90049162B /* ALView+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D21DE81D01AE89002E6296 /* ALView+PureLayout.m */; };
 		2F98BF4F237B5AED0049162B /* NSArray+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D21DEA1D01AE89002E6296 /* NSArray+PureLayout.m */; };
 		2F98BF50237B5AF00049162B /* NSLayoutConstraint+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D21DEC1D01AE89002E6296 /* NSLayoutConstraint+PureLayout.m */; };
+		2FB0420E242C4FAE007B9C88 /* NodeActionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB0420D242C4FAE007B9C88 /* NodeActionViewController.swift */; };
 		2FCE04A9241B019800EE7842 /* ActionSheetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCE04A7241B019800EE7842 /* ActionSheetCell.swift */; };
 		2FCE04AA241B019800EE7842 /* ActionSheetCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2FCE04A8241B019800EE7842 /* ActionSheetCell.xib */; };
 		410AD3C11C883AA900BF939E /* MEGAAVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 410AD3C01C883AA900BF939E /* MEGAAVViewController.m */; };
@@ -1169,6 +1170,7 @@
 		2F8F5F1523691A390049603F /* UINavigationViewController+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationViewController+Additions.swift"; sourceTree = "<group>"; };
 		2F91390D238C9AC4004C611A /* MEGARecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGARecordView.swift; sourceTree = "<group>"; };
 		2F91390F238CC3CA004C611A /* MEGARecordView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MEGARecordView.xib; sourceTree = "<group>"; };
+		2FB0420D242C4FAE007B9C88 /* NodeActionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeActionViewController.swift; sourceTree = "<group>"; };
 		2FCE04A7241B019800EE7842 /* ActionSheetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSheetCell.swift; sourceTree = "<group>"; };
 		2FCE04A8241B019800EE7842 /* ActionSheetCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ActionSheetCell.xib; sourceTree = "<group>"; };
 		410333D71B9993A000380FF3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -4114,6 +4116,7 @@
 				83681575202AFBC000CA8EFC /* CustomActionViewController.h */,
 				83681576202AFBC000CA8EFC /* CustomActionViewController.m */,
 				83681577202AFBC000CA8EFC /* CustomActionViewController.xib */,
+				2FB0420D242C4FAE007B9C88 /* NodeActionViewController.swift */,
 				2F83AA0D2419C96000505B8A /* ActionSheetViewController.swift */,
 			);
 			path = CustomActionViewController;
@@ -5616,7 +5619,6 @@
 				A841E63E20CAB477005E1D1B /* MEGAMessageCallManagementView.xib in Resources */,
 				417279331DB663FA001AC818 /* JSQMessagesAssets.bundle in Resources */,
 				2FCE04AA241B019800EE7842 /* ActionSheetCell.xib in Resources */,
-				83C570E822E5BFCF00216896 /* update.sh in Resources */,
 				9462A1811FDFFD4800008F32 /* MEGAToolbarTextContentView.xib in Resources */,
 				831844BD22C4D62E00E4C401 /* ContactsPermissionBottomView.xib in Resources */,
 				7795677921C80D36002B6227 /* Onboarding.storyboard in Resources */,
@@ -6192,6 +6194,7 @@
 				7720C5B5206A931E00F995D1 /* MEGATransfer+MNZCategory.m in Sources */,
 				B6CCC36621E6F67B00B68E2C /* VideoUploadsTableViewController.m in Sources */,
 				4152273B1A692EEF00EC7BB6 /* SVProgressHUD.m in Sources */,
+				2FB0420E242C4FAE007B9C88 /* NodeActionViewController.swift in Sources */,
 				E8C289FD1BF65B7800F7A034 /* LaunchViewController.m in Sources */,
 				41BADDB61A8E2E92008408B3 /* PhotosViewController.m in Sources */,
 				837A88C520B45C11007B55D1 /* SendToViewController.m in Sources */,

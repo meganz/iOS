@@ -53,6 +53,7 @@
 #import "SharedItemsViewController.h"
 #import "UpgradeTableViewController.h"
 #import "UIViewController+MNZCategory.h"
+#import "MEGA-Swift.h"
 
 static const NSTimeInterval kSearchTimeDelay = .5;
 
@@ -1494,7 +1495,53 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     [rubbishBinAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
     [moreAlertController addAction:rubbishBinAlertAction];
     
-    [self presentFromMoreBarButtonItemTheAlertController:moreAlertController];
+    ActionSheetViewController *vc =ActionSheetViewController.new;
+    vc.modalPresentationStyle = UIModalPresentationOverFullScreen;
+    vc.headerTitle = @"test title";
+    
+    vc.actions = @[
+        ({
+            ActionSheetAction *action = ActionSheetAction.new;
+            action.title = @"123";
+            action.image = [UIImage imageNamed:@"restore"];
+            action.action = ^{
+                NSLog(@"123");
+            };
+            action.type = UIAlertActionStyleDestructive;
+            action;
+        }),
+        ({
+            ActionSheetAction *action = ActionSheetAction.new;
+            action.title = @"456";
+            action.image = [UIImage imageNamed:@"selected"];
+
+            action.action = ^{
+                NSLog(@"456");
+            };
+            action;
+        }),
+        ({
+            ActionSheetAction *action = ActionSheetAction.new;
+            action.title = @"456";
+            action.action = ^{
+                NSLog(@"456");
+            };
+            action;
+        }),
+        ({
+               ActionSheetAction *action = ActionSheetAction.new;
+               action.title = @"456";
+               action.image = [UIImage imageNamed:@"selected"];
+
+               action.action = ^{
+                   NSLog(@"456");
+               };
+               action;
+           }),
+      
+    ];
+    
+    [self presentFromMoreBarButtonItemTheAlertController:vc];
 }
 
 - (IBAction)moreMinimizedAction:(UIBarButtonItem *)sender {

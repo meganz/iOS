@@ -2,8 +2,10 @@ import UIKit
 
 class ActionSheetAction: NSObject {
     @objc var title: String?
+    @objc var detail: String?
     @objc var image: UIImage?
     @objc var action = { }
+    @objc var type: UIAlertAction.Style = .default
 }
 
 class ActionSheetViewController: UIViewController {
@@ -227,10 +229,12 @@ extension ActionSheetViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
-        let action = actions[indexPath.row]
-        cell.textLabel?.text = action.title
-        cell.imageView?.image = action.image
+        var cell: ActionSheetCell!
+        if cell == nil {
+            cell = ActionSheetCell(style: .value1, reuseIdentifier: "ActionSheetCell")
+        }
+        cell?.configureCell(action: actions[indexPath.row])
+
         return cell
     }
 
@@ -240,7 +244,13 @@ extension ActionSheetViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        self.dismiss(animated: true, completion: nil)
+        let action = actions[indexPath.row]
+        self.dismiss(animated: true, completion: {
+            if action.type != .cancel {
+                action.action()
+            }
+        })
+
     }
 
 }
