@@ -10,4 +10,7 @@
    <FileRef
       location = "group:iMEGA/Vendor/Karere/bindings/Objective-C/Karere.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:iMEGA/Vendor/MessageKit/MessageKit.xcodeproj">
+   </FileRef>
 </Workspace>

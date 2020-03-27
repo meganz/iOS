@@ -65,3 +65,6 @@ url=https://github.com/meganz/CTAssetsPickerController.git
 [submodule "iMEGA/Vendor/PhoneNumberKit"]
 	path = iMEGA/Vendor/PhoneNumberKit
 	url = https://github.com/marmelroy/PhoneNumberKit.git
+[submodule "iMega/Vendor/MessageKit"]
+	path = iMega/Vendor/MessageKit
+	url = https://github.com/MessageKit/MessageKit.git
