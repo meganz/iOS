@@ -83,7 +83,7 @@ extension ActionSheetViewController {
         headerView?.addSubview(title)
         title.autoCenterInSuperview()
 
-        tableView.tableHeaderView = headerView
+        tableView.tableHeaderView = (headerTitle != nil) ? headerView : nil
         tableView.tableFooterView = UIView()
         tableView.isScrollEnabled = true
         tableView.delegate = self
