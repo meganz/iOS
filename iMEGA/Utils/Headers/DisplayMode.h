@@ -9,4 +9,5 @@ typedef NS_ENUM (NSInteger, DisplayMode) {
     DisplayModeFileLink,
     DisplayModeRecents,
     DisplayModeChatAttachment,
+    DisplayModeChatSharedFiles,
 };
