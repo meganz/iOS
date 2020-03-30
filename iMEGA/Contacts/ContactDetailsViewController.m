@@ -550,7 +550,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     }
 
     CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
-    callVC.chatRoom = self.chatRoom;
+    callVC.chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomByUser:self.userHandle];
     callVC.videoCall = videoCall;
     callVC.callType = active ? CallTypeActive : CallTypeOutgoing;
     callVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
