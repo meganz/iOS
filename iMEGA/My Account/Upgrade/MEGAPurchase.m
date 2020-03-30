@@ -104,7 +104,9 @@
         MEGALogError(@"[StoreKit] Invalid product \"%@\"", invalidProductIdentifiers);
     }
     
-    [self.pricingsDelegate pricingsReady];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.pricingsDelegate pricingsReady];
+    });
 }
 
 - (void)request:(SKRequest *)request didFailWithError:(NSError *)error {
