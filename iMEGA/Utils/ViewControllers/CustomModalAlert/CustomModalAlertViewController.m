@@ -3,24 +3,40 @@
 
 #import "AchievementsViewController.h"
 #import "CopyableLabel.h"
+
+#ifdef MNZ_SHARE_EXTENSION
+#import "MEGAShare-Swift.h"
+#elif MNZ_PICKER_EXTENSION
+#import "MEGAPicker-Swift.h"
+#else
+#import "MEGA-Swift.h"
+#endif
+
 #import "UIApplication+MNZCategory.h"
 #import "UIImage+GKContact.h"
 
 @interface CustomModalAlertViewController ()
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
+
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *detailLabel;
+
 @property (weak, nonatomic) IBOutlet UIButton *firstButton;
 @property (weak, nonatomic) IBOutlet UIButton *secondButton;
 @property (weak, nonatomic) IBOutlet UIButton *dismissButton;
+
 @property (weak, nonatomic) IBOutlet UIView *alphaView;
+@property (weak, nonatomic) IBOutlet UIView *mainView;
+
 @property (weak, nonatomic) IBOutlet UIView *linkView;
 @property (weak, nonatomic) IBOutlet CopyableLabel *linkLabel;
 
 @end
 
 @implementation CustomModalAlertViewController
+
+#pragma mark - Lifecycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -73,13 +89,13 @@
     }
     
     if (self.link) {
-        self.linkView.layer.cornerRadius = 4;
-        self.linkView.layer.borderWidth = 0.5;
         self.linkView.layer.borderColor = [[UIColor colorWithRed:0 green:0 blue:0 alpha:0.1] CGColor];
         self.linkLabel.text = self.link;
     } else {
         self.linkView.hidden = YES;
     }
+    
+    [self updateAppearance];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -87,13 +103,37 @@
     [self fadeInBackgroundCompletion:nil];
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateAppearance];
+        }
+    }
+}
+
+#pragma mark - Private
+
+- (void)updateAppearance {
+    self.mainView.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
+    
+    self.linkView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
+    
+    [self.firstButton mnz_setupPrimary:self.traitCollection];
+    [self.secondButton mnz_setupDestructive:self.traitCollection];
+    [self.dismissButton mnz_setupCancel:self.traitCollection];
+}
+
 - (void)configUIAppearance {
+    self.mainView.layer.shadowColor = UIColor.blackColor.CGColor;
+    self.mainView.layer.shadowOffset = CGSizeMake(0, 1);
+    self.mainView.layer.shadowOpacity = 0.15;
+    
     self.firstButton.titleLabel.numberOfLines = 2;
     self.firstButton.titleLabel.textAlignment = NSTextAlignmentCenter;
     self.firstButton.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
 }
-
-#pragma mark - Private
 
 - (void)fadeInBackgroundCompletion:(void (^ __nullable)(void))fadeInCompletion {
     [UIView animateWithDuration:.3 animations:^{

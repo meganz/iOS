@@ -3,6 +3,23 @@ import Foundation
 
 extension UIColor {
     
+    @objc class func mnz_tertiaryBackground(_ traitCollection: UITraitCollection) -> UIColor {
+        if #available(iOS 13.0, *) {
+            switch traitCollection.userInterfaceStyle {
+            case UIUserInterfaceStyle.unspecified, UIUserInterfaceStyle.light:
+                return UIColor.mnz_grayFAFAFA()
+                
+            case UIUserInterfaceStyle.dark:
+                return UIColor.tertiarySystemBackground
+                
+            default:
+                return UIColor.tertiarySystemBackground
+            }
+        } else {
+            return UIColor.mnz_grayFAFAFA()
+        }
+    }
+    
     // MARK: - PRO account colors
     
     /**
