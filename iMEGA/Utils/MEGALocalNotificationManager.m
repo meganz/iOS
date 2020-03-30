@@ -85,8 +85,6 @@
                                                 MOMessage *moMessage = [MEGAStore.shareInstance fetchMessageWithChatId:self.chatRoom.chatId messageId:self.message.messageId];
                                                 if (moMessage) {
                                                     [MEGAStore.shareInstance deleteMessage:moMessage];
-                                                } else {
-                                                    [MEGAStore.shareInstance insertMessage:self.message.messageId chatId:self.chatRoom.chatId];
                                                 }
                                             }
                                         });
@@ -108,8 +106,6 @@
                                 MOMessage *moMessage = [MEGAStore.shareInstance fetchMessageWithChatId:self.chatRoom.chatId messageId:self.message.messageId];
                                 if (moMessage) {
                                     [MEGAStore.shareInstance deleteMessage:moMessage];
-                                } else {
-                                    [MEGAStore.shareInstance insertMessage:self.message.messageId chatId:self.chatRoom.chatId];
                                 }
                             }
                         });
