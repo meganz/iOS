@@ -2,6 +2,8 @@
 "cancel"="Скасувати";
 /* Button title to accept something */
 "ok"="ОК";
+/* Button title to clear something */
+"clear"="Очистити";
 /* */
 "yes"="Так";
 /* */
@@ -42,6 +44,8 @@
 "Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration.";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Невірна ланка";
+/* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
+"The account that created this link has been terminated due to multiple violations of our Terms of Service."="Дію облікового запису було припинено через численні порушення Умов надання послуг.";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="Введіть ключ розшифрування";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -889,6 +893,8 @@
 "transfers"="Передача";
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
 "all"="Все";
+/* Title of one of the filters in the Transfers section. In this case "Completed" transfers. */
+"Completed"="Завершено";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
 "downloads"="Завантаження";
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
@@ -2064,6 +2070,16 @@
 "Include location tags"="Include location tags";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
 "If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them.";
+/* Used in Photos app browser view to send the photos from the view to the chat. */
+"Send (%d)"="Send (%d)";
+/* Used in Photos app browser view to upload the photos from the view to the cloud. */
+"Upload (%d)"="Upload (%d)";
+/* Used in Photos app browser carousel view to unselect a selected photo. */
+"Unselect"="Unselect";
+/* Used in Photos app browser. Shown when there are no photos or videos in the Photos app. */
+"No Photos or Videos"="Немає фото або відео";
+/* Button title which, if tapped, will trigger the action of opening a folder containg this file */
+"View in Folder"="View in Folder";
 /* Error message shown when opening a link with an account that not corresponds to the link */
 "This link is not related to this account. Please log in with the correct account."="This link is not related to this account. Please log in with the correct account.";
 /* Text emncouraging the user to add contacts in MEGA */
@@ -2104,6 +2120,10 @@
 "It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.";
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.";
+/* tool bar title used in transfer widget, allow user to clear the selected items in the list */
+"Clear Selected"="Clear Selected";
+/* tool bar title used in transfer widget, allow user to clear all items in the list */
+"Clear All"="Очистити Все";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
 "MEGA CAMERA UPLOADS FOLDER"="MEGA CAMERA UPLOADS FOLDER";
 /* Action button text of folder selection screen for camera uploads */
