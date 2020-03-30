@@ -431,7 +431,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 }
 - (void)showRemoveContactAlert {
     
-    NSString *message = [NSString stringWithFormat:AMLocalizedString(@"removeUserMessage", nil), self.userEmail];
+    NSString *message = [NSString stringWithFormat:AMLocalizedString(@"removeUserMessage", nil), self.user.mnz_displayName];
     
     UIAlertController *removeContactAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"removeUserTitle", @"Alert title shown when you want to remove one or more contacts") message:message preferredStyle:UIAlertControllerStyleAlert];
     
