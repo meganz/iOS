@@ -109,7 +109,8 @@ class NicknameViewController: UIViewController {
 
             self.dismissViewController()
         }
-
+        
+        SVProgressHUD.setDefaultMaskType(.clear)
         SVProgressHUD.show()
         MEGASdkManager.sharedMEGASdk().setUserAlias(nickname, forHandle: user.handle, delegate: genericRequestDelegate)
     }

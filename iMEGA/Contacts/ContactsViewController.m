@@ -92,6 +92,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *noContactsDescriptionLabel;
 @property (weak, nonatomic) IBOutlet UIButton *inviteContactButton;
 
+@property (strong, nonatomic) MEGAUser *detailUser;
+
 @end
 
 @implementation ContactsViewController
@@ -1357,16 +1359,18 @@
     switch (self.contactsMode) {
         case ContactsModeDefault: {
             MEGAUser *user = [self userAtIndexPath:indexPath];
+            
             if (!user) {
                 [SVProgressHUD showErrorWithStatus:@"Invalid user"];
                 return;
             }
-            ContactDetailsViewController *contactDetailsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactDetailsViewControllerID"];
-            contactDetailsVC.contactDetailsMode = ContactDetailsModeDefault;
-            contactDetailsVC.userEmail = user.email;
-            contactDetailsVC.userName = user.mnz_fullName;
-            contactDetailsVC.userHandle = user.handle;
-            [self.navigationController pushViewController:contactDetailsVC animated:YES];
+            
+            if (self.searchController.isActive) {
+                self.detailUser = user;
+                self.searchController.active = NO;
+            } else {
+                [self showContactDetailsForUser:user];
+            }
             break;
         }
             
@@ -1732,10 +1736,8 @@
     NSString *text = @"";
     if (MEGAReachabilityManager.isReachable && !self.searchController.isActive) {
         text = AMLocalizedString(@"inviteContact", @"Text shown when the user tries to make a call and the receiver is not a contact");
-    } else {
-        if (!MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
+    } else if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
             text = AMLocalizedString(@"Turn Mobile Data on", @"Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app.");
-        }
     }
     
     return [[NSAttributedString alloc] initWithString:text attributes:[Helper buttonTextAttributesForEmptyState]];
@@ -1797,6 +1799,13 @@
         default:
             searchController.searchBar.showsCancelButton = YES;
             break;
+    }
+}
+
+- (void)didDismissSearchController:(UISearchController *)searchController {
+    if (self.detailUser != nil) {
+        [self showContactDetailsForUser:self.detailUser];
+        self.detailUser = nil;
     }
 }
 
@@ -1979,6 +1988,17 @@
 
 - (void)emailForScannedQR:(NSString *)email {
     [self inviteEmailToShareFolder:email];
+}
+
+#pragma mark - Show contact details
+
+- (void)showContactDetailsForUser:(MEGAUser *)user {
+    ContactDetailsViewController *contactDetailsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactDetailsViewControllerID"];
+    contactDetailsVC.contactDetailsMode = ContactDetailsModeDefault;
+    contactDetailsVC.userEmail = user.email;
+    contactDetailsVC.userName = user.mnz_fullName;
+    contactDetailsVC.userHandle = user.handle;
+    [self.navigationController pushViewController:contactDetailsVC animated:YES];
 }
 
 @end
