@@ -36,13 +36,21 @@ class NodeActionViewController: ActionSheetViewController {
         subtitle.autoPinEdge(.trailing, to: .trailing, of: headerView!, withOffset: -8)
         subtitle.autoAlignAxis(.horizontal, toSameAxisOf: headerView!, withOffset: 8)
 
-        if node!.isFile() {
-            subtitle.text = Helper.sizeAndDate(for: node!, api: MEGASdkManager.sharedMEGASdk())
-        } else {
-            subtitle.text = Helper.filesAndFolders(inFolderNode: node!, api: MEGASdkManager.sharedMEGASdk())
+        let separatorLine = UIView.newAutoLayout()
+        separatorLine.backgroundColor = tableView.separatorColor
+        headerView?.addSubview(separatorLine)
 
+        separatorLine.autoPinEdge(toSuperviewEdge: .leading)
+        separatorLine.autoPinEdge(toSuperviewEdge: .trailing)
+        separatorLine.autoPinEdge(toSuperviewEdge: .bottom)
+        separatorLine.autoSetDimension(.height, toSize: 1/UIScreen.main.scale)
+
+        if node != nil {
+            if node!.isFile() {
+                subtitle.text = Helper.sizeAndDate(for: node!, api: MEGASdkManager.sharedMEGASdk())
+            } else {
+                subtitle.text = Helper.filesAndFolders(inFolderNode: node!, api: MEGASdkManager.sharedMEGASdk())
+            }
         }
-
     }
-
 }
