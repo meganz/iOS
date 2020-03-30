@@ -1228,7 +1228,12 @@ void uncaughtExceptionHandler(NSException *exception) {
 }
 
 - (void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions options))completionHandler {
-    completionHandler(UNNotificationPresentationOptionAlert | UNNotificationPresentationOptionSound);
+    MEGALogDebug(@"userNotificationCenter willPresentNotification %@", notification);
+    if ([notification.request.trigger isKindOfClass:UNPushNotificationTrigger.class]) {
+        completionHandler(UNNotificationPresentationOptionNone);
+    } else {
+        completionHandler(UNNotificationPresentationOptionAlert | UNNotificationPresentationOptionSound);
+    }    
 }
 
 #pragma mark - LaunchViewControllerDelegate
