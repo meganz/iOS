@@ -91,6 +91,8 @@ extension ActionSheetViewController {
 
         let title = UILabel()
         title.text = headerTitle
+        title.textColor = .systemGray
+        title.font = .boldSystemFont(ofSize: 15)
         title.sizeToFit()
         headerView?.addSubview(title)
         title.autoCenterInSuperview()
