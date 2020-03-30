@@ -1,10 +1,10 @@
-/*
+
 #import "JSQMessages.h"
 
 #import "MEGASdkManager.h"
 #import "ToolbarType.h"
 
-@interface MessagesViewController : JSQMessagesViewController <MEGAChatRoomDelegate>
+@interface M : JSQMessagesViewController <MEGAChatRoomDelegate>
 
 @property (nonatomic, strong) MEGAChatRoom *chatRoom;
 @property (nonatomic) NSURL *publicChatLink;
@@ -15,4 +15,4 @@
 - (void)showOptionsForPeerWithHandle:(uint64_t)userHandle senderView:(UIView *)senderView;
 
 @end
-*/
+

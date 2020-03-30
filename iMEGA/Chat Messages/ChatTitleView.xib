@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="ChatTitleView" customModule="MEGA" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="93"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <stackView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="Uso-l7-Nf0">
+                    <rect key="frame" x="20" y="0.0" width="394" height="93"/>
+                    <subviews>
+                        <stackView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Uli-zp-IhX">
+                            <rect key="frame" x="0.0" y="0.0" width="46" height="18"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="anS-wb-vkW">
+                                    <rect key="frame" x="0.0" y="0.0" width="28" height="18"/>
+                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <view clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kZJ-T2-lvi">
+                                    <rect key="frame" x="36" y="4" width="10" height="10"/>
+                                    <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="10" id="Q4V-5C-9dQ"/>
+                                        <constraint firstAttribute="width" constant="10" id="oqE-um-1Cc"/>
+                                    </constraints>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                            <integer key="value" value="5"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                </view>
+                            </subviews>
+                        </stackView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oL4-a5-AfV">
+                            <rect key="frame" x="0.0" y="78.5" width="42.5" height="14.5"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                </stackView>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <gestureRecognizers/>
+            <constraints>
+                <constraint firstItem="Uso-l7-Nf0" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="O73-T1-MGk"/>
+                <constraint firstItem="Uso-l7-Nf0" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="YeF-6f-bG1"/>
+                <constraint firstAttribute="bottom" secondItem="Uso-l7-Nf0" secondAttribute="bottom" id="fAK-7b-jMn"/>
+                <constraint firstAttribute="trailing" secondItem="Uso-l7-Nf0" secondAttribute="trailing" id="lvt-82-CMa"/>
+            </constraints>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="statusView" destination="kZJ-T2-lvi" id="94c-Zb-KlL"/>
+                <outlet property="subtitleLabel" destination="oL4-a5-AfV" id="lEA-Zj-A1b"/>
+                <outlet property="titleLabel" destination="anS-wb-vkW" id="YBu-lC-e0K"/>
+                <outletCollection property="gestureRecognizers" destination="oZ3-qB-nFP" appends="YES" id="n5O-TA-7IR"/>
+            </connections>
+            <point key="canvasLocation" x="153.62318840579712" y="-120.87053571428571"/>
+        </view>
+        <tapGestureRecognizer id="oZ3-qB-nFP">
+            <connections>
+                <action selector="didTapWithTapGesture:" destination="iN0-l3-epB" id="gIY-nC-Uhu"/>
+            </connections>
+        </tapGestureRecognizer>
+    </objects>
+</document>

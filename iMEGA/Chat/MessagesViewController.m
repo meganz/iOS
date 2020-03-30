@@ -1,4 +1,4 @@
-/*
+
 #import "MessagesViewController.h"
 
 #import <UserNotifications/UserNotifications.h>
@@ -67,7 +67,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
 
 static NSMutableSet<NSString *> *tapForInfoSet;
 
-@interface MessagesViewController () <MEGAPhotoBrowserDelegate, JSQMessagesViewAccessoryButtonDelegate, JSQMessagesComposerTextViewPasteDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAChatDelegate, MEGAChatRequestDelegate, MEGARequestDelegate, MEGAChatCallDelegate>
+@interface M () <MEGAPhotoBrowserDelegate, JSQMessagesViewAccessoryButtonDelegate, JSQMessagesComposerTextViewPasteDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAChatDelegate, MEGAChatRequestDelegate, MEGARequestDelegate, MEGAChatCallDelegate>
 
 @property (nonatomic, strong) MEGAOpenMessageHeaderView *openMessageHeaderView;
 @property (nonatomic, strong) MEGALoadingMessagesHeaderView *loadingMessagesHeaderView;
@@ -147,7 +147,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 
 @end
 
-@implementation MessagesViewController
+@implementation M
 
 #pragma mark - Class properties
 
@@ -3431,4 +3431,3 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 }
 
 @end
-*/
