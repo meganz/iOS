@@ -11,9 +11,10 @@ class ActionSheetAction: NSObject {
 
     }
 
-    public init(title: String?, detail: String?, style: UIAlertAction.Style, handler: (() -> Void)? = nil) {
+    @objc public init(title: String?, detail: String?, image: UIImage? ,style: UIAlertAction.Style, handler: (() -> Void)? = nil) {
         self.title = title
         self.detail = detail
+        self.image = image
         self.style = style
         self.action = handler ?? {}
     }
