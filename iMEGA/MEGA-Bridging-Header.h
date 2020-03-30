@@ -45,3 +45,5 @@
 #import "OnboardingViewController.h"
 #import "UpgradeTableViewController.h"
 #import "LoginViewcontroller.h"
+#import "GroupChatDetailsViewController.h"
+#import "ContactDetailsViewController.h"

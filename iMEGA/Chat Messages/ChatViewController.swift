@@ -3,27 +3,38 @@
 import UIKit
 import MessageKit
 
-public class ChatViewController: MessageKit.MessagesViewController {
-    @objc public var chatRoom: MEGAChatRoom!
-    @objc public var publicChatLink: URL?
-    @objc public var publicChatWithLinkCreated: Bool = false
+class ChatViewController: MessagesViewController {
+    @objc var chatRoom: MEGAChatRoom! {
+        didSet {
+            if isViewLoaded == false {
+                return
+            }
+            
+            configureNavigationBar()
+        }
+    }
+    
+    @objc var publicChatLink: URL?
+    @objc var publicChatWithLinkCreated: Bool = false
     
     var messages: [MessageType] = []
     
-    public override func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messagesLayoutDelegate = self
         messagesCollectionView.messagesDisplayDelegate = self
         
         populateSampleData()
+        
+        configureNavigationBar()
     }
     
-    @objc public func updateUnreadLabel() {
+    @objc func updateUnreadLabel() {
         
     }
     
-    @objc public func showOptions(forPeerWithHandle handle: UInt64, senderView: UIView) {
+    @objc func showOptions(forPeerWithHandle handle: UInt64, senderView: UIView) {
         
     }
 }
