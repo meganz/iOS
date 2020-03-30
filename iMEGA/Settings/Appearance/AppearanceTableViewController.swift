@@ -58,7 +58,7 @@ class AppearanceTableViewController: UITableViewController {
             selectIcon(with: nil)
         }
         
-        updateUI()
+        updateAppearance()
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -66,14 +66,14 @@ class AppearanceTableViewController: UITableViewController {
         
         if #available(iOS 13, *) {
             if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-                updateUI()
+                updateAppearance()
             }
         }
     }
     
     // MARK: - Private
     
-    func updateUI() {
+    func updateAppearance() {
         tableView.separatorColor = UIColor.mnz_separatorColor(for: traitCollection)
         tableView.backgroundColor = UIColor.mnz_settingsBackground(for: traitCollection)
         

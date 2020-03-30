@@ -34,7 +34,7 @@ class VerifyEmailViewController: UIViewController {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         
-        updateUI()
+        updateAppearance()
     }
     
     override func viewDidLayoutSubviews() {
@@ -47,10 +47,10 @@ class VerifyEmailViewController: UIViewController {
     func configureUI() {
         localizeLabels()
         boldenText()
-        updateUI()
+        updateAppearance()
     }
     
-    func updateUI() {
+    func updateAppearance() {
         hintButton.backgroundColor = UIColor.white
         resendButton.backgroundColor = UIColor.white
 

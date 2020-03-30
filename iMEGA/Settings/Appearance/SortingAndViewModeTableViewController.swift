@@ -36,7 +36,7 @@ class SortingAndViewModeTableViewController: UITableViewController {
         viewModePreferenceListViewLabel.text = AMLocalizedString("List view", "Text shown for switching from thumbnail view to list view.")
         viewModePreferenceThumbnailViewLabel.text = AMLocalizedString("Thumbnail view", "Text shown for switching from list view to thumbnail view.")
         
-        updateUI()
+        updateAppearance()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -54,14 +54,14 @@ class SortingAndViewModeTableViewController: UITableViewController {
         
         if #available(iOS 13, *) {
             if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-                updateUI()
+                updateAppearance()
             }
         }
     }
     
     // MARK: - Private
     
-    func updateUI() {
+    func updateAppearance() {
         sortingPreferenceSameForAllDetailLabel.textColor = UIColor.mnz_secondaryGray(for: traitCollection)
         
         tableView.separatorColor = UIColor.mnz_separatorColor(for: traitCollection)

@@ -48,7 +48,7 @@
         self.selectedLanguage = nil;
     }
     
-    [self updateUI];
+    [self updateAppearance];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -66,7 +66,7 @@
     
     if (@available(iOS 13.0, *)) {
         if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-            [self updateUI];
+            [self updateAppearance];
         }
     }
 }
@@ -98,7 +98,7 @@
     self.dataProtectionRegulationLabel.text = AMLocalizedString(@"dataProtectionRegulationLabel", @"Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation'");
 }
 
-- (void)updateUI {
+- (void)updateAppearance {
     self.cameraUploadsDetailLabel.textColor = self.passcodeDetailLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
     
     self.tableView.separatorColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];

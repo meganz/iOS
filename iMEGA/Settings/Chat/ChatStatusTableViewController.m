@@ -72,7 +72,7 @@ static const NSInteger MaxAutoawayTimeout = 1457; // 87420 seconds
     
     self.lastActiveLabel.attributedText = showLastSeenAttributedString;
     
-    [self updateUI];
+    [self updateAppearance];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -101,14 +101,14 @@ static const NSInteger MaxAutoawayTimeout = 1457; // 87420 seconds
     
     if (@available(iOS 13.0, *)) {
         if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-            [self updateUI];
+            [self updateAppearance];
         }
     }
 }
 
 #pragma mark - Private
 
-- (void)updateUI {
+- (void)updateAppearance {
     self.tableView.separatorColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
     self.tableView.backgroundColor = [UIColor mnz_settingsBackgroundForTraitCollection:self.traitCollection];
     

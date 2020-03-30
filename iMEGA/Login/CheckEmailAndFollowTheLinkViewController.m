@@ -11,6 +11,7 @@
 #import "MEGASendSignupLinkRequestDelegate.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
+#import "MEGA-Swift.h"
 
 @interface CheckEmailAndFollowTheLinkViewController () <UITextFieldDelegate, MEGAGlobalDelegate>
 
@@ -38,7 +39,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self updateUI];
+    [self updateAppearance];
     
     self.email = [SAMKeychain passwordForService:@"MEGA" account:@"email"];
     self.name = [SAMKeychain passwordForService:@"MEGA" account:@"name"];
@@ -89,7 +90,7 @@
     
     if (@available(iOS 13.0, *)) {
         if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-            [self updateUI];
+            [self updateAppearance];
         }
     }
 }
@@ -112,20 +113,17 @@
     }
 }
 
-- (void)updateUI {
+- (void)updateAppearance {
     self.view.backgroundColor = [UIColor mnz_accountViewsBackgroundColorForTraitCollection:self.traitCollection];
     
     self.checkYourEmailLabel.textColor = [UIColor mnz_subtitlesColorForTraitCollection:self.traitCollection];
     
-    [self.emailInputView updateUI];
+    [self.emailInputView updateAppearance];
     
     self.misspelledLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
     
-    [self.resendButton setTitleColor:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection] forState:UIControlStateNormal];
-    self.resendButton.backgroundColor = [UIColor mnz_basicButtonForTraitCollection:self.traitCollection];
-    self.resendButton.layer.shadowColor = UIColor.blackColor.CGColor;
-    
-    [self.cancelButton setTitleColor:[UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection] forState:UIControlStateNormal];
+    [self.resendButton mnz_setupPrimary:self.traitCollection];
+    [self.cancelButton mnz_setupCancel:self.traitCollection];
 }
 
 #pragma mark - IBActions

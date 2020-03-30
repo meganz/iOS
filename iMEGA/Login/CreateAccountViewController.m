@@ -62,7 +62,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self updateUI];
+    [self updateAppearance];
     
     self.passwordStrengthIndicatorContainerView.hidden = YES;
     
@@ -139,7 +139,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
             [AppearanceManager setupAppearance:self.traitCollection];
             [AppearanceManager invalidateViews];
             
-            [self updateUI];
+            [self updateAppearance];
         }
     }
 }
@@ -341,22 +341,20 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     self.termsForLosingPasswordLabel.attributedText = termsMutableAttributedString;
 }
 
-- (void)updateUI {
+- (void)updateAppearance {
     self.view.backgroundColor = [UIColor mnz_accountViewsBackgroundColorForTraitCollection:self.traitCollection];
     
-    [self.firstNameInputView updateUI];
-    [self.lastNameInputView updateUI];
-    [self.emailInputView updateUI];
-    [self.passwordView updateUI];
+    [self.firstNameInputView updateAppearance];
+    [self.lastNameInputView updateAppearance];
+    [self.emailInputView updateAppearance];
+    [self.passwordView updateAppearance];
     self.passwordStrengthIndicatorContainerView.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
-    [self.retypePasswordView updateUI];
+    [self.retypePasswordView updateAppearance];
     
     [self setTermsOfServiceAttributedTitle];
     [self setTermsForLosingPasswordAttributedText];
     
-    self.createAccountButton.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
-    [self.createAccountButton setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
-    self.createAccountButton.layer.shadowColor = UIColor.blackColor.CGColor;
+    [self.createAccountButton mnz_setupPrimary:self.traitCollection];
 }
 
 #pragma mark - IBActions

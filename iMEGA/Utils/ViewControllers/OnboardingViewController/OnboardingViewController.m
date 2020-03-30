@@ -32,7 +32,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self updateUI];
+    [self updateAppearance];
     
     switch (self.type) {
         case OnboardingTypeDefault:
@@ -115,7 +115,7 @@
             [AppearanceManager setupAppearance:self.traitCollection];
             [AppearanceManager invalidateViews];
             
-            [self updateUI];
+            [self updateAppearance];
         }
     }
 }
@@ -162,20 +162,15 @@
     }
 }
 
-- (void)updateUI {
+- (void)updateAppearance {
     self.view.backgroundColor = self.scrollView.backgroundColor = UIColor.mnz_background;
     
     self.pageControl.currentPageIndicatorTintColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
     self.pageControl.pageIndicatorTintColor = [UIColor mnz_tertiaryGrayForTraitCollection:self.traitCollection];
     self.pageControl.backgroundColor = UIColor.mnz_background;
     
-    self.primaryButton.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
-    [self.primaryButton setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
-    self.primaryButton.layer.shadowColor = UIColor.blackColor.CGColor;
-    
-    self.secondaryButton.backgroundColor = [UIColor mnz_basicButtonForTraitCollection:self.traitCollection];
-    [self.secondaryButton setTitleColor:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection]  forState:UIControlStateNormal];
-    self.secondaryButton.layer.shadowColor = UIColor.blackColor.CGColor;
+    [self.primaryButton mnz_setupPrimary:self.traitCollection];
+    [self.secondaryButton mnz_setupBasic:self.traitCollection];
 }
 
 #pragma mark - Targets

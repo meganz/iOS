@@ -80,7 +80,7 @@
     [_selectMembershiptLabel setText:AMLocalizedString(@"selectMembership", nil)];
     [_save17Label setText:AMLocalizedString(@"save17", nil)];
     
-    [self updateUI];
+    [self updateAppearance];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -100,7 +100,7 @@
     
     if (@available(iOS 13.0, *)) {
         if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-            [self updateUI];
+            [self updateAppearance];
             
             [self.tableView reloadData];
         }
@@ -109,7 +109,7 @@
 
 #pragma mark - Private
 
-- (void)updateUI {
+- (void)updateAppearance {
     self.tableView.separatorColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
     
     self.storageLabel.textColor = self.storageSizeLabel.textColor = self.bandwidthLabel.textColor = self.bandwidthSizeLabel.textColor = UIColor.whiteColor;

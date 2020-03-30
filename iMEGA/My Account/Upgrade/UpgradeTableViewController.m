@@ -88,7 +88,7 @@
     
     [self initCurrentPlan];
     
-    [self updateUI];
+    [self updateAppearance];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -121,7 +121,7 @@
     
     if (@available(iOS 13.0, *)) {
         if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-            [self updateUI];
+            [self updateAppearance];
             
             [self.tableView reloadData];
         }
@@ -130,7 +130,7 @@
 
 #pragma mark - Private
 
-- (void)updateUI {
+- (void)updateAppearance {
     self.tableView.separatorColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
     
     if (@available(iOS 13.0, *)) {

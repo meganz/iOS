@@ -3,6 +3,14 @@
 
 #import "NSString+MNZCategory.h"
 
+#ifdef MNZ_SHARE_EXTENSION
+#import "MEGAShare-Swift.h"
+#elif MNZ_PICKER_EXTENSION
+#import "MEGAPicker-Swift.h"
+#else
+#import "MEGA-Swift.h"
+#endif
+
 @interface EmptyStateView ()
 
 @property (nullable, weak, nonatomic) IBOutlet UIImageView *imageView;
@@ -44,7 +52,7 @@
     
     if (@available(iOS 13.0, *)) {
         if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-            [self updateUI];
+            [self updateAppearance];
         }
     }
 }
@@ -54,7 +62,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     
-    [self updateUI];
+    [self updateAppearance];
 }
 
 - (BOOL)shouldAutorotate {
@@ -67,12 +75,10 @@
 
 #pragma mark - Private
 
-- (void)updateUI {
+- (void)updateAppearance {
     self.descriptionLabel.textColor = [UIColor mnz_subtitlesColorForTraitCollection:self.traitCollection];
     
-    [self.button setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
-    self.button.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
-    self.button.layer.shadowColor = UIColor.blackColor.CGColor;
+    [self.button mnz_setupPrimary:self.traitCollection];
 }
 
 @end

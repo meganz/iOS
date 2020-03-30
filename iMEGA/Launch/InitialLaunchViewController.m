@@ -2,6 +2,7 @@
 #import "InitialLaunchViewController.h"
 
 #import "OnboardingViewController.h"
+#import "MEGA-Swift.h"
 
 @interface InitialLaunchViewController () <MEGARequestDelegate>
 
@@ -21,7 +22,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self updateUI];
+    [self updateAppearance];
     
     self.titleLabel.text = AMLocalizedString(@"Setup MEGA", @"Button which triggers the initial setup");
     self.descriptionLabel.text = AMLocalizedString(@"To fully take advantage of your MEGA account we need to ask you some permissions.", @"Detailed explanation of why the user should give some permissions to MEGA");
@@ -56,7 +57,7 @@
     
     if (@available(iOS 13.0, *)) {
         if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-            [self updateUI];
+            [self updateAppearance];
         }
     }
 }
@@ -94,18 +95,13 @@
     self.descriptionLabel.frame = descriptionFrame;
 }
 
-- (void)updateUI {
+- (void)updateAppearance {
     self.view.backgroundColor = UIColor.mnz_background;
     
     self.descriptionLabel.textColor = [UIColor mnz_subtitlesColorForTraitCollection:self.traitCollection];
     
-    self.setupButton.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
-    [self.setupButton setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
-    self.setupButton.layer.shadowColor = UIColor.blackColor.CGColor;
-    
-    self.skipButton.backgroundColor = [UIColor mnz_basicButtonForTraitCollection:self.traitCollection];
-    [self.skipButton setTitleColor:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection]  forState:UIControlStateNormal];
-    self.skipButton.layer.shadowColor = UIColor.blackColor.CGColor;
+    [self.setupButton mnz_setupPrimary:self.traitCollection];
+    [self.skipButton mnz_setupBasic:self.traitCollection];
 }
 
 #pragma mark - IBActions

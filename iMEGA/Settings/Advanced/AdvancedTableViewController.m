@@ -51,7 +51,7 @@
     }];
     [[MEGASdkManager sharedMEGASdk] multiFactorAuthCheckWithEmail:[[MEGASdkManager sharedMEGASdk] myEmail] delegate:delegate];
     
-    [self updateUI];
+    [self updateAppearance];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -82,14 +82,14 @@
     
     if (@available(iOS 13.0, *)) {
         if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-            [self updateUI];
+            [self updateAppearance];
         }
     }
 }
 
 #pragma mark - Private
 
-- (void)updateUI {
+- (void)updateAppearance {
     self.cancelAccountLabel.textColor = [UIColor mnz_redMainForTraitCollection:self.traitCollection];
     
     self.tableView.separatorColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];

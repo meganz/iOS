@@ -39,14 +39,14 @@ class PasscodeTimeDurationTableViewController: UITableViewController {
         
         if #available(iOS 13, *) {
             if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-                self.updateUI()
+                self.updateAppearance()
             }
         }
     }
     
     // MARK: - Private
     
-    func updateUI() {
+    func updateAppearance() {
         tableView.separatorColor = UIColor.mnz_separatorColor(for: traitCollection)
         tableView.backgroundColor = UIColor.mnz_settingsBackground(for: traitCollection)
         

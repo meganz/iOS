@@ -40,7 +40,7 @@ class NicknameViewController: UIViewController {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         
-        updateUI()
+        updateAppearance()
     }
     
     // MARK:- IBActions
@@ -142,10 +142,10 @@ class NicknameViewController: UIViewController {
         saveBarButtonItem.title = AMLocalizedString("save", "Saves the new nickname")
         nicknameLabel.text = AMLocalizedString("Alias/ Nickname", "Add nickname screen: This text appears above the alias(nickname) entry")
         
-        updateUI()
+        updateAppearance()
     }
     
-    private func updateUI() {
+    private func updateAppearance() {
         removeNicknameButton.setTitleColor(UIColor.mnz_redMain(), for: .normal)
     }
 }

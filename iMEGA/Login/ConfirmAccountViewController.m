@@ -39,7 +39,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self updateUI];
+    [self updateAppearance];
     
     if (UIDevice.currentDevice.iPhone4X) {
         self.logoTopLayoutConstraint.constant = 12.f;
@@ -103,7 +103,7 @@
             [AppearanceManager setupAppearance:self.traitCollection];
             [AppearanceManager invalidateViews];
             
-            [self updateUI];
+            [self updateAppearance];
         }
     }
 }
@@ -183,17 +183,14 @@
     self.cancelButton.enabled = !boolValue;
 }
 
-- (void)updateUI {
+- (void)updateAppearance {
     self.view.backgroundColor = [UIColor mnz_accountViewsBackgroundColorForTraitCollection:self.traitCollection];
     
-    [self.emailInputView updateUI];
-    [self.passwordView updateUI];
+    [self.emailInputView updateAppearance];
+    [self.passwordView updateAppearance];
     
-    self.confirmAccountButton.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
-    [self.confirmAccountButton setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
-    self.confirmAccountButton.layer.shadowColor = UIColor.blackColor.CGColor;
-    
-    [self.cancelButton setTitleColor:[UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection] forState:UIControlStateNormal];
+    [self.confirmAccountButton mnz_setupPrimary:self.traitCollection];
+    [self.cancelButton mnz_setupCancel:self.traitCollection];
 }
 
 #pragma mark - UIResponder

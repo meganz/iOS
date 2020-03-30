@@ -133,7 +133,7 @@ static const CGFloat GapBetweenPages = 10.0;
             break;
     }
     
-    [self updateUI];
+    [self updateAppearance];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -226,7 +226,7 @@ static const CGFloat GapBetweenPages = 10.0;
 
     if (@available(iOS 13.0, *)) {
         if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-            [self updateUI];
+            [self updateAppearance];
         }
     }
 }
@@ -342,7 +342,7 @@ static const CGFloat GapBetweenPages = 10.0;
     }];
 }
 
-- (void)updateUI {
+- (void)updateAppearance {
     self.statusBarBackground.backgroundColor = self.navigationBar.backgroundColor = self.toolbar.barTintColor = [UIColor mnz_mainBarsColorForTraitCollection:self.traitCollection];
     self.navigationBar.tintColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
     [self reloadTitle];
