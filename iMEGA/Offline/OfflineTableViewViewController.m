@@ -3,6 +3,7 @@
 
 #import "NSString+MNZCategory.h"
 #import "UIAlertAction+MNZCategory.h"
+#import "UIImage+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 
 #import "Helper.h"
@@ -147,7 +148,7 @@ static NSString *kPath = @"kPath";
     BOOL isDirectory;
     [[NSFileManager defaultManager] fileExistsAtPath:pathForItem isDirectory:&isDirectory];
     if (isDirectory) {
-        cell.thumbnailImageView.image = [Helper folderImage];
+        cell.thumbnailImageView.image = UIImage.mnz_folderImage;
         
         NSInteger files = 0;
         NSInteger folders = 0;

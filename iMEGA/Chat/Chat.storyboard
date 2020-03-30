@@ -1698,6 +1698,10 @@
                                                         <constraint firstAttribute="height" constant="40" id="ezS-s3-AMT"/>
                                                     </constraints>
                                                 </imageView>
+                                                <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="contactVerified" translatesAutoresizingMaskIntoConstraints="NO" id="vLT-gp-lJH">
+                                                    <rect key="frame" x="36" y="10" width="14" height="14"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5zE-El-ibr">
                                                     <rect key="frame" x="60" y="21" width="39.333333333333343" height="18"/>
                                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
@@ -1787,6 +1791,7 @@
                                             <outlet property="leftImageView" destination="a2e-FA-4Oy" id="DDb-SZ-OAy"/>
                                             <outlet property="onlineStatusView" destination="smg-gq-BPa" id="gUh-Ev-Xoh"/>
                                             <outlet property="permissionsButton" destination="Nr2-wV-nC7" id="emg-55-sHg"/>
+                                            <outlet property="verifiedImageView" destination="vLT-gp-lJH" id="sj4-V3-90I"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="GroupChatDetailsObserversTypeID" rowHeight="60" id="eXW-oQ-R0N" customClass="GroupChatDetailsViewTableViewCell">
@@ -1928,6 +1933,10 @@
                                                         <action selector="didTapPermissionsButton:" destination="0sZ-aU-4Bm" eventType="touchUpInside" id="lUY-UR-KLD"/>
                                                     </connections>
                                                 </button>
+                                                <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="contactVerified" translatesAutoresizingMaskIntoConstraints="NO" id="Gey-cr-szE">
+                                                    <rect key="frame" x="36" y="10" width="14" height="14"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="LE3-vf-IXa" secondAttribute="bottom" constant="2" id="1Qd-6w-PED"/>
@@ -1990,6 +1999,7 @@
                                             <outlet property="nameLabel" destination="DXU-jt-Kcb" id="kQc-nQ-2Wc"/>
                                             <outlet property="onlineStatusView" destination="E8z-Hv-3OF" id="ZdH-Up-hsm"/>
                                             <outlet property="permissionsButton" destination="waT-q0-bk9" id="EpD-zW-rmi"/>
+                                            <outlet property="verifiedImageView" destination="Gey-cr-szE" id="Yhz-Nd-D0a"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -2439,6 +2449,8 @@
         <image name="cameraOff" width="64" height="64"/>
         <image name="cameraOn" width="64" height="64"/>
         <image name="chatIcon" width="31" height="28"/>
+        <image name="chatSelectedIcon" width="31" height="28"/>
+        <image name="contactVerified" width="14" height="14"/>
         <image name="discloserArrow" width="8" height="12"/>
         <image name="down-arrow" width="24" height="24"/>
         <image name="info_sharedWithArrow" width="22" height="22"/>

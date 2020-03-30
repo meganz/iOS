@@ -33,7 +33,7 @@
     self.joinBetaLabel.text = AMLocalizedString(@"Join Beta", @"Section title that links you to the webpage that let you join and test the beta versions");
     self.rateUsLabel.text = AMLocalizedString(@"rateUsLabel", @"Title to rate the app");
     
-    [self updateAppearance];
+    [self updateAppearance];
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
@@ -45,7 +45,7 @@
     
     if (@available(iOS 13.0, *)) {
         if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-            [self updateAppearance];
+            [self updateAppearance];
         }
     }
 }
@@ -86,7 +86,7 @@
 
 #pragma mark - Private
 
-- (void)updateAppearance {
+- (void)updateAppearance {
     self.tableView.separatorColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
     self.tableView.backgroundColor = [UIColor mnz_settingsBackgroundForTraitCollection:self.traitCollection];
     

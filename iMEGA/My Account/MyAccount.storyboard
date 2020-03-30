@@ -1690,9 +1690,8 @@
                                                 <constraint firstItem="3Kd-00-kGk" firstAttribute="leading" secondItem="7HB-kS-PcD" secondAttribute="leading" id="be3-Fk-VUd"/>
                                                 <constraint firstItem="W4X-U2-znV" firstAttribute="leading" secondItem="b6E-NY-l8T" secondAttribute="trailing" id="e6g-ce-NPl"/>
                                                 <constraint firstAttribute="bottom" secondItem="b6E-NY-l8T" secondAttribute="bottom" id="eMP-7b-xRi"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="W4X-U2-znV" secondAttribute="bottom" constant="13" id="mJc-1U-gQw"/>
-                                                <constraint firstItem="W4X-U2-znV" firstAttribute="top" secondItem="pZV-dp-ZFx" secondAttribute="topMargin" constant="13" id="mTZ-LI-OgF"/>
                                                 <constraint firstAttribute="bottom" secondItem="3Kd-00-kGk" secondAttribute="bottom" id="qSg-Sv-VrQ"/>
+                                                <constraint firstItem="W4X-U2-znV" firstAttribute="centerY" secondItem="pZV-dp-ZFx" secondAttribute="centerY" id="vkA-sh-ajF"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
@@ -1797,16 +1796,15 @@
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="C7h-u2-Obj" secondAttribute="trailing" id="6bh-uQ-yN3"/>
                                                 <constraint firstItem="cx3-ld-15i" firstAttribute="top" secondItem="2Z6-2D-Ed0" secondAttribute="top" id="9z4-R0-TVU"/>
-                                                <constraint firstItem="JYn-Ce-Zcm" firstAttribute="top" secondItem="2Z6-2D-Ed0" secondAttribute="topMargin" constant="3" id="ALZ-4L-5mU"/>
+                                                <constraint firstItem="JYn-Ce-Zcm" firstAttribute="top" secondItem="m1t-sa-qTM" secondAttribute="top" id="KRH-gW-h7g"/>
                                                 <constraint firstItem="7J3-lR-TnN" firstAttribute="top" secondItem="JYn-Ce-Zcm" secondAttribute="bottom" constant="4" id="NLB-eJ-wch"/>
                                                 <constraint firstItem="C7h-u2-Obj" firstAttribute="leading" secondItem="sS5-6Q-cyU" secondAttribute="leading" id="NWK-aK-xvY"/>
                                                 <constraint firstItem="7J3-lR-TnN" firstAttribute="leading" secondItem="JYn-Ce-Zcm" secondAttribute="leading" id="QOJ-zf-KEa"/>
                                                 <constraint firstAttribute="bottom" secondItem="cx3-ld-15i" secondAttribute="bottom" id="QYv-Lh-yX5"/>
                                                 <constraint firstAttribute="bottom" secondItem="C7h-u2-Obj" secondAttribute="bottom" id="a3N-q0-BTP"/>
-                                                <constraint firstAttribute="bottom" secondItem="7J3-lR-TnN" secondAttribute="bottom" constant="13" id="cGc-sF-IWZ"/>
                                                 <constraint firstItem="cx3-ld-15i" firstAttribute="leading" secondItem="2Z6-2D-Ed0" secondAttribute="leading" id="e7f-RY-6aK"/>
                                                 <constraint firstItem="JYn-Ce-Zcm" firstAttribute="leading" secondItem="cx3-ld-15i" secondAttribute="trailing" id="ewe-g5-6lf"/>
-                                                <constraint firstItem="JYn-Ce-Zcm" firstAttribute="leading" secondItem="2Z6-2D-Ed0" secondAttribute="leadingMargin" constant="74" id="yZ4-95-JYL"/>
+                                                <constraint firstItem="JYn-Ce-Zcm" firstAttribute="leading" secondItem="2Z6-2D-Ed0" secondAttribute="leadingMargin" constant="74" id="qxO-RH-Ha4"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>

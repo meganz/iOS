@@ -13,6 +13,7 @@
 #import "NSString+MNZCategory.h"
 #import "NSURL+MNZCategory.h"
 #import "UIFont+MNZCategory.h"
+#import "UIImage+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 
 @interface MEGARichPreviewMediaItem()
@@ -146,7 +147,7 @@
             dialogView.titleLabel.text = self.message.richTitle;
             dialogView.descriptionLabel.text = [Helper memoryStyleStringFromByteCount:self.message.richNumber.longLongValue > 0 ? self.message.richNumber.longLongValue : 0];
             dialogView.linkLabel.text = @"mega.nz";
-            dialogView.imageImageView.image = [Helper folderImage];
+            dialogView.imageImageView.image = UIImage.mnz_folderImage;
             dialogView.descriptionLabel.text = [NSString stringWithFormat:@"%@\n%@", self.message.richString, dialogView.descriptionLabel.text];
             dialogView.iconImageView.image = [UIImage imageNamed:@"favicon"];
         } else if (type == URLTypePublicChatLink) {

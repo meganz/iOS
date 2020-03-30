@@ -67,7 +67,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
 
 static NSMutableSet<NSString *> *tapForInfoSet;
 
-@interface MessagesViewController () <MEGAPhotoBrowserDelegate, JSQMessagesViewAccessoryButtonDelegate, JSQMessagesComposerTextViewPasteDelegate, DZNEmptyDataSetSource, MEGAChatDelegate, MEGAChatRequestDelegate, MEGARequestDelegate, MEGAChatCallDelegate>
+@interface MessagesViewController () <MEGAPhotoBrowserDelegate, JSQMessagesViewAccessoryButtonDelegate, JSQMessagesComposerTextViewPasteDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAChatDelegate, MEGAChatRequestDelegate, MEGARequestDelegate, MEGAChatCallDelegate>
 
 @property (nonatomic, strong) MEGAOpenMessageHeaderView *openMessageHeaderView;
 @property (nonatomic, strong) MEGALoadingMessagesHeaderView *loadingMessagesHeaderView;
@@ -268,6 +268,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     
     self.loadingState = YES;
     self.collectionView.emptyDataSetSource = self;
+    self.collectionView.emptyDataSetDelegate = self;
     [self.collectionView reloadData];
 }
 
@@ -2910,14 +2911,16 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     [self setLastMessageAsSeen];
 }
 
+#pragma mark - DZNEmptyDataSetDelegate
+
+- (BOOL)emptyDataSetShouldDisplay:(UIScrollView *)scrollView {
+    return self.loadingState;
+}
+
 #pragma mark - DZNEmptyDataSetSource
 
 - (UIView *)customViewForEmptyDataSet:(UIScrollView *)scrollView {
-    UIImageView *skeletonImageView = nil;
-    
-    if (self.loadingState) {
-        skeletonImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"chatroomLoading"]];
-    }
+    UIImageView *skeletonImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"chatroomLoading"]];
     
     return skeletonImageView;
 }
