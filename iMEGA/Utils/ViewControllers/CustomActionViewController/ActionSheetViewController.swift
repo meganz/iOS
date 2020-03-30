@@ -6,7 +6,7 @@ class ActionSheetAction: NSObject {
     @objc var image: UIImage?
     @objc var action = { }
     @objc var style: UIAlertAction.Style = .default
-    
+
     override init() {
 
     }
@@ -26,7 +26,7 @@ class ActionSheetViewController: UIViewController {
     }
     var didSetupConstraints = false
     var tableView = UITableView.newAutoLayout()
-    var headerView = UIView(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
+    var headerView: UIView?
     var indicator = UIView(frame: CGRect(x: 0, y: 0, width: 36, height: 6))
     var backgroundView = UIView.newAutoLayout()
     var top: NSLayoutConstraint?
@@ -79,7 +79,10 @@ extension ActionSheetViewController {
         indicator.clipsToBounds = true
         indicator.backgroundColor = UIColor(red: 4/255, green: 4/255, blue: 15/255, alpha: 0.15)
         indicator.isHidden = true
-        headerView.addSubview(indicator)
+        if headerView == nil {
+            headerView = UIView(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
+        }
+        headerView?.addSubview(indicator)
         indicator.autoAlignAxis(toSuperviewAxis: .vertical)
         indicator.autoSetDimension(.height, toSize: 6)
         indicator.autoSetDimension(.width, toSize: 36)
@@ -88,11 +91,11 @@ extension ActionSheetViewController {
         let title = UILabel()
         title.text = headerTitle
         title.sizeToFit()
-        headerView.addSubview(title)
+        headerView?.addSubview(title)
         title.autoCenterInSuperview()
 
         if headerTitle == nil {
-            headerView.frame = CGRect(x: 0, y: 0, width: 320, height: 10)
+            headerView?.frame = CGRect(x: 0, y: 0, width: 320, height: 10)
         }
         tableView.tableHeaderView = headerView
         tableView.tableFooterView = UIView()
@@ -198,7 +201,7 @@ extension ActionSheetViewController: UITableViewDelegate {
         if #available(iOS 11.0, *) {
             bottomHeight = Int(view.safeAreaInsets.bottom)
         }
-        let height = CGFloat(actions.count * 60 + 70 + bottomHeight)
+        let height = CGFloat(actions.count * 60 + bottomHeight + 20) + (headerView?.bounds.height ?? 0)
         if height < view.bounds.height - layoutThreshold {
             top = tableView.autoPinEdge(toSuperviewSafeArea: .top, withInset: CGFloat(view.bounds.height - height))
             tableView.isScrollEnabled = false
@@ -309,7 +312,7 @@ extension ActionSheetViewController: UIViewControllerAnimatedTransitioning, UIVi
 
 extension ActionSheetViewController: UIPopoverPresentationControllerDelegate {
     func prepareForPopoverPresentation(_ popoverPresentationController: UIPopoverPresentationController) {
-        let height = CGFloat(actions.count * 60 + 50)
+        let height = CGFloat(actions.count * 60) + (headerView?.bounds.height ?? 0)
         top?.constant = CGFloat(0)
         tableView.isScrollEnabled = false
         backgroundView.backgroundColor = .clear
