@@ -48,7 +48,7 @@
     }];
     [[MEGASdkManager sharedMEGASdk] isRichPreviewsEnabledWithDelegate:delegate];
     
-    [self updateUI];
+    [self updateAppearance];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -80,7 +80,7 @@
     
     if (@available(iOS 13.0, *)) {
         if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-            [self updateUI];
+            [self updateAppearance];
         }
     }
 }
@@ -93,7 +93,7 @@
 
 #pragma mark - Private
 
-- (void)updateUI {
+- (void)updateAppearance {
     self.statusRightDetailLabel.textColor = self.videoQualityRightDetailLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
     
     self.tableView.separatorColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];

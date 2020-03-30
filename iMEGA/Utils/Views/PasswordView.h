@@ -27,6 +27,6 @@ IB_DESIGNABLE
 - (void)setErrorState:(BOOL)error;
 - (void)setErrorState:(BOOL)error withText:(NSString *)text;
 
-- (void)updateUI;
+- (void)updateAppearance;
 
 @end

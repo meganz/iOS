@@ -39,7 +39,7 @@ typedef NS_ENUM(NSUInteger, VideoUploadsSectionFormatRow) {
     self.videoQualityLabel.text = AMLocalizedString(@"videoQuality", @"Title that refers to the video compression quality when to transcode from HEVC to H.264 codec");
     [self configVideoFormatTexts];
     
-    [self updateUI];
+    [self updateAppearance];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -53,7 +53,7 @@ typedef NS_ENUM(NSUInteger, VideoUploadsSectionFormatRow) {
     
     if (@available(iOS 13.0, *)) {
         if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-            [self updateUI];
+            [self updateAppearance];
         }
     }
 }
@@ -104,7 +104,7 @@ typedef NS_ENUM(NSUInteger, VideoUploadsSectionFormatRow) {
     self.videoQualityRightDetailLabel.text = videoQualityString;
 }
 
-- (void)updateUI {
+- (void)updateAppearance {
     self.videoQualityRightDetailLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
     
     self.tableView.separatorColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];

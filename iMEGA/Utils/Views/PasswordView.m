@@ -78,7 +78,7 @@
     }
 }
 
-- (void)updateUI {
+- (void)updateAppearance {
     CALayer *topBorderLayer = CALayer.new;
     topBorderLayer.frame = CGRectMake(0, 0, self.frame.size.width, 0.5);
     topBorderLayer.backgroundColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection].CGColor;

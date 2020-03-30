@@ -46,7 +46,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self updateUI];
+    [self updateAppearance];
     
     self.tapGesture = [UITapGestureRecognizer.alloc initWithTarget:self action:@selector(hideKeyboard)];
     self.tapGesture.cancelsTouchesInView = NO;
@@ -121,7 +121,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
             [AppearanceManager setupAppearance:self.traitCollection];
             [AppearanceManager invalidateViews];
             
-            [self updateUI];
+            [self updateAppearance];
         }
     }
 }
@@ -264,18 +264,16 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     [self.view endEditing:YES];
 }
 
-- (void)updateUI {
+- (void)updateAppearance {
     self.view.backgroundColor = [UIColor mnz_accountViewsBackgroundColorForTraitCollection:self.traitCollection];
     
-    [self.emailInputView updateUI];
-    [self.passwordView updateUI];
+    [self.emailInputView updateAppearance];
+    [self.passwordView updateAppearance];
     
     [self.forgotPasswordButton setTitleColor:[UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection] forState:UIControlStateNormal];
     self.forgotPasswordImageView.tintColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
     
-    self.loginButton.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
-    [self.loginButton setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
-    self.loginButton.layer.shadowColor = UIColor.blackColor.CGColor;
+    [self.loginButton mnz_setupPrimary:self.traitCollection];
 }
 
 #pragma mark - UIGestureRecognizerDelegate

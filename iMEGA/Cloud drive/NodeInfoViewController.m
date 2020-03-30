@@ -71,7 +71,7 @@
     
     self.closeBarButtonItem.title = AMLocalizedString(@"close", @"A button label. The button allows the user to close the conversation.");
     
-    [self updateUI];
+    [self updateAppearance];
     
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     [[MEGAReachabilityManager sharedManager] retryPendingConnections];
@@ -99,7 +99,7 @@
             [AppearanceManager setupAppearance:self.traitCollection];
             [AppearanceManager invalidateViews];
             
-            [self updateUI];
+            [self updateAppearance];
             
             [self.tableView reloadData];
         }
@@ -126,7 +126,7 @@
     [self.tableView reloadData];
 }
 
-- (void)updateUI {
+- (void)updateAppearance {
     self.nodeTopSeparatorView.backgroundColor = self.nodeBottomSeparatorView.backgroundColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
     
     self.infoButton.tintColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];

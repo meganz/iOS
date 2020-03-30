@@ -77,7 +77,7 @@
     
     if (@available(iOS 13.0, *)) {
         if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-            [self updateUI];
+            [self updateAppearance];
             
             [self.tableView reloadData];
         }
@@ -98,7 +98,7 @@
     }
 }
 
-- (void)updateUI {
+- (void)updateAppearance {
     self.tableView.backgroundColor = [UIColor mnz_settingsBackgroundForTraitCollection:self.traitCollection];
 }
 
