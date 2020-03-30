@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -19,6 +17,7 @@
                 <outlet property="imageView" destination="2PZ-4l-cdv" id="IxH-vE-oOH"/>
                 <outlet property="linkLabel" destination="wDA-KR-Ozd" id="WHv-jc-pJY"/>
                 <outlet property="linkView" destination="m1j-av-tR3" id="CoD-dT-GgP"/>
+                <outlet property="mainView" destination="sy9-8p-mxu" id="AwV-0e-Bd6"/>
                 <outlet property="secondButton" destination="3Tk-m3-ghO" id="r9P-BP-trE"/>
                 <outlet property="titleLabel" destination="a7Y-Zm-Y3I" id="y9z-Y2-Goc"/>
                 <outlet property="view" destination="iN0-l3-epB" id="9VL-RL-8Jx"/>
@@ -39,7 +38,7 @@
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="4Ln-Ti-cts">
                             <rect key="frame" x="8" y="35" width="364" height="477"/>
                             <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" image="inviteSent" translatesAutoresizingMaskIntoConstraints="NO" id="2PZ-4l-cdv">
+                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="2PZ-4l-cdv">
                                     <rect key="frame" x="118" y="0.0" width="128" height="128"/>
                                     <constraints>
                                         <constraint firstAttribute="width" relation="lessThanOrEqual" constant="128" id="ASG-HV-Zh4">
@@ -59,31 +58,38 @@
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Title Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a7Y-Zm-Y3I">
                                     <rect key="frame" x="143.5" y="148" width="77" height="19.5"/>
                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
-                                    <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m1j-av-tR3">
                                     <rect key="frame" x="29.5" y="187.5" width="305.5" height="50"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="https://mega.nz/chat/uhNHUIZa#DI..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wDA-KR-Ozd" customClass="CopyableLabel">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wDA-KR-Ozd" customClass="CopyableLabel">
                                             <rect key="frame" x="10" y="12" width="285.5" height="26"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
-                                    <color key="backgroundColor" red="0.98039215686274506" green="0.98039215686274506" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="bottom" secondItem="wDA-KR-Ozd" secondAttribute="bottom" constant="12" id="RLP-j5-Wuw"/>
                                         <constraint firstItem="wDA-KR-Ozd" firstAttribute="leading" secondItem="m1j-av-tR3" secondAttribute="leading" constant="10" id="dtz-aV-VO8"/>
                                         <constraint firstAttribute="trailing" secondItem="wDA-KR-Ozd" secondAttribute="trailing" constant="10" id="gFY-8J-HBi"/>
                                         <constraint firstItem="wDA-KR-Ozd" firstAttribute="top" secondItem="m1j-av-tR3" secondAttribute="top" constant="12" id="vud-V1-CcL"/>
                                     </constraints>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                            <real key="value" value="4"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                            <real key="value" value="0.5"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
                                 </view>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="249" text="Detail label Detail label Detail label Detail label Detail label Detail labelDetail labelDetail label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="KXA-VS-o9F">
                                     <rect key="frame" x="11" y="257.5" width="342" height="33.5"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                    <color key="textColor" red="0.46666666666666667" green="0.46666666666666667" blue="0.46666666666666667" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="woc-LH-3yv">
@@ -91,41 +97,25 @@
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RVu-6u-5sa">
                                             <rect key="frame" x="0.0" y="0.0" width="291" height="50"/>
-                                            <color key="backgroundColor" red="0.0" green="0.74901960784313726" blue="0.6470588235294118" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="50" id="OQw-Cu-GeO"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
-                                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <inset key="titleEdgeInsets" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
-                                            <state key="normal" title="See plans"/>
-                                            <userDefinedRuntimeAttributes>
-                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                    <integer key="value" value="4"/>
-                                                </userDefinedRuntimeAttribute>
-                                            </userDefinedRuntimeAttributes>
+                                            <state key="normal" title="First"/>
                                             <connections>
                                                 <action selector="firstButtonTouchUpInside:" destination="-1" eventType="touchUpInside" id="Vkh-ao-cdF"/>
                                             </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Tk-m3-ghO">
                                             <rect key="frame" x="0.0" y="58" width="291" height="50"/>
-                                            <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="50" id="cYk-e2-ssh"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
-                                            <color key="tintColor" red="0.53725490196078429" green="0.60784313725490191" blue="0.61176470588235299" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <inset key="titleEdgeInsets" minX="5" minY="0.0" maxX="0.0" maxY="0.0"/>
                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="5" maxY="0.0"/>
-                                            <state key="normal" title="Get Bonus">
-                                                <color key="titleColor" red="0.53725490196078429" green="0.60784313725490191" blue="0.61176470588235299" alpha="1" colorSpace="calibratedRGB"/>
-                                            </state>
-                                            <userDefinedRuntimeAttributes>
-                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                    <integer key="value" value="4"/>
-                                                </userDefinedRuntimeAttribute>
-                                            </userDefinedRuntimeAttributes>
+                                            <state key="normal" title="Second"/>
                                             <connections>
                                                 <action selector="secondButtonTouchUpInside:" destination="-1" eventType="touchUpInside" id="46i-1F-qas"/>
                                             </connections>
@@ -135,8 +125,7 @@
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="50" id="5OY-NV-ozf"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
-                                            <color key="tintColor" red="0.53725490196078429" green="0.60784313725490191" blue="0.61176470588235299" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <state key="normal" title="Dismiss"/>
                                             <connections>
                                                 <action selector="dismissTouchUpInside:" destination="-1" eventType="touchUpInside" id="ZoY-Bf-3NQ"/>
@@ -178,7 +167,6 @@
                             </variation>
                         </stackView>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="bottom" secondItem="4Ln-Ti-cts" secondAttribute="bottom" constant="29" id="7mb-yg-qqK"/>
                         <constraint firstItem="4Ln-Ti-cts" firstAttribute="leading" secondItem="sy9-8p-mxu" secondAttribute="leading" constant="8" id="bTD-FU-Isu"/>
@@ -186,13 +174,12 @@
                         <constraint firstItem="4Ln-Ti-cts" firstAttribute="top" secondItem="sy9-8p-mxu" secondAttribute="top" constant="35" id="yN1-hc-LSA"/>
                     </constraints>
                     <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                            <integer key="value" value="4"/>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="4"/>
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                 </view>
             </subviews>
-            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="9or-B3-Uwe" secondAttribute="trailing" id="6Od-6K-UGZ"/>
                 <constraint firstAttribute="bottom" secondItem="9or-B3-Uwe" secondAttribute="bottom" id="Bfm-pc-gS2"/>
@@ -234,7 +221,4 @@
             <point key="canvasLocation" x="22.5" y="48.75"/>
         </view>
     </objects>
-    <resources>
-        <image name="inviteSent" width="256" height="256"/>
-    </resources>
 </document>

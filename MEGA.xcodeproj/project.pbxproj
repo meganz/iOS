@@ -319,6 +319,8 @@
 		5BEB2EB1220ADA27000F029F /* RecentsTableViewHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BEB2EB0220ADA27000F029F /* RecentsTableViewHeaderView.xib */; };
 		5BEB2EB6220ADC9B000F029F /* RecentsTableViewHeaderFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BEB2EB5220ADC9B000F029F /* RecentsTableViewHeaderFooterView.m */; };
 		5BF4B3B720AB081A00A6E6D7 /* TwoFactorAuthenticationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BF4B3B620AB081A00A6E6D7 /* TwoFactorAuthenticationViewController.m */; };
+		5BF4EEDE243204C100D39415 /* UIButton+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC6919D2428C716001AC3DC /* UIButton+Additions.swift */; };
+		5BF4EEDF243204E000D39415 /* UIButton+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC6919D2428C716001AC3DC /* UIButton+Additions.swift */; };
 		5BF5388423743AD80023F2E4 /* ExtensionAppearanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BF538822374394F0023F2E4 /* ExtensionAppearanceManager.swift */; };
 		5BFA346B1FAB4169005BFC4E /* MEGARemoveRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFA34691FAB4168005BFC4E /* MEGARemoveRequestDelegate.m */; };
 		5BFA346E1FAB6282005BFC4E /* MEGAMoveRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFA346D1FAB6282005BFC4E /* MEGAMoveRequestDelegate.m */; };
@@ -1708,6 +1710,7 @@
 		5BEB2EB7220ADCAE000F029F /* RecentsTableViewHeaderFooterView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RecentsTableViewHeaderFooterView.h; sourceTree = "<group>"; };
 		5BF4B3B520AB081A00A6E6D7 /* TwoFactorAuthenticationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TwoFactorAuthenticationViewController.h; sourceTree = "<group>"; };
 		5BF4B3B620AB081A00A6E6D7 /* TwoFactorAuthenticationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TwoFactorAuthenticationViewController.m; sourceTree = "<group>"; };
+		5BF4EEDD243203C300D39415 /* CustomModalAlertViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomModalAlertViewController.h; path = iMEGA/Utils/ViewControllers/CustomModalAlert/CustomModalAlertViewController.h; sourceTree = SOURCE_ROOT; };
 		5BF5387F23741DB70023F2E4 /* MEGA.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = MEGA.entitlements; sourceTree = "<group>"; };
 		5BF538822374394F0023F2E4 /* ExtensionAppearanceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionAppearanceManager.swift; sourceTree = "<group>"; };
 		5BFA34691FAB4168005BFC4E /* MEGARemoveRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGARemoveRequestDelegate.m; path = API/Requests/MEGARemoveRequestDelegate.m; sourceTree = "<group>"; };
@@ -2050,7 +2053,6 @@
 		A815FCE91FE2AD080075AC29 /* UIApplication+MNZCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIApplication+MNZCategory.m"; sourceTree = "<group>"; };
 		A81613FC1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGACreateAccountRequestDelegate.h; path = API/Requests/MEGACreateAccountRequestDelegate.h; sourceTree = "<group>"; };
 		A81613FD1EDC1CA900500381 /* MEGACreateAccountRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGACreateAccountRequestDelegate.m; path = API/Requests/MEGACreateAccountRequestDelegate.m; sourceTree = "<group>"; };
-		A819B33D1EAFA7E2004592F9 /* CustomModalAlertViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomModalAlertViewController.h; sourceTree = "<group>"; };
 		A819B33E1EAFA7E2004592F9 /* CustomModalAlertViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomModalAlertViewController.m; sourceTree = "<group>"; };
 		A819B3411EAFA844004592F9 /* CustomModalAlertViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomModalAlertViewController.xib; sourceTree = "<group>"; };
 		A81AD7371F3099F800CA4059 /* MEGAProcessAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAProcessAsset.h; sourceTree = "<group>"; };
@@ -4155,6 +4157,16 @@
 			path = "Two Factor Authentication";
 			sourceTree = "<group>";
 		};
+		5BF4EEDC2432039C00D39415 /* CustomModalAlert */ = {
+			isa = PBXGroup;
+			children = (
+				5BF4EEDD243203C300D39415 /* CustomModalAlertViewController.h */,
+				A819B33E1EAFA7E2004592F9 /* CustomModalAlertViewController.m */,
+				A819B3411EAFA844004592F9 /* CustomModalAlertViewController.xib */,
+			);
+			path = CustomModalAlert;
+			sourceTree = "<group>";
+		};
 		7747B2D5208623550011814E /* Network */ = {
 			isa = PBXGroup;
 			children = (
@@ -4584,6 +4596,7 @@
 		A819B3401EAFA7E7004592F9 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				5BF4EEDC2432039C00D39415 /* CustomModalAlert */,
 				5B59B4CD2367266900A57229 /* Document Previewer */,
 				A815EE1723630BB2009B8D59 /* WebCodeViewController */,
 				837C4F86235DFF3E00FFE177 /* VerifyEmailViewcontroller */,
@@ -4591,9 +4604,6 @@
 				83D64E2B2017873D00E24155 /* PasswordReminder */,
 				77D9A5692023538600B48470 /* Photo browser */,
 				7795677421C80C43002B6227 /* OnboardingViewController */,
-				A819B33D1EAFA7E2004592F9 /* CustomModalAlertViewController.h */,
-				A819B33E1EAFA7E2004592F9 /* CustomModalAlertViewController.m */,
-				A819B3411EAFA844004592F9 /* CustomModalAlertViewController.xib */,
 				E8B3FE761DDB379C008A9C82 /* HelpModalViewController.h */,
 				E8B3FE771DDB379C008A9C82 /* HelpModalViewController.m */,
 				5B134B8E1F86260A000E367E /* HelpModalViewController.xib */,
@@ -6623,6 +6633,7 @@
 				943229341EDD8823007DB542 /* MEGANavigationController.m in Sources */,
 				2F98BF4E237B5AE90049162B /* ALView+PureLayout.m in Sources */,
 				5BA81EA41FC30C9A00C8146C /* MEGAShareRequestDelegate.m in Sources */,
+				5BF4EEDF243204E000D39415 /* UIButton+Additions.swift in Sources */,
 				5BEACE2B1FB4740E0010E02F /* UIAlertAction+MNZCategory.m in Sources */,
 				943229501EDD9CF8007DB542 /* UIImage+MNZCategory.m in Sources */,
 				831D61A7218738EB0038F5B8 /* MOFolderLayout+CoreDataClass.m in Sources */,
@@ -6744,6 +6755,7 @@
 				83FB143C219C3C6E00418BE6 /* MOOfflineFolderLayout+CoreDataProperties.m in Sources */,
 				77F95CEF20E3B14D00F42D9C /* ShareFilesDestinationTableViewController.m in Sources */,
 				5BEACE251FB473A20010E02F /* UIImage+MNZCategory.m in Sources */,
+				5BF4EEDE243204C100D39415 /* UIButton+Additions.swift in Sources */,
 				94892C931EFBEA4100AEAC25 /* MEGALogger.m in Sources */,
 				94892CA01EFBF16A00AEAC25 /* UIColor+MNZCategory.m in Sources */,
 				94C9D7561FBDC87B008BA1B5 /* MEGANodeList+MNZCategory.m in Sources */,
