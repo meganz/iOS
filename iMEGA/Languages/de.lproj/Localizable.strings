@@ -1270,7 +1270,7 @@
 /* Alert message shown when the user perform logout and has files in the Offline directory */
 "allFilesSavedForOfflineWillBeDeletedFromYourDevice"="Alle für Offline-Nutzung gespeicherten Dateien werden beim Logout gelöscht. Fortfahren?";
 /* Title shown when you almost had used your available transfer quota. */
-"depletedTransferQuota_title"="Transfervolumen erschöpft";
+"depletedTransferQuota_title"="Transfervolumen nicht ausreichend";
 /* Description shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_message"="Die zu übertragende Datenmenge überschreitet das verbleibende Transfervolumen Ihres Accounts. Die Übertragung könnte daher unterbrochen werden.";
 /* Button title to see the available pro plans in MEGA */
@@ -1546,6 +1546,10 @@
 "callFailed"="Anruf fehlgeschlagen";
 /* When an active call of user A with user B had ended */
 "callEnded"="Gespräch beendet.";
+/* When an active goup call is ended */
+"Group call ended"="Audio-/Videokonferenz beendet";
+/* When an active goup call is ended, shows the duration */
+"[A]Group call ended[/A][C]. Duration: [/C]"="[A]Group call ended[/A][C]. Duration: [/C]";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="Dauer: %@";
 /* */
@@ -1959,9 +1963,11 @@
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Auf den Testserver wechseln? Dies ist mit erheblichen Risiken behaftet.";
 /* Title label that explains that the user is going to be asked for the contacts permission */
-"Enable Access to Contacts"="Enable Access to Contacts";
+"Enable Access to Your Address Book"="Enable Access to Your Address Book";
 /* Detailed explanation of why the user should give permission to contacts */
-"MEGA needs access to your contacts to help you connect with other people on MEGA."="MEGA needs access to your contacts to help you connect with other people on MEGA.";
+"Easily discover contacts from your address book on MEGA."="Easily discover contacts from your address book on MEGA.";
+/* Detailed explanation about MEGA not using the contacts data without permision */
+"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA will not use this data for any other purpose and will never interact with your contacts without your consent.";
 /* Title encouraging the user to check who of its contacts are using MEGA */
 "See who's already on MEGA"="See who is already on MEGA";
 /* Title showing the user how many of his contacts are using MEGA */
@@ -2126,5 +2132,5 @@
 "Easily discover contacts from your address book on MEGA."="Easily discover contacts from your address book on MEGA.";
 /* Detailed description of why the user should give permission to contacts */
 "MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA will not use this data for any other purpose and will never interact with your contacts without your consent.";
-/* Title label that explains that the user is going to be asked for the contacts permission */
-"Enable Access to Your Address Book"="Enable Access to Your Address Book";
+/* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
+"Enter group name"="Benennen Sie den Gruppenchat";

@@ -12,9 +12,7 @@
 
 #pragma mark - Video calls
 
-+ (UIImage *)mnz_convertBitmapRGBA8ToUIImage:(unsigned char *)buffer
-                               withWidth:(NSInteger)width
-                              withHeight:(NSInteger)height {
++ (UIImage *)mnz_convertBitmapRGBA8ToUIImage:(unsigned char *)buffer withWidth:(NSInteger)width withHeight:(NSInteger)height {
     size_t bufferLength = width * height * 4;
     CGDataProviderRef provider = CGDataProviderCreateWithData(NULL, buffer, bufferLength, NULL);
     size_t bitsPerComponent = 8;
@@ -22,7 +20,7 @@
     size_t bytesPerRow = 4 * width;
     
     CGColorSpaceRef colorSpaceRef = CGColorSpaceCreateDeviceRGB();
-    if(colorSpaceRef == NULL) {
+    if (colorSpaceRef == NULL) {
         NSLog(@"Error allocating color space");
         CGDataProviderRelease(provider);
         return nil;
@@ -31,21 +29,11 @@
     CGBitmapInfo bitmapInfo = kCGBitmapByteOrderDefault | kCGImageAlphaPremultipliedLast;
     CGColorRenderingIntent renderingIntent = kCGRenderingIntentDefault;
     
-    CGImageRef iref = CGImageCreate(width,
-                                    height,
-                                    bitsPerComponent,
-                                    bitsPerPixel,
-                                    bytesPerRow,
-                                    colorSpaceRef,
-                                    bitmapInfo,
-                                    provider,    // data provider
-                                    NULL,        // decode
-                                    YES,            // should interpolate
-                                    renderingIntent);
+    CGImageRef iref = CGImageCreate(width, height, bitsPerComponent, bitsPerPixel, bytesPerRow, colorSpaceRef, bitmapInfo, provider, NULL, YES, renderingIntent);
     
     uint32_t* pixels = (uint32_t*)malloc(bufferLength);
     
-    if(pixels == NULL) {
+    if (pixels == NULL) {
         NSLog(@"Error: Memory not allocated for bitmap");
         CGDataProviderRelease(provider);
         CGColorSpaceRelease(colorSpaceRef);
@@ -53,27 +41,20 @@
         return nil;
     }
     
-    CGContextRef context = CGBitmapContextCreate(pixels,
-                                                 width,
-                                                 height,
-                                                 bitsPerComponent,
-                                                 bytesPerRow,
-                                                 colorSpaceRef,
-                                                 bitmapInfo);
+    CGContextRef context = CGBitmapContextCreate(pixels, width, height, bitsPerComponent, bytesPerRow, colorSpaceRef, bitmapInfo);
     
-    if(context == NULL) {
+    if (context == NULL) {
         NSLog(@"Error context not created");
     }
     
     UIImage *image = nil;
-    if(context) {
-        
+    if (context) {
         CGContextDrawImage(context, CGRectMake(0.0f, 0.0f, width, height), iref);
         
         CGImageRef imageRef = CGBitmapContextCreateImage(context);
         
         // Support both iPad 3.2 and iPhone 4 Retina displays with the correct scale
-        if([UIImage respondsToSelector:@selector(imageWithCGImage:scale:orientation:)]) {
+        if ([UIImage respondsToSelector:@selector(imageWithCGImage:scale:orientation:)]) {
             float scale = [[UIScreen mainScreen] scale];
             image = [UIImage imageWithCGImage:imageRef scale:scale orientation:UIImageOrientationUp];
         } else {
@@ -88,7 +69,7 @@
     CGImageRelease(iref);
     CGDataProviderRelease(provider);
     
-    if(pixels) {
+    if (pixels) {
         free(pixels);
     }
     
@@ -215,6 +196,121 @@
     UIImage *scaledImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return scaledImage;
+}
+    
+#pragma mark - Extensions
+
++ (UIImage *)mnz_genericImage {
+    static UIImage *genericImage = nil;
+    if (genericImage == nil) {
+        genericImage = [UIImage imageNamed:@"generic"];
+    }
+    
+    return genericImage;
+}
+
++ (UIImage *)mnz_folderImage {
+    static UIImage *folderImage = nil;
+    if (folderImage == nil) {
+        folderImage = [UIImage imageNamed:@"folder"];
+    }
+    
+    return folderImage;
+}
+
++ (UIImage *)mnz_incomingFolderImage {
+    static UIImage *incomingFolderImage = nil;
+    if (incomingFolderImage == nil) {
+        incomingFolderImage = [UIImage imageNamed:@"folder_incoming"];
+    }
+    
+    return incomingFolderImage;
+}
+
++ (UIImage *)mnz_outgoingFolderImage {
+    static UIImage *outgoingFolderImage = nil;
+    if (outgoingFolderImage == nil) {
+        outgoingFolderImage = [UIImage imageNamed:@"folder_outgoing"];
+    }
+    
+    return outgoingFolderImage;
+}
+
++ (UIImage *)mnz_folderCameraUploadsImage {
+    static UIImage *folderCameraUploadsImage = nil;
+    if (folderCameraUploadsImage == nil) {
+        folderCameraUploadsImage = [UIImage imageNamed:@"folder_image"];
+    }
+    
+    return folderCameraUploadsImage;
+}
+
++ (UIImage *)mnz_defaultPhotoImage {
+    static UIImage *defaultPhotoImage = nil;
+    if (defaultPhotoImage == nil) {
+        defaultPhotoImage = [UIImage imageNamed:@"image"];
+    }
+    
+    return defaultPhotoImage;
+}
+
++ (UIImage *)mnz_downloadingTransferImage {
+    static UIImage *downloadingTransferImage = nil;
+    if (downloadingTransferImage == nil) {
+        downloadingTransferImage = [UIImage imageNamed:@"downloading"];
+    }
+    
+    return downloadingTransferImage;
+}
+
++ (UIImage *)mnz_uploadingTransferImage {
+    static UIImage *uploadingTransferImage = nil;
+    if (uploadingTransferImage == nil) {
+        uploadingTransferImage = [UIImage imageNamed:@"uploading"];
+    }
+    
+    return uploadingTransferImage;
+}
+
++ (UIImage *)mnz_downloadQueuedTransferImage {
+    static UIImage *downloadQueuedTransferImage = nil;
+    if (downloadQueuedTransferImage == nil) {
+        downloadQueuedTransferImage = [UIImage imageNamed:@"downloadQueued"];
+    }
+    
+    return downloadQueuedTransferImage;
+}
+
++ (UIImage *)mnz_uploadQueuedTransferImage {
+    static UIImage *uploadQueuedTransferImage = nil;
+    if (uploadQueuedTransferImage == nil) {
+        uploadQueuedTransferImage = [UIImage imageNamed:@"uploadQueued"];
+    }
+    
+    return uploadQueuedTransferImage;
+}
+
++ (UIImage * _Nullable)mnz_permissionsButtonImageForShareType:(MEGAShareType)shareType {
+    UIImage *image;
+    switch (shareType) {
+        case MEGAShareTypeAccessRead:
+            image = [UIImage imageNamed:@"readPermissions"];
+            break;
+            
+        case MEGAShareTypeAccessReadWrite:
+            image =  [UIImage imageNamed:@"readWritePermissions"];
+            break;
+            
+        case MEGAShareTypeAccessFull:
+            image = [UIImage imageNamed:@"fullAccessPermissions"];
+            break;
+            
+        default:
+            image = nil;
+            break;
+    }
+    
+    return image;
 }
 
 @end

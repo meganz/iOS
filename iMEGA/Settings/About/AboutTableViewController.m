@@ -46,7 +46,7 @@
     
     [self.acknowledgementsLabel setText:AMLocalizedString(@"acknowledgements", nil)];
     
-    [self updateAppearance];
+    [self updateAppearance];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -65,14 +65,14 @@
     
     if (@available(iOS 13.0, *)) {
         if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-            [self updateAppearance];
+            [self updateAppearance];
         }
     }
 }
 
 #pragma mark - Private
 
-- (void)updateAppearance {
+- (void)updateAppearance {
     self.tableView.separatorColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
     self.tableView.backgroundColor = [UIColor mnz_settingsBackgroundForTraitCollection:self.traitCollection];
     

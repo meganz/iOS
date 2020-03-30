@@ -311,7 +311,7 @@
 /* Title shown under the action that allows you to save an image to your camera roll */
 "saveImage"="保存照片";
 /* Title shown under the action that allows you to get a link to file or folder */
-"getLink"="获得链接";
+"getLink"="获取链接";
 /* Title shown under the action that allows you to get several links to files and/or folders */
 "getLinks"="创建共享链接";
 /* Item menu option upon right click on one or multiple files. */
@@ -427,7 +427,7 @@
 /* Success message shown when you have copied [A] = {1+} files and [B] = {1+} folders */
 "copyFilesFoldersMessage"="已复制[A] 个文件与[B] 个文件夹";
 /* Title for the action that allows you to rename a file or folder  */
-"rename"="重新命名";
+"rename"="重命名";
 /* Hint text to suggest that the user have to write the new name for the file or folder */
 "renameNodeMessage"="输入新名字";
 /* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
@@ -519,7 +519,7 @@
 /* Title of the Contacts section */
 "contactsTitle"="联系人";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
-"oneFolderShared"="一个文件夹";
+"oneFolderShared"="1个文件夹";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
 "foldersShared"="%d 个文件夹";
 /* Item menu option to add a contact writting his/her email */
@@ -605,7 +605,7 @@
 /* Permissions given to the user you share your folder with */
 "readOnly"="只读";
 /* Permissions given to the user you share your folder with */
-"readAndWrite"="可读写";
+"readAndWrite"="仅读写";
 /* Permissions given to the user you share your folder with */
 "fullAccess"="完全访问权限";
 /* Title of the Settings section */
@@ -1546,6 +1546,10 @@
 "callFailed"="通话失败";
 /* When an active call of user A with user B had ended */
 "callEnded"="呼叫结束。";
+/* When an active goup call is ended */
+"Group call ended"="群组呼叫结束";
+/* When an active goup call is ended, shows the duration */
+"[A]Group call ended[/A][C]. Duration: [/C]"="[A]群组通话结束[/A][C]。时长：[/C]";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="时长：%@";
 /* */
@@ -1691,7 +1695,7 @@
 /* Title for the Rubbish-Bin Cleaning Scheduler feature */
 "Rubbish-Bin Cleaning Scheduler:"="垃圾桶定时清理";
 /* A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days. */
-"Remove files older than"="删除较旧的文件，早于";
+"Remove files older than"="删除垃圾桶中的文件，时间早于";
 /* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
 "Days"="天";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
@@ -1959,9 +1963,11 @@
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="您确定要更改为测试服务器吗？ 您的帐户可能会遇到无法解决的问题";
 /* Title label that explains that the user is going to be asked for the contacts permission */
-"Enable Access to Contacts"="允许访问联系人";
+"Enable Access to Your Address Book"="Enable Access to Your Address Book";
 /* Detailed explanation of why the user should give permission to contacts */
-"MEGA needs access to your contacts to help you connect with other people on MEGA."="与其他人建立联系前，MEGA需访问您的联系人";
+"Easily discover contacts from your address book on MEGA."="Easily discover contacts from your address book on MEGA.";
+/* Detailed explanation about MEGA not using the contacts data without permision */
+"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA will not use this data for any other purpose and will never interact with your contacts without your consent.";
 /* Title encouraging the user to check who of its contacts are using MEGA */
 "See who's already on MEGA"="看看谁在用MEGA";
 /* Title showing the user how many of his contacts are using MEGA */
@@ -2126,5 +2132,5 @@
 "Easily discover contacts from your address book on MEGA."="Easily discover contacts from your address book on MEGA.";
 /* Detailed description of why the user should give permission to contacts */
 "MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA will not use this data for any other purpose and will never interact with your contacts without your consent.";
-/* Title label that explains that the user is going to be asked for the contacts permission */
-"Enable Access to Your Address Book"="Enable Access to Your Address Book";
+/* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
+"Enter group name"="输入群名称";

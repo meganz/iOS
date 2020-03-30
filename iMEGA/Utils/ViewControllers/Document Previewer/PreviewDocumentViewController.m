@@ -56,7 +56,7 @@
     [super viewDidLoad];
     
     [self configureNavigation];
-    [self updateAppearance];
+    [self updateAppearance];
     
     self.moreBarButtonItem.accessibilityLabel = AMLocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
 }
@@ -223,7 +223,7 @@
     }
 }
 
-- (void)updateAppearance {
+- (void)updateAppearance {
     self.view.backgroundColor = UIColor.mnz_background;
 }
 

@@ -261,128 +261,6 @@ static MEGAIndexer *indexer;
     return fileTypesDictionary;
 }
 
-+ (UIImage *)genericImage {
-    static UIImage *genericImage = nil;
-    
-    if (genericImage == nil) {
-        genericImage = [UIImage imageNamed:@"generic"];
-    }
-    return genericImage;
-}
-
-+ (UIImage *)folderImage {
-    static UIImage *folderImage = nil;
-    
-    if (folderImage == nil) {
-        folderImage = [UIImage imageNamed:@"folder"];
-    }
-    return folderImage;
-}
-
-+ (UIImage *)incomingFolderImage {
-    static UIImage *incomingFolderImage = nil;
-    
-    if (incomingFolderImage == nil) {
-        incomingFolderImage = [UIImage imageNamed:@"folder_incoming"];
-    }
-    return incomingFolderImage;
-}
-
-+ (UIImage *)outgoingFolderImage {
-    static UIImage *outgoingFolderImage = nil;
-    
-    if (outgoingFolderImage == nil) {
-        outgoingFolderImage = [UIImage imageNamed:@"folder_outgoing"];
-    }
-    return outgoingFolderImage;
-}
-
-+ (UIImage *)folderCameraUploadsImage {
-    static UIImage *folderCameraUploadsImage = nil;
-    
-    if (folderCameraUploadsImage == nil) {
-        folderCameraUploadsImage = [UIImage imageNamed:@"folder_image"];
-    }
-    return folderCameraUploadsImage;
-}
-
-+ (UIImage *)defaultPhotoImage {
-    static UIImage *defaultPhotoImage = nil;
-    
-    if (defaultPhotoImage == nil) {
-        defaultPhotoImage = [UIImage imageNamed:@"image"];
-    }
-    return defaultPhotoImage;
-}
-
-+ (UIImage *)downloadedArrowImage {
-    static UIImage *downloadedArrowImage = nil;
-    
-    if (downloadedArrowImage == nil) {
-        downloadedArrowImage = [UIImage imageNamed:@"downloadedArrow"];
-    }
-    return downloadedArrowImage;
-}
-
-+ (UIImage *)downloadingTransferImage {
-    static UIImage *downloadingTransferImage = nil;
-    
-    if (downloadingTransferImage == nil) {
-        downloadingTransferImage = [UIImage imageNamed:@"downloading"];
-    }
-    return downloadingTransferImage;
-}
-
-+ (UIImage *)uploadingTransferImage {
-    static UIImage *uploadingTransferImage = nil;
-    
-    if (uploadingTransferImage == nil) {
-        uploadingTransferImage = [UIImage imageNamed:@"uploading"];
-    }
-    return uploadingTransferImage;
-}
-
-+ (UIImage *)downloadQueuedTransferImage {
-    static UIImage *downloadQueuedTransferImage = nil;
-    
-    if (downloadQueuedTransferImage == nil) {
-        downloadQueuedTransferImage = [UIImage imageNamed:@"downloadQueued"];
-    }
-    return downloadQueuedTransferImage;
-}
-
-+ (UIImage *)uploadQueuedTransferImage {
-    static UIImage *uploadQueuedTransferImage = nil;
-    
-    if (uploadQueuedTransferImage == nil) {
-        uploadQueuedTransferImage = [UIImage imageNamed:@"uploadQueued"];
-    }
-    return uploadQueuedTransferImage;
-}
-
-+ (UIImage *)permissionsButtonImageForShareType:(MEGAShareType)shareType {
-    UIImage *image;
-    switch (shareType) {
-        case MEGAShareTypeAccessRead:
-            image = [UIImage imageNamed:@"readPermissions"];
-            break;
-            
-        case MEGAShareTypeAccessReadWrite:
-            image =  [UIImage imageNamed:@"readWritePermissions"];
-            break;
-            
-        case MEGAShareTypeAccessFull:
-            image = [UIImage imageNamed:@"fullAccessPermissions"];
-            break;
-            
-        default:
-            image = nil;
-            break;
-    }
-    
-    return image;
-}
-
 #pragma mark - Paths
 
 + (NSString *)pathForOffline {
@@ -1292,6 +1170,12 @@ static MEGAIndexer *indexer;
     [[Helper uploadingNodes] removeAllObjects];
     
     [NSUserDefaults.standardUserDefaults removePersistentDomainForName:NSBundle.mainBundle.bundleIdentifier];
+
+    //Set default values on logout
+    [NSUserDefaults.standardUserDefaults setValue:MEGAFirstRunValue forKey:MEGAFirstRun];
+    if (@available(iOS 12.0, *)) {} else {
+        [NSUserDefaults.standardUserDefaults synchronize];
+    }
     
     NSUserDefaults *sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];
     [sharedUserDefaults removePersistentDomainForName:MEGAGroupIdentifier];

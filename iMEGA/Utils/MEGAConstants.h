@@ -7,6 +7,8 @@ extern NSString * const MEGAiOSAppUserAgent;
 extern NSString * const MEGAiOSAppKey;
 extern NSString * const MEGAPasswordService;
 extern NSString * const MEGAPasswordName;
+extern NSString * const MEGAFirstRun;
+extern NSString * const MEGAFirstRunValue;
 
 extern NSString * const MEGAGroupIdentifier;
 

@@ -112,6 +112,10 @@
                 break;
             }
                 
+            case MEGAErrorTypeApiETooMany:
+                [self showLinkNotValidForTooManyError];
+                break;
+                
             case MEGAErrorTypeApiEIncomplete: {
                 [self showDecryptionAlert];
                 break;
@@ -172,6 +176,7 @@
 }
 
 - (void)showEmptyStateViewWithTitle:(NSString *)title text:(NSString *)text {
+    self.moreBarButtonItem.enabled = self.downloadBarButtonItem.enabled = self.importBarButtonItem.enabled = NO;
     UnavailableLinkView *unavailableLinkView = [[[NSBundle mainBundle] loadNibNamed:@"UnavailableLinkView" owner:self options: nil] firstObject];
     unavailableLinkView.frame = self.view.bounds;
     unavailableLinkView.imageView.image = [UIImage imageNamed:@"invalidFileLink"];
@@ -188,6 +193,10 @@
 
 - (void)showLinkNotValid {
     [self showEmptyStateViewWithTitle:AMLocalizedString(@"linkNotValid", nil) text:@""];
+}
+
+- (void)showLinkNotValidForTooManyError {
+    [self showEmptyStateViewWithTitle:AMLocalizedString(@"linkNotValid", nil) text:AMLocalizedString(@"The account that created this link has been terminated due to multiple violations of our Terms of Service.", @"An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service.")];
 }
 
 - (void)showDecryptionAlert {

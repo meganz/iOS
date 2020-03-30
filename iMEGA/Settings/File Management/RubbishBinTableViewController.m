@@ -36,7 +36,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self updateAppearance];
+    [self updateAppearance];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -59,7 +59,7 @@
 
 #pragma mark - Private
 
-- (void)updateAppearance {
+- (void)updateAppearance {
     self.tableView.separatorColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
     self.tableView.backgroundColor = [UIColor mnz_settingsBackgroundForTraitCollection:self.traitCollection];
     

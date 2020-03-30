@@ -32,7 +32,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self updateAppearance];
+    [self updateAppearance];
     
     switch (self.type) {
         case OnboardingTypeDefault:
@@ -115,7 +115,7 @@
             [AppearanceManager setupAppearance:self.traitCollection];
             [AppearanceManager invalidateViews];
             
-            [self updateAppearance];
+            [self updateAppearance];
         }
     }
 }
@@ -162,7 +162,7 @@
     }
 }
 
-- (void)updateAppearance {
+- (void)updateAppearance {
     self.view.backgroundColor = self.scrollView.backgroundColor = UIColor.mnz_background;
     
     self.pageControl.currentPageIndicatorTintColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];

@@ -40,7 +40,7 @@ class NicknameViewController: UIViewController {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         
-        updateAppearance()
+        updateAppearance()
     }
     
     // MARK:- IBActions
@@ -112,6 +112,7 @@ class NicknameViewController: UIViewController {
             self.dismissViewController()
         }
         
+        SVProgressHUD.setDefaultMaskType(.clear)
         SVProgressHUD.show()
         MEGASdkManager.sharedMEGASdk().setUserAlias(nickname, forHandle: user.handle, delegate: genericRequestDelegate)
     }
