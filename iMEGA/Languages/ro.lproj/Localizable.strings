@@ -2,6 +2,8 @@
 "cancel"="Anulează";
 /* Button title to accept something */
 "ok"="Ok";
+/* Button title to clear something */
+"clear"="Șterge";
 /* */
 "yes"="Da";
 /* */
@@ -42,6 +44,8 @@
 "Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="Linkul tău de confirmare nu mai este valid. Este posibil ca contul tău să fie deja activat sau s-ar putea să fi anulat înregistrarea.";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Link nevalid";
+/* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
+"The account that created this link has been terminated due to multiple violations of our Terms of Service."="Contul care a creat acest link a fost desființat din cauza mai multor încălcări ale Termenilor de utilizare a serviciului nostru.";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="Introdu cheia de decriptare";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -889,6 +893,8 @@
 "transfers"="Transferuri";
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
 "all"="Toate";
+/* Title of one of the filters in the Transfers section. In this case "Completed" transfers. */
+"Completed"="Terminat";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
 "downloads"="Descărcări";
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
@@ -1963,11 +1969,11 @@
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Sigur vrei să schimbi pe un server de test? Contul tău poate suferi probleme irecuperabile";
 /* Title label that explains that the user is going to be asked for the contacts permission */
-"Enable Access to Your Address Book"="Enable Access to Your Address Book";
+"Enable Access to Your Address Book"="Activează accesul la agenda de adrese";
 /* Detailed explanation of why the user should give permission to contacts */
-"Easily discover contacts from your address book on MEGA."="Easily discover contacts from your address book on MEGA.";
+"Easily discover contacts from your address book on MEGA."="Descoperă cu ușurință contactele din agenda de adrese pe MEGA.";
 /* Detailed explanation about MEGA not using the contacts data without permision */
-"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA will not use this data for any other purpose and will never interact with your contacts without your consent.";
+"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA nu va folosi aceste date în alt scop și nu va interacționa niciodată cu contactele tale fără consimțământul tău.";
 /* Title encouraging the user to check who of its contacts are using MEGA */
 "See who's already on MEGA"="Vezi cine este deja pe MEGA";
 /* Title showing the user how many of his contacts are using MEGA */
@@ -2064,6 +2070,16 @@
 "Include location tags"="Include etichetele locațiilor";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
 "If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="Dacă aceasta este activată, vei încărca informații despre locul în care au fost făcute fotografiile și videoclipurile, așa că ai grijă când le împărtășești.";
+/* Used in Photos app browser view to send the photos from the view to the chat. */
+"Send (%d)"="Trimite (%d)";
+/* Used in Photos app browser view to upload the photos from the view to the cloud. */
+"Upload (%d)"="Încarcă (%d)";
+/* Used in Photos app browser carousel view to unselect a selected photo. */
+"Unselect"="Deselectează";
+/* Used in Photos app browser. Shown when there are no photos or videos in the Photos app. */
+"No Photos or Videos"="Nicio fotografie sau videoclip";
+/* Button title which, if tapped, will trigger the action of opening a folder containg this file */
+"View in Folder"="Vezi în folder";
 /* Error message shown when opening a link with an account that not corresponds to the link */
 "This link is not related to this account. Please log in with the correct account."="Acest link nu are legătură cu acest cont. Te rugăm să te autentifici cu contul corect.";
 /* Text emncouraging the user to add contacts in MEGA */
@@ -2104,6 +2120,10 @@
 "It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="Este posibil să folosești aceeași parolă pentru contul tău MEGA ca și pentru alte servicii și că cel puțin unul dintre aceste alte servicii a suferit o încălcare a securității datelor.";
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="Parola ta s-a scurs și acum este folosită de persoane rău-intenționate pentru a se autentifica în conturile tale, inclusiv, dar nu numai, în contul tău MEGA.";
+/* tool bar title used in transfer widget, allow user to clear the selected items in the list */
+"Clear Selected"="Șterge elementele selectate";
+/* tool bar title used in transfer widget, allow user to clear all items in the list */
+"Clear All"="Șterge toate";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
 "MEGA CAMERA UPLOADS FOLDER"="FOLDER DE ÎNCĂRCĂRI CAMERĂ MEGA";
 /* Action button text of folder selection screen for camera uploads */
@@ -2129,8 +2149,8 @@
 /* export Quality Option for Scan document */
 "best"="Cea mai bună";
 /* Description of why the user should give permission to contacts */
-"Easily discover contacts from your address book on MEGA."="Easily discover contacts from your address book on MEGA.";
+"Easily discover contacts from your address book on MEGA."="Descoperă cu ușurință contactele din agenda de adrese pe MEGA.";
 /* Detailed description of why the user should give permission to contacts */
-"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA will not use this data for any other purpose and will never interact with your contacts without your consent.";
+"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA nu va folosi aceste date în alt scop și nu va interacționa niciodată cu contactele tale fără consimțământul tău.";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="Introdu numele grupului";
