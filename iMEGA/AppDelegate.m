@@ -1228,11 +1228,20 @@ void uncaughtExceptionHandler(NSException *exception) {
 }
 
 - (void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions options))completionHandler {
-    MEGALogDebug(@"userNotificationCenter willPresentNotification %@", notification);
+    MEGALogDebug(@"[Notification] will present notification %@", notification);
+    uint64_t chatId = [notification.request.content.userInfo[@"chatId"] unsignedLongLongValue];
+    uint64_t msgId =  [notification.request.content.userInfo[@"msgId"] unsignedLongLongValue];
+    MEGALogDebug(@"[Notification] chatId: %@ messageId: %@", [MEGASdk base64HandleForUserHandle:chatId], [MEGASdk base64HandleForUserHandle:msgId]);
     if ([notification.request.trigger isKindOfClass:UNPushNotificationTrigger.class]) {
-        completionHandler(UNNotificationPresentationOptionNone);
+        MOMessage *moMessage = [MEGAStore.shareInstance fetchMessageWithChatId:chatId messageId:msgId];
+        if (moMessage) {
+            [MEGAStore.shareInstance deleteMessage:moMessage];
+            completionHandler(UNNotificationPresentationOptionNone);
+        } else {
+            completionHandler(UNNotificationPresentationOptionAlert);
+        }
     } else {
-        completionHandler(UNNotificationPresentationOptionAlert | UNNotificationPresentationOptionSound);
+        completionHandler(UNNotificationPresentationOptionAlert);
     }    
 }
 
