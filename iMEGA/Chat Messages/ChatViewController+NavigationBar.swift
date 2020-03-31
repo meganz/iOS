@@ -3,12 +3,51 @@ import Foundation
 
 extension ChatViewController {
     
+    private var rightBarButtons: [UIBarButtonItem] {
+        var barButtons: [UIBarButtonItem] = []
+        
+        if chatRoom.isGroup {
+            if chatRoom.ownPrivilege == .moderator {
+                barButtons.append(addParticpantBarButtonItem)
+            }
+            
+            barButtons.append(audioCallBarButtonItem)
+        } else {
+            barButtons = [audioCallBarButtonItem, videoCallBarButtonItem]
+        }
+        
+        return barButtons
+    }
+    
+    private var shouldDisableAudioVideoCall: Bool {
+        let chatConnection = MEGASdkManager.sharedMEGAChatSdk()!.chatConnectionState(chatRoom.chatId)
+        
+        return chatRoom.ownPrivilege.rawValue < MEGAChatRoomPrivilege.standard.rawValue
+            || chatConnection != .online
+            || !MEGAReachabilityManager.isReachable()
+            || chatRoom.peerCount == 0
+            || MEGASdkManager.sharedMEGAChatSdk()!.hasCall(inChatRoom: chatRoom.chatId)
+            || MEGASdkManager.sharedMEGAChatSdk()!.mnz_existsActiveCall
+    }
+    
+    
     func configureNavigationBar() {
+        addRightBarButtons()
+        setTitleView()
+    }
+    
+    private func addRightBarButtons() {
+        self.navigationItem.rightBarButtonItems = rightBarButtons
+        
+        let shouldEnableAudioVideoCall = !shouldDisableAudioVideoCall
+        audioCallBarButtonItem.isEnabled = shouldEnableAudioVideoCall
+        videoCallBarButtonItem.isEnabled = shouldEnableAudioVideoCall
+    }
+    
+    private func setTitleView() {
         let titleView = ChatTitleView.instanceFromNib
         titleView.chatRoom = chatRoom
         titleView.tapHandler = { [weak self] in
-            print("Handle tap")
-            
             guard let `self` = self else {
                 return
             }

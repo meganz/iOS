@@ -19,6 +19,27 @@ class ChatViewController: MessagesViewController {
     
     var messages: [MessageType] = []
     
+    lazy var audioCallBarButtonItem: UIBarButtonItem = {
+        return UIBarButtonItem(image: UIImage(named: "audioCall"),
+                               style: .done,
+                               target: self,
+                               action: #selector(startAudioCall))
+    }()
+    
+    lazy var videoCallBarButtonItem = {
+        return UIBarButtonItem(image: UIImage(named: "videoCall"),
+                               style: .done,
+                               target: self,
+                               action: #selector(startVideoCall))
+    }()
+    
+    lazy var addParticpantBarButtonItem = {
+        return UIBarButtonItem(image: UIImage(named: "addContact"),
+                               style: .done,
+                               target: self,
+                               action: #selector(addParticipant))
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         messagesCollectionView.messagesDataSource = self
@@ -35,6 +56,20 @@ class ChatViewController: MessagesViewController {
     }
     
     @objc func showOptions(forPeerWithHandle handle: UInt64, senderView: UIView) {
+        
+    }
+    
+    // MARK: - Bar Button actions
+    
+    @objc func startAudioCall() {
+        
+    }
+    
+    @objc func startVideoCall() {
+        
+    }
+    
+    @objc func addParticipant() {
         
     }
 }
