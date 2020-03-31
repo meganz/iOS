@@ -80,7 +80,7 @@ class InviteContactViewController: UIViewController {
     }
     
     @IBAction func scanQrCodeButtonTapped(_ sender: Any) {
-        guard let contactLinkVC = UIStoryboard(name: "Contacts", bundle: nil).instantiateViewController(withIdentifier: "ContactLinkQRViewControllerID") as? ContactLinkQRViewController  else { return }
+        guard let contactLinkVC = UIStoryboard(name: "ContactLinkQR", bundle: nil).instantiateViewController(withIdentifier: "ContactLinkQRViewControllerID") as? ContactLinkQRViewController  else { return }
         contactLinkVC.scanCode = true
         present(contactLinkVC, animated: true, completion: nil)
     }
