@@ -10,6 +10,8 @@
 		137361901A6664C300B740E8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1373618F1A6664C300B740E8 /* main.m */; };
 		137361931A6664C300B740E8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 137361921A6664C300B740E8 /* AppDelegate.m */; };
 		1373619E1A6664C300B740E8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1373619D1A6664C300B740E8 /* Images.xcassets */; };
+		2F0F76032432DA8E00446C87 /* MessageKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F0F76002432DA4600446C87 /* MessageKit.framework */; };
+		2F0F76042432DA8E00446C87 /* MessageKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2F0F76002432DA4600446C87 /* MessageKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2F8F5F1623691A390049603F /* UINavigationViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8F5F1523691A390049603F /* UINavigationViewController+Additions.swift */; };
 		2F91390E238C9AC4004C611A /* MEGARecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F91390D238C9AC4004C611A /* MEGARecordView.swift */; };
 		2F913910238CC3CA004C611A /* MEGARecordView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F91390F238CC3CA004C611A /* MEGARecordView.xib */; };
@@ -1096,6 +1098,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		2F0F75FF2432DA4600446C87 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2F0F75FA2432DA4600446C87 /* MessageKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 88916B221CF0DF2F00469F91;
+			remoteInfo = MessageKit;
+		};
+		2F0F76012432DA4600446C87 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2F0F75FA2432DA4600446C87 /* MessageKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 88916B2C1CF0DF2F00469F91;
+			remoteInfo = MessageKitTests;
+		};
 		7794AED9231E4E0A0039C1D2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 137361821A6664C300B740E8 /* Project object */;
@@ -1168,6 +1184,7 @@
 		137361911A6664C300B740E8 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		137361921A6664C300B740E8 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AppDelegate.m; sourceTree = "<group>"; wrapsLines = 1; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		1373619D1A6664C300B740E8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		2F0F75FA2432DA4600446C87 /* MessageKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MessageKit.xcodeproj; path = Vendor/MessageKit/MessageKit.xcodeproj; sourceTree = "<group>"; };
 		2F8F5F1523691A390049603F /* UINavigationViewController+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationViewController+Additions.swift"; sourceTree = "<group>"; };
 		2F91390D238C9AC4004C611A /* MEGARecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGARecordView.swift; sourceTree = "<group>"; };
 		2F91390F238CC3CA004C611A /* MEGARecordView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MEGARecordView.xib; sourceTree = "<group>"; };
@@ -2841,6 +2858,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		2F0F75FB2432DA4600446C87 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2F0F76002432DA4600446C87 /* MessageKit.framework */,
+				2F0F76022432DA4600446C87 /* MessageKitTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		41136FB91E1692650031C516 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -2927,6 +2953,7 @@
 		415226671A692EBD00EC7BB6 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				2F0F75FA2432DA4600446C87 /* MessageKit.xcodeproj */,
 				83C570C722E5BFCF00216896 /* PhoneNumberKit */,
 				A85A01D2228B0DA100C6ADBB /* FLEX */,
 				A824A9162039EC9F00D777D2 /* SDAVAssetExportSession */,
@@ -5579,6 +5606,12 @@
 			mainGroup = 137361811A6664C300B740E8;
 			productRefGroup = 1373618B1A6664C300B740E8 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 2F0F75FB2432DA4600446C87 /* Products */;
+					ProjectRef = 2F0F75FA2432DA4600446C87 /* MessageKit.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				137361891A6664C300B740E8 /* MEGA */,
@@ -5590,6 +5623,23 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		2F0F76002432DA4600446C87 /* MessageKit.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = MessageKit.framework;
+			remoteRef = 2F0F75FF2432DA4600446C87 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		2F0F76022432DA4600446C87 /* MessageKitTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = MessageKitTests.xctest;
+			remoteRef = 2F0F76012432DA4600446C87 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		137361881A6664C300B740E8 /* Resources */ = {

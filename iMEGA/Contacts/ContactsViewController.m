@@ -981,39 +981,18 @@
 }
 
 - (IBAction)deleteAction:(UIBarButtonItem *)sender {
-    if (self.contactsMode == ContactsModeFolderSharedWith) {
-        MEGAShareRequestDelegate *shareRequestDelegate = [[MEGAShareRequestDelegate alloc] initToChangePermissionsWithNumberOfRequests:self.selectedUsersArray.count completion:^{
-            if (self.selectedUsersArray.count == self.visibleUsersArray.count) {
-                [self.navigationController popViewControllerAnimated:YES];
-            } else {
-                [self reloadUI];
-            }
-            self.navigationItem.leftBarButtonItems = @[];
-            [self setTableViewEditing:NO animated:YES];
-        }];
-        
-        for (MEGAUser *user in self.selectedUsersArray) {
-            [[MEGASdkManager sharedMEGASdk] shareNode:self.node withUser:user level:MEGAShareTypeAccessUnknown delegate:shareRequestDelegate];
+    MEGAShareRequestDelegate *shareRequestDelegate = [[MEGAShareRequestDelegate alloc] initToChangePermissionsWithNumberOfRequests:self.selectedUsersArray.count completion:^{
+        if (self.selectedUsersArray.count == self.visibleUsersArray.count) {
+            [self.navigationController popViewControllerAnimated:YES];
+        } else {
+            [self reloadUI];
         }
-    } else {
-        NSString *message = (self.selectedUsersArray.count > 1) ? [NSString stringWithFormat:AMLocalizedString(@"removeMultipleUsersMessage", nil), self.selectedUsersArray.count] :[NSString stringWithFormat:AMLocalizedString(@"removeUserMessage", nil), [self.selectedUsersArray.firstObject email]];
-        UIAlertController *removeUserAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"removeUserTitle", @"Alert title shown when you want to remove one or more contacts") message:message preferredStyle:UIAlertControllerStyleAlert];
-        
-        [removeUserAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
-        
-        [removeUserAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-                MEGARemoveContactRequestDelegate *removeContactRequestDelegate = [[MEGARemoveContactRequestDelegate alloc] initWithNumberOfRequests:self.selectedUsersArray.count completion:^{
-                    [self setTableViewEditing:NO animated:NO];
-                }];
-                for (NSInteger i = 0; i < self.selectedUsersArray.count; i++) {
-                    [[MEGASdkManager sharedMEGASdk] removeContactUser:[self.selectedUsersArray objectAtIndex:i] delegate:removeContactRequestDelegate];
-                }
-                [self dismissViewControllerAnimated:YES completion:nil];
-            }
-        }]];
-        
-        [self presentViewController:removeUserAlertController animated:YES completion:nil];
+        self.navigationItem.leftBarButtonItems = @[];
+        [self setTableViewEditing:NO animated:YES];
+    }];
+    
+    for (MEGAUser *user in self.selectedUsersArray) {
+        [[MEGASdkManager sharedMEGASdk] shareNode:self.node withUser:user level:MEGAShareTypeAccessUnknown delegate:shareRequestDelegate];
     }
 }
 
@@ -1736,10 +1715,8 @@
     NSString *text = @"";
     if (MEGAReachabilityManager.isReachable && !self.searchController.isActive) {
         text = AMLocalizedString(@"inviteContact", @"Text shown when the user tries to make a call and the receiver is not a contact");
-    } else {
-        if (!MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
+    } else if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
             text = AMLocalizedString(@"Turn Mobile Data on", @"Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app.");
-        }
     }
     
     return [[NSAttributedString alloc] initWithString:text attributes:[Helper buttonTextAttributesForEmptyState]];
