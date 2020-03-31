@@ -11,6 +11,7 @@
 #import "MEGAContactLinkQueryRequestDelegate.h"
 #import "MEGAInviteContactRequestDelegate.h"
 #import "MEGASdkManager.h"
+#import "MEGA-Swift.h"
 #import "QRSettingsTableViewController.h"
 
 #import "NSString+MNZCategory.h"
@@ -18,6 +19,11 @@
 #import "UIImage+GKContact.h"
 #import "UIImage+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
+
+typedef NS_ENUM(NSInteger, QRSection) {
+    QRSectionMyCode = 0,
+    QRSectionScanCode
+};
 
 @interface ContactLinkQRViewController () <AVCaptureMetadataOutputObjectsDelegate>
 
@@ -53,6 +59,8 @@
 
 @implementation ContactLinkQRViewController
 
+#pragma mark - Lifecycle
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -70,25 +78,23 @@
     }
 
     if (self.scanCode) {
-        self.segmentedControl.selectedSegmentIndex = 1;
+        self.segmentedControl.selectedSegmentIndex = QRSectionScanCode;
         [self valueChangedAtSegmentedControl:self.segmentedControl];
         [self stopRecognizingCodes];
     }
     
-    self.cameraMaskBorderView.layer.borderColor = [UIColor whiteColor].CGColor;
-    self.cameraMaskBorderView.layer.borderWidth = 2.0f;
-    self.cameraMaskBorderView.layer.cornerRadius = 46.0f;
-    
     self.contactLinkCreateDelegate = [[MEGAContactLinkCreateRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
         NSString *destination = [NSString stringWithFormat:@"https://mega.nz/C!%@", [MEGASdk base64HandleForHandle:request.nodeHandle]];
         self.contactLinkLabel.text = destination;
-        if (self.segmentedControl.selectedSegmentIndex == 0) {
+        if (self.segmentedControl.selectedSegmentIndex == QRSectionMyCode) {
             self.linkCopyButton.hidden = self.moreButton.hidden = NO;
         }
         
-        self.qrImageView.image = [UIImage mnz_qrImageFromString:destination withSize:self.qrImageView.frame.size color:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection]];
+        self.qrImageView.image = [UIImage mnz_qrImageFromString:destination withSize:self.qrImageView.frame.size color:[UIColor mnz_qr:self.traitCollection] backgroundColor:[UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection]];
         [self setUserAvatar];
     }];
+    
+    [self updateAppearance];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -114,7 +120,7 @@
         [self setupCameraMask];
         [self startRecognizingCodes];
     } completion:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
-        self.cameraMaskView.hidden = self.segmentedControl.selectedSegmentIndex==0;
+        self.cameraMaskView.hidden = self.segmentedControl.selectedSegmentIndex == QRSectionMyCode;
     }];
 }
 
@@ -127,7 +133,56 @@
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
-    return (self.segmentedControl.selectedSegmentIndex == 0) ? UIStatusBarStyleDefault : UIStatusBarStyleLightContent;
+    return (self.segmentedControl.selectedSegmentIndex == QRSectionMyCode) ? UIStatusBarStyleDefault : UIStatusBarStyleLightContent;
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateAppearance];
+        }
+    }
+}
+
+#pragma mark - Private
+
+- (void)updateAppearance {
+    switch (self.segmentedControl.selectedSegmentIndex) {
+        case QRSectionMyCode: {
+            self.view.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
+            self.backButton.tintColor = self.moreButton.tintColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
+            
+            if (@available(iOS 13.0, *)) {
+                [self.segmentedControl setTitleTextAttributes:@{NSFontAttributeName : [UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName : UIColor.mnz_label} forState:UIControlStateNormal];
+                [self.segmentedControl setTitleTextAttributes:@{NSFontAttributeName : [UIFont systemFontOfSize:12.0f weight:UIFontWeightSemibold], NSForegroundColorAttributeName : UIColor.mnz_label} forState:UIControlStateSelected];
+            } else {
+                self.segmentedControl.tintColor = UIColor.whiteColor;
+            }
+            break;
+        }
+        
+        case QRSectionScanCode: {
+            self.view.backgroundColor = UIColor.clearColor;
+            self.backButton.tintColor = UIColor.whiteColor;
+            self.hintLabel.textColor = UIColor.whiteColor;
+            
+            if (@available(iOS 13.0, *)) {
+                [self.segmentedControl setTitleTextAttributes:@{NSFontAttributeName : [UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName:UIColor.whiteColor} forState:UIControlStateNormal];
+                
+                UIColor *scanCodeLabelTextColor = (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark ? UIColor.whiteColor : UIColor.blackColor);
+                [self.segmentedControl setTitleTextAttributes:@{NSFontAttributeName : [UIFont systemFontOfSize:12.0f weight:UIFontWeightSemibold], NSForegroundColorAttributeName : scanCodeLabelTextColor} forState:UIControlStateSelected];
+            } else {
+                self.segmentedControl.tintColor = UIColor.whiteColor;
+            }
+            break;
+        }
+    }
+    
+    self.qrImageView.image = [UIImage mnz_qrImageFromString:self.contactLinkLabel.text withSize:self.qrImageView.frame.size color:[UIColor mnz_qr:self.traitCollection] backgroundColor:[UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection]];
+    
+    [self.linkCopyButton mnz_setupPrimary:self.traitCollection];
 }
 
 #pragma mark - User avatar and camera mask
@@ -151,39 +206,23 @@
 #pragma mark - IBActions
 
 - (IBAction)valueChangedAtSegmentedControl:(UISegmentedControl *)sender {
+    [self updateAppearance];
+    
     switch (sender.selectedSegmentIndex) {
-        case 0:
+        case QRSectionMyCode:
             [self stopRecognizingCodes];
-            self.view.backgroundColor = [UIColor whiteColor];
             self.qrImageView.hidden = self.avatarBackgroundView.hidden = self.avatarImageView.hidden = self.contactLinkLabel.hidden = NO;
             self.linkCopyButton.hidden = self.moreButton.hidden = (self.contactLinkLabel.text.length == 0);
             self.cameraView.hidden = self.cameraMaskView.hidden = self.cameraMaskBorderView.hidden = self.hintLabel.hidden = self.errorLabel.hidden = YES;
-            self.backButton.tintColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
-            if (@available(iOS 13.0, *)) {
-                [self.segmentedControl setTitleTextAttributes:@{NSForegroundColorAttributeName:UIColor.mnz_label} forState:UIControlStateNormal];
-                [self.segmentedControl setTitleTextAttributes:@{NSForegroundColorAttributeName:UIColor.mnz_label} forState:UIControlStateSelected];
-            } else {
-                self.segmentedControl.tintColor = UIColor.mnz_redMain;
-            }
-            
             break;
             
-        case 1:
+        case QRSectionScanCode:
             if ([self startRecognizingCodes]) {
-                self.view.backgroundColor = [UIColor clearColor];
                 self.qrImageView.hidden = self.avatarBackgroundView.hidden = self.avatarImageView.hidden = self.contactLinkLabel.hidden = self.linkCopyButton.hidden = self.moreButton.hidden = YES;
                 self.cameraView.hidden = self.cameraMaskView.hidden = self.cameraMaskBorderView.hidden = self.hintLabel.hidden = self.errorLabel.hidden = NO;
                 self.queryInProgress = NO;
-                self.backButton.tintColor = UIColor.whiteColor;
-                if (@available(iOS 13.0, *)) {
-                    [self.segmentedControl setTitleTextAttributes:@{NSForegroundColorAttributeName:UIColor.whiteColor} forState:UIControlStateNormal];
-                    [self.segmentedControl setTitleTextAttributes:@{NSForegroundColorAttributeName:UIColor.blackColor} forState:UIControlStateSelected];
-                } else {
-                    self.segmentedControl.tintColor = UIColor.whiteColor;
-                }
-                
             } else {
-                sender.selectedSegmentIndex = 0;
+                sender.selectedSegmentIndex = QRSectionMyCode;
                 [self valueChangedAtSegmentedControl:sender];
                 [DevicePermissionsHelper alertVideoPermissionWithCompletionHandler:nil];
             }
@@ -219,7 +258,7 @@
             
             [self presentViewController:activityVC animated:YES completion:nil];
         }];
-        [shareAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
+        [shareAlertAction mnz_setTitleTextColor:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]];
         [moreAlertController addAction:shareAlertAction];
     }
     
@@ -227,14 +266,14 @@
         UINavigationController *qrSettingsNC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"QRSettingsNavigationControllerID"];
         [self presentViewController:qrSettingsNC animated:YES completion:nil];
     }];
-    [settingsAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
+    [settingsAlertAction mnz_setTitleTextColor:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]];
     [moreAlertController addAction:settingsAlertAction];
     
     UIAlertAction *resetAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"resetQrCode", @"Action to reset the current valid QR code of the user") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         self.qrImageView.image = nil;
         [[MEGASdkManager sharedMEGASdk] contactLinkCreateRenew:YES delegate:self.contactLinkCreateDelegate];
     }];
-    [resetAlertAction mnz_setTitleTextColor:[UIColor redColor]];
+    [resetAlertAction mnz_setTitleTextColor:[UIColor mnz_redMainForTraitCollection:self.traitCollection]];
     [moreAlertController addAction:resetAlertAction];
     
     moreAlertController.modalPresentationStyle = UIModalPresentationPopover;
@@ -345,7 +384,7 @@
     inviteOrDismissModal.modalPresentationStyle = UIModalPresentationOverCurrentContext;
     
     if (imageOnBase64URLEncoding.mnz_isEmpty) {
-        inviteOrDismissModal.image = [UIImage imageForName:fullName.mnz_initialForAvatar size:CGSizeMake(128.0f, 128.0f) backgroundColor:[UIColor colorFromHexString:[MEGASdk avatarColorForBase64UserHandle:[MEGASdk base64HandleForUserHandle:contactLinkHandle]]] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:64.0f]];
+        inviteOrDismissModal.image = [UIImage imageForName:fullName.mnz_initialForAvatar size:CGSizeMake(128.0f, 128.0f) backgroundColor:[UIColor colorFromHexString:[MEGASdk avatarColorForBase64UserHandle:[MEGASdk base64HandleForUserHandle:contactLinkHandle]]] textColor:UIColor.whiteColor font:[UIFont systemFontOfSize:64.0f]];
     } else {
         inviteOrDismissModal.roundImage = YES;
         NSData *imageData = [[NSData alloc] initWithBase64EncodedString:[NSString mnz_base64FromBase64URLEncoding:imageOnBase64URLEncoding] options:NSDataBase64DecodingIgnoreUnknownCharacters];
@@ -416,7 +455,6 @@
         colorAnimation.fromValue = (id)color.CGColor;
         colorAnimation.toValue = (id)[UIColor whiteColor].CGColor;
         colorAnimation.duration = 1;
-        self.cameraMaskBorderView.layer.borderColor = [UIColor whiteColor].CGColor;
         [self.cameraMaskBorderView.layer addAnimation:colorAnimation forKey:@"borderColor"];
     });
     

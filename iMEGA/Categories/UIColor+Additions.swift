@@ -20,6 +20,23 @@ extension UIColor {
         }
     }
     
+    @objc class func mnz_qr(_ traitCollection: UITraitCollection) -> UIColor {
+        if #available(iOS 13.0, *) {
+            switch traitCollection.userInterfaceStyle {
+            case UIUserInterfaceStyle.unspecified, UIUserInterfaceStyle.light:
+                return UIColor.mnz_redProIII()
+                
+            case UIUserInterfaceStyle.dark:
+                return UIColor.white
+                
+            default:
+                return UIColor.mnz_redProIII()
+            }
+        } else {
+            return UIColor.mnz_redProIII()
+        }
+    }
+    
     // MARK: - PRO account colors
     
     /**
