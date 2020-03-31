@@ -2,6 +2,8 @@
 "cancel"="ยกเลิก";
 /* Button title to accept something */
 "ok"="ตกลง";
+/* Button title to clear something */
+"clear"="เคลียร์";
 /* */
 "yes"="ใช่";
 /* */
@@ -42,6 +44,8 @@
 "Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="ลิงก์ยืนยันของคุณใช้ไม่ได้อีกต่อไป บัญชีของคุณอาจถูกเปิดใช้งานหรือคุณอาจยกเลิกการลงทะเบียนแล้ว";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="ลิงก์ไม่ถูกต้อง";
+/* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
+"The account that created this link has been terminated due to multiple violations of our Terms of Service."="บัญชีที่สร้างลิงก์นี้ถูกยุติการใช้งาน เนื่องจากมีการละเมิดเงื่อนไขการให้บริการของเราหลายครั้ง";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="กรอกคีย์เพื่อถอดรหัสลับ";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -889,6 +893,8 @@
 "transfers"="การถ่ายโอน";
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
 "all"="ทั้งหมด";
+/* Title of one of the filters in the Transfers section. In this case "Completed" transfers. */
+"Completed"="เรียบร้อยแล้ว";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
 "downloads"="ดาวน์โหลด";
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
@@ -2064,6 +2070,16 @@
 "Include location tags"="รวมแท็กตำแหน่งที่ตั้ง";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
 "If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="หากเปิดใช้งาน คุณจะอัปโหลดข้อมูลเกี่ยวกับตำแหน่งที่ถ่ายภาพและวิดีโอของคุณ ดังนั้นโปรดระมัดระวังถ้าคุณจะแชร์ตำแหน่งที่ตั้ง";
+/* Used in Photos app browser view to send the photos from the view to the chat. */
+"Send (%d)"="Send (%d)";
+/* Used in Photos app browser view to upload the photos from the view to the cloud. */
+"Upload (%d)"="Upload (%d)";
+/* Used in Photos app browser carousel view to unselect a selected photo. */
+"Unselect"="Unselect";
+/* Used in Photos app browser. Shown when there are no photos or videos in the Photos app. */
+"No Photos or Videos"="ไม่มีรูปถ่ายหรือวิดีโอ";
+/* Button title which, if tapped, will trigger the action of opening a folder containg this file */
+"View in Folder"="View in Folder";
 /* Error message shown when opening a link with an account that not corresponds to the link */
 "This link is not related to this account. Please log in with the correct account."="ลิงก์นี้ไม่เกี่ยวข้องกับบัญชีนี้ กรุณาเข้าสู่ระบบด้วยบัญชีที่ถูกต้อง";
 /* Text emncouraging the user to add contacts in MEGA */
@@ -2104,6 +2120,10 @@
 "It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="เป็นไปได้ว่าคุณกำลังใช้รหัสผ่านเดียวกันสำหรับบัญชี MEGA ของคุณสำหรับบริการอื่น ๆ และอย่างน้อยหนึ่งในบริการอื่น ๆ เหล่านี้ได้รับความเสียหายจากข้อมูล";
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="รหัสผ่านของคุณรั่วไหลและกำลังถูกใช้โดยผู้ไม่หวังดีเพื่อเข้าสู่บัญชีของคุณ รวมไปถึง การไม่จำกัดบัญชี MEGA ของคุณ";
+/* tool bar title used in transfer widget, allow user to clear the selected items in the list */
+"Clear Selected"="Clear Selected";
+/* tool bar title used in transfer widget, allow user to clear all items in the list */
+"Clear All"="ลบทั้งหมด";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
 "MEGA CAMERA UPLOADS FOLDER"="โฟลเดอร์อัปโหลดจากกล้องของแอป MEGA";
 /* Action button text of folder selection screen for camera uploads */
