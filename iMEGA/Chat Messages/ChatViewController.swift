@@ -10,7 +10,7 @@ class ChatViewController: MessagesViewController {
                 return
             }
             
-            configureNavigationBar()
+            updateUI()
         }
     }
     
@@ -18,6 +18,7 @@ class ChatViewController: MessagesViewController {
     @objc var publicChatWithLinkCreated: Bool = false
     
     var messages: [MessageType] = []
+    var chatRoomDelegate: ChatRoomDelegate?
     
     lazy var audioCallBarButtonItem: UIBarButtonItem = {
         return UIBarButtonItem(image: UIImage(named: "audioCall"),
@@ -48,7 +49,7 @@ class ChatViewController: MessagesViewController {
         
         populateSampleData()
         
-        configureNavigationBar()
+        updateUI()
     }
     
     @objc func updateUnreadLabel() {
@@ -57,6 +58,11 @@ class ChatViewController: MessagesViewController {
     
     @objc func showOptions(forPeerWithHandle handle: UInt64, senderView: UIView) {
         
+    }
+    
+    private func updateUI() {
+        configureNavigationBar()
+        chatRoomDelegate = ChatRoomDelegate(chatRoom: chatRoom, collectionView: messagesCollectionView)
     }
     
     // MARK: - Bar Button actions
@@ -105,15 +111,12 @@ extension ChatViewController: MessagesDataSource {
     }
 
     public func numberOfSections(in messagesCollectionView: MessagesCollectionView) -> Int {
-        return messages.count
+        return chatRoomDelegate?.messages.count ?? 0
     }
 
     public func messageForItem(at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageType {
-        return messages[indexPath.section]
+        return messages[indexPath.section % 4]
     }
 }
 
 extension ChatViewController: MessagesDisplayDelegate, MessagesLayoutDelegate {}
-
-
-extension ChatViewController: MEGAChatRoomDelegate { }
