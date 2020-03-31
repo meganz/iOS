@@ -145,11 +145,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
             bestAttemptContent.sound = nil
         } else {
             if let msgId = msgId, let chatId = chatId {
-                if let moMessage = MEGAStore.shareInstance()?.fetchMessage(withChatId: chatId, messageId: msgId) {
-                    MEGAStore.shareInstance()?.delete(moMessage)
-                } else {
-                    MEGAStore.shareInstance()?.insertMessage(msgId, chatId: chatId)
-                }
+                MEGAStore.shareInstance()?.insertMessage(msgId, chatId: chatId)
             }
         }
         
