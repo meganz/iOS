@@ -7,21 +7,15 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
     
     let chatRoom: MEGAChatRoom
     let collectionView: MessagesCollectionView
-    var messages: Set<MEGAChatMessage> = []
+    var messages: [ChatMessage] = []
+    var isChatRoomOpen: Bool = false
     
     // MARK: - Init
 
     init(chatRoom: MEGAChatRoom, collectionView: MessagesCollectionView) {
         self.chatRoom = chatRoom
         self.collectionView = collectionView
-        
         super.init()
-        
-        if MEGASdkManager.sharedMEGAChatSdk()!.openChatRoom(chatRoom.chatId, delegate: self) {
-            loadMessages()
-        } else {
-            MEGALogError("OpenChatRoom: Cannot open chat room with id \(chatRoom.chatId)")
-        }
     }
     
     // MARK: - MEGAChatRoomDelegate methods
@@ -31,10 +25,12 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
     }
     
     func onMessageLoaded(_ api: MEGAChatSdk!, message: MEGAChatMessage!) {
-        if message != nil {
-            messages.insert(message)
+        if let chatMessage = message {
+            messages.append(ChatMessage(message: chatMessage, chatRoom: chatRoom))
         } else {
+            messages = messages.reversed()
             collectionView.reloadData()
+            collectionView.scrollToBottom()
         }
     }
     
@@ -58,6 +54,26 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
         }
     }
     
+    func openChatRoom() {
+        guard isChatRoomOpen == false else {
+            MEGALogDebug("openChatRoom: Trying to open already opened chat room")
+            return
+        }
+        
+        isChatRoomOpen = MEGASdkManager.sharedMEGAChatSdk()!.openChatRoom(chatRoom.chatId, delegate: self)
+        if isChatRoomOpen {
+            loadMessages()
+        } else {
+            MEGALogError("OpenChatRoom: Cannot open chat room with id \(chatRoom.chatId)")
+        }
+    }
+    
+    func closeChatRoom() {
+        if isChatRoomOpen {
+            MEGASdkManager.sharedMEGAChatSdk()!.closeChatRoom(chatRoom.chatId, delegate: self)
+        }
+    }
+    
     // MARK: - Private methods
     
     private func loadMessages(count: Int = 32) {
@@ -74,5 +90,4 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
             MEGALogError("loadMessagesForChat: unknown case executed")
         }
     }
-    
 }

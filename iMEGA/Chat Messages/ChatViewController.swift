@@ -6,19 +6,24 @@ import MessageKit
 class ChatViewController: MessagesViewController {
     @objc var chatRoom: MEGAChatRoom! {
         didSet {
-            if isViewLoaded == false {
-                return
-            }
-            
-            updateUI()
+            update()
         }
     }
     
     @objc var publicChatLink: URL?
     @objc var publicChatWithLinkCreated: Bool = false
     
-    var messages: [MessageType] = []
-    var chatRoomDelegate: ChatRoomDelegate?
+    var messages: [ChatMessage] {
+        return chatRoomDelegate.messages
+    }
+    
+    var myUser: MEGAUser {
+        return MEGASdkManager.sharedMEGASdk()!.myUser!
+    }
+    
+    lazy var chatRoomDelegate: ChatRoomDelegate = {
+        return ChatRoomDelegate(chatRoom: chatRoom, collectionView: messagesCollectionView)
+    }()
     
     lazy var audioCallBarButtonItem: UIBarButtonItem = {
         return UIBarButtonItem(image: UIImage(named: "audioCall"),
@@ -46,10 +51,8 @@ class ChatViewController: MessagesViewController {
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messagesLayoutDelegate = self
         messagesCollectionView.messagesDisplayDelegate = self
-        
-        populateSampleData()
-        
-        updateUI()
+            
+        update()
     }
     
     @objc func updateUnreadLabel() {
@@ -60,9 +63,72 @@ class ChatViewController: MessagesViewController {
         
     }
     
-    private func updateUI() {
+    func isFromCurrentSender(message: MessageType) -> Bool {
+        guard let chatMessage = message as? ChatMessage else {
+            return false
+        }
+        
+        return chatMessage.senderHandle == myUser.handle
+    }
+    
+    func isTimeLabelVisible(at indexPath: IndexPath) -> Bool {
+        guard let previousIndexPath = indexPath.previousSectionIndexPath else { return true }
+        
+        if isPreviousMessageSameSender(at: indexPath)
+            && isTimeLabelVisible(at: previousIndexPath)
+            && isPreviousMessageHasSameTime(at: indexPath) {
+            return false
+        }
+        
+        return true
+    }
+    
+    /// This method ignores the milliseconds.
+    func isPreviousMessageHasSameTime(at indexPath: IndexPath) -> Bool {
+        guard let previousIndexPath = indexPath.previousSectionIndexPath else { return false }
+        
+        return Calendar.current.compare(messages[indexPath.section].sentDate,
+                                        to: messages[previousIndexPath.section].sentDate,
+                                        toGranularity: .minute) == .orderedSame
+    }
+    
+    func isPreviousMessageSameSender(at indexPath: IndexPath) -> Bool {
+        guard let previousIndexPath = indexPath.previousSectionIndexPath else { return false }
+        return messages[indexPath.section].senderHandle == messages[previousIndexPath.section].senderHandle
+    }
+    
+    func avatarImage(for message: MessageType) -> UIImage? {
+        guard let chatMessage = message as? ChatMessage else { return nil }
+        return chatMessage.avatarImage
+    }
+    
+    func initials(for message: MessageType) -> String {
+        guard let chatMessage = message as? ChatMessage else { return "" }
+        
+        if let user = MEGAStore.shareInstance()?.fetchUser(withUserHandle: chatMessage.senderHandle) {
+            return (user.displayName as NSString).mnz_initialForAvatar()
+        }
+        
+        if let peerFullname = chatRoom.peerFullname(byHandle: chatMessage.senderHandle) {
+            return (peerFullname as NSString).mnz_initialForAvatar()
+        }
+        
+        return ""
+    }
+    
+    // MARK: - Private methods
+
+    private func update() {
+        guard isViewLoaded, chatRoom != nil else {
+            return
+        }
+        
         configureNavigationBar()
-        chatRoomDelegate = ChatRoomDelegate(chatRoom: chatRoom, collectionView: messagesCollectionView)
+        chatRoomDelegate.openChatRoom()
+        
+        if let layout = messagesCollectionView.collectionViewLayout as? MessagesCollectionViewFlowLayout {
+          layout.textMessageSizeCalculator.outgoingAvatarSize = .zero
+        }
     }
     
     // MARK: - Bar Button actions
@@ -77,6 +143,10 @@ class ChatViewController: MessagesViewController {
     
     @objc func addParticipant() {
         
+    }
+    
+    deinit {
+        chatRoomDelegate.closeChatRoom()
     }
 }
 
@@ -93,30 +163,66 @@ extension ChatViewController {
         var sentDate: Date
         var kind: MessageKind
     }
-    
-    private func populateSampleData() {
-        let sender = Sender(senderId: "sender", displayName: "sender")
-        let receiver = Sender(senderId: "receiver", displayName: "receiver")
-        messages.append(Message(sender: sender, messageId: "1", sentDate: Date(), kind: .text("Hello")))
-        messages.append(Message(sender: receiver, messageId: "2", sentDate: Date(), kind: .text("Hi")))
-        messages.append(Message(sender: sender, messageId: "3", sentDate: Date(), kind: .text("How are you?")))
-        messages.append(Message(sender: receiver, messageId: "4", sentDate: Date(), kind: .text("I am doin good")))
-    }
 }
 
 extension ChatViewController: MessagesDataSource {
-       
+
     public func currentSender() -> SenderType {
-        return Sender(senderId: "receiver", displayName: "receiver")
+        return myUser
     }
 
     public func numberOfSections(in messagesCollectionView: MessagesCollectionView) -> Int {
-        return chatRoomDelegate?.messages.count ?? 0
+        return messages.count
     }
 
-    public func messageForItem(at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageType {
-        return messages[indexPath.section % 4]
+    public func messageForItem(at indexPath: IndexPath,
+                               in messagesCollectionView: MessagesCollectionView) -> MessageType {
+        return messages[indexPath.section]
+    }
+    
+    func messageTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
+        if isTimeLabelVisible(at: indexPath) {
+            return NSAttributedString(
+                string: message.sentDate.string(withDateFormat: "hh:mm") ,
+                attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13.0, weight: .medium),
+                             NSAttributedString.Key.foregroundColor: UIColor(fromHexString: "#848484") ?? .black])
+        }
+        return nil
     }
 }
 
-extension ChatViewController: MessagesDisplayDelegate, MessagesLayoutDelegate {}
+extension ChatViewController: MessagesDisplayDelegate {
+    func backgroundColor(for message: MessageType,
+                         at indexPath: IndexPath,
+                         in messagesCollectionView: MessagesCollectionView) -> UIColor {
+        return isFromCurrentSender(message: message) ? UIColor(fromHexString: "#009476") : UIColor(fromHexString: "#EEEEEE")
+    }
+    
+    func textColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
+        return isFromCurrentSender(message: message) ? .white : .black
+    }
+    
+    func messageStyle(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageStyle {
+        return .custom { containerView in
+            containerView.layer.cornerRadius = 13.0
+        }
+    }
+    
+    func configureAvatarView(_ avatarView: AvatarView,
+                             for message: MessageType,
+                             at indexPath: IndexPath,
+                             in messagesCollectionView: MessagesCollectionView) {
+        avatarView.isHidden = isFromCurrentSender(message: message)
+        
+        let chatInitials = initials(for: message)
+        let avatar = Avatar(image: avatarImage(for: message), initials: chatInitials)
+        avatarView.set(avatar: avatar)
+    }
+}
+
+extension ChatViewController: MessagesLayoutDelegate {
+    func messageTopLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+        return isTimeLabelVisible(at: indexPath) ? 28.0 : 0.0
+    }
+}
+
