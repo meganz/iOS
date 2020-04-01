@@ -118,6 +118,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
         self.userName = self.user.mnz_fullName;
     }
     
+    [self configureShadowInLayer:self.backButton.layer];
     [self configureShadowInLayer:self.nameOrNicknameLabel.layer];
     [self configureShadowInLayer:self.optionalNameLabel.layer];
     [self updateUserDetails];
