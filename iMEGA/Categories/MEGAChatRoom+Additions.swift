@@ -58,4 +58,14 @@ extension MEGAChatRoom {
             return ""
         }
     }
+    
+    func avatarImage(delegate: MEGARequestDelegate?) -> UIImage? {
+        guard peerCount == 1,
+            let peerEmail = peerEmail(byHandle: peerHandle(at: 0)),
+            let user = MEGASdkManager.sharedMEGASdk()?.contact(forEmail: peerEmail) else {
+                return nil
+        }
+        
+        return user.avatarImage(withDelegate: delegate)
+    }
 }

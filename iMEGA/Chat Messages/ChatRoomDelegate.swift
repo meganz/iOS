@@ -5,10 +5,16 @@ import MessageKit
 
 class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
     
+    // MARK: - Properties
+
     let chatRoom: MEGAChatRoom
     let collectionView: MessagesCollectionView
     var messages: [ChatMessage] = []
     var isChatRoomOpen: Bool = false
+    
+    var isFullChatHistoryLoaded: Bool {
+        return MEGASdkManager.sharedMEGAChatSdk()!.isFullHistoryLoaded(forChat: chatRoom.chatId)
+    }
     
     // MARK: - Init
 
@@ -49,7 +55,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
     // MARK: - Interface methods
 
     func loadMoreMessages() {
-        if MEGASdkManager.sharedMEGAChatSdk()!.isFullHistoryLoaded(forChat: chatRoom.chatId) == false {
+        if !isFullChatHistoryLoaded {
             loadMessages()
         }
     }
