@@ -2,6 +2,8 @@
 "cancel"="取消";
 /* Button title to accept something */
 "ok"="OK";
+/* Button title to clear something */
+"clear"="清除";
 /* */
 "yes"="是";
 /* */
@@ -42,6 +44,8 @@
 "Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="您的確認連結已無效。您的帳戶可能已啟用，或您可能已取消註冊";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="無效的連結";
+/* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
+"The account that created this link has been terminated due to multiple violations of our Terms of Service."="由於多次違反我們的服務條款，因此創建此連結的帳戶已被停權。";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="請輸入解密金鑰";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -889,6 +893,8 @@
 "transfers"="傳輸";
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
 "all"="全部";
+/* Title of one of the filters in the Transfers section. In this case "Completed" transfers. */
+"Completed"="完成";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
 "downloads"="下載";
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
@@ -1963,13 +1969,13 @@
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="您確定要更改為測試伺服器？您的帳戶可能會遇到無法恢復的問題。";
 /* Title label that explains that the user is going to be asked for the contacts permission */
-"Enable Access to Your Address Book"="Enable Access to Your Address Book";
+"Enable Access to Your Address Book"="啟用存取您的通訊錄";
 /* Detailed explanation of why the user should give permission to contacts */
-"Easily discover contacts from your address book on MEGA."="Easily discover contacts from your address book on MEGA.";
+"Easily discover contacts from your address book on MEGA."="輕易的在您通訊錄中找到有在使用MEGA的聯絡人。";
 /* Detailed explanation about MEGA not using the contacts data without permision */
-"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA will not use this data for any other purpose and will never interact with your contacts without your consent.";
+"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA不會將這些資料用於任何其他目的，並且未經您的同意絕不會與您的聯絡人互動。";
 /* Title encouraging the user to check who of its contacts are using MEGA */
-"See who's already on MEGA"="查看誰已經在使用MEGA";
+"See who's already on MEGA"="查看誰已經在MEGA上";
 /* Title showing the user how many of his contacts are using MEGA */
 "[X] contacts found on MEGA"="在MEGA上找到[X]個聯絡人";
 /* Title showing the user that one of his contacts are using MEGA */
@@ -2064,6 +2070,16 @@
 "Include location tags"="包含位置標籤";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
 "If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="如果啟用，您將上傳關於相片與影片拍攝位置的資訊，所以分享時請格外小心。";
+/* Used in Photos app browser view to send the photos from the view to the chat. */
+"Send (%d)"="傳送 (%d)";
+/* Used in Photos app browser view to upload the photos from the view to the cloud. */
+"Upload (%d)"="上傳 (%d)";
+/* Used in Photos app browser carousel view to unselect a selected photo. */
+"Unselect"="取消選取";
+/* Used in Photos app browser. Shown when there are no photos or videos in the Photos app. */
+"No Photos or Videos"="無照片或視頻";
+/* Button title which, if tapped, will trigger the action of opening a folder containg this file */
+"View in Folder"="在資料夾中檢視";
 /* Error message shown when opening a link with an account that not corresponds to the link */
 "This link is not related to this account. Please log in with the correct account."="此連結與此帳戶無關，請使用正確的帳戶登入。";
 /* Text emncouraging the user to add contacts in MEGA */
@@ -2104,6 +2120,10 @@
 "It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="這有可能是您MEGA帳戶所使用的密碼與在其它網站上所使用的密碼相同，而且這些網站當中至少有一個遭遇資料外洩。";
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="您的密碼已洩漏並且現在被不肖人士拿來登入您的帳戶，包括但不限於您的MEGA帳戶。";
+/* tool bar title used in transfer widget, allow user to clear the selected items in the list */
+"Clear Selected"="清除選取";
+/* tool bar title used in transfer widget, allow user to clear all items in the list */
+"Clear All"="全部清除";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
 "MEGA CAMERA UPLOADS FOLDER"="MEGA相機上傳資料夾";
 /* Action button text of folder selection screen for camera uploads */
@@ -2129,8 +2149,8 @@
 /* export Quality Option for Scan document */
 "best"="最好的";
 /* Description of why the user should give permission to contacts */
-"Easily discover contacts from your address book on MEGA."="Easily discover contacts from your address book on MEGA.";
+"Easily discover contacts from your address book on MEGA."="輕易的在您通訊錄中找到有在使用MEGA的聯絡人。";
 /* Detailed description of why the user should give permission to contacts */
-"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA will not use this data for any other purpose and will never interact with your contacts without your consent.";
+"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA不會將這些資料用於任何其他目的，並且未經您的同意絕不會與您的聯絡人互動。";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="輸入群組名稱";
