@@ -48,10 +48,16 @@ class ChatViewController: MessagesViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        print(ChatMessageHeaderView.reuseIdentifier)
+        messagesCollectionView.register(ChatMessageHeaderView.nib,
+                                        forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+                                        withReuseIdentifier: ChatMessageHeaderView.reuseIdentifier)
+        
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messagesLayoutDelegate = self
         messagesCollectionView.messagesDisplayDelegate = self
-            
+        
         update()
     }
     
@@ -117,7 +123,7 @@ class ChatViewController: MessagesViewController {
     }
     
     // MARK: - Private methods
-
+    
     private func update() {
         guard isViewLoaded, chatRoom != nil else {
             return
@@ -127,7 +133,7 @@ class ChatViewController: MessagesViewController {
         chatRoomDelegate.openChatRoom()
         
         if let layout = messagesCollectionView.collectionViewLayout as? MessagesCollectionViewFlowLayout {
-          layout.textMessageSizeCalculator.outgoingAvatarSize = .zero
+            layout.textMessageSizeCalculator.outgoingAvatarSize = .zero
         }
     }
     
@@ -166,15 +172,15 @@ extension ChatViewController {
 }
 
 extension ChatViewController: MessagesDataSource {
-
+    
     public func currentSender() -> SenderType {
         return myUser
     }
-
+    
     public func numberOfSections(in messagesCollectionView: MessagesCollectionView) -> Int {
         return messages.count
     }
-
+    
     public func messageForItem(at indexPath: IndexPath,
                                in messagesCollectionView: MessagesCollectionView) -> MessageType {
         return messages[indexPath.section]
@@ -188,6 +194,12 @@ extension ChatViewController: MessagesDataSource {
                              NSAttributedString.Key.foregroundColor: UIColor(fromHexString: "#848484") ?? .black])
         }
         return nil
+    }
+    
+    func messageHeaderView(for indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageReusableView {
+        let chatMessageHeaderView = messagesCollectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: ChatMessageHeaderView.reuseIdentifier, for: indexPath) as! ChatMessageHeaderView
+        chatMessageHeaderView.chatRoom = chatRoom
+        return chatMessageHeaderView
     }
 }
 
@@ -224,5 +236,17 @@ extension ChatViewController: MessagesLayoutDelegate {
     func messageTopLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
         return isTimeLabelVisible(at: indexPath) ? 28.0 : 0.0
     }
+    
+    func headerViewSize(for section: Int, in messagesCollectionView: MessagesCollectionView) -> CGSize {
+        if chatRoomDelegate.isFullChatHistoryLoaded && section == 0 {
+            let chatMessageHeaderView = ChatMessageHeaderView.instanceFromNib
+            chatMessageHeaderView.chatRoom = chatRoom
+            return chatMessageHeaderView.sizeThatFits(
+                CGSize(width: messagesCollectionView.bounds.width,
+                       height: CGFloat.greatestFiniteMagnitude)
+            )
+        }
+        
+        return .zero
+    }
 }
-
