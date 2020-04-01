@@ -130,6 +130,7 @@ class ChatViewController: MessagesViewController {
         }
         
         configureNavigationBar()
+        configureInputBar()
         chatRoomDelegate.openChatRoom()
         
         if let layout = messagesCollectionView.collectionViewLayout as? MessagesCollectionViewFlowLayout {
