@@ -433,7 +433,6 @@
 }
 
 - (void)dismissWithCompletionHandler:(void (^)(void))completion {
-    [[ShareAttachment attachmentsArray] removeAllObjects];
     [UIView animateWithDuration:MNZ_ANIMATION_TIME
                      animations:^{
                          self.view.transform = CGAffineTransformMakeTranslation(0, self.view.frame.size.height);
@@ -513,6 +512,7 @@ void uncaughtExceptionHandler(NSException *exception) {
         return;
     }
     
+    [ShareAttachment.attachmentsArray removeAllObjects];
     NSExtensionItem *content = self.extensionContext.inputItems.firstObject;
     self.totalAssets = self.pendingAssets = content.attachments.count;
     self.progress = 0;

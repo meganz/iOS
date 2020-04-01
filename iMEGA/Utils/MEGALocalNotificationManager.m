@@ -37,6 +37,7 @@
 #ifndef MNZ_APP_EXTENSION
 
 - (void)processNotification {
+    MEGALogDebug(@"[Notification] process notification: %@\n%@", self.chatRoom, self.message);
     if (self.message.status == MEGAChatMessageStatusNotSeen) {
         if  (self.message.type == MEGAChatMessageTypeNormal || self.message.type == MEGAChatMessageTypeContact || self.message.type == MEGAChatMessageTypeAttachment || self.message.containsMeta.type == MEGAChatContainsMetaTypeGeolocation || self.message.type == MEGAChatMessageTypeVoiceClip) {
             if (self.message.deleted) {
@@ -80,9 +81,12 @@
                                     [center addNotificationRequest:notificationRequest withCompletionHandler:^(NSError * _Nullable error) {
                                         dispatch_async(dispatch_get_main_queue(), ^{
                                             if (error) {
-                                                MEGALogError(@"[Chat notification] Add NotificationRequest failed with error: %@", error);
+                                                MEGALogError(@"[Notification] Add NotificationRequest failed with error: %@", error);
                                             } else {
-                                                [MEGAStore.shareInstance insertMessage:self.message.messageId chatId:self.chatRoom.chatId];
+                                                MOMessage *moMessage = [MEGAStore.shareInstance fetchMessageWithChatId:self.chatRoom.chatId messageId:self.message.messageId];
+                                                if (moMessage) {
+                                                    [MEGAStore.shareInstance deleteMessage:moMessage];
+                                                }
                                             }
                                         });
                                     }];
@@ -98,9 +102,12 @@
                     [center addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
                         dispatch_async(dispatch_get_main_queue(), ^{
                             if (error) {
-                                MEGALogError(@"[Chat notification] Add NotificationRequest failed with error: %@", error);
+                                MEGALogError(@"[Notification] Add NotificationRequest failed with error: %@", error);
                             } else {
-                                [MEGAStore.shareInstance insertMessage:self.message.messageId chatId:self.chatRoom.chatId];
+                                MOMessage *moMessage = [MEGAStore.shareInstance fetchMessageWithChatId:self.chatRoom.chatId messageId:self.message.messageId];
+                                if (moMessage) {
+                                    [MEGAStore.shareInstance deleteMessage:moMessage];
+                                }
                             }
                         });
                     }];
@@ -184,13 +191,13 @@
         NSURL *fileURL = [NSURL fileURLWithPath:jpgPath];
         UNNotificationAttachment *notificationAttachment = [UNNotificationAttachment attachmentWithIdentifier:identifier URL:fileURL options:nil error:&error];
         if (error) {
-            MEGALogError(@"[Chat notification] Error creating notification attachment %@", error);
+            MEGALogError(@"[Notification] Error creating notification attachment %@", error);
             return nil;
         } else {
             return notificationAttachment;
         }
     } else {
-        MEGALogError(@"[Chat notification] Create symbolic link at path failed %@", error);
+        MEGALogError(@"[Notification] Create symbolic link at path failed %@", error);
         return nil;
     }
 }
