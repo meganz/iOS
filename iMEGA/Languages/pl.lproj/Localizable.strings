@@ -2,6 +2,8 @@
 "cancel"="Anuluj";
 /* Button title to accept something */
 "ok"="OK";
+/* Button title to clear something */
+"clear"="Wyczyść";
 /* */
 "yes"="Tak";
 /* */
@@ -42,6 +44,8 @@
 "Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="Twój link potwierdzający nie jest już ważny. Twoje konto może już być aktywne lub możesz anulować rejestrację.";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Nieprawidłowy link";
+/* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
+"The account that created this link has been terminated due to multiple violations of our Terms of Service."="To konto zostało zablokowane z powodu naruszeń regulaminu serwisu.";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="Wprowadź klucz deszyfrujący";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -887,6 +891,8 @@
 "transfers"="Ruch";
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
 "all"="Wszystko";
+/* Title of one of the filters in the Transfers section. In this case "Completed" transfers. */
+"Completed"="Zakończone";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
 "downloads"="Pobierane";
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
@@ -1544,6 +1550,10 @@
 "callFailed"="Nieudane połączenie";
 /* When an active call of user A with user B had ended */
 "callEnded"="Rozmowa została zakończona.";
+/* When an active goup call is ended */
+"Group call ended"="Zakończono połączenie grupowe";
+/* When an active goup call is ended, shows the duration */
+"[A]Group call ended[/A][C]. Duration: [/C]"="[A]Połączenie grupowe zakończone[/A][C]. Czas trwania:[/C]";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="Trwanie: %@";
 /* */
@@ -1957,9 +1967,11 @@
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Czy na pewno chcesz przejść na serwer testowy? Na Twoim koncie mogą wystąpić nieodwracalne problemy";
 /* Title label that explains that the user is going to be asked for the contacts permission */
-"Enable Access to Contacts"="Włącz dostęp do kontaktów";
+"Enable Access to Your Address Book"="Włącz dostęp do swojej książki adresowej";
 /* Detailed explanation of why the user should give permission to contacts */
-"MEGA needs access to your contacts to help you connect with other people on MEGA."="MEGA potrzebuje dostępu do twoich kontaktów, aby móc łączyć się z innymi osobami w MEGA.";
+"Easily discover contacts from your address book on MEGA."="Łatwo odkrywaj kontakty z książki adresowej na MEGA.";
+/* Detailed explanation about MEGA not using the contacts data without permision */
+"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA nie będzie wykorzystywać tych danych w żadnym innym celu i nigdy nie będzie wchodzić w interakcje z Twoimi kontaktami bez Twojej zgody.";
 /* Title encouraging the user to check who of its contacts are using MEGA */
 "See who's already on MEGA"="Zobacz, kto jest już na MEGA";
 /* Title showing the user how many of his contacts are using MEGA */
@@ -2056,6 +2068,16 @@
 "Include location tags"="Dołącz tagi lokalizacji";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
 "If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="Jeśli ta opcja jest włączona, będziesz przesyłać informacje o tym, gdzie zostały zrobione Twoje zdjęcia i filmy, więc zachowaj ostrożność, udostępniając je.";
+/* Used in Photos app browser view to send the photos from the view to the chat. */
+"Send (%d)"="Wyślij (%d)";
+/* Used in Photos app browser view to upload the photos from the view to the cloud. */
+"Upload (%d)"="Wgrywanie (%d)";
+/* Used in Photos app browser carousel view to unselect a selected photo. */
+"Unselect"="Odznacz";
+/* Used in Photos app browser. Shown when there are no photos or videos in the Photos app. */
+"No Photos or Videos"="Brak zdjęć i filmów";
+/* Button title which, if tapped, will trigger the action of opening a folder containg this file */
+"View in Folder"="Zobacz w folderze";
 /* Error message shown when opening a link with an account that not corresponds to the link */
 "This link is not related to this account. Please log in with the correct account."="Ten link nie jest powiązany z tym kontem. Zaloguj się na właściwe konto.";
 /* Text emncouraging the user to add contacts in MEGA */
@@ -2096,6 +2118,10 @@
 "It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="Możliwe, że używasz tego samego hasła do konta MEGA co do innych usług i że co najmniej jedna z tych innych usług doznała naruszenia danych.";
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="Twoje hasło wyciekło i jest obecnie wykorzystywane przez złych aktorów do logowania się na twoje konta, w tym między innymi na twoje konto MEGA.";
+/* tool bar title used in transfer widget, allow user to clear the selected items in the list */
+"Clear Selected"="Odznacz";
+/* tool bar title used in transfer widget, allow user to clear all items in the list */
+"Clear All"="Wyczyść wszystko";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
 "MEGA CAMERA UPLOADS FOLDER"="FOLDER DO PRZESYŁANIA ZDJĘĆ";
 /* Action button text of folder selection screen for camera uploads */
@@ -2121,8 +2147,8 @@
 /* export Quality Option for Scan document */
 "best"="Najlepsze";
 /* Description of why the user should give permission to contacts */
-"Easily discover contacts from your address book on MEGA."="Easily discover contacts from your address book on MEGA.";
+"Easily discover contacts from your address book on MEGA."="Łatwo odkrywaj kontakty z książki adresowej na MEGA.";
 /* Detailed description of why the user should give permission to contacts */
-"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA will not use this data for any other purpose and will never interact with your contacts without your consent.";
-/* Title label that explains that the user is going to be asked for the contacts permission */
-"Enable Access to Your Address Book"="Enable Access to Your Address Book";
+"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA nie będzie wykorzystywać tych danych w żadnym innym celu i nigdy nie będzie wchodzić w interakcje z Twoimi kontaktami bez Twojej zgody.";
+/* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
+"Enter group name"="Wprowadź nazwę grupy";
