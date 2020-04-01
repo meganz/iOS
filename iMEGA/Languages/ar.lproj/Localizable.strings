@@ -2,6 +2,8 @@
 "cancel"="الغاء";
 /* Button title to accept something */
 "ok"="حسنا";
+/* Button title to clear something */
+"clear"="تنظيف ذاكرة التخزين المؤقت";
 /* */
 "yes"="نعم";
 /* */
@@ -42,6 +44,8 @@
 "Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="رابط التأكيد خاصتك لم يعد صالحاً. قد يكون حسابك مفعلاً مسبقاً أو قد تكون قد ألغيت تسجيل حسابك.";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="رابط غير موجود";
+/* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
+"The account that created this link has been terminated due to multiple violations of our Terms of Service."="تم إنهاء الحساب الذي أنشأ هذا الرابط بسبب انتهاكات متعددة لشروط الخدمة.";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="أدخل مفتاح فك التشفير";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -887,6 +891,8 @@
 "transfers"="نقل";
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
 "all"="الكل";
+/* Title of one of the filters in the Transfers section. In this case "Completed" transfers. */
+"Completed"="اكتمل";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
 "downloads"="التنزيلات";
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
@@ -1544,6 +1550,10 @@
 "callFailed"="فشل الاتصال";
 /* When an active call of user A with user B had ended */
 "callEnded"="انتهاء المكالمة.";
+/* When an active goup call is ended */
+"Group call ended"="فشل اتصال المجموعة";
+/* When an active goup call is ended, shows the duration */
+"[A]Group call ended[/A][C]. Duration: [/C]"="[A]Group call ended[/A][C]. Duration: [/C]";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="مدة الاتصال: %@";
 /* */
@@ -1945,7 +1955,7 @@
 /* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
 "Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="يرجى الانتقال إلى قسم الخصوصية في إعدادات جهازك. تمكين خدمات الموقع وضبط ميغا MEGA إلى أثناء استخدام التطبيق أو دائماً.";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
-"NSLocationAlwaysAndWhenInUseUsageDescription"="MEGA accesses your location when you share it with your contacts in chat or when you enable ”Upload in Background” for Camera Uploads so your photos and videos are uploaded when your location changes.";
+"NSLocationAlwaysAndWhenInUseUsageDescription"="يصل ميغا MEGA إلى موقعك عندما تشاركه مع جهات الاتصال الخاصة بك في المحادثة أو عندما تقوم بتمكين \"تحميل في الخلفية\" لتحميلات الكاميرا حتى يتم تحميل الصور ومقاطع الفيديو الخاصة بك عندما يتغير موقعك.";
 /* Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
 "Mobile Data is turned off"="تم إيقاف تشغيل بيانات الجوال";
 /* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */
@@ -1957,9 +1967,11 @@
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="هل أنت متأكد من رغبتك بالانتقال الى المخدم التجريبي؟ من الممكن ان يتعرض حسابك لمشاكل غير قابلة للإصلاح.";
 /* Title label that explains that the user is going to be asked for the contacts permission */
-"Enable Access to Contacts"="تمكين الوصول إلى جهات الاتصال";
+"Enable Access to Your Address Book"="Enable Access to Your Address Book";
 /* Detailed explanation of why the user should give permission to contacts */
-"MEGA needs access to your contacts to help you connect with other people on MEGA."="تحتاج ميغا MEGA إلى الوصول إلى جهات الاتصال الخاصة بك لمساعدتك على التواصل مع أشخاص آخرين على ميغا MEGA.";
+"Easily discover contacts from your address book on MEGA."="Easily discover contacts from your address book on MEGA.";
+/* Detailed explanation about MEGA not using the contacts data without permision */
+"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA will not use this data for any other purpose and will never interact with your contacts without your consent.";
 /* Title encouraging the user to check who of its contacts are using MEGA */
 "See who's already on MEGA"="معرفة من هو بالفعل على ميغا MEGA";
 /* Title showing the user how many of his contacts are using MEGA */
@@ -2056,6 +2068,16 @@
 "Include location tags"="تشمل علامات الموقع";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
 "If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="في حالة التمكين، ستقوم بتحميل معلومات حول مكان التقاط الصور ومقاطع الفيديو الخاصة بك، لذا كن حذراً عند مشاركتها.";
+/* Used in Photos app browser view to send the photos from the view to the chat. */
+"Send (%d)"="Send (%d)";
+/* Used in Photos app browser view to upload the photos from the view to the cloud. */
+"Upload (%d)"="Upload (%d)";
+/* Used in Photos app browser carousel view to unselect a selected photo. */
+"Unselect"="Unselect";
+/* Used in Photos app browser. Shown when there are no photos or videos in the Photos app. */
+"No Photos or Videos"="لا يوجد صور أو فيديوهات";
+/* Button title which, if tapped, will trigger the action of opening a folder containg this file */
+"View in Folder"="View in Folder";
 /* Error message shown when opening a link with an account that not corresponds to the link */
 "This link is not related to this account. Please log in with the correct account."="هذا الرابط لا يعود لهذا الحساب. يرجى تسجيل الدخول باستخدام الحساب الصحيح.";
 /* Text emncouraging the user to add contacts in MEGA */
@@ -2096,6 +2118,10 @@
 "It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="من الممكن أن تقوم باستخدام نفس كلمة المرور لحساب ميغا MEGA الخاص بك لخدمات الأخرى، وأن واحدة من هذه الخدمات الأخرى على الأقل قد تعرضت لاختراق للبيانات.";
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="تم تسريب كلمة المرور الخاصة بك وتستخدمها الآن  أطراف خبيثة لتسجيل الدخول إلى حساباتك، بما في ذلك على سبيل المثال لا الحصر، حساب ميغا MEGA الخاص بك.";
+/* tool bar title used in transfer widget, allow user to clear the selected items in the list */
+"Clear Selected"="Clear Selected";
+/* tool bar title used in transfer widget, allow user to clear all items in the list */
+"Clear All"="مسح الكل";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
 "MEGA CAMERA UPLOADS FOLDER"="مجلد ميغا MEGA لترفيعات الكاميرا";
 /* Action button text of folder selection screen for camera uploads */
@@ -2113,16 +2139,16 @@
 /* Description of Optimised Image Quality option */
 "Send smaller size images optimised for lower data consumption"="أرسل صوراً أصغر حجماً مثالية لتقليل استهلاك البيانات";
 /* Description of High Image Quality option */
-"Send original size, increased quality images"="Send original size, increased quality images";
+"Send original size, increased quality images"="إرسال الحجم الأصلي، وزيادة جودة الصور";
 /* Setting title for Doc scan view */
 "Save Settings"="احفظ الإعدادات";
 /* file type title, used in changing the export format of scaned doc */
 "File Type"="نوع الملف";
 /* export Quality Option for Scan document */
-"best"="Best";
+"best"="الأفضل";
 /* Description of why the user should give permission to contacts */
 "Easily discover contacts from your address book on MEGA."="Easily discover contacts from your address book on MEGA.";
 /* Detailed description of why the user should give permission to contacts */
 "MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA will not use this data for any other purpose and will never interact with your contacts without your consent.";
-/* Title label that explains that the user is going to be asked for the contacts permission */
-"Enable Access to Your Address Book"="Enable Access to Your Address Book";
+/* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
+"Enter group name"="ادخل اسم المجموعة";

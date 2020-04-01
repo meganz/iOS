@@ -2,6 +2,8 @@
 "cancel"="취소";
 /* Button title to accept something */
 "ok"="OK";
+/* Button title to clear something */
+"clear"="비우기";
 /* */
 "yes"="예";
 /* */
@@ -42,6 +44,8 @@
 "Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="확인 링크가 더 이상 유효하지 않습니다. 당신의 계정이 이미 활성화되었거나 등록을 취소했을 수 있습니다.";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="유효하지 않은 링크";
+/* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
+"The account that created this link has been terminated due to multiple violations of our Terms of Service."="이 링크를 생성한 계정은 다수의 이용 약관 위반으로 삭제되었습니다.";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="해독 키를 입력하세요";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -887,6 +891,8 @@
 "transfers"="전송";
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
 "all"="모두";
+/* Title of one of the filters in the Transfers section. In this case "Completed" transfers. */
+"Completed"="완료";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
 "downloads"="다운로드";
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
@@ -1544,6 +1550,10 @@
 "callFailed"="통화 실패";
 /* When an active call of user A with user B had ended */
 "callEnded"="통화 종료됨.";
+/* When an active goup call is ended */
+"Group call ended"="그룹 통화 종료됨";
+/* When an active goup call is ended, shows the duration */
+"[A]Group call ended[/A][C]. Duration: [/C]"="[A]단체 통화 종료[/A][C]. 통화 시간: [/C]";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="시간: %@";
 /* */
@@ -1957,11 +1967,13 @@
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="테스트 서버로 변경하시겠습니까? 당신의 계정이 복구할 수 없는 문제를 겪을 수 있습니다.";
 /* Title label that explains that the user is going to be asked for the contacts permission */
-"Enable Access to Contacts"="연락처에 접근 허용";
+"Enable Access to Your Address Book"="주소록에 대한 접근 허용";
 /* Detailed explanation of why the user should give permission to contacts */
-"MEGA needs access to your contacts to help you connect with other people on MEGA."="MEGA에 있는 다른 사람들과 당신을 연결하기 위해서는 당신의 연락처에 대한 접근이 필요합니다.";
+"Easily discover contacts from your address book on MEGA."="MEGA에서 당신의 주소록에 있는 지인들을 쉽게 찾으세요.";
+/* Detailed explanation about MEGA not using the contacts data without permision */
+"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA는 당신의 동의 없이 이 데이터를 다른 목적으로 사용하고 당신의 지인들과 상호 작용하지 않을 것입니다.";
 /* Title encouraging the user to check who of its contacts are using MEGA */
-"See who's already on MEGA"="누가 MEGA를 사용중인지 보기";
+"See who's already on MEGA"="MEGA에 누가 있는지 보기";
 /* Title showing the user how many of his contacts are using MEGA */
 "[X] contacts found on MEGA"="[X]명의 지인을 MEGA에서 발견함";
 /* Title showing the user that one of his contacts are using MEGA */
@@ -2056,6 +2068,16 @@
 "Include location tags"="위치 태그 포함";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
 "If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="활성화되면, 사진과 동영상이 어디서 촬영되었는지에 대한 정보가 업로드됩니다, 공유할 때 주의하세요.";
+/* Used in Photos app browser view to send the photos from the view to the chat. */
+"Send (%d)"="전송 (%d)";
+/* Used in Photos app browser view to upload the photos from the view to the cloud. */
+"Upload (%d)"="업로드 (%d)";
+/* Used in Photos app browser carousel view to unselect a selected photo. */
+"Unselect"="선택 해제";
+/* Used in Photos app browser. Shown when there are no photos or videos in the Photos app. */
+"No Photos or Videos"="사진이나 동영상이 없습니다";
+/* Button title which, if tapped, will trigger the action of opening a folder containg this file */
+"View in Folder"="폴더에서 보기";
 /* Error message shown when opening a link with an account that not corresponds to the link */
 "This link is not related to this account. Please log in with the correct account."="이 링크는 이 계정과 연결되어 있지 않습니다. 올바른 계정으로 로그인 하세요.";
 /* Text emncouraging the user to add contacts in MEGA */
@@ -2096,6 +2118,10 @@
 "It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="MEGA와 다른 서비스들에서 같은 비밀번호를 이용하고 있고, 다른 서비스들 중 한 곳에서 데이터 유출이 발생했을 가능성이 있습니다.";
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="당신의 비밀번호가 유출되어서 MEGA 계정뿐만 아니라 당신의 계정에 접속하려는 나쁜 사람들에게 이용되고 있습니다.";
+/* tool bar title used in transfer widget, allow user to clear the selected items in the list */
+"Clear Selected"="선택 초기화";
+/* tool bar title used in transfer widget, allow user to clear all items in the list */
+"Clear All"="모두 삭제";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
 "MEGA CAMERA UPLOADS FOLDER"="MEGA 카메라 업로드 폴더";
 /* Action button text of folder selection screen for camera uploads */
@@ -2121,8 +2147,8 @@
 /* export Quality Option for Scan document */
 "best"="최고";
 /* Description of why the user should give permission to contacts */
-"Easily discover contacts from your address book on MEGA."="Easily discover contacts from your address book on MEGA.";
+"Easily discover contacts from your address book on MEGA."="MEGA에서 당신의 주소록에 있는 지인들을 쉽게 찾으세요.";
 /* Detailed description of why the user should give permission to contacts */
-"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA will not use this data for any other purpose and will never interact with your contacts without your consent.";
-/* Title label that explains that the user is going to be asked for the contacts permission */
-"Enable Access to Your Address Book"="Enable Access to Your Address Book";
+"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA는 당신의 동의 없이 이 데이터를 다른 목적으로 사용하고 당신의 지인들과 상호 작용하지 않을 것입니다.";
+/* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
+"Enter group name"="그룹 이름을 입력하세요";

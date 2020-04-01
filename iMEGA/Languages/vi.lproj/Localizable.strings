@@ -2,6 +2,8 @@
 "cancel"="Hủy";
 /* Button title to accept something */
 "ok"="OK";
+/* Button title to clear something */
+"clear"="Dọn sạch";
 /* */
 "yes"="Có";
 /* */
@@ -42,6 +44,8 @@
 "Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="Liên kết xác nhận không còn hiệu lực. Tài khoản của có thể đã được kích hoạt rồi hoặc việc đăng ký đã bị hủy.";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Đường dẫn liên kết không hợp lệ";
+/* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
+"The account that created this link has been terminated due to multiple violations of our Terms of Service."="Tài khoản của chủ sở hữu mục này đã bị ngưng hoạt động do vi phạm Điều Khoản Dịch Vụ.";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="Nhập mã giải khóa";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -887,6 +891,8 @@
 "transfers"="Các Phiên Truyền Tải";
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
 "all"="Tất Cả";
+/* Title of one of the filters in the Transfers section. In this case "Completed" transfers. */
+"Completed"="Hoàn thành";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
 "downloads"="Phiên Tải Xuống";
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
@@ -1544,6 +1550,10 @@
 "callFailed"="Cuộc gọi thất bại";
 /* When an active call of user A with user B had ended */
 "callEnded"="Cuộc gọi chấm dứt.";
+/* When an active goup call is ended */
+"Group call ended"="Cuộc gọi nhóm chấm dứt";
+/* When an active goup call is ended, shows the duration */
+"[A]Group call ended[/A][C]. Duration: [/C]"="[A]Group call ended[/A][C]. Duration: [/C]";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="Thời lượng: %@";
 /* */
@@ -1957,9 +1967,11 @@
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Bạn có chắc muốn chuyển sang máy chủ thử nghiệm? Tài khoản có thể sẽ gặp các vấn đề không thể phục hồi";
 /* Title label that explains that the user is going to be asked for the contacts permission */
-"Enable Access to Contacts"="Enable Access to Contacts";
+"Enable Access to Your Address Book"="Enable Access to Your Address Book";
 /* Detailed explanation of why the user should give permission to contacts */
-"MEGA needs access to your contacts to help you connect with other people on MEGA."="MEGA needs access to your contacts to help you connect with other people on MEGA.";
+"Easily discover contacts from your address book on MEGA."="Easily discover contacts from your address book on MEGA.";
+/* Detailed explanation about MEGA not using the contacts data without permision */
+"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA will not use this data for any other purpose and will never interact with your contacts without your consent.";
 /* Title encouraging the user to check who of its contacts are using MEGA */
 "See who's already on MEGA"="See who is already on MEGA";
 /* Title showing the user how many of his contacts are using MEGA */
@@ -2056,6 +2068,16 @@
 "Include location tags"="Include location tags";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
 "If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them.";
+/* Used in Photos app browser view to send the photos from the view to the chat. */
+"Send (%d)"="Send (%d)";
+/* Used in Photos app browser view to upload the photos from the view to the cloud. */
+"Upload (%d)"="Upload (%d)";
+/* Used in Photos app browser carousel view to unselect a selected photo. */
+"Unselect"="Unselect";
+/* Used in Photos app browser. Shown when there are no photos or videos in the Photos app. */
+"No Photos or Videos"="Không có hình ảnh hoặc video";
+/* Button title which, if tapped, will trigger the action of opening a folder containg this file */
+"View in Folder"="View in Folder";
 /* Error message shown when opening a link with an account that not corresponds to the link */
 "This link is not related to this account. Please log in with the correct account."="Đường liên kết này không thuộc sở hữu của tài khoản hiện tại. Xin đăng nhập vào tài khoản phù hợp.";
 /* Text emncouraging the user to add contacts in MEGA */
@@ -2096,6 +2118,10 @@
 "It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach.";
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account.";
+/* tool bar title used in transfer widget, allow user to clear the selected items in the list */
+"Clear Selected"="Clear Selected";
+/* tool bar title used in transfer widget, allow user to clear all items in the list */
+"Clear All"="Dọn Danh Sách";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
 "MEGA CAMERA UPLOADS FOLDER"="MEGA CAMERA UPLOADS FOLDER";
 /* Action button text of folder selection screen for camera uploads */
@@ -2124,5 +2150,5 @@
 "Easily discover contacts from your address book on MEGA."="Easily discover contacts from your address book on MEGA.";
 /* Detailed description of why the user should give permission to contacts */
 "MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA will not use this data for any other purpose and will never interact with your contacts without your consent.";
-/* Title label that explains that the user is going to be asked for the contacts permission */
-"Enable Access to Your Address Book"="Enable Access to Your Address Book";
+/* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
+"Enter group name"="Điền tên nhóm";

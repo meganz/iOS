@@ -60,14 +60,14 @@
     extension = extension.lowercaseString;
     UIImage *image;
     if ([extension isEqualToString:@"jpg"] || [extension isEqualToString:@"jpeg"]) {
-        image = [Helper defaultPhotoImage];
+        image = UIImage.mnz_defaultPhotoImage;
     } else {
         NSDictionary *fileTypesDictionary = [Helper fileTypesDictionary];
         NSString *filetypeImage = [fileTypesDictionary valueForKey:extension];
         if (filetypeImage && filetypeImage.length > 0) {
             image = [UIImage imageNamed:filetypeImage];
         } else {
-            image = [Helper genericImage];
+            image = UIImage.mnz_genericImage;
         }
     }
     
@@ -78,14 +78,14 @@
     switch (node.type) {
         case MEGANodeTypeFolder: {
             if ([node.name isEqualToString:MEGACameraUploadsNodeName]) {
-                self.image = [Helper folderCameraUploadsImage];
+                self.image = UIImage.mnz_folderCameraUploadsImage;
             } else {
                 if (node.isInShare) {
-                    self.image = [Helper incomingFolderImage];
+                    self.image = UIImage.mnz_incomingFolderImage;
                 } else if (node.isOutShare) {
-                    self.image = [Helper outgoingFolderImage];
+                    self.image = UIImage.mnz_outgoingFolderImage;
                 } else {
-                    self.image = [Helper folderImage];
+                    self.image = UIImage.mnz_folderImage;
                 }
             }
             break;
@@ -96,7 +96,7 @@
             break;
             
         default:
-            self.image = [Helper genericImage];
+            self.image = UIImage.mnz_genericImage;
     }
 }
 

@@ -2,6 +2,8 @@
 "cancel"="キャンセルする";
 /* Button title to accept something */
 "ok"="OK";
+/* Button title to clear something */
+"clear"="クリアする";
 /* */
 "yes"="はい";
 /* */
@@ -42,6 +44,8 @@
 "Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="あなたの確認リンクはもう有効ではありません。あなたのアカウントは既に有効になっているか、登録をキャンセルしたかもしれません。";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="リンク無効";
+/* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
+"The account that created this link has been terminated due to multiple violations of our Terms of Service."="このリンクを作成したアカウントは、当社のご利用規約に複数違反したため、終了しました。";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="復号化鍵を入力してください。";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -887,6 +891,8 @@
 "transfers"="転送";
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
 "all"="全部";
+/* Title of one of the filters in the Transfers section. In this case "Completed" transfers. */
+"Completed"="完了";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
 "downloads"="ダウンロード";
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
@@ -1544,6 +1550,10 @@
 "callFailed"="通話に失敗しました";
 /* When an active call of user A with user B had ended */
 "callEnded"="通話が終了しました。";
+/* When an active goup call is ended */
+"Group call ended"="グループ通話が終了しました";
+/* When an active goup call is ended, shows the duration */
+"[A]Group call ended[/A][C]. Duration: [/C]"="[A]グループ通話が終了しました[/A][C]。通話時間：[/C]";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="通話時間：%@";
 /* */
@@ -1957,9 +1967,11 @@
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="テストサーバーに変更してもよろしいですか？　アカウントに回復不能な問題が発生する可能性があります";
 /* Title label that explains that the user is going to be asked for the contacts permission */
-"Enable Access to Contacts"="連絡先へのアクセスを有効にする";
+"Enable Access to Your Address Book"="アドレス帳へのアクセスを有効にする";
 /* Detailed explanation of why the user should give permission to contacts */
-"MEGA needs access to your contacts to help you connect with other people on MEGA."="MEGAは、あなたがMEGAで他の人々とつながるのをご支援するために、あなたの連絡先にアクセスする必要があります。";
+"Easily discover contacts from your address book on MEGA."="MEGAのあなたのアドレス帳から連絡先を簡単に見つけます。";
+/* Detailed explanation about MEGA not using the contacts data without permision */
+"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGAはこのデータを他の目的に使用せず、あなたの同意なしにあなたの連絡先とやり取りすることは絶対にございません。";
 /* Title encouraging the user to check who of its contacts are using MEGA */
 "See who's already on MEGA"="すでにMEGAにいる人を確認";
 /* Title showing the user how many of his contacts are using MEGA */
@@ -2056,6 +2068,16 @@
 "Include location tags"="場所タグを含める";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
 "If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="有効にすると、あなたの写真や動画が撮影された場所に関する情報をアップロードするため、それらを共有する際にご注意ください。";
+/* Used in Photos app browser view to send the photos from the view to the chat. */
+"Send (%d)"="送信 (%d)";
+/* Used in Photos app browser view to upload the photos from the view to the cloud. */
+"Upload (%d)"="アップロード (%d)";
+/* Used in Photos app browser carousel view to unselect a selected photo. */
+"Unselect"="選択を解除";
+/* Used in Photos app browser. Shown when there are no photos or videos in the Photos app. */
+"No Photos or Videos"="フォトやビデオなし";
+/* Button title which, if tapped, will trigger the action of opening a folder containg this file */
+"View in Folder"="フォルダで表示";
 /* Error message shown when opening a link with an account that not corresponds to the link */
 "This link is not related to this account. Please log in with the correct account."="このリンクはこのアカウントとは関係ありません。正しいアカウントでログインしてください。";
 /* Text emncouraging the user to add contacts in MEGA */
@@ -2096,6 +2118,10 @@
 "It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="おそらく、MEGAアカウントで他のサービスと同じパスワードを使用しており、それらのサービスの少なくとも1つがデータ侵害を受けていると思われます。";
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="あなたのパスワードが漏えいし、悪意のあるアクターがあなたのアカウント（あなたのMEGAアカウントを含むがこれに限定されない）にログインするために使用されています。";
+/* tool bar title used in transfer widget, allow user to clear the selected items in the list */
+"Clear Selected"="選択をクリア";
+/* tool bar title used in transfer widget, allow user to clear all items in the list */
+"Clear All"="全部をクリア";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
 "MEGA CAMERA UPLOADS FOLDER"="MEGAカメラアップロードフォルダ";
 /* Action button text of folder selection screen for camera uploads */
@@ -2121,8 +2147,8 @@
 /* export Quality Option for Scan document */
 "best"="最高";
 /* Description of why the user should give permission to contacts */
-"Easily discover contacts from your address book on MEGA."="Easily discover contacts from your address book on MEGA.";
+"Easily discover contacts from your address book on MEGA."="MEGAのあなたのアドレス帳から連絡先を簡単に見つけます。";
 /* Detailed description of why the user should give permission to contacts */
-"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA will not use this data for any other purpose and will never interact with your contacts without your consent.";
-/* Title label that explains that the user is going to be asked for the contacts permission */
-"Enable Access to Your Address Book"="Enable Access to Your Address Book";
+"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGAはこのデータを他の目的に使用せず、あなたの同意なしにあなたの連絡先とやり取りすることは絶対にございません。";
+/* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
+"Enter group name"="グループ名を入力";
