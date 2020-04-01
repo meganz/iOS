@@ -1,6 +1,11 @@
 import Foundation
-extension ChatViewController {
+import MessageKit
+import InputBarAccessoryView
+
+extension ChatViewController: InputBarAccessoryViewDelegate {
     func configureInputBar() {
+//        messageInputBar
         
+
     }
 }
