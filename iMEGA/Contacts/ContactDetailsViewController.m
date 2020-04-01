@@ -823,6 +823,8 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     NSInteger rowsInSection;
     if ([self isSharedFolderSection:section]) {
         rowsInSection = self.incomingNodeListForUser.size.integerValue;
+    } else if (self.shouldAllowToAddContact) {
+        rowsInSection = 1;
     } else if (section == ContactDetailsSectionNicknameVerifyCredentials) {
         rowsInSection = self.rowsForNicknameAndVerify.count;
     } else {
