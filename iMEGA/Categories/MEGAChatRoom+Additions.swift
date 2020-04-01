@@ -1,5 +1,13 @@
 
 extension MEGAChatRoom {
+    var onlineStatus: MEGAChatStatus? {
+        if isGroup {
+            return nil
+        }
+        
+        return MEGASdkManager.sharedMEGAChatSdk()?.userOnlineStatus(peerHandle(at: 0))
+    }
+    
     @objc func userNickname(atIndex index: UInt) -> String? {
         let userHandle = peerHandle(at: index)
         return userNickname(forUserHandle: userHandle)
@@ -29,5 +37,25 @@ extension MEGAChatRoom {
         }
         
         return self.peerFullname(byHandle: userHandle)
+    }
+    
+    var participantsNames: String {
+        return (0..<peerCount).reduce("") { (result, index) in
+            if let nickname = userNickname(atIndex: index)?.trim {
+                let appendResult = (index == peerCount-1) ? nickname : "\(nickname), "
+                return result + appendResult
+            } else if let peerFirstname = peerFirstname(at: index)?.trim {
+                let appendResult = (index == peerCount-1) ? peerFirstname : "\(peerFirstname), "
+                return result + appendResult
+            } else if let peerLastname = peerLastname(at: index)?.trim {
+                let appendResult = (index == peerCount-1) ? peerLastname : "\(peerLastname), "
+                return result + appendResult
+            } else if let peerEmail = peerEmail(byHandle: peerHandle(at: index))?.trim {
+                let appendResult = (index == peerCount-1) ? peerEmail : "\(peerEmail), "
+                return result + appendResult
+            }
+            
+            return ""
+        }
     }
 }
