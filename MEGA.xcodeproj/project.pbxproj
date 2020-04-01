@@ -1053,6 +1053,8 @@
 		BFB463EF2434290400FB90B9 /* UIView+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB463EE2434290300FB90B9 /* UIView+Additions.swift */; };
 		BFB463F32434296000FB90B9 /* IndexPath+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB463F22434296000FB90B9 /* IndexPath+Additions.swift */; };
 		BFB463F724342F7F00FB90B9 /* MEGAUser+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB463F624342F7F00FB90B9 /* MEGAUser+Additions.swift */; };
+		BFB463FB243456D900FB90B9 /* ChatMessageHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB463F9243456D900FB90B9 /* ChatMessageHeaderView.swift */; };
+		BFB463FC243456D900FB90B9 /* ChatMessageHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFB463FA243456D900FB90B9 /* ChatMessageHeaderView.xib */; };
 		BFD23CCE236255A5005D4A1E /* NicknameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD23CCD236255A5005D4A1E /* NicknameViewController.swift */; };
 		BFE54778231F0F27007FB8F6 /* UIViewController+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0BBEFD230627BE001FD542 /* UIViewController+MNZCategory.m */; };
 		BFE54779231F0F29007FB8F6 /* UIViewController+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0BBEFD230627BE001FD542 /* UIViewController+MNZCategory.m */; };
@@ -2481,6 +2483,8 @@
 		BFB463EE2434290300FB90B9 /* UIView+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Additions.swift"; sourceTree = "<group>"; };
 		BFB463F22434296000FB90B9 /* IndexPath+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IndexPath+Additions.swift"; sourceTree = "<group>"; };
 		BFB463F624342F7F00FB90B9 /* MEGAUser+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAUser+Additions.swift"; sourceTree = "<group>"; };
+		BFB463F9243456D900FB90B9 /* ChatMessageHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageHeaderView.swift; sourceTree = "<group>"; };
+		BFB463FA243456D900FB90B9 /* ChatMessageHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatMessageHeaderView.xib; sourceTree = "<group>"; };
 		BFD23CCD236255A5005D4A1E /* NicknameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewController.swift; sourceTree = "<group>"; };
 		BFE6DBF7242D879D00E2E5B4 /* MessageKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MessageKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFE6DBFB242DBA4A00E2E5B4 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
@@ -5233,6 +5237,8 @@
 				BFB463DC2432F2E900FB90B9 /* ChatRoomDelegate.swift */,
 				BFE6DBFB242DBA4A00E2E5B4 /* ChatViewController.swift */,
 				BFE6DBFD2431489C00E2E5B4 /* ChatViewController+NavigationBar.swift */,
+				BFB463F9243456D900FB90B9 /* ChatMessageHeaderView.swift */,
+				BFB463FA243456D900FB90B9 /* ChatMessageHeaderView.xib */,
 				BF06E3DD243191B000B30FB7 /* ChatTitleView.swift */,
 				BF06E3DC243191B000B30FB7 /* ChatTitleView.xib */,
 			);
@@ -5676,6 +5682,7 @@
 				41D21E6D1D01AEC3002E6296 /* CTAssetsPickerController.bundle in Resources */,
 				A82E5BCA1F3465A3003C149C /* Spotlight_folder@2x.png in Resources */,
 				774FA65E2090BF9F0061DD85 /* MEGAMessageDialogView.xib in Resources */,
+				BFB463FC243456D900FB90B9 /* ChatMessageHeaderView.xib in Resources */,
 				8326F384229FC032009BA19A /* MEGALoadingMessagesHeaderView.xib in Resources */,
 				5BD8F2BE2212F319003F2BDE /* Recents.storyboard in Resources */,
 				5B134B8F1F86260B000E367E /* HelpModalViewController.xib in Resources */,
@@ -5996,6 +6003,7 @@
 				834AD6052024694200D2527F /* MGSwipeButton.m in Sources */,
 				4172795D1DB663FA001AC818 /* JSQMessagesTypingIndicatorFooterView.m in Sources */,
 				B6A4A11121A2544C007E7EEC /* MEGAError+MNZCategory.m in Sources */,
+				BFB463FB243456D900FB90B9 /* ChatMessageHeaderView.swift in Sources */,
 				83FB1439219C372800418BE6 /* MOOfflineFolderLayout+CoreDataClass.m in Sources */,
 				41D21E701D01AEC3002E6296 /* CTAssetsViewControllerTransition.m in Sources */,
 				41D408101B8F240B0001F8BE /* MEGAPurchase.m in Sources */,
