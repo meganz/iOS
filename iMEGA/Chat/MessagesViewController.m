@@ -67,7 +67,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
 
 static NSMutableSet<NSString *> *tapForInfoSet;
 
-@interface MessagesViewController () <MEGAPhotoBrowserDelegate, JSQMessagesViewAccessoryButtonDelegate, JSQMessagesComposerTextViewPasteDelegate, DZNEmptyDataSetSource, MEGAChatDelegate, MEGAChatRequestDelegate, MEGARequestDelegate, MEGAChatCallDelegate>
+@interface MessagesViewController () <MEGAPhotoBrowserDelegate, JSQMessagesViewAccessoryButtonDelegate, JSQMessagesComposerTextViewPasteDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAChatDelegate, MEGAChatRequestDelegate, MEGARequestDelegate, MEGAChatCallDelegate>
 
 @property (nonatomic, strong) MEGAOpenMessageHeaderView *openMessageHeaderView;
 @property (nonatomic, strong) MEGALoadingMessagesHeaderView *loadingMessagesHeaderView;
@@ -268,6 +268,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     
     self.loadingState = YES;
     self.collectionView.emptyDataSetSource = self;
+    self.collectionView.emptyDataSetDelegate = self;
     [self.collectionView reloadData];
 }
 
@@ -1752,7 +1753,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             [self.selectedMessages removeObject:message];
         } else {
             NSUInteger index = [self.selectedMessages indexOfObject:message inSortedRange:(NSRange){0, self.selectedMessages.count} options:NSBinarySearchingInsertionIndex usingComparator:^NSComparisonResult(MEGAChatMessage *obj1, MEGAChatMessage *obj2) {
-                return [obj1.date compare:obj2.date];
+                return [@(obj1.messageIndex) compare:@(obj2.messageIndex)];
             }];
             [self.selectedMessages insertObject:message atIndex:index];
         }
@@ -2910,14 +2911,16 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     [self setLastMessageAsSeen];
 }
 
+#pragma mark - DZNEmptyDataSetDelegate
+
+- (BOOL)emptyDataSetShouldDisplay:(UIScrollView *)scrollView {
+    return self.loadingState;
+}
+
 #pragma mark - DZNEmptyDataSetSource
 
 - (UIView *)customViewForEmptyDataSet:(UIScrollView *)scrollView {
-    UIImageView *skeletonImageView = nil;
-    
-    if (self.loadingState) {
-        skeletonImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"chatroomLoading"]];
-    }
+    UIImageView *skeletonImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"chatroomLoading"]];
     
     return skeletonImageView;
 }
@@ -3039,7 +3042,11 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             case MEGAChatMessageTypePublicHandleDelete:
             case MEGAChatMessageTypeSetPrivateMode: {
                 if (!message.isDeleted) {
-                    [self.loadingMessages insertObject:message atIndex:0];
+                    if(message.status == MEGAChatMessageStatusSending || message.status == MEGAChatMessageStatusSendingManual) {
+                        [self.loadingMessages addObject:message];
+                    } else {
+                        [self.loadingMessages insertObject:message atIndex:0];
+                    }
                 }
                 break;
             }

@@ -61,8 +61,6 @@
 
 #import "MEGAProviderDelegate.h"
 
-#define kFirstRun @"FirstRun"
-
 @interface AppDelegate () <PKPushRegistryDelegate, UIApplicationDelegate, UNUserNotificationCenterDelegate, LTHPasscodeViewControllerDelegate, LaunchViewControllerDelegate, MEGAApplicationDelegate, MEGAChatDelegate, MEGAChatRequestDelegate, MEGAGlobalDelegate, MEGAPurchasePricingDelegate, MEGARequestDelegate, MEGATransferDelegate> {
     BOOL isAccountFirstLogin;
     BOOL isFetchNodesDone;
@@ -178,12 +176,12 @@
     NSString *sessionV3 = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
     
     //Clear keychain (session) and delete passcode on first run in case of reinstallation
-    if (![[NSUserDefaults standardUserDefaults] objectForKey:kFirstRun]) {
+    if (![NSUserDefaults.standardUserDefaults objectForKey:MEGAFirstRun]) {
         sessionV3 = nil;
         [Helper clearEphemeralSession];
         [Helper clearSession];
         [Helper deletePasscode];
-        [[NSUserDefaults standardUserDefaults] setValue:@"1strun" forKey:kFirstRun];
+        [NSUserDefaults.standardUserDefaults setValue:MEGAFirstRunValue forKey:MEGAFirstRun];
         if (@available(iOS 12.0, *)) {} else {
             [NSUserDefaults.standardUserDefaults synchronize];
         }
@@ -1230,7 +1228,21 @@ void uncaughtExceptionHandler(NSException *exception) {
 }
 
 - (void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions options))completionHandler {
-    completionHandler(UNNotificationPresentationOptionAlert | UNNotificationPresentationOptionSound);
+    MEGALogDebug(@"[Notification] will present notification %@", notification);
+    uint64_t chatId = [notification.request.content.userInfo[@"chatId"] unsignedLongLongValue];
+    uint64_t msgId =  [notification.request.content.userInfo[@"msgId"] unsignedLongLongValue];
+    MEGALogDebug(@"[Notification] chatId: %@ messageId: %@", [MEGASdk base64HandleForUserHandle:chatId], [MEGASdk base64HandleForUserHandle:msgId]);
+    if ([notification.request.trigger isKindOfClass:UNPushNotificationTrigger.class]) {
+        MOMessage *moMessage = [MEGAStore.shareInstance fetchMessageWithChatId:chatId messageId:msgId];
+        if (moMessage) {
+            [MEGAStore.shareInstance deleteMessage:moMessage];
+            completionHandler(UNNotificationPresentationOptionNone);
+        } else {
+            completionHandler(UNNotificationPresentationOptionAlert);
+        }
+    } else {
+        completionHandler(UNNotificationPresentationOptionAlert);
+    }    
 }
 
 #pragma mark - LaunchViewControllerDelegate
@@ -1490,7 +1502,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                     
                     [self.sslKeyPinningController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"openBrowser", @"Button title to allow the user open the default browser") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                         self.sslKeyPinningController = nil;
-                        NSURL *url = [NSURL URLWithString:@"https://www.mega.nz"];
+                        NSURL *url = [NSURL URLWithString:@"https://mega.nz"];
                         [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:NULL];
                     }]];
                     
