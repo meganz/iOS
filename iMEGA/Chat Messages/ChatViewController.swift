@@ -49,10 +49,10 @@ class ChatViewController: MessagesViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print(ChatMessageHeaderView.reuseIdentifier)
-        messagesCollectionView.register(ChatMessageHeaderView.nib,
+        print(ChatMessageIntroductionHeaderView.reuseIdentifier)
+        messagesCollectionView.register(ChatMessageIntroductionHeaderView.nib,
                                         forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-                                        withReuseIdentifier: ChatMessageHeaderView.reuseIdentifier)
+                                        withReuseIdentifier: ChatMessageIntroductionHeaderView.reuseIdentifier)
         
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messagesLayoutDelegate = self
@@ -198,7 +198,7 @@ extension ChatViewController: MessagesDataSource {
     }
     
     func messageHeaderView(for indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageReusableView {
-        let chatMessageHeaderView = messagesCollectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: ChatMessageHeaderView.reuseIdentifier, for: indexPath) as! ChatMessageHeaderView
+        let chatMessageHeaderView = messagesCollectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: ChatMessageIntroductionHeaderView.reuseIdentifier, for: indexPath) as! ChatMessageIntroductionHeaderView
         chatMessageHeaderView.chatRoom = chatRoom
         return chatMessageHeaderView
     }
@@ -240,12 +240,16 @@ extension ChatViewController: MessagesLayoutDelegate {
     
     func headerViewSize(for section: Int, in messagesCollectionView: MessagesCollectionView) -> CGSize {
         if chatRoomDelegate.isFullChatHistoryLoaded && section == 0 {
-            let chatMessageHeaderView = ChatMessageHeaderView.instanceFromNib
+            let chatMessageHeaderView = ChatMessageIntroductionHeaderView.instanceFromNib
             chatMessageHeaderView.chatRoom = chatRoom
-            return chatMessageHeaderView.sizeThatFits(
+            let size = chatMessageHeaderView.sizeThatFits(
                 CGSize(width: messagesCollectionView.bounds.width,
-                       height: CGFloat.greatestFiniteMagnitude)
+                       height: .greatestFiniteMagnitude)
             )
+            
+            print("width \(size.width), height: \(size.height)")
+            
+            return size
         }
         
         return .zero
