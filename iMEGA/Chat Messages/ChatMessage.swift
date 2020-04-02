@@ -36,6 +36,12 @@ extension ChatMessage: MessageType {
             return .text(message.content)
         }
         
+        if case .callEnded = message.type {
+            return .custom(message)
+        } else if case .callStarted = message.type {
+            return .custom(message)
+        }
+        
         return .text(message.type.description)
     }
 }
