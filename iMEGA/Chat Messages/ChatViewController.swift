@@ -49,10 +49,10 @@ class ChatViewController: MessagesViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print(ChatMessageHeaderView.reuseIdentifier)
-        messagesCollectionView.register(ChatMessageHeaderView.nib,
+        print(ChatMessageIntroductionHeaderView.reuseIdentifier)
+        messagesCollectionView.register(ChatMessageIntroductionHeaderView.nib,
                                         forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-                                        withReuseIdentifier: ChatMessageHeaderView.reuseIdentifier)
+                                        withReuseIdentifier: ChatMessageIntroductionHeaderView.reuseIdentifier)
         
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messagesLayoutDelegate = self
@@ -157,97 +157,5 @@ class ChatViewController: MessagesViewController {
     }
 }
 
-// TODO: Remove the temporary extension
-extension ChatViewController {
-    private struct Sender: SenderType {
-        public let senderId: String
-        public let displayName: String
-    }
-    
-    private struct Message: MessageType {
-        var sender: SenderType
-        var messageId: String
-        var sentDate: Date
-        var kind: MessageKind
-    }
-}
 
-extension ChatViewController: MessagesDataSource {
-    
-    public func currentSender() -> SenderType {
-        return myUser
-    }
-    
-    public func numberOfSections(in messagesCollectionView: MessagesCollectionView) -> Int {
-        return messages.count
-    }
-    
-    public func messageForItem(at indexPath: IndexPath,
-                               in messagesCollectionView: MessagesCollectionView) -> MessageType {
-        return messages[indexPath.section]
-    }
-    
-    func messageTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
-        if isTimeLabelVisible(at: indexPath) {
-            return NSAttributedString(
-                string: message.sentDate.string(withDateFormat: "hh:mm") ,
-                attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13.0, weight: .medium),
-                             NSAttributedString.Key.foregroundColor: UIColor(fromHexString: "#848484") ?? .black])
-        }
-        return nil
-    }
-    
-    func messageHeaderView(for indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageReusableView {
-        let chatMessageHeaderView = messagesCollectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: ChatMessageHeaderView.reuseIdentifier, for: indexPath) as! ChatMessageHeaderView
-        chatMessageHeaderView.chatRoom = chatRoom
-        return chatMessageHeaderView
-    }
-}
 
-extension ChatViewController: MessagesDisplayDelegate {
-    func backgroundColor(for message: MessageType,
-                         at indexPath: IndexPath,
-                         in messagesCollectionView: MessagesCollectionView) -> UIColor {
-        return isFromCurrentSender(message: message) ? UIColor(fromHexString: "#009476") : UIColor(fromHexString: "#EEEEEE")
-    }
-    
-    func textColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
-        return isFromCurrentSender(message: message) ? .white : .black
-    }
-    
-    func messageStyle(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageStyle {
-        return .custom { containerView in
-            containerView.layer.cornerRadius = 13.0
-        }
-    }
-    
-    func configureAvatarView(_ avatarView: AvatarView,
-                             for message: MessageType,
-                             at indexPath: IndexPath,
-                             in messagesCollectionView: MessagesCollectionView) {
-        avatarView.isHidden = isFromCurrentSender(message: message)
-        
-        let chatInitials = initials(for: message)
-        let avatar = Avatar(image: avatarImage(for: message), initials: chatInitials)
-        avatarView.set(avatar: avatar)
-    }
-}
-
-extension ChatViewController: MessagesLayoutDelegate {
-    func messageTopLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
-        return isTimeLabelVisible(at: indexPath) ? 28.0 : 0.0
-    }
-    
-    func headerViewSize(for section: Int, in messagesCollectionView: MessagesCollectionView) -> CGSize {
-        if chatRoomDelegate.isFullChatHistoryLoaded && section == 0 {
-            let chatMessageHeaderView = ChatMessageHeaderView.instanceFromNib
-            chatMessageHeaderView.chatRoom = chatRoom
-            return chatMessageHeaderView.sizeThatFits(
-                CGSize(width: messagesCollectionView.bounds.width,
-                       height: CGFloat.greatestFiniteMagnitude)
-            )
-        }
-        
-        return .zero
-    }
-}
