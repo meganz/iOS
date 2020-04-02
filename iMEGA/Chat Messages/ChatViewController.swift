@@ -49,7 +49,6 @@ class ChatViewController: MessagesViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print(ChatMessageIntroductionHeaderView.reuseIdentifier)
         messagesCollectionView.register(ChatMessageIntroductionHeaderView.nib,
                                         forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
                                         withReuseIdentifier: ChatMessageIntroductionHeaderView.reuseIdentifier)
@@ -77,26 +76,41 @@ class ChatViewController: MessagesViewController {
         return chatMessage.senderHandle == myUser.handle
     }
     
-    func isTimeLabelVisible(at indexPath: IndexPath) -> Bool {
-        guard let previousIndexPath = indexPath.previousSectionIndexPath else { return true }
-        
-        if isPreviousMessageSameSender(at: indexPath)
-            && isTimeLabelVisible(at: previousIndexPath)
-            && isPreviousMessageHasSameTime(at: indexPath) {
+    func isDateLabelVisible(for indexPath: IndexPath) -> Bool {
+        if isPreviousMessageSentSameDay(at: indexPath) {
             return false
         }
         
         return true
     }
     
-    /// This method ignores the milliseconds.
-    func isPreviousMessageHasSameTime(at indexPath: IndexPath) -> Bool {
-        guard let previousIndexPath = indexPath.previousSectionIndexPath else { return false }
+    func isTimeLabelVisible(at indexPath: IndexPath) -> Bool {
+        guard let previousIndexPath = indexPath.previousSectionIndexPath else { return true }
         
-        return Calendar.current.compare(messages[indexPath.section].sentDate,
-                                        to: messages[previousIndexPath.section].sentDate,
-                                        toGranularity: .minute) == .orderedSame
+        if isPreviousMessageSameSender(at: indexPath)
+            && isTimeLabelVisible(at: previousIndexPath)
+            && isPreviousMessageSentSameTime(at: indexPath) {
+            return false
+        }
+        
+        return true
     }
+    
+    func isPreviousMessageSentSameDay(at indexPath: IndexPath) -> Bool {
+        guard let previousIndexPath = indexPath.previousSectionIndexPath else { return true }
+
+        let previousMessageDate = messages[previousIndexPath.section].sentDate
+        return messages[indexPath.section].sentDate.isSameDay(date: previousMessageDate)
+    }
+    
+    /// This method ignores the milliseconds.
+    func isPreviousMessageSentSameTime(at indexPath: IndexPath) -> Bool {
+        guard let previousIndexPath = indexPath.previousSectionIndexPath else { return true }
+
+        let previousMessageDate = messages[previousIndexPath.section].sentDate
+        return messages[indexPath.section].sentDate.isSameMinute(date: previousMessageDate)
+    }
+    
     
     func isPreviousMessageSameSender(at indexPath: IndexPath) -> Bool {
         guard let previousIndexPath = indexPath.previousSectionIndexPath else { return false }
@@ -156,6 +170,3 @@ class ChatViewController: MessagesViewController {
         chatRoomDelegate.closeChatRoom()
     }
 }
-
-
-
