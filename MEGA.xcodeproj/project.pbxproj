@@ -17,6 +17,8 @@
 		2F98BF4E237B5AE90049162B /* ALView+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D21DE81D01AE89002E6296 /* ALView+PureLayout.m */; };
 		2F98BF4F237B5AED0049162B /* NSArray+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D21DEA1D01AE89002E6296 /* NSArray+PureLayout.m */; };
 		2F98BF50237B5AF00049162B /* NSLayoutConstraint+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D21DEC1D01AE89002E6296 /* NSLayoutConstraint+PureLayout.m */; };
+		2FA6D9AF24355528007A8E81 /* InputBarAccessoryView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FA6D9AE24355528007A8E81 /* InputBarAccessoryView.framework */; };
+		2FA6D9B02435558B007A8E81 /* InputBarAccessoryView.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2FA6D9AE24355528007A8E81 /* InputBarAccessoryView.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		410AD3C11C883AA900BF939E /* MEGAAVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 410AD3C01C883AA900BF939E /* MEGAAVViewController.m */; };
 		411504941CEB183600BF38E3 /* SaveToCameraRollActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 411504931CEB183600BF38E3 /* SaveToCameraRollActivity.m */; };
 		4115D6441E718B1F004BB0FF /* UIImage+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 4115D6431E718B1F004BB0FF /* UIImage+MNZCategory.m */; };
@@ -1107,16 +1109,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		2F0F75FF2432DA4600446C87 /* PBXContainerItemProxy */ = {
+		2F338D8724354CD5008015B3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 2F0F75FA2432DA4600446C87 /* MessageKit.xcodeproj */;
+			containerPortal = 2F338D8224354CD5008015B3 /* MessageKit.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 88916B221CF0DF2F00469F91;
 			remoteInfo = MessageKit;
 		};
-		2F0F76012432DA4600446C87 /* PBXContainerItemProxy */ = {
+		2F338D8924354CD5008015B3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 2F0F75FA2432DA4600446C87 /* MessageKit.xcodeproj */;
+			containerPortal = 2F338D8224354CD5008015B3 /* MessageKit.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 88916B2C1CF0DF2F00469F91;
 			remoteInfo = MessageKitTests;
@@ -1179,6 +1181,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				2FA6D9B02435558B007A8E81 /* InputBarAccessoryView.framework in Embed Frameworks */,
 				BF06E3E6243192FB00B30FB7 /* MessageKit.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -1194,10 +1197,11 @@
 		137361921A6664C300B740E8 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AppDelegate.m; sourceTree = "<group>"; wrapsLines = 1; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		1373619D1A6664C300B740E8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		2F0194A6243452E500734EA3 /* ChatViewController+InputBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatViewController+InputBar.swift"; sourceTree = "<group>"; };
-		2F0F75FA2432DA4600446C87 /* MessageKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MessageKit.xcodeproj; path = Vendor/MessageKit/MessageKit.xcodeproj; sourceTree = "<group>"; };
+		2F338D8224354CD5008015B3 /* MessageKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MessageKit.xcodeproj; path = Vendor/MessageKit/MessageKit.xcodeproj; sourceTree = "<group>"; };
 		2F8F5F1523691A390049603F /* UINavigationViewController+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationViewController+Additions.swift"; sourceTree = "<group>"; };
 		2F91390D238C9AC4004C611A /* MEGARecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGARecordView.swift; sourceTree = "<group>"; };
 		2F91390F238CC3CA004C611A /* MEGARecordView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MEGARecordView.xib; sourceTree = "<group>"; };
+		2FA6D9AE24355528007A8E81 /* InputBarAccessoryView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = InputBarAccessoryView.framework; path = iMEGA/Vendor/MessageKit/Carthage/Build/iOS/InputBarAccessoryView.framework; sourceTree = "<group>"; };
 		410333D71B9993A000380FF3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		410333E11B99948600380FF3 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		410333EB1B9994F400380FF3 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = nl; path = nl.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
@@ -2602,6 +2606,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2FA6D9AF24355528007A8E81 /* InputBarAccessoryView.framework in Frameworks */,
 				77FD20022359A5A7004FB892 /* libvideoframebuffer_objc.a in Frameworks */,
 				77FD20032359A5A7004FB892 /* libnative_api.a in Frameworks */,
 				77FD20042359A5A7004FB892 /* libvideocapture_objc.a in Frameworks */,
@@ -2878,11 +2883,11 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		2F0F75FB2432DA4600446C87 /* Products */ = {
+		2F338D8324354CD5008015B3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				2F0F76002432DA4600446C87 /* MessageKit.framework */,
-				2F0F76022432DA4600446C87 /* MessageKitTests.xctest */,
+				2F338D8824354CD5008015B3 /* MessageKit.framework */,
+				2F338D8A24354CD5008015B3 /* MessageKitTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2973,7 +2978,7 @@
 		415226671A692EBD00EC7BB6 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
-				2F0F75FA2432DA4600446C87 /* MessageKit.xcodeproj */,
+				2F338D8224354CD5008015B3 /* MessageKit.xcodeproj */,
 				83C570C722E5BFCF00216896 /* PhoneNumberKit */,
 				A85A01D2228B0DA100C6ADBB /* FLEX */,
 				A824A9162039EC9F00D777D2 /* SDAVAssetExportSession */,
@@ -3359,6 +3364,7 @@
 		418851EE1A66826800FDBA15 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2FA6D9AE24355528007A8E81 /* InputBarAccessoryView.framework */,
 				BF06E3E1243192EB00B30FB7 /* MessageKit.framework */,
 				BFE6DBF7242D879D00E2E5B4 /* MessageKit.framework */,
 				77FD1FFF2359A5A7004FB892 /* libnative_api.a */,
@@ -5639,8 +5645,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 2F0F75FB2432DA4600446C87 /* Products */;
-					ProjectRef = 2F0F75FA2432DA4600446C87 /* MessageKit.xcodeproj */;
+					ProductGroup = 2F338D8324354CD5008015B3 /* Products */;
+					ProjectRef = 2F338D8224354CD5008015B3 /* MessageKit.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -5656,18 +5662,18 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		2F0F76002432DA4600446C87 /* MessageKit.framework */ = {
+		2F338D8824354CD5008015B3 /* MessageKit.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = MessageKit.framework;
-			remoteRef = 2F0F75FF2432DA4600446C87 /* PBXContainerItemProxy */;
+			remoteRef = 2F338D8724354CD5008015B3 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		2F0F76022432DA4600446C87 /* MessageKitTests.xctest */ = {
+		2F338D8A24354CD5008015B3 /* MessageKitTests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = MessageKitTests.xctest;
-			remoteRef = 2F0F76012432DA4600446C87 /* PBXContainerItemProxy */;
+			remoteRef = 2F338D8924354CD5008015B3 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -6932,6 +6938,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/iMEGA/Vendor/MessageKit/Carthage/Build/iOS",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "iMEGA/MEGA-PrefixHeader.pch";
@@ -6988,6 +6995,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/iMEGA/Vendor/MessageKit/Carthage/Build/iOS",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "iMEGA/MEGA-PrefixHeader.pch";
