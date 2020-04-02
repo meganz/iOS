@@ -18,6 +18,7 @@
 		2F98BF4F237B5AED0049162B /* NSArray+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D21DEA1D01AE89002E6296 /* NSArray+PureLayout.m */; };
 		2F98BF50237B5AF00049162B /* NSLayoutConstraint+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D21DEC1D01AE89002E6296 /* NSLayoutConstraint+PureLayout.m */; };
 		2FA6D9B02435558B007A8E81 /* InputBarAccessoryView.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2FA6D9AE24355528007A8E81 /* InputBarAccessoryView.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2FA6D9BF2436ABAF007A8E81 /* ChatViewAttachmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA6D9BE2436ABAF007A8E81 /* ChatViewAttachmentCell.swift */; };
 		410AD3C11C883AA900BF939E /* MEGAAVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 410AD3C01C883AA900BF939E /* MEGAAVViewController.m */; };
 		411504941CEB183600BF38E3 /* SaveToCameraRollActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 411504931CEB183600BF38E3 /* SaveToCameraRollActivity.m */; };
 		4115D6441E718B1F004BB0FF /* UIImage+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 4115D6431E718B1F004BB0FF /* UIImage+MNZCategory.m */; };
@@ -1207,6 +1208,7 @@
 		2F91390D238C9AC4004C611A /* MEGARecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGARecordView.swift; sourceTree = "<group>"; };
 		2F91390F238CC3CA004C611A /* MEGARecordView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MEGARecordView.xib; sourceTree = "<group>"; };
 		2FA6D9AE24355528007A8E81 /* InputBarAccessoryView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = InputBarAccessoryView.framework; path = iMEGA/Vendor/MessageKit/Carthage/Build/iOS/InputBarAccessoryView.framework; sourceTree = "<group>"; };
+		2FA6D9BE2436ABAF007A8E81 /* ChatViewAttachmentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewAttachmentCell.swift; sourceTree = "<group>"; };
 		410333D71B9993A000380FF3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		410333E11B99948600380FF3 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		410333EB1B9994F400380FF3 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = nl; path = nl.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
@@ -5269,6 +5271,7 @@
 			isa = PBXGroup;
 			children = (
 				BF15891D2435EF85007AF9EC /* ChatViewCallCollectionCell.swift */,
+				2FA6D9BE2436ABAF007A8E81 /* ChatViewAttachmentCell.swift */,
 				BF15891E2435EF85007AF9EC /* ChatViewCallCollectionCell.xib */,
 				BFB463F9243456D900FB90B9 /* ChatViewIntroductionHeaderView.swift */,
 				BFB463FA243456D900FB90B9 /* ChatViewIntroductionHeaderView.xib */,
@@ -6058,6 +6061,7 @@
 				836AEDE020188F3C00868FC7 /* TestPasswordViewController.m in Sources */,
 				A86B9F612316D6AB00F35E7A /* FLEXInstancesTableViewController.m in Sources */,
 				5B8281491E7BE8300079C1BB /* SelectableTableViewCell.m in Sources */,
+				2FA6D9BF2436ABAF007A8E81 /* ChatViewAttachmentCell.swift in Sources */,
 				A86B9F862316D6AB00F35E7A /* FLEXKeyboardHelpViewController.m in Sources */,
 				5B22F97E1F8374C500D2B156 /* VENTokenField.m in Sources */,
 				A86B9F2E2316D6AB00F35E7A /* FLEXDictionaryExplorerViewController.m in Sources */,
