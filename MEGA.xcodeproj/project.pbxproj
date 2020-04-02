@@ -1058,6 +1058,9 @@
 		BFB463F724342F7F00FB90B9 /* MEGAUser+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB463F624342F7F00FB90B9 /* MEGAUser+Additions.swift */; };
 		BFB463FB243456D900FB90B9 /* ChatMessageIntroductionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB463F9243456D900FB90B9 /* ChatMessageIntroductionHeaderView.swift */; };
 		BFB463FC243456D900FB90B9 /* ChatMessageIntroductionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFB463FA243456D900FB90B9 /* ChatMessageIntroductionHeaderView.xib */; };
+		BFB464122435820700FB90B9 /* ChatViewController+MessageLayoutDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB464112435820700FB90B9 /* ChatViewController+MessageLayoutDelegate.swift */; };
+		BFB464142435823400FB90B9 /* ChatViewController+MessagesDisplayDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB464132435823400FB90B9 /* ChatViewController+MessagesDisplayDelegate.swift */; };
+		BFB464162435825A00FB90B9 /* ChatViewController+MessagesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB464152435825A00FB90B9 /* ChatViewController+MessagesDataSource.swift */; };
 		BFD23CCE236255A5005D4A1E /* NicknameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD23CCD236255A5005D4A1E /* NicknameViewController.swift */; };
 		BFE54778231F0F27007FB8F6 /* UIViewController+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0BBEFD230627BE001FD542 /* UIViewController+MNZCategory.m */; };
 		BFE54779231F0F29007FB8F6 /* UIViewController+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0BBEFD230627BE001FD542 /* UIViewController+MNZCategory.m */; };
@@ -2491,6 +2494,9 @@
 		BFB463F624342F7F00FB90B9 /* MEGAUser+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAUser+Additions.swift"; sourceTree = "<group>"; };
 		BFB463F9243456D900FB90B9 /* ChatMessageIntroductionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageIntroductionHeaderView.swift; sourceTree = "<group>"; };
 		BFB463FA243456D900FB90B9 /* ChatMessageIntroductionHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatMessageIntroductionHeaderView.xib; sourceTree = "<group>"; };
+		BFB464112435820700FB90B9 /* ChatViewController+MessageLayoutDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatViewController+MessageLayoutDelegate.swift"; sourceTree = "<group>"; };
+		BFB464132435823400FB90B9 /* ChatViewController+MessagesDisplayDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatViewController+MessagesDisplayDelegate.swift"; sourceTree = "<group>"; };
+		BFB464152435825A00FB90B9 /* ChatViewController+MessagesDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatViewController+MessagesDataSource.swift"; sourceTree = "<group>"; };
 		BFD23CCD236255A5005D4A1E /* NicknameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewController.swift; sourceTree = "<group>"; };
 		BFE6DBF7242D879D00E2E5B4 /* MessageKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MessageKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFE6DBFB242DBA4A00E2E5B4 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
@@ -5239,19 +5245,30 @@
 		BF06E3E0243191B800B30FB7 /* Chat Messages */ = {
 			isa = PBXGroup;
 			children = (
+				BFB464172435831900FB90B9 /* Views */,
 				BFB463EA2433FD6A00FB90B9 /* MegaDataFormatter.swift */,
 				BFB463E42433390600FB90B9 /* MEGAUser+Chat.swift */,
 				BFB463E82433394500FB90B9 /* ChatMessage.swift */,
 				BFB463DC2432F2E900FB90B9 /* ChatRoomDelegate.swift */,
+				2F0194A6243452E500734EA3 /* ChatViewController+InputBar.swift */,
 				BFE6DBFB242DBA4A00E2E5B4 /* ChatViewController.swift */,
+				BFB464152435825A00FB90B9 /* ChatViewController+MessagesDataSource.swift */,
+				BFB464132435823400FB90B9 /* ChatViewController+MessagesDisplayDelegate.swift */,
+				BFB464112435820700FB90B9 /* ChatViewController+MessageLayoutDelegate.swift */,
 				BFE6DBFD2431489C00E2E5B4 /* ChatViewController+NavigationBar.swift */,
+			);
+			path = "Chat Messages";
+			sourceTree = "<group>";
+		};
+		BFB464172435831900FB90B9 /* Views */ = {
+			isa = PBXGroup;
+			children = (
 				BFB463F9243456D900FB90B9 /* ChatMessageIntroductionHeaderView.swift */,
 				BFB463FA243456D900FB90B9 /* ChatMessageIntroductionHeaderView.xib */,
-				2F0194A6243452E500734EA3 /* ChatViewController+InputBar.swift */,
 				BF06E3DD243191B000B30FB7 /* ChatTitleView.swift */,
 				BF06E3DC243191B000B30FB7 /* ChatTitleView.xib */,
 			);
-			path = "Chat Messages";
+			path = Views;
 			sourceTree = "<group>";
 		};
 		E84CDAFE1A7292AA003F4C77 /* Links */ = {
@@ -6174,6 +6191,7 @@
 				A86B9F2D2316D6AB00F35E7A /* FLEXBundleExplorerViewController.m in Sources */,
 				B6D995F9222CA42000A98BEF /* MainTabBarController+CameraUpload.m in Sources */,
 				77B3AE0F215D0588008E889A /* InitialLaunchViewController.m in Sources */,
+				BFB464122435820700FB90B9 /* ChatViewController+MessageLayoutDelegate.swift in Sources */,
 				5B48F8031F4C73FE001E3A29 /* AchievementsViewController.m in Sources */,
 				5B20F4A21EFA9629007E0A34 /* ChatAttachedNodesViewController.m in Sources */,
 				837A88BF20B42290007B55D1 /* CloudDriveViewController.m in Sources */,
@@ -6330,6 +6348,7 @@
 				9462A1841FDFFD8B00008F32 /* MEGAToolbarContentView.m in Sources */,
 				4172795B1DB663FA001AC818 /* JSQMessagesToolbarContentView.m in Sources */,
 				411504941CEB183600BF38E3 /* SaveToCameraRollActivity.m in Sources */,
+				BFB464162435825A00FB90B9 /* ChatViewController+MessagesDataSource.swift in Sources */,
 				83C570EA22E5BFCF00216896 /* Formatter.swift in Sources */,
 				832F19EC2091BA970067679E /* MOMediaDestination+CoreDataClass.m in Sources */,
 				A8F1381F21D3F8B0003C7364 /* LocationSearchTableViewCell.m in Sources */,
@@ -6411,6 +6430,7 @@
 				417279451DB663FA001AC818 /* JSQMessagesCollectionViewLayoutAttributes.m in Sources */,
 				5B5A983C212EF29500FDBC79 /* RubbishBinTableViewController.m in Sources */,
 				A86B9F692316D6AB00F35E7A /* FLEXSystemLogMessage.m in Sources */,
+				BFB464142435823400FB90B9 /* ChatViewController+MessagesDisplayDelegate.swift in Sources */,
 				5B22F97D1F8374C500D2B156 /* VENToken.m in Sources */,
 				E8B415061DE3237F00B9D206 /* GroupChatDetailsViewController.m in Sources */,
 				B6E19B322175716600882F74 /* TransferSessionTaskDelegate.m in Sources */,
