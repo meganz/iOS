@@ -35,14 +35,14 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
 
         }
         
-        button.setSize(CGSize(width: 36, height: 36), animated: false)
+        button.setSize(CGSize(width: 60, height: 60), animated: false)
         button.setImage(UIImage(named: "addAttachment"), for: .normal)
         button.imageView?.contentMode = .scaleAspectFit
         button.tintColor = UIColor(red: 0, green: 122/255, blue: 1, alpha: 1)
         messageInputBar.setStackViewItems([button], forStack: .left, animated: false)
-        messageInputBar.sendButton.image = UIImage(named: "sendButton")
+        messageInputBar.sendButton.image = UIImage(named: "sendVoiceClipDefault")
         messageInputBar.sendButton.title = nil
-        messageInputBar.sendButton.setSize(CGSize(width: 36, height: 36), animated: false)
+        messageInputBar.sendButton.setSize(CGSize(width: 60, height: 60), animated: false)
         messageInputBar.sendButton.imageView?.backgroundColor = UIColor(white: 0.85, alpha: 1)
         messageInputBar.sendButton.imageView?.layer.cornerRadius = 16
 
