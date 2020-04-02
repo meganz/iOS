@@ -16,6 +16,7 @@
 #import "NSMutableArray+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIAlertAction+MNZCategory.h"
+#import "UIImage+MNZCategory.h"
 
 #import "BrowserViewController.h"
 #import "CloudDriveViewController.h"
@@ -417,15 +418,16 @@
     self.incomingNodesForEmailMutableDictionary[node.base64Handle] = userEmail;
     self.incomingIndexPathsMutableDictionary[node.base64Handle] = indexPath;
     
-    cell.thumbnailImageView.image = Helper.incomingFolderImage;
+    cell.thumbnailImageView.image = UIImage.mnz_incomingFolderImage;
     
     cell.nameLabel.text = node.name;
     
     MEGAUser *user = [MEGASdkManager.sharedMEGASdk contactForEmail:userEmail];
+
     NSString *userDisplayName = user.mnz_displayName;
     cell.infoLabel.text = (userDisplayName != nil) ? userDisplayName : userEmail;
 
-    [cell.permissionsButton setImage:[Helper permissionsButtonImageForShareType:share.access] forState:UIControlStateNormal];
+    [cell.permissionsButton setImage:[UIImage mnz_permissionsButtonImageForShareType:share.access] forState:UIControlStateNormal];
     cell.permissionsButton.hidden = NO;
 
     cell.nodeHandle = node.handle;
@@ -455,7 +457,7 @@
     self.outgoingNodesForEmailMutableDictionary[node.base64Handle] = share.user;
     self.outgoingIndexPathsMutableDictionary[node.base64Handle] = indexPath;
     
-    cell.thumbnailImageView.image = Helper.outgoingFolderImage;
+    cell.thumbnailImageView.image = UIImage.mnz_outgoingFolderImage;
     
     cell.nameLabel.text = node.name;
     

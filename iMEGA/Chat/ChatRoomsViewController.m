@@ -166,14 +166,6 @@
     if ([[MEGASdkManager sharedMEGAChatSdk] initState] == MEGAChatInitOnlineSession) {
         [self reloadData];
     }
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    
-    if ([DevicePermissionsHelper shouldAskForNotificationsPermissions]) {
-        [DevicePermissionsHelper modalNotificationsPermission];
-    }
     
     self.chatRoomOnGoingCall = nil;
     MEGAHandleList *chatRoomIDsWithCallInProgress = [MEGASdkManager.sharedMEGAChatSdk chatCallsWithState:MEGAChatCallStatusInProgress];
@@ -189,6 +181,16 @@
         if (!self.chatRoomOnGoingCall && self.topBannerButtonTopConstraint.constant == 0) {
             [self hideTopBannerButton];
         }
+    } else {
+        [self hideTopBannerButton];
+    }
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    if ([DevicePermissionsHelper shouldAskForNotificationsPermissions]) {
+        [DevicePermissionsHelper modalNotificationsPermission];
     }
 }
 
