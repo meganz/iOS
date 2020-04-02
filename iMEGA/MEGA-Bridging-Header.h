@@ -20,7 +20,7 @@
 #import "UIDevice+MNZCategory.h"
 #import "UIFont+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
-
+#import "UIImage+MNZCategory.h"
 #import "MEGAUser+MNZCategory.h"
 
 #import "MEGAAssetsPickerController.h"

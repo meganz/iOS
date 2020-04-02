@@ -4,6 +4,9 @@ import UIKit
 import MessageKit
 
 class ChatViewController: MessagesViewController {
+    
+    // MARK: - Properties
+    
     @objc var chatRoom: MEGAChatRoom! {
         didSet {
             update()
@@ -22,7 +25,7 @@ class ChatViewController: MessagesViewController {
     }
     
     lazy var chatRoomDelegate: ChatRoomDelegate = {
-        return ChatRoomDelegate(chatRoom: chatRoom, collectionView: messagesCollectionView)
+        return ChatRoomDelegate(chatRoom: chatRoom, messagesCollectionView: messagesCollectionView)
     }()
     
     lazy var audioCallBarButtonItem: UIBarButtonItem = {
@@ -46,12 +49,21 @@ class ChatViewController: MessagesViewController {
                                action: #selector(addParticipant))
     }()
     
+    // MARK: - Overriden methods
+    
     override func viewDidLoad() {
-        super.viewDidLoad()
         
-        messagesCollectionView.register(ChatMessageIntroductionHeaderView.nib,
+        messagesCollectionView = MessagesCollectionView(frame: .zero,
+                                                        collectionViewLayout: ChatViewMessagesFlowLayout())
+//        messagesCollectionView.register(ChatViewCallCollectionCell.self)
+        messagesCollectionView.register(ChatViewCallCollectionCell.nib,
+                                        forCellWithReuseIdentifier: ChatViewCallCollectionCell.reuseIdentifier)
+        
+        super.viewDidLoad()
+
+        messagesCollectionView.register(ChatViewIntroductionHeaderView.nib,
                                         forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-                                        withReuseIdentifier: ChatMessageIntroductionHeaderView.reuseIdentifier)
+                                        withReuseIdentifier: ChatViewIntroductionHeaderView.reuseIdentifier)
         
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messagesLayoutDelegate = self
@@ -60,6 +72,24 @@ class ChatViewController: MessagesViewController {
         update()
     }
     
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let messagesDataSource = messagesCollectionView.messagesDataSource else {
+            fatalError("Ouch. nil data source for messages")
+        }
+        
+        let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
+        
+        if case .custom = message.kind {
+            let cell = messagesCollectionView.dequeueReusableCell(ChatViewCallCollectionCell.self, for: indexPath)
+            cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+            return cell
+        }
+        
+        return super.collectionView(collectionView, cellForItemAt: indexPath)
+    }
+    
+    // MARK: - Interface methods
+    
     @objc func updateUnreadLabel() {
         
     }
@@ -67,6 +97,8 @@ class ChatViewController: MessagesViewController {
     @objc func showOptions(forPeerWithHandle handle: UInt64, senderView: UIView) {
         
     }
+    
+    // MARK: - Internal methods used by the extension of this class
     
     func isFromCurrentSender(message: MessageType) -> Bool {
         guard let chatMessage = message as? ChatMessage else {

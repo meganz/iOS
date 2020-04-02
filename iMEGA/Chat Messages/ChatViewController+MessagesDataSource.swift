@@ -41,7 +41,7 @@ extension ChatViewController: MessagesDataSource {
 
     
     func messageHeaderView(for indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageReusableView {
-        let chatMessageHeaderView = messagesCollectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: ChatMessageIntroductionHeaderView.reuseIdentifier, for: indexPath) as! ChatMessageIntroductionHeaderView
+        let chatMessageHeaderView = messagesCollectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: ChatViewIntroductionHeaderView.reuseIdentifier, for: indexPath) as! ChatViewIntroductionHeaderView
         chatMessageHeaderView.chatRoom = chatRoom
         return chatMessageHeaderView
     }

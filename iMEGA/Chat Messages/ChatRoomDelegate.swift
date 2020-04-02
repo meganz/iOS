@@ -8,7 +8,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
     // MARK: - Properties
 
     let chatRoom: MEGAChatRoom
-    let collectionView: MessagesCollectionView
+    let messagesCollectionView: MessagesCollectionView
     var messages: [ChatMessage] = []
     var isChatRoomOpen: Bool = false
     
@@ -18,38 +18,47 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
     
     // MARK: - Init
 
-    init(chatRoom: MEGAChatRoom, collectionView: MessagesCollectionView) {
+    init(chatRoom: MEGAChatRoom, messagesCollectionView: MessagesCollectionView) {
         self.chatRoom = chatRoom
-        self.collectionView = collectionView
+        self.messagesCollectionView = messagesCollectionView
         super.init()
     }
     
     // MARK: - MEGAChatRoomDelegate methods
 
     func onChatRoomUpdate(_ api: MEGAChatSdk!, chat: MEGAChatRoom!) {
-        print("onChatRoomUpdate \(chatRoom)")
+        MEGALogInfo("ChatRoomDelegate: onChatRoomUpdate \(chatRoom)")
     }
     
     func onMessageLoaded(_ api: MEGAChatSdk!, message: MEGAChatMessage!) {
+        MEGALogInfo("ChatRoomDelegate: onMessageLoaded")
+
         if let chatMessage = message {
             messages.append(ChatMessage(message: chatMessage, chatRoom: chatRoom))
         } else {
             messages = messages.reversed()
-            collectionView.reloadData()
-            collectionView.scrollToBottom()
+            messagesCollectionView.reloadData()
+            messagesCollectionView.scrollToBottom()
         }
     }
     
     func onMessageReceived(_ api: MEGAChatSdk!, message: MEGAChatMessage!) {
-        print("onMessageReceived")
+        MEGALogInfo("ChatRoomDelegate: onMessageReceived")
+
+        guard let chatMessage = message else {
+            MEGALogError("ChatRoomDelegate: onMessageReceived - message is nil")
+            return
+        }
+        
+        insertMessage(chatMessage)
     }
     
     func onMessageUpdate(_ api: MEGAChatSdk!, message: MEGAChatMessage!) {
-        print("onMessageUpdate")
+        MEGALogInfo("ChatRoomDelegate: onMessageUpdate")
     }
     
     func onHistoryReloaded(_ api: MEGAChatSdk!, chat: MEGAChatRoom!) {
-        print("onHistoryReloaded")
+        MEGALogInfo("ChatRoomDelegate: onHistoryReloaded")
     }
     
     // MARK: - Interface methods
@@ -81,6 +90,25 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
     }
     
     // MARK: - Private methods
+    
+    private func insertMessage(_ message: MEGAChatMessage) {
+         messages.append(ChatMessage(message: message, chatRoom: chatRoom))
+        
+         messagesCollectionView.performBatchUpdates({
+             messagesCollectionView.insertSections([messages.count - 1])
+         }, completion: { [weak self] _ in
+             if self?.isLastSectionVisible() == true {
+                 self?.messagesCollectionView.scrollToBottom(animated: true)
+             }
+         })
+     }
+    
+    private func isLastSectionVisible() -> Bool {
+        guard !messages.isEmpty else { return false }
+        
+        let lastIndexPath = IndexPath(item: 0, section: messages.count - 1)
+        return messagesCollectionView.indexPathsForVisibleItems.contains(lastIndexPath)
+    }
     
     private func loadMessages(count: Int = 32) {
         switch MEGASdkManager.sharedMEGAChatSdk()!.loadMessages(forChat: chatRoom.chatId, count: count){
