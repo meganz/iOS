@@ -10,6 +10,7 @@
 #import "UIImageView+MNZCategory.h"
 #import "MEGAChatMessage+MNZCategory.h"
 #import "MEGAGetPreviewRequestDelegate.h"
+#import "MEGA-Swift.h"
 
 @interface MEGAPhotoMediaItem ()
 
@@ -164,7 +165,7 @@
 }
 
 - (UIView *)mediaPlaceholderView {
-    UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    UIActivityIndicatorView *indicator = UIActivityIndicatorView.mnz_init;
     [indicator startAnimating];
     return indicator;
 }

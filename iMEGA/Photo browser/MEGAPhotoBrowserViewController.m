@@ -576,7 +576,7 @@ static const CGFloat GapBetweenPages = 10.0;
 }
 
 - (UIActivityIndicatorView *)addActivityIndicatorToView:(UIView *)view {
-    UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    UIActivityIndicatorView *activityIndicator = UIActivityIndicatorView.mnz_init;
     activityIndicator.frame = CGRectMake((view.frame.size.width-activityIndicator.frame.size.width)/2, (view.frame.size.height-activityIndicator.frame.size.height)/2, activityIndicator.frame.size.width, activityIndicator.frame.size.height);
     [activityIndicator startAnimating];
     [view addSubview:activityIndicator];

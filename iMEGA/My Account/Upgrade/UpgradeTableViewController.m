@@ -431,7 +431,7 @@
         cell = [tableView dequeueReusableCellWithIdentifier:@"freeProductCell" forIndexPath:indexPath];
         NSMutableAttributedString *superscriptOneAttributedString = [NSMutableAttributedString.alloc initWithString:@"¹ " attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_redMainForTraitCollection:(self.traitCollection)]}];
         
-        NSAttributedString *subjectToYourParticipationAttributedString = [NSAttributedString.alloc initWithString:AMLocalizedString(@"subjectToYourParticipationInOurAchievementsProgram", @"") attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName:UIColor.mnz_label}];
+        NSAttributedString *subjectToYourParticipationAttributedString = [NSAttributedString.alloc initWithString:AMLocalizedString(@"subjectToYourParticipationInOurAchievementsProgram", @"") attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
         [superscriptOneAttributedString appendAttributedString:subjectToYourParticipationAttributedString];
         
         cell.subjectToYourParticipationLabel.attributedText = superscriptOneAttributedString;
@@ -463,7 +463,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     CGFloat heightForRow;
     if (self.isChoosingTheAccountType && indexPath.row == 0) {
-        heightForRow = 104.0f;
+        heightForRow = 118.0f;
     } else {
         heightForRow = 86.0f;
     }
