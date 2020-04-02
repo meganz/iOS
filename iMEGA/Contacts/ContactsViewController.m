@@ -1888,11 +1888,15 @@
         if (deleteContactsOnIndexPathsArray.count != 0) {
             for (NSIndexPath *indexPath in deleteContactsOnIndexPathsArray) {
                 [self.visibleUsersArray removeObjectAtIndex:indexPath.row];
-                MEGAUser *userToDelete = [deleteContactsIndexPathMutableDictionary objectForKey:indexPath];
-                NSString *userToDeleteBase64Handle = [MEGASdk base64HandleForUserHandle:userToDelete.handle];
-                [self.indexPathsMutableDictionary removeObjectForKey:userToDeleteBase64Handle];
             }
             [self.tableView deleteRowsAtIndexPaths:deleteContactsOnIndexPathsArray withRowAnimation:UITableViewRowAnimationAutomatic];
+            
+            //Rebuild indexPaths to keep consistency with the table
+            [self.indexPathsMutableDictionary removeAllObjects];
+            for (MEGAUser *user in self.visibleUsersArray) {
+                NSString *base64Handle = [MEGASdk base64HandleForUserHandle:user.handle];
+                [self.indexPathsMutableDictionary setObject:[NSIndexPath indexPathForRow:[self.visibleUsersArray indexOfObject:user] inSection:0] forKey:base64Handle];
+            }
         }
     }
 }
