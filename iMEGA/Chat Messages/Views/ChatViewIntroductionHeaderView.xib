@@ -14,7 +14,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionReusableView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ChatMessageIntroductionHeaderView" id="U6b-Vx-4bR" customClass="ChatMessageIntroductionHeaderView" customModule="MEGA" customModuleProvider="target">
+        <collectionReusableView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ChatViewIntroductionHeaderView" id="U6b-Vx-4bR" customClass="ChatViewIntroductionHeaderView" customModule="MEGA" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="320" height="537"/>
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
