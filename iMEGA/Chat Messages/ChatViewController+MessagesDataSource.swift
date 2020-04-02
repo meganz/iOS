@@ -26,6 +26,20 @@ extension ChatViewController: MessagesDataSource {
         return nil
     }
     
+    func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
+        if isDateLabelVisible(for: indexPath) {
+            return NSAttributedString(
+                string: message.sentDate.string(withDateFormat: "E dd MMM") ,
+                attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 15.0, weight: .bold),
+                             NSAttributedString.Key.foregroundColor: UIColor(red: 0, green: 0, blue: 0, alpha: 0.8)])
+
+        }
+        
+        return nil
+    }
+    
+
+    
     func messageHeaderView(for indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageReusableView {
         let chatMessageHeaderView = messagesCollectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: ChatMessageIntroductionHeaderView.reuseIdentifier, for: indexPath) as! ChatMessageIntroductionHeaderView
         chatMessageHeaderView.chatRoom = chatRoom
