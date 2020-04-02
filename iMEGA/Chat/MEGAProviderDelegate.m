@@ -70,10 +70,7 @@
         [self reportIncomingCallOrUpdate:call];
     } else {
         MEGAChatRoom *chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:chatId];
-        unsigned char tempUuid[128];
-        memcpy(tempUuid, &chatId, sizeof(chatId));
-        memcpy(tempUuid + sizeof(chatId), &callId, sizeof(callId));
-        NSUUID *uuid = [NSUUID.alloc initWithUUIDBytes:tempUuid];
+        NSUUID *uuid = [self uuidForChatId:chatId callId:callId];
         if (chatRoom) {
             [self reportNewIncomingCallWithValue:[MEGASdk base64HandleForUserHandle:chatRoom.chatId]
                                       callerName:chatRoom.title
@@ -95,6 +92,14 @@
     
     [self stopDialerTone];
     [self.provider reportOutgoingCallWithUUID:call.uuid connectedAtDate:nil];
+}
+
+- (void)reportEndCallWithCallId:(uint64_t)callId chatId:(uint64_t)chatId {
+    MEGALogDebug(@"[CallKit] Report end call with callid %@ and chatid %@", [MEGASdk base64HandleForUserHandle:callId], [MEGASdk base64HandleForUserHandle:chatId]);
+    
+    NSUUID *uuid = [self uuidForChatId:chatId callId:callId];
+    [self.provider reportCallWithUUID:uuid endedAtDate:nil reason:CXCallEndedReasonRemoteEnded];
+    [self.megaCallManager removeCallByUUID:uuid];
 }
 
 - (void)reportEndCall:(MEGAChatCall *)call {
@@ -136,7 +141,7 @@
     if (callEndedReason) {
         [self.provider reportCallWithUUID:call.uuid endedAtDate:nil reason:callEndedReason];
     }
-    [self.megaCallManager removeCall:call];
+    [self.megaCallManager removeCallByUUID:call.uuid];
 }
 
 #pragma mark - Private
@@ -211,6 +216,14 @@
     update.hasVideo = hasVideo;
     
     return update;
+}
+
+- (NSUUID *)uuidForChatId:(uint64_t)chatId callId:(uint64_t)callId {
+    unsigned char tempUuid[128];
+    memcpy(tempUuid, &chatId, sizeof(chatId));
+    memcpy(tempUuid + sizeof(chatId), &callId, sizeof(callId));
+    NSUUID *uuid = [NSUUID.alloc initWithUUIDBytes:tempUuid];
+    return uuid;
 }
 
 #pragma mark - CXProviderDelegate
@@ -312,7 +325,7 @@
     if (call) {
         [MEGASdkManager.sharedMEGAChatSdk hangChatCall:call.chatId];
         [action fulfill];
-        [self.megaCallManager removeCall:call];
+        [self.megaCallManager removeCallByUUID:call.uuid];
     } else {
         [action fail];
     }
