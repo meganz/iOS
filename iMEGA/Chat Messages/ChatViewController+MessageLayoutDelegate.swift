@@ -13,7 +13,7 @@ extension ChatViewController: MessagesLayoutDelegate {
     
     func headerViewSize(for section: Int, in messagesCollectionView: MessagesCollectionView) -> CGSize {
         if chatRoomDelegate.isFullChatHistoryLoaded && section == 0 {
-            let chatMessageHeaderView = ChatMessageIntroductionHeaderView.instanceFromNib
+            let chatMessageHeaderView = ChatViewIntroductionHeaderView.instanceFromNib
             chatMessageHeaderView.chatRoom = chatRoom
             return chatMessageHeaderView.sizeThatFits(
                 CGSize(width: messagesCollectionView.bounds.width,

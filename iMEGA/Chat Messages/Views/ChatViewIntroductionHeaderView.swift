@@ -1,7 +1,7 @@
 
 import MessageKit
 
-class ChatMessageIntroductionHeaderView: MessageReusableView {
+class ChatViewIntroductionHeaderView: MessageReusableView {
     
     @IBOutlet weak var mainStackView: UIStackView!
     @IBOutlet weak var mainStackViewTopConstraint: NSLayoutConstraint!
@@ -136,7 +136,7 @@ class ChatMessageIntroductionHeaderView: MessageReusableView {
     }
 }
 
-extension ChatMessageIntroductionHeaderView: MEGARequestDelegate {
+extension ChatViewIntroductionHeaderView: MEGARequestDelegate {
     func onRequestFinish(_ api: MEGASdk, request: MEGARequest, error: MEGAError) {
         guard error.type == .apiOk else {
             MEGALogError("ChatMessageHeaderView: Could not fetch avatar image")
