@@ -70,6 +70,8 @@ class AppearanceManager: NSObject {
         UICollectionView.appearance().backgroundColor = UIColor.mnz_background()
         UIButton.appearance(whenContainedInInstancesOf: [UICollectionViewCell.self]).tintColor = UIColor.mnz_tertiaryGray(for: traitCollection)
         
+        self.setupActivityIndicatorAppearance(traitCollection)
+        
         self.setupToolbar(traitCollection)
         
         self.setupThirdPartyAppereance(traitCollection)
@@ -92,7 +94,7 @@ class AppearanceManager: NSObject {
         SVProgressHUD.setFont(UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.semibold))
         SVProgressHUD.setForegroundColor(UIColor.mnz_primaryGray(for: traitCollection))
         SVProgressHUD.setForegroundImageColor(UIColor.mnz_primaryGray(for: traitCollection))
-        SVProgressHUD.setBackgroundColor(UIColor.mnz_background())
+        SVProgressHUD.setBackgroundColor(UIColor.mnz_secondaryBackground(for: traitCollection))
         SVProgressHUD.setHapticsEnabled(true)
         
         SVProgressHUD.setSuccessImage(UIImage(named: "hudSuccess")!)
@@ -118,6 +120,16 @@ class AppearanceManager: NSObject {
     }
     
     // MARK: - Private
+    
+    private class func setupActivityIndicatorAppearance(_ traitCollection: UITraitCollection) {
+        if #available(iOS 13.0, *) {
+            UIActivityIndicatorView.appearance().style = .medium
+            UIActivityIndicatorView.appearance().color = (traitCollection.userInterfaceStyle == UIUserInterfaceStyle.dark) ? UIColor.white : UIColor.mnz_primaryGray(for: traitCollection)
+        } else {
+            UIActivityIndicatorView.appearance().style = .gray
+            UIActivityIndicatorView.appearance().color = UIColor.mnz_primaryGray(for: traitCollection)
+        }
+    }
     
     private class func setupToolbar(_ traitCollection: UITraitCollection) {
         if #available(iOS 13, *) {

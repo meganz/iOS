@@ -132,10 +132,7 @@
             } else {
                 cell.tintColor = [[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection] colorWithAlphaComponent:0.5];
                 
-                UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-                if (@available(iOS 13.0, *)) {
-                    activityIndicator.color = (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) ? UIColor.whiteColor : [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
-                }
+                UIActivityIndicatorView *activityIndicator = UIActivityIndicatorView.mnz_init;
                 [activityIndicator startAnimating];
                 cell.accessoryView = activityIndicator;
             }

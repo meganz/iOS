@@ -323,6 +323,8 @@
 		5BF4EEDE243204C100D39415 /* UIButton+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC6919D2428C716001AC3DC /* UIButton+Additions.swift */; };
 		5BF4EEDF243204E000D39415 /* UIButton+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC6919D2428C716001AC3DC /* UIButton+Additions.swift */; };
 		5BF5388423743AD80023F2E4 /* ExtensionAppearanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BF538822374394F0023F2E4 /* ExtensionAppearanceManager.swift */; };
+		5BF60EF824360C9E00AFD553 /* UIActivityIndicatorView+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BF60EF724360C9E00AFD553 /* UIActivityIndicatorView+Additions.swift */; };
+		5BF60EF92436133E00AFD553 /* UIActivityIndicatorView+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BF60EF724360C9E00AFD553 /* UIActivityIndicatorView+Additions.swift */; };
 		5BFA346B1FAB4169005BFC4E /* MEGARemoveRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFA34691FAB4168005BFC4E /* MEGARemoveRequestDelegate.m */; };
 		5BFA346E1FAB6282005BFC4E /* MEGAMoveRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFA346D1FAB6282005BFC4E /* MEGAMoveRequestDelegate.m */; };
 		5BFA346F1FAC5850005BFC4E /* MEGAMoveRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFA346D1FAB6282005BFC4E /* MEGAMoveRequestDelegate.m */; };
@@ -1715,6 +1717,7 @@
 		5BF4EEDD243203C300D39415 /* CustomModalAlertViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomModalAlertViewController.h; path = iMEGA/Utils/ViewControllers/CustomModalAlert/CustomModalAlertViewController.h; sourceTree = SOURCE_ROOT; };
 		5BF5387F23741DB70023F2E4 /* MEGA.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = MEGA.entitlements; sourceTree = "<group>"; };
 		5BF538822374394F0023F2E4 /* ExtensionAppearanceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionAppearanceManager.swift; sourceTree = "<group>"; };
+		5BF60EF724360C9E00AFD553 /* UIActivityIndicatorView+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIActivityIndicatorView+Additions.swift"; sourceTree = "<group>"; };
 		5BFA34691FAB4168005BFC4E /* MEGARemoveRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGARemoveRequestDelegate.m; path = API/Requests/MEGARemoveRequestDelegate.m; sourceTree = "<group>"; };
 		5BFA346A1FAB4169005BFC4E /* MEGARemoveRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGARemoveRequestDelegate.h; path = API/Requests/MEGARemoveRequestDelegate.h; sourceTree = "<group>"; };
 		5BFA346C1FAB6282005BFC4E /* MEGAMoveRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGAMoveRequestDelegate.h; path = API/Requests/MEGAMoveRequestDelegate.h; sourceTree = "<group>"; };
@@ -3563,6 +3566,7 @@
 		41BADDA61A8E064E008408B3 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				5BF60EF724360C9E00AFD553 /* UIActivityIndicatorView+Additions.swift */,
 				5BC6919D2428C716001AC3DC /* UIButton+Additions.swift */,
 				5B7273AF240FAFA3005816AB /* UIView+Additions.swift */,
 				2F8F5F1523691A390049603F /* UINavigationViewController+Additions.swift */,
@@ -6084,6 +6088,7 @@
 				A86B9F6D2316D6AB00F35E7A /* FLEXSystemLogTableViewCell.m in Sources */,
 				A86B9F302316D6AB00F35E7A /* FLEXViewControllerExplorerViewController.m in Sources */,
 				5B6CCF0C21788A3A0049AD14 /* MEGATransferList+MNZCategory.m in Sources */,
+				5BF60EF824360C9E00AFD553 /* UIActivityIndicatorView+Additions.swift in Sources */,
 				B6D11ADF219CE69300446B86 /* FileEncrypter.m in Sources */,
 				4152269B1A692ECC00EC7BB6 /* MEGASdkManager.m in Sources */,
 				E81616731A8397B5002EFDD7 /* FolderLinkViewController.m in Sources */,
@@ -6804,6 +6809,7 @@
 				941135501F00FFAB00D33428 /* BrowserViewController.m in Sources */,
 				94892CA11EFBF20800AEAC25 /* UIFont+MNZCategory.m in Sources */,
 				8361359521074C5D002FA3CC /* MOUploadTransfer+CoreDataProperties.m in Sources */,
+				5BF60EF92436133E00AFD553 /* UIActivityIndicatorView+Additions.swift in Sources */,
 				5BC1276F2375A75600CCAF26 /* EmptyStateView.m in Sources */,
 				5BE689842417C75B00462134 /* SortingAndViewModeTableViewController.swift in Sources */,
 				77892EA020E5029E0020A533 /* MOUser.m in Sources */,
