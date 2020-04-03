@@ -23,6 +23,12 @@
 #import "ItemListViewController.h"
 #import "NSString+MNZCategory.h"
 
+#ifdef MNZ_APP_EXTENSION
+#import "MEGAShare-Swift.h"
+#else
+#import "MEGA-Swift.h"
+#endif
+
 @interface SendToViewController () <UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, UISearchControllerDelegate, ItemListViewControllerDelegate, UIGestureRecognizerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -402,46 +408,6 @@
     }
 }
 
-- (NSString *)participantsNamesForChatRoom:(MEGAChatRoom *)chatRoom {
-    NSString *participantsNames = @"";
-    for (NSUInteger i = 0; i < chatRoom.peerCount; i++) {
-        NSString *peerName;
-        NSString *peerFirstname = [chatRoom peerFirstnameAtIndex:i];
-        if (peerFirstname.length > 0 && ![[peerFirstname stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""]) {
-            peerName = peerFirstname;
-        } else {
-            NSString *peerLastname = [chatRoom peerLastnameAtIndex:i];
-            if (peerLastname.length > 0 && ![[peerLastname stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""]) {
-                peerName = peerLastname;
-            }
-        }
-        
-        if (!peerName.length) {
-            peerName = [chatRoom peerEmailByHandle:[chatRoom peerHandleAtIndex:i]];
-        }
-        
-        if (chatRoom.peerCount == 1 || (i + 1) == chatRoom.peerCount) {
-            participantsNames = [participantsNames stringByAppendingString:peerName ? peerName : @"Unknown user"];
-        } else {
-            participantsNames = [participantsNames stringByAppendingString:[NSString stringWithFormat:@"%@, ", peerName]];
-        }
-    }
-    
-    NSString *myName = [[MEGASdkManager sharedMEGAChatSdk] myFullname];
-    BOOL isNameEmpty = [[myName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""];
-    if (isNameEmpty) {
-        myName = MEGASdkManager.sharedMEGAChatSdk.myEmail;
-    }
-    myName = [NSString stringWithFormat:@"%@ (%@)", myName, AMLocalizedString(@"me", @"The title for my message in a chat. The message was sent from yourself.")];
-    if (chatRoom.peerCount) {
-        participantsNames = [participantsNames stringByAppendingString:[NSString stringWithFormat:@", %@", myName]];
-    } else {
-        participantsNames = myName;
-    }
-    
-    return participantsNames;
-}
-
 #pragma mark - IBActions
 
 - (IBAction)cancelAction:(UIBarButtonItem *)sender {
@@ -608,7 +574,7 @@
         cell.chatTitle.text = chatListItem.title;
         
         MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatListItem.chatId];
-        cell.chatLastMessage.text = [self participantsNamesForChatRoom:chatRoom];
+        cell.chatLastMessage.text = [chatRoom participantsNamesWithMe:YES];
         cell.chatLastTime.hidden = YES;
         
         if (@available(iOS 11.0, *)) {

@@ -295,7 +295,8 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     
     [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
     [[MEGASdkManager sharedMEGAChatSdk] addChatCallDelegate:self];
-
+    [MEGASdkManager.sharedMEGAChatSdk addChatRequestDelegate:self];
+    
     [[MEGAReachabilityManager sharedManager] retryPendingConnections];
     
     self.inputToolbar.contentView.textView.text = [[MEGAStore shareInstance] fetchChatDraftWithChatId:self.chatRoom.chatId].text;
@@ -440,6 +441,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     
     [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
     [[MEGASdkManager sharedMEGAChatSdk] removeChatCallDelegate:self];
+    [MEGASdkManager.sharedMEGAChatSdk removeChatRequestDelegate:self];
     
     [self saveChatDraft];
     [self.inputToolbar mnz_lockRecordingIfNeeded];
@@ -638,11 +640,12 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             self.navigationStatusView.hidden = YES;
             chatRoomState = AMLocalizedString(@"archived", @"Title of flag of archived chats.");
         } else {
+            NSString *participantsNames = [self.chatRoom participantsNamesWithMe:NO];
             if (self.chatRoom.isGroup) {
                 if (self.chatRoom.ownPrivilege < MEGAChatRoomPrivilegeRo) {
                     chatRoomState = AMLocalizedString(@"Inactive chat", @"Subtitle of chat screen when the chat is inactive");
                 } else if (self.chatRoom.hasCustomTitle) {
-                    chatRoomState = [self participantsNames];
+                    chatRoomState = participantsNames;
                 } else {
                     if (self.chatRoom.peerCount) {
                         chatRoomState = [NSString stringWithFormat:AMLocalizedString(@"%d participants", @"Plural of participant. 2 participants").capitalizedString, self.chatRoom.peerCount + 1];
@@ -983,37 +986,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     }
 }
 
-- (NSString *)participantsNames {
-    NSString *participantsNames = @"";
-    for (NSUInteger i = 0; i < self.chatRoom.peerCount; i++) {
-        NSString *peerName = [self.chatRoom userNicknameAtIndex:i];
-        
-        if (peerName == nil || peerName.mnz_isEmpty) {
-            NSString *peerFirstname = [self.chatRoom peerFirstnameAtIndex:i];
-            
-            if (peerFirstname.length > 0 && ![[peerFirstname stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceCharacterSet] isEqualToString:@""]) {
-                peerName = peerFirstname;
-            } else {
-                NSString *peerLastname = [self.chatRoom peerLastnameAtIndex:i];
-                if (peerLastname.length > 0 && ![[peerLastname stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceCharacterSet] isEqualToString:@""]) {
-                    peerName = peerLastname;
-                }
-            }
-        }
-        
-        if (!peerName.length) {
-            peerName = [self.chatRoom peerEmailByHandle:[self.chatRoom peerHandleAtIndex:i]];
-        }
-        
-        if (self.chatRoom.peerCount == 1 || (i + 1) == self.chatRoom.peerCount) {
-            participantsNames = [participantsNames stringByAppendingString:peerName ? peerName : @"Unknown user"];
-        } else {
-            participantsNames = [participantsNames stringByAppendingString:[NSString stringWithFormat:@"%@, ", peerName]];
-        }
-    }
-    return participantsNames;
-}
-
 - (BOOL)isAParticipant:(MEGAUser *)user {
     BOOL isUserAParticipant = NO;
     
@@ -1035,7 +1007,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     }
     
     self.openMessageHeaderView.chattingWithLabel.text = AMLocalizedString(@"chattingWith", @"Title show above the name of the persons with whom you're chatting");
-    self.openMessageHeaderView.conversationWithLabel.text = [self participantsNames];
+    self.openMessageHeaderView.conversationWithLabel.text = [self.chatRoom participantsNamesWithMe:NO];
     self.openMessageHeaderView.conversationWithAvatar.image = self.chatRoom.isGroup ? nil : self.peerAvatar;
     self.openMessageHeaderView.introductionLabel.text = AMLocalizedString(@"chatIntroductionMessage", @"Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server.");
     
@@ -3366,34 +3338,11 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 #pragma mark - MEGAChatRequest
 
 - (void)onChatRequestFinish:(MEGAChatSdk *)api request:(MEGAChatRequest *)request error:(MEGAChatError *)error {
-    if (error.type) return;
-    
     switch (request.type) {
-        case MEGAChatRequestTypeInviteToChatRoom: {
-            switch (error.type) {
-                case MEGAChatErrorTypeArgs: //If the chat is not a group chat (cannot invite peers)
-                case MEGAChatErrorTypeAccess: //If the logged in user doesn't have privileges to invite peers.
-                case MEGAChatErrorTypeNoEnt: //If there isn't any chat with the specified chatid.
-                    self.stopInvitingContacts = YES;
-                    [SVProgressHUD showErrorWithStatus:error.name];
-                    break;
-                    
-                default:
-                    if (error.type) {
-                        [SVProgressHUD showErrorWithStatus:error.name];
-                    }
-                    break;
-            }
+        case MEGAChatRequestTypeGetPeerAttributes:
+            if (error.type) return;
+            [self customNavigationBarLabel];
             break;
-        }
-            
-        case MEGAChatRequestTypeNodeMessage: {
-            if (error.type) {
-                [SVProgressHUD showErrorWithStatus:error.name];
-                return;
-            }
-            break;
-        }
             
         default:
             break;
