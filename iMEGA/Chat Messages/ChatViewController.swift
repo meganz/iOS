@@ -55,8 +55,7 @@ class ChatViewController: MessagesViewController {
         
         messagesCollectionView = MessagesCollectionView(frame: .zero,
                                                         collectionViewLayout: ChatViewMessagesFlowLayout())
-        messagesCollectionView.register(ChatViewCallCollectionCell.nib,
-                                        forCellWithReuseIdentifier: ChatViewCallCollectionCell.reuseIdentifier)
+        registerCustomCells()
         messagesCollectionView.register(ChatViewAttachmentCell.nib,
                                               forCellWithReuseIdentifier: ChatViewAttachmentCell.reuseIdentifier)
               
@@ -79,14 +78,18 @@ class ChatViewController: MessagesViewController {
         }
         
         let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView) as! ChatMessage
-        let chatMessage = message.message as MEGAChatMessage
+        
         if case .custom = message.kind {
-            if chatMessage.type == .attachment {
-                let cell = messagesCollectionView.dequeueReusableCell(ChatViewAttachmentCell.self, for: indexPath)
+            guard let chatMessage = message as? ChatMessage else {
+                fatalError("Ouch. Custom message is not of type `ChatMessage`")
+            }
+            
+            if chatMessage.message.type == .attachment {
+                let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatViewAttachmentCell.reuseIdentifier, for: indexPath) as! ChatViewAttachmentCell
                 cell.configure(with: message, at: indexPath, and: messagesCollectionView)
                 return cell
             } else {
-                let cell = messagesCollectionView.dequeueReusableCell(ChatViewCallCollectionCell.self, for: indexPath)
+                let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatViewCallCollectionCell.reuseIdentifier, for: indexPath) as! ChatViewCallCollectionCell
                 cell.configure(with: message, at: indexPath, and: messagesCollectionView)
                 return cell
             }
@@ -177,6 +180,13 @@ class ChatViewController: MessagesViewController {
     }
     
     // MARK: - Private methods
+    
+    private func registerCustomCells() {
+        messagesCollectionView.register(ChatViewCallCollectionCell.nib,
+                                         forCellWithReuseIdentifier: ChatViewCallCollectionCell.reuseIdentifier)
+        messagesCollectionView.register(ChatViewAttachmentCell.nib,
+                                         forCellWithReuseIdentifier: ChatViewAttachmentCell.reuseIdentifier)
+    }
     
     private func update() {
         guard isViewLoaded, chatRoom != nil else {
