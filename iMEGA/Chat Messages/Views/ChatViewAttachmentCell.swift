@@ -9,7 +9,6 @@ class ChatViewAttachmentCell: UICollectionViewCell {
     func configure(with message: MessageType,
                      at indexPath: IndexPath,
                      and messagesCollectionView: MessagesCollectionView) {
-          
           guard let chatMessage = message as? ChatMessage else {
               return
           }
@@ -19,7 +18,11 @@ class ChatViewAttachmentCell: UICollectionViewCell {
 class ChatViewAttachmentCellCalculator: MessageSizeCalculator {
     
     override func messageContainerSize(for message: MessageType) -> CGSize {
-       
-        return CGSize(width: 320, height: 120)
+        guard let layout = layout else { return .zero }
+        
+        let collectionViewWidth = layout.collectionView?.bounds.width ?? 0
+        let contentInset = layout.collectionView?.contentInset ?? .zero
+        let inset = layout.sectionInset.left + layout.sectionInset.right + contentInset.left + contentInset.right
+        return CGSize(width: collectionViewWidth - inset, height: 120)
     }
 }
