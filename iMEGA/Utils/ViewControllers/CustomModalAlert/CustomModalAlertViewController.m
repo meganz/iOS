@@ -179,7 +179,7 @@
             self.secondCompletion();
         } else {
             [self dismissViewControllerAnimated:YES completion:^{
-                AchievementsViewController *achievementsVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"AchievementsViewControllerID"];
+                AchievementsViewController *achievementsVC = [[UIStoryboard storyboardWithName:@"Achievements" bundle:nil] instantiateViewControllerWithIdentifier:@"AchievementsViewControllerID"];
                 achievementsVC.enableCloseBarButton = YES;
                 UINavigationController *navigation = [[UINavigationController alloc] initWithRootViewController:achievementsVC];
                 [UIApplication.mnz_presentingViewController presentViewController:navigation animated:YES completion:nil];

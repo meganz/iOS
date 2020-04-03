@@ -4,6 +4,7 @@
 #import "NSDate+DateTools.h"
 
 #import "Helper.h"
+#import "MEGA-Swift.h"
 #import "NSString+MNZCategory.h"
 
 @interface AchievementsDetailsViewController ()
@@ -14,6 +15,8 @@
 @property (weak, nonatomic) IBOutlet UIView *bonusExpireInView;
 @property (weak, nonatomic) IBOutlet UILabel *bonusExpireInLabel;
 
+@property (weak, nonatomic) IBOutlet UIView *howItWorksTopSeparatorView;
+@property (weak, nonatomic) IBOutlet UIView *howItWorksView;
 @property (weak, nonatomic) IBOutlet UILabel *howItWorksLabel;
 @property (weak, nonatomic) IBOutlet UILabel *howItWorksExplanationLabel;
 
@@ -88,6 +91,29 @@
     self.howItWorksLabel.hidden = YES;
     self.howItWorksExplanationLabel.hidden = YES;
     self.howItWorksCompletedExplanationLabel.text = howItWorksExplanationLabel;
+    
+    [self updateAppearance];
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateAppearance];
+        }
+    }
+}
+
+#pragma mark - Private
+
+- (void)updateAppearance {
+    self.view.backgroundColor = UIColor.mnz_background;
+    
+    self.bonusExpireInView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
+    
+    self.howItWorksTopSeparatorView.backgroundColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
+    self.howItWorksView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
 }
 
 #pragma - Private
@@ -102,8 +128,6 @@
     if (awardExpirationdDate.daysUntil == 0) {
         bonusExpiresIn = AMLocalizedString(@"expired", @"Label to show that an error related with expiration occurs during a SDK operation.");
         self.bonusExpireInLabel.textColor = [UIColor mnz_redMainForTraitCollection:(self.traitCollection)];
-        self.bonusExpireInView.backgroundColor = self.bonusExpireInLabel.backgroundColor = [UIColor colorFromHexString:@"#FEF9F9"];
-        
         self.bonusExpireInView.layer.borderColor = [UIColor mnz_redMainForTraitCollection:(self.traitCollection)].CGColor;
     } else {
         self.bonusExpireInView.layer.borderColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.14].CGColor;
@@ -118,8 +142,6 @@
     }
     
     self.bonusExpireInLabel.text = bonusExpiresIn;
-    
-    self.bonusExpireInView.layer.borderWidth = 0.5f;
 }
 
 @end

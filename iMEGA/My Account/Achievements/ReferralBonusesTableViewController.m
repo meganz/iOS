@@ -26,6 +26,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.tableView.tableFooterView = [UIView.alloc initWithFrame:CGRectZero];
+    
     self.navigationItem.title = AMLocalizedString(@"referralBonuses", @"achievement type");
     
     self.inviteAchievementsIndexesMutableArray = [[NSMutableArray alloc] init];
@@ -43,9 +45,28 @@
         NSString *email = [stringList stringAtIndex:0];
         [self.inviteAchievementsEmailsMutableArray addObject:email];
     }
+    
+    [self updateAppearance];
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateAppearance];
+            
+            [self.tableView reloadData];
+        }
+    }
 }
 
 #pragma mark - Private
+
+- (void)updateAppearance {
+    self.view.backgroundColor = UIColor.mnz_background;
+    self.tableView.separatorColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
+}
 
 - (void)setStorageAndTransferQuotaRewardsForCell:(AchievementsTableViewCell *)cell withAwardId:(NSInteger)awardId {
     long long classStorageReward = [self.achievementsDetails rewardStorageByAwardId:awardId];
