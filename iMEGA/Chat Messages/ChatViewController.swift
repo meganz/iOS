@@ -15,6 +15,7 @@ class ChatViewController: MessagesViewController {
     
     @objc var publicChatLink: URL?
     @objc var publicChatWithLinkCreated: Bool = false
+    var inputBar: MessageInputBar!
     
     var messages: [ChatMessage] {
         return chatRoomDelegate.messages
@@ -77,20 +78,16 @@ class ChatViewController: MessagesViewController {
             fatalError("Ouch. nil data source for messages")
         }
         
-        let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView) as! ChatMessage
+        let chatMessage = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView) as! ChatMessage
         
-        if case .custom = message.kind {
-            guard let chatMessage = message as? ChatMessage else {
-                fatalError("Ouch. Custom message is not of type `ChatMessage`")
-            }
-            
+        if case .custom = chatMessage.kind {
             if chatMessage.message.type == .attachment {
                 let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatViewAttachmentCell.reuseIdentifier, for: indexPath) as! ChatViewAttachmentCell
-                cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+                cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
                 return cell
             } else {
                 let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatViewCallCollectionCell.reuseIdentifier, for: indexPath) as! ChatViewCallCollectionCell
-                cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+                cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
                 return cell
             }
           
@@ -194,7 +191,6 @@ class ChatViewController: MessagesViewController {
         }
         
         configureNavigationBar()
-        configureInputBar()
         chatRoomDelegate.openChatRoom()
         
         if let layout = messagesCollectionView.collectionViewLayout as? MessagesCollectionViewFlowLayout {
