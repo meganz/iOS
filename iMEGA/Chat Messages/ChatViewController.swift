@@ -55,10 +55,11 @@ class ChatViewController: MessagesViewController {
         
         messagesCollectionView = MessagesCollectionView(frame: .zero,
                                                         collectionViewLayout: ChatViewMessagesFlowLayout())
-//        messagesCollectionView.register(ChatViewCallCollectionCell.self)
         messagesCollectionView.register(ChatViewCallCollectionCell.nib,
                                         forCellWithReuseIdentifier: ChatViewCallCollectionCell.reuseIdentifier)
-        
+        messagesCollectionView.register(ChatViewAttachmentCell.nib,
+                                              forCellWithReuseIdentifier: ChatViewAttachmentCell.reuseIdentifier)
+              
         super.viewDidLoad()
 
         messagesCollectionView.register(ChatViewIntroductionHeaderView.nib,
@@ -77,12 +78,19 @@ class ChatViewController: MessagesViewController {
             fatalError("Ouch. nil data source for messages")
         }
         
-        let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
-        
+        let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView) as! ChatMessage
+        let chatMessage = message.message as MEGAChatMessage
         if case .custom = message.kind {
-            let cell = messagesCollectionView.dequeueReusableCell(ChatViewCallCollectionCell.self, for: indexPath)
-            cell.configure(with: message, at: indexPath, and: messagesCollectionView)
-            return cell
+            if chatMessage.type == .attachment {
+                let cell = messagesCollectionView.dequeueReusableCell(ChatViewAttachmentCell.self, for: indexPath)
+                cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+                return cell
+            } else {
+                let cell = messagesCollectionView.dequeueReusableCell(ChatViewCallCollectionCell.self, for: indexPath)
+                cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+                return cell
+            }
+          
         }
         
         return super.collectionView(collectionView, cellForItemAt: indexPath)

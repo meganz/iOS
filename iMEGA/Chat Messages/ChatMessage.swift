@@ -40,8 +40,9 @@ extension ChatMessage: MessageType {
             return .custom(message)
         } else if case .callStarted = message.type {
             return .custom(message)
+        } else if case .attachment = message.type {
+            return .custom(message)
         }
-        
         return .text(message.type.description)
     }
 }
