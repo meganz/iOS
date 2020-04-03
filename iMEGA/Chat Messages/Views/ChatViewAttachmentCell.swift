@@ -1,18 +1,25 @@
-//
-//  ChatViewAttachmentCell.swift
-//  MEGA
-//
-//  Created by Haoran Li on 3/04/20.
-//  Copyright © 2020 MEGA. All rights reserved.
-//
-
-import UIKit
+import MessageKit
 
 class ChatViewAttachmentCell: UICollectionViewCell {
+      
+    @IBOutlet weak var avatarImageView: UIImageView!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var detailLabel: UILabel!
+    
+    func configure(with message: MessageType,
+                     at indexPath: IndexPath,
+                     and messagesCollectionView: MessagesCollectionView) {
+          
+          guard let chatMessage = message as? ChatMessage else {
+              return
+          }
+      }
+}
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+class ChatViewAttachmentCellCalculator: MessageSizeCalculator {
+    
+    override func messageContainerSize(for message: MessageType) -> CGSize {
+       
+        return CGSize(width: 320, height: 120)
     }
-
 }
