@@ -11,14 +11,14 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ChatViewCallCollectionCell" id="gTV-IL-0wX" customClass="ChatViewCallCollectionCell" customModule="MEGA" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="420" height="182"/>
+            <rect key="frame" x="0.0" y="0.0" width="469" height="127"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="420" height="182"/>
+                <rect key="frame" x="0.0" y="0.0" width="469" height="127"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Clu-a7-6D8">
-                        <rect key="frame" x="94" y="73" width="232" height="36"/>
+                        <rect key="frame" x="118.5" y="45.5" width="232" height="36"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="750" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="loO-BH-h7f">
                                 <rect key="frame" x="0.0" y="0.0" width="36" height="36"/>
@@ -54,12 +54,12 @@
                 <constraint firstItem="Clu-a7-6D8" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="mCY-ZZ-qHw"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
-            <size key="customSize" width="420" height="182"/>
+            <size key="customSize" width="569" height="159"/>
             <connections>
                 <outlet property="iconImageView" destination="loO-BH-h7f" id="u8B-a3-ePG"/>
                 <outlet property="reasonTextLabel" destination="Sb7-Bu-jxp" id="3BY-6H-VDf"/>
             </connections>
-            <point key="canvasLocation" x="-64" y="52"/>
+            <point key="canvasLocation" x="29.710144927536234" y="51.897321428571423"/>
         </collectionViewCell>
     </objects>
 </document>
