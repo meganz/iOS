@@ -4,7 +4,6 @@
 #import <ContactsUI/ContactsUI.h>
 
 #import "UIImage+GKContact.h"
-#import "NSDate+DateTools.h"
 #import "SVProgressHUD.h"
 #import "UIScrollView+EmptyDataSet.h"
 #import "UIBarButtonItem+Badge.h"
