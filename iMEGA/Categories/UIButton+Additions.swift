@@ -30,6 +30,12 @@ extension UIButton {
         setTitleColor(UIColor.mnz_secondaryGray(for: traitCollection), for: UIControl.State.normal)
     }
     
+    @objc func mnz_clearSetup() {
+        backgroundColor = UIColor.clear
+        
+        removeLayer()
+    }
+    
     // MARK: - Private
     
     private func setupLayer() {
@@ -38,5 +44,13 @@ extension UIButton {
         layer.shadowOpacity = 0.15
         layer.shadowRadius = 3
         layer.shadowColor = UIColor.black.cgColor
+    }
+    
+    private func removeLayer() {
+        layer.cornerRadius = 0
+        layer.shadowOffset = CGSize(width: 0, height: 0)
+        layer.shadowOpacity = 0
+        layer.shadowRadius = 0
+        layer.shadowColor = UIColor.clear.cgColor
     }
 }
