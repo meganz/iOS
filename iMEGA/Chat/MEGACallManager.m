@@ -75,9 +75,9 @@
     [self printAllCalls];
 }
 
-- (void)removeCall:(MEGAChatCall *)call {
-    MEGALogDebug(@"[CallKit] Remove call: %@", call);
-    [self.callsDictionary removeObjectForKey:call.uuid];
+- (void)removeCallByUUID:(NSUUID *)uuid {
+    MEGALogDebug(@"[CallKit] Remove call: %@", uuid);
+    [self.callsDictionary removeObjectForKey:uuid];
     [self printAllCalls];
 }
 
