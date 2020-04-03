@@ -3,6 +3,7 @@
 
 #import "Helper.h"
 #import "MEGASdkManager.h"
+#import "MEGA-Swift.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGANavigationController.h"
 #import "NSString+MNZCategory.h"
@@ -46,15 +47,9 @@
     
     self.descriptionLabelHeight = self.descriptionLabelHeightConstraint.constant;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardDidShow:)
-                                                 name:UIKeyboardDidShowNotification
-                                               object:nil];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardDidHide:)
-                                                 name:UIKeyboardDidHideNotification
-                                               object:nil];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -77,6 +72,16 @@
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         [self arrangeLogoutButton];
     } completion:nil];
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateAppearance];
+        }
+    }
 }
 
 #pragma mark - IBActions
@@ -123,6 +128,21 @@
 
 #pragma mark - Private
 
+- (void)updateAppearance {
+    self.view.backgroundColor = UIColor.mnz_background;
+    
+    self.descriptionLabel.textColor = [UIColor mnz_subtitlesColorForTraitCollection:self.traitCollection];
+    
+    [self.passwordView updateAppearance];
+    
+    if (![self.confirmButton.titleLabel.text isEqualToString:AMLocalizedString(@"passwordAccepted", @"Used as a message in the 'Password reminder' dialog that is shown when the user enters his password, clicks confirm and his password is correct.")]) {
+        [self.confirmButton mnz_setupBasic:self.traitCollection];
+    }
+    [self.backupKeyButton mnz_setupPrimary:self.traitCollection];
+    
+    [self.logoutButton mnz_setupCancel:self.traitCollection];
+}
+
 - (void)configureUI {
     self.title = AMLocalizedString(@"testPassword", @"Label for test password button");
     self.passwordView.passwordTextField.delegate = self;
@@ -145,9 +165,9 @@
         [self.backupKeyButton setTitle:AMLocalizedString(@"backupRecoveryKey", @"Label for recovery key button") forState:UIControlStateNormal];
     }
     
-    self.confirmButton.layer.borderWidth = 1.0;
-    self.confirmButton.layer.borderColor = [UIColor colorFromHexString:@"899B9C"].CGColor;
     [self.confirmButton setTitle:AMLocalizedString(@"confirm", @"Title text for the account confirmation.") forState:UIControlStateNormal];
+    
+    [self.logoutButton setTitle:AMLocalizedString(@"proceedToLogout", @"Title to confirm that you want to logout") forState:UIControlStateNormal];
 }
 
 - (void)arrangeLogoutButton {
@@ -180,11 +200,9 @@
 }
 
 - (void)passwordTestSuccess {
-    self.passwordView.passwordTextField.textColor = UIColor.mnz_green31B500;
-    
     self.confirmButton.enabled = NO;
-    self.confirmButton.layer.borderWidth = 0.0f;
-    [self.confirmButton setTitleColor:UIColor.mnz_green31B500 forState:UIControlStateNormal];
+    [self.confirmButton mnz_clearSetup];
+    [self.confirmButton setTitleColor:UIColor.systemGreenColor forState:UIControlStateNormal];
     [self.confirmButton setImage:[UIImage imageNamed:@"contact_request_accept"] forState:UIControlStateNormal];
     [self.confirmButton setTitle:AMLocalizedString(@"passwordAccepted", @"Used as a message in the 'Password reminder' dialog that is shown when the user enters his password, clicks confirm and his password is correct.") forState:UIControlStateNormal];
     
@@ -196,19 +214,13 @@
     self.confirmButton.enabled = YES;
     
     if (self.isLoggingOut) {
-        self.confirmButton.layer.borderWidth = 0.0f;
-        self.confirmButton.layer.borderColor = nil;
-        self.confirmButton.backgroundColor = [UIColor colorFromHexString:@"F2F2F2"];
         [self.confirmButton setTitle:AMLocalizedString(@"testPassword", @"Label for test password button") forState:UIControlStateNormal];
     } else {
-        self.confirmButton.layer.borderWidth = 1.0;
-        self.confirmButton.layer.borderColor = [UIColor colorFromHexString:@"F2F2F2"].CGColor;
         [self.confirmButton setTitle:AMLocalizedString(@"confirm", @"Title text for the account confirmation.") forState:UIControlStateNormal];
     }
     
+    [self.confirmButton mnz_setupBasic:self.traitCollection];
     [self.confirmButton setImage:nil forState:UIControlStateNormal];
-    self.confirmButton.titleLabel.font = [UIFont mnz_SFUIRegularWithSize:16.0f];
-    [self.confirmButton setTitleColor:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection] forState:UIControlStateNormal];
 }
 
 - (void)keyboardDidShow:(NSNotification *)notification {
