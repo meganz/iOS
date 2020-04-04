@@ -14,8 +14,25 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="85"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gyg-48-psi" userLabel="SemiTransparentView">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="85"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </view>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JcV-Wx-f9z" userLabel="ExpandedTextCoverView">
+                    <rect key="frame" x="0.0" y="22" width="414" height="113"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="15"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vXN-Gp-R34" userLabel="CollapsedTextCoverView">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="85"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zpz-gS-Gkz" customClass="MessageInputTextBackgroundView" customModule="MEGA" customModuleProvider="target">
-                    <rect key="frame" x="10" y="5" width="339" height="75"/>
+                    <rect key="frame" x="10" y="22" width="339" height="58"/>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.030179794520547944" colorSpace="custom" customColorSpace="calibratedRGB"/>
                 </view>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="m9Z-ji-AUs">
@@ -48,13 +65,13 @@
                     <state key="normal" image="add"/>
                 </button>
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" contentInsetAdjustmentBehavior="never" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="ul9-iZ-5KV" customClass="MessageTextView" customModule="MEGA" customModuleProvider="target">
-                    <rect key="frame" x="65" y="15" width="284" height="55"/>
+                    <rect key="frame" x="65" y="32" width="284" height="38"/>
                     <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                 </textView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="APV-vT-gYp">
-                    <rect key="frame" x="360" y="0.0" width="44" height="44"/>
+                    <rect key="frame" x="305" y="22" width="44" height="44"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="0Ip-Fv-rMf"/>
                         <constraint firstAttribute="width" constant="44" id="WsR-HG-NSt"/>
@@ -65,23 +82,35 @@
                     </connections>
                 </button>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="m9Z-ji-AUs" secondAttribute="trailing" constant="10" id="0PM-gi-HcR"/>
+                <constraint firstItem="APV-vT-gYp" firstAttribute="top" secondItem="zpz-gS-Gkz" secondAttribute="top" id="0TK-Sa-oRW"/>
                 <constraint firstItem="ul9-iZ-5KV" firstAttribute="leading" secondItem="Emu-CZ-PtI" secondAttribute="trailing" id="2eq-im-bu6"/>
+                <constraint firstItem="vXN-Gp-R34" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="6hu-z0-D59"/>
+                <constraint firstItem="JcV-Wx-f9z" firstAttribute="top" secondItem="zpz-gS-Gkz" secondAttribute="top" id="9Pu-2m-fGj"/>
+                <constraint firstItem="vXN-Gp-R34" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="BAP-8l-AfS"/>
+                <constraint firstItem="APV-vT-gYp" firstAttribute="trailing" secondItem="zpz-gS-Gkz" secondAttribute="trailing" id="Cy8-d3-v1M"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="Emu-CZ-PtI" secondAttribute="bottom" constant="5" id="E8V-cY-11B"/>
-                <constraint firstItem="APV-vT-gYp" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="ExF-1s-VlH"/>
+                <constraint firstItem="vXN-Gp-R34" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="EA7-CE-8BL"/>
+                <constraint firstItem="gyg-48-psi" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Q33-kC-Y9H"/>
                 <constraint firstItem="zpz-gS-Gkz" firstAttribute="trailing" secondItem="m9Z-ji-AUs" secondAttribute="trailing" id="Rih-d3-jce"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="gyg-48-psi" secondAttribute="trailing" id="TjQ-Wj-1H6"/>
                 <constraint firstItem="m9Z-ji-AUs" firstAttribute="leading" secondItem="ul9-iZ-5KV" secondAttribute="trailing" id="U4b-qt-i4X"/>
-                <constraint firstItem="ul9-iZ-5KV" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="15" id="UE7-5x-znS"/>
+                <constraint firstItem="ul9-iZ-5KV" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="32" id="UE7-5x-znS"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="m9Z-ji-AUs" secondAttribute="bottom" constant="5" id="c2T-Qw-dgK"/>
                 <constraint firstItem="zpz-gS-Gkz" firstAttribute="leading" secondItem="Emu-CZ-PtI" secondAttribute="leading" id="cLk-mb-yNb"/>
                 <constraint firstItem="zpz-gS-Gkz" firstAttribute="top" secondItem="ul9-iZ-5KV" secondAttribute="top" constant="-10" id="fPC-Vq-M1z"/>
+                <constraint firstItem="JcV-Wx-f9z" firstAttribute="bottom" secondItem="iN0-l3-epB" secondAttribute="bottom" constant="50" id="fXP-Pm-6Nn"/>
+                <constraint firstItem="JcV-Wx-f9z" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="gmO-P0-T9e"/>
                 <constraint firstItem="zpz-gS-Gkz" firstAttribute="bottom" secondItem="ul9-iZ-5KV" secondAttribute="bottom" constant="10" id="iCm-C8-wxV"/>
                 <constraint firstItem="Emu-CZ-PtI" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="10" id="jZ3-JP-Z6O"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="APV-vT-gYp" secondAttribute="trailing" constant="10" id="jh6-J2-Uzw"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="ul9-iZ-5KV" secondAttribute="bottom" constant="15" id="lC6-Rd-2PT"/>
+                <constraint firstItem="gyg-48-psi" firstAttribute="bottom" secondItem="iN0-l3-epB" secondAttribute="bottom" id="od0-pO-f9a"/>
                 <constraint firstItem="zpz-gS-Gkz" firstAttribute="trailing" secondItem="ul9-iZ-5KV" secondAttribute="trailing" id="q8V-yt-DgD"/>
+                <constraint firstItem="gyg-48-psi" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="qdN-uB-Vyz"/>
+                <constraint firstAttribute="bottom" secondItem="vXN-Gp-R34" secondAttribute="bottom" id="tc4-65-U4o"/>
+                <constraint firstItem="JcV-Wx-f9z" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="x17-cC-M4D"/>
             </constraints>
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
@@ -93,14 +122,18 @@
                 </mask>
             </variation>
             <connections>
-                <outlet property="backgroundView" destination="zpz-gS-Gkz" id="La3-y5-h5F"/>
-                <outlet property="backgroundViewBottomContraint" destination="iCm-C8-wxV" id="wwT-vs-FgJ"/>
-                <outlet property="backgroundViewTopConstraint" destination="fPC-Vq-M1z" id="QeO-wq-vZV"/>
                 <outlet property="backgroundViewTrailingButtonConstraint" destination="Rih-d3-jce" id="tjW-Va-Q8W"/>
                 <outlet property="backgroundViewTrailingTextViewConstraint" destination="q8V-yt-DgD" id="IAU-5w-26A"/>
+                <outlet property="collapsedTextViewCoverView" destination="vXN-Gp-R34" id="wUf-Ru-xqw"/>
                 <outlet property="expandCollapseButton" destination="APV-vT-gYp" id="tbl-if-paO"/>
+                <outlet property="expandedTextViewCoverView" destination="JcV-Wx-f9z" id="yne-t0-iV3"/>
                 <outlet property="messageTextView" destination="ul9-iZ-5KV" id="LDJ-sC-X8I"/>
+                <outlet property="messageTextViewCoverView" destination="zpz-gS-Gkz" id="La3-y5-h5F"/>
+                <outlet property="messageTextViewCoverViewBottomContraint" destination="iCm-C8-wxV" id="wwT-vs-FgJ"/>
+                <outlet property="messageTextViewCoverViewTopConstraint" destination="fPC-Vq-M1z" id="QeO-wq-vZV"/>
+                <outlet property="messageTextViewTopConstraint" destination="UE7-5x-znS" id="Cs6-H7-fCX"/>
                 <outlet property="micButton" destination="dvx-SE-Dth" id="vkL-aN-Rtz"/>
+                <outlet property="semiTransparentView" destination="gyg-48-psi" id="85v-4J-eM0"/>
                 <outlet property="sendButton" destination="aIG-GH-GIp" id="RVs-PK-Uwf"/>
             </connections>
             <point key="canvasLocation" x="-84.057971014492765" y="147.65625"/>
