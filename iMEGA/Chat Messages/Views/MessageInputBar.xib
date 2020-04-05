@@ -128,6 +128,7 @@
                 <outlet property="expandCollapseButton" destination="APV-vT-gYp" id="tbl-if-paO"/>
                 <outlet property="expandedTextViewCoverView" destination="JcV-Wx-f9z" id="yne-t0-iV3"/>
                 <outlet property="messageTextView" destination="ul9-iZ-5KV" id="LDJ-sC-X8I"/>
+                <outlet property="messageTextViewBottomConstraint" destination="lC6-Rd-2PT" id="EBH-Ng-z4q"/>
                 <outlet property="messageTextViewCoverView" destination="zpz-gS-Gkz" id="La3-y5-h5F"/>
                 <outlet property="messageTextViewCoverViewBottomContraint" destination="iCm-C8-wxV" id="wwT-vs-FgJ"/>
                 <outlet property="messageTextViewCoverViewTopConstraint" destination="fPC-Vq-M1z" id="QeO-wq-vZV"/>
