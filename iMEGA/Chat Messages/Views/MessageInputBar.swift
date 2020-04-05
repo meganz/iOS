@@ -91,14 +91,20 @@ class MessageInputBar: UIView {
     }
     
     private func expand() {
-        self.messageTextViewCoverView.isHidden = true
-        self.expandedTextViewCoverView.isHidden = false
-        self.collapsedTextViewCoverView.isHidden = true
-        self.semiTransparentView.isHidden = false
         
-        self.messageTextViewTopConstraint.constant = self.messageTextViewTopConstraintValueWhenExpanded ?? messageTextViewToConstraintValueWhenCollapsed
-        self.messageTextView.expand(true, expandedHeight: self.expandedHeight)
-        self.expandCollapseButton.setImage(#imageLiteral(resourceName: "collapse"), for: .normal)
+//        UIView.animate(withDuration: 0.4) {
+            self.messageTextViewCoverView.isHidden = true
+            self.expandedTextViewCoverView.isHidden = false
+            self.collapsedTextViewCoverView.isHidden = true
+            self.semiTransparentView.isHidden = false
+
+            self.messageTextViewTopConstraint.constant = self.messageTextViewTopConstraintValueWhenExpanded ?? self.messageTextViewToConstraintValueWhenCollapsed
+            self.messageTextView.expand(true, expandedHeight: self.expandedHeight)
+            self.expandCollapseButton.setImage(#imageLiteral(resourceName: "collapse"), for: .normal)
+//
+//            self.setNeedsLayout()
+//            self.layoutIfNeeded()
+//        }
         
     }
     
