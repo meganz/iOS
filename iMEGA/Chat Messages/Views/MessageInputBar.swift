@@ -6,7 +6,8 @@ class MessageInputBar: UIView {
     
     @IBOutlet weak var messageTextView: MessageTextView!
     @IBOutlet weak var messageTextViewTopConstraint: NSLayoutConstraint!
-    
+    @IBOutlet weak var messageTextViewBottomConstraint: NSLayoutConstraint!
+
     @IBOutlet weak var collapsedTextViewCoverView: UIView!
     @IBOutlet weak var expandedTextViewCoverView: UIView!
     @IBOutlet weak var semiTransparentView: UIView!
@@ -30,7 +31,7 @@ class MessageInputBar: UIView {
         guard let keyboardHeight = keyboardHeight else {
             return nil
         }
-                
+           
         return UIScreen.main.bounds.height - (messageTextViewTopConstraintValueWhenExpanded! + 15.0 + keyboardHeight)
     }
     
@@ -91,34 +92,77 @@ class MessageInputBar: UIView {
     }
     
     private func expand() {
-        
-//        UIView.animate(withDuration: 0.4) {
-            self.messageTextViewCoverView.isHidden = true
-            self.expandedTextViewCoverView.isHidden = false
-            self.collapsedTextViewCoverView.isHidden = true
-            self.semiTransparentView.isHidden = false
-
-            self.messageTextViewTopConstraint.constant = self.messageTextViewTopConstraintValueWhenExpanded ?? self.messageTextViewToConstraintValueWhenCollapsed
-            self.messageTextView.expand(true, expandedHeight: self.expandedHeight)
-            self.expandCollapseButton.setImage(#imageLiteral(resourceName: "collapse"), for: .normal)
-//
-//            self.setNeedsLayout()
-//            self.layoutIfNeeded()
-//        }
-        
+        expandAnimationStart(completionHandler: expandAnimationComplete)
     }
     
     private func collapse() {
-        self.messageTextViewCoverView.isHidden = false
-        self.expandedTextViewCoverView.isHidden = true
-        self.collapsedTextViewCoverView.isHidden = false
-        self.semiTransparentView.isHidden = true
+        collapseAnimationStart(completionHandler: collapseAnimationComplete)
+    }
+    
+    private func collapseAnimationStart(completionHandler: ((Bool) -> Void)?) {
+        messageTextViewCoverView.isHidden = false
+        messageTextViewCoverView.alpha = 0.0
+        
+        let priorValue = messageTextView.intrinsicContentSize.height
+        messageTextView.expand(false, expandedHeight: nil)
+        let newValue = messageTextView.intrinsicContentSize.height
+        let delta = priorValue - newValue
+        messageTextViewBottomConstraint.constant += delta
+        layoutIfNeeded()
+        
+        UIView.animate(withDuration: 0.4, animations: {
+            self.messageTextViewBottomConstraint.constant = 15.0
+            self.messageTextViewTopConstraint.constant += delta
+            self.messageTextViewCoverView.alpha = 1.0
+            self.semiTransparentView.alpha = 0.0
+            self.layoutIfNeeded()
+        }, completion: completionHandler)
 
+    }
+    
+    private func collapseAnimationComplete(_ animationCompletion: Bool) {
+        expandedTextViewCoverView.isHidden = true
+        collapsedTextViewCoverView.isHidden = false
+
+        semiTransparentView.isHidden = true
+        semiTransparentView.alpha = 1.0
         
         self.messageTextViewTopConstraint.constant = messageTextViewToConstraintValueWhenCollapsed
-        self.messageTextView.expand(false, expandedHeight: nil)
+        self.messageTextViewBottomConstraint.constant = 15.0
         self.expandCollapseButton.setImage(#imageLiteral(resourceName: "expand"), for: .normal)
+    }
+    
+    private func expandAnimationStart(completionHandler: ((Bool) -> Void)?) {
+        collapsedTextViewCoverView.isHidden = true
+        messageTextViewCoverView.isHidden = true
+        expandedTextViewCoverView.isHidden = false
+        semiTransparentView.alpha = 0.0
+        semiTransparentView.isHidden = false
+
+        let topConstraintValue: CGFloat = UIScreen.main.bounds.height
+            - (keyboardHeight!
+                + messageTextViewBottomConstraint.constant
+                + messageTextView.intrinsicContentSize.height)
+
+        messageTextViewTopConstraint.constant = topConstraintValue
+        layoutIfNeeded()
         
+        let bottomAnimatableConstraint = topConstraintValue
+            - messageTextViewTopConstraintValueWhenExpanded!
+
+        UIView.animate(withDuration: 0.4, animations: {
+            self.semiTransparentView.alpha = 1.0
+            self.messageTextViewBottomConstraint.constant += bottomAnimatableConstraint
+            self.messageTextViewTopConstraint.constant = self.messageTextViewTopConstraintValueWhenExpanded!
+            self.layoutIfNeeded()
+        }, completion: completionHandler)
+    }
+    
+    private func expandAnimationComplete(_ animationCompletion: Bool) {
+        self.messageTextViewBottomConstraint.constant = 15.0
+        self.messageTextViewTopConstraint.constant = self.messageTextViewTopConstraintValueWhenExpanded ?? self.messageTextViewToConstraintValueWhenCollapsed
+        self.messageTextView.expand(true, expandedHeight: self.expandedHeight)
+        self.expandCollapseButton.setImage(#imageLiteral(resourceName: "collapse"), for: .normal)
     }
     
     private func keyboardShowNotification() -> NSObjectProtocol {
@@ -136,8 +180,8 @@ class MessageInputBar: UIView {
             }
             
             let inputBarHeight: CGFloat = self.messageTextView.intrinsicContentSize.height
-                + 15.0
-                + (self.expanded ? self.messageTextViewTopConstraintValueWhenExpanded! : self.messageTextViewToConstraintValueWhenCollapsed)
+                + self.messageTextViewBottomConstraint.constant
+                + self.messageTextViewTopConstraint.constant
             self.keyboardHeight = keyboardFrame.size.height - inputBarHeight
             
             self.backgroundViewTrailingTextViewConstraint.isActive = false
