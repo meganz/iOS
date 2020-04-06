@@ -21,15 +21,46 @@ class ChatViewAttachmentCell: UICollectionViewCell {
           }
         
         let megaMessage = chatMessage.message
-        if megaMessage.userHandle == MEGASdkManager.sharedMEGAChatSdk().myUserHandle {
-            avatarImageView.isHidden = true
-            messageTimeLabel.textAlignment = .left
-        } else {
-            avatarImageView.image = chatMessage.avatarImage
-            messageTimeLabel.textAlignment = .right
-
+        
+        let totalNodes = megaMessage.nodeList.size.uintValue
+        if totalNodes == 1 {
+            let node = megaMessage.nodeList.node(at: 0)!
+            titleLabel.text = node.name;
+            detailLabel.text = Helper.memoryStyleString(fromByteCount: node.size.int64Value)
             
         }
+        titleLabel.sizeToFit()
+        let width = titleLabel.frame.width
+                  
+        if megaMessage.userHandle == MEGASdkManager.sharedMEGAChatSdk().myUserHandle {
+            avatarImageView.isHidden = true
+            messageTimeLabel.textAlignment = .right
+            leftForward.isHidden = false
+            rightForward.isHidden = true
+            containerView.autoPinEdge(toSuperviewEdge: .right)
+            containerView.layer.borderColor = #colorLiteral(red: 0, green: 0.5803921569, blue: 0.462745098, alpha: 1).cgColor
+
+        } else {
+            avatarImageView.image = chatMessage.avatarImage
+            messageTimeLabel.textAlignment = .left
+            leftForward.isHidden = true
+             rightForward.isHidden = false
+            containerView.autoPinEdge(toSuperviewEdge: .left)
+            containerView.layer.borderColor = #colorLiteral(red: 0.8941176471, green: 0.9215686275, blue: 0.9176470588, alpha: 1).cgColor
+
+        }
+        containerView.autoPinEdge(toSuperviewEdge: .top)
+        containerView.autoPinEdge(toSuperviewEdge: .bottom)
+        
+        let collectionViewWidth = messagesCollectionView.bounds.width
+        
+        containerView.autoSetDimension(.width, toSize: CGFloat(min(width + 80, collectionViewWidth  - 80)))
+
+        containerView.layer.cornerRadius = 12
+        containerView.clipsToBounds = true
+        containerView.layer.borderWidth = 1
+        
+      
         
       }
 }
@@ -45,6 +76,6 @@ class ChatViewAttachmentCellCalculator: MessageSizeCalculator {
         let collectionViewWidth = layout.collectionView?.bounds.width ?? 0
         let contentInset = layout.collectionView?.contentInset ?? .zero
         let inset = layout.sectionInset.left + layout.sectionInset.right + contentInset.left + contentInset.right
-        return CGSize(width: collectionViewWidth - inset, height: 120)
+        return CGSize(width: collectionViewWidth - inset, height: 100)
     }
 }
