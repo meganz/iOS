@@ -4,7 +4,6 @@
 #import <UserNotifications/UserNotifications.h>
 
 #import <PureLayout/PureLayout.h>
-#import "NSDate+DateTools.h"
 #import "SVProgressHUD.h"
 #import "UIImage+GKContact.h"
 #import "UIScrollView+EmptyDataSet.h"

@@ -1,6 +1,5 @@
 #import "ChatStatusTableViewController.h"
 
-#import "NSDate+DateTools.h"
 #import "SVProgressHUD.h"
 #import "UIScrollView+EmptyDataSet.h"
 
