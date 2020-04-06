@@ -2,7 +2,16 @@
 
 import UIKit
 
+protocol MessageInputBarDelegate: class {
+    func tappedAddButton()
+    func tappedSendButton(withText text: String)
+    func tappedVoiceButton()
+    func typing(withText text: String)
+}
+
 class MessageInputBar: UIView {
+    
+    // MARK:- Outlets
     
     @IBOutlet weak var messageTextView: MessageTextView!
     @IBOutlet weak var messageTextViewTopConstraint: NSLayoutConstraint!
@@ -22,12 +31,18 @@ class MessageInputBar: UIView {
     @IBOutlet weak var sendButton: UIButton!
     @IBOutlet weak var micButton: UIButton!
     @IBOutlet weak var expandCollapseButton: UIButton!
-
-    var keyboardShowObserver: NSObjectProtocol!
-    var keyboardHideObserver: NSObjectProtocol!
     
-    var expanded: Bool = false
-    var expandedHeight: CGFloat? {
+    // MARK:- Interface properties
+
+    weak var delegate: MessageInputBarDelegate?
+    
+    // MARK:- Private properties
+
+    private var keyboardShowObserver: NSObjectProtocol!
+    private var keyboardHideObserver: NSObjectProtocol!
+    
+    private var expanded: Bool = false
+    private var expandedHeight: CGFloat? {
         guard let keyboardHeight = keyboardHeight else {
             return nil
         }
@@ -35,9 +50,9 @@ class MessageInputBar: UIView {
         return UIScreen.main.bounds.height - (messageTextViewTopConstraintValueWhenExpanded! + 15.0 + keyboardHeight)
     }
     
-    var keyboardHeight: CGFloat?
-    var messageTextViewToConstraintValueWhenCollapsed: CGFloat = 32.0
-    var messageTextViewTopConstraintValueWhenExpanded: CGFloat? {
+    private var keyboardHeight: CGFloat?
+    private var messageTextViewToConstraintValueWhenCollapsed: CGFloat = 32.0
+    private var messageTextViewTopConstraintValueWhenExpanded: CGFloat? {
         var statusBarHeight: CGFloat = 20.0
         if #available(iOS 11.0, *) {
             statusBarHeight = UIApplication.shared.keyWindow?.safeAreaInsets.top ?? 20.0
@@ -46,6 +61,8 @@ class MessageInputBar: UIView {
         // The text view should be (statusBarHeight + 67.0) from the top of the screen
         return statusBarHeight + 67.0
     }
+    
+    // MARK: - Overriden methods.
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -67,19 +84,11 @@ class MessageInputBar: UIView {
             + messageTextView.textContainerInset.bottom
     }
     
-    func registerKeyboardNotifications() {
-        keyboardHideObserver = keyboardHideNotification()
-        keyboardShowObserver = keyboardShowNotification()
-    }
-    
-    func removeKeyboardNotifications() {
-        NotificationCenter.default.removeObserver(keyboardShowObserver!)
-        NotificationCenter.default.removeObserver(keyboardHideObserver!)
-    }
-    
     override var intrinsicContentSize: CGSize {
         return .zero
     }
+    
+    // MARK: - Actions
     
     @IBAction func exapandCollapseButtonTapped(_ button: UIButton) {
         expanded = !expanded
@@ -89,6 +98,43 @@ class MessageInputBar: UIView {
         } else {
             collapse()
         }
+    }
+    
+    @IBAction func sendButtonTapped(_ button: UIButton) {
+        guard let delegate = delegate,
+            let text = messageTextView.text else {
+            return
+        }
+        
+        delegate.tappedSendButton(withText: text)
+    }
+    
+    @IBAction func voiceButtonTapped(_ button: UIButton) {
+        guard let delegate = delegate else {
+            return
+        }
+        
+        delegate.tappedVoiceButton()
+    }
+    
+    @IBAction func addButtonTapped(_ button: UIButton) {
+        guard let delegate = delegate else {
+            return
+        }
+        
+        delegate.tappedAddButton()
+    }
+    
+    // MARK: - Private methods
+    
+    private func registerKeyboardNotifications() {
+        keyboardHideObserver = keyboardHideNotification()
+        keyboardShowObserver = keyboardShowNotification()
+    }
+    
+    private func removeKeyboardNotifications() {
+        NotificationCenter.default.removeObserver(keyboardShowObserver!)
+        NotificationCenter.default.removeObserver(keyboardHideObserver!)
     }
     
     private func expand() {
@@ -233,18 +279,25 @@ class MessageInputBar: UIView {
         }
     }
     
+    // MARK: - Deinit
+    
     deinit {
         removeKeyboardNotifications()
     }
 }
 
-class MessageInputTextBackgroundView: UIView {
-    
-    var maxCornerRadius: CGFloat = .greatestFiniteMagnitude
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        layer.cornerRadius = min(bounds.height / 2.0, maxCornerRadius)
+// MARK: - UITextViewDelegate
+
+extension MessageInputBar: UITextViewDelegate {
+    func textViewDidChange(_ textView: UITextView) {
+        guard let delegate = delegate,
+            let text = textView.text else {
+            return
+        }
+        
+        sendButton.isEnabled = text.count > 0
+        delegate.typing(withText: text)
     }
-    
 }
+
+

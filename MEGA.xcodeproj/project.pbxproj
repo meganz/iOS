@@ -1045,6 +1045,7 @@
 		BF06E3DF243191B000B30FB7 /* ChatTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF06E3DD243191B000B30FB7 /* ChatTitleView.swift */; };
 		BF06E3E5243192FB00B30FB7 /* MessageKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF06E3E1243192EB00B30FB7 /* MessageKit.framework */; };
 		BF06E3E6243192FB00B30FB7 /* MessageKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BF06E3E1243192EB00B30FB7 /* MessageKit.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		BF09FF23243BDB770067DD77 /* MessageInputTextBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF09FF22243BDB770067DD77 /* MessageInputTextBackgroundView.swift */; };
 		BF0ACD64240C87A80002101E /* MEGAChatListItem+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0ACD63240C87A80002101E /* MEGAChatListItem+Additions.swift */; };
 		BF0BBEFE230627BE001FD542 /* UIViewController+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0BBEFD230627BE001FD542 /* UIViewController+MNZCategory.m */; };
 		BF1574AE2373AB8C0095B283 /* MEGAChatRoom+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1574AD2373AB8C0095B283 /* MEGAChatRoom+Additions.swift */; };
@@ -2488,6 +2489,7 @@
 		BF06E3DC243191B000B30FB7 /* ChatTitleView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatTitleView.xib; sourceTree = "<group>"; };
 		BF06E3DD243191B000B30FB7 /* ChatTitleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatTitleView.swift; sourceTree = "<group>"; };
 		BF06E3E1243192EB00B30FB7 /* MessageKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MessageKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BF09FF22243BDB770067DD77 /* MessageInputTextBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageInputTextBackgroundView.swift; sourceTree = "<group>"; };
 		BF0ACD63240C87A80002101E /* MEGAChatListItem+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAChatListItem+Additions.swift"; sourceTree = "<group>"; };
 		BF0BBEFC230627BE001FD542 /* UIViewController+MNZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+MNZCategory.h"; sourceTree = "<group>"; };
 		BF0BBEFD230627BE001FD542 /* UIViewController+MNZCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+MNZCategory.m"; sourceTree = "<group>"; };
@@ -5286,6 +5288,7 @@
 				BFB463FA243456D900FB90B9 /* ChatViewIntroductionHeaderView.xib */,
 				BF06E3DD243191B000B30FB7 /* ChatTitleView.swift */,
 				BF06E3DC243191B000B30FB7 /* ChatTitleView.xib */,
+				BF09FF22243BDB770067DD77 /* MessageInputTextBackgroundView.swift */,
 				BF15894B2436EB8D007AF9EC /* MessageTextView.swift */,
 				BF1589232436A27A007AF9EC /* MessageInputBar.swift */,
 				BF1589252436A296007AF9EC /* MessageInputBar.xib */,
@@ -6472,6 +6475,7 @@
 				771A932823A24DB300CB0ED7 /* UIPasteboard+FLEX.m in Sources */,
 				E85044C61A6D84620064B675 /* FileLinkViewController.m in Sources */,
 				B6E19B2F21756F0800882F74 /* TransferSessionManager.m in Sources */,
+				BF09FF23243BDB770067DD77 /* MessageInputTextBackgroundView.swift in Sources */,
 				A85D93BC2045751E0066F45B /* ChatVideoQualityTableViewController.m in Sources */,
 				A86B9F4A2316D6AB00F35E7A /* FLEXMethodCallingViewController.m in Sources */,
 				E80C76101DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.m in Sources */,
