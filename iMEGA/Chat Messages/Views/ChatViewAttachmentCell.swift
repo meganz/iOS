@@ -27,10 +27,8 @@ class ChatViewAttachmentCell: UICollectionViewCell {
             let node = megaMessage.nodeList.node(at: 0)!
             titleLabel.text = node.name;
             detailLabel.text = Helper.memoryStyleString(fromByteCount: node.size.int64Value)
-            
+            attachmentImageView.mnz_setThumbnail(by: node)
         }
-        titleLabel.sizeToFit()
-        let width = titleLabel.frame.width
                   
         if megaMessage.userHandle == MEGASdkManager.sharedMEGAChatSdk().myUserHandle {
             avatarImageView.isHidden = true
@@ -51,10 +49,10 @@ class ChatViewAttachmentCell: UICollectionViewCell {
         }
         containerView.autoPinEdge(toSuperviewEdge: .top)
         containerView.autoPinEdge(toSuperviewEdge: .bottom)
-        
-        let collectionViewWidth = messagesCollectionView.bounds.width
-        
-        containerView.autoSetDimension(.width, toSize: CGFloat(min(width + 80, collectionViewWidth  - 80)))
+
+        let size: CGSize = titleLabel.text!.size(withAttributes: [.font: UIFont.systemFont(ofSize:14)])
+        let width = min(280, size.width + 80)
+        containerView.autoSetDimension(.width, toSize: CGFloat(width))
 
         containerView.layer.cornerRadius = 12
         containerView.clipsToBounds = true
@@ -76,6 +74,6 @@ class ChatViewAttachmentCellCalculator: MessageSizeCalculator {
         let collectionViewWidth = layout.collectionView?.bounds.width ?? 0
         let contentInset = layout.collectionView?.contentInset ?? .zero
         let inset = layout.sectionInset.left + layout.sectionInset.right + contentInset.left + contentInset.right
-        return CGSize(width: collectionViewWidth - inset, height: 100)
+        return CGSize(width: collectionViewWidth - inset, height: 120)
     }
 }
