@@ -7,5 +7,4 @@ class MessageInputTextBackgroundView: UIView {
         super.layoutSubviews()
         layer.cornerRadius = min(bounds.height / 2.0, maxCornerRadius)
     }
-    
 }

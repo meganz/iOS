@@ -47,11 +47,15 @@ class MessageInputBar: UIView {
             return nil
         }
            
-        return UIScreen.main.bounds.height - (messageTextViewTopConstraintValueWhenExpanded! + 15.0 + keyboardHeight)
+        return UIScreen.main.bounds.height -
+            (messageTextViewTopConstraintValueWhenExpanded!
+                + messageTextViewBottomConstraintDefaultValue
+                + keyboardHeight)
     }
     
     private var keyboardHeight: CGFloat?
-    private var messageTextViewToConstraintValueWhenCollapsed: CGFloat = 32.0
+    private let messageTextViewBottomConstraintDefaultValue: CGFloat = 15.0
+    private let messageTextViewTopConstraintValueWhenCollapsed: CGFloat = 32.0
     private var messageTextViewTopConstraintValueWhenExpanded: CGFloat? {
         var statusBarHeight: CGFloat = 20.0
         if #available(iOS 11.0, *) {
@@ -157,7 +161,7 @@ class MessageInputBar: UIView {
         layoutIfNeeded()
         
         UIView.animate(withDuration: 0.4, animations: {
-            self.messageTextViewBottomConstraint.constant = 15.0
+            self.messageTextViewBottomConstraint.constant = self.messageTextViewBottomConstraintDefaultValue
             self.messageTextViewTopConstraint.constant += delta
             self.messageTextViewCoverView.alpha = 1.0
             self.semiTransparentView.alpha = 0.0
@@ -173,9 +177,9 @@ class MessageInputBar: UIView {
         semiTransparentView.isHidden = true
         semiTransparentView.alpha = 1.0
         
-        self.messageTextViewTopConstraint.constant = messageTextViewToConstraintValueWhenCollapsed
-        self.messageTextViewBottomConstraint.constant = 15.0
-        self.expandCollapseButton.setImage(#imageLiteral(resourceName: "expand"), for: .normal)
+        messageTextViewTopConstraint.constant = messageTextViewTopConstraintValueWhenCollapsed
+        messageTextViewBottomConstraint.constant = messageTextViewBottomConstraintDefaultValue
+        expandCollapseButton.setImage(#imageLiteral(resourceName: "expand"), for: .normal)
     }
     
     private func expandAnimationStart(completionHandler: ((Bool) -> Void)?) {
@@ -205,10 +209,10 @@ class MessageInputBar: UIView {
     }
     
     private func expandAnimationComplete(_ animationCompletion: Bool) {
-        self.messageTextViewBottomConstraint.constant = 15.0
-        self.messageTextViewTopConstraint.constant = self.messageTextViewTopConstraintValueWhenExpanded ?? self.messageTextViewToConstraintValueWhenCollapsed
-        self.messageTextView.expand(true, expandedHeight: self.expandedHeight)
-        self.expandCollapseButton.setImage(#imageLiteral(resourceName: "collapse"), for: .normal)
+        messageTextViewBottomConstraint.constant = messageTextViewBottomConstraintDefaultValue
+        messageTextViewTopConstraint.constant = messageTextViewTopConstraintValueWhenExpanded ?? messageTextViewTopConstraintValueWhenCollapsed
+        messageTextView.expand(true, expandedHeight: expandedHeight)
+        expandCollapseButton.setImage(#imageLiteral(resourceName: "collapse"), for: .normal)
     }
     
     private func keyboardShowNotification() -> NSObjectProtocol {

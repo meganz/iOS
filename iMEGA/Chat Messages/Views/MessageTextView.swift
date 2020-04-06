@@ -59,5 +59,4 @@ class MessageTextView: UITextView {
     deinit {
         NotificationCenter.default.removeObserver(textChangeNotificationToken!)
     }
-    
 }
