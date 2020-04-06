@@ -121,6 +121,11 @@
                                                     <constraint firstAttribute="height" constant="24" id="5zO-Q8-aeZ"/>
                                                     <constraint firstAttribute="width" constant="24" id="bYG-96-wZe"/>
                                                 </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                        <integer key="value" value="12"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
                                             </imageView>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -154,6 +159,17 @@
             </constraints>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <size key="customSize" width="463" height="161"/>
+            <connections>
+                <outlet property="attachmentImageView" destination="YtG-Ti-2YW" id="Umh-vM-2LV"/>
+                <outlet property="avatarImageView" destination="SR5-AG-yip" id="Q7e-GO-dI8"/>
+                <outlet property="containerView" destination="ymV-l6-eaI" id="RsB-ua-efL"/>
+                <outlet property="dateLabel" destination="1Kx-e9-pX2" id="eDK-qf-2RL"/>
+                <outlet property="detailLabel" destination="EHq-gq-eKe" id="0IP-nF-RvR"/>
+                <outlet property="leftForward" destination="TXa-J1-JUa" id="r4c-0a-wPd"/>
+                <outlet property="messageTimeLabel" destination="zAR-eK-6lB" id="BMd-of-7LZ"/>
+                <outlet property="rightForward" destination="tfh-ng-7SU" id="Poy-aj-0HJ"/>
+                <outlet property="titleLabel" destination="a0H-Xp-gUj" id="fWh-wX-G0j"/>
+            </connections>
             <point key="canvasLocation" x="-151.44927536231884" y="182.8125"/>
         </collectionViewCell>
     </objects>
