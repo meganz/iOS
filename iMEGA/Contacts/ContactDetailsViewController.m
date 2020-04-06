@@ -118,6 +118,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
         self.userName = self.user.mnz_fullName;
     }
     
+    [self configureShadowInLayer:self.backButton.layer];
     [self configureShadowInLayer:self.nameOrNicknameLabel.layer];
     [self configureShadowInLayer:self.optionalNameLabel.layer];
     [self updateUserDetails];
@@ -423,7 +424,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 }
 - (void)showRemoveContactAlert {
     
-    NSString *message = [NSString stringWithFormat:AMLocalizedString(@"removeUserMessage", nil), self.userEmail];
+    NSString *message = [NSString stringWithFormat:AMLocalizedString(@"removeUserMessage", nil), self.user.mnz_displayName];
     
     UIAlertController *removeContactAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"removeUserTitle", @"Alert title shown when you want to remove one or more contacts") message:message preferredStyle:UIAlertControllerStyleAlert];
     
@@ -814,6 +815,8 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     NSInteger rowsInSection;
     if ([self isSharedFolderSection:section]) {
         rowsInSection = self.incomingNodeListForUser.size.integerValue;
+    } else if (self.shouldAllowToAddContact) {
+        rowsInSection = 1;
     } else if (section == ContactDetailsSectionNicknameVerifyCredentials) {
         rowsInSection = self.rowsForNicknameAndVerify.count;
     } else {
