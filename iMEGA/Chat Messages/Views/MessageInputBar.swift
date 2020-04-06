@@ -175,7 +175,7 @@ class MessageInputBar: UIView {
                 return
             }
             
-            guard let keyboardFrame = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
+            guard let keyboardFrame = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue, self.messageTextView.isFirstResponder else {
                 return
             }
             
@@ -184,10 +184,24 @@ class MessageInputBar: UIView {
                 + self.messageTextViewTopConstraint.constant
             self.keyboardHeight = keyboardFrame.size.height - inputBarHeight
             
-            self.backgroundViewTrailingTextViewConstraint.isActive = false
-            self.backgroundViewTrailingButtonConstraint.isActive = true
-            self.micButton.isHidden = true
+            if self.backgroundViewTrailingButtonConstraint.isActive {
+                return
+            }
+            
+            self.sendButton.alpha = 0.0
             self.sendButton.isHidden = false
+
+            UIView.animate(withDuration: 0.4, animations: {
+                self.backgroundViewTrailingTextViewConstraint.isActive = false
+                self.backgroundViewTrailingButtonConstraint.isActive = true
+                self.micButton.alpha = 0.0
+                self.sendButton.alpha = 1.0
+                self.layoutIfNeeded()
+
+            }) { _ in
+                self.micButton.isHidden = true
+                self.micButton.alpha = 1.0
+            }
         }
     }
     
@@ -201,12 +215,19 @@ class MessageInputBar: UIView {
                 return
             }
             
+            self.micButton.alpha = 0.0
+            self.micButton.isHidden = false
+
             if self.messageTextView.text.count == 0 {
-                UIView.animate(withDuration: 0.4) {
+                UIView.animate(withDuration: 0.4, animations: {
                     self.backgroundViewTrailingTextViewConstraint.isActive = true
                     self.backgroundViewTrailingButtonConstraint.isActive = false
-                    self.micButton.isHidden = false
+                    self.micButton.alpha = 1.0
+                    self.sendButton.alpha = 0.0
+                    self.layoutIfNeeded()
+                }) { _ in
                     self.sendButton.isHidden = true
+                    self.sendButton.alpha = 1.0
                 }
             }
         }
