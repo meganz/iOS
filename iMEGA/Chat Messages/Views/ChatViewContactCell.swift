@@ -90,6 +90,8 @@ open class CustomContactMessageSizeCalculator: MessageSizeCalculator {
     public override init(layout: MessagesCollectionViewFlowLayout? = nil) {
         super.init(layout: layout)
         outgoingAvatarSize = .zero
+        outgoingMessageTopLabelAlignment = LabelAlignment(textAlignment: .right, textInsets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 12))
+
     }
 
     open override func messageContainerSize(for message: MessageType) -> CGSize {
@@ -118,7 +120,7 @@ open class CustomContactMessageSizeCalculator: MessageSizeCalculator {
             }
             let titleSize: CGSize = title.size(withAttributes: [.font: UIFont.mnz_SFUIMedium(withSize: 14)!])
             let detailSize: CGSize = detail.size(withAttributes: [.font: UIFont.mnz_SFUIRegular(withSize: 12)!])
-            width = 70 + max(titleSize.width, detailSize.width)
+            width = 75 + max(titleSize.width, detailSize.width)
             return CGSize(width: min(width, maxWidth), height: 80)
         default:
             fatalError("messageContainerSize received unhandled MessageDataType: \(message.kind)")

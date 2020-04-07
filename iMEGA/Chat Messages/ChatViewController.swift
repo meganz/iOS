@@ -199,8 +199,9 @@ class ChatViewController: MessagesViewController {
         chatRoomDelegate.openChatRoom()
 
         if let layout = messagesCollectionView.collectionViewLayout as? MessagesCollectionViewFlowLayout {
-//            layout.textMessageSizeCalculator.outgoingAvatarSize = .zero
             layout.setMessageOutgoingAvatarSize(.zero)
+            layout.setMessageOutgoingMessageTopLabelAlignment(LabelAlignment(textAlignment: .right, textInsets:  UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 12)))
+
         }
     }
 
