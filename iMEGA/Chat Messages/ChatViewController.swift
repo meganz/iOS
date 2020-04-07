@@ -55,8 +55,6 @@ class ChatViewController: MessagesViewController {
         messagesCollectionView = MessagesCollectionView(frame: .zero,
                                                         collectionViewLayout: ChatViewMessagesFlowLayout())
         registerCustomCells()
-        messagesCollectionView.register(ChatViewAttachmentCell.nib,
-                                              forCellWithReuseIdentifier: ChatViewAttachmentCell.reuseIdentifier)
 
         super.viewDidLoad()
 
@@ -184,7 +182,7 @@ class ChatViewController: MessagesViewController {
     private func registerCustomCells() {
         messagesCollectionView.register(ChatViewCallCollectionCell.nib,
                                          forCellWithReuseIdentifier: ChatViewCallCollectionCell.reuseIdentifier)
-        messagesCollectionView.register(ChatViewAttachmentCell.nib,
+        messagesCollectionView.register(ChatViewAttachmentCell.self,
                                          forCellWithReuseIdentifier: ChatViewAttachmentCell.reuseIdentifier)
 
         messagesCollectionView.register(ChatViewContactCell.self, forCellWithReuseIdentifier: ChatViewContactCell.reuseIdentifier)
