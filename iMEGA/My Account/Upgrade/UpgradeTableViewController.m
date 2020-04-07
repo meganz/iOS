@@ -307,7 +307,7 @@
 }
 
 - (NSAttributedString *)storageAttributedStringForProLevelAtIndex:(NSInteger)index {
-    NSMutableAttributedString *storageString = [NSMutableAttributedString.alloc initWithString:[NSString stringWithFormat:@" %@", AMLocalizedString(@"productSpace", @"Storage related with the MEGA PRO account level you can subscribe")] attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
+    NSMutableAttributedString *storageString = [NSMutableAttributedString.alloc initWithString:[NSString stringWithFormat:@" %@", AMLocalizedString(@"Storage", @"Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible).")] attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
     
     SKProduct *product = [[MEGAPurchase sharedInstance].products objectAtIndex:index];
     NSString *storageFormattedString = [self storageAndUnitsByProduct:product];
@@ -329,7 +329,7 @@
 }
 
 - (NSAttributedString *)freeStorageAttributedString {
-    NSMutableAttributedString *storageString = [NSMutableAttributedString.alloc initWithString:[NSString stringWithFormat:@" %@", AMLocalizedString(@"productSpace", @"Storage related with the MEGA PRO account level you can subscribe")] attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
+    NSMutableAttributedString *storageString = [NSMutableAttributedString.alloc initWithString:[NSString stringWithFormat:@" %@", AMLocalizedString(@"Storage", @"Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible).")] attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
     
     NSMutableAttributedString *storageMutableAttributedString = [NSMutableAttributedString.alloc initWithString:@"50 GB" attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName:UIColor.mnz_label}];
     [storageMutableAttributedString appendAttributedString:storageString];

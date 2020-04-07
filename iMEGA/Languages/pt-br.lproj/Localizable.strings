@@ -1036,7 +1036,7 @@
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
 "cloudDriveIsFull"="[S]A sua Nuvem de arquivos está cheia.[/S] [A]Faça upgrade[/A] a um plano PRO e obtenha [S]até %@ TB (%@ GB)[/S] de espaço de armazenamento.";
 /* Storage related with the MEGA PRO account level you can subscribe */
-"productSpace"="Armazenamento";
+"Storage"="Armazenamento";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "transferQuota"="Cota de transferência";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */

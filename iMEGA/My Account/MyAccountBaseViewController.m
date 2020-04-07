@@ -62,20 +62,13 @@
     UIAlertController *editProfileAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     [editProfileAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
     
-    UIAlertAction *changeNameAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"changeName", @"Button title that allows the user change his name") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        MEGANavigationController *changeNameNavigationController = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"ChangeNameNavigationControllerID"];
-        [self presentViewController:changeNameNavigationController animated:YES completion:nil];
-    }];
-    [changeNameAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
-    [editProfileAlertController addAction:changeNameAlertAction];
-    
     UIAlertAction *changeAvatarAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"changeAvatar", @"button that allows the user the change his avatar") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self presentChangeAvatarAlertController];
     }];
     [changeAvatarAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
     [editProfileAlertController addAction:changeAvatarAlertAction];
     
-    UIAlertAction *myCodeAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"myCode", @"Title for view that displays the QR code of the user. String as short as possible.") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *myCodeAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"My QR code", @"Label for any ‘My QR code’ button, link, text, title, etc. - (String as short as possible).") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         ContactLinkQRViewController *contactLinkVC = [[UIStoryboard storyboardWithName:@"ContactLinkQR" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactLinkQRViewControllerID"];
         contactLinkVC.scanCode = NO;
         contactLinkVC.modalPresentationStyle = UIModalPresentationFullScreen;

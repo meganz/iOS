@@ -1035,8 +1035,8 @@
 "cloudDriveIsAlmostFull"="[S]Your Cloud Drive is almost full.[/S] [A]Upgrade now[/A] to a PRO account and get [S]up to %@ TB (%@ GB)[/S] of cloud storage space.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
 "cloudDriveIsFull"="[S]Your Cloud Drive is full.[/S] [A]Upgrade now[/A] to a PRO account and get [S]up to %@ TB (%@ GB)[/S] of cloud storage space.";
-/* Storage related with the MEGA PRO account level you can subscribe */
-"productSpace"="Storage";
+/* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
+"Storage"="Storage";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "transferQuota"="Transfer Quota";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
@@ -1442,6 +1442,8 @@
 "resetQrCodeFooter"="Previous QR codes will no longer be valid.";
 /* Title for view that displays the QR code of the user. String as short as possible. */
 "myCode"="My Code";
+/* Label for any ‘My QR code’ button, link, text, title, etc. - (String as short as possible). */
+"My QR code"="My QR code";
 /* Segmented control title for view that allows the user to scan QR codes. String as short as possible. */
 "scanCode"="Scan Code";
 /* Label that encourage the user to line the QR to scan with the camera */

@@ -1036,7 +1036,7 @@
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
 "cloudDriveIsFull"="[S]Unitatea ta cloud este plină.[/S] [A]Upgradează acum[/A] la un cont PRO și obține [S]până la %@ TB (%@ GB)[/S] spațiu de stocare în cloud.";
 /* Storage related with the MEGA PRO account level you can subscribe */
-"productSpace"="Spațiu de stocare";
+"Storage"="Spațiu de stocare";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "transferQuota"="Cotă de transferuri";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
