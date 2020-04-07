@@ -2,7 +2,6 @@ import MessageKit
 
 class ChatViewContactCell: MessageContentCell {
 
-    /// The image view display the media content.
     open var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
@@ -11,7 +10,6 @@ class ChatViewContactCell: MessageContentCell {
         return imageView
     }()
 
-    /// The time duration lable to display on audio messages.
     public lazy var titleLabel: UILabel = {
         let titleLabel = UILabel(frame: CGRect.zero)
         titleLabel.font = UIFont.mnz_SFUIMedium(withSize: 14)
@@ -19,7 +17,6 @@ class ChatViewContactCell: MessageContentCell {
         return titleLabel
     }()
 
-    /// The time duration lable to display on audio messages.
     public lazy var detailLabel: UILabel = {
         let detailLabel = UILabel(frame: CGRect.zero)
         detailLabel.font = UIFont.mnz_SFUIRegular(withSize: 12)
