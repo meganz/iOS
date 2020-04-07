@@ -3,17 +3,17 @@ import MessageKit
 struct ChatMessage {
     let message: MEGAChatMessage
     let chatRoom: MEGAChatRoom
-    
+
     var senderHandle: UInt64 {
         return message.userHandle
     }
-    
+
     var avatarImage: UIImage? {
         guard let peerEmail = chatRoom.peerEmail(byHandle: senderHandle),
             let user = MEGASdkManager.sharedMEGASdk()?.contact(forEmail: peerEmail) else {
                 return nil
         }
-        
+
         return user.avatarImage(withDelegate: nil)
     }
 }
@@ -22,25 +22,27 @@ extension ChatMessage: MessageType {
     var sender: SenderType {
         return self
     }
-    
+
     var messageId: String {
         return String(format: "%llu", message.messageId)
     }
-    
+
     var sentDate: Date {
         return message.timestamp
     }
-    
+
     var kind: MessageKind {
         if message.content != nil && message.content.count > 0 {
             return .text(message.content)
         }
-        
+
         if case .callEnded = message.type {
             return .custom(message)
         } else if case .callStarted = message.type {
             return .custom(message)
         } else if case .attachment = message.type {
+            return .custom(message)
+        } else if case .contact = message.type {
             return .custom(message)
         }
         return .text(message.type.description)
@@ -51,7 +53,7 @@ extension ChatMessage: SenderType {
     var senderId: String {
         return String(format: "%llu", message.userHandle)
     }
-    
+
     var displayName: String {
         return String(format: "%llu", message.userHandle)
     }
@@ -68,7 +70,6 @@ extension ChatMessage: Comparable {
         return lhs.message.messageIndex < rhs.message.messageIndex
     }
 }
-
 
 extension MEGAChatMessageType: CustomStringConvertible {
     public var description: String {
