@@ -1,10 +1,12 @@
 import MessageKit
 
-class ChatViewAttachmentCell: MessageContentCell {
+class ChatViewContactCell: MessageContentCell {
 
     open var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
+        imageView.layer.cornerRadius = 20
+        imageView.clipsToBounds = true
         return imageView
     }()
 
@@ -49,6 +51,7 @@ class ChatViewAttachmentCell: MessageContentCell {
         setupConstraints()
     }
     
+    
     override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
         super.configure(with: message, at: indexPath, and: messagesCollectionView)
 
@@ -58,20 +61,20 @@ class ChatViewAttachmentCell: MessageContentCell {
         let megaMessage = chatMessage.message
         
         var title, detail : String
-        let totalNodes = megaMessage.nodeList.size.uintValue
-        if totalNodes == 1 {
-            let node = megaMessage.nodeList.node(at: 0)!
-            title = node.name
-            detail = Helper.memoryStyleString(fromByteCount: node.size.int64Value)
-            imageView.mnz_setThumbnail(by: node)
+        if megaMessage.usersCount == 1 {
+            imageView.mnz_setImage(forUserHandle: megaMessage.userHandle(at: 0), name: megaMessage.userName(at: 0))
+            title = megaMessage.userName(at: 0)
+            detail = megaMessage.userEmail(at: 0)
         } else {
-            title = String(format: NSLocalizedString("files", comment: ""), totalNodes)
+            var usersString = NSLocalizedString("XContactsSelected", comment: "")
+            usersString = usersString.replacingOccurrences(of: "[X]", with: "\(megaMessage.usersCount)", options: .literal, range: nil)
+            title = usersString
 
-            var totalSize = 0
-            for index in 0...totalNodes {
-                totalSize += megaMessage.nodeList.node(at: Int(index))!.size.intValue
+            var emails = megaMessage.userEmail(at: 0)
+            for index in 2...megaMessage.usersCount {
+                emails = "\(emails!) \(megaMessage.userEmail(at: index - 1)!)"
             }
-            detail = Helper.memoryStyleString(fromByteCount: Int64(totalSize))
+           detail = emails!
         }
         
         titleLabel.text = title
@@ -80,7 +83,7 @@ class ChatViewAttachmentCell: MessageContentCell {
     }
 }
 
-open class ChatViewAttachmentCellCalculator: MessageSizeCalculator {
+open class CustomContactMessageSizeCalculator: MessageSizeCalculator {
     public override init(layout: MessagesCollectionViewFlowLayout? = nil) {
         super.init(layout: layout)
         outgoingAvatarSize = .zero
@@ -90,7 +93,7 @@ open class ChatViewAttachmentCellCalculator: MessageSizeCalculator {
         
         incomingAccessoryViewPadding = HorizontalEdgeInsets(left: 10, right: 10)
         outgoingAccessoryViewPadding = HorizontalEdgeInsets(left: 10, right: 10)
-}
+    }
 
     open override func messageContainerSize(for message: MessageType) -> CGSize {
         switch message.kind {
@@ -103,19 +106,18 @@ open class ChatViewAttachmentCellCalculator: MessageSizeCalculator {
             let megaMessage = chatMessage.message
             var title, detail : String
             var width = CGFloat()
-            let totalNodes = megaMessage.nodeList.size.uintValue
-            if totalNodes == 1 {
-                let node = megaMessage.nodeList.node(at: 0)!
-                title = node.name
-                detail = Helper.memoryStyleString(fromByteCount: node.size.int64Value)
+            if megaMessage.usersCount == 1 {
+                title = megaMessage.userName(at: 0)
+                detail = megaMessage.userEmail(at: 0)
             } else {
-                title = String(format: NSLocalizedString("files", comment: ""), totalNodes)
-
-                var totalSize = 0
-                for index in 0...totalNodes {
-                    totalSize += megaMessage.nodeList.node(at: Int(index))!.size.intValue
+                var usersString = NSLocalizedString("XContactsSelected", comment: "")
+                usersString = usersString.replacingOccurrences(of: "[X]", with: "\(megaMessage.usersCount)", options: .literal, range: nil)
+                title = usersString
+                var emails = megaMessage.userEmail(at: 0)
+                for index in 2...megaMessage.usersCount {
+                    emails = "\(emails!) \(megaMessage.userEmail(at: index - 1)!)"
                 }
-                detail = Helper.memoryStyleString(fromByteCount: Int64(totalSize))
+                detail = emails!
             }
             let titleSize: CGSize = title.size(withAttributes: [.font: UIFont.mnz_SFUIMedium(withSize: 14)!])
             let detailSize: CGSize = detail.size(withAttributes: [.font: UIFont.mnz_SFUIRegular(withSize: 12)!])

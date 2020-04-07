@@ -1,4 +1,3 @@
-
 import MessageKit
 
 class ChatViewMessagesFlowLayout: MessagesCollectionViewFlowLayout {
@@ -7,19 +6,22 @@ class ChatViewMessagesFlowLayout: MessagesCollectionViewFlowLayout {
 
     override func cellSizeCalculatorForItem(at indexPath: IndexPath) -> CellSizeCalculator {
         let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
-        
+
         if case .custom = message.kind {
             guard let chatMessage = message as? ChatMessage else {
                 return super.cellSizeCalculatorForItem(at: indexPath)
             }
-            
-            if case .attachment = chatMessage.message.type {
+
+            switch chatMessage.message.type {
+            case .attachment:
                 return chatViewAttachmentCellCalculator
-            } else {
+            case .callEnded, .callStarted:
                 return chatViewCallCollectionCellCalculator
+
+            default:
+                return super.cellSizeCalculatorForItem(at: indexPath)
             }
         }
-        
         return super.cellSizeCalculatorForItem(at: indexPath)
     }
 }

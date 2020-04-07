@@ -49,4 +49,5 @@
 #import "ContactDetailsViewController.h"
 
 #import <PureLayout/PureLayout.h>
+#import "UIImage+GKContact.h"
 
