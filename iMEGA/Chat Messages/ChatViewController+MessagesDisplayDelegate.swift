@@ -26,6 +26,20 @@ extension ChatViewController: MessagesDisplayDelegate {
         }
     }
 
+    func configureAccessoryView(_ accessoryView: UIView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
+        // Cells are reused, so only add a button here once. For real use you would need to
+        // ensure any subviews are removed if not needed
+        accessoryView.subviews.forEach { $0.removeFromSuperview() }
+        accessoryView.backgroundColor = .clear
+
+        let button = UIButton()
+        button.setImage(UIImage(named: "forwardChat"), for: .normal)
+        accessoryView.addSubview(button)
+        button.frame = accessoryView.bounds
+        button.isUserInteractionEnabled = false // respond to accessoryView tap through `MessageCellDelegate`
+        accessoryView.layer.cornerRadius = accessoryView.frame.height / 2
+    }
+    
     func configureAvatarView(_ avatarView: AvatarView,
                              for message: MessageType,
                              at indexPath: IndexPath,
