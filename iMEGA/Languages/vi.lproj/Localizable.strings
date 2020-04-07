@@ -1036,7 +1036,7 @@
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
 "cloudDriveIsFull"="[S]Ổ Mây đã bị đầy.[/S] [A]Nâng cấp ngay[/A] lên hạng PRO để nhận [S]thêm tới %@ TB (%@ GB)[/S] không gian lưu trữ.";
 /* Storage related with the MEGA PRO account level you can subscribe */
-"productSpace"="Lưu trữ";
+"Storage"="Lưu trữ";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "transferQuota"="Lượng băng thông";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */

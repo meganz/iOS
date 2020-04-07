@@ -4,10 +4,8 @@
 #import "AchievementsViewController.h"
 #import "ContactsViewController.h"
 #import "Helper.h"
-#import "MEGAContactLinkCreateRequestDelegate.h"
 #import "MEGAPurchase.h"
 #import "MEGASdk+MNZCategory.h"
-#import "MEGAUser+MNZCategory.h"
 #import "MEGAUserAlertList+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
@@ -17,10 +15,24 @@
 #import "OfflineViewController.h"
 #import "SettingsTableViewController.h"
 #import "TransfersViewController.h"
-#import "UIImage+MNZCategory.h"
 #import "UpgradeTableViewController.h"
 #import "UsageViewController.h"
 #import "MEGA-Swift.h"
+
+typedef NS_ENUM(NSInteger, MyAccountSection) {
+    MyAccountSectionMEGA = 0,
+    MyAccountSectionOther
+};
+
+typedef NS_ENUM(NSInteger, MyAccount) {
+    MyAccountStorage = 0,
+    MyAccountSettings = 0,
+    MyAccountContacts,
+    MyAccountNotifications,
+    MyAccountAchievements,
+    MyAccountTransfers,
+    MyAccountOffline
+};
 
 @interface MyAccountHallViewController () <UITableViewDataSource, UITableViewDelegate, MEGAPurchasePricingDelegate, MEGAGlobalDelegate, MEGARequestDelegate>
 
@@ -29,11 +41,16 @@
 @property (weak, nonatomic) IBOutlet UIView *profileView;
 @property (weak, nonatomic) IBOutlet UILabel *viewAndEditProfileLabel;
 @property (weak, nonatomic) IBOutlet UIButton *viewAndEditProfileButton;
-@property (weak, nonatomic) IBOutlet UIImageView *viewAndEditProfileDisclosureImageView;
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIImageView *viewAndEditProfileImageView;
+@property (weak, nonatomic) IBOutlet UIView *profileBottomSeparatorView;
+
 @property (weak, nonatomic) IBOutlet UIView *addPhoneNumberView;
+@property (weak, nonatomic) IBOutlet UIImageView *addPhoneNumberImageView;
 @property (weak, nonatomic) IBOutlet UILabel *addPhoneNumberTitle;
 @property (weak, nonatomic) IBOutlet UILabel *addPhoneNumberDescription;
+@property (weak, nonatomic) IBOutlet UIView *addPhoneNumberBottomSeparatorView;
+
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property (strong, nonatomic) NSNumberFormatter *numberFormatter;
 
@@ -50,34 +67,21 @@
     
     self.buyPROBarButtonItem.title = AMLocalizedString(@"upgrade", @"Caption of a button to upgrade the account to Pro status");
     
-    self.profileView.backgroundColor = UIColor.mnz_background;
     self.viewAndEditProfileLabel.text = AMLocalizedString(@"viewAndEditProfile", @"Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile");
     self.viewAndEditProfileButton.accessibilityLabel = AMLocalizedString(@"viewAndEditProfile", @"Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile");
 
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewAndEditProfileTouchUpInside:)];
     self.profileView.gestureRecognizers = @[tapGestureRecognizer];
     
-    self.viewAndEditProfileDisclosureImageView.image = self.viewAndEditProfileDisclosureImageView.image.imageFlippedForRightToLeftLayoutDirection;
+    self.avatarImageView.image = self.avatarImageView.image.imageFlippedForRightToLeftLayoutDirection;
+    self.qrCodeImageView.image = self.qrCodeImageView.image.imageFlippedForRightToLeftLayoutDirection;
+    self.viewAndEditProfileImageView.image = self.viewAndEditProfileImageView.image.imageFlippedForRightToLeftLayoutDirection;
+    self.addPhoneNumberImageView.image = self.addPhoneNumberImageView.image.imageFlippedForRightToLeftLayoutDirection;
     
     _numberFormatter = [[NSNumberFormatter alloc] init];
     [_numberFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
     [_numberFormatter setLocale:[NSLocale currentLocale]];
     [_numberFormatter setMaximumFractionDigits:0];
-    
-    MEGAContactLinkCreateRequestDelegate *delegate = [[MEGAContactLinkCreateRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
-        CGSize qrImageSie = self.qrCodeImageView.frame.size;
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-            NSString *destination = [NSString stringWithFormat:@"https://mega.nz/C!%@", [MEGASdk base64HandleForHandle:request.nodeHandle]];
-            UIImage *image = [UIImage mnz_qrImageFromString:destination withSize:qrImageSie color:[UIColor mnz_qr:self.traitCollection] backgroundColor:[UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection]];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                self.qrCodeImageView.image = image;
-                self.avatarImageView.layer.borderColor = [UIColor whiteColor].CGColor;
-                self.avatarImageView.layer.borderWidth = 6.0f;
-                self.avatarImageView.layer.cornerRadius = 40.0f;
-            });
-        });
-    }];
-    [[MEGASdkManager sharedMEGASdk] contactLinkCreateRenew:NO delegate:delegate];
 
     [[MEGAPurchase sharedInstance] setPricingsDelegate:self];
     
@@ -85,6 +89,8 @@
     self.addPhoneNumberView.hidden = YES;
     
     [self configAddPhoneNumberTexts];
+    
+    [self updateAppearance];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -92,7 +98,6 @@
     
     [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
-    
     
     if (MEGASdkManager.sharedMEGASdk.mnz_shouldRequestAccountDetails) {
         [MEGASdkManager.sharedMEGASdk getAccountDetails];
@@ -113,7 +118,32 @@
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateAppearance];
+            
+            [self.tableView reloadData];
+        }
+    }
+}
+
 #pragma mark - Private
+
+- (void)updateAppearance {
+    self.view.backgroundColor = UIColor.mnz_background;
+    
+    self.tableView.separatorColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
+    
+    self.profileView.backgroundColor = [UIColor mnz_mainBarsColorForTraitCollection:self.traitCollection];
+    self.viewAndEditProfileLabel.textColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
+    self.profileBottomSeparatorView.backgroundColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
+    
+    self.addPhoneNumberView.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
+    self.addPhoneNumberBottomSeparatorView.backgroundColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
+}
 
 - (void)configAddPhoneNumberTexts {
     self.addPhoneNumberTitle.text = AMLocalizedString(@"Add Your Phone Number", nil);
@@ -155,7 +185,7 @@
         [self.navigationController popToRootViewControllerAnimated:NO];
     }
     
-    NSIndexPath *achievementsIndexPath = [NSIndexPath indexPathForRow:3 inSection:0];
+    NSIndexPath *achievementsIndexPath = [NSIndexPath indexPathForRow:MyAccountAchievements inSection:MyAccountSectionMEGA];
     [self tableView:self.tableView didSelectRowAtIndexPath:achievementsIndexPath];
 }
 
@@ -165,11 +195,19 @@
         [self.navigationController popToRootViewControllerAnimated:NO];
     }
     
-    NSIndexPath *offlineIndexPath = [NSIndexPath indexPathForRow:5 inSection:0];
+    NSIndexPath *offlineIndexPath = [NSIndexPath indexPathForRow:MyAccountOffline inSection:MyAccountSectionMEGA];
     [self tableView:self.tableView didSelectRowAtIndexPath:offlineIndexPath];
 }
 
 #pragma mark - IBActions
+
+- (IBAction)scanQrCode:(UIBarButtonItem *)sender {
+    ContactLinkQRViewController *contactLinkVC = [[UIStoryboard storyboardWithName:@"ContactLinkQR" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactLinkQRViewControllerID"];
+    contactLinkVC.scanCode = YES;
+    contactLinkVC.modalPresentationStyle = UIModalPresentationFullScreen;
+    
+    [self presentViewController:contactLinkVC animated:YES completion:nil];
+}
 
 - (IBAction)buyPROTouchUpInside:(UIBarButtonItem *)sender {
     if ([[MEGASdkManager sharedMEGASdk] mnz_accountDetails]) {
@@ -195,48 +233,47 @@
 
 #pragma mark - UITableViewDataSource
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 2;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 7;
+    return (section == MyAccountSectionMEGA) ? 6 : 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *identifier;
-    if (indexPath.row == 0) {
-        identifier = @"MyAccountHallUsedStorageTableViewCellID";
-    } else if (indexPath.row == 3) {
-        identifier = @"MyAccountHallWithSubtitleTableViewCellID";
-    } else {
-        identifier = @"MyAccountHallTableViewCellID";
-    }
-    
+    NSString *identifier = @"MyAccountHallTableViewCellID";
     MyAccountHallTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
     if (cell == nil) {
         cell = [[MyAccountHallTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
     
+    if (indexPath.section == MyAccountSectionOther) {
+        cell.sectionLabel.text = AMLocalizedString(@"settingsTitle", @"Title of the Settings section");
+        cell.iconImageView.image = [UIImage imageNamed:@"icon-settings"].imageFlippedForRightToLeftLayoutDirection;
+        cell.pendingView.hidden = YES;
+        cell.pendingLabel.text = nil;
+        
+        return cell;
+    }
+    
     switch (indexPath.row) {
-        case 0: { // Used Storage
-            cell.sectionLabel.text = AMLocalizedString(@"usedStorage", @"Title of the Used Storage section");
+        case MyAccountStorage: {
+            cell.iconImageView.image = [UIImage imageNamed:@"icon-storage"].imageFlippedForRightToLeftLayoutDirection;
+            cell.sectionLabel.text = AMLocalizedString(@"Storage", @"Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible).");
             
             if ([[MEGASdkManager sharedMEGASdk] mnz_accountDetails]) {
                 MEGAAccountDetails *accountDetails = [[MEGASdkManager sharedMEGASdk] mnz_accountDetails];
-                cell.usedLabel.text = [Helper memoryStyleStringFromByteCount:accountDetails.storageUsed.longLongValue];
-                NSNumber *number = [NSNumber numberWithFloat:((accountDetails.storageUsed.floatValue / accountDetails.storageMax.floatValue) * 100)];
-                NSString *percentageString = [self.numberFormatter stringFromNumber:number];
-                NSString *ofString = [NSString stringWithFormat:AMLocalizedString(@"of %@", @"Sentece showed under the used space percentage to complete the info with the maximum storage."), [Helper memoryStyleStringFromByteCount:accountDetails.storageMax.longLongValue]];
-                cell.usedPercentageLabel.text = [NSString stringWithFormat:@"%@ %% %@", percentageString, ofString];
-                cell.usedProgressView.progress = number.floatValue / 100;
+                cell.detailLabel.text = [NSString stringWithFormat:@"%@ / %@", [Helper memoryStyleStringFromByteCount:accountDetails.storageUsed.longLongValue], [Helper memoryStyleStringFromByteCount:accountDetails.storageMax.longLongValue]];
             } else {
-                cell.usedLabel.text = @"";
-                cell.usedPercentageLabel.text = @"";
-                cell.usedProgressView.progress = 0;
+                cell.detailTextLabel.text = @"";
             }
             break;
         }
             
-        case 1: { // Notifications
+        case MyAccountNotifications: {
             cell.sectionLabel.text = AMLocalizedString(@"notifications", nil);
-            cell.iconImageView.image = [UIImage imageNamed:@"myAccountNotificationsIcon"];
+            cell.iconImageView.image = [UIImage imageNamed:@"icon-notifications"].imageFlippedForRightToLeftLayoutDirection;
             NSUInteger unseenUserAlerts = [MEGASdkManager sharedMEGASdk].userAlertList.mnz_relevantUnseenCount;
             if (unseenUserAlerts == 0) {
                 cell.pendingView.hidden = YES;
@@ -252,9 +289,9 @@
             break;
         }
             
-        case 2: { // Contacts
+        case MyAccountContacts: {
             cell.sectionLabel.text = AMLocalizedString(@"contactsTitle", @"Title of the Contacts section");
-            cell.iconImageView.image = [UIImage imageNamed:@"myAccountContactsIcon"];
+            cell.iconImageView.image = [UIImage imageNamed:@"icon-contacts"].imageFlippedForRightToLeftLayoutDirection;
             MEGAContactRequestList *incomingContactsLists = [[MEGASdkManager sharedMEGASdk] incomingContactRequests];
             NSUInteger incomingContacts = incomingContactsLists.size.unsignedIntegerValue;
             if (incomingContacts == 0) {
@@ -271,34 +308,25 @@
             break;
         }
             
-        case 3: { // Achievements
+        case MyAccountAchievements: {
             cell.sectionLabel.text = AMLocalizedString(@"achievementsTitle", @"Title of the Achievements section");
-            cell.subtitleLabel.text = AMLocalizedString(@"inviteFriendsAndGetRewards", @"Subtitle show under the Achievements label to explain what is this section");
-            cell.iconImageView.image = [UIImage imageNamed:@"myAccountAchievementsIcon"];
+            cell.iconImageView.image = [UIImage imageNamed:@"icon-achievements"].imageFlippedForRightToLeftLayoutDirection;
             cell.pendingView.hidden = YES;
             cell.pendingLabel.text = nil;
             break;
         }
             
-        case 4: { // Transfers
+        case MyAccountTransfers: {
             cell.sectionLabel.text = AMLocalizedString(@"transfers", @"Title of the Transfers section");
-            cell.iconImageView.image = [UIImage imageNamed:@"myAccountTransfersIcon"];
+            cell.iconImageView.image = [UIImage imageNamed:@"icon-transfers"].imageFlippedForRightToLeftLayoutDirection;
             cell.pendingView.hidden = YES;
             cell.pendingLabel.text = nil;
             break;
         }
             
-        case 5: { // Offline
+        case MyAccountOffline: {
             cell.sectionLabel.text = AMLocalizedString(@"offline", @"Title of the Offline section");
-            cell.iconImageView.image = [UIImage imageNamed:@"myAccountOfflineIcon"];
-            cell.pendingView.hidden = YES;
-            cell.pendingLabel.text = nil;
-            break;
-        }
-            
-        case 6: { // Settings
-            cell.sectionLabel.text = AMLocalizedString(@"settingsTitle", @"Title of the Settings section");
-            cell.iconImageView.image = [UIImage imageNamed:@"myAccountSettingsIcon"];
+            cell.iconImageView.image = [UIImage imageNamed:@"icon-offline"].imageFlippedForRightToLeftLayoutDirection;
             cell.pendingView.hidden = YES;
             cell.pendingLabel.text = nil;
             break;
@@ -312,7 +340,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     CGFloat heightForRow;
-    if (indexPath.row == 3 && ![[MEGASdkManager sharedMEGASdk] isAchievementsEnabled]) {
+    if (indexPath.row == MyAccountAchievements && ![MEGASdkManager.sharedMEGASdk isAchievementsEnabled]) {
         heightForRow = 0.0f;
     } else {
         heightForRow = 60.0f;
@@ -324,8 +352,16 @@
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == MyAccountSectionOther) {
+        SettingsTableViewController *settingsTVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"SettingsTableViewControllerID"];
+        [self.navigationController pushViewController:settingsTVC animated:YES];
+        
+        [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+        return;
+    }
+    
     switch (indexPath.row) {
-        case 0: { // Used Storage
+        case MyAccountStorage: {
             if ([[MEGASdkManager sharedMEGASdk] mnz_accountDetails]) {
                 UsageViewController *usageVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UsageViewControllerID"];
                 [self.navigationController pushViewController:usageVC animated:YES];
@@ -336,44 +372,43 @@
             break;
         }
             
-        case 1: { // Notifications
+        case MyAccountNotifications: {
             NotificationsTableViewController *notificationsTVC = [[UIStoryboard storyboardWithName:@"Notifications" bundle:nil] instantiateViewControllerWithIdentifier:@"NotificationsTableViewControllerID"];
             [self.navigationController pushViewController:notificationsTVC animated:YES];
             break;
         }
             
-        case 2: { // Contacts
+        case MyAccountContacts: {
             ContactsViewController *contactsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsViewControllerID"];
             [self.navigationController pushViewController:contactsVC animated:YES];
             break;
         }
             
-        case 3: { // Achievements
+        case MyAccountAchievements: {
             AchievementsViewController *achievementsVC = [[UIStoryboard storyboardWithName:@"Achievements" bundle:nil] instantiateViewControllerWithIdentifier:@"AchievementsViewControllerID"];
             [self.navigationController pushViewController:achievementsVC animated:YES];
             break;
         }
             
-        case 4: { // Transfers
+        case MyAccountTransfers: {
             TransfersViewController *transferVC = [[UIStoryboard storyboardWithName:@"Transfers" bundle:nil] instantiateViewControllerWithIdentifier:@"TransfersViewControllerID"];
             [self.navigationController pushViewController:transferVC animated:YES];
             break;
         }
             
-        case 5: { // Offline
+        case MyAccountOffline: {
             OfflineViewController *offlineVC = [[UIStoryboard storyboardWithName:@"Offline" bundle:nil] instantiateViewControllerWithIdentifier:@"OfflineViewControllerID"];
             [self.navigationController pushViewController:offlineVC animated:YES];
-            break;
-        }
-            
-        case 6: { // Settings
-            SettingsTableViewController *settingsTVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"SettingsTableViewControllerID"];
-            [self.navigationController pushViewController:settingsTVC animated:YES];
             break;
         }
     }
     
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+//To remove the space between the table view and the profile view or the add phone number view
+- (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 0.01f;
 }
 
 #pragma mark - MEGAPurchasePricingDelegate
@@ -385,12 +420,12 @@
 #pragma mark - MEGAGlobalDelegate
 
 - (void)onContactRequestsUpdate:(MEGASdk *)api contactRequestList:(MEGAContactRequestList *)contactRequestList {
-    NSIndexPath *contactsIndexPath = [NSIndexPath indexPathForRow:2 inSection:0];
+    NSIndexPath *contactsIndexPath = [NSIndexPath indexPathForRow:MyAccountContacts inSection:MyAccountSectionMEGA];
     [self.tableView reloadRowsAtIndexPaths:@[contactsIndexPath] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 - (void)onUserAlertsUpdate:(MEGASdk *)api userAlertList:(MEGAUserAlertList *)userAlertList {
-    NSIndexPath *notificationsIndexPath = [NSIndexPath indexPathForRow:1 inSection:0];
+    NSIndexPath *notificationsIndexPath = [NSIndexPath indexPathForRow:MyAccountNotifications inSection:MyAccountSectionMEGA];
     [self.tableView reloadRowsAtIndexPaths:@[notificationsIndexPath] withRowAnimation:UITableViewRowAnimationNone];
 }
 

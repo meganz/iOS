@@ -1036,7 +1036,7 @@
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
 "cloudDriveIsFull"="[S]คลาวด์ไดร์ฟของคุณเต็มแล้ว[/S] [A]อัปเกรด[/A]เป็นบัญชี PRO และรับพื้นที่เก็บข้อมูลบนคลาวด์[S]สูงสุด %@ TB (%@ GB)[/S]";
 /* Storage related with the MEGA PRO account level you can subscribe */
-"productSpace"="ที่เก็บข้อมูล";
+"Storage"="ที่เก็บข้อมูล";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "transferQuota"="โควต้าการถ่ายโอน";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
