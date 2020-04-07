@@ -3,7 +3,7 @@ import MessageKit
 class ChatViewContactCell: MessageContentCell {
 
     open var imageView: UIImageView = {
-        let imageView = UIImageView()
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
         imageView.contentMode = .scaleAspectFit
         imageView.layer.cornerRadius = 20
         imageView.clipsToBounds = true
@@ -66,6 +66,7 @@ class ChatViewContactCell: MessageContentCell {
             title = megaMessage.userName(at: 0)
             detail = megaMessage.userEmail(at: 0)
         } else {
+            imageView.image = UIImage(forName: "\(megaMessage.usersCount)", size: imageView.bounds.size, backgroundColor: .mnz_gray999999(), textColor: .white, font: UIFont.mnz_SFUIRegular(withSize: imageView.bounds.size.width / 2))
             var usersString = NSLocalizedString("XContactsSelected", comment: "")
             usersString = usersString.replacingOccurrences(of: "[X]", with: "\(megaMessage.usersCount)", options: .literal, range: nil)
             title = usersString
@@ -74,6 +75,7 @@ class ChatViewContactCell: MessageContentCell {
             for index in 2...megaMessage.usersCount {
                 emails = "\(emails!) \(megaMessage.userEmail(at: index - 1)!)"
             }
+
            detail = emails!
         }
         

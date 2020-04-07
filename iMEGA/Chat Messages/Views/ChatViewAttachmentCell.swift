@@ -3,7 +3,7 @@ import MessageKit
 class ChatViewAttachmentCell: MessageContentCell {
 
     open var imageView: UIImageView = {
-        let imageView = UIImageView()
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
