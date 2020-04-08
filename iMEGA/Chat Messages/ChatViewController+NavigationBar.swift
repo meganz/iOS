@@ -37,7 +37,7 @@ extension ChatViewController {
     }
     
     private func addRightBarButtons() {
-        self.navigationItem.rightBarButtonItems = rightBarButtons
+        navigationItem.rightBarButtonItems = rightBarButtons
         
         let shouldEnableAudioVideoCall = !shouldDisableAudioVideoCall
         audioCallBarButtonItem.isEnabled = shouldEnableAudioVideoCall

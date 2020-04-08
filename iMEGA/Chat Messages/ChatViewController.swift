@@ -24,7 +24,8 @@ class ChatViewController: MessagesViewController {
     }
 
     lazy var chatRoomDelegate: ChatRoomDelegate = {
-        return ChatRoomDelegate(chatRoom: chatRoom, messagesCollectionView: messagesCollectionView)
+        return ChatRoomDelegate(chatRoom: chatRoom,
+                                messagesCollectionView: messagesCollectionView)
     }()
 
     lazy var audioCallBarButtonItem: UIBarButtonItem = {

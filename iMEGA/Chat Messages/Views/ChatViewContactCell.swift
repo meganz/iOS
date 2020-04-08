@@ -88,8 +88,6 @@ class ChatViewContactCell: MessageContentCell {
 open class CustomContactMessageSizeCalculator: MessageSizeCalculator {
     public override init(layout: MessagesCollectionViewFlowLayout? = nil) {
         super.init(layout: layout)
-        outgoingAvatarSize = .zero
-        outgoingMessageTopLabelAlignment = LabelAlignment(textAlignment: .right, textInsets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 12))
         incomingAccessoryViewSize = CGSize(width: 30, height: 30)
         outgoingAccessoryViewSize = CGSize(width: 30, height: 30)
         
