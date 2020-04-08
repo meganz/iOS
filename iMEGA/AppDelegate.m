@@ -519,6 +519,10 @@
                             [callVC tapOnVideoCallkitWhenDeviceIsLocked];
                         }
                     }
+                    if ([presentedVC isKindOfClass:CallViewController.class]) {
+                        CallViewController *callVC = (CallViewController *)UIApplication.mnz_presentingViewController;
+                        [callVC tapOnVideoCallkitWhenDeviceIsLocked];
+                    }
                 } else {
                     self.chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:handle];
                     MEGAChatConnection chatConnection = [[MEGASdkManager sharedMEGAChatSdk] chatConnectionState:self.chatRoom.chatId];
