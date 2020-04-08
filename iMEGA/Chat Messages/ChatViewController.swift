@@ -52,21 +52,13 @@ class ChatViewController: MessagesViewController {
     // MARK: - Overriden methods
 
     override func viewDidLoad() {
-
         messagesCollectionView = MessagesCollectionView(frame: .zero,
                                                         collectionViewLayout: ChatViewMessagesFlowLayout())
         registerCustomCells()
 
         super.viewDidLoad()
-
-        messagesCollectionView.register(ChatViewIntroductionHeaderView.nib,
-                                        forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-                                        withReuseIdentifier: ChatViewIntroductionHeaderView.reuseIdentifier)
-
-        messagesCollectionView.messagesDataSource = self
-        messagesCollectionView.messagesLayoutDelegate = self
-        messagesCollectionView.messagesDisplayDelegate = self
-
+        
+        configureMessageCollectionView()
         update()
     }
 
@@ -179,6 +171,26 @@ class ChatViewController: MessagesViewController {
     }
 
     // MARK: - Private methods
+    
+    private func configureMessageCollectionView() {
+        messagesCollectionView.register(ChatViewIntroductionHeaderView.nib,
+                                        forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+                                        withReuseIdentifier: ChatViewIntroductionHeaderView.reuseIdentifier)
+
+        messagesCollectionView.messagesDataSource = self
+        messagesCollectionView.messagesLayoutDelegate = self
+        messagesCollectionView.messagesDisplayDelegate = self
+        
+        let flowLayout = messagesCollectionView.messagesCollectionViewFlowLayout as? ChatViewMessagesFlowLayout
+        
+        let accessorySize = CGSize(width: 30, height: 30)
+        flowLayout?.setMessageIncomingAccessoryViewSize(accessorySize)
+        flowLayout?.setMessageOutgoingAccessoryViewSize(accessorySize)
+        
+        let accessoryPadding = HorizontalEdgeInsets(left: 10, right: 10)
+        flowLayout?.setMessageIncomingAccessoryViewPadding(accessoryPadding)
+        flowLayout?.setMessageOutgoingAccessoryViewPadding(accessoryPadding)
+    }
 
     private func registerCustomCells() {
         messagesCollectionView.register(ChatViewCallCollectionCell.nib,
