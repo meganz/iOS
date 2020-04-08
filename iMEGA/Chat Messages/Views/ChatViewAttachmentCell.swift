@@ -1,5 +1,11 @@
 import MessageKit
 
+protocol AttachmentCellDataSource {
+    var title: String { get }
+    var subtitle: String { get }
+    func set(imageView: UIImageView)
+}
+
 class ChatViewAttachmentCell: MessageContentCell {
 
     open var imageView: UIImageView = {
@@ -12,6 +18,7 @@ class ChatViewAttachmentCell: MessageContentCell {
         let titleLabel = UILabel(frame: CGRect.zero)
         titleLabel.font = UIFont.mnz_SFUIMedium(withSize: 14)
         titleLabel.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        titleLabel.lineBreakMode = .byTruncatingMiddle
         return titleLabel
     }()
 
@@ -19,6 +26,7 @@ class ChatViewAttachmentCell: MessageContentCell {
         let detailLabel = UILabel(frame: CGRect.zero)
         detailLabel.font = UIFont.mnz_SFUIRegular(withSize: 12)
         detailLabel.textColor = #colorLiteral(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)
+        detailLabel.lineBreakMode = .byTruncatingMiddle
         return detailLabel
     }()
 
@@ -49,74 +57,56 @@ class ChatViewAttachmentCell: MessageContentCell {
         setupConstraints()
     }
     
+    var attachment: AttachmentCellDataSource! {
+        didSet {
+            configureUI()
+        }
+    }
+    
+    private func configureUI() {
+        titleLabel.text = attachment.title
+        detailLabel.text = attachment.subtitle
+        attachment.set(imageView: imageView)
+    }
+    
     override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
         super.configure(with: message, at: indexPath, and: messagesCollectionView)
         
         guard let chatMessage = message as? ChatMessage else {
             return
         }
-        let megaMessage = chatMessage.message
         
-        var title, detail : String
-        let totalNodes = megaMessage.nodeList.size.uintValue
-        if totalNodes == 1 {
-            let node = megaMessage.nodeList.node(at: 0)!
-            title = node.name
-            detail = Helper.memoryStyleString(fromByteCount: node.size.int64Value)
-            imageView.mnz_setThumbnail(by: node)
-        } else {
-            title = String(format: NSLocalizedString("files", comment: ""), totalNodes)
-
-            var totalSize = 0
-            for index in 0...totalNodes {
-                totalSize += megaMessage.nodeList.node(at: Int(index))!.size.intValue
-            }
-            detail = Helper.memoryStyleString(fromByteCount: Int64(totalSize))
-        }
+        self.attachment = chatMessage
+    }
+    
+    func sizeThatFits() -> CGSize {
+        titleLabel.sizeToFit()
+        detailLabel.sizeToFit()
         
-        titleLabel.text = title
-        detailLabel.text = detail
-        
+        let width = 75 + max(titleLabel.bounds.width, detailLabel.bounds.width)
+        return CGSize(width: width, height: 80)
     }
 }
 
 open class ChatViewAttachmentCellCalculator: MessageSizeCalculator {
+    
+    let chatViewAttachmentCell = ChatViewAttachmentCell()
+    
     public override init(layout: MessagesCollectionViewFlowLayout? = nil) {
         super.init(layout: layout)
         configureAccessoryView()
     }
 
     open override func messageContainerSize(for message: MessageType) -> CGSize {
-        switch message.kind {
-        case .custom:
-            let maxWidth = messageContainerMaxWidth(for: message)
-            guard let chatMessage = message as? ChatMessage else {
-                return .zero
-            }
-            
-            let megaMessage = chatMessage.message
-            var title, detail : String
-            var width = CGFloat()
-            let totalNodes = megaMessage.nodeList.size.uintValue
-            if totalNodes == 1 {
-                let node = megaMessage.nodeList.node(at: 0)!
-                title = node.name
-                detail = Helper.memoryStyleString(fromByteCount: node.size.int64Value)
-            } else {
-                title = String(format: NSLocalizedString("files", comment: ""), totalNodes)
-
-                var totalSize = 0
-                for index in 0...totalNodes {
-                    totalSize += megaMessage.nodeList.node(at: Int(index))!.size.intValue
-                }
-                detail = Helper.memoryStyleString(fromByteCount: Int64(totalSize))
-            }
-            let titleSize: CGSize = title.size(withAttributes: [.font: UIFont.mnz_SFUIMedium(withSize: 14)!])
-            let detailSize: CGSize = detail.size(withAttributes: [.font: UIFont.mnz_SFUIRegular(withSize: 12)!])
-            width = 75 + max(titleSize.width, detailSize.width)
-            return CGSize(width: min(width, maxWidth), height: 80)
-        default:
-            fatalError("messageContainerSize received unhandled MessageDataType: \(message.kind)")
+       guard let chatMessage = message as? ChatMessage else {
+            fatalError("ChatViewAttachmentCellCalculator: wrong type message passed.")
         }
+        
+        let maxWidth = messageContainerMaxWidth(for: message)
+        
+        chatViewAttachmentCell.attachment = chatMessage
+        let size = chatViewAttachmentCell.sizeThatFits()
+        
+        return CGSize(width: min(size.width, maxWidth), height: size.height)
     }
 }

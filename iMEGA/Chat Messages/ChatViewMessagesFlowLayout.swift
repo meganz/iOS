@@ -3,7 +3,6 @@ import MessageKit
 class ChatViewMessagesFlowLayout: MessagesCollectionViewFlowLayout {
     lazy var chatViewCallCollectionCellCalculator = ChatViewCallCollectionCellCalculator(layout: self)
     lazy var chatViewAttachmentCellCalculator = ChatViewAttachmentCellCalculator(layout: self)
-    lazy var customContactMessageSizeCalculator = CustomContactMessageSizeCalculator(layout: self)
 
     override func cellSizeCalculatorForItem(at indexPath: IndexPath) -> CellSizeCalculator {
         let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
@@ -14,12 +13,10 @@ class ChatViewMessagesFlowLayout: MessagesCollectionViewFlowLayout {
             }
 
             switch chatMessage.message.type {
-            case .attachment:
+            case .attachment, .contact:
                 return chatViewAttachmentCellCalculator
             case .callEnded, .callStarted:
                 return chatViewCallCollectionCellCalculator
-            case .contact:
-                return customContactMessageSizeCalculator
             default:
                 return super.cellSizeCalculatorForItem(at: indexPath)
             }
@@ -31,8 +28,7 @@ class ChatViewMessagesFlowLayout: MessagesCollectionViewFlowLayout {
         var calculators = super.messageSizeCalculators()
         calculators.append(contentsOf: [
             chatViewAttachmentCellCalculator,
-            chatViewCallCollectionCellCalculator,
-            customContactMessageSizeCalculator
+            chatViewCallCollectionCellCalculator
         ])
         return calculators
     }
