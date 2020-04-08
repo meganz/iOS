@@ -8,7 +8,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
     // MARK: - Properties
 
     let chatRoom: MEGAChatRoom
-    let messagesCollectionView: MessagesCollectionView
+    weak var messagesCollectionView: MessagesCollectionView!
     var messages: [ChatMessage] = []
     var isChatRoomOpen: Bool = false
     

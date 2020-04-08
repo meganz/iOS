@@ -22,8 +22,4 @@ extension ChatViewController: MessagesLayoutDelegate {
 
         return .zero
     }
-
-    func customCellSizeCalculator(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CellSizeCalculator {
-        return CustomContactMessageSizeCalculator(layout: messagesCollectionView.messagesCollectionViewFlowLayout)
-    }
 }

@@ -32,8 +32,8 @@ class MessageTextView: UITextView {
     
     private lazy var placeholderTextView: UITextView = {
         let textView = UITextView()
-        textView.textColor = UIColor(fromHexString: "#848484")
-        textView.backgroundColor = .clear
+        textView.textColor = #colorLiteral(red: 0.5176470588, green: 0.5176470588, blue: 0.5176470588, alpha: 1)
+        textView.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0)
         textView.font = font
         textView.isUserInteractionEnabled = false
         textView.isScrollEnabled = false
@@ -90,7 +90,7 @@ class MessageTextView: UITextView {
     
     func expand(_ expanded: Bool, expandedHeight: CGFloat?) {
         self.expandedHeight = expandedHeight
-        self.invalidateIntrinsicContentSize()
+        invalidateIntrinsicContentSize()
     }
     
     //MARK: - Private methods
