@@ -81,7 +81,11 @@ class ChatViewAttachmentCell: MessageContentCell {
 }
 
 open class ChatViewAttachmentCellCalculator: MessageSizeCalculator {
-    
+    public override init(layout: MessagesCollectionViewFlowLayout? = nil) {
+        super.init(layout: layout)
+        configureAccessoryView()
+    }
+
     open override func messageContainerSize(for message: MessageType) -> CGSize {
         switch message.kind {
         case .custom:

@@ -84,7 +84,12 @@ class ChatViewContactCell: MessageContentCell {
 }
 
 open class CustomContactMessageSizeCalculator: MessageSizeCalculator {
-
+    
+    public override init(layout: MessagesCollectionViewFlowLayout? = nil) {
+        super.init(layout: layout)
+        configureAccessoryView()
+    }
+    
     open override func messageContainerSize(for message: MessageType) -> CGSize {
         switch message.kind {
         case .custom:
