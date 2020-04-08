@@ -35,6 +35,10 @@ extension ChatViewController: MessagesDisplayDelegate {
         // ensure any subviews are removed if not needed
         accessoryView.subviews.forEach { $0.removeFromSuperview() }
         accessoryView.backgroundColor = .clear
+        
+        guard shouldShowAccessoryView(for: message) else {
+            return
+        }
 
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "forwardChat"), for: .normal)
@@ -54,5 +58,14 @@ extension ChatViewController: MessagesDisplayDelegate {
             avatarView.set(avatar: avatar)
             avatarView.isHidden = isFromCurrentSender(message: message)
         }
+    }
+    
+    // MARK: - Private methods
+    
+    private func shouldShowAccessoryView(for message: MessageType) -> Bool {
+        guard let chatMessage = message as? ChatMessage else { return false }
+        
+        return (chatMessage.message.type == .contact
+            || chatMessage.message.type == .attachment)
     }
 }
