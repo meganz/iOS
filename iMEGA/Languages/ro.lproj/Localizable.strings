@@ -923,8 +923,6 @@
 "profile"="Profil";
 /* Title of the Achievements section */
 "achievementsTitle"="Realizări";
-/* Title of the Used storage section */
-"usedStorage"="Stocare folosită";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
 "inviteFriendsAndGetRewards"="Invită prieteni și obține bonusuri";
 /* Indicating text for when "you invite your friends" */
@@ -1021,12 +1019,6 @@
 "Renews on"="Se reînnoiește pe";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="Partajări primite";
-/* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
-"of %@"="din %@";
-/* Sentence shown under the used space to complete the info with the user account maximum storage. "used of {maximun storage}" */
-"used of %@"="folosit din %@";
-/* Sentence shown under the available space to complete the info with the user account maximum storage. "available of {maximun storage}" */
-"available of %@"="disponibil din %@";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Upgradează contul";
 /*  */

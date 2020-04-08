@@ -923,8 +923,6 @@
 "profile"="Cá Nhân";
 /* Title of the Achievements section */
 "achievementsTitle"="Phần Thưởng Thành Tích";
-/* Title of the Used storage section */
-"usedStorage"="Luợng sử dụng";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
 "inviteFriendsAndGetRewards"="Mời bạn bè tham gia sử dụng MEGA để nhận thêm phần thưởng";
 /* Indicating text for when "you invite your friends" */
@@ -1021,12 +1019,6 @@
 "Renews on"="Ngày chu kỳ mới";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="Mục Chia Sẻ Nhận Được";
-/* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
-"of %@"="trong tổng %@";
-/* Sentence shown under the used space to complete the info with the user account maximum storage. "used of {maximun storage}" */
-"used of %@"="trong tổng %@";
-/* Sentence shown under the available space to complete the info with the user account maximum storage. "available of {maximun storage}" */
-"available of %@"="còn lại trong tổng %@";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Nâng cấp tài khoản";
 /*  */

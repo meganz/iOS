@@ -923,8 +923,6 @@
 "profile"="プロファイル";
 /* Title of the Achievements section */
 "achievementsTitle"="実績";
-/* Title of the Used storage section */
-"usedStorage"="使用済みストレージ";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
 "inviteFriendsAndGetRewards"="友人を招待してボーナスを獲得";
 /* Indicating text for when "you invite your friends" */
@@ -1021,12 +1019,6 @@
 "Renews on"="更新日";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="共有フォルダ受信";
-/* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
-"of %@"="全体は%@";
-/* Sentence shown under the used space to complete the info with the user account maximum storage. "used of {maximun storage}" */
-"used of %@"="使用可能枠%@";
-/* Sentence shown under the available space to complete the info with the user account maximum storage. "available of {maximun storage}" */
-"available of %@"="利用可能枠%@";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="アカウントをアップグレードする";
 /*  */

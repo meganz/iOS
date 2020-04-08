@@ -52,8 +52,6 @@ typedef NS_ENUM(NSInteger, MyAccount) {
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
-@property (strong, nonatomic) NSNumberFormatter *numberFormatter;
-
 @end
 
 @implementation MyAccountHallViewController
@@ -77,11 +75,6 @@ typedef NS_ENUM(NSInteger, MyAccount) {
     self.qrCodeImageView.image = self.qrCodeImageView.image.imageFlippedForRightToLeftLayoutDirection;
     self.viewAndEditProfileImageView.image = self.viewAndEditProfileImageView.image.imageFlippedForRightToLeftLayoutDirection;
     self.addPhoneNumberImageView.image = self.addPhoneNumberImageView.image.imageFlippedForRightToLeftLayoutDirection;
-    
-    _numberFormatter = [[NSNumberFormatter alloc] init];
-    [_numberFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
-    [_numberFormatter setLocale:[NSLocale currentLocale]];
-    [_numberFormatter setMaximumFractionDigits:0];
 
     [[MEGAPurchase sharedInstance] setPricingsDelegate:self];
     
@@ -363,7 +356,7 @@ typedef NS_ENUM(NSInteger, MyAccount) {
     switch (indexPath.row) {
         case MyAccountStorage: {
             if ([[MEGASdkManager sharedMEGASdk] mnz_accountDetails]) {
-                UsageViewController *usageVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UsageViewControllerID"];
+                UsageViewController *usageVC = [[UIStoryboard storyboardWithName:@"Usage" bundle:nil] instantiateViewControllerWithIdentifier:@"UsageViewControllerID"];
                 [self.navigationController pushViewController:usageVC animated:YES];
             } else {
                 MEGALogError(@"Account details unavailable");

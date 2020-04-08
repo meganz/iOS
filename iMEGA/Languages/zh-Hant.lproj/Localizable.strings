@@ -923,8 +923,6 @@
 "profile"="檔案";
 /* Title of the Achievements section */
 "achievementsTitle"="成果";
-/* Title of the Used storage section */
-"usedStorage"="已使用空間";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
 "inviteFriendsAndGetRewards"="邀請朋友並獲得獎勵";
 /* Indicating text for when "you invite your friends" */
@@ -1021,12 +1019,6 @@
 "Renews on"="更新";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="傳入的分享";
-/* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
-"of %@"="%@ 中的";
-/* Sentence shown under the used space to complete the info with the user account maximum storage. "used of {maximun storage}" */
-"used of %@"="%@ 中已用";
-/* Sentence shown under the available space to complete the info with the user account maximum storage. "available of {maximun storage}" */
-"available of %@"="共 %@ 可用";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="升級帳號";
 /*  */
