@@ -435,6 +435,7 @@
     [self enableDisableVideo:self.enableDisableVideoButton];
     self.call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
     self.localPeer.video = YES;
+    [self enableLoudspeaker];
 }
 
 #pragma mark - Private
@@ -509,8 +510,8 @@
                 self.speakerEnabled = NO;
             }
         }
-        if (routeChangeReason == AVAudioSessionRouteChangeReasonRouteConfigurationChange) {
-            if (self.isSpeakerEnabled && self.call.status <= MEGAChatCallStatusInProgress) {
+        if (routeChangeReason == AVAudioSessionRouteChangeReasonCategoryChange) {
+            if (self.isSpeakerEnabled && (self.call.status <= MEGAChatCallStatusInProgress || self.call.status == MEGAChatCallStatusReconnecting)) {
                 [self enableLoudspeaker];
             }
         }
