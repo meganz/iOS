@@ -19,7 +19,11 @@ extension ChatViewController: MessagesDisplayDelegate {
     }
 
     func messageStyle(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageStyle {
-        return .custom { containerView in
+        return .custom { [weak self] containerView in
+            guard let `self` = self else {
+                return
+            }
+            
             containerView.layer.cornerRadius = 13.0
             containerView.layer.borderColor = self.isFromCurrentSender(message: message) ?  #colorLiteral(red: 0, green: 0.5803921569, blue: 0.462745098, alpha: 1).cgColor :  #colorLiteral(red: 0.8941176471, green: 0.9215686275, blue: 0.9176470588, alpha: 1).cgColor
             containerView.layer.borderWidth = 1
@@ -33,7 +37,7 @@ extension ChatViewController: MessagesDisplayDelegate {
         accessoryView.backgroundColor = .clear
 
         let button = UIButton()
-        button.setImage(UIImage(named: "forwardChat"), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "forwardChat"), for: .normal)
         accessoryView.addSubview(button)
         button.frame = accessoryView.bounds
         button.isUserInteractionEnabled = false // respond to accessoryView tap through `MessageCellDelegate`
