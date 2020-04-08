@@ -180,16 +180,6 @@ class ChatViewController: MessagesViewController {
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messagesLayoutDelegate = self
         messagesCollectionView.messagesDisplayDelegate = self
-        
-        let flowLayout = messagesCollectionView.messagesCollectionViewFlowLayout as? ChatViewMessagesFlowLayout
-        
-        let accessorySize = CGSize(width: 30, height: 30)
-        flowLayout?.setMessageIncomingAccessoryViewSize(accessorySize)
-        flowLayout?.setMessageOutgoingAccessoryViewSize(accessorySize)
-        
-        let accessoryPadding = HorizontalEdgeInsets(left: 10, right: 10)
-        flowLayout?.setMessageIncomingAccessoryViewPadding(accessoryPadding)
-        flowLayout?.setMessageOutgoingAccessoryViewPadding(accessoryPadding)
     }
 
     private func registerCustomCells() {
