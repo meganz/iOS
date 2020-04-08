@@ -209,6 +209,7 @@
 - (void)tapOnVideoCallkitWhenDeviceIsLocked {
     self.enableDisableVideoButton.selected = NO;
     [self enableDisableVideo:self.enableDisableVideoButton];
+    [self enableLoudspeaker];
 }
 
 #pragma mark - Private
@@ -235,8 +236,8 @@
                 self.speakerEnabled = NO;
             }
         }
-        if (routeChangeReason == AVAudioSessionRouteChangeReasonRouteConfigurationChange) {
-            if (self.isSpeakerEnabled && self.call.status <= MEGAChatCallStatusInProgress) {
+        if (routeChangeReason == AVAudioSessionRouteChangeReasonCategoryChange) {
+            if (self.isSpeakerEnabled && (self.call.status <= MEGAChatCallStatusInProgress || self.call.status == MEGAChatCallStatusReconnecting)) {
                 [self enableLoudspeaker];
             }
         }
