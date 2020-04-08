@@ -75,12 +75,9 @@ class ChatViewController: MessagesViewController {
 
         let chatMessage = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView) as! ChatMessage
 
-        if chatMessage.message.type == .attachment {
+        if chatMessage.message.type == .attachment
+            || chatMessage.message.type == .contact {
             let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatViewAttachmentCell.reuseIdentifier, for: indexPath) as! ChatViewAttachmentCell
-            cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
-            return cell
-        } else if chatMessage.message.type == .contact {
-            let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatViewContactCell.reuseIdentifier, for: indexPath) as! ChatViewContactCell
             cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
             return cell
         } else {
@@ -180,16 +177,6 @@ class ChatViewController: MessagesViewController {
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messagesLayoutDelegate = self
         messagesCollectionView.messagesDisplayDelegate = self
-        
-        let flowLayout = messagesCollectionView.messagesCollectionViewFlowLayout as? ChatViewMessagesFlowLayout
-        
-        let accessorySize = CGSize(width: 30, height: 30)
-        flowLayout?.setMessageIncomingAccessoryViewSize(accessorySize)
-        flowLayout?.setMessageOutgoingAccessoryViewSize(accessorySize)
-        
-        let accessoryPadding = HorizontalEdgeInsets(left: 10, right: 10)
-        flowLayout?.setMessageIncomingAccessoryViewPadding(accessoryPadding)
-        flowLayout?.setMessageOutgoingAccessoryViewPadding(accessoryPadding)
     }
 
     private func registerCustomCells() {
@@ -197,8 +184,6 @@ class ChatViewController: MessagesViewController {
                                          forCellWithReuseIdentifier: ChatViewCallCollectionCell.reuseIdentifier)
         messagesCollectionView.register(ChatViewAttachmentCell.self,
                                          forCellWithReuseIdentifier: ChatViewAttachmentCell.reuseIdentifier)
-
-        messagesCollectionView.register(ChatViewContactCell.self, forCellWithReuseIdentifier: ChatViewContactCell.reuseIdentifier)
     }
 
     private func update() {
