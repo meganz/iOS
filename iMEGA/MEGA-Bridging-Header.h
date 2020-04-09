@@ -26,6 +26,7 @@
 #import "MEGAAssetsPickerController.h"
 #import "MEGAChatGenericRequestDelegate.h"
 #import "MEGAContactLinkCreateRequestDelegate.h"
+#import "MEGAGetPreviewRequestDelegate.h"
 #import "MEGAConstants.h"
 #import "MEGAGenericRequestDelegate.h"
 #import "MEGAInviteContactRequestDelegate.h"
@@ -51,3 +52,4 @@
 #import <PureLayout/PureLayout.h>
 #import "UIImage+GKContact.h"
 
+#import <YYWebImage/YYWebImage.h>

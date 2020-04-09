@@ -20,6 +20,11 @@
 		2FA6D9B02435558B007A8E81 /* InputBarAccessoryView.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2FA6D9AE24355528007A8E81 /* InputBarAccessoryView.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2FA6D9C42436C314007A8E81 /* ChatViewAttachmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA6D9C22436C314007A8E81 /* ChatViewAttachmentCell.swift */; };
 		2FA6D9DD243E8CB5007A8E81 /* ChatMediaCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA6D9DA243E8CB4007A8E81 /* ChatMediaCollectionViewCell.swift */; };
+		2FA6DA5D243E915F007A8E81 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FA6DA5C243E915F007A8E81 /* CoreFoundation.framework */; };
+		2FA6DA5E243E918D007A8E81 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432290A1EDD8271007DB542 /* QuartzCore.framework */; };
+		2FA6DA5F243E9191007A8E81 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432292A1EDD84FD007DB542 /* AssetsLibrary.framework */; };
+		2FA6DA60243E9198007A8E81 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432291B1EDD83E9007DB542 /* ImageIO.framework */; };
+		2FA6DA62243E919D007A8E81 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FA6DA61243E919D007A8E81 /* Accelerate.framework */; };
 		410AD3C11C883AA900BF939E /* MEGAAVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 410AD3C01C883AA900BF939E /* MEGAAVViewController.m */; };
 		411504941CEB183600BF38E3 /* SaveToCameraRollActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 411504931CEB183600BF38E3 /* SaveToCameraRollActivity.m */; };
 		4115D6441E718B1F004BB0FF /* UIImage+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 4115D6431E718B1F004BB0FF /* UIImage+MNZCategory.m */; };
@@ -1136,6 +1141,13 @@
 			remoteGlobalIDString = 88916B2C1CF0DF2F00469F91;
 			remoteInfo = MessageKitTests;
 		};
+		2FA6DAA2243E938E007A8E81 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2FA6DA9E243E938D007A8E81 /* YYWebImage.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D9312D061F36DC820055FE6D;
+			remoteInfo = YYWebImage;
+		};
 		7794AED9231E4E0A0039C1D2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 137361821A6664C300B740E8 /* Project object */;
@@ -1217,6 +1229,9 @@
 		2FA6D9AE24355528007A8E81 /* InputBarAccessoryView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = InputBarAccessoryView.framework; path = iMEGA/Vendor/MessageKit/Carthage/Build/iOS/InputBarAccessoryView.framework; sourceTree = "<group>"; };
 		2FA6D9C22436C314007A8E81 /* ChatViewAttachmentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewAttachmentCell.swift; sourceTree = "<group>"; };
 		2FA6D9DA243E8CB4007A8E81 /* ChatMediaCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatMediaCollectionViewCell.swift; sourceTree = "<group>"; };
+		2FA6DA5C243E915F007A8E81 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		2FA6DA61243E919D007A8E81 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		2FA6DA9E243E938D007A8E81 /* YYWebImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = YYWebImage.xcodeproj; path = Vendor/YYWebImage/Framework/YYWebImage.xcodeproj; sourceTree = "<group>"; };
 		410333D71B9993A000380FF3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		410333E11B99948600380FF3 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		410333EB1B9994F400380FF3 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = nl; path = nl.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
@@ -2633,6 +2648,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A82751101E97AB6E007CD9E2 /* libz.tbd in Frameworks */,
+				A82751141E97AB79007CD9E2 /* libsqlite3.tbd in Frameworks */,
+				A8F6E8941F9E770C0087859C /* MobileCoreServices.framework in Frameworks */,
+				2FA6DA62243E919D007A8E81 /* Accelerate.framework in Frameworks */,
+				2FA6DA60243E9198007A8E81 /* ImageIO.framework in Frameworks */,
+				2FA6DA5F243E9191007A8E81 /* AssetsLibrary.framework in Frameworks */,
+				2FA6DA5E243E918D007A8E81 /* QuartzCore.framework in Frameworks */,
+				2FA6DA5D243E915F007A8E81 /* CoreFoundation.framework in Frameworks */,
 				77FD20022359A5A7004FB892 /* libvideoframebuffer_objc.a in Frameworks */,
 				77FD20032359A5A7004FB892 /* libnative_api.a in Frameworks */,
 				77FD20042359A5A7004FB892 /* libvideocapture_objc.a in Frameworks */,
@@ -2640,7 +2663,6 @@
 				77FD1FFD2359A59C004FB892 /* libwebrtc.a in Frameworks */,
 				A82A38D7200D333100883533 /* libmediainfo.a in Frameworks */,
 				A82A38D0200D32BD00883533 /* libzen.a in Frameworks */,
-				A8F6E8941F9E770C0087859C /* MobileCoreServices.framework in Frameworks */,
 				A8F6E8931F9E75DD0087859C /* GLKit.framework in Frameworks */,
 				A8F6E8911F9E75D00087859C /* VideoToolbox.framework in Frameworks */,
 				A8F6E88F1F9E75B70087859C /* libwebsockets.a in Frameworks */,
@@ -2652,9 +2674,7 @@
 				A88BFFE11F0A52E90081BCE3 /* libsodium.a in Frameworks */,
 				A88BFFD51F0A52E90081BCE3 /* libcryptopp.a in Frameworks */,
 				A88BFFD81F0A52E90081BCE3 /* libcurl.a in Frameworks */,
-				A82751141E97AB79007CD9E2 /* libsqlite3.tbd in Frameworks */,
 				A82751121E97AB73007CD9E2 /* libresolv.tbd in Frameworks */,
-				A82751101E97AB6E007CD9E2 /* libz.tbd in Frameworks */,
 				A88BFFCF1F0A52E90081BCE3 /* libcares.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2918,6 +2938,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		2FA6DA9F243E938D007A8E81 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2FA6DAA3243E938E007A8E81 /* YYWebImage.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		41136FB91E1692650031C516 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -3004,6 +3032,7 @@
 		415226671A692EBD00EC7BB6 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				2FA6DA9E243E938D007A8E81 /* YYWebImage.xcodeproj */,
 				2F338D8224354CD5008015B3 /* MessageKit.xcodeproj */,
 				83C570C722E5BFCF00216896 /* PhoneNumberKit */,
 				A85A01D2228B0DA100C6ADBB /* FLEX */,
@@ -3390,6 +3419,8 @@
 		418851EE1A66826800FDBA15 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2FA6DA61243E919D007A8E81 /* Accelerate.framework */,
+				2FA6DA5C243E915F007A8E81 /* CoreFoundation.framework */,
 				2FA6D9AE24355528007A8E81 /* InputBarAccessoryView.framework */,
 				BF06E3E1243192EB00B30FB7 /* MessageKit.framework */,
 				BFE6DBF7242D879D00E2E5B4 /* MessageKit.framework */,
@@ -5696,6 +5727,10 @@
 					ProductGroup = 2F338D8324354CD5008015B3 /* Products */;
 					ProjectRef = 2F338D8224354CD5008015B3 /* MessageKit.xcodeproj */;
 				},
+				{
+					ProductGroup = 2FA6DA9F243E938D007A8E81 /* Products */;
+					ProjectRef = 2FA6DA9E243E938D007A8E81 /* YYWebImage.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -5722,6 +5757,13 @@
 			fileType = wrapper.cfbundle;
 			path = MessageKitTests.xctest;
 			remoteRef = 2F338D8924354CD5008015B3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		2FA6DAA3243E938E007A8E81 /* YYWebImage.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = YYWebImage.framework;
+			remoteRef = 2FA6DAA2243E938E007A8E81 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
