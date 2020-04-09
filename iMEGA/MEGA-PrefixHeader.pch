@@ -7,4 +7,5 @@
     #import "UIColor+MNZCategory.h"
     #import "UIDevice+MNZCategory.h"
     #import "UIFont+MNZCategory.h"
+    #import <YYWebImage/YYWebImage.h>
 #endif

@@ -6,6 +6,8 @@
 #import "UIImage+MNZCategory.h"
 #import "UIImage+GKContact.h"
 #import "MEGAGetThumbnailRequestDelegate.h"
+#import "MEGAGetPreviewRequestDelegate.h"
+#import <YYWebImage/YYWebImage.h>
 
 @implementation UIImageView (MNZCategory)
 
@@ -41,15 +43,36 @@
 
 - (void)mnz_setThumbnailByNode:(MEGANode *)node {
     if (node.hasThumbnail) {
-        NSString *thumbnailFilePath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
-        if ([[NSFileManager defaultManager] fileExistsAtPath:thumbnailFilePath]) {
-            self.image = [UIImage imageWithContentsOfFile:thumbnailFilePath];
+        NSString *path = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
+        if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
+            self.image = [YYImage imageWithContentsOfFile:path];
         } else {
-            MEGAGetThumbnailRequestDelegate *getThumbnailRequestDelegate = [[MEGAGetThumbnailRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
-                self.image = [UIImage imageWithContentsOfFile:request.file];
+            MEGAGetThumbnailRequestDelegate *delegate = [[MEGAGetThumbnailRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+                self.yy_imageURL = [NSURL fileURLWithPath:request.file];
             }];
             [self mnz_imageForNode:node];
-            [[MEGASdkManager sharedMEGASdk] getThumbnailNode:node destinationFilePath:thumbnailFilePath delegate:getThumbnailRequestDelegate];
+            [[MEGASdkManager sharedMEGASdk] getThumbnailNode:node destinationFilePath:path delegate:delegate];
+        }
+    } else {
+        [self mnz_imageForNode:node];
+    }
+}
+
+- (void)mnz_setPreviewByNode:(MEGANode *)node completion:(nullable MNZWebImageCompletionBlock)completion {
+    if (node.hasPreview) {
+        NSString *path = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"previewsV3"];
+        if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
+            self.image = [YYImage imageWithContentsOfFile:path];
+        } else {
+            MEGAGetPreviewRequestDelegate *delegate = [[MEGAGetPreviewRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+                self.yy_imageURL = [NSURL fileURLWithPath:request.file];
+                if (completion) {
+                    completion(request);
+                }
+                
+            }];
+            [self mnz_imageForNode:node];
+            [[MEGASdkManager sharedMEGASdk] getPreviewNode:node destinationFilePath:path delegate:delegate];
         }
     } else {
         [self mnz_imageForNode:node];

@@ -31,12 +31,17 @@ class ChatMediaCollectionViewCell: MessageContentCell {
         let megaMessage = chatMessage.message
         let node = megaMessage.nodeList.node(at: 0)!
         
-        self.imageView.mnz_setThumbnail(by: node)
+        self.imageView.mnz_setPreview(by: node) { (request) in
+            messagesCollectionView.reloadItems(at: [indexPath])
+        }
   
     }
 }
 
 open class ChatMediaCollectionViewSizeCalculator: MessageSizeCalculator {
+   
+    let cell = ChatMediaCollectionViewCell()
+
     public override init(layout: MessagesCollectionViewFlowLayout? = nil) {
         super.init(layout: layout)
     }
@@ -45,14 +50,36 @@ open class ChatMediaCollectionViewSizeCalculator: MessageSizeCalculator {
         switch message.kind {
         case .custom:
             let maxWidth = messageContainerMaxWidth(for: message)
+            let maxHeight = UIDevice.current.mnz_maxSideForChatBubble(withMedia: true)
             guard let chatMessage = message as? ChatMessage else {
                 return .zero
             }
            
             let megaMessage = chatMessage.message
-            let node = megaMessage.nodeList.node(at: 0)
+            let node = megaMessage.nodeList.node(at: 0)!
+            let previewFilePath = Helper.path(for: node, inSharedSandboxCacheDirectory: "previewsV3")
+         
+            if FileManager.default.fileExists(atPath: previewFilePath) {
+                let previewImage = YYImage(contentsOfFile: previewFilePath)
+                let ratio = previewImage!.size.width / previewImage!.size.height
+                var width, height : CGFloat
+                if ratio > 1 {
+                    width = min(maxWidth, previewImage!.size.width)
+                    height = width / ratio
+                } else {
+                    height = min(maxHeight, previewImage!.size.height)
+                    width = height * ratio
+                }
             
-            return CGSize(width: min(200, Int(maxWidth)), height: 200)
+                return CGSize(width: width, height: height)
+            }
+            if node.hasPreview() &&
+                node.height > 0 &&
+                node.width > 0 {
+                return CGSize(width: min(node.width, Int(maxWidth)), height: node.height)
+            }
+            return CGSize(width: 200, height: 200)
+
         default:
             fatalError("messageContainerSize received unhandled MessageDataType: \(message.kind)")
         }
