@@ -25,6 +25,9 @@
 		2FA6DA5F243E9191007A8E81 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432292A1EDD84FD007DB542 /* AssetsLibrary.framework */; };
 		2FA6DA60243E9198007A8E81 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432291B1EDD83E9007DB542 /* ImageIO.framework */; };
 		2FA6DA62243E919D007A8E81 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FA6DA61243E919D007A8E81 /* Accelerate.framework */; };
+		2FA6DAA4243ED05A007A8E81 /* YYWebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FA6DAA3243E938E007A8E81 /* YYWebImage.framework */; };
+		2FA6DAA5243ED07E007A8E81 /* MEGAGetPreviewRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8EC55B31F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.m */; };
+		2FA6DAA7243ED07F007A8E81 /* MEGAGetPreviewRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8EC55B31F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.m */; };
 		410AD3C11C883AA900BF939E /* MEGAAVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 410AD3C01C883AA900BF939E /* MEGAAVViewController.m */; };
 		411504941CEB183600BF38E3 /* SaveToCameraRollActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 411504931CEB183600BF38E3 /* SaveToCameraRollActivity.m */; };
 		4115D6441E718B1F004BB0FF /* UIImage+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 4115D6431E718B1F004BB0FF /* UIImage+MNZCategory.m */; };
@@ -2722,6 +2725,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2FA6DAA4243ED05A007A8E81 /* YYWebImage.framework in Frameworks */,
 				77FD201A2359E431004FB892 /* libnative_video.a in Frameworks */,
 				77FD20152359E3FA004FB892 /* libvideoframebuffer_objc.a in Frameworks */,
 				77FD20142359E3D2004FB892 /* libvideocapture_objc.a in Frameworks */,
@@ -6662,6 +6666,7 @@
 				945605491EDD6FAC0094EF0F /* Helper.m in Sources */,
 				9432294E1EDD9CEE007DB542 /* NSString+MNZCategory.m in Sources */,
 				A81F2C6C1F334FF0008600A5 /* MEGAProcessAsset.m in Sources */,
+				2FA6DAA5243ED07E007A8E81 /* MEGAGetPreviewRequestDelegate.m in Sources */,
 				945605381EDD52C00094EF0F /* SVProgressAnimatedView.m in Sources */,
 				5BEACE201FB472CC0010E02F /* MEGANodeList+MNZCategory.m in Sources */,
 				83FB143B219C3C6D00418BE6 /* MOOfflineFolderLayout+CoreDataProperties.m in Sources */,
@@ -6721,6 +6726,7 @@
 			files = (
 				77892E9E20E501DC0020A533 /* ContactTableViewCell.m in Sources */,
 				94892C921EFBEA3D00AEAC25 /* MEGASdkManager.m in Sources */,
+				2FA6DAA7243ED07F007A8E81 /* MEGAGetPreviewRequestDelegate.m in Sources */,
 				8310488A21AECD860057400D /* DTConstants.m in Sources */,
 				77F95CF320E3E60A00F42D9C /* MEGAChatAttachNodeRequestDelegate.m in Sources */,
 				B6048910223C4F7B00BA91F9 /* MEGAStoreStack.m in Sources */,
