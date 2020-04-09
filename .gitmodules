@@ -68,3 +68,6 @@ url=https://github.com/meganz/CTAssetsPickerController.git
 [submodule "iMEGA/Vendor/MessageKit"]
 	path = iMEGA/Vendor/MessageKit
 	url = https://github.com/MessageKit/MessageKit.git
+[submodule "iMEGA/Vendor/YYWebImage"]
+	path = iMEGA/Vendor/YYWebImage
+	url = https://github.com/ibireme/YYWebImage.git
