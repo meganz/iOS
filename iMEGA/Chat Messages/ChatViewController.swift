@@ -77,6 +77,15 @@ class ChatViewController: MessagesViewController {
 
         if chatMessage.message.type == .attachment
             || chatMessage.message.type == .contact {
+            if (chatMessage.message.nodeList?.size?.intValue ?? 0 == 1) {
+                let node = chatMessage.message.nodeList.node(at: 0)!
+                if (node.name!.mnz_isImagePathExtension || node.name!.mnz_isVideoPathExtension) {
+                    let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatMediaCollectionViewCell.reuseIdentifier, for: indexPath) as! ChatMediaCollectionViewCell
+                    cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
+                    return cell
+                }
+            }
+
             let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatViewAttachmentCell.reuseIdentifier, for: indexPath) as! ChatViewAttachmentCell
             cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
             return cell
@@ -184,6 +193,8 @@ class ChatViewController: MessagesViewController {
                                          forCellWithReuseIdentifier: ChatViewCallCollectionCell.reuseIdentifier)
         messagesCollectionView.register(ChatViewAttachmentCell.self,
                                          forCellWithReuseIdentifier: ChatViewAttachmentCell.reuseIdentifier)
+        messagesCollectionView.register(ChatMediaCollectionViewCell.self,
+                                         forCellWithReuseIdentifier: ChatMediaCollectionViewCell.reuseIdentifier)
     }
 
     private func update() {

@@ -2,8 +2,8 @@ import MessageKit
 
 class ChatMediaCollectionViewCell: MessageContentCell {
 
-    open var imageView: UIImageView = {
-        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+    open var imageView: YYAnimatedImageView = {
+        let imageView = YYAnimatedImageView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
@@ -27,9 +27,12 @@ class ChatMediaCollectionViewCell: MessageContentCell {
         guard let chatMessage = message as? ChatMessage else {
             return
         }
-        let megaMessage = chatMessage.message
 
+        let megaMessage = chatMessage.message
+        let node = megaMessage.nodeList.node(at: 0)!
         
+        self.imageView.mnz_setThumbnail(by: node)
+  
     }
 }
 
@@ -46,7 +49,10 @@ open class ChatMediaCollectionViewSizeCalculator: MessageSizeCalculator {
                 return .zero
             }
            
-            return CGSize(width: min(200, maxWidth), height: 80)
+            let megaMessage = chatMessage.message
+            let node = megaMessage.nodeList.node(at: 0)
+            
+            return CGSize(width: min(200, Int(maxWidth)), height: 200)
         default:
             fatalError("messageContainerSize received unhandled MessageDataType: \(message.kind)")
         }
