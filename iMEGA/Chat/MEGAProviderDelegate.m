@@ -468,7 +468,7 @@
                 self.outgoingCall = NO;
             }
             
-            if ([call hasChangedForType:MEGAChatCallChangeTypeLocalAVFlags] || [call hasChangedForType:MEGAChatCallChangeTypeRemoteAVFlags]) {
+            if (([call hasChangedForType:MEGAChatCallChangeTypeLocalAVFlags] || [call hasChangedForType:MEGAChatCallChangeTypeRemoteAVFlags]) && ![MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:call.chatId].isGroup) {
                 CXCallUpdate *callUpdate = CXCallUpdate.alloc.init;
                 MEGAChatSession *remoteSession = [call sessionForPeer:call.peerSessionStatusChange clientId:call.clientSessionStatusChange];
                 callUpdate.hasVideo = call.hasLocalVideo || remoteSession.hasVideo;
