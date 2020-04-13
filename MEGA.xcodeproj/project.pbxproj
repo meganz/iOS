@@ -11,6 +11,8 @@
 		137361931A6664C300B740E8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 137361921A6664C300B740E8 /* AppDelegate.m */; };
 		1373619E1A6664C300B740E8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1373619D1A6664C300B740E8 /* Images.xcassets */; };
 		2F0194A7243452E500734EA3 /* ChatViewController+InputBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0194A6243452E500734EA3 /* ChatViewController+InputBar.swift */; };
+		2F209A572445151B004AC88D /* YYWebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FA6DAA3243E938E007A8E81 /* YYWebImage.framework */; };
+		2F88A41124451587006477D1 /* YYWebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FA6DAA3243E938E007A8E81 /* YYWebImage.framework */; };
 		2F8F5F1623691A390049603F /* UINavigationViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8F5F1523691A390049603F /* UINavigationViewController+Additions.swift */; };
 		2F91390E238C9AC4004C611A /* MEGARecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F91390D238C9AC4004C611A /* MEGARecordView.swift */; };
 		2F913910238CC3CA004C611A /* MEGARecordView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F91390F238CC3CA004C611A /* MEGARecordView.xib */; };
@@ -25,7 +27,6 @@
 		2FA6DA5F243E9191007A8E81 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432292A1EDD84FD007DB542 /* AssetsLibrary.framework */; };
 		2FA6DA60243E9198007A8E81 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9432291B1EDD83E9007DB542 /* ImageIO.framework */; };
 		2FA6DA62243E919D007A8E81 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FA6DA61243E919D007A8E81 /* Accelerate.framework */; };
-		2FA6DAA4243ED05A007A8E81 /* YYWebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FA6DAA3243E938E007A8E81 /* YYWebImage.framework */; };
 		2FA6DAA5243ED07E007A8E81 /* MEGAGetPreviewRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8EC55B31F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.m */; };
 		2FA6DAA7243ED07F007A8E81 /* MEGAGetPreviewRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8EC55B31F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.m */; };
 		410AD3C11C883AA900BF939E /* MEGAAVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 410AD3C01C883AA900BF939E /* MEGAAVViewController.m */; };
@@ -2651,6 +2652,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2F209A572445151B004AC88D /* YYWebImage.framework in Frameworks */,
 				A82751101E97AB6E007CD9E2 /* libz.tbd in Frameworks */,
 				A82751141E97AB79007CD9E2 /* libsqlite3.tbd in Frameworks */,
 				A8F6E8941F9E770C0087859C /* MobileCoreServices.framework in Frameworks */,
@@ -2725,7 +2727,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2FA6DAA4243ED05A007A8E81 /* YYWebImage.framework in Frameworks */,
+				2F88A41124451587006477D1 /* YYWebImage.framework in Frameworks */,
 				77FD201A2359E431004FB892 /* libnative_video.a in Frameworks */,
 				77FD20152359E3FA004FB892 /* libvideoframebuffer_objc.a in Frameworks */,
 				77FD20142359E3D2004FB892 /* libvideocapture_objc.a in Frameworks */,
