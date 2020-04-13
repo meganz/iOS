@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="qvR-uV-YnP">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="qvR-uV-YnP">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -1352,7 +1352,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iif-ej-krY">
                                 <rect key="frame" x="0.0" y="0.0" width="422" height="350"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="padlockMasterKey" translatesAutoresizingMaskIntoConstraints="NO" id="zGq-Ok-dOC">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="key_illustration" translatesAutoresizingMaskIntoConstraints="NO" id="zGq-Ok-dOC">
                                         <rect key="frame" x="131" y="40" width="160" height="225"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="225" id="15b-PQ-BJ5"/>
@@ -1360,12 +1360,11 @@
                                         </constraints>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="az8-Aw-mS9" userLabel="Save Button">
-                                        <rect key="frame" x="223.66666666666663" y="291" width="135" height="44"/>
-                                        <color key="backgroundColor" red="0.95294117647058818" green="0.047058823529411764" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <rect key="frame" x="223.66666666666663" y="281" width="135" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="TeO-59-4cy"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                         <state key="normal" title="Save">
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
@@ -1384,13 +1383,12 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ODS-fW-K0n" userLabel="Copy Button">
-                                        <rect key="frame" x="63.666666666666657" y="291" width="135" height="44"/>
-                                        <color key="backgroundColor" red="0.93333333730000001" green="0.93333333730000001" blue="0.93333333730000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <rect key="frame" x="63.666666666666657" y="281" width="135" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="135" id="EzD-Ju-Drj"/>
-                                            <constraint firstAttribute="height" constant="44" id="fqu-mv-kUW"/>
+                                            <constraint firstAttribute="height" constant="50" id="fqu-mv-kUW"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                         <state key="normal" title="Copy">
                                             <color key="titleColor" red="0.46666666870000001" green="0.46666666870000001" blue="0.46666666870000001" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
@@ -1415,7 +1413,7 @@
                                     <constraint firstItem="az8-Aw-mS9" firstAttribute="centerY" secondItem="ODS-fW-K0n" secondAttribute="centerY" id="aip-8u-gJM"/>
                                     <constraint firstItem="az8-Aw-mS9" firstAttribute="height" secondItem="ODS-fW-K0n" secondAttribute="height" id="cNo-FQ-2ay"/>
                                     <constraint firstItem="ODS-fW-K0n" firstAttribute="centerX" secondItem="zGq-Ok-dOC" secondAttribute="centerX" constant="-80" id="hWO-oB-t3J"/>
-                                    <constraint firstItem="ODS-fW-K0n" firstAttribute="top" secondItem="zGq-Ok-dOC" secondAttribute="bottom" constant="26" id="hoe-S4-rhN"/>
+                                    <constraint firstItem="ODS-fW-K0n" firstAttribute="top" secondItem="zGq-Ok-dOC" secondAttribute="bottom" constant="16" id="hoe-S4-rhN"/>
                                     <constraint firstItem="az8-Aw-mS9" firstAttribute="centerX" secondItem="ODS-fW-K0n" secondAttribute="centerX" id="iF7-QZ-jIt"/>
                                     <constraint firstItem="zGq-Ok-dOC" firstAttribute="centerY" secondItem="iif-ej-krY" secondAttribute="centerY" id="lT6-Ei-eFb"/>
                                     <constraint firstItem="az8-Aw-mS9" firstAttribute="firstBaseline" secondItem="ODS-fW-K0n" secondAttribute="baseline" id="oZQ-8d-9Sm"/>
@@ -1436,66 +1434,56 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Why do I need a Recovery Key?" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MbZ-sd-Eec" userLabel="Why Do I Need a Recovery Key Label And Button">
-                                <rect key="frame" x="100.00000000000001" y="375" width="214.33333333333337" height="36"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jaA-3A-VfQ">
+                                <rect key="frame" x="0.0" y="350" width="414" height="386"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Why do I need a Recovery Key?" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MbZ-sd-Eec" userLabel="Why Do I Need a Recovery Key Label And Button">
+                                        <rect key="frame" x="97.666666666666671" y="20" width="218.66666666666663" height="36"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="36" id="v5q-V7-KNg"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jTL-gV-SRV" userLabel="Why Do I Need a Recovery Key? Button">
+                                        <rect key="frame" x="97.666666666666671" y="20" width="218.66666666666663" height="36"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="68" id="plH-QP-ycX"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="plH-QP-ycX"/>
+                                            </mask>
+                                        </variation>
+                                        <connections>
+                                            <action selector="whyDoINeedARecoveryKeyTouchUpInside:" destination="mZP-69-mDb" eventType="touchUpInside" id="5zq-10-mDz"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="36" id="v5q-V7-KNg"/>
+                                    <constraint firstItem="jTL-gV-SRV" firstAttribute="top" secondItem="jaA-3A-VfQ" secondAttribute="top" constant="20" id="JB6-7t-xEA"/>
+                                    <constraint firstItem="jTL-gV-SRV" firstAttribute="centerX" secondItem="jaA-3A-VfQ" secondAttribute="centerX" id="Kja-VG-OBy"/>
+                                    <constraint firstItem="MbZ-sd-Eec" firstAttribute="centerX" secondItem="jTL-gV-SRV" secondAttribute="centerX" id="M0v-nv-qx5"/>
+                                    <constraint firstItem="MbZ-sd-Eec" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="jaA-3A-VfQ" secondAttribute="leadingMargin" constant="15" id="hAp-26-RBa"/>
+                                    <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="MbZ-sd-Eec" secondAttribute="trailing" constant="15" id="rBp-E9-gyG"/>
+                                    <constraint firstItem="MbZ-sd-Eec" firstAttribute="width" secondItem="jTL-gV-SRV" secondAttribute="width" id="u5L-zE-GjN"/>
+                                    <constraint firstItem="jTL-gV-SRV" firstAttribute="height" secondItem="MbZ-sd-Eec" secondAttribute="height" id="uwb-JA-dPk"/>
+                                    <constraint firstItem="MbZ-sd-Eec" firstAttribute="centerY" secondItem="jTL-gV-SRV" secondAttribute="centerY" id="vb4-1D-hl9"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <color key="textColor" red="0.95294117647058818" green="0.047058823529411764" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jTL-gV-SRV" userLabel="Why Do I Need a Recovery Key? Button">
-                                <rect key="frame" x="100.00000000000001" y="375" width="214.33333333333337" height="36"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="68" id="plH-QP-ycX"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <state key="normal">
-                                    <color key="titleColor" red="0.95294117647058818" green="0.047058823529411764" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="plH-QP-ycX"/>
-                                    </mask>
-                                </variation>
-                                <connections>
-                                    <action selector="whyDoINeedARecoveryKeyTouchUpInside:" destination="mZP-69-mDb" eventType="touchUpInside" id="5zq-10-mDz"/>
-                                </connections>
-                            </button>
+                            </view>
                         </subviews>
                         <constraints>
                             <constraint firstItem="pPu-oh-inR" firstAttribute="right" secondItem="iif-ej-krY" secondAttribute="rightMargin" id="6Qr-4S-NhG"/>
-                            <constraint firstItem="jTL-gV-SRV" firstAttribute="height" secondItem="MbZ-sd-Eec" secondAttribute="height" id="BWh-3s-rvc"/>
                             <constraint firstItem="iif-ej-krY" firstAttribute="left" secondItem="pPu-oh-inR" secondAttribute="left" id="DsO-H0-eCH"/>
                             <constraint firstItem="iif-ej-krY" firstAttribute="top" secondItem="pPu-oh-inR" secondAttribute="top" id="Kpl-y6-JJq"/>
-                            <constraint firstItem="MbZ-sd-Eec" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="inr-l3-pAM" secondAttribute="leadingMargin" constant="15" id="Lgi-rh-OmP"/>
-                            <constraint firstItem="jTL-gV-SRV" firstAttribute="leading" secondItem="MbZ-sd-Eec" secondAttribute="trailing" id="SKn-Pw-97x"/>
-                            <constraint firstItem="MbZ-sd-Eec" firstAttribute="centerX" secondItem="jTL-gV-SRV" secondAttribute="centerX" id="co1-N3-nQg"/>
-                            <constraint firstItem="jTL-gV-SRV" firstAttribute="top" secondItem="iif-ej-krY" secondAttribute="bottom" constant="25" id="fWB-8z-IWQ"/>
-                            <constraint firstItem="MbZ-sd-Eec" firstAttribute="width" secondItem="jTL-gV-SRV" secondAttribute="width" id="fYv-MF-WWu"/>
-                            <constraint firstItem="pPu-oh-inR" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="jTL-gV-SRV" secondAttribute="trailing" constant="15" id="h7t-Ky-yPm"/>
-                            <constraint firstItem="MbZ-sd-Eec" firstAttribute="centerY" secondItem="jTL-gV-SRV" secondAttribute="centerY" id="lrA-yn-eHT"/>
-                            <constraint firstItem="jTL-gV-SRV" firstAttribute="top" secondItem="MbZ-sd-Eec" secondAttribute="bottom" id="mh1-M1-8mX"/>
-                            <constraint firstItem="MbZ-sd-Eec" firstAttribute="height" secondItem="jTL-gV-SRV" secondAttribute="height" id="mwO-Ok-wmY"/>
-                            <constraint firstItem="MbZ-sd-Eec" firstAttribute="top" secondItem="iif-ej-krY" secondAttribute="bottom" constant="25" id="n3o-O3-Ezr"/>
-                            <constraint firstItem="jTL-gV-SRV" firstAttribute="centerX" secondItem="iif-ej-krY" secondAttribute="centerX" id="nvo-ua-6nV"/>
-                            <constraint firstItem="jTL-gV-SRV" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="pPu-oh-inR" secondAttribute="leading" constant="15" id="p50-gY-DxA"/>
-                            <constraint firstItem="MbZ-sd-Eec" firstAttribute="centerX" secondItem="pPu-oh-inR" secondAttribute="centerX" id="rL6-JW-A0R"/>
-                            <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="MbZ-sd-Eec" secondAttribute="trailing" constant="15" id="s6o-3T-xwX"/>
+                            <constraint firstItem="jaA-3A-VfQ" firstAttribute="leading" secondItem="pPu-oh-inR" secondAttribute="leading" id="XEz-XU-qvC"/>
+                            <constraint firstItem="pPu-oh-inR" firstAttribute="bottom" secondItem="jaA-3A-VfQ" secondAttribute="bottom" id="jLz-tg-CRj"/>
+                            <constraint firstItem="pPu-oh-inR" firstAttribute="trailing" secondItem="jaA-3A-VfQ" secondAttribute="trailing" id="q6q-HS-55y"/>
+                            <constraint firstItem="jaA-3A-VfQ" firstAttribute="top" secondItem="iif-ej-krY" secondAttribute="bottom" id="wc8-4c-kgF"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="pPu-oh-inR"/>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="h7t-Ky-yPm"/>
-                                <exclude reference="mwO-Ok-wmY"/>
-                                <exclude reference="SKn-Pw-97x"/>
-                                <exclude reference="fWB-8z-IWQ"/>
-                                <exclude reference="mh1-M1-8mX"/>
-                                <exclude reference="nvo-ua-6nV"/>
-                                <exclude reference="p50-gY-DxA"/>
-                            </mask>
-                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="CTL-ap-DS5">
                         <barButtonItem key="backBarButtonItem" title=" " id="0NO-sM-a8J"/>
@@ -1504,11 +1492,12 @@
                         <outlet property="carbonCopyMasterKeyButton" destination="ODS-fW-K0n" id="1Dp-cm-VSa"/>
                         <outlet property="saveMasterKey" destination="az8-Aw-mS9" id="ESL-jx-EVz"/>
                         <outlet property="whyDoINeedARecoveryKeyLabel" destination="MbZ-sd-Eec" id="s6e-EC-AVm"/>
+                        <outlet property="whyDoINeedARecoveryKeyView" destination="jaA-3A-VfQ" id="Izj-Dc-ctX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Mbo-8B-J3H" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-582" y="-1199"/>
+            <point key="canvasLocation" x="-582.60869565217399" y="-1199.1847826086957"/>
         </scene>
         <!--Settings-->
         <scene sceneID="cEa-vL-6c6">
@@ -2242,7 +2231,7 @@ You may still receive file versions from shared folders if your contacts have th
         <image name="emailConfirm" width="32" height="32"/>
         <image name="icon-key-only" width="24" height="24"/>
         <image name="icon-link-w-key" width="24" height="24"/>
+        <image name="key_illustration" width="320" height="450"/>
         <image name="mail" width="24" height="24"/>
-        <image name="padlockMasterKey" width="160" height="225"/>
     </resources>
 </document>
