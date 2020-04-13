@@ -151,7 +151,7 @@
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="تحتاج إلى إفراغ المزيد من مساحة جهازك";
 /* Message shown when you try to downlonad files bigger than the available memory. */
-"MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device."="MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device.";
+"MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device."="تحتاج ميغا MEGA إلى حد أدنى إلى %@. حرر بعض المساحة بحذف التطبيقات التي لم تعد تستخدمها أو ملفات الفيديو الكبيرة في معرض الصور الخاص بك. يمكنك أيضاً إدارة ما تخزنه ميغا MEGA على جهازك.";
 /* Title for the file link view */
 "fileLink"="رابط الملف";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
@@ -691,7 +691,7 @@
 /* Title to show when device local storage is full */
 "%@ Storage Full"="%@ مساحة التخزين ممتلئة";
 /* Title to show when device local storage is almost full */
-"Device Storage Almost Full"="Device Storage Almost Full";
+"Device Storage Almost Full"="مساحة تخزين الجهاز ممتلئة تقريباً";
 /* Detail for local storage full situation */
 "You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="ليس لديك مساحة تخزين كافية لترفيعات الكاميرا إضافية. حرر المساحة عن طريق حذف التطبيقات أو مقاطع الفيديو أو الموسيقى غير الضرورية. يمكنك إدارة مساحة التخزين الخاص بك في %@";
 /* Navigation path for Storage settings in iOS */
@@ -968,7 +968,7 @@
 /* %1 will be replaced by a numeric value and %2 will be 'days' or 'months', for example (Expires in [S]10[/S] days) */
 "bonusExpiresIn"="(الإضافة تنتهي في [S]%1[/S]  %2)";
 /* Add Phone Number title  */
-"Add Phone Number"="إضافة رقم هاتف";
+"Add Phone Number"="أضف رقم هاتف";
 /* Achievement explanation for add phone number */
 "You have received %1$s storage space and %2$s transfer quota for verifying your phone number."="لقد حصلت على %1$s من مساحة تخزين و %2$s من حجم التراسل المتاح  للتحقق من رقم هاتفك.";
 /* Free storage description to encourage users to add phone number to their accounts */
@@ -978,11 +978,11 @@
 /* Description to unblock account by verifying phone number */
 "Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account."="تم قفل حسابك مؤقتاً بسبب سوء استخدام محتمل. يرجى التحقق من رقم هاتفك لفتح حسابك.";
 /* Verify your account title */
-"Verify Your Account"="تأكيد حسابك";
+"Verify Your Account"="تحقق من حسابك";
 /* Add your phone number title */
-"Add Your Phone Number"="اضف رقم هاتفك";
+"Add Your Phone Number"="أضف رقم هاتفك";
 /* Choose Your Country title */
-"Choose Your Country"="اختر دولتك";
+"Choose Your Country"="اختر بلدك";
 /* Used to display the number of months a plan was purchased for e.g. 3 months, 6 months. */
 "months"="شهور";
 /*  */
@@ -1555,7 +1555,7 @@
 /* When an active goup call is ended */
 "Group call ended"="فشل اتصال المجموعة";
 /* When an active goup call is ended, shows the duration */
-"[A]Group call ended[/A][C]. Duration: [/C]"="[A]Group call ended[/A][C]. Duration: [/C]";
+"[A]Group call ended[/A][C]. Duration: [/C]"="[A]انتهت المكالمة الجماعية[/A][C]. المدة: [/C]";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="مدة الاتصال: %@";
 /* */
@@ -1639,7 +1639,7 @@
 /* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="احفظ نسخة من الصور والفيديوهات المأخوذة من تطبيق MEGA في مكتبة الوسائط على جهازك.";
 /* Settings section title where you can enable the option to 'Spotlight search' */
-"Spotlight Search"="Spotlight Search";
+"Spotlight Search"="البحث الذكي Spotlight";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="انت تحتفظ بالمفتاح";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -1969,11 +1969,11 @@
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="هل أنت متأكد من رغبتك بالانتقال الى المخدم التجريبي؟ من الممكن ان يتعرض حسابك لمشاكل غير قابلة للإصلاح.";
 /* Title label that explains that the user is going to be asked for the contacts permission */
-"Enable Access to Your Address Book"="Enable Access to Your Address Book";
+"Enable Access to Your Address Book"="تمكين الوصول إلى دفتر العناوين الخاص بك";
 /* Detailed explanation of why the user should give permission to contacts */
-"Easily discover contacts from your address book on MEGA."="Easily discover contacts from your address book on MEGA.";
+"Easily discover contacts from your address book on MEGA."="اكتشف جهات الاتصال بسهولة من دفتر العناوين الخاص بك على ميغا MEGA.";
 /* Detailed explanation about MEGA not using the contacts data without permision */
-"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA will not use this data for any other purpose and will never interact with your contacts without your consent.";
+"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="لن تستخدم ميغا MEGA هذه البيانات لأي غرض آخر ولن تتفاعل أبداً مع جهات الاتصال الخاصة بك دون موافقتك.";
 /* Title encouraging the user to check who of its contacts are using MEGA */
 "See who's already on MEGA"="تعرف على الموجودين بالفعل على ميغا MEGA";
 /* Title showing the user how many of his contacts are using MEGA */
@@ -2121,7 +2121,7 @@
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="تم تسريب كلمة المرور الخاصة بك وتستخدمها الآن  أطراف خبيثة لتسجيل الدخول إلى حساباتك، بما في ذلك على سبيل المثال لا الحصر، حساب ميغا MEGA الخاص بك.";
 /* tool bar title used in transfer widget, allow user to clear the selected items in the list */
-"Clear Selected"="Clear Selected";
+"Clear Selected"="إلغاء التحديد";
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
 "Clear All"="مسح الكل";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
@@ -2149,8 +2149,8 @@
 /* export Quality Option for Scan document */
 "best"="الأفضل";
 /* Description of why the user should give permission to contacts */
-"Easily discover contacts from your address book on MEGA."="Easily discover contacts from your address book on MEGA.";
+"Easily discover contacts from your address book on MEGA."="اكتشف جهات الاتصال بسهولة من دفتر العناوين الخاص بك على ميغا MEGA.";
 /* Detailed description of why the user should give permission to contacts */
-"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA will not use this data for any other purpose and will never interact with your contacts without your consent.";
+"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="لن تستخدم ميغا MEGA هذه البيانات لأي غرض آخر ولن تتفاعل أبداً مع جهات الاتصال الخاصة بك دون موافقتك.";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="ادخل اسم المجموعة";
