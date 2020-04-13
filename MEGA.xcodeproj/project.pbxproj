@@ -295,6 +295,8 @@
 		7720C5D3206AB2EB00F995D1 /* SF-UI-Text-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5B6429DB2020A5E6000E0DCB /* SF-UI-Text-Semibold.otf */; };
 		77264F242147D60600DC6BCB /* MEGACopyRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B2E91911F1F98F4003C6920 /* MEGACopyRequestDelegate.m */; };
 		772BA5722243C7D100F062CB /* UITableView+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 772BA5712243C7D100F062CB /* UITableView+MNZCategory.m */; };
+		772DE069244464BA0013EF52 /* MEGAChatRoom+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1574AD2373AB8C0095B283 /* MEGAChatRoom+Additions.swift */; };
+		772DE06A2444B30C0013EF52 /* MEGALocalNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F0A1C6217898F600575C57 /* MEGALocalNotificationManager.m */; };
 		773DF39C20EF6902004C3418 /* MEGACopyRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B2E91911F1F98F4003C6920 /* MEGACopyRequestDelegate.m */; };
 		774089682164AAF000B93D3E /* CustomModalAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A819B33E1EAFA7E2004592F9 /* CustomModalAlertViewController.m */; };
 		774089692164AB1300B93D3E /* CustomModalAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A819B33E1EAFA7E2004592F9 /* CustomModalAlertViewController.m */; };
@@ -405,7 +407,6 @@
 		77B3AE232163BDB8008E889A /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77B3AE222163BDB8008E889A /* UserNotifications.framework */; };
 		77B9FEE623C6025B0002D0CD /* MEGAChatGenericRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A86E34B2217F705700EFCAB0 /* MEGAChatGenericRequestDelegate.m */; };
 		77B9FEE723C604260002D0CD /* MEGAChatBaseRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A802B1F91FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.m */; };
-		77B9FEE823CCAF440002D0CD /* MEGALocalNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F0A1C6217898F600575C57 /* MEGALocalNotificationManager.m */; };
 		77BE2FEF24000CB600514DB8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 415227411A692F8D00EC7BB6 /* Localizable.strings */; };
 		77BE2FFB24084E9600514DB8 /* MEGAFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B695E57F23275A4E00D12B9E /* MEGAFunctions.swift */; };
 		77C544FF2028542D00A9ACD6 /* MEGAPhotoBrowserAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 77C544FE2028542D00A9ACD6 /* MEGAPhotoBrowserAnimator.m */; };
@@ -6375,9 +6376,9 @@
 				77F0ED4323C4C750000E6B5B /* NSFileManager+MNZCategory.m in Sources */,
 				774941DE2410EABC00FC5CB6 /* MEGAStoreStack.m in Sources */,
 				774941E52410F47200FC5CB6 /* MOMessage+CoreDataProperties.m in Sources */,
+				772DE06A2444B30C0013EF52 /* MEGALocalNotificationManager.m in Sources */,
 				7794AF1C231FDF590039C1D2 /* SVIndefiniteAnimatedView.m in Sources */,
 				774941E12410EAE900FC5CB6 /* MOUploadTransfer+CoreDataClass.m in Sources */,
-				77B9FEE823CCAF440002D0CD /* MEGALocalNotificationManager.m in Sources */,
 				7794AF19231FDF3D0039C1D2 /* Reachability.m in Sources */,
 				7794AF17231FDF120039C1D2 /* SAMKeychain.m in Sources */,
 				7794AF16231FDE0A0039C1D2 /* MEGAReachabilityManager.m in Sources */,
@@ -6385,6 +6386,7 @@
 				774941E62416552600FC5CB6 /* MEGALogger.m in Sources */,
 				77B9FEE623C6025B0002D0CD /* MEGAChatGenericRequestDelegate.m in Sources */,
 				A893322A24127B1B0088E588 /* MOUser.m in Sources */,
+				772DE069244464BA0013EF52 /* MEGAChatRoom+Additions.swift in Sources */,
 				774941DF2410EADA00FC5CB6 /* MOChatDraft+CoreDataClass.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -5,7 +5,9 @@
 
 #ifndef MNZ_APP_EXTENSION
 #import "Helper.h"
+#import "MEGAChatGenericRequestDelegate.h"
 #import "MEGAGetThumbnailRequestDelegate.h"
+#import "MEGA-Swift.h"
 #endif
 
 #import "MEGASdkManager.h"
@@ -43,16 +45,37 @@
             if (self.message.deleted) {
                 [self removePendingAndDeliveredNotificationForMessage];
             } else {
-                UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
-                
                 UNMutableNotificationContent *content = [UNMutableNotificationContent new];
                 content.categoryIdentifier = @"nz.mega.chat.message";
                 content.userInfo = @{@"chatId" : @(self.chatRoom.chatId), @"msgId" : @(self.message.messageId)};
                 content.title = self.chatRoom.title;
                 content.sound = nil;
                 content.body = [self bodyString];
+                
+                __block BOOL waitForThumbnail = NO;
+                __block BOOL waitForUserAttributes = NO;
+                
+                UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:1 repeats:NO];
+                NSString *identifier = [NSString stringWithFormat:@"%@%@", [MEGASdk base64HandleForUserHandle:self.chatRoom.chatId], [MEGASdk base64HandleForUserHandle:self.message.messageId]];
+                
                 if (self.chatRoom.isGroup) {
-                    content.subtitle = [self displayName];
+                    NSString *displayName = [self.chatRoom userDisplayNameForUserHandle:self.message.userHandle];
+                    if (displayName) {
+                        content.subtitle = displayName;
+                    } else {
+                        MEGALogWarning("[Chat Links Scalability] Display name not ready");
+                        waitForUserAttributes = YES;
+                        MEGAChatGenericRequestDelegate *delegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
+                            if (!error.type) {
+                                content.subtitle = [self.chatRoom userDisplayNameForUserHandle:self.message.userHandle];
+                            }
+                            waitForUserAttributes = NO;
+                            if (!waitForThumbnail) {
+                                [self postNotificationWithIdentifier:identifier content:content trigger:trigger];
+                            }
+                        }];
+                        [[MEGASdkManager sharedMEGAChatSdk] loadUserAttributesForChatId:self.chatRoom.chatId usersHandles:@[@(self.message.userHandle)] authorizationToken:self.chatRoom.authorizationToken delegate:delegate];
+                    }
                 }
                 
                 content.threadIdentifier = [MEGASdk base64HandleForUserHandle:self.chatRoom.chatId] ?: @"";
@@ -60,10 +83,6 @@
                     content.summaryArgument = self.chatRoom.title;
                 }
                 
-                UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:1 repeats:NO];
-                NSString *identifier = [NSString stringWithFormat:@"%@%@", [MEGASdk base64HandleForUserHandle:self.chatRoom.chatId], [MEGASdk base64HandleForUserHandle:self.message.messageId]];
-                
-                BOOL waitForThumbnail = NO;
                 if (self.message.type == MEGAChatMessageTypeAttachment) {
                     MEGANodeList *nodeList = self.message.nodeList;
                     if (nodeList) {
@@ -77,19 +96,10 @@
                                     if (notificationAttachment) {
                                         content.attachments = @[notificationAttachment];
                                     }
-                                    UNNotificationRequest *notificationRequest = [UNNotificationRequest requestWithIdentifier:identifier content:content trigger:trigger];
-                                    [center addNotificationRequest:notificationRequest withCompletionHandler:^(NSError * _Nullable error) {
-                                        dispatch_async(dispatch_get_main_queue(), ^{
-                                            if (error) {
-                                                MEGALogError(@"[Notification] Add NotificationRequest failed with error: %@", error);
-                                            } else {
-                                                MOMessage *moMessage = [MEGAStore.shareInstance fetchMessageWithChatId:self.chatRoom.chatId messageId:self.message.messageId];
-                                                if (moMessage) {
-                                                    [MEGAStore.shareInstance deleteMessage:moMessage];
-                                                }
-                                            }
-                                        });
-                                    }];
+                                    waitForThumbnail = NO;
+                                    if (!waitForUserAttributes) {
+                                        [self postNotificationWithIdentifier:identifier content:content trigger:trigger];
+                                    }
                                 }];
                                 [[MEGASdkManager sharedMEGASdk] getThumbnailNode:node destinationFilePath:thumbnailFilePath delegate:getThumbnailRequestDelegate];
                             }
@@ -97,20 +107,8 @@
                     }
                 }
                 
-                if (!waitForThumbnail) {
-                    UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:identifier content:content trigger:trigger];
-                    [center addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            if (error) {
-                                MEGALogError(@"[Notification] Add NotificationRequest failed with error: %@", error);
-                            } else {
-                                MOMessage *moMessage = [MEGAStore.shareInstance fetchMessageWithChatId:self.chatRoom.chatId messageId:self.message.messageId];
-                                if (moMessage) {
-                                    [MEGAStore.shareInstance deleteMessage:moMessage];
-                                }
-                            }
-                        });
-                    }];
+                if (!waitForThumbnail && !waitForUserAttributes) {
+                    [self postNotificationWithIdentifier:identifier content:content trigger:trigger];
                 }
             }
             
@@ -179,11 +177,6 @@
     return body;
 }
 
-- (NSString *)displayName {
-    MOUser *user = [MEGAStore.shareInstance fetchUserWithUserHandle:self.message.userHandle];
-    return user ? user.displayName : [self.chatRoom peerFullnameByHandle:self.message.userHandle];
-}
-
 - (nullable UNNotificationAttachment *)notificationAttachmentFor:(NSString *)file withIdentifier:(NSString *)identifier {
     NSString *jpgPath = [file stringByAppendingPathExtension:@"jpg"];
     NSError *error;
@@ -203,6 +196,22 @@
 }
 
 #pragma mark - Private
+
+- (void)postNotificationWithIdentifier:(NSString *)identifier content:(UNNotificationContent *)content trigger:(UNNotificationTrigger *)trigger {
+    UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:identifier content:content trigger:trigger];
+    [[UNUserNotificationCenter currentNotificationCenter] addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (error) {
+                MEGALogError(@"[Notification] Add NotificationRequest failed with error: %@", error);
+            } else {
+                MOMessage *moMessage = [MEGAStore.shareInstance fetchMessageWithChatId:self.chatRoom.chatId messageId:self.message.messageId];
+                if (moMessage) {
+                    [MEGAStore.shareInstance deleteMessage:moMessage];
+                }
+            }
+        });
+    }];
+}
 
 - (void)removeAllPendingAndDeliveredNotificationsForChatRoom {
     UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
