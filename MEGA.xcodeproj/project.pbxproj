@@ -1065,6 +1065,8 @@
 		BF15894C2436EB8D007AF9EC /* MessageTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF15894B2436EB8D007AF9EC /* MessageTextView.swift */; };
 		BF33EF6C243D878F00CD35AC /* MessageSizeCalculator+AccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF33EF6B243D878F00CD35AC /* MessageSizeCalculator+AccessoryView.swift */; };
 		BF33EF70243DA31D00CD35AC /* ChatMessage+AttachmentCellDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF33EF6F243DA31D00CD35AC /* ChatMessage+AttachmentCellDataSource.swift */; };
+		BF33EF7424451A4700CD35AC /* TapAndHoldMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF33EF7324451A4700CD35AC /* TapAndHoldMessageView.swift */; };
+		BF33EF7924451A6200CD35AC /* TapAndHoldMessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF33EF7824451A6200CD35AC /* TapAndHoldMessageView.xib */; };
 		BF69E5172374F3720031913D /* AppDelegate+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF69E5162374F3720031913D /* AppDelegate+Additions.swift */; };
 		BFB463DD2432F2E900FB90B9 /* ChatRoomDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB463DC2432F2E900FB90B9 /* ChatRoomDelegate.swift */; };
 		BFB463E52433390600FB90B9 /* MEGAUser+Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB463E42433390600FB90B9 /* MEGAUser+Chat.swift */; };
@@ -2522,6 +2524,8 @@
 		BF15894B2436EB8D007AF9EC /* MessageTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTextView.swift; sourceTree = "<group>"; };
 		BF33EF6B243D878F00CD35AC /* MessageSizeCalculator+AccessoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageSizeCalculator+AccessoryView.swift"; sourceTree = "<group>"; };
 		BF33EF6F243DA31D00CD35AC /* ChatMessage+AttachmentCellDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatMessage+AttachmentCellDataSource.swift"; sourceTree = "<group>"; };
+		BF33EF7324451A4700CD35AC /* TapAndHoldMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapAndHoldMessageView.swift; sourceTree = "<group>"; };
+		BF33EF7824451A6200CD35AC /* TapAndHoldMessageView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TapAndHoldMessageView.xib; sourceTree = "<group>"; };
 		BF69E5162374F3720031913D /* AppDelegate+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Additions.swift"; sourceTree = "<group>"; };
 		BFB463DC2432F2E900FB90B9 /* ChatRoomDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomDelegate.swift; sourceTree = "<group>"; };
 		BFB463E42433390600FB90B9 /* MEGAUser+Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAUser+Chat.swift"; sourceTree = "<group>"; };
@@ -5329,6 +5333,8 @@
 				BFB463FA243456D900FB90B9 /* ChatViewIntroductionHeaderView.xib */,
 				BF06E3DD243191B000B30FB7 /* ChatTitleView.swift */,
 				BF06E3DC243191B000B30FB7 /* ChatTitleView.xib */,
+				BF33EF7324451A4700CD35AC /* TapAndHoldMessageView.swift */,
+				BF33EF7824451A6200CD35AC /* TapAndHoldMessageView.xib */,
 				BF09FF22243BDB770067DD77 /* MessageInputTextBackgroundView.swift */,
 				BF15894B2436EB8D007AF9EC /* MessageTextView.swift */,
 				BF1589232436A27A007AF9EC /* MessageInputBar.swift */,
@@ -5850,6 +5856,7 @@
 				E8E1D2D51AFA860E00A9BD5B /* Main.storyboard in Resources */,
 				41BADDAF1A8E28FD008408B3 /* Photos.storyboard in Resources */,
 				5B6429DD2020A8CB000E0DCB /* SF-UI-Display-Semibold.otf in Resources */,
+				BF33EF7924451A6200CD35AC /* TapAndHoldMessageView.xib in Resources */,
 				E889C9E61B5565C900ECEFDF /* MyAccount.storyboard in Resources */,
 				94AAA9AA1FD6D1C20029D6EB /* SF-UI-Text-BoldItalic.otf in Resources */,
 				A82E5BC91F3465A3003C149C /* Spotlight_file@3x.png in Resources */,
@@ -6067,6 +6074,7 @@
 				5BC4912F20AC457F00F7F952 /* SetupTwoFactorAuthenticationTableViewController.m in Sources */,
 				417279361DB663FA001AC818 /* UIColor+JSQMessages.m in Sources */,
 				137361931A6664C300B740E8 /* AppDelegate.m in Sources */,
+				BF33EF7424451A4700CD35AC /* TapAndHoldMessageView.swift in Sources */,
 				83FB1434219AC7DD00418BE6 /* OfflineCollectionViewController.m in Sources */,
 				A86B9F482316D6AB00F35E7A /* FLEXPropertyEditorViewController.m in Sources */,
 				5BFA346E1FAB6282005BFC4E /* MEGAMoveRequestDelegate.m in Sources */,
