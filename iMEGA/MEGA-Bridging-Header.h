@@ -51,5 +51,5 @@
 
 #import <PureLayout/PureLayout.h>
 #import "UIImage+GKContact.h"
-
+#import "NSAttributedString+MNZCategory.h"
 #import <YYWebImage/YYWebImage.h>
