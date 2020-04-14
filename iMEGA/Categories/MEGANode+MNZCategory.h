@@ -13,7 +13,8 @@
 - (BOOL)mnz_downloadNodeOverwriting:(BOOL)overwrite api:(MEGASdk *)api;
 - (void)mnz_renameNodeInViewController:(UIViewController *)viewController;
 - (void)mnz_renameNodeInViewController:(UIViewController *)viewController completion:(void(^)(MEGARequest *request))completion;
-- (void)mnz_moveToTheRubbishBinInViewController:(UIViewController *)viewController;
+- (void)mnz_askToMoveToTheRubbishBinInViewController:(UIViewController *)viewController;
+- (void)mnz_moveToTheRubbishBinWithCompletion:(void (^)(void))completion;
 - (void)mnz_removeInViewController:(UIViewController *)viewController;
 - (void)mnz_leaveSharingInViewController:(UIViewController *)viewController;
 - (void)mnz_removeSharing;

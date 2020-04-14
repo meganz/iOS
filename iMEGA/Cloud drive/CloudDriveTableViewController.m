@@ -283,7 +283,15 @@
         shareAction.image = [[UIImage imageNamed:@"shareGray"] imageWithTintColor:UIColor.whiteColor];
         shareAction.backgroundColor = UIColor.systemOrangeColor;
         
-        return [UISwipeActionsConfiguration configurationWithActions:@[shareAction]];
+        UIContextualAction *rubbishBinAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+            [node mnz_moveToTheRubbishBinWithCompletion:^{
+                [self setTableViewEditing:NO animated:YES];
+            }];
+        }];
+        rubbishBinAction.image = [[UIImage imageNamed:@"rubbishBin"] imageWithTintColor:UIColor.whiteColor];
+        rubbishBinAction.backgroundColor = UIColor.systemRedColor;
+        
+        return [UISwipeActionsConfiguration configurationWithActions:@[rubbishBinAction, shareAction]];
     }
     
     return [UISwipeActionsConfiguration configurationWithActions:@[]];
@@ -354,7 +362,16 @@
             }];
             [shareButton iconTintColor:[UIColor whiteColor]];
             
-            return @[shareButton];
+            MGSwipeButton *rubbishBinButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"rubbishBin"] backgroundColor:UIColor.systemRedColor padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
+                [node mnz_moveToTheRubbishBinWithCompletion:^{
+                    [self setTableViewEditing:NO animated:YES];
+                }];
+                
+                return YES;
+            }];
+            [rubbishBinButton iconTintColor:UIColor.whiteColor];
+            
+            return @[rubbishBinButton, shareButton];
         }
     }
     
