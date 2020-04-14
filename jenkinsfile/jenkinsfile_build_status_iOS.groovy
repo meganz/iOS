@@ -42,9 +42,6 @@ pipeline {
         stage('Generating Executable (IPA)') {
             steps {
                 injectEnvironments({
-                    dir("iMEGA/Vendor/MessageKit") {
-                        sh "carthage update --platform iOS"  
-                    }
                     sh "fastlane build_using_development BUILD_NUMBER:$BUILD_NUMBER"
                 })
             }
