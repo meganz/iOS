@@ -226,6 +226,8 @@
             [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
             [[MEGASdkManager sharedMEGAChatSdk] logout];
             [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
+        } else if (chatInit == MEGAChatInitOnlineSession || chatInit == MEGAChatInitOfflineSession) {
+            [self importMessagesFromNSE];
         }
         
         MEGALoginRequestDelegate *loginRequestDelegate = [[MEGALoginRequestDelegate alloc] init];
@@ -336,6 +338,7 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     MEGALogDebug(@"[App Lifecycle] Application will enter foreground");
+    [self checkChatInitState];
     
     if (self.wasAppSuspended && !MEGASdkManager.sharedMEGAChatSdk.mnz_existsActiveCall) {
         //If the app has been suspended, we assume that the sockets have been closed, so we have to reconnect.
@@ -1091,6 +1094,33 @@ void uncaughtExceptionHandler(NSException *exception) {
     }
 }
 
+- (void)checkChatInitState {
+    MEGAChatInit initState = [MEGASdkManager.sharedMEGAChatSdk initState];
+    MEGALogDebug(@"%@", [MEGAChatSdk stringForMEGAChatInitState:initState]);
+    if (initState == MEGAChatInitOfflineSession || initState == MEGAChatInitOnlineSession) {
+        [self importMessagesFromNSE];
+    }
+}
+
+- (void)importMessagesFromNSE {
+    NSURL *containerURL = [NSFileManager.defaultManager containerURLForSecurityApplicationGroupIdentifier:MEGAGroupIdentifier];
+    NSURL *nseCacheURL = [containerURL URLByAppendingPathComponent:MEGANotificationServiceExtensionCacheFolder isDirectory:YES];
+    NSString *session = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
+    NSString *filename = [NSString stringWithFormat:@"karere-%@.db", [session substringFromIndex:MAX(session.length - MEGALastCharactersFromSession, 0)]];
+    NSURL *nseCacheFileURL = [nseCacheURL URLByAppendingPathComponent:filename];
+    
+    if ([NSFileManager.defaultManager fileExistsAtPath:nseCacheFileURL.path]) {
+        if (MEGAStore.shareInstance.areTherePendingMessages) {
+            MEGALogDebug(@"Import messages from %@", nseCacheFileURL.path);
+            [MEGASdkManager.sharedMEGAChatSdk importMessagesFromPath:nseCacheFileURL.path];
+        } else {
+            MEGALogDebug(@"No messages to import from NSE.");
+        }
+    } else {
+        MEGALogWarning(@"NSE cache file %@ doesn't exist", nseCacheFileURL.path);
+    }
+}
+
 #pragma mark - LTHPasscodeViewControllerDelegate
 
 - (void)passcodeWasEnteredSuccessfully {
@@ -1722,6 +1752,10 @@ void uncaughtExceptionHandler(NSException *exception) {
         self.megaProviderDelegate = nil;
         self.megaCallManager = nil;
         [self.mainTBC setBadgeValueForChats];
+    }
+    
+    if (request.type == MEGAChatRequestTypeImportMessages) {
+        MEGALogDebug(@"Imported messages %lld", request.number);
     }
     
     MEGALogInfo(@"onChatRequestFinish request type: %td", request.type);

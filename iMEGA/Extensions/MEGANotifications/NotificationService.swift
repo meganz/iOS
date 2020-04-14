@@ -151,6 +151,8 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
             }
         }
         
+        MEGASdkManager.sharedMEGAChatSdk()?.saveCurrentState()
+        
         // Note: As soon as we call the contentHandler, no content can be retrieved from notification center.
         bestAttemptContent.badge = MEGASdkManager.sharedMEGAChatSdk()?.unreadChats as NSNumber?
         contentHandler(bestAttemptContent)
@@ -198,7 +200,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
                     do {
                         try FileManager.default.createDirectory(atPath: logsFolderURL.path, withIntermediateDirectories: false, attributes: nil)
                     } catch {
-                        MEGALogError("Error creating logs directory: \(error)")
+                        MEGALogError("Error creating logs directory: \(logsFolderURL.path)")
                         return
                     }
                 }
@@ -220,11 +222,6 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
     static func copyDatabasesFromMainApp() {
         let fileManager = FileManager.default
         
-        guard let applicationSupportDirectoryURL = try? fileManager.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true) else {
-            MEGALogError("Failed to locate/create .applicationSupportDirectory.")
-            return
-        }
-        
         guard let groupContainerURL = fileManager.containerURL(forSecurityApplicationGroupIdentifier: MEGAGroupIdentifier) else {
             MEGALogError("No groupContainerURL")
             return
@@ -236,8 +233,16 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
             return
         }
         
+        let nseCacheURL = groupContainerURL.appendingPathComponent(MEGANotificationServiceExtensionCacheFolder)
+                
+        do {
+            try fileManager.createDirectory(at: nseCacheURL, withIntermediateDirectories: true, attributes: nil)
+        } catch {
+            MEGALogError("Failed to locate/create \(nseCacheURL.path) directory");
+        }
+        
         guard let incomingDate = try? newestMegaclientModificationDateForDirectory(at: groupSupportURL),
-            let extensionDate = try? newestMegaclientModificationDateForDirectory(at: applicationSupportDirectoryURL)
+            let extensionDate = try? newestMegaclientModificationDateForDirectory(at: nseCacheURL)
             else {
                 MEGALogError("Exception in newestMegaclientModificationDateForDirectory")
                 return
@@ -247,24 +252,27 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
             return
         }
         
-        guard let applicationSupportContent = try? fileManager.contentsOfDirectory(atPath: applicationSupportDirectoryURL.path),
+        guard let nseCacheContent = try? fileManager.contentsOfDirectory(atPath: nseCacheURL.path),
             let groupSupportPathContent = try? fileManager.contentsOfDirectory(atPath: groupSupportURL.path)
             else {
                 MEGALogError("Error enumerating groupSupportPathContent")
                 return
         }
         
-        for filename in applicationSupportContent {
-            if filename.contains("megaclient") || filename.contains("karere") {
-                let pathToRemove = applicationSupportDirectoryURL.appendingPathComponent(filename).path
+        guard let cacheSessionName = session?.suffix(Int(MEGALastCharactersFromSession)) else {
+            return
+        }
+        for filename in nseCacheContent {
+            if filename.contains(cacheSessionName) {
+                let pathToRemove = nseCacheURL.appendingPathComponent(filename).path
                 fileManager.mnz_removeItem(atPath: pathToRemove)
             }
         }
         
         for filename in groupSupportPathContent {
-            if filename.contains("megaclient") || filename.contains("karere") {
+            if filename.contains(cacheSessionName) {
                 let sourceURL = groupSupportURL.appendingPathComponent(filename)
-                let destinationURL = applicationSupportDirectoryURL.appendingPathComponent(filename)
+                let destinationURL = nseCacheURL.appendingPathComponent(filename)
                 do {
                     try fileManager.copyItem(at: sourceURL, to: destinationURL)
                 } catch {
