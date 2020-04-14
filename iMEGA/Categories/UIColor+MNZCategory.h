@@ -23,7 +23,6 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus);
 + (UIColor *)mnz_separatorColorForTraitCollection:(UITraitCollection *)traitCollection;
 
 + (UIColor *)mnz_settingsBackgroundForTraitCollection:(UITraitCollection *)traitCollection;
-+ (UIColor *)mnz_settingsDetailsBackgroundForTraitCollection:(UITraitCollection *)traitCollection;
 
 + (UIColor *)mnz_notificationSeenBackgroundForTraitCollection:(UITraitCollection *)traitCollection;
 + (UIColor *)mnz_notificationUnseenBackgroundForTraitCollection:(UITraitCollection *)traitCollection;

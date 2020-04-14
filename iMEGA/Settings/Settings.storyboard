@@ -1437,6 +1437,12 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jaA-3A-VfQ">
                                 <rect key="frame" x="0.0" y="350" width="414" height="386"/>
                                 <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MVm-ad-Jg6">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="0.66666666666666663"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="0.5" id="QfY-tN-0Nj"/>
+                                        </constraints>
+                                    </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Why do I need a Recovery Key?" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MbZ-sd-Eec" userLabel="Why Do I Need a Recovery Key Label And Button">
                                         <rect key="frame" x="97.666666666666671" y="20" width="218.66666666666663" height="36"/>
                                         <constraints>
@@ -1463,11 +1469,14 @@
                                     </button>
                                 </subviews>
                                 <constraints>
+                                    <constraint firstItem="MVm-ad-Jg6" firstAttribute="top" secondItem="jaA-3A-VfQ" secondAttribute="top" id="238-R9-rth"/>
+                                    <constraint firstItem="MVm-ad-Jg6" firstAttribute="leading" secondItem="jaA-3A-VfQ" secondAttribute="leading" id="IMJ-nf-vJt"/>
                                     <constraint firstItem="jTL-gV-SRV" firstAttribute="top" secondItem="jaA-3A-VfQ" secondAttribute="top" constant="20" id="JB6-7t-xEA"/>
                                     <constraint firstItem="jTL-gV-SRV" firstAttribute="centerX" secondItem="jaA-3A-VfQ" secondAttribute="centerX" id="Kja-VG-OBy"/>
                                     <constraint firstItem="MbZ-sd-Eec" firstAttribute="centerX" secondItem="jTL-gV-SRV" secondAttribute="centerX" id="M0v-nv-qx5"/>
                                     <constraint firstItem="MbZ-sd-Eec" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="jaA-3A-VfQ" secondAttribute="leadingMargin" constant="15" id="hAp-26-RBa"/>
                                     <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="MbZ-sd-Eec" secondAttribute="trailing" constant="15" id="rBp-E9-gyG"/>
+                                    <constraint firstAttribute="trailing" secondItem="MVm-ad-Jg6" secondAttribute="trailing" id="tRC-t6-1OH"/>
                                     <constraint firstItem="MbZ-sd-Eec" firstAttribute="width" secondItem="jTL-gV-SRV" secondAttribute="width" id="u5L-zE-GjN"/>
                                     <constraint firstItem="jTL-gV-SRV" firstAttribute="height" secondItem="MbZ-sd-Eec" secondAttribute="height" id="uwb-JA-dPk"/>
                                     <constraint firstItem="MbZ-sd-Eec" firstAttribute="centerY" secondItem="jTL-gV-SRV" secondAttribute="centerY" id="vb4-1D-hl9"/>
@@ -1490,8 +1499,10 @@
                     </navigationItem>
                     <connections>
                         <outlet property="carbonCopyMasterKeyButton" destination="ODS-fW-K0n" id="1Dp-cm-VSa"/>
+                        <outlet property="illustrationView" destination="iif-ej-krY" id="TIm-7r-9Bq"/>
                         <outlet property="saveMasterKey" destination="az8-Aw-mS9" id="ESL-jx-EVz"/>
                         <outlet property="whyDoINeedARecoveryKeyLabel" destination="MbZ-sd-Eec" id="s6e-EC-AVm"/>
+                        <outlet property="whyDoINeedARecoveryKeyTopSeparatorView" destination="MVm-ad-Jg6" id="s06-Q4-sYz"/>
                         <outlet property="whyDoINeedARecoveryKeyView" destination="jaA-3A-VfQ" id="Izj-Dc-ctX"/>
                     </connections>
                 </viewController>

@@ -1396,7 +1396,6 @@
                                                                             </constraints>
                                                                         </imageView>
                                                                     </subviews>
-                                                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                                     <constraints>
                                                                         <constraint firstItem="cie-fo-Pdg" firstAttribute="centerX" secondItem="Lka-1E-Pb1" secondAttribute="centerX" id="SXK-Uk-xXA"/>
                                                                         <constraint firstAttribute="width" constant="12" id="TA1-hL-QvO"/>

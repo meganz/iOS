@@ -80,7 +80,7 @@ class PasscodeTimeDurationTableViewController: UITableViewController {
     // MARK: - UITableViewDelegate
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.backgroundColor = UIColor.mnz_settingsDetailsBackground(for: traitCollection)
+        cell.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

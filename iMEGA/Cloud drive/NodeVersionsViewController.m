@@ -102,22 +102,7 @@
     self.tableView.backgroundColor = [UIColor mnz_settingsBackgroundForTraitCollection:self.traitCollection];
 }
 
-- (UIColor *)backgroundColorForCells {
-    if (@available(iOS 13.0, *)) {
-        switch (self.traitCollection.userInterfaceStyle) {
-            case UIUserInterfaceStyleUnspecified:
-            case UIUserInterfaceStyleLight:
-                return UIColor.whiteColor;
-                
-            case UIUserInterfaceStyleDark:
-                return [UIColor mnz_chatGrayForTraitCollection:self.traitCollection];
-        }
-    } else {
-        return UIColor.whiteColor;
-    }
-}
-
-#pragma mark - TableViewDataSource
+#pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 2;
@@ -138,9 +123,6 @@
     
     NodeTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"nodeCell" forIndexPath:indexPath];
     [cell configureCellForNode:node delegate:self api:[MEGASdkManager sharedMEGASdk]];
-    cell.backgroundColor = [self backgroundColorForCells];
-    cell.nameLabel.textColor = UIColor.mnz_label;
-    cell.subtitleLabel.textColor = [UIColor mnz_subtitlesColorForTraitCollection:self.traitCollection];
     
     if (self.tableView.isEditing) {
         for (MEGANode *tempNode in self.selectedNodesArray) {
@@ -164,7 +146,11 @@
     return YES;
 }
 
-#pragma mark - TableViewDelegate
+#pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    cell.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     MEGANode *node = [self nodeForIndexPath:indexPath];

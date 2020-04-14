@@ -166,7 +166,7 @@ class AppearanceTableViewController: UITableViewController {
     // MARK: - UITableViewDataSource
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.backgroundColor = UIColor.mnz_settingsDetailsBackground(for: traitCollection)
+        cell.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

@@ -11,9 +11,11 @@
 
 @interface MasterKeyViewController ()
 
+@property (weak, nonatomic) IBOutlet UIView *illustrationView;
 @property (weak, nonatomic) IBOutlet UIButton *carbonCopyMasterKeyButton;
 @property (weak, nonatomic) IBOutlet UIButton *saveMasterKey;
 
+@property (weak, nonatomic) IBOutlet UIView *whyDoINeedARecoveryKeyTopSeparatorView;
 @property (weak, nonatomic) IBOutlet UIView *whyDoINeedARecoveryKeyView;
 @property (weak, nonatomic) IBOutlet UILabel *whyDoINeedARecoveryKeyLabel;
 
@@ -76,9 +78,11 @@
 - (void)updateAppearance {
     self.view.backgroundColor = UIColor.mnz_background;
     
+    self.illustrationView.backgroundColor = [UIColor mnz_accountViewsBackgroundColorForTraitCollection:self.traitCollection];
     [self.carbonCopyMasterKeyButton mnz_setupBasic:self.traitCollection];
     [self.saveMasterKey mnz_setupPrimary:self.traitCollection];
     
+    self.whyDoINeedARecoveryKeyTopSeparatorView.backgroundColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
     self.whyDoINeedARecoveryKeyView.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
     self.whyDoINeedARecoveryKeyLabel.textColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
 }
