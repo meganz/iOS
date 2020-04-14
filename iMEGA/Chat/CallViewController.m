@@ -1,11 +1,5 @@
 
 #import "CallViewController.h"
-#import "MEGARemoteImageView.h"
-#import "MEGALocalImageView.h"
-#import "AVAudioSession+MNZCategory.h"
-#import "NSString+MNZCategory.h"
-#import "UIApplication+MNZCategory.h"
-#import "UIImageView+MNZCategory.h"
 
 #import <AVFoundation/AVFoundation.h>
 #import <AudioToolbox/AudioToolbox.h>
@@ -13,11 +7,19 @@
 
 #import "LTHPasscodeViewController.h"
 
+#import "MEGALocalImageView.h"
+#import "MEGARemoteImageView.h"
+#import "AVAudioSession+MNZCategory.h"
+#import "NSString+MNZCategory.h"
+#import "UIApplication+MNZCategory.h"
+#import "UIImageView+MNZCategory.h"
+
 #import "MEGAChatAnswerCallRequestDelegate.h"
 #import "MEGAChatEnableDisableVideoRequestDelegate.h"
 #import "MEGAChatStartCallRequestDelegate.h"
 
 #import "DevicePermissionsHelper.h"
+#import "MEGA-Swift.h"
 
 @interface CallViewController () <UIGestureRecognizerDelegate, MEGAChatRequestDelegate, MEGAChatCallDelegate>
 
@@ -102,7 +104,20 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSessionRouteChange:) name:AVAudioSessionRouteChangeNotification object:nil];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didWirelessRoutesAvailableChange:) name:MPVolumeViewWirelessRoutesAvailableDidChangeNotification object:nil];
     
-    self.nameLabel.text = [self.chatRoom peerFullnameAtIndex:0];
+    uint64_t peerHandle = [self.chatRoom peerHandleAtIndex:0];
+    NSString *displayName = [self.chatRoom userDisplayNameForUserHandle:peerHandle];
+    if (displayName) {
+        self.nameLabel.text = displayName;
+    } else {
+        MEGAChatGenericRequestDelegate *delegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
+            if (error.type) {
+                return;
+            }
+            self.nameLabel.text = [self.chatRoom userDisplayNameForUserHandle:peerHandle];
+        }];
+        [[MEGASdkManager sharedMEGAChatSdk] loadUserAttributesForChatId:self.chatRoom.chatId usersHandles:@[@(peerHandle)] authorizationToken:self.chatRoom.authorizationToken delegate:delegate];
+    }
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
