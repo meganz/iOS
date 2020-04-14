@@ -13,7 +13,7 @@ extension MEGAChatListItem {
     }
     
     @objc var searchString: String {
-        let fullnames = (0..<peerCount).compactMap { chatRoom.fullName(atIndex: $0)}.joined(separator: " ")
+        let fullnames = (0..<peerCount).compactMap { chatRoom.peerFullname(at: $0)}.joined(separator: " ")
         let nicknames = (0..<peerCount).compactMap { chatRoom.userNickname(atIndex: $0) }.joined(separator: " ")
         let emails = (0..<peerCount).compactMap { chatRoom.peerEmail(byHandle: chatRoom.peerHandle(at: $0)) }.joined(separator: " ")
         
