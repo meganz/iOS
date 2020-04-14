@@ -299,7 +299,7 @@
     }
 }
 
-- (void)mnz_moveToTheRubbishBinInViewController:(UIViewController *)viewController {
+- (void)mnz_askToMoveToTheRubbishBinInViewController:(UIViewController *)viewController {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         NSString *alertTitle = AMLocalizedString(@"moveToTheRubbishBin", @"Title for the action that allows you to 'Move to the Rubbish Bin' files or folders");
         NSString *alertMessage = (self.type == MEGANodeTypeFolder) ? AMLocalizedString(@"moveFolderToRubbishBinMessage", @"Alert message to confirm if the user wants to move to the Rubbish Bin '1 folder'") : AMLocalizedString(@"moveFileToRubbishBinMessage", @"Alert message to confirm if the user wants to move to the Rubbish Bin '1 file'");
@@ -309,19 +309,24 @@
         [moveRemoveLeaveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
         
         [moveRemoveLeaveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-                void (^completion)(void) = nil;
-                if (![viewController isKindOfClass:MEGAPhotoBrowserViewController.class]) {
-                    completion = ^{
-                        [viewController dismissViewControllerAnimated:YES completion:nil];
-                    };
-                }
-                MEGAMoveRequestDelegate *moveRequestDelegate = [[MEGAMoveRequestDelegate alloc] initToMoveToTheRubbishBinWithFiles:(self.isFile ? 1 : 0) folders:(self.isFolder ? 1 : 0) completion:completion];
-                [[MEGASdkManager sharedMEGASdk] moveNode:self newParent:[[MEGASdkManager sharedMEGASdk] rubbishNode] delegate:moveRequestDelegate];
+            
+            void (^completion)(void) = nil;
+            if (![viewController isKindOfClass:MEGAPhotoBrowserViewController.class]) {
+                completion = ^{
+                    [viewController dismissViewControllerAnimated:YES completion:nil];
+                };
             }
+            [self mnz_moveToTheRubbishBinWithCompletion:completion];
         }]];
         
         [viewController presentViewController:moveRemoveLeaveAlertController animated:YES completion:nil];
+    }
+}
+
+- (void)mnz_moveToTheRubbishBinWithCompletion:(void (^)(void))completion {
+    if (MEGAReachabilityManager.isReachableHUDIfNot) {
+        MEGAMoveRequestDelegate *moveRequestDelegate = [MEGAMoveRequestDelegate.alloc initToMoveToTheRubbishBinWithFiles:(self.isFile ? 1 : 0) folders:(self.isFolder ? 1 : 0) completion:completion];
+        [MEGASdkManager.sharedMEGASdk moveNode:self newParent:MEGASdkManager.sharedMEGASdk.rubbishNode delegate:moveRequestDelegate];
     }
 }
 

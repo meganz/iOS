@@ -473,11 +473,9 @@ static const NSTimeInterval kSearchTimeDelay = .5;
                                  if (accessType == MEGAShareTypeAccessOwner) {
                                      if (self.displayMode == DisplayModeCloudDrive) {
                                          if (navigationController.viewControllers.lastObject.class == CloudDriveViewController.class) {
-                                             MEGAMoveRequestDelegate *moveRequestDelegate = [[MEGAMoveRequestDelegate alloc] initToMoveToTheRubbishBinWithFiles:(self.parentNode.isFile ? 1 : 0) folders:(self.parentNode.isFolder ? 1 : 0) completion:^{
+                                             [parentNode mnz_moveToTheRubbishBinWithCompletion:^{
                                                  [self setEditMode:NO];
                                              }];
-                                             
-                                             [[MEGASdkManager sharedMEGASdk] moveNode:parentNode newParent:[[MEGASdkManager sharedMEGASdk] rubbishNode] delegate:moveRequestDelegate];
                                          } else if (navigationController.viewControllers.lastObject.class == SharedItemsViewController.class) {
                                              NSMutableArray *outSharesForNodeMutableArray = [[NSMutableArray alloc] init];
                                              MEGAShareList *shareList = [[MEGASdkManager sharedMEGASdk] outSharesForNode:self.parentNode];
@@ -503,13 +501,11 @@ static const NSTimeInterval kSearchTimeDelay = .5;
                                          [[MEGASdkManager sharedMEGASdk] removeNode:parentNode delegate:removeRequestDelegate];
                                      }
                                  } if (accessType == MEGAShareTypeAccessFull) { //DisplayModeSharedItem (Move to the Rubbish Bin)
-                                     MEGAMoveRequestDelegate *moveRequestDelegate = [[MEGAMoveRequestDelegate alloc] initToMoveToTheRubbishBinWithFiles:(self.parentNode.isFile ? 1 : 0) folders:(self.parentNode.isFolder ? 1 : 0) completion:^{
+                                     [parentNode mnz_moveToTheRubbishBinWithCompletion:^{
                                          [self setEditMode:NO];
                                      }];
-                                     
-                                     [[MEGASdkManager sharedMEGASdk] moveNode:parentNode newParent:[[MEGASdkManager sharedMEGASdk] rubbishNode] delegate:moveRequestDelegate];
                                  }
-                             }];
+    }];
     
     MEGAShareType shareType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.parentNode];
     NSArray<id<UIPreviewActionItem>> *previewActions;
@@ -2114,7 +2110,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
         }
             
         case MegaNodeActionTypeMoveToRubbishBin:
-            [node mnz_moveToTheRubbishBinInViewController:self];
+            [node mnz_askToMoveToTheRubbishBinInViewController:self];
             break;
             
         case MegaNodeActionTypeRemove:

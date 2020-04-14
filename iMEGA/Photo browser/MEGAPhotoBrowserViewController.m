@@ -1023,7 +1023,7 @@ static const CGFloat GapBetweenPages = 10.0;
         }
             
         case MegaNodeActionTypeMoveToRubbishBin:
-            [node mnz_moveToTheRubbishBinInViewController:self];
+            [node mnz_askToMoveToTheRubbishBinInViewController:self];
             break;
             
         case MegaNodeActionTypeImport:
