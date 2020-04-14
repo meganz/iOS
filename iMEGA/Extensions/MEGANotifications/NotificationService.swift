@@ -2,14 +2,14 @@
 import UserNotifications
 
 class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationDelegate {
-    static var session: String?
-    static var isLogging = false
+    private static var session: String?
+    private static var isLogging = false
 
-    var contentHandler: ((UNNotificationContent) -> Void)?
-    var bestAttemptContent: UNMutableNotificationContent?
+    private var contentHandler: ((UNNotificationContent) -> Void)?
+    private var bestAttemptContent: UNMutableNotificationContent?
     
-    var chatId: UInt64?
-    var msgId: UInt64?
+    private var chatId: UInt64?
+    private var msgId: UInt64?
 
     override func didReceive(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
         self.contentHandler = contentHandler
@@ -73,7 +73,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
     
     // MARK: - Private
     
-    func generateNotification(with message: MEGAChatMessage, immediately: Bool) -> Bool {
+    private func generateNotification(with message: MEGAChatMessage, immediately: Bool) -> Bool {
         guard let chatId = chatId, let chatRoom = MEGASdkManager.sharedMEGAChatSdk()?.chatRoom(forChatId: chatId) else {
             return false
         }
@@ -131,7 +131,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         return true
     }
     
-    func postNotification(withError error: String?) {
+    private func postNotification(withError error: String?) {
         MEGASdkManager.sharedMEGAChatSdk()?.remove(self as MEGAChatNotificationDelegate)
         
         guard let contentHandler = contentHandler else {
@@ -156,7 +156,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         contentHandler(bestAttemptContent)
     }
     
-    func path(for node: MEGANode, in sharedSandboxCacheDirectory: String) -> String? {
+    private func path(for node: MEGANode, in sharedSandboxCacheDirectory: String) -> String? {
         let containerURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: MEGAGroupIdentifier)
         guard let destinationURL = containerURL?.appendingPathComponent(MEGAExtensionCacheFolder, isDirectory: true).appendingPathComponent(sharedSandboxCacheDirectory, isDirectory: true) else {
             return nil
@@ -171,7 +171,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
 
     // MARK: - Lean init, login and connect
     
-    static func initExtensionProcess() {
+    private static func initExtensionProcess() {
         NSSetUncaughtExceptionHandler { (exception) in
             MEGALogError("Exception name: \(exception.name)\nreason: \(String(describing: exception.reason))\nuser info: \(String(describing: exception.userInfo))\n")
             MEGALogError("Stack trace: \(exception.callStackSymbols)")
@@ -188,7 +188,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         loginToMEGA(with: session)
     }
     
-    static func setupLogging() {
+    private static func setupLogging() {
         if let sharedUserDefaults = UserDefaults.init(suiteName: MEGAGroupIdentifier) {
             if !isLogging && sharedUserDefaults.bool(forKey: "logging") {
                 guard let logsFolderURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: MEGAGroupIdentifier)?.appendingPathComponent(MEGAExtensionLogsFolder) else {
@@ -217,7 +217,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
     }
     
     // As part of the lean init, a cache is required. It will not be generated from scratch.
-    static func copyDatabasesFromMainApp() {
+    private static func copyDatabasesFromMainApp() {
         let fileManager = FileManager.default
         
         guard let applicationSupportDirectoryURL = try? fileManager.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true) else {
@@ -274,7 +274,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         }
     }
     
-    static func newestMegaclientModificationDateForDirectory(at url: URL) throws -> Date {
+    private static func newestMegaclientModificationDateForDirectory(at url: URL) throws -> Date {
         let fileManager = FileManager.default
         var newestDate = Date(timeIntervalSince1970: 0)
         var pathContent: [String]
@@ -301,7 +301,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         return newestDate
     }
     
-    static func initChat() {
+    private static func initChat() {
         if MEGASdkManager.sharedMEGAChatSdk() == nil {
             MEGASdkManager.createSharedMEGAChatSdk()
         }
@@ -318,7 +318,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         }
     }
     
-    static func loginToMEGA(with session: String) {
+    private static func loginToMEGA(with session: String) {
         MEGASdkManager.sharedMEGASdk()?.fastLogin(withSession: session, delegate: MEGAGenericRequestDelegate { request, error in
             if error.type != .apiOk {
                 MEGALogError("Login error \(error)")
