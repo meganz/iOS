@@ -133,25 +133,14 @@
     self.infoButton.tintColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
     
     self.tableView.backgroundColor = [UIColor mnz_settingsBackgroundForTraitCollection:self.traitCollection];
-    self.nodeView.backgroundColor = [UIColor mnz_settingsDetailsBackgroundForTraitCollection:self.traitCollection];
-}
-
-- (UIColor *)backgroundColorForCells {
-    if (@available(iOS 13.0, *)) {
-        switch (self.traitCollection.userInterfaceStyle) {
-            case UIUserInterfaceStyleUnspecified:
-            case UIUserInterfaceStyleLight:
-                return UIColor.whiteColor;
-                
-            case UIUserInterfaceStyleDark:
-                return [UIColor mnz_chatGrayForTraitCollection:self.traitCollection];
-        }
-    } else {
-        return UIColor.whiteColor;
-    }
+    self.nodeView.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection]; //Review this color
 }
 
 #pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    cell.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
+}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
@@ -293,7 +282,6 @@
     UITableViewCell *cell;
     if (indexPath.section == 0) {
         NodePropertyTableViewCell *propertyCell = [self.tableView dequeueReusableCellWithIdentifier:@"nodePropertyCell" forIndexPath:indexPath];
-        propertyCell.backgroundColor = [self backgroundColorForCells];
         propertyCell.keyLabel.text = [self.nodeProperties objectAtIndex:indexPath.row].title;
         propertyCell.keyLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
         propertyCell.valueLabel.text = [self.nodeProperties objectAtIndex:indexPath.row].value;
@@ -403,7 +391,6 @@
 
 - (NodeTappablePropertyTableViewCell *)versionCellForIndexPath:(NSIndexPath *)indexPath {
     NodeTappablePropertyTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"nodeTappablePropertyCell" forIndexPath:indexPath];
-    cell.backgroundColor = [self backgroundColorForCells];
     cell.iconImageView.tintColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
     cell.iconImageView.image = [UIImage imageNamed:@"versions"];
     cell.titleLabel.text = [AMLocalizedString(@"xVersions", @"Message to display the number of historical versions of files.") stringByReplacingOccurrencesOfString:@"[X]" withString: [NSString stringWithFormat:@"%ld", (long)self.node.mnz_numberOfVersions]];
@@ -415,7 +402,6 @@
 
 - (NodeTappablePropertyTableViewCell *)sharedFolderCellForIndexPath:(NSIndexPath *)indexPath {
     NodeTappablePropertyTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"nodeTappablePropertyCell" forIndexPath:indexPath];
-    cell.backgroundColor = [self backgroundColorForCells];
     cell.iconImageView.image = [UIImage imageNamed:@"shareFolder"];
     cell.iconImageView.tintColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
     cell.separatorView.backgroundColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
@@ -433,7 +419,6 @@
 
 - (NodeTappablePropertyTableViewCell *)linkCellForIndexPath:(NSIndexPath *)indexPath {
     NodeTappablePropertyTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"nodeTappablePropertyCell" forIndexPath:indexPath];
-    cell.backgroundColor = [self backgroundColorForCells];
     cell.iconImageView.image = [UIImage imageNamed:@"link"];
     cell.iconImageView.tintColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
     if (self.node.isExported) {

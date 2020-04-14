@@ -15,7 +15,7 @@
                 if (traitCollection.accessibilityContrast == UIAccessibilityContrastHigh) {
                     return UIColor.whiteColor;
                 } else {
-                    return [UIColor colorWithRed:247.0/255.0 green:247.0/255.0 blue:247.0/255.0 alpha:1.0];
+                    return UIColor.mnz_grayF7F7F7;
                 }
             }
                 
@@ -28,7 +28,7 @@
             }
         }
     } else {
-        return [UIColor colorWithRed:247.0/255.0 green:247.0/255.0 blue:247.0/255.0 alpha:1.0];
+        return UIColor.mnz_grayF7F7F7;
     }
 }
 
@@ -49,7 +49,11 @@
             }
                 
             case UIUserInterfaceStyleDark: {
-                return UIColor.secondarySystemBackgroundColor;
+                if (traitCollection.accessibilityContrast == UIAccessibilityContrastHigh) {
+                    return UIColor.tertiarySystemBackgroundColor;
+                } else {
+                    return UIColor.secondarySystemBackgroundColor;
+                }
             }
         }
     } else {
@@ -162,28 +166,11 @@
             }
                 
             case UIUserInterfaceStyleDark: {
-                return [UIColor mnz_mainBarsColorForTraitCollection:traitCollection];
+                return UIColor.systemBackgroundColor;
             }
         }
     } else {
         return UIColor.mnz_grayF7F7F7;
-    }
-}
-
-+ (UIColor *)mnz_settingsDetailsBackgroundForTraitCollection:(UITraitCollection *)traitCollection {
-    if (@available(iOS 13.0, *)) {
-        switch (traitCollection.userInterfaceStyle) {
-            case UIUserInterfaceStyleUnspecified:
-            case UIUserInterfaceStyleLight: {
-                return UIColor.mnz_background;
-            }
-                
-            case UIUserInterfaceStyleDark: {
-                return [UIColor mnz_chatGrayForTraitCollection:traitCollection];
-            }
-        }
-    } else {
-        return UIColor.mnz_background;
     }
 }
 
@@ -351,7 +338,7 @@
                 if (traitCollection.accessibilityContrast == UIAccessibilityContrastHigh) {
                     return [UIColor colorFromHexString:@"3F3F42"];
                 } else {
-                    return [UIColor colorFromHexString:@"2C2C2E"];
+                    return UIColor.secondarySystemBackgroundColor;
                 }
             }
         }
