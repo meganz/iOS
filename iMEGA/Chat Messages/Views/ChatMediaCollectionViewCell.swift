@@ -1,7 +1,7 @@
 import MessageKit
 
 class ChatMediaCollectionViewCell: MessageContentCell {
-
+        
     open var imageView: YYAnimatedImageView = {
         let imageView = YYAnimatedImageView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
         imageView.contentMode = .scaleAspectFit
@@ -30,11 +30,9 @@ class ChatMediaCollectionViewCell: MessageContentCell {
 
         let megaMessage = chatMessage.message
         let node = megaMessage.nodeList.node(at: 0)!
-        
-        self.imageView.mnz_setPreview(by: node) { (request) in
+        self.imageView.mnz_setPreview(by: node) {(request) in
             messagesCollectionView.reloadItems(at: [indexPath])
         }
-  
     }
 }
 
@@ -59,27 +57,31 @@ open class ChatMediaCollectionViewSizeCalculator: MessageSizeCalculator {
             let node = megaMessage.nodeList.node(at: 0)!
             let previewFilePath = Helper.path(for: node, inSharedSandboxCacheDirectory: "previewsV3")
          
+            var width: CGFloat = 200
+            var height: CGFloat = 200
+
             if FileManager.default.fileExists(atPath: previewFilePath) {
                 let previewImage = YYImage(contentsOfFile: previewFilePath)
-                let ratio = previewImage!.size.width / previewImage!.size.height
-                var width, height : CGFloat
-                if ratio > 1 {
-                    width = min(maxWidth, previewImage!.size.width)
-                    height = width / ratio
-                } else {
-                    height = min(maxHeight, previewImage!.size.height)
-                    width = height * ratio
-                }
-            
-                return CGSize(width: width, height: height)
+                width = previewImage!.size.width
+                height = previewImage!.size.height
             }
             if node.hasPreview() &&
                 node.height > 0 &&
                 node.width > 0 {
-                return CGSize(width: min(node.width, Int(maxWidth)), height: node.height)
+                width = CGFloat(node.width)
+                height = CGFloat(node.height)
             }
-            return CGSize(width: 200, height: 200)
-
+            
+            let ratio = width / height
+            if ratio > 1 {
+                width = min(maxWidth, width)
+                height = width / ratio
+            } else {
+                height = min(maxHeight, height)
+                width = height * ratio
+            }
+            
+            return CGSize(width: width, height: height)
         default:
             fatalError("messageContainerSize received unhandled MessageDataType: \(message.kind)")
         }

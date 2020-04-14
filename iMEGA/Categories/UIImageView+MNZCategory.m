@@ -8,6 +8,9 @@
 #import "MEGAGetThumbnailRequestDelegate.h"
 #import "MEGAGetPreviewRequestDelegate.h"
 #import <YYWebImage/YYWebImage.h>
+#import <objc/runtime.h>
+
+static int _MEGAWebImageSetterKey;
 
 @implementation UIImageView (MNZCategory)
 
@@ -65,11 +68,9 @@
             self.image = [YYImage imageWithContentsOfFile:path];
         } else {
             MEGAGetPreviewRequestDelegate *delegate = [[MEGAGetPreviewRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
-                self.yy_imageURL = [NSURL fileURLWithPath:request.file];
                 if (completion) {
                     completion(request);
                 }
-                
             }];
             [self mnz_imageForNode:node];
             [[MEGASdkManager sharedMEGASdk] getPreviewNode:node destinationFilePath:path delegate:delegate];
