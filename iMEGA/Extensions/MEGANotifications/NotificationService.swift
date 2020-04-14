@@ -3,7 +3,8 @@ import UserNotifications
 
 class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationDelegate {
     static var session: String?
-    
+    static var isLogging = false
+
     var contentHandler: ((UNNotificationContent) -> Void)?
     var bestAttemptContent: UNMutableNotificationContent?
     
@@ -22,6 +23,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
             }
         }
         
+        NotificationService.setupLogging()
         MEGALogInfo("Push received: request identifier: \(request.identifier)\n user info: \(request.content.userInfo)")
         
         guard let megadataDictionary = bestAttemptContent?.userInfo["megadata"] as? [String : String],
@@ -170,6 +172,10 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
     // MARK: - Lean init, login and connect
     
     static func initExtensionProcess() {
+        NSSetUncaughtExceptionHandler { (exception) in
+            MEGALogError("Exception name: \(exception.name)\nreason: \(String(describing: exception.reason))\nuser info: \(String(describing: exception.userInfo))\n")
+            MEGALogError("Stack trace: \(exception.callStackSymbols)")
+        }
         setupLogging()
         
         guard let session = SAMKeychain.password(forService: "MEGA", account: "sessionV3") else {
@@ -183,13 +189,8 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
     }
     
     static func setupLogging() {
-        NSSetUncaughtExceptionHandler { (exception) in
-            MEGALogError("Exception name: \(exception.name)\nreason: \(String(describing: exception.reason))\nuser info: \(String(describing: exception.userInfo))\n")
-            MEGALogError("Stack trace: \(exception.callStackSymbols)")
-        }
-        
         if let sharedUserDefaults = UserDefaults.init(suiteName: MEGAGroupIdentifier) {
-            if sharedUserDefaults.bool(forKey: "logging") {
+            if !isLogging && sharedUserDefaults.bool(forKey: "logging") {
                 guard let logsFolderURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: MEGAGroupIdentifier)?.appendingPathComponent(MEGAExtensionLogsFolder) else {
                     return
                 }
@@ -210,6 +211,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
                 MEGASdk.setLogLevel(.fatal)
 #endif
                 MEGASdk.setLogToConsole(true)
+                isLogging = true
             }
         }
     }
