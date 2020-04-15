@@ -576,7 +576,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 
 - (void)loadMessages {
     NSUInteger messagesToLoad = 32;
-    if (self.isFirstLoad && (self.unreadMessages > 32 || self.unreadMessages < 0)) {
+    if (self.isFirstLoad && (self.unreadMessages > messagesToLoad || self.unreadMessages < 0)) {
         messagesToLoad = ABS(self.unreadMessages);
     }
     NSInteger loadMessage = [[MEGASdkManager sharedMEGAChatSdk] loadMessagesForChat:self.chatRoom.chatId count:messagesToLoad];
@@ -2881,12 +2881,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     }
 }
 
-#pragma mark - UIScrollViewDelegate
-
-- (BOOL)scrollViewShouldScrollToTop:(UIScrollView *)scrollView {
-    return NO;
-}
-
 #pragma mark - UITextViewDelegate
 
 - (void)textViewDidChange:(UITextView *)textView {
@@ -3112,6 +3106,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         } else {
             // TODO: improve load earlier messages
             CGFloat oldContentOffsetFromBottomY = self.collectionView.contentSize.height - self.collectionView.contentOffset.y;
+            [self.collectionView setContentOffset:self.collectionView.contentOffset animated:NO];
             [self.collectionView reloadData];
             [self.collectionView layoutIfNeeded];
             CGPoint newContentOffset = CGPointMake(self.collectionView.contentOffset.x, self.collectionView.contentSize.height - oldContentOffsetFromBottomY);

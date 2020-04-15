@@ -82,6 +82,7 @@ extern NSString * const MEGAFileExtensionStorageFolder;
 extern NSString * const MEGAExtensionLogsFolder;
 extern NSString * const MEGAExtensionGroupSupportFolder;
 extern NSString * const MEGAExtensionCacheFolder;
+extern NSString * const MEGANotificationServiceExtensionCacheFolder;
 
 #pragma mark - MEGA Activity Types
 
@@ -106,3 +107,8 @@ extern NSString * const MEGALastPublicTimestampAccessed;
 #pragma mark - MEGA Contact Nickname change Notification
 
 extern NSString * const MEGContactNicknameChangeNotification;
+
+#pragma mark - DB name
+
+// Last 36 characters of the user session are used by sdk and karere to name their dbs
+extern const NSUInteger MEGALastCharactersFromSession;

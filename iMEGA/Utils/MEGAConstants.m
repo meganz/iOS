@@ -82,6 +82,7 @@ NSString * const MEGAFileExtensionStorageFolder = @"File Provider Storage";
 NSString * const MEGAExtensionLogsFolder = @"logs";
 NSString * const MEGAExtensionGroupSupportFolder = @"GroupSupport";
 NSString * const MEGAExtensionCacheFolder = @"Library/Cache/";
+NSString * const MEGANotificationServiceExtensionCacheFolder = @"Library/Cache/NSE";
 
 #pragma mark - MEGA Activity Types
 
@@ -106,3 +107,7 @@ NSString * const MEGALastPublicTimestampAccessed = @"kLastPublicTimestampAccesse
 #pragma mark - MEGA Contact Nickname change Notification
 
 NSString * const MEGContactNicknameChangeNotification = @"MEGAContactNicknameChangeNotification";
+
+#pragma mark - DB name
+
+const NSUInteger MEGALastCharactersFromSession = 36;

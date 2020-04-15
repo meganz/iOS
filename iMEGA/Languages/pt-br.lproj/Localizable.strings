@@ -2065,7 +2065,7 @@
 /* Used in Photos app browser view to send the photos from the view to the chat. */
 "Send (%d)"="Enviar (%d)";
 /* Used in Photos app browser view to upload the photos from the view to the cloud. */
-"Upload (%d)"="Upload (%d)";
+"Upload (%d)"="Fazer upload (%d)";
 /* Used in Photos app browser carousel view to unselect a selected photo. */
 "Unselect"="Remover a seleção";
 /* Used in Photos app browser. Shown when there are no photos or videos in the Photos app. */

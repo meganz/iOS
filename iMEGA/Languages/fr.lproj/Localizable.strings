@@ -61,7 +61,7 @@
 /* This dialog message is used on the Password Decrypt dialog as an instruction for the user. */
 "If you do not have the password, contact the creator of the link."="Si vous ne connaissez pas le mot de passe, contactez le créateur du lien.";
 /* This placeholder text is used on the Password Decrypt dialog as an instruction for the user. */
-"Enter the password"="Saisir le mot de passe";
+"Enter the password"="Saisissez le mot de passe";
 /* Alert title shown when your account has been closed through another client or the web by killing all your sessions */
 "loggedOut_alertTitle"="Déconnecté";
 /* Alert message shown when your account has been closed through another client or the web by killing all your sessions */
@@ -2065,7 +2065,7 @@
 /* Used in Photos app browser view to send the photos from the view to the chat. */
 "Send (%d)"="Envoyer (%d)";
 /* Used in Photos app browser view to upload the photos from the view to the cloud. */
-"Upload (%d)"="Upload (%d)";
+"Upload (%d)"="Téléverser (%d)";
 /* Used in Photos app browser carousel view to unselect a selected photo. */
 "Unselect"="Dessélectionner";
 /* Used in Photos app browser. Shown when there are no photos or videos in the Photos app. */

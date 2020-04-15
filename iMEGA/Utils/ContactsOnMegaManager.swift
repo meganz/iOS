@@ -50,7 +50,7 @@ struct ContactOnMega: Codable {
         //Get all outgoing contact request emails
         let outgoingContactRequestList = MEGASdkManager.sharedMEGASdk().outgoingContactRequests()
         for i in 0 ..< outgoingContactRequestList.size.intValue {
-            contactEmailsToFilter.append(outgoingContactRequestList.contactRequest(at: i)?.targetEmail ?? "")
+            contactEmailsToFilter.append(outgoingContactRequestList.contactRequest(at: i)?.targetEmail.lowercased() ?? "")
         }
         
         //Get all visible contacts emails
@@ -58,7 +58,7 @@ struct ContactOnMega: Codable {
         for j in 0 ..< userContacts.size.intValue {
             if let user = userContacts.user(at: j) {
                 if user.visibility == .visible {
-                    contactEmailsToFilter.append(user.email)
+                    contactEmailsToFilter.append(user.email.lowercased())
                 }
             }
         }
@@ -66,7 +66,7 @@ struct ContactOnMega: Codable {
         //Filter ContactsOnMEGA from API with outgoing contact request and visible contacts
         if contactEmailsToFilter.count > 0 {
             for contact in contactsOnMega {
-                if contactEmailsToFilter.filter({$0 == contact.email}).count == 0 {
+                if contactEmailsToFilter.filter({$0 == contact.email.lowercased()}).count == 0 {
                     contactsOnMegaFiltered.append(contact)
                 }
             }
