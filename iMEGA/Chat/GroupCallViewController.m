@@ -1083,7 +1083,7 @@
                                 [self.peerTalkingImageView mnz_setImageForUserHandle:chatSessionWithAudioLevel.peerId name:displayName];
                             } else {
                                 MEGAChatGenericRequestDelegate *delegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
-                                    NSString *displayName = error.type ? [MEGASdk base64HandleForUserHandle:chatSessionWithAudioLevel.peerId] : [self.chatRoom userDisplayNameForUserHandle:chatSessionWithAudioLevel.peerId];
+                                    NSString *displayName = error.type ? @"?" : [self.chatRoom userDisplayNameForUserHandle:chatSessionWithAudioLevel.peerId];
                                     [self.peerTalkingImageView mnz_setImageForUserHandle:chatSessionWithAudioLevel.peerId name:displayName];
                                 }];
                                 [[MEGASdkManager sharedMEGAChatSdk] loadUserAttributesForChatId:self.chatRoom.chatId usersHandles:@[@(chatSessionWithAudioLevel.peerId)] authorizationToken:self.chatRoom.authorizationToken delegate:delegate];

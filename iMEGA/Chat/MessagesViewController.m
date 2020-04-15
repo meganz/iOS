@@ -1390,7 +1390,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         ContactDetailsViewController *contactDetailsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactDetailsViewControllerID"];
         contactDetailsVC.contactDetailsMode = self.chatRoom.isGroup ? ContactDetailsModeFromGroupChat : ContactDetailsModeFromChat;
         contactDetailsVC.userEmail = userEmail;
-        contactDetailsVC.userName = userName;
         contactDetailsVC.userHandle = userHandle;
         contactDetailsVC.groupChatRoom = self.chatRoom;
         [self.navigationController pushViewController:contactDetailsVC animated:YES];
