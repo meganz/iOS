@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="RUe-vS-5fH">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="RUe-vS-5fH">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -92,8 +92,8 @@
                                                                                     </label>
                                                                                 </subviews>
                                                                             </stackView>
-                                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="252" verticalHuggingPriority="251" image="disclosureIndicatorGray" translatesAutoresizingMaskIntoConstraints="NO" id="zz8-T4-R75">
-                                                                                <rect key="frame" x="333" y="12" width="8" height="26"/>
+                                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="252" verticalHuggingPriority="251" image="standardDisclosureIndicator" translatesAutoresizingMaskIntoConstraints="NO" id="zz8-T4-R75">
+                                                                                <rect key="frame" x="333" y="19" width="8" height="12"/>
                                                                                 <constraints>
                                                                                     <constraint firstAttribute="width" constant="8" id="614-lv-gJF"/>
                                                                                 </constraints>
@@ -146,7 +146,7 @@
                                                                                 </constraints>
                                                                             </imageView>
                                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="xCE-6Q-bRi">
-                                                                                <rect key="frame" x="41" y="6" width="300" height="38.5"/>
+                                                                                <rect key="frame" x="41" y="5.5" width="300" height="39.5"/>
                                                                                 <subviews>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Phone Number" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WJa-I9-2TH">
                                                                                         <rect key="frame" x="0.0" y="0.0" width="300" height="14.5"/>
@@ -155,16 +155,16 @@
                                                                                         <nil key="highlightedColor"/>
                                                                                     </label>
                                                                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="1ZJ-k7-wc7">
-                                                                                        <rect key="frame" x="0.0" y="17.5" width="300" height="21"/>
+                                                                                        <rect key="frame" x="0.0" y="17.5" width="300" height="22"/>
                                                                                         <subviews>
                                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="+64" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l67-zd-SyV">
-                                                                                                <rect key="frame" x="0.0" y="0.0" width="32" height="21"/>
+                                                                                                <rect key="frame" x="0.0" y="0.0" width="32" height="22"/>
                                                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                                                                 <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                                                 <nil key="highlightedColor"/>
                                                                                             </label>
                                                                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ya6-zD-9Hn">
-                                                                                                <rect key="frame" x="40" y="0.0" width="260" height="21"/>
+                                                                                                <rect key="frame" x="40" y="0.0" width="260" height="22"/>
                                                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                                                                 <textInputTraits key="textInputTraits" keyboardType="numberPad" textContentType="tel"/>
                                                                                                 <connections>
@@ -332,7 +332,7 @@
             </objects>
             <point key="canvasLocation" x="79.710144927536234" y="-588.61607142857144"/>
         </scene>
-        <!--Single Code Delegate-->
+        <!--Verification Code View Controller-->
         <scene sceneID="Asa-Cw-ikC">
             <objects>
                 <viewController storyboardIdentifier="VerificationCodeViewControllerID" id="ZVj-3U-FfW" customClass="VerificationCodeViewController" customModule="MEGA" customModuleProvider="target" sceneMemberID="viewController">
@@ -672,7 +672,7 @@
     <resources>
         <image name="addPhoneNumberMedium" width="128" height="128"/>
         <image name="delete" width="28" height="28"/>
-        <image name="disclosureIndicatorGray" width="16" height="26"/>
+        <image name="standardDisclosureIndicator" width="7.5" height="12"/>
         <image name="verificationCountry" width="24" height="24"/>
         <image name="verificationHeader" width="375" height="291"/>
         <image name="verificationNumber" width="24" height="24"/>
