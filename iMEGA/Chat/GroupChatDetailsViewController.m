@@ -823,12 +823,10 @@
 
                 if (userHandle != MEGASdkManager.sharedMEGASdk.myUser.handle) {
                     
-                    NSString *userName = [self.chatRoom peerFullnameByHandle:userHandle];
                     NSString *userEmail = [self.chatRoom peerEmailByHandle:userHandle];
                     ContactDetailsViewController *contactDetailsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactDetailsViewControllerID"];
                     contactDetailsVC.contactDetailsMode = ContactDetailsModeFromGroupChat;
                     contactDetailsVC.userEmail = userEmail;
-                    contactDetailsVC.userName = userName;
                     contactDetailsVC.userHandle = userHandle;
                     contactDetailsVC.groupChatRoom = self.chatRoom;
 
