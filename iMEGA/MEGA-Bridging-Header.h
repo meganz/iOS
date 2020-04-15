@@ -22,6 +22,7 @@
 #import "UIImageView+MNZCategory.h"
 #import "UIImage+MNZCategory.h"
 #import "MEGAUser+MNZCategory.h"
+#import "MEGANode+MNZCategory.h"
 
 #import "MEGAAssetsPickerController.h"
 #import "MEGAChatGenericRequestDelegate.h"

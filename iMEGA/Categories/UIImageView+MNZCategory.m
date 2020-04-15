@@ -48,7 +48,7 @@ static int _MEGAWebImageSetterKey;
     if (node.hasThumbnail) {
         NSString *path = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
         if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
-            self.image = [YYImage imageWithContentsOfFile:path];
+            self.yy_imageURL = [NSURL fileURLWithPath:path];
         } else {
             MEGAGetThumbnailRequestDelegate *delegate = [[MEGAGetThumbnailRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
                 self.yy_imageURL = [NSURL fileURLWithPath:request.file];
@@ -65,7 +65,7 @@ static int _MEGAWebImageSetterKey;
     if (node.hasPreview) {
         NSString *path = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"previewsV3"];
         if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
-            self.image = [YYImage imageWithContentsOfFile:path];
+            self.yy_imageURL = [NSURL fileURLWithPath:path];
         } else {
             MEGAGetPreviewRequestDelegate *delegate = [[MEGAGetPreviewRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
                 if (completion) {
