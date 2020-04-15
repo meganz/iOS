@@ -1067,6 +1067,9 @@
 		BF33EF70243DA31D00CD35AC /* ChatMessage+AttachmentCellDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF33EF6F243DA31D00CD35AC /* ChatMessage+AttachmentCellDataSource.swift */; };
 		BF33EF7424451A4700CD35AC /* TapAndHoldMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF33EF7324451A4700CD35AC /* TapAndHoldMessageView.swift */; };
 		BF33EF7924451A6200CD35AC /* TapAndHoldMessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF33EF7824451A6200CD35AC /* TapAndHoldMessageView.xib */; };
+		BF33EF7D24453FFD00CD35AC /* AudioRecordingInputBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF33EF7C24453FFD00CD35AC /* AudioRecordingInputBar.xib */; };
+		BF33EF822445401800CD35AC /* AudioRecordingInputBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF33EF812445401800CD35AC /* AudioRecordingInputBar.swift */; };
+		BF33EF8424457A0700CD35AC /* ChatMessageAndAudioInputBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF33EF8324457A0700CD35AC /* ChatMessageAndAudioInputBar.swift */; };
 		BF69E5172374F3720031913D /* AppDelegate+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF69E5162374F3720031913D /* AppDelegate+Additions.swift */; };
 		BFB463DD2432F2E900FB90B9 /* ChatRoomDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB463DC2432F2E900FB90B9 /* ChatRoomDelegate.swift */; };
 		BFB463E52433390600FB90B9 /* MEGAUser+Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB463E42433390600FB90B9 /* MEGAUser+Chat.swift */; };
@@ -2525,6 +2528,9 @@
 		BF33EF6F243DA31D00CD35AC /* ChatMessage+AttachmentCellDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatMessage+AttachmentCellDataSource.swift"; sourceTree = "<group>"; };
 		BF33EF7324451A4700CD35AC /* TapAndHoldMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapAndHoldMessageView.swift; sourceTree = "<group>"; };
 		BF33EF7824451A6200CD35AC /* TapAndHoldMessageView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TapAndHoldMessageView.xib; sourceTree = "<group>"; };
+		BF33EF7C24453FFD00CD35AC /* AudioRecordingInputBar.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AudioRecordingInputBar.xib; sourceTree = "<group>"; };
+		BF33EF812445401800CD35AC /* AudioRecordingInputBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecordingInputBar.swift; sourceTree = "<group>"; };
+		BF33EF8324457A0700CD35AC /* ChatMessageAndAudioInputBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageAndAudioInputBar.swift; sourceTree = "<group>"; };
 		BF69E5162374F3720031913D /* AppDelegate+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Additions.swift"; sourceTree = "<group>"; };
 		BFB463DC2432F2E900FB90B9 /* ChatRoomDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomDelegate.swift; sourceTree = "<group>"; };
 		BFB463E42433390600FB90B9 /* MEGAUser+Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAUser+Chat.swift"; sourceTree = "<group>"; };
@@ -5333,6 +5339,9 @@
 				BFB463FA243456D900FB90B9 /* ChatViewIntroductionHeaderView.xib */,
 				BF06E3DD243191B000B30FB7 /* ChatTitleView.swift */,
 				BF06E3DC243191B000B30FB7 /* ChatTitleView.xib */,
+				BF33EF8324457A0700CD35AC /* ChatMessageAndAudioInputBar.swift */,
+				BF33EF812445401800CD35AC /* AudioRecordingInputBar.swift */,
+				BF33EF7C24453FFD00CD35AC /* AudioRecordingInputBar.xib */,
 				BF33EF7324451A4700CD35AC /* TapAndHoldMessageView.swift */,
 				BF33EF7824451A6200CD35AC /* TapAndHoldMessageView.xib */,
 				BF09FF22243BDB770067DD77 /* MessageInputTextBackgroundView.swift */,
@@ -5843,6 +5852,7 @@
 				417279521DB663FA001AC818 /* JSQMessagesCollectionViewCellIncoming.xib in Resources */,
 				4172795C1DB663FA001AC818 /* JSQMessagesToolbarContentView.xib in Resources */,
 				5BEB2EB1220ADA27000F029F /* RecentsTableViewHeaderView.xib in Resources */,
+				BF33EF7D24453FFD00CD35AC /* AudioRecordingInputBar.xib in Resources */,
 				4172795E1DB663FA001AC818 /* JSQMessagesTypingIndicatorFooterView.xib in Resources */,
 				5B5B50011E684FDC00DBEB3B /* SF-UI-Display-Regular.otf in Resources */,
 				83D64E2D20178A0400E24155 /* PasswordReminder.storyboard in Resources */,
@@ -6253,6 +6263,7 @@
 				B6D9D7EF216AE5D000D7B08A /* CameraUploadRecordManager.m in Sources */,
 				41FC83B11AA853CC008FA551 /* SettingsTableViewController.m in Sources */,
 				B65AC8BA21F6A91A0094FF4F /* ImageExportOperation.m in Sources */,
+				BF33EF8424457A0700CD35AC /* ChatMessageAndAudioInputBar.swift in Sources */,
 				41D21E6A1D01AEC3002E6296 /* CTAssetsPageView.m in Sources */,
 				836AEDDD2018830E00868FC7 /* PasswordReminderViewController.m in Sources */,
 				E8D4B8921A69429200A3B2E2 /* CreateAccountViewController.m in Sources */,
@@ -6454,6 +6465,7 @@
 				41AA1A1C1AC081C600D32691 /* SecurityOptionsTableViewController.m in Sources */,
 				B6575FD3220101BB00B7AD82 /* MediaInfoLoader.m in Sources */,
 				A86B9F712316D6AB00F35E7A /* FLEXTableContentViewController.m in Sources */,
+				BF33EF822445401800CD35AC /* AudioRecordingInputBar.swift in Sources */,
 				5B40AB321F7A512E0034C3B3 /* AchievementsDetailsViewController.m in Sources */,
 				83C570E022E5BFCF00216896 /* PhoneNumber.swift in Sources */,
 				411E712F1D461E1D00DD7EF8 /* MEGACollectionViewFlowLayout.m in Sources */,
