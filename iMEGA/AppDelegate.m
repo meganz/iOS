@@ -100,9 +100,6 @@
 @property (strong, nonatomic) BackgroundRefreshPerformer *backgroundRefreshPerformer;
 @property (nonatomic, strong) MEGAProviderDelegate *megaProviderDelegate;
 
-@property (nonatomic, strong) NSNumber *callId;
-@property (nonatomic, strong) NSNumber *chatId;
-
 @end
 
 @implementation AppDelegate
@@ -1228,9 +1225,6 @@ void uncaughtExceptionHandler(NSException *exception) {
         NSString *callIdB64 = payload.dictionaryPayload[@"megadata"][@"callid"];
         uint64_t chatId = [MEGASdk handleForBase64UserHandle:chatIdB64];
         uint64_t callId = [MEGASdk handleForBase64UserHandle:callIdB64];
-                
-        self.chatId = @(chatId);
-        self.callId = @(callId);
         
         [self.megaProviderDelegate reportIncomingCallWithCallId:callId chatId:chatId];
         
@@ -1781,13 +1775,6 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 - (void)onChatConnectionStateUpdate:(MEGAChatSdk *)api chatId:(uint64_t)chatId newState:(int)newState {
     MEGALogInfo(@"onChatConnectionStateUpdate: %@, new state: %d", [MEGASdk base64HandleForUserHandle:chatId], newState);
-    if (self.chatId.unsignedLongLongValue == chatId && newState == MEGAChatConnectionOnline && self.callId) {
-        if ([MEGASdkManager.sharedMEGAChatSdk chatCallForCallId:self.callId.unsignedLongLongValue] == nil) {
-            [self.megaProviderDelegate reportEndCallWithCallId:self.callId.unsignedLongLongValue chatId:chatId];
-        }
-        self.chatId = nil;
-        self.callId = nil;
-    }
     
     if (self.chatRoom.chatId == chatId && newState == MEGAChatConnectionOnline) {
         [self performCall];
