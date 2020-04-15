@@ -30,6 +30,13 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (BOOL)mnz_isOutputEqualToPortType:(AVAudioSessionPort)portType;
 
+/** @brief Convert AVAudioSessionRouteChangeReason to string.
+*
+* @param reason the AVAudioSessionRouteChangeReason reason.
+* @return string for a AVAudioSessionRouteChangeReason reason.
+*/
+- (NSString *)stringForAVAudioSessionRouteChangeReason:(AVAudioSessionRouteChangeReason)reason;
+
 @end
 
 NS_ASSUME_NONNULL_END
