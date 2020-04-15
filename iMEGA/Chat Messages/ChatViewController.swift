@@ -13,7 +13,7 @@ class ChatViewController: MessagesViewController {
 
     @objc var publicChatLink: URL?
     @objc var publicChatWithLinkCreated: Bool = false
-    var inputBar: MessageInputBar!
+    var chatMessageAndAudioInputBar: ChatMessageAndAudioInputBar!
 
     var messages: [ChatMessage] {
         return chatRoomDelegate.messages
@@ -48,6 +48,7 @@ class ChatViewController: MessagesViewController {
                                target: self,
                                action: #selector(addParticipant))
     }()
+    
 
     // MARK: - Overriden methods
 

@@ -94,6 +94,13 @@ class MessageInputBar: UIView {
         return .zero
     }
     
+    //MARK: - interface method.
+    
+    func isMicButtonPresent(atLocation point: CGPoint) -> Bool {
+        let view = hitTest(point, with: nil)
+        return view === micButton
+    }
+    
     // MARK: - Actions
     
     @IBAction func exapandCollapseButtonTapped(_ button: UIButton) {

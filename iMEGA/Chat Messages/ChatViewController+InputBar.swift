@@ -4,12 +4,12 @@ import MessageKit
 extension ChatViewController {
     
     override var inputAccessoryView: UIView? {
-        if inputBar == nil {
-            inputBar = MessageInputBar.instanceFromNib
-            inputBar.delegate = self
+        if chatMessageAndAudioInputBar == nil {
+            chatMessageAndAudioInputBar = ChatMessageAndAudioInputBar()
+            chatMessageAndAudioInputBar.delegate = self
         }
         
-        return inputBar
+        return chatMessageAndAudioInputBar
     }
     
     override var canBecomeFirstResponder: Bool {
@@ -18,7 +18,7 @@ extension ChatViewController {
 
 }
 
-extension ChatViewController: MessageInputBarDelegate {
+extension ChatViewController: ChatMessageAndAudioInputBarDelegate {
     
     func tappedAddButton() {
         print("Add button tapped")
@@ -29,7 +29,6 @@ extension ChatViewController: MessageInputBarDelegate {
     }
     
     func tappedVoiceButton() {
-
         let myViews = view.subviews.filter { $0 is TapAndHoldMessageView }
         guard myViews.count == 0  else {
             return
