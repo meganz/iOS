@@ -69,6 +69,7 @@
 - (void)insertMessage:(uint64_t)messageId chatId:(uint64_t)chatId;
 - (void)deleteMessage:(MOMessage *)message;
 - (MOMessage *)fetchMessageWithChatId:(uint64_t)chatId messageId:(uint64_t)messageId;
+- (BOOL)areTherePendingMessages;
 
 #pragma mark - Context Save
 

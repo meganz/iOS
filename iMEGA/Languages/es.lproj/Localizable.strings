@@ -968,7 +968,7 @@
 /* Add Phone Number title  */
 "Add Phone Number"="Añade el número de teléfono";
 /* Achievement explanation for add phone number */
-"You have received %1$s storage space and %2$s transfer quota for verifying your phone number."="Has recibido %1$s de espacio de almacenamiento y %2$s de cuota de transferencia por haber verificado tu número de teléfono.";
+"You have received %1$s storage space and %2$s transfer quota for verifying your phone number."="Has recibido %1$s de espacio de almacenamiento y%2$s de cuota de transferencia por haber verificado tu número de teléfono.";
 /* Free storage description to encourage users to add phone number to their accounts */
 "Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."="Obtén %@ gratis al añadir tu número de teléfono. De esta manera tus contactos te encontrarán más facilmente en MEGA.";
 /* Description to encourage users to add phone number to their accounts when there are not achievements */
@@ -2053,7 +2053,7 @@
 /* Contact details screen: Edit the alias(nickname) for a user */
 "Edit Nickname"="Editar alias";
 /* Edit nickname screen: Remove nickname button title */
-"Remove Nickname"="Remover alias";
+"Remove Nickname"="Eliminar alias";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
 "Alias/ Nickname"="Alias";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
@@ -2065,7 +2065,7 @@
 /* Used in Photos app browser view to send the photos from the view to the chat. */
 "Send (%d)"="Enviar (%d)";
 /* Used in Photos app browser view to upload the photos from the view to the cloud. */
-"Upload (%d)"="Upload (%d)";
+"Upload (%d)"="Subir (%d)";
 /* Used in Photos app browser carousel view to unselect a selected photo. */
 "Unselect"="Deseleccionar";
 /* Used in Photos app browser. Shown when there are no photos or videos in the Photos app. */

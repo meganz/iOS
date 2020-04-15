@@ -475,4 +475,12 @@
     
 }
 
+- (BOOL)areTherePendingMessages {
+    NSFetchRequest *request = [MOMessage fetchRequest];
+    
+    NSError *error;
+    
+    return [self.managedObjectContext executeFetchRequest:request error:&error].count > 0;
+}
+
 @end
