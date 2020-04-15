@@ -33,6 +33,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self updateAppearance];
+    
     self.tableView.tableFooterView = [UIView.alloc initWithFrame:CGRectZero];
     
     self.tableView.emptyDataSetDelegate = self;
@@ -58,6 +60,25 @@
     [super removeFromParentViewController];
     
     [MEGASdkManager.sharedMEGASdk removeMEGADelegate:self];
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateAppearance];
+            
+            [self.tableView reloadData];
+        }
+    }
+}
+
+#pragma mark - Private
+
+- (void)updateAppearance {
+    self.tableView.separatorColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
+    self.tableView.backgroundColor = UIColor.mnz_background;
 }
 
 #pragma mark - Actions

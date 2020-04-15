@@ -51,16 +51,16 @@
                                                             <rect key="frame" x="50" y="0.0" width="344" height="55"/>
                                                             <subviews>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="3eh-hG-xjV">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="344" height="37.666666666666664"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="344" height="38"/>
                                                                     <subviews>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7PO-mE-tsu">
-                                                                            <rect key="frame" x="0.0" y="10" width="39.333333333333336" height="18"/>
+                                                                            <rect key="frame" x="0.0" y="10.33333333333333" width="37" height="17.666666666666671"/>
                                                                             <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="15"/>
                                                                             <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lRT-kC-JWt">
-                                                                            <rect key="frame" x="43.333333333333329" y="16" width="6" height="6"/>
+                                                                            <rect key="frame" x="41" y="16" width="6" height="6"/>
                                                                             <color key="backgroundColor" red="0.1921568662" green="0.70980393890000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="width" constant="6" id="2b8-Mc-Zyu"/>
@@ -73,25 +73,25 @@
                                                                             </userDefinedRuntimeAttributes>
                                                                         </view>
                                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="privateChat" translatesAutoresizingMaskIntoConstraints="NO" id="SH9-4s-gmS">
-                                                                            <rect key="frame" x="53.333333333333329" y="7" width="24" height="24"/>
+                                                                            <rect key="frame" x="51" y="7" width="24" height="24"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="width" constant="24" id="OSi-gd-cyG"/>
                                                                                 <constraint firstAttribute="height" constant="24" id="tDZ-xY-dbG"/>
                                                                             </constraints>
                                                                         </imageView>
                                                                         <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="onACall" translatesAutoresizingMaskIntoConstraints="NO" id="Z2z-gC-vIF">
-                                                                            <rect key="frame" x="79.333333333333343" y="13" width="12" height="12"/>
+                                                                            <rect key="frame" x="77" y="13" width="12" height="12"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="12" id="PrS-3b-eIB"/>
                                                                                 <constraint firstAttribute="width" constant="12" id="gn2-1r-3bB"/>
                                                                             </constraints>
                                                                         </imageView>
                                                                         <view contentMode="scaleToFill" horizontalHuggingPriority="249" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="0ef-yO-BBV">
-                                                                            <rect key="frame" x="81.333333333333343" y="0.0" width="238.00000000000003" height="37.666666666666664"/>
+                                                                            <rect key="frame" x="78.999999999999986" y="0.0" width="241.66666666666663" height="38"/>
                                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         </view>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="time" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="6xG-n6-aut">
-                                                                            <rect key="frame" x="323.33333333333331" y="13" width="20.666666666666686" height="12"/>
+                                                                            <rect key="frame" x="324.66666666666669" y="13.333333333333332" width="19.333333333333314" height="11.666666666666668"/>
                                                                             <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="10"/>
                                                                             <color key="textColor" red="0.40000000596046448" green="0.40000000596046448" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
                                                                             <nil key="highlightedColor"/>
@@ -99,16 +99,16 @@
                                                                     </subviews>
                                                                 </stackView>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="VHr-Dz-W24">
-                                                                    <rect key="frame" x="0.0" y="40.666666666666664" width="344" height="14.333333333333336"/>
+                                                                    <rect key="frame" x="0.0" y="41" width="344" height="14"/>
                                                                     <subviews>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lpz-9f-lNv">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="344" height="14.333333333333334"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="344" height="14"/>
                                                                             <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
                                                                             <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                         <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bKm-zc-lgI" userLabel="Unread View">
-                                                                            <rect key="frame" x="0.0" y="-17.666666666666664" width="8" height="50"/>
+                                                                            <rect key="frame" x="0.0" y="-18" width="8" height="50"/>
                                                                             <subviews>
                                                                                 <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="U" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="RGB-uG-ZWn">
                                                                                     <rect key="frame" x="4" y="18.333333333333336" width="0.0" height="13.333333333333336"/>
@@ -227,7 +227,7 @@
                                                                     <color key="textColor" red="0.5607843137254902" green="0.55686274509803924" blue="0.58039215686274503" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="discloserArrow" translatesAutoresizingMaskIntoConstraints="NO" id="SXx-eV-RxZ">
+                                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="standardDisclosureIndicator" translatesAutoresizingMaskIntoConstraints="NO" id="SXx-eV-RxZ">
                                                                     <rect key="frame" x="49.666666666666686" y="4.3333333333333357" width="8" height="12"/>
                                                                     <color key="tintColor" red="0.95294117647058818" green="0.047058823529411764" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <constraints>
@@ -274,7 +274,7 @@
                                                             <color key="textColor" white="0.20000000000000001" alpha="1" colorSpace="calibratedWhite"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="discloserArrow" translatesAutoresizingMaskIntoConstraints="NO" id="W1R-s2-o33">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="standardDisclosureIndicator" translatesAutoresizingMaskIntoConstraints="NO" id="W1R-s2-o33">
                                                             <rect key="frame" x="394" y="8" width="8" height="43"/>
                                                             <color key="tintColor" red="0.95294117649999999" green="0.047058823530000002" blue="0.078431372550000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <constraints>
@@ -2451,7 +2451,6 @@
         <image name="cameraOn" width="64" height="64"/>
         <image name="chatIcon" width="31" height="28"/>
         <image name="contactVerified" width="14" height="14"/>
-        <image name="discloserArrow" width="8" height="12"/>
         <image name="down-arrow" width="24" height="24"/>
         <image name="info_sharedWithArrow" width="22" height="22"/>
         <image name="inviteToChat" width="40" height="40"/>
@@ -2469,6 +2468,7 @@
         <image name="sendLocation" width="40" height="40"/>
         <image name="speakerOff" width="64" height="64"/>
         <image name="speakerOn" width="64" height="64"/>
+        <image name="standardDisclosureIndicator" width="7.6666665077209473" height="12"/>
         <image name="userMuted(grey)" width="24" height="24"/>
         <image name="userMutedBig" width="24" height="24"/>
         <image name="video_list" width="22" height="22"/>

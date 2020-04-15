@@ -168,6 +168,8 @@
     self.uploadOrVersionImageView.image = recentActionBucket.isUpdate ? [UIImage imageNamed:@"versioned"] : [UIImage imageNamed:@"recentUpload"];
     
     self.timeLabel.text = recentActionBucket.timestamp.mnz_formattedHourAndMinutes;
+    
+    self.subtitleLabel.textColor = self.infoLabel.textColor = self.timeLabel.textColor = [UIColor mnz_subtitlesColorForTraitCollection:self.traitCollection];
 }
 
 #pragma mark - IBActions
