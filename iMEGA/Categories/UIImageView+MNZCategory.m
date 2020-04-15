@@ -8,6 +8,9 @@
 #import "MEGAGetThumbnailRequestDelegate.h"
 #import "MEGAGetPreviewRequestDelegate.h"
 #import <YYWebImage/YYWebImage.h>
+#import <objc/runtime.h>
+
+static int _MEGAWebImageSetterKey;
 
 @implementation UIImageView (MNZCategory)
 
@@ -45,7 +48,7 @@
     if (node.hasThumbnail) {
         NSString *path = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
         if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
-            self.image = [YYImage imageWithContentsOfFile:path];
+            self.yy_imageURL = [NSURL fileURLWithPath:path];
         } else {
             MEGAGetThumbnailRequestDelegate *delegate = [[MEGAGetThumbnailRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
                 self.yy_imageURL = [NSURL fileURLWithPath:request.file];
@@ -62,14 +65,12 @@
     if (node.hasPreview) {
         NSString *path = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"previewsV3"];
         if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
-            self.image = [YYImage imageWithContentsOfFile:path];
+            self.yy_imageURL = [NSURL fileURLWithPath:path];
         } else {
             MEGAGetPreviewRequestDelegate *delegate = [[MEGAGetPreviewRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
-                self.yy_imageURL = [NSURL fileURLWithPath:request.file];
                 if (completion) {
                     completion(request);
                 }
-                
             }];
             [self mnz_imageForNode:node];
             [[MEGASdkManager sharedMEGASdk] getPreviewNode:node destinationFilePath:path delegate:delegate];
