@@ -408,6 +408,7 @@
 }
 
 - (IBAction)enableDisableSpeaker:(UIButton *)sender {
+    MEGALogDebug(@"[Audio] %@ button speaker tapped", sender.selected ? @"Disable" : @"Enable");
     if (sender.selected) {
         [self disableLoudspeaker];
     } else {
@@ -435,6 +436,7 @@
     [self enableDisableVideo:self.enableDisableVideoButton];
     self.call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
     self.localPeer.video = YES;
+    MEGALogDebug(@"[Audio] Enable loud speaker, tap on video callkit icon when device is locked");
     [self enableLoudspeaker];
 }
 
@@ -448,6 +450,11 @@
                     [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"Error. No more participants are allowed in this group call.", @"Message show when a call cannot be established because there are too many participants in the group call")];
                 }
             }];
+        } else {
+            if (self.videoCall && !AVAudioSession.sharedInstance.mnz_isBluetoothAudioRouteAvailable) {
+                MEGALogDebug(@"[Audio] Enable loud speaker is video call and there is no bluetooth connected");
+                [self enableLoudspeaker];
+            }
         }
     }];
     [MEGASdkManager.sharedMEGAChatSdk answerChatCall:self.chatRoom.chatId enableVideo:self.videoCall delegate:answerCallRequestDelegate];
@@ -500,18 +507,19 @@
 - (void)didSessionRouteChange:(NSNotification *)notification {
     dispatch_async(dispatch_get_main_queue(), ^{
         NSDictionary *interuptionDict = notification.userInfo;
-        const NSInteger routeChangeReason = [[interuptionDict valueForKey:AVAudioSessionRouteChangeReasonKey] integerValue];
-        MEGALogDebug(@"didSessionRouteChange routeChangeReason: %ld, current route outputs %@", (long)routeChangeReason, [[[AVAudioSession sharedInstance] currentRoute] outputs]);
+        const AVAudioSessionRouteChangeReason routeChangeReason = [[interuptionDict valueForKey:AVAudioSessionRouteChangeReasonKey] integerValue];
+        MEGALogDebug(@"[Audio] Did session route changed, reason: %@, current route outputs %@", [AVAudioSession.sharedInstance stringForAVAudioSessionRouteChangeReason:routeChangeReason], [[[AVAudioSession sharedInstance] currentRoute] outputs]);
         if (routeChangeReason == AVAudioSessionRouteChangeReasonOverride) {
-            if ([AVAudioSession.sharedInstance mnz_isOutputEqualToPortType:AVAudioSessionPortBuiltInSpeaker]) {
-                self.speakerEnabled = YES;
-            }
             if ([AVAudioSession.sharedInstance mnz_isOutputEqualToPortType:AVAudioSessionPortBuiltInReceiver]) {
-                self.speakerEnabled = NO;
+                if (self.isSpeakerEnabled) {
+                    MEGALogDebug(@"[Audio] Enable loud speaker, override to built in receiver, but speaker was enabled");
+                    [self enableLoudspeaker];
+                }
             }
         }
         if (routeChangeReason == AVAudioSessionRouteChangeReasonCategoryChange) {
             if (self.isSpeakerEnabled && (self.call.status <= MEGAChatCallStatusInProgress || self.call.status == MEGAChatCallStatusReconnecting)) {
+                MEGALogDebug(@"[Audio] Enable loud speaker, category changed, but speaker was enabled");
                 [self enableLoudspeaker];
             }
         }
@@ -531,6 +539,7 @@
 }
 
 - (void)enableLoudspeaker {
+    self.speakerEnabled = YES;
     [[AVAudioSession sharedInstance] overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:nil];
 }
 
