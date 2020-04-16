@@ -80,7 +80,7 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
                 imageView.yy_imageURL = URL(fileURLWithPath: originalImagePath)
                 return
             }
-            MEGASdkManager.sharedMEGASdk()?.startDownloadNode(node, localPath: originalImagePath)
+            MEGASdkManager.sharedMEGASdk()?.startDownloadTopPriority(with: node, localPath: originalImagePath, appData: nil)
         } else if name.mnz_isVideoPathExtension {
             durationLabel.text = NSString.mnz_string(fromTimeInterval: TimeInterval(node.duration))
             durationLabel.isHidden = false

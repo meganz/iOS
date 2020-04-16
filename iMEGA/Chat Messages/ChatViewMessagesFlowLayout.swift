@@ -4,6 +4,7 @@ class ChatViewMessagesFlowLayout: MessagesCollectionViewFlowLayout {
     lazy var chatViewCallCollectionCellCalculator = ChatViewCallCollectionCellCalculator(layout: self)
     lazy var chatViewAttachmentCellCalculator = ChatViewAttachmentCellCalculator(layout: self)
     lazy var chatMediaCollectionViewSizeCalculator = ChatMediaCollectionViewSizeCalculator(layout: self)
+    lazy var chatRichPreviewMediaCollectionViewSizeCalculator = ChatRichPreviewMediaCollectionViewSizeCalculator(layout: self)
 
     override func cellSizeCalculatorForItem(at indexPath: IndexPath) -> CellSizeCalculator {
         let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
@@ -25,6 +26,10 @@ class ChatViewMessagesFlowLayout: MessagesCollectionViewFlowLayout {
 
             case .callEnded, .callStarted:
                 return chatViewCallCollectionCellCalculator
+            case .normal:
+                if chatMessage.message.containsMEGALink() {
+                    return chatRichPreviewMediaCollectionViewSizeCalculator
+                }
             default:
                 return super.cellSizeCalculatorForItem(at: indexPath)
             }
@@ -37,7 +42,8 @@ class ChatViewMessagesFlowLayout: MessagesCollectionViewFlowLayout {
         calculators.append(contentsOf: [
             chatViewAttachmentCellCalculator,
             chatViewCallCollectionCellCalculator,
-            chatMediaCollectionViewSizeCalculator
+            chatMediaCollectionViewSizeCalculator,
+            chatRichPreviewMediaCollectionViewSizeCalculator
         ])
         return calculators
     }
