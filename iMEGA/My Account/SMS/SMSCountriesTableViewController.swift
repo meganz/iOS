@@ -2,7 +2,7 @@
 import UIKit
 
 protocol SMSCountriesTableViewControllerDelegate: AnyObject {
-    func countriesTableViewController(_ controller: SMSCountriesTableViewController, didSelectCountry country:SMSCountry)
+    func countriesTableViewController(_ controller: SMSCountriesTableViewController?, didSelectCountry country:SMSCountry)
 }
 
 class SMSCountriesTableViewController: UITableViewController {
@@ -110,8 +110,14 @@ extension SMSCountriesTableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let country = smsCountry(for: indexPath)
-        searchController.isActive = false
-        delegate?.countriesTableViewController(self, didSelectCountry: country)
+        if #available(iOS 13.0, *) {
+            searchController.dismiss(animated: true) { [weak self] in
+                self?.delegate?.countriesTableViewController(self, didSelectCountry: country)
+            }
+        } else {
+            searchController.isActive = false
+            delegate?.countriesTableViewController(self, didSelectCountry: country)
+        }
     }
 }
 
