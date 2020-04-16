@@ -36,6 +36,7 @@
 
 @property (strong, nonatomic) NSMutableArray *participantsMutableArray;
 @property (nonatomic) NSMutableDictionary<NSString *, NSIndexPath *> *indexPathsMutableDictionary;
+@property (nonatomic) NSMutableSet<NSNumber *> *requestedParticipantsMutableSet;
 
 @end
 
@@ -47,12 +48,14 @@
     [super viewDidLoad];
     
     self.navigationItem.title = AMLocalizedString(@"info", @"A button label. The button allows the user to get more info of the current context");
+    self.requestedParticipantsMutableSet = NSMutableSet.new;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
+    [MEGASdkManager.sharedMEGAChatSdk addChatRequestDelegate:self];
     
     [self updateHeadingView];
     [self setParticipants];
@@ -63,6 +66,7 @@
     [super viewWillDisappear:animated];
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
     [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
+    [MEGASdkManager.sharedMEGAChatSdk removeChatRequestDelegate:self];
 }
 
 - (BOOL)hidesBottomBarWhenPushed {
@@ -102,6 +106,26 @@
     }
     
     self.indexPathsMutableDictionary = [[NSMutableDictionary alloc] initWithCapacity:self.participantsMutableArray.count];
+}
+
+- (void)loadParticipantsFromIndex:(NSUInteger)index {
+    if (index >= self.participantsMutableArray.count) {
+        return;
+    }
+    
+    NSUInteger participantsToLoad = 20;
+    NSUInteger topIndex = MIN(index + participantsToLoad, self.participantsMutableArray.count);
+    NSMutableArray<NSNumber *> *usersHandles = [NSMutableArray.alloc initWithCapacity:participantsToLoad];
+    for (NSUInteger i = index; i < topIndex; i++) {
+        NSNumber *handle = [self.participantsMutableArray objectAtIndex:i];
+        if (![self.chatRoom peerEmailByHandle:handle.unsignedLongLongValue] && ![self.requestedParticipantsMutableSet containsObject:handle]) {
+            [usersHandles addObject:handle];
+            [self.requestedParticipantsMutableSet addObject:handle];
+        }
+    }
+    if (usersHandles.count) {
+        [MEGASdkManager.sharedMEGAChatSdk loadUserAttributesForChatId:self.chatRoom.chatId usersHandles:usersHandles authorizationToken:self.chatRoom.authorizationToken];
+    }
 }
 
 - (void)alertTextFieldDidChange:(UITextField *)textField {
@@ -322,19 +346,25 @@
             [readOnlyAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
             [permissionsAlertController addAction:readOnlyAlertAction];
             
-            MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:[self.chatRoom peerEmailByHandle:userHandle]];
-            if (!user || user.visibility != MEGAUserVisibilityVisible) {
-                [permissionsAlertController addAction:[self sendParticipantContactRequestAlertActionForHandle:userHandle]];
-            }
+            NSString *peerEmail = [self.chatRoom peerEmailByHandle:userHandle];
+            if (peerEmail) {
+                MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:peerEmail];
+                if (!user || user.visibility != MEGAUserVisibilityVisible) {
+                    [permissionsAlertController addAction:[self sendParticipantContactRequestAlertActionForHandle:userHandle]];
+                }
             
+            }
             UIAlertAction *removeParticipantAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"removeParticipant", @"A button title which removes a participant from a chat.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                 [[MEGASdkManager sharedMEGAChatSdk] removeFromChat:self.chatRoom.chatId userHandle:userHandle delegate:self];
             }];
             [permissionsAlertController addAction:removeParticipantAlertAction];
         } else {
-            MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:[self.chatRoom peerEmailByHandle:userHandle]];
-            if (!user || user.visibility != MEGAUserVisibilityVisible) {
-                [permissionsAlertController addAction:[self sendParticipantContactRequestAlertActionForHandle:userHandle]];
+            NSString *peerEmail = [self.chatRoom peerEmailByHandle:userHandle];
+            if (peerEmail) {
+                MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:peerEmail];
+                if (!user || user.visibility != MEGAUserVisibilityVisible) {
+                    [permissionsAlertController addAction:[self sendParticipantContactRequestAlertActionForHandle:userHandle]];
+                }
             }
         }
         
@@ -486,8 +516,14 @@
                 peerEmail = [[MEGASdkManager sharedMEGAChatSdk] myEmail];
                 privilege = self.chatRoom.ownPrivilege;
             } else {
-                peerFullname = [self.chatRoom userDisplayNameForUserHandle:handle];
+                peerFullname = [self.chatRoom userDisplayNameForUserHandle:handle] ?: @"";
                 peerEmail = [self.chatRoom peerEmailByHandle:handle];
+                if (!peerEmail) {
+                    peerEmail = @"";
+                    if (![self.requestedParticipantsMutableSet containsObject:[self.participantsMutableArray objectAtIndex:index]]) {
+                        [self loadParticipantsFromIndex:index];
+                    }
+                }
                 privilege = [self.chatRoom peerPrivilegeAtIndex:index];
             }
             
@@ -824,13 +860,15 @@
                 if (userHandle != MEGASdkManager.sharedMEGASdk.myUser.handle) {
                     
                     NSString *userEmail = [self.chatRoom peerEmailByHandle:userHandle];
-                    ContactDetailsViewController *contactDetailsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactDetailsViewControllerID"];
-                    contactDetailsVC.contactDetailsMode = ContactDetailsModeFromGroupChat;
-                    contactDetailsVC.userEmail = userEmail;
-                    contactDetailsVC.userHandle = userHandle;
-                    contactDetailsVC.groupChatRoom = self.chatRoom;
+                    if (userEmail) {
+                        ContactDetailsViewController *contactDetailsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactDetailsViewControllerID"];
+                        contactDetailsVC.contactDetailsMode = ContactDetailsModeFromGroupChat;
+                        contactDetailsVC.userEmail = userEmail;
+                        contactDetailsVC.userHandle = userHandle;
+                        contactDetailsVC.groupChatRoom = self.chatRoom;
 
-                    [self.navigationController pushViewController:contactDetailsVC animated:YES];
+                        [self.navigationController pushViewController:contactDetailsVC animated:YES];
+                    }
                 }
                 break;
                 
@@ -847,13 +885,30 @@
 - (void)onChatRequestFinish:(MEGAChatSdk *)api request:(MEGAChatRequest *)request error:(MEGAChatError *)error {
     self.chatRoom = [api chatRoomForChatId:self.chatRoom.chatId];
     
+    if (error.type) {
+        return;
+    }
+    
     switch (request.type) {            
         case MEGAChatRequestTypeUpdatePeerPermissions:
-            if (!error.type) {
-                [self setParticipants];
-                [self.tableView reloadData];
-            }
+            [self setParticipants];
+            [self.tableView reloadData];
             break;
+            
+        case MEGAChatRequestTypeGetPeerAttributes: {
+            MEGAHandleList *handleList = request.megaHandleList;
+            NSMutableArray<NSIndexPath *> *indexPathsToReload = [NSMutableArray.alloc initWithCapacity:handleList.size];
+            for (NSUInteger i = 0; i < handleList.size; i++) {
+                NSString *base64Handle = [MEGASdk base64HandleForUserHandle:[handleList megaHandleAtIndex:i]];
+                NSIndexPath *indexPath = [self.indexPathsMutableDictionary objectForKey:base64Handle];
+                if (indexPath && [self.tableView.indexPathsForVisibleRows containsObject:indexPath]) {
+                    [indexPathsToReload addObject:indexPath];
+                }
+            }
+            [self.tableView reloadRowsAtIndexPaths:indexPathsToReload withRowAnimation:UITableViewRowAnimationNone];
+            
+            break;
+        }
             
         default:
             break;
