@@ -1072,6 +1072,8 @@
 		BF33EF7D24453FFD00CD35AC /* AudioRecordingInputBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF33EF7C24453FFD00CD35AC /* AudioRecordingInputBar.xib */; };
 		BF33EF822445401800CD35AC /* AudioRecordingInputBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF33EF812445401800CD35AC /* AudioRecordingInputBar.swift */; };
 		BF33EF8424457A0700CD35AC /* ChatMessageAndAudioInputBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF33EF8324457A0700CD35AC /* ChatMessageAndAudioInputBar.swift */; };
+		BF33EF8C2447E6DD00CD35AC /* EnlargementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF33EF8B2447E6DC00CD35AC /* EnlargementView.swift */; };
+		BF33EF902447E70200CD35AC /* CondensationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF33EF8F2447E70200CD35AC /* CondensationView.swift */; };
 		BF69E5172374F3720031913D /* AppDelegate+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF69E5162374F3720031913D /* AppDelegate+Additions.swift */; };
 		BFB463DD2432F2E900FB90B9 /* ChatRoomDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB463DC2432F2E900FB90B9 /* ChatRoomDelegate.swift */; };
 		BFB463E52433390600FB90B9 /* MEGAUser+Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB463E42433390600FB90B9 /* MEGAUser+Chat.swift */; };
@@ -2539,6 +2541,8 @@
 		BF33EF7C24453FFD00CD35AC /* AudioRecordingInputBar.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AudioRecordingInputBar.xib; sourceTree = "<group>"; };
 		BF33EF812445401800CD35AC /* AudioRecordingInputBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecordingInputBar.swift; sourceTree = "<group>"; };
 		BF33EF8324457A0700CD35AC /* ChatMessageAndAudioInputBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageAndAudioInputBar.swift; sourceTree = "<group>"; };
+		BF33EF8B2447E6DC00CD35AC /* EnlargementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnlargementView.swift; sourceTree = "<group>"; };
+		BF33EF8F2447E70200CD35AC /* CondensationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CondensationView.swift; sourceTree = "<group>"; };
 		BF69E5162374F3720031913D /* AppDelegate+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Additions.swift"; sourceTree = "<group>"; };
 		BFB463DC2432F2E900FB90B9 /* ChatRoomDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomDelegate.swift; sourceTree = "<group>"; };
 		BFB463E42433390600FB90B9 /* MEGAUser+Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAUser+Chat.swift"; sourceTree = "<group>"; };
@@ -5380,6 +5384,8 @@
 				BF06E3DD243191B000B30FB7 /* ChatTitleView.swift */,
 				BF06E3DC243191B000B30FB7 /* ChatTitleView.xib */,
 				BF33EF8324457A0700CD35AC /* ChatMessageAndAudioInputBar.swift */,
+				BF33EF8B2447E6DC00CD35AC /* EnlargementView.swift */,
+				BF33EF8F2447E70200CD35AC /* CondensationView.swift */,
 				BF33EF812445401800CD35AC /* AudioRecordingInputBar.swift */,
 				BF33EF7C24453FFD00CD35AC /* AudioRecordingInputBar.xib */,
 				BF33EF7324451A4700CD35AC /* TapAndHoldMessageView.swift */,
@@ -6247,6 +6253,7 @@
 				7759700F219EC2D700B31671 /* NotificationTableViewCell.m in Sources */,
 				5BFA346B1FAB4169005BFC4E /* MEGARemoveRequestDelegate.m in Sources */,
 				83FB1431219AC7CD00418BE6 /* OfflineTableViewViewController.m in Sources */,
+				BF33EF902447E70200CD35AC /* CondensationView.swift in Sources */,
 				7747B2D8208625B50011814E /* Reachability.m in Sources */,
 				417279471DB663FA001AC818 /* JSQLocationMediaItem.m in Sources */,
 				A8665F5220ADA1600044F8F6 /* PWProgressView.m in Sources */,
@@ -6312,6 +6319,7 @@
 				A86B9F6D2316D6AB00F35E7A /* FLEXSystemLogTableViewCell.m in Sources */,
 				A86B9F302316D6AB00F35E7A /* FLEXViewControllerExplorerViewController.m in Sources */,
 				5B6CCF0C21788A3A0049AD14 /* MEGATransferList+MNZCategory.m in Sources */,
+				BF33EF8C2447E6DD00CD35AC /* EnlargementView.swift in Sources */,
 				B6D11ADF219CE69300446B86 /* FileEncrypter.m in Sources */,
 				4152269B1A692ECC00EC7BB6 /* MEGASdkManager.m in Sources */,
 				E81616731A8397B5002EFDD7 /* FolderLinkViewController.m in Sources */,
