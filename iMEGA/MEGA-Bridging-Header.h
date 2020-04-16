@@ -24,11 +24,13 @@
 #import "MEGAUser+MNZCategory.h"
 #import "MEGANode+MNZCategory.h"
 #import "MEGAChatMessage+MNZCategory.h"
+#import "NSURL+MNZCategory.h"
 
 #import "MEGAAssetsPickerController.h"
 #import "MEGAChatGenericRequestDelegate.h"
 #import "MEGAContactLinkCreateRequestDelegate.h"
 #import "MEGAGetPreviewRequestDelegate.h"
+#import "MEGAGetPublicNodeRequestDelegate.h"
 #import "MEGAConstants.h"
 #import "MEGAGenericRequestDelegate.h"
 #import "MEGAInviteContactRequestDelegate.h"

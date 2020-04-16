@@ -33,6 +33,7 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
 
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        MEGASdkManager.sharedMEGASdk()?.add(self)
     }
     
     // MARK: - Methods
