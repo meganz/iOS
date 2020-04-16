@@ -13,6 +13,7 @@
 		23F01CD736149ADA35338A8E /* Pods_MEGAPicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 994E8D2BAB110FB6786F5A14 /* Pods_MEGAPicker.framework */; };
 		2D420ED729CA60BD103A0260 /* Pods_MEGANotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A79021E0BCC1853A793A6BEF /* Pods_MEGANotifications.framework */; };
 		2F0194A7243452E500734EA3 /* ChatViewController+InputBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0194A6243452E500734EA3 /* ChatViewController+InputBar.swift */; };
+		2F2801D32447C8FD00C160D0 /* ChatRichPreviewMediaCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2801D22447C8FD00C160D0 /* ChatRichPreviewMediaCollectionViewCell.swift */; };
 		2F8F5F1623691A390049603F /* UINavigationViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8F5F1523691A390049603F /* UINavigationViewController+Additions.swift */; };
 		2F91390E238C9AC4004C611A /* MEGARecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F91390D238C9AC4004C611A /* MEGARecordView.swift */; };
 		2F913910238CC3CA004C611A /* MEGARecordView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F91390F238CC3CA004C611A /* MEGARecordView.xib */; };
@@ -1227,6 +1228,7 @@
 		2F0194A6243452E500734EA3 /* ChatViewController+InputBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatViewController+InputBar.swift"; sourceTree = "<group>"; };
 		2F28019C24455A4900C160D0 /* Karere.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Karere.xcodeproj; path = "Vendor/Karere/bindings/Objective-C/Karere.xcodeproj"; sourceTree = "<group>"; };
 		2F2801A324455A4900C160D0 /* MEGASDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MEGASDK.xcodeproj; path = Vendor/SDK/bindings/ios/MEGASDK.xcodeproj; sourceTree = "<group>"; };
+		2F2801D22447C8FD00C160D0 /* ChatRichPreviewMediaCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRichPreviewMediaCollectionViewCell.swift; sourceTree = "<group>"; };
 		2F8F5F1523691A390049603F /* UINavigationViewController+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationViewController+Additions.swift"; sourceTree = "<group>"; };
 		2F91390D238C9AC4004C611A /* MEGARecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGARecordView.swift; sourceTree = "<group>"; };
 		2F91390F238CC3CA004C611A /* MEGARecordView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MEGARecordView.xib; sourceTree = "<group>"; };
@@ -5371,6 +5373,7 @@
 			isa = PBXGroup;
 			children = (
 				2FA6D9DA243E8CB4007A8E81 /* ChatMediaCollectionViewCell.swift */,
+				2F2801D22447C8FD00C160D0 /* ChatRichPreviewMediaCollectionViewCell.swift */,
 				BF33EF6B243D878F00CD35AC /* MessageSizeCalculator+AccessoryView.swift */,
 				2FA6D9C22436C314007A8E81 /* ChatViewAttachmentCell.swift */,
 				BF15891D2435EF85007AF9EC /* ChatViewCallCollectionCell.swift */,
@@ -6337,6 +6340,7 @@
 				83D726592316903D007B2E58 /* ContactsHeaderFooterView.swift in Sources */,
 				8315B91622DF52DD000CA232 /* ContactOnMegaTableViewCell.swift in Sources */,
 				A85740C52032F6B80033034C /* MOChatDraft+CoreDataClass.m in Sources */,
+				2F2801D32447C8FD00C160D0 /* ChatRichPreviewMediaCollectionViewCell.swift in Sources */,
 				4122C0E61B274E8C001CE833 /* LocalizationSystem.m in Sources */,
 				5BADE39A1F02BD1F009C9AD7 /* MEGANodeList+MNZCategory.m in Sources */,
 				839D5A9721C25A7D00FAE757 /* GridFlowLayout.m in Sources */,
