@@ -672,7 +672,10 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             //Configure open message header that uses navigation bar info
             if (self.openMessageHeaderView) {
                 self.openMessageHeaderView.onlineStatusView.backgroundColor = self.navigationStatusView.backgroundColor;
+                if (![chatRoomState isEqualToString:participantsNames]) {
                 self.openMessageHeaderView.onlineStatusLabel.text = chatRoomState;
+            }
+                self.openMessageHeaderView.conversationWithLabel.text = participantsNames;
             }
         }
         
@@ -1240,16 +1243,14 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 }
 
 - (void)setTypingIndicator {
-    NSString *typingString = nil;
     NSMutableAttributedString *typingAttributedString = nil;
     if (self.whoIsTypingTimersMutableDictionary.allKeys.count >= 2) {
         typingAttributedString = [self twoOrMoreUsersAreTypingString];
     } else if (self.whoIsTypingTimersMutableDictionary.allKeys.count == 1) {
         NSNumber *firstUserHandle = self.whoIsTypingTimersMutableDictionary.allKeys.firstObject;
-        NSString *firstUserName = [self.chatRoom peerFirstnameByHandle:firstUserHandle.unsignedLongLongValue];
-        NSString *whoIsTypingString = firstUserName.length ? firstUserName : [self.chatRoom peerEmailByHandle:firstUserHandle.unsignedLongLongValue];
+        NSString *whoIsTypingString = [self.chatRoom participantNameForUserHandle:firstUserHandle.unsignedLongLongValue];
         
-        typingString = [NSString stringWithFormat:AMLocalizedString(@"isTyping", @"A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime."), whoIsTypingString];
+        NSString *typingString = [NSString stringWithFormat:AMLocalizedString(@"isTyping", @"A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime."), whoIsTypingString];
         
         typingAttributedString = [[NSMutableAttributedString alloc] initWithString:typingString];
         [typingAttributedString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:10 weight:UIFontWeightBold] range:NSMakeRange(0, whoIsTypingString.length)];
@@ -1262,11 +1263,9 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     NSNumber *firstUserHandle = self.whoIsTypingTimersMutableDictionary.allKeys.firstObject;
     NSNumber *secondUserHandle = [self.whoIsTypingTimersMutableDictionary.allKeys objectAtIndex:1];
     
-    NSString *firstUserFirstName = [self.chatRoom peerFirstnameByHandle:firstUserHandle.unsignedLongLongValue];
-    NSString *whoIsTypingString = firstUserFirstName.length ? firstUserFirstName : [self.chatRoom peerEmailByHandle:firstUserHandle.unsignedLongLongValue];
-    
-    NSString *secondUserFirstName = [self.chatRoom peerFirstnameByHandle:secondUserHandle.unsignedLongLongValue];
-    whoIsTypingString = [whoIsTypingString stringByAppendingString:[NSString stringWithFormat:@", %@", (secondUserFirstName.length ? secondUserFirstName : [self.chatRoom peerEmailByHandle:firstUserHandle.unsignedLongLongValue])]];
+    NSString *firstUserDisplayName = [self.chatRoom participantNameForUserHandle:firstUserHandle.unsignedLongLongValue];
+    NSString *secondUserDisplayName = [self.chatRoom participantNameForUserHandle:secondUserHandle.unsignedLongLongValue];
+    NSString *whoIsTypingString = [NSString stringWithFormat:@"%@, %@", firstUserDisplayName, secondUserDisplayName];
     
     NSString *twoOrMoreUsersAreTypingString;
     if (self.whoIsTypingTimersMutableDictionary.allKeys.count == 2) {
@@ -1371,8 +1370,8 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         return;
     }
     
-    NSString *userName = [self.chatRoom userDisplayNameForUserHandle:userHandle];
     NSString *userEmail = [self.chatRoom peerEmailByHandle:userHandle];
+    NSString *userName = [self.chatRoom userDisplayNameForUserHandle:userHandle] ?: userEmail;
     
     if (!userEmail) {
         return;
@@ -1397,12 +1396,12 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     [infoAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
     [userAlertController addAction:infoAlertAction];
     
-    MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:[self.chatRoom peerEmailByHandle:userHandle]];
+    MEGAUser *user = [MEGASdkManager.sharedMEGASdk contactForEmail:userEmail];
     if (!user || user.visibility != MEGAUserVisibilityVisible) {
         UIAlertAction *addContactAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             if ([MEGAReachabilityManager isReachableHUDIfNot]) {
                 MEGAInviteContactRequestDelegate *inviteContactRequestDelegate = [[MEGAInviteContactRequestDelegate alloc] initWithNumberOfRequests:1];
-                [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:[self.chatRoom peerEmailByHandle:userHandle] message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
+                [MEGASdkManager.sharedMEGASdk inviteContactWithEmail:userEmail message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
                 self.inputToolbar.hidden = self.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo;
             }
         }];
@@ -3242,7 +3241,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             break;
             
         case MEGAChatRoomChangeTypeUserTyping: {
-            if (chat.userTypingHandle != api.myUserHandle) {
+            if (chat.userTypingHandle != api.myUserHandle && [self.chatRoom participantNameForUserHandle:chat.userTypingHandle]) {
                 NSNumber *userTypingHandle = [NSNumber numberWithUnsignedLongLong:chat.userTypingHandle];
                 NSTimer *userTypingTimer = [self.whoIsTypingTimersMutableDictionary objectForKey:userTypingHandle];
                 if (userTypingTimer) {
