@@ -78,53 +78,43 @@ class ChatMessageAndAudioInputBar: UIView {
     
     var initialTranslation: SIMD2<Double>?
     
-    enum Direction {
-        case invalid
-        case left
-        case up
-    }
-    
-    var translationDirection = Direction.invalid
-    
     @objc func pan(_ panGesture: UIPanGestureRecognizer) {
         guard let gestureView = panGesture.view,
             audioRecordingInputBar.superview != nil else {
             return
         }
-        
+
         let translation = panGesture.translation(in: gestureView).simD2
-        
+
         switch panGesture.state {
         case .began:
             initialTranslation = translation
         case .changed:
             if let initialValue = initialTranslation {
                 let difference = translation - initialValue
-                
+
                 if difference.point.x < difference.point.y {
-                    audioRecordingInputBar.voiceViewTrailingConstraint.constant =
-                        audioRecordingInputBar.voiceViewTrailingDefaultValue - difference.point.x
-                    audioRecordingInputBar.voiceViewBottomConstraint.constant = audioRecordingInputBar.voiceViewBottomDefaultValue
+                    let progress = abs(difference.point.x)
+                    let progressComplete = 0.6 * bounds.width
+                    let test = min(1.0, progress / progressComplete)
+                    audioRecordingInputBar.moveToTrash(test)
                 } else {
-                    audioRecordingInputBar.voiceViewTrailingConstraint.constant =
-                        audioRecordingInputBar.voiceViewTrailingDefaultValue
-                    audioRecordingInputBar.voiceViewBottomConstraint.constant = audioRecordingInputBar.voiceViewBottomDefaultValue - difference.point.y
+                    let progress = abs(difference.point.y)
+                    let progressComplete = 0.4 * bounds.height
+                    let test = min(1.0, progress / progressComplete)
+                    audioRecordingInputBar.lock(test)
                 }
             }
         case .ended, .cancelled:
             if let initialValue = initialTranslation {
                 let difference = translation - initialValue
-                
+
                 if difference.point.x < difference.point.y
                     && abs(difference.point.x) > (0.15 * bounds.width) {
                     print("move to trash")
-                } else if difference.point.y < difference.point.x
-                    && abs(difference.point.y) > (0.15 * bounds.height) {
+                } else if difference.point.y < difference.point.x {
                     print("lock voice")
                 } else {
-                    audioRecordingInputBar.voiceViewTrailingConstraint.constant =
-                        audioRecordingInputBar.voiceViewTrailingDefaultValue
-                    audioRecordingInputBar.voiceViewBottomConstraint.constant = audioRecordingInputBar.voiceViewBottomDefaultValue
                 }
             }
         default:
