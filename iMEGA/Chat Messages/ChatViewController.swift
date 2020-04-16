@@ -161,20 +161,22 @@ class ChatViewController: MessagesViewController {
         guard let previousIndexPath = indexPath.previousSectionIndexPath else { return false }
         return messages[indexPath.section].senderHandle == messages[previousIndexPath.section].senderHandle
     }
-
+    
     func avatarImage(for message: MessageType) -> UIImage? {
-        guard let chatMessage = message as? ChatMessage else { return nil }
-        return chatMessage.avatarImage
+        guard let peerEmail = chatRoom.peerEmail(byHandle: UInt64(message.sender.senderId)!),
+            let user = MEGASdkManager.sharedMEGASdk()?.contact(forEmail: peerEmail) else {
+                return nil
+        }
+        return user.avatarImage(withDelegate: nil)
     }
 
     func initials(for message: MessageType) -> String {
-        guard let chatMessage = message as? ChatMessage else { return "" }
 
-        if let user = MEGAStore.shareInstance()?.fetchUser(withUserHandle: chatMessage.senderHandle) {
+        if let user = MEGAStore.shareInstance()?.fetchUser(withUserHandle: UInt64(message.sender.senderId)!) {
             return (user.displayName as NSString).mnz_initialForAvatar()
         }
 
-        if let peerFullname = chatRoom.peerFullname(byHandle: chatMessage.senderHandle) {
+        if let peerFullname = chatRoom.peerFullname(byHandle:UInt64(message.sender.senderId)!) {
             return (peerFullname as NSString).mnz_initialForAvatar()
         }
 
