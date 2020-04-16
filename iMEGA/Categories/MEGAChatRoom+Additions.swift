@@ -87,25 +87,29 @@ extension MEGAChatRoom {
     }
     
     func participantName(atIndex index:UInt) -> String? {
-        if let nickName = userNickname(atIndex: index) {
+        return participantName(forUserHandle: peerHandle(at: index))
+    }
+    
+    @objc func participantName(forUserHandle userHandle: UInt64) -> String? {
+        if let nickName = userNickname(forUserHandle: userHandle) {
             if !nickName.mnz_isEmpty() {
                 return nickName
             }
         }
         
-        if let firstName = peerFirstname(at: index) {
+        if let firstName = peerFirstname(byHandle: userHandle) {
             if !firstName.mnz_isEmpty() {
                 return firstName
             }
         }
         
-        if let lastName = peerLastname(at: index) {
+        if let lastName = peerLastname(byHandle: userHandle) {
             if !lastName.mnz_isEmpty() {
                 return lastName
             }
         }
         
-        if let email = peerEmail(byHandle: peerHandle(at: index)) {
+        if let email = peerEmail(byHandle: userHandle) {
             if !email.mnz_isEmpty() {
                 return email
             }
