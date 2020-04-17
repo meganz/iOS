@@ -61,7 +61,16 @@ class ChatRichPreviewMediaCollectionViewCell: TextMessageCell, MEGARequestDelega
             }
             richPreviewContentView.isHidden = false
         case .publicChatLink:
-            break
+            if megaMessage.richNumber == nil {
+
+            MEGASdkManager.sharedMEGAChatSdk()?.checkChatLink(megaMessage.megaLink, delegate: MEGAChatGenericRequestDelegate(completion: { (request, error) in
+                messagesCollectionView.reloadItems(at: [indexPath])
+                
+            }))
+                return
+            }
+            richPreviewContentView.isHidden = false
+
         default:
             break
         }
