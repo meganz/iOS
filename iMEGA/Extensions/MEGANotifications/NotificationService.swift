@@ -104,6 +104,9 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
                 if error.type != .MEGAChatErrorTypeOk {
                     return
                 }
+                guard let chatRoom = MEGASdkManager.sharedMEGAChatSdk()?.chatRoom(forChatId: chatId) else {
+                    return
+                }
                 let displayName = chatRoom.userDisplayName(forUserHandle: message.userHandle)
                 self?.setupDisplayName(displayName: displayName, for: chatRoom)
                 self?.waitingForUserAttributes = false

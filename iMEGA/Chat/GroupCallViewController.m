@@ -920,11 +920,12 @@
             if (error.type) {
                 return;
             }
+            self.chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:self.chatRoom.chatId];
             NSString *displayName = [self.chatRoom userDisplayNameForUserHandle:chatSession.peerId];
             remoteUser.name = displayName;
             [self showToastMessage:[NSString stringWithFormat:AMLocalizedString(@"%@ joined the call.", @"Message to inform the local user that someone has joined the current group call"), displayName] color:@"#00BFA5" shouldHide:YES];
         }];
-        [[MEGASdkManager sharedMEGAChatSdk] loadUserAttributesForChatId:self.chatRoom.chatId usersHandles:@[@(chatSession.peerId)] authorizationToken:self.chatRoom.authorizationToken delegate:delegate];
+        [MEGASdkManager.sharedMEGAChatSdk loadUserAttributesForChatId:self.chatRoom.chatId usersHandles:@[@(chatSession.peerId)] authorizationToken:self.chatRoom.authorizationToken delegate:delegate];
     }
     
     [self.peersInCall insertObject:remoteUser atIndex:0];
@@ -970,9 +971,10 @@
                 if (error.type) {
                     return;
                 }
+                self.chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:self.chatRoom.chatId];
                 [self showToastMessage:[NSString stringWithFormat:AMLocalizedString(@"%@ left the call.", @"Message to inform the local user that someone has left the current group call"), [self.chatRoom userDisplayNameForUserHandle:chatSession.peerId]] color:@"#00BFA5" shouldHide:YES];
             }];
-            [[MEGASdkManager sharedMEGAChatSdk] loadUserAttributesForChatId:self.chatRoom.chatId usersHandles:@[@(chatSession.peerId)] authorizationToken:self.chatRoom.authorizationToken delegate:delegate];
+            [MEGASdkManager.sharedMEGAChatSdk loadUserAttributesForChatId:self.chatRoom.chatId usersHandles:@[@(chatSession.peerId)] authorizationToken:self.chatRoom.authorizationToken delegate:delegate];
         }
         [self updateParticipants];
     } else {
@@ -1083,10 +1085,14 @@
                                 [self.peerTalkingImageView mnz_setImageForUserHandle:chatSessionWithAudioLevel.peerId name:displayName];
                             } else {
                                 MEGAChatGenericRequestDelegate *delegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
-                                    NSString *displayName = error.type ? @"?" : [self.chatRoom userDisplayNameForUserHandle:chatSessionWithAudioLevel.peerId];
+                                    NSString *displayName = @"?";
+                                    if (!error.type) {
+                                        self.chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:self.chatRoom.chatId];
+                                        displayName = [self.chatRoom userDisplayNameForUserHandle:chatSessionWithAudioLevel.peerId];
+                                    }
                                     [self.peerTalkingImageView mnz_setImageForUserHandle:chatSessionWithAudioLevel.peerId name:displayName];
                                 }];
-                                [[MEGASdkManager sharedMEGAChatSdk] loadUserAttributesForChatId:self.chatRoom.chatId usersHandles:@[@(chatSessionWithAudioLevel.peerId)] authorizationToken:self.chatRoom.authorizationToken delegate:delegate];
+                                [MEGASdkManager.sharedMEGAChatSdk loadUserAttributesForChatId:self.chatRoom.chatId usersHandles:@[@(chatSessionWithAudioLevel.peerId)] authorizationToken:self.chatRoom.authorizationToken delegate:delegate];
                             }
                             self.peerTalkingVideoView.hidden = YES;
                             self.peerTalkingImageView.hidden = NO;
