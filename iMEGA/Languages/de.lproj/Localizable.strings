@@ -2,6 +2,8 @@
 "cancel"="Abbrechen";
 /* Button title to accept something */
 "ok"="OK";
+/* Button title to clear something */
+"clear"="Leeren";
 /* */
 "yes"="Ja";
 /* */
@@ -42,6 +44,8 @@
 "Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="Der Bestätigungslink ist nicht mehr gültig. Entweder haben Sie Ihren Account bereits aktiviert, oder die Registrierung wurde abgebrochen.";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Ungültiger Link";
+/* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
+"The account that created this link has been terminated due to multiple violations of our Terms of Service."="Der zugrundeliegende Account wurde wegen wiederholter Verletzung unserer Nutzungsrichtlinien gesperrt.";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="Entschlüsselungs-Code eingeben";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -587,7 +591,7 @@
 /* Alert message shown when the user tap on the leave share action selecting multiple inshares */
 "leaveSharesAlertMessage"="Wollen Sie diese Ordnerfreigaben wirklich verlassen?";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected */
-"share"="Freigeben";
+"share"="Daten teilen";
 /* Select all items/elements on the list */
 "selectAll"="Alle auswählen";
 /*  */
@@ -889,6 +893,8 @@
 "transfers"="Transfers";
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
 "all"="Alle";
+/* Title of one of the filters in the Transfers section. In this case "Completed" transfers. */
+"Completed"="Abgeschlossen";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
 "downloads"="Downloads";
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
@@ -1270,7 +1276,7 @@
 /* Alert message shown when the user perform logout and has files in the Offline directory */
 "allFilesSavedForOfflineWillBeDeletedFromYourDevice"="Alle für Offline-Nutzung gespeicherten Dateien werden beim Logout gelöscht. Fortfahren?";
 /* Title shown when you almost had used your available transfer quota. */
-"depletedTransferQuota_title"="Transfervolumen erschöpft";
+"depletedTransferQuota_title"="Transfervolumen nicht ausreichend";
 /* Description shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_message"="Die zu übertragende Datenmenge überschreitet das verbleibende Transfervolumen Ihres Accounts. Die Übertragung könnte daher unterbrochen werden.";
 /* Button title to see the available pro plans in MEGA */
@@ -1546,6 +1552,10 @@
 "callFailed"="Anruf fehlgeschlagen";
 /* When an active call of user A with user B had ended */
 "callEnded"="Gespräch beendet.";
+/* When an active goup call is ended */
+"Group call ended"="Audio-/Videokonferenz beendet";
+/* When an active goup call is ended, shows the duration */
+"[A]Group call ended[/A][C]. Duration: [/C]"="[A]Group call ended[/A][C]. Duration: [/C]";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="Dauer: %@";
 /* */
@@ -1959,9 +1969,11 @@
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Auf den Testserver wechseln? Dies ist mit erheblichen Risiken behaftet.";
 /* Title label that explains that the user is going to be asked for the contacts permission */
-"Enable Access to Contacts"="Enable Access to Contacts";
+"Enable Access to Your Address Book"="Enable Access to Your Address Book";
 /* Detailed explanation of why the user should give permission to contacts */
-"MEGA needs access to your contacts to help you connect with other people on MEGA."="MEGA needs access to your contacts to help you connect with other people on MEGA.";
+"Easily discover contacts from your address book on MEGA."="Easily discover contacts from your address book on MEGA.";
+/* Detailed explanation about MEGA not using the contacts data without permision */
+"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA will not use this data for any other purpose and will never interact with your contacts without your consent.";
 /* Title encouraging the user to check who of its contacts are using MEGA */
 "See who's already on MEGA"="See who is already on MEGA";
 /* Title showing the user how many of his contacts are using MEGA */
@@ -2058,6 +2070,16 @@
 "Include location tags"="Ortsinformationen";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
 "If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them.";
+/* Used in Photos app browser view to send the photos from the view to the chat. */
+"Send (%d)"="Send (%d)";
+/* Used in Photos app browser view to upload the photos from the view to the cloud. */
+"Upload (%d)"="Upload (%d)";
+/* Used in Photos app browser carousel view to unselect a selected photo. */
+"Unselect"="Unselect";
+/* Used in Photos app browser. Shown when there are no photos or videos in the Photos app. */
+"No Photos or Videos"="Keine Fotos oder Videos";
+/* Button title which, if tapped, will trigger the action of opening a folder containg this file */
+"View in Folder"="View in Folder";
 /* Error message shown when opening a link with an account that not corresponds to the link */
 "This link is not related to this account. Please log in with the correct account."="Der Link ist nicht für diesen Account. Bitte melden Sie sich mit dem korrekten Account an.";
 /* Text emncouraging the user to add contacts in MEGA */
@@ -2098,6 +2120,10 @@
 "It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="Wir vermuten, dass Sie das Passwort für Ihren MEGA-Account auch anderswo verwenden, und dass einer dieser Dienste kompromittiert wurde.";
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="Ihr Passwort ist so in Umlauf geraten, und dubiose Personen loggen sich in sämtliche Ihrer Accounts ein, bei denen Sie das Passwort verwenden.";
+/* tool bar title used in transfer widget, allow user to clear the selected items in the list */
+"Clear Selected"="Clear Selected";
+/* tool bar title used in transfer widget, allow user to clear all items in the list */
+"Clear All"="Alle entfernen";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
 "MEGA CAMERA UPLOADS FOLDER"="MEGA KAMERAUPLOADS";
 /* Action button text of folder selection screen for camera uploads */
@@ -2126,5 +2152,5 @@
 "Easily discover contacts from your address book on MEGA."="Easily discover contacts from your address book on MEGA.";
 /* Detailed description of why the user should give permission to contacts */
 "MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA will not use this data for any other purpose and will never interact with your contacts without your consent.";
-/* Title label that explains that the user is going to be asked for the contacts permission */
-"Enable Access to Your Address Book"="Enable Access to Your Address Book";
+/* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
+"Enter group name"="Benennen Sie den Gruppenchat";

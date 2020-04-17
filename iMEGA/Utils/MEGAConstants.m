@@ -7,6 +7,8 @@ NSString * const MEGAiOSAppUserAgent = @"MEGAiOS";
 NSString * const MEGAiOSAppKey = @"EVtjzb7R";
 NSString * const MEGAPasswordService = @"MEGA";
 NSString * const MEGAPasswordName = @"sessionV3";
+NSString * const MEGAFirstRun = @"FirstRun";
+NSString * const MEGAFirstRunValue = @"1strun";
 
 NSString * const MEGAGroupIdentifier = @"group.mega.ios";
 
@@ -75,6 +77,7 @@ NSString * const MEGAFileExtensionStorageFolder = @"File Provider Storage";
 NSString * const MEGAExtensionLogsFolder = @"logs";
 NSString * const MEGAExtensionGroupSupportFolder = @"GroupSupport";
 NSString * const MEGAExtensionCacheFolder = @"Library/Cache/";
+NSString * const MEGANotificationServiceExtensionCacheFolder = @"Library/Cache/NSE";
 
 #pragma mark - MEGA Activity Types
 
@@ -99,3 +102,7 @@ NSString * const MEGALastPublicTimestampAccessed = @"kLastPublicTimestampAccesse
 #pragma mark - MEGA Contact Nickname change Notification
 
 NSString * const MEGContactNicknameChangeNotification = @"MEGAContactNicknameChangeNotification";
+
+#pragma mark - DB name
+
+const NSUInteger MEGALastCharactersFromSession = 36;

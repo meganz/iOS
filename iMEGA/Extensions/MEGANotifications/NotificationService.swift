@@ -3,7 +3,8 @@ import UserNotifications
 
 class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationDelegate {
     static var session: String?
-    
+    static var isLogging = false
+
     var contentHandler: ((UNNotificationContent) -> Void)?
     var bestAttemptContent: UNMutableNotificationContent?
     
@@ -22,6 +23,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
             }
         }
         
+        NotificationService.setupLogging()
         MEGALogInfo("Push received: request identifier: \(request.identifier)\n user info: \(request.content.userInfo)")
         
         guard let megadataDictionary = bestAttemptContent?.userInfo["megadata"] as? [String : String],
@@ -149,6 +151,8 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
             }
         }
         
+        MEGASdkManager.sharedMEGAChatSdk()?.saveCurrentState()
+        
         // Note: As soon as we call the contentHandler, no content can be retrieved from notification center.
         bestAttemptContent.badge = MEGASdkManager.sharedMEGAChatSdk()?.unreadChats as NSNumber?
         contentHandler(bestAttemptContent)
@@ -170,6 +174,10 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
     // MARK: - Lean init, login and connect
     
     static func initExtensionProcess() {
+        NSSetUncaughtExceptionHandler { (exception) in
+            MEGALogError("Exception name: \(exception.name)\nreason: \(String(describing: exception.reason))\nuser info: \(String(describing: exception.userInfo))\n")
+            MEGALogError("Stack trace: \(exception.callStackSymbols)")
+        }
         setupLogging()
         
         guard let session = SAMKeychain.password(forService: "MEGA", account: "sessionV3") else {
@@ -183,13 +191,8 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
     }
     
     static func setupLogging() {
-        NSSetUncaughtExceptionHandler { (exception) in
-            MEGALogError("Exception name: \(exception.name)\nreason: \(String(describing: exception.reason))\nuser info: \(String(describing: exception.userInfo))\n")
-            MEGALogError("Stack trace: \(exception.callStackSymbols)")
-        }
-        
         if let sharedUserDefaults = UserDefaults.init(suiteName: MEGAGroupIdentifier) {
-            if sharedUserDefaults.bool(forKey: "logging") {
+            if !isLogging && sharedUserDefaults.bool(forKey: "logging") {
                 guard let logsFolderURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: MEGAGroupIdentifier)?.appendingPathComponent(MEGAExtensionLogsFolder) else {
                     return
                 }
@@ -197,7 +200,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
                     do {
                         try FileManager.default.createDirectory(atPath: logsFolderURL.path, withIntermediateDirectories: false, attributes: nil)
                     } catch {
-                        MEGALogError("Error creating logs directory: \(error)")
+                        MEGALogError("Error creating logs directory: \(logsFolderURL.path)")
                         return
                     }
                 }
@@ -210,6 +213,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
                 MEGASdk.setLogLevel(.fatal)
 #endif
                 MEGASdk.setLogToConsole(true)
+                isLogging = true
             }
         }
     }
@@ -217,11 +221,6 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
     // As part of the lean init, a cache is required. It will not be generated from scratch.
     static func copyDatabasesFromMainApp() {
         let fileManager = FileManager.default
-        
-        guard let applicationSupportDirectoryURL = try? fileManager.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true) else {
-            MEGALogError("Failed to locate/create .applicationSupportDirectory.")
-            return
-        }
         
         guard let groupContainerURL = fileManager.containerURL(forSecurityApplicationGroupIdentifier: MEGAGroupIdentifier) else {
             MEGALogError("No groupContainerURL")
@@ -234,8 +233,16 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
             return
         }
         
+        let nseCacheURL = groupContainerURL.appendingPathComponent(MEGANotificationServiceExtensionCacheFolder)
+                
+        do {
+            try fileManager.createDirectory(at: nseCacheURL, withIntermediateDirectories: true, attributes: nil)
+        } catch {
+            MEGALogError("Failed to locate/create \(nseCacheURL.path) directory");
+        }
+        
         guard let incomingDate = try? newestMegaclientModificationDateForDirectory(at: groupSupportURL),
-            let extensionDate = try? newestMegaclientModificationDateForDirectory(at: applicationSupportDirectoryURL)
+            let extensionDate = try? newestMegaclientModificationDateForDirectory(at: nseCacheURL)
             else {
                 MEGALogError("Exception in newestMegaclientModificationDateForDirectory")
                 return
@@ -245,24 +252,27 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
             return
         }
         
-        guard let applicationSupportContent = try? fileManager.contentsOfDirectory(atPath: applicationSupportDirectoryURL.path),
+        guard let nseCacheContent = try? fileManager.contentsOfDirectory(atPath: nseCacheURL.path),
             let groupSupportPathContent = try? fileManager.contentsOfDirectory(atPath: groupSupportURL.path)
             else {
                 MEGALogError("Error enumerating groupSupportPathContent")
                 return
         }
         
-        for filename in applicationSupportContent {
-            if filename.contains("megaclient") || filename.contains("karere") {
-                let pathToRemove = applicationSupportDirectoryURL.appendingPathComponent(filename).path
+        guard let cacheSessionName = session?.suffix(Int(MEGALastCharactersFromSession)) else {
+            return
+        }
+        for filename in nseCacheContent {
+            if filename.contains(cacheSessionName) {
+                let pathToRemove = nseCacheURL.appendingPathComponent(filename).path
                 fileManager.mnz_removeItem(atPath: pathToRemove)
             }
         }
         
         for filename in groupSupportPathContent {
-            if filename.contains("megaclient") || filename.contains("karere") {
+            if filename.contains(cacheSessionName) {
                 let sourceURL = groupSupportURL.appendingPathComponent(filename)
-                let destinationURL = applicationSupportDirectoryURL.appendingPathComponent(filename)
+                let destinationURL = nseCacheURL.appendingPathComponent(filename)
                 do {
                     try fileManager.copyItem(at: sourceURL, to: destinationURL)
                 } catch {

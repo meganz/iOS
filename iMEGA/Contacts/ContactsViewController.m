@@ -4,7 +4,6 @@
 #import <ContactsUI/ContactsUI.h>
 
 #import "UIImage+GKContact.h"
-#import "NSDate+DateTools.h"
 #import "SVProgressHUD.h"
 #import "UIScrollView+EmptyDataSet.h"
 #import "UIBarButtonItem+Badge.h"
@@ -91,6 +90,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *noContactsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *noContactsDescriptionLabel;
 @property (weak, nonatomic) IBOutlet UIButton *inviteContactButton;
+
+@property (strong, nonatomic) MEGAUser *detailUser;
 
 @end
 
@@ -979,39 +980,18 @@
 }
 
 - (IBAction)deleteAction:(UIBarButtonItem *)sender {
-    if (self.contactsMode == ContactsModeFolderSharedWith) {
-        MEGAShareRequestDelegate *shareRequestDelegate = [[MEGAShareRequestDelegate alloc] initToChangePermissionsWithNumberOfRequests:self.selectedUsersArray.count completion:^{
-            if (self.selectedUsersArray.count == self.visibleUsersArray.count) {
-                [self.navigationController popViewControllerAnimated:YES];
-            } else {
-                [self reloadUI];
-            }
-            self.navigationItem.leftBarButtonItems = @[];
-            [self setTableViewEditing:NO animated:YES];
-        }];
-        
-        for (MEGAUser *user in self.selectedUsersArray) {
-            [[MEGASdkManager sharedMEGASdk] shareNode:self.node withUser:user level:MEGAShareTypeAccessUnknown delegate:shareRequestDelegate];
+    MEGAShareRequestDelegate *shareRequestDelegate = [[MEGAShareRequestDelegate alloc] initToChangePermissionsWithNumberOfRequests:self.selectedUsersArray.count completion:^{
+        if (self.selectedUsersArray.count == self.visibleUsersArray.count) {
+            [self.navigationController popViewControllerAnimated:YES];
+        } else {
+            [self reloadUI];
         }
-    } else {
-        NSString *message = (self.selectedUsersArray.count > 1) ? [NSString stringWithFormat:AMLocalizedString(@"removeMultipleUsersMessage", nil), self.selectedUsersArray.count] :[NSString stringWithFormat:AMLocalizedString(@"removeUserMessage", nil), [self.selectedUsersArray.firstObject email]];
-        UIAlertController *removeUserAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"removeUserTitle", @"Alert title shown when you want to remove one or more contacts") message:message preferredStyle:UIAlertControllerStyleAlert];
-        
-        [removeUserAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
-        
-        [removeUserAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-                MEGARemoveContactRequestDelegate *removeContactRequestDelegate = [[MEGARemoveContactRequestDelegate alloc] initWithNumberOfRequests:self.selectedUsersArray.count completion:^{
-                    [self setTableViewEditing:NO animated:NO];
-                }];
-                for (NSInteger i = 0; i < self.selectedUsersArray.count; i++) {
-                    [[MEGASdkManager sharedMEGASdk] removeContactUser:[self.selectedUsersArray objectAtIndex:i] delegate:removeContactRequestDelegate];
-                }
-                [self dismissViewControllerAnimated:YES completion:nil];
-            }
-        }]];
-        
-        [self presentViewController:removeUserAlertController animated:YES completion:nil];
+        self.navigationItem.leftBarButtonItems = @[];
+        [self setTableViewEditing:NO animated:YES];
+    }];
+    
+    for (MEGAUser *user in self.selectedUsersArray) {
+        [[MEGASdkManager sharedMEGASdk] shareNode:self.node withUser:user level:MEGAShareTypeAccessUnknown delegate:shareRequestDelegate];
     }
 }
 
@@ -1248,6 +1228,7 @@
         } 
         
         [cell.avatarImageView mnz_setImageForUserHandle:user.handle name:cell.nameLabel.text];
+        cell.verifiedImageView.hidden = ![MEGASdkManager.sharedMEGASdk areCredentialsVerifiedOfUser:user];
         
         if (self.tableView.isEditing) {
             // Check if selectedNodesArray contains the current node in the tableView
@@ -1356,16 +1337,18 @@
     switch (self.contactsMode) {
         case ContactsModeDefault: {
             MEGAUser *user = [self userAtIndexPath:indexPath];
+            
             if (!user) {
                 [SVProgressHUD showErrorWithStatus:@"Invalid user"];
                 return;
             }
-            ContactDetailsViewController *contactDetailsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactDetailsViewControllerID"];
-            contactDetailsVC.contactDetailsMode = ContactDetailsModeDefault;
-            contactDetailsVC.userEmail = user.email;
-            contactDetailsVC.userName = user.mnz_fullName;
-            contactDetailsVC.userHandle = user.handle;
-            [self.navigationController pushViewController:contactDetailsVC animated:YES];
+            
+            if (self.searchController.isActive) {
+                self.detailUser = user;
+                self.searchController.active = NO;
+            } else {
+                [self showContactDetailsForUser:user];
+            }
             break;
         }
             
@@ -1731,10 +1714,8 @@
     NSString *text = @"";
     if (MEGAReachabilityManager.isReachable && !self.searchController.isActive) {
         text = AMLocalizedString(@"inviteContact", @"Text shown when the user tries to make a call and the receiver is not a contact");
-    } else {
-        if (!MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
+    } else if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
             text = AMLocalizedString(@"Turn Mobile Data on", @"Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app.");
-        }
     }
     
     return [[NSAttributedString alloc] initWithString:text attributes:[Helper buttonTextAttributesForEmptyState]];
@@ -1796,6 +1777,13 @@
         default:
             searchController.searchBar.showsCancelButton = YES;
             break;
+    }
+}
+
+- (void)didDismissSearchController:(UISearchController *)searchController {
+    if (self.detailUser != nil) {
+        [self showContactDetailsForUser:self.detailUser];
+        self.detailUser = nil;
     }
 }
 
@@ -1899,11 +1887,15 @@
         if (deleteContactsOnIndexPathsArray.count != 0) {
             for (NSIndexPath *indexPath in deleteContactsOnIndexPathsArray) {
                 [self.visibleUsersArray removeObjectAtIndex:indexPath.row];
-                MEGAUser *userToDelete = [deleteContactsIndexPathMutableDictionary objectForKey:indexPath];
-                NSString *userToDeleteBase64Handle = [MEGASdk base64HandleForUserHandle:userToDelete.handle];
-                [self.indexPathsMutableDictionary removeObjectForKey:userToDeleteBase64Handle];
             }
             [self.tableView deleteRowsAtIndexPaths:deleteContactsOnIndexPathsArray withRowAnimation:UITableViewRowAnimationAutomatic];
+            
+            //Rebuild indexPaths to keep consistency with the table
+            [self.indexPathsMutableDictionary removeAllObjects];
+            for (MEGAUser *user in self.visibleUsersArray) {
+                NSString *base64Handle = [MEGASdk base64HandleForUserHandle:user.handle];
+                [self.indexPathsMutableDictionary setObject:[NSIndexPath indexPathForRow:[self.visibleUsersArray indexOfObject:user] inSection:0] forKey:base64Handle];
+            }
         }
     }
 }
@@ -1978,6 +1970,17 @@
 
 - (void)emailForScannedQR:(NSString *)email {
     [self inviteEmailToShareFolder:email];
+}
+
+#pragma mark - Show contact details
+
+- (void)showContactDetailsForUser:(MEGAUser *)user {
+    ContactDetailsViewController *contactDetailsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactDetailsViewControllerID"];
+    contactDetailsVC.contactDetailsMode = ContactDetailsModeDefault;
+    contactDetailsVC.userEmail = user.email;
+    contactDetailsVC.userName = user.mnz_fullName;
+    contactDetailsVC.userHandle = user.handle;
+    [self.navigationController pushViewController:contactDetailsVC animated:YES];
 }
 
 @end

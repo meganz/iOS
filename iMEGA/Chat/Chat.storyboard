@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="eDp-9x-QPr">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="eDp-9x-QPr">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15509"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -1423,6 +1423,7 @@
                         <outlet property="collectionViewBottomConstraint" destination="Dbz-ZZ-98m" id="M7k-3P-AOI"/>
                         <outlet property="enableDisableSpeaker" destination="4uv-S3-2LB" id="bJA-ys-6xu"/>
                         <outlet property="enableDisableVideoButton" destination="fZi-pG-uLA" id="dT2-PR-3NL"/>
+                        <outlet property="minimizeButton" destination="rPI-Vv-ZsG" id="oiP-ZE-egA"/>
                         <outlet property="muteUnmuteMicrophone" destination="7fC-MD-Exy" id="6J0-bH-yj9"/>
                         <outlet property="navigationSubtitleLabel" destination="9xa-XC-DGg" id="z5m-65-Uoc"/>
                         <outlet property="navigationTitleLabel" destination="4qv-BX-eb8" id="hx6-oA-Mbm"/>
@@ -1467,7 +1468,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="MSE-iA-SRP">
-                                                    <rect key="frame" x="10" y="10" width="0.0" height="40"/>
+                                                    <rect key="frame" x="10" y="10" width="40" height="40"/>
                                                     <color key="tintColor" red="0.80477464200000004" green="0.0" blue="0.041726302360000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="40" id="b2q-zQ-cn4"/>
@@ -1481,13 +1482,13 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Vq-gO-h5T">
-                                                    <rect key="frame" x="-10" y="13" width="0.0" height="18"/>
+                                                    <rect key="frame" x="60" y="13" width="39.333333333333343" height="18"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="15"/>
                                                     <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JhP-sF-uyB">
-                                                    <rect key="frame" x="-10" y="34" width="0.0" height="14"/>
+                                                    <rect key="frame" x="60" y="34" width="31" height="14"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
                                                     <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -1759,6 +1760,10 @@
                                                         <constraint firstAttribute="height" constant="40" id="ezS-s3-AMT"/>
                                                     </constraints>
                                                 </imageView>
+                                                <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="contactVerified" translatesAutoresizingMaskIntoConstraints="NO" id="vLT-gp-lJH">
+                                                    <rect key="frame" x="36" y="10" width="14" height="14"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5zE-El-ibr">
                                                     <rect key="frame" x="60" y="21" width="39.333333333333343" height="18"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="15"/>
@@ -1848,6 +1853,7 @@
                                             <outlet property="leftImageView" destination="a2e-FA-4Oy" id="DDb-SZ-OAy"/>
                                             <outlet property="onlineStatusView" destination="smg-gq-BPa" id="gUh-Ev-Xoh"/>
                                             <outlet property="permissionsButton" destination="Nr2-wV-nC7" id="emg-55-sHg"/>
+                                            <outlet property="verifiedImageView" destination="vLT-gp-lJH" id="sj4-V3-90I"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="GroupChatDetailsObserversTypeID" rowHeight="60" id="eXW-oQ-R0N" customClass="GroupChatDetailsViewTableViewCell">
@@ -1989,6 +1995,10 @@
                                                         <action selector="didTapPermissionsButton:" destination="0sZ-aU-4Bm" eventType="touchUpInside" id="lUY-UR-KLD"/>
                                                     </connections>
                                                 </button>
+                                                <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="contactVerified" translatesAutoresizingMaskIntoConstraints="NO" id="Gey-cr-szE">
+                                                    <rect key="frame" x="36" y="10" width="14" height="14"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="LE3-vf-IXa" secondAttribute="bottom" constant="2" id="1Qd-6w-PED"/>
@@ -2051,6 +2061,7 @@
                                             <outlet property="nameLabel" destination="DXU-jt-Kcb" id="kQc-nQ-2Wc"/>
                                             <outlet property="onlineStatusView" destination="E8z-Hv-3OF" id="ZdH-Up-hsm"/>
                                             <outlet property="permissionsButton" destination="waT-q0-bk9" id="EpD-zW-rmi"/>
+                                            <outlet property="verifiedImageView" destination="Gey-cr-szE" id="Yhz-Nd-D0a"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -2179,11 +2190,11 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qEg-Qp-Sfr" userLabel="Middle Image View">
-                                                    <rect key="frame" x="0.0" y="26" width="0.0" height="8"/>
+                                                    <rect key="frame" x="0.0" y="26" width="14" height="8"/>
                                                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </imageView>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CU7-U2-Ogi">
-                                                    <rect key="frame" x="8" y="10" width="0.0" height="40"/>
+                                                    <rect key="frame" x="8" y="10" width="40" height="40"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JK0-Bh-FbN">
                                                             <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
@@ -2207,13 +2218,13 @@
                                                     </constraints>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RkJ-YH-mFt">
-                                                    <rect key="frame" x="-10" y="13" width="0.0" height="18"/>
+                                                    <rect key="frame" x="58" y="13" width="32.333333333333343" height="18"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="15"/>
                                                     <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="fnS-9K-HhH">
-                                                    <rect key="frame" x="-10" y="34" width="0.0" height="14"/>
+                                                    <rect key="frame" x="58" y="34" width="43.666666666666657" height="14"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
                                                     <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -2502,6 +2513,7 @@
         <image name="cameraOn" width="60" height="60"/>
         <image name="chatIcon" width="31" height="28"/>
         <image name="chatSelectedIcon" width="31" height="28"/>
+        <image name="contactVerified" width="14" height="14"/>
         <image name="discloserArrow" width="8" height="12"/>
         <image name="down-arrow" width="24" height="24"/>
         <image name="info_sharedWithArrow" width="22" height="22"/>

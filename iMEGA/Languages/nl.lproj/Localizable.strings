@@ -2,6 +2,8 @@
 "cancel"="Annuleer";
 /* Button title to accept something */
 "ok"="OK";
+/* Button title to clear something */
+"clear"="Leegmaken";
 /* */
 "yes"="Ja";
 /* */
@@ -42,6 +44,8 @@
 "Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="Uw bevestigingskoppeling is niet langer geldig. Uw account kan al geactiveerd zijn of u kunt uw registratie geannuleerd hebben.";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Ongeldige koppeling";
+/* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
+"The account that created this link has been terminated due to multiple violations of our Terms of Service."="De account die deze koppeling gecreëerd heeft is beëindigd door meerdere overtredingen van onze Algemene Voorwaarden.";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="Vul decoderingssleutel in";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -889,6 +893,8 @@
 "transfers"="Overdrachten";
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
 "all"="Alle";
+/* Title of one of the filters in the Transfers section. In this case "Completed" transfers. */
+"Completed"="Voltooid";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
 "downloads"="Downloads";
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
@@ -1546,6 +1552,10 @@
 "callFailed"="Oproep mislukt";
 /* When an active call of user A with user B had ended */
 "callEnded"="Oproep beëindigd.";
+/* When an active goup call is ended */
+"Group call ended"="Groep oproep beëindigd";
+/* When an active goup call is ended, shows the duration */
+"[A]Group call ended[/A][C]. Duration: [/C]"="[A]Groepsgesprek beëindigd [/A][C]. Duur: [/C]";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="Duur: %@";
 /* */
@@ -1959,11 +1969,13 @@
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Weet u zeker dat u wilt wijzigen naar een test server? Uw account kan onherstelbare problemen krijgen";
 /* Title label that explains that the user is going to be asked for the contacts permission */
-"Enable Access to Contacts"="Toegang tot Contacten Inschakelen";
+"Enable Access to Your Address Book"="Schakel Toegang tot Uw Adresboek in";
 /* Detailed explanation of why the user should give permission to contacts */
-"MEGA needs access to your contacts to help you connect with other people on MEGA."="MEGA heeft toegang tot uw contacten nodig om u te helpen verbinden met andere mensen op MEGA.";
+"Easily discover contacts from your address book on MEGA."="Ontdek gemakkelijk contacten uit uw adresboek op MEGA";
+/* Detailed explanation about MEGA not using the contacts data without permision */
+"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA zal deze gegevens niet voor andere doeleinden gebruiken en zal nooit zonder uw toestemming met uw contacten communiceren.";
 /* Title encouraging the user to check who of its contacts are using MEGA */
-"See who's already on MEGA"="Bekijk wie al op MEGA zit.";
+"See who's already on MEGA"="Zie wie al bij MEGA is";
 /* Title showing the user how many of his contacts are using MEGA */
 "[X] contacts found on MEGA"="[X] contacten gevonden op MEGA";
 /* Title showing the user that one of his contacts are using MEGA */
@@ -2058,6 +2070,16 @@
 "Include location tags"="Inclusief locatie labels";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
 "If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="Indien ingeschakeld, upload u informatie over waar uw foto's en video's zijn gemaakt, dus wees voorzichtig wanneer u ze deelt.";
+/* Used in Photos app browser view to send the photos from the view to the chat. */
+"Send (%d)"="Versturen (%d)";
+/* Used in Photos app browser view to upload the photos from the view to the cloud. */
+"Upload (%d)"="Uploaden (%d)";
+/* Used in Photos app browser carousel view to unselect a selected photo. */
+"Unselect"="Deselecteren";
+/* Used in Photos app browser. Shown when there are no photos or videos in the Photos app. */
+"No Photos or Videos"="Geen Foto's of Video's";
+/* Button title which, if tapped, will trigger the action of opening a folder containg this file */
+"View in Folder"="Weergeven in Map";
 /* Error message shown when opening a link with an account that not corresponds to the link */
 "This link is not related to this account. Please log in with the correct account."="Deze link is niet gerelateerd aan dit account. Log in met het juiste account.";
 /* Text emncouraging the user to add contacts in MEGA */
@@ -2098,6 +2120,10 @@
 "It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="Het is mogelijk dat u hetzelfde wachtwoord gebruikt voor uw MEGA-account als voor andere services en dat ten minste een van deze andere services een gegevenslek heeft geleden.";
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="Uw wachtwoord is gelekt en wordt nu door slechte personen gebruikt om in te loggen op uw accounts, inclusief, maar niet beperkt tot, uw MEGA-account.";
+/* tool bar title used in transfer widget, allow user to clear the selected items in the list */
+"Clear Selected"="Geselecteerd Wissen";
+/* tool bar title used in transfer widget, allow user to clear all items in the list */
+"Clear All"="Wis alles";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
 "MEGA CAMERA UPLOADS FOLDER"="MEGA CAMERA UPLOADS MAP";
 /* Action button text of folder selection screen for camera uploads */
@@ -2123,8 +2149,8 @@
 /* export Quality Option for Scan document */
 "best"="Beste";
 /* Description of why the user should give permission to contacts */
-"Easily discover contacts from your address book on MEGA."="Easily discover contacts from your address book on MEGA.";
+"Easily discover contacts from your address book on MEGA."="Ontdek gemakkelijk contacten uit uw adresboek op MEGA";
 /* Detailed description of why the user should give permission to contacts */
-"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA will not use this data for any other purpose and will never interact with your contacts without your consent.";
-/* Title label that explains that the user is going to be asked for the contacts permission */
-"Enable Access to Your Address Book"="Enable Access to Your Address Book";
+"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA zal deze gegevens niet voor andere doeleinden gebruiken en zal nooit zonder uw toestemming met uw contacten communiceren.";
+/* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
+"Enter group name"="Voer groep naam in";
