@@ -115,11 +115,7 @@ class ChatViewController: MessagesViewController {
     // MARK: - Internal methods used by the extension of this class
 
     func isFromCurrentSender(message: MessageType) -> Bool {
-        guard let chatMessage = message as? ChatMessage else {
-            return false
-        }
-
-        return chatMessage.senderHandle == myUser.handle
+        return UInt64(message.sender.senderId) == myUser.handle
     }
 
     func isDateLabelVisible(for indexPath: IndexPath) -> Bool {
