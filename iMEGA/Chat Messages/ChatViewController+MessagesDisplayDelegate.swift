@@ -4,14 +4,21 @@ extension ChatViewController: MessagesDisplayDelegate {
     func backgroundColor(for message: MessageType,
                          at indexPath: IndexPath,
                          in messagesCollectionView: MessagesCollectionView) -> UIColor {
-        let chatMessage = message as! ChatMessage
-        switch chatMessage.message.type {
-        case .contact, .attachment:
-            return .clear
+        switch message.kind {
+        case .custom:
+            let chatMessage = message as! ChatMessage
+            switch chatMessage.message.type {
+            case .contact, .attachment:
+                return .clear
+            default:
+                return isFromCurrentSender(message: message) ? UIColor(fromHexString: "#009476") : UIColor(fromHexString: "#EEEEEE")
+                
+            }
         default:
             return isFromCurrentSender(message: message) ? UIColor(fromHexString: "#009476") : UIColor(fromHexString: "#EEEEEE")
-
+            
         }
+        
     }
 
     func textColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
