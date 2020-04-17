@@ -29,22 +29,43 @@ class ChatRichPreviewMediaCollectionViewCell: TextMessageCell, MEGARequestDelega
         guard let chatMessage = message as? ChatMessage else {
             return
         }
-        
+ 
         let megaMessage = chatMessage.message
+        richPreviewContentView.isHidden = true
+        richPreviewContentView.message = megaMessage
+
+        
         let dummyMssage = ConcreteMessageType(sender: message.sender, messageId: message.messageId, sentDate: message.sentDate, kind: .text(megaMessage.content))
         super.configure(with: dummyMssage, at: indexPath, and: messagesCollectionView)
 
-        guard let node = megaMessage.node else {
-            
-            MEGASdkManager.sharedMEGASdk()?.publicNode(forMegaFileLink: (megaMessage.megaLink as NSURL).mnz_MEGAURL(), delegate: MEGAGetPublicNodeRequestDelegate(completion: { (request, error) in
-                messagesCollectionView.reloadItems(at: [indexPath])
-            }))
-            
-            richPreviewContentView.isHidden = true
-            return
+        let megaLink = megaMessage.megaLink as NSURL
+        switch megaLink.mnz_type() {
+        case .fileLink:
+            if megaMessage.richNumber == nil {
+
+                MEGASdkManager.sharedMEGASdk()?.publicNode(forMegaFileLink: megaLink.mnz_MEGAURL(), delegate: MEGAGetPublicNodeRequestDelegate(completion: { (request, error) in
+                    messagesCollectionView.reloadItems(at: [indexPath])
+                }))
+                
+                return
+            }
+            richPreviewContentView.isHidden = false
+        case .folderLink:
+            if megaMessage.richNumber == nil {
+                
+                MEGASdkManager.sharedMEGASdk()?.getPublicLinkInformation(withFolderLink: megaLink.mnz_MEGAURL(), delegate: MEGAGenericRequestDelegate(completion: { (request, error) in
+                    messagesCollectionView.reloadItems(at: [indexPath])
+                    
+                }))
+                return
+            }
+            richPreviewContentView.isHidden = false
+        case .publicChatLink:
+            break
+        default:
+            break
         }
-        richPreviewContentView.isHidden = false
-        richPreviewContentView.node = node
+        
         
     }
     
@@ -81,7 +102,7 @@ open class ChatRichPreviewMediaCollectionViewSizeCalculator: TextMessageSizeCalc
         
         switch message.kind {
         case .custom:
-            if megaMessage.node == nil {
+            if megaMessage.richNumber == nil {
                 return containerSize
             }
             
