@@ -16,6 +16,7 @@
 		2F2801D32447C8FD00C160D0 /* ChatRichPreviewMediaCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2801D22447C8FD00C160D0 /* ChatRichPreviewMediaCollectionViewCell.swift */; };
 		2F2801D924481EFD00C160D0 /* RichPreviewContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2801D824481EFD00C160D0 /* RichPreviewContentView.swift */; };
 		2F2801DD24481F3A00C160D0 /* RichPreviewContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F2801DC24481F3A00C160D0 /* RichPreviewContentView.xib */; };
+		2F2801DF2449587400C160D0 /* ChatVoiceClipCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2801DE2449587400C160D0 /* ChatVoiceClipCollectionViewCell.swift */; };
 		2F8F5F1623691A390049603F /* UINavigationViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8F5F1523691A390049603F /* UINavigationViewController+Additions.swift */; };
 		2F91390E238C9AC4004C611A /* MEGARecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F91390D238C9AC4004C611A /* MEGARecordView.swift */; };
 		2F913910238CC3CA004C611A /* MEGARecordView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F91390F238CC3CA004C611A /* MEGARecordView.xib */; };
@@ -1240,6 +1241,7 @@
 		2F2801D22447C8FD00C160D0 /* ChatRichPreviewMediaCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRichPreviewMediaCollectionViewCell.swift; sourceTree = "<group>"; };
 		2F2801D824481EFD00C160D0 /* RichPreviewContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichPreviewContentView.swift; sourceTree = "<group>"; };
 		2F2801DC24481F3A00C160D0 /* RichPreviewContentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RichPreviewContentView.xib; sourceTree = "<group>"; };
+		2F2801DE2449587400C160D0 /* ChatVoiceClipCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatVoiceClipCollectionViewCell.swift; sourceTree = "<group>"; };
 		2F8F5F1523691A390049603F /* UINavigationViewController+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationViewController+Additions.swift"; sourceTree = "<group>"; };
 		2F91390D238C9AC4004C611A /* MEGARecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGARecordView.swift; sourceTree = "<group>"; };
 		2F91390F238CC3CA004C611A /* MEGARecordView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MEGARecordView.xib; sourceTree = "<group>"; };
@@ -5391,6 +5393,7 @@
 			isa = PBXGroup;
 			children = (
 				2FA6D9DA243E8CB4007A8E81 /* ChatMediaCollectionViewCell.swift */,
+				2F2801DE2449587400C160D0 /* ChatVoiceClipCollectionViewCell.swift */,
 				2F2801D22447C8FD00C160D0 /* ChatRichPreviewMediaCollectionViewCell.swift */,
 				2F2801D824481EFD00C160D0 /* RichPreviewContentView.swift */,
 				2F2801DC24481F3A00C160D0 /* RichPreviewContentView.xib */,
@@ -6808,6 +6811,7 @@
 				77B3227F20A436D60037FA89 /* NSURL+MNZCategory.m in Sources */,
 				417279401DB663FA001AC818 /* JSQMessagesVideoThumbnailFactory.m in Sources */,
 				4152269A1A692ECC00EC7BB6 /* Helper.m in Sources */,
+				2F2801DF2449587400C160D0 /* ChatVoiceClipCollectionViewCell.swift in Sources */,
 				A86B9F632316D6AB00F35E7A /* FLEXKeychain.m in Sources */,
 				5B5B4FFF1E681BAC00DBEB3B /* UIFont+MNZCategory.m in Sources */,
 				8330A9F322F41F470059B39C /* Array+Additions.swift in Sources */,
