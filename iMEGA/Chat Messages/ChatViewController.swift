@@ -90,6 +90,10 @@ class ChatViewController: MessagesViewController {
             let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatViewAttachmentCell.reuseIdentifier, for: indexPath) as! ChatViewAttachmentCell
             cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
             return cell
+        } else if chatMessage.message.type == .normal && chatMessage.message.containsMEGALink() {
+            let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatRichPreviewMediaCollectionViewCell.reuseIdentifier, for: indexPath) as! ChatRichPreviewMediaCollectionViewCell
+            cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
+            return cell
         } else {
             let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatViewCallCollectionCell.reuseIdentifier, for: indexPath) as! ChatViewCallCollectionCell
             cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
@@ -111,11 +115,7 @@ class ChatViewController: MessagesViewController {
     // MARK: - Internal methods used by the extension of this class
 
     func isFromCurrentSender(message: MessageType) -> Bool {
-        guard let chatMessage = message as? ChatMessage else {
-            return false
-        }
-
-        return chatMessage.senderHandle == myUser.handle
+        return UInt64(message.sender.senderId) == myUser.handle
     }
 
     func isDateLabelVisible(for indexPath: IndexPath) -> Bool {
@@ -157,20 +157,22 @@ class ChatViewController: MessagesViewController {
         guard let previousIndexPath = indexPath.previousSectionIndexPath else { return false }
         return messages[indexPath.section].senderHandle == messages[previousIndexPath.section].senderHandle
     }
-
+    
     func avatarImage(for message: MessageType) -> UIImage? {
-        guard let chatMessage = message as? ChatMessage else { return nil }
-        return chatMessage.avatarImage
+        guard let peerEmail = chatRoom.peerEmail(byHandle: UInt64(message.sender.senderId)!),
+            let user = MEGASdkManager.sharedMEGASdk()?.contact(forEmail: peerEmail) else {
+                return nil
+        }
+        return user.avatarImage(withDelegate: nil)
     }
 
     func initials(for message: MessageType) -> String {
-        guard let chatMessage = message as? ChatMessage else { return "" }
 
-        if let user = MEGAStore.shareInstance()?.fetchUser(withUserHandle: chatMessage.senderHandle) {
+        if let user = MEGAStore.shareInstance()?.fetchUser(withUserHandle: UInt64(message.sender.senderId)!) {
             return (user.displayName as NSString).mnz_initialForAvatar()
         }
 
-        if let peerFullname = chatRoom.peerFullname(byHandle: chatMessage.senderHandle) {
+        if let peerFullname = chatRoom.peerFullname(byHandle:UInt64(message.sender.senderId)!) {
             return (peerFullname as NSString).mnz_initialForAvatar()
         }
 
@@ -196,6 +198,8 @@ class ChatViewController: MessagesViewController {
                                          forCellWithReuseIdentifier: ChatViewAttachmentCell.reuseIdentifier)
         messagesCollectionView.register(ChatMediaCollectionViewCell.self,
                                          forCellWithReuseIdentifier: ChatMediaCollectionViewCell.reuseIdentifier)
+        messagesCollectionView.register(ChatRichPreviewMediaCollectionViewCell.self,
+                                               forCellWithReuseIdentifier: ChatRichPreviewMediaCollectionViewCell.reuseIdentifier)
     }
 
     private func update() {

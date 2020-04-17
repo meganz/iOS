@@ -30,12 +30,9 @@ extension ChatMessage: MessageType {
     var sentDate: Date {
         return message.timestamp
     }
-
+    
     var kind: MessageKind {
-        if message.content != nil && message.content.count > 0 {
-            return .text(message.content)
-        }
-
+        
         if case .callEnded = message.type {
             return .custom(message)
         } else if case .callStarted = message.type {
@@ -44,7 +41,16 @@ extension ChatMessage: MessageType {
             return .custom(message)
         } else if case .contact = message.type {
             return .custom(message)
+        } else if case .containsMeta = message.type {
+            return .custom(message)
+        } else if case .normal = message.type {
+            if message.containsMEGALink() {
+                return .custom(message)
+            } else if message.content != nil && message.content.count > 0 {
+                return .text(message.content)
+            }
         }
+        
         return .text(message.type.description)
     }
 }
