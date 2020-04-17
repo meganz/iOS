@@ -30,10 +30,18 @@ class RichPreviewContentView: UIView {
             
         case .folderLink:
             titleLabel.text = message?.richTitle
-            descriptionLabel.text = String(format: "%@\n%@", message!.richString, Helper.memoryStyleString(fromByteCount: (message?.richNumber.int64Value)!))
+            descriptionLabel.text = String(format: "%@\n%@", message!.richString, Helper.memoryStyleString(fromByteCount: max(message!.richNumber.int64Value, 0)))
             linkLabel.text = "mega.nz"
             iconImageView.image = UIImage(named: "favicon")
             imageView.image = UIImage.mnz_folder()
+            
+        case .publicChatLink:
+            titleLabel.text = message?.richString
+            descriptionLabel.text = String(format: "%lld %@", message!.richNumber.int64Value, AMLocalizedString("participants", "Label to describe the section where you can see the participants of a group chat"))
+            linkLabel.text = "mega.nz"
+            iconImageView.image = UIImage(named: "favicon")
+            imageView.image = UIImage(named: "groupChat")
+
         default:
             break
         }
