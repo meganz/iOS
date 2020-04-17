@@ -81,6 +81,7 @@
     self.tokenField.minInputWidth = (self.tokenField.frame.size.width / 2);
     
     self.tokenField.inputTextFieldKeyboardType = UIKeyboardTypeEmailAddress;
+    self.tokenField.autocapitalizationType = UITextAutocapitalizationTypeNone;
     
     self.tokenField.toLabelText = @"";
     self.tokenField.inputTextFieldTextColor = [UIColor mnz_black333333];

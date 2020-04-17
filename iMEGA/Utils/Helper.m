@@ -6,6 +6,7 @@
 #import "SVProgressHUD.h"
 
 #import "NSFileManager+MNZCategory.h"
+#import "NSDate+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
@@ -634,7 +635,7 @@ static MEGAIndexer *indexer;
 }
 
 + (NSString *)sizeAndDateForNode:(MEGANode *)node api:(MEGASdk *)api {
-    return [NSString stringWithFormat:@"%@ • %@", [self sizeForNode:node api:api], [self dateWithISO8601FormatOfRawTime:node.creationTime.timeIntervalSince1970]];
+    return [NSString stringWithFormat:@"%@ • %@", [self sizeForNode:node api:api], node.creationTime.mnz_formattedDefaultDateForMedia];
 }
 
 + (NSString *)sizeForNode:(MEGANode *)node api:(MEGASdk *)api {
@@ -645,14 +646,6 @@ static MEGAIndexer *indexer;
         size = [Helper memoryStyleStringFromByteCount:[api sizeForNode:node].longLongValue];
     }
     return size;
-}
-
-+ (NSString *)dateWithISO8601FormatOfRawTime:(time_t)rawtime {
-    struct tm *timeinfo = localtime(&rawtime);
-    char buffer[80];
-    strftime(buffer, 80, "%Y-%m-%d %H:%M:%S", timeinfo);
-    
-    return [NSString stringWithCString:buffer encoding:NSUTF8StringEncoding];
 }
 
 + (NSString *)filesAndFoldersInFolderNode:(MEGANode *)node api:(MEGASdk *)api {
@@ -1211,9 +1204,14 @@ static MEGAIndexer *indexer;
     
     [NSUserDefaults.standardUserDefaults removePersistentDomainForName:NSBundle.mainBundle.bundleIdentifier];
 
-    //Set default order on logout
+    //Set default values on logout
     [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"SortOrderType"];
     [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"OfflineSortOrderType"];
+    
+    [NSUserDefaults.standardUserDefaults setValue:MEGAFirstRunValue forKey:MEGAFirstRun];
+    if (@available(iOS 12.0, *)) {} else {
+        [NSUserDefaults.standardUserDefaults synchronize];
+    }
 
     NSUserDefaults *sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];
     [sharedUserDefaults removePersistentDomainForName:MEGAGroupIdentifier];

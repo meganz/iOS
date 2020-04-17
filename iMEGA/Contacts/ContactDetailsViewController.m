@@ -34,8 +34,7 @@
 #import "MEGA-Swift.h"
 
 typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
-    ContactDetailsSectionNickname = 0,
-    ContactDetailsSectionVerifyCredentials,
+    ContactDetailsSectionNicknameVerifyCredentials = 0,
     ContactDetailsSectionAddAndRemoveContact,
     ContactDetailsSectionSharedFolders,
     ContactDetailsSectionClearChatHistory,
@@ -43,6 +42,11 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
     ContactDetailsSectionAddParticipantToContact,
     ContactDetailsSectionRemoveParticipant,
     ContactDetailsSectionSetPermission
+};
+
+typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
+    ContactDetailsRowNickname = 0,
+    ContactDetailsRowVerifyCredentials
 };
 
 @interface ContactDetailsViewController () <CustomActionViewControllerDelegate, MEGAChatDelegate, MEGAChatCallDelegate, MEGAGlobalDelegate>
@@ -79,6 +83,10 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
 
 @property (strong, nonatomic) NSString *userNickname;
 @property (strong, nonatomic) NSArray<NSNumber *> *contactDetailsSections;
+@property (strong, nonatomic, readonly) NSArray<NSNumber *> *rowsForNicknameAndVerify;
+
+@property (nonatomic, getter=shouldWaitForChatConnectivity) BOOL waitForChatConnectivity;
+@property (nonatomic, getter=isVideoCall) BOOL videoCall;
 
 @end
 
@@ -110,6 +118,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
         self.userName = self.user.mnz_fullName;
     }
     
+    [self configureShadowInLayer:self.backButton.layer];
     [self configureShadowInLayer:self.nameOrNicknameLabel.layer];
     [self configureShadowInLayer:self.optionalNameLabel.layer];
     [self updateUserDetails];
@@ -204,6 +213,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
     AMLocalizedString(@"Edit Nickname", @"Contact details screen: Edit the alias(nickname) for a user");
     
     cell.nameLabel.textColor = UIColor.mnz_black333333;
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     return cell;
 }
@@ -422,7 +432,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
 }
 - (void)showRemoveContactAlert {
     
-    NSString *message = [NSString stringWithFormat:AMLocalizedString(@"removeUserMessage", nil), self.userEmail];
+    NSString *message = [NSString stringWithFormat:AMLocalizedString(@"removeUserMessage", nil), self.user.mnz_displayName];
     
     UIAlertController *removeContactAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"removeUserTitle", @"Alert title shown when you want to remove one or more contacts") message:message preferredStyle:UIAlertControllerStyleAlert];
     
@@ -522,7 +532,13 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
         [peerList addPeerWithHandle:self.userHandle privilege:MEGAChatRoomPrivilegeStandard];
         MEGAChatCreateChatGroupRequestDelegate *createChatGroupRequestDelegate = [[MEGAChatCreateChatGroupRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
             self.chatRoom = chatRoom;
-            [self openCallViewWithVideo:video active:NO];
+            MEGAChatConnection chatConnection = [MEGASdkManager.sharedMEGAChatSdk chatConnectionState:self.chatRoom.chatId];
+            if (chatConnection == MEGAChatConnectionOnline) {
+                [self openCallViewWithVideo:video active:NO];
+            } else {
+                self.waitForChatConnectivity = YES;
+                self.videoCall = video;
+            }
         }];
         [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:NO peers:peerList delegate:createChatGroupRequestDelegate];
     }
@@ -535,7 +551,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
     }
 
     CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
-    callVC.chatRoom = self.chatRoom;
+    callVC.chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomByUser:self.userHandle];
     callVC.videoCall = videoCall;
     callVC.callType = active ? CallTypeActive : CallTypeOutgoing;
     callVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
@@ -689,7 +705,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
 }
 
 - (NSArray<NSNumber *> *)sectionsForContactModeDefault {
-    return [self addSharedFoldersSectionIfNeededToSections:@[@(ContactDetailsSectionNickname), @(ContactDetailsSectionVerifyCredentials), @(ContactDetailsSectionAddAndRemoveContact)]];
+    return [self addSharedFoldersSectionIfNeededToSections:@[@(ContactDetailsSectionNicknameVerifyCredentials), @(ContactDetailsSectionAddAndRemoveContact)]];
 }
 
 - (NSArray<NSNumber *> *)sectionsForContactFromChat {
@@ -697,7 +713,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
         return [self addSharedFoldersSectionIfNeededToSections:@[@(ContactDetailsSectionClearChatHistory), @(ContactDetailsSectionArchiveChat)]];
     }
     
-    return [self addSharedFoldersSectionIfNeededToSections:@[@(ContactDetailsSectionNickname), @(ContactDetailsSectionClearChatHistory), @(ContactDetailsSectionArchiveChat)]];
+    return [self addSharedFoldersSectionIfNeededToSections:@[@(ContactDetailsSectionNicknameVerifyCredentials), @(ContactDetailsSectionClearChatHistory), @(ContactDetailsSectionArchiveChat)]];
 }
 
 - (NSArray<NSNumber *> *)sectionsForContactFromGroupChat {
@@ -706,11 +722,11 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
     if (self.shouldAllowToAddContact) { // User not in contact list
         [sections addObject:@(ContactDetailsSectionAddParticipantToContact)];
     } else { // user in contact list
-        [sections addObject:@(ContactDetailsSectionNickname)];
+        [sections addObject:@(ContactDetailsSectionNicknameVerifyCredentials)];
     }
     
     MEGAChatRoomPrivilege peerPrivilege = [self.groupChatRoom peerPrivilegeByHandle:self.userHandle];
-    if (self.groupChatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator || peerPrivilege >= MEGAChatRoomPrivilegeRo) {
+    if (self.groupChatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator && peerPrivilege >= MEGAChatRoomPrivilegeRo) {
         [sections addObjectsFromArray:@[@(ContactDetailsSectionSetPermission), @(ContactDetailsSectionRemoveParticipant)]];
     }
     
@@ -731,6 +747,10 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
 - (BOOL)shouldAllowToAddContact {
     MEGAUser *user = [MEGASdkManager.sharedMEGASdk contactForEmail:self.userEmail];
     return (user == nil || user.visibility != MEGAUserVisibilityVisible);
+}
+
+- (NSArray<NSNumber *> *)rowsForNicknameAndVerify {
+    return @[@(ContactDetailsRowNickname), @(ContactDetailsRowVerifyCredentials)];
 }
 
 #pragma mark - IBActions
@@ -800,19 +820,36 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self isSharedFolderSection:section] ? self.incomingNodeListForUser.size.integerValue : 1;
+    NSInteger rowsInSection;
+    if ([self isSharedFolderSection:section]) {
+        rowsInSection = self.incomingNodeListForUser.size.integerValue;
+    } else if (self.shouldAllowToAddContact) {
+        rowsInSection = 1;
+    } else if (section == ContactDetailsSectionNicknameVerifyCredentials) {
+        rowsInSection = self.rowsForNicknameAndVerify.count;
+    } else {
+        rowsInSection = 1;
+    }
+    return rowsInSection;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ContactTableViewCell *cell;
     
     switch (self.contactDetailsSections[indexPath.section].intValue) {
-        case ContactDetailsSectionNickname:
-            cell = [self cellForNicknameWithIndexPath:indexPath];
-            break;
-            
-        case ContactDetailsSectionVerifyCredentials:
-            cell = [self cellForVerifyCredentialsWithIndexPath:indexPath];
+        case ContactDetailsSectionNicknameVerifyCredentials:
+            switch (self.rowsForNicknameAndVerify[indexPath.row].intValue) {
+                case ContactDetailsRowNickname:
+                    cell = [self cellForNicknameWithIndexPath:indexPath];
+                    break;
+                    
+                case ContactDetailsRowVerifyCredentials:
+                    cell = [self cellForVerifyCredentialsWithIndexPath:indexPath];
+                    break;
+                    
+                default:
+                    break;
+            }
             break;
             
         case ContactDetailsSectionAddAndRemoveContact:
@@ -892,12 +929,19 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     switch (self.contactDetailsSections[indexPath.section].intValue) {
-        case ContactDetailsSectionNickname:
-            [self showNickNameViewContoller];
-            break;
-            
-        case ContactDetailsSectionVerifyCredentials:
-            [self pushVerifyCredentialsViewController];
+        case ContactDetailsSectionNicknameVerifyCredentials:
+            switch (self.rowsForNicknameAndVerify[indexPath.row].intValue) {
+                case ContactDetailsRowNickname:
+                    [self showNickNameViewContoller];
+                    break;
+                    
+                case ContactDetailsRowVerifyCredentials:
+                    [self pushVerifyCredentialsViewController];
+                    break;
+                    
+                default:
+                    break;
+            }
             break;
             
         case ContactDetailsSectionAddAndRemoveContact:
@@ -996,6 +1040,9 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
     if (self.chatRoom.chatId == chatId) {
         [self updateCallButtonsState];
         [self.tableView reloadData];
+        if (self.shouldWaitForChatConnectivity && newState == MEGAChatConnectionOnline) {
+            [self openCallViewWithVideo:self.isVideoCall active:NO];
+        }
     } else if (self.groupChatRoom.chatId == chatId) {
         [self.tableView reloadData];
     }

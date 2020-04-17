@@ -61,8 +61,6 @@
 
 #import "MEGAProviderDelegate.h"
 
-#define kFirstRun @"FirstRun"
-
 @interface AppDelegate () <PKPushRegistryDelegate, UIApplicationDelegate, UNUserNotificationCenterDelegate, LTHPasscodeViewControllerDelegate, LaunchViewControllerDelegate, MEGAApplicationDelegate, MEGAChatDelegate, MEGAChatRequestDelegate, MEGAGlobalDelegate, MEGAPurchasePricingDelegate, MEGARequestDelegate, MEGATransferDelegate> {
     BOOL isAccountFirstLogin;
     BOOL isFetchNodesDone;
@@ -178,12 +176,12 @@
     NSString *sessionV3 = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
     
     //Clear keychain (session) and delete passcode on first run in case of reinstallation
-    if (![[NSUserDefaults standardUserDefaults] objectForKey:kFirstRun]) {
+    if (![NSUserDefaults.standardUserDefaults objectForKey:MEGAFirstRun]) {
         sessionV3 = nil;
         [Helper clearEphemeralSession];
         [Helper clearSession];
         [Helper deletePasscode];
-        [[NSUserDefaults standardUserDefaults] setValue:@"1strun" forKey:kFirstRun];
+        [NSUserDefaults.standardUserDefaults setValue:MEGAFirstRunValue forKey:MEGAFirstRun];
         if (@available(iOS 12.0, *)) {} else {
             [NSUserDefaults.standardUserDefaults synchronize];
         }
@@ -225,6 +223,8 @@
             [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
             [[MEGASdkManager sharedMEGAChatSdk] logout];
             [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
+        } else if (chatInit == MEGAChatInitOnlineSession || chatInit == MEGAChatInitOfflineSession) {
+            [self importMessagesFromNSE];
         }
         
         MEGALoginRequestDelegate *loginRequestDelegate = [[MEGALoginRequestDelegate alloc] init];
@@ -335,6 +335,7 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     MEGALogDebug(@"[App Lifecycle] Application will enter foreground");
+    [self checkChatInitState];
     
     if (self.wasAppSuspended && !MEGASdkManager.sharedMEGAChatSdk.mnz_existsActiveCall) {
         //If the app has been suspended, we assume that the sockets have been closed, so we have to reconnect.
@@ -461,6 +462,7 @@
                                 CallViewController *callVC = (CallViewController *)UIApplication.mnz_presentingViewController;
                                 if (!callVC.videoCall) {
                                     [callVC tapOnVideoCallkitWhenDeviceIsLocked];
+                                    self.chatRoom = nil;
                                 }
                             }
                         } else {
@@ -516,7 +518,13 @@
                         callVC.callType = CallTypeActive;
                         if (!callVC.videoCall) {
                             [callVC tapOnVideoCallkitWhenDeviceIsLocked];
+                            self.chatRoom = nil;
                         }
+                    }
+                    if ([presentedVC isKindOfClass:CallViewController.class]) {
+                        CallViewController *callVC = (CallViewController *)UIApplication.mnz_presentingViewController;
+                        [callVC tapOnVideoCallkitWhenDeviceIsLocked];
+                        self.chatRoom = nil;
                     }
                 } else {
                     self.chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:handle];
@@ -1086,6 +1094,33 @@ void uncaughtExceptionHandler(NSException *exception) {
     }
 }
 
+- (void)checkChatInitState {
+    MEGAChatInit initState = [MEGASdkManager.sharedMEGAChatSdk initState];
+    MEGALogDebug(@"%@", [MEGAChatSdk stringForMEGAChatInitState:initState]);
+    if (initState == MEGAChatInitOfflineSession || initState == MEGAChatInitOnlineSession) {
+        [self importMessagesFromNSE];
+    }
+}
+
+- (void)importMessagesFromNSE {
+    NSURL *containerURL = [NSFileManager.defaultManager containerURLForSecurityApplicationGroupIdentifier:MEGAGroupIdentifier];
+    NSURL *nseCacheURL = [containerURL URLByAppendingPathComponent:MEGANotificationServiceExtensionCacheFolder isDirectory:YES];
+    NSString *session = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
+    NSString *filename = [NSString stringWithFormat:@"karere-%@.db", [session substringFromIndex:MAX(session.length - MEGALastCharactersFromSession, 0)]];
+    NSURL *nseCacheFileURL = [nseCacheURL URLByAppendingPathComponent:filename];
+    
+    if ([NSFileManager.defaultManager fileExistsAtPath:nseCacheFileURL.path]) {
+        if (MEGAStore.shareInstance.areTherePendingMessages) {
+            MEGALogDebug(@"Import messages from %@", nseCacheFileURL.path);
+            [MEGASdkManager.sharedMEGAChatSdk importMessagesFromPath:nseCacheFileURL.path];
+        } else {
+            MEGALogDebug(@"No messages to import from NSE.");
+        }
+    } else {
+        MEGALogWarning(@"NSE cache file %@ doesn't exist", nseCacheFileURL.path);
+    }
+}
+
 #pragma mark - LTHPasscodeViewControllerDelegate
 
 - (void)passcodeWasEnteredSuccessfully {
@@ -1230,7 +1265,21 @@ void uncaughtExceptionHandler(NSException *exception) {
 }
 
 - (void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions options))completionHandler {
-    completionHandler(UNNotificationPresentationOptionAlert | UNNotificationPresentationOptionSound);
+    MEGALogDebug(@"[Notification] will present notification %@", notification);
+    uint64_t chatId = [notification.request.content.userInfo[@"chatId"] unsignedLongLongValue];
+    uint64_t msgId =  [notification.request.content.userInfo[@"msgId"] unsignedLongLongValue];
+    MEGALogDebug(@"[Notification] chatId: %@ messageId: %@", [MEGASdk base64HandleForUserHandle:chatId], [MEGASdk base64HandleForUserHandle:msgId]);
+    if ([notification.request.trigger isKindOfClass:UNPushNotificationTrigger.class]) {
+        MOMessage *moMessage = [MEGAStore.shareInstance fetchMessageWithChatId:chatId messageId:msgId];
+        if (moMessage) {
+            [MEGAStore.shareInstance deleteMessage:moMessage];
+            completionHandler(UNNotificationPresentationOptionNone);
+        } else {
+            completionHandler(UNNotificationPresentationOptionAlert);
+        }
+    } else {
+        completionHandler(UNNotificationPresentationOptionAlert);
+    }    
 }
 
 #pragma mark - LaunchViewControllerDelegate
@@ -1490,7 +1539,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                     
                     [self.sslKeyPinningController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"openBrowser", @"Button title to allow the user open the default browser") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                         self.sslKeyPinningController = nil;
-                        NSURL *url = [NSURL URLWithString:@"https://www.mega.nz"];
+                        NSURL *url = [NSURL URLWithString:@"https://mega.nz"];
                         [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:NULL];
                     }]];
                     
@@ -1702,6 +1751,10 @@ void uncaughtExceptionHandler(NSException *exception) {
         [self.mainTBC setBadgeValueForChats];
     }
     
+    if (request.type == MEGAChatRequestTypeImportMessages) {
+        MEGALogDebug(@"Imported messages %lld", request.number);
+    }
+    
     MEGALogInfo(@"onChatRequestFinish request type: %td", request.type);
 }
 
@@ -1725,6 +1778,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 - (void)onChatConnectionStateUpdate:(MEGAChatSdk *)api chatId:(uint64_t)chatId newState:(int)newState {
     MEGALogInfo(@"onChatConnectionStateUpdate: %@, new state: %d", [MEGASdk base64HandleForUserHandle:chatId], newState);
+    
     if (self.chatRoom.chatId == chatId && newState == MEGAChatConnectionOnline) {
         [self performCall];
     }
