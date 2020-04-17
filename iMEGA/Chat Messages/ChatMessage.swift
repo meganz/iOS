@@ -46,7 +46,7 @@ extension ChatMessage: MessageType {
         } else if case .normal = message.type {
             if message.containsMEGALink() {
                 return .custom(message)
-            } else {
+            } else if message.content != nil && message.content.count > 0 {
                 return .text(message.content)
             }
         }

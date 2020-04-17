@@ -99,23 +99,21 @@ class ChatRichPreviewMediaCollectionViewCell: TextMessageCell, MEGARequestDelega
 open class ChatRichPreviewMediaCollectionViewSizeCalculator: TextMessageSizeCalculator {
     
     open override func messageContainerSize(for message: MessageType) -> CGSize {
-        let maxWidth = messageContainerMaxWidth(for: message)
         guard let chatMessage = message as? ChatMessage else {
             return .zero
         }
         
         let megaMessage = chatMessage.message
         let dummyMssage = ConcreteMessageType(sender: message.sender, messageId: message.messageId, sentDate: message.sentDate, kind: .text(megaMessage.content))
-
-        let containerSize = super.messageContainerSize(for: dummyMssage)
         
+        let containerSize = super.messageContainerSize(for: dummyMssage)
         switch message.kind {
         case .custom:
             if megaMessage.richNumber == nil {
                 return containerSize
             }
             
-            return CGSize(width: maxWidth, height: containerSize.height + 104)
+            return CGSize(width: containerSize.width, height: containerSize.height + 104)
         default:
             fatalError("messageContainerSize received unhandled MessageDataType: \(message.kind)")
         }
