@@ -1053,6 +1053,10 @@
 		B6E19B3A2178424600882F74 /* TransferSessionDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E19B392178424600882F74 /* TransferSessionDelegate.m */; };
 		B6E19B3D2180126500882F74 /* CameraUploadCompletionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E19B3C2180126500882F74 /* CameraUploadCompletionManager.m */; };
 		B6E6EF9422485A0300653311 /* CameraUploadNodeLoadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E6EF9322485A0300653311 /* CameraUploadNodeLoadOperation.m */; };
+		BF017D902448062F00FB4DFD /* AudioWavesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF017D8F2448062F00FB4DFD /* AudioWavesView.swift */; };
+		BF017D942448066100FB4DFD /* AudioWavesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF017D932448066100FB4DFD /* AudioWavesView.xib */; };
+		BF017D962448076200FB4DFD /* AudioWaveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF017D952448076200FB4DFD /* AudioWaveView.swift */; };
+		BF017D982448077C00FB4DFD /* AudioWaveView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF017D972448077C00FB4DFD /* AudioWaveView.xib */; };
 		BF06E3DE243191B000B30FB7 /* ChatTitleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF06E3DC243191B000B30FB7 /* ChatTitleView.xib */; };
 		BF06E3DF243191B000B30FB7 /* ChatTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF06E3DD243191B000B30FB7 /* ChatTitleView.swift */; };
 		BF09FF23243BDB770067DD77 /* MessageInputTextBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF09FF22243BDB770067DD77 /* MessageInputTextBackgroundView.swift */; };
@@ -1088,6 +1092,7 @@
 		BFB464122435820700FB90B9 /* ChatViewController+MessageLayoutDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB464112435820700FB90B9 /* ChatViewController+MessageLayoutDelegate.swift */; };
 		BFB464142435823400FB90B9 /* ChatViewController+MessagesDisplayDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB464132435823400FB90B9 /* ChatViewController+MessagesDisplayDelegate.swift */; };
 		BFB464162435825A00FB90B9 /* ChatViewController+MessagesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB464152435825A00FB90B9 /* ChatViewController+MessagesDataSource.swift */; };
+		BFC1795024491073004F35AB /* AudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC1794F24491073004F35AB /* AudioRecorder.swift */; };
 		BFD23CCE236255A5005D4A1E /* NicknameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD23CCD236255A5005D4A1E /* NicknameViewController.swift */; };
 		BFE54778231F0F27007FB8F6 /* UIViewController+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0BBEFD230627BE001FD542 /* UIViewController+MNZCategory.m */; };
 		BFE54779231F0F29007FB8F6 /* UIViewController+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0BBEFD230627BE001FD542 /* UIViewController+MNZCategory.m */; };
@@ -2520,6 +2525,10 @@
 		B6E6EF9222485A0300653311 /* CameraUploadNodeLoadOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraUploadNodeLoadOperation.h; sourceTree = "<group>"; };
 		B6E6EF9322485A0300653311 /* CameraUploadNodeLoadOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CameraUploadNodeLoadOperation.m; sourceTree = "<group>"; };
 		BF000566235E62A5005F23B6 /* MEGACD 4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "MEGACD 4.xcdatamodel"; sourceTree = "<group>"; };
+		BF017D8F2448062F00FB4DFD /* AudioWavesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioWavesView.swift; sourceTree = "<group>"; };
+		BF017D932448066100FB4DFD /* AudioWavesView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AudioWavesView.xib; sourceTree = "<group>"; };
+		BF017D952448076200FB4DFD /* AudioWaveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioWaveView.swift; sourceTree = "<group>"; };
+		BF017D972448077C00FB4DFD /* AudioWaveView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AudioWaveView.xib; sourceTree = "<group>"; };
 		BF06E3DC243191B000B30FB7 /* ChatTitleView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatTitleView.xib; sourceTree = "<group>"; };
 		BF06E3DD243191B000B30FB7 /* ChatTitleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatTitleView.swift; sourceTree = "<group>"; };
 		BF06E3E1243192EB00B30FB7 /* MessageKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MessageKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2557,6 +2566,7 @@
 		BFB464112435820700FB90B9 /* ChatViewController+MessageLayoutDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatViewController+MessageLayoutDelegate.swift"; sourceTree = "<group>"; };
 		BFB464132435823400FB90B9 /* ChatViewController+MessagesDisplayDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatViewController+MessagesDisplayDelegate.swift"; sourceTree = "<group>"; };
 		BFB464152435825A00FB90B9 /* ChatViewController+MessagesDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatViewController+MessagesDataSource.swift"; sourceTree = "<group>"; };
+		BFC1794F24491073004F35AB /* AudioRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorder.swift; sourceTree = "<group>"; };
 		BFD23CCD236255A5005D4A1E /* NicknameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewController.swift; sourceTree = "<group>"; };
 		BFE6DBF7242D879D00E2E5B4 /* MessageKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MessageKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFE6DBFB242DBA4A00E2E5B4 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
@@ -5386,6 +5396,11 @@
 				BF33EF8324457A0700CD35AC /* ChatMessageAndAudioInputBar.swift */,
 				BF33EF8B2447E6DC00CD35AC /* EnlargementView.swift */,
 				BF33EF8F2447E70200CD35AC /* CondensationView.swift */,
+				BF017D952448076200FB4DFD /* AudioWaveView.swift */,
+				BF017D972448077C00FB4DFD /* AudioWaveView.xib */,
+				BF017D8F2448062F00FB4DFD /* AudioWavesView.swift */,
+				BF017D932448066100FB4DFD /* AudioWavesView.xib */,
+				BFC1794F24491073004F35AB /* AudioRecorder.swift */,
 				BF33EF812445401800CD35AC /* AudioRecordingInputBar.swift */,
 				BF33EF7C24453FFD00CD35AC /* AudioRecordingInputBar.xib */,
 				BF33EF7324451A4700CD35AC /* TapAndHoldMessageView.swift */,
@@ -5860,6 +5875,7 @@
 				BF1589202435EF85007AF9EC /* ChatViewCallCollectionCell.xib in Resources */,
 				A8F2629A1FA8F7C3000B2768 /* incoming_voice_video_call.mp3 in Resources */,
 				E8D36F791AD677C6006D4D40 /* Transfers.storyboard in Resources */,
+				BF017D942448066100FB4DFD /* AudioWavesView.xib in Resources */,
 				A82E5BF41F3470B5003C149C /* Spotlight_file.png in Resources */,
 				832E102B202B0A3900BDD30F /* NodeActionHeaderCollectionReusableView.xib in Resources */,
 				777615B12175D88C00A7796D /* InputView.xib in Resources */,
@@ -5928,6 +5944,7 @@
 				417279541DB663FA001AC818 /* JSQMessagesCollectionViewCellOutgoing.xib in Resources */,
 				5B22F97C1F8374C500D2B156 /* VENToken.xib in Resources */,
 				5BE484BF215BB3CD003B291D /* ChatSettings.storyboard in Resources */,
+				BF017D982448077C00FB4DFD /* AudioWaveView.xib in Resources */,
 				417279591DB663FA001AC818 /* JSQMessagesLoadEarlierHeaderView.xib in Resources */,
 				E8C289F71BF5FCDD00F7A034 /* SF-UI-Text-Regular.otf in Resources */,
 				832E1026202B09AE00BDD30F /* NodeActionCollectionViewCell.xib in Resources */,
@@ -6197,6 +6214,7 @@
 				B6CE0D0F221FDFCB00E6BD41 /* CameraUploadConcurrentCountCalculator.m in Sources */,
 				B6A4A11A21A404DC007E7EEC /* NSError+CameraUpload.m in Sources */,
 				B658D3B8218F9357004C0D64 /* PhotoUploadOperation.m in Sources */,
+				BF017D902448062F00FB4DFD /* AudioWavesView.swift in Sources */,
 				9419B6C01F20D1D700FEBE31 /* MEGAIndexer.m in Sources */,
 				B6B73E6E22C5713700ACAD48 /* SMSCountriesTableViewController.swift in Sources */,
 				832E1025202B09AE00BDD30F /* NodeActionCollectionViewCell.m in Sources */,
@@ -6644,6 +6662,7 @@
 				5B20B01120E6300300511C0F /* MEGAGenericRequestDelegate.m in Sources */,
 				837C4F8A235DFFBA00FFE177 /* VerifyEmailViewController.swift in Sources */,
 				4172794E1DB663FA001AC818 /* JSQMessagesCellTextView.m in Sources */,
+				BF017D962448076200FB4DFD /* AudioWaveView.swift in Sources */,
 				A86B9F5A2316D6AB00F35E7A /* FLEXFieldEditorView.m in Sources */,
 				B61F01C6220D37A400F4A917 /* DiskSpaceDetector.m in Sources */,
 				4180727A1AA5BBA00078D950 /* MEGAReachabilityManager.m in Sources */,
@@ -6677,6 +6696,7 @@
 				411E712F1D461E1D00DD7EF8 /* MEGACollectionViewFlowLayout.m in Sources */,
 				4131997B1BD7BD5D002CD6EA /* DTTimePeriodCollection.m in Sources */,
 				5B0670D321F5DB4500AD9F99 /* RecentsViewController.m in Sources */,
+				BFC1795024491073004F35AB /* AudioRecorder.swift in Sources */,
 				A86B9F2A2316D6AB00F35E7A /* FLEXArrayExplorerViewController.m in Sources */,
 				946BD1331FEBBE4E00B76785 /* MEGAToolbarSelectedAssets.m in Sources */,
 				A841E64120CE6681005E1D1B /* MEGACallManagementMediaItem.m in Sources */,
