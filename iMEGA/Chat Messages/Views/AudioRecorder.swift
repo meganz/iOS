@@ -85,6 +85,9 @@ class AudioRecorder {
     }
     
     @objc func update() {
+        
+        var normalizedValue: Float = 0.0
+
         guard let handler = updateHandler else {
             return
         }
@@ -97,10 +100,18 @@ class AudioRecorder {
         let timeString = NSString.mnz_string(fromTimeInterval: timeDifference)
         
         recorder.updateMeters()
-        let peakPower = recorder.peakPower(forChannel: 0)
-        let lowPassResults = pow(10, peakPower * 0.05)
-        let level = min(Int(round(lowPassResults * 100.0)) + 1, 100)
-                
-        handler(timeString, level)
+        let decibels = recorder.averagePower(forChannel: 0)
+        normalizedValue = min(normalizedPower(decibels) * 100 + 1, 100)
+
+        handler(timeString, Int(normalizedValue))
     }
+    
+    func normalizedPower(_ decibels: Float) -> Float {
+        if (decibels < -60.0 || decibels == 0.0) {
+            return 0.0
+        }
+        let temp = (pow(10.0, 0.05 * decibels) - pow(10.0, 0.05 * -60.0))
+        return max(0, powf(temp * (1.0 / (1.0 - pow(10.0, 0.05 * -60.0))), 1.0 / 2.0))
+    }
+    
 }
