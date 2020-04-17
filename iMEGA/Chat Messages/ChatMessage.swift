@@ -49,6 +49,8 @@ extension ChatMessage: MessageType {
             } else if message.content != nil && message.content.count > 0 {
                 return .text(message.content)
             }
+        } else if case .voiceClip = message.type {
+            return .custom(message)
         }
         
         return .text(message.type.description)

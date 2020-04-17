@@ -94,6 +94,10 @@ class ChatViewController: MessagesViewController {
             let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatRichPreviewMediaCollectionViewCell.reuseIdentifier, for: indexPath) as! ChatRichPreviewMediaCollectionViewCell
             cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
             return cell
+        } else if chatMessage.message.type == .voiceClip {
+            let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatVoiceClipCollectionViewCell.reuseIdentifier, for: indexPath) as! ChatVoiceClipCollectionViewCell
+            cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
+            return cell
         } else {
             let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatViewCallCollectionCell.reuseIdentifier, for: indexPath) as! ChatViewCallCollectionCell
             cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
@@ -200,6 +204,8 @@ class ChatViewController: MessagesViewController {
                                          forCellWithReuseIdentifier: ChatMediaCollectionViewCell.reuseIdentifier)
         messagesCollectionView.register(ChatRichPreviewMediaCollectionViewCell.self,
                                                forCellWithReuseIdentifier: ChatRichPreviewMediaCollectionViewCell.reuseIdentifier)
+        messagesCollectionView.register(ChatVoiceClipCollectionViewCell.self,
+                                                 forCellWithReuseIdentifier: ChatVoiceClipCollectionViewCell.reuseIdentifier)
     }
 
     private func update() {
