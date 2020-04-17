@@ -138,6 +138,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 @property (nonatomic) BOOL chatLinkBeenClosed;
 
 @property (nonatomic) BOOL loadingState;
+@property (nonatomic) BOOL awaitingLoad;
 
 @property (nonatomic) NSString *lastGreenString;
 
@@ -578,6 +579,10 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 }
 
 - (void)loadMessages {
+    if (self.awaitingLoad) {
+        MEGALogWarning(@"[Chat Links Scalability] avoid loadMessages because of an ongoing load");
+        return;
+    }
     NSUInteger messagesToLoad = 32;
     if (self.isFirstLoad && (self.unreadMessages > 32 || self.unreadMessages < 0)) {
         messagesToLoad = ABS(self.unreadMessages);
@@ -591,14 +596,17 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             
         case 0:
             MEGALogDebug(@"loadMessagesForChat: there's no more history available (not even in the server)");
+            self.awaitingLoad = YES;
             break;
             
         case 1:
             MEGALogDebug(@"loadMessagesForChat: messages will be fetched locally");
+            self.awaitingLoad = YES;
             break;
             
         case 2:
             MEGALogDebug(@"loadMessagesForChat: messages will be requested to the server");
+            self.awaitingLoad = YES;
             break;
             
         default:
@@ -673,8 +681,8 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             if (self.openMessageHeaderView) {
                 self.openMessageHeaderView.onlineStatusView.backgroundColor = self.navigationStatusView.backgroundColor;
                 if (![chatRoomState isEqualToString:participantsNames]) {
-                self.openMessageHeaderView.onlineStatusLabel.text = chatRoomState;
-            }
+                    self.openMessageHeaderView.onlineStatusLabel.text = chatRoomState;
+                }
                 self.openMessageHeaderView.conversationWithLabel.text = participantsNames;
             }
         }
@@ -3044,6 +3052,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             }
         }
     } else {
+        self.awaitingLoad = NO;
         if (!self.loadMessagesLater) {
             [SVProgressHUD dismiss];
             self.loadingState = NO;
@@ -3224,13 +3233,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             [self customNavigationBarLabel];
             [self updateToolbarPlaceHolder];
             
-            if (self.collectionView.indexPathsForVisibleItems.count > 0) {
-                [self.collectionView performBatchUpdates:^{
-                    [self.collectionView.collectionViewLayout invalidateLayoutWithContext:[JSQMessagesCollectionViewFlowLayoutInvalidationContext context]];
-                    [self.collectionView reloadItemsAtIndexPaths:self.collectionView.indexPathsForVisibleItems];
-                } completion:nil];
-            }
-            
             break;
         }
             
@@ -3307,6 +3309,8 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         [self updateNavigationBarButtonsState];
 
         if (newState == MEGAChatConnectionOnline) {
+            self.chatRoom = [api chatRoomForChatId:self.chatRoom.chatId];
+            [self customNavigationBarLabel];
             [self checkIfChatHasActiveCall];
             if (self.loadMessagesLater) {
                 self.loadMessagesLater = NO;
