@@ -1,0 +1,33 @@
+import UIKit
+
+class AudioWaveView: UIView {
+
+    @IBOutlet weak var proportionalHeightConstraint: NSLayoutConstraint!
+    var proportionalDefaultMultiplier: CGFloat!
+    
+    @IBOutlet weak var representationView: UIView!
+
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        proportionalDefaultMultiplier = proportionalHeightConstraint.multiplier
+    }
+
+    /// The value of level can be between 1 and 100
+    var level: Int = 1  {
+        didSet {
+            guard level >= 1 && level <= 100 else {
+                fatalError("AudioWaveView: level range should be from 1 to 100 including both")
+            }
+            
+            let range: CGFloat = 1.0 - proportionalDefaultMultiplier
+            let block: CGFloat = range / 99.0
+            let multiplier = proportionalDefaultMultiplier + (block * CGFloat(level))
+            
+            removeConstraint(proportionalHeightConstraint)
+            proportionalHeightConstraint = representationView.heightAnchor.constraint(equalTo: heightAnchor,
+                                                                                      multiplier: multiplier)
+            proportionalHeightConstraint.isActive = true
+        }
+    }
+}

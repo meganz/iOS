@@ -5,6 +5,31 @@ class AudioRecordingInputBar: UIView {
     @IBOutlet weak var trashView: EnlargementView!
     @IBOutlet weak var lockView: EnlargementView!
     @IBOutlet weak var voiceView: CondensationView!
+    @IBOutlet weak var audioWavesholderView: UIView!
+    @IBOutlet weak var recordTimeLabel: UILabel!
+
+    var audioWavesView: AudioWavesView!
+    
+    lazy var audioRecorder = AudioRecorder()
+    var player: AVAudioPlayer?
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        audioWavesView = AudioWavesView.instanceFromNib
+        audioWavesholderView.addSubview(audioWavesView)
+        audioWavesView.autoPinEdgesToSuperviewEdges()
+        
+        try? audioRecorder.start()
+        audioRecorder.updateHandler = { [weak self] timeString, level in
+            guard let `self` = self else {
+                return
+            }
+            
+            self.recordTimeLabel.text = timeString
+            self.audioWavesView.updateAudioView(withLevel: level)
+        }
+    }
 
     override var intrinsicContentSize: CGSize {
         var size = super.intrinsicContentSize
