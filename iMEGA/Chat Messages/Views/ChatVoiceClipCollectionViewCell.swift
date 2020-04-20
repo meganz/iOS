@@ -8,7 +8,7 @@ class ChatVoiceClipCollectionViewCell: MessageContentCell {
     }()
     
     open var waveView: UIImageView = {
-        let waveView = UIImageView(image: UIImage(named: "playButton"))
+        let waveView = UIImageView(image: UIImage(named: "voiceWave"))
         waveView.frame = CGRect(x: 0, y: 0, width: 55, height: 33)
         return waveView
     }()
@@ -30,7 +30,7 @@ class ChatVoiceClipCollectionViewCell: MessageContentCell {
         durationLabel.autoPinEdge(.trailing, to: .leading, of: waveView, withOffset: 10)
         durationLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
         
-        waveView.autoPinEdge(toSuperviewEdge: .trailing)
+        waveView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 10)
         waveView.autoAlignAxis(toSuperviewAxis: .horizontal)
         waveView.autoSetDimensions(to: CGSize(width: 55, height: 33))
 
@@ -73,6 +73,6 @@ class ChatVoiceClipCollectionViewCell: MessageContentCell {
 
 open class ChatVoiceClipCollectionViewSizeCalculator: MessageSizeCalculator {
     open override func messageContainerSize(for message: MessageType) -> CGSize {
-        return CGSize(width: 200, height: 50)
+        return CGSize(width: 170, height: 50)
     }
 }
