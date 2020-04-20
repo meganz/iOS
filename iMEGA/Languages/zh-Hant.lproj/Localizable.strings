@@ -523,7 +523,7 @@
 /* Title of the Contacts section */
 "contactsTitle"="聯絡人";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
-"oneFolderShared"="1個檔案夾";
+"oneFolderShared"="1個資料夾";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
 "foldersShared"="%d 個資料夾";
 /* Item menu option to add a contact writting his/her email */
