@@ -85,12 +85,9 @@ class AudioRecorder: NSObject {
     }
     
     @objc func update() {
-        guard let handler = updateHandler else {
-            return
-        }
-        
-        guard let recorder = recorder else {
-            fatalError("AudioRecorder: recorder cannot be nil")
+        guard let handler = updateHandler,
+            let recorder = recorder else {
+                return
         }
         
         let timeDifference = Date().timeIntervalSince1970 - recordStartDate.timeIntervalSince1970
@@ -99,6 +96,8 @@ class AudioRecorder: NSObject {
         recorder.updateMeters()
         let decibels = recorder.averagePower(forChannel: 0)
         let normalizedValue: Float = min((meterTable[decibels] * 100.0) + 1, 100)
+
         handler(timeString, Int(normalizedValue))
     }
+    
 }
