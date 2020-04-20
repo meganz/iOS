@@ -23,7 +23,15 @@ class ChatLocationCollectionViewCell: MessageContentCell {
     
     override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
         super.configure(with: message, at: indexPath, and: messagesCollectionView)
-
+        guard let chatMessage = message as? ChatMessage else {
+            return
+        }
+        
+        let megaMessage = chatMessage.message
+        let imageData = Data(base64Encoded: megaMessage.containsMeta.geolocation.image!, options: .ignoreUnknownCharacters)
+        locationView.imageView.image = UIImage(data: imageData!)
+        locationView.titleLabel.text = AMLocalizedString("Pinned Location", "Text shown in location-type messages")
+        locationView.subtitleLabel.text = NSString.mnz_convertCoordinatesLatitude(megaMessage.containsMeta.geolocation.latitude, longitude: megaMessage.containsMeta.geolocation.longitude)
     }
 }
 
