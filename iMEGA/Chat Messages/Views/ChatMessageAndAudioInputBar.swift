@@ -3,11 +3,13 @@
 import UIKit
 import simd
 
-protocol ChatMessageAndAudioInputBarDelegate: MessageInputBarDelegate { }
+protocol ChatMessageAndAudioInputBarDelegate: MessageInputBarDelegate {
+    func tappedSendAudio(atPath path: String)
+}
 
 class ChatMessageAndAudioInputBar: UIView {
     let messageInputBar = MessageInputBar.instanceFromNib
-    lazy var audioRecordingInputBar = AudioRecordingInputBar.instanceFromNib
+    var audioRecordingInputBar: AudioRecordingInputBar!
     
     lazy var longPressGesture: UILongPressGestureRecognizer = {
         let recognizer = UILongPressGestureRecognizer(target: self, action:#selector(longPress))
@@ -50,6 +52,19 @@ class ChatMessageAndAudioInputBar: UIView {
         messageInputBar.autoPinEdgesToSuperviewEdges()
     }
     
+    private func voiceInputBarToTextInputSwitch() {
+        messageInputBar.alpha = 0.0
+        addMessageInputBar()
+                
+        UIView.animate(withDuration: 0.4, animations: {
+            self.audioRecordingInputBar.alpha = 0.0
+            self.messageInputBar.alpha = 1.0
+        }) { _ in
+            self.audioRecordingInputBar.removeFromSuperview()
+            self.audioRecordingInputBar = nil
+        }
+    }
+    
     @objc func longPress(_ longPressGesture: UILongPressGestureRecognizer) {
         guard longPressGesture.state == .began else {
             return
@@ -58,6 +73,8 @@ class ChatMessageAndAudioInputBar: UIView {
         let loc = longPressGesture.location(in: longPressGesture.view)
         if messageInputBar.superview != nil
             && messageInputBar.isMicButtonPresent(atLocation: loc) {
+            
+            audioRecordingInputBar = AudioRecordingInputBar.instanceFromNib
             
             audioRecordingInputBar.alpha = 0.0
             addSubview(audioRecordingInputBar)
@@ -72,7 +89,6 @@ class ChatMessageAndAudioInputBar: UIView {
                 self.messageInputBar.removeFromSuperview()
                 self.messageInputBar.alpha = 1.0
             }
-
         }
     }
     
@@ -80,11 +96,15 @@ class ChatMessageAndAudioInputBar: UIView {
     
     @objc func pan(_ panGesture: UIPanGestureRecognizer) {
         guard let gestureView = panGesture.view,
-            audioRecordingInputBar.superview != nil else {
+            audioRecordingInputBar != nil,
+            audioRecordingInputBar.superview != nil,
+            audioRecordingInputBar.locked == false else {
             return
         }
 
         let translation = panGesture.translation(in: gestureView).simD2
+        let trashTranslationRequiredInTotal =  0.6 * bounds.height
+        let lockTranslationRequiredInTotal = 0.4 * bounds.height
 
         switch panGesture.state {
         case .began:
@@ -95,13 +115,11 @@ class ChatMessageAndAudioInputBar: UIView {
 
                 if difference.point.x < difference.point.y {
                     let progress = abs(difference.point.x)
-                    let progressComplete = 0.6 * bounds.width
-                    let test = min(1.0, progress / progressComplete)
+                    let test = min(1.0, progress / trashTranslationRequiredInTotal)
                     audioRecordingInputBar.moveToTrash(test)
                 } else {
                     let progress = abs(difference.point.y)
-                    let progressComplete = 0.4 * bounds.height
-                    let test = min(1.0, progress / progressComplete)
+                    let test = min(1.0, progress / lockTranslationRequiredInTotal)
                     audioRecordingInputBar.lock(test)
                 }
             }
@@ -110,11 +128,27 @@ class ChatMessageAndAudioInputBar: UIView {
                 let difference = translation - initialValue
 
                 if difference.point.x < difference.point.y
-                    && abs(difference.point.x) > (0.15 * bounds.width) {
+                    && abs(difference.point.x) >= (trashTranslationRequiredInTotal * 0.75) {
                     print("move to trash")
-                } else if difference.point.y < difference.point.x {
-                    print("lock voice")
+                    audioRecordingInputBar.cancelRecording()
+                    voiceInputBarToTextInputSwitch()
+                } else if difference.point.y < difference.point.x
+                    && abs(difference.point.y) >= (lockTranslationRequiredInTotal * 0.75) {
+                    print("lock audio")
+                    audioRecordingInputBar.lock { [weak self] in
+                        guard let `self` = self else {
+                            return
+                        }
+                        
+                        if let clipPath = self.audioRecordingInputBar.stopRecording() {
+                            self.delegate?.tappedSendAudio(atPath: clipPath)
+                        }
+                        
+                        self.voiceInputBarToTextInputSwitch()
+                    }
                 } else {
+                    audioRecordingInputBar.cancelRecording()
+                    voiceInputBarToTextInputSwitch()
                 }
             }
         default:

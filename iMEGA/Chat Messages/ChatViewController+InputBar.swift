@@ -28,6 +28,10 @@ extension ChatViewController: ChatMessageAndAudioInputBarDelegate {
         print("Send button tapped with text \(text)")
     }
     
+    func tappedSendAudio(atPath path: String) {
+        print("send audio at path \(path)")
+    }
+    
     func tappedVoiceButton() {
         let myViews = view.subviews.filter { $0 is TapAndHoldMessageView }
         guard myViews.count == 0  else {
