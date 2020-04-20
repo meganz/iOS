@@ -3,7 +3,8 @@
 class EnlargementView: UIView {
     @IBOutlet weak var nonSelectionView: UIView!
     @IBOutlet weak var selectionView: UIView!
-    
+    @IBOutlet weak var imageView: UIImageView!
+
     @IBOutlet weak var widthConstraint: NSLayoutConstraint!
     @IBOutlet weak var heightConstraint: NSLayoutConstraint!
     @IBOutlet weak var placeholderConstraint: NSLayoutConstraint!
@@ -12,6 +13,17 @@ class EnlargementView: UIView {
     var originalHeight: CGFloat!
     
     var originalPlaceholderValue: CGFloat!
+    
+    var tapHandler: (() -> Void)? {
+        didSet {
+            removeAllTapGestures()
+            
+            guard tapHandler != nil else {
+                return
+            }
+            addTapGesture()
+        }
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -53,7 +65,31 @@ class EnlargementView: UIView {
         
         nonSelectionView.alpha = 1.0 - progress
         selectionView.alpha = progress
-        
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
         layer.cornerRadius = width / 2.0
+    }
+    
+    
+    private func removeAllTapGestures() {
+        if let tapGestures = gestureRecognizers?.filter({ $0 is UITapGestureRecognizer }) {
+            tapGestures.forEach { removeGestureRecognizer($0) }
+        }
+    }
+    
+    private func addTapGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(viewTapped(_:)))
+        addGestureRecognizer(tapGesture)
+    }
+    
+    @objc func viewTapped(_ gesture: UITapGestureRecognizer) {
+        guard let handler = tapHandler,
+            gesture.state == .ended  else {
+            return
+        }
+        
+        handler()
     }
 }

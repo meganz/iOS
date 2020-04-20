@@ -20,9 +20,22 @@ class AudioWavesView: UIView {
             return
         }
         
-        stackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
-        (0..<numberOfViews).forEach { _ in
-            addAudioView(withLevel: 1)
+        if stackView.arrangedSubviews.count < numberOfViews {
+            let balance = numberOfViews - stackView.arrangedSubviews.count
+            var level = 1
+            
+            if stackView.arrangedSubviews.count > 0,
+                let audioWaveView = stackView.arrangedSubviews[stackView.arrangedSubviews.count - 1] as? AudioWaveView {
+                level = audioWaveView.level
+            }
+            
+            (0..<balance).forEach { _ in
+                addAudioView(withLevel: level)
+            }
+        } else {
+            let balance = stackView.arrangedSubviews.count - numberOfViews
+            let viewsToRemove = stackView.arrangedSubviews[0..<balance]
+            viewsToRemove.forEach({ $0.removeFromSuperview() })
         }
     }
     

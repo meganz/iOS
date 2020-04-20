@@ -1082,6 +1082,7 @@
 		BF33EF8C2447E6DD00CD35AC /* EnlargementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF33EF8B2447E6DC00CD35AC /* EnlargementView.swift */; };
 		BF33EF902447E70200CD35AC /* CondensationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF33EF8F2447E70200CD35AC /* CondensationView.swift */; };
 		BF69E5172374F3720031913D /* AppDelegate+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF69E5162374F3720031913D /* AppDelegate+Additions.swift */; };
+		BF7EBD1C244D354A0015255F /* MeterTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7EBD1B244D354A0015255F /* MeterTable.swift */; };
 		BFB463DD2432F2E900FB90B9 /* ChatRoomDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB463DC2432F2E900FB90B9 /* ChatRoomDelegate.swift */; };
 		BFB463E52433390600FB90B9 /* MEGAUser+Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB463E42433390600FB90B9 /* MEGAUser+Chat.swift */; };
 		BFB463E92433394500FB90B9 /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB463E82433394500FB90B9 /* ChatMessage.swift */; };
@@ -2559,6 +2560,7 @@
 		BF33EF8B2447E6DC00CD35AC /* EnlargementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnlargementView.swift; sourceTree = "<group>"; };
 		BF33EF8F2447E70200CD35AC /* CondensationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CondensationView.swift; sourceTree = "<group>"; };
 		BF69E5162374F3720031913D /* AppDelegate+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Additions.swift"; sourceTree = "<group>"; };
+		BF7EBD1B244D354A0015255F /* MeterTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeterTable.swift; sourceTree = "<group>"; };
 		BFB463DC2432F2E900FB90B9 /* ChatRoomDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomDelegate.swift; sourceTree = "<group>"; };
 		BFB463E42433390600FB90B9 /* MEGAUser+Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAUser+Chat.swift"; sourceTree = "<group>"; };
 		BFB463E82433394500FB90B9 /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
@@ -5402,7 +5404,6 @@
 				BFB463FA243456D900FB90B9 /* ChatViewIntroductionHeaderView.xib */,
 				BF06E3DD243191B000B30FB7 /* ChatTitleView.swift */,
 				BF06E3DC243191B000B30FB7 /* ChatTitleView.xib */,
-				BF33EF8324457A0700CD35AC /* ChatMessageAndAudioInputBar.swift */,
 				BF33EF8B2447E6DC00CD35AC /* EnlargementView.swift */,
 				BF33EF8F2447E70200CD35AC /* CondensationView.swift */,
 				BF017D952448076200FB4DFD /* AudioWaveView.swift */,
@@ -5410,8 +5411,10 @@
 				BF017D8F2448062F00FB4DFD /* AudioWavesView.swift */,
 				BF017D932448066100FB4DFD /* AudioWavesView.xib */,
 				BFC1794F24491073004F35AB /* AudioRecorder.swift */,
+				BF7EBD1B244D354A0015255F /* MeterTable.swift */,
 				BF33EF812445401800CD35AC /* AudioRecordingInputBar.swift */,
 				BF33EF7C24453FFD00CD35AC /* AudioRecordingInputBar.xib */,
+				BF33EF8324457A0700CD35AC /* ChatMessageAndAudioInputBar.swift */,
 				BF33EF7324451A4700CD35AC /* TapAndHoldMessageView.swift */,
 				BF33EF7824451A6200CD35AC /* TapAndHoldMessageView.xib */,
 				BF09FF22243BDB770067DD77 /* MessageInputTextBackgroundView.swift */,
@@ -6561,6 +6564,7 @@
 				5B0CD42A2188D71100F97A2C /* UITextField+MNZCategory.m in Sources */,
 				B672EDB3221CD96000DE6684 /* CameraUploadOperation+Utils.m in Sources */,
 				5B323F231F5834E100C5F557 /* ReferralBonusesTableViewController.m in Sources */,
+				BF7EBD1C244D354A0015255F /* MeterTable.swift in Sources */,
 				BF1589222435F3E7007AF9EC /* ChatViewMessagesFlowLayout.swift in Sources */,
 				A86B9F292316D6AB00F35E7A /* FLEXObjectExplorerFactory.m in Sources */,
 				41EAAE471D06B49400622FAF /* NSDateFormatter+CTAssetsPickerController.m in Sources */,

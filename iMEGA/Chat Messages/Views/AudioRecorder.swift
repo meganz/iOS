@@ -1,6 +1,6 @@
 
 
-class AudioRecorder {
+class AudioRecorder: NSObject {
 
     enum RecordError: Error {
         case activeCall
@@ -10,6 +10,7 @@ class AudioRecorder {
     private var recorder: AVAudioRecorder?
     private var displayLink: CADisplayLink?
     private var recordStartDate: Date!
+    private var meterTable = MeterTable()
 
     private var isCallActive: Bool {
         return MEGASdkManager.sharedMEGAChatSdk()!.mnz_existsActiveCall
@@ -80,7 +81,6 @@ class AudioRecorder {
         try AVAudioSession.sharedInstance().setMode(.voiceChat)
         try AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
 
-        UINotificationFeedbackGenerator().notificationOccurred(.success)
         return recorder.url.path
     }
     
@@ -97,10 +97,8 @@ class AudioRecorder {
         let timeString = NSString.mnz_string(fromTimeInterval: timeDifference)
         
         recorder.updateMeters()
-        let peakPower = recorder.peakPower(forChannel: 0)
-        let lowPassResults = pow(10, peakPower * 0.05)
-        let level = min(Int(round(lowPassResults * 100.0)) + 1, 100)
-                
-        handler(timeString, level)
+        let decibels = recorder.averagePower(forChannel: 0)
+        let normalizedValue: Float = min((meterTable[decibels] * 100.0) + 1, 100)
+        handler(timeString, Int(normalizedValue))
     }
 }
