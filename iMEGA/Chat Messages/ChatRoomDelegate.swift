@@ -11,6 +11,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
     weak var messagesCollectionView: MessagesCollectionView!
     var messages: [ChatMessage] = []
     var isChatRoomOpen: Bool = false
+    var historyMessages: [ChatMessage] = []
     
     var isFullChatHistoryLoaded: Bool {
         return MEGASdkManager.sharedMEGAChatSdk()!.isFullHistoryLoaded(forChat: chatRoom.chatId)
@@ -32,13 +33,32 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
     
     func onMessageLoaded(_ api: MEGAChatSdk!, message: MEGAChatMessage!) {
         MEGALogInfo("ChatRoomDelegate: onMessageLoaded")
-
+        
+        if isFullChatHistoryLoaded {
+            messagesCollectionView.refreshControl = nil
+        }
+        
         if let chatMessage = message {
-            messages.append(ChatMessage(message: chatMessage, chatRoom: chatRoom))
+            if !chatMessage.isDeleted {
+                if chatMessage.status == .sending || chatMessage.status == .sendingManual {
+                    historyMessages.append(ChatMessage(message: chatMessage, chatRoom: chatRoom))
+                } else {
+                    historyMessages.insert(ChatMessage(message: chatMessage, chatRoom: chatRoom), at: 0)
+                }
+            }
         } else {
-            messages = messages.reversed()
-            messagesCollectionView.reloadData()
-            messagesCollectionView.scrollToBottom()
+            if messages.count == 0 {
+                messages = historyMessages
+                historyMessages.removeAll()
+                messagesCollectionView.reloadData()
+                messagesCollectionView.scrollToBottom()
+                return
+            }
+            
+            messages = historyMessages + messages
+            historyMessages.removeAll()
+            messagesCollectionView.reloadDataAndKeepOffset()
+            messagesCollectionView.refreshControl?.endRefreshing()
         }
     }
     

@@ -14,7 +14,12 @@ class ChatViewController: MessagesViewController {
     @objc var publicChatLink: URL?
     @objc var publicChatWithLinkCreated: Bool = false
     var chatMessageAndAudioInputBar: ChatMessageAndAudioInputBar!
-
+    private(set) lazy var refreshControl: UIRefreshControl = {
+         let control = UIRefreshControl()
+         control.addTarget(self, action: #selector(loadMoreMessages), for: .valueChanged)
+         return control
+     }()
+    
     var messages: [ChatMessage] {
         return chatRoomDelegate.messages
     }
@@ -197,6 +202,8 @@ class ChatViewController: MessagesViewController {
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messagesLayoutDelegate = self
         messagesCollectionView.messagesDisplayDelegate = self
+        
+        messagesCollectionView.refreshControl = refreshControl
     }
 
     private func registerCustomCells() {
@@ -227,6 +234,11 @@ class ChatViewController: MessagesViewController {
             layout.setMessageOutgoingMessageTopLabelAlignment(LabelAlignment(textAlignment: .right, textInsets:  UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 12)))
 
         }
+    }
+    
+    @objc func loadMoreMessages() {
+        
+        chatRoomDelegate.loadMoreMessages()
     }
 
     // MARK: - Bar Button actions
