@@ -6,7 +6,7 @@ class ChatViewMessagesFlowLayout: MessagesCollectionViewFlowLayout {
     lazy var chatMediaCollectionViewSizeCalculator = ChatMediaCollectionViewSizeCalculator(layout: self)
     lazy var chatRichPreviewMediaCollectionViewSizeCalculator = ChatRichPreviewMediaCollectionViewSizeCalculator(layout: self)
     lazy var chatVoiceClipCollectionViewSizeCalculator = ChatVoiceClipCollectionViewSizeCalculator(layout: self)
-  
+    lazy var chatlocationCollectionViewSizeCalculator = ChatlocationCollectionViewSizeCalculator(layout: self)
     override func cellSizeCalculatorForItem(at indexPath: IndexPath) -> CellSizeCalculator {
         let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
 
@@ -33,7 +33,8 @@ class ChatViewMessagesFlowLayout: MessagesCollectionViewFlowLayout {
                 }
                 case .voiceClip:
                     return chatVoiceClipCollectionViewSizeCalculator
-                
+            case .containsMeta:
+                return chatlocationCollectionViewSizeCalculator
             default:
                 return super.cellSizeCalculatorForItem(at: indexPath)
             }
@@ -48,7 +49,8 @@ class ChatViewMessagesFlowLayout: MessagesCollectionViewFlowLayout {
             chatViewCallCollectionCellCalculator,
             chatMediaCollectionViewSizeCalculator,
             chatRichPreviewMediaCollectionViewSizeCalculator,
-            chatVoiceClipCollectionViewSizeCalculator
+            chatVoiceClipCollectionViewSizeCalculator,
+            chatlocationCollectionViewSizeCalculator
         ])
         return calculators
     }
