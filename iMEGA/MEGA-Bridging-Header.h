@@ -31,6 +31,7 @@
 #import "MEGAContactLinkCreateRequestDelegate.h"
 #import "MEGAGetPreviewRequestDelegate.h"
 #import "MEGAGetPublicNodeRequestDelegate.h"
+#import "MEGAStartDownloadTransferDelegate.h"
 #import "MEGAConstants.h"
 #import "MEGAGenericRequestDelegate.h"
 #import "MEGAInviteContactRequestDelegate.h"
