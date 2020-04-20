@@ -1007,6 +1007,10 @@
     if (![currentlySelected isEqualToString:shouldBeSelected]) {
         [MEGASdkManager.sharedMEGAChatSdk setChatVideoInDevices:shouldBeSelected];
     }
+
+    NSUInteger index = [self.peersInCall indexOfObject:self.localPeer];
+     GroupCallCollectionViewCell *cell = (GroupCallCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:index inSection:0]];
+    [cell localVideoMirror:!self.switchCameraButton.selected];
 }
 
 #pragma mark - MEGAChatCallDelegate

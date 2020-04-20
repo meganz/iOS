@@ -391,6 +391,8 @@
     if (![currentlySelected isEqualToString:shouldBeSelected]) {
         [MEGASdkManager.sharedMEGAChatSdk setChatVideoInDevices:shouldBeSelected];
     }
+    
+    self.localVideoImageView.transform = self.switchCameraButton.selected ? CGAffineTransformMakeScale(1, 1) : CGAffineTransformMakeScale(-1, 1);
 }
 
 #pragma mark - IBActions
