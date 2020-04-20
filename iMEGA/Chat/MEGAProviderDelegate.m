@@ -525,6 +525,7 @@
                 self.muteAudioWhenConnect = NO;
             }
         } else {
+            MEGALogWarning(@"[CallKit] The call %@ doesn't exist, end it", [MEGASdk base64HandleForUserHandle:self.callId.unsignedLongLongValue]);
             [self reportEndCallWithCallId:self.callId.unsignedLongLongValue chatId:chatId];
         }
         
