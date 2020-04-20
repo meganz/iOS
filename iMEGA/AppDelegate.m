@@ -1220,7 +1220,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 }
 
 - (void)pushRegistry:(PKPushRegistry *)registry didReceiveIncomingPushWithPayload:(PKPushPayload *)payload forType:(NSString *)type {
-    MEGALogDebug(@"Did receive incoming push with payload: %@", [payload dictionaryPayload]);
+    MEGALogDebug(@"Did receive incoming push with payload: %@ and type: %@", [payload dictionaryPayload], type);
     
     // Call
     if ([payload.dictionaryPayload[@"megatype"] integerValue] == 4) {
@@ -1230,26 +1230,6 @@ void uncaughtExceptionHandler(NSException *exception) {
         uint64_t callId = [MEGASdk handleForBase64UserHandle:callIdB64];
         
         [self.megaProviderDelegate reportIncomingCallWithCallId:callId chatId:chatId];
-        
-        if (!DevicePermissionsHelper.shouldAskForNotificationsPermissions) {
-            [DevicePermissionsHelper notificationsPermissionWithCompletionHandler:^(BOOL granted) {
-                if (granted && !DevicePermissionsHelper.shouldAskForAudioPermissions) {
-                    [DevicePermissionsHelper audioPermissionModal:NO forIncomingCall:YES withCompletionHandler:^(BOOL granted) {
-                        if (!granted) {
-                            UNMutableNotificationContent *content = [UNMutableNotificationContent new];
-                            content.body = AMLocalizedString(@"Incoming call", @"notification subtitle of incoming calls");
-                            content.sound = [UNNotificationSound soundNamed:@"incoming_voice_video_call_iOS9.mp3"];
-                            UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:1 repeats:NO];
-                            NSString *identifier = @"Incoming call";
-                            UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:identifier
-                                                                                                  content:content
-                                                                                                  trigger:trigger];
-                            [UNUserNotificationCenter.currentNotificationCenter addNotificationRequest:request withCompletionHandler:nil];
-                        }
-                    }];
-                }
-            }];
-        }
     }
 }
 
