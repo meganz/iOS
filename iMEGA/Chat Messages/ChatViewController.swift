@@ -98,6 +98,10 @@ class ChatViewController: MessagesViewController {
             let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatVoiceClipCollectionViewCell.reuseIdentifier, for: indexPath) as! ChatVoiceClipCollectionViewCell
             cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
             return cell
+        } else if chatMessage.message.type == .containsMeta {
+            let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatLocationCollectionViewCell.reuseIdentifier, for: indexPath) as! ChatLocationCollectionViewCell
+            cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
+            return cell
         } else {
             let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatViewCallCollectionCell.reuseIdentifier, for: indexPath) as! ChatViewCallCollectionCell
             cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
@@ -206,6 +210,8 @@ class ChatViewController: MessagesViewController {
                                                forCellWithReuseIdentifier: ChatRichPreviewMediaCollectionViewCell.reuseIdentifier)
         messagesCollectionView.register(ChatVoiceClipCollectionViewCell.self,
                                                  forCellWithReuseIdentifier: ChatVoiceClipCollectionViewCell.reuseIdentifier)
+        messagesCollectionView.register(ChatLocationCollectionViewCell.self,
+                                        forCellWithReuseIdentifier: ChatLocationCollectionViewCell.reuseIdentifier)
     }
 
     private func update() {
