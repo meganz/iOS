@@ -75,6 +75,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
     }
     
     func onMessageUpdate(_ api: MEGAChatSdk!, message: MEGAChatMessage!) {
+        insertMessage(message)
         MEGALogInfo("ChatRoomDelegate: onMessageUpdate")
     }
     

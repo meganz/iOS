@@ -63,6 +63,50 @@ extension ChatViewController: ChatMessageAndAudioInputBarDelegate {
     
     func tappedSendAudio(atPath path: String) {
         print("send audio at path \(path)")
+        
+        // TODO: Refactor the below code.
+        // Handle errors and show the progress as well
+        MEGASdkManager.sharedMEGASdk()!.getMyChatFilesFolder {[weak self] result in
+            guard let `self` = self else {
+                return
+            }
+            
+            let voiceFolderName = "My voice messages"
+            
+            let transferUploadDelegate: MEGAStartUploadTransferDelegate  = MEGAStartUploadTransferDelegate { _ in
+                // SHould show the progress to the user.
+            }
+            
+            let appData = ("" as NSString).mnz_appDataToAttach(toChatID: self.chatRoom.chatId, asVoiceClip: true)
+
+            if let voiceMessagesNode = MEGASdkManager.sharedMEGASdk()!.node(forPath: voiceFolderName, node: result) {
+                MEGASdkManager.sharedMEGASdk()!.startUpload(withLocalPath: path,
+                                                            parent: voiceMessagesNode,
+                                                            appData: appData,
+                                                            isSourceTemporary: true,
+                                                            delegate: transferUploadDelegate)
+            } else {
+                let requestDelegate: MEGARequestDelegate = MEGACreateFolderRequestDelegate { request in
+                    guard let request = request else {
+                        fatalError("request object should not be nil")
+                    }
+                    
+                    if let voiceMessagesNode = MEGASdkManager.sharedMEGASdk()!.node(forHandle: request.nodeHandle) {
+
+                        MEGASdkManager.sharedMEGASdk()!.startUpload(withLocalPath: path,
+                                                                    parent: voiceMessagesNode,
+                                                                    appData: appData,
+                                                                    isSourceTemporary: true,
+                                                                    delegate: transferUploadDelegate)
+
+                    }
+                }
+                
+                MEGASdkManager.sharedMEGASdk()!.createFolder(withName: voiceFolderName,
+                                                             parent: result,
+                                                             delegate: requestDelegate)
+            }
+        }
     }
     
     func tappedVoiceButton() {
