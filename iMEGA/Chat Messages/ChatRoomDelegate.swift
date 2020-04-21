@@ -8,7 +8,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
     // MARK: - Properties
 
     let chatRoom: MEGAChatRoom
-    weak var messagesCollectionView: MessagesCollectionView!
+    weak var chatViewController: ChatViewController!
     var messages: [ChatMessage] = []
     var isChatRoomOpen: Bool = false
     var historyMessages: [ChatMessage] = []
@@ -19,9 +19,9 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
     
     // MARK: - Init
 
-    init(chatRoom: MEGAChatRoom, messagesCollectionView: MessagesCollectionView) {
+    init(chatRoom: MEGAChatRoom, chatViewController: ChatViewController) {
         self.chatRoom = chatRoom
-        self.messagesCollectionView = messagesCollectionView
+        self.chatViewController = chatViewController
         super.init()
     }
     
@@ -29,13 +29,14 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
 
     func onChatRoomUpdate(_ api: MEGAChatSdk!, chat: MEGAChatRoom!) {
         MEGALogInfo("ChatRoomDelegate: onChatRoomUpdate \(chatRoom)")
+        chatViewController.chatRoom = chat
     }
     
     func onMessageLoaded(_ api: MEGAChatSdk!, message: MEGAChatMessage!) {
         MEGALogInfo("ChatRoomDelegate: onMessageLoaded")
         
         if isFullChatHistoryLoaded {
-            messagesCollectionView.refreshControl = nil
+            chatViewController.messagesCollectionView.refreshControl = nil
         }
         
         if let chatMessage = message {
@@ -50,15 +51,15 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
             if messages.count == 0 {
                 messages = historyMessages
                 historyMessages.removeAll()
-                messagesCollectionView.reloadData()
-                messagesCollectionView.scrollToBottom()
+                chatViewController.messagesCollectionView.reloadData()
+                chatViewController.messagesCollectionView.scrollToBottom()
                 return
             }
             
             messages = historyMessages + messages
             historyMessages.removeAll()
-            messagesCollectionView.reloadDataAndKeepOffset()
-            messagesCollectionView.refreshControl?.endRefreshing()
+            chatViewController.messagesCollectionView.reloadDataAndKeepOffset()
+            chatViewController.messagesCollectionView.refreshControl?.endRefreshing()
         }
     }
     
@@ -114,11 +115,11 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
     private func insertMessage(_ message: MEGAChatMessage) {
          messages.append(ChatMessage(message: message, chatRoom: chatRoom))
         
-         messagesCollectionView.performBatchUpdates({
-             messagesCollectionView.insertSections([messages.count - 1])
+         chatViewController.messagesCollectionView.performBatchUpdates({
+             chatViewController.messagesCollectionView.insertSections([messages.count - 1])
          }, completion: { [weak self] _ in
              if self?.isLastSectionVisible() == true {
-                 self?.messagesCollectionView.scrollToBottom(animated: true)
+                 self?.chatViewController.messagesCollectionView.scrollToBottom(animated: true)
              }
          })
      }
@@ -127,7 +128,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
         guard !messages.isEmpty else { return false }
         
         let lastIndexPath = IndexPath(item: 0, section: messages.count - 1)
-        return messagesCollectionView.indexPathsForVisibleItems.contains(lastIndexPath)
+        return chatViewController.messagesCollectionView.indexPathsForVisibleItems.contains(lastIndexPath)
     }
     
     private func loadMessages(count: Int = 32) {

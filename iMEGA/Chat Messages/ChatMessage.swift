@@ -4,12 +4,8 @@ struct ChatMessage {
     let message: MEGAChatMessage
     let chatRoom: MEGAChatRoom
 
-    var senderHandle: UInt64 {
-        return message.userHandle
-    }
-
     var avatarImage: UIImage? {
-        guard let peerEmail = chatRoom.peerEmail(byHandle: senderHandle),
+        guard let peerEmail = chatRoom.peerEmail(byHandle: message.userHandle),
             let user = MEGASdkManager.sharedMEGASdk()?.contact(forEmail: peerEmail) else {
                 return nil
         }
@@ -51,6 +47,9 @@ extension ChatMessage: MessageType {
             }
         } else if case .voiceClip = message.type {
             return .custom(message)
+        } else if case .alterParticipants = message.type {
+            message.text()
+            return .attributedText(message.attributedText)
         }
         
         return .text(message.type.description)
@@ -59,6 +58,9 @@ extension ChatMessage: MessageType {
 
 extension ChatMessage: SenderType {
     var senderId: String {
+        if message.isManagementMessage {
+            return "0"
+        }
         return String(format: "%llu", message.userHandle)
     }
 
@@ -122,21 +124,4 @@ extension MEGAChatMessageType: CustomStringConvertible {
             return "default case executed"
         }
     }
-}
-
-
-
-private struct ImageMediaItem: MediaItem {
-
-    var url: URL?
-    var image: UIImage?
-    var placeholderImage: UIImage
-    var size: CGSize
-
-//    init(image: UIImage) {
-//        self.image = image
-//        self.size = CGSize(width: 240, height: 240)
-//        self.placeholderImage = UIImage()
-//    }
-
 }

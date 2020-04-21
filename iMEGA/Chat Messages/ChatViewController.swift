@@ -32,7 +32,7 @@ class ChatViewController: MessagesViewController {
 
     lazy var chatRoomDelegate: ChatRoomDelegate = {
         return ChatRoomDelegate(chatRoom: chatRoom,
-                                messagesCollectionView: messagesCollectionView)
+                                chatViewController: self)
     }()
 
     lazy var audioCallBarButtonItem: UIBarButtonItem = {
@@ -170,7 +170,7 @@ class ChatViewController: MessagesViewController {
 
     func isPreviousMessageSameSender(at indexPath: IndexPath) -> Bool {
         guard let previousIndexPath = indexPath.previousSectionIndexPath else { return false }
-        return messages[indexPath.section].senderHandle == messages[previousIndexPath.section].senderHandle
+        return messages[indexPath.section].sender.senderId == messages[previousIndexPath.section].sender.senderId
     }
     
     func avatarImage(for message: MessageType) -> UIImage? {
@@ -246,17 +246,82 @@ class ChatViewController: MessagesViewController {
     // MARK: - Bar Button actions
 
     @objc func startAudioCall() {
-
+        DevicePermissionsHelper.audioPermissionModal(true, forIncomingCall: false) { (granted) in
+            if granted {
+                self.openCallViewWithVideo(videoCall: false, active: (MEGASdkManager.sharedMEGAChatSdk()?.hasCall(inChatRoom:self.chatRoom.chatId))!)
+            } else {
+                DevicePermissionsHelper.alertAudioPermission(forIncomingCall: false)
+            }
+        }
     }
 
     @objc func startVideoCall() {
-
+        DevicePermissionsHelper.audioPermissionModal(true, forIncomingCall: false) { (granted) in
+            if granted {
+                DevicePermissionsHelper.videoPermission { (videoPermission) in
+                    if videoPermission {
+                        self.openCallViewWithVideo(videoCall: true, active: (MEGASdkManager.sharedMEGAChatSdk()?.hasCall(inChatRoom:self.chatRoom.chatId))!)
+                    } else {
+                        DevicePermissionsHelper.alertVideoPermission(completionHandler: nil)
+                    }
+                }
+                
+            } else {
+                DevicePermissionsHelper.alertAudioPermission(forIncomingCall: false)
+            }
+        }
     }
 
     @objc func addParticipant() {
-
+        let navigationController = UIStoryboard.init(name: "Contacts", bundle: nil).instantiateViewController(withIdentifier: "ContactsNavigationControllerID") as! UINavigationController
+        let contactsVC = navigationController.viewControllers.first as! ContactsViewController
+        contactsVC.contactsMode = .chatAddParticipant
+        var participantsMutableDictionary: [NSNumber:NSNumber] = [:]
+        
+        if chatRoom.peerCount > 1 {
+            for idx in 0...chatRoom.peerCount - 1 {
+                let peerHandle = chatRoom.peerHandle(at: idx)
+                if chatRoom.peerPrivilege(byHandle: peerHandle) > MEGAChatRoomPrivilege.rm.rawValue {
+                    participantsMutableDictionary[NSNumber(value: peerHandle)] = NSNumber(value: peerHandle)
+                }
+            }
+        }
+        
+        contactsVC.participantsMutableDictionary = NSMutableDictionary(dictionary: participantsMutableDictionary)
+        contactsVC.userSelected = { users in
+            users?.forEach({ (user) in
+                MEGASdkManager.sharedMEGAChatSdk()?.invite(toChat: self.chatRoom.chatId, user: (user as! MEGAUser).handle, privilege: MEGAChatRoomPrivilege.standard.rawValue)
+            })
+        }
+        present(navigationController, animated: true, completion: nil)
     }
 
+    func openCallViewWithVideo(videoCall: Bool, active: Bool) {
+        if UIDevice.current.orientation != .portrait {
+            UIDevice.current.setValue(NSNumber(integerLiteral: UIInterfaceOrientation.portrait.rawValue), forKey: "orientation")
+        }
+        
+        if chatRoom.isGroup {
+            let groupCallVC = UIStoryboard(name: "Chat", bundle: nil).instantiateViewController(withIdentifier: "GroupCallViewControllerID") as! GroupCallViewController
+            groupCallVC.callType = active ? .active : (MEGASdkManager.sharedMEGAChatSdk()?.chatCall(forCallId: chatRoom.chatId) != nil ? .active : .outgoing)
+            groupCallVC.videoCall = videoCall
+            groupCallVC.chatRoom = chatRoom
+            groupCallVC.modalTransitionStyle = .crossDissolve
+            groupCallVC.megaCallManager = (UIApplication.shared.delegate as! AppDelegate).megaCallManager
+            self.present(groupCallVC, animated: true, completion: nil)
+        } else {
+            let callVC = UIStoryboard(name: "Chat", bundle: nil).instantiateViewController(withIdentifier: "CallViewControllerID") as! CallViewController
+            callVC.chatRoom = chatRoom
+            callVC.videoCall = videoCall
+            callVC.callType = active ? .active : .outgoing
+            callVC.modalTransitionStyle = .crossDissolve
+            callVC.megaCallManager = (UIApplication.shared.delegate as! AppDelegate).megaCallManager
+            self.present(callVC, animated: true, completion: nil)
+
+        }
+        
+    }
+    
     deinit {
         chatRoomDelegate.closeChatRoom()
     }
