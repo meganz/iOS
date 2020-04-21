@@ -61,4 +61,7 @@
 #import "NSAttributedString+MNZCategory.h"
 #import <YYWebImage/YYWebImage.h>
 #import "NSDate+MNZCategory.h"
+#import "MEGASdk+MNZCategory.h"
+#import "MEGACreateFolderRequestDelegate.h"
+#import "MEGAStartUploadTransferDelegate.h"
 
