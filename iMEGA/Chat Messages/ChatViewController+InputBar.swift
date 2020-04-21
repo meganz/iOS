@@ -58,6 +58,7 @@ extension ChatViewController: ChatMessageAndAudioInputBarDelegate {
     
     func tappedSendButton(withText text: String) {
         print("Send button tapped with text \(text)")
+        MEGASdkManager.sharedMEGAChatSdk()?.sendMessage(toChat: chatRoom.chatId, message: text)
     }
     
     func tappedSendAudio(atPath path: String) {
