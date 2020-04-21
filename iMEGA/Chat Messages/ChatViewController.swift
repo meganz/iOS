@@ -30,7 +30,7 @@ class ChatViewController: MessagesViewController {
 
     lazy var chatRoomDelegate: ChatRoomDelegate = {
         return ChatRoomDelegate(chatRoom: chatRoom,
-                                messagesCollectionView: messagesCollectionView)
+                                chatViewController: self)
     }()
 
     lazy var audioCallBarButtonItem: UIBarButtonItem = {
@@ -271,7 +271,27 @@ class ChatViewController: MessagesViewController {
     }
 
     @objc func addParticipant() {
-
+        let navigationController = UIStoryboard.init(name: "Contacts", bundle: nil).instantiateViewController(withIdentifier: "ContactsNavigationControllerID") as! UINavigationController
+        let contactsVC = navigationController.viewControllers.first as! ContactsViewController
+        contactsVC.contactsMode = .chatAddParticipant
+        var participantsMutableDictionary: [NSNumber:NSNumber] = [:]
+        
+        if chatRoom.peerCount > 1 {
+            for idx in 0...chatRoom.peerCount - 1 {
+                let peerHandle = chatRoom.peerHandle(at: idx)
+                if chatRoom.peerPrivilege(byHandle: peerHandle) > MEGAChatRoomPrivilege.rm.rawValue {
+                    participantsMutableDictionary[NSNumber(value: peerHandle)] = NSNumber(value: peerHandle)
+                }
+            }
+        }
+        
+        contactsVC.participantsMutableDictionary = NSMutableDictionary(dictionary: participantsMutableDictionary)
+        contactsVC.userSelected = { users in
+            users?.forEach({ (user) in
+                MEGASdkManager.sharedMEGAChatSdk()?.invite(toChat: self.chatRoom.chatId, user: (user as! MEGAUser).handle, privilege: MEGAChatRoomPrivilege.standard.rawValue)
+            })
+        }
+        present(navigationController, animated: true, completion: nil)
     }
 
     func openCallViewWithVideo(videoCall: Bool, active: Bool) {

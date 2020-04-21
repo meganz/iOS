@@ -55,6 +55,7 @@
 #import "ContactDetailsViewController.h"
 #import "GroupCallViewController.h"
 #import "CallViewController.h"
+#import "ContactsViewController.h"
 #import <PureLayout/PureLayout.h>
 #import "UIImage+GKContact.h"
 #import "NSAttributedString+MNZCategory.h"
