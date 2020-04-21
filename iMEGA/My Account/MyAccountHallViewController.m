@@ -53,17 +53,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-                
-    if (MEGASdkManager.sharedMEGASdk.isBusinessAccount) {
-        self.navigationItem.rightBarButtonItem = nil;
-        UILabel *label = [Helper customNavigationBarLabelWithTitle:AMLocalizedString(@"myAccount", @"Title of the app section where you can see your account details") subtitle:AMLocalizedString(@"Business", nil)];
-        label.frame = CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44);
-        self.navigationItem.titleView = label;
-    } else {
-        self.buyPROBarButtonItem.title = AMLocalizedString(@"upgrade", @"Caption of a button to upgrade the account to Pro status");
-        self.navigationItem.title = AMLocalizedString(@"myAccount", @"Title of the app section where you can see your account details");
-    }
-    
+        
     self.viewAndEditProfileLabel.text = AMLocalizedString(@"viewAndEditProfile", @"Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile");
     self.viewAndEditProfileButton.accessibilityLabel = AMLocalizedString(@"viewAndEditProfile", @"Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile");
 
@@ -93,13 +83,6 @@
     [[MEGASdkManager sharedMEGASdk] contactLinkCreateRenew:NO delegate:delegate];
 
     [[MEGAPurchase sharedInstance] setPricingsDelegate:self];
-    
-    if (MEGASdkManager.sharedMEGASdk.isMasterBusinessAccount) {
-        self.tableFooterLabel.text = AMLocalizedString(@"User management is only available in a desktop web browser.", @"Label presented to Admins that full management of the business is only available in a desktop web browser");
-        self.tableView.tableFooterView = self.tableFooterView;
-    } else {
-        self.tableView.tableFooterView = [UIView.alloc initWithFrame:CGRectZero];
-    }
     
     UITapGestureRecognizer *tapAvatarGestureRecognizer = [UITapGestureRecognizer.alloc initWithTarget:self action:@selector(avatarTapped:)];
     self.avatarImageView.gestureRecognizers = @[tapAvatarGestureRecognizer];
@@ -170,6 +153,9 @@
 }
 
 - (void)reloadUI {
+    [self configNavigationItem];
+    [self configTableFooterView];
+    
     self.nameLabel.text = [[[MEGASdkManager sharedMEGASdk] myUser] mnz_fullName];
     [self setUserAvatar];
     
@@ -207,6 +193,27 @@
 - (void)setUserAvatar {
     MEGAUser *myUser = MEGASdkManager.sharedMEGASdk.myUser;
     [self.avatarImageView mnz_setImageForUserHandle:myUser.handle];
+}
+
+- (void)configNavigationItem {
+    if (MEGASdkManager.sharedMEGASdk.isBusinessAccount) {
+        self.navigationItem.rightBarButtonItem = nil;
+        UILabel *label = [Helper customNavigationBarLabelWithTitle:AMLocalizedString(@"myAccount", @"Title of the app section where you can see your account details") subtitle:AMLocalizedString(@"Business", nil)];
+        label.frame = CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44);
+        self.navigationItem.titleView = label;
+    } else {
+        self.buyPROBarButtonItem.title = AMLocalizedString(@"upgrade", @"Caption of a button to upgrade the account to Pro status");
+        self.navigationItem.title = AMLocalizedString(@"myAccount", @"Title of the app section where you can see your account details");
+    }
+}
+
+- (void)configTableFooterView {
+    if (MEGASdkManager.sharedMEGASdk.isMasterBusinessAccount) {
+        self.tableFooterLabel.text = AMLocalizedString(@"User management is only available in a desktop web browser.", @"Label presented to Admins that full management of the business is only available in a desktop web browser");
+        self.tableView.tableFooterView = self.tableFooterView;
+    } else {
+        self.tableView.tableFooterView = [UIView.alloc initWithFrame:CGRectZero];
+    }
 }
 
 #pragma mark - IBActions
@@ -366,7 +373,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     CGFloat heightForRow;
-    if (indexPath.row == 3 && ![[MEGASdkManager sharedMEGASdk] isAchievementsEnabled]) {
+    if (indexPath.row == 3 && (![[MEGASdkManager sharedMEGASdk] isAchievementsEnabled] | MEGASdkManager.sharedMEGASdk.isBusinessAccount)) {
         heightForRow = 0.0f;
     } else if (indexPath.row == 0 && MEGASdkManager.sharedMEGASdk.isBusinessAccount) {
         heightForRow = 94;
