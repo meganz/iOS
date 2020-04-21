@@ -1082,11 +1082,15 @@
 		BF33EF7924451A6200CD35AC /* TapAndHoldMessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF33EF7824451A6200CD35AC /* TapAndHoldMessageView.xib */; };
 		BF33EF7D24453FFD00CD35AC /* AudioRecordingInputBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF33EF7C24453FFD00CD35AC /* AudioRecordingInputBar.xib */; };
 		BF33EF822445401800CD35AC /* AudioRecordingInputBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF33EF812445401800CD35AC /* AudioRecordingInputBar.swift */; };
-		BF33EF8424457A0700CD35AC /* ChatMessageAndAudioInputBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF33EF8324457A0700CD35AC /* ChatMessageAndAudioInputBar.swift */; };
+		BF33EF8424457A0700CD35AC /* ChatInputBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF33EF8324457A0700CD35AC /* ChatInputBar.swift */; };
 		BF33EF8C2447E6DD00CD35AC /* EnlargementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF33EF8B2447E6DC00CD35AC /* EnlargementView.swift */; };
 		BF33EF902447E70200CD35AC /* CondensationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF33EF8F2447E70200CD35AC /* CondensationView.swift */; };
 		BF69E5172374F3720031913D /* AppDelegate+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF69E5162374F3720031913D /* AppDelegate+Additions.swift */; };
 		BF7EBD1C244D354A0015255F /* MeterTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7EBD1B244D354A0015255F /* MeterTable.swift */; };
+		BF7EBD20244E50270015255F /* FingerLiftupGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7EBD1F244E50270015255F /* FingerLiftupGestureRecognizer.swift */; };
+		BF7EBD24244E8AFC0015255F /* UIImageView+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7EBD23244E8AFC0015255F /* UIImageView+Additions.swift */; };
+		BF7EBD26244E8B380015255F /* SIMD2+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7EBD25244E8B380015255F /* SIMD2+Additions.swift */; };
+		BF7EBD28244E8B5A0015255F /* CGPoint+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7EBD27244E8B5A0015255F /* CGPoint+Additions.swift */; };
 		BFB463DD2432F2E900FB90B9 /* ChatRoomDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB463DC2432F2E900FB90B9 /* ChatRoomDelegate.swift */; };
 		BFB463E52433390600FB90B9 /* MEGAUser+Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB463E42433390600FB90B9 /* MEGAUser+Chat.swift */; };
 		BFB463E92433394500FB90B9 /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB463E82433394500FB90B9 /* ChatMessage.swift */; };
@@ -2564,11 +2568,15 @@
 		BF33EF7824451A6200CD35AC /* TapAndHoldMessageView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TapAndHoldMessageView.xib; sourceTree = "<group>"; };
 		BF33EF7C24453FFD00CD35AC /* AudioRecordingInputBar.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AudioRecordingInputBar.xib; sourceTree = "<group>"; };
 		BF33EF812445401800CD35AC /* AudioRecordingInputBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecordingInputBar.swift; sourceTree = "<group>"; };
-		BF33EF8324457A0700CD35AC /* ChatMessageAndAudioInputBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageAndAudioInputBar.swift; sourceTree = "<group>"; };
+		BF33EF8324457A0700CD35AC /* ChatInputBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatInputBar.swift; sourceTree = "<group>"; };
 		BF33EF8B2447E6DC00CD35AC /* EnlargementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnlargementView.swift; sourceTree = "<group>"; };
 		BF33EF8F2447E70200CD35AC /* CondensationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CondensationView.swift; sourceTree = "<group>"; };
 		BF69E5162374F3720031913D /* AppDelegate+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Additions.swift"; sourceTree = "<group>"; };
 		BF7EBD1B244D354A0015255F /* MeterTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeterTable.swift; sourceTree = "<group>"; };
+		BF7EBD1F244E50270015255F /* FingerLiftupGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FingerLiftupGestureRecognizer.swift; sourceTree = "<group>"; };
+		BF7EBD23244E8AFC0015255F /* UIImageView+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Additions.swift"; sourceTree = "<group>"; };
+		BF7EBD25244E8B380015255F /* SIMD2+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SIMD2+Additions.swift"; sourceTree = "<group>"; };
+		BF7EBD27244E8B5A0015255F /* CGPoint+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+Additions.swift"; sourceTree = "<group>"; };
 		BFB463DC2432F2E900FB90B9 /* ChatRoomDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomDelegate.swift; sourceTree = "<group>"; };
 		BFB463E42433390600FB90B9 /* MEGAUser+Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAUser+Chat.swift"; sourceTree = "<group>"; };
 		BFB463E82433394500FB90B9 /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
@@ -3721,6 +3729,9 @@
 				BFB463EE2434290300FB90B9 /* UIView+Additions.swift */,
 				BFB463F22434296000FB90B9 /* IndexPath+Additions.swift */,
 				2F8F5F1523691A390049603F /* UINavigationViewController+Additions.swift */,
+				BF7EBD23244E8AFC0015255F /* UIImageView+Additions.swift */,
+				BF7EBD25244E8B380015255F /* SIMD2+Additions.swift */,
+				BF7EBD27244E8B5A0015255F /* CGPoint+Additions.swift */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -5426,7 +5437,8 @@
 				BF7EBD1B244D354A0015255F /* MeterTable.swift */,
 				BF33EF812445401800CD35AC /* AudioRecordingInputBar.swift */,
 				BF33EF7C24453FFD00CD35AC /* AudioRecordingInputBar.xib */,
-				BF33EF8324457A0700CD35AC /* ChatMessageAndAudioInputBar.swift */,
+				BF33EF8324457A0700CD35AC /* ChatInputBar.swift */,
+				BF7EBD1F244E50270015255F /* FingerLiftupGestureRecognizer.swift */,
 				BF33EF7324451A4700CD35AC /* TapAndHoldMessageView.swift */,
 				BF33EF7824451A6200CD35AC /* TapAndHoldMessageView.xib */,
 				BF09FF22243BDB770067DD77 /* MessageInputTextBackgroundView.swift */,
@@ -6312,6 +6324,7 @@
 				41D21E6C1D01AEC3002E6296 /* CTAssetsPickerAccessDeniedView.m in Sources */,
 				B6C524DD21E2BC9900AE3575 /* AVAsset+CameraUpload.m in Sources */,
 				83C570E122E5BFCF00216896 /* RegexManager.swift in Sources */,
+				BF7EBD24244E8AFC0015255F /* UIImageView+Additions.swift in Sources */,
 				41A66D0D1AE7A0FE007D7E20 /* ProductTableViewCell.m in Sources */,
 				E8E3E6F91E0939BE00D45F45 /* MEGAOpenMessageHeaderView.m in Sources */,
 				832E1035202DE10500BDD30F /* NodeTappablePropertyTableViewCell.m in Sources */,
@@ -6515,11 +6528,12 @@
 				B6D9D7EF216AE5D000D7B08A /* CameraUploadRecordManager.m in Sources */,
 				41FC83B11AA853CC008FA551 /* SettingsTableViewController.m in Sources */,
 				B65AC8BA21F6A91A0094FF4F /* ImageExportOperation.m in Sources */,
-				BF33EF8424457A0700CD35AC /* ChatMessageAndAudioInputBar.swift in Sources */,
+				BF33EF8424457A0700CD35AC /* ChatInputBar.swift in Sources */,
 				41D21E6A1D01AEC3002E6296 /* CTAssetsPageView.m in Sources */,
 				2F2801D924481EFD00C160D0 /* RichPreviewContentView.swift in Sources */,
 				836AEDDD2018830E00868FC7 /* PasswordReminderViewController.m in Sources */,
 				E8D4B8921A69429200A3B2E2 /* CreateAccountViewController.m in Sources */,
+				BF7EBD20244E50270015255F /* FingerLiftupGestureRecognizer.swift in Sources */,
 				B6D90BC22224D46800E0623A /* AssetLocalAttribute.m in Sources */,
 				A86B9F2C2316D6AB00F35E7A /* FLEXClassExplorerViewController.m in Sources */,
 				837A88C220B44AA8007B55D1 /* OfflineViewController.m in Sources */,
@@ -6748,6 +6762,7 @@
 				41DC6F721D54E7080081832C /* NSFileManager+MNZCategory.m in Sources */,
 				41D21E5F1D01AEC3002E6296 /* CTAssetPlayButton.m in Sources */,
 				838633A623FED61D00CDB6A5 /* CustomModalAlertViewController+TwoFactorAuthentication.swift in Sources */,
+				BF7EBD28244E8B5A0015255F /* CGPoint+Additions.swift in Sources */,
 				A86B9F5E2316D6AB00F35E7A /* FLEXGlobalsTableViewController.m in Sources */,
 				8394CFB8211B1AFD00A1634A /* GroupCallCollectionViewCell.m in Sources */,
 				A89629781FACEAF800F02F7A /* MEGAProviderDelegate.m in Sources */,
@@ -6847,6 +6862,7 @@
 				94F376E71FE7C126009AAA10 /* MEGAToolbarAssetPicker.m in Sources */,
 				7795677721C80CDF002B6227 /* OnboardingViewController.m in Sources */,
 				A86B9F8A2316D6AB00F35E7A /* FLEXObjcInternal.mm in Sources */,
+				BF7EBD26244E8B380015255F /* SIMD2+Additions.swift in Sources */,
 				41FC83C01AAE056C008FA551 /* CameraUploadsTableViewController.m in Sources */,
 				944B205D1EE55533003C967B /* UIAlertAction+MNZCategory.m in Sources */,
 				A86B9F6F2316D6AB00F35E7A /* FLEXTableLeftCell.m in Sources */,

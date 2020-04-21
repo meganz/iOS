@@ -4,12 +4,12 @@ import MessageKit
 extension ChatViewController {
     
     override var inputAccessoryView: UIView? {
-        if chatMessageAndAudioInputBar == nil {
-            chatMessageAndAudioInputBar = ChatMessageAndAudioInputBar()
-            chatMessageAndAudioInputBar.delegate = self
+        if chatInputBar == nil {
+            chatInputBar = ChatInputBar()
+            chatInputBar.delegate = self
         }
         
-        return chatMessageAndAudioInputBar
+        return chatInputBar
     }
     
     override var canBecomeFirstResponder: Bool {
