@@ -53,7 +53,8 @@ class ChatInputBar: UIView {
         
         addGestureRecognizer(longPressGesture)
         addGestureRecognizer(panGesture)
-        addGestureRecognizer(fingerLiftupGesture)
+        // FIXME: Enabling this will make send and add button untappable.
+//        addGestureRecognizer(fingerLiftupGesture)
         
         addMessageInputBar()
     }
@@ -71,12 +72,15 @@ class ChatInputBar: UIView {
     }
     
     private func voiceInputBarToTextInputSwitch() {
+        removeGestureRecognizer(fingerLiftupGesture)
         messageInputBar.alpha = 0.0
         addMessageInputBar()
         
-        self.audioRecordingInputBar.placeholderViewTopConstraint.isActive = false
-        self.audioRecordingInputBar.layoutIfNeeded()
+        audioRecordingInputBar.placeholderViewTopConstraint.isActive = false
+        audioRecordingInputBar.layoutIfNeeded()
                 
+        print(storedMessageInputBarHeight)
+
         UIView.animate(withDuration: 0.4, animations: {
             self.audioRecordingInputBar.alpha = 0.0
             self.messageInputBar.alpha = 1.0
@@ -89,7 +93,8 @@ class ChatInputBar: UIView {
     }
     
     private func textInputToVoiceInputBarSwitch() {
-        storedMessageInputBarHeight = messageInputBar.intrinsicContentSize.height
+        storedMessageInputBarHeight = messageInputBar.bounds.height
+        addGestureRecognizer(fingerLiftupGesture)
         audioRecordingInputBar = AudioRecordingInputBar.instanceFromNib
         
         audioRecordingInputBar.alpha = 0.0

@@ -15,13 +15,45 @@ extension ChatViewController {
     override var canBecomeFirstResponder: Bool {
         return true
     }
+    
+    private func displayAddToChatViewController() {
+        // Using last window instead of keywindow. Using keywindow creates a glitch in the animation.
+        // Athough using last prints "Keyboard cannot present view controllers" but does not have any side effects.
+        // https://stackoverflow.com/questions/46996251/inputaccessoryview-animating-down-when-alertcontroller-actionsheet-presented
+        guard let rootViewController = UIApplication.shared.windows.last?.rootViewController else {
+            return
+        }
+        
+        addToChatViewController = AddToChatViewController(nibName: nil, bundle: nil)
+        addToChatViewController.transitioningDelegate = self
+        rootViewController.present(addToChatViewController, animated: true, completion: nil)
+    }
+}
 
+extension ChatViewController: UIViewControllerTransitioningDelegate {
+    func animationController(forPresented presented: UIViewController,
+                             presenting: UIViewController,
+                             source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        guard presented is AddToChatViewController else {
+            return nil
+        }
+        
+        return AddToChatViewAnimator(type: .present)
+    }
+    
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        guard dismissed is AddToChatViewController else {
+            return nil
+        }
+        
+        return AddToChatViewAnimator(type: .dismiss)
+    }
 }
 
 extension ChatViewController: ChatMessageAndAudioInputBarDelegate {
     
     func tappedAddButton() {
-        print("Add button tapped")
+        displayAddToChatViewController()
     }
     
     func tappedSendButton(withText text: String) {
