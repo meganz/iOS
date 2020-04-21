@@ -336,7 +336,7 @@ extension ProfileViewController: UITableViewDataSource {
                     if MEGASdkManager.sharedMEGASdk().businessStatus == .active {
                         cell.accountTypeLabel.text = AMLocalizedString("Active", "")
                     } else {
-                        cell.accountTypeLabel.text = AMLocalizedString("Payment Overdue", "Business expired account Overdue payment page header.")
+                        cell.accountTypeLabel.text = AMLocalizedString("Payment overdue", "Business expired account Overdue payment page header.")
                     }
                     cell.upgradePlanLabel.text = AMLocalizedString("Business", "")
                     cell.accessoryType = .none
