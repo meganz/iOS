@@ -51,6 +51,8 @@ extension ChatMessage: MessageType {
             }
         } else if case .voiceClip = message.type {
             return .custom(message)
+        } else if case .alterParticipants = message.type {
+            return .text(message.text())
         }
         
         return .text(message.type.description)
