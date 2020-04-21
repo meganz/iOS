@@ -1037,8 +1037,6 @@
 "cloudDriveIsFull"="[S]Cloud Drive Anda penuh.[/S] [A]Tingkatkan sekarang[/A] ke akun PRO dan dapatkan [S]hingga %@ TB (%@ GB) [/S] ruang penyimpanan cloud.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Gudang";
-/* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
-"transferQuota"="Kuota Transfer";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
 "limited"="Terbatas";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
@@ -1766,14 +1764,6 @@
 "Thumbnail view"="Thumbnail view";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
 "Poor connection."="Koneksi lemah.";
-/* Message shown in a chat room when there is an active group call */
-"There is an active group call. Tap to join."="Ada panggilan grup aktif. Ketuk untuk bergabung.";
-/* Message shown in a chat room for a group call in progress displaying the duration of the call */
-"Touch to return to call %@"="Sentuh untuk kembali ke panggilan %@";
-/* Menu item to change from grid view to list view */
-"List view"="List view";
-/* Menu item to change from list view to grid view */
-"Thumbnail view"="Thumbnail view";
 /* There are no notifications to display. */
 "No notifications"="Tidak ada notifikasi";
 /* The header of a notification related to payments */
@@ -2148,9 +2138,5 @@
 "File Type"="Jenis File";
 /* export Quality Option for Scan document */
 "best"="Terbaik";
-/* Description of why the user should give permission to contacts */
-"Easily discover contacts from your address book on MEGA."="Temukan kontak dari buku alamat Anda dengan mudah di MEGA.";
-/* Detailed description of why the user should give permission to contacts */
-"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA tidak akan menggunakan data ini untuk tujuan lain apa pun dan tidak akan pernah berinteraksi dengan kontak anda tanpa persetujuan anda.";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="Masukan nama grup";

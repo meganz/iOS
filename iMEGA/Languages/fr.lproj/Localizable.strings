@@ -1037,8 +1037,6 @@
 "cloudDriveIsFull"="[S]Votre disque nuagique est plein.[/S] [A]Surclassez votre compte maintenant[/A] vers un compte PRO et obtenez [S]jusqu’à %@ To (%@ Go)[/S] d’espace de stockage nuagique.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Espace de stockage";
-/* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
-"transferQuota"="Quota de transfert";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
 "limited"="Limité";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
@@ -1766,14 +1764,6 @@
 "Thumbnail view"="Vue en imagettes";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
 "Poor connection."="La connexion est de mauvaise qualité.";
-/* Message shown in a chat room when there is an active group call */
-"There is an active group call. Tap to join."="Un appel de groupe est actif. Touchez pour vous y joindre.";
-/* Message shown in a chat room for a group call in progress displaying the duration of the call */
-"Touch to return to call %@"="Touchez pour revenir à l’appel %@";
-/* Menu item to change from grid view to list view */
-"List view"="Vue en liste";
-/* Menu item to change from list view to grid view */
-"Thumbnail view"="Vue en imagettes";
 /* There are no notifications to display. */
 "No notifications"="Il n’y a aucune notification";
 /* The header of a notification related to payments */
@@ -2148,9 +2138,5 @@
 "File Type"="Type de fichier";
 /* export Quality Option for Scan document */
 "best"="La meilleure";
-/* Description of why the user should give permission to contacts */
-"Easily discover contacts from your address book on MEGA."="Trouvez facilement les contacts de votre carnet d’adresses sur MEGA.";
-/* Detailed description of why the user should give permission to contacts */
-"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA n’utilisera pas ces données et n’interagira jamais avec vos contacts sans votre consentement.";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="Saisissez le nom du groupe";

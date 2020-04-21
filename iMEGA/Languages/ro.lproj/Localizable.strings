@@ -1037,8 +1037,6 @@
 "cloudDriveIsFull"="[S]Unitatea ta cloud este plină.[/S] [A]Upgradează acum[/A] la un cont PRO și obține [S]până la %@ TB (%@ GB)[/S] spațiu de stocare în cloud.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Spațiu de stocare";
-/* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
-"transferQuota"="Cotă de transferuri";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
 "limited"="Limitat";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
@@ -1766,14 +1764,6 @@
 "Thumbnail view"="Vizualizare tip miniatură";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
 "Poor connection."="Conexiune slabă.";
-/* Message shown in a chat room when there is an active group call */
-"There is an active group call. Tap to join."="Există un apel de grup activ. Atinge pentru a te alătura.";
-/* Message shown in a chat room for a group call in progress displaying the duration of the call */
-"Touch to return to call %@"="Atinge pentru a reveni la apelul %@";
-/* Menu item to change from grid view to list view */
-"List view"="Vizualizare tip listă";
-/* Menu item to change from list view to grid view */
-"Thumbnail view"="Vizualizare tip miniatură";
 /* There are no notifications to display. */
 "No notifications"="Nicio notificare";
 /* The header of a notification related to payments */
@@ -2148,9 +2138,5 @@
 "File Type"="Tipul fișierului";
 /* export Quality Option for Scan document */
 "best"="Cea mai bună";
-/* Description of why the user should give permission to contacts */
-"Easily discover contacts from your address book on MEGA."="Descoperă cu ușurință contactele din agenda de adrese pe MEGA.";
-/* Detailed description of why the user should give permission to contacts */
-"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA nu va folosi aceste date în alt scop și nu va interacționa niciodată cu contactele tale fără consimțământul tău.";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="Introdu numele grupului";
