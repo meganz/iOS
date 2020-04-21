@@ -168,7 +168,7 @@ class ChatViewController: MessagesViewController {
 
     func isPreviousMessageSameSender(at indexPath: IndexPath) -> Bool {
         guard let previousIndexPath = indexPath.previousSectionIndexPath else { return false }
-        return messages[indexPath.section].senderHandle == messages[previousIndexPath.section].senderHandle
+        return messages[indexPath.section].sender.senderId == messages[previousIndexPath.section].sender.senderId
     }
     
     func avatarImage(for message: MessageType) -> UIImage? {
