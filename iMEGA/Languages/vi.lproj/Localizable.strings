@@ -1037,8 +1037,6 @@
 "cloudDriveIsFull"="[S]Ổ Mây đã bị đầy.[/S] [A]Nâng cấp ngay[/A] lên hạng PRO để nhận [S]thêm tới %@ TB (%@ GB)[/S] không gian lưu trữ.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Lưu trữ";
-/* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
-"transferQuota"="Lượng băng thông";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
 "limited"="Bị giới hạn";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
@@ -1766,14 +1764,6 @@
 "Thumbnail view"="Hiện dạng ảnh nhỏ";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
 "Poor connection."="Mạng yếu.";
-/* Message shown in a chat room when there is an active group call */
-"There is an active group call. Tap to join."="Có một cuộc gọi nhóm đang diễn ra. Chạm để tham gia.";
-/* Message shown in a chat room for a group call in progress displaying the duration of the call */
-"Touch to return to call %@"="Chạm để quay trở lại cuộc gọi %@";
-/* Menu item to change from grid view to list view */
-"List view"="Xem dạng danh sách";
-/* Menu item to change from list view to grid view */
-"Thumbnail view"="Hiện dạng ảnh nhỏ";
 /* There are no notifications to display. */
 "No notifications"="Không có thông báo mới";
 /* The header of a notification related to payments */
@@ -2148,9 +2138,5 @@
 "File Type"="File Type";
 /* export Quality Option for Scan document */
 "best"="Best";
-/* Description of why the user should give permission to contacts */
-"Easily discover contacts from your address book on MEGA."="Easily discover contacts from your address book on MEGA.";
-/* Detailed description of why the user should give permission to contacts */
-"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA will not use this data for any other purpose and will never interact with your contacts without your consent.";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="Điền tên nhóm";
