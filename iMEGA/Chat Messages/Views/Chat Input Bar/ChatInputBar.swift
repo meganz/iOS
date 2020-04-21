@@ -7,27 +7,42 @@ protocol ChatMessageAndAudioInputBarDelegate: MessageInputBarDelegate {
     func tappedSendAudio(atPath path: String)
 }
 
-class ChatMessageAndAudioInputBar: UIView {
-    let messageInputBar = MessageInputBar.instanceFromNib
-    var audioRecordingInputBar: AudioRecordingInputBar!
-    
-    lazy var longPressGesture: UILongPressGestureRecognizer = {
+class ChatInputBar: UIView {
+
+    // MARK:- Gestures properties
+
+    private lazy var longPressGesture: UILongPressGestureRecognizer = {
         let recognizer = UILongPressGestureRecognizer(target: self, action:#selector(longPress))
         recognizer.delegate = self
         return recognizer
     }()
     
-    lazy var panGesture: UIPanGestureRecognizer = {
+    private lazy var panGesture: UIPanGestureRecognizer = {
         let recognizer = UIPanGestureRecognizer(target: self, action:#selector(pan))
         recognizer.delegate = self
         return recognizer
     }()
     
+    private lazy var fingerLiftupGesture: FingerLiftupGestureRecognizer = {
+        let recognizer = FingerLiftupGestureRecognizer(target: self, action: #selector(fingerLiftUpDetected))
+        recognizer.delegate = self
+        return recognizer
+    }()
+    
+    // MARK:- Private properties
+
+    private let messageInputBar = MessageInputBar.instanceFromNib
+    private var audioRecordingInputBar: AudioRecordingInputBar!
+    private var initialTranslation: SIMD2<Double>?
+    private var storedMessageInputBarHeight: CGFloat = 0.0
+
+    
     // MARK:- Interface properties
 
     weak var delegate: ChatMessageAndAudioInputBarDelegate?
 
-    
+    // MARK:- overriden properties and methods
+
     override var intrinsicContentSize: CGSize {
         return .zero
     }
@@ -38,6 +53,7 @@ class ChatMessageAndAudioInputBar: UIView {
         
         addGestureRecognizer(longPressGesture)
         addGestureRecognizer(panGesture)
+        addGestureRecognizer(fingerLiftupGesture)
         
         addMessageInputBar()
     }
@@ -45,6 +61,8 @@ class ChatMessageAndAudioInputBar: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: - Private methods.
     
     private func addMessageInputBar() {
         messageInputBar.delegate = self
@@ -55,14 +73,53 @@ class ChatMessageAndAudioInputBar: UIView {
     private func voiceInputBarToTextInputSwitch() {
         messageInputBar.alpha = 0.0
         addMessageInputBar()
+        
+        self.audioRecordingInputBar.placeholderViewTopConstraint.isActive = false
+        self.audioRecordingInputBar.layoutIfNeeded()
                 
         UIView.animate(withDuration: 0.4, animations: {
             self.audioRecordingInputBar.alpha = 0.0
             self.messageInputBar.alpha = 1.0
+            self.audioRecordingInputBar.viewHeightConstraint.constant = self.storedMessageInputBarHeight
+            self.audioRecordingInputBar.layoutIfNeeded()
         }) { _ in
             self.audioRecordingInputBar.removeFromSuperview()
             self.audioRecordingInputBar = nil
         }
+    }
+    
+    private func textInputToVoiceInputBarSwitch() {
+        storedMessageInputBarHeight = messageInputBar.intrinsicContentSize.height
+        audioRecordingInputBar = AudioRecordingInputBar.instanceFromNib
+        
+        audioRecordingInputBar.alpha = 0.0
+        addSubview(audioRecordingInputBar)
+        audioRecordingInputBar.autoPinEdgesToSuperviewEdges()
+        
+        messageInputBar.alpha = 0.5
+        
+        UIView.animate(withDuration: 0.4, animations: {
+            self.audioRecordingInputBar.alpha = 1.0
+            self.messageInputBar.alpha = 0.0
+        }) { _ in
+            self.messageInputBar.removeFromSuperview()
+            self.messageInputBar.alpha = 1.0
+        }
+    }
+    
+    // MARK:- Gesture callback methods.
+    
+    @objc func fingerLiftUpDetected(_ gesture: FingerLiftupGestureRecognizer) {
+        guard gesture.state == .ended,
+            audioRecordingInputBar != nil,
+            audioRecordingInputBar.superview != nil,
+            audioRecordingInputBar.locked == false else {
+                return
+        }
+        
+        UINotificationFeedbackGenerator().notificationOccurred(.error)
+        audioRecordingInputBar.cancelRecording()
+        voiceInputBarToTextInputSwitch()
     }
     
     @objc func longPress(_ longPressGesture: UILongPressGestureRecognizer) {
@@ -74,25 +131,9 @@ class ChatMessageAndAudioInputBar: UIView {
         if messageInputBar.superview != nil
             && messageInputBar.isMicButtonPresent(atLocation: loc) {
             
-            audioRecordingInputBar = AudioRecordingInputBar.instanceFromNib
-            
-            audioRecordingInputBar.alpha = 0.0
-            addSubview(audioRecordingInputBar)
-            audioRecordingInputBar.autoPinEdgesToSuperviewEdges()
-            
-            messageInputBar.alpha = 0.5
-            
-            UIView.animate(withDuration: 0.4, animations: {
-                self.audioRecordingInputBar.alpha = 1.0
-                self.messageInputBar.alpha = 0.0
-            }) { _ in
-                self.messageInputBar.removeFromSuperview()
-                self.messageInputBar.alpha = 1.0
-            }
+            textInputToVoiceInputBarSwitch()
         }
     }
-    
-    var initialTranslation: SIMD2<Double>?
     
     @objc func pan(_ panGesture: UIPanGestureRecognizer) {
         guard let gestureView = panGesture.view,
@@ -101,6 +142,8 @@ class ChatMessageAndAudioInputBar: UIView {
             audioRecordingInputBar.locked == false else {
             return
         }
+        
+        fingerLiftupGesture.failGestureIfRecognized()
 
         let translation = panGesture.translation(in: gestureView).simD2
         let trashTranslationRequiredInTotal =  0.6 * bounds.height
@@ -129,12 +172,10 @@ class ChatMessageAndAudioInputBar: UIView {
 
                 if difference.point.x < difference.point.y
                     && abs(difference.point.x) >= (trashTranslationRequiredInTotal * 0.75) {
-                    print("move to trash")
                     audioRecordingInputBar.cancelRecording()
                     voiceInputBarToTextInputSwitch()
                 } else if difference.point.y < difference.point.x
                     && abs(difference.point.y) >= (lockTranslationRequiredInTotal * 0.75) {
-                    print("lock audio")
                     audioRecordingInputBar.lock { [weak self] in
                         guard let `self` = self else {
                             return
@@ -157,15 +198,15 @@ class ChatMessageAndAudioInputBar: UIView {
         
     }
 }
-extension ChatMessageAndAudioInputBar: UIGestureRecognizerDelegate {
-    func gestureRecognizer(_: UIGestureRecognizer,
-                           shouldRecognizeSimultaneouslyWith _: UIGestureRecognizer) -> Bool {
+extension ChatInputBar: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gesture: UIGestureRecognizer,
+                           shouldRecognizeSimultaneouslyWith otherGesture: UIGestureRecognizer) -> Bool {
         return true
     }
 }
 
 
-extension ChatMessageAndAudioInputBar: MessageInputBarDelegate {
+extension ChatInputBar: MessageInputBarDelegate {
 
     func tappedAddButton() {
         delegate?.tappedAddButton()
@@ -181,18 +222,5 @@ extension ChatMessageAndAudioInputBar: MessageInputBarDelegate {
 
     func typing(withText text: String) {
         delegate?.typing(withText: text)
-    }
-}
-
-extension CGPoint {
-    var simD2: SIMD2<Double> {
-        return SIMD2(x: Double(x), y: Double(y))
-    }
-}
-
-
-extension SIMD2 where Scalar == Double {
-    var point: CGPoint {
-        return CGPoint(x: self.x, y: self.y)
     }
 }
