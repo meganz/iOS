@@ -25,6 +25,7 @@ class ChatInputBar: UIView {
     
     private lazy var fingerLiftupGesture: FingerLiftupGestureRecognizer = {
         let recognizer = FingerLiftupGestureRecognizer(target: self, action: #selector(fingerLiftUpDetected))
+        recognizer.cancelsTouchesInView = false;
         recognizer.delegate = self
         return recognizer
     }()
@@ -53,8 +54,7 @@ class ChatInputBar: UIView {
         
         addGestureRecognizer(longPressGesture)
         addGestureRecognizer(panGesture)
-        // FIXME: Enabling this will make send and add button untappable.
-//        addGestureRecognizer(fingerLiftupGesture)
+        addGestureRecognizer(fingerLiftupGesture)
         
         addMessageInputBar()
     }
