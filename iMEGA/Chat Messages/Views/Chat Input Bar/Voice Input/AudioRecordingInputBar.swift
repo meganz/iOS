@@ -64,7 +64,7 @@ class AudioRecordingInputBar: UIView {
         locked = true
         voiceView.finalRatio = (voiceView.bounds.width - trashView.bounds.width) / voiceView.bounds.width
         voiceView.selectionView.backgroundColor = #colorLiteral(red: 0, green: 0.5803921569, blue: 0.462745098, alpha: 1)
-        voiceView.imageView.image = UIImage(named: "sendChatDisabled")
+        voiceView.imageView.image = #imageLiteral(resourceName: "sendChatDisabled")
         voiceView.imageView.renderImage(withColor: .white)
         let audioWaveTrailing = self.trashView.frame.width
             + (self.trashView.frame.origin.x * 2.0)
@@ -123,11 +123,4 @@ class AudioRecordingInputBar: UIView {
 }
 
 
-extension UIImageView{
-    func renderImage(withColor color: UIColor) {
-        guard let image =  self.image else { return }
-        
-        self.image = image.withRenderingMode(.alwaysTemplate)
-        self.tintColor = color
-    }
-}
+

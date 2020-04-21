@@ -13,7 +13,7 @@ class ChatViewController: MessagesViewController {
 
     @objc var publicChatLink: URL?
     @objc var publicChatWithLinkCreated: Bool = false
-    var chatMessageAndAudioInputBar: ChatMessageAndAudioInputBar!
+    var chatInputBar: ChatInputBar!
     private(set) lazy var refreshControl: UIRefreshControl = {
          let control = UIRefreshControl()
          control.addTarget(self, action: #selector(loadMoreMessages), for: .valueChanged)
