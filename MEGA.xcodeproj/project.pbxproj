@@ -5408,6 +5408,47 @@
 			path = "Chat Messages";
 			sourceTree = "<group>";
 		};
+		BF7EBD29244E8D120015255F /* Chat Input Bar */ = {
+			isa = PBXGroup;
+			children = (
+				BF33EF8324457A0700CD35AC /* ChatInputBar.swift */,
+				BF7EBD2B244E8D540015255F /* Voice Input */,
+				BF7EBD2A244E8D3C0015255F /* Text Input */,
+			);
+			path = "Chat Input Bar";
+			sourceTree = "<group>";
+		};
+		BF7EBD2A244E8D3C0015255F /* Text Input */ = {
+			isa = PBXGroup;
+			children = (
+				BF09FF22243BDB770067DD77 /* MessageInputTextBackgroundView.swift */,
+				BF15894B2436EB8D007AF9EC /* MessageTextView.swift */,
+				BF1589232436A27A007AF9EC /* MessageInputBar.swift */,
+				BF1589252436A296007AF9EC /* MessageInputBar.xib */,
+			);
+			path = "Text Input";
+			sourceTree = "<group>";
+		};
+		BF7EBD2B244E8D540015255F /* Voice Input */ = {
+			isa = PBXGroup;
+			children = (
+				BF33EF812445401800CD35AC /* AudioRecordingInputBar.swift */,
+				BF33EF7C24453FFD00CD35AC /* AudioRecordingInputBar.xib */,
+				BF33EF7324451A4700CD35AC /* TapAndHoldMessageView.swift */,
+				BF33EF7824451A6200CD35AC /* TapAndHoldMessageView.xib */,
+				BF33EF8B2447E6DC00CD35AC /* EnlargementView.swift */,
+				BF33EF8F2447E70200CD35AC /* CondensationView.swift */,
+				BF017D8F2448062F00FB4DFD /* AudioWavesView.swift */,
+				BF017D932448066100FB4DFD /* AudioWavesView.xib */,
+				BF017D952448076200FB4DFD /* AudioWaveView.swift */,
+				BF017D972448077C00FB4DFD /* AudioWaveView.xib */,
+				BFC1794F24491073004F35AB /* AudioRecorder.swift */,
+				BF7EBD1B244D354A0015255F /* MeterTable.swift */,
+				BF7EBD1F244E50270015255F /* FingerLiftupGestureRecognizer.swift */,
+			);
+			path = "Voice Input";
+			sourceTree = "<group>";
+		};
 		BFB464172435831900FB90B9 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -5427,24 +5468,7 @@
 				BFB463FA243456D900FB90B9 /* ChatViewIntroductionHeaderView.xib */,
 				BF06E3DD243191B000B30FB7 /* ChatTitleView.swift */,
 				BF06E3DC243191B000B30FB7 /* ChatTitleView.xib */,
-				BF33EF8B2447E6DC00CD35AC /* EnlargementView.swift */,
-				BF33EF8F2447E70200CD35AC /* CondensationView.swift */,
-				BF017D952448076200FB4DFD /* AudioWaveView.swift */,
-				BF017D972448077C00FB4DFD /* AudioWaveView.xib */,
-				BF017D8F2448062F00FB4DFD /* AudioWavesView.swift */,
-				BF017D932448066100FB4DFD /* AudioWavesView.xib */,
-				BFC1794F24491073004F35AB /* AudioRecorder.swift */,
-				BF7EBD1B244D354A0015255F /* MeterTable.swift */,
-				BF33EF812445401800CD35AC /* AudioRecordingInputBar.swift */,
-				BF33EF7C24453FFD00CD35AC /* AudioRecordingInputBar.xib */,
-				BF33EF8324457A0700CD35AC /* ChatInputBar.swift */,
-				BF7EBD1F244E50270015255F /* FingerLiftupGestureRecognizer.swift */,
-				BF33EF7324451A4700CD35AC /* TapAndHoldMessageView.swift */,
-				BF33EF7824451A6200CD35AC /* TapAndHoldMessageView.xib */,
-				BF09FF22243BDB770067DD77 /* MessageInputTextBackgroundView.swift */,
-				BF15894B2436EB8D007AF9EC /* MessageTextView.swift */,
-				BF1589232436A27A007AF9EC /* MessageInputBar.swift */,
-				BF1589252436A296007AF9EC /* MessageInputBar.xib */,
+				BF7EBD29244E8D120015255F /* Chat Input Bar */,
 			);
 			path = Views;
 			sourceTree = "<group>";
