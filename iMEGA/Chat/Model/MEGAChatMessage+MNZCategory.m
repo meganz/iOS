@@ -184,8 +184,8 @@ static const void *richTitleTagKey = &richTitleTagKey;
                             text = wasRemovedFromTheGroupChatBy;
                             
                             NSMutableAttributedString *mutableAttributedString = [[NSMutableAttributedString alloc] initWithString:wasRemovedFromTheGroupChatBy attributes:@{NSFontAttributeName:textFontRegular, NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
-                            [mutableAttributedString addAttributes:@{ NSFontAttributeName: textFontMedium, NSLinkAttributeName: [self chatPeerOptionsUrlStringForUserHandle:[self userHandleReceiveAction]] } range:[wasRemovedFromTheGroupChatBy rangeOfString:fullNameReceiveAction]];
-                            [mutableAttributedString addAttributes:@{ NSFontAttributeName: textFontMedium, NSLinkAttributeName: [self chatPeerOptionsUrlStringForUserHandle:self.userHandle] } range:[wasRemovedFromTheGroupChatBy rangeOfString:fullNameDidAction]];
+                            [mutableAttributedString addAttributes:@{ NSFontAttributeName: textFontMedium, NSFontAttributeName: [self chatPeerOptionsUrlStringForUserHandle:[self userHandleReceiveAction]] } range:[wasRemovedFromTheGroupChatBy rangeOfString:fullNameReceiveAction]];
+                            [mutableAttributedString addAttributes:@{ NSFontAttributeName: textFontMedium, NSFontAttributeName: [self chatPeerOptionsUrlStringForUserHandle:self.userHandle] } range:[wasRemovedFromTheGroupChatBy rangeOfString:fullNameDidAction]];
                             self.attributedText = mutableAttributedString;
                         } else {
                             NSString *leftTheGroupChat = AMLocalizedString(@"leftTheGroupChat", @"A log message in the chat conversation to tell the reader that a participant [A] left the group chat. For example: Alice left the group chat.");
@@ -193,7 +193,7 @@ static const void *richTitleTagKey = &richTitleTagKey;
                             text = leftTheGroupChat;
                             
                             NSMutableAttributedString *mutableAttributedString = [[NSMutableAttributedString alloc] initWithString:leftTheGroupChat attributes:@{NSFontAttributeName:textFontRegular, NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
-                            [mutableAttributedString addAttributes:@{ NSFontAttributeName: textFontMedium, NSLinkAttributeName: [self chatPeerOptionsUrlStringForUserHandle:[self userHandleReceiveAction]] } range:[leftTheGroupChat rangeOfString:fullNameReceiveAction]];
+                            [mutableAttributedString addAttributes:@{ NSFontAttributeName: textFontMedium, NSFontAttributeName: [self chatPeerOptionsUrlStringForUserHandle:[self userHandleReceiveAction]] } range:[leftTheGroupChat rangeOfString:fullNameReceiveAction]];
                             self.attributedText = mutableAttributedString;
                         }
                         break;
@@ -207,15 +207,15 @@ static const void *richTitleTagKey = &richTitleTagKey;
                             text = joinedTheGroupChatByInvitationFrom;
                             
                             NSMutableAttributedString *mutableAttributedString = [[NSMutableAttributedString alloc] initWithString:joinedTheGroupChatByInvitationFrom attributes:@{NSFontAttributeName:textFontRegular, NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
-                            [mutableAttributedString addAttributes:@{ NSFontAttributeName: textFontMedium, NSLinkAttributeName: [self chatPeerOptionsUrlStringForUserHandle:[self userHandleReceiveAction]] } range:[joinedTheGroupChatByInvitationFrom rangeOfString:fullNameReceiveAction]];
-                            [mutableAttributedString addAttributes:@{ NSFontAttributeName: textFontMedium, NSLinkAttributeName: [self chatPeerOptionsUrlStringForUserHandle:self.userHandle] } range:[joinedTheGroupChatByInvitationFrom rangeOfString:fullNameDidAction]];
+                            [mutableAttributedString addAttributes:@{ NSFontAttributeName: textFontMedium, NSFontAttributeName: [self chatPeerOptionsUrlStringForUserHandle:[self userHandleReceiveAction]] } range:[joinedTheGroupChatByInvitationFrom rangeOfString:fullNameReceiveAction]];
+                            [mutableAttributedString addAttributes:@{ NSFontAttributeName: textFontMedium, NSFontAttributeName: [self chatPeerOptionsUrlStringForUserHandle:self.userHandle] } range:[joinedTheGroupChatByInvitationFrom rangeOfString:fullNameDidAction]];
                             self.attributedText = mutableAttributedString;
                         } else {
                             NSString *joinedTheGroupChat = [NSString stringWithFormat:AMLocalizedString(@"%@ joined the group chat.", @"Management message shown in a chat when the user %@ joined it from a public chat link"), fullNameReceiveAction];
                             text = joinedTheGroupChat;
                             
                             NSMutableAttributedString *mutableAttributedString = [[NSMutableAttributedString alloc] initWithString:joinedTheGroupChat attributes:@{NSFontAttributeName:textFontRegular, NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
-                            [mutableAttributedString addAttributes:@{ NSFontAttributeName: textFontMedium, NSLinkAttributeName: [self chatPeerOptionsUrlStringForUserHandle:[self userHandleReceiveAction]] } range:[joinedTheGroupChat rangeOfString:fullNameReceiveAction]];
+                            [mutableAttributedString addAttributes:@{ NSFontAttributeName: textFontMedium, NSFontAttributeName: [self chatPeerOptionsUrlStringForUserHandle:[self userHandleReceiveAction]] } range:[joinedTheGroupChat rangeOfString:fullNameReceiveAction]];
                             self.attributedText = mutableAttributedString;
                         }
                         break;
@@ -232,7 +232,7 @@ static const void *richTitleTagKey = &richTitleTagKey;
                 text = clearedTheChatHistory;
                 
                 NSMutableAttributedString *mutableAttributedString = [[NSMutableAttributedString alloc] initWithString:clearedTheChatHistory attributes:@{NSFontAttributeName:textFontRegular, NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
-                [mutableAttributedString addAttributes:@{ NSFontAttributeName: textFontMedium, NSLinkAttributeName: [self chatPeerOptionsUrlStringForUserHandle:[self userHandleReceiveAction]] } range:[clearedTheChatHistory rangeOfString:fullNameDidAction]];
+                [mutableAttributedString addAttributes:@{ NSFontAttributeName: textFontMedium, NSFontAttributeName: [self chatPeerOptionsUrlStringForUserHandle:[self userHandleReceiveAction]] } range:[clearedTheChatHistory rangeOfString:fullNameDidAction]];
                 self.attributedText = mutableAttributedString;
                 break;
             }
@@ -262,9 +262,9 @@ static const void *richTitleTagKey = &richTitleTagKey;
                 text = wasChangedToBy;
                 
                 NSMutableAttributedString *mutableAttributedString = [[NSMutableAttributedString alloc] initWithString:wasChangedToBy attributes:@{NSFontAttributeName:textFontRegular, NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
-                [mutableAttributedString addAttributes:@{ NSFontAttributeName: textFontMedium, NSLinkAttributeName: [self chatPeerOptionsUrlStringForUserHandle:[self userHandleReceiveAction]] } range:[wasChangedToBy rangeOfString:fullNameReceiveAction]];
+                [mutableAttributedString addAttributes:@{ NSFontAttributeName: textFontMedium, NSFontAttributeName: [self chatPeerOptionsUrlStringForUserHandle:[self userHandleReceiveAction]] } range:[wasChangedToBy rangeOfString:fullNameReceiveAction]];
                 [mutableAttributedString addAttribute:NSFontAttributeName value:textFontMedium range:[wasChangedToBy rangeOfString:privilige]];
-                [mutableAttributedString addAttributes:@{ NSFontAttributeName: textFontMedium, NSLinkAttributeName: [self chatPeerOptionsUrlStringForUserHandle:self.userHandle] } range:[wasChangedToBy rangeOfString:fullNameDidAction]];
+                [mutableAttributedString addAttributes:@{ NSFontAttributeName: textFontMedium, NSFontAttributeName: [self chatPeerOptionsUrlStringForUserHandle:self.userHandle] } range:[wasChangedToBy rangeOfString:fullNameDidAction]];
                 self.attributedText = mutableAttributedString;
                 break;
             }
@@ -276,7 +276,7 @@ static const void *richTitleTagKey = &richTitleTagKey;
                 text = changedGroupChatNameTo;
                 
                 NSMutableAttributedString *mutableAttributedString = [[NSMutableAttributedString alloc] initWithString:changedGroupChatNameTo attributes:@{NSFontAttributeName:textFontRegular, NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
-                [mutableAttributedString addAttributes:@{ NSFontAttributeName: textFontMedium, NSLinkAttributeName: [self chatPeerOptionsUrlStringForUserHandle:[self userHandleReceiveAction]] } range:[changedGroupChatNameTo rangeOfString:fullNameDidAction]];
+                [mutableAttributedString addAttributes:@{ NSFontAttributeName: textFontMedium, NSFontAttributeName: [self chatPeerOptionsUrlStringForUserHandle:[self userHandleReceiveAction]] } range:[changedGroupChatNameTo rangeOfString:fullNameDidAction]];
                 if (self.content) [mutableAttributedString addAttribute:NSFontAttributeName value:textFontMedium range:[changedGroupChatNameTo rangeOfString:self.content]];
                 self.attributedText = mutableAttributedString;
                 break;
@@ -287,7 +287,7 @@ static const void *richTitleTagKey = &richTitleTagKey;
                 text = publicHandleCreated;
                 
                 NSMutableAttributedString *mutableAttributedString = [[NSMutableAttributedString alloc] initWithString:publicHandleCreated attributes:@{NSFontAttributeName:textFontRegular, NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
-                [mutableAttributedString addAttributes:@{ NSFontAttributeName: textFontMedium, NSLinkAttributeName: [self chatPeerOptionsUrlStringForUserHandle:[self userHandleReceiveAction]] } range:[publicHandleCreated rangeOfString:fullNameReceiveAction]];
+                [mutableAttributedString addAttributes:@{ NSFontAttributeName: textFontMedium, NSFontAttributeName: [self chatPeerOptionsUrlStringForUserHandle:[self userHandleReceiveAction]] } range:[publicHandleCreated rangeOfString:fullNameReceiveAction]];
                 
                 self.attributedText = mutableAttributedString;
                 break;
@@ -298,7 +298,7 @@ static const void *richTitleTagKey = &richTitleTagKey;
                 text = publicHandleRemoved;
                 
                 NSMutableAttributedString *mutableAttributedString = [[NSMutableAttributedString alloc] initWithString:publicHandleRemoved attributes:@{NSFontAttributeName:textFontRegular, NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
-                [mutableAttributedString addAttributes:@{ NSFontAttributeName: textFontMedium, NSLinkAttributeName: [self chatPeerOptionsUrlStringForUserHandle:[self userHandleReceiveAction]] } range:[publicHandleRemoved rangeOfString:fullNameReceiveAction]];
+                [mutableAttributedString addAttributes:@{ NSFontAttributeName: textFontMedium, NSFontAttributeName: [self chatPeerOptionsUrlStringForUserHandle:[self userHandleReceiveAction]] } range:[publicHandleRemoved rangeOfString:fullNameReceiveAction]];
                 
                 self.attributedText = mutableAttributedString;
                 break;
@@ -310,7 +310,7 @@ static const void *richTitleTagKey = &richTitleTagKey;
                 text = [NSString stringWithFormat:@"%@\n\n%@", setPrivateMode, keyRotationExplanation];
                 
                 NSMutableAttributedString *mutableAttributedString = [[NSMutableAttributedString alloc] initWithString:text attributes:@{NSFontAttributeName:textFontRegular, NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
-                [mutableAttributedString addAttributes:@{ NSFontAttributeName: textFontMedium, NSLinkAttributeName: [self chatPeerOptionsUrlStringForUserHandle:[self userHandleReceiveAction]] } range:[text rangeOfString:fullNameReceiveAction]];
+                [mutableAttributedString addAttributes:@{ NSFontAttributeName: textFontMedium, NSFontAttributeName: [self chatPeerOptionsUrlStringForUserHandle:[self userHandleReceiveAction]] } range:[text rangeOfString:fullNameReceiveAction]];
                 [mutableAttributedString addAttribute:NSFontAttributeName value:textFontMedium range:[text rangeOfString:AMLocalizedString(@"Encrypted Key Rotation", nil)]];
                 [mutableAttributedString addAttribute:NSFontAttributeName value:textFontMediumFootnote range:[text rangeOfString:keyRotationExplanation]];
                 [mutableAttributedString addAttribute:NSForegroundColorAttributeName value:[UIColor mnz_gray999999] range:[text rangeOfString:keyRotationExplanation]];
