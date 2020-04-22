@@ -37,30 +37,38 @@
     [self requestTransaction:transaction];
 }
 
-- (void)endCall:(MEGAChatCall *)call {
-    if (call.uuid) {
-        MEGALogDebug(@"[CallKit] End call %@", call);
-        CXEndCallAction *endCallAction = [[CXEndCallAction alloc] initWithCallUUID:call.uuid];
+- (void)endCallWithCallId:(uint64_t)callId chatId:(uint64_t)chatId {
+    NSUUID *uuid = [self uuidForChatId:chatId callId:callId];
+    MEGALogDebug(@"[CallKit] End call %@", uuid);
+    if (uuid) {
+        CXEndCallAction *endCallAction = [[CXEndCallAction alloc] initWithCallUUID:uuid];
         CXTransaction *transaction = [[CXTransaction alloc] init];
         [transaction addAction:endCallAction];
         [self requestTransaction:transaction];
     } else {
-        MEGALogDebug(@"[CallKit] Call %@ not found in the calls dictionary. Hang the call", call);
+        MEGALogDebug(@"[CallKit] Call %@ not found in the calls dictionary. Hang the call", [MEGASdk base64HandleForUserHandle:callId]);
         [self printAllCalls];
-        [[MEGASdkManager sharedMEGAChatSdk] hangChatCall:call.chatId];
+        [MEGASdkManager.sharedMEGAChatSdk hangChatCall:chatId];
     }
 }
 
-
-- (void)requestTransaction:(CXTransaction *)transaction {
-    MEGALogDebug(@"[CallKit] Request transaction  %@", transaction);
-    [self.callController requestTransaction:transaction completion:^(NSError * _Nullable error) {
-        if (error) {
-            MEGALogError(@"[CallKit] Requested transaction %@ failed %@", transaction, error.localizedDescription);
+- (void)muteUnmuteCallWithCallId:(uint64_t)callId chatId:(uint64_t)chatId muted:(BOOL)muted {
+    NSUUID *uuid = [self uuidForChatId:chatId callId:callId];
+    MEGALogDebug(@"[CallKit] %@ call %@", muted ? @"Mute" : @"Unmute", uuid);
+    if (uuid) {
+        CXSetMutedCallAction *muteCallAction = [CXSetMutedCallAction.alloc initWithCallUUID:uuid muted:muted];
+        CXTransaction *transaction = [[CXTransaction alloc] init];
+        [transaction addAction:muteCallAction];
+        [self requestTransaction:transaction];
+    } else {
+        MEGALogDebug(@"[CallKit] Call %@ not found in the calls dictionary. %@ the call", [MEGASdk base64HandleForUserHandle:callId], muted ? @"Mute" : @"Unmute");
+        [self printAllCalls];
+        if (muted) {
+            [MEGASdkManager.sharedMEGAChatSdk disableAudioForChat:chatId];
         } else {
-            MEGALogDebug(@"[CallKit] Requested transaction successfully %@", transaction);
+            [MEGASdkManager.sharedMEGAChatSdk enableAudioForChat:chatId];
         }
-    }];
+    }
 }
 
 - (void)addCall:(MEGAChatCall *)call {
@@ -88,12 +96,31 @@
 }
 
 
-- (uint64_t)callForUUID:(NSUUID *)uuid {
+- (uint64_t)callIdForUUID:(NSUUID *)uuid {
     [self printAllCalls];
     uint64_t callId = [[self.callsDictionary objectForKey:uuid] unsignedLongLongValue];
     MEGALogDebug(@"[CallKit] Call %@ for uuid: %@", [MEGASdk base64HandleForUserHandle:callId], uuid);
     return callId;
 }
+
+- (uint64_t)chatIdForUUID:(NSUUID *)uuid {
+    unsigned char bytes[128];
+    [uuid getUUIDBytes:bytes];
+    uint64_t chatid;
+    memcpy(&chatid, bytes, sizeof(chatid));
+    MEGALogDebug(@"[CallKit] Chat %@ for uuid: %@", [MEGASdk base64HandleForUserHandle:chatid], uuid);
+    return chatid;
+}
+
+- (NSUUID *)uuidForChatId:(uint64_t)chatId callId:(uint64_t)callId {
+    unsigned char tempUuid[128];
+    memcpy(tempUuid, &chatId, sizeof(chatId));
+    memcpy(tempUuid + sizeof(chatId), &callId, sizeof(callId));
+    NSUUID *uuid = [NSUUID.alloc initWithUUIDBytes:tempUuid];
+    return uuid;
+}
+
+#pragma mark - Private
 
 - (void)printAllCalls {
     MEGALogDebug(@"[CallKit] All calls: %tu", self.callsDictionary.count);
@@ -101,5 +128,18 @@
         MEGALogDebug(@"[CallKit] call %@", call);
     }
 }
+
+- (void)requestTransaction:(CXTransaction *)transaction {
+    MEGALogDebug(@"[CallKit] Request transaction  %@", transaction);
+    [self.callController requestTransaction:transaction completion:^(NSError * _Nullable error) {
+        if (error) {
+            MEGALogError(@"[CallKit] Requested transaction %@ failed %@", transaction, error.localizedDescription);
+        } else {
+            MEGALogDebug(@"[CallKit] Requested transaction successfully %@", transaction);
+        }
+    }];
+}
+
+
 
 @end

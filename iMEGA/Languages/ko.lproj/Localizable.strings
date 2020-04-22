@@ -1758,14 +1758,6 @@
 "Thumbnail view"="썸네일 보기";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
 "Poor connection."="연결 상태 나쁨.";
-/* Message shown in a chat room when there is an active group call */
-"There is an active group call. Tap to join."="활성화된 그룹 통화가 있습니다. 참여하려면 탭하세요.";
-/* Message shown in a chat room for a group call in progress displaying the duration of the call */
-"Touch to return to call %@"="%@ 통화로 돌아가려면 터치하세요";
-/* Menu item to change from grid view to list view */
-"List view"="목록 보기";
-/* Menu item to change from list view to grid view */
-"Thumbnail view"="썸네일 보기";
 /* There are no notifications to display. */
 "No notifications"="알림 없음";
 /* The header of a notification related to payments */
@@ -2140,9 +2132,5 @@
 "File Type"="파일 유형";
 /* export Quality Option for Scan document */
 "best"="최고";
-/* Description of why the user should give permission to contacts */
-"Easily discover contacts from your address book on MEGA."="MEGA에서 당신의 주소록에 있는 지인들을 쉽게 찾으세요.";
-/* Detailed description of why the user should give permission to contacts */
-"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA는 당신의 동의 없이 이 데이터를 다른 목적으로 사용하고 당신의 지인들과 상호 작용하지 않을 것입니다.";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="그룹 이름을 입력하세요";

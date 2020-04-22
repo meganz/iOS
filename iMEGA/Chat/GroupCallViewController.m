@@ -29,12 +29,15 @@
 
 @interface GroupCallViewController () <UICollectionViewDataSource, MEGAChatCallDelegate, UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate>
 
+@property (nonatomic, strong) MEGAChatCall *call;
+
 @property (weak, nonatomic) IBOutlet UIView *callControlsView;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
 @property (weak, nonatomic) IBOutlet UIButton *enableDisableVideoButton;
 @property (weak, nonatomic) IBOutlet UIButton *muteUnmuteMicrophone;
 @property (weak, nonatomic) IBOutlet UIButton *enableDisableSpeaker;
+@property (weak, nonatomic) IBOutlet UIButton *minimizeButton;
 
 @property (weak, nonatomic) IBOutlet UIView *toastView;
 @property (weak, nonatomic) IBOutlet UILabel *toastLabel;
@@ -92,11 +95,13 @@
     [self initDataSource];
  
     if (self.callType == CallTypeIncoming) {
+        self.call = [MEGASdkManager.sharedMEGAChatSdk chatCallForCallId:self.callId];
         [self answerChatCall];
     } else  if (self.callType == CallTypeOutgoing) {
         [self startOutgoingCall];
     } else  if (self.callType == CallTypeActive) {
         self.call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
+        self.callId = self.call.callId;
         if (self.call.status == MEGAChatCallStatusUserNoPresent) {
             [self joinActiveCall];
         } else {
@@ -356,15 +361,17 @@
 
 - (IBAction)hangCall:(UIButton *)sender {
     [self removeAllVideoListeners];
-    [self.megaCallManager endCall:self.call];
+    [self.megaCallManager endCallWithCallId:self.callId chatId:self.chatRoom.chatId];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)muteOrUnmuteCall:(UIButton *)sender {
     if (sender.selected) {
-        [[MEGASdkManager sharedMEGAChatSdk] enableAudioForChat:self.chatRoom.chatId];
+        [self.megaCallManager muteUnmuteCallWithCallId:self.callId chatId:self.chatRoom.chatId muted:NO];
     } else {
-        [[MEGASdkManager sharedMEGAChatSdk] disableAudioForChat:self.chatRoom.chatId];
+        [self.megaCallManager muteUnmuteCallWithCallId:self.callId chatId:self.chatRoom.chatId muted:YES];
     }
+    self.muteUnmuteMicrophone.selected = !sender.selected;
 }
 
 - (IBAction)enableDisableVideo:(UIButton *)sender {
@@ -408,6 +415,7 @@
 }
 
 - (IBAction)enableDisableSpeaker:(UIButton *)sender {
+    MEGALogDebug(@"[Audio] %@ button speaker tapped", sender.selected ? @"Disable" : @"Enable");
     if (sender.selected) {
         [self disableLoudspeaker];
     } else {
@@ -435,22 +443,33 @@
     [self enableDisableVideo:self.enableDisableVideoButton];
     self.call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
     self.localPeer.video = YES;
+    MEGALogDebug(@"[Audio] Enable loud speaker, tap on video callkit icon when device is locked");
     [self enableLoudspeaker];
 }
 
 #pragma mark - Private
 
 - (void)answerChatCall {
-    MEGAChatAnswerCallRequestDelegate *answerCallRequestDelegate = [MEGAChatAnswerCallRequestDelegate.alloc initWithCompletion:^(MEGAChatError *error) {
-        if (error.type != MEGAChatErrorTypeOk) {
-            [self dismissViewControllerAnimated:YES completion:^{
-                if (error.type == MEGAChatErrorTooMany) {
-                    [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"Error. No more participants are allowed in this group call.", @"Message show when a call cannot be established because there are too many participants in the group call")];
+    if ([MEGASdkManager.sharedMEGAChatSdk chatConnectionState:self.chatRoom.chatId] == MEGAChatConnectionOnline) {
+        MEGAChatAnswerCallRequestDelegate *answerCallRequestDelegate = [MEGAChatAnswerCallRequestDelegate.alloc initWithCompletion:^(MEGAChatError *error) {
+            if (error.type != MEGAChatErrorTypeOk) {
+                [self dismissViewControllerAnimated:YES completion:^{
+                    if (error.type == MEGAChatErrorTooMany) {
+                        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"Error. No more participants are allowed in this group call.", @"Message show when a call cannot be established because there are too many participants in the group call")];
+                    }
+                }];
+            } else {
+                if (self.videoCall && !AVAudioSession.sharedInstance.mnz_isBluetoothAudioRouteAvailable) {
+                    MEGALogDebug(@"[Audio] Enable loud speaker is video call and there is no bluetooth connected");
+                    [self enableLoudspeaker];
                 }
-            }];
-        }
-    }];
-    [MEGASdkManager.sharedMEGAChatSdk answerChatCall:self.chatRoom.chatId enableVideo:self.videoCall delegate:answerCallRequestDelegate];
+            }
+        }];
+        [MEGASdkManager.sharedMEGAChatSdk answerChatCall:self.chatRoom.chatId enableVideo:self.videoCall delegate:answerCallRequestDelegate];
+    } else {
+        self.enableDisableVideoButton.enabled = self.minimizeButton.enabled = NO;
+        self.navigationSubtitleLabel.text = AMLocalizedString(@"connecting", @"Label in login screen to inform about the chat initialization proccess");
+    }
 }
 
 - (void)customNavigationBarLabel {
@@ -500,18 +519,19 @@
 - (void)didSessionRouteChange:(NSNotification *)notification {
     dispatch_async(dispatch_get_main_queue(), ^{
         NSDictionary *interuptionDict = notification.userInfo;
-        const NSInteger routeChangeReason = [[interuptionDict valueForKey:AVAudioSessionRouteChangeReasonKey] integerValue];
-        MEGALogDebug(@"didSessionRouteChange routeChangeReason: %ld, current route outputs %@", (long)routeChangeReason, [[[AVAudioSession sharedInstance] currentRoute] outputs]);
+        const AVAudioSessionRouteChangeReason routeChangeReason = [[interuptionDict valueForKey:AVAudioSessionRouteChangeReasonKey] integerValue];
+        MEGALogDebug(@"[Audio] Did session route changed, reason: %@, current route outputs %@", [AVAudioSession.sharedInstance stringForAVAudioSessionRouteChangeReason:routeChangeReason], [[[AVAudioSession sharedInstance] currentRoute] outputs]);
         if (routeChangeReason == AVAudioSessionRouteChangeReasonOverride) {
-            if ([AVAudioSession.sharedInstance mnz_isOutputEqualToPortType:AVAudioSessionPortBuiltInSpeaker]) {
-                self.speakerEnabled = YES;
-            }
             if ([AVAudioSession.sharedInstance mnz_isOutputEqualToPortType:AVAudioSessionPortBuiltInReceiver]) {
-                self.speakerEnabled = NO;
+                if (self.isSpeakerEnabled) {
+                    MEGALogDebug(@"[Audio] Enable loud speaker, override to built in receiver, but speaker was enabled");
+                    [self enableLoudspeaker];
+                }
             }
         }
         if (routeChangeReason == AVAudioSessionRouteChangeReasonCategoryChange) {
             if (self.isSpeakerEnabled && (self.call.status <= MEGAChatCallStatusInProgress || self.call.status == MEGAChatCallStatusReconnecting)) {
+                MEGALogDebug(@"[Audio] Enable loud speaker, category changed, but speaker was enabled");
                 [self enableLoudspeaker];
             }
         }
@@ -531,6 +551,7 @@
 }
 
 - (void)enableLoudspeaker {
+    self.speakerEnabled = YES;
     [[AVAudioSession sharedInstance] overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:nil];
 }
 
@@ -751,6 +772,7 @@
         [self initDurationTimer];
         [self initShowHideControls];
         [self updateParticipants];
+        self.enableDisableVideoButton.enabled = self.minimizeButton.enabled = YES;
     }
 }
 
@@ -815,6 +837,7 @@
             [weakSelf dismissViewControllerAnimated:YES completion:nil];
         } else {
             weakSelf.call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:weakSelf.chatRoom.chatId];
+            weakSelf.callId = weakSelf.call.callId;
             [weakSelf.megaCallManager addCall:weakSelf.call];
             [weakSelf.megaCallManager startCall:weakSelf.call];
             
@@ -964,7 +987,7 @@
 - (void)onChatCallUpdate:(MEGAChatSdk *)api call:(MEGAChatCall *)call {
     MEGALogDebug(@"onChatCallUpdate %@", call);
     
-    if (self.call.callId == call.callId) {
+    if (self.callId == call.callId) {
         self.call = call;
     } else {
         return;

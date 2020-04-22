@@ -1758,14 +1758,6 @@
 "Thumbnail view"="サムネールで見る";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
 "Poor connection."="接続不良。";
-/* Message shown in a chat room when there is an active group call */
-"There is an active group call. Tap to join."="有効なグループ通話があります。タップして参加します。";
-/* Message shown in a chat room for a group call in progress displaying the duration of the call */
-"Touch to return to call %@"="タッチして通話に戻る %@";
-/* Menu item to change from grid view to list view */
-"List view"="リスト一覧";
-/* Menu item to change from list view to grid view */
-"Thumbnail view"="サムネールで見る";
 /* There are no notifications to display. */
 "No notifications"="通知はありません";
 /* The header of a notification related to payments */
@@ -2140,9 +2132,5 @@
 "File Type"="ファイルの種類";
 /* export Quality Option for Scan document */
 "best"="最高";
-/* Description of why the user should give permission to contacts */
-"Easily discover contacts from your address book on MEGA."="MEGAのあなたのアドレス帳から連絡先を簡単に見つけます。";
-/* Detailed description of why the user should give permission to contacts */
-"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGAはこのデータを他の目的に使用せず、あなたの同意なしにあなたの連絡先とやり取りすることは絶対にございません。";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="グループ名を入力";
