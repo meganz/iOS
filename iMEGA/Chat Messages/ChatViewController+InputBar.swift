@@ -47,7 +47,6 @@ extension ChatViewController {
             addToChatViewController.didMove(toParent: rootViewController)
             
             // remove the accessory view and presenting animation
-            //FIXME: Keyboard does not seem to disappeat
             chatInputBar.dismissKeyboard()
             reloadInputViews()
             addToChatViewController.presentAnimation()
