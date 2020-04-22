@@ -1041,6 +1041,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
         [self updateCallButtonsState];
         [self.tableView reloadData];
         if (self.shouldWaitForChatConnectivity && newState == MEGAChatConnectionOnline) {
+            self.waitForChatConnectivity = NO;
             [self openCallViewWithVideo:self.isVideoCall active:NO];
         }
     } else if (self.groupChatRoom.chatId == chatId) {
