@@ -72,6 +72,20 @@ extension AddToChatViewController: UICollectionViewDataSource {
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView,
+                        willDisplay cell: UICollectionViewCell,
+                        forItemAt indexPath: IndexPath) {
+        guard let cameraCell = cell as? AddToChatCameraCollectionCell else {
+            return
+        }
+        
+        do {
+            try cameraCell.showLiveFeed()
+        } catch {
+            print("camera live feed error \(error.localizedDescription)")
+        }
+    }
+    
     
 }
 
