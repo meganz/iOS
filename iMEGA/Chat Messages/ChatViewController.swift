@@ -115,6 +115,11 @@ class ChatViewController: MessagesViewController {
                            cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
                 return cell
             }
+        } else if chatMessage.message.isManagementMessage {
+            let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatManagmentTypeCollectionViewCell.reuseIdentifier, for: indexPath) as! ChatManagmentTypeCollectionViewCell
+            cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
+            return cell
+            
         } else {
             let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatViewCallCollectionCell.reuseIdentifier, for: indexPath) as! ChatViewCallCollectionCell
             cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
@@ -227,6 +232,8 @@ class ChatViewController: MessagesViewController {
                                                  forCellWithReuseIdentifier: ChatVoiceClipCollectionViewCell.reuseIdentifier)
         messagesCollectionView.register(ChatLocationCollectionViewCell.self,
                                         forCellWithReuseIdentifier: ChatLocationCollectionViewCell.reuseIdentifier)
+        messagesCollectionView.register(ChatManagmentTypeCollectionViewCell.self,
+                                        forCellWithReuseIdentifier: ChatManagmentTypeCollectionViewCell.reuseIdentifier)
     }
 
     private func update() {

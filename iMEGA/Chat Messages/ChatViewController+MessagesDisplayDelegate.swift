@@ -6,7 +6,14 @@ extension ChatViewController: MessagesDisplayDelegate {
                          in messagesCollectionView: MessagesCollectionView) -> UIColor {
         switch message.kind {
         case .custom:
-            let chatMessage = message as! ChatMessage
+            guard let chatMessage = message as? ChatMessage else {
+                return isFromCurrentSender(message: message) ? UIColor(fromHexString: "#009476") : UIColor(fromHexString: "#EEEEEE")
+            }
+
+            if chatMessage.message.isManagementMessage {
+                return .clear
+            }
+            
             switch chatMessage.message.type {
             case .contact, .attachment:
                 return .clear
@@ -34,6 +41,15 @@ extension ChatViewController: MessagesDisplayDelegate {
             containerView.layer.cornerRadius = 13.0
             containerView.layer.borderColor = self.isFromCurrentSender(message: message) ?  #colorLiteral(red: 0, green: 0.5803921569, blue: 0.462745098, alpha: 1).cgColor :  #colorLiteral(red: 0.8941176471, green: 0.9215686275, blue: 0.9176470588, alpha: 1).cgColor
             containerView.layer.borderWidth = 1
+            
+            guard let chatMessage = message as? ChatMessage else {
+                return
+            }
+            
+            if chatMessage.message.isManagementMessage {
+                containerView.layer.borderColor = #colorLiteral(red: 0.8941176471, green: 0.9215686275, blue: 0.9176470588, alpha: 0).cgColor
+                return
+            }
         }
     }
 

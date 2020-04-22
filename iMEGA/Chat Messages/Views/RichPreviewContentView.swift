@@ -11,15 +11,12 @@ class RichPreviewContentView: UIView {
     
     var message : MEGAChatMessage? {
         didSet {
-//            if message?.richNumber == nil && message?.containsMeta.type != .richPreview {
-//                return
-//            }
             configureView()
         }
     }
 
     func configureView() {
-        if message?.containsMeta.type == .richPreview {
+        if message?.containsMeta?.type == .richPreview {
             guard let richPreview = message?.containsMeta.richPreview else {
                 return
             }
