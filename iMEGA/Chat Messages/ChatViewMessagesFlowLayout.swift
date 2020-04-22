@@ -34,7 +34,11 @@ class ChatViewMessagesFlowLayout: MessagesCollectionViewFlowLayout {
                 case .voiceClip:
                     return chatVoiceClipCollectionViewSizeCalculator
             case .containsMeta:
-                return chatlocationCollectionViewSizeCalculator
+                if chatMessage.message.containsMeta.type == .geolocation {
+                    return chatlocationCollectionViewSizeCalculator
+                } else {
+                    return chatRichPreviewMediaCollectionViewSizeCalculator
+                }
             default:
                 return super.cellSizeCalculatorForItem(at: indexPath)
             }
