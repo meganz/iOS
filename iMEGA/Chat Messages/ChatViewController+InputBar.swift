@@ -6,12 +6,6 @@ extension ChatViewController {
     override var inputAccessoryView: UIView? {
         if let addToChatViewController = addToChatViewController,
             addToChatViewController.parent != nil {
-            
-            // FIXME: Keyboard should disappear if present
-//            if let inputBar = chatInputBar {
-//                inputBar.endEditing(true)
-//            }
-//
             return nil
         }
         
@@ -54,7 +48,8 @@ extension ChatViewController {
             
             // remove the accessory view and presenting animation
             //FIXME: Keyboard does not seem to disappeat
-//            reloadInputViews()
+            chatInputBar.dismissKeyboard()
+            reloadInputViews()
             addToChatViewController.presentAnimation()
         }
         
