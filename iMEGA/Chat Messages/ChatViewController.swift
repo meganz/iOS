@@ -106,9 +106,15 @@ class ChatViewController: MessagesViewController {
             cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
             return cell
         } else if chatMessage.message.type == .containsMeta {
-            let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatLocationCollectionViewCell.reuseIdentifier, for: indexPath) as! ChatLocationCollectionViewCell
-            cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
-            return cell
+            if chatMessage.message.containsMeta.type == .geolocation {
+                  let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatLocationCollectionViewCell.reuseIdentifier, for: indexPath) as! ChatLocationCollectionViewCell
+                          cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
+                          return cell
+            } else {
+                let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatRichPreviewMediaCollectionViewCell.reuseIdentifier, for: indexPath) as! ChatRichPreviewMediaCollectionViewCell
+                           cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
+                return cell
+            }
         } else {
             let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatViewCallCollectionCell.reuseIdentifier, for: indexPath) as! ChatViewCallCollectionCell
             cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
