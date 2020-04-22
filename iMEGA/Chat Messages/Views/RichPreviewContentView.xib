@@ -162,6 +162,7 @@
                 <outlet property="descriptionLabel" destination="wtb-ZB-02Z" id="WeC-8A-F0S"/>
                 <outlet property="iconImageView" destination="foO-yz-LOi" id="r8P-mR-6en"/>
                 <outlet property="imageView" destination="3sq-Mn-ae8" id="RKr-zf-L1R"/>
+                <outlet property="imageViewContainer" destination="XNx-RR-LHH" id="5EX-X9-QjO"/>
                 <outlet property="linkLabel" destination="JNr-FJ-HZg" id="V9W-b5-YSi"/>
                 <outlet property="titleLabel" destination="0ba-m6-v2I" id="pfL-dH-gJq"/>
             </connections>

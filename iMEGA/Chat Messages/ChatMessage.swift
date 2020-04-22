@@ -29,6 +29,8 @@ extension ChatMessage: MessageType {
     
     var kind: MessageKind {
         
+        message.text()
+
         if case .callEnded = message.type {
             return .custom(message)
         } else if case .callStarted = message.type {
@@ -47,9 +49,8 @@ extension ChatMessage: MessageType {
             }
         } else if case .voiceClip = message.type {
             return .custom(message)
-        } else if case .alterParticipants = message.type {
-            message.text()
-            return .attributedText(message.attributedText)
+        } else if message.isManagementMessage {
+            return .custom(message)
         }
         
         return .text(message.type.description)

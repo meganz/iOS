@@ -34,10 +34,16 @@ class ChatRichPreviewMediaCollectionViewCell: TextMessageCell, MEGARequestDelega
         richPreviewContentView.isHidden = true
         richPreviewContentView.message = megaMessage
 
-        
         let dummyMssage = ConcreteMessageType(sender: message.sender, messageId: message.messageId, sentDate: message.sentDate, kind: .text(megaMessage.content))
         super.configure(with: dummyMssage, at: indexPath, and: messagesCollectionView)
 
+        if megaMessage.type == .containsMeta {
+            richPreviewContentView.isHidden = false
+            return
+        }
+
+       
+        
         let megaLink = megaMessage.megaLink as NSURL
         switch megaLink.mnz_type() {
         case .fileLink:
@@ -105,15 +111,17 @@ open class ChatRichPreviewMediaCollectionViewSizeCalculator: TextMessageSizeCalc
         
         let megaMessage = chatMessage.message
         let dummyMssage = ConcreteMessageType(sender: message.sender, messageId: message.messageId, sentDate: message.sentDate, kind: .text(megaMessage.content))
-        
+
+        let maxWidth = super.messageContainerMaxWidth(for: dummyMssage)
+
         let containerSize = super.messageContainerSize(for: dummyMssage)
         switch message.kind {
         case .custom:
-            if megaMessage.richNumber == nil {
+            if megaMessage.richNumber == nil && megaMessage.containsMeta?.type != .richPreview {
                 return containerSize
             }
             
-            return CGSize(width: containerSize.width, height: containerSize.height + 104)
+            return CGSize(width: max(maxWidth, containerSize.width), height: containerSize.height + 104)
         default:
             fatalError("messageContainerSize received unhandled MessageDataType: \(message.kind)")
         }

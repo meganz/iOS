@@ -7,6 +7,10 @@ class ChatViewMessagesFlowLayout: MessagesCollectionViewFlowLayout {
     lazy var chatRichPreviewMediaCollectionViewSizeCalculator = ChatRichPreviewMediaCollectionViewSizeCalculator(layout: self)
     lazy var chatVoiceClipCollectionViewSizeCalculator = ChatVoiceClipCollectionViewSizeCalculator(layout: self)
     lazy var chatlocationCollectionViewSizeCalculator = ChatlocationCollectionViewSizeCalculator(layout: self)
+    lazy var chatManagmentTypeCollectionViewSizeCalculator = ChatManagmentTypeCollectionViewSizeCalculator(layout: self)
+
+    
+    
     override func cellSizeCalculatorForItem(at indexPath: IndexPath) -> CellSizeCalculator {
         let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
 
@@ -14,7 +18,7 @@ class ChatViewMessagesFlowLayout: MessagesCollectionViewFlowLayout {
             guard let chatMessage = message as? ChatMessage else {
                 return super.cellSizeCalculatorForItem(at: indexPath)
             }
-
+            
             switch chatMessage.message.type {
             case .attachment, .contact:
                 if (chatMessage.message.nodeList?.size?.intValue ?? 0 == 1) {
@@ -34,8 +38,15 @@ class ChatViewMessagesFlowLayout: MessagesCollectionViewFlowLayout {
                 case .voiceClip:
                     return chatVoiceClipCollectionViewSizeCalculator
             case .containsMeta:
-                return chatlocationCollectionViewSizeCalculator
+                if chatMessage.message.containsMeta.type == .geolocation {
+                    return chatlocationCollectionViewSizeCalculator
+                } else {
+                    return chatRichPreviewMediaCollectionViewSizeCalculator
+                }
             default:
+                if chatMessage.message.isManagementMessage {
+                    return chatManagmentTypeCollectionViewSizeCalculator
+                }
                 return super.cellSizeCalculatorForItem(at: indexPath)
             }
         }
@@ -50,7 +61,8 @@ class ChatViewMessagesFlowLayout: MessagesCollectionViewFlowLayout {
             chatMediaCollectionViewSizeCalculator,
             chatRichPreviewMediaCollectionViewSizeCalculator,
             chatVoiceClipCollectionViewSizeCalculator,
-            chatlocationCollectionViewSizeCalculator
+            chatlocationCollectionViewSizeCalculator,
+            chatManagmentTypeCollectionViewSizeCalculator
         ])
         return calculators
     }
