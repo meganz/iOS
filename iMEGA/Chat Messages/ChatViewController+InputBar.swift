@@ -4,8 +4,7 @@ import MessageKit
 extension ChatViewController {
     
     override var inputAccessoryView: UIView? {
-        if let addToChatViewController = addToChatViewController,
-            addToChatViewController.parent != nil {
+        if displayedAddToChatViewController {
             return nil
         }
         
@@ -24,6 +23,11 @@ extension ChatViewController {
     private func displayAddToChatViewController() {
         addToChatViewController = AddToChatViewController(nibName: nil, bundle: nil)
         
+        addToChatViewController.tapHandler = {
+            self.displayedAddToChatViewController = false
+            self.reloadInputViews()
+        }
+        
         addToChatViewController.dismissHandler = {[weak self] viewController in
             // remove the content
             viewController.willMove(toParent: nil)
@@ -34,9 +38,7 @@ extension ChatViewController {
                 return
             }
             
-            // add back the accessory view
             self.addToChatViewController = nil
-            self.reloadInputViews()
         }
         
         if let rootViewController = UIApplication.shared.keyWindow?.rootViewController {
@@ -46,6 +48,8 @@ extension ChatViewController {
             addToChatViewController.view.autoPinEdgesToSuperviewEdges()
             addToChatViewController.didMove(toParent: rootViewController)
             
+            self.displayedAddToChatViewController = true
+
             // remove the accessory view and presenting animation
             chatInputBar.dismissKeyboard()
             reloadInputViews()

@@ -14,6 +14,7 @@ class AddToChatViewController: UIViewController {
     @IBOutlet weak var middleCollectionView: UICollectionView!
     @IBOutlet weak var pageControl: UIPageControl!
     
+    var tapHandler: (() -> Void)?
     var dismissHandler: ((AddToChatViewController) -> Void)?
     var presentAndDismissAnimationDuration: TimeInterval = 0.4
     
@@ -31,22 +32,26 @@ class AddToChatViewController: UIViewController {
     // MARK:- Actions.
 
     @IBAction func backgroundViewTapped(_ tapGesture: UITapGestureRecognizer) {
-        guard let handler = dismissHandler else {
+        guard let dismissHandler = dismissHandler,
+            let tapHandler = tapHandler else {
             return
         }
         
+        tapHandler()
         dismissAnimation { _ in
-            handler(self)
+            dismissHandler(self)
         }
     }
     
     // MARK:- Animation methods while presenting and dismissing.
     
     func presentAnimation() {
+        backgroundView.alpha = 0.0
         contentViewBottomConstraint.constant = -contentViewHeightConstraint.constant
         view.layoutIfNeeded()
 
         UIView.animate(withDuration: presentAndDismissAnimationDuration) {
+            self.backgroundView.alpha = 1.0
             self.contentViewBottomConstraint.constant = 0.0
             self.view.layoutIfNeeded()
         }
@@ -55,6 +60,7 @@ class AddToChatViewController: UIViewController {
     func dismissAnimation(completion: ((Bool) -> Void)?) {
         UIView.animate(withDuration: presentAndDismissAnimationDuration,
                        animations: {
+                        self.backgroundView.alpha = 0.0
                         self.contentViewBottomConstraint.constant = -self.contentViewHeightConstraint.constant
                         self.view.layoutIfNeeded()
         }, completion: completion)
