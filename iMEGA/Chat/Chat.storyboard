@@ -1364,6 +1364,7 @@
                         <outlet property="collectionViewBottomConstraint" destination="Dbz-ZZ-98m" id="M7k-3P-AOI"/>
                         <outlet property="enableDisableSpeaker" destination="4uv-S3-2LB" id="bJA-ys-6xu"/>
                         <outlet property="enableDisableVideoButton" destination="fZi-pG-uLA" id="dT2-PR-3NL"/>
+                        <outlet property="minimizeButton" destination="rPI-Vv-ZsG" id="oiP-ZE-egA"/>
                         <outlet property="muteUnmuteMicrophone" destination="7fC-MD-Exy" id="6J0-bH-yj9"/>
                         <outlet property="navigationSubtitleLabel" destination="9xa-XC-DGg" id="z5m-65-Uoc"/>
                         <outlet property="navigationTitleLabel" destination="4qv-BX-eb8" id="hx6-oA-Mbm"/>

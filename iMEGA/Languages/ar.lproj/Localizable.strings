@@ -1027,7 +1027,6 @@
 "cloudDriveIsAlmostFull"="[S]السواقة السحابية ممتلئة تقريباً.[/S] [A]قم بترقية حسابك الآن[/A] الى حساب برو PRO و احصل [S]تصل حتى %@ تيرابايت (%@ غيغابايت)[/S] من مساحة تخزين سحابية.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
 "cloudDriveIsFull"="[S]سواقتك السحابية ممتلئة.[/S] [A]قم بترقية حسابك الآن[/A] إلى حساب برو PRO و احصل على [S]يصل إلى %@ تيرابايت (%@ غيغابايت)[/S] من مساحة تخزين سحابية.";
-/* Storage related with the MEGA PRO account level you can subscribe */
 "Storage"="التخزين";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "transferQuota"="حصة النقل";
@@ -1758,14 +1757,6 @@
 "Thumbnail view"="عرض الصور مصغرة";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
 "Poor connection."="اتصال ضعيف.";
-/* Message shown in a chat room when there is an active group call */
-"There is an active group call. Tap to join."="توجد محادثة جماعية فعالة. انقر للانضمام";
-/* Message shown in a chat room for a group call in progress displaying the duration of the call */
-"Touch to return to call %@"="انقر للعودة الى المكالمة %@";
-/* Menu item to change from grid view to list view */
-"List view"="طريقة عرض القائمة";
-/* Menu item to change from list view to grid view */
-"Thumbnail view"="عرض الصور مصغرة";
 /* There are no notifications to display. */
 "No notifications"="لا يوجد إشعارات جديدة";
 /* The header of a notification related to payments */
@@ -2140,9 +2131,5 @@
 "File Type"="نوع الملف";
 /* export Quality Option for Scan document */
 "best"="الأفضل";
-/* Description of why the user should give permission to contacts */
-"Easily discover contacts from your address book on MEGA."="اكتشف جهات الاتصال بسهولة من دفتر العناوين الخاص بك على ميغا MEGA.";
-/* Detailed description of why the user should give permission to contacts */
-"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="لن تستخدم ميغا MEGA هذه البيانات لأي غرض آخر ولن تتفاعل أبداً مع جهات الاتصال الخاصة بك دون موافقتك.";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="ادخل اسم المجموعة";

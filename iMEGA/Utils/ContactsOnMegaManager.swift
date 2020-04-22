@@ -125,7 +125,7 @@ struct ContactOnMega: Codable {
                         let formatedNumber = phoneNumberKit.format(phoneNumber, toType: .e164)
                         let name = contact.givenName + " " + contact.familyName
 
-                        deviceContacts.append([formatedNumber:name])
+                        deviceContacts.append([formatedNumber:name.replacingOccurrences(of: "\"", with: "''")])
                     }
                     catch {
                         MEGALogError("Device contact number parser error " + label.value.stringValue)
@@ -201,7 +201,9 @@ struct ContactOnMega: Codable {
         UserDefaults.standard.set(Date(), forKey: "lastDateContactsOnMegaRequested")
         self.state = .ready
         guard let completion = completionWhenReady else { return }
-        completion()
+        DispatchQueue.main.async {
+            completion()
+        }
         completionWhenReady = nil
     }
     

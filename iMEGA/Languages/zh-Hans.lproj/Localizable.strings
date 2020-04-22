@@ -1758,14 +1758,6 @@
 "Thumbnail view"="缩略图";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
 "Poor connection."="网络连接不佳。";
-/* Message shown in a chat room when there is an active group call */
-"There is an active group call. Tap to join."="您有一个活跃的群组通话。点击加入。";
-/* Message shown in a chat room for a group call in progress displaying the duration of the call */
-"Touch to return to call %@"="触摸即可返回通话%@";
-/* Menu item to change from grid view to list view */
-"List view"="列表显示";
-/* Menu item to change from list view to grid view */
-"Thumbnail view"="缩略图";
 /* There are no notifications to display. */
 "No notifications"="没有新通知";
 /* The header of a notification related to payments */
@@ -2140,9 +2132,5 @@
 "File Type"="文件类型";
 /* export Quality Option for Scan document */
 "best"="最高";
-/* Description of why the user should give permission to contacts */
-"Easily discover contacts from your address book on MEGA."="Easily discover contacts from your address book on MEGA.";
-/* Detailed description of why the user should give permission to contacts */
-"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA will not use this data for any other purpose and will never interact with your contacts without your consent.";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="输入群名称";

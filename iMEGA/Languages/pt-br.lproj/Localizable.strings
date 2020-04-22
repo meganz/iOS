@@ -1270,7 +1270,7 @@
 /* Title shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_title"="Cota de transferência insuficiente";
 /* Description shown when you almost had used your available transfer quota. */
-"depletedTransferQuota_message"="O seu download excede a cota de transferência disponível para o seu endereço IP e, portanto, pode ser interrompido.";
+"depletedTransferQuota_message"="O download excede a cota de transferência disponível para o seu IP e, portanto, pode ser interrompido.";
 /* Button title to see the available pro plans in MEGA */
 "seePlans"="Veja os planos";
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
@@ -1758,14 +1758,6 @@
 "Thumbnail view"="Visualização em miniaturas";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
 "Poor connection."="Conexão ruim.";
-/* Message shown in a chat room when there is an active group call */
-"There is an active group call. Tap to join."="Há uma chamada em grupo ativa. Toque para participar.";
-/* Message shown in a chat room for a group call in progress displaying the duration of the call */
-"Touch to return to call %@"="Toque para voltar à chamada %@";
-/* Menu item to change from grid view to list view */
-"List view"="Visualização em lista";
-/* Menu item to change from list view to grid view */
-"Thumbnail view"="Visualização em miniaturas";
 /* There are no notifications to display. */
 "No notifications"="Não há notificações";
 /* The header of a notification related to payments */
@@ -2140,9 +2132,5 @@
 "File Type"="Tipo de arquivo";
 /* export Quality Option for Scan document */
 "best"="Superior";
-/* Description of why the user should give permission to contacts */
-"Easily discover contacts from your address book on MEGA."="Descubra facilmente quais são os contatos do seu catálogo de endereços que já estão no MEGA.";
-/* Detailed description of why the user should give permission to contacts */
-"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="O MEGA não utilizará esses dados com nenhum outro propósito, e nunca irá interagir com os seus contatos sem o seu consentimento.";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="Digite o nome do grupo";

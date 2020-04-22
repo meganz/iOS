@@ -523,7 +523,7 @@
 /* Title of the Contacts section */
 "contactsTitle"="聯絡人";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
-"oneFolderShared"="1個檔案夾";
+"oneFolderShared"="1個資料夾";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
 "foldersShared"="%d 個資料夾";
 /* Item menu option to add a contact writting his/her email */
@@ -1758,14 +1758,6 @@
 "Thumbnail view"="縮圖檢視";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
 "Poor connection."="連線品質不良";
-/* Message shown in a chat room when there is an active group call */
-"There is an active group call. Tap to join."="有一個群組通話進行中。點擊可加入。";
-/* Message shown in a chat room for a group call in progress displaying the duration of the call */
-"Touch to return to call %@"="觸踫可返回撥給%@";
-/* Menu item to change from grid view to list view */
-"List view"="顯示列表";
-/* Menu item to change from list view to grid view */
-"Thumbnail view"="縮圖檢視";
 /* There are no notifications to display. */
 "No notifications"="沒有新通知";
 /* The header of a notification related to payments */
@@ -2140,9 +2132,5 @@
 "File Type"="檔案類型";
 /* export Quality Option for Scan document */
 "best"="最好的";
-/* Description of why the user should give permission to contacts */
-"Easily discover contacts from your address book on MEGA."="輕易的在您通訊錄中找到有在使用MEGA的聯絡人。";
-/* Detailed description of why the user should give permission to contacts */
-"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA不會將這些資料用於任何其他目的，並且未經您的同意絕不會與您的聯絡人互動。";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="輸入群組名稱";
