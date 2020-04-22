@@ -1310,13 +1310,16 @@
         case MEGAChatCallStatusDestroyed: {
             [self.timer invalidate];
             self.chatRoomOnGoingCall = nil;
-            [self hideTopBannerButton];
             NSIndexPath *indexPath = [self.chatIdIndexPathDictionary objectForKey:@(call.chatId)];
             if ([self.tableView.indexPathsForVisibleRows containsObject:indexPath]) {
                 [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
             }
             break;
         }
+            
+        case MEGAChatCallStatusTerminatingUserParticipation:
+            [self hideTopBannerButton];
+            break;
             
         default:
             break;
