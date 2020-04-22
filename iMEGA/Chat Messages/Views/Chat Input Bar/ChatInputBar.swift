@@ -63,6 +63,10 @@ class ChatInputBar: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func dismissKeyboard() {
+        messageInputBar.dismissKeyboard()
+    }
+    
     // MARK: - Private methods.
     
     private func addMessageInputBar() {
