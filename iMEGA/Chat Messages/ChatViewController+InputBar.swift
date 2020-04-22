@@ -4,6 +4,17 @@ import MessageKit
 extension ChatViewController {
     
     override var inputAccessoryView: UIView? {
+        if let addToChatViewController = addToChatViewController,
+            addToChatViewController.parent != nil {
+            
+            // FIXME: Keyboard should disappear if present
+//            if let inputBar = chatInputBar {
+//                inputBar.endEditing(true)
+//            }
+//
+            return nil
+        }
+        
         if chatInputBar == nil {
             chatInputBar = ChatInputBar()
             chatInputBar.delegate = self
@@ -17,36 +28,36 @@ extension ChatViewController {
     }
     
     private func displayAddToChatViewController() {
-        // Using last window instead of keywindow. Using keywindow creates a glitch in the animation.
-        // Athough using last prints "Keyboard cannot present view controllers" but does not have any side effects.
-        // https://stackoverflow.com/questions/46996251/inputaccessoryview-animating-down-when-alertcontroller-actionsheet-presented
-        guard let rootViewController = UIApplication.shared.windows.last?.rootViewController else {
-            return
-        }
-        
         addToChatViewController = AddToChatViewController(nibName: nil, bundle: nil)
-        addToChatViewController.transitioningDelegate = self
-        rootViewController.present(addToChatViewController, animated: true, completion: nil)
-    }
-}
-
-extension ChatViewController: UIViewControllerTransitioningDelegate {
-    func animationController(forPresented presented: UIViewController,
-                             presenting: UIViewController,
-                             source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        guard presented is AddToChatViewController else {
-            return nil
+        
+        addToChatViewController.dismissHandler = {[weak self] viewController in
+            // remove the content
+            viewController.willMove(toParent: nil)
+            viewController.view.removeFromSuperview()
+            viewController.removeFromParent()
+            
+            guard let `self` = self else {
+                return
+            }
+            
+            // add back the accessory view
+            self.addToChatViewController = nil
+            self.reloadInputViews()
         }
         
-        return AddToChatViewAnimator(type: .present)
-    }
-    
-    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        guard dismissed is AddToChatViewController else {
-            return nil
+        if let rootViewController = UIApplication.shared.keyWindow?.rootViewController {
+            // add content view
+            rootViewController.addChild(addToChatViewController)
+            rootViewController.view.addSubview(addToChatViewController.view)
+            addToChatViewController.view.autoPinEdgesToSuperviewEdges()
+            addToChatViewController.didMove(toParent: rootViewController)
+            
+            // remove the accessory view and presenting animation
+            //FIXME: Keyboard does not seem to disappeat
+//            reloadInputViews()
+            addToChatViewController.presentAnimation()
         }
         
-        return AddToChatViewAnimator(type: .dismiss)
     }
 }
 
