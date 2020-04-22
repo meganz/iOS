@@ -116,10 +116,16 @@ class ChatViewController: MessagesViewController {
                 return cell
             }
         } else if chatMessage.message.isManagementMessage {
-            let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatManagmentTypeCollectionViewCell.reuseIdentifier, for: indexPath) as! ChatManagmentTypeCollectionViewCell
-            cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
-            return cell
-            
+            switch chatMessage.message.type {
+            case .callEnded, .callStarted:
+                let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatViewCallCollectionCell.reuseIdentifier, for: indexPath) as! ChatViewCallCollectionCell
+                cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
+                return cell
+            default:
+                let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatManagmentTypeCollectionViewCell.reuseIdentifier, for: indexPath) as! ChatManagmentTypeCollectionViewCell
+                cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
+                return cell
+            }
         } else {
             let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatViewCallCollectionCell.reuseIdentifier, for: indexPath) as! ChatViewCallCollectionCell
             cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)

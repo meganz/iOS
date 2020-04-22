@@ -18,9 +18,6 @@ class ChatViewMessagesFlowLayout: MessagesCollectionViewFlowLayout {
             guard let chatMessage = message as? ChatMessage else {
                 return super.cellSizeCalculatorForItem(at: indexPath)
             }
-            if chatMessage.message.isManagementMessage {
-                return chatManagmentTypeCollectionViewSizeCalculator
-            }
             
             switch chatMessage.message.type {
             case .attachment, .contact:
@@ -47,6 +44,9 @@ class ChatViewMessagesFlowLayout: MessagesCollectionViewFlowLayout {
                     return chatRichPreviewMediaCollectionViewSizeCalculator
                 }
             default:
+                if chatMessage.message.isManagementMessage {
+                    return chatManagmentTypeCollectionViewSizeCalculator
+                }
                 return super.cellSizeCalculatorForItem(at: indexPath)
             }
         }
