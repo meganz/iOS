@@ -101,6 +101,10 @@ class MessageInputBar: UIView {
         return view === micButton
     }
     
+    func dismissKeyboard() {
+        messageTextView.resignFirstResponder()
+    }
+    
     // MARK: - Actions
     
     @IBAction func exapandCollapseButtonTapped(_ button: UIButton) {
