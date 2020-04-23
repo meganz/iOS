@@ -39,6 +39,7 @@
 #import "MEGALoginRequestDelegate.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGAStore.h"
+#import "MEGALinkManager.h"
 
 #import "AppDelegate.h"
 #import "ContactLinkQRViewController.h"

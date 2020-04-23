@@ -70,9 +70,59 @@ class ChatViewController: MessagesViewController {
         configureMessageCollectionView()
         update()
     }
-
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if (presentingViewController != nil) && parent != nil {
+            navigationItem.leftBarButtonItem = UIBarButtonItem(title: AMLocalizedString("close"), style: .plain, target: self, action: #selector(dismissChatRoom))
+        }
+        
+        if publicChatWithLinkCreated {
+            let customModalAlertVC = CustomModalAlertViewController()
+            customModalAlertVC.modalPresentationStyle = .overCurrentContext
+            customModalAlertVC.image = UIImage(named: "chatLinkCreation")
+            customModalAlertVC.viewTitle = chatRoom.title
+            customModalAlertVC.detail = AMLocalizedString("People can join your group by using this link.", "Text explaining users how the chat links work.")
+            customModalAlertVC.firstButtonTitle = AMLocalizedString("share", "Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected")
+            customModalAlertVC.link = publicChatLink?.absoluteString;
+            customModalAlertVC.secondButtonTitle = AMLocalizedString("delete", nil)
+            customModalAlertVC.dismissButtonTitle = AMLocalizedString("dismiss", "Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).")
+            customModalAlertVC.firstCompletion = { [weak customModalAlertVC] in
+                customModalAlertVC?.dismiss(animated: true, completion: {
+                    let activityVC = UIActivityViewController(activityItems: [self.publicChatLink?.absoluteString], applicationActivities: nil)
+                    self.publicChatWithLinkCreated = false
+                    if UIDevice.current.iPadDevice {
+                        activityVC.popoverPresentationController?.sourceView = self.view
+                        activityVC.popoverPresentationController?.sourceRect = self.view.frame
+                    }
+                    self.present(activityVC, animated: true, completion: nil)
+                    
+                })
+                
+            }
+            customModalAlertVC.secondCompletion = { [weak customModalAlertVC] in
+                customModalAlertVC?.dismiss(animated: true, completion: {
+                    MEGASdkManager.sharedMEGAChatSdk()?.removeChatLink(self.chatRoom.chatId, delegate: MEGAChatGenericRequestDelegate(completion: { (request, error) in
+                        if error.type == .MEGAChatErrorTypeOk {
+                            SVProgressHUD.showSuccess(withStatus: AMLocalizedString("linkRemoved", "Message shown when the link to a file or folder has been removed"))
+                        }
+                    }))
+                    
+                })
+            }
+            
+            customModalAlertVC.dismissCompletion = { [weak customModalAlertVC] in
+                self.publicChatWithLinkCreated = false
+                customModalAlertVC?.dismiss(animated: true, completion: nil)
+            }
+            
+            present(customModalAlertVC, animated: true, completion: nil)
+        }
+        
+    }
+    
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-
+        
         return super.collectionView(collectionView, cellForItemAt: indexPath)
     }
 
@@ -292,6 +342,21 @@ class ChatViewController: MessagesViewController {
         }
     }
 
+    @objc func dismissChatRoom() {
+        dismiss(animated: true) {
+            if MEGASdkManager.sharedMEGAChatSdk()?.initState() == .anonymous {
+                MEGASdkManager.sharedMEGAChatSdk()?.logout(with: MEGAChatGenericRequestDelegate(completion: { (request, error) in
+                    MEGASdkManager.destroySharedMEGAChatSdk()
+                }))
+                
+                if MEGALinkManager.selectedOption == .joinChatLink {
+                    let onboardingVC = UIApplication.mnz_visibleViewController() as! OnboardingViewController
+                    onboardingVC.presentLoginViewController()
+                }
+            }
+        }
+    }
+    
     @objc func addParticipant() {
         let navigationController = UIStoryboard.init(name: "Contacts", bundle: nil).instantiateViewController(withIdentifier: "ContactsNavigationControllerID") as! UINavigationController
         let contactsVC = navigationController.viewControllers.first as! ContactsViewController
