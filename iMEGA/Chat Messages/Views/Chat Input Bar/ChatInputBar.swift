@@ -98,7 +98,15 @@ class ChatInputBar: UIView {
     
     private func textInputToVoiceInputBarSwitch() {
         storedMessageInputBarHeight = messageInputBar.bounds.height
+        
         audioRecordingInputBar = AudioRecordingInputBar.instanceFromNib
+        audioRecordingInputBar.trashButtonTapHandler = { [weak self] in
+            guard let `self` = self else {
+                return
+            }
+            
+            self.cancelRecordingAndSwitchToTextInput()
+        }
         
         audioRecordingInputBar.alpha = 0.0
         addSubview(audioRecordingInputBar)
@@ -122,6 +130,11 @@ class ChatInputBar: UIView {
             self.delegate?.tappedSendAudio(atPath: clipPath)
         }
         
+        voiceInputBarToTextInputSwitch()
+    }
+    
+    private func cancelRecordingAndSwitchToTextInput() {
+        audioRecordingInputBar.cancelRecording()
         voiceInputBarToTextInputSwitch()
     }
     
@@ -187,8 +200,7 @@ class ChatInputBar: UIView {
 
                 if difference.point.x < difference.point.y
                     && abs(difference.point.x) >= (trashTranslationRequiredInTotal * 0.75) {
-                    audioRecordingInputBar.cancelRecording()
-                    voiceInputBarToTextInputSwitch()
+                    self.cancelRecordingAndSwitchToTextInput()
                 } else if difference.point.y < difference.point.x
                     && abs(difference.point.y) >= (lockTranslationRequiredInTotal * 0.75) {
                     audioRecordingInputBar.lock { [weak self] in
