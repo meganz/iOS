@@ -117,6 +117,14 @@ class ChatInputBar: UIView {
         }
     }
     
+    private func stopRecordingAndSwitchToTextInput() {
+        if let clipPath = audioRecordingInputBar.stopRecording() {
+            self.delegate?.tappedSendAudio(atPath: clipPath)
+        }
+        
+        voiceInputBarToTextInputSwitch()
+    }
+    
     // MARK:- Gesture callback methods.
     
     @objc func fingerLiftUpDetected(_ gesture: FingerLiftupGestureRecognizer) {
@@ -127,9 +135,7 @@ class ChatInputBar: UIView {
                 return
         }
         
-        UINotificationFeedbackGenerator().notificationOccurred(.error)
-        audioRecordingInputBar.cancelRecording()
-        voiceInputBarToTextInputSwitch()
+        stopRecordingAndSwitchToTextInput()
     }
     
     @objc func longPress(_ longPressGesture: UILongPressGestureRecognizer) {
@@ -190,15 +196,10 @@ class ChatInputBar: UIView {
                             return
                         }
                         
-                        if let clipPath = self.audioRecordingInputBar.stopRecording() {
-                            self.delegate?.tappedSendAudio(atPath: clipPath)
-                        }
-                        
-                        self.voiceInputBarToTextInputSwitch()
+                        self.stopRecordingAndSwitchToTextInput()
                     }
                 } else {
-                    audioRecordingInputBar.cancelRecording()
-                    voiceInputBarToTextInputSwitch()
+                    self.stopRecordingAndSwitchToTextInput()
                 }
             }
         default:
