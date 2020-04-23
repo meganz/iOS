@@ -18,6 +18,7 @@ class AudioRecordingInputBar: UIView {
     
     lazy var audioRecorder = AudioRecorder()
     var player: AVAudioPlayer?
+    var trashButtonTapHandler: (() -> Void)?
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -120,6 +121,15 @@ class AudioRecordingInputBar: UIView {
     func cancelRecording() {
         stopRecording(true)
     }
+    
+    @IBAction func trashButtonTapped(_ button: UIButton) {
+        guard locked, let handler = trashButtonTapHandler else {
+            return
+        }
+        
+        handler()
+    }
+
 }
 
 
