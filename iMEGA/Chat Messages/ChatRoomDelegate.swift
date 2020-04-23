@@ -75,8 +75,36 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
     }
     
     func onMessageUpdate(_ api: MEGAChatSdk!, message: MEGAChatMessage!) {
-        insertMessage(message)
         MEGALogInfo("ChatRoomDelegate: onMessageUpdate")
+        message.chatId = self.chatRoom.chatId;
+        print(message!.status)
+        if message.hasChanged(for: .status) {
+            switch message.status {
+            case .unknown, .sending, .sendingManual:
+                break
+            case .serverReceived:
+                let filteredArray = messages.filter { chatMessage in
+                    return chatMessage.message.temporalId == message.temporalId
+                }
+              
+                if filteredArray.count > 0 {
+                    let oldMessage = filteredArray.first!
+//                    if oldMessage.warningDialog.r > MEGAChatMessageWarningDialogNone {
+//
+//                    }
+                    
+                    let index = messages.firstIndex(of: oldMessage)!
+                    messages[index] = ChatMessage(message: message, chatRoom: chatRoom)
+                    chatViewController.messagesCollectionView.performBatchUpdates({
+                        chatViewController.messagesCollectionView.reloadSections([index])
+                    }, completion: nil)
+                    
+                }
+                
+            default:
+                break
+            }
+        }
     }
     
     func onHistoryReloaded(_ api: MEGAChatSdk!, chat: MEGAChatRoom!) {
@@ -111,9 +139,8 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
         }
     }
     
-    // MARK: - Private methods
     
-    private func insertMessage(_ message: MEGAChatMessage) {
+    func insertMessage(_ message: MEGAChatMessage) {
          messages.append(ChatMessage(message: message, chatRoom: chatRoom))
         
          chatViewController.messagesCollectionView.performBatchUpdates({
@@ -125,6 +152,8 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
          })
      }
     
+    // MARK: - Private methods
+
     private func isLastSectionVisible() -> Bool {
         guard !messages.isEmpty else { return false }
         
