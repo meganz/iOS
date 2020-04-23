@@ -36,7 +36,7 @@ class ChatInputBar: UIView {
     private var audioRecordingInputBar: AudioRecordingInputBar!
     private var initialTranslation: SIMD2<Double>?
     private var storedMessageInputBarHeight: CGFloat = 0.0
-
+    private var voiceToTextSwitching = false
     
     // MARK:- Interface properties
 
@@ -76,16 +76,15 @@ class ChatInputBar: UIView {
     }
     
     private func voiceInputBarToTextInputSwitch() {
-        removeGestureRecognizer(fingerLiftupGesture)
+        voiceToTextSwitching = true
+        
         messageInputBar.alpha = 0.0
         addMessageInputBar()
         
         audioRecordingInputBar.placeholderViewTopConstraint.isActive = false
         audioRecordingInputBar.layoutIfNeeded()
                 
-        print(storedMessageInputBarHeight)
-
-        UIView.animate(withDuration: 0.4, animations: {
+        UIView.animate(withDuration: 0.2, animations: {
             self.audioRecordingInputBar.alpha = 0.0
             self.messageInputBar.alpha = 1.0
             self.audioRecordingInputBar.viewHeightConstraint.constant = self.storedMessageInputBarHeight
@@ -93,12 +92,12 @@ class ChatInputBar: UIView {
         }) { _ in
             self.audioRecordingInputBar.removeFromSuperview()
             self.audioRecordingInputBar = nil
+            self.voiceToTextSwitching = false
         }
     }
     
     private func textInputToVoiceInputBarSwitch() {
         storedMessageInputBarHeight = messageInputBar.bounds.height
-        addGestureRecognizer(fingerLiftupGesture)
         audioRecordingInputBar = AudioRecordingInputBar.instanceFromNib
         
         audioRecordingInputBar.alpha = 0.0
@@ -107,12 +106,14 @@ class ChatInputBar: UIView {
         
         messageInputBar.alpha = 0.5
         
-        UIView.animate(withDuration: 0.4, animations: {
+        UIView.animate(withDuration: 0.2, animations: {
             self.audioRecordingInputBar.alpha = 1.0
             self.messageInputBar.alpha = 0.0
         }) { _ in
-            self.messageInputBar.removeFromSuperview()
-            self.messageInputBar.alpha = 1.0
+            if !self.voiceToTextSwitching {
+                self.messageInputBar.removeFromSuperview()
+                self.messageInputBar.alpha = 1.0
+            }
         }
     }
     
@@ -139,7 +140,6 @@ class ChatInputBar: UIView {
         let loc = longPressGesture.location(in: longPressGesture.view)
         if messageInputBar.superview != nil
             && messageInputBar.isMicButtonPresent(atLocation: loc) {
-            
             textInputToVoiceInputBarSwitch()
         }
     }
