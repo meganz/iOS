@@ -123,6 +123,7 @@ class MessageInputBar: UIView {
             return
         }
         
+        messageTextView.text = nil
         delegate.tappedSendButton(withText: text)
     }
     
