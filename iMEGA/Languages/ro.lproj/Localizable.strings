@@ -578,8 +578,6 @@
 "removeUserMessage"="Sigur vrei să elimini contactul %@ din lista de contacte?";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
 "removeMultipleUsersMessage"="Sigur vrei să elimini %d utilizatori din lista de contacte?";
-/* Success message shown when the selected contacts have been removed */
-"removedContacts"="%d contacte eliminate";
 /* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
 "removedContact"="Contactul %@ a fost eliminat";
 /* Label shown when a contact request is pending */
@@ -856,7 +854,7 @@
 /* Hint text where the user have to re-write the new email to confirm it */
 "confirmNewEmail"="Confirmă e-mailul nou";
 /* The title of the alert dialog to change the email associated to an account. */
-"changeEmail"="Modifică e-mailul";
+"Change Email"="Modifică e-mailul";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
 "oldAndNewEmailMatch"="E-mailul nou și cel vechi nu trebuie să coincidă";
 /* Error message shown when you have not written the same email when confirming a new one */

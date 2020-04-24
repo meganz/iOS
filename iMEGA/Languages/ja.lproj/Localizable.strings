@@ -578,8 +578,6 @@
 "removeUserMessage"="あなたの知り合いリストから%@ を取り除きますね？";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
 "removeMultipleUsersMessage"="知り合いリストからユーザー%d人、取り除きますね？";
-/* Success message shown when the selected contacts have been removed */
-"removedContacts"="知り合い%d人除外";
 /* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
 "removedContact"="知り合い%@ 除外";
 /* Label shown when a contact request is pending */
@@ -856,7 +854,7 @@
 /* Hint text where the user have to re-write the new email to confirm it */
 "confirmNewEmail"="メールアドレスを確認";
 /* The title of the alert dialog to change the email associated to an account. */
-"changeEmail"="メールを変更する";
+"Change Email"="メールを変更する";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
 "oldAndNewEmailMatch"="新しいEメールは現在のEメールと違う必要があります";
 /* Error message shown when you have not written the same email when confirming a new one */

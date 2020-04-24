@@ -578,8 +578,6 @@
 "removeUserMessage"="%@님을 연락처에서 삭제하시겠습니까?";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
 "removeMultipleUsersMessage"="이용자 %d명을 연락처 목록에서 삭제하시겠습니까?";
-/* Success message shown when the selected contacts have been removed */
-"removedContacts"="%d 연락처 삭제됨";
 /* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
 "removedContact"="연락처 %@ 삭제됨";
 /* Label shown when a contact request is pending */
@@ -856,7 +854,7 @@
 /* Hint text where the user have to re-write the new email to confirm it */
 "confirmNewEmail"="새 이메일 승인";
 /* The title of the alert dialog to change the email associated to an account. */
-"changeEmail"="이메일 변경";
+"Change Email"="이메일 변경";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
 "oldAndNewEmailMatch"="새 이메일과 이전 이메일이 일치하지 않아야합니다";
 /* Error message shown when you have not written the same email when confirming a new one */

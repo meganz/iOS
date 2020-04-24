@@ -2,6 +2,7 @@
 #import "MyAccountHallViewController.h"
 
 #import "AchievementsViewController.h"
+#import "ContactLinkQRViewController.h"
 #import "ContactsViewController.h"
 #import "Helper.h"
 #import "MEGAContactLinkCreateRequestDelegate.h"
@@ -12,7 +13,7 @@
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
 #import "MyAccountHallTableViewCell.h"
-#import "MyAccountViewController.h"
+#import "MEGA-Swift.h"
 #import "NotificationsTableViewController.h"
 #import "OfflineViewController.h"
 #import "SettingsTableViewController.h"
@@ -37,6 +38,13 @@
 
 @property (strong, nonatomic) NSNumberFormatter *numberFormatter;
 
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *qrCodeImageView;
+
+@property (weak, nonatomic) IBOutlet UIView *tableFooterView;
+@property (weak, nonatomic) IBOutlet UILabel *tableFooterLabel;
+
 @end
 
 @implementation MyAccountHallViewController
@@ -45,11 +53,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.navigationItem.title = AMLocalizedString(@"myAccount", @"Title of the app section where you can see your account details");
-    
-    self.buyPROBarButtonItem.title = AMLocalizedString(@"upgrade", @"Caption of a button to upgrade the account to Pro status");
-    
+        
     self.viewAndEditProfileLabel.text = AMLocalizedString(@"viewAndEditProfile", @"Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile");
     self.viewAndEditProfileButton.accessibilityLabel = AMLocalizedString(@"viewAndEditProfile", @"Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile");
 
@@ -80,7 +84,13 @@
 
     [[MEGAPurchase sharedInstance] setPricingsDelegate:self];
     
-    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    UITapGestureRecognizer *tapAvatarGestureRecognizer = [UITapGestureRecognizer.alloc initWithTarget:self action:@selector(avatarTapped:)];
+    self.avatarImageView.gestureRecognizers = @[tapAvatarGestureRecognizer];
+    self.avatarImageView.userInteractionEnabled = YES;
+    
+    if (@available(iOS 11.0, *)) {
+        self.avatarImageView.accessibilityIgnoresInvertColors = YES;
+    }
     self.addPhoneNumberView.hidden = YES;
     
     [self configAddPhoneNumberTexts];
@@ -110,6 +120,7 @@
     [super viewWillDisappear:animated];
     
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
+    [MEGASdkManager.sharedMEGASdk removeMEGARequestDelegate:self];
 }
 
 #pragma mark - Private
@@ -142,6 +153,9 @@
 }
 
 - (void)reloadUI {
+    [self configNavigationItem];
+    [self configTableFooterView];
+    
     self.nameLabel.text = [[[MEGASdkManager sharedMEGASdk] myUser] mnz_fullName];
     [self setUserAvatar];
     
@@ -168,13 +182,45 @@
     [self tableView:self.tableView didSelectRowAtIndexPath:offlineIndexPath];
 }
 
+- (void)avatarTapped:(UITapGestureRecognizer *)sender {
+    if (sender.state == UIGestureRecognizerStateEnded) {
+        ContactLinkQRViewController *contactLinkVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactLinkQRViewControllerID"];
+        contactLinkVC.scanCode = NO;
+        [self presentViewController:contactLinkVC animated:YES completion:nil];
+    }
+}
+
+- (void)setUserAvatar {
+    MEGAUser *myUser = MEGASdkManager.sharedMEGASdk.myUser;
+    [self.avatarImageView mnz_setImageForUserHandle:myUser.handle];
+}
+
+- (void)configNavigationItem {
+    if (MEGASdkManager.sharedMEGASdk.isBusinessAccount) {
+        self.navigationItem.rightBarButtonItem = nil;
+        UILabel *label = [Helper customNavigationBarLabelWithTitle:AMLocalizedString(@"myAccount", @"Title of the app section where you can see your account details") subtitle:AMLocalizedString(@"Business", nil)];
+        label.frame = CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44);
+        self.navigationItem.titleView = label;
+    } else {
+        self.buyPROBarButtonItem.title = AMLocalizedString(@"upgrade", @"Caption of a button to upgrade the account to Pro status");
+        self.navigationItem.title = AMLocalizedString(@"myAccount", @"Title of the app section where you can see your account details");
+    }
+}
+
+- (void)configTableFooterView {
+    if (MEGASdkManager.sharedMEGASdk.isMasterBusinessAccount) {
+        self.tableFooterLabel.text = AMLocalizedString(@"User management is only available in a desktop web browser.", @"Label presented to Admins that full management of the business is only available in a desktop web browser");
+        self.tableView.tableFooterView = self.tableFooterView;
+    } else {
+        self.tableView.tableFooterView = [UIView.alloc initWithFrame:CGRectZero];
+    }
+}
+
 #pragma mark - IBActions
 
 - (IBAction)buyPROTouchUpInside:(UIBarButtonItem *)sender {
     if ([[MEGASdkManager sharedMEGASdk] mnz_accountDetails]) {
-        UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
-        upgradeTVC.hideSkipButton = YES;
-        
+        UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];        
         [self.navigationController pushViewController:upgradeTVC animated:YES];
     } else {
          [MEGAReachabilityManager isReachableHUDIfNot];
@@ -182,8 +228,8 @@
 }
 
 - (IBAction)viewAndEditProfileTouchUpInside:(UIButton *)sender {
-    MyAccountViewController *myAccountVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"MyAccountViewControllerID"];
-    [self.navigationController pushViewController:myAccountVC animated:YES];
+    ProfileViewController *profileViewController = [[UIStoryboard storyboardWithName:@"Profile" bundle:nil] instantiateViewControllerWithIdentifier:@"ProfileViewControllerID"];
+    [self.navigationController pushViewController:profileViewController animated:YES];
 }
 
 - (IBAction)didTapAddPhoneNumberView {
@@ -201,7 +247,11 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *identifier;
     if (indexPath.row == 0) {
-        identifier = @"MyAccountHallUsedStorageTableViewCellID";
+        if (MEGASdkManager.sharedMEGASdk.isBusinessAccount) {
+            identifier = @"MyAccountHallBusinessUsageTableViewCellID";
+        } else {
+            identifier = @"MyAccountHallUsedStorageTableViewCellID";
+        }
     } else if (indexPath.row == 3) {
         identifier = @"MyAccountHallWithSubtitleTableViewCellID";
     } else {
@@ -215,20 +265,32 @@
     
     switch (indexPath.row) {
         case 0: { // Used Storage
-            cell.sectionLabel.text = AMLocalizedString(@"usedStorage", @"Title of the Used Storage section");
-            
-            if ([[MEGASdkManager sharedMEGASdk] mnz_accountDetails]) {
-                MEGAAccountDetails *accountDetails = [[MEGASdkManager sharedMEGASdk] mnz_accountDetails];
-                cell.usedLabel.text = [Helper memoryStyleStringFromByteCount:accountDetails.storageUsed.longLongValue];
-                NSNumber *number = [NSNumber numberWithFloat:((accountDetails.storageUsed.floatValue / accountDetails.storageMax.floatValue) * 100)];
-                NSString *percentageString = [self.numberFormatter stringFromNumber:number];
-                NSString *ofString = [NSString stringWithFormat:AMLocalizedString(@"of %@", @"Sentece showed under the used space percentage to complete the info with the maximum storage."), [Helper memoryStyleStringFromByteCount:accountDetails.storageMax.longLongValue]];
-                cell.usedPercentageLabel.text = [NSString stringWithFormat:@"%@ %% %@", percentageString, ofString];
-                cell.usedProgressView.progress = number.floatValue / 100;
+            if (MEGASdkManager.sharedMEGASdk.isBusinessAccount) {
+                cell.sectionLabel.text = AMLocalizedString(@"Usage", @"Button title that goes to the section Usage where you can see how your MEGA space is used");
+                cell.storageLabel.text = AMLocalizedString(@"productSpace", nil);
+                cell.transferLabel.text = AMLocalizedString(@"Transfer", nil);
+                MEGAAccountDetails *accountDetails = MEGASdkManager.sharedMEGASdk.mnz_accountDetails;
+                if (accountDetails) {
+                    cell.storageUsedLabel.text = [Helper memoryStyleStringFromByteCount:accountDetails.storageUsed.longLongValue];
+                    cell.transferUsedLabel.text = [Helper memoryStyleStringFromByteCount:accountDetails.transferOwnUsed.longLongValue];
+                } else {
+                    cell.storageUsedLabel.text = @"";
+                    cell.transferUsedLabel.text = @"";
+                }
             } else {
-                cell.usedLabel.text = @"";
-                cell.usedPercentageLabel.text = @"";
-                cell.usedProgressView.progress = 0;
+                cell.sectionLabel.text = AMLocalizedString(@"usedStorage", @"Title of the Used Storage section");
+                
+                if (MEGASdkManager.sharedMEGASdk.mnz_accountDetails) {
+                    MEGAAccountDetails *accountDetails = MEGASdkManager.sharedMEGASdk.mnz_accountDetails;
+                    cell.usedLabel.text = [Helper memoryStyleStringFromByteCount:accountDetails.storageUsed.longLongValue];
+                    NSNumber *number = [NSNumber numberWithFloat:((accountDetails.storageUsed.floatValue / accountDetails.storageMax.floatValue) * 100)];
+                    NSString *percentageString = [self.numberFormatter stringFromNumber:number];
+                    NSString *ofString = [NSString stringWithFormat:AMLocalizedString(@"of %@", @"Sentece showed under the used space percentage to complete the info with the maximum storage."), [Helper memoryStyleStringFromByteCount:accountDetails.storageMax.longLongValue]];
+                    cell.usedPercentageLabel.text = [NSString stringWithFormat:@"%@ %% %@", percentageString, ofString];
+                } else {
+                    cell.usedLabel.text = @"";
+                    cell.usedPercentageLabel.text = @"";                    
+                }
             }
             break;
         }
@@ -311,10 +373,12 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     CGFloat heightForRow;
-    if (indexPath.row == 3 && ![[MEGASdkManager sharedMEGASdk] isAchievementsEnabled]) {
+    if (indexPath.row == 3 && (![[MEGASdkManager sharedMEGASdk] isAchievementsEnabled] | MEGASdkManager.sharedMEGASdk.isBusinessAccount)) {
         heightForRow = 0.0f;
+    } else if (indexPath.row == 0 && MEGASdkManager.sharedMEGASdk.isBusinessAccount) {
+        heightForRow = 94;
     } else {
-        heightForRow = 60.0f;
+        heightForRow = 60;
     }
     
     return heightForRow;
@@ -396,8 +460,6 @@
 #pragma mark - MEGARequestDelegate
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-    [super onRequestFinish:api request:request error:error];
-    
     switch (request.type) {
         case MEGARequestTypeAccountDetails:
             if (error.type) {
@@ -406,6 +468,21 @@
             [self reloadUI];
             
             break;
+            
+        case MEGARequestTypeGetAttrUser: {
+            if (error.type) {
+                return;
+            }
+            
+            if (request.file) {
+                [self setUserAvatar];
+            }
+            
+            if (request.paramType == MEGAUserAttributeFirstname || request.paramType == MEGAUserAttributeLastname) {
+                self.nameLabel.text = api.myUser.mnz_fullName;
+            }
+            break;
+        }
             
         default:
             break;

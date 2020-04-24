@@ -578,8 +578,6 @@
 "removeUserMessage"="هل أنت متأكد أنك تريد إزالة %@ من قائمة الاتصال الخاصة بك؟";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
 "removeMultipleUsersMessage"="هل أنت متأكد أنك تريد إزالة %d مستخدمين من قائمة الاتصال الخاصة بك؟";
-/* Success message shown when the selected contacts have been removed */
-"removedContacts"="%d جهات الاتصال المحذوفة";
 /* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
 "removedContact"="جهة اتصال %@ مزالة";
 /* Label shown when a contact request is pending */
@@ -856,7 +854,7 @@
 /* Hint text where the user have to re-write the new email to confirm it */
 "confirmNewEmail"="تأكيد البريد الإلكتروني الجديد";
 /* The title of the alert dialog to change the email associated to an account. */
-"changeEmail"="تغيير البريد الإلكتروني";
+"Change Email"="تغيير البريد الإلكتروني";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
 "oldAndNewEmailMatch"="بريدك الالكتروني القديم يجب ألا يتطابق مع الجديد";
 /* Error message shown when you have not written the same email when confirming a new one */

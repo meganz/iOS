@@ -578,8 +578,6 @@
 "removeUserMessage"="Weet u zeker dat u %@ uit uw contactenlijst wilt verwijderen?";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
 "removeMultipleUsersMessage"="Weet u zeker dat u %d gebruikers uit uw contactenlijst wilt verwijderen?";
-/* Success message shown when the selected contacts have been removed */
-"removedContacts"="%d contacten verwijderd";
 /* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
 "removedContact"="Contact %@ verwijderd";
 /* Label shown when a contact request is pending */
@@ -856,7 +854,7 @@
 /* Hint text where the user have to re-write the new email to confirm it */
 "confirmNewEmail"="Bevestig nieuw e-mailadres";
 /* The title of the alert dialog to change the email associated to an account. */
-"changeEmail"="E-mailadres wijzigen";
+"Change Email"="E-mailadres wijzigen";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
 "oldAndNewEmailMatch"="Het nieuwe en het oude e-mailadres mogen niet hetzelfde zijn.";
 /* Error message shown when you have not written the same email when confirming a new one */

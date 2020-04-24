@@ -578,8 +578,6 @@
 "removeUserMessage"="Are you sure you want to remove %@ from your contact list?";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
 "removeMultipleUsersMessage"="Are you sure you want to remove %d users from your contact list?";
-/* Success message shown when the selected contacts have been removed */
-"removedContacts"="%d contacts removed";
 /* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
 "removedContact"="Contact %@ removed";
 /* Label shown when a contact request is pending */
@@ -856,7 +854,7 @@
 /* Hint text where the user have to re-write the new email to confirm it */
 "confirmNewEmail"="Confirm new email";
 /* The title of the alert dialog to change the email associated to an account. */
-"changeEmail"="Change email";
+"Change Email"="Change Email";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
 "oldAndNewEmailMatch"="The new and the old email must not match";
 /* Error message shown when you have not written the same email when confirming a new one */
@@ -1988,6 +1986,18 @@
 "Hi, Have encrypted conversations on Mega with me and get 50GB free storage."="Hi! Have secure conversations on MEGA with me and get up to 50GB free storage.";
 /* Destination folder name of chat files */
 "My chat files"="My chat files";
+/* */
+"Subscription plan"="Subscription plan";
+/* */
+"If you lose this Recovery key and forget your password, [B]all your files, folders and messages will be inaccessible, even by MEGA[/B]."="If you lose this Recovery key and forget your password, [B]all your files, folders and messages will be inaccessible, even by MEGA[/B].";
+/* */
+"Business"="Business";
+/* */
+"Administrator"="Administrator";
+/* */
+"Transfer"="Transfer";
+/* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. %@ will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
+"You cannot remove %@ as a contact as they are part of your Business account."="You cannot remove %@ as a contact as they are part of your Business account.";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
 "Require passcode"="Require passcode";
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
@@ -1998,6 +2008,22 @@
 "This folder has been the subject of a takedown notice."="This folder has been the subject of a takedown notice.";
 /* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
 "Dispute Takedown"="Dispute Takedown";
+/* Label presented to Admins that full management of the business is only available in a desktop web browser */
+"User management is only available in a desktop web browser."="User management is only available in a desktop web browser.";
+/* When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information */
+"There has been a problem with your last payment. Please access MEGA in a desktop browser for more information."="There has been a problem with your last payment. Please access MEGA in a desktop browser for more information.";
+/* A dialog title shown to users when their business account is expired. */
+"Your business account is expired"="Your business account is expired";
+/* Details shown when a Business account is expired. Details for the administrator of the Business account */
+"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser.";
+/* A dialog message which is shown to sub-users of expired business accounts. */
+"Your account is currently [B]suspended[/B]. You can only browse your data."="Your account is currently [B]suspended[/B]. You can only browse your data.";
+/* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
+"While MEGA does not have access to your data, your organization administrators do have the ability to control and view your Camera Uploads in your user account"="While MEGA does not have access to your data, your organization administrators do have the ability to control and view your Camera Uploads in your user account";
+/* */
+"Something went wrong"="Something went wrong";
+/* Button title that goes to the section Usage where you can see how your MEGA space is used */
+"Usage"="Usage";
 /* Title of the "Links" Shared Items. */
 "Links"="Links";
 /* Title for empty state view of "Links" in Shared Items. */
@@ -2006,6 +2032,8 @@
 "Manage Share"="Manage share";
 /* Title of the screen that shows the users with whom the user can share a folder */
 "Share with"="Share with";
+/* A dialog message which is shown to sub-users of expired business accounts. */
+"Contact your business account administrator to resolve the issue and activate your account."="Contact your business account administrator to resolve the issue and activate your account.";
 /* Chat Notifications DND: Option that does not deactivate DND automatically */
 "Until I Turn it On Again"="Until I turn it on again";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
@@ -2056,6 +2084,12 @@
 "Alias/ Nickname"="Alias / Nickname";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
 "It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1.";
+/* Business expired account Overdue payment page header. */
+"Payment overdue"="Payment overdue";
+/* */
+"Active"="Active";
+/* title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts */
+"Role"="Role";
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
 "Include location tags"="Include location tags";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
@@ -2138,5 +2172,13 @@
 "File Type"="File Type";
 /* export Quality Option for Scan document */
 "best"="Best";
+/* Error message appears to sub-users of a business account when they try to login and they are disabled. */
+"Your account has been disabled by your administrator. Please contact your business account administrator for further details."="Your account has been disabled by your administrator. Please contact your business account administrator for further details.";
+/* An error message which appears to sub-users of a business account when they try to login and they are deleted. */
+"Your account has been removed by your administrator. Please contact your business account administrator for further details."="Your account has been removed by your administrator. Please contact your business account administrator for further details.";
+/* Description of why the user should give permission to contacts */
+"Easily discover contacts from your address book on MEGA."="Easily discover contacts from your address book on MEGA.";
+/* Detailed description of why the user should give permission to contacts */
+"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA will not use this data for any other purpose and will never interact with your contacts without your consent.";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="Enter group name";

@@ -578,8 +578,6 @@
 "removeUserMessage"="Voulez-vous vraiment retirer %@ de votre liste de contacts ?";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
 "removeMultipleUsersMessage"="Voulez-vraiment retirer %d utilisateurs de votre liste de contacts ?";
-/* Success message shown when the selected contacts have been removed */
-"removedContacts"="%d contacts ont été supprimés";
 /* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
 "removedContact"="Le contact %@ a été supprimé";
 /* Label shown when a contact request is pending */
@@ -856,7 +854,7 @@
 /* Hint text where the user have to re-write the new email to confirm it */
 "confirmNewEmail"="Confirmez la nouvelle adresse courriel";
 /* The title of the alert dialog to change the email associated to an account. */
-"changeEmail"="Changer l’adresse courriel";
+"Change Email"="Changer l’adresse courriel";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
 "oldAndNewEmailMatch"="La nouvelle adresse courriel et l'ancienne ne doivent pas correspondre";
 /* Error message shown when you have not written the same email when confirming a new one */

@@ -578,8 +578,6 @@
 "removeUserMessage"="Ви впевнені, що бажаєте видалити %@ зі списку контактів?";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
 "removeMultipleUsersMessage"="Ви впевнені, що хочете видалити %d користувачів зі списку контактів?";
-/* Success message shown when the selected contacts have been removed */
-"removedContacts"="%d контакти видалено";
 /* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
 "removedContact"="Контакт %@ видалено";
 /* Label shown when a contact request is pending */
@@ -856,7 +854,7 @@
 /* Hint text where the user have to re-write the new email to confirm it */
 "confirmNewEmail"="Підтвердити нову е-пошту";
 /* The title of the alert dialog to change the email associated to an account. */
-"changeEmail"="Зміна е-пошти";
+"Change Email"="Зміна е-пошти";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
 "oldAndNewEmailMatch"="Нова та стара адреси е-пошти не повинні збігатися";
 /* Error message shown when you have not written the same email when confirming a new one */
