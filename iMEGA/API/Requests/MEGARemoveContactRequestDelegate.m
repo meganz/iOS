@@ -6,9 +6,6 @@
 #import "MEGAUser+MNZCategory.h"
 
 @interface MEGARemoveContactRequestDelegate ()
-
-@property (nonatomic) NSUInteger numberOfRequests;
-@property (nonatomic) NSUInteger totalRequests;
 @property (nonatomic, copy) void (^completion)(void);
 
 @end
@@ -17,11 +14,9 @@
 
 #pragma mark - Initialization
 
-- (instancetype)initWithNumberOfRequests:(NSUInteger)numberOfRequests completion:(void (^)(void))completion {
+- (instancetype)initWithCompletion:(void (^)(void))completion {
     self = [super init];
     if (self) {
-        _numberOfRequests = numberOfRequests;
-        _totalRequests = numberOfRequests;
         _completion = completion;
     }
     
@@ -37,28 +32,29 @@
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     [super onRequestFinish:api request:request error:error];
     
-    self.numberOfRequests--;
+    MEGAUser *user = [api contactForEmail:request.email];
     
     if (error.type) {
         [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-        [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, error.name]];
+        switch (error.type) {
+            case MEGAErrorTypeApiEMasterOnly: {
+                [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:AMLocalizedString(@"You cannot remove %@ as a contact as they are part of your Business account.", @"Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. %@ will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz"), user.mnz_displayName]];
+                break;
+            }
+                
+            default:
+                [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, error.name]];
+                break;
+        }
         return;
     }
     
-    if (self.numberOfRequests == 0) {
-        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-        NSString *message;
-        if (self.totalRequests <= 1) {
-            MEGAUser *user = [api contactForEmail:request.email];
-            message = [NSString stringWithFormat:AMLocalizedString(@"removedContact", @"Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed'"), user.mnz_displayName];
-        } else {
-            message = [NSString stringWithFormat:AMLocalizedString(@"removedContacts", @"Success message shown when the selected contacts have been removed"), self.totalRequests];
-        }
-        [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:message];
-        
-        if (self.completion) {
-            self.completion();
-        }
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
+    NSString *message = [NSString stringWithFormat:AMLocalizedString(@"removedContact", @"Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed'"), user.mnz_displayName];
+    [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:message];
+    
+    if (self.completion) {
+        self.completion();
     }
 }
 

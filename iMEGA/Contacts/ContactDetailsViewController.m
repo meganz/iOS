@@ -48,7 +48,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     ContactDetailsRowVerifyCredentials
 };
 
-@interface ContactDetailsViewController () <CustomActionViewControllerDelegate, MEGAChatDelegate, MEGAChatCallDelegate, MEGAGlobalDelegate>
+@interface ContactDetailsViewController () <CustomActionViewControllerDelegate, MEGAChatDelegate, MEGAChatCallDelegate, MEGAGlobalDelegate, MEGARequestDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *verifiedImageView;
@@ -147,6 +147,8 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     if (@available(iOS 11.0, *)) {
         self.avatarImageView.accessibilityIgnoresInvertColors = YES;
     }
+    
+    [MEGASdkManager.sharedMEGASdk addMEGARequestDelegate:self];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -168,6 +170,10 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
     [[MEGASdkManager sharedMEGAChatSdk] removeChatCallDelegate:self];
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
+    
+    if (self.isMovingFromParentViewController) {
+        [MEGASdkManager.sharedMEGASdk removeMEGARequestDelegate:self];
+    }
     
     // Creates a glitch in the animation when the view controller is presented.
     // So do not remove it if the view controller is presented
@@ -438,7 +444,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil];
     
     UIAlertAction *okAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-        MEGARemoveContactRequestDelegate *removeContactRequestDelegate = [[MEGARemoveContactRequestDelegate alloc] initWithNumberOfRequests:1 completion:^{
+        MEGARemoveContactRequestDelegate *removeContactRequestDelegate = [MEGARemoveContactRequestDelegate.alloc initWithCompletion:^{                    
             //TODO: Close chat room because the contact was removed
             
             [self.navigationController popViewControllerAnimated:YES];
@@ -664,6 +670,9 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 
 - (void)updateUserDetails {
     BOOL isNicknamePresent = self.userNickname.length > 0;
+    if (self.user) {
+        self.userName = self.user.mnz_fullName;
+    }
     self.nameOrNicknameLabel.text = isNicknamePresent ? self.userNickname : self.userName;
     self.optionalNameLabel.text = isNicknamePresent ? self.userName : nil;
 }
@@ -1084,6 +1093,35 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     if (shouldProcessOnNodesUpdate) {
         self.incomingNodeListForUser = [[MEGASdkManager sharedMEGASdk] inSharesForUser:self.user];
         [self.tableView reloadData];
+    }
+}
+
+#pragma mark - MEGARequestDelegate
+
+- (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
+    switch (request.type) {
+        case MEGARequestTypeGetAttrUser: {
+            if (error.type) {
+                return;
+            }
+            
+            if (request.paramType == MEGAUserAttributeFirstname || request.paramType == MEGAUserAttributeLastname) {
+                [self updateUserDetails];
+            }
+            break;
+        }
+            
+        case MEGARequestTypeGetUserEmail: {
+            if (error.type) {
+                return;
+            }
+            
+            self.emailLabel.text = request.email;
+            break;
+        }
+            
+        default:
+            break;
     }
 }
 

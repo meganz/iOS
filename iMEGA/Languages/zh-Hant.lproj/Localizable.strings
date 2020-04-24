@@ -578,8 +578,6 @@
 "removeUserMessage"="您確定要把 %@ 從您的聯絡簿刪除嗎？";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
 "removeMultipleUsersMessage"="您確定要從聯絡簿刪除 %d 個聯絡人嗎？";
-/* Success message shown when the selected contacts have been removed */
-"removedContacts"="已移除 %d 位聯絡人";
 /* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
 "removedContact"="聯絡人 %@ 已移除";
 /* Label shown when a contact request is pending */
@@ -856,7 +854,7 @@
 /* Hint text where the user have to re-write the new email to confirm it */
 "confirmNewEmail"="確認新電子郵件地址";
 /* The title of the alert dialog to change the email associated to an account. */
-"changeEmail"="更改電子信箱";
+"Change Email"="更改電子信箱";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
 "oldAndNewEmailMatch"="新的和舊的電子郵件不能一模一樣";
 /* Error message shown when you have not written the same email when confirming a new one */

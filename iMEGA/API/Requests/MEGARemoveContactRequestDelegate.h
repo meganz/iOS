@@ -3,6 +3,6 @@
 
 @interface MEGARemoveContactRequestDelegate : MEGABaseRequestDelegate
 
-- (instancetype)initWithNumberOfRequests:(NSUInteger)numberOfRequests completion:(void (^)(void))completion;
+- (instancetype)initWithCompletion:(void (^)(void))completion;
 
 @end

@@ -39,7 +39,11 @@
     [super onRequestFinish:api request:request error:error];
 
     if (error.type) {
-        [SVProgressHUD showErrorWithStatus:error.name];
+        if (error.type == MEGAErrorTypeApiEBusinessPastDue) {
+            [SVProgressHUD dismiss];
+        } else {
+            [SVProgressHUD showErrorWithStatus:error.name];
+        }
         return;
     }
     

@@ -7,6 +7,7 @@
 #import "DevicePermissionsHelper.h"
 #import "Helper.h"
 #import "CustomModalAlertViewController.h"
+#import "MEGASdkManager.h"
 #import "TransferSessionManager.h"
 @import CoreLocation;
 
@@ -238,7 +239,17 @@
     if (sender.isOn) {
         [DevicePermissionsHelper photosPermissionWithCompletionHandler:^(BOOL granted) {
             if (granted) {
-                [CameraUploadManager.shared enableCameraUpload];
+                if (MEGASdkManager.sharedMEGASdk.isBusinessAccount && !MEGASdkManager.sharedMEGASdk.isMasterBusinessAccount) {
+                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"cameraUploadsLabel", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options") message:@"While MEGA does not have access to your data, your organization administrators do have the ability to control and view your Camera Uploads in your user account" preferredStyle:UIAlertControllerStyleAlert];
+                    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
+                    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"enable", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                        [CameraUploadManager.shared enableCameraUpload];
+                        [self configUI];
+                    }]];
+                    [self presentViewController:alertController animated:YES completion:nil];
+                } else {
+                    [CameraUploadManager.shared enableCameraUpload];
+                }
             } else {
                 [DevicePermissionsHelper alertPhotosPermission];
             }
