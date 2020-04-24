@@ -12,11 +12,6 @@ class AddToChatCameraCollectionCell: UICollectionViewCell {
         case captureDeviceInputInstantiationFailed
     }
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-    
     func showLiveFeed() throws {
         if DevicePermissionsHelper.shouldAskForVideoPermissions() {
             throw LiveFeedError.askForPermission
@@ -25,6 +20,7 @@ class AddToChatCameraCollectionCell: UICollectionViewCell {
         let captureSession = AVCaptureSession()
         captureSession.sessionPreset = .photo
         
+        previewLayer.isHidden = false
         previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
         liveFeedView.layer.addSublayer(previewLayer)
        
@@ -48,6 +44,11 @@ class AddToChatCameraCollectionCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        
+        guard let previewLayer = previewLayer else {
+            return
+        }
+        
         previewLayer.frame = liveFeedView.layer.bounds
     }
 

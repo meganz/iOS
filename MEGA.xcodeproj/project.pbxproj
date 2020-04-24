@@ -1096,6 +1096,14 @@
 		BF7EBD2F244E916F0015255F /* AddToChatViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF7EBD2D244E916F0015255F /* AddToChatViewController.xib */; };
 		BF7EBD34244FA92B0015255F /* AddToChatCameraCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7EBD32244FA92B0015255F /* AddToChatCameraCollectionCell.swift */; };
 		BF7EBD35244FA92B0015255F /* AddToChatCameraCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF7EBD33244FA92B0015255F /* AddToChatCameraCollectionCell.xib */; };
+		BF7EBD3F24526A140015255F /* AddToChatMediaCollectionSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7EBD3E24526A140015255F /* AddToChatMediaCollectionSource.swift */; };
+		BF7EBD46245277EB0015255F /* AddToChatMenuItemsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7EBD44245277EB0015255F /* AddToChatMenuItemsView.swift */; };
+		BF7EBD47245277EB0015255F /* AddToChatMenuItemsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF7EBD45245277EB0015255F /* AddToChatMenuItemsView.xib */; };
+		BF7EBD4A245293530015255F /* AddToChatMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7EBD48245293530015255F /* AddToChatMenuViewController.swift */; };
+		BF7EBD4B245293530015255F /* AddToChatMenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF7EBD49245293530015255F /* AddToChatMenuViewController.xib */; };
+		BF7EBD4D2452ABE20015255F /* AddToChatMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7EBD4C2452ABE20015255F /* AddToChatMenuView.swift */; };
+		BF7EBD4F2452AF460015255F /* AddToChatMenus.plist in Resources */ = {isa = PBXBuildFile; fileRef = BF7EBD4E2452AF460015255F /* AddToChatMenus.plist */; };
+		BF7EBD512452B0A00015255F /* AddToChatMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7EBD502452B0A00015255F /* AddToChatMenu.swift */; };
 		BFB463DD2432F2E900FB90B9 /* ChatRoomDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB463DC2432F2E900FB90B9 /* ChatRoomDelegate.swift */; };
 		BFB463E52433390600FB90B9 /* MEGAUser+Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB463E42433390600FB90B9 /* MEGAUser+Chat.swift */; };
 		BFB463E92433394500FB90B9 /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB463E82433394500FB90B9 /* ChatMessage.swift */; };
@@ -2587,6 +2595,14 @@
 		BF7EBD2D244E916F0015255F /* AddToChatViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddToChatViewController.xib; sourceTree = "<group>"; };
 		BF7EBD32244FA92B0015255F /* AddToChatCameraCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToChatCameraCollectionCell.swift; sourceTree = "<group>"; };
 		BF7EBD33244FA92B0015255F /* AddToChatCameraCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddToChatCameraCollectionCell.xib; sourceTree = "<group>"; };
+		BF7EBD3E24526A140015255F /* AddToChatMediaCollectionSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToChatMediaCollectionSource.swift; sourceTree = "<group>"; };
+		BF7EBD44245277EB0015255F /* AddToChatMenuItemsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToChatMenuItemsView.swift; sourceTree = "<group>"; };
+		BF7EBD45245277EB0015255F /* AddToChatMenuItemsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddToChatMenuItemsView.xib; sourceTree = "<group>"; };
+		BF7EBD48245293530015255F /* AddToChatMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToChatMenuViewController.swift; sourceTree = "<group>"; };
+		BF7EBD49245293530015255F /* AddToChatMenuViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddToChatMenuViewController.xib; sourceTree = "<group>"; };
+		BF7EBD4C2452ABE20015255F /* AddToChatMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToChatMenuView.swift; sourceTree = "<group>"; };
+		BF7EBD4E2452AF460015255F /* AddToChatMenus.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = AddToChatMenus.plist; sourceTree = "<group>"; };
+		BF7EBD502452B0A00015255F /* AddToChatMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToChatMenu.swift; sourceTree = "<group>"; };
 		BFB463DC2432F2E900FB90B9 /* ChatRoomDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomDelegate.swift; sourceTree = "<group>"; };
 		BFB463E42433390600FB90B9 /* MEGAUser+Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAUser+Chat.swift"; sourceTree = "<group>"; };
 		BFB463E82433394500FB90B9 /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
@@ -5416,8 +5432,16 @@
 				2F0194A6243452E500734EA3 /* ChatViewController+InputBar.swift */,
 				BF7EBD2C244E916F0015255F /* AddToChatViewController.swift */,
 				BF7EBD2D244E916F0015255F /* AddToChatViewController.xib */,
+				BF7EBD3E24526A140015255F /* AddToChatMediaCollectionSource.swift */,
 				BF7EBD32244FA92B0015255F /* AddToChatCameraCollectionCell.swift */,
 				BF7EBD33244FA92B0015255F /* AddToChatCameraCollectionCell.xib */,
+				BF7EBD48245293530015255F /* AddToChatMenuViewController.swift */,
+				BF7EBD49245293530015255F /* AddToChatMenuViewController.xib */,
+				BF7EBD44245277EB0015255F /* AddToChatMenuItemsView.swift */,
+				BF7EBD45245277EB0015255F /* AddToChatMenuItemsView.xib */,
+				BF7EBD4C2452ABE20015255F /* AddToChatMenuView.swift */,
+				BF7EBD502452B0A00015255F /* AddToChatMenu.swift */,
+				BF7EBD4E2452AF460015255F /* AddToChatMenus.plist */,
 			);
 			path = "Chat Messages";
 			sourceTree = "<group>";
@@ -5958,6 +5982,7 @@
 				4152268B1A692ECC00EC7BB6 /* Cloud.storyboard in Resources */,
 				B6A11A0E2283987D0017CD59 /* SMSVerification.storyboard in Resources */,
 				83681579202AFBC000CA8EFC /* CustomActionViewController.xib in Resources */,
+				BF7EBD4B245293530015255F /* AddToChatMenuViewController.xib in Resources */,
 				41EABF171DA7C5250087271C /* Chat.storyboard in Resources */,
 				5B6429E42020A9A3000E0DCB /* SF-UI-Display-Bold.otf in Resources */,
 				E8C289F51BF5F8A200F7A034 /* SF-UI-Text-Light.otf in Resources */,
@@ -5996,6 +6021,7 @@
 				4172795E1DB663FA001AC818 /* JSQMessagesTypingIndicatorFooterView.xib in Resources */,
 				5B5B50011E684FDC00DBEB3B /* SF-UI-Display-Regular.otf in Resources */,
 				83D64E2D20178A0400E24155 /* PasswordReminder.storyboard in Resources */,
+				BF7EBD47245277EB0015255F /* AddToChatMenuItemsView.xib in Resources */,
 				83C570E722E5BFCF00216896 /* README.md in Resources */,
 				A82E5BC81F3465A3003C149C /* Spotlight_file@2x.png in Resources */,
 				5B6429E02020A8CF000E0DCB /* SF-UI-Text-Semibold.otf in Resources */,
@@ -6019,6 +6045,7 @@
 				7784A86521B159C900B49CA1 /* MEGAMessageVoiceClipView.xib in Resources */,
 				1373619E1A6664C300B740E8 /* Images.xcassets in Resources */,
 				41D77EA91A6E8E6300818BE8 /* LaunchScreen.xib in Resources */,
+				BF7EBD4F2452AF460015255F /* AddToChatMenus.plist in Resources */,
 				417279541DB663FA001AC818 /* JSQMessagesCollectionViewCellOutgoing.xib in Resources */,
 				5B22F97C1F8374C500D2B156 /* VENToken.xib in Resources */,
 				2F147788244D2DF30069B264 /* GeoLocationView.xib in Resources */,
@@ -6644,6 +6671,8 @@
 				B645165322320C23001680BC /* UploadStats.m in Sources */,
 				B6BD012221B7123B00E97086 /* UploadRecordsCollator.m in Sources */,
 				4182B4EF1BF4ADD400E6FFB8 /* ContactRequestsTableViewCell.m in Sources */,
+				BF7EBD4D2452ABE20015255F /* AddToChatMenuView.swift in Sources */,
+				BF7EBD46245277EB0015255F /* AddToChatMenuItemsView.swift in Sources */,
 				BF0BBEFE230627BE001FD542 /* UIViewController+MNZCategory.m in Sources */,
 				B68C42CB216DAA85003C5A50 /* CameraUploadOperation.m in Sources */,
 				41840EEA1E811CD600D8308D /* MEGAApplication.m in Sources */,
@@ -6689,10 +6718,12 @@
 				83C570E222E5BFCF00216896 /* MetadataTypes.swift in Sources */,
 				5B7B4CA31EE5AC1200DA6A8D /* MEGAShareRequestDelegate.m in Sources */,
 				A86FC4FC1EBB4999006053A6 /* MEGAPhotoMediaItem.m in Sources */,
+				BF7EBD3F24526A140015255F /* AddToChatMediaCollectionSource.swift in Sources */,
 				77CAAAE3202C72F8004B16ED /* MEGAPhotoBrowserPickerCollectionViewCell.m in Sources */,
 				E879DFDA1D12A31D009B74FD /* UIDevice+MNZCategory.m in Sources */,
 				41EAAE4A1D06B49400622FAF /* PHAsset+CTAssetsPickerController.m in Sources */,
 				2F0194A7243452E500734EA3 /* ChatViewController+InputBar.swift in Sources */,
+				BF7EBD512452B0A00015255F /* AddToChatMenu.swift in Sources */,
 				41D21E6B1D01AEC3002E6296 /* CTAssetsPageViewController.m in Sources */,
 				7784A86821B553AF00B49CA1 /* MEGAVoiceClipMediaItem.m in Sources */,
 				41D21DF11D01AE89002E6296 /* NSArray+PureLayout.m in Sources */,
@@ -6834,6 +6865,7 @@
 				415E690A1DABCDF90043B75F /* ChatRoomsViewController.m in Sources */,
 				B6031EE52202A6BF00F7EAA1 /* NodesFetchListenerOperation.m in Sources */,
 				4152268F1A692ECC00EC7BB6 /* NodeTableViewCell.m in Sources */,
+				BF7EBD4A245293530015255F /* AddToChatMenuViewController.swift in Sources */,
 				A86B9F4E2316D6AB00F35E7A /* FLEXArgumentInputColorView.m in Sources */,
 				E8D5BF691BF35DC400955550 /* SharedItemsViewController.m in Sources */,
 				B60102C522E172FC00A92C17 /* VerificationCodeViewController.swift in Sources */,
