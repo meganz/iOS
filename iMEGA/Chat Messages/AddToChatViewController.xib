@@ -14,9 +14,10 @@
                 <outlet property="contentView" destination="hwb-7m-LMj" id="qaE-tq-ECQ"/>
                 <outlet property="contentViewBottomConstraint" destination="6uI-ZA-cpI" id="Gam-tS-vvy"/>
                 <outlet property="contentViewHeightConstraint" destination="wl7-ZE-7X9" id="JQ3-GK-7TW"/>
-                <outlet property="middleCollectionView" destination="sW4-yW-BRN" id="Ff7-7y-lY0"/>
-                <outlet property="pageControl" destination="Hev-od-dM3" id="BoV-hy-ppf"/>
-                <outlet property="topCollectionView" destination="Zxb-mH-hnV" id="VNj-pc-nzB"/>
+                <outlet property="contentViewLeadingConstraint" destination="PKo-4r-vzh" id="lXy-aw-AKp"/>
+                <outlet property="contentViewTrailingConstraint" destination="Pn1-Dl-3hC" id="ViB-Vv-mJl"/>
+                <outlet property="mediaCollectionView" destination="Zxb-mH-hnV" id="VNj-pc-nzB"/>
+                <outlet property="menuView" destination="32M-MS-rdd" id="8CU-AU-cHZ"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -41,10 +42,10 @@
                     </constraints>
                 </view>
                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hwb-7m-LMj" userLabel="ContentView">
-                    <rect key="frame" x="0.0" y="416" width="414" height="446"/>
+                    <rect key="frame" x="0.0" y="484" width="414" height="378"/>
                     <subviews>
                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="Zxb-mH-hnV">
-                            <rect key="frame" x="10" y="5" width="404" height="110"/>
+                            <rect key="frame" x="5" y="5" width="409" height="110"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="110" id="1tq-lA-fNN"/>
@@ -56,38 +57,20 @@
                                 <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                             </collectionViewFlowLayout>
                         </collectionView>
-                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="sW4-yW-BRN">
-                            <rect key="frame" x="0.0" y="115" width="414" height="287"/>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                            <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="30" minimumInteritemSpacing="5" id="fb7-GR-Tjj">
-                                <size key="itemSize" width="128" height="128"/>
-                                <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                            </collectionViewFlowLayout>
-                        </collectionView>
-                        <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="2" translatesAutoresizingMaskIntoConstraints="NO" id="Hev-od-dM3">
-                            <rect key="frame" x="0.0" y="402" width="414" height="44"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="44" id="xHe-u1-VPz"/>
-                            </constraints>
-                            <color key="pageIndicatorTintColor" red="0.31764705882352939" green="0.31764705882352939" blue="0.31764705882352939" alpha="0.30332298801369861" colorSpace="custom" customColorSpace="sRGB"/>
-                            <color key="currentPageIndicatorTintColor" red="0.31764705882352939" green="0.31764705882352939" blue="0.31764705882352939" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        </pageControl>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="32M-MS-rdd" userLabel="Menu View">
+                            <rect key="frame" x="0.0" y="115" width="414" height="263"/>
+                        </view>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                     <constraints>
-                        <constraint firstItem="sW4-yW-BRN" firstAttribute="top" secondItem="Zxb-mH-hnV" secondAttribute="bottom" id="1kd-Ss-ciI"/>
-                        <constraint firstItem="sW4-yW-BRN" firstAttribute="leading" secondItem="hwb-7m-LMj" secondAttribute="leading" id="22h-17-QuV"/>
-                        <constraint firstAttribute="trailing" secondItem="Hev-od-dM3" secondAttribute="trailing" id="BjO-q5-kUp"/>
-                        <constraint firstItem="Zxb-mH-hnV" firstAttribute="leading" secondItem="hwb-7m-LMj" secondAttribute="leading" constant="10" id="JKd-ZH-8de"/>
+                        <constraint firstItem="32M-MS-rdd" firstAttribute="leading" secondItem="hwb-7m-LMj" secondAttribute="leading" id="DV7-tm-CbF"/>
+                        <constraint firstItem="Zxb-mH-hnV" firstAttribute="leading" secondItem="hwb-7m-LMj" secondAttribute="leading" constant="5" id="JKd-ZH-8de"/>
+                        <constraint firstItem="32M-MS-rdd" firstAttribute="bottom" secondItem="hwb-7m-LMj" secondAttribute="bottom" id="KUQ-gf-Whe"/>
                         <constraint firstItem="Zxb-mH-hnV" firstAttribute="top" secondItem="hwb-7m-LMj" secondAttribute="top" constant="5" id="KcC-JS-iDO"/>
+                        <constraint firstItem="32M-MS-rdd" firstAttribute="top" secondItem="Zxb-mH-hnV" secondAttribute="bottom" id="TKr-3S-IxU"/>
                         <constraint firstAttribute="trailing" secondItem="Zxb-mH-hnV" secondAttribute="trailing" id="a4R-NR-tKw"/>
-                        <constraint firstAttribute="trailing" secondItem="sW4-yW-BRN" secondAttribute="trailing" id="cRY-KL-rfc"/>
-                        <constraint firstItem="Hev-od-dM3" firstAttribute="top" secondItem="sW4-yW-BRN" secondAttribute="bottom" id="dTU-sA-f47"/>
-                        <constraint firstAttribute="bottom" secondItem="Hev-od-dM3" secondAttribute="bottom" id="inN-7Y-50L"/>
-                        <constraint firstItem="Hev-od-dM3" firstAttribute="leading" secondItem="hwb-7m-LMj" secondAttribute="leading" id="mgn-3s-EyY"/>
-                        <constraint firstAttribute="height" constant="446" id="wl7-ZE-7X9"/>
+                        <constraint firstAttribute="trailing" secondItem="32M-MS-rdd" secondAttribute="trailing" id="g43-HZ-aZa"/>
+                        <constraint firstAttribute="height" constant="378" id="wl7-ZE-7X9"/>
                     </constraints>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
