@@ -45,6 +45,11 @@ extension ChatViewController: MessagesDisplayDelegate {
             guard let chatMessage = message as? ChatMessage else {
                 return
             }
+            if chatMessage.message.status == .sending || chatMessage.message.status == .sendingManual {
+                containerView.alpha = 0.7
+            } else {
+                containerView.alpha = 1
+            }
             
             if chatMessage.message.isManagementMessage {
                 containerView.layer.borderColor = #colorLiteral(red: 0.8941176471, green: 0.9215686275, blue: 0.9176470588, alpha: 0).cgColor

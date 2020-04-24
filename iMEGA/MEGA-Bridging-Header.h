@@ -39,6 +39,7 @@
 #import "MEGALoginRequestDelegate.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGAStore.h"
+#import "MEGALinkManager.h"
 
 #import "AppDelegate.h"
 #import "ContactLinkQRViewController.h"
@@ -64,4 +65,4 @@
 #import "MEGASdk+MNZCategory.h"
 #import "MEGACreateFolderRequestDelegate.h"
 #import "MEGAStartUploadTransferDelegate.h"
-
+#import "MEGAGetAttrUserRequestDelegate.h"
