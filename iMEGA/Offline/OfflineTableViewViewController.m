@@ -1,7 +1,9 @@
 
 #import "OfflineTableViewViewController.h"
 
+#import "NSDate+MNZCategory.h"
 #import "NSString+MNZCategory.h"
+#import "UIImage+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 
 #import "Helper.h"
@@ -146,7 +148,7 @@ static NSString *kPath = @"kPath";
     BOOL isDirectory;
     [[NSFileManager defaultManager] fileExistsAtPath:pathForItem isDirectory:&isDirectory];
     if (isDirectory) {
-        cell.thumbnailImageView.image = [Helper folderImage];
+        cell.thumbnailImageView.image = UIImage.mnz_folderImage;
         
         NSInteger files = 0;
         NSInteger folders = 0;
@@ -199,17 +201,11 @@ static NSString *kPath = @"kPath";
             }
         }
         
-        NSDictionary *filePropertiesDictionary = [[NSFileManager defaultManager] attributesOfItemAtPath:pathForItem error:nil];
+        NSDate *modificationDate = [[NSFileManager.defaultManager attributesOfItemAtPath:pathForItem error:nil] valueForKey:NSFileModificationDate];
         
-        time_t rawtime = [[filePropertiesDictionary valueForKey:NSFileModificationDate] timeIntervalSince1970];
-        NSString *date = [Helper dateWithISO8601FormatOfRawTime:rawtime];
+        unsigned long long size = [NSFileManager.defaultManager attributesOfItemAtPath:pathForItem error:nil].fileSize;
         
-        unsigned long long size;
-        size = [[[NSFileManager defaultManager] attributesOfItemAtPath:pathForItem error:nil] fileSize];
-        
-        NSString *sizeString = [Helper memoryStyleStringFromByteCount:size];
-        NSString *sizeAndDate = [NSString stringWithFormat:@"%@ • %@", sizeString, date];
-        cell.infoLabel.text = sizeAndDate;
+        cell.infoLabel.text = [NSString stringWithFormat:@"%@ • %@", [Helper memoryStyleStringFromByteCount:size], modificationDate.mnz_formattedDefaultDateForMedia];
     }
     cell.nameLabel.text = [[MEGASdkManager sharedMEGASdk] unescapeFsIncompatible:nameString];
     

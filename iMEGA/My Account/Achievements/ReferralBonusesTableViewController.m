@@ -76,14 +76,14 @@
     
     if (user) {
         [cell.avatarImageView mnz_setImageForUserHandle:user.handle];
-        cell.titleLabel.text = user.mnz_fullName;
+        cell.titleLabel.text = user.mnz_displayName;
     } else {
         MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithEmail:email];
         if (moUser) {
-            [cell.avatarImageView mnz_setImageForUserHandle:~(uint64_t)0 name:moUser.fullName];
-            cell.titleLabel.text = moUser.fullName;
+            [cell.avatarImageView mnz_setImageForUserHandle:MEGAInvalidHandle name:moUser.fullName];
+            cell.titleLabel.text = moUser.displayName;
         } else {
-            [cell.avatarImageView mnz_setImageForUserHandle:~(uint64_t)0];
+            [cell.avatarImageView mnz_setImageForUserHandle:MEGAInvalidHandle];
             cell.titleLabel.text = @"";
             MEGAGetAttrUserRequestDelegate *delegate = [[MEGAGetAttrUserRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
                 [tableView reloadData];

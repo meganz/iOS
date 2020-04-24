@@ -66,7 +66,7 @@
     } else if (self.chat) {
         return self.chat.chatId;
     } else {
-        return ~(uint64_t)0;
+        return MEGAInvalidHandle;
     }
 }
 

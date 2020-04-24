@@ -2,6 +2,8 @@
 "cancel"="ยกเลิก";
 /* Button title to accept something */
 "ok"="ตกลง";
+/* Button title to clear something */
+"clear"="เคลียร์";
 /* */
 "yes"="ใช่";
 /* */
@@ -20,7 +22,7 @@
 "passcode"="รหัส";
 /* "Size" of the file or folder you are sharing */
 "size"="ขนาด";
-/*  */
+/* Quality title, used in changing the export quality of scaned doc */
 "Quality"="Quality";
 /*  */
 "folder"="โฟลเดอร์";
@@ -42,6 +44,8 @@
 "Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="ลิงก์ยืนยันของคุณใช้ไม่ได้อีกต่อไป บัญชีของคุณอาจถูกเปิดใช้งานหรือคุณอาจยกเลิกการลงทะเบียนแล้ว";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="ลิงก์ไม่ถูกต้อง";
+/* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
+"The account that created this link has been terminated due to multiple violations of our Terms of Service."="บัญชีที่สร้างลิงก์นี้ถูกยุติการใช้งาน เนื่องจากมีการละเมิดเงื่อนไขการให้บริการของเราหลายครั้ง";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="กรอกคีย์เพื่อถอดรหัสลับ";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -146,6 +150,8 @@
 "emailAlreadyInUse"="ผิดพลาด ชื่อบัญชีนี้ได้ถูกใช้งานไปแล้ว";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="คุณจำเป็นต้องเพิ่มพื้นที่ว่างบนอุปกรณ์ของคุณ";
+/* Message shown when you try to downlonad files bigger than the available memory. */
+"MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device."="MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device.";
 /* Title for the file link view */
 "fileLink"="การเชื่อมโยงของไฟล์";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
@@ -684,6 +690,8 @@
 "Custom Settings"="การตั้งค่าที่กำหนดเอง";
 /* Title to show when device local storage is full */
 "%@ Storage Full"="พื้นที่จัดเก็บข้อมูลของ %@ เต็มแล้ว";
+/* Title to show when device local storage is almost full */
+"Device Storage Almost Full"="Device Storage Almost Full";
 /* Detail for local storage full situation */
 "You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="คุณมีพื้นที่เก็บข้อมูลไม่เพียงพอสำหรับการอัปโหลดของกล้องเพิ่มเติม เพิ่มพื้นที่ว่างโดยการลบแอป วิดีโอหรือเพลงที่ไม่จำเป็น คุณสามารถจัดการที่เก็บข้อมูลของคุณใน %@";
 /* Navigation path for Storage settings in iOS */
@@ -885,6 +893,8 @@
 "transfers"="การถ่ายโอน";
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
 "all"="ทั้งหมด";
+/* Title of one of the filters in the Transfers section. In this case "Completed" transfers. */
+"Completed"="เรียบร้อยแล้ว";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
 "downloads"="ดาวน์โหลด";
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
@@ -1027,8 +1037,6 @@
 "cloudDriveIsFull"="[S]คลาวด์ไดร์ฟของคุณเต็มแล้ว[/S] [A]อัปเกรด[/A]เป็นบัญชี PRO และรับพื้นที่เก็บข้อมูลบนคลาวด์[S]สูงสุด %@ TB (%@ GB)[/S]";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="ที่เก็บข้อมูล";
-/* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
-"transferQuota"="โควต้าการถ่ายโอน";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
 "limited"="ถูกจำกัด";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
@@ -1273,8 +1281,8 @@
 "seePlans"="ดูแผนการ";
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
 "dismiss"="ละทิ้ง";
-/* Notification text body shown when you have received a new chat message */
-"newMessage"="ข้อความใหม่";
+/* Content of the notification when there is unknown activity on the Chat */
+"You may have new messages"="คุณอาจมีข้อความใหม่";
 /* Notification text body shown when you have received a contact request */
 "contactRequest"="คำขอติดต่อ";
 /* Notification text body shown when you have received a new shared folder */
@@ -1542,6 +1550,10 @@
 "callFailed"="ติดต่อไม่ได้";
 /* When an active call of user A with user B had ended */
 "callEnded"="วางสายแล้ว";
+/* When an active goup call is ended */
+"Group call ended"="วางสายการโทรแบบกลุ่มแล้ว";
+/* When an active goup call is ended, shows the duration */
+"[A]Group call ended[/A][C]. Duration: [/C]"="[A]Group call ended[/A][C]. Duration: [/C]";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="ระยะเวลา: %@";
 /* */
@@ -1624,6 +1636,8 @@
 "Save in Photos"="บันทึกในรูปภาพ";
 /* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="บันทึกสำเนาของรูปภาพและวิดีโอที่ถ่ายจากแอป MEGA ในไลบรารีสื่อของอุปกรณ์";
+/* Settings section title where you can enable the option to 'Spotlight search' */
+"Spotlight Search"="Spotlight Search";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="คุณคือผู้ถือกุญแจ";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -1750,14 +1764,6 @@
 "Thumbnail view"="มุมมองภาพตัวอย่าง";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
 "Poor connection."="การเชื่อมต่อแย่";
-/* Message shown in a chat room when there is an active group call */
-"There is an active group call. Tap to join."="มีการโทรกลุ่มอยู่ในขณะนี้ แตะเพื่อเข้าร่วม";
-/* Message shown in a chat room for a group call in progress displaying the duration of the call */
-"Touch to return to call %@"="แตะเพื่อกลับไปที่สาย %@";
-/* Menu item to change from grid view to list view */
-"List view"="มุมมองรายการ";
-/* Menu item to change from list view to grid view */
-"Thumbnail view"="มุมมองภาพตัวอย่าง";
 /* There are no notifications to display. */
 "No notifications"="ไม่มีแจ้งเตือน";
 /* The header of a notification related to payments */
@@ -1953,17 +1959,17 @@
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="คุณแน่ใจหรือไม่ว่าต้องการเปลี่ยนไปใช้เซิร์ฟเวอร์ทดสอบ บัญชีของคุณอาจประสบปัญหาไม่สามารถกู้คืนได้";
 /* Title label that explains that the user is going to be asked for the contacts permission */
-"Enable Access to Contacts"="เปิดใช้งานการเข้าถึงผู้ติดต่อ";
+"Enable Access to Your Address Book"="Enable Access to Your Address Book";
 /* Detailed explanation of why the user should give permission to contacts */
-"MEGA needs access to your contacts to help you connect with other people on MEGA."="MEGA ต้องการเข้าถึงผู้ติดต่อของคุณ เพื่อช่วยคุณเชื่อมต่อกับผู้อื่นใน MEGA";
+"Easily discover contacts from your address book on MEGA."="Easily discover contacts from your address book on MEGA.";
+/* Detailed explanation about MEGA not using the contacts data without permision */
+"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA will not use this data for any other purpose and will never interact with your contacts without your consent.";
 /* Title encouraging the user to check who of its contacts are using MEGA */
 "See who's already on MEGA"="ดูว่าใครอยู่ใน MEGA แล้ว";
 /* Title showing the user how many of his contacts are using MEGA */
 "[X] contacts found on MEGA"="พบผู้ติดต่อ [X] รายการใน MEGA";
 /* Title showing the user that one of his contacts are using MEGA */
 "1 contact found on MEGA"="พบผู้ติดต่อ 1 รายการใน MEGA";
-/* Text indicating the user to perform an action to grant some permission */
-"Enable Access"="เปิดใช้งานการเข้าถึง";
 /* Text indicating the user to open the device settings for MEGA */
 "Open Settings"="เปิดการตั้งค่า";
 /* Text encouraging the user to invite contacts to MEGA */
@@ -2042,6 +2048,10 @@
 "Inactive chat"="แชทที่ไม่ได้ใช้งาน";
 /* Contact details screen: Set the alias(nickname) for a user */
 "Set Nickname"="ตั้งชื่อเล่น";
+/* Contact details screen: Edit the alias(nickname) for a user */
+"Edit Nickname"="Edit Nickname";
+/* Edit nickname screen: Remove nickname button title */
+"Remove Nickname"="Remove Nickname";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
 "Alias/ Nickname"="นามแฝง / ชื่อเล่น";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
@@ -2050,6 +2060,16 @@
 "Include location tags"="รวมแท็กตำแหน่งที่ตั้ง";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
 "If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="หากเปิดใช้งาน คุณจะอัปโหลดข้อมูลเกี่ยวกับตำแหน่งที่ถ่ายภาพและวิดีโอของคุณ ดังนั้นโปรดระมัดระวังถ้าคุณจะแชร์ตำแหน่งที่ตั้ง";
+/* Used in Photos app browser view to send the photos from the view to the chat. */
+"Send (%d)"="Send (%d)";
+/* Used in Photos app browser view to upload the photos from the view to the cloud. */
+"Upload (%d)"="Upload (%d)";
+/* Used in Photos app browser carousel view to unselect a selected photo. */
+"Unselect"="Unselect";
+/* Used in Photos app browser. Shown when there are no photos or videos in the Photos app. */
+"No Photos or Videos"="ไม่มีรูปถ่ายหรือวิดีโอ";
+/* Button title which, if tapped, will trigger the action of opening a folder containg this file */
+"View in Folder"="View in Folder";
 /* Error message shown when opening a link with an account that not corresponds to the link */
 "This link is not related to this account. Please log in with the correct account."="ลิงก์นี้ไม่เกี่ยวข้องกับบัญชีนี้ กรุณาเข้าสู่ระบบด้วยบัญชีที่ถูกต้อง";
 /* Text emncouraging the user to add contacts in MEGA */
@@ -2090,6 +2110,10 @@
 "It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="เป็นไปได้ว่าคุณกำลังใช้รหัสผ่านเดียวกันสำหรับบัญชี MEGA ของคุณสำหรับบริการอื่น ๆ และอย่างน้อยหนึ่งในบริการอื่น ๆ เหล่านี้ได้รับความเสียหายจากข้อมูล";
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="รหัสผ่านของคุณรั่วไหลและกำลังถูกใช้โดยผู้ไม่หวังดีเพื่อเข้าสู่บัญชีของคุณ รวมไปถึง การไม่จำกัดบัญชี MEGA ของคุณ";
+/* tool bar title used in transfer widget, allow user to clear the selected items in the list */
+"Clear Selected"="Clear Selected";
+/* tool bar title used in transfer widget, allow user to clear all items in the list */
+"Clear All"="ลบทั้งหมด";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
 "MEGA CAMERA UPLOADS FOLDER"="โฟลเดอร์อัปโหลดจากกล้องของแอป MEGA";
 /* Action button text of folder selection screen for camera uploads */
@@ -2101,7 +2125,7 @@
 /* Title of Image Quality option */
 "Automatic"="อัตโนมัติ";
 /* Description of Automatic Image Quality option */
-"Send smaller size images through cellular networks and original size images through wifi"="Send smaller size images through cellular networks and original size images through wifi";
+"Send smaller size images through cellular networks and original size images through wifi"="Send smaller size images through cellular networks and original size images through Wi-Fi";
 /* Title of Image Quality option */
 "Optimised"="ปรับให้เหมาะสม";
 /* Description of Optimised Image Quality option */
@@ -2114,3 +2138,5 @@
 "File Type"="ประเภทไฟล์";
 /* export Quality Option for Scan document */
 "best"="Best";
+/* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
+"Enter group name"="กรอกชื่อกลุ่ม";

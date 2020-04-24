@@ -2,6 +2,8 @@
 "cancel"="Отмена";
 /* Button title to accept something */
 "ok"="ОК";
+/* Button title to clear something */
+"clear"="Очистить";
 /* */
 "yes"="Да";
 /* */
@@ -20,8 +22,8 @@
 "passcode"="Код доступа";
 /* "Size" of the file or folder you are sharing */
 "size"="Размер";
-/*  */
-"Quality"="Quality";
+/* Quality title, used in changing the export quality of scaned doc */
+"Quality"="Качество";
 /*  */
 "folder"="Папка";
 /* Error message shown when there's no camera available on the device */
@@ -42,6 +44,8 @@
 "Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="Ссылка подтверждения более не действительна. Ваш аккаунт может быть уже активирован или вы могли отменить регистрацию.";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Неправильная ссылка";
+/* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
+"The account that created this link has been terminated due to multiple violations of our Terms of Service."="Учётная запись владельца этой ссылки была заблокирована за многочисленные нарушения условий предоставления услуг.";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="Введите ключ дешифрирования";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -146,6 +150,8 @@
 "emailAlreadyInUse"="Ошибка. Этот адрес уже используется.";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Нужно освободить больше места";
+/* Message shown when you try to downlonad files bigger than the available memory. */
+"MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device."="MEGA нужно минимум %@. Освободите место, удалив приложения, которые вы больше не используете, или большие видеофайлы в галерее. Вы также можете управлять тем, что MEGA хранит на устройстве.";
 /* Title for the file link view */
 "fileLink"="Ссылка на файл";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
@@ -509,7 +515,7 @@
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
 "itemsSelected"="Элементов выбрано: %lu";
 /* String shown when multi selection is enabled and only one item has been selected. */
-"1 selected"="1 selected";
+"1 selected"="1 выбран";
 /* String shown when multi selection is enabled and the user has more than one item selected. */
 "xSelected"="%d выбрано";
 /* Title of the Offline section */
@@ -629,7 +635,7 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="Политика конфиденциальности";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
-"termsOfServicesLabel"="условиями предоставления услуг";
+"termsOfServicesLabel"="Условия предоставления услуг";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
 "dataProtectionRegulationLabel"="Data Protection Regulation";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
@@ -684,6 +690,8 @@
 "Custom Settings"="Пользовательские настройки";
 /* Title to show when device local storage is full */
 "%@ Storage Full"="Хранилище %@ заполнено";
+/* Title to show when device local storage is almost full */
+"Device Storage Almost Full"="Память устройства почти заполнена";
 /* Detail for local storage full situation */
 "You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="У вас недостаточно места для дальнейшей загрузки с камеры. Освободите место, удалив ненужные приложения, видео или музыку. Вы можете управлять хранилищем в %@";
 /* Navigation path for Storage settings in iOS */
@@ -885,6 +893,8 @@
 "transfers"="Передачи";
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
 "all"="Все";
+/* Title of one of the filters in the Transfers section. In this case "Completed" transfers. */
+"Completed"="Готово";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
 "downloads"="Загрузки с сервера";
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
@@ -958,7 +968,7 @@
 /* %1 will be replaced by a numeric value and %2 will be 'days' or 'months', for example (Expires in [S]10[/S] days) */
 "bonusExpiresIn"="(Бонус действует [S]%1[/S] %2)";
 /* Add Phone Number title  */
-"Add Phone Number"="Добавить номер телефона";
+"Add Phone Number"="Добавить телефонный номер";
 /* Achievement explanation for add phone number */
 "You have received %1$s storage space and %2$s transfer quota for verifying your phone number."="Вы получили %1$s для хранения и %2$s трафика за подтверждение телефонного номера.";
 /* Free storage description to encourage users to add phone number to their accounts */
@@ -968,9 +978,9 @@
 /* Description to unblock account by verifying phone number */
 "Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account."="Ваш аккаунт был временно заблокирован из-за возможного злоупотребления. Пожалуйста, подтвердите номер телефона, чтобы разблокировать аккаунт.";
 /* Verify your account title */
-"Verify Your Account"="Подтвердить аккаунт";
+"Verify Your Account"="Подтвердите аккаунт";
 /* Add your phone number title */
-"Add Your Phone Number"="Добавить телефонный номер";
+"Add Your Phone Number"="Добавить номер телефона";
 /* Choose Your Country title */
 "Choose Your Country"="Выберите свою страну";
 /* Used to display the number of months a plan was purchased for e.g. 3 months, 6 months. */
@@ -1027,8 +1037,6 @@
 "cloudDriveIsFull"="[S]Ваш облачный диск заполнен.[/S] [A]Улучшите его сейчас[/A] до PRO и получите [S]до %@ ТБ (%@ ГБ)[/S] свободного места в облаке.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="свободного места";
-/* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
-"transferQuota"="Квота на передачу";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
 "limited"="Ограничено";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
@@ -1266,15 +1274,15 @@
 /* Alert message shown when the user perform logout and has files in the Offline directory */
 "allFilesSavedForOfflineWillBeDeletedFromYourDevice"="Все сохранённые локально файлы будут удалены с устройства. Продолжить?";
 /* Title shown when you almost had used your available transfer quota. */
-"depletedTransferQuota_title"="Квота передач исчерпана";
+"depletedTransferQuota_title"="Недостаточная квота передач";
 /* Description shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_message"="Загрузка в очереди превышает текущую квоту передачи, доступную для вашей учетной записи, и поэтому может быть прервана.";
 /* Button title to see the available pro plans in MEGA */
 "seePlans"="Подписки";
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
 "dismiss"="Отклонить";
-/* Notification text body shown when you have received a new chat message */
-"newMessage"="Новое сообщение";
+/* Content of the notification when there is unknown activity on the Chat */
+"You may have new messages"="У вас могут быть новые сообщения";
 /* Notification text body shown when you have received a contact request */
 "contactRequest"="Новый контакт";
 /* Notification text body shown when you have received a new shared folder */
@@ -1542,6 +1550,10 @@
 "callFailed"="Вызов не удался";
 /* When an active call of user A with user B had ended */
 "callEnded"="Вызов окончен.";
+/* When an active goup call is ended */
+"Group call ended"="Групповой вызов окончен";
+/* When an active goup call is ended, shows the duration */
+"[A]Group call ended[/A][C]. Duration: [/C]"="[A]Групповой вызов завершен[/A][C]. Длительность: [/C]";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="Длительность: %@";
 /* */
@@ -1624,6 +1636,8 @@
 "Save in Photos"="Сохранять в «Фотографиях»";
 /* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Сохраните копию изображений и видео из приложения MEGA в медиабиблиотеке вашего устройства.";
+/* Settings section title where you can enable the option to 'Spotlight search' */
+"Spotlight Search"="Поиск Spotlight";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="Ключи хранятся у вас";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -1687,7 +1701,7 @@
 /* A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days. */
 "Remove files older than"="Удалять файлы старше";
 /* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
-"Days"="Дни";
+"Days"="д.";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
 "The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="Корзина очищается автоматически. Минимальный срок составляет 7 дней, максимальный — 30 дней.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
@@ -1750,14 +1764,6 @@
 "Thumbnail view"="Значки";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
 "Poor connection."="Плохое соединение.";
-/* Message shown in a chat room when there is an active group call */
-"There is an active group call. Tap to join."="Активный групповой вызов. Нажмите, чтобы присоединиться.";
-/* Message shown in a chat room for a group call in progress displaying the duration of the call */
-"Touch to return to call %@"="Коснитесь для возврата к вызову %@";
-/* Menu item to change from grid view to list view */
-"List view"="Вид списка";
-/* Menu item to change from list view to grid view */
-"Thumbnail view"="Значки";
 /* There are no notifications to display. */
 "No notifications"="Нет оповещений";
 /* The header of a notification related to payments */
@@ -1941,7 +1947,7 @@
 /* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
 "Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="Перейдите в раздел «Конфиденциальность» в настройках вашего устройства. Включите службы определения местоположения и установите MEGA на «Во время использования приложения» или «Всегда».";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
-"NSLocationAlwaysAndWhenInUseUsageDescription"="MEGA accesses your location when you share it with your contacts in chat or when you enable ”Upload in Background” for Camera Uploads so your photos and videos are uploaded when your location changes.";
+"NSLocationAlwaysAndWhenInUseUsageDescription"="MEGA получает доступ к вашему местоположению, когда вы делитесь им со своими контактами в чате или когда вы включаете «Загружать в фоновом режиме» для загрузок из камеры, чтобы ваши фотографии и видео загружались при изменении вашего местоположения.";
 /* Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
 "Mobile Data is turned off"="Мобильные данные отключены";
 /* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */
@@ -1953,17 +1959,17 @@
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Действительно перейти на тестовый сервер? Это может вызвать непоправимые сбои в работе аккаунта";
 /* Title label that explains that the user is going to be asked for the contacts permission */
-"Enable Access to Contacts"="Разрешить доступ к контактам";
+"Enable Access to Your Address Book"="Откройте доступ к вашей адресной книге";
 /* Detailed explanation of why the user should give permission to contacts */
-"MEGA needs access to your contacts to help you connect with other people on MEGA."="MEGA нужен доступ к вашим контактам, чтобы помочь вам общаться с ними в MEGA.";
+"Easily discover contacts from your address book on MEGA."="Легко находите контакты из своей адресной книги в MEGA.";
+/* Detailed explanation about MEGA not using the contacts data without permision */
+"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA не будет использовать эти данные для каких-либо других целей и никогда не будет взаимодействовать с вашими контактами без вашего согласия.";
 /* Title encouraging the user to check who of its contacts are using MEGA */
-"See who's already on MEGA"="Посмотреть, кто уже в MEGA";
+"See who's already on MEGA"="Посмотрите, кто уже в MEGA";
 /* Title showing the user how many of his contacts are using MEGA */
 "[X] contacts found on MEGA"="Контакты ([X]) найдены в MEGA";
 /* Title showing the user that one of his contacts are using MEGA */
 "1 contact found on MEGA"="1 контакт найден в MEGA";
-/* Text indicating the user to perform an action to grant some permission */
-"Enable Access"="Открыть доступ";
 /* Text indicating the user to open the device settings for MEGA */
 "Open Settings"="Открыть настройки";
 /* Text encouraging the user to invite contacts to MEGA */
@@ -2042,6 +2048,10 @@
 "Inactive chat"="Неактивный чат";
 /* Contact details screen: Set the alias(nickname) for a user */
 "Set Nickname"="Задать псевдоним";
+/* Contact details screen: Edit the alias(nickname) for a user */
+"Edit Nickname"="Изменить псевдоним";
+/* Edit nickname screen: Remove nickname button title */
+"Remove Nickname"="Удалить псевдоним";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
 "Alias/ Nickname"="Псевдоним / Никнейм";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
@@ -2050,6 +2060,16 @@
 "Include location tags"="Включить метки местоположения";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
 "If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="Если включено, вы будете загружать информацию о том, где были сняты фотографии и видео, поэтому будьте осторожны при их обмене.";
+/* Used in Photos app browser view to send the photos from the view to the chat. */
+"Send (%d)"="Отправить (%d)";
+/* Used in Photos app browser view to upload the photos from the view to the cloud. */
+"Upload (%d)"="Загрузить (%d)";
+/* Used in Photos app browser carousel view to unselect a selected photo. */
+"Unselect"="Снять выбор";
+/* Used in Photos app browser. Shown when there are no photos or videos in the Photos app. */
+"No Photos or Videos"="Нет фотографий или видео";
+/* Button title which, if tapped, will trigger the action of opening a folder containg this file */
+"View in Folder"="Посмотреть в папке";
 /* Error message shown when opening a link with an account that not corresponds to the link */
 "This link is not related to this account. Please log in with the correct account."="Ссылка не связана с этим аккаунтом. Пожалуйста, войдите в правильный аккаунт.";
 /* Text emncouraging the user to add contacts in MEGA */
@@ -2090,6 +2110,10 @@
 "It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="Возможно, вы используете тот же пароль для своего аккаунта MEGA, что и для других служб, и что по крайней мере одна из этих других служб пострадала от утечки данных.";
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="Ваш пароль утёк и теперь используется плохими игроками для входа в ваши аккаунты, включая, но не ограничиваясь аккаунтом MEGA.";
+/* tool bar title used in transfer widget, allow user to clear the selected items in the list */
+"Clear Selected"="Очистить выбранное";
+/* tool bar title used in transfer widget, allow user to clear all items in the list */
+"Clear All"="Очистить все";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
 "MEGA CAMERA UPLOADS FOLDER"="ПАПКА ЗАГРУЗОК ИЗ КАМЕРЫ MEGA";
 /* Action button text of folder selection screen for camera uploads */
@@ -2101,16 +2125,18 @@
 /* Title of Image Quality option */
 "Automatic"="Автоматически";
 /* Description of Automatic Image Quality option */
-"Send smaller size images through cellular networks and original size images through wifi"="Send smaller size images through cellular networks and original size images through wifi";
+"Send smaller size images through cellular networks and original size images through wifi"="Отправляйте изображения меньшего размера через мобильные сети, а изображения оригинального размера - через Wi-Fi";
 /* Title of Image Quality option */
 "Optimised"="Оптимизированное";
 /* Description of Optimised Image Quality option */
 "Send smaller size images optimised for lower data consumption"="Отправлять изображения меньшего размера для экономии трафика";
 /* Description of High Image Quality option */
-"Send original size, increased quality images"="Send original size, increased quality images";
+"Send original size, increased quality images"="Отправлять оригинальный размер, увеличенное качество изображения";
 /* Setting title for Doc scan view */
-"Save Settings"="Save Settings";
+"Save Settings"="Сохранение настроек";
 /* file type title, used in changing the export format of scaned doc */
 "File Type"="Тип файла";
 /* export Quality Option for Scan document */
-"best"="Best";
+"best"="Лучшее";
+/* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
+"Enter group name"="Введите имя группы";

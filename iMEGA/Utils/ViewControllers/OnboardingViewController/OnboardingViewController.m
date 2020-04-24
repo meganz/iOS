@@ -11,7 +11,6 @@
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
-@property (weak, nonatomic) IBOutlet UILabel *pageLabel;
 @property (weak, nonatomic) IBOutlet UIButton *primaryButton;
 @property (weak, nonatomic) IBOutlet UIButton *secondaryButton;
 
@@ -98,9 +97,6 @@
                 [self.scrollView.subviews.firstObject.subviews[nextIndex] removeFromSuperview];
             }
             
-            self.pageLabel.text = [[AMLocalizedString(@"%1 of %2", @"Shows number of the current page. '%1' will be replaced by current page number. '%2' will be replaced by number of all pages.") stringByReplacingOccurrencesOfString:@"%1" withString:@"1"] stringByReplacingOccurrencesOfString:@"%2" withString:[NSString stringWithFormat:@"%tu", self.scrollView.subviews.firstObject.subviews.count]];
-            self.pageLabel.hidden = NO;
-            
             break;
     }
     
@@ -143,8 +139,6 @@
         [self.primaryButton setTitle:AMLocalizedString(@"continue", @"'Next' button in a dialog") forState:UIControlStateNormal];
         self.secondaryButton.hidden = YES;
     }
-    
-    self.pageLabel.text = [[AMLocalizedString(@"%1 of %2", @"Shows number of the current page. '%1' will be replaced by current page number. '%2' will be replaced by number of all pages.") stringByReplacingOccurrencesOfString:@"%1" withString:[NSString stringWithFormat:@"%td", page + 1]] stringByReplacingOccurrencesOfString:@"%2" withString:[NSString stringWithFormat:@"%tu", self.scrollView.subviews.firstObject.subviews.count]];
 }
 
 - (void)nextPageOrDismiss {
@@ -204,6 +198,9 @@
                     
                 case OnboardingViewTypeNotificationsPermission: {
                     [DevicePermissionsHelper notificationsPermissionWithCompletionHandler:^(BOOL granted) {
+                        if (granted) {
+                            [UIApplication.sharedApplication registerForRemoteNotifications];
+                        }
                         [self nextPageOrDismiss];
                     }];
                     break;

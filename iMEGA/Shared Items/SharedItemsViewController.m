@@ -16,6 +16,7 @@
 #import "NSMutableArray+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIAlertAction+MNZCategory.h"
+#import "UIImage+MNZCategory.h"
 
 #import "BrowserViewController.h"
 #import "CloudDriveViewController.h"
@@ -417,17 +418,16 @@
     self.incomingNodesForEmailMutableDictionary[node.base64Handle] = userEmail;
     self.incomingIndexPathsMutableDictionary[node.base64Handle] = indexPath;
     
-    cell.thumbnailImageView.image = Helper.incomingFolderImage;
+    cell.thumbnailImageView.image = UIImage.mnz_incomingFolderImage;
     
     cell.nameLabel.text = node.name;
     
     MEGAUser *user = [MEGASdkManager.sharedMEGASdk contactForEmail:userEmail];
-    NSString *userName = user.mnz_fullName ? user.mnz_fullName : userEmail;
-    
-    NSString *infoLabelText = userName;
-    cell.infoLabel.text = infoLabelText;
-    
-    [cell.permissionsButton setImage:[Helper permissionsButtonImageForShareType:share.access] forState:UIControlStateNormal];
+
+    NSString *userDisplayName = user.mnz_displayName;
+    cell.infoLabel.text = (userDisplayName != nil) ? userDisplayName : userEmail;
+
+    [cell.permissionsButton setImage:[UIImage mnz_permissionsButtonImageForShareType:share.access] forState:UIControlStateNormal];
     cell.permissionsButton.hidden = NO;
 
     cell.nodeHandle = node.handle;
@@ -457,7 +457,7 @@
     self.outgoingNodesForEmailMutableDictionary[node.base64Handle] = share.user;
     self.outgoingIndexPathsMutableDictionary[node.base64Handle] = indexPath;
     
-    cell.thumbnailImageView.image = Helper.outgoingFolderImage;
+    cell.thumbnailImageView.image = UIImage.mnz_outgoingFolderImage;
     
     cell.nameLabel.text = node.name;
     
@@ -468,7 +468,8 @@
         userName = [NSString stringWithFormat:AMLocalizedString(@"sharedWithXContacts", nil), outSharesCount];
     } else {
         MEGAUser *user = [MEGASdkManager.sharedMEGASdk contactForEmail:[outSharesMutableArray.firstObject user]];
-        userName = user.mnz_fullName ? user.mnz_fullName : user.email;
+        NSString *userDisplayName = user.mnz_displayName;
+        userName = (userDisplayName != nil) ? userDisplayName : user.email;
     }
     
     cell.permissionsButton.hidden = YES;
