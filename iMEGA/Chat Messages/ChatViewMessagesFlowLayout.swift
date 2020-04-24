@@ -12,6 +12,9 @@ class ChatViewMessagesFlowLayout: MessagesCollectionViewFlowLayout {
     
     
     override func cellSizeCalculatorForItem(at indexPath: IndexPath) -> CellSizeCalculator {
+        if isSectionReservedForTypingIndicator(indexPath.section) {
+            return typingIndicatorSizeCalculator
+        }
         let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
 
         if case .custom = message.kind {
