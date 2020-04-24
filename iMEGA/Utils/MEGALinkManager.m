@@ -335,7 +335,12 @@ static NSString *nodeToPresentBase64Handle;
             [MEGALinkManager resetLinkAndURLType];
             break;
             
-        case URLTypeConfirmationLink:
+        case URLTypeConfirmationLink: {
+            MEGAQuerySignupLinkRequestDelegate *querySignupLinkRequestDelegate = [MEGAQuerySignupLinkRequestDelegate.alloc initWithCompletion:nil urlType:MEGALinkManager.urlType];
+            [MEGASdkManager.sharedMEGASdk querySignupLink:url.mnz_MEGAURL delegate:querySignupLinkRequestDelegate];
+            break;
+        }
+            
         case URLTypeNewSignUpLink: {
             if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
                 [MEGALinkManager resetLinkAndURLType];

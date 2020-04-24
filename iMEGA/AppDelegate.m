@@ -45,7 +45,6 @@
 #import "ProductDetailViewController.h"
 #import "UpgradeTableViewController.h"
 
-#import "MEGAChatCreateChatGroupRequestDelegate.h"
 #import "MEGAChatNotificationDelegate.h"
 #import "MEGAChatGenericRequestDelegate.h"
 #import "MEGACreateAccountRequestDelegate.h"
@@ -224,6 +223,8 @@
             [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
             [[MEGASdkManager sharedMEGAChatSdk] logout];
             [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
+        } else if (chatInit == MEGAChatInitOnlineSession || chatInit == MEGAChatInitOfflineSession) {
+            [self importMessagesFromNSE];
         }
         
         MEGALoginRequestDelegate *loginRequestDelegate = [[MEGALoginRequestDelegate alloc] init];
@@ -334,6 +335,7 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     MEGALogDebug(@"[App Lifecycle] Application will enter foreground");
+    [self checkChatInitState];
     
     if (self.wasAppSuspended && !MEGASdkManager.sharedMEGAChatSdk.mnz_existsActiveCall) {
         //If the app has been suspended, we assume that the sockets have been closed, so we have to reconnect.
@@ -462,6 +464,7 @@
                                 CallViewController *callVC = (CallViewController *)UIApplication.mnz_presentingViewController;
                                 if (!callVC.videoCall) {
                                     [callVC tapOnVideoCallkitWhenDeviceIsLocked];
+                                    self.chatRoom = nil;
                                 }
                             }
                         } else {
@@ -489,9 +492,7 @@
                         }
                     } else {
                         MEGALogDebug(@"There is not a chat with %@, create the chat and inmediatelly perform the call", self.email);
-                        MEGAChatPeerList *peerList = [[MEGAChatPeerList alloc] init];
-                        [peerList addPeerWithHandle:userHandle privilege:MEGAChatRoomPrivilegeStandard];
-                        MEGAChatCreateChatGroupRequestDelegate *createChatGroupRequestDelegate = [[MEGAChatCreateChatGroupRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
+                        [MEGASdkManager.sharedMEGAChatSdk mnz_createChatRoomWithUserHandle:userHandle completion:^(MEGAChatRoom * _Nonnull chatRoom) {
                             self.chatRoom = chatRoom;
                             MEGAChatConnection chatConnection = [[MEGASdkManager sharedMEGAChatSdk] chatConnectionState:self.chatRoom.chatId];
                             MEGALogDebug(@"Chat %@ connection state: %ld", [MEGASdk base64HandleForUserHandle:self.chatRoom.chatId], (long)chatConnection);
@@ -499,7 +500,6 @@
                                 [self performCall];
                             }
                         }];
-                        [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:NO peers:peerList delegate:createChatGroupRequestDelegate];
                     }
                 }
             } if (personHandle.type == INPersonHandleTypeUnknown) {
@@ -517,7 +517,13 @@
                         callVC.callType = CallTypeActive;
                         if (!callVC.videoCall) {
                             [callVC tapOnVideoCallkitWhenDeviceIsLocked];
+                            self.chatRoom = nil;
                         }
+                    }
+                    if ([presentedVC isKindOfClass:CallViewController.class]) {
+                        CallViewController *callVC = (CallViewController *)UIApplication.mnz_presentingViewController;
+                        [callVC tapOnVideoCallkitWhenDeviceIsLocked];
+                        self.chatRoom = nil;
                     }
                 } else {
                     self.chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:handle];
@@ -1087,6 +1093,33 @@ void uncaughtExceptionHandler(NSException *exception) {
     }
 }
 
+- (void)checkChatInitState {
+    MEGAChatInit initState = [MEGASdkManager.sharedMEGAChatSdk initState];
+    MEGALogDebug(@"%@", [MEGAChatSdk stringForMEGAChatInitState:initState]);
+    if (initState == MEGAChatInitOfflineSession || initState == MEGAChatInitOnlineSession) {
+        [self importMessagesFromNSE];
+    }
+}
+
+- (void)importMessagesFromNSE {
+    NSURL *containerURL = [NSFileManager.defaultManager containerURLForSecurityApplicationGroupIdentifier:MEGAGroupIdentifier];
+    NSURL *nseCacheURL = [containerURL URLByAppendingPathComponent:MEGANotificationServiceExtensionCacheFolder isDirectory:YES];
+    NSString *session = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
+    NSString *filename = [NSString stringWithFormat:@"karere-%@.db", [session substringFromIndex:MAX(session.length - MEGALastCharactersFromSession, 0)]];
+    NSURL *nseCacheFileURL = [nseCacheURL URLByAppendingPathComponent:filename];
+    
+    if ([NSFileManager.defaultManager fileExistsAtPath:nseCacheFileURL.path]) {
+        if (MEGAStore.shareInstance.areTherePendingMessages) {
+            MEGALogDebug(@"Import messages from %@", nseCacheFileURL.path);
+            [MEGASdkManager.sharedMEGAChatSdk importMessagesFromPath:nseCacheFileURL.path];
+        } else {
+            MEGALogDebug(@"No messages to import from NSE.");
+        }
+    } else {
+        MEGALogWarning(@"NSE cache file %@ doesn't exist", nseCacheFileURL.path);
+    }
+}
+
 - (void)presentAccountExpiredAlertIfNeeded {
     if (!self.isAccountExpiredPresented && ![UIApplication.mnz_visibleViewController isKindOfClass:BusinessExpiredViewController.class]) {
         NSString *alertTitle = AMLocalizedString(@"Your business account is expired", @"A dialog title shown to users when their business account is expired.");
@@ -1233,7 +1266,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 }
 
 - (void)pushRegistry:(PKPushRegistry *)registry didReceiveIncomingPushWithPayload:(PKPushPayload *)payload forType:(NSString *)type {
-    MEGALogDebug(@"Did receive incoming push with payload: %@", [payload dictionaryPayload]);
+    MEGALogDebug(@"Did receive incoming push with payload: %@ and type: %@", [payload dictionaryPayload], type);
     
     // Call
     if ([payload.dictionaryPayload[@"megatype"] integerValue] == 4) {
@@ -1243,26 +1276,6 @@ void uncaughtExceptionHandler(NSException *exception) {
         uint64_t callId = [MEGASdk handleForBase64UserHandle:callIdB64];
         
         [self.megaProviderDelegate reportIncomingCallWithCallId:callId chatId:chatId];
-        
-        if (!DevicePermissionsHelper.shouldAskForNotificationsPermissions) {
-            [DevicePermissionsHelper notificationsPermissionWithCompletionHandler:^(BOOL granted) {
-                if (granted && !DevicePermissionsHelper.shouldAskForAudioPermissions) {
-                    [DevicePermissionsHelper audioPermissionModal:NO forIncomingCall:YES withCompletionHandler:^(BOOL granted) {
-                        if (!granted) {
-                            UNMutableNotificationContent *content = [UNMutableNotificationContent new];
-                            content.body = AMLocalizedString(@"Incoming call", @"notification subtitle of incoming calls");
-                            content.sound = [UNNotificationSound soundNamed:@"incoming_voice_video_call_iOS9.mp3"];
-                            UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:1 repeats:NO];
-                            NSString *identifier = @"Incoming call";
-                            UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:identifier
-                                                                                                  content:content
-                                                                                                  trigger:trigger];
-                            [UNUserNotificationCenter.currentNotificationCenter addNotificationRequest:request withCompletionHandler:nil];
-                        }
-                    }];
-                }
-            }];
-        }
     }
 }
 
@@ -1777,6 +1790,10 @@ void uncaughtExceptionHandler(NSException *exception) {
         [self.mainTBC setBadgeValueForChats];
     }
     
+    if (request.type == MEGAChatRequestTypeImportMessages) {
+        MEGALogDebug(@"Imported messages %lld", request.number);
+    }
+    
     MEGALogInfo(@"onChatRequestFinish request type: %td", request.type);
 }
 
@@ -1800,6 +1817,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 - (void)onChatConnectionStateUpdate:(MEGAChatSdk *)api chatId:(uint64_t)chatId newState:(int)newState {
     MEGALogInfo(@"onChatConnectionStateUpdate: %@, new state: %d", [MEGASdk base64HandleForUserHandle:chatId], newState);
+    
     if (self.chatRoom.chatId == chatId && newState == MEGAChatConnectionOnline) {
         [self performCall];
     }
