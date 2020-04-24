@@ -20,7 +20,7 @@ class AddToChatCameraCollectionCell: UICollectionViewCell {
         let captureSession = AVCaptureSession()
         captureSession.sessionPreset = .photo
         
-        previewLayer.isHidden = false
+        liveFeedView.isHidden = false
         previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
         liveFeedView.layer.addSublayer(previewLayer)
        

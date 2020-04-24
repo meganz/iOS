@@ -644,6 +644,13 @@
     
     [SVProgressHUD setSuccessImage:[UIImage imageNamed:@"hudSuccess"]];
     [SVProgressHUD setErrorImage:[UIImage imageNamed:@"hudError"]];
+    
+    UIPageControl *pageControl = [UIPageControl appearance];
+    pageControl.pageIndicatorTintColor = [UIColor colorWithRed:(81.0/255.0)
+                                                         green:(81.0/255.0)
+                                                          blue:(81.0/255.0)
+                                                         alpha:0.3];
+    pageControl.currentPageIndicatorTintColor = [UIColor colorFromHexString:@"#515151"];
 }
 
 - (void)beginBackgroundTaskWithName:(NSString *)name {
