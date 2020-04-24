@@ -14,12 +14,19 @@ static MEGAChatSdk *_MEGAChatSdk = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         NSError *error;
-        NSURL *applicationSupportDirectoryURL = [[NSFileManager defaultManager] URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:&error];
+        NSURL *basePathURL;
+#ifndef MNZ_NOTIFICATION_EXTENSION
+        basePathURL = [NSFileManager.defaultManager URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:&error];
+#else
+        NSURL *containerURL = [NSFileManager.defaultManager containerURLForSecurityApplicationGroupIdentifier:MEGAGroupIdentifier];
+        basePathURL = [containerURL URLByAppendingPathComponent:MEGANotificationServiceExtensionCacheFolder isDirectory:YES];
+        [NSFileManager.defaultManager createDirectoryAtURL:basePathURL withIntermediateDirectories:YES attributes:nil error:&error];
+#endif
         if (error) {
-            MEGALogError(@"Failed to locate/create NSApplicationSupportDirectory with error: %@", error);
+            MEGALogError(@"Failed to locate/create basePathURL with error: %@", error);
         }
 
-        _megaSDK = [[MEGASdk alloc] initWithAppKey:MEGAiOSAppKey userAgent:[self userAgent] basePath:applicationSupportDirectoryURL.path];
+        _megaSDK = [[MEGASdk alloc] initWithAppKey:MEGAiOSAppKey userAgent:[self userAgent] basePath:basePathURL.path];
         [_megaSDK retrySSLErrors:YES];
     });
     return _megaSDK;

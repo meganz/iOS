@@ -968,7 +968,7 @@
 /* Add Phone Number title  */
 "Add Phone Number"="Añade el número de teléfono";
 /* Achievement explanation for add phone number */
-"You have received %1$s storage space and %2$s transfer quota for verifying your phone number."="Has recibido %1$s de espacio de almacenamiento y %2$s de cuota de transferencia por haber verificado tu número de teléfono.";
+"You have received %1$s storage space and %2$s transfer quota for verifying your phone number."="Has recibido %1$s de espacio de almacenamiento y%2$s de cuota de transferencia por haber verificado tu número de teléfono.";
 /* Free storage description to encourage users to add phone number to their accounts */
 "Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."="Obtén %@ gratis al añadir tu número de teléfono. De esta manera tus contactos te encontrarán más facilmente en MEGA.";
 /* Description to encourage users to add phone number to their accounts when there are not achievements */
@@ -1035,8 +1035,6 @@
 "cloudDriveIsFull"="[S]Tu Nube está llena.[/S] [A]Amplía tu cuenta[/A] y obtén [S]hasta %@ TB (%@ GB)[/S] de espacio de almacenamiento en la nube.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Almacenamiento";
-/* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
-"transferQuota"="Cuota de transferencia";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
 "limited"="Limitado";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
@@ -1764,14 +1762,6 @@
 "Thumbnail view"="Vista en miniatura";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
 "Poor connection."="Mala conexión.";
-/* Message shown in a chat room when there is an active group call */
-"There is an active group call. Tap to join."="Llamada de grupo en curso. Toca para unirte.";
-/* Message shown in a chat room for a group call in progress displaying the duration of the call */
-"Touch to return to call %@"="Toca para volver a la llamada %@";
-/* Menu item to change from grid view to list view */
-"List view"="Ver como lista";
-/* Menu item to change from list view to grid view */
-"Thumbnail view"="Vista en miniatura";
 /* There are no notifications to display. */
 "No notifications"="Sin notificaciones";
 /* The header of a notification related to payments */
@@ -2059,7 +2049,7 @@
 /* Contact details screen: Edit the alias(nickname) for a user */
 "Edit Nickname"="Editar alias";
 /* Edit nickname screen: Remove nickname button title */
-"Remove Nickname"="Remover alias";
+"Remove Nickname"="Eliminar alias";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
 "Alias/ Nickname"="Alias";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
@@ -2071,7 +2061,7 @@
 /* Used in Photos app browser view to send the photos from the view to the chat. */
 "Send (%d)"="Enviar (%d)";
 /* Used in Photos app browser view to upload the photos from the view to the cloud. */
-"Upload (%d)"="Upload (%d)";
+"Upload (%d)"="Subir (%d)";
 /* Used in Photos app browser carousel view to unselect a selected photo. */
 "Unselect"="Deseleccionar";
 /* Used in Photos app browser. Shown when there are no photos or videos in the Photos app. */
@@ -2146,9 +2136,5 @@
 "File Type"="Tipo de archivo";
 /* export Quality Option for Scan document */
 "best"="Óptima";
-/* Description of why the user should give permission to contacts */
-"Easily discover contacts from your address book on MEGA."="Descubre contactos de tu agenda que tienen MEGA.";
-/* Detailed description of why the user should give permission to contacts */
-"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA no utilizará estos datos para ningún otro propósito y nunca interactuará con tus contactos sin tu consentimiento.";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="Escribe el nombre del grupo";

@@ -3,6 +3,7 @@
 
 #import "SVProgressHUD.h"
 
+#import "Helper.h"
 #import "CreateAccountViewController.h"
 #import "LoginViewController.h"
 #import "MEGALinkManager.h"
@@ -39,7 +40,8 @@
 - (void)manageQuerySignupLinkRequest:(MEGARequest *)request {
     if (self.urlType == URLTypeConfirmationLink) {
         if (request.flag) {
-            if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionId"]) {
+            NSString *ephemeralEmail = [SAMKeychain passwordForService:@"MEGA" account:@"email"];
+            if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionId"] && [request.email isEqualToString:ephemeralEmail]) {
                 if ([MEGASdkManager sharedMEGAChatSdk] == nil) {
                     [MEGASdkManager createSharedMEGAChatSdk];
                 }
@@ -68,7 +70,15 @@
                     }
                 }]];
                 
-                [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
+                if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionId"]) {
+                    [MEGASdkManager.sharedMEGASdk cancelCreateAccount];
+                    [Helper clearEphemeralSession];
+                    [UIApplication.mnz_visibleViewController dismissViewControllerAnimated:YES completion:^{
+                        [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
+                    }];
+                } else {
+                    [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
+                }
                 
                 [MEGALinkManager resetLinkAndURLType];
             }
@@ -109,12 +119,20 @@
                 [MEGALinkManager showLinkNotValid];
                 break;
                 
-                
+            case MEGAErrorTypeApiEExpired:
             case MEGAErrorTypeApiENoent: {
                 UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:AMLocalizedString(@"Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration.", nil) preferredStyle:UIAlertControllerStyleAlert];
                 [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
                 
                 [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
+                break;
+            }
+                
+            case MEGAErrorTypeApiEAccess: {
+                UIAlertController *alreadyLoggedInAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", nil) message:AMLocalizedString(@"This link is not related to this account. Please log in with the correct account.", @"Error message shown when opening a link with an account that not corresponds to the link") preferredStyle:UIAlertControllerStyleAlert];
+                [alreadyLoggedInAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDestructive handler:nil]];
+
+                [UIApplication.mnz_visibleViewController presentViewController:alreadyLoggedInAlertController animated:YES completion:nil];
                 break;
             }
                 
