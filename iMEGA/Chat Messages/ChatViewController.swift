@@ -119,6 +119,7 @@ class ChatViewController: MessagesViewController {
             present(customModalAlertVC, animated: true, completion: nil)
         }
         
+        setLastMessageAsSeen()
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -311,6 +312,16 @@ class ChatViewController: MessagesViewController {
             layout.setMessageOutgoingAvatarSize(.zero)
             layout.setMessageOutgoingMessageTopLabelAlignment(LabelAlignment(textAlignment: .right, textInsets:  UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 12)))
 
+        }
+    }
+    
+    private func setLastMessageAsSeen() {
+        if messages.count > 0 {
+            let lastMessage = messages.last
+            if lastMessage?.message.userHandle != MEGASdkManager.sharedMEGAChatSdk()?.myUserHandle
+                && ((MEGASdkManager.sharedMEGAChatSdk()?.lastChatMessageSeen(forChat: chatRoom.chatId))?.messageId != lastMessage!.message.messageId) {
+                MEGASdkManager.sharedMEGAChatSdk()?.setMessageSeenForChat(chatRoom.chatId, messageId: lastMessage!.message.messageId)
+            }
         }
     }
     
