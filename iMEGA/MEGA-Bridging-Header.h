@@ -65,4 +65,4 @@
 #import "MEGASdk+MNZCategory.h"
 #import "MEGACreateFolderRequestDelegate.h"
 #import "MEGAStartUploadTransferDelegate.h"
-
+#import "MEGAGetAttrUserRequestDelegate.h"
