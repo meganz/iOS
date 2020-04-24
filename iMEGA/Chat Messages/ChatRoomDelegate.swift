@@ -30,6 +30,25 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
     func onChatRoomUpdate(_ api: MEGAChatSdk!, chat: MEGAChatRoom!) {
         MEGALogInfo("ChatRoomDelegate: onChatRoomUpdate \(chatRoom)")
         chatViewController.chatRoom = chat
+        
+        switch chat.changes {
+        case .userTyping:
+            if (chat.userTypingHandle != api.myUserHandle) {
+                chatViewController.setTypingIndicatorViewHidden(false, animated: true ,whilePerforming: nil) { [weak self] success in
+                    if success, self?.isLastSectionVisible() == true {
+                        self?.chatViewController.messagesCollectionView.scrollToBottom(animated: true)
+                    }
+                }
+            }
+        case .userStopTyping:
+            chatViewController.setTypingIndicatorViewHidden(true, animated: true ,whilePerforming: nil)  { [weak self] success in
+                if success, self?.isLastSectionVisible() == true {
+                    self?.chatViewController.messagesCollectionView.scrollToBottom(animated: true)
+                }
+            }
+        default:
+            break
+        }
     }
     
     func onMessageLoaded(_ api: MEGAChatSdk!, message: MEGAChatMessage!) {

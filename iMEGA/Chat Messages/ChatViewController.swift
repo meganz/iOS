@@ -123,6 +123,12 @@ class ChatViewController: MessagesViewController {
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
+        // Very important to check this when overriding `cellForItemAt`
+               // Super method will handle returning the typing indicator cell
+               guard !isSectionReservedForTypingIndicator(indexPath.section) else {
+                   return super.collectionView(collectionView, cellForItemAt: indexPath)
+               }
+
         return super.collectionView(collectionView, cellForItemAt: indexPath)
     }
 
