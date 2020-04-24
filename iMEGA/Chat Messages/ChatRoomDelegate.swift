@@ -118,7 +118,8 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
 //                    }
                     
                     let index = messages.firstIndex(of: oldMessage)!
-                    messages[index] = ChatMessage(message: message, chatRoom: chatRoom)
+                    let receivedMessage = ChatMessage(message: message, chatRoom: chatRoom)
+                    messages[index] = receivedMessage
                     chatViewController.messagesCollectionView.performBatchUpdates({
                         chatViewController.messagesCollectionView.reloadSections([index])
                     }, completion: nil)
@@ -127,6 +128,35 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
                 
             default:
                 break
+            }
+        }
+        
+        if message.hasChanged(for: .content) {
+            if message.isDeleted || message.isEdited {
+                let filteredArray = messages.filter { chatMessage in
+                    return chatMessage.message.temporalId == message.temporalId
+                }
+                if filteredArray.count > 0 {
+                    let oldMessage = filteredArray.first!
+                    
+                    let index = messages.firstIndex(of: oldMessage)!
+                    let receivedMessage = ChatMessage(message: message, chatRoom: chatRoom)
+                    
+                    if message.isEdited {
+                        messages[index] = receivedMessage
+                        chatViewController.messagesCollectionView.performBatchUpdates({
+                            chatViewController.messagesCollectionView.reloadSections([index])
+                        }, completion: nil)
+                    }
+                    
+                    if message.isDeleted {
+                        messages.remove(at: index)
+                        chatViewController.messagesCollectionView.performBatchUpdates({
+                            chatViewController.messagesCollectionView.deleteSections([index])
+                        }, completion: nil)
+                    }
+                    
+                }
             }
         }
     }
