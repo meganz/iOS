@@ -1,0 +1,120 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+APPCENTER_API_TOKEN = ENV["appcenter_api_token"]
+APPCENTER_OWNER_NAME = ENV["appcenter_owner_name"]
+APPCENTER_APP_NAME = ENV["appcenter_app_name"]
+APPCENTER_DESTINATIONS = ENV["appcenter_destinations"]
+APPCENTER_SLACK_URL = ENV["appcenter_slack_url"]
+APPCENTER_SLACK_CHANNEL_NAME = ENV["appcenter_slack_channel_name"]
+
+# Directories
+BUILD_DIR       = File.expand_path('build')
+
+# Build
+PROJECT             = "MEGA.xcodeproj"
+WORKSPACE           = "iMEGA.xcworkspace"
+SCHEME              = 'MEGA'
+
+
+def build_appcenter_release_url(id)
+  return "https://appcenter.ms/orgs/#{APPCENTER_OWNER_NAME}/apps/#{APPCENTER_APP_NAME}/distribute/releases/#{id}"
+end
+
+
+default_platform(:ios)
+
+platform :ios do
+  
+  desc "Build App using development certificate for Appcenter"
+  lane :build_using_development do |options|
+    increment_build_number(
+      build_number: options[:BUILD_NUMBER],
+      xcodeproj: PROJECT
+    )
+
+    gym(
+      workspace: WORKSPACE,
+      scheme: SCHEME,
+      export_method: "development",
+      output_directory: BUILD_DIR,
+      export_options: {
+        iCloudContainerEnvironment: "Development"
+      }
+    )
+  end
+
+  desc "Upload to Appcenter"
+  lane :upload_to_appcenter do |options|
+    # Get the 20 latest commints from the current branch.
+    changelog_from_git_commits(
+      commits_count: 20,  
+      pretty: "- %s",
+      date_format: "short",
+      match_lightweight_tag: false,
+      merge_commit_filtering: "exclude_merges"
+    )
+
+    # Upload the IPA to Appcenter.
+    appcenter_upload(
+      api_token: APPCENTER_API_TOKEN,
+      owner_name: APPCENTER_OWNER_NAME,
+      app_name: APPCENTER_APP_NAME,
+      ipa: "#{BUILD_DIR}/MEGA.ipa",
+      destinations: APPCENTER_DESTINATIONS,
+      destination_type: "group",
+      release_notes: lane_context[SharedValues::FL_CHANGELOG],
+      notify_testers: true
+    )
+
+    # Send a Slack message to the channel with the build information.
+    slack(
+      message: "🎉New version available!",
+      channel: APPCENTER_SLACK_CHANNEL_NAME,
+      success: true, 
+      default_payloads: [:git_branch, :git_author],      
+      payload: {  
+        "App link" => build_appcenter_release_url(lane_context[SharedValues::APPCENTER_BUILD_INFORMATION]["id"]),
+        "Build Number" => lane_context[SharedValues::APPCENTER_BUILD_INFORMATION]["version"],
+        "Release Notes" => lane_context[SharedValues::APPCENTER_BUILD_INFORMATION]["release_notes"]
+      },
+      slack_url: APPCENTER_SLACK_URL
+    )
+  end
+
+  desc "build a app store release version"
+  lane :build_release do |options|
+
+    increment_build_number(
+      build_number: options[:BUILD_NUMBER],
+      xcodeproj: PROJECT
+    )
+
+    gym(
+      workspace: WORKSPACE,
+      scheme: SCHEME,
+      export_method: 'app-store',
+      output_name: "MEGA",
+      output_directory: BUILD_DIR,
+      configuration: 'Release',
+      export_options: {
+        iCloudContainerEnvironment: "Production"
+      }
+    )
+
+    pilot(ipa: "#{BUILD_DIR}/MEGA.ipa")
+  end
+
+end

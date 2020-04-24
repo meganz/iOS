@@ -2,6 +2,8 @@
 "cancel"="Anulează";
 /* Button title to accept something */
 "ok"="Ok";
+/* Button title to clear something */
+"clear"="Șterge";
 /* */
 "yes"="Da";
 /* */
@@ -20,8 +22,8 @@
 "passcode"="Cod de acces";
 /* "Size" of the file or folder you are sharing */
 "size"="Dimensiune";
-/*  */
-"Quality"="Quality";
+/* Quality title, used in changing the export quality of scaned doc */
+"Quality"="Calitate";
 /*  */
 "folder"="Folder";
 /* Error message shown when there's no camera available on the device */
@@ -42,6 +44,8 @@
 "Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="Linkul tău de confirmare nu mai este valid. Este posibil ca contul tău să fie deja activat sau s-ar putea să fi anulat înregistrarea.";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Link nevalid";
+/* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
+"The account that created this link has been terminated due to multiple violations of our Terms of Service."="Contul care a creat acest link a fost desființat din cauza mai multor încălcări ale Termenilor de utilizare a serviciului nostru.";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="Introdu cheia de decriptare";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -146,6 +150,8 @@
 "emailAlreadyInUse"="Eroare. Această adresă de e-mail este folosită deja.";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Trebuie să eliberezi ceva spațiu pe dispozitiv";
+/* Message shown when you try to downlonad files bigger than the available memory. */
+"MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device."="MEGA are nevoie de minimum %@. Eliberează puțin spațiu ștergând aplicațiile pe care nu le mai folosești sau fișierele video mari din galerie. Poți și gestiona ceea ce MEGA stochează pe dispozitiv.";
 /* Title for the file link view */
 "fileLink"="Linkul fișierului";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
@@ -279,7 +285,7 @@
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="Capturează";
 /* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
-"Scan Document"="Scan Document";
+"Scan Document"="Scanează un document";
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="Folder nou";
 /* Hint text shown on the create folder alert. */
@@ -509,7 +515,7 @@
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
 "itemsSelected"="%lu elemente selectate";
 /* String shown when multi selection is enabled and only one item has been selected. */
-"1 selected"="1 selected";
+"1 selected"="1 selectat";
 /* String shown when multi selection is enabled and the user has more than one item selected. */
 "xSelected"="%d selectate";
 /* Title of the Offline section */
@@ -684,6 +690,8 @@
 "Custom Settings"="Setări personalizate";
 /* Title to show when device local storage is full */
 "%@ Storage Full"="Spațiu de stocare plin %@";
+/* Title to show when device local storage is almost full */
+"Device Storage Almost Full"="Stocarea dispozitivului aproape plină";
 /* Detail for local storage full situation */
 "You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="Nu ai suficient spațiu de stocare pentru încărcarea suplimentară a camerei. Eliberează spațiu ștergând aplicații, videoclipuri sau muzică care nu sunt necesare. Poți gestiona spațiul de stocare în %@";
 /* Navigation path for Storage settings in iOS */
@@ -836,7 +844,7 @@
 /* Headline for parking an account (basically restarting from scratch) */
 "parkAccount"="Cont parcat";
 /* Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed "Recovery Key") */
-"startingFreshAccount"="Recunosc că încep un cont nou, gol și că voi pierde toate datele în contul meu prezent, cu excepția cazului în care îmi aduc aminte de parolă sau găsesc o cheie de recuperare exportată.";
+"startingFreshAccount"="Iau la cunoștință faptul că încep un cont nou, gol și că voi pierde toate datele în contul meu prezent, cu excepția cazului în care îmi aduc aminte parola sau găsesc o cheie de recuperare exportată.";
 /* Caption of the button to proceed */
 "startNewAccount"="Începe un cont nou";
 /*  */
@@ -860,7 +868,7 @@
 /* Text shown on the confirm email view to remind the user what to do */
 "verifyYourEmailAddress_description"="Te rugăm să introduci parola pentru a-ți verifica adresa de e-mail";
 /* The [X] will be replaced with the e-mail address. */
-"congratulationsNewEmailAddress"="Felicitări, adresa de e-mail nouă pentru acest cont MEGA este: [X]";
+"congratulationsNewEmailAddress"="Felicitări, noua adresă de e-mail pentru acest cont MEGA este: [X]";
 /* Button text to close other login sessions except the current session in use. This will log out other devices which have an active login session. */
 "closeOtherSessions"="Închide alte sesiuni";
 /* Message shown when you click on 'Close other session' to block other login sessions except the current session in use. This message is shown when this has been done. */
@@ -885,6 +893,8 @@
 "transfers"="Transferuri";
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
 "all"="Toate";
+/* Title of one of the filters in the Transfers section. In this case "Completed" transfers. */
+"Completed"="Terminat";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
 "downloads"="Descărcări";
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
@@ -962,15 +972,15 @@
 /* Achievement explanation for add phone number */
 "You have received %1$s storage space and %2$s transfer quota for verifying your phone number."="Ai primit %1$s spațiu de stocare și %2$s cotă de transfer pentru verificarea numărului tău de telefon.";
 /* Free storage description to encourage users to add phone number to their accounts */
-"Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."="Get %@ free when you add your phone number. This makes it easier for your contacts to find you on MEGA.";
+"Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."="Obține %@ gratuiți atunci când adaugi numărul de telefon. Acest lucru face mai ușor pentru contactele tale să te găsească pe MEGA.";
 /* Description to encourage users to add phone number to their accounts when there are not achievements */
 "Add your phone number to MEGA. This makes it easier for your contacts to find you on MEGA."="Adaugă-ți numărul de telefon pe MEGA. Acest lucru face mai ușor pentru contactele tale să te găsească pe MEGA.";
 /* Description to unblock account by verifying phone number */
-"Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account."="Contul tău a fost suspendat temporar din cauza unor posibile abuzuri. Te rugăm să verifici numărul de telefon pentru a-ți debloca contul.";
+"Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account."="Contul tău a fost blocat temporar din cauza unor posibile abuzuri. Te rugăm să verifici numărul de telefon pentru a-ți debloca contul.";
 /* Verify your account title */
 "Verify Your Account"="Verifică-ți contul";
 /* Add your phone number title */
-"Add Your Phone Number"="Adaugă numărul tău de telefon";
+"Add Your Phone Number"="Adaugă-ți numărul de telefon";
 /* Choose Your Country title */
 "Choose Your Country"="Alege-ți țara";
 /* Used to display the number of months a plan was purchased for e.g. 3 months, 6 months. */
@@ -1027,8 +1037,6 @@
 "cloudDriveIsFull"="[S]Unitatea ta cloud este plină.[/S] [A]Upgradează acum[/A] la un cont PRO și obține [S]până la %@ TB (%@ GB)[/S] spațiu de stocare în cloud.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Spațiu de stocare";
-/* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
-"transferQuota"="Cotă de transferuri";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
 "limited"="Limitat";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
@@ -1220,7 +1228,7 @@
 /* Title show above the name of the persons with whom you're chatting */
 "chattingWith"="Chat împreună cu";
 /* Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server. */
-"chatIntroductionMessage"="MEGA îți protejează conversațiile cu criptare (controlată de utilizator) capăt-la-capăt oferind asigurări de siguranță:";
+"chatIntroductionMessage"="MEGA îți protejează conversațiile cu criptare (controlată de utilizator) capăt-la-capăt, oferind asigurări esențiale de siguranță:";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
 "confidentialityExplanation"="[S]Confidențialitate.[/S] Doar autorul și destinatarii vizați sunt capabili să descifreze și să citească conținutul.";
 /* Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit. */
@@ -1266,15 +1274,15 @@
 /* Alert message shown when the user perform logout and has files in the Offline directory */
 "allFilesSavedForOfflineWillBeDeletedFromYourDevice"="Toate fișierele salvate pentru offline vor fi șterse de pe dispozitiv. Continui spre deconectare?";
 /* Title shown when you almost had used your available transfer quota. */
-"depletedTransferQuota_title"="Cotă de transfer epuizată";
+"depletedTransferQuota_title"="Cotă de transfer insuficientă";
 /* Description shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_message"="Descărcarea în coadă depășește cota de transfer actuală disponibilă pentru contul tău și, prin urmare, poate fi întreruptă.";
 /* Button title to see the available pro plans in MEGA */
 "seePlans"="Vezi planurile";
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
 "dismiss"="Înlătură";
-/* Notification text body shown when you have received a new chat message */
-"newMessage"="Mesaj nou";
+/* Content of the notification when there is unknown activity on the Chat */
+"You may have new messages"="S-ar putea să ai mesaje noi";
 /* Notification text body shown when you have received a contact request */
 "contactRequest"="Cerere de contact";
 /* Notification text body shown when you have received a new shared folder */
@@ -1433,7 +1441,7 @@
 /* Title for view that displays the QR code of the user. String as short as possible. */
 "myCode"="Codul meu";
 /* Segmented control title for view that allows the user to scan QR codes. String as short as possible. */
-"scanCode"="Scanează codul";
+"scanCode"="Scanează un cod";
 /* Label that encourage the user to line the QR to scan with the camera */
 "lineCodeWithCamera"="Aliniază codul QR pentru a-l scana cu camera dispozitivului";
 /* Error text shown when the user scans a QR that is not valid. String as short as possible. */
@@ -1499,7 +1507,7 @@
 /* Label for test password button and titles */
 "testPassword"="Testează parola";
 /* Label for recovery key button */
-"backupRecoveryKey"="Fă backup cheii recup";
+"backupRecoveryKey"="Fă backup cheii de recuperare";
 /* Used as a message in the 'Password reminder' dialog as a tip on why confirming the password and/or exporting the recovery key is important and vital for the user to not lose any data. */
 "testPasswordText"="Te rugăm să îți testezi parola mai jos pentru a te asigura că ți-o aduci aminte. Dacă îți pierzi parola, vei pierde accesul la datele tale MEGA. [A]Află mai multe[/A]";
 /* Title text for the account confirmation. */
@@ -1542,6 +1550,10 @@
 "callFailed"="Apel eșuat";
 /* When an active call of user A with user B had ended */
 "callEnded"="Apel încheiat.";
+/* When an active goup call is ended */
+"Group call ended"="Apel de grup încheiat";
+/* When an active goup call is ended, shows the duration */
+"[A]Group call ended[/A][C]. Duration: [/C]"="[A]Apel de grup încheiat[/A][C]. Durata: [/C]";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="Durată: %@";
 /* */
@@ -1624,6 +1636,8 @@
 "Save in Photos"="Salvează în Fotografii";
 /* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Salvează o copie a imaginilor și videoclipurilor realizate din aplicația MEGA în biblioteca media a dispozitivului.";
+/* Settings section title where you can enable the option to 'Spotlight search' */
+"Spotlight Search"="Căutare cu Spotlight";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="Tu deții cheile";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -1687,7 +1701,7 @@
 /* A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days. */
 "Remove files older than"="Elimină fișierele mai vechi de";
 /* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
-"Days"="Zile";
+"Days"="zile";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
 "The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="Coșul de gunoi este golit pentru tine automat. Perioada minimă este de 7 zile și perioada maximă este de 30 de zile.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
@@ -1750,14 +1764,6 @@
 "Thumbnail view"="Vizualizare tip miniatură";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
 "Poor connection."="Conexiune slabă.";
-/* Message shown in a chat room when there is an active group call */
-"There is an active group call. Tap to join."="Există un apel de grup activ. Atinge pentru a te alătura.";
-/* Message shown in a chat room for a group call in progress displaying the duration of the call */
-"Touch to return to call %@"="Atinge pentru a reveni la apelul %@";
-/* Menu item to change from grid view to list view */
-"List view"="Vizualizare tip listă";
-/* Menu item to change from list view to grid view */
-"Thumbnail view"="Vizualizare tip miniatură";
 /* There are no notifications to display. */
 "No notifications"="Nicio notificare";
 /* The header of a notification related to payments */
@@ -1941,7 +1947,7 @@
 /* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
 "Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="Te rugăm să accesezi secțiunea Intimitate din aplicația Configurări a dispozitivului. Activează Servicii de localizare și setează MEGA pe La utilizarea aplicației sau Întotdeauna.";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
-"NSLocationAlwaysAndWhenInUseUsageDescription"="MEGA accesses your location when you share it with your contacts in chat or when you enable ”Upload in Background” for Camera Uploads so your photos and videos are uploaded when your location changes.";
+"NSLocationAlwaysAndWhenInUseUsageDescription"="MEGA îți accesează locația atunci când o împărtășești cu contactele tale în chat sau când activezi „Încarcă în fundal” pentru încărcări cameră, astfel încât fotografiile și videoclipurile tale sunt încărcate atunci când locația ta se schimbă.";
 /* Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
 "Mobile Data is turned off"="Datele mobile sunt oprite";
 /* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */
@@ -1953,33 +1959,33 @@
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Sigur vrei să schimbi pe un server de test? Contul tău poate suferi probleme irecuperabile";
 /* Title label that explains that the user is going to be asked for the contacts permission */
-"Enable Access to Contacts"="Activează accesul la contacte";
+"Enable Access to Your Address Book"="Activează accesul la agenda de adrese";
 /* Detailed explanation of why the user should give permission to contacts */
-"MEGA needs access to your contacts to help you connect with other people on MEGA."="MEGA are nevoie de acces la contacte pentru a te ajuta să te conectezi cu alte persoane de pe MEGA.";
+"Easily discover contacts from your address book on MEGA."="Descoperă cu ușurință contactele din agenda de adrese pe MEGA.";
+/* Detailed explanation about MEGA not using the contacts data without permision */
+"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA nu va folosi aceste date în alt scop și nu va interacționa niciodată cu contactele tale fără consimțământul tău.";
 /* Title encouraging the user to check who of its contacts are using MEGA */
 "See who's already on MEGA"="Vezi cine este deja pe MEGA";
 /* Title showing the user how many of his contacts are using MEGA */
-"[X] contacts found on MEGA"="[X] contacts found on MEGA";
+"[X] contacts found on MEGA"="[X] contacte găsite pe MEGA";
 /* Title showing the user that one of his contacts are using MEGA */
-"1 contact found on MEGA"="1 contact found on MEGA";
-/* Text indicating the user to perform an action to grant some permission */
-"Enable Access"="Activează accesul";
+"1 contact found on MEGA"="1 contact găsit pe MEGA";
 /* Text indicating the user to open the device settings for MEGA */
-"Open Settings"="Open Settings";
+"Open Settings"="Deschide Configurări";
 /* Text encouraging the user to invite contacts to MEGA */
 "Invite contacts and start chatting securely with MEGA’s encrypted chat."="Invită contacte și începe să chatuiești în siguranță cu chatul criptat MEGA.";
 /* Text showing the user how many contacts would be invited */
-"Invite [X] contacts"="Invite [X] contacts";
+"Invite [X] contacts"="Invită [X] contacte";
 /* Text showing the user how to write more than one email in order to invite them to MEGA */
-"Tap space to enter multiple emails"="Tap space to enter multiple emails";
+"Tap space to enter multiple emails"="Atinge spațiu pentru a introduce mai multe e-mailuri";
 /* Text used as a section title or similar */
-"Enter Email"="Enter Email";
+"Enter Email"="Introdu un e-mail";
 /* Text used as view title showing the user the phone contacts using MEGA */
 "On MEGA"="Pe MEGA";
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
-"CONTACTS ON MEGA"="CONTACTS ON MEGA";
+"CONTACTS ON MEGA"="CONTACTE PE MEGA";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"Hi, Have encrypted conversations on Mega with me and get 50GB free storage."="Hi! Have secure conversations on MEGA with me and get up to 50GB free storage.";
+"Hi, Have encrypted conversations on Mega with me and get 50GB free storage."="Bună! Conversează securizat pe MEGA cu mine și obține până la 50 GB spațiu de stocare gratuit.";
 /* Destination folder name of chat files */
 "My chat files"="Fișierele mele chat";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
@@ -2042,6 +2048,10 @@
 "Inactive chat"="Chat inactiv";
 /* Contact details screen: Set the alias(nickname) for a user */
 "Set Nickname"="Setează pseudonim";
+/* Contact details screen: Edit the alias(nickname) for a user */
+"Edit Nickname"="Editează pseudonimul";
+/* Edit nickname screen: Remove nickname button title */
+"Remove Nickname"="Elimină pseudonimul";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
 "Alias/ Nickname"="Alias / Pseudonim";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
@@ -2050,12 +2060,22 @@
 "Include location tags"="Include etichetele locațiilor";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
 "If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="Dacă aceasta este activată, vei încărca informații despre locul în care au fost făcute fotografiile și videoclipurile, așa că ai grijă când le împărtășești.";
+/* Used in Photos app browser view to send the photos from the view to the chat. */
+"Send (%d)"="Trimite (%d)";
+/* Used in Photos app browser view to upload the photos from the view to the cloud. */
+"Upload (%d)"="Încarcă (%d)";
+/* Used in Photos app browser carousel view to unselect a selected photo. */
+"Unselect"="Deselectează";
+/* Used in Photos app browser. Shown when there are no photos or videos in the Photos app. */
+"No Photos or Videos"="Nicio fotografie sau videoclip";
+/* Button title which, if tapped, will trigger the action of opening a folder containg this file */
+"View in Folder"="Vezi în folder";
 /* Error message shown when opening a link with an account that not corresponds to the link */
 "This link is not related to this account. Please log in with the correct account."="Acest link nu are legătură cu acest cont. Te rugăm să te autentifici cu contul corect.";
 /* Text emncouraging the user to add contacts in MEGA */
-"Invite contact now"="Invite contacts now";
+"Invite contact now"="Invită contacte acum";
 /* Text showing the user one contact would be invited */
-"Invite 1 contact"="Invite 1 contact";
+"Invite 1 contact"="Invită 1 contact";
 /* Error message if user click next button without enter a valid phone number */
 "Please enter a valid phone number"="Te rugăm să furnizezi un număr de telefon valid.";
 /* Error message that will show to user when user reached the sms verification daily limit */
@@ -2067,19 +2087,19 @@
 /* Country label for a button, title, etc. */
 "Country"="Țară";
 /* Error message that will show to user its account is already verified */
-"Your account is already verified"="Your account is already verified";
+"Your account is already verified"="Contul tău este deja verificat";
 /* Place holder for enter mobile number field */
 "Your phone number"="Numărul tău de telefon";
 /* Label tell user to enter received txt to below input boxes */
-"Please type the verification code sent to"="Te rugăm să tastezi codul de verificare trimis către";
+"Please type the verification code sent to"="Te rugăm să introduci codul de verificare trimis către";
 /* Text message to remind user to resend verification code */
 "You didn't receive a code?"="Nu ai primit un cod?";
 /* Message shown when verify phone number successfully */
 "Your phone number has been verified successfully"="Numărul tău de telefon a fost verificat cu succes";
 /* Text describing account suspended state to the user */
-"Your account has been temporarily suspended for your safety."="Contul tău a fost temporar suspendat pentru siguranța ta.";
+"Your account has been temporarily suspended for your safety."="Contul tău a fost blocat temporar pentru siguranța ta.";
 /* Text indicating the user next step to unlock suspended account. Please leave [S], [/S] as it is which is used to bolden the text. */
-"[S]Please verify your email[/S] and follow its steps to unlock your account."="[S]Please verify your email address[/S] and follow the steps in MEGA’s email to unlock your account.";
+"[S]Please verify your email[/S] and follow its steps to unlock your account."="[S]Te rugăm să-ți verifici adresa de e-mail[/S] și urmează pașii din e-mailul MEGA pentru a-ți debloca contul.";
 /* Text for button to open an helping view */
 "Why am I seeing this?"="De ce văd asta?";
 /* Text to notify user an email has been sent */
@@ -2090,27 +2110,33 @@
 "It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="Este posibil să folosești aceeași parolă pentru contul tău MEGA ca și pentru alte servicii și că cel puțin unul dintre aceste alte servicii a suferit o încălcare a securității datelor.";
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="Parola ta s-a scurs și acum este folosită de persoane rău-intenționate pentru a se autentifica în conturile tale, inclusiv, dar nu numai, în contul tău MEGA.";
+/* tool bar title used in transfer widget, allow user to clear the selected items in the list */
+"Clear Selected"="Șterge elementele selectate";
+/* tool bar title used in transfer widget, allow user to clear all items in the list */
+"Clear All"="Șterge toate";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
-"MEGA CAMERA UPLOADS FOLDER"="MEGA CAMERA UPLOADS FOLDER";
+"MEGA CAMERA UPLOADS FOLDER"="FOLDER DE ÎNCĂRCĂRI CAMERĂ MEGA";
 /* Action button text of folder selection screen for camera uploads */
-"Select Folder"="Select Folder";
+"Select Folder"="Selectează folderul";
 /* Title of the folder selection screen for camera uploads */
 "Choose Folder"="Alege un folder";
 /* Label used near to the option selected to encode the images uploaded to a chat (Low, Medium, Original) */
-"Image quality"="Image quality";
+"Image quality"="Calitatea imaginii";
 /* Title of Image Quality option */
 "Automatic"="Automat";
 /* Description of Automatic Image Quality option */
-"Send smaller size images through cellular networks and original size images through wifi"="Send smaller size images through cellular networks and original size images through wifi";
+"Send smaller size images through cellular networks and original size images through wifi"="Trimite imagini de dimensiuni mai mici prin rețele celulare și imagini de dimensiuni originale prin Wi-Fi";
 /* Title of Image Quality option */
-"Optimised"="Optimised";
+"Optimised"="Optimizată";
 /* Description of Optimised Image Quality option */
-"Send smaller size images optimised for lower data consumption"="Send smaller size images optimised for lower data consumption";
+"Send smaller size images optimised for lower data consumption"="Trimite imagini de dimensiuni mai mici, optimizate pentru un consum de date mai mic";
 /* Description of High Image Quality option */
-"Send original size, increased quality images"="Send original size, increased quality images";
+"Send original size, increased quality images"="Trimite imagini de dimensiuni originale, cu calitate crescută";
 /* Setting title for Doc scan view */
-"Save Settings"="Save Settings";
+"Save Settings"="Setări pentru salvare";
 /* file type title, used in changing the export format of scaned doc */
-"File Type"="File Type";
+"File Type"="Tipul fișierului";
 /* export Quality Option for Scan document */
-"best"="Best";
+"best"="Cea mai bună";
+/* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
+"Enter group name"="Introdu numele grupului";

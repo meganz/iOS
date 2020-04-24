@@ -63,5 +63,7 @@
 		<string>SF-UI-Text-BoldItalic.otf</string>
 		<string>SF-UI-Text-Semibold.otf</string>
 	</array>
+	<key>UIUserInterfaceStyle</key>
+	<string>Light</string>
 </dict>
 </plist>

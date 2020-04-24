@@ -6,6 +6,7 @@
 #import "SVProgressHUD.h"
 
 #import "NSFileManager+MNZCategory.h"
+#import "NSDate+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
@@ -251,128 +252,6 @@ static MEGAIndexer *indexer;
     }
     
     return fileTypesDictionary;
-}
-
-+ (UIImage *)genericImage {
-    static UIImage *genericImage = nil;
-    
-    if (genericImage == nil) {
-        genericImage = [UIImage imageNamed:@"generic"];
-    }
-    return genericImage;
-}
-
-+ (UIImage *)folderImage {
-    static UIImage *folderImage = nil;
-    
-    if (folderImage == nil) {
-        folderImage = [UIImage imageNamed:@"folder"];
-    }
-    return folderImage;
-}
-
-+ (UIImage *)incomingFolderImage {
-    static UIImage *incomingFolderImage = nil;
-    
-    if (incomingFolderImage == nil) {
-        incomingFolderImage = [UIImage imageNamed:@"folder_incoming"];
-    }
-    return incomingFolderImage;
-}
-
-+ (UIImage *)outgoingFolderImage {
-    static UIImage *outgoingFolderImage = nil;
-    
-    if (outgoingFolderImage == nil) {
-        outgoingFolderImage = [UIImage imageNamed:@"folder_outgoing"];
-    }
-    return outgoingFolderImage;
-}
-
-+ (UIImage *)folderCameraUploadsImage {
-    static UIImage *folderCameraUploadsImage = nil;
-    
-    if (folderCameraUploadsImage == nil) {
-        folderCameraUploadsImage = [UIImage imageNamed:@"folder_image"];
-    }
-    return folderCameraUploadsImage;
-}
-
-+ (UIImage *)defaultPhotoImage {
-    static UIImage *defaultPhotoImage = nil;
-    
-    if (defaultPhotoImage == nil) {
-        defaultPhotoImage = [UIImage imageNamed:@"image"];
-    }
-    return defaultPhotoImage;
-}
-
-+ (UIImage *)downloadedArrowImage {
-    static UIImage *downloadedArrowImage = nil;
-    
-    if (downloadedArrowImage == nil) {
-        downloadedArrowImage = [UIImage imageNamed:@"downloadedArrow"];
-    }
-    return downloadedArrowImage;
-}
-
-+ (UIImage *)downloadingTransferImage {
-    static UIImage *downloadingTransferImage = nil;
-    
-    if (downloadingTransferImage == nil) {
-        downloadingTransferImage = [UIImage imageNamed:@"downloading"];
-    }
-    return downloadingTransferImage;
-}
-
-+ (UIImage *)uploadingTransferImage {
-    static UIImage *uploadingTransferImage = nil;
-    
-    if (uploadingTransferImage == nil) {
-        uploadingTransferImage = [UIImage imageNamed:@"uploading"];
-    }
-    return uploadingTransferImage;
-}
-
-+ (UIImage *)downloadQueuedTransferImage {
-    static UIImage *downloadQueuedTransferImage = nil;
-    
-    if (downloadQueuedTransferImage == nil) {
-        downloadQueuedTransferImage = [UIImage imageNamed:@"downloadQueued"];
-    }
-    return downloadQueuedTransferImage;
-}
-
-+ (UIImage *)uploadQueuedTransferImage {
-    static UIImage *uploadQueuedTransferImage = nil;
-    
-    if (uploadQueuedTransferImage == nil) {
-        uploadQueuedTransferImage = [UIImage imageNamed:@"uploadQueued"];
-    }
-    return uploadQueuedTransferImage;
-}
-
-+ (UIImage *)permissionsButtonImageForShareType:(MEGAShareType)shareType {
-    UIImage *image;
-    switch (shareType) {
-        case MEGAShareTypeAccessRead:
-            image = [UIImage imageNamed:@"readPermissions"];
-            break;
-            
-        case MEGAShareTypeAccessReadWrite:
-            image =  [UIImage imageNamed:@"readWritePermissions"];
-            break;
-            
-        case MEGAShareTypeAccessFull:
-            image = [UIImage imageNamed:@"fullAccessPermissions"];
-            break;
-            
-        default:
-            image = nil;
-            break;
-    }
-    
-    return image;
 }
 
 #pragma mark - Paths
@@ -756,7 +635,7 @@ static MEGAIndexer *indexer;
 }
 
 + (NSString *)sizeAndDateForNode:(MEGANode *)node api:(MEGASdk *)api {
-    return [NSString stringWithFormat:@"%@ • %@", [self sizeForNode:node api:api], [self dateWithISO8601FormatOfRawTime:node.creationTime.timeIntervalSince1970]];
+    return [NSString stringWithFormat:@"%@ • %@", [self sizeForNode:node api:api], node.creationTime.mnz_formattedDefaultDateForMedia];
 }
 
 + (NSString *)sizeForNode:(MEGANode *)node api:(MEGASdk *)api {
@@ -767,14 +646,6 @@ static MEGAIndexer *indexer;
         size = [Helper memoryStyleStringFromByteCount:[api sizeForNode:node].longLongValue];
     }
     return size;
-}
-
-+ (NSString *)dateWithISO8601FormatOfRawTime:(time_t)rawtime {
-    struct tm *timeinfo = localtime(&rawtime);
-    char buffer[80];
-    strftime(buffer, 80, "%Y-%m-%d %H:%M:%S", timeinfo);
-    
-    return [NSString stringWithCString:buffer encoding:NSUTF8StringEncoding];
 }
 
 + (NSString *)filesAndFoldersInFolderNode:(MEGANode *)node api:(MEGASdk *)api {
@@ -1331,33 +1202,19 @@ static MEGAIndexer *indexer;
     [[Helper downloadingNodes] removeAllObjects];
     [[Helper uploadingNodes] removeAllObjects];
     
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"agreedCopywriteWarning"];
-    
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"TransfersPaused"];
-    
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"IsSavePhotoToGalleryEnabled"];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"IsSaveVideoToGalleryEnabled"];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"ChatVideoQuality"];
-    
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"logging"];
+    [NSUserDefaults.standardUserDefaults removePersistentDomainForName:NSBundle.mainBundle.bundleIdentifier];
 
-    //Set default order on logout
+    //Set default values on logout
     [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"SortOrderType"];
     [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"OfflineSortOrderType"];
     
-    [NSUserDefaults.standardUserDefaults removeObjectForKey:@"lastDateAddPhoneNumberShowed"];
-    [NSUserDefaults.standardUserDefaults removeObjectForKey:@"ContactsOnMega"];
-    [NSUserDefaults.standardUserDefaults removeObjectForKey:@"lastDateContactsOnMegaRequested"];
-    [NSUserDefaults.standardUserDefaults removeObjectForKey:@"twoFactorAuthenticationAlreadySuggested"];
-
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    [NSUserDefaults.standardUserDefaults setValue:MEGAFirstRunValue forKey:MEGAFirstRun];
+    if (@available(iOS 12.0, *)) {} else {
+        [NSUserDefaults.standardUserDefaults synchronize];
+    }
 
     NSUserDefaults *sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];
-    [sharedUserDefaults removeObjectForKey:@"extensions"];
-    [sharedUserDefaults removeObjectForKey:@"extensions-passcode"];
-    [sharedUserDefaults removeObjectForKey:@"treeCompleted"];
-    [sharedUserDefaults removeObjectForKey:@"useHttpsOnly"];
-    [sharedUserDefaults synchronize];
+    [sharedUserDefaults removePersistentDomainForName:MEGAGroupIdentifier];
 }
 
 + (void)deletePasscode {

@@ -65,10 +65,14 @@
 }
 
 - (void)saveContext {
-    NSError *error = nil;
-    if ([self.managedObjectContext hasChanges] && ![self.managedObjectContext save:&error]) {
-        MEGALogError(@"Unresolved error %@, %@", error, [error userInfo]);
-        abort();
+    if ([NSThread isMainThread]) {
+        NSError *error = nil;
+        if ([self.managedObjectContext hasChanges] && ![self.managedObjectContext save:&error]) {
+            MEGALogError(@"Unresolved error %@, %@", error, [error userInfo]);
+            abort();
+        }
+    } else {
+        [self saveContext:self.managedObjectContext];
     }
 }
 
@@ -500,24 +504,29 @@
 #pragma mark - MOMessage entity
 
 - (void)insertMessage:(uint64_t)messageId chatId:(uint64_t)chatId {
-    MOMessage *mMessage = [NSEntityDescription insertNewObjectForEntityForName:@"MOMessage" inManagedObjectContext:self.managedObjectContext];
+    NSManagedObjectContext *context = [NSThread isMainThread] ? self.managedObjectContext : self.childPrivateQueueContext;
+    
+    MOMessage *mMessage = [NSEntityDescription insertNewObjectForEntityForName:@"MOMessage"
+                                                        inManagedObjectContext:context];
     mMessage.chatId = [NSNumber numberWithUnsignedLongLong:chatId];
     mMessage.messageId = [NSNumber numberWithUnsignedLongLong:messageId];
-    
+
     MEGALogDebug(@"Save context - insert MOMessage with chat %@ and message %@", [MEGASdk base64HandleForUserHandle:chatId], [MEGASdk base64HandleForUserHandle:messageId]);
-    
-    [self saveContext];
+
+    [self saveContext:context];
 }
 
 - (void)deleteMessage:(MOMessage *)message {
-    [self.managedObjectContext deleteObject:message];
+    NSManagedObjectContext *context = [NSThread isMainThread] ? self.managedObjectContext : self.childPrivateQueueContext;
+
+    [context deleteObject:message];
     
     MEGALogDebug(@"Save context - remove MOMessage with chat %@ and message %@", [MEGASdk base64HandleForUserHandle:message.chatId.unsignedLongLongValue],[MEGASdk base64HandleForUserHandle:message.messageId.unsignedLongLongValue]);
     
-    [self saveContext];
+    [self saveContext:context];
 }
 
-- (MOUploadTransfer *)fetchMessageWithChatId:(uint64_t)chatId messageId:(uint64_t)messageId {
+- (MOMessage *)fetchMessageWithChatId:(uint64_t)chatId messageId:(uint64_t)messageId {
     NSFetchRequest *request = [MOMessage fetchRequest];
     
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"chatId == %llu AND messageId == %llu", chatId, messageId];
@@ -528,6 +537,14 @@
     
     return array.firstObject;
     
+}
+
+- (BOOL)areTherePendingMessages {
+    NSFetchRequest *request = [MOMessage fetchRequest];
+    
+    NSError *error;
+    
+    return [self.managedObjectContext executeFetchRequest:request error:&error].count > 0;
 }
 
 @end

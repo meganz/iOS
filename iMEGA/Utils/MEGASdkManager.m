@@ -14,12 +14,19 @@ static MEGAChatSdk *_MEGAChatSdk = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         NSError *error;
-        NSURL *applicationSupportDirectoryURL = [[NSFileManager defaultManager] URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:&error];
+        NSURL *basePathURL;
+#ifndef MNZ_NOTIFICATION_EXTENSION
+        basePathURL = [NSFileManager.defaultManager URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:&error];
+#else
+        NSURL *containerURL = [NSFileManager.defaultManager containerURLForSecurityApplicationGroupIdentifier:MEGAGroupIdentifier];
+        basePathURL = [containerURL URLByAppendingPathComponent:MEGANotificationServiceExtensionCacheFolder isDirectory:YES];
+        [NSFileManager.defaultManager createDirectoryAtURL:basePathURL withIntermediateDirectories:YES attributes:nil error:&error];
+#endif
         if (error) {
-            MEGALogError(@"Failed to locate/create NSApplicationSupportDirectory with error: %@", error);
+            MEGALogError(@"Failed to locate/create basePathURL with error: %@", error);
         }
 
-        _megaSDK = [[MEGASdk alloc] initWithAppKey:MEGAiOSAppKey userAgent:[self userAgent] basePath:applicationSupportDirectoryURL.path];
+        _megaSDK = [[MEGASdk alloc] initWithAppKey:MEGAiOSAppKey userAgent:[self userAgent] basePath:basePathURL.path];
         [_megaSDK retrySSLErrors:YES];
     });
     return _megaSDK;
@@ -31,16 +38,20 @@ static MEGAChatSdk *_MEGAChatSdk = nil;
 
 + (void)createSharedMEGAChatSdk {
     _MEGAChatSdk = [[MEGAChatSdk alloc] init:[self sharedMEGASdk]];
+#ifndef MNZ_APP_EXTENSION
     [_MEGAChatSdk addChatDelegate:(id<MEGAChatDelegate>)[[UIApplication sharedApplication] delegate]];
     [_MEGAChatSdk addChatRequestDelegate:(id<MEGAChatRequestDelegate>)[[UIApplication sharedApplication] delegate]];
+#endif
     MEGALogDebug(@"_MEGAChatSdk created: %@", _MEGAChatSdk);
     [MEGASdk setLogToConsole:NO];
     [MEGAChatSdk setLogToConsole:YES];
 }
 
 + (void)destroySharedMEGAChatSdk {
+#ifndef MNZ_APP_EXTENSION
     [_MEGAChatSdk removeChatDelegate:(id<MEGAChatDelegate>)[[UIApplication sharedApplication] delegate]];
     [_MEGAChatSdk removeChatRequestDelegate:(id<MEGAChatRequestDelegate>)[[UIApplication sharedApplication] delegate]];
+#endif
     _MEGAChatSdk = nil;
     MEGALogDebug(@"_MEGAChatSdk destroyed: %@", _MEGAChatSdk);
     [MEGAChatSdk setLogToConsole:NO];

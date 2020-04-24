@@ -6,6 +6,8 @@
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <Photos/Photos.h>
 
+#import "LocalizationSystem.h"
+
 #import "NSDate+DateTools.h"
 
 #import "NSDate+MNZCategory.h"
@@ -176,7 +178,7 @@ static NSString* const B = @"[B]";
     return unitString;
 }
 
-- (NSString*)mnz_stringBetweenString:(NSString*)start andString:(NSString*)end {
+- (NSString *_Nullable)mnz_stringBetweenString:(NSString*)start andString:(NSString*)end {
     NSScanner* scanner = [NSScanner scannerWithString:self];
     [scanner setCharactersToBeSkipped:nil];
     [scanner scanUpToString:start intoString:NULL];
@@ -267,7 +269,7 @@ static NSString* const B = @"[B]";
     return missedString;
 }
 
-+ (NSString *)chatStatusString:(MEGAChatStatus)onlineStatus {
++ (NSString * _Nullable)chatStatusString:(MEGAChatStatus)onlineStatus {
     NSString *onlineStatusString;
     switch (onlineStatus) {
         case MEGAChatStatusOffline:
@@ -294,13 +296,19 @@ static NSString* const B = @"[B]";
     return onlineStatusString;
 }
 
-+ (NSString *)mnz_stringByEndCallReason:(MEGAChatMessageEndCallReason)endCallReason userHandle:(uint64_t)userHandle duration:(NSInteger)duration {
++ (NSString *)mnz_stringByEndCallReason:(MEGAChatMessageEndCallReason)endCallReason userHandle:(uint64_t)userHandle duration:(NSNumber * _Nullable)duration isGroup:(BOOL)isGroup {
     NSString *endCallReasonString;
     switch (endCallReason) {
         case MEGAChatMessageEndCallReasonEnded: {
-            NSString *durationString = [NSString stringWithFormat:AMLocalizedString(@"duration", @"Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc)"), [NSString mnz_stringFromCallDuration:duration]];
-            NSString *callEnded = AMLocalizedString(@"callEnded", @"When an active call of user A with user B had ended");
-            endCallReasonString = [NSString stringWithFormat:@"%@ %@", callEnded, durationString];
+            if (isGroup) {
+                if (duration) {
+                    endCallReasonString = [[AMLocalizedString(@"[A]Group call ended[/A][C]. Duration: [/C]", @"When an active goup call is ended (with duration)") stringByReplacingOccurrencesOfString:@"[/C]" withString:[NSString mnz_stringFromCallDuration:duration.integerValue]] mnz_removeWebclientFormatters];
+                } else {
+                    endCallReasonString = AMLocalizedString(@"Group call ended", @"When an active goup call is ended");
+                }
+            } else {
+                endCallReasonString = [NSString stringWithFormat:@"%@ %@", AMLocalizedString(@"callEnded", @"When an active call of user A with user B had ended"), [NSString stringWithFormat:AMLocalizedString(@"duration", @"Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc)"), [NSString mnz_stringFromCallDuration:duration.integerValue]]];
+            }
             break;
         }
             
@@ -369,6 +377,8 @@ static NSString* const B = @"[B]";
     string = [string stringByReplacingOccurrencesOfString:@"[/A]" withString:@""];
     string = [string stringByReplacingOccurrencesOfString:@"[S]" withString:@""];
     string = [string stringByReplacingOccurrencesOfString:@"[/S]" withString:@""];
+    string = [string stringByReplacingOccurrencesOfString:@"[C]" withString:@""];
+    string = [string stringByReplacingOccurrencesOfString:@"[/C]" withString:@""];
     string = [string stringByReplacingOccurrencesOfString:@"<a href=\"terms\">" withString:@""];
     string = [string stringByReplacingOccurrencesOfString:@"<a href='terms'>" withString:@""];
     string = [string stringByReplacingOccurrencesOfString:@"</a>" withString:@""];
@@ -709,7 +719,7 @@ static NSString* const B = @"[B]";
     return [trimmedSelf substringToIndex:end].uppercaseString;
 }
 
-- (NSString *)mnz_coordinatesOfPhotoOrVideo {
+- (NSString * _Nullable)mnz_coordinatesOfPhotoOrVideo {
     if (self.mnz_isImagePathExtension) {
         NSURL *fileURL;
         if ([self containsString:@"/tmp/"]) {
