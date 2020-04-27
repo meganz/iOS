@@ -123,6 +123,11 @@
     [self.volumeContainerView addSubview:self.mpVolumeView];
         
     [self updateAudioOutputImage];
+    
+    if (self.callType == CallTypeOutgoing && self.videoCall && !AVAudioSession.sharedInstance.mnz_isBluetoothAudioRouteAvailable) {
+        MEGALogDebug(@"[Audio] Enable loud speaker is video call and there is no bluetooth connected");
+        [self enableLoudspeaker];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
