@@ -4,7 +4,6 @@
 #import <ContactsUI/ContactsUI.h>
 
 #import "UIImage+GKContact.h"
-#import "NSDate+DateTools.h"
 #import "SVProgressHUD.h"
 #import "UIScrollView+EmptyDataSet.h"
 #import "UIBarButtonItem+Badge.h"
@@ -32,7 +31,7 @@
 #import "ShareFolderActivity.h"
 #import "ItemListViewController.h"
 
-@interface ContactsViewController () <CNContactPickerDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, ItemListViewControllerDelegate, UISearchControllerDelegate, UIGestureRecognizerDelegate, MEGAChatDelegate, ContactLinkQRViewControllerDelegate>
+@interface ContactsViewController () <CNContactPickerDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, ItemListViewControllerDelegate, UISearchControllerDelegate, UIGestureRecognizerDelegate, MEGAChatDelegate, ContactLinkQRViewControllerDelegate, MEGARequestDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -127,6 +126,8 @@
     
     [self.tableView registerNib:[UINib nibWithNibName:@"ContactsHeaderFooterView" bundle:nil] forHeaderFooterViewReuseIdentifier:@"ContactsHeaderFooterView"];
     
+    [MEGASdkManager.sharedMEGASdk addMEGARequestDelegate:self];
+
     if (self.contactsMode == ContactsModeChatNamingGroup) {
         self.enterGroupNameTextField.placeholder = AMLocalizedString(@"Enter group name", @"Title of the dialog shown when the user it is creating a chat link and the chat has not title");
     }
@@ -157,6 +158,10 @@
 
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
     [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
+    
+    if (self.isMovingFromParentViewController) {
+        [MEGASdkManager.sharedMEGASdk removeMEGARequestDelegate:self];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -1544,7 +1549,7 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         switch (self.contactsMode) {
             case ContactsModeDefault: {
-                MEGARemoveContactRequestDelegate *removeContactRequestDelegate = [[MEGARemoveContactRequestDelegate alloc] initWithNumberOfRequests:1 completion:^{
+                MEGARemoveContactRequestDelegate *removeContactRequestDelegate = [MEGARemoveContactRequestDelegate. alloc initWithCompletion:^{                
                     [self setTableViewEditing:NO animated:NO];
                 }];
                 MEGAUser *user = [self userAtIndexPath:indexPath];
@@ -1888,11 +1893,15 @@
         if (deleteContactsOnIndexPathsArray.count != 0) {
             for (NSIndexPath *indexPath in deleteContactsOnIndexPathsArray) {
                 [self.visibleUsersArray removeObjectAtIndex:indexPath.row];
-                MEGAUser *userToDelete = [deleteContactsIndexPathMutableDictionary objectForKey:indexPath];
-                NSString *userToDeleteBase64Handle = [MEGASdk base64HandleForUserHandle:userToDelete.handle];
-                [self.indexPathsMutableDictionary removeObjectForKey:userToDeleteBase64Handle];
             }
             [self.tableView deleteRowsAtIndexPaths:deleteContactsOnIndexPathsArray withRowAnimation:UITableViewRowAnimationAutomatic];
+            
+            //Rebuild indexPaths to keep consistency with the table
+            [self.indexPathsMutableDictionary removeAllObjects];
+            for (MEGAUser *user in self.visibleUsersArray) {
+                NSString *base64Handle = [MEGASdk base64HandleForUserHandle:user.handle];
+                [self.indexPathsMutableDictionary setObject:[NSIndexPath indexPathForRow:[self.visibleUsersArray indexOfObject:user] inSection:0] forKey:base64Handle];
+            }
         }
     }
 }
@@ -1967,6 +1976,26 @@
 
 - (void)emailForScannedQR:(NSString *)email {
     [self inviteEmailToShareFolder:email];
+}
+
+#pragma mark - MEGARequestDelegate
+
+- (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
+    switch (request.type) {
+        case MEGARequestTypeGetAttrUser: {
+            if (error.type) {
+                return;
+            }
+            
+            if (request.paramType == MEGAUserAttributeFirstname || request.paramType == MEGAUserAttributeLastname) {
+                [self reloadUI];
+            }
+            break;
+        }
+            
+        default:
+            break;
+    }
 }
 
 #pragma mark - Show contact details
