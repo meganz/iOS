@@ -1,11 +1,5 @@
 import MessageKit
 
-protocol AttachmentCellDataSource {
-    var title: String { get }
-    var subtitle: String { get }
-    func set(imageView: UIImageView)
-}
-
 class ChatViewAttachmentCell: MessageContentCell {
 
     open var imageView: UIImageView = {
@@ -57,16 +51,16 @@ class ChatViewAttachmentCell: MessageContentCell {
         setupConstraints()
     }
     
-    var attachment: AttachmentCellDataSource! {
+    var attachmentViewModel: ChatViewAttachmentCellViewModel! {
         didSet {
             configureUI()
         }
     }
     
     private func configureUI() {
-        titleLabel.text = attachment.title
-        detailLabel.text = attachment.subtitle
-        attachment.set(imageView: imageView)
+        titleLabel.text = attachmentViewModel.title
+        detailLabel.text = attachmentViewModel.subtitle
+        attachmentViewModel.set(imageView: imageView)
     }
     
     override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
@@ -76,7 +70,7 @@ class ChatViewAttachmentCell: MessageContentCell {
             return
         }
         
-        self.attachment = chatMessage
+        self.attachmentViewModel = ChatViewAttachmentCellViewModel(chatMessage: chatMessage)
     }
     
     func sizeThatFits() -> CGSize {
@@ -104,7 +98,7 @@ open class ChatViewAttachmentCellCalculator: MessageSizeCalculator {
         
         let maxWidth = messageContainerMaxWidth(for: message)
         
-        chatViewAttachmentCell.attachment = chatMessage
+        chatViewAttachmentCell.attachmentViewModel = ChatViewAttachmentCellViewModel(chatMessage: chatMessage)
         let size = chatViewAttachmentCell.sizeThatFits()
         
         return CGSize(width: min(size.width, maxWidth), height: size.height)

@@ -4,9 +4,10 @@ import MessageKit
 extension ChatViewController {
     
     override var inputAccessoryView: UIView? {
-        if displayedAddToChatViewController {
-            return nil
-        }
+        // TODO: The `displayedAddToChatViewController` is required if `AddToChatViewController` added as a content view and not presented.
+//        if displayedAddToChatViewController {
+//            return nil
+//        }
         
         if chatInputBar == nil {
             chatInputBar = ChatInputBar()
@@ -21,41 +22,56 @@ extension ChatViewController {
     }
     
     private func displayAddToChatViewController() {
-        addToChatViewController = AddToChatViewController(nibName: nil, bundle: nil)
-        
-        addToChatViewController.tapHandler = {
-            self.displayedAddToChatViewController = false
-            self.reloadInputViews()
-        }
-        
-        addToChatViewController.dismissHandler = {[weak self] viewController in
-            // remove the content
-            viewController.willMove(toParent: nil)
-            viewController.view.removeFromSuperview()
-            viewController.removeFromParent()
-            
-            guard let `self` = self else {
-                return
+        if let rc = UIApplication.shared.keyWindow?.rootViewController {
+            if let tabBarController = rc as? UITabBarController {
+                tabBarController.tabBar.isHidden = true
             }
             
-            self.addToChatViewController = nil
+            let addToChatViewController = AddToChatViewController(nibName: nil, bundle: nil)
+            addToChatViewController.transitioningDelegate = self
+            rc.present(addToChatViewController, animated: true) {
+                if let tabBarController = rc as? UITabBarController {
+                    tabBarController.tabBar.isHidden = false
+                }
+            }
         }
         
-        if let rootViewController = UIApplication.shared.keyWindow?.rootViewController {
-            // add content view
-            rootViewController.addChild(addToChatViewController)
-            rootViewController.view.addSubview(addToChatViewController.view)
-            addToChatViewController.view.autoPinEdgesToSuperviewEdges()
-            addToChatViewController.didMove(toParent: rootViewController)
-            
-            self.displayedAddToChatViewController = true
+        // TODO: The below code can be used if added as a content view. If the view is not added content view we need to remove the logic
 
-            // remove the accessory view and presenting animation
-            chatInputBar.dismissKeyboard()
-            reloadInputViews()
-            addToChatViewController.presentAnimation()
-        }
+//        addToChatViewController = AddToChatViewController(nibName: nil, bundle: nil)
         
+//        addToChatViewController.tapHandler = {
+//            self.displayedAddToChatViewController = false
+//            self.reloadInputViews()
+//        }
+//
+//        addToChatViewController.dismissHandler = {[weak self] viewController in
+//            // remove the content
+//            viewController.willMove(toParent: nil)
+//            viewController.view.removeFromSuperview()
+//            viewController.removeFromParent()
+//
+//            guard let `self` = self else {
+//                return
+//            }
+//
+//            self.addToChatViewController = nil
+//        }
+//
+//        if let rootViewController = UIApplication.shared.keyWindow?.rootViewController {
+//            // add content view
+//            rootViewController.addChild(addToChatViewController)
+//            rootViewController.view.addSubview(addToChatViewController.view)
+//            addToChatViewController.view.autoPinEdgesToSuperviewEdges()
+//            addToChatViewController.didMove(toParent: rootViewController)
+//
+//            self.displayedAddToChatViewController = true
+//
+//            // remove the accessory view and presenting animation
+//            chatInputBar.dismissKeyboard()
+//            reloadInputViews()
+//            addToChatViewController.presentAnimation()
+//        }
     }
 }
 
@@ -135,5 +151,26 @@ extension ChatViewController: ChatMessageAndAudioInputBarDelegate {
     
     func typing(withText text: String) {
         print("Started typing with text \(text)")
+    }
+}
+
+
+extension ChatViewController: UIViewControllerTransitioningDelegate {
+    func animationController(forPresented presented: UIViewController,
+                             presenting: UIViewController,
+                             source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        guard presented is AddToChatViewController else {
+            return nil
+        }
+
+        return AddToChatViewAnimator(type: .present)
+    }
+
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        guard dismissed is AddToChatViewController else {
+            return nil
+        }
+
+        return AddToChatViewAnimator(type: .dismiss)
     }
 }

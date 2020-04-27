@@ -15,7 +15,8 @@ class ChatViewController: MessagesViewController {
     @objc var publicChatWithLinkCreated: Bool = false
     var chatInputBar: ChatInputBar!
     var addToChatViewController: AddToChatViewController!
-    var displayedAddToChatViewController = false
+    // TODO: The `displayedAddToChatViewController` is required if `AddToChatViewController` added as a content view and not presented.
+//    var displayedAddToChatViewController = false
     
     private(set) lazy var refreshControl: UIRefreshControl = {
          let control = UIRefreshControl()
