@@ -49,19 +49,6 @@
 
 #pragma mark - Private
 
-- (void)performAnimation {
-    [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        self.circularShapeLayer.hidden = YES;
-        [self moveLogo];
-    } completion:^(BOOL finished) {
-        [self centerLabels];
-        self.titleLabel.hidden = self.descriptionLabel.hidden = NO;
-        self.setupButton.hidden = self.skipButton.hidden = NO;
-        [self.activityIndicatorView stopAnimating];
-        self.logoMoved = YES;
-    }];
-}
-
 - (void)moveLogo {
     CGFloat newY = MIN(self.logoImageView.frame.origin.x, 145.0f);
     self.logoImageView.frame = CGRectMake(self.logoImageView.frame.origin.x, newY, self.logoImageView.frame.size.width, self.logoImageView.frame.size.height);
@@ -78,6 +65,21 @@
     CGRect descriptionFrame = self.descriptionLabel.frame;
     descriptionFrame.origin.y -= verticalIncrement;
     self.descriptionLabel.frame = descriptionFrame;
+}
+
+#pragma mark - Public
+
+- (void)performAnimation {
+    [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        self.circularShapeLayer.hidden = YES;
+        [self moveLogo];
+    } completion:^(BOOL finished) {
+        [self centerLabels];
+        self.titleLabel.hidden = self.descriptionLabel.hidden = NO;
+        self.setupButton.hidden = self.skipButton.hidden = NO;
+        self.activityIndicatorView.hidden = YES;
+        self.logoMoved = YES;
+    }];
 }
 
 #pragma mark - IBActions

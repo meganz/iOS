@@ -10,7 +10,6 @@
 #import "LaunchViewController.h"
 #import "LoginRequiredViewController.h"
 #import "MEGAChatAttachNodeRequestDelegate.h"
-#import "MEGAChatCreateChatGroupRequestDelegate.h"
 #import "MEGACreateFolderRequestDelegate.h"
 #import "MEGALogger.h"
 #import "MEGAReachabilityManager.h"
@@ -18,6 +17,7 @@
 #import "MEGASdkManager.h"
 #import "MEGASdk+MNZCategory.h"
 #import "MEGATransferDelegate.h"
+#import "MEGAShare-Swift.h"
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "ShareAttachment.h"
@@ -695,13 +695,10 @@ void uncaughtExceptionHandler(NSException *exception) {
             [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatRoom.chatId node:nodeHandle delegate:chatAttachNodeRequestDelegate];
         } else {
             MEGALogDebug(@"There is not a chat with %@, create the chat and attach", user.email);
-            MEGAChatPeerList *peerList = [[MEGAChatPeerList alloc] init];
-            [peerList addPeerWithHandle:user.handle privilege:MEGAChatRoomPrivilegeStandard];
-            MEGAChatCreateChatGroupRequestDelegate *createChatGroupRequestDelegate = [[MEGAChatCreateChatGroupRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
+            [MEGASdkManager.sharedMEGAChatSdk mnz_createChatRoomWithUserHandle:user.handle completion:^(MEGAChatRoom * _Nonnull chatRoom) {
                 self.pendingAssets++;
                 [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatRoom.chatId node:nodeHandle delegate:chatAttachNodeRequestDelegate];
             }];
-            [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:NO peers:peerList delegate:createChatGroupRequestDelegate];
         }
     }
     
@@ -719,12 +716,9 @@ void uncaughtExceptionHandler(NSException *exception) {
             [self sendMessage:message toChat:chatRoom.chatId];
         } else {
             MEGALogDebug(@"There is not a chat with %@, create the chat and send message", user.email);
-            MEGAChatPeerList *peerList = [[MEGAChatPeerList alloc] init];
-            [peerList addPeerWithHandle:user.handle privilege:MEGAChatRoomPrivilegeStandard];
-            MEGAChatCreateChatGroupRequestDelegate *createChatGroupRequestDelegate = [[MEGAChatCreateChatGroupRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
+            [MEGASdkManager.sharedMEGAChatSdk mnz_createChatRoomWithUserHandle:user.handle completion:^(MEGAChatRoom * _Nonnull chatRoom) {
                 [self sendMessage:message toChat:chatRoom.chatId];
             }];
-            [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:NO peers:peerList delegate:createChatGroupRequestDelegate];
         }
     }
     
