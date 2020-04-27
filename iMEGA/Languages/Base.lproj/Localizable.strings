@@ -2124,6 +2124,8 @@
 "Your account is already verified"="Your account is already verified";
 /* Place holder for enter mobile number field */
 "Your phone number"="Your phone number";
+/* Text related to verified phone number. Used as title or cell description.  */
+"Phone number"="Phone number";
 /* Label tell user to enter received txt to below input boxes */
 "Please type the verification code sent to"="Please enter the verification code sent to";
 /* Text message to remind user to resend verification code */
