@@ -450,9 +450,10 @@
 - (void)onChatSessionUpdate:(MEGAChatSdk *)api chatId:(uint64_t)chatId callId:(uint64_t)callId session:(MEGAChatSession *)session{
     MEGALogDebug(@"onChatSessionUpdate %@", session);
     
-    MEGAChatCall *chatCall = [MEGASdkManager.sharedMEGAChatSdk chatCallForCallId:callId];
-
-    [self callUpdateVideoForCall:chatCall];
+    if ([session hasChanged:MEGAChatSessionChangeRemoteAvFlags]) {
+        MEGAChatCall *chatCall = [MEGASdkManager.sharedMEGAChatSdk chatCallForCallId:callId];
+        [self callUpdateVideoForCall:chatCall];
+    }
 }
 
 - (void)onChatCallUpdate:(MEGAChatSdk *)api call:(MEGAChatCall *)call {
