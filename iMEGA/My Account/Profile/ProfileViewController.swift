@@ -226,9 +226,17 @@ extension ProfileViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             if MEGASdkManager.sharedMEGASdk().isBusinessAccount && !MEGASdkManager.sharedMEGASdk().isMasterBusinessAccount {
-                return 2
+                if MEGASdkManager.sharedMEGASdk().smsAllowedState() == .optInAndUnblock {
+                    return 3
+                } else {
+                    return 2
+                }
             } else {
-                return 4
+                if MEGASdkManager.sharedMEGASdk().smsAllowedState() == .optInAndUnblock {
+                    return 5
+                } else {
+                    return 4
+                }
             }
         } else if section == 2 {
             if MEGASdkManager.sharedMEGASdk().isBusinessAccount {
@@ -271,36 +279,58 @@ extension ProfileViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
-            let cell = UITableViewCell(style: .default, reuseIdentifier: "cellID")
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileCellID", for: indexPath) as! ProfileTableViewCell
             switch indexPath.row {
             case 0:
                 if MEGASdkManager.sharedMEGASdk().isBusinessAccount && !MEGASdkManager.sharedMEGASdk().isMasterBusinessAccount {
-                    cell.textLabel?.text = AMLocalizedString("changeAvatar", "button that allows the user the change his avatar")
+                    cell.nameLabel.text = AMLocalizedString("changeAvatar", "button that allows the user the change his avatar")
                 } else {
-                    cell.textLabel?.text = AMLocalizedString("changeName", "Button title that allows the user change his name")
+                    cell.nameLabel.text = AMLocalizedString("changeName", "Button title that allows the user change his name")
                 }
             case 1:
                 if MEGASdkManager.sharedMEGASdk().isBusinessAccount && !MEGASdkManager.sharedMEGASdk().isMasterBusinessAccount {
-                    cell.textLabel?.text = AMLocalizedString("changePasswordLabel", "Section title where you can change your MEGA's password").capitalized
+                    cell.nameLabel.text = AMLocalizedString("changePasswordLabel", "Section title where you can change your MEGA's password").capitalized
                 } else {
-                    cell.textLabel?.text = AMLocalizedString("changeAvatar", "button that allows the user the change his avatar")
+                    cell.nameLabel.text = AMLocalizedString("changeAvatar", "button that allows the user the change his avatar")
                 }
             case 2:
-                switch twoFactorAuthStatus {
-                case .Unknown, .Disabled, .Enabled:
-                    cell.textLabel?.isEnabled = true
-                    cell.accessoryView = nil
-                case .Querying:
-                    cell.textLabel?.isEnabled = false
-                    let activityIndicator = UIActivityIndicatorView(style: .gray)
-                    activityIndicator.startAnimating()
-                    cell.accessoryView = activityIndicator
+                if MEGASdkManager.sharedMEGASdk().isBusinessAccount && !MEGASdkManager.sharedMEGASdk().isMasterBusinessAccount {
+                    let phoneNumber = MEGASdkManager.sharedMEGASdk().smsVerifiedPhoneNumber()
+                    cell.nameLabel.text = (phoneNumber != nil) ? phoneNumber : AMLocalizedString("Add Phone Number", "Add Phone Number title")
+                } else {
+                    switch twoFactorAuthStatus {
+                    case .Unknown, .Disabled, .Enabled:
+                        cell.nameLabel?.isEnabled = true
+                        cell.accessoryView = nil
+                    case .Querying:
+                        cell.nameLabel?.isEnabled = false
+                        let activityIndicator = UIActivityIndicatorView(style: .gray)
+                        activityIndicator.startAnimating()
+                        cell.accessoryView = activityIndicator
+                    }
+                    cell.nameLabel.text = AMLocalizedString("Change Email", "The title of the alert dialog to change the email associated to an account.")
                 }
-                cell.textLabel?.text = AMLocalizedString("Change Email", "The title of the alert dialog to change the email associated to an account.")
             case 3:
-                cell.textLabel?.text = AMLocalizedString("changePasswordLabel", "Section title where you can change your MEGA's password").capitalized
+                if MEGASdkManager.sharedMEGASdk().smsAllowedState() == .optInAndUnblock {
+                    if MEGASdkManager.sharedMEGASdk().smsVerifiedPhoneNumber() == nil {
+                        cell.nameLabel.text = AMLocalizedString("Add Phone Number", "Add Phone Number title").capitalized
+                    } else {
+                        cell.nameLabel.text = AMLocalizedString("Phone number", "Text related to verified phone number. Used as title or cell description.").capitalized
+                        let phoneNumber = MEGASdkManager.sharedMEGASdk().smsVerifiedPhoneNumber()
+                        do {
+                            let phone = try PhoneNumberKit().parse(phoneNumber ?? "")
+                            cell.detailLabel.text = PhoneNumberKit().format(phone, toType: .international)
+                        } catch {
+                            cell.detailLabel.text = phoneNumber
+                        }
+                    }
+                } else {
+                    cell.nameLabel.text = AMLocalizedString("changePasswordLabel", "Section title where you can change your MEGA's password").capitalized
+                }
+            case 4:
+                cell.nameLabel.text = AMLocalizedString("changePasswordLabel", "Section title where you can change your MEGA's password").capitalized
             default:
-                cell.textLabel?.text = "default"
+                cell.nameLabel.text = "default"
             }
             cell.accessoryType = .disclosureIndicator
             return cell
@@ -310,8 +340,8 @@ extension ProfileViewController: UITableViewDataSource {
             cell.backupRecoveryKeyLabel.text = AMLocalizedString("backupRecoveryKey", "Label for recovery key button")
             return cell
         } else if indexPath.section == 2 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "UpgradePlanID", for: indexPath) as! UpgradePlanTableViewCell
-            cell.upgradePlanLabel?.text = AMLocalizedString("upgradeAccount", "Button title which triggers the action to upgrade your MEGA account level")
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileCellID", for: indexPath) as! ProfileTableViewCell
+            cell.nameLabel.text = AMLocalizedString("upgradeAccount", "Button title which triggers the action to upgrade your MEGA account level")
             guard let accountDetails = MEGASdkManager.sharedMEGASdk().mnz_accountDetails else {
                 return cell
             }
@@ -319,37 +349,37 @@ extension ProfileViewController: UITableViewDataSource {
             if indexPath.row == 0 {
                 switch accountType {
                 case .free:
-                    cell.accountTypeLabel.text = AMLocalizedString("Free", "Text relative to the MEGA account level. UPPER CASE")
+                    cell.detailLabel.text = AMLocalizedString("Free", "Text relative to the MEGA account level. UPPER CASE")
                 case .proI:
-                    cell.accountTypeLabel.text = "Pro I"
-                    cell.accountTypeLabel.textColor = UIColor.mnz_redProI()
+                    cell.detailLabel.text = "Pro I"
+                    cell.detailLabel.textColor = UIColor.mnz_redProI()
                 case .proII:
-                    cell.accountTypeLabel.text = "Pro II"
-                    cell.accountTypeLabel.textColor = UIColor.mnz_redProII()
+                    cell.detailLabel.text = "Pro II"
+                    cell.detailLabel.textColor = UIColor.mnz_redProII()
                 case .proIII:
-                    cell.accountTypeLabel.text = "Pro III"
-                    cell.accountTypeLabel.textColor = UIColor.mnz_redProIII()
+                    cell.detailLabel.text = "Pro III"
+                    cell.detailLabel.textColor = UIColor.mnz_redProIII()
                 case .lite:
-                    cell.accountTypeLabel.text = "Lite"
-                    cell.accountTypeLabel.textColor = UIColor.mnz_orangeFFA500()
+                    cell.detailLabel.text = "Lite"
+                    cell.detailLabel.textColor = UIColor.mnz_orangeFFA500()
                 case .business:
                     if MEGASdkManager.sharedMEGASdk().businessStatus == .active {
-                        cell.accountTypeLabel.text = AMLocalizedString("Active", "")
+                        cell.detailLabel.text = AMLocalizedString("Active", "")
                     } else {
-                        cell.accountTypeLabel.text = AMLocalizedString("Payment overdue", "Business expired account Overdue payment page header.")
+                        cell.detailLabel.text = AMLocalizedString("Payment overdue", "Business expired account Overdue payment page header.")
                     }
-                    cell.upgradePlanLabel.text = AMLocalizedString("Business", "")
+                    cell.detailLabel.text = AMLocalizedString("Business", "")
                     cell.accessoryType = .none
                 default:
-                    cell.accountTypeLabel.text = "..."
+                    cell.detailLabel.text = "..."
                 }
             } else {
                 if MEGASdkManager.sharedMEGASdk().isMasterBusinessAccount {
-                    cell.accountTypeLabel.text = AMLocalizedString("Administrator", "")
+                    cell.detailLabel.text = AMLocalizedString("Administrator", "")
                 } else {
-                    cell.accountTypeLabel.text = AMLocalizedString("user", "user (singular) label indicating is receiving some info, for example shared folders").capitalized
+                    cell.detailLabel.text = AMLocalizedString("user", "user (singular) label indicating is receiving some info, for example shared folders").capitalized
                 }
-                cell.upgradePlanLabel.text = AMLocalizedString("Role:", "title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts").replacingOccurrences(of: ":", with: "")
+                cell.nameLabel.text = AMLocalizedString("Role:", "title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts").replacingOccurrences(of: ":", with: "")
                 cell.accessoryType = .none
             }
             return cell
@@ -386,7 +416,21 @@ extension ProfileViewController: UITableViewDelegate {
                     presentChangeAvatarController(tableView:tableView, cell: cell)
                 }
             } else if indexPath.row == 2 {
-                pushChangeViewController(changeType: .email)
+                if MEGASdkManager.sharedMEGASdk().isBusinessAccount && !MEGASdkManager.sharedMEGASdk().isMasterBusinessAccount {
+                    if  MEGASdkManager.sharedMEGASdk().smsVerifiedPhoneNumber() == nil {
+                        showAddPhoneNumber()
+                    }
+                } else {
+                    pushChangeViewController(changeType: .email)
+                }
+            } else if (indexPath.row == 3) {
+                if MEGASdkManager.sharedMEGASdk().smsAllowedState() == .optInAndUnblock {
+                    if  MEGASdkManager.sharedMEGASdk().smsVerifiedPhoneNumber() == nil {
+                        showAddPhoneNumber()
+                    }
+                } else {
+                    pushChangeViewController(changeType: .password)
+                }
             } else {
                 pushChangeViewController(changeType: .password)
             }
@@ -443,6 +487,13 @@ extension ProfileViewController: UITableViewDelegate {
         } else {
             navigationController?.pushViewController(changePasswordViewController, animated: true)
         }
+    }
+    
+    
+    func showAddPhoneNumber() {
+        let addPhoneNumberController = UIStoryboard(name: "SMSVerification", bundle: nil).instantiateViewController(withIdentifier: "AddPhoneNumberViewControllerID")
+        addPhoneNumberController.modalPresentationStyle = .fullScreen
+        present(addPhoneNumberController, animated: true, completion: nil)
     }
 }
 
