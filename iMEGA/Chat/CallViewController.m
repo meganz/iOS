@@ -469,7 +469,7 @@
 - (void)onChatSessionUpdate:(MEGAChatSdk *)api chatId:(uint64_t)chatId callId:(uint64_t)callId session:(MEGAChatSession *)session {
     MEGALogDebug(@"onChatSessionUpdate %@", session);
 
-    if (self.call.callId != callId) {
+    if (self.callId != callId) {
         return;
     }
     
@@ -533,7 +533,7 @@
 - (void)onChatCallUpdate:(MEGAChatSdk *)api call:(MEGAChatCall *)call {
     MEGALogDebug(@"onChatCallUpdate %@", call);
     
-    if (self.call.callId == call.callId) {
+    if (self.callId == call.callId) {
         self.call = call;
     } else if (self.call.chatId == call.chatId) {
         MEGALogInfo(@"Two calls at same time in same chat.");
