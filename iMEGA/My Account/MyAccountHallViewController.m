@@ -209,7 +209,7 @@
 
 - (void)configTableFooterView {
     if (MEGASdkManager.sharedMEGASdk.isMasterBusinessAccount) {
-        self.tableFooterLabel.text = AMLocalizedString(@"User management is only available in a desktop web browser.", @"Label presented to Admins that full management of the business is only available in a desktop web browser");
+        self.tableFooterLabel.text = AMLocalizedString(@"User management is only available from a desktop web browser.", @"Label presented to Admins that full management of the business is only available in a desktop web browser");
         self.tableView.tableFooterView = self.tableFooterView;
     } else {
         self.tableView.tableFooterView = [UIView.alloc initWithFrame:CGRectZero];

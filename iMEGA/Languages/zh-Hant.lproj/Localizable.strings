@@ -854,7 +854,7 @@
 /* Hint text where the user have to re-write the new email to confirm it */
 "confirmNewEmail"="確認新電子郵件地址";
 /* The title of the alert dialog to change the email associated to an account. */
-"Change Email"="更改電子信箱";
+"Change Email"="更改電子郵件地址";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
 "oldAndNewEmailMatch"="新的和舊的電子郵件不能一模一樣";
 /* Error message shown when you have not written the same email when confirming a new one */
@@ -1986,6 +1986,18 @@
 "Hi, Have encrypted conversations on Mega with me and get 50GB free storage."="嗨，一起在MEGA上與我進行安全的對談，並獲得50GB的免費儲存空間。";
 /* Destination folder name of chat files */
 "My chat files"="我的聊天檔案";
+/* Title of the section about the plan in the storage tab in My Account Section */
+"Plan"="會員方案";
+/* */
+"If you lose this Recovery key and forget your password, [B]all your files, folders and messages will be inaccessible, even by MEGA[/B]."="如果您遺失此還原金鑰並忘記密碼，[B]即使是MEGA[/B]也將無法存取您所有的檔案、資料夾與訊息。";
+/* */
+"Business"="商業";
+/* */
+"Administrator"="管理員";
+/* */
+"Transfer"="傳輸";
+/* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
+"You cannot remove %1$s as a contact because they are part of your Business account."="您無法以刪除聯絡人方式刪除%1$s，因為他們是您商業帳戶的成員之一。";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
 "Require passcode"="需要密碼";
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
@@ -1996,6 +2008,22 @@
 "This folder has been the subject of a takedown notice."="此資料夾接獲下架通知且已被移除";
 /* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
 "Dispute Takedown"="爭議被刪除";
+/* Label presented to Admins that full management of the business is only available in a desktop web browser */
+"User management is only available from a desktop web browser."="用戶管理只能在電腦版瀏覽器進行。";
+/* When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information */
+"There has been a problem with your last payment. Please access MEGA using a desktop browser for more information."="您最近一次付款有問題。請使用電腦版瀏覽器登入MEGA以取得更多訊息。";
+/* A dialog title shown to users when their business account is expired. */
+"Your business account is expired"="您的商業帳戶已過期";
+/* Details shown when a Business account is expired. Details for the administrator of the Business account */
+"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="處理您的付款時出現問題。在電腦版網頁瀏覽器中修復此問題之前，MEGA僅限於檢視。";
+/* A dialog message which is shown to sub-users of expired business accounts. */
+"Your account is currently [B]suspended[/B]. You can only browse your data."="您的帳戶目前[B]暫停使用[/B]。您只能瀏覽您的資料。";
+/* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
+"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="儘管MEGA無權存取您的資料，但您的組織管理員是可以控制和檢視您使用者帳戶中的「相機上傳」。";
+/* */
+"Something went wrong"="出錯了";
+/* Button title that goes to the section Usage where you can see how your MEGA space is used */
+"Usage"="用量";
 /* Title of the "Links" Shared Items. */
 "Links"="連結";
 /* Title for empty state view of "Links" in Shared Items. */
@@ -2004,6 +2032,8 @@
 "Manage Share"="管理分享";
 /* Title of the screen that shows the users with whom the user can share a folder */
 "Share with"="與之分享";
+/* A dialog message which is shown to sub-users of expired business accounts. */
+"Contact your business account administrator to resolve the issue and activate your account."="請聯繫您的商業帳戶管理員來解決問題並啟用您的帳戶。";
 /* Chat Notifications DND: Option that does not deactivate DND automatically */
 "Until I Turn it On Again"="直到我再次打開";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
@@ -2054,6 +2084,12 @@
 "Alias/ Nickname"="別名 / 暱稱";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
 "It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="無法獲得此檔案的內容，因為它並不是以UTF-8或ISO/IEC 8859-1進行編碼。";
+/* Business expired account Overdue payment page header. */
+"Payment overdue"="付款逾期";
+/* */
+"Active"="登入";
+/* title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts */
+"Role:"="職稱:";
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
 "Include location tags"="包含位置標籤";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
@@ -2136,5 +2172,13 @@
 "File Type"="檔案類型";
 /* export Quality Option for Scan document */
 "best"="最好的";
+/* Error message appears to sub-users of a business account when they try to login and they are disabled. */
+"Your account has been disabled by your administrator. Please contact your business account administrator for further details."="您的帳戶已被您的管理員停用。相關詳細資訊，請與您的商業帳戶管理員聯絡。";
+/* An error message which appears to sub-users of a business account when they try to login and they are deleted. */
+"Your account has been removed by your administrator. Please contact your business account administrator for further details."="您的帳戶已被管理員刪除。有關更多資訊，請與您的商業帳戶管理員聯繫。";
+/* Description of why the user should give permission to contacts */
+"Easily discover contacts from your address book on MEGA."="輕易的在您通訊錄中找到有在使用MEGA的聯絡人。";
+/* Detailed description of why the user should give permission to contacts */
+"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA不會將這些資料用於任何其他目的，並且未經您的同意絕不會與您的聯絡人互動。";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="輸入群組名稱";

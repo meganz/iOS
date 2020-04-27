@@ -854,7 +854,7 @@
 /* Hint text where the user have to re-write the new email to confirm it */
 "confirmNewEmail"="确认新电子邮件地址";
 /* The title of the alert dialog to change the email associated to an account. */
-"Change Email"="更改电子信箱";
+"Change Email"="更改电子邮件地址";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
 "oldAndNewEmailMatch"="新的和旧的电子邮件不能一模一样";
 /* Error message shown when you have not written the same email when confirming a new one */
@@ -1957,13 +1957,13 @@
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="您确定要更改为测试服务器吗？ 您的帐户可能会遇到无法解决的问题";
 /* Title label that explains that the user is going to be asked for the contacts permission */
-"Enable Access to Your Address Book"="Enable Access to Your Address Book";
+"Enable Access to Your Address Book"="开启允许访问通讯录";
 /* Detailed explanation of why the user should give permission to contacts */
-"Easily discover contacts from your address book on MEGA."="Easily discover contacts from your address book on MEGA.";
+"Easily discover contacts from your address book on MEGA."="在您的MEGA通讯录中轻松找到联系人。";
 /* Detailed explanation about MEGA not using the contacts data without permision */
-"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA will not use this data for any other purpose and will never interact with your contacts without your consent.";
+"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA不会将这些数据用于任何其他目的，并且未经您的允许绝不会与您的联系人互动。";
 /* Title encouraging the user to check who of its contacts are using MEGA */
-"See who's already on MEGA"="看看谁在用MEGA";
+"See who's already on MEGA"="查看谁在用MEGA";
 /* Title showing the user how many of his contacts are using MEGA */
 "[X] contacts found on MEGA"="已发现[X]个联系人";
 /* Title showing the user that one of his contacts are using MEGA */
@@ -1986,6 +1986,18 @@
 "Hi, Have encrypted conversations on Mega with me and get 50GB free storage."="嗨！和我一起使用MEGA，并获得最高50GB的免费存储空间。";
 /* Destination folder name of chat files */
 "My chat files"="我的聊天文件";
+/* Title of the section about the plan in the storage tab in My Account Section */
+"Plan"="会员方案";
+/* */
+"If you lose this Recovery key and forget your password, [B]all your files, folders and messages will be inaccessible, even by MEGA[/B]."="如果您丢失了恢复密钥并忘记了密码，[B]您将无法访问您的所有文件，文件夹和信息，即使是MEGA也无能为力[/B]。";
+/* */
+"Business"="企业";
+/* */
+"Administrator"="管理员";
+/* */
+"Transfer"="传输";
+/* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
+"You cannot remove %1$s as a contact because they are part of your Business account."="您无法删除联系人%1$s，因为它们是您的企业帐户的一部分。";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
 "Require passcode"="密码请求";
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
@@ -1996,6 +2008,22 @@
 "This folder has been the subject of a takedown notice."="此文件夹接获下架通知且已被移除";
 /* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
 "Dispute Takedown"="解除争议";
+/* Label presented to Admins that full management of the business is only available in a desktop web browser */
+"User management is only available from a desktop web browser."="用户管理仅可通过桌面网络浏览器进行。";
+/* When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information */
+"There has been a problem with your last payment. Please access MEGA using a desktop browser for more information."="您的上一次付款有问题。请使用桌面浏览器访问MEGA获取更多信息。";
+/* A dialog title shown to users when their business account is expired. */
+"Your business account is expired"="您的企业帐户已到期";
+/* Details shown when a Business account is expired. Details for the administrator of the Business account */
+"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="处理您的付款时出现问题。在桌面浏览器中修复此问题前，MEGA仅限于查看。";
+/* A dialog message which is shown to sub-users of expired business accounts. */
+"Your account is currently [B]suspended[/B]. You can only browse your data."="当前您的帐户已被[B]禁用[/B]。您只能浏览数据。";
+/* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
+"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="尽管MEGA无法访问您的数据，但您的企业管理员可以控制并查看用户的帐户中的“相机上传”文件。";
+/* */
+"Something went wrong"="出错了";
+/* Button title that goes to the section Usage where you can see how your MEGA space is used */
+"Usage"="用量";
 /* Title of the "Links" Shared Items. */
 "Links"="链接";
 /* Title for empty state view of "Links" in Shared Items. */
@@ -2004,6 +2032,8 @@
 "Manage Share"="管理共享";
 /* Title of the screen that shows the users with whom the user can share a folder */
 "Share with"="分享";
+/* A dialog message which is shown to sub-users of expired business accounts. */
+"Contact your business account administrator to resolve the issue and activate your account."="请联系您的企业帐户管理员解决此问题并激活帐户。";
 /* Chat Notifications DND: Option that does not deactivate DND automatically */
 "Until I Turn it On Again"="直到再次开启时";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
@@ -2054,20 +2084,26 @@
 "Alias/ Nickname"="别名/昵称";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
 "It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="该文件未使用UTF-8或ISO/IEC 8859-1进行编码，无法读取文件内容。";
+/* Business expired account Overdue payment page header. */
+"Payment overdue"="逾期支付";
+/* */
+"Active"="已登录";
+/* title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts */
+"Role:"="级别：";
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
 "Include location tags"="分享位置标签";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
 "If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="开启后，您的相关照片和视频的拍摄地点信息将会上传，分享前请谨慎选择。";
 /* Used in Photos app browser view to send the photos from the view to the chat. */
-"Send (%d)"="Send (%d)";
+"Send (%d)"="发送(%d)";
 /* Used in Photos app browser view to upload the photos from the view to the cloud. */
-"Upload (%d)"="Upload (%d)";
+"Upload (%d)"="上传(%d)";
 /* Used in Photos app browser carousel view to unselect a selected photo. */
-"Unselect"="Unselect";
+"Unselect"="取消选择";
 /* Used in Photos app browser. Shown when there are no photos or videos in the Photos app. */
 "No Photos or Videos"="无照片或视频";
 /* Button title which, if tapped, will trigger the action of opening a folder containg this file */
-"View in Folder"="View in Folder";
+"View in Folder"="在文件夹中查看";
 /* Error message shown when opening a link with an account that not corresponds to the link */
 "This link is not related to this account. Please log in with the correct account."="此链接未关联该帐户。请登录正确的MEGA帐户。";
 /* Text emncouraging the user to add contacts in MEGA */
@@ -2109,7 +2145,7 @@
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="您的密码遭到泄露（包括且不限于MEGA帐户），您的帐户正在被他人登录和使用。";
 /* tool bar title used in transfer widget, allow user to clear the selected items in the list */
-"Clear Selected"="Clear Selected";
+"Clear Selected"="清除已选项目";
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
 "Clear All"="全部清除";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
@@ -2136,5 +2172,13 @@
 "File Type"="文件类型";
 /* export Quality Option for Scan document */
 "best"="最高";
+/* Error message appears to sub-users of a business account when they try to login and they are disabled. */
+"Your account has been disabled by your administrator. Please contact your business account administrator for further details."="您的帐户已被管理员禁用。请联系您的企业帐户管理员了解详情。";
+/* An error message which appears to sub-users of a business account when they try to login and they are deleted. */
+"Your account has been removed by your administrator. Please contact your business account administrator for further details."="您的帐户已被管理员移除。请联系您的企业帐户管理员了解详情。";
+/* Description of why the user should give permission to contacts */
+"Easily discover contacts from your address book on MEGA."="在您的MEGA通讯录中轻松找到联系人。";
+/* Detailed description of why the user should give permission to contacts */
+"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA不会将这些数据用于任何其他目的，并且未经您的允许绝不会与您的联系人互动。";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="输入群名称";

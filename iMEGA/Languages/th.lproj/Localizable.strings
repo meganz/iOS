@@ -1986,6 +1986,18 @@
 "Hi, Have encrypted conversations on Mega with me and get 50GB free storage."="สวัสดี! มาร่วมสนทนาอย่างปลอดภัยบน MEGA กับฉันและรับพื้นที่เก็บข้อมูลฟรีสูงสุด 50GB";
 /* Destination folder name of chat files */
 "My chat files"="ไฟล์แชทของฉัน";
+/* Title of the section about the plan in the storage tab in My Account Section */
+"Plan"="แผน";
+/* */
+"If you lose this Recovery key and forget your password, [B]all your files, folders and messages will be inaccessible, even by MEGA[/B]."="หากคุณทำคีย์การกู้คืนสูญหายและลืมรหัสผ่าน[B]ไฟล์ โฟลเดอร์และข้อความทั้งหมดของคุณจะไม่สามารถเข้าถึงได้ ไม่เว้นแม้แต่ MEGA[/B]";
+/* */
+"Business"="ธุรกิจ";
+/* */
+"Administrator"="แอดมิน";
+/* */
+"Transfer"="ถ่ายโอน";
+/* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
+"You cannot remove %1$s as a contact because they are part of your Business account."="You cannot remove %1$s as a contact because they are part of your Business account.";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
 "Require passcode"="ต้องใช้รหัส";
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
@@ -1996,6 +2008,22 @@
 "This folder has been the subject of a takedown notice."="โฟลเดอร์นี้ถูกแจ้งว่าให้ลบเนื้อหา";
 /* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
 "Dispute Takedown"="ระงับข้อพิพาท";
+/* Label presented to Admins that full management of the business is only available in a desktop web browser */
+"User management is only available from a desktop web browser."="User management is only available from a desktop web browser.";
+/* When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information */
+"There has been a problem with your last payment. Please access MEGA using a desktop browser for more information."="There has been a problem with your last payment. Please access MEGA using a desktop browser for more information.";
+/* A dialog title shown to users when their business account is expired. */
+"Your business account is expired"="บัญชีธุรกิจของคุณหมดอายุแล้ว";
+/* Details shown when a Business account is expired. Details for the administrator of the Business account */
+"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser.";
+/* A dialog message which is shown to sub-users of expired business accounts. */
+"Your account is currently [B]suspended[/B]. You can only browse your data."="บัญชีของคุณ[B]ถูกระงับ[/B]ในขณะนี้ คุณสามารถเรียกดูได้แค่ข้อมูลของคุณเท่านั้น";
+/* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
+"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account";
+/* */
+"Something went wrong"="มีบางอย่างผิดพลาด";
+/* Button title that goes to the section Usage where you can see how your MEGA space is used */
+"Usage"="การใช้งาน";
 /* Title of the "Links" Shared Items. */
 "Links"="ลิงก์";
 /* Title for empty state view of "Links" in Shared Items. */
@@ -2004,6 +2032,8 @@
 "Manage Share"="จัดการการแชร์";
 /* Title of the screen that shows the users with whom the user can share a folder */
 "Share with"="แชร์กับ";
+/* A dialog message which is shown to sub-users of expired business accounts. */
+"Contact your business account administrator to resolve the issue and activate your account."="ติดต่อผู้ดูแลระบบบัญชีธุรกิจของคุณเพื่อแก้ไขปัญหาและเปิดใช้งานบัญชีของคุณ";
 /* Chat Notifications DND: Option that does not deactivate DND automatically */
 "Until I Turn it On Again"="จนกว่าฉันจะเปิดอีกครั้ง";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
@@ -2054,6 +2084,12 @@
 "Alias/ Nickname"="นามแฝง / ชื่อเล่น";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
 "It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="ไม่สามารถรับเนื้อหาของไฟล์นี้เนื่องจากไม่ได้เข้ารหัสเป็น UTF-8 หรือ ISO/IEC 8859-1";
+/* Business expired account Overdue payment page header. */
+"Payment overdue"="การชำระเงินล่าช้า";
+/* */
+"Active"="กำลังใช้งาน";
+/* title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts */
+"Role:"="บทบาท:";
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
 "Include location tags"="รวมแท็กตำแหน่งที่ตั้ง";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
@@ -2136,5 +2172,13 @@
 "File Type"="ประเภทไฟล์";
 /* export Quality Option for Scan document */
 "best"="Best";
+/* Error message appears to sub-users of a business account when they try to login and they are disabled. */
+"Your account has been disabled by your administrator. Please contact your business account administrator for further details."="บัญชีของคุณถูกปิดใช้งานโดยผู้ดูแลระบบของคุณ กรุณาติดต่อผู้ดูแลระบบบัญชีธุรกิจของคุณเพื่อขอรายละเอียดเพิ่มเติม";
+/* An error message which appears to sub-users of a business account when they try to login and they are deleted. */
+"Your account has been removed by your administrator. Please contact your business account administrator for further details."="บัญชีของคุณถูกลบโดยผู้ดูแลระบบของคุณ กรุณาติดต่อผู้ดูแลระบบบัญชีธุรกิจของคุณเพื่อขอทราบรายละเอียดเพิ่มเติม";
+/* Description of why the user should give permission to contacts */
+"Easily discover contacts from your address book on MEGA."="Easily discover contacts from your address book on MEGA.";
+/* Detailed description of why the user should give permission to contacts */
+"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA will not use this data for any other purpose and will never interact with your contacts without your consent.";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="กรอกชื่อกลุ่ม";

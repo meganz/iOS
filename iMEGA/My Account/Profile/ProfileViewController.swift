@@ -242,7 +242,7 @@ extension ProfileViewController: UITableViewDataSource {
         if section == 1 {
             return AMLocalizedString("masterKey", "Title for the MEGA Recovery Key")
         } else if section == 2 {
-            return AMLocalizedString("Subscription plan", "Subscription plan")
+            return AMLocalizedString("Plan", "Title of the section about the plan in the storage tab in My Account Section")
         }
         return nil
     }
@@ -349,7 +349,7 @@ extension ProfileViewController: UITableViewDataSource {
                 } else {
                     cell.accountTypeLabel.text = AMLocalizedString("user", "user (singular) label indicating is receiving some info, for example shared folders").capitalized
                 }
-                cell.upgradePlanLabel.text = AMLocalizedString("Role", "title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts")
+                cell.upgradePlanLabel.text = AMLocalizedString("Role:", "title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts").replacingOccurrences(of: ":", with: "")
                 cell.accessoryType = .none
             }
             return cell
