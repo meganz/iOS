@@ -1146,7 +1146,7 @@ void uncaughtExceptionHandler(NSException *exception) {
             customModalAlertVC.modalPresentationStyle = UIModalPresentationOverFullScreen;
             customModalAlertVC.image = [UIImage imageNamed:@"paymentOverdue"];
             customModalAlertVC.viewTitle = AMLocalizedString(@"Something went wrong", @"");
-            customModalAlertVC.detail = AMLocalizedString(@"There has been a problem with your last payment. Please access MEGA in a desktop browser for more information.", @"When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information");
+            customModalAlertVC.detail = AMLocalizedString(@"There has been a problem with your last payment. Please access MEGA using a desktop browser for more information.", @"When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information");
             customModalAlertVC.dismissButtonTitle = AMLocalizedString(@"dismiss", @"");
             __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;
             customModalAlertVC.dismissCompletion = ^{

@@ -38,7 +38,9 @@
         [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
         switch (error.type) {
             case MEGAErrorTypeApiEMasterOnly: {
-                [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:AMLocalizedString(@"You cannot remove %@ as a contact as they are part of your Business account.", @"Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. %@ will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz"), user.mnz_displayName]];
+                NSString *status = AMLocalizedString(@"You cannot remove %1$s as a contact because they are part of your Business account.", @"Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz");
+                status = [status stringByReplacingOccurrencesOfString:@"%1$s" withString:user.mnz_displayName];
+                [SVProgressHUD showErrorWithStatus:status];
                 break;
             }
                 
