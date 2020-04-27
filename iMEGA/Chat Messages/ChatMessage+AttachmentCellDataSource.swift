@@ -1,7 +1,17 @@
 
-extension ChatMessage: AttachmentCellDataSource {
+
+class ChatViewAttachmentCellViewModel {
+    //MARK: - Private properties.
+    private let chatMessage: ChatMessage
+    
+    private var message: MEGAChatMessage {
+        return chatMessage.message
+    }
+    
+    //MARK: - Inteface properties.
+    
     var title: String {
-        switch message.type {
+        switch chatMessage.message.type {
         case .attachment:
             return titleForAttachment()
         case .contact:
@@ -23,6 +33,14 @@ extension ChatMessage: AttachmentCellDataSource {
         }
     }
     
+    //MARK: - Intializers.
+    
+    init(chatMessage: ChatMessage) {
+        self.chatMessage = chatMessage
+    }
+    
+    //MARK: - Interface methods.
+    
     func set(imageView: UIImageView) {
         switch message.type {
         case .attachment:
@@ -33,10 +51,9 @@ extension ChatMessage: AttachmentCellDataSource {
             break
         }
     }
-}
-
-/// Attachment Extension for - Attachment type object
-extension ChatMessage {
+    
+    //MARK: - Private methods.
+    
     private func titleForAttachment() -> String {
         if message.nodeList.size.uintValue == 1 {
             let node = message.nodeList.node(at: 0)!
@@ -64,10 +81,6 @@ extension ChatMessage {
             imageView.mnz_setThumbnail(by: node)
         }
     }
-}
-
-/// Attachment Extension for - contact type object
-extension ChatMessage {
     
     private func titleForContact() -> String {
         if message.usersCount == 1 {
@@ -92,5 +105,4 @@ extension ChatMessage {
         imageView.mnz_setImage(forUserHandle: message.userHandle(at: 0),
                                name: message.userName(at: 0))
     }
-    
 }
