@@ -8,6 +8,34 @@ enum TwoFactorAuthStatus {
     case Enabled
 }
 
+enum ProfileTableViewSections: Int {
+    case Profile
+    case Security
+    case Plan
+    case Session
+}
+
+enum ProfileSectionRows: Int {
+    case ChangeName
+    case ChangePhoto
+    case ChangeEmail
+    case PhoneNumber
+    case ChangePassword
+}
+
+enum SecuritySectionRows: Int {
+    case RecoveryKey
+}
+
+enum PlanSectionRows: Int {
+    case Upgrade
+    case Role
+}
+
+enum SessionSectionRows: Int {
+    case Logout
+}
+
 @objc class ProfileViewController: UIViewController {
 
     @IBOutlet weak var nameLabel: UILabel!
@@ -197,7 +225,7 @@ enum TwoFactorAuthStatus {
         let avatarFilePath: String = Helper.path(forSharedSandboxCacheDirectory: "thumbnailsV3") + "/" + (MEGASdk.base64Handle(forUserHandle: MEGASdkManager.sharedMEGASdk().myUser?.handle ?? ~0) ?? "")
         
         if FileManager.default.fileExists(atPath: avatarFilePath) {
-            let removeAvatarAlertAction = UIAlertAction.init(title: AMLocalizedString("removeAvatar", "Button to remove avatar. Try to keep the text short (as in English)"), style: .default) { (UIAlertAction) in
+            let removeAvatarAlertAction = UIAlertAction.init(title: AMLocalizedString("Remove Photo", "Button to remove some photo, e.g. avatar photo. Try to keep the text short (as in English)"), style: .default) { (UIAlertAction) in
                 MEGASdkManager.sharedMEGASdk().setAvatarUserWithSourceFilePath(nil)
             }
             removeAvatarAlertAction.mnz_setTitleTextColor(UIColor.mnz_black333333())
@@ -207,255 +235,44 @@ enum TwoFactorAuthStatus {
         self.present(changeAvatarAlertController, animated: true, completion: nil)
     }
     
-    // MARK: - IBActions
-    
-    @IBAction func backTouchUpInside(_ sender: UIButton) {
-        navigationController?.popViewController(animated: true)
-    }
-}
-
-
-// MARK: - UITableViewDataSource
-
-extension ProfileViewController: UITableViewDataSource {
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 4
+    func tableViewSections() -> [ProfileTableViewSections] {
+        return [.Profile, .Security, .Plan, .Session]
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
-            if MEGASdkManager.sharedMEGASdk().isBusinessAccount && !MEGASdkManager.sharedMEGASdk().isMasterBusinessAccount {
-                if MEGASdkManager.sharedMEGASdk().smsAllowedState() == .optInAndUnblock {
-                    return 3
-                } else {
-                    return 2
-                }
-            } else {
-                if MEGASdkManager.sharedMEGASdk().smsAllowedState() == .optInAndUnblock {
-                    return 5
-                } else {
-                    return 4
-                }
-            }
-        } else if section == 2 {
-            if MEGASdkManager.sharedMEGASdk().isBusinessAccount {
-                return 2
-            }
-        }
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section == 1 {
-            return AMLocalizedString("masterKey", "Title for the MEGA Recovery Key")
-        } else if section == 2 {
-            return AMLocalizedString("Plan", "Title of the section about the plan in the storage tab in My Account Section")
-        }
-        return nil
-    }
-    
-    func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        if section == 1 {
-            return AMLocalizedString("If you lose this Recovery key and forget your password, [B]all your files, folders and messages will be inaccessible, even by MEGA[/B].", "").replacingOccurrences(of: "[B]", with: "").replacingOccurrences(of: "[/B]", with: "")
-        } else if section == 2 {
-            guard let accountDetails = MEGASdkManager.sharedMEGASdk().mnz_accountDetails else {
-                return nil
-            }
-            if accountDetails.type != .free {
-                if accountDetails.subscriptionRenewTime > 0 {
-                    let renewDate = Date(timeIntervalSince1970: TimeInterval(accountDetails.subscriptionRenewTime))
-                    let renewsExpiresString = AMLocalizedString("Renews on", "Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible).") + " " + dateFormatter.string(from: renewDate)
-                    return renewsExpiresString
-                } else if accountDetails.proExpiration > 0 && accountDetails.type != .business {
-                    let renewDate = Date(timeIntervalSince1970: TimeInterval(accountDetails.proExpiration))
-                    let renewsExpiresString = String(format: AMLocalizedString("expiresOn", "Text that shows the expiry date of the account PRO level"), dateFormatter.string(from: renewDate))
-                    return renewsExpiresString
-                }
-            }
-        }
-        return nil
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileCellID", for: indexPath) as! ProfileTableViewCell
-            switch indexPath.row {
-            case 0:
-                if MEGASdkManager.sharedMEGASdk().isBusinessAccount && !MEGASdkManager.sharedMEGASdk().isMasterBusinessAccount {
-                    cell.nameLabel.text = AMLocalizedString("changeAvatar", "button that allows the user the change his avatar")
-                } else {
-                    cell.nameLabel.text = AMLocalizedString("changeName", "Button title that allows the user change his name")
-                }
-            case 1:
-                if MEGASdkManager.sharedMEGASdk().isBusinessAccount && !MEGASdkManager.sharedMEGASdk().isMasterBusinessAccount {
-                    cell.nameLabel.text = AMLocalizedString("changePasswordLabel", "Section title where you can change your MEGA's password").capitalized
-                } else {
-                    cell.nameLabel.text = AMLocalizedString("changeAvatar", "button that allows the user the change his avatar")
-                }
-            case 2:
-                if MEGASdkManager.sharedMEGASdk().isBusinessAccount && !MEGASdkManager.sharedMEGASdk().isMasterBusinessAccount {
-                    let phoneNumber = MEGASdkManager.sharedMEGASdk().smsVerifiedPhoneNumber()
-                    cell.nameLabel.text = (phoneNumber != nil) ? phoneNumber : AMLocalizedString("Add Phone Number", "Add Phone Number title")
-                } else {
-                    switch twoFactorAuthStatus {
-                    case .Unknown, .Disabled, .Enabled:
-                        cell.nameLabel?.isEnabled = true
-                        cell.accessoryView = nil
-                    case .Querying:
-                        cell.nameLabel?.isEnabled = false
-                        let activityIndicator = UIActivityIndicatorView(style: .gray)
-                        activityIndicator.startAnimating()
-                        cell.accessoryView = activityIndicator
-                    }
-                    cell.nameLabel.text = AMLocalizedString("Change Email", "The title of the alert dialog to change the email associated to an account.")
-                }
-            case 3:
-                if MEGASdkManager.sharedMEGASdk().smsAllowedState() == .optInAndUnblock {
-                    if MEGASdkManager.sharedMEGASdk().smsVerifiedPhoneNumber() == nil {
-                        cell.nameLabel.text = AMLocalizedString("Add Phone Number", "Add Phone Number title").capitalized
-                    } else {
-                        cell.nameLabel.text = AMLocalizedString("Phone number", "Text related to verified phone number. Used as title or cell description.").capitalized
-                        let phoneNumber = MEGASdkManager.sharedMEGASdk().smsVerifiedPhoneNumber()
-                        do {
-                            let phone = try PhoneNumberKit().parse(phoneNumber ?? "")
-                            cell.detailLabel.text = PhoneNumberKit().format(phone, toType: .international)
-                        } catch {
-                            cell.detailLabel.text = phoneNumber
-                        }
-                    }
-                } else {
-                    cell.nameLabel.text = AMLocalizedString("changePasswordLabel", "Section title where you can change your MEGA's password").capitalized
-                }
-            case 4:
-                cell.nameLabel.text = AMLocalizedString("changePasswordLabel", "Section title where you can change your MEGA's password").capitalized
-            default:
-                cell.nameLabel.text = "default"
-            }
-            cell.accessoryType = .disclosureIndicator
-            return cell
-        } else if indexPath.section == 1 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "RecoveryKeyID", for: indexPath) as! RecoveryKeyTableViewCell
-            cell.recoveryKeyLabel.text = AMLocalizedString("masterKey", "Title for the MEGA Recovery Key")+".txt"
-            cell.backupRecoveryKeyLabel.text = AMLocalizedString("backupRecoveryKey", "Label for recovery key button")
-            return cell
-        } else if indexPath.section == 2 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileCellID", for: indexPath) as! ProfileTableViewCell
-            cell.nameLabel.text = AMLocalizedString("upgradeAccount", "Button title which triggers the action to upgrade your MEGA account level")
-            guard let accountDetails = MEGASdkManager.sharedMEGASdk().mnz_accountDetails else {
-                return cell
-            }
-            let accountType = accountDetails.type
-            if indexPath.row == 0 {
-                switch accountType {
-                case .free:
-                    cell.detailLabel.text = AMLocalizedString("Free", "Text relative to the MEGA account level. UPPER CASE")
-                case .proI:
-                    cell.detailLabel.text = "Pro I"
-                    cell.detailLabel.textColor = UIColor.mnz_redProI()
-                case .proII:
-                    cell.detailLabel.text = "Pro II"
-                    cell.detailLabel.textColor = UIColor.mnz_redProII()
-                case .proIII:
-                    cell.detailLabel.text = "Pro III"
-                    cell.detailLabel.textColor = UIColor.mnz_redProIII()
-                case .lite:
-                    cell.detailLabel.text = "Lite"
-                    cell.detailLabel.textColor = UIColor.mnz_orangeFFA500()
-                case .business:
-                    if MEGASdkManager.sharedMEGASdk().businessStatus == .active {
-                        cell.detailLabel.text = AMLocalizedString("Active", "")
-                    } else {
-                        cell.detailLabel.text = AMLocalizedString("Payment overdue", "Business expired account Overdue payment page header.")
-                    }
-                    cell.detailLabel.text = AMLocalizedString("Business", "")
-                    cell.accessoryType = .none
-                default:
-                    cell.detailLabel.text = "..."
-                }
-            } else {
-                if MEGASdkManager.sharedMEGASdk().isMasterBusinessAccount {
-                    cell.detailLabel.text = AMLocalizedString("Administrator", "")
-                } else {
-                    cell.detailLabel.text = AMLocalizedString("user", "user (singular) label indicating is receiving some info, for example shared folders").capitalized
-                }
-                cell.nameLabel.text = AMLocalizedString("Role:", "title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts").replacingOccurrences(of: ":", with: "")
-                cell.accessoryType = .none
-            }
-            return cell
-        } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "LogoutID", for: indexPath) as! LogoutTableViewCell
-            cell.logoutLabel.text = AMLocalizedString("logoutLabel", "Title of the button which logs out from your account.")
-            return cell
-        }
-    }
-}
-
-// MARK: - UITableViewDelegate
-
-extension ProfileViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 0 {
-            if indexPath.row == 0 {
-                if MEGASdkManager.sharedMEGASdk().isBusinessAccount && !MEGASdkManager.sharedMEGASdk().isMasterBusinessAccount {
-                    guard let cell = tableView.cellForRow(at: indexPath) else {
-                        return
-                    }
-                    presentChangeAvatarController(tableView:tableView, cell: cell)
-                } else {
-                    let changeNameNavigationController = UIStoryboard.init(name: "MyAccount", bundle: nil).instantiateViewController(withIdentifier: "ChangeNameViewControllerID")
-                    navigationController?.pushViewController(changeNameNavigationController, animated: true)
-                }
-            } else if indexPath.row == 1 {
-                if MEGASdkManager.sharedMEGASdk().isBusinessAccount && !MEGASdkManager.sharedMEGASdk().isMasterBusinessAccount {
-                    pushChangeViewController(changeType: .password)
-                } else {
-                    guard let cell = tableView.cellForRow(at: indexPath) else {
-                        return
-                    }
-                    presentChangeAvatarController(tableView:tableView, cell: cell)
-                }
-            } else if indexPath.row == 2 {
-                if MEGASdkManager.sharedMEGASdk().isBusinessAccount && !MEGASdkManager.sharedMEGASdk().isMasterBusinessAccount {
-                    if  MEGASdkManager.sharedMEGASdk().smsVerifiedPhoneNumber() == nil {
-                        showAddPhoneNumber()
-                    }
-                } else {
-                    pushChangeViewController(changeType: .email)
-                }
-            } else if (indexPath.row == 3) {
-                if MEGASdkManager.sharedMEGASdk().smsAllowedState() == .optInAndUnblock {
-                    if  MEGASdkManager.sharedMEGASdk().smsVerifiedPhoneNumber() == nil {
-                        showAddPhoneNumber()
-                    }
-                } else {
-                    pushChangeViewController(changeType: .password)
-                }
-            } else {
-                pushChangeViewController(changeType: .password)
-            }
-        } else if indexPath.section == 1 {
-            let recoveryKeyViewController = UIStoryboard.init(name: "Settings", bundle: nil).instantiateViewController(withIdentifier: "MasterKeyViewControllerID")
-            navigationController?.pushViewController(recoveryKeyViewController, animated: true)
-        } else if indexPath.section == 2 {
-            if !MEGASdkManager.sharedMEGASdk().isBusinessAccount {
-                if ((MEGASdkManager.sharedMEGASdk().mnz_accountDetails) != nil) {
-                    let upgradeViewController = UIStoryboard.init(name: "MyAccount", bundle: nil).instantiateViewController(withIdentifier: "UpgradeID")
-                    navigationController?.pushViewController(upgradeViewController, animated: true)
-                } else {
-                    MEGAReachabilityManager.isReachableHUDIfNot()
-                }
-            }
-        } else {
-            if MEGAReachabilityManager.isReachableHUDIfNot() {
-                guard let showPasswordReminderDelegate = MEGAShowPasswordReminderRequestDelegate(toLogout: true) else {
-                    return
-                }
-                MEGASdkManager.sharedMEGASdk().shouldShowPasswordReminderDialog(atLogout: true, delegate: showPasswordReminderDelegate)
-            }
-        }
+    func rowsForProfileSection() -> [ProfileSectionRows] {
+        let isBusiness = MEGASdkManager.sharedMEGASdk().isBusinessAccount
+        let isMasterBusiness = MEGASdkManager.sharedMEGASdk().isMasterBusinessAccount
+        let isSmsAllowed = MEGASdkManager.sharedMEGASdk().smsAllowedState() == .optInAndUnblock
+        var profileRows = [ProfileSectionRows]()
         
-        tableView.deselectRow(at: indexPath, animated: true)
+        if !isBusiness || isMasterBusiness {
+            profileRows.append(.ChangeName)
+        }
+        profileRows.append(.ChangePhoto)
+        if !isBusiness || isMasterBusiness {
+            profileRows.append(.ChangeEmail)
+        }
+        profileRows.append(.ChangePassword)
+        if isSmsAllowed {
+            profileRows.append(.PhoneNumber)
+        }
+        return profileRows
+    }
+    
+    func rowsForSecuritySection() -> [SecuritySectionRows] {
+        return [.RecoveryKey]
+    }
+    
+    func rowsForPlanSection() -> [PlanSectionRows] {
+        if MEGASdkManager.sharedMEGASdk().isBusinessAccount {
+            return [.Upgrade, .Role]
+        } else {
+            return [.Upgrade]
+        }
+    }
+    
+    func rowsForSessionSection() -> [SessionSectionRows] {
+        return [.Logout]
     }
     
     func pushChangeViewController(changeType: ChangeType) -> Void {
@@ -489,11 +306,234 @@ extension ProfileViewController: UITableViewDelegate {
         }
     }
     
-    
     func showAddPhoneNumber() {
         let addPhoneNumberController = UIStoryboard(name: "SMSVerification", bundle: nil).instantiateViewController(withIdentifier: "AddPhoneNumberViewControllerID")
         addPhoneNumberController.modalPresentationStyle = .fullScreen
         present(addPhoneNumberController, animated: true, completion: nil)
+    }
+    
+    // MARK: - IBActions
+    
+    @IBAction func backTouchUpInside(_ sender: UIButton) {
+        navigationController?.popViewController(animated: true)
+    }
+}
+
+
+// MARK: - UITableViewDataSource
+
+extension ProfileViewController: UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return tableViewSections().count
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        switch tableViewSections()[section] {
+        case .Profile:
+            return rowsForProfileSection().count
+        case .Security:
+            return rowsForSecuritySection().count
+        case .Plan:
+            return rowsForPlanSection().count
+        case .Session:
+            return rowsForSessionSection().count
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch tableViewSections()[section] {
+        case .Security:
+            return AMLocalizedString("masterKey", "Title for the MEGA Recovery Key")
+        case .Plan:
+            return AMLocalizedString("Plan", "Title of the section about the plan in the storage tab in My Account Section")
+        default:
+            return nil
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        switch tableViewSections()[section] {
+        case .Security:
+            return AMLocalizedString("If you lose this Recovery key and forget your password, [B]all your files, folders and messages will be inaccessible, even by MEGA[/B].", "").replacingOccurrences(of: "[B]", with: "").replacingOccurrences(of: "[/B]", with: "")
+        case .Plan:
+            guard let accountDetails = MEGASdkManager.sharedMEGASdk().mnz_accountDetails else {
+                return nil
+            }
+            var planFooterString = ""
+            if accountDetails.type != .free {
+                if accountDetails.subscriptionRenewTime > 0 {
+                    let renewDate = Date(timeIntervalSince1970: TimeInterval(accountDetails.subscriptionRenewTime))
+                    planFooterString = AMLocalizedString("Renews on", "Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible).") + " " + dateFormatter.string(from: renewDate)
+                } else if accountDetails.proExpiration > 0 && accountDetails.type != .business {
+                    let renewDate = Date(timeIntervalSince1970: TimeInterval(accountDetails.proExpiration))
+                    planFooterString = String(format: AMLocalizedString("expiresOn", "Text that shows the expiry date of the account PRO level"), dateFormatter.string(from: renewDate))
+                }
+            }
+            return planFooterString
+        default:
+            return nil
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        switch tableViewSections()[indexPath.section] {
+        case .Profile:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileCellID", for: indexPath) as! ProfileTableViewCell
+            cell.accessoryType = .disclosureIndicator
+            cell.detailLabel.text = ""
+            switch rowsForProfileSection()[indexPath.row] {
+            case .ChangeName:
+                cell.nameLabel.text = AMLocalizedString("changeName", "Button title that allows the user change his name")
+            case .ChangePhoto:
+                let hasPhotoAvatar = FileManager.default.fileExists(atPath:Helper.path(forSharedSandboxCacheDirectory: "thumbnailsV3") + "/" + (MEGASdk.base64Handle(forUserHandle: MEGASdkManager.sharedMEGASdk().myUser?.handle ?? ~0) ?? ""))
+                cell.nameLabel.text = hasPhotoAvatar ? AMLocalizedString("Change Photo", "Button that allows the user the change a photo, e.g. his avatar photo ") : AMLocalizedString("Add Photo", "Button that allows the user the add a photo, e.g avatar photo")
+            case .ChangeEmail:
+                switch twoFactorAuthStatus {
+                case .Unknown, .Disabled, .Enabled:
+                    cell.nameLabel?.isEnabled = true
+                    cell.accessoryView = nil
+                case .Querying:
+                    cell.nameLabel?.isEnabled = false
+                    let activityIndicator = UIActivityIndicatorView(style: .gray)
+                    activityIndicator.startAnimating()
+                    cell.accessoryView = activityIndicator
+                }
+                cell.nameLabel.text = AMLocalizedString("Change Email", "The title of the alert dialog to change the email associated to an account.")
+            case .PhoneNumber:
+                if MEGASdkManager.sharedMEGASdk().smsVerifiedPhoneNumber() == nil {
+                    cell.nameLabel.text = AMLocalizedString("Add Phone Number", "Add Phone Number title").capitalized
+                } else {
+                    cell.nameLabel.text = AMLocalizedString("Phone number", "Text related to verified phone number. Used as title or cell description.")
+                    let phoneNumber = MEGASdkManager.sharedMEGASdk().smsVerifiedPhoneNumber()
+                    do {
+                        let phone = try PhoneNumberKit().parse(phoneNumber ?? "")
+                        cell.detailLabel.text = PhoneNumberKit().format(phone, toType: .international)
+                    } catch {
+                        cell.detailLabel.text = phoneNumber
+                    }
+                    cell.accessoryType = .none
+                }
+            case .ChangePassword:
+                cell.nameLabel.text = AMLocalizedString("changePasswordLabel", "Section title where you can change your MEGA's password").capitalized
+            }
+            return cell
+        case .Security:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "RecoveryKeyID", for: indexPath) as! RecoveryKeyTableViewCell
+            cell.recoveryKeyLabel.text = AMLocalizedString("masterKey", "Title for the MEGA Recovery Key")+".txt"
+            cell.backupRecoveryKeyLabel.text = AMLocalizedString("backupRecoveryKey", "Label for recovery key button")
+            return cell
+        case .Plan:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileCellID", for: indexPath) as! ProfileTableViewCell
+            cell.nameLabel.text = AMLocalizedString("upgradeAccount", "Button title which triggers the action to upgrade your MEGA account level")
+            guard let accountDetails = MEGASdkManager.sharedMEGASdk().mnz_accountDetails else {
+                return cell
+            }
+            let accountType = accountDetails.type
+            
+            switch rowsForPlanSection()[indexPath.row] {
+            case .Upgrade:
+                switch accountType {
+                case .free:
+                    cell.detailLabel.text = AMLocalizedString("Free", "Text relative to the MEGA account level. UPPER CASE")
+                case .proI:
+                    cell.detailLabel.text = "Pro I"
+                    cell.detailLabel.textColor = UIColor.mnz_redProI()
+                case .proII:
+                    cell.detailLabel.text = "Pro II"
+                    cell.detailLabel.textColor = UIColor.mnz_redProII()
+                case .proIII:
+                    cell.detailLabel.text = "Pro III"
+                    cell.detailLabel.textColor = UIColor.mnz_redProIII()
+                case .lite:
+                    cell.detailLabel.text = "Lite"
+                    cell.detailLabel.textColor = UIColor.mnz_orangeFFA500()
+                case .business:
+                    if MEGASdkManager.sharedMEGASdk().businessStatus == .active {
+                        cell.detailLabel.text = AMLocalizedString("Active", "")
+                    } else {
+                        cell.detailLabel.text = AMLocalizedString("Payment overdue", "Business expired account Overdue payment page header.")
+                    }
+                    cell.detailLabel.text = AMLocalizedString("Business", "")
+                    cell.accessoryType = .none
+                default:
+                    cell.detailLabel.text = "..."
+                }
+            case .Role:
+                if MEGASdkManager.sharedMEGASdk().isMasterBusinessAccount {
+                    cell.detailLabel.text = AMLocalizedString("Administrator", "")
+                } else {
+                    cell.detailLabel.text = AMLocalizedString("user", "user (singular) label indicating is receiving some info, for example shared folders").capitalized
+                }
+                cell.nameLabel.text = AMLocalizedString("Role:", "title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts").replacingOccurrences(of: ":", with: "")
+                cell.accessoryType = .none
+            }
+            return cell
+        case .Session:
+            switch rowsForSessionSection()[indexPath.row] {
+            case .Logout:
+                let cell = tableView.dequeueReusableCell(withIdentifier: "LogoutID", for: indexPath) as! LogoutTableViewCell
+                cell.logoutLabel.text = AMLocalizedString("logoutLabel", "Title of the button which logs out from your account.")
+                return cell
+            }
+        }
+    }
+}
+
+// MARK: - UITableViewDelegate
+
+extension ProfileViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch tableViewSections()[indexPath.section] {
+        case .Profile:
+            switch rowsForProfileSection()[indexPath.row] {
+            case .ChangeName:
+                let changeNameNavigationController = UIStoryboard.init(name: "MyAccount", bundle: nil).instantiateViewController(withIdentifier: "ChangeNameViewControllerID")
+                navigationController?.pushViewController(changeNameNavigationController, animated: true)
+            case .ChangePhoto:
+                guard let cell = tableView.cellForRow(at: indexPath) else {
+                    return
+                }
+                presentChangeAvatarController(tableView:tableView, cell: cell)
+            case .ChangeEmail:
+                pushChangeViewController(changeType: .email)
+            case .PhoneNumber:
+                if MEGASdkManager.sharedMEGASdk().smsVerifiedPhoneNumber() == nil {
+                    showAddPhoneNumber()
+                }
+            case .ChangePassword:
+                pushChangeViewController(changeType: .password)
+            }
+        case .Security:
+            switch rowsForSecuritySection()[indexPath.row] {
+            case .RecoveryKey:
+                let recoveryKeyViewController = UIStoryboard.init(name: "Settings", bundle: nil).instantiateViewController(withIdentifier: "MasterKeyViewControllerID")
+                navigationController?.pushViewController(recoveryKeyViewController, animated: true)
+            }
+        case .Plan:
+            switch rowsForPlanSection()[indexPath.row] {
+            default:
+                if !MEGASdkManager.sharedMEGASdk().isBusinessAccount {
+                    if ((MEGASdkManager.sharedMEGASdk().mnz_accountDetails) != nil) {
+                        let upgradeViewController = UIStoryboard.init(name: "MyAccount", bundle: nil).instantiateViewController(withIdentifier: "UpgradeID")
+                        navigationController?.pushViewController(upgradeViewController, animated: true)
+                    } else {
+                        MEGAReachabilityManager.isReachableHUDIfNot()
+                    }
+                }
+            }
+        case .Session:
+            switch rowsForSessionSection()[indexPath.row] {
+            case .Logout:
+                if MEGAReachabilityManager.isReachableHUDIfNot() {
+                    guard let showPasswordReminderDelegate = MEGAShowPasswordReminderRequestDelegate(toLogout: true) else {
+                        return
+                    }
+                    MEGASdkManager.sharedMEGASdk().shouldShowPasswordReminderDialog(atLogout: true, delegate: showPasswordReminderDelegate)
+                }
+            }
+        }
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 
@@ -534,6 +574,7 @@ extension ProfileViewController: MEGARequestDelegate {
                 FileManager.default.mnz_removeItem(atPath: avatarFilePath)
             }
             avatarImageView.mnz_setImageAvatarOrColor(forUserHandle: myUser.handle)
+            tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
             
         case .MEGARequestTypeAccountDetails:
             tableView.reloadData()
@@ -544,6 +585,9 @@ extension ProfileViewController: MEGARequestDelegate {
             
         case .MEGARequestTypeGetUserEmail:
             emailLabel.text = request.email
+            
+        case .MEGARequestTypeCheckSMSVerificationCode:
+            tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
             
         default:
             break;
