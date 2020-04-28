@@ -932,7 +932,7 @@
 		A8C262B01FA1D876006172CE /* MEGALocalImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = A8C262AF1FA1D876006172CE /* MEGALocalImageView.m */; };
 		A8C93C0C22D718030030CE1B /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C93C0B22D718030030CE1B /* ProfileViewController.swift */; };
 		A8C93C0E22D718440030CE1B /* RecoveryKeyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C93C0D22D718440030CE1B /* RecoveryKeyTableViewCell.swift */; };
-		A8C93C1022D718BA0030CE1B /* UpgradePlanTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C93C0F22D718BA0030CE1B /* UpgradePlanTableViewCell.swift */; };
+		A8C93C1022D718BA0030CE1B /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C93C0F22D718BA0030CE1B /* ProfileTableViewCell.swift */; };
 		A8C93C1222D718FD0030CE1B /* LogoutTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C93C1122D718FD0030CE1B /* LogoutTableViewCell.swift */; };
 		A8C93C1422D71C470030CE1B /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A8C93C1322D71C470030CE1B /* Profile.storyboard */; };
 		A8DE32CB22FC14CC006BAC7A /* BusinessExpiredViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DE32C922FC14CC006BAC7A /* BusinessExpiredViewController.swift */; };
@@ -2253,7 +2253,7 @@
 		A8C262AF1FA1D876006172CE /* MEGALocalImageView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGALocalImageView.m; sourceTree = "<group>"; };
 		A8C93C0B22D718030030CE1B /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		A8C93C0D22D718440030CE1B /* RecoveryKeyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoveryKeyTableViewCell.swift; sourceTree = "<group>"; };
-		A8C93C0F22D718BA0030CE1B /* UpgradePlanTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpgradePlanTableViewCell.swift; sourceTree = "<group>"; };
+		A8C93C0F22D718BA0030CE1B /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
 		A8C93C1122D718FD0030CE1B /* LogoutTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutTableViewCell.swift; sourceTree = "<group>"; };
 		A8C93C1322D71C470030CE1B /* Profile.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
 		A8DE32C922FC14CC006BAC7A /* BusinessExpiredViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessExpiredViewController.swift; sourceTree = "<group>"; };
@@ -4944,7 +4944,7 @@
 			children = (
 				A8C93C0B22D718030030CE1B /* ProfileViewController.swift */,
 				A8C93C0D22D718440030CE1B /* RecoveryKeyTableViewCell.swift */,
-				A8C93C0F22D718BA0030CE1B /* UpgradePlanTableViewCell.swift */,
+				A8C93C0F22D718BA0030CE1B /* ProfileTableViewCell.swift */,
 				A8C93C1122D718FD0030CE1B /* LogoutTableViewCell.swift */,
 				A8C93C1322D71C470030CE1B /* Profile.storyboard */,
 			);
@@ -6149,7 +6149,7 @@
 				41D21E651D01AEC3002E6296 /* CTAssetsGridViewCell.m in Sources */,
 				5B50DE0720AC1BDD00F2CB09 /* EnablingTwoFactorAuthenticationViewController.m in Sources */,
 				4172793F1DB663FA001AC818 /* JSQMessagesToolbarButtonFactory.m in Sources */,
-				A8C93C1022D718BA0030CE1B /* UpgradePlanTableViewCell.swift in Sources */,
+				A8C93C1022D718BA0030CE1B /* ProfileTableViewCell.swift in Sources */,
 				949086881FD5482E002B12BD /* NSAttributedString+MNZCategory.m in Sources */,
 				A86B9F872316D6AB00F35E7A /* FLEXResources.m in Sources */,
 				137361901A6664C300B740E8 /* main.m in Sources */,
