@@ -47,25 +47,28 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         }
         
         if let message = MEGASdkManager.sharedMEGAChatSdk()?.message(forChat: chatId, messageId: msgId) {
-            if generateNotification(with: message, immediately: false) {
+            if message.type != .unknown && generateNotification(with: message, immediately: false) {
                 postNotification(withError: nil)
+                return
             }
-            return
-        } else {
-            MEGASdkManager.sharedMEGAChatSdk()?.add(self as MEGAChatNotificationDelegate)
-            MEGASdkManager.sharedMEGAChatSdk()?.pushReceived(withBeep: true, chatId: chatId, delegate: MEGAChatGenericRequestDelegate { [weak self] request, error in
-                if error.type != .MEGAChatErrorTypeOk {
-                    self?.postNotification(withError: "Error in pushReceived \(error)")
-                    return
-                }
-            })
         }
+        
+        MEGASdkManager.sharedMEGAChatSdk()?.add(self as MEGAChatNotificationDelegate)
+        MEGASdkManager.sharedMEGAChatSdk()?.pushReceived(withBeep: true, chatId: chatId, delegate: MEGAChatGenericRequestDelegate { [weak self] request, error in
+            if error.type != .MEGAChatErrorTypeOk {
+                self?.postNotification(withError: "Error in pushReceived \(error)")
+            }
+        })
     }
     
     override func serviceExtensionTimeWillExpire() {
         if let chatId = chatId, let msgId = msgId, let message = MEGASdkManager.sharedMEGAChatSdk()?.message(forChat: chatId, messageId: msgId) {
-            let error = !generateNotification(with: message, immediately: true)
-            postNotification(withError: error ? "No chat room for message" : nil)
+            if message.type == .unknown {
+                postNotification(withError: "Unknown message")
+            } else {
+                let error = !generateNotification(with: message, immediately: true)
+                postNotification(withError: error ? "No chat room for message" : nil)
+            }
         } else {
             postNotification(withError: "Service Extension time will expire")
         }
