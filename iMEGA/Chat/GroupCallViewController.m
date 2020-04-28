@@ -37,6 +37,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *enableDisableVideoButton;
 @property (weak, nonatomic) IBOutlet UIButton *muteUnmuteMicrophone;
 @property (weak, nonatomic) IBOutlet UIButton *enableDisableSpeaker;
+@property (weak, nonatomic) IBOutlet UIButton *switchCameraButton;
 @property (weak, nonatomic) IBOutlet UIButton *minimizeButton;
 
 @property (weak, nonatomic) IBOutlet UIView *toastView;
@@ -81,6 +82,9 @@
 
 @property (assign, nonatomic, getter=isReconnecting) BOOL reconnecting;
 
+@property (nonatomic) NSString *backCamera;
+@property (nonatomic) NSString *frontCamera;
+
 @end
 
 @implementation GroupCallViewController
@@ -89,6 +93,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.frontCamera = [AVCaptureDevice defaultDeviceWithDeviceType:AVCaptureDeviceTypeBuiltInWideAngleCamera mediaType:AVMediaTypeVideo position:AVCaptureDevicePositionFront].localizedName;
+    self.backCamera = [AVCaptureDevice defaultDeviceWithDeviceType:AVCaptureDeviceTypeBuiltInWideAngleCamera mediaType:AVMediaTypeVideo position:AVCaptureDevicePositionBack].localizedName;
     
     [self customNavigationBarLabel];
     [self updateParticipants];
@@ -118,7 +125,7 @@
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didSessionRouteChange:) name:AVAudioSessionRouteChangeNotification object:nil];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didWirelessRoutesAvailableChange:) name:MPVolumeViewWirelessRoutesAvailableDidChangeNotification object:nil];
     
-    self.mpVolumeView = [[MPVolumeView alloc] initWithFrame:self.enableDisableSpeaker.bounds];
+    self.mpVolumeView = [[MPVolumeView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 60.0f, 60.0f)];
     self.mpVolumeView.showsVolumeSlider = NO;
     [self.volumeContainerView addSubview:self.mpVolumeView];
         
@@ -396,8 +403,10 @@
                             [cell removeLocalVideoInChat:self.chatRoom.chatId];
                         } else {
                             [cell addLocalVideoInChat:self.chatRoom.chatId];
+                            [self updateSelectedCamera];
                         }
                         sender.selected = !sender.selected;
+                        self.switchCameraButton.hidden = !sender.selected;
                         
                         [self updateParticipants];
                     }
@@ -433,12 +442,18 @@
     [self removeAllVideoListeners];
     [[NSUserDefaults standardUserDefaults] setBool:self.localPeer.video forKey:@"groupCallLocalVideo"];
     [[NSUserDefaults standardUserDefaults] setBool:self.localPeer.audio forKey:@"groupCallLocalAudio"];
+    [[NSUserDefaults standardUserDefaults] setBool:self.switchCameraButton.selected forKey:@"groupCallCameraSwitched"];
     if (@available(iOS 12.0, *)) {} else {
         [NSUserDefaults.standardUserDefaults synchronize];
     }
     
     [self.timer invalidate];
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (IBAction)switchCamera:(UIButton *)sender {
+    sender.selected = !sender.selected;
+    [self updateSelectedCamera];
 }
 
 #pragma mark - Public
@@ -503,6 +518,8 @@
 - (void)configureControlsForLocalUser:(MEGAGroupCallPeer *)localUser {
     self.enableDisableVideoButton.selected = localUser.video;
     self.muteUnmuteMicrophone.selected = !localUser.audio;
+    self.switchCameraButton.hidden = !localUser.video;
+    [self updateSelectedCamera];
 }
 
 - (void)initDataSource {
@@ -510,6 +527,7 @@
     self.localPeer = [MEGAGroupCallPeer new];
     self.localPeer.video = [[NSUserDefaults standardUserDefaults] objectForKey:@"groupCallLocalVideo"] ? [[NSUserDefaults standardUserDefaults] boolForKey:@"groupCallLocalVideo"] : self.videoCall;
     self.localPeer.audio = [[NSUserDefaults standardUserDefaults] objectForKey:@"groupCallLocalAudio"] ? [[NSUserDefaults standardUserDefaults] boolForKey:@"groupCallLocalAudio"] : YES;
+    self.switchCameraButton.selected = [[NSUserDefaults standardUserDefaults] objectForKey:@"groupCallCameraSwitched"] ? [[NSUserDefaults standardUserDefaults] boolForKey:@"groupCallCameraSwitched"] : NO;
     self.localPeer.peerId = 0;
     self.localPeer.clientId = 0;
     [self.peersInCall addObject:self.localPeer];
@@ -762,6 +780,7 @@
 - (void)deleteActiveCallFlags {
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"groupCallLocalVideo"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"groupCallLocalAudio"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"groupCallCameraSwitched"];
     if (@available(iOS 12.0, *)) {} else {
         [NSUserDefaults.standardUserDefaults synchronize];
     }
@@ -975,6 +994,18 @@
     } else {
         MEGALogDebug(@"GROUPCALL session destroyed for peer %llu not found", chatSession.peerId);
     }
+}
+
+- (void)updateSelectedCamera {
+    NSString *currentlySelected = [MEGASdkManager.sharedMEGAChatSdk videoDeviceSelected];
+    NSString *shouldBeSelected = self.switchCameraButton.selected ? self.backCamera : self.frontCamera;
+    if (![currentlySelected isEqualToString:shouldBeSelected]) {
+        [MEGASdkManager.sharedMEGAChatSdk setChatVideoInDevices:shouldBeSelected];
+    }
+
+    NSUInteger index = [self.peersInCall indexOfObject:self.localPeer];
+     GroupCallCollectionViewCell *cell = (GroupCallCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:index inSection:0]];
+    [cell localVideoMirror:!self.switchCameraButton.selected];
 }
 
 #pragma mark - MEGAChatCallDelegate
