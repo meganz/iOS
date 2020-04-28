@@ -82,7 +82,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
             break;
             
         case ChangeTypeEmail: {
-            self.navigationItem.title = AMLocalizedString(@"changeEmail", @"The title of the alert dialog to change the email associated to an account.");
+            self.navigationItem.title = AMLocalizedString(@"Change Email", @"The title of the alert dialog to change the email associated to an account.");
             self.theNewPasswordView.hidden = self.confirmPasswordView.hidden = YES;
             self.currentEmailInputView.hidden = self.theNewEmailInputView.hidden = self.confirmEmailInputView.hidden = NO;
             
@@ -101,7 +101,6 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
                 self.theNewEmailInputView.inputTextField.textContentType = UITextContentTypeUsername;
                 self.confirmEmailInputView.inputTextField.textContentType = UITextContentTypeUsername;
             }
-            
             
             [self.theNewEmailInputView.inputTextField becomeFirstResponder];
             
@@ -613,7 +612,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
             [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"passwordChanged", @"The label showed when your password has been changed")];
             
             if (self.changeType == ChangeTypePassword) {
-                [self.navigationController popToViewController:self.navigationController.viewControllers[2] animated:YES];
+                [self.navigationController popViewControllerAnimated:YES];
             } else if (self.changeType == ChangeTypePasswordFromLogout) {
                 [Helper logoutAfterPasswordReminder];
             }
