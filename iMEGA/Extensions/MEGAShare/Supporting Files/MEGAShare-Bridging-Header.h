@@ -1,5 +1,6 @@
-//  Use this file to import your target's public headers that you would like to expose to Swift.
-//
+
+#ifndef MEGAShare_Bridging_Header_h
+#define MEGAShare_Bridging_Header_h
 
 #import "MEGASdkManager.h"
 
@@ -15,3 +16,5 @@
 #import "MEGAStore.h"
 
 #import "SelectableTableViewCell.h"
+
+#endif /* MEGAShare_Bridging_Header_h */

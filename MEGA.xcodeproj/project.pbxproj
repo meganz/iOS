@@ -1718,7 +1718,6 @@
 		77CAAADF202C58E4004B16ED /* MEGAPhotoBrowserPickerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAPhotoBrowserPickerViewController.m; sourceTree = "<group>"; };
 		77CAAAE1202C72F8004B16ED /* MEGAPhotoBrowserPickerCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAPhotoBrowserPickerCollectionViewCell.h; sourceTree = "<group>"; };
 		77CAAAE2202C72F8004B16ED /* MEGAPhotoBrowserPickerCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAPhotoBrowserPickerCollectionViewCell.m; sourceTree = "<group>"; };
-		77D7E85224371942005D2795 /* MEGAShare-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MEGAShare-Bridging-Header.h"; sourceTree = "<group>"; };
 		77D9A56A2023547900B48470 /* MEGAPhotoBrowserViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAPhotoBrowserViewController.h; sourceTree = "<group>"; };
 		77D9A56B2023547900B48470 /* MEGAPhotoBrowserViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAPhotoBrowserViewController.m; sourceTree = "<group>"; };
 		77D9A56D202355F800B48470 /* MEGAPhotoBrowserViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MEGAPhotoBrowserViewController.storyboard; sourceTree = "<group>"; };
@@ -4364,7 +4363,6 @@
 				942FD0791EF3EE8800E99FB1 /* Supporting Files */,
 				943F8B241EF2708E00AFD89F /* Info.plist */,
 				943F8B291EF284A500AFD89F /* MEGAShare-PrefixHeader.pch */,
-				77D7E85224371942005D2795 /* MEGAShare-Bridging-Header.h */,
 			);
 			name = MEGAShare;
 			path = iMEGA/Extensions/MEGAShare;
