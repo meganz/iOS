@@ -70,6 +70,10 @@ class ChatViewController: MessagesViewController {
         
         configureMessageCollectionView()
         update()
+        
+        
+        configureMenus()
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -132,6 +136,48 @@ class ChatViewController: MessagesViewController {
                }
 
         return super.collectionView(collectionView, cellForItemAt: indexPath)
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
+//        if action == NSSelectorFromString("delete:") {
+            return true
+//        }
+        return super.collectionView(collectionView, canPerformAction: action, forItemAt: indexPath, withSender: sender)
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
+
+        if action == NSSelectorFromString("delete:") {
+            // 1.) Remove from datasource
+            // insert your code here
+            
+            // 2.) Delete sections
+            collectionView.deleteSections([indexPath.section])
+        } else {
+            super.collectionView(collectionView, performAction: action, forItemAt: indexPath, withSender: sender)
+        }
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
+        guard let messagesDataSource = messagesCollectionView.messagesDataSource else { return false }
+        
+        if isSectionReservedForTypingIndicator(indexPath.section) {
+            return false
+        }
+        
+        let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
+        selectedIndexPathForMenu = indexPath
+
+        switch message.kind {
+        case .custom:
+            let megaMessage = (message as! ChatMessage).message
+            if megaMessage.isManagementMessage {
+                return false
+            }
+            return true
+        default:
+            return true
+        }
     }
 
     func customCell(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UICollectionViewCell {
@@ -283,6 +329,12 @@ class ChatViewController: MessagesViewController {
         
         messagesCollectionView.refreshControl = refreshControl
     }
+    
+    private func configureMenus() {
+        let editMenuItem = UIMenuItem(title: "123", action: #selector(forwardMessage))
+        
+        UIMenuController.shared.menuItems = [editMenuItem]
+    }
 
     private func registerCustomCells() {
         messagesCollectionView.register(ChatViewCallCollectionCell.nib,
@@ -324,6 +376,14 @@ class ChatViewController: MessagesViewController {
                 MEGASdkManager.sharedMEGAChatSdk()?.setMessageSeenForChat(chatRoom.chatId, messageId: lastMessage!.message.messageId)
             }
         }
+    }
+    
+    @objc func forwardMessage(_ sender: Any?) {
+        
+    }
+    
+    @objc func deleteMessage(_ sender: Any?) {
+          
     }
     
     @objc func loadMoreMessages() {
