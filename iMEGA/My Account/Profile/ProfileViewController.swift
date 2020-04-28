@@ -404,7 +404,7 @@ extension ProfileViewController: UITableViewDataSource {
                 if MEGASdkManager.sharedMEGASdk().smsVerifiedPhoneNumber() == nil {
                     cell.nameLabel.text = AMLocalizedString("Add Phone Number", "Add Phone Number title").capitalized
                 } else {
-                    cell.nameLabel.text = AMLocalizedString("Phone number", "Text related to verified phone number. Used as title or cell description.")
+                    cell.nameLabel.text = AMLocalizedString("Phone Number", "Text related to verified phone number. Used as title or cell description.")
                     let phoneNumber = MEGASdkManager.sharedMEGASdk().smsVerifiedPhoneNumber()
                     do {
                         let phone = try PhoneNumberKit().parse(phoneNumber ?? "")
