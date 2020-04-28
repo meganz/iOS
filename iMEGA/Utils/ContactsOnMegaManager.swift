@@ -201,7 +201,9 @@ struct ContactOnMega: Codable {
         UserDefaults.standard.set(Date(), forKey: "lastDateContactsOnMegaRequested")
         self.state = .ready
         guard let completion = completionWhenReady else { return }
-        completion()
+        DispatchQueue.main.async {
+            completion()
+        }
         completionWhenReady = nil
     }
     

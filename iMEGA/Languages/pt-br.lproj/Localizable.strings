@@ -578,8 +578,6 @@
 "removeUserMessage"="Tem certeza que deseja remover %@ da sua lista de contatos?";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
 "removeMultipleUsersMessage"="Tem certeza que deseja remover %d usuários da sua lista de contatos?";
-/* Success message shown when the selected contacts have been removed */
-"removedContacts"="%d contatos removidos";
 /* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
 "removedContact"="Contato %@ removido";
 /* Label shown when a contact request is pending */
@@ -856,7 +854,7 @@
 /* Hint text where the user have to re-write the new email to confirm it */
 "confirmNewEmail"="Confirmar novo email";
 /* The title of the alert dialog to change the email associated to an account. */
-"changeEmail"="Alterar email";
+"Change Email"="Alterar email";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
 "oldAndNewEmailMatch"="O email novo e o email antigo não podem iguais";
 /* Error message shown when you have not written the same email when confirming a new one */
@@ -866,7 +864,7 @@
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
 "emailIsChanging_description"="Acesse a sua caixa de entrada e clique no link para confirmar o seu novo endereço de email.";
 /* Text shown on the confirm email view to remind the user what to do */
-"verifyYourEmailAddress_description"="Por favor, digite a sua senha para confirmar o seu endereço de email";
+"verifyYourEmailAddress_description"="Por favor, digite a sua senha para confirmar o seu email";
 /* The [X] will be replaced with the e-mail address. */
 "congratulationsNewEmailAddress"="Parabéns! O novo endereço de email para esta conta MEGA é: [X]";
 /* Button text to close other login sessions except the current session in use. This will log out other devices which have an active login session. */
@@ -1037,8 +1035,6 @@
 "cloudDriveIsFull"="[S]A sua Nuvem de arquivos está cheia.[/S] [A]Faça upgrade[/A] a um plano PRO e obtenha [S]até %@ TB (%@ GB)[/S] de espaço de armazenamento.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Armazenamento";
-/* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
-"transferQuota"="Cota de transferência";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
 "limited"="Limitado";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
@@ -1278,7 +1274,7 @@
 /* Title shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_title"="Cota de transferência insuficiente";
 /* Description shown when you almost had used your available transfer quota. */
-"depletedTransferQuota_message"="O seu download excede a cota de transferência disponível para o seu endereço IP e, portanto, pode ser interrompido.";
+"depletedTransferQuota_message"="O download excede a cota de transferência disponível para o seu IP e, portanto, pode ser interrompido.";
 /* Button title to see the available pro plans in MEGA */
 "seePlans"="Veja os planos";
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
@@ -1766,14 +1762,6 @@
 "Thumbnail view"="Visualização em miniaturas";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
 "Poor connection."="Conexão ruim.";
-/* Message shown in a chat room when there is an active group call */
-"There is an active group call. Tap to join."="Há uma chamada em grupo ativa. Toque para participar.";
-/* Message shown in a chat room for a group call in progress displaying the duration of the call */
-"Touch to return to call %@"="Toque para voltar à chamada %@";
-/* Menu item to change from grid view to list view */
-"List view"="Visualização em lista";
-/* Menu item to change from list view to grid view */
-"Thumbnail view"="Visualização em miniaturas";
 /* There are no notifications to display. */
 "No notifications"="Não há notificações";
 /* The header of a notification related to payments */
@@ -1998,6 +1986,18 @@
 "Hi, Have encrypted conversations on Mega with me and get 50GB free storage."="Oi! Converse comigo com segurança e obtenha até 50 GB de armazenamento gratuito no MEGA.";
 /* Destination folder name of chat files */
 "My chat files"="Arquivos dos meus chats";
+/* Title of the section about the plan in the storage tab in My Account Section */
+"Plan"="Plano";
+/* */
+"If you lose this Recovery key and forget your password, [B]all your files, folders and messages will be inaccessible, even by MEGA[/B]."="Se você perder a chave de recuperação e esquecer a sua senha, [B]todos os seus arquivos, pastas e mensagens não poderão ser acessados, nem mesmo pelo MEGA[/B].";
+/* */
+"Business"="Business";
+/* */
+"Administrator"="Administrador";
+/* */
+"Transfer"="Transferência";
+/* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
+"You cannot remove %1$s as a contact because they are part of your Business account."="Você não pode remover a %1$s dos seus contatos, por fazer parte da sua conta Business.";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
 "Require passcode"="Solicitar código de acesso";
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
@@ -2008,6 +2008,22 @@
 "This folder has been the subject of a takedown notice."="Esta pasta foi alvo de um aviso de remoção.";
 /* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
 "Dispute Takedown"="Disputar remoção";
+/* Label presented to Admins that full management of the business is only available in a desktop web browser */
+"User management is only available from a desktop web browser."="O gerenciamento de usuários somente está disponível no navegador de um computador.";
+/* When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information */
+"There has been a problem with your last payment. Please access MEGA using a desktop browser for more information."="Não foi possível processar o seu último pagamento. Por favor, acesse o MEGA usando um navegador em um computador para obter mais informações.";
+/* A dialog title shown to users when their business account is expired. */
+"Your business account is expired"="A sua conta business expirou";
+/* Details shown when a Business account is expired. Details for the administrator of the Business account */
+"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="Não foi possível processar o seu pagamento. O seu acesso será somente leitura até que o problema seja corrigido usando um navegador em um computador.";
+/* A dialog message which is shown to sub-users of expired business accounts. */
+"Your account is currently [B]suspended[/B]. You can only browse your data."="A sua conta [B]expirou[/B]. Somente é possível visualizar os seus dados.";
+/* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
+"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="Embora o MEGA não tenha acesso a seus dados, os administradores de sua organização podem controlar e visualizar os Uploads da câmera na sua conta de usuário.";
+/* */
+"Something went wrong"="Algo deu errado";
+/* Button title that goes to the section Usage where you can see how your MEGA space is used */
+"Usage"="Utilização";
 /* Title of the "Links" Shared Items. */
 "Links"="Links";
 /* Title for empty state view of "Links" in Shared Items. */
@@ -2016,6 +2032,8 @@
 "Manage Share"="Gerenciar compartilhamento";
 /* Title of the screen that shows the users with whom the user can share a folder */
 "Share with"="Compartilhar com";
+/* A dialog message which is shown to sub-users of expired business accounts. */
+"Contact your business account administrator to resolve the issue and activate your account."="Entre em contato com o administrador de sua conta comercial para solucionar o problema e ativar a sua conta.";
 /* Chat Notifications DND: Option that does not deactivate DND automatically */
 "Until I Turn it On Again"="Até eu ativar novamente";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
@@ -2066,6 +2084,12 @@
 "Alias/ Nickname"="Apelido";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
 "It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="Não foi possível obter o conteúdo deste arquivo, pois ele não está codificado em UTF-8 ou ISO/IEC 8859-1.";
+/* Business expired account Overdue payment page header. */
+"Payment overdue"="Pagamento atrasado";
+/* */
+"Active"="Ativa";
+/* title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts */
+"Role:"="Função:";
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
 "Include location tags"="Incluir etiquetas de localização";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
@@ -2148,6 +2172,10 @@
 "File Type"="Tipo de arquivo";
 /* export Quality Option for Scan document */
 "best"="Superior";
+/* Error message appears to sub-users of a business account when they try to login and they are disabled. */
+"Your account has been disabled by your administrator. Please contact your business account administrator for further details."="A sua conta foi desativada pelo seu administrador. Você deve entrar em contato com o administrador da sua conta business para obter mais informações.";
+/* An error message which appears to sub-users of a business account when they try to login and they are deleted. */
+"Your account has been removed by your administrator. Please contact your business account administrator for further details."="A sua conta foi eliminada pelo seu administrador. Você deve entrar em contato com o administrador da sua conta business para obter mais informações.";
 /* Description of why the user should give permission to contacts */
 "Easily discover contacts from your address book on MEGA."="Descubra facilmente quais são os contatos do seu catálogo de endereços que já estão no MEGA.";
 /* Detailed description of why the user should give permission to contacts */
