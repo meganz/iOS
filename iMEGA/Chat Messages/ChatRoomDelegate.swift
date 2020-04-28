@@ -134,7 +134,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
         if message.hasChanged(for: .content) {
             if message.isDeleted || message.isEdited {
                 let filteredArray = messages.filter { chatMessage in
-                    return chatMessage.message.temporalId == message.temporalId
+                    return chatMessage.message.messageId == message.messageId
                 }
                 if filteredArray.count > 0 {
                     let oldMessage = filteredArray.first!
