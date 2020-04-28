@@ -23,4 +23,8 @@ extension MEGAChatListItem {
         
         return chatRoomTitle + " " + fullnames + " " + nicknames + " " + emails
     }
+    
+    @objc func chatTitle() -> String {
+        return chatRoom.chatTitle()
+    }
 }

@@ -2182,3 +2182,6 @@
 "MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA will not use this data for any other purpose and will never interact with your contacts without your consent.";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="Enter group name";
+/* Default title of an empty chat. */
+"Chat created on %s1"="Chat created on %s1";
+
