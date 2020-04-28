@@ -2,38 +2,38 @@
 import UIKit
 
 enum TwoFactorAuthStatus {
-    case Unknown
-    case Querying
-    case Disabled
-    case Enabled
+    case unknown
+    case querying
+    case disabled
+    case enabled
 }
 
-enum ProfileTableViewSections: Int {
-    case Profile
-    case Security
-    case Plan
-    case Session
+enum ProfileTableViewSection: Int {
+    case profile
+    case security
+    case plan
+    case session
 }
 
-enum ProfileSectionRows: Int {
-    case ChangeName
-    case ChangePhoto
-    case ChangeEmail
-    case PhoneNumber
-    case ChangePassword
+enum ProfileSectionRow: Int {
+    case changeName
+    case changePhoto
+    case changeEmail
+    case phoneNumber
+    case changePassword
 }
 
-enum SecuritySectionRows: Int {
-    case RecoveryKey
+enum SecuritySectionRow: Int {
+    case recoveryKey
 }
 
-enum PlanSectionRows: Int {
-    case Upgrade
-    case Role
+enum PlanSectionRow: Int {
+    case upgrade
+    case role
 }
 
-enum SessionSectionRows: Int {
-    case Logout
+enum SessionSectionRow: Int {
+    case logout
 }
 
 @objc class ProfileViewController: UIViewController {
@@ -56,7 +56,7 @@ enum SessionSectionRows: Int {
         return dateFormatter
     }()
     
-    private var twoFactorAuthStatus:TwoFactorAuthStatus = .Unknown
+    private var twoFactorAuthStatus:TwoFactorAuthStatus = .unknown
     
     // MARK: - Lifecycle
     
@@ -235,44 +235,44 @@ enum SessionSectionRows: Int {
         self.present(changeAvatarAlertController, animated: true, completion: nil)
     }
     
-    func tableViewSections() -> [ProfileTableViewSections] {
-        return [.Profile, .Security, .Plan, .Session]
+    func tableViewSections() -> [ProfileTableViewSection] {
+        return [.profile, .security, .plan, .session]
     }
     
-    func rowsForProfileSection() -> [ProfileSectionRows] {
+    func rowsForProfileSection() -> [ProfileSectionRow] {
         let isBusiness = MEGASdkManager.sharedMEGASdk().isBusinessAccount
         let isMasterBusiness = MEGASdkManager.sharedMEGASdk().isMasterBusinessAccount
         let isSmsAllowed = MEGASdkManager.sharedMEGASdk().smsAllowedState() == .optInAndUnblock
-        var profileRows = [ProfileSectionRows]()
+        var profileRows = [ProfileSectionRow]()
         
         if !isBusiness || isMasterBusiness {
-            profileRows.append(.ChangeName)
+            profileRows.append(.changeName)
         }
-        profileRows.append(.ChangePhoto)
+        profileRows.append(.changePhoto)
         if !isBusiness || isMasterBusiness {
-            profileRows.append(.ChangeEmail)
+            profileRows.append(.changeEmail)
         }
-        profileRows.append(.ChangePassword)
+        profileRows.append(.changePassword)
         if isSmsAllowed {
-            profileRows.append(.PhoneNumber)
+            profileRows.append(.phoneNumber)
         }
         return profileRows
     }
     
-    func rowsForSecuritySection() -> [SecuritySectionRows] {
-        return [.RecoveryKey]
+    func rowsForSecuritySection() -> [SecuritySectionRow] {
+        return [.recoveryKey]
     }
     
-    func rowsForPlanSection() -> [PlanSectionRows] {
+    func rowsForPlanSection() -> [PlanSectionRow] {
         if MEGASdkManager.sharedMEGASdk().isBusinessAccount {
-            return [.Upgrade, .Role]
+            return [.upgrade, .role]
         } else {
-            return [.Upgrade]
+            return [.upgrade]
         }
     }
     
-    func rowsForSessionSection() -> [SessionSectionRows] {
-        return [.Logout]
+    func rowsForSessionSection() -> [SessionSectionRow] {
+        return [.logout]
     }
     
     func pushChangeViewController(changeType: ChangeType) -> Void {
@@ -280,12 +280,12 @@ enum SessionSectionRows: Int {
         changePasswordViewController.changeType = changeType
         if changeType == .email {
             switch twoFactorAuthStatus {
-            case .Unknown:
+            case .unknown:
                  guard let myEmail = MEGASdkManager.sharedMEGASdk().myEmail else {
                     return
                  }
                  MEGASdkManager.sharedMEGASdk().multiFactorAuthCheck(withEmail: myEmail, delegate: MEGAGenericRequestDelegate(completion: { (request, error) in
-                    self.twoFactorAuthStatus = request.flag ? .Enabled : .Disabled
+                    self.twoFactorAuthStatus = request.flag ? .enabled : .disabled
                     self.tableView.reloadRows(at: [IndexPath(row: 2, section: 0)], with: .automatic)
                     if self.navigationController?.children.count != 2 {
                         return
@@ -293,12 +293,12 @@ enum SessionSectionRows: Int {
                     changePasswordViewController.isTwoFactorAuthenticationEnabled = request.flag
                     self.navigationController?.pushViewController(changePasswordViewController, animated: true)
                  }))
-                 twoFactorAuthStatus = .Querying
+                 twoFactorAuthStatus = .querying
                  tableView.reloadRows(at: [IndexPath(row: 2, section: 0)], with: .automatic)
-            case .Querying:
+            case .querying:
                 return
-            case .Disabled, .Enabled:
-                    changePasswordViewController.isTwoFactorAuthenticationEnabled = self.twoFactorAuthStatus == .Enabled
+            case .disabled, .enabled:
+                    changePasswordViewController.isTwoFactorAuthenticationEnabled = self.twoFactorAuthStatus == .enabled
                     self.navigationController?.pushViewController(changePasswordViewController, animated: true)
             }
         } else {
@@ -330,22 +330,22 @@ extension ProfileViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch tableViewSections()[section] {
-        case .Profile:
+        case .profile:
             return rowsForProfileSection().count
-        case .Security:
+        case .security:
             return rowsForSecuritySection().count
-        case .Plan:
+        case .plan:
             return rowsForPlanSection().count
-        case .Session:
+        case .session:
             return rowsForSessionSection().count
         }
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch tableViewSections()[section] {
-        case .Security:
+        case .security:
             return AMLocalizedString("masterKey", "Title for the MEGA Recovery Key")
-        case .Plan:
+        case .plan:
             return AMLocalizedString("Plan", "Title of the section about the plan in the storage tab in My Account Section")
         default:
             return nil
@@ -354,9 +354,9 @@ extension ProfileViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         switch tableViewSections()[section] {
-        case .Security:
+        case .security:
             return AMLocalizedString("If you lose this Recovery key and forget your password, [B]all your files, folders and messages will be inaccessible, even by MEGA[/B].", "").replacingOccurrences(of: "[B]", with: "").replacingOccurrences(of: "[/B]", with: "")
-        case .Plan:
+        case .plan:
             guard let accountDetails = MEGASdkManager.sharedMEGASdk().mnz_accountDetails else {
                 return nil
             }
@@ -378,29 +378,29 @@ extension ProfileViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch tableViewSections()[indexPath.section] {
-        case .Profile:
+        case .profile:
             let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileCellID", for: indexPath) as! ProfileTableViewCell
             cell.accessoryType = .disclosureIndicator
             cell.detailLabel.text = ""
             switch rowsForProfileSection()[indexPath.row] {
-            case .ChangeName:
+            case .changeName:
                 cell.nameLabel.text = AMLocalizedString("changeName", "Button title that allows the user change his name")
-            case .ChangePhoto:
+            case .changePhoto:
                 let hasPhotoAvatar = FileManager.default.fileExists(atPath:Helper.path(forSharedSandboxCacheDirectory: "thumbnailsV3") + "/" + (MEGASdk.base64Handle(forUserHandle: MEGASdkManager.sharedMEGASdk().myUser?.handle ?? ~0) ?? ""))
                 cell.nameLabel.text = hasPhotoAvatar ? AMLocalizedString("Change Photo", "Button that allows the user the change a photo, e.g. his avatar photo ") : AMLocalizedString("Add Photo", "Button that allows the user the add a photo, e.g avatar photo")
-            case .ChangeEmail:
+            case .changeEmail:
                 switch twoFactorAuthStatus {
-                case .Unknown, .Disabled, .Enabled:
+                case .unknown, .disabled, .enabled:
                     cell.nameLabel?.isEnabled = true
                     cell.accessoryView = nil
-                case .Querying:
+                case .querying:
                     cell.nameLabel?.isEnabled = false
                     let activityIndicator = UIActivityIndicatorView(style: .gray)
                     activityIndicator.startAnimating()
                     cell.accessoryView = activityIndicator
                 }
                 cell.nameLabel.text = AMLocalizedString("Change Email", "The title of the alert dialog to change the email associated to an account.")
-            case .PhoneNumber:
+            case .phoneNumber:
                 if MEGASdkManager.sharedMEGASdk().smsVerifiedPhoneNumber() == nil {
                     cell.nameLabel.text = AMLocalizedString("Add Phone Number", "Add Phone Number title").capitalized
                 } else {
@@ -414,16 +414,16 @@ extension ProfileViewController: UITableViewDataSource {
                     }
                     cell.accessoryType = .none
                 }
-            case .ChangePassword:
+            case .changePassword:
                 cell.nameLabel.text = AMLocalizedString("changePasswordLabel", "Section title where you can change your MEGA's password").capitalized
             }
             return cell
-        case .Security:
+        case .security:
             let cell = tableView.dequeueReusableCell(withIdentifier: "RecoveryKeyID", for: indexPath) as! RecoveryKeyTableViewCell
             cell.recoveryKeyLabel.text = AMLocalizedString("masterKey", "Title for the MEGA Recovery Key")+".txt"
             cell.backupRecoveryKeyLabel.text = AMLocalizedString("backupRecoveryKey", "Label for recovery key button")
             return cell
-        case .Plan:
+        case .plan:
             let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileCellID", for: indexPath) as! ProfileTableViewCell
             cell.nameLabel.text = AMLocalizedString("upgradeAccount", "Button title which triggers the action to upgrade your MEGA account level")
             guard let accountDetails = MEGASdkManager.sharedMEGASdk().mnz_accountDetails else {
@@ -432,7 +432,7 @@ extension ProfileViewController: UITableViewDataSource {
             let accountType = accountDetails.type
             
             switch rowsForPlanSection()[indexPath.row] {
-            case .Upgrade:
+            case .upgrade:
                 switch accountType {
                 case .free:
                     cell.detailLabel.text = AMLocalizedString("Free", "Text relative to the MEGA account level. UPPER CASE")
@@ -459,7 +459,7 @@ extension ProfileViewController: UITableViewDataSource {
                 default:
                     cell.detailLabel.text = "..."
                 }
-            case .Role:
+            case .role:
                 if MEGASdkManager.sharedMEGASdk().isMasterBusinessAccount {
                     cell.detailLabel.text = AMLocalizedString("Administrator", "")
                 } else {
@@ -469,9 +469,9 @@ extension ProfileViewController: UITableViewDataSource {
                 cell.accessoryType = .none
             }
             return cell
-        case .Session:
+        case .session:
             switch rowsForSessionSection()[indexPath.row] {
-            case .Logout:
+            case .logout:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "LogoutID", for: indexPath) as! LogoutTableViewCell
                 cell.logoutLabel.text = AMLocalizedString("logoutLabel", "Title of the button which logs out from your account.")
                 return cell
@@ -485,32 +485,32 @@ extension ProfileViewController: UITableViewDataSource {
 extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch tableViewSections()[indexPath.section] {
-        case .Profile:
+        case .profile:
             switch rowsForProfileSection()[indexPath.row] {
-            case .ChangeName:
+            case .changeName:
                 let changeNameNavigationController = UIStoryboard.init(name: "MyAccount", bundle: nil).instantiateViewController(withIdentifier: "ChangeNameViewControllerID")
                 navigationController?.pushViewController(changeNameNavigationController, animated: true)
-            case .ChangePhoto:
+            case .changePhoto:
                 guard let cell = tableView.cellForRow(at: indexPath) else {
                     return
                 }
                 presentChangeAvatarController(tableView:tableView, cell: cell)
-            case .ChangeEmail:
+            case .changeEmail:
                 pushChangeViewController(changeType: .email)
-            case .PhoneNumber:
+            case .phoneNumber:
                 if MEGASdkManager.sharedMEGASdk().smsVerifiedPhoneNumber() == nil {
                     showAddPhoneNumber()
                 }
-            case .ChangePassword:
+            case .changePassword:
                 pushChangeViewController(changeType: .password)
             }
-        case .Security:
+        case .security:
             switch rowsForSecuritySection()[indexPath.row] {
-            case .RecoveryKey:
+            case .recoveryKey:
                 let recoveryKeyViewController = UIStoryboard.init(name: "Settings", bundle: nil).instantiateViewController(withIdentifier: "MasterKeyViewControllerID")
                 navigationController?.pushViewController(recoveryKeyViewController, animated: true)
             }
-        case .Plan:
+        case .plan:
             switch rowsForPlanSection()[indexPath.row] {
             default:
                 if !MEGASdkManager.sharedMEGASdk().isBusinessAccount {
@@ -522,9 +522,9 @@ extension ProfileViewController: UITableViewDelegate {
                     }
                 }
             }
-        case .Session:
+        case .session:
             switch rowsForSessionSection()[indexPath.row] {
-            case .Logout:
+            case .logout:
                 if MEGAReachabilityManager.isReachableHUDIfNot() {
                     guard let showPasswordReminderDelegate = MEGAShowPasswordReminderRequestDelegate(toLogout: true) else {
                         return
