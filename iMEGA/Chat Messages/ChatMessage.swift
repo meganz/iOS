@@ -45,7 +45,7 @@ extension ChatMessage: MessageType {
             if message.containsMEGALink() {
                 return .custom(message)
             } else if message.content != nil && message.content.count > 0 {
-                return .text(message.content)
+                return .attributedText(message.attributedText)
             }
         } else if case .voiceClip = message.type {
             return .custom(message)
