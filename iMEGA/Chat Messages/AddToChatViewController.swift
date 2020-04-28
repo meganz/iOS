@@ -1,6 +1,10 @@
 
 import UIKit
 
+protocol AddToChatViewControllerDelegate: class {
+    func send(asset: PHAsset)
+}
+
 class AddToChatViewController: UIViewController {
     
     // MARK:- Properties.
@@ -20,7 +24,8 @@ class AddToChatViewController: UIViewController {
     private var mediaCollectionSource: AddToChatMediaCollectionSource!
     private var menuPageViewController: UIPageViewController!
 
-    var menuPages: [AddToChatMenuViewController]!
+    private var menuPages: [AddToChatMenuViewController]!
+    weak var delegate: AddToChatViewControllerDelegate?
     
     // MARK:- View lifecycle methods.
     
@@ -38,7 +43,8 @@ class AddToChatViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        mediaCollectionSource = AddToChatMediaCollectionSource(collectionView: mediaCollectionView)
+        mediaCollectionSource = AddToChatMediaCollectionSource(collectionView: mediaCollectionView,
+                                                               delegate: self)
         setUpMenuPageViewController()
     }
     
@@ -84,28 +90,28 @@ class AddToChatViewController: UIViewController {
 //        }
     }
     
-    // MARK:- Animation methods while presenting and dismissing.
-    
-    func presentAnimation() {
-        backgroundView.alpha = 0.0
-        contentViewBottomConstraint.constant = -contentViewHeightConstraint.constant
-        view.layoutIfNeeded()
-
-        UIView.animate(withDuration: presentAndDismissAnimationDuration) {
-            self.backgroundView.alpha = 1.0
-            self.contentViewBottomConstraint.constant = 0.0
-            self.view.layoutIfNeeded()
-        }
-    }
-
-    func dismissAnimation(completion: ((Bool) -> Void)?) {
-        UIView.animate(withDuration: presentAndDismissAnimationDuration,
-                       animations: {
-                        self.backgroundView.alpha = 0.0
-                        self.contentViewBottomConstraint.constant = -self.contentViewHeightConstraint.constant
-                        self.view.layoutIfNeeded()
-        }, completion: completion)
-    }
+//    // MARK:- Animation methods while presenting and dismissing.
+//
+//    func presentAnimation() {
+//        backgroundView.alpha = 0.0
+//        contentViewBottomConstraint.constant = -contentViewHeightConstraint.constant
+//        view.layoutIfNeeded()
+//
+//        UIView.animate(withDuration: presentAndDismissAnimationDuration) {
+//            self.backgroundView.alpha = 1.0
+//            self.contentViewBottomConstraint.constant = 0.0
+//            self.view.layoutIfNeeded()
+//        }
+//    }
+//
+//    func dismissAnimation(completion: ((Bool) -> Void)?) {
+//        UIView.animate(withDuration: presentAndDismissAnimationDuration,
+//                       animations: {
+//                        self.backgroundView.alpha = 0.0
+//                        self.contentViewBottomConstraint.constant = -self.contentViewHeightConstraint.constant
+//                        self.view.layoutIfNeeded()
+//        }, completion: completion)
+//    }
 }
 
 
@@ -137,6 +143,24 @@ extension AddToChatViewController: UIPageViewControllerDataSource, UIPageViewCon
 
     func presentationIndex(for pageViewController: UIPageViewController) -> Int {
         return 0
+    }
+}
+
+extension AddToChatViewController: AddToChatMediaCollectionSourceDelegate {
+    func moreButtonTapped() {
+        
+    }
+    
+    func sendAsset(asset: PHAsset) {
+        if let delegate = delegate {
+            delegate.send(asset: asset)
+        }
+        
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func cameraButtonTapped() {
+        
     }
 }
 

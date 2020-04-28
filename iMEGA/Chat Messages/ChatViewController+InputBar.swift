@@ -28,6 +28,7 @@ extension ChatViewController {
             }
             
             let addToChatViewController = AddToChatViewController(nibName: nil, bundle: nil)
+            addToChatViewController.delegate = self
             addToChatViewController.transitioningDelegate = self
             rc.present(addToChatViewController, animated: true) {
                 if let tabBarController = rc as? UITabBarController {
@@ -172,5 +173,72 @@ extension ChatViewController: UIViewControllerTransitioningDelegate {
         }
 
         return AddToChatViewAnimator(type: .dismiss)
+    }
+}
+
+
+extension ChatViewController: AddToChatViewControllerDelegate {
+    func send(asset: PHAsset) {
+        print("send the asset")
+        
+        //TODO: Refactor this function.
+        MEGASdkManager.sharedMEGASdk()!.getMyChatFilesFolder {[weak self] resultNode in
+            guard let `self` = self else {
+                return
+            }
+            
+            let processAsset = MEGAProcessAsset(toShareThroughChatWith: [asset], parentNode: resultNode, filePaths: { filePaths in
+                
+                guard let filePath = filePaths?.first else {
+                    return
+                }
+                
+                let transferUploadDelegate: MEGAStartUploadTransferDelegate  = MEGAStartUploadTransferDelegate { _ in
+                    // Should show the progress to the user.
+                }
+                
+                var appData: String? = nil
+                
+                if let cordinates = (filePath as NSString).mnz_coordinatesOfPhotoOrVideo() {
+                    appData = NSString().mnz_appData(toSaveCoordinates: cordinates)
+                }
+                
+                if appData == nil {
+                    appData = ("" as NSString).mnz_appDataToAttach(toChatID: self.chatRoom.chatId,
+                                                                   asVoiceClip: false)
+                } else {
+                    appData = appData!.mnz_appDataToAttach(toChatID: self.chatRoom.chatId,
+                                                           asVoiceClip: false)
+                }
+                
+                MEGASdkManager.sharedMEGASdk()!.startUpload(withLocalPath: filePath,
+                                                            parent: resultNode,
+                                                            appData: appData,
+                                                            isSourceTemporary: true,
+                                                            delegate: transferUploadDelegate)
+                
+            }, nodes:nil) { errors in
+                guard let error = errors?.first else {
+                    return
+                }
+                
+                let alertController = UIAlertController(title: AMLocalizedString("error", nil),
+                                                        message: error.localizedDescription,
+                                                        preferredStyle: .alert)
+                alertController.addAction(UIAlertAction(title: AMLocalizedString("ok", nil),
+                                                        style: .cancel,
+                                                        handler: nil))
+                
+                DispatchQueue.main.async {
+                    self.present(alertController, animated: true)
+                }
+            }
+            
+            DispatchQueue.global(qos: .background).async {
+                processAsset?.isOriginalName = true
+                processAsset?.prepare()
+            }
+        }
+
     }
 }
