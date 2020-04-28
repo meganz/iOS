@@ -578,8 +578,6 @@
 "removeUserMessage"="Sigur vrei să elimini contactul %@ din lista de contacte?";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
 "removeMultipleUsersMessage"="Sigur vrei să elimini %d utilizatori din lista de contacte?";
-/* Success message shown when the selected contacts have been removed */
-"removedContacts"="%d contacte eliminate";
 /* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
 "removedContact"="Contactul %@ a fost eliminat";
 /* Label shown when a contact request is pending */
@@ -856,7 +854,7 @@
 /* Hint text where the user have to re-write the new email to confirm it */
 "confirmNewEmail"="Confirmă e-mailul nou";
 /* The title of the alert dialog to change the email associated to an account. */
-"changeEmail"="Modifică e-mailul";
+"Change Email"="Modifică e-mailul";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
 "oldAndNewEmailMatch"="E-mailul nou și cel vechi nu trebuie să coincidă";
 /* Error message shown when you have not written the same email when confirming a new one */
@@ -1037,8 +1035,6 @@
 "cloudDriveIsFull"="[S]Unitatea ta cloud este plină.[/S] [A]Upgradează acum[/A] la un cont PRO și obține [S]până la %@ TB (%@ GB)[/S] spațiu de stocare în cloud.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Spațiu de stocare";
-/* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
-"transferQuota"="Cotă de transferuri";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
 "limited"="Limitat";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
@@ -1766,14 +1762,6 @@
 "Thumbnail view"="Vizualizare tip miniatură";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
 "Poor connection."="Conexiune slabă.";
-/* Message shown in a chat room when there is an active group call */
-"There is an active group call. Tap to join."="Există un apel de grup activ. Atinge pentru a te alătura.";
-/* Message shown in a chat room for a group call in progress displaying the duration of the call */
-"Touch to return to call %@"="Atinge pentru a reveni la apelul %@";
-/* Menu item to change from grid view to list view */
-"List view"="Vizualizare tip listă";
-/* Menu item to change from list view to grid view */
-"Thumbnail view"="Vizualizare tip miniatură";
 /* There are no notifications to display. */
 "No notifications"="Nicio notificare";
 /* The header of a notification related to payments */
@@ -1998,6 +1986,18 @@
 "Hi, Have encrypted conversations on Mega with me and get 50GB free storage."="Bună! Conversează securizat pe MEGA cu mine și obține până la 50 GB spațiu de stocare gratuit.";
 /* Destination folder name of chat files */
 "My chat files"="Fișierele mele chat";
+/* Title of the section about the plan in the storage tab in My Account Section */
+"Plan"="Plan";
+/* */
+"If you lose this Recovery key and forget your password, [B]all your files, folders and messages will be inaccessible, even by MEGA[/B]."="Dacă pierzi această cheie de recuperare și îți uiți parola, [B]toate fișierele, folderele și mesajele vor fi inaccesibile, chiar și prin MEGA[/B].";
+/* */
+"Business"="Business";
+/* */
+"Administrator"="Administrator";
+/* */
+"Transfer"="Transferuri";
+/* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
+"You cannot remove %1$s as a contact because they are part of your Business account."="Nu poți elimina pe %1$s ca contact, deoarece face parte din contul tău business.";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
 "Require passcode"="Necesită cod de acces";
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
@@ -2008,6 +2008,22 @@
 "This folder has been the subject of a takedown notice."="Acest folder a făcut obiectul unei notificări de eliminare.";
 /* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
 "Dispute Takedown"="Contestă eliminarea";
+/* Label presented to Admins that full management of the business is only available in a desktop web browser */
+"User management is only available from a desktop web browser."="Gestionarea utilizatorilor este disponibilă doar de pe un browser web de desktop.";
+/* When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information */
+"There has been a problem with your last payment. Please access MEGA using a desktop browser for more information."="A fost o problemă cu ultima plată. Te rugăm să accesezi MEGA folosind un browser desktop pentru mai multe informații.";
+/* A dialog title shown to users when their business account is expired. */
+"Your business account is expired"="Contul tău business a expirat";
+/* Details shown when a Business account is expired. Details for the administrator of the Business account */
+"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="A apărut o problemă la procesarea plății. MEGA este limitat în modul numai vizualizare până când această problemă a fost rezolvată într-un browser web desktop.";
+/* A dialog message which is shown to sub-users of expired business accounts. */
+"Your account is currently [B]suspended[/B]. You can only browse your data."="În prezent, contul tău este [B]suspendat[/B]. Poți răsfoi numai prin datele tale.";
+/* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
+"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="Deși MEGA nu are acces la datele tale, administratorii organizației tale pot controla și vedea încărcările cameră din contul tău de utilizator";
+/* */
+"Something went wrong"="Ceva a mers prost";
+/* Button title that goes to the section Usage where you can see how your MEGA space is used */
+"Usage"="Utilizare";
 /* Title of the "Links" Shared Items. */
 "Links"="Linkuri";
 /* Title for empty state view of "Links" in Shared Items. */
@@ -2016,6 +2032,8 @@
 "Manage Share"="Gestionează partajarea";
 /* Title of the screen that shows the users with whom the user can share a folder */
 "Share with"="Partajează cu";
+/* A dialog message which is shown to sub-users of expired business accounts. */
+"Contact your business account administrator to resolve the issue and activate your account."="Contactează administratorul contului business pentru a rezolva problema și pentru a-ți activa contul.";
 /* Chat Notifications DND: Option that does not deactivate DND automatically */
 "Until I Turn it On Again"="Până când le pornesc din nou";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
@@ -2066,6 +2084,12 @@
 "Alias/ Nickname"="Alias / Pseudonim";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
 "It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="Nu a fost posibil să se obțină conținutul acestui fișier, deoarece nu este codificat nici în UTF-8, nici în ISO/IEC 8859-1.";
+/* Business expired account Overdue payment page header. */
+"Payment overdue"="Plată restantă";
+/* */
+"Active"="Activă";
+/* title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts */
+"Role:"="Rol:";
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
 "Include location tags"="Include etichetele locațiilor";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
@@ -2148,6 +2172,10 @@
 "File Type"="Tipul fișierului";
 /* export Quality Option for Scan document */
 "best"="Cea mai bună";
+/* Error message appears to sub-users of a business account when they try to login and they are disabled. */
+"Your account has been disabled by your administrator. Please contact your business account administrator for further details."="Contul tău a fost dezactivat de către administrator. Te rugăm să contactezi administratorul contului tău business pentru detalii suplimentare.";
+/* An error message which appears to sub-users of a business account when they try to login and they are deleted. */
+"Your account has been removed by your administrator. Please contact your business account administrator for further details."="Contul tău a fost eliminat de către administrator. Te rugăm să contactezi administratorul contului tău business pentru detalii suplimentare.";
 /* Description of why the user should give permission to contacts */
 "Easily discover contacts from your address book on MEGA."="Descoperă cu ușurință contactele din agenda de adrese pe MEGA.";
 /* Detailed description of why the user should give permission to contacts */

@@ -7,6 +7,7 @@
 #import "MEGASdk+MNZCategory.h"
 
 #import "Helper.h"
+#import "MEGASdkManager.h"
 
 @interface UsageViewController () <PieChartViewDelegate, PieChartViewDataSource, UIGestureRecognizerDelegate, UIScrollViewDelegate>
 
@@ -61,21 +62,30 @@
     [self.rubbishBinLabel setText:AMLocalizedString(@"rubbishBinLabel", @"")];
     [self.incomingSharesLabel setText:AMLocalizedString(@"incomingShares", @"")];
     
+    if (MEGASdkManager.sharedMEGASdk.isBusinessAccount) {
+        self.usagePageControl.currentPage = 1;
+        [self changePieChartText:1];
+        self.usagePageControl.hidden = YES;
+        self.pieChartSecondaryLabel.hidden = YES;
+        [self.view.gestureRecognizers enumerateObjectsUsingBlock:^(__kindof UIGestureRecognizer * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [self.view removeGestureRecognizer:obj];
+        }];
+    } else {
+        [_cloudDriveProgressView setProgress:(self.cloudDriveSize.doubleValue / self.maxStorage.floatValue) animated:NO];
+        [_rubbishBinProgressView setProgress:(self.rubbishBinSize.floatValue / self.maxStorage.floatValue) animated:NO];
+        [_incomingSharesProgressView setProgress:(self.incomingSharesSize.floatValue/ self.maxStorage.floatValue) animated:NO];
+    }
+    
     [_pieChartView.layer setCornerRadius:CGRectGetWidth(self.pieChartView.frame)/2];
     [_pieChartView.layer setMasksToBounds:YES];
     [self changePieChartText:_usagePageControl.currentPage];
     
     NSString *stringFromByteCount = [Helper memoryStyleStringFromByteCount:self.cloudDriveSize.longLongValue];
     [_cloudDriveSizeLabel setAttributedText:[self textForSizeLabels:stringFromByteCount]];
-    [_cloudDriveProgressView setProgress:(self.cloudDriveSize.doubleValue / self.maxStorage.floatValue) animated:NO];
-    
     stringFromByteCount = [Helper memoryStyleStringFromByteCount:self.rubbishBinSize.longLongValue];
     [_rubbishBinSizeLabel setAttributedText:[self textForSizeLabels:stringFromByteCount]];
-    [_rubbishBinProgressView setProgress:(self.rubbishBinSize.floatValue / self.maxStorage.floatValue) animated:NO];
-     
     stringFromByteCount = [Helper memoryStyleStringFromByteCount:self.incomingSharesSize.longLongValue];
     [_incomingSharesSizeLabel setAttributedText:[self textForSizeLabels:stringFromByteCount]];
-    [_incomingSharesProgressView setProgress:(self.incomingSharesSize.floatValue/ self.maxStorage.floatValue) animated:NO];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
