@@ -5,6 +5,7 @@ class AddToChatCameraCollectionCell: UICollectionViewCell {
     
     @IBOutlet weak var liveFeedView: UIView!
     var previewLayer: AVCaptureVideoPreviewLayer!
+    var isCurrentShowingLiveFeed = false
     
     enum LiveFeedError: Error {
         case askForPermission
@@ -40,6 +41,7 @@ class AddToChatCameraCollectionCell: UICollectionViewCell {
         }
         
         captureSession.startRunning()
+        isCurrentShowingLiveFeed = true
     }
     
     override func layoutSubviews() {
