@@ -130,4 +130,8 @@
     self.layer.borderWidth = 0;
 }
 
+- (void)localVideoMirror:(BOOL)mirror {
+    self.videoImageView.transform = mirror ? CGAffineTransformMakeScale(-1, 1) : CGAffineTransformMakeScale(1, 1);
+}
+
 @end

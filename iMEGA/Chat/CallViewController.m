@@ -30,6 +30,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *enableDisableVideoButton;
 @property (weak, nonatomic) IBOutlet UIButton *muteUnmuteMicrophone;
 @property (weak, nonatomic) IBOutlet UIButton *enableDisableSpeaker;
+@property (weak, nonatomic) IBOutlet UIButton *switchCameraButton;
 
 @property (weak, nonatomic) IBOutlet UIView *callControlsView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
@@ -54,12 +55,18 @@
 
 @property (assign, nonatomic, getter=isReconnecting) BOOL reconnecting;
 
+@property (nonatomic) NSString *backCamera;
+@property (nonatomic) NSString *frontCamera;
+
 @end
 
 @implementation CallViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.frontCamera = [AVCaptureDevice defaultDeviceWithDeviceType:AVCaptureDeviceTypeBuiltInWideAngleCamera mediaType:AVMediaTypeVideo position:AVCaptureDevicePositionFront].localizedName;
+    self.backCamera = [AVCaptureDevice defaultDeviceWithDeviceType:AVCaptureDeviceTypeBuiltInWideAngleCamera mediaType:AVMediaTypeVideo position:AVCaptureDevicePositionBack].localizedName;
     
     _statusBarShouldBeHidden = NO;
     
@@ -118,7 +125,8 @@
     if (self.callType == CallTypeActive) {
         self.enableDisableVideoButton.selected = [[NSUserDefaults standardUserDefaults] objectForKey:@"oneOnOneCallLocalVideo"] ? [[NSUserDefaults standardUserDefaults] boolForKey:@"oneOnOneCallLocalVideo"] : self.videoCall;
         self.muteUnmuteMicrophone.selected = [[NSUserDefaults standardUserDefaults] objectForKey:@"oneOnOneCallLocalAudio"] ? [[NSUserDefaults standardUserDefaults] boolForKey:@"oneOnOneCallLocalAudio"] : YES;
-        
+        self.switchCameraButton.selected = [[NSUserDefaults standardUserDefaults] objectForKey:@"oneOnOneCallCameraSwitched"] ? [[NSUserDefaults standardUserDefaults] boolForKey:@"oneOnOneCallCameraSwitched"] : NO;
+
         self.localVideoImageView.hidden = !self.enableDisableVideoButton.selected;
         
         MEGAChatSession *remoteSession = [self.call sessionForPeer:[self.call.sessionsPeerId megaHandleAtIndex:0] clientId:[self.call.sessionsClientId megaHandleAtIndex:0]];
@@ -158,12 +166,14 @@
     
     [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
     
-    self.mpVolumeView = [[MPVolumeView alloc] initWithFrame:self.enableDisableSpeaker.bounds];
+    self.mpVolumeView = [[MPVolumeView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 60.0f, 60.0f)];
     self.mpVolumeView.showsVolumeSlider = NO;
     [self.volumeContainerView addSubview:self.mpVolumeView];
     
     [self updateAudioOutputImage];
     
+    self.switchCameraButton.hidden = !self.enableDisableVideoButton.selected;
+    [self updateSelectedCamera];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -346,6 +356,8 @@
 - (void)deleteActiveCallFlags {
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"oneOnOneCallLocalVideo"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"oneOnOneCallLocalAudio"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"oneOnOneCallCameraSwitched"];
+    
     if (@available(iOS 12.0, *)) {} else {
         [NSUserDefaults.standardUserDefaults synchronize];
     }
@@ -371,6 +383,16 @@
     }
     
     [[UIDevice currentDevice] setProximityMonitoringEnabled:[AVAudioSession.sharedInstance mnz_isOutputEqualToPortType:AVAudioSessionPortBuiltInReceiver]];
+}
+
+- (void)updateSelectedCamera {
+    NSString *currentlySelected = [MEGASdkManager.sharedMEGAChatSdk videoDeviceSelected];
+    NSString *shouldBeSelected = self.switchCameraButton.selected ? self.backCamera : self.frontCamera;
+    if (![currentlySelected isEqualToString:shouldBeSelected]) {
+        [MEGASdkManager.sharedMEGAChatSdk setChatVideoInDevices:shouldBeSelected];
+    }
+    
+    self.localVideoImageView.transform = self.switchCameraButton.selected ? CGAffineTransformMakeScale(1, 1) : CGAffineTransformMakeScale(-1, 1);
 }
 
 #pragma mark - IBActions
@@ -405,8 +427,10 @@
                         self.remoteAvatarImageView.hidden = YES;
                         self.localVideoImageView.hidden = NO;
                         [[MEGASdkManager sharedMEGAChatSdk] addChatLocalVideo:self.chatRoom.chatId delegate:self.localVideoImageView];
+                        [self updateSelectedCamera];
                     }
                     sender.selected = !sender.selected;
+                    self.switchCameraButton.hidden = !sender.selected;
                 }
             }];
             if (sender.selected) {
@@ -445,6 +469,7 @@
     
     [[NSUserDefaults standardUserDefaults] setBool:!self.localVideoImageView.hidden forKey:@"oneOnOneCallLocalVideo"];
     [[NSUserDefaults standardUserDefaults] setBool:self.muteUnmuteMicrophone.selected forKey:@"oneOnOneCallLocalAudio"];
+    [[NSUserDefaults standardUserDefaults] setBool:self.switchCameraButton.selected forKey:@"oneOnOneCallCameraSwitched"];
     if (@available(iOS 12.0, *)) {} else {
         [NSUserDefaults.standardUserDefaults synchronize];
     }
@@ -453,6 +478,12 @@
     
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+
+- (IBAction)switchCamera:(UIButton *)sender {
+    sender.selected = !sender.selected;
+    [self updateSelectedCamera];
+}
+
 
 #pragma mark - UIGestureRecognizerDelegate
 
