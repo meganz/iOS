@@ -146,7 +146,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         
         if let errorString = error {
             MEGALogError(errorString)
-            bestAttemptContent.body = AMLocalizedString("You may have new messages", "Content of the notification when there is unknown activity on the Chat")
+            bestAttemptContent.body = NSLocalizedString("You may have new messages", comment: "Content of the notification when there is unknown activity on the Chat")
             bestAttemptContent.sound = nil
         } else {
             if let msgId = msgId, let chatId = chatId {
