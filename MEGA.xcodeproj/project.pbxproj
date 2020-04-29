@@ -529,6 +529,9 @@
 		837C4F88235DFFA600FFE177 /* VerifyEmail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 837C4F87235DFFA600FFE177 /* VerifyEmail.storyboard */; };
 		837C4F8A235DFFBA00FFE177 /* VerifyEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837C4F89235DFFBA00FFE177 /* VerifyEmailViewController.swift */; };
 		838633A623FED61D00CDB6A5 /* CustomModalAlertViewController+TwoFactorAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838633A523FED61D00CDB6A5 /* CustomModalAlertViewController+TwoFactorAuthentication.swift */; };
+		838F7C10243B7300004DEC84 /* MEGAChatRoom+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1574AD2373AB8C0095B283 /* MEGAChatRoom+Additions.swift */; };
+		838F7C12243B76BC004DEC84 /* MEGAFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B695E57F23275A4E00D12B9E /* MEGAFunctions.swift */; };
+		838F7C13243B7A5B004DEC84 /* MEGAChatListItem+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0ACD63240C87A80002101E /* MEGAChatListItem+Additions.swift */; };
 		8394CFA3211AE24100A1634A /* GroupCallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8394CFA2211AE24100A1634A /* GroupCallViewController.m */; };
 		8394CFB8211B1AFD00A1634A /* GroupCallCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8394CFB7211B1AFD00A1634A /* GroupCallCollectionViewCell.m */; };
 		839D5A9721C25A7D00FAE757 /* GridFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 839D5A9621C25A7D00FAE757 /* GridFlowLayout.m */; };
@@ -6566,6 +6569,7 @@
 				943F8B281EF283D300AFD89F /* UIDevice+MNZCategory.m in Sources */,
 				77F0522122CB8BA800032138 /* MEGAGenericRequestDelegate.m in Sources */,
 				A836581B21020FB9005E616F /* ItemListViewController.m in Sources */,
+				838F7C10243B7300004DEC84 /* MEGAChatRoom+Additions.swift in Sources */,
 				83FB143E219C3C7100418BE6 /* MOOfflineFolderLayout+CoreDataClass.m in Sources */,
 				83FB143C219C3C6E00418BE6 /* MOOfflineFolderLayout+CoreDataProperties.m in Sources */,
 				77F95CEF20E3B14D00F42D9C /* ShareFilesDestinationTableViewController.m in Sources */,
@@ -6574,6 +6578,7 @@
 				94C9D7561FBDC87B008BA1B5 /* MEGANodeList+MNZCategory.m in Sources */,
 				7794AEA9231674750039C1D2 /* MEGASdk+MNZCategory.m in Sources */,
 				9411355E1F0100DA00D33428 /* RemoveLinkActivity.m in Sources */,
+				838F7C13243B7A5B004DEC84 /* MEGAChatListItem+Additions.swift in Sources */,
 				5BA81EA31FC30C8F00C8146C /* MEGAShareRequestDelegate.m in Sources */,
 				943F8B271EF283BD00AFD89F /* LaunchViewController.m in Sources */,
 				A85740C92032F6E80033034C /* MOChatDraft+CoreDataProperties.m in Sources */,
@@ -6608,6 +6613,7 @@
 				77B3227C20A343A40037FA89 /* CopyrightWarningViewController.m in Sources */,
 				83337CAC2100B33D000F40A7 /* ItemListModel.m in Sources */,
 				949CEACF1F05121D00A3A580 /* LoginRequiredViewController.m in Sources */,
+				838F7C12243B76BC004DEC84 /* MEGAFunctions.swift in Sources */,
 				77892EA220E508300020A533 /* UIImage+GKContact.m in Sources */,
 				941135631F0106DC00D33428 /* UIScrollView+EmptyDataSet.m in Sources */,
 				832F19EE2091BD8E0067679E /* MOMediaDestination+CoreDataProperties.m in Sources */,

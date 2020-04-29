@@ -6,6 +6,7 @@
 #import "LocalizationSystem.h"
 #import "SVProgressHUD.h"
 
+#import "NSDate+MNZCategory.h"
 #import "UIColor+MNZCategory.h"
 
 #import "MEGAChatGenericRequestDelegate.h"
