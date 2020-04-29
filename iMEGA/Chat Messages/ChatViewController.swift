@@ -166,8 +166,7 @@ class ChatViewController: MessagesViewController {
             if isFromCurrentSender(message: chatMessage) {
                 if action == NSSelectorFromString("delete:") {
                     if message.isDeletable {
-                        if editMessage != nil
-                        || editMessage?.messageId != message.messageId {
+                        if editMessage?.messageId != message.messageId {
                             return true
                         }
                     }
@@ -199,7 +198,7 @@ class ChatViewController: MessagesViewController {
         }
         
         if action == NSSelectorFromString("edit:") {
-            
+            editMessage(message)
             return
         }
         
@@ -414,13 +413,13 @@ class ChatViewController: MessagesViewController {
         
         let importMenuItem = UIMenuItem(title:AMLocalizedString("import","Caption of a button to edit the files that are selected"), action: #selector(MessageCollectionViewCell.importMessage(_:)))
         
+        let editMenuItem = UIMenuItem(title:AMLocalizedString("edit","Caption of a button to edit the files that are selected"), action: #selector(MessageCollectionViewCell.edit(_:)))
         
         
         
         
         
-        
-        UIMenuController.shared.menuItems = [forwardMenuItem, importMenuItem]
+        UIMenuController.shared.menuItems = [forwardMenuItem, importMenuItem, editMenuItem]
     }
 
     private func registerCustomCells() {
