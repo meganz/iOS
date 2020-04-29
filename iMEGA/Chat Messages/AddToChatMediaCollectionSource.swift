@@ -59,6 +59,11 @@ extension AddToChatMediaCollectionSource: UICollectionViewDataSource {
         case 0:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AddToChatCameraCollectionCell.reuseIdentifier,
                                                           for: indexPath) as! AddToChatCameraCollectionCell
+            
+            if !(AVCaptureDevice.authorizationStatus(for: .video) == .authorized) {
+                cell.hideLiveFeedView()
+            }
+
             return cell
             
         default:

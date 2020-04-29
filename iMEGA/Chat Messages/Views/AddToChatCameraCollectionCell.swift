@@ -41,7 +41,12 @@ class AddToChatCameraCollectionCell: UICollectionViewCell {
         }
         
         captureSession.startRunning()
+        liveFeedView.isHidden = false
         isCurrentShowingLiveFeed = true
+    }
+    
+    func hideLiveFeedView() {
+        liveFeedView.isHidden = true
     }
     
     override func layoutSubviews() {
