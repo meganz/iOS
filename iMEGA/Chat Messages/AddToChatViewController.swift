@@ -4,6 +4,7 @@ import UIKit
 protocol AddToChatViewControllerDelegate: class {
     func send(asset: PHAsset)
     func loadPhotosView()
+    func showCamera()
 }
 
 class AddToChatViewController: UIViewController {
@@ -161,8 +162,9 @@ extension AddToChatViewController: AddToChatMediaCollectionSourceDelegate {
         dismiss(animated: true, completion: nil)
     }
     
-    func cameraButtonTapped() {
-        
+    func showCamera() {
+        dismiss(animated: true, completion: nil)
+        delegate?.showCamera()
     }
 }
 

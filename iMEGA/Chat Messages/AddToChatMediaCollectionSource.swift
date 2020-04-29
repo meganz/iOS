@@ -2,7 +2,7 @@
 protocol AddToChatMediaCollectionSourceDelegate: class {
     func moreButtonTapped()
     func sendAsset(asset: PHAsset)
-    func cameraButtonTapped()
+    func showCamera()
 }
 
 class AddToChatMediaCollectionSource: NSObject {
@@ -129,10 +129,27 @@ extension AddToChatMediaCollectionSource: UICollectionViewDelegate {
                 self.lastSelectedIndexPath = indexPath
                 imageCell.toggleSelection()
             }
-        } else if cell is AddToChatAllowAccessCollectionCell,
-            DevicePermissionsHelper.shouldAskForPhotosPermissions() {
-            DevicePermissionsHelper.photosPermission { success in
-                self.collectionView.reloadData()
+        } else if cell is AddToChatAllowAccessCollectionCell {
+            DevicePermissionsHelper.photosPermission { granted in
+                if granted {
+                    self.collectionView.reloadData()
+                } else {
+                    DevicePermissionsHelper.alertPhotosPermission()
+                }
+            }
+        } else if cell is AddToChatCameraCollectionCell {
+            DevicePermissionsHelper.videoPermission { videoPermissionGranted in
+                if videoPermissionGranted {
+                    DevicePermissionsHelper.photosPermission { photosPermissionGranted in
+                        if photosPermissionGranted {
+                            self.delegate?.showCamera()
+                        } else {
+                            DevicePermissionsHelper.alertPhotosPermission()
+                        }
+                    }
+                } else {
+                    DevicePermissionsHelper.alertVideoPermission(completionHandler: nil)
+                }
             }
         }
     }
