@@ -154,4 +154,35 @@
     return 0;
 }
 
+#pragma mark - Utils
+
+- (BOOL)mnz_existsOfflineFiles {
+    NSError *error;
+    NSArray *directoryContent = [self contentsOfDirectoryAtPath:NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject error:&error];
+    if (error) {
+        MEGALogError(@"Contents of directory at path failed with error: %@", error);
+    }
+    
+    BOOL isInboxDirectory = NO;
+    for (NSString *directoryElement in directoryContent) {
+        if ([directoryElement isEqualToString:@"Inbox"]) {
+            NSString *inboxPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"/Inbox"];
+            [self fileExistsAtPath:inboxPath isDirectory:&isInboxDirectory];
+            break;
+        }
+    }
+    
+    if (directoryContent.count == 0 || (directoryContent.count == 1 && isInboxDirectory)) {
+        return NO;
+    } else {
+        for (int i = 0; i < directoryContent.count; i++) {
+            NSString *fileName = [NSString stringWithFormat:@"%@", [directoryContent objectAtIndex:i]];
+            if (![fileName.lowercaseString.pathExtension isEqualToString:@"mega"]) {
+                return YES;
+            }
+        }
+        return NO;
+    }
+}
+
 @end

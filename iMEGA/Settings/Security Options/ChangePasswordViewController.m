@@ -614,7 +614,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
             if (self.changeType == ChangeTypePassword) {
                 [self.navigationController popViewControllerAnimated:YES];
             } else if (self.changeType == ChangeTypePasswordFromLogout) {
-                [Helper logoutAfterPasswordReminder];
+                [MEGASdkManager.sharedMEGASdk logout];
             }
             
             break;
