@@ -23,7 +23,7 @@
                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zxd-pW-fVV">
                         <rect key="frame" x="0.0" y="0.0" width="100" height="110"/>
                         <subviews>
-                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iGN-Ue-ibQ">
+                            <visualEffectView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iGN-Ue-ibQ">
                                 <rect key="frame" x="0.0" y="0.0" width="100" height="110"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="lcA-M2-mrT">
                                     <rect key="frame" x="0.0" y="0.0" width="100" height="110"/>
@@ -33,7 +33,7 @@
                             </visualEffectView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8HN-gE-OpX">
                                 <rect key="frame" x="0.0" y="0.0" width="100" height="110"/>
-                                <color key="backgroundColor" red="0.0" green="0.6588235294117647" blue="0.52549019607843139" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.0" green="0.6588235294117647" blue="0.52549019607843139" alpha="0.54136344178082196" colorSpace="custom" customColorSpace="calibratedRGB"/>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="kki-sX-XOQ">
                                 <rect key="frame" x="35" y="33.5" width="30" height="43.5"/>
@@ -84,6 +84,7 @@
                 </userDefinedRuntimeAttribute>
             </userDefinedRuntimeAttributes>
             <connections>
+                <outlet property="blurView" destination="iGN-Ue-ibQ" id="wBV-bA-S7h"/>
                 <outlet property="imageView" destination="B63-Dg-j5n" id="5ky-1m-9qR"/>
                 <outlet property="selectedImageView" destination="oIE-uq-0xX" id="WoL-ih-gav"/>
                 <outlet property="selectedLabel" destination="eqx-Ww-k93" id="bjP-OY-Jry"/>
