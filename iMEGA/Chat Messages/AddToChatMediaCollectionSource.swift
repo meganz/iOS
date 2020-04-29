@@ -104,7 +104,9 @@ extension AddToChatMediaCollectionSource: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
         
-        if let imageCell = collectionView.cellForItem(at: indexPath) as? AddToChatImageCell {
+        let cell = collectionView.cellForItem(at: indexPath)
+        
+        if let imageCell = cell as? AddToChatImageCell {
             
             guard imageCell.cellType != .more else {
                 delegate?.moreButtonTapped()
@@ -126,6 +128,11 @@ extension AddToChatMediaCollectionSource: UICollectionViewDelegate {
                 
                 self.lastSelectedIndexPath = indexPath
                 imageCell.toggleSelection()
+            }
+        } else if cell is AddToChatAllowAccessCollectionCell,
+            DevicePermissionsHelper.shouldAskForPhotosPermissions() {
+            DevicePermissionsHelper.photosPermission { success in
+                self.collectionView.reloadData()
             }
         }
     }
