@@ -17,6 +17,7 @@
 #import "Helper.h"
 #import "MEGASdk+MNZCategory.h"
 #import "NSFileManager+MNZCategory.h"
+#import "NSDate+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIAlertAction+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
