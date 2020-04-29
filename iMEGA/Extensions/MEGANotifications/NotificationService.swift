@@ -4,6 +4,7 @@ import UserNotifications
 class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationDelegate {
     private static var session: String?
     private static var isLogging = false
+    private static let genericBody = NSLocalizedString("You may have new messages", comment: "Content of the notification when there is unknown activity on the Chat")
 
     private var contentHandler: ((UNNotificationContent) -> Void)?
     private var bestAttemptContent: UNMutableNotificationContent?
@@ -15,6 +16,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         self.contentHandler = contentHandler
         bestAttemptContent = (request.content.mutableCopy() as? UNMutableNotificationContent)
         
+        removePreviousGenericNotifications()
         if NotificationService.session == nil {
             NotificationService.initExtensionProcess()
             if NotificationService.session == nil {
@@ -146,7 +148,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         
         if let errorString = error {
             MEGALogError(errorString)
-            bestAttemptContent.body = NSLocalizedString("You may have new messages", comment: "Content of the notification when there is unknown activity on the Chat")
+            bestAttemptContent.body = NotificationService.genericBody
             bestAttemptContent.sound = nil
         } else {
             if let msgId = msgId, let chatId = chatId {
@@ -159,6 +161,27 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         // Note: As soon as we call the contentHandler, no content can be retrieved from notification center.
         bestAttemptContent.badge = MEGASdkManager.sharedMEGAChatSdk()?.unreadChats as NSNumber?
         contentHandler(bestAttemptContent)
+    }
+    
+    private func removePreviousGenericNotifications() {
+        UNUserNotificationCenter.current().getPendingNotificationRequests { (requests) in
+            var identifiers = [String]()
+            for request in requests {
+                if request.content.body == NotificationService.genericBody {
+                    identifiers.append(request.identifier)
+                }
+            }
+            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: identifiers)
+        }
+        UNUserNotificationCenter.current().getDeliveredNotifications { (notifications) in
+            var identifiers = [String]()
+            for notification in notifications {
+                if notification.request.content.body == NotificationService.genericBody {
+                    identifiers.append(notification.request.identifier)
+                }
+            }
+            UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: identifiers)
+        }
     }
     
     private func path(for node: MEGANode, in sharedSandboxCacheDirectory: String) -> String? {
