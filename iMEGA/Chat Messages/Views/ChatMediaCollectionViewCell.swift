@@ -99,6 +99,8 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
             }
         }
     }
+    
+    
 }
 
 open class ChatMediaCollectionViewSizeCalculator: MessageSizeCalculator {
