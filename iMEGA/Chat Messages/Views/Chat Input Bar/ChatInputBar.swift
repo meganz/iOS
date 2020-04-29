@@ -67,6 +67,16 @@ class ChatInputBar: UIView {
         messageInputBar.dismissKeyboard()
     }
     
+    //MARK: - Interface methods.
+    
+    func set(text: String) {
+        guard messageInputBar.superview != nil else {
+            fatalError("message input bar was not the shown to the user")
+        }
+        
+        messageInputBar.set(text: text)
+    }
+    
     // MARK: - Private methods.
     
     private func addMessageInputBar() {

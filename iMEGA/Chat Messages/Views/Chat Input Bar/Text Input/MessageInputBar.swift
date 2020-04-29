@@ -105,6 +105,11 @@ class MessageInputBar: UIView {
         messageTextView.resignFirstResponder()
     }
     
+    func set(text: String) {
+        messageTextView.text = text
+        messageTextView.becomeFirstResponder()
+    }
+    
     // MARK: - Actions
     
     @IBAction func exapandCollapseButtonTapped(_ button: UIButton) {
