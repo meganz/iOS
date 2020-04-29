@@ -244,4 +244,8 @@ extension ChatViewController: AddToChatViewControllerDelegate {
     func loadPhotosView() {
         print("Load photos view")
     }
+    
+    func showCamera() {
+        print("show camera")
+    }
 }
