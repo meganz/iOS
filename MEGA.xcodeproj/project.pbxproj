@@ -5440,17 +5440,8 @@
 				BF7EBD2D244E916F0015255F /* AddToChatViewController.xib */,
 				BF6DF365245797CC00D612D0 /* AddToChatViewAnimator.swift */,
 				BF7EBD3E24526A140015255F /* AddToChatMediaCollectionSource.swift */,
-				BF7EBD32244FA92B0015255F /* AddToChatCameraCollectionCell.swift */,
-				BF7EBD33244FA92B0015255F /* AddToChatCameraCollectionCell.xib */,
-				BF6DF3692457A06300D612D0 /* AddToChatImageCell.swift */,
-				BF6DF36A2457A06300D612D0 /* AddToChatImageCell.xib */,
 				BF7EBD48245293530015255F /* AddToChatMenuViewController.swift */,
 				BF7EBD49245293530015255F /* AddToChatMenuViewController.xib */,
-				BF7EBD44245277EB0015255F /* AddToChatMenuItemsView.swift */,
-				BF7EBD45245277EB0015255F /* AddToChatMenuItemsView.xib */,
-				BF7EBD4C2452ABE20015255F /* AddToChatMenuView.swift */,
-				BF7EBD502452B0A00015255F /* AddToChatMenu.swift */,
-				BF7EBD4E2452AF460015255F /* AddToChatMenus.plist */,
 			);
 			path = "Chat Messages";
 			sourceTree = "<group>";
@@ -5516,6 +5507,15 @@
 				BFB463FA243456D900FB90B9 /* ChatViewIntroductionHeaderView.xib */,
 				BF06E3DD243191B000B30FB7 /* ChatTitleView.swift */,
 				BF06E3DC243191B000B30FB7 /* ChatTitleView.xib */,
+				BF7EBD44245277EB0015255F /* AddToChatMenuItemsView.swift */,
+				BF7EBD45245277EB0015255F /* AddToChatMenuItemsView.xib */,
+				BF7EBD4C2452ABE20015255F /* AddToChatMenuView.swift */,
+				BF7EBD502452B0A00015255F /* AddToChatMenu.swift */,
+				BF7EBD4E2452AF460015255F /* AddToChatMenus.plist */,
+				BF7EBD32244FA92B0015255F /* AddToChatCameraCollectionCell.swift */,
+				BF7EBD33244FA92B0015255F /* AddToChatCameraCollectionCell.xib */,
+				BF6DF3692457A06300D612D0 /* AddToChatImageCell.swift */,
+				BF6DF36A2457A06300D612D0 /* AddToChatImageCell.xib */,
 				BF7EBD29244E8D120015255F /* Chat Input Bar */,
 			);
 			path = Views;

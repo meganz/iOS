@@ -54,6 +54,11 @@ extension AddToChatMediaCollectionSource: UICollectionViewDataSource {
             if lastSelectedIndexPath == indexPath {
                 cell.selectedView.isHidden = false
             }
+            
+            if indexPath.item == (collectionView.numberOfItems(inSection: 0) - 1) {
+                cell.cellType = .more
+            }
+            
             return cell
         }
     }
@@ -79,6 +84,11 @@ extension AddToChatMediaCollectionSource: UICollectionViewDelegate {
         collectionView.deselectItem(at: indexPath, animated: true)
         
         if let imageCell = collectionView.cellForItem(at: indexPath) as? AddToChatImageCell {
+            
+            guard imageCell.cellType != .more else {
+                delegate?.moreButtonTapped()
+                return
+            }
 
             if lastSelectedIndexPath == indexPath {
                 guard let delegate = delegate,

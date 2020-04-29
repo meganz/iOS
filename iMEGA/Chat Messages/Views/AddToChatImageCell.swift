@@ -3,9 +3,36 @@ import UIKit
 
 class AddToChatImageCell: UICollectionViewCell {
     
+    enum CellType {
+        case media
+        case more
+    }
+    
     @IBOutlet weak var imageView: UIImageView!
+    
     @IBOutlet weak var selectedView: UIView!
+    @IBOutlet weak var selectionBackgroundView: UIView!
+    @IBOutlet weak var selectedImageView: UIImageView!
+    @IBOutlet weak var selectedLabel: UILabel!
+
+    
     private var imageRequestID: PHImageRequestID?
+    
+    var cellType: CellType = .media {
+        didSet {
+            if cellType == .media {
+                selectedLabel.text = AMLocalizedString("Send")
+                let sendImage = UIImage(named: "sendChatDisabled")?.withRenderingMode(.alwaysTemplate)
+                selectedImageView.image = sendImage
+            } else {
+                selectedLabel.text = AMLocalizedString("more")
+                let moreImage = UIImage(named: "moreSelected")?.withRenderingMode(.alwaysTemplate)
+                selectedImageView.image = moreImage
+                selectionBackgroundView.isHidden = true
+                selectedView.isHidden = false
+            }
+        }
+    }
     
     var asset: PHAsset! {
         didSet {
@@ -31,10 +58,16 @@ class AddToChatImageCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         selectedView.isHidden = true
+        selectionBackgroundView.isHidden = false
         
         if let imageRequestID = imageRequestID {
             PHImageManager.default().cancelImageRequest(imageRequestID)
         }
+    }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        cellType = .media
     }
     
     func toggleSelection() {

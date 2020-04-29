@@ -18,5 +18,4 @@ class AddToChatMenuViewController: UIViewController {
         menuView.autoPinEdgesToSuperviewEdges()
     }
 
-
 }
