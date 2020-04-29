@@ -371,6 +371,16 @@ extension ProfileViewController: UITableViewDataSource {
                 }
             }
             return planFooterString
+        case .session:
+            if FileManager.default.mnz_existsOfflineFiles() && MEGASdkManager.sharedMEGASdk().transfers.size != 0 {
+                return AMLocalizedString("When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled.", "Warning message to alert user about logout in My Account section if has offline files and transfers in progress.")
+            } else if FileManager.default.mnz_existsOfflineFiles() {
+                return AMLocalizedString("When you logout, files from your Offline section will be deleted from your device.", "Warning message to alert user about logout in My Account section if has offline files.")
+            } else if MEGASdkManager.sharedMEGASdk().transfers.size != 0 {
+                return AMLocalizedString("When you logout, ongoing transfers will be cancelled.", "Warning message to alert user about logout in My Account section if has transfers in progress.")
+            } else {
+                return nil
+            }
         default:
             return nil
         }
