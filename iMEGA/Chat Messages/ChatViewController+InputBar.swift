@@ -239,6 +239,9 @@ extension ChatViewController: AddToChatViewControllerDelegate {
                 processAsset?.prepare()
             }
         }
-
+    }
+    
+    func loadPhotosView() {
+        print("Load photos view")
     }
 }
