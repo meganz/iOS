@@ -27,6 +27,7 @@
 #import "NSURL+MNZCategory.h"
 
 #import "MEGAAssetsPickerController.h"
+#import "SendToViewController.h"
 #import "MEGAChatGenericRequestDelegate.h"
 #import "MEGAContactLinkCreateRequestDelegate.h"
 #import "MEGAGetPreviewRequestDelegate.h"
