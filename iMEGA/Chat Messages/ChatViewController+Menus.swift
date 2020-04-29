@@ -66,5 +66,6 @@ extension ChatViewController {
     
     func editMessage(_ message: MEGAChatMessage) {
         editMessage = message
+        chatInputBar.set(text: editMessage!.content)
     }
 }
