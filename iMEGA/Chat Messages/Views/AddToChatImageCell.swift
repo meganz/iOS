@@ -12,6 +12,8 @@ class AddToChatImageCell: UICollectionViewCell {
     
     @IBOutlet weak var selectedView: UIView!
     @IBOutlet weak var selectionBackgroundView: UIView!
+    @IBOutlet weak var blurView: UIVisualEffectView!
+
     @IBOutlet weak var selectedImageView: UIImageView!
     @IBOutlet weak var selectedLabel: UILabel!
 
@@ -30,6 +32,7 @@ class AddToChatImageCell: UICollectionViewCell {
                 selectedImageView.image = moreImage
                 selectionBackgroundView.isHidden = true
                 selectedView.isHidden = false
+                blurView.isHidden = false
             }
         }
     }
@@ -59,6 +62,7 @@ class AddToChatImageCell: UICollectionViewCell {
         super.prepareForReuse()
         selectedView.isHidden = true
         selectionBackgroundView.isHidden = false
+        blurView.isHidden = true
         
         if let imageRequestID = imageRequestID {
             PHImageManager.default().cancelImageRequest(imageRequestID)
