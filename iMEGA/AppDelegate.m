@@ -285,8 +285,9 @@
     MEGALogDebug(@"[App Lifecycle] Application did finish launching with options %@", launchOptions);
     
     [self.window makeKeyAndVisible];
-    if (application.applicationState == UIApplicationStateActive) {
+    if (application.applicationState != UIApplicationStateBackground) {
         UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+        [center removeAllPendingNotificationRequests];
         [center removeAllDeliveredNotifications];
     }
     
@@ -361,6 +362,7 @@
     [self application:application shouldHideWindows:NO];
     
     UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+    [center removeAllPendingNotificationRequests];
     [center removeAllDeliveredNotifications];
 }
 
