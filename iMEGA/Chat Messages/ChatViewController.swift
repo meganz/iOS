@@ -14,6 +14,7 @@ class ChatViewController: MessagesViewController {
     @objc var publicChatLink: URL?
     @objc var publicChatWithLinkCreated: Bool = false
     var chatInputBar: ChatInputBar!
+    var editMessage: MEGAChatMessage?
     var addToChatViewController: AddToChatViewController!
     // TODO: The `displayedAddToChatViewController` is required if `AddToChatViewController` added as a content view and not presented.
 //    var displayedAddToChatViewController = false
@@ -71,7 +72,7 @@ class ChatViewController: MessagesViewController {
         configureMessageCollectionView()
         update()
         
-        
+        messagesCollectionView.allowsMultipleSelection = true
         configureMenus()
         
     }
@@ -139,20 +140,97 @@ class ChatViewController: MessagesViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-//        if action == NSSelectorFromString("delete:") {
-            return true
-//        }
-        return super.collectionView(collectionView, canPerformAction: action, forItemAt: indexPath, withSender: sender)
+
+        guard let messagesDataSource = messagesCollectionView.messagesDataSource else {
+            fatalError("Ouch. nil data source for messages")
+        }
+        
+        let chatMessage = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView) as! ChatMessage
+        let message = chatMessage.message
+        if MEGASdkManager.sharedMEGAChatSdk()?.initState() == .anonymous
+        && action != NSSelectorFromString("copy:") {
+            return false
+        }
+        
+        switch chatMessage.message.type {
+        case .invalid, .revokeAttachment:
+            return false
+        case .normal:
+            //All messages
+            if action == NSSelectorFromString("copy:")
+            || action == NSSelectorFromString("forward:") {
+                return true
+            }
+            
+            //Your messages
+            if isFromCurrentSender(message: chatMessage) {
+                if action == NSSelectorFromString("delete:") {
+                    if message.isDeletable {
+                        if editMessage != nil
+                        || editMessage?.messageId != message.messageId {
+                            return true
+                        }
+                    }
+                }
+                
+                if action == NSSelectorFromString("edit:") {
+                    return message.isEditable
+                }
+            }
+        default:
+            return false
+
+        }
+        return false
     }
     
     override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
-
-        if action == NSSelectorFromString("delete:") {
-            // 1.) Remove from datasource
-            // insert your code here
+        
+        guard let messagesDataSource = messagesCollectionView.messagesDataSource else {
+            fatalError("Ouch. nil data source for messages")
+        }
+        
+        let chatMessage = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView) as! ChatMessage
+        let message = chatMessage.message
+        
+        if action == NSSelectorFromString("copy:") {
             
-            // 2.) Delete sections
-            collectionView.deleteSections([indexPath.section])
+            return
+        }
+        
+        if action == NSSelectorFromString("edit:") {
+            
+            return
+        }
+        
+        if action == NSSelectorFromString("forward:") {
+            forwardMessage(message)
+            return
+        }
+        
+        if action == NSSelectorFromString("import:") {
+
+            return
+        }
+        
+        if action == NSSelectorFromString("download:") {
+
+            return
+        }
+        
+        if action == NSSelectorFromString("addContact:") {
+
+            return
+        }
+        
+        if action == NSSelectorFromString("removeRichPreview:") {
+
+            return
+        }
+        
+        if action == NSSelectorFromString("delete:") {
+    
+            return
         } else {
             super.collectionView(collectionView, performAction: action, forItemAt: indexPath, withSender: sender)
         }
@@ -166,7 +244,6 @@ class ChatViewController: MessagesViewController {
         }
         
         let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
-        selectedIndexPathForMenu = indexPath
 
         switch message.kind {
         case .custom:
@@ -174,8 +251,10 @@ class ChatViewController: MessagesViewController {
             if megaMessage.isManagementMessage {
                 return false
             }
+            selectedIndexPathForMenu = indexPath
             return true
         default:
+            selectedIndexPathForMenu = indexPath
             return true
         }
     }
@@ -331,9 +410,17 @@ class ChatViewController: MessagesViewController {
     }
     
     private func configureMenus() {
-        let editMenuItem = UIMenuItem(title: "123", action: #selector(forwardMessage))
+        let forwardMenuItem = UIMenuItem(title:AMLocalizedString("forward","Item of a menu to forward a message chat to another chatroom"), action: #selector(MessageCollectionViewCell.forward(_:)))
         
-        UIMenuController.shared.menuItems = [editMenuItem]
+        let importMenuItem = UIMenuItem(title:AMLocalizedString("import","Caption of a button to edit the files that are selected"), action: #selector(MessageCollectionViewCell.importMessage(_:)))
+        
+        
+        
+        
+        
+        
+        
+        UIMenuController.shared.menuItems = [forwardMenuItem, importMenuItem]
     }
 
     private func registerCustomCells() {
@@ -376,14 +463,6 @@ class ChatViewController: MessagesViewController {
                 MEGASdkManager.sharedMEGAChatSdk()?.setMessageSeenForChat(chatRoom.chatId, messageId: lastMessage!.message.messageId)
             }
         }
-    }
-    
-    @objc func forwardMessage(_ sender: Any?) {
-        
-    }
-    
-    @objc func deleteMessage(_ sender: Any?) {
-          
     }
     
     @objc func loadMoreMessages() {
