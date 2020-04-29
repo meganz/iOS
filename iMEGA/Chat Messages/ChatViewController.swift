@@ -139,10 +139,32 @@ class ChatViewController: MessagesViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-//        if action == NSSelectorFromString("delete:") {
-            return true
-//        }
-        return super.collectionView(collectionView, canPerformAction: action, forItemAt: indexPath, withSender: sender)
+
+        guard let messagesDataSource = messagesCollectionView.messagesDataSource else {
+            fatalError("Ouch. nil data source for messages")
+        }
+        
+        let chatMessage = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView) as! ChatMessage
+
+        if MEGASdkManager.sharedMEGAChatSdk()?.initState() == .anonymous
+        && action != NSSelectorFromString("copy:") {
+            return false
+        }
+        
+        switch chatMessage.message.type {
+        case .invalid, .revokeAttachment:
+            return false
+        case .normal:
+            //All messages
+            if action == NSSelectorFromString("copy:")
+            || action == NSSelectorFromString("forward:") {
+                return true
+            }
+        default:
+            return false
+
+        }
+        return false
     }
     
     override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
@@ -331,9 +353,17 @@ class ChatViewController: MessagesViewController {
     }
     
     private func configureMenus() {
-        let editMenuItem = UIMenuItem(title: "123", action: #selector(forwardMessage))
+        let forwardMenuItem = UIMenuItem(title:AMLocalizedString("forward","Item of a menu to forward a message chat to another chatroom"), action: #selector(MessageCollectionViewCell.forward(_:)))
         
-        UIMenuController.shared.menuItems = [editMenuItem]
+        let importMenuItem = UIMenuItem(title:AMLocalizedString("import","Caption of a button to edit the files that are selected"), action: #selector(MessageCollectionViewCell.importMessage(_:)))
+        
+        
+        
+        
+        
+        
+        
+        UIMenuController.shared.menuItems = [forwardMenuItem, importMenuItem]
     }
 
     private func registerCustomCells() {
