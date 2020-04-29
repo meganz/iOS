@@ -18,6 +18,7 @@
 		2F147788244D2DF30069B264 /* GeoLocationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F147787244D2DF30069B264 /* GeoLocationView.xib */; };
 		2F14778A244D2E2A0069B264 /* GeoLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F147789244D2E2A0069B264 /* GeoLocationView.swift */; };
 		2F18DEE92458EDC500E7EE27 /* MessageCollectionViewCell+menus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F18DEE82458EDC500E7EE27 /* MessageCollectionViewCell+menus.swift */; };
+		2F18DEEF24592F0E00E7EE27 /* ChatViewController+Menus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F18DEEE24592F0E00E7EE27 /* ChatViewController+Menus.swift */; };
 		2F2801D32447C8FD00C160D0 /* ChatRichPreviewMediaCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2801D22447C8FD00C160D0 /* ChatRichPreviewMediaCollectionViewCell.swift */; };
 		2F2801D924481EFD00C160D0 /* RichPreviewContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2801D824481EFD00C160D0 /* RichPreviewContentView.swift */; };
 		2F2801DD24481F3A00C160D0 /* RichPreviewContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F2801DC24481F3A00C160D0 /* RichPreviewContentView.xib */; };
@@ -1268,6 +1269,7 @@
 		2F147787244D2DF30069B264 /* GeoLocationView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GeoLocationView.xib; sourceTree = "<group>"; };
 		2F147789244D2E2A0069B264 /* GeoLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoLocationView.swift; sourceTree = "<group>"; };
 		2F18DEE82458EDC500E7EE27 /* MessageCollectionViewCell+menus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageCollectionViewCell+menus.swift"; sourceTree = "<group>"; };
+		2F18DEEE24592F0E00E7EE27 /* ChatViewController+Menus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatViewController+Menus.swift"; sourceTree = "<group>"; };
 		2F28019C24455A4900C160D0 /* Karere.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Karere.xcodeproj; path = "Vendor/Karere/bindings/Objective-C/Karere.xcodeproj"; sourceTree = "<group>"; };
 		2F2801A324455A4900C160D0 /* MEGASDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MEGASDK.xcodeproj; path = Vendor/SDK/bindings/ios/MEGASDK.xcodeproj; sourceTree = "<group>"; };
 		2F2801D22447C8FD00C160D0 /* ChatRichPreviewMediaCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRichPreviewMediaCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -5437,6 +5439,7 @@
 				BFB463DC2432F2E900FB90B9 /* ChatRoomDelegate.swift */,
 				BF1589212435F3E7007AF9EC /* ChatViewMessagesFlowLayout.swift */,
 				BFE6DBFB242DBA4A00E2E5B4 /* ChatViewController.swift */,
+				2F18DEEE24592F0E00E7EE27 /* ChatViewController+Menus.swift */,
 				BFB464152435825A00FB90B9 /* ChatViewController+MessagesDataSource.swift */,
 				BFB464132435823400FB90B9 /* ChatViewController+MessagesDisplayDelegate.swift */,
 				BFB464112435820700FB90B9 /* ChatViewController+MessageLayoutDelegate.swift */,
@@ -6711,6 +6714,7 @@
 				B6D11AD8219BAE6D00446B86 /* MOAssetUploadFileNameRecord+CoreDataProperties.m in Sources */,
 				A802B2011FAB2EA500AC8BB0 /* MEGAChatAnswerCallRequestDelegate.m in Sources */,
 				774FA6612090C0030061DD85 /* MEGAMessageDialogView.m in Sources */,
+				2F18DEEF24592F0E00E7EE27 /* ChatViewController+Menus.swift in Sources */,
 				5B2E91921F1F98F4003C6920 /* MEGACopyRequestDelegate.m in Sources */,
 				77F1DBE52056B767005D5F0E /* MEGASetAttrUserRequestDelegate.m in Sources */,
 				41EC68461D76DA93003EC803 /* UIBarButtonItem+Badge.m in Sources */,
