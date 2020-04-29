@@ -36,11 +36,35 @@ extension ChatViewController {
                     }
                     
                 })
+                
+                showSuccess = chatIdNumbers?.count ?? 0 > 1;
+            } else if chatIdNumbers?.count == 1 && self.chatRoom.isPreview {
+                let chatId = chatIdNumbers?.first!.uint64Value
+                let chatRoom = MEGASdkManager.sharedMEGAChatSdk()?.chatRoom(forChatId: chatId!)
+                let messagesVC = ChatViewController()
+                messagesVC.chatRoom = chatRoom
+                
+                let chatNC = self.parent as! UINavigationController
+                chatNC.pushViewController(messagesVC, animated: true)
+                var viewControllers = chatNC.viewControllers
+                viewControllers.remove(at: viewControllers.count - 2)
+                chatNC.viewControllers = viewControllers
+            } else {
+                showSuccess = true
             }
             
+            
+            
+            if showSuccess {
+                SVProgressHUD.showSuccess(withStatus: AMLocalizedString("messagesSent", "Success message shown after forwarding messages to other chats"))
+            }
         }
         
         present(sendToNC, animated: true, completion: nil)
     }
     
+    
+    func editMessage(_ message: MEGAChatMessage) {
+        editMessage = message
+    }
 }
