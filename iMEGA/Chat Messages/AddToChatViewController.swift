@@ -3,6 +3,7 @@ import UIKit
 
 protocol AddToChatViewControllerDelegate: class {
     func send(asset: PHAsset)
+    func loadPhotosView()
 }
 
 class AddToChatViewController: UIViewController {
@@ -148,7 +149,8 @@ extension AddToChatViewController: UIPageViewControllerDataSource, UIPageViewCon
 
 extension AddToChatViewController: AddToChatMediaCollectionSourceDelegate {
     func moreButtonTapped() {
-        
+        dismiss(animated: true, completion: nil)
+        delegate?.loadPhotosView()
     }
     
     func sendAsset(asset: PHAsset) {

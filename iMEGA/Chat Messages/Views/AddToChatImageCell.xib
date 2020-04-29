@@ -23,6 +23,18 @@
                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zxd-pW-fVV">
                         <rect key="frame" x="0.0" y="0.0" width="100" height="110"/>
                         <subviews>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iGN-Ue-ibQ">
+                                <rect key="frame" x="0.0" y="0.0" width="100" height="110"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="lcA-M2-mrT">
+                                    <rect key="frame" x="0.0" y="0.0" width="100" height="110"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                                <blurEffect style="regular"/>
+                            </visualEffectView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8HN-gE-OpX">
+                                <rect key="frame" x="0.0" y="0.0" width="100" height="110"/>
+                                <color key="backgroundColor" red="0.0" green="0.6588235294117647" blue="0.52549019607843139" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="kki-sX-XOQ">
                                 <rect key="frame" x="35" y="33.5" width="30" height="43.5"/>
                                 <subviews>
@@ -39,10 +51,18 @@
                                 </subviews>
                             </stackView>
                         </subviews>
-                        <color key="backgroundColor" red="0.0" green="0.6588235294117647" blue="0.52549019607843139" alpha="0.53978488869863017" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="iGN-Ue-ibQ" firstAttribute="leading" secondItem="zxd-pW-fVV" secondAttribute="leading" id="3j4-05-jyJ"/>
+                            <constraint firstItem="8HN-gE-OpX" firstAttribute="leading" secondItem="zxd-pW-fVV" secondAttribute="leading" id="45h-Fr-k8w"/>
+                            <constraint firstAttribute="bottom" secondItem="iGN-Ue-ibQ" secondAttribute="bottom" id="6ag-1r-S3q"/>
+                            <constraint firstAttribute="trailing" secondItem="iGN-Ue-ibQ" secondAttribute="trailing" id="Jh7-ga-zfP"/>
                             <constraint firstItem="kki-sX-XOQ" firstAttribute="centerX" secondItem="zxd-pW-fVV" secondAttribute="centerX" id="Kzy-ft-Uyo"/>
+                            <constraint firstAttribute="trailing" secondItem="8HN-gE-OpX" secondAttribute="trailing" id="MHx-tK-t3K"/>
+                            <constraint firstItem="iGN-Ue-ibQ" firstAttribute="top" secondItem="zxd-pW-fVV" secondAttribute="top" id="nge-4k-Mtg"/>
                             <constraint firstItem="kki-sX-XOQ" firstAttribute="centerY" secondItem="zxd-pW-fVV" secondAttribute="centerY" id="rfP-NA-vpt"/>
+                            <constraint firstAttribute="bottom" secondItem="8HN-gE-OpX" secondAttribute="bottom" id="zf2-b4-oYd"/>
+                            <constraint firstItem="8HN-gE-OpX" firstAttribute="top" secondItem="zxd-pW-fVV" secondAttribute="top" id="zv0-yv-8VR"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -65,7 +85,10 @@
             </userDefinedRuntimeAttributes>
             <connections>
                 <outlet property="imageView" destination="B63-Dg-j5n" id="5ky-1m-9qR"/>
+                <outlet property="selectedImageView" destination="oIE-uq-0xX" id="WoL-ih-gav"/>
+                <outlet property="selectedLabel" destination="eqx-Ww-k93" id="bjP-OY-Jry"/>
                 <outlet property="selectedView" destination="zxd-pW-fVV" id="30o-TQ-1YU"/>
+                <outlet property="selectionBackgroundView" destination="8HN-gE-OpX" id="Y4q-qW-dKz"/>
             </connections>
             <point key="canvasLocation" x="137.68115942028987" y="152.67857142857142"/>
         </collectionViewCell>
