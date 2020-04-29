@@ -10,6 +10,14 @@ class AddToChatMediaCollectionSource: NSObject {
     private let maxNumberOfAssetsFetched = 16
     private var lastSelectedIndexPath:IndexPath?
     private weak var delegate: AddToChatMediaCollectionSourceDelegate?
+    
+    private let minimumLineSpacing: CGFloat = 5.0
+    private let cellDefaultWidth: CGFloat = 100.0
+
+    
+    private var hasAuthorizedAccessToPhotoAlbum: Bool {
+        return PHPhotoLibrary.authorizationStatus() == .authorized
+    }
 
     private lazy var fetchResult: PHFetchResult<PHAsset> = {
         let fetchOptions = PHFetchOptions()
@@ -28,6 +36,8 @@ class AddToChatMediaCollectionSource: NSObject {
                                    forCellWithReuseIdentifier: AddToChatCameraCollectionCell.reuseIdentifier)
         collectionView.register(AddToChatImageCell.nib,
                                 forCellWithReuseIdentifier: AddToChatImageCell.reuseIdentifier)
+        collectionView.register(AddToChatAllowAccessCollectionCell.nib,
+                                forCellWithReuseIdentifier: AddToChatAllowAccessCollectionCell.reuseIdentifier)
         collectionView.dataSource = self
         collectionView.delegate = self
     }
@@ -35,8 +45,12 @@ class AddToChatMediaCollectionSource: NSObject {
 
 extension AddToChatMediaCollectionSource: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let assetCounts = (fetchResult.count > maxNumberOfAssetsFetched) ? maxNumberOfAssetsFetched : fetchResult.count
-        return 1 + assetCounts
+        if hasAuthorizedAccessToPhotoAlbum {
+            let assetCounts = (fetchResult.count > maxNumberOfAssetsFetched) ? maxNumberOfAssetsFetched : fetchResult.count
+            return 1 + assetCounts
+        }
+        
+        return 2
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -48,18 +62,25 @@ extension AddToChatMediaCollectionSource: UICollectionViewDataSource {
             return cell
             
         default:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AddToChatImageCell.reuseIdentifier,
-                                                          for: indexPath) as! AddToChatImageCell
-            cell.asset = fetchResult.object(at: indexPath.item-1)
-            if lastSelectedIndexPath == indexPath {
-                cell.selectedView.isHidden = false
+            if hasAuthorizedAccessToPhotoAlbum {
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AddToChatImageCell.reuseIdentifier,
+                                                              for: indexPath) as! AddToChatImageCell
+                cell.asset = fetchResult.object(at: indexPath.item-1)
+                if lastSelectedIndexPath == indexPath {
+                    cell.selectedView.isHidden = false
+                }
+                
+                if indexPath.item == (collectionView.numberOfItems(inSection: 0) - 1) {
+                    cell.cellType = .more
+                }
+                
+                return cell
+            } else {
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AddToChatAllowAccessCollectionCell.reuseIdentifier,
+                                                              for: indexPath) as! AddToChatAllowAccessCollectionCell
+                
+                return cell
             }
-            
-            if indexPath.item == (collectionView.numberOfItems(inSection: 0) - 1) {
-                cell.cellType = .more
-            }
-            
-            return cell
         }
     }
 }
@@ -107,5 +128,24 @@ extension AddToChatMediaCollectionSource: UICollectionViewDelegate {
                 imageCell.toggleSelection()
             }
         }
+    }
+}
+
+extension AddToChatMediaCollectionSource: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+        if indexPath.item == 1 && !hasAuthorizedAccessToPhotoAlbum {
+            return CGSize(width: collectionView.bounds.width - (cellDefaultWidth + minimumLineSpacing),
+                          height: 110)
+        }
+        
+        return CGSize(width: cellDefaultWidth, height: collectionView.bounds.height)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout
+        collectionViewLayout: UICollectionViewLayout,
+                        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return minimumLineSpacing
     }
 }

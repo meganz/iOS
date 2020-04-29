@@ -1107,6 +1107,8 @@
 		BF7EBD4D2452ABE20015255F /* AddToChatMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7EBD4C2452ABE20015255F /* AddToChatMenuView.swift */; };
 		BF7EBD4F2452AF460015255F /* AddToChatMenus.plist in Resources */ = {isa = PBXBuildFile; fileRef = BF7EBD4E2452AF460015255F /* AddToChatMenus.plist */; };
 		BF7EBD512452B0A00015255F /* AddToChatMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7EBD502452B0A00015255F /* AddToChatMenu.swift */; };
+		BF9D491C2459047800D7B7DC /* AddToChatAllowAccessCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9D491A2459047800D7B7DC /* AddToChatAllowAccessCollectionCell.swift */; };
+		BF9D491D2459047800D7B7DC /* AddToChatAllowAccessCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF9D491B2459047800D7B7DC /* AddToChatAllowAccessCollectionCell.xib */; };
 		BFB463DD2432F2E900FB90B9 /* ChatRoomDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB463DC2432F2E900FB90B9 /* ChatRoomDelegate.swift */; };
 		BFB463E52433390600FB90B9 /* MEGAUser+Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB463E42433390600FB90B9 /* MEGAUser+Chat.swift */; };
 		BFB463E92433394500FB90B9 /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB463E82433394500FB90B9 /* ChatMessage.swift */; };
@@ -2609,6 +2611,8 @@
 		BF7EBD4C2452ABE20015255F /* AddToChatMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToChatMenuView.swift; sourceTree = "<group>"; };
 		BF7EBD4E2452AF460015255F /* AddToChatMenus.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = AddToChatMenus.plist; sourceTree = "<group>"; };
 		BF7EBD502452B0A00015255F /* AddToChatMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToChatMenu.swift; sourceTree = "<group>"; };
+		BF9D491A2459047800D7B7DC /* AddToChatAllowAccessCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToChatAllowAccessCollectionCell.swift; sourceTree = "<group>"; };
+		BF9D491B2459047800D7B7DC /* AddToChatAllowAccessCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddToChatAllowAccessCollectionCell.xib; sourceTree = "<group>"; };
 		BFB463DC2432F2E900FB90B9 /* ChatRoomDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomDelegate.swift; sourceTree = "<group>"; };
 		BFB463E42433390600FB90B9 /* MEGAUser+Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAUser+Chat.swift"; sourceTree = "<group>"; };
 		BFB463E82433394500FB90B9 /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
@@ -5516,6 +5520,8 @@
 				BF7EBD33244FA92B0015255F /* AddToChatCameraCollectionCell.xib */,
 				BF6DF3692457A06300D612D0 /* AddToChatImageCell.swift */,
 				BF6DF36A2457A06300D612D0 /* AddToChatImageCell.xib */,
+				BF9D491A2459047800D7B7DC /* AddToChatAllowAccessCollectionCell.swift */,
+				BF9D491B2459047800D7B7DC /* AddToChatAllowAccessCollectionCell.xib */,
 				BF7EBD29244E8D120015255F /* Chat Input Bar */,
 			);
 			path = Views;
@@ -5985,6 +5991,7 @@
 				A8F2629A1FA8F7C3000B2768 /* incoming_voice_video_call.mp3 in Resources */,
 				E8D36F791AD677C6006D4D40 /* Transfers.storyboard in Resources */,
 				BF017D942448066100FB4DFD /* AudioWavesView.xib in Resources */,
+				BF9D491D2459047800D7B7DC /* AddToChatAllowAccessCollectionCell.xib in Resources */,
 				A82E5BF41F3470B5003C149C /* Spotlight_file.png in Resources */,
 				832E102B202B0A3900BDD30F /* NodeActionHeaderCollectionReusableView.xib in Resources */,
 				777615B12175D88C00A7796D /* InputView.xib in Resources */,
@@ -6764,6 +6771,7 @@
 				942F4FD81F500A8F001FC4AC /* MEGASdk+MNZCategory.m in Sources */,
 				A86B9F3F2316D6AB00F35E7A /* FLEXNetworkCurlLogger.m in Sources */,
 				83C570EC22E5BFCF00216896 /* PartialFormatter.swift in Sources */,
+				BF9D491C2459047800D7B7DC /* AddToChatAllowAccessCollectionCell.swift in Sources */,
 				E85EB30D1DF58EBA0066AC68 /* VerifyCredentialsViewController.m in Sources */,
 				E8F7917F1BC5754A00C58676 /* MEGAActivityItemProvider.m in Sources */,
 				A8EC55B41F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.m in Sources */,
