@@ -7,6 +7,6 @@
 
 - (instancetype)initToUploadToCloudDriveWithParentNode:(MEGANode *)parentNode;
 
-- (instancetype)initToUploadToChatWithAssetsCompletion:(void (^)(NSArray *assets))assetsCompletion;
+- (instancetype)initToUploadToChatWithAssetsCompletion:(void (^)(NSArray<PHAsset *> *assets))assetsCompletion;
 
 @end

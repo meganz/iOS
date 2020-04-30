@@ -202,7 +202,16 @@ extension ChatViewController: AddToChatViewControllerDelegate {
     }
     
     func loadPhotosView() {
-        print("Load photos view")
+        // TODO: Need to refactor this method.
+        let imagePickerController = MEGAAssetsPickerController { assets in
+            guard let assets = assets else {
+                return
+            }
+            
+            assets.forEach { self.send(asset: $0)}
+        }
+        
+        present(imagePickerController!, animated: true, completion: nil)
     }
     
     func showCamera() {
