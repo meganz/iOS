@@ -68,3 +68,4 @@
 #import "MEGAStartUploadTransferDelegate.h"
 #import "MEGAGetAttrUserRequestDelegate.h"
 #import "MEGAProcessAsset.h"
+#import "MEGAImagePickerController.h"

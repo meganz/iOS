@@ -4,11 +4,6 @@ import MessageKit
 extension ChatViewController {
     
     override var inputAccessoryView: UIView? {
-        // TODO: The `displayedAddToChatViewController` is required if `AddToChatViewController` added as a content view and not presented.
-//        if displayedAddToChatViewController {
-//            return nil
-//        }
-        
         if chatInputBar == nil {
             chatInputBar = ChatInputBar()
             chatInputBar.delegate = self
@@ -27,6 +22,8 @@ extension ChatViewController {
                 tabBarController.tabBar.isHidden = true
             }
             
+            chatInputBar.dismissKeyboard()
+
             let addToChatViewController = AddToChatViewController(nibName: nil, bundle: nil)
             addToChatViewController.delegate = self
             addToChatViewController.transitioningDelegate = self
@@ -36,43 +33,6 @@ extension ChatViewController {
                 }
             }
         }
-        
-        // TODO: The below code can be used if added as a content view. If the view is not added content view we need to remove the logic
-
-//        addToChatViewController = AddToChatViewController(nibName: nil, bundle: nil)
-        
-//        addToChatViewController.tapHandler = {
-//            self.displayedAddToChatViewController = false
-//            self.reloadInputViews()
-//        }
-//
-//        addToChatViewController.dismissHandler = {[weak self] viewController in
-//            // remove the content
-//            viewController.willMove(toParent: nil)
-//            viewController.view.removeFromSuperview()
-//            viewController.removeFromParent()
-//
-//            guard let `self` = self else {
-//                return
-//            }
-//
-//            self.addToChatViewController = nil
-//        }
-//
-//        if let rootViewController = UIApplication.shared.keyWindow?.rootViewController {
-//            // add content view
-//            rootViewController.addChild(addToChatViewController)
-//            rootViewController.view.addSubview(addToChatViewController.view)
-//            addToChatViewController.view.autoPinEdgesToSuperviewEdges()
-//            addToChatViewController.didMove(toParent: rootViewController)
-//
-//            self.displayedAddToChatViewController = true
-//
-//            // remove the accessory view and presenting animation
-//            chatInputBar.dismissKeyboard()
-//            reloadInputViews()
-//            addToChatViewController.presentAnimation()
-//        }
     }
 }
 
@@ -263,6 +223,27 @@ extension ChatViewController: AddToChatViewControllerDelegate {
     }
     
     func showCamera() {
-        print("show camera")
+        let pickerController = MEGAImagePickerController(toShareThroughChatWith: .camera) { (filePath, sourceType, node) in
+            guard let path = filePath,
+                let parentNode = node,
+                (path as NSString).mnz_isImagePathExtension else {
+                return
+            }
+            
+            let transferUploadDelegate: MEGAStartUploadTransferDelegate  = MEGAStartUploadTransferDelegate { _ in
+                // Should show the progress to the user.
+            }
+            
+            let appData = ("" as NSString).mnz_appDataToAttach(toChatID: self.chatRoom.chatId,
+                                                               asVoiceClip: false)
+            
+            MEGASdkManager.sharedMEGASdk()!.startUpload(withLocalPath: path,
+                                                        parent: parentNode,
+                                                        appData: appData,
+                                                        isSourceTemporary: true,
+                                                        delegate: transferUploadDelegate)
+        }
+        
+        present(pickerController!, animated: true, completion: nil)
     }
 }

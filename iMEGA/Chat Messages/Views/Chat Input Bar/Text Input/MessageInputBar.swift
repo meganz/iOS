@@ -302,8 +302,8 @@ class MessageInputBar: UIView {
 
             if self.messageTextView.text.count == 0 {
                 UIView.animate(withDuration: 0.4, animations: {
-                    self.backgroundViewTrailingTextViewConstraint.isActive = true
                     self.backgroundViewTrailingButtonConstraint.isActive = false
+                    self.backgroundViewTrailingTextViewConstraint.isActive = true
                     self.micButton.alpha = 1.0
                     self.sendButton.alpha = 0.0
                     self.layoutIfNeeded()
@@ -353,10 +353,6 @@ class MessageInputBar: UIView {
 
 extension MessageInputBar: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
-        guard let text = textView.text else {
-            return
-        }
-        
         updateTextUI()
     }
 }
