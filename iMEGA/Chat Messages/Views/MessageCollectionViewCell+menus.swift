@@ -35,6 +35,30 @@ extension MessageCollectionViewCell {
                 collectionView.delegate?.collectionView?(collectionView, performAction: #selector(MessageCollectionViewCell.edit(_:)), forItemAt: indexPath, withSender: sender)
             }
         }
+        
+    
     }
     
+    @objc open override func delete(_ sender: Any?) {
+        // Get the collectionView
+          if let collectionView = self.superview as? UICollectionView {
+              // Get indexPath
+              if let indexPath = collectionView.indexPath(for: self) {
+                  // Trigger action
+                  collectionView.delegate?.collectionView?(collectionView, performAction: #selector(MessageCollectionViewCell.delete(_:)), forItemAt: indexPath, withSender: sender)
+              }
+          }
+    }
+    
+    open override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        // Get the collectionView
+        if let collectionView = self.superview as? UICollectionView {
+            // Get indexPath
+            if let indexPath = collectionView.indexPath(for: self) {
+                // Trigger action
+                return (collectionView.delegate?.collectionView?(collectionView, canPerformAction: action, forItemAt: indexPath, withSender: sender))!
+            }
+        }
+        return false
+    }
 }

@@ -188,7 +188,6 @@ class ChatViewController: MessagesViewController {
         }
         
         let chatMessage = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView) as! ChatMessage
-        let message = chatMessage.message
         
         if action == NSSelectorFromString("copy:") {
             
@@ -201,7 +200,7 @@ class ChatViewController: MessagesViewController {
         }
         
         if action == NSSelectorFromString("forward:") {
-            forwardMessage(message)
+            forwardMessage(chatMessage)
             return
         }
         
@@ -226,7 +225,7 @@ class ChatViewController: MessagesViewController {
         }
         
         if action == NSSelectorFromString("delete:") {
-    
+            deleteMessage(chatMessage)
             return
         } else {
             super.collectionView(collectionView, performAction: action, forItemAt: indexPath, withSender: sender)
@@ -412,11 +411,7 @@ class ChatViewController: MessagesViewController {
         let importMenuItem = UIMenuItem(title:AMLocalizedString("import","Caption of a button to edit the files that are selected"), action: #selector(MessageCollectionViewCell.importMessage(_:)))
         
         let editMenuItem = UIMenuItem(title:AMLocalizedString("edit","Caption of a button to edit the files that are selected"), action: #selector(MessageCollectionViewCell.edit(_:)))
-        
-        
-        
-        
-        
+
         UIMenuController.shared.menuItems = [forwardMenuItem, importMenuItem, editMenuItem]
     }
 
