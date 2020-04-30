@@ -34,7 +34,7 @@
     return self;
 }
 
-- (instancetype)initToUploadToChatWithAssetsCompletion:(void (^)(NSArray *))assetsCompletion {
+- (instancetype)initToUploadToChatWithAssetsCompletion:(void (^)(NSArray<PHAsset *> *))assetsCompletion {
     self = [super init];
     
     if (self) {
@@ -81,9 +81,7 @@
             [Helper startPendingUploadTransferIfNeeded];
         } else if (self.toUploadToChat) {
             self.assets = assets;
-            [MEGASdkManager.sharedMEGASdk getMyChatFilesFolderWithCompletion:^(MEGANode *myChatFilesNode) {
-                [self triggerAssetsCompletion];
-            }];
+            [self triggerAssetsCompletion];
         }
     }];
 }
