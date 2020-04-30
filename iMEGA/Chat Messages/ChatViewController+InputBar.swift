@@ -84,11 +84,28 @@ extension ChatViewController: ChatMessageAndAudioInputBarDelegate {
     
     func tappedSendButton(withText text: String) {
         print("Send button tapped with text \(text)")
-        
-        let message = MEGASdkManager.sharedMEGAChatSdk()?.sendMessage(toChat: chatRoom.chatId, message: text)
-        print(message!.status)
-
-        chatRoomDelegate.insertMessage(message!)
+        var message : MEGAChatMessage?
+        if editMessage != nil {
+            if editMessage?.message.content != text {
+                let messageId = editMessage?.message.status == .sending ? editMessage?.message.temporalId : editMessage?.message.messageId
+                message = MEGASdkManager.sharedMEGAChatSdk()?.editMessage(forChat: chatRoom.chatId, messageId: messageId!, message: text)!
+                message?.chatId = chatRoom.chatId
+                let index = messages.firstIndex(of: editMessage!)
+                if index != NSNotFound {
+                    chatRoomDelegate.messages[index!] = ChatMessage(message: message!, chatRoom: chatRoom)
+                    messagesCollectionView.reloadDataAndKeepOffset()
+                }
+            }
+            
+            editMessage = nil
+        } else {
+            message = MEGASdkManager.sharedMEGAChatSdk()?.sendMessage(toChat: chatRoom.chatId, message: text)
+            print(message!.status)
+            
+            chatRoomDelegate.insertMessage(message!)
+            
+        }
+        MEGASdkManager.sharedMEGAChatSdk()?.sendStopTypingNotification(forChat: chatRoom.chatId)
     }
     
     func tappedSendAudio(atPath path: String) {
@@ -108,7 +125,7 @@ extension ChatViewController: ChatMessageAndAudioInputBarDelegate {
             }
             
             let appData = ("" as NSString).mnz_appDataToAttach(toChatID: self.chatRoom.chatId, asVoiceClip: true)
-
+            
             if let voiceMessagesNode = MEGASdkManager.sharedMEGASdk()!.node(forPath: voiceFolderName, node: result) {
                 MEGASdkManager.sharedMEGASdk()!.startUpload(withLocalPath: path,
                                                             parent: voiceMessagesNode,
@@ -122,13 +139,13 @@ extension ChatViewController: ChatMessageAndAudioInputBarDelegate {
                     }
                     
                     if let voiceMessagesNode = MEGASdkManager.sharedMEGASdk()!.node(forHandle: request.nodeHandle) {
-
+                        
                         MEGASdkManager.sharedMEGASdk()!.startUpload(withLocalPath: path,
                                                                     parent: voiceMessagesNode,
                                                                     appData: appData,
                                                                     isSourceTemporary: true,
                                                                     delegate: transferUploadDelegate)
-
+                        
                     }
                 }
                 
@@ -145,7 +162,7 @@ extension ChatViewController: ChatMessageAndAudioInputBarDelegate {
             return
         }
         
-
+        
         let tapAndHoldMessageView = TapAndHoldMessageView.instanceFromNib
         tapAndHoldMessageView.add(toView: view, bottom: inputAccessoryView!.frame.height)
     }
@@ -163,15 +180,15 @@ extension ChatViewController: UIViewControllerTransitioningDelegate {
         guard presented is AddToChatViewController else {
             return nil
         }
-
+        
         return AddToChatViewAnimator(type: .present)
     }
-
+    
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         guard dismissed is AddToChatViewController else {
             return nil
         }
-
+        
         return AddToChatViewAnimator(type: .dismiss)
     }
 }
