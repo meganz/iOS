@@ -79,41 +79,7 @@ class AddToChatViewController: UIViewController {
 
     @IBAction func backgroundViewTapped(_ tapGesture: UITapGestureRecognizer) {
         dismiss(animated: true, completion: nil)
-        
-        // TODO: The below code can be used if added as a content view. If the view is not added content view we need to remove the logic
-//        guard let dismissHandler = dismissHandler,
-//            let tapHandler = tapHandler else {
-//            return
-//        }
-//
-//        tapHandler()
-//        dismissAnimation { _ in
-//            dismissHandler(self)
-//        }
     }
-    
-//    // MARK:- Animation methods while presenting and dismissing.
-//
-//    func presentAnimation() {
-//        backgroundView.alpha = 0.0
-//        contentViewBottomConstraint.constant = -contentViewHeightConstraint.constant
-//        view.layoutIfNeeded()
-//
-//        UIView.animate(withDuration: presentAndDismissAnimationDuration) {
-//            self.backgroundView.alpha = 1.0
-//            self.contentViewBottomConstraint.constant = 0.0
-//            self.view.layoutIfNeeded()
-//        }
-//    }
-//
-//    func dismissAnimation(completion: ((Bool) -> Void)?) {
-//        UIView.animate(withDuration: presentAndDismissAnimationDuration,
-//                       animations: {
-//                        self.backgroundView.alpha = 0.0
-//                        self.contentViewBottomConstraint.constant = -self.contentViewHeightConstraint.constant
-//                        self.view.layoutIfNeeded()
-//        }, completion: completion)
-//    }
 }
 
 
