@@ -141,10 +141,6 @@
         [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:[contactSelected targetEmail] message:@"" action:MEGAInviteActionDelete delegate:self];
     }
 }
-
-- (IBAction)doneTouchUpInside:(UIBarButtonItem *)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
     
 #pragma mark - UITableViewDataSource
 

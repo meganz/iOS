@@ -302,22 +302,6 @@
     }
 }
 
-- (NSMutableArray *)outSharesForNode:(MEGANode *)node {
-
-    NSMutableArray *outSharesForNodeMutableArray = NSMutableArray.alloc.init;
-    
-    MEGAShareList *outSharesForNodeShareList = [[MEGASdkManager sharedMEGASdk] outSharesForNode:node];
-    NSUInteger outSharesForNodeCount = outSharesForNodeShareList.size.unsignedIntegerValue;
-    for (NSInteger i = 0; i < outSharesForNodeCount; i++) {
-        MEGAShare *share = [outSharesForNodeShareList shareAtIndex:i];
-        if ([share user] != nil) {
-            [outSharesForNodeMutableArray addObject:share];
-        }
-    }
-    
-    return outSharesForNodeMutableArray;
-}
-
 - (void)toolbarItemsForSharedItems {
     
     NSMutableArray *toolbarItemsMutableArray = NSMutableArray.alloc.init;
@@ -347,7 +331,7 @@
     self.selectedSharesMutableArray = NSMutableArray.alloc.init;
     
     for (MEGANode *node in self.selectedNodesMutableArray) {
-        NSMutableArray *outSharesOfNodeMutableArray = [self outSharesForNode:node];
+        NSMutableArray *outSharesOfNodeMutableArray = node.outShares;
         [self.selectedSharesMutableArray addObjectsFromArray:outSharesOfNodeMutableArray];
     }
 }
@@ -470,7 +454,7 @@
     cell.nameLabel.text = node.name;
     
     NSString *userName;
-    NSMutableArray *outSharesMutableArray = [self outSharesForNode:node];
+    NSMutableArray *outSharesMutableArray = node.outShares;
     outSharesCount = outSharesMutableArray.count;
     if (outSharesCount > 1) {
         userName = [NSString stringWithFormat:AMLocalizedString(@"sharedWithXContacts", nil), outSharesCount];
@@ -690,7 +674,7 @@
             NSUInteger count = self.outgoingNodesMutableArray.count;
             for (NSInteger i = 0; i < count; i++) {
                 n = [self.outgoingNodesMutableArray objectAtIndex:i];
-                [self.selectedSharesMutableArray addObjectsFromArray:[self outSharesForNode:n]];
+                [self.selectedSharesMutableArray addObjectsFromArray:n.outShares];
                 [self.selectedNodesMutableArray addObject:n];
             }
         } else if (self.linksButton.selected) {

@@ -1,6 +1,28 @@
 #import "ContactTableViewCell.h"
 
+#import "UIImageView+MNZCategory.h"
+
+#import "MEGASdkManager.h"
+#import "MEGAUser+MNZCategory.h"
+#import "NSString+MNZCategory.h"
+
 @implementation ContactTableViewCell
+
+-(void)awakeFromNib {
+    [super awakeFromNib];
+    
+    if (@available(iOS 11.0, *)) {
+        self.avatarImageView.accessibilityIgnoresInvertColors = YES;
+    }
+    
+    [self setup];
+}
+
+- (void)prepareForReuse {
+    [super prepareForReuse];
+    
+    [self setup];
+}
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
     [super setEditing:editing animated:animated];
@@ -38,6 +60,87 @@
     if (highlighted){
         self.onlineStatusView.backgroundColor = color;
     }
+}
+
+#pragma mark - Private
+
+- (void)setup {
+    self.shareLabel.textColor = [UIColor mnz_subtitlesColorForTraitCollection:self.traitCollection];
+}
+
+- (NSString *)userNameForUser:(MEGAUser *)user {
+    NSString *userName;
+    if (user.handle == MEGASdkManager.sharedMEGASdk.myUser.handle) {
+        userName = [userName stringByAppendingString:[NSString stringWithFormat:@" (%@)", AMLocalizedString(@"me", @"The title for my message in a chat. The message was sent from yourself.")]];
+    } else {
+        userName = user.mnz_displayName;
+    }
+    
+    return userName;
+}
+
+- (void)configureDefaultCellForUser:(MEGAUser *)user newUser:(BOOL)newUser {
+    [self.avatarImageView mnz_setImageForUserHandle:user.handle name:self.nameLabel.text];
+    self.verifiedImageView.hidden = ![MEGASdkManager.sharedMEGASdk areCredentialsVerifiedOfUser:user];
+    
+    NSString *userName = [self userNameForUser:user];
+    self.nameLabel.text = userName ? userName : user.email;
+    
+    MEGAChatStatus userStatus = [MEGASdkManager.sharedMEGAChatSdk userOnlineStatus:user.handle];
+    self.shareLabel.text = [NSString chatStatusString:userStatus];
+    self.onlineStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:userStatus];
+    if (userStatus < MEGAChatStatusOnline) {
+        [MEGASdkManager.sharedMEGAChatSdk requestLastGreen:user.handle];
+    }
+    
+    if (newUser) {
+        self.contactNewView.hidden = NO;
+        self.contactNewLabel.text = AMLocalizedString(@"New", @"Label shown inside an unseen notification").uppercaseString;
+        self.contactNewLabel.textColor = UIColor.whiteColor;
+        self.contactNewLabelView.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
+    }
+}
+
+- (void)configureCellForContactsModeFolderSharedWith:(MEGAUser *)user indexPath:(NSIndexPath *)indexPath {
+    [self.avatarImageView mnz_setImageForUserHandle:user.handle name:self.nameLabel.text];
+    self.verifiedImageView.hidden = ![MEGASdkManager.sharedMEGASdk areCredentialsVerifiedOfUser:user];
+    
+    if (indexPath.section == 0) {
+        if (indexPath.row == 0) {
+            self.permissionsImageView.hidden = YES;
+            self.avatarImageView.image = [UIImage imageNamed:@"inviteToChat"];
+            self.nameLabel.text = AMLocalizedString(@"addContactButton", @"Button title to 'Add' the contact to your contacts list");
+            self.shareLabel.hidden = YES;
+        } else {
+            NSString *userName = [self userNameForUser:user];
+            if (userName) {
+                self.nameLabel.text = userName;
+                self.shareLabel.text = user.email;
+            } else {
+                self.nameLabel.text = user.email;
+                self.shareLabel.hidden = YES;
+            }
+        }
+    } else if (indexPath.section == 1) {
+        self.shareLabel.hidden = YES;
+        self.permissionsImageView.image = [UIImage imageNamed:@"delete"];
+        self.permissionsImageView.tintColor = [UIColor mnz_redMainForTraitCollection:(self.traitCollection)];
+    }
+}
+
+- (void)configureCellForContactsModeChatStartConversation:(NSIndexPath *)indexPath {
+    self.permissionsImageView.hidden = YES;
+    if (indexPath.row == 0) {
+        self.nameLabel.text = AMLocalizedString(@"inviteContact", @"Text shown when the user tries to make a call and the receiver is not a contact");
+        self.avatarImageView.image = [UIImage imageNamed:@"inviteToChat"];
+    } else if (indexPath.row == 1) {
+        self.nameLabel.text = AMLocalizedString(@"New group chat", @"Text button for init a group chat").capitalizedString;
+        self.avatarImageView.image = [UIImage imageNamed:@"createGroup"];
+    } else {
+        self.nameLabel.text = AMLocalizedString(@"New Chat Link", @"Text button for init a group chat with link.");
+        self.avatarImageView.image = [UIImage imageNamed:@"chatLink"];
+    }
+    self.shareLabel.hidden = YES;
 }
 
 @end

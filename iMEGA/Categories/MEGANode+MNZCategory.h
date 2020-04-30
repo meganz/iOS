@@ -41,6 +41,10 @@
 - (NSString *)mnz_temporaryPathForDownloadCreatingDirectories:(BOOL)creatingDirectories;
 - (NSAttributedString *)mnz_attributedTakenDownNameWithHeight:(CGFloat)height;
 
+#pragma mark - Shares
+
+- (NSMutableArray <MEGAShare *> *)outShares;
+
 #pragma mark - Versions
 
 - (NSInteger)mnz_numberOfVersions;

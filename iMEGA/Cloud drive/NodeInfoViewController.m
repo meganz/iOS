@@ -407,8 +407,9 @@
     cell.separatorView.backgroundColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
     if (self.node.isShared) {
         cell.titleLabel.text = AMLocalizedString(@"sharedWidth", @"Label title indicating the number of users having a node shared");
-        NSString *usersString = [self outSharesForNode:self.node].count > 1 ? AMLocalizedString(@"users", @"used for example when a folder is shared with 2 or more users") : AMLocalizedString(@"user", @"user (singular) label indicating is receiving some info");
-        cell.subtitleLabel.text = [NSString stringWithFormat:@"%lu %@",(unsigned long)[self outSharesForNode:self.node].count, usersString];
+        NSMutableArray *outSharesMutableArray = self.node.outShares;
+        NSString *usersString = outSharesMutableArray.count > 1 ? AMLocalizedString(@"users", @"used for example when a folder is shared with 2 or more users") : AMLocalizedString(@"user", @"user (singular) label indicating is receiving some info");
+        cell.subtitleLabel.text = [NSString stringWithFormat:@"%lu %@",(unsigned long)outSharesMutableArray.count, usersString];
         [cell.subtitleLabel setHidden:NO];
     } else {
         cell.titleLabel.text = AMLocalizedString(@"share", @"Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected");
@@ -430,21 +431,6 @@
     cell.separatorView.hidden = YES;
     
     return cell;
-}
-
-- (NSMutableArray *)outSharesForNode:(MEGANode *)node {
-    NSMutableArray *outSharesForNodeMutableArray = [[NSMutableArray alloc] init];
-    
-    MEGAShareList *outSharesForNodeShareList = [[MEGASdkManager sharedMEGASdk] outSharesForNode:node];
-    NSUInteger outSharesForNodeCount = [[outSharesForNodeShareList size] unsignedIntegerValue];
-    for (NSInteger i = 0; i < outSharesForNodeCount; i++) {
-        MEGAShare *share = [outSharesForNodeShareList shareAtIndex:i];
-        if ([share user] != nil) {
-            [outSharesForNodeMutableArray addObject:share];
-        }
-    }
-    
-    return outSharesForNodeMutableArray;
 }
 
 - (void)showManageLinkView {
