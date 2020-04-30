@@ -991,10 +991,12 @@
 "logoutLabel"="로그아웃";
 /* String shown when you are logging out of your account. */
 "loggingOut"="로그아웃중";
-/* Button to remove avatar. Try to keep the text short (as in English) */
-"removeAvatar"="아바타 제거";
-/* button that allows the user the change his avatar */
-"changeAvatar"="아바타 변경";
+/* Button to remove some photo, e.g. avatar photo. Try to keep the text short (as in English) */
+"Remove Photo"="사진 삭제";
+/* Button that allows the user the change a photo, e.g. his avatar photo */
+"Change Photo"="사진 변경";
+/* Button that allows the user the add a photo, e.g avatar photo */
+"Add Photo"="사진 추가";
 /* Button title that allows the user change his name */
 "changeName"="이름 변경";
 /* Success message when changing profile information. */
@@ -1269,8 +1271,6 @@
 "removePreview"="미리보기 제거";
 /* */
 "warning"="경고";
-/* Alert message shown when the user perform logout and has files in the Offline directory */
-"allFilesSavedForOfflineWillBeDeletedFromYourDevice"="오프라인용으로 저장된 모든 파일이 기기에서 삭제됩니다. 로그아웃 하시겠습니까?";
 /* Title shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_title"="전송 할당량 부족";
 /* Description shown when you almost had used your available transfer quota. */
@@ -2124,6 +2124,8 @@
 "Your account is already verified"="계정이 이미 인증되었습니다";
 /* Place holder for enter mobile number field */
 "Your phone number"="당신의 전화번호";
+/* Text related to verified phone number. Used as title or cell description.  */
+"Phone Number"="전화번호";
 /* Label tell user to enter received txt to below input boxes */
 "Please type the verification code sent to"="다음으로 전송된 코드를 입력하세요";
 /* Text message to remind user to resend verification code */
@@ -2182,3 +2184,11 @@
 "MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA는 당신의 동의 없이 이 데이터를 다른 목적으로 사용하고 당신의 지인들과 상호 작용하지 않을 것입니다.";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="그룹 이름을 입력하세요";
+/* Warning message to alert user about logout in My Account section if has transfers in progress. */
+"When you logout, ongoing transfers will be cancelled."="로그아웃하면, 진행중인 전송은 취소됩니다.";
+/* Warning message to alert user about logout in My Account section if has offline files. */
+"When you logout, files from your Offline section will be deleted from your device."="로그아웃하면 오프라인 섹션의 파일들이 당신의 기기에서 삭제됩니다.";
+/* Warning message to alert user about logout in My Account section if has offline files and transfers in progress. */
+"When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled."="로그아웃하면, 기기의 오프라인 섹션의 파일들이 삭제되고 진행중인 전송이 취소됩니다.";
+/* Default title of an empty chat. */
+"Chat created on %s1"="%s1에 생성된 대화";
