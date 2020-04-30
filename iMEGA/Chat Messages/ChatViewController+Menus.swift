@@ -3,13 +3,14 @@ import Foundation
 
 extension ChatViewController {
     
-    func forwardMessage(_ message: MEGAChatMessage) {
+    func forwardMessage(_ message: ChatMessage) {
+        let megaMessage = message.message
         let chatStoryboard = UIStoryboard(name: "Chat", bundle: nil)
         let sendToNC = chatStoryboard.instantiateViewController(withIdentifier: "SendToNavigationControllerID") as! UINavigationController
         let sendToViewController = sendToNC.viewControllers.first as! SendToViewController
         
         sendToViewController.sendMode = .forward
-        sendToViewController.messages = [message]
+        sendToViewController.messages = [megaMessage]
         sendToViewController.sourceChatId = chatRoom.chatId
         sendToViewController.completion = { (chatIdNumbers, sentMessages) in
             var selfForwarded = false
@@ -67,5 +68,31 @@ extension ChatViewController {
     func editMessage(_ message: ChatMessage) {
         editMessage = message
         chatInputBar.set(text: editMessage!.message.content)
+    }
+    
+    func deleteMessage(_ message: ChatMessage) {
+    
+        let megaMessage =  message.message
+        
+        if megaMessage.type == .attachment ||
+        megaMessage.type == .voiceClip {
+            
+        } else {
+            let index = messages.firstIndex(of: message)!
+            if megaMessage.status == .sending {
+                chatRoomDelegate.messages.remove(at: index)
+                messagesCollectionView.performBatchUpdates({
+                    messagesCollectionView.deleteSections([index])
+                }, completion: nil)
+            } else {
+                let messageId = megaMessage.status == .sending ? megaMessage.temporalId : megaMessage.messageId
+                let deleteMessage = MEGASdkManager.sharedMEGAChatSdk()?.deleteMessage(forChat: chatRoom.chatId, messageId: messageId)
+                deleteMessage?.chatId = chatRoom.chatId
+                chatRoomDelegate.messages[index] = ChatMessage(message: deleteMessage!, chatRoom: chatRoom)
+            }
+        }
+        
+        
+        
     }
 }
