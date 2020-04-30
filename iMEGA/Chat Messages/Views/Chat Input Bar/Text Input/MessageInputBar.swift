@@ -129,7 +129,14 @@ class MessageInputBar: UIView {
         }
         
         messageTextView.text = nil
-        messageTextView.invalidateIntrinsicContentSize()
+        
+        if expanded {
+            expanded = false
+            collapse()
+        } else {
+            messageTextView.invalidateIntrinsicContentSize()
+        }
+        
         sendButton.isEnabled = false
         delegate.tappedSendButton(withText: text)
     }
