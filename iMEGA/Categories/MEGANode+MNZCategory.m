@@ -836,6 +836,23 @@
     return nameAttributedString;
 }
 
+#pragma mark - Shares
+
+- (NSMutableArray <MEGAShare *> *)outShares {
+    NSMutableArray *outSharesForNodeMutableArray = NSMutableArray.new;
+    
+    MEGAShareList *outSharesForNodeShareList = [MEGASdkManager.sharedMEGASdk outSharesForNode:self];
+    NSUInteger outSharesForNodeCount = outSharesForNodeShareList.size.unsignedIntegerValue;
+    for (NSInteger i = 0; i < outSharesForNodeCount; i++) {
+        MEGAShare *share = [outSharesForNodeShareList shareAtIndex:i];
+        if (share.user != nil) {
+            [outSharesForNodeMutableArray addObject:share];
+        }
+    }
+    
+    return outSharesForNodeMutableArray;
+}
+
 #pragma mark - Versions
 
 - (NSInteger)mnz_numberOfVersions {

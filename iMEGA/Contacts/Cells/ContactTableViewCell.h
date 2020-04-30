@@ -12,9 +12,17 @@
 @property (weak, nonatomic) IBOutlet UIImageView *permissionsImageView;
 @property (weak, nonatomic) IBOutlet UILabel *permissionsLabel;
 
+@property (weak, nonatomic) IBOutlet UIView *contactNewView;
+@property (weak, nonatomic) IBOutlet UIView *contactNewLabelView;
+@property (weak, nonatomic) IBOutlet UILabel *contactNewLabel;
+
 @property (weak, nonatomic) IBOutlet UIButton *infoButton;
 
 @property (weak, nonatomic) IBOutlet UITextField *groupNameTextField;
 @property (weak, nonatomic) IBOutlet UIImageView *verifiedImageView;
+
+- (void)configureDefaultCellForUser:(MEGAUser *)user newUser:(BOOL)newUser;
+- (void)configureCellForContactsModeChatStartConversation:(NSIndexPath *)indexPath;
+- (void)configureCellForContactsModeFolderSharedWith:(MEGAUser *)user indexPath:(NSIndexPath *)indexPath;
 
 @end

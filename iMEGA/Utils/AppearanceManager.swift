@@ -5,20 +5,13 @@ class AppearanceManager: NSObject {
     
     @objc class func setupAppearance(_ traitCollection: UITraitCollection) {
         
-        UINavigationBar.appearance().barTintColor = UIColor.mnz_mainBarsColor(for: traitCollection)
-        UINavigationBar.appearance().backgroundColor = UIColor.mnz_mainBarsColor(for: traitCollection)
+        setupNavigationAppearance(traitCollection)
         
         let navigationBarFont = UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.semibold)
         UINavigationBar.appearance(whenContainedInInstancesOf: [MEGANavigationController.self]).titleTextAttributes = [NSAttributedString.Key.font: navigationBarFont, NSAttributedString.Key.foregroundColor: UIColor.mnz_label()!]
         UINavigationBar.appearance(whenContainedInInstancesOf: [MEGANavigationController.self]).barTintColor = UIColor.mnz_mainBarsColor(for: traitCollection)
         UINavigationBar.appearance(whenContainedInInstancesOf: [MEGANavigationController.self]).backgroundColor = UIColor.mnz_mainBarsColor(for: traitCollection)
         UINavigationBar.appearance(whenContainedInInstancesOf: [MEGANavigationController.self]).tintColor = UIColor.mnz_primaryGray(for: traitCollection)
-        UINavigationBar.appearance().backIndicatorImage = UIImage(named: "backArrow")
-        UINavigationBar.appearance().backIndicatorTransitionMaskImage = UIImage(named: "backArrow")
-        
-        //Remove the line under the top navigation bar
-        UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
-        UINavigationBar.appearance().shadowImage = UIImage()
         
         UILabel.appearance(whenContainedInInstancesOf: [MEGANavigationController.self]).textColor = UIColor.mnz_label()
         
@@ -35,7 +28,6 @@ class AppearanceManager: NSObject {
         UIBarButtonItem.appearance(whenContainedInInstancesOf: [MEGAAssetsPickerController.self]).tintColor = UIColor.mnz_primaryGray(for: traitCollection)
         
         UISearchBar.appearance().isTranslucent = false
-        UISearchBar.appearance().backgroundColor = UIColor.mnz_background()
         UISearchBar.appearance().tintColor = UIColor.mnz_primaryGray(for: traitCollection)
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = UIColor.mnz_background()
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).textColor = UIColor.mnz_label()
@@ -120,6 +112,32 @@ class AppearanceManager: NSObject {
     }
     
     // MARK: - Private
+    
+    private class func setupNavigationAppearance(_ traitCollection: UITraitCollection) {
+        if #available(iOS 13.0, *) {
+            let navigationBarAppearance = UINavigationBarAppearance()
+            navigationBarAppearance.configureWithOpaqueBackground()
+            navigationBarAppearance.backgroundColor = UIColor.mnz_mainBarsColor(for: traitCollection)
+            
+            navigationBarAppearance.shadowImage = nil
+            navigationBarAppearance.shadowColor = nil
+            
+            let backArrowImage = UIImage(named: "backArrow")
+            navigationBarAppearance.setBackIndicatorImage(backArrowImage, transitionMaskImage: backArrowImage)
+            
+            UINavigationBar.appearance().standardAppearance = navigationBarAppearance
+            UINavigationBar.appearance().scrollEdgeAppearance = navigationBarAppearance
+        } else {
+            UINavigationBar.appearance().barTintColor = UIColor.mnz_mainBarsColor(for: traitCollection)
+            UINavigationBar.appearance().backgroundColor = UIColor.mnz_mainBarsColor(for: traitCollection)
+            
+            UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
+            UINavigationBar.appearance().shadowImage = UIImage()
+            
+            UINavigationBar.appearance().backIndicatorImage = UIImage(named: "backArrow")
+            UINavigationBar.appearance().backIndicatorTransitionMaskImage = UIImage(named: "backArrow")
+        }
+    }
     
     private class func setupActivityIndicatorAppearance(_ traitCollection: UITraitCollection) {
         if #available(iOS 13.0, *) {
