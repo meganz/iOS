@@ -106,8 +106,8 @@ class MessageInputBar: UIView {
     }
     
     func set(text: String) {
-        messageTextView.text = text
-        messageTextView.becomeFirstResponder()
+        messageTextView.set(text: text)
+        updateTextUI()
     }
     
     // MARK: - Actions
@@ -129,6 +129,8 @@ class MessageInputBar: UIView {
         }
         
         messageTextView.text = nil
+        messageTextView.invalidateIntrinsicContentSize()
+        sendButton.isEnabled = false
         delegate.tappedSendButton(withText: text)
     }
     
@@ -307,12 +309,31 @@ class MessageInputBar: UIView {
     }
     
     private func setPlaceholderTextWhenKeyboardShown() {
+        guard messageTextView.text.isEmpty else {
+            return
+        }
+        
         messageTextView.placeholderText = AMLocalizedString("Message...", "Chat: This is the placeholder text for text view when keyboard is shown")
     }
     
     private func setPlaceholderTextWhenKeyboardHidden() {
+        guard messageTextView.text.isEmpty else {
+            return
+        }
+        
         messageTextView.placeholderText = AMLocalizedString("Write message to", "Chat: This is the placeholder text for text view when keyboard is hidden")
     }
+    
+    private func updateTextUI() {
+        guard let delegate = delegate,
+            let text = messageTextView.text else {
+            return
+        }
+        
+        sendButton.isEnabled = !text.isEmpty
+        delegate.typing(withText: text)
+    }
+    
     
     // MARK: - Deinit
     
@@ -325,13 +346,11 @@ class MessageInputBar: UIView {
 
 extension MessageInputBar: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
-        guard let delegate = delegate,
-            let text = textView.text else {
+        guard let text = textView.text else {
             return
         }
         
-        sendButton.isEnabled = !text.isEmpty
-        delegate.typing(withText: text)
+        updateTextUI()
     }
 }
 
