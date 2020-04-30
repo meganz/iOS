@@ -991,10 +991,12 @@
 "logoutLabel"="Выйти";
 /* String shown when you are logging out of your account. */
 "loggingOut"="Выход";
-/* Button to remove avatar. Try to keep the text short (as in English) */
-"removeAvatar"="Удалить аватар";
-/* button that allows the user the change his avatar */
-"changeAvatar"="Изменить аватар";
+/* Button to remove some photo, e.g. avatar photo. Try to keep the text short (as in English) */
+"Remove Photo"="Удалить фото";
+/* Button that allows the user the change a photo, e.g. his avatar photo */
+"Change Photo"="Изменить фото";
+/* Button that allows the user the add a photo, e.g avatar photo */
+"Add Photo"="Добавить фото";
 /* Button title that allows the user change his name */
 "changeName"="Сменить имя";
 /* Success message when changing profile information. */
@@ -1269,8 +1271,6 @@
 "removePreview"="Удалить превью";
 /* */
 "warning"="Предупреждение";
-/* Alert message shown when the user perform logout and has files in the Offline directory */
-"allFilesSavedForOfflineWillBeDeletedFromYourDevice"="Все сохранённые локально файлы будут удалены с устройства. Продолжить?";
 /* Title shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_title"="Недостаточная квота передач";
 /* Description shown when you almost had used your available transfer quota. */
@@ -2124,6 +2124,8 @@
 "Your account is already verified"="Ваш аккаунт уже подтверждён";
 /* Place holder for enter mobile number field */
 "Your phone number"="Ваш телефонный номер";
+/* Text related to verified phone number. Used as title or cell description.  */
+"Phone Number"="Телефонный номер";
 /* Label tell user to enter received txt to below input boxes */
 "Please type the verification code sent to"="Пожалуйста, введите отправленный проверочный код";
 /* Text message to remind user to resend verification code */
@@ -2182,3 +2184,11 @@
 "MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA не будет использовать эти данные для каких-либо других целей и никогда не будет взаимодействовать с вашими контактами без вашего согласия.";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="Введите имя группы";
+/* Warning message to alert user about logout in My Account section if has transfers in progress. */
+"When you logout, ongoing transfers will be cancelled."="При выходе из системы текущие передачи будут отменены.";
+/* Warning message to alert user about logout in My Account section if has offline files. */
+"When you logout, files from your Offline section will be deleted from your device."="При выходе из системы файлы из раздела «Оффлайн» будут удалены с вашего устройства.";
+/* Warning message to alert user about logout in My Account section if has offline files and transfers in progress. */
+"When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled."="Когда вы выйдете из системы, файлы из раздела «Оффлайн» будут удалены с вашего устройства, а текущие передачи будут отменены.";
+/* Default title of an empty chat. */
+"Chat created on %s1"="Чат создан %s1";
