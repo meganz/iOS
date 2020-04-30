@@ -80,9 +80,8 @@ class MessageTextView: UITextView {
             guard let `self` = self else {
                 return
             }
-            
-            self.placeholderTextView.isHidden = !self.text.isEmpty
-            self.invalidateIntrinsicContentSize()
+
+            self.updatePlaceholder()
         }
     }
     
@@ -93,7 +92,18 @@ class MessageTextView: UITextView {
         invalidateIntrinsicContentSize()
     }
     
+    func set(text: String) {
+        self.text = text
+        updatePlaceholder()
+        becomeFirstResponder()
+    }
+    
     //MARK: - Private methods
+    
+    private func updatePlaceholder() {
+        self.placeholderTextView.isHidden = !self.text.isEmpty
+        self.invalidateIntrinsicContentSize()
+    }
     
     private func addPlaceholderTextView() {
         addSubview(placeholderTextView)
