@@ -546,27 +546,18 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 }
 
 - (IBAction)deleteAction:(UIBarButtonItem *)sender {
-    NSString *message = (self.selectedItemsDictionary.count > 1) ? [NSString stringWithFormat:AMLocalizedString(@"moveFilesToRubbishBinMessage", @"Alert message to confirm if the user wants to move to the Rubbish Bin '{1+} files'"), self.selectedItemsDictionary.count] : [NSString stringWithString:AMLocalizedString(@"moveFileToRubbishBinMessage", @"Alert message to confirm if the user wants to move to the Rubbish Bin '1 file'")];
-    UIAlertController *moveToTheRubbishBinAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"moveToTheRubbishBin", @"Title for the action that allows you to 'Move to the Rubbish Bin' files or folders") message:message preferredStyle:UIAlertControllerStyleAlert];
+    NSUInteger count = self.selectedItemsDictionary.count;
+    NSArray *selectedItemsArray = [self.selectedItemsDictionary allValues];
+    MEGANode *rubbishBinNode = [[MEGASdkManager sharedMEGASdk] rubbishNode];
+    MEGAMoveRequestDelegate *moveRequestDelegate = [[MEGAMoveRequestDelegate alloc] initToMoveToTheRubbishBinWithFiles:selectedItemsArray.count folders:0 completion:^{
+        [self setEditing:NO animated:NO];
+    }];
     
-    [moveToTheRubbishBinAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
+    for (NSUInteger i = 0; i < count; i++) {
+        [[MEGASdkManager sharedMEGASdk] moveNode:[selectedItemsArray objectAtIndex:i] newParent:rubbishBinNode delegate:moveRequestDelegate];
+    }
     
-    [moveToTheRubbishBinAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        NSUInteger count = self.selectedItemsDictionary.count;
-        NSArray *selectedItemsArray = [self.selectedItemsDictionary allValues];
-        MEGANode *rubbishBinNode = [[MEGASdkManager sharedMEGASdk] rubbishNode];
-        MEGAMoveRequestDelegate *moveRequestDelegate = [[MEGAMoveRequestDelegate alloc] initToMoveToTheRubbishBinWithFiles:selectedItemsArray.count folders:0 completion:^{
-            [self setEditing:NO animated:NO];
-        }];
-        
-        for (NSUInteger i = 0; i < count; i++) {
-            [[MEGASdkManager sharedMEGASdk] moveNode:[selectedItemsArray objectAtIndex:i] newParent:rubbishBinNode delegate:moveRequestDelegate];
-        }
-        
-        [self setEditing:NO animated:YES];
-    }]];
-    
-    [self presentViewController:moveToTheRubbishBinAlertController animated:YES completion:nil];
+    [self setEditing:NO animated:YES];
 }
 
 #pragma mark - UICollectionViewDataSource

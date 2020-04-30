@@ -298,27 +298,14 @@
 
 - (void)mnz_moveToTheRubbishBinInViewController:(UIViewController *)viewController {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        NSString *alertTitle = AMLocalizedString(@"moveToTheRubbishBin", @"Title for the action that allows you to 'Move to the Rubbish Bin' files or folders");
-        NSString *alertMessage = (self.type == MEGANodeTypeFolder) ? AMLocalizedString(@"moveFolderToRubbishBinMessage", @"Alert message to confirm if the user wants to move to the Rubbish Bin '1 folder'") : AMLocalizedString(@"moveFileToRubbishBinMessage", @"Alert message to confirm if the user wants to move to the Rubbish Bin '1 file'");
-        
-        UIAlertController *moveRemoveLeaveAlertController = [UIAlertController alertControllerWithTitle:alertTitle message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
-        
-        [moveRemoveLeaveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
-        
-        [moveRemoveLeaveAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-                void (^completion)(void) = nil;
-                if (![viewController isKindOfClass:MEGAPhotoBrowserViewController.class]) {
-                    completion = ^{
-                        [viewController dismissViewControllerAnimated:YES completion:nil];
-                    };
-                }
-                MEGAMoveRequestDelegate *moveRequestDelegate = [[MEGAMoveRequestDelegate alloc] initToMoveToTheRubbishBinWithFiles:(self.isFile ? 1 : 0) folders:(self.isFolder ? 1 : 0) completion:completion];
-                [[MEGASdkManager sharedMEGASdk] moveNode:self newParent:[[MEGASdkManager sharedMEGASdk] rubbishNode] delegate:moveRequestDelegate];
-            }
-        }]];
-        
-        [viewController presentViewController:moveRemoveLeaveAlertController animated:YES completion:nil];
+        void (^completion)(void) = nil;
+        if (![viewController isKindOfClass:MEGAPhotoBrowserViewController.class]) {
+            completion = ^{
+                [viewController dismissViewControllerAnimated:YES completion:nil];
+            };
+        }
+        MEGAMoveRequestDelegate *moveRequestDelegate = [[MEGAMoveRequestDelegate alloc] initToMoveToTheRubbishBinWithFiles:(self.isFile ? 1 : 0) folders:(self.isFolder ? 1 : 0) completion:completion];
+        [MEGASdkManager.sharedMEGASdk moveNode:self newParent:MEGASdkManager.sharedMEGASdk.rubbishNode delegate:moveRequestDelegate];
     }
 }
 
@@ -372,20 +359,27 @@
 }
 
 - (void)mnz_removeSharing {
-    NSMutableArray *outSharesForNodeMutableArray = [[NSMutableArray alloc] init];
-    
-    MEGAShareList *outSharesForNodeShareList = [[MEGASdkManager sharedMEGASdk] outSharesForNode:self];
-    NSUInteger outSharesForNodeCount = outSharesForNodeShareList.size.unsignedIntegerValue;
-    for (NSInteger i = 0; i < outSharesForNodeCount; i++) {
-        MEGAShare *share = [outSharesForNodeShareList shareAtIndex:i];
-        if (share.user != nil) {
-            [outSharesForNodeMutableArray addObject:share];
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+        NSMutableArray *outSharesForNodeMutableArray = [[NSMutableArray alloc] init];
+        
+        MEGAShareList *outSharesForNodeShareList = [[MEGASdkManager sharedMEGASdk] outSharesForNode:self];
+        NSUInteger outSharesForNodeCount = outSharesForNodeShareList.size.unsignedIntegerValue;
+        for (NSInteger i = 0; i < outSharesForNodeCount; i++) {
+            MEGAShare *share = [outSharesForNodeShareList shareAtIndex:i];
+            if (share.user != nil) {
+                [outSharesForNodeMutableArray addObject:share];
+            }
         }
-    }
-    
-    MEGAShareRequestDelegate *shareRequestDelegate = [[MEGAShareRequestDelegate alloc] initToChangePermissionsWithNumberOfRequests:outSharesForNodeMutableArray.count completion:nil];
-    for (MEGAShare *share in outSharesForNodeMutableArray) {
-        [[MEGASdkManager sharedMEGASdk] shareNode:self withEmail:share.user level:MEGAShareTypeAccessUnknown delegate:shareRequestDelegate];
+        NSString *alertMessage = outSharesForNodeMutableArray.count == 1 ? AMLocalizedString(@"removeOneShareOneContactMessage", nil) : [NSString stringWithFormat:AMLocalizedString(@"removeOneShareMultipleContactsMessage", nil), outSharesForNodeMutableArray.count];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"removeSharing", nil) message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
+        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            MEGAShareRequestDelegate *shareRequestDelegate = [[MEGAShareRequestDelegate alloc] initToChangePermissionsWithNumberOfRequests:outSharesForNodeMutableArray.count completion:nil];
+            for (MEGAShare *share in outSharesForNodeMutableArray) {
+                [[MEGASdkManager sharedMEGASdk] shareNode:self withEmail:share.user level:MEGAShareTypeAccessUnknown delegate:shareRequestDelegate];
+            }
+        }]];
+        [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
     }
 }
 
