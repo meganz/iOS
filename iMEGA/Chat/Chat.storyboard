@@ -456,11 +456,18 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="p5b-7o-fgJ">
                         <barButtonItem key="backBarButtonItem" title=" " id="1Ub-kM-Jrr"/>
-                        <barButtonItem key="rightBarButtonItem" image="add" id="fu8-g8-gHZ">
-                            <connections>
-                                <action selector="addTapped:" destination="Li1-XI-VLz" id="zKR-Fq-am2"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem title="Item" image="moreSelected" id="8yY-z6-rqz">
+                                <connections>
+                                    <action selector="optionsTapped:" destination="Li1-XI-VLz" id="aB2-1V-dni"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem image="startConversation" id="fu8-g8-gHZ">
+                                <connections>
+                                    <action selector="addTapped:" destination="Li1-XI-VLz" id="zKR-Fq-am2"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="addBarButtonItem" destination="fu8-g8-gHZ" id="MMk-4L-0Gs"/>
@@ -2504,7 +2511,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="add" width="22" height="22"/>
         <image name="archiveChat_gray" width="28" height="28"/>
         <image name="backArrow" width="13" height="21"/>
         <image name="callSlots" width="24" height="24"/>
@@ -2522,6 +2528,7 @@
         <image name="locationPin" width="40" height="40"/>
         <image name="micOff" width="60" height="60"/>
         <image name="micOn" width="60" height="60"/>
+        <image name="moreSelected" width="28" height="28"/>
         <image name="onACall" width="10" height="10"/>
         <image name="privateChat" width="24" height="24"/>
         <image name="readPermissions" width="24" height="24"/>
@@ -2534,6 +2541,7 @@
         <image name="sendLocation" width="40" height="40"/>
         <image name="speakerOff" width="60" height="60"/>
         <image name="speakerOn" width="60" height="60"/>
+        <image name="startConversation" width="28" height="28"/>
         <image name="userMuted(grey)" width="24" height="24"/>
         <image name="userMutedBig" width="24" height="24"/>
         <image name="video_list" width="22" height="22"/>

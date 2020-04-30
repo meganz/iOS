@@ -537,8 +537,6 @@
                 label.adjustsFontSizeToFitWidth = YES;
                 label.minimumScaleFactor = 0.8f;
                 label.frame = CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44);
-                label.userInteractionEnabled = YES;
-                label.gestureRecognizers = @[[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(chatRoomTitleDidTap)]];
                 [self.navigationItem setTitleView:label];
             } else {
                 self.navigationItem.titleView = nil;
@@ -550,12 +548,6 @@
         case ChatRoomsTypeArchived:
             self.navigationItem.title = AMLocalizedString(@"archivedChats", @"Title of archived chats button");
             break;
-    }
-}
-
-- (void)chatRoomTitleDidTap {
-    if ([[MEGASdkManager sharedMEGAChatSdk] presenceConfig] != nil) {
-        [self presentChangeOnlineStatusAlertController];
     }
 }
 
@@ -748,6 +740,10 @@
     return cell;
 }
 
+- (BOOL)isUserContactsSectionVisible {
+    return [self numberOfChatRooms] > 0;
+}
+
 #pragma mark - TopBannerButton
 
 - (void)showTopBannerButton:(MEGAChatCall *)call {
@@ -903,8 +899,6 @@
     }
 }
 
-#pragma mark - IBActions
-
 - (IBAction)addTapped:(UIBarButtonItem *)sender {
     MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsNavigationControllerID"];
     ContactsViewController *contactsVC = navigationController.viewControllers.firstObject;
@@ -914,8 +908,10 @@
     [self presentViewController:navigationController animated:YES completion:nil];
 }
 
-- (BOOL)isUserContactsSectionVisible {
-    return [self numberOfChatRooms] > 0;
+- (IBAction)optionsTapped:(UIBarButtonItem *)sender {
+    if (MEGASdkManager.sharedMEGAChatSdk.presenceConfig) {
+        [self presentChangeOnlineStatusAlertController];
+    }
 }
 
 #pragma mark - UITableViewDataSource
