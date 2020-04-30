@@ -733,7 +733,7 @@
 /* Title for the MEGA Recovery Key */
 "masterKey"="Recovery Key";
 /* Section title where you can change your MEGA's password */
-"changePasswordLabel"="Change password";
+"changePasswordLabel"="Change Password";
 /* Advising the user to keep the user's master key safe. */
 "exportMasterKeyFooter"="Exporting the Recovery Key and keeping it in a secure location enables you to set a new password without data loss.";
 /* Question button to present a view where it's explained what is the Recovery Key */

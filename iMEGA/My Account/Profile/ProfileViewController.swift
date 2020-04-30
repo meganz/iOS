@@ -425,7 +425,7 @@ extension ProfileViewController: UITableViewDataSource {
                     cell.accessoryType = .none
                 }
             case .changePassword:
-                cell.nameLabel.text = AMLocalizedString("changePasswordLabel", "Section title where you can change your MEGA's password").capitalized
+                cell.nameLabel.text = AMLocalizedString("changePasswordLabel", "Section title where you can change your MEGA's password")
             }
             return cell
         case .security:
