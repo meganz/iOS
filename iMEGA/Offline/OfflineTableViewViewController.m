@@ -76,7 +76,9 @@ static NSString *kPath = @"kPath";
     NSString *itemPath = [self.offline.currentOfflinePath stringByAppendingPathComponent:cell.nameLabel.text];
     
     UIAlertAction *removeItemAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"remove", @"Title for the action that allows to remove a file or folder") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [self.offline removeOfflineNodeCell:itemPath];
+        [self.offline showRemoveAlertWithConfirmAction:^{
+            [self.offline removeOfflineNodeCell:itemPath];
+        } andCancelAction:nil];
     }];
     
     [removeItemAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
@@ -279,9 +281,12 @@ static NSString *kPath = @"kPath";
     UIContextualAction *deleteAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
         OfflineTableViewCell *cell = (OfflineTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
         NSString *itemPath = [[self.offline currentOfflinePath] stringByAppendingPathComponent:cell.itemNameString];
-        [self.offline removeOfflineNodeCell:itemPath];
-        
-        [self.offline updateNavigationBarTitle];
+        [self.offline showRemoveAlertWithConfirmAction:^{
+            [self.offline removeOfflineNodeCell:itemPath];
+            [self.offline updateNavigationBarTitle];
+        } andCancelAction:^{
+            [self.offline setEditMode:NO];
+        }];
     }];
     deleteAction.image = [UIImage imageNamed:@"delete"];
     deleteAction.backgroundColor = [UIColor colorWithRed:0.94 green:0.22 blue:0.23 alpha:1];
@@ -317,8 +322,11 @@ static NSString *kPath = @"kPath";
         MGSwipeButton *deleteButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"delete"] backgroundColor:[UIColor colorWithRed:0.93 green:0.22 blue:0.23 alpha:1.0] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
             OfflineTableViewCell *offlineCell = (OfflineTableViewCell *)cell;
             NSString *itemPath = [self.offline.currentOfflinePath stringByAppendingPathComponent:offlineCell.itemNameString];
-            [self.offline removeOfflineNodeCell:itemPath];
-            
+            [self.offline showRemoveAlertWithConfirmAction:^{
+                [self.offline removeOfflineNodeCell:itemPath];
+            } andCancelAction:^{
+                [self.offline setEditMode:NO];
+            }];
             return YES;
         }];
         [deleteButton iconTintColor:[UIColor whiteColor]];

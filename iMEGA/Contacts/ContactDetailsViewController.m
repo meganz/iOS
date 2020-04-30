@@ -436,24 +436,14 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     }
 }
 - (void)showRemoveContactAlert {
-    
-    NSString *message = [NSString stringWithFormat:AMLocalizedString(@"removeUserMessage", nil), self.user.mnz_displayName];
-    
-    UIAlertController *removeContactAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"removeUserTitle", @"Alert title shown when you want to remove one or more contacts") message:message preferredStyle:UIAlertControllerStyleAlert];
-    
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil];
-    
-    UIAlertAction *okAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-        MEGARemoveContactRequestDelegate *removeContactRequestDelegate = [MEGARemoveContactRequestDelegate.alloc initWithCompletion:^{                    
+    UIAlertController *removeContactAlertController = [Helper removeUserContactWithConfirmAction:^{
+        MEGARemoveContactRequestDelegate *removeContactRequestDelegate = [MEGARemoveContactRequestDelegate.alloc initWithCompletion:^{
             //TODO: Close chat room because the contact was removed
             
             [self.navigationController popViewControllerAnimated:YES];
         }];
         [[MEGASdkManager sharedMEGASdk] removeContactUser:self.user delegate:removeContactRequestDelegate];
     }];
-    
-    [removeContactAlertController addAction:cancelAction];
-    [removeContactAlertController addAction:okAction];
     
     [self presentViewController:removeContactAlertController animated:YES completion:nil];
 }

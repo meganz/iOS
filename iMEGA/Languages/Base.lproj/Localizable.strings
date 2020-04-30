@@ -436,22 +436,6 @@
 "renameNodeMessage"="Enter the new name";
 /* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
 "moveToTheRubbishBin"="Move to the Rubbish Bin";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 file' */
-"moveFileToRubbishBinMessage"="Are you sure you want to move 1 file to the Rubbish Bin?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin '{1+} files' */
-"moveFilesToRubbishBinMessage"="Are you sure you want to move %d files to the Rubbish Bin?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 folder' */
-"moveFolderToRubbishBinMessage"="Are you sure you want to move 1 folder to the Rubbish Bin?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} folders" */
-"moveFoldersToRubbishBinMessage"="Are you sure you want to move %d folders to the Rubbish Bin?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and 1 folder" */
-"moveFileFolderToRubbishBinMessage"="Are you sure you want to move 1 file and 1 folder to the Rubbish Bin?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and {1+} folders" */
-"moveFileFoldersToRubbishBinMessage"="Are you sure you want to move 1 file and %d folders to the Rubbish Bin?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files and 1 folder" */
-"moveFilesFolderToRubbishBinMessage"="Are you sure you want to move %d files and 1 folder to the Rubbish Bin?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "[A] = {1+} files and [B] = {1+} folders" */
-"moveFilesFoldersToRubbishBinMessage"="Are you sure you want to move [A] files and [B] folders to the Rubbish Bin?";
 /* Success message shown when you have moved 1 file to the rubbish bin */
 "fileMovedToRubbishBinMessage"="1 file moved to the Rubbish Bin";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
@@ -574,8 +558,6 @@
 "theUsersHaveBeenInvited"="The users have been invited and will appear in your contact list once accepted.";
 /* Alert title shown when you want to remove one or more contacts */
 "removeUserTitle"="Remove contact";
-/* Alert confirmation message shown when you want to remove one contact from your contacts list */
-"removeUserMessage"="Are you sure you want to remove %@ from your contact list?";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
 "removeMultipleUsersMessage"="Are you sure you want to remove %d users from your contact list?";
 /* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
