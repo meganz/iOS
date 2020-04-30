@@ -14,7 +14,7 @@ class ChatViewController: MessagesViewController {
     @objc var publicChatLink: URL?
     @objc var publicChatWithLinkCreated: Bool = false
     var chatInputBar: ChatInputBar!
-    var editMessage: MEGAChatMessage?
+    var editMessage: ChatMessage?
     var addToChatViewController: AddToChatViewController!
     // TODO: The `displayedAddToChatViewController` is required if `AddToChatViewController` added as a content view and not presented.
 //    var displayedAddToChatViewController = false
@@ -166,7 +166,7 @@ class ChatViewController: MessagesViewController {
             if isFromCurrentSender(message: chatMessage) {
                 if action == NSSelectorFromString("delete:") {
                     if message.isDeletable {
-                        if editMessage?.messageId != message.messageId {
+                        if editMessage?.message.messageId != message.messageId {
                             return true
                         }
                     }
@@ -198,7 +198,7 @@ class ChatViewController: MessagesViewController {
         }
         
         if action == NSSelectorFromString("edit:") {
-            editMessage(message)
+            editMessage(chatMessage)
             return
         }
         
