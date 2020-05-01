@@ -8,5 +8,6 @@ extension ChatViewController: MessageCellDelegate {
     
     func didTapAccessoryView(in cell: MessageCollectionViewCell) {
         print("Accessory view tapped")
+        cell.forward(nil)
     }
 }
