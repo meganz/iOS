@@ -1,10 +1,17 @@
 
 import UIKit
 
+protocol AddToChatMenuItemsViewDelegate: class {
+    func didTap(itemAtIndex index: Int)
+}
+
 class AddToChatMenuItemsView: UIView {
     
     @IBOutlet var menuViews: [AddToChatMenuView]!
+    @IBOutlet var buttons: [UIButton]!
     
+    weak var delegate: AddToChatMenuItemsViewDelegate?
+
     var menus: [AddToChatMenu]? {
         didSet {
             guard let menus = menus,
@@ -21,5 +28,14 @@ class AddToChatMenuItemsView: UIView {
                 }
             }
         }
+    }
+    
+    @IBAction func buttonTapped(_ button: UIButton) {
+        guard let tappedIndex = buttons.firstIndex(of: button),
+            let delegate = delegate else {
+                return
+        }
+        
+        delegate.didTap(itemAtIndex: tappedIndex)
     }
 }

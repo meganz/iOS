@@ -52,7 +52,9 @@ class AddToChatViewController: UIViewController {
     
     func setUpMenuPageViewController() {
         let firstPageController = AddToChatMenuViewController(nibName: nil, bundle: nil)
+        firstPageController.delegate = self
         let secondPageController = AddToChatMenuViewController(nibName: nil, bundle: nil)
+        secondPageController.delegate = self
         if let menus = AddToChatMenu.menus() {
             firstPageController.menus = (0..<8).map { menus[$0] }
             secondPageController.menus = [menus[8]]
@@ -111,6 +113,29 @@ extension AddToChatViewController: UIPageViewControllerDataSource, UIPageViewCon
 
     func presentationIndex(for pageViewController: UIPageViewController) -> Int {
         return 0
+    }
+}
+
+extension AddToChatViewController: AddToChatMenuViewControllerDelegate {
+    func didTap(itemAtIndex index: Int, viewController: AddToChatMenuViewController) {
+        var actualMenuIndex = 0
+        if menuPages.first == viewController {
+            actualMenuIndex = index
+        } else {
+            guard let totalMenusInFirstPage = menuPages.first?.menus?.count else {
+                return
+            }
+            
+            actualMenuIndex = (totalMenusInFirstPage - 1) + index
+        }
+        
+        switch actualMenuIndex {
+        case 0:
+            dismiss(animated: true, completion: nil)
+            delegate?.loadPhotosView()
+        default:
+            break
+        }
     }
 }
 
