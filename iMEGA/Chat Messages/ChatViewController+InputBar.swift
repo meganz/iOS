@@ -219,40 +219,60 @@ extension ChatViewController: AddToChatViewControllerDelegate {
     }
     
     func loadPhotosView() {
-        // TODO: Need to refactor this method.
-        let imagePickerController = MEGAAssetsPickerController { assets in
-            guard let assets = assets else {
-                return
+        if let rc = UIApplication.shared.keyWindow?.rootViewController {
+            if let tabBarController = rc as? UITabBarController {
+                tabBarController.tabBar.isHidden = true
             }
             
-            assets.forEach { self.send(asset: $0)}
+            // TODO: Need to refactor this method.
+            let imagePickerController = MEGAAssetsPickerController { assets in
+                guard let assets = assets else {
+                    return
+                }
+                
+                assets.forEach { self.send(asset: $0)}
+            }
+            
+            present(imagePickerController!, animated: true) {
+                if let tabBarController = rc as? UITabBarController {
+                    tabBarController.tabBar.isHidden = false
+                }
+            }
         }
-        
-        present(imagePickerController!, animated: true, completion: nil)
     }
     
     func showCamera() {
-        let pickerController = MEGAImagePickerController(toShareThroughChatWith: .camera) { (filePath, sourceType, node) in
-            guard let path = filePath,
-                let parentNode = node,
-                (path as NSString).mnz_isImagePathExtension else {
-                return
+        if let rc = UIApplication.shared.keyWindow?.rootViewController {
+            if let tabBarController = rc as? UITabBarController {
+                tabBarController.tabBar.isHidden = true
             }
             
-            let transferUploadDelegate: MEGAStartUploadTransferDelegate  = MEGAStartUploadTransferDelegate { _ in
-                // Should show the progress to the user.
+            let pickerController = MEGAImagePickerController(toShareThroughChatWith: .camera) { (filePath, sourceType, node) in
+                guard let path = filePath,
+                    let parentNode = node,
+                    (path as NSString).mnz_isImagePathExtension else {
+                        return
+                }
+                
+                let transferUploadDelegate: MEGAStartUploadTransferDelegate  = MEGAStartUploadTransferDelegate { _ in
+                    // Should show the progress to the user.
+                }
+                
+                let appData = ("" as NSString).mnz_appDataToAttach(toChatID: self.chatRoom.chatId,
+                                                                   asVoiceClip: false)
+                
+                MEGASdkManager.sharedMEGASdk()!.startUpload(withLocalPath: path,
+                                                            parent: parentNode,
+                                                            appData: appData,
+                                                            isSourceTemporary: true,
+                                                            delegate: transferUploadDelegate)
             }
             
-            let appData = ("" as NSString).mnz_appDataToAttach(toChatID: self.chatRoom.chatId,
-                                                               asVoiceClip: false)
-            
-            MEGASdkManager.sharedMEGASdk()!.startUpload(withLocalPath: path,
-                                                        parent: parentNode,
-                                                        appData: appData,
-                                                        isSourceTemporary: true,
-                                                        delegate: transferUploadDelegate)
+            present(pickerController!, animated: true) {
+                if let tabBarController = rc as? UITabBarController {
+                    tabBarController.tabBar.isHidden = false
+                }
+            }
         }
-        
-        present(pickerController!, animated: true, completion: nil)
     }
 }
