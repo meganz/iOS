@@ -39,6 +39,7 @@
 		2FA6DA62243E919D007A8E81 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FA6DA61243E919D007A8E81 /* Accelerate.framework */; };
 		2FA6DAA5243ED07E007A8E81 /* MEGAGetPreviewRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8EC55B31F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.m */; };
 		2FA6DAA7243ED07F007A8E81 /* MEGAGetPreviewRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8EC55B31F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.m */; };
+		2FBC74C8245BE74900BE513F /* ChatViewController+EmptyDataSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBC74C7245BE74900BE513F /* ChatViewController+EmptyDataSet.swift */; };
 		410AD3C11C883AA900BF939E /* MEGAAVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 410AD3C01C883AA900BF939E /* MEGAAVViewController.m */; };
 		411504941CEB183600BF38E3 /* SaveToCameraRollActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 411504931CEB183600BF38E3 /* SaveToCameraRollActivity.m */; };
 		4115D6441E718B1F004BB0FF /* UIImage+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 4115D6431E718B1F004BB0FF /* UIImage+MNZCategory.m */; };
@@ -1286,6 +1287,7 @@
 		2FA6D9DA243E8CB4007A8E81 /* ChatMediaCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatMediaCollectionViewCell.swift; sourceTree = "<group>"; };
 		2FA6DA5C243E915F007A8E81 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		2FA6DA61243E919D007A8E81 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		2FBC74C7245BE74900BE513F /* ChatViewController+EmptyDataSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatViewController+EmptyDataSet.swift"; sourceTree = "<group>"; };
 		410333D71B9993A000380FF3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		410333E11B99948600380FF3 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		410333EB1B9994F400380FF3 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = nl; path = nl.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
@@ -5442,6 +5444,7 @@
 				BF1589212435F3E7007AF9EC /* ChatViewMessagesFlowLayout.swift */,
 				BFE6DBFB242DBA4A00E2E5B4 /* ChatViewController.swift */,
 				2F18DEEE24592F0E00E7EE27 /* ChatViewController+Menus.swift */,
+				2FBC74C7245BE74900BE513F /* ChatViewController+EmptyDataSet.swift */,
 				BFB464152435825A00FB90B9 /* ChatViewController+MessagesDataSource.swift */,
 				BFB464132435823400FB90B9 /* ChatViewController+MessagesDisplayDelegate.swift */,
 				2F18DEF4245BD07E00E7EE27 /* ChatViewController+MessageCellDelegate.swift */,
@@ -6937,6 +6940,7 @@
 				5BB50E091F20E840000CA24D /* MEGACreateFolderRequestDelegate.m in Sources */,
 				A81AD7391F3099F800CA4059 /* MEGAProcessAsset.m in Sources */,
 				417279531DB663FA001AC818 /* JSQMessagesCollectionViewCellOutgoing.m in Sources */,
+				2FBC74C8245BE74900BE513F /* ChatViewController+EmptyDataSet.swift in Sources */,
 				BF1574AE2373AB8C0095B283 /* MEGAChatRoom+Additions.swift in Sources */,
 				B6575FD021FC526D00B7AD82 /* LivePhotoUploadOperation.m in Sources */,
 				B65AC8E521F9B7A30094FF4F /* MOAssetUploadErrorPerLaunch+CoreDataProperties.m in Sources */,
