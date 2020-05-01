@@ -30,6 +30,7 @@ class AddToChatViewAnimator: NSObject, UIViewControllerAnimatedTransitioning {
 
         if let toView = transitionContext.view(forKey: .to) {
             containerView.addSubview(toView)
+            toView.autoPinEdgesToSuperviewEdges()
         }
         containerView.bringSubviewToFront(addToChatViewController.view)
         addToChatViewController.view.layoutIfNeeded()
