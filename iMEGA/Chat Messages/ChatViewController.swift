@@ -174,9 +174,103 @@ class ChatViewController: MessagesViewController {
                     return message.isEditable
                 }
             }
+        case .containsMeta:
+            //All messages
+            if (action == NSSelectorFromString("copy:") && message.containsMeta.type != .geolocation)
+                || action == NSSelectorFromString("forward:") {
+                return true
+            }
+            
+            //Your messages
+            if isFromCurrentSender(message: chatMessage) {
+                if action == NSSelectorFromString("delete:") {
+                    if message.isDeletable {
+                        if editMessage?.message.messageId != message.messageId {
+                            return true
+                        }
+                    }
+                }
+                
+                if action == NSSelectorFromString("edit:") {
+                    return message.isEditable
+                }
+                
+                if action == NSSelectorFromString("removeRichPreview:") && message.containsMeta.type != .geolocation {
+                    return message.isEditable
+                }
+            }
+        case .alterParticipants, .truncate, .privilegeChange, .chatTitle:
+            if action == NSSelectorFromString("copy:") {
+                return true
+            }
+        case .attachment:
+            if action == NSSelectorFromString("download:")
+                || action == NSSelectorFromString("forward:") {
+                return true
+            }
+            
+            //Your messages
+            if isFromCurrentSender(message: chatMessage) {
+                if action == NSSelectorFromString("delete:") && message.isDeletable {
+                    return true
+                }
+                
+                if action == NSSelectorFromString("import:") {
+                    return true
+                }
+            }
+            
+        case .voiceClip:
+            if (action == NSSelectorFromString("download:")
+                || action == NSSelectorFromString("forward:")) && message.richNumber != nil {
+                return true
+            }
+            
+            //Your messages
+            if isFromCurrentSender(message: chatMessage) {
+                if action == NSSelectorFromString("delete:") && message.isDeletable {
+                    return true
+                }
+                
+                if action == NSSelectorFromString("import:") && message.richNumber == nil {
+                    return true
+                }
+            }
+            
+        case .contact:
+            if action == NSSelectorFromString("forward:") {
+                return true
+            }
+            
+            //Your messages
+            if isFromCurrentSender(message: chatMessage) {
+                if action == NSSelectorFromString("delete:") && message.isDeletable {
+                    return true
+                }
+            }
+            
+            if action == NSSelectorFromString("addContact:") {
+                if message.usersCount == 1 {
+                    let email = message.userEmail(at: 0)!
+                    let user = MEGASdkManager.sharedMEGASdk()?.contact(forEmail: email)
+                    if user?.visibility != .visible {
+                        return true
+                    } else {
+                        for index in 0...message.usersCount - 1 {
+                            let email = message.userEmail(at: index)!
+                            let user = MEGASdkManager.sharedMEGASdk()?.contact(forEmail: email)
+                            if user?.visibility == .visible {
+                                return false
+                            }
+                        }
+                        return true
+                    }
+                    
+                }
+            }
         default:
             return false
-
+            
         }
         return false
     }
