@@ -71,7 +71,6 @@ class ChatVoiceClipCollectionViewCell: MessageContentCell {
             if !FileManager.default.fileExists(atPath: nodePath!) {
                 MEGASdkManager.sharedMEGASdk()?.startDownloadTopPriority(with: node, localPath: nodePath!, appData: nil, delegate: MEGAStartDownloadTransferDelegate(progress: nil, completion: { (transfer) in
                     messagesCollectionView.reloadItems(at: [indexPath])
-
                 }, onError: nil))
             }
         }
@@ -79,6 +78,11 @@ class ChatVoiceClipCollectionViewCell: MessageContentCell {
 }
 
 open class ChatVoiceClipCollectionViewSizeCalculator: MessageSizeCalculator {
+    public override init(layout: MessagesCollectionViewFlowLayout? = nil) {
+        super.init(layout: layout)
+        configureAccessoryView()
+    }
+    
     open override func messageContainerSize(for message: MessageType) -> CGSize {
         return CGSize(width: 170, height: 50)
     }
