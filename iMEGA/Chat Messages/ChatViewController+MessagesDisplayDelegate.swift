@@ -93,8 +93,6 @@ extension ChatViewController: MessagesDisplayDelegate {
     private func shouldShowAccessoryView(for message: MessageType) -> Bool {
         guard let chatMessage = message as? ChatMessage else { return false }
         
-        return (chatMessage.message.type == .contact
-            || chatMessage.message.type == .containsMeta
-            || chatMessage.message.type == .attachment)
+        return chatMessage.message.shouldShowForwardAccessory()
     }
 }
