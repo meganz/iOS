@@ -495,7 +495,8 @@ class ChatViewController: MessagesViewController {
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messagesLayoutDelegate = self
         messagesCollectionView.messagesDisplayDelegate = self
-        
+        messagesCollectionView.messageCellDelegate = self
+
         messagesCollectionView.refreshControl = refreshControl
     }
     
