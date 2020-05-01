@@ -123,7 +123,12 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
                     chatViewController.messagesCollectionView.performBatchUpdates({
                         chatViewController.messagesCollectionView.reloadSections([index])
                     }, completion: nil)
-                    
+                    if message.type == .attachment {
+                        
+                    }
+                } else {
+                    message.chatId = chatRoom.chatId
+                    insertMessage(message)
                 }
                 
             default:
