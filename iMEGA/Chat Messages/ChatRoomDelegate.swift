@@ -12,7 +12,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
     var messages: [ChatMessage] = []
     var isChatRoomOpen: Bool = false
     var historyMessages: [ChatMessage] = []
-    
+    var loadingState = true
     var isFullChatHistoryLoaded: Bool {
         return MEGASdkManager.sharedMEGAChatSdk()!.isFullHistoryLoaded(forChat: chatRoom.chatId)
     }
@@ -53,7 +53,6 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
     
     func onMessageLoaded(_ api: MEGAChatSdk!, message: MEGAChatMessage!) {
         MEGALogInfo("ChatRoomDelegate: onMessageLoaded")
-        
         if isFullChatHistoryLoaded {
             chatViewController.messagesCollectionView.refreshControl = nil
         }
@@ -67,6 +66,8 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
                 }
             }
         } else {
+            loadingState = false
+
             if messages.count == 0 {
                 messages = historyMessages
                 historyMessages.removeAll()
