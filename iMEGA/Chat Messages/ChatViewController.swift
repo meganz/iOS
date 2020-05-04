@@ -304,7 +304,7 @@ class ChatViewController: MessagesViewController {
         }
         
         if action == NSSelectorFromString("download:") {
-
+            downloadMessage(chatMessage)
             return
         }
         
