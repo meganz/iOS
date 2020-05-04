@@ -327,6 +327,61 @@ extension ChatViewController: AddToChatViewControllerDelegate {
     }
     
     func showLocation() {
+        let genericRequestDelegate = MEGAGenericRequestDelegate { (request, error) in
+            if error.type != .apiOk {
+                let title = AMLocalizedString("Send Location", "Alert title shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm")
+                
+                let message = AMLocalizedString("This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform.", "Message shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm")
+                
+                let cancelAction = UIAlertAction(title: AMLocalizedString("cancel"), style: .cancel) { _ in
+                    //TODO: Logic if check if the input bar hidden or not.
+                }
+                
+                let continueAction = UIAlertAction(title: AMLocalizedString("continue"), style: .default) { _ in
+                    let enableGeolocationDelegate = MEGAGenericRequestDelegate { (request, error) in
+                        if error.type != .apiOk {
+                            let alertTitle = AMLocalizedString("error")
+                            let alertMessage = String(format: "Enable geolocation failed. Error: %@", error.name)
+                            
+                            let enableGeolocationAlertAction = UIAlertAction(title: AMLocalizedString("ok"),
+                                                                             style: .default) { _ in
+                                                                                //TODO: Logic if check if the input bar hidden or not.
+                                                                                
+                            }
+                            
+                            let enableGeolocationAlertController = UIAlertController(title: alertTitle,
+                                                                                     message: alertMessage,
+                                                                                     preferredStyle: .alert)
+                            enableGeolocationAlertController.addAction(enableGeolocationAlertAction)
+                            self.present(viewController: enableGeolocationAlertController)
+                        } else {
+                            self.presentShareLocation()
+                        }
+                    }
+                    MEGASdkManager.sharedMEGASdk()?.enableGeolocation(with: enableGeolocationDelegate)
+                }
+                
+                let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+                alertController.addAction(cancelAction)
+                alertController.addAction(continueAction)
+                self.present(viewController: alertController)
+            } else {
+                self.presentShareLocation()
+            }
+        }
+        MEGASdkManager.sharedMEGASdk()?.isGeolocationEnabled(with: genericRequestDelegate)
+    }
+    
+    private func presentShareLocation() {
+        let storyboard = UIStoryboard(name: "Chat", bundle: nil)
+        guard let shareLocationViewController = storyboard.instantiateViewController(withIdentifier: "ShareLocationViewControllerID") as? ShareLocationViewController else {
+            fatalError("ChatViewController: could not create an instance of ShareLocationViewController")
+        }
         
+        shareLocationViewController.chatRoom = chatRoom
+            
+        let navController = MEGANavigationController(rootViewController: shareLocationViewController)
+        navController.addLeftDismissButton(withText: AMLocalizedString("cancel"))
+        present(viewController: navController)
     }
 }
