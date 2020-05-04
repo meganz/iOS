@@ -412,6 +412,7 @@
                 if (viewControllers.count != 2) {
                     [self.navigationController popToViewController:currentMessagesVC animated:YES];
                 }
+                [NSNotificationCenter.defaultCenter postNotificationName:MEGAOpenChatRoomFromPushNotification object:nil];
                 return;
             } else {
                 [[MEGASdkManager sharedMEGAChatSdk] closeChatRoom:currentMessagesVC.chatRoom.chatId delegate:currentMessagesVC];
