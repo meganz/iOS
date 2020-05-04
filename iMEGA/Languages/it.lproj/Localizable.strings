@@ -996,7 +996,7 @@
 /* Button that allows the user the change a photo, e.g. his avatar photo */
 "Change Photo"="Cambia foto";
 /* Button that allows the user the add a photo, e.g avatar photo */
-"Add Photo"="Add Photo";
+"Add Photo"="Aggiungi foto";
 /* Button title that allows the user change his name */
 "changeName"="Cambia nome";
 /* Success message when changing profile information. */
@@ -2125,7 +2125,7 @@
 /* Place holder for enter mobile number field */
 "Your phone number"="Il tuo numero di telefono";
 /* Text related to verified phone number. Used as title or cell description.  */
-"Phone Number"="Phone Number";
+"Phone Number"="Numero di telefono";
 /* Label tell user to enter received txt to below input boxes */
 "Please type the verification code sent to"="Per favore, inserisci il codice di verifica inviato a";
 /* Text message to remind user to resend verification code */
