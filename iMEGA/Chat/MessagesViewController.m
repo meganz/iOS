@@ -4,7 +4,6 @@
 #import <UserNotifications/UserNotifications.h>
 
 #import <PureLayout/PureLayout.h>
-#import "NSDate+DateTools.h"
 #import "SVProgressHUD.h"
 #import "UIImage+GKContact.h"
 #import "UIScrollView+EmptyDataSet.h"
@@ -577,7 +576,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 
 - (void)loadMessages {
     NSUInteger messagesToLoad = 32;
-    if (self.isFirstLoad && (self.unreadMessages > 32 || self.unreadMessages < 0)) {
+    if (self.isFirstLoad && (self.unreadMessages > messagesToLoad || self.unreadMessages < 0)) {
         messagesToLoad = ABS(self.unreadMessages);
     }
     NSInteger loadMessage = [[MEGASdkManager sharedMEGAChatSdk] loadMessagesForChat:self.chatRoom.chatId count:messagesToLoad];
@@ -630,7 +629,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             }
         }
         
-        NSString *chatRoomTitle = self.chatRoom.title ?: @"";
+        NSString *chatRoomTitle = self.chatRoom.chatTitle ?: @"";
         NSString *chatRoomState;
         if (self.tapForInfoTimer.isValid) {
             chatRoomState = AMLocalizedString(@"Tap here for info", @"Subtitle shown in a chat to inform where to tap to enter in the chat details view");
@@ -2882,12 +2881,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     }
 }
 
-#pragma mark - UIScrollViewDelegate
-
-- (BOOL)scrollViewShouldScrollToTop:(UIScrollView *)scrollView {
-    return NO;
-}
-
 #pragma mark - UITextViewDelegate
 
 - (void)textViewDidChange:(UITextView *)textView {
@@ -3113,6 +3106,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         } else {
             // TODO: improve load earlier messages
             CGFloat oldContentOffsetFromBottomY = self.collectionView.contentSize.height - self.collectionView.contentOffset.y;
+            [self.collectionView setContentOffset:self.collectionView.contentOffset animated:NO];
             [self.collectionView reloadData];
             [self.collectionView layoutIfNeeded];
             CGPoint newContentOffset = CGPointMake(self.collectionView.contentOffset.x, self.collectionView.contentSize.height - oldContentOffsetFromBottomY);
@@ -3296,6 +3290,11 @@ static NSMutableSet<NSString *> *tapForInfoSet;
                 [api closeChatRoom:chat.chatId delegate:self];
                 [self.navigationController popToRootViewControllerAnimated:YES];
             }
+            break;
+            
+        case MEGAChatRoomChangeTypeOwnPriv:
+            [self customNavigationBarLabel];
+            [self updateNavigationBarButtonsState];
             break;
             
         case MEGAChatRoomChangeTypeUserStopTyping: {
