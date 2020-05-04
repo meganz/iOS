@@ -130,6 +130,21 @@ extension ChatViewController: ChatMessageAndAudioInputBarDelegate {
     func typing(withText text: String) {
         print("Started typing with text \(text)")
     }
+    
+    func present(viewController: UIViewController) {
+        if let rc = UIApplication.shared.keyWindow?.rootViewController {
+            if let tabBarController = rc as? UITabBarController {
+                tabBarController.tabBar.isHidden = true
+            }
+            
+            present(viewController, animated: true) {
+                if let tabBarController = rc as? UITabBarController {
+                    tabBarController.tabBar.isHidden = false
+                }
+            }
+        }
+
+    }
 }
 
 
@@ -219,60 +234,99 @@ extension ChatViewController: AddToChatViewControllerDelegate {
     }
     
     func loadPhotosView() {
-        if let rc = UIApplication.shared.keyWindow?.rootViewController {
-            if let tabBarController = rc as? UITabBarController {
-                tabBarController.tabBar.isHidden = true
+        let imagePickerController = MEGAAssetsPickerController { assets in
+            guard let assets = assets else {
+                return
             }
             
-            // TODO: Need to refactor this method.
-            let imagePickerController = MEGAAssetsPickerController { assets in
-                guard let assets = assets else {
-                    return
-                }
-                
-                assets.forEach { self.send(asset: $0)}
-            }
-            
-            present(imagePickerController!, animated: true) {
-                if let tabBarController = rc as? UITabBarController {
-                    tabBarController.tabBar.isHidden = false
-                }
-            }
+            assets.forEach { self.send(asset: $0)}
         }
+        
+        present(viewController: imagePickerController!)
     }
     
     func showCamera() {
-        if let rc = UIApplication.shared.keyWindow?.rootViewController {
-            if let tabBarController = rc as? UITabBarController {
-                tabBarController.tabBar.isHidden = true
+        let pickerController = MEGAImagePickerController(toShareThroughChatWith: .camera) { (filePath, sourceType, node) in
+            guard let path = filePath,
+                let parentNode = node,
+                (path as NSString).mnz_isImagePathExtension else {
+                    return
             }
             
-            let pickerController = MEGAImagePickerController(toShareThroughChatWith: .camera) { (filePath, sourceType, node) in
-                guard let path = filePath,
-                    let parentNode = node,
-                    (path as NSString).mnz_isImagePathExtension else {
-                        return
-                }
-                
-                let transferUploadDelegate: MEGAStartUploadTransferDelegate  = MEGAStartUploadTransferDelegate { _ in
-                    // Should show the progress to the user.
-                }
-                
-                let appData = ("" as NSString).mnz_appDataToAttach(toChatID: self.chatRoom.chatId,
-                                                                   asVoiceClip: false)
-                
-                MEGASdkManager.sharedMEGASdk()!.startUpload(withLocalPath: path,
-                                                            parent: parentNode,
-                                                            appData: appData,
-                                                            isSourceTemporary: true,
-                                                            delegate: transferUploadDelegate)
+            let transferUploadDelegate: MEGAStartUploadTransferDelegate  = MEGAStartUploadTransferDelegate { _ in
+                // Should show the progress to the user.
             }
             
-            present(pickerController!, animated: true) {
-                if let tabBarController = rc as? UITabBarController {
-                    tabBarController.tabBar.isHidden = false
+            let appData = ("" as NSString).mnz_appDataToAttach(toChatID: self.chatRoom.chatId,
+                                                               asVoiceClip: false)
+            
+            MEGASdkManager.sharedMEGASdk()!.startUpload(withLocalPath: path,
+                                                        parent: parentNode,
+                                                        appData: appData,
+                                                        isSourceTemporary: true,
+                                                        delegate: transferUploadDelegate)
+        }
+        
+        present(viewController: pickerController!)
+    }
+    
+    func showCloudDrive() {
+        let storyboard = UIStoryboard(name: "Cloud", bundle: nil)
+        let cloudDriveNavController = storyboard.instantiateViewController(withIdentifier: "BrowserNavigationControllerID")
+        
+        if let navController = cloudDriveNavController as? UINavigationController,
+            let browserViewController = navController.viewControllers.first as? BrowserViewController {
+            browserViewController.browserAction = .sendFromCloudDrive
+            browserViewController.selectedNodes = { selectedObjects in
+                guard let selectedNodes = selectedObjects as? [MEGANode] else {
+                    return
                 }
+                
+                // TODO: Handle the error
+                selectedNodes.forEach { node in
+                    Helper.import(node) { newNode in
+                        MEGASdkManager.sharedMEGAChatSdk()?.attachNode(toChat: self.chatRoom.chatId, node: newNode.handle)
+                    }
+                }
+                
             }
         }
+        
+        present(viewController: cloudDriveNavController)
+    }
+    
+    func showVoiceClip() {
+        
+    }
+    
+    func showContacts() {
+        let storyboard = UIStoryboard(name: "Contacts", bundle: nil)
+        let contactsNavigationController = storyboard.instantiateViewController(withIdentifier: "ContactsNavigationControllerID")
+        
+        guard let navController = contactsNavigationController as? UINavigationController,
+            let contactsViewController = navController.viewControllers.first as? ContactsViewController else {
+                return
+        }
+            
+        contactsViewController.contactsMode = .chatAttachParticipant
+
+        contactsViewController.userSelected = { users in
+            if let message = MEGASdkManager.sharedMEGAChatSdk()?.attachContacts(toChat: self.chatRoom.chatId,
+                                                                                contacts: users) {
+                //TODO: Add the message to model and reload the cell.
+                print(message)
+                
+            }
+        }
+        
+        present(viewController: contactsNavigationController)
+    }
+    
+    func startGroupChat() {
+        
+    }
+    
+    func showLocation() {
+        
     }
 }

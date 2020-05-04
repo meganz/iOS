@@ -2,7 +2,7 @@
 import UIKit
 
 protocol AddToChatMenuViewControllerDelegate: class {
-    func didTap(itemAtIndex index: Int, viewController: AddToChatMenuViewController)
+    func didTap(menu: AddToChatMenu)
 }
 
 class AddToChatMenuViewController: UIViewController {
@@ -26,7 +26,7 @@ class AddToChatMenuViewController: UIViewController {
 }
 
 extension AddToChatMenuViewController: AddToChatMenuItemsViewDelegate {
-    func didTap(itemAtIndex index: Int) {
-        delegate?.didTap(itemAtIndex: index, viewController: self)
+    func didTap(menu: AddToChatMenu) {
+        delegate?.didTap(menu: menu)
     }
 }
