@@ -27,7 +27,6 @@
 #import "ContactsViewController.h"
 #import "GroupCallViewController.h"
 #import "GroupChatDetailsViewController.h"
-#import "MainTabBarController.h"
 #import "MessagesViewController.h"
 
 @interface ChatRoomsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAChatDelegate, UIScrollViewDelegate, MEGAChatCallDelegate, UISearchControllerDelegate>
@@ -167,14 +166,6 @@
     if ([[MEGASdkManager sharedMEGAChatSdk] initState] == MEGAChatInitOnlineSession) {
         [self reloadData];
     }
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    
-    if ([DevicePermissionsHelper shouldAskForNotificationsPermissions]) {
-        [DevicePermissionsHelper modalNotificationsPermission];
-    }
     
     self.chatRoomOnGoingCall = nil;
     MEGAHandleList *chatRoomIDsWithCallInProgress = [MEGASdkManager.sharedMEGAChatSdk chatCallsWithState:MEGAChatCallStatusInProgress];
@@ -190,6 +181,16 @@
         if (!self.chatRoomOnGoingCall && self.topBannerButtonTopConstraint.constant == 0) {
             [self hideTopBannerButton];
         }
+    } else {
+        [self hideTopBannerButton];
+    }
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    if ([DevicePermissionsHelper shouldAskForNotificationsPermissions]) {
+        [DevicePermissionsHelper modalNotificationsPermission];
     }
 }
 
@@ -808,24 +809,30 @@
 #pragma mark - IBActions
 
 - (IBAction)joinActiveCall:(id)sender {
-    [self.timer invalidate];
-    if (self.chatRoomOnGoingCall.isGroup) {
-        GroupCallViewController *groupCallVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupCallViewControllerID"];
-        groupCallVC.callType = CallTypeActive;
-        groupCallVC.videoCall = NO;
-        groupCallVC.chatRoom = self.chatRoomOnGoingCall;
-        groupCallVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-        groupCallVC.megaCallManager = [(MainTabBarController *)UIApplication.sharedApplication.keyWindow.rootViewController megaCallManager];
-        [self presentViewController:groupCallVC animated:YES completion:nil];
-    } else {
-        CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
-        callVC.chatRoom = self.chatRoomOnGoingCall;
-        callVC.videoCall = NO;
-        callVC.callType = CallTypeActive;
-        callVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-        callVC.megaCallManager = [(MainTabBarController *)UIApplication.sharedApplication.keyWindow.rootViewController megaCallManager];
-        [self presentViewController:callVC animated:YES completion:nil];
-    }
+    [DevicePermissionsHelper audioPermissionModal:YES forIncomingCall:NO withCompletionHandler:^(BOOL granted) {
+        if (granted) {
+            [self.timer invalidate];
+            if (self.chatRoomOnGoingCall.isGroup) {
+                GroupCallViewController *groupCallVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupCallViewControllerID"];
+                groupCallVC.callType = CallTypeActive;
+                groupCallVC.videoCall = NO;
+                groupCallVC.chatRoom = self.chatRoomOnGoingCall;
+                groupCallVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+                groupCallVC.megaCallManager = ((AppDelegate *)UIApplication.sharedApplication.delegate).megaCallManager;
+                [self presentViewController:groupCallVC animated:YES completion:nil];
+            } else {
+                CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
+                callVC.chatRoom = self.chatRoomOnGoingCall;
+                callVC.videoCall = NO;
+                callVC.callType = CallTypeActive;
+                callVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+                callVC.megaCallManager = ((AppDelegate *)UIApplication.sharedApplication.delegate).megaCallManager;
+                [self presentViewController:callVC animated:YES completion:nil];
+            }
+        } else {
+            [DevicePermissionsHelper alertAudioPermissionForIncomingCall:NO];
+        }
+    }];
 }
 
 - (IBAction)openArchivedChats:(id)sender {
@@ -1111,9 +1118,13 @@
             self.searchChatListItemArray = self.chatListItemArray;
             self.searchUsersWithoutChatArray = self.usersWithoutChatArray;
         } else {
-            NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"SELF.title contains[c] %@", searchString];
+            NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"SELF.searchString contains[c] %@", searchString];
             self.searchChatListItemArray = [[self.chatListItemArray filteredArrayUsingPredicate:resultPredicate] mutableCopy];
-            NSPredicate *resultPredicateForUsers = [NSPredicate predicateWithFormat:@"SELF.mnz_fullName contains[c] %@", searchString];
+
+            NSPredicate *fullnamePredicate = [NSPredicate predicateWithFormat:@"SELF.mnz_fullName contains[c] %@", searchString];
+            NSPredicate *nicknamePredicate = [NSPredicate predicateWithFormat:@"SELF.mnz_nickname contains[c] %@", searchString];
+            NSPredicate *emailPredicate = [NSPredicate predicateWithFormat:@"SELF.email contains[c] %@", searchString];
+            NSPredicate *resultPredicateForUsers = [NSCompoundPredicate orPredicateWithSubpredicates:@[fullnamePredicate, nicknamePredicate, emailPredicate]];
             self.searchUsersWithoutChatArray = [[self.usersWithoutChatArray filteredArrayUsingPredicate:resultPredicateForUsers] mutableCopy];
         }
     }
@@ -1258,8 +1269,7 @@
 }
 
 - (void)onChatConnectionStateUpdate:(MEGAChatSdk *)api chatId:(uint64_t)chatId newState:(int)newState {
-    // INVALID_HANDLE = ~(uint64_t)0
-    if (chatId == ~(uint64_t)0 && newState == MEGAChatConnectionOnline) {
+    if (chatId == MEGAInvalidHandle && newState == MEGAChatConnectionOnline) {
         // Now it's safe to trigger a reordering of the list:
         [self reloadData];
     }

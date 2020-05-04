@@ -72,11 +72,11 @@
 	<key>NSFaceIDUsageDescription</key>
 	<string>NSFaceIDUsageDescription</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Please select “Always” - your photos and videos will be automatically uploaded to MEGA when your location changes.</string>
+	<string>NSLocationAlwaysAndWhenInUseUsageDescription</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Please select “Always” - your photos and videos will be automatically uploaded to MEGA when your location changes.</string>
+	<string>NSLocationAlwaysAndWhenInUseUsageDescription</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Please select “Always” - your photos and videos will be automatically uploaded to MEGA when your location changes.</string>
+	<string>NSLocationAlwaysAndWhenInUseUsageDescription</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>NSMicrophoneUsageDescription</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
@@ -144,7 +144,6 @@
 	<array>
 		<string>audio</string>
 		<string>fetch</string>
-		<string>location</string>
 		<string>remote-notification</string>
 		<string>voip</string>
 	</array>
@@ -181,6 +180,8 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
+	<key>UIUserInterfaceStyle</key>
+	<string>Light</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
 </dict>

@@ -15,7 +15,6 @@
     if (_locationManager == nil) {
         _locationManager = [[CLLocationManager alloc] init];
         _locationManager.delegate = self;
-        _locationManager.allowsBackgroundLocationUpdates = YES;
     }
     
     return _locationManager;

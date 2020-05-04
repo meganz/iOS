@@ -2,6 +2,8 @@
 "cancel"="Annuleer";
 /* Button title to accept something */
 "ok"="OK";
+/* Button title to clear something */
+"clear"="Leegmaken";
 /* */
 "yes"="Ja";
 /* */
@@ -20,8 +22,8 @@
 "passcode"="Toegangscode";
 /* "Size" of the file or folder you are sharing */
 "size"="Grootte";
-/*  */
-"Quality"="Quality";
+/* Quality title, used in changing the export quality of scaned doc */
+"Quality"="Kwaliteit";
 /*  */
 "folder"="Map";
 /* Error message shown when there's no camera available on the device */
@@ -42,6 +44,8 @@
 "Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="Uw bevestigingskoppeling is niet langer geldig. Uw account kan al geactiveerd zijn of u kunt uw registratie geannuleerd hebben.";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Ongeldige koppeling";
+/* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
+"The account that created this link has been terminated due to multiple violations of our Terms of Service."="De account die deze koppeling gecreëerd heeft is beëindigd door meerdere overtredingen van onze Algemene Voorwaarden.";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="Vul decoderingssleutel in";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -146,6 +150,8 @@
 "emailAlreadyInUse"="Fout. Dit e-mailadres is al in gebruik.";
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="U moet ruimte vrij maken op uw apparaat";
+/* Message shown when you try to downlonad files bigger than the available memory. */
+"MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device."="MEGA heeft minimaal %@ nodig. Maak ruimte vrij door applicaties die u niet meer gebruikt of grote videobestanden in uw galerij te verwijderen. U kunt ook beheren wat MEGA op uw apparaat opslaat.";
 /* Title for the file link view */
 "fileLink"="Bestandskoppeling";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
@@ -278,6 +284,8 @@
 "choosePhotoVideo"="Kies";
 /* Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA. */
 "capturePhotoVideo"="Vastleggen";
+/* Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA. */
+"Scan Document"="Document Scannen";
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="Nieuwe map";
 /* Hint text shown on the create folder alert. */
@@ -506,7 +514,9 @@
 "oneItemSelected"="%lu item geselecteerd";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
 "itemsSelected"="%lu items geselecteerd";
-/* Title shown when multiselection is enable in chat tabs, and the user has more than one item selected. */
+/* String shown when multi selection is enabled and only one item has been selected. */
+"1 selected"="1 geselecteerd";
+/* String shown when multi selection is enabled and the user has more than one item selected. */
 "xSelected"="%d geselecteerd";
 /* Title of the Offline section */
 "offline"="Offline";
@@ -680,6 +690,8 @@
 "Custom Settings"="Aangepaste Instellingen";
 /* Title to show when device local storage is full */
 "%@ Storage Full"="%@ Opslag Vol";
+/* Title to show when device local storage is almost full */
+"Device Storage Almost Full"="Apparaat Opslag Bijna Vol";
 /* Detail for local storage full situation */
 "You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="U heeft geen genoeg Opslag voor verdere camera uploads. Maak ruimte vrij door het verwijderen van onnodige applicaties, video's of muziek. U kunt uw opslag beheren in %@";
 /* Navigation path for Storage settings in iOS */
@@ -881,6 +893,8 @@
 "transfers"="Overdrachten";
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
 "all"="Alle";
+/* Title of one of the filters in the Transfers section. In this case "Completed" transfers. */
+"Completed"="Voltooid";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
 "downloads"="Downloads";
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
@@ -954,7 +968,7 @@
 /* %1 will be replaced by a numeric value and %2 will be 'days' or 'months', for example (Expires in [S]10[/S] days) */
 "bonusExpiresIn"="(Bonus verloopt in  [S]%1[/S] %2)";
 /* Add Phone Number title  */
-"Add Phone Number"="Telefoonnummer toevoegen";
+"Add Phone Number"="Telefoonnummer Toevoegen";
 /* Achievement explanation for add phone number */
 "You have received %1$s storage space and %2$s transfer quota for verifying your phone number."="U heeft %1$s opslagruimte en %2$s overdracht tegoed voor het verifiëren ervan uw telefoonnummer ontvangen.";
 /* Free storage description to encourage users to add phone number to their accounts */
@@ -962,13 +976,13 @@
 /* Description to encourage users to add phone number to their accounts when there are not achievements */
 "Add your phone number to MEGA. This makes it easier for your contacts to find you on MEGA."="Voeg uw telefoonnummer toe tot MEGA. Dit maakt het makkelijker voor uw contacten u te vinden op MEGA.";
 /* Description to unblock account by verifying phone number */
-"Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account."="Uw account is tijdelijk opgeschort vanwege mogelijk misbruik. Verifieer uw telefoonnummer om uw account te ontgrendelen.";
+"Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account."="Uw account is tijdelijk geblokkeerd door potentieel misbruik. Verifieer uw telefoonnummer om uw account te ontgrendelen.";
 /* Verify your account title */
-"Verify Your Account"="Uw account verifiëren";
+"Verify Your Account"="Verifieer Uw Account";
 /* Add your phone number title */
-"Add Your Phone Number"="Voeg uw telefoonnummer toe";
+"Add Your Phone Number"="Uw Telefoonnummer Toevoegen";
 /* Choose Your Country title */
-"Choose Your Country"="Kies uw land";
+"Choose Your Country"="Kies Uw Land";
 /* Used to display the number of months a plan was purchased for e.g. 3 months, 6 months. */
 "months"="maanden";
 /*  */
@@ -1262,15 +1276,15 @@
 /* Alert message shown when the user perform logout and has files in the Offline directory */
 "allFilesSavedForOfflineWillBeDeletedFromYourDevice"="Alle bestanden opgeslagen voor Offline worden verwijderd van uw apparaat. Wilt u verder gaan om uit te loggen?";
 /* Title shown when you almost had used your available transfer quota. */
-"depletedTransferQuota_title"="Verminderde overdracht tegoed";
+"depletedTransferQuota_title"="Onvoldoende overdracht tegoed";
 /* Description shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_message"="Uw wachtende download overschrijdt de huidige overdracht tegoed die beschikbaar is op uw account en kan daardoor onderbroken worden.";
 /* Button title to see the available pro plans in MEGA */
 "seePlans"="Zie abonnementen";
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
 "dismiss"="Sluiten";
-/* Notification text body shown when you have received a new chat message */
-"newMessage"="Nieuw Bericht";
+/* Content of the notification when there is unknown activity on the Chat */
+"You may have new messages"="U kunt nieuwe berichten hebben";
 /* Notification text body shown when you have received a contact request */
 "contactRequest"="Contact Verzoek";
 /* Notification text body shown when you have received a new shared folder */
@@ -1538,6 +1552,10 @@
 "callFailed"="Oproep mislukt";
 /* When an active call of user A with user B had ended */
 "callEnded"="Oproep beëindigd.";
+/* When an active goup call is ended */
+"Group call ended"="Groep oproep beëindigd";
+/* When an active goup call is ended, shows the duration */
+"[A]Group call ended[/A][C]. Duration: [/C]"="[A]Groepsgesprek beëindigd [/A][C]. Duur: [/C]";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="Duur: %@";
 /* */
@@ -1620,6 +1638,8 @@
 "Save in Photos"="Opslaan in Foto's";
 /* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Maak een kopie van de afbeeldingen en video's die gemaakt zijn van de MEGA applicatie in de media bibliotheek van uw apparaat.";
+/* Settings section title where you can enable the option to 'Spotlight search' */
+"Spotlight Search"="Spotlight zoeken";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="U heeft de sleutels";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -1657,7 +1677,7 @@
 /* Detailed explanation of why the user should give permission to deliver notifications */
 "We would like to send you notifications so you receive new messages on your device instantly."="We willen u notificaties sturen zodat u nieuwe berichten direct op uw apparaat kunt ontvangen.";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
-"Allow Access"="Toegang inschakelen";
+"Allow Access"="Toegang Toestaan";
 /* A section header which contains the file management settings. These settings allow users to remove duplicate files etc. */
 "File Management"="Bestandsmanagement";
 /* Title of the option to enable or disable file versioning on Settings section */
@@ -1683,7 +1703,7 @@
 /* A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days. */
 "Remove files older than"="Verwijder bestanden ouder dan";
 /* Label for any ‘Days’ button, link, text, title, etc. - (String as short as possible). */
-"Days"="Dagen";
+"Days"="dagen";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
 "The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="De Prullenbak wordt automatisch voor u gewist. De minimale periode is 7 dagen en uw maximale periode is 30 dagen.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
@@ -1937,7 +1957,7 @@
 /* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
 "Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="Ga naar de Privacy Sectie in uw apparaat Instellingen. Schakel Locatie Diensten in en zet MEGA op Tijdens Gebruik van de App of Altijd.";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
-"MEGA accesses your location when you elect to share it with your contacts."="MEGA heeft toegang tot uw locatie wanneer u ervoor kiest deze met uw contacten te delen.";
+"NSLocationAlwaysAndWhenInUseUsageDescription"="MEGA heeft toegang tot uw locatie wanneer u deze deelt met uw contacten in de chat of wanneer u \"Uploaden op achtergrond\" inschakelt voor Camera-uploads, zodat uw foto's en video's worden geüpload wanneer uw locatie verandert.";
 /* Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
 "Mobile Data is turned off"="Mobiele Data is uitgeschakeld";
 /* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */
@@ -1949,17 +1969,17 @@
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Weet u zeker dat u wilt wijzigen naar een test server? Uw account kan onherstelbare problemen krijgen";
 /* Title label that explains that the user is going to be asked for the contacts permission */
-"Enable Access to Contacts"="Toegang tot contacten inschakelen";
+"Enable Access to Your Address Book"="Schakel Toegang tot Uw Adresboek in";
 /* Detailed explanation of why the user should give permission to contacts */
-"MEGA needs access to your contacts to help you connect with other people on MEGA."="MEGA heeft toegang tot uw contacten nodig om u te helpen verbinden met andere mensen op MEGA.";
+"Easily discover contacts from your address book on MEGA."="Ontdek gemakkelijk contacten uit uw adresboek op MEGA";
+/* Detailed explanation about MEGA not using the contacts data without permision */
+"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA zal deze gegevens niet voor andere doeleinden gebruiken en zal nooit zonder uw toestemming met uw contacten communiceren.";
 /* Title encouraging the user to check who of its contacts are using MEGA */
-"See who's already on MEGA"="Bekijk wie al op MEGA zit.";
+"See who's already on MEGA"="Zie wie al bij MEGA is";
 /* Title showing the user how many of his contacts are using MEGA */
 "[X] contacts found on MEGA"="[X] contacten gevonden op MEGA";
 /* Title showing the user that one of his contacts are using MEGA */
 "1 contact found on MEGA"="1 contact gevonden op MEGA";
-/* Text indicating the user to perform an action to grant some permission */
-"Enable Access"="Toegang inschakelen";
 /* Text indicating the user to open the device settings for MEGA */
 "Open Settings"="Instellingen Openen";
 /* Text encouraging the user to invite contacts to MEGA */
@@ -2038,6 +2058,10 @@
 "Inactive chat"="Inactief gesprek";
 /* Contact details screen: Set the alias(nickname) for a user */
 "Set Nickname"="Bijnaam instellen";
+/* Contact details screen: Edit the alias(nickname) for a user */
+"Edit Nickname"="Bijnaam Wijzigen";
+/* Edit nickname screen: Remove nickname button title */
+"Remove Nickname"="Bijnaam Verwijderen";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
 "Alias/ Nickname"="Alias/Bijnaam";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
@@ -2046,6 +2070,16 @@
 "Include location tags"="Inclusief locatie labels";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
 "If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="Indien ingeschakeld, upload u informatie over waar uw foto's en video's zijn gemaakt, dus wees voorzichtig wanneer u ze deelt.";
+/* Used in Photos app browser view to send the photos from the view to the chat. */
+"Send (%d)"="Versturen (%d)";
+/* Used in Photos app browser view to upload the photos from the view to the cloud. */
+"Upload (%d)"="Uploaden (%d)";
+/* Used in Photos app browser carousel view to unselect a selected photo. */
+"Unselect"="Deselecteren";
+/* Used in Photos app browser. Shown when there are no photos or videos in the Photos app. */
+"No Photos or Videos"="Geen Foto's of Video's";
+/* Button title which, if tapped, will trigger the action of opening a folder containg this file */
+"View in Folder"="Weergeven in Map";
 /* Error message shown when opening a link with an account that not corresponds to the link */
 "This link is not related to this account. Please log in with the correct account."="Deze link is niet gerelateerd aan dit account. Log in met het juiste account.";
 /* Text emncouraging the user to add contacts in MEGA */
@@ -2073,9 +2107,9 @@
 /* Message shown when verify phone number successfully */
 "Your phone number has been verified successfully"="Uw telefoonnummer is succesvol geverifieerd";
 /* Text describing account suspended state to the user */
-"Your account has been temporarily suspended for your safety."="Uw account is tijdelijk opgeschort voor uw veiligheid.";
+"Your account has been temporarily suspended for your safety."="Uw account is tijdelijk geblokkeerd voor uw veiligheid.";
 /* Text indicating the user next step to unlock suspended account. Please leave [S], [/S] as it is which is used to bolden the text. */
-"[S]Please verify your email[/S] and follow its steps to unlock your account."="[S] Controleer uw e-mail [/S] en volg de stappen om uw account te ontgrendelen.";
+"[S]Please verify your email[/S] and follow its steps to unlock your account."="[S]Controleer uw e-mail [/S] en volg de stappen om uw account te ontgrendelen.";
 /* Text for button to open an helping view */
 "Why am I seeing this?"="Waarom zie ik dit?";
 /* Text to notify user an email has been sent */
@@ -2086,7 +2120,37 @@
 "It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="Het is mogelijk dat u hetzelfde wachtwoord gebruikt voor uw MEGA-account als voor andere services en dat ten minste een van deze andere services een gegevenslek heeft geleden.";
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="Uw wachtwoord is gelekt en wordt nu door slechte personen gebruikt om in te loggen op uw accounts, inclusief, maar niet beperkt tot, uw MEGA-account.";
+/* tool bar title used in transfer widget, allow user to clear the selected items in the list */
+"Clear Selected"="Geselecteerd Wissen";
+/* tool bar title used in transfer widget, allow user to clear all items in the list */
+"Clear All"="Wis alles";
+/* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
+"MEGA CAMERA UPLOADS FOLDER"="MEGA CAMERA UPLOADS MAP";
+/* Action button text of folder selection screen for camera uploads */
+"Select Folder"="Selecteer Map";
+/* Title of the folder selection screen for camera uploads */
+"Choose Folder"="Kies Map";
+/* Label used near to the option selected to encode the images uploaded to a chat (Low, Medium, Original) */
+"Image quality"="Afbeelding kwaliteit";
+/* Title of Image Quality option */
+"Automatic"="Automatisch";
+/* Description of Automatic Image Quality option */
+"Send smaller size images through cellular networks and original size images through wifi"="Verzend afbeeldingen met een kleiner formaat via mobiele netwerken en afbeeldingen met een origineel formaat via Wi-Fi";
+/* Title of Image Quality option */
+"Optimised"="Geoptimaliseerd";
+/* Description of Optimised Image Quality option */
+"Send smaller size images optimised for lower data consumption"="Verstuur kleinere formaat afbeeldingen geoptimaliseerd voor lagere data consumptie";
+/* Description of High Image Quality option */
+"Send original size, increased quality images"="Verstuur originele grootte, afbeeldingen van hogere kwaliteit";
 /* Setting title for Doc scan view */
-"Save Settings"="Save Settings";
+"Save Settings"="Instellingen Opslaan";
 /* file type title, used in changing the export format of scaned doc */
-"File Type"="File Type";
+"File Type"="Bestandstype";
+/* export Quality Option for Scan document */
+"best"="Beste";
+/* Description of why the user should give permission to contacts */
+"Easily discover contacts from your address book on MEGA."="Ontdek gemakkelijk contacten uit uw adresboek op MEGA";
+/* Detailed description of why the user should give permission to contacts */
+"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA zal deze gegevens niet voor andere doeleinden gebruiken en zal nooit zonder uw toestemming met uw contacten communiceren.";
+/* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
+"Enter group name"="Voer groep naam in";

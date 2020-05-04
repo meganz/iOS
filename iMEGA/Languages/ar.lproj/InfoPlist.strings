@@ -5,7 +5,7 @@
 /* Photo library usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSPhotoLibraryUsageDescription"="تطبيق MEGA يدخل الى الصور والفيديوهات عندما تقوم بالترفيع أو المشاركة بالمحادثات أو عندما تقوم بتفعيل الترفيع التلقائي لصور الكاميرا";
 /* Contacts Usage Description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
-"NSContactsUsageDescription"="تقوم ميغا MEGA بالوصول إلى جهات الاتصال الخاصة بك عند تحديد بعضها للحفظ/للتصدير ولمساعدتك على التواصل مع أشخاص آخرين على ميغا MEGA.";
+"NSContactsUsageDescription"="إن السماح بالوصول إلى دفتر العناوين الخاص بك يساعدك ويساعد الآخرين في العثور على الأصدقاء ويساعدنا على تقديم خدمة أفضل.";
 /* Write-only access to the user’s photo library description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSPhotoLibraryAddUsageDescription"="يتطلب MEGA الوصول إلى مكتبة الصور الخاصة بك لإضافة الصور ومقاطع الفيديو إلى استديو جهازك للصور";
 /* Face ID usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
@@ -17,4 +17,4 @@
 /* Title of the Offline section */
 "quickActionOfflineString"="غير متاح";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
-"NSLocationWhenInUseUsageDescription"="تقوم ميغا MEGA بأخذ موقعك عندما تختار مشاركته مع جهات الاتصال الخاصة بك.";
+"NSLocationAlwaysAndWhenInUseUsageDescription"="يصل ميغا MEGA إلى موقعك عندما تشاركه مع جهات الاتصال الخاصة بك في المحادثة أو عندما تقوم بتمكين \"تحميل في الخلفية\" لتحميلات الكاميرا حتى يتم تحميل الصور ومقاطع الفيديو الخاصة بك عندما يتغير موقعك.";

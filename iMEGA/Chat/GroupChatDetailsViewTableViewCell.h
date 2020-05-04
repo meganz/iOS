@@ -13,4 +13,6 @@
 
 @property (weak, nonatomic) IBOutlet UISwitch *notificationsSwitch;
 
+@property (weak, nonatomic) IBOutlet UIImageView *verifiedImageView;
+
 @end
