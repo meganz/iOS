@@ -69,3 +69,4 @@
 #import "MEGAGetAttrUserRequestDelegate.h"
 #import "MEGAProcessAsset.h"
 #import "MEGAImagePickerController.h"
+#import "BrowserViewController.h"
