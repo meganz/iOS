@@ -214,8 +214,8 @@ class ChatViewController: MessagesViewController {
                 if action == NSSelectorFromString("delete:") && message.isDeletable {
                     return true
                 }
-                
-                if action == NSSelectorFromString("import:") {
+            } else {
+                if action == NSSelectorFromString("importMessage:") {
                     return true
                 }
             }
@@ -231,8 +231,8 @@ class ChatViewController: MessagesViewController {
                 if action == NSSelectorFromString("delete:") && message.isDeletable {
                     return true
                 }
-                
-                if action == NSSelectorFromString("import:") && message.richNumber == nil {
+            } else {
+                if action == NSSelectorFromString("importMessage:") {
                     return true
                 }
             }
@@ -298,8 +298,8 @@ class ChatViewController: MessagesViewController {
             return
         }
         
-        if action == NSSelectorFromString("import:") {
-
+        if action == NSSelectorFromString("importMessage:") {
+            importMessage(chatMessage)
             return
         }
         
