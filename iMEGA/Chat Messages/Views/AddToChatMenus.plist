@@ -28,12 +28,6 @@
 	</dict>
 	<dict>
 		<key>imageKey</key>
-		<string>attachGIF</string>
-		<key>nameKey</key>
-		<string>GIF</string>
-	</dict>
-	<dict>
-		<key>imageKey</key>
 		<string>attachContact</string>
 		<key>nameKey</key>
 		<string>Contact</string>

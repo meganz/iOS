@@ -2,7 +2,7 @@
 import UIKit
 
 protocol AddToChatMenuItemsViewDelegate: class {
-    func didTap(itemAtIndex index: Int)
+    func didTap(menu: AddToChatMenu)
 }
 
 class AddToChatMenuItemsView: UIView {
@@ -32,10 +32,11 @@ class AddToChatMenuItemsView: UIView {
     
     @IBAction func buttonTapped(_ button: UIButton) {
         guard let tappedIndex = buttons.firstIndex(of: button),
+            let menus = menus,
             let delegate = delegate else {
                 return
         }
         
-        delegate.didTap(itemAtIndex: tappedIndex)
+        delegate.didTap(menu: menus[tappedIndex])
     }
 }
