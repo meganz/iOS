@@ -96,8 +96,10 @@ extension ChatViewController {
                 chatRoomDelegate.messages[index] = ChatMessage(message: deleteMessage!, chatRoom: chatRoom)
             }
         }
-        
-        
-        
+    }
+    
+    func removeRichPreview(_ message: ChatMessage) {
+        let megaMessage =  message.message
+        MEGASdkManager.sharedMEGAChatSdk()?.removeRichLink(forChat: chatRoom.chatId, messageId: megaMessage.messageId)
     }
 }
