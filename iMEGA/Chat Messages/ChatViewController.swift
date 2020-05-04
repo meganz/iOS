@@ -314,7 +314,7 @@ class ChatViewController: MessagesViewController {
         }
         
         if action == NSSelectorFromString("removeRichPreview:") {
-
+            removeRichPreview(chatMessage)
             return
         }
         
@@ -510,7 +510,13 @@ class ChatViewController: MessagesViewController {
         
         let editMenuItem = UIMenuItem(title:AMLocalizedString("edit","Caption of a button to edit the files that are selected"), action: #selector(MessageCollectionViewCell.edit(_:)))
 
-        UIMenuController.shared.menuItems = [forwardMenuItem, importMenuItem, editMenuItem]
+        let downloadMenuItem = UIMenuItem(title:AMLocalizedString("saveForOffline","Caption of a button to download the files that are selected"), action: #selector(MessageCollectionViewCell.download(_:)))
+
+        let addContactMenuItem = UIMenuItem(title:AMLocalizedString("addContact","Alert title shown when you select to add a contact inserting his/her email"), action: #selector(MessageCollectionViewCell.addContact(_:)))
+
+        let removeRichLinkMenuItem = UIMenuItem(title:AMLocalizedString("removePreview","Once a preview is generated for a message which contains URLs, the user can remove it. Same button is also shown during loading of the preview - and would cancel the loading (text of the button is the same in both cases)."), action: #selector(MessageCollectionViewCell.removeRichPreview(_:)))
+
+        UIMenuController.shared.menuItems = [forwardMenuItem, importMenuItem, editMenuItem, downloadMenuItem, addContactMenuItem, removeRichLinkMenuItem]
     }
 
     private func registerCustomCells() {
