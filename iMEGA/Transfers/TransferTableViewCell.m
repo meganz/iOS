@@ -7,6 +7,7 @@
 #import "MEGASdkManager.h"
 #import "NSDate+MNZCategory.h"
 #import "NSString+MNZCategory.h"
+#import "UIImage+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 
 @interface TransferTableViewCell ()
@@ -168,7 +169,7 @@
 - (void)configureCellWithTransferState:(MEGATransferState)transferState {
     switch (transferState) {
         case MEGATransferStateQueued: {
-            self.arrowImageView.image = (self.transfer.type == MEGATransferTypeDownload) ? [Helper downloadQueuedTransferImage] : [Helper uploadQueuedTransferImage];
+            self.arrowImageView.image = (self.transfer.type == MEGATransferTypeDownload) ? UIImage.mnz_downloadQueuedTransferImage : UIImage.mnz_uploadQueuedTransferImage;
             self.infoLabel.textColor = UIColor.mnz_gray666666;
             self.infoLabel.text = AMLocalizedString(@"queued", @"Queued");
             [self.pauseButton setImage:[UIImage imageNamed:@"pauseTransfers"] forState:UIControlStateNormal];
@@ -177,7 +178,7 @@
         }
             
         case MEGATransferStateActive: {
-            self.arrowImageView.image = (self.transfer.type == MEGATransferTypeDownload) ? [Helper downloadingTransferImage] : [Helper uploadingTransferImage];
+            self.arrowImageView.image = (self.transfer.type == MEGATransferTypeDownload) ? UIImage.mnz_downloadingTransferImage : UIImage.mnz_uploadingTransferImage;
             [self.arrowImageView setNeedsDisplay];
             [self.pauseButton setImage:[UIImage imageNamed:@"pauseTransfers"] forState:UIControlStateNormal];
             self.pauseButton.hidden = self.cancelButton.hidden = NO;
@@ -185,7 +186,7 @@
         }
             
         case MEGATransferStatePaused: {
-            self.arrowImageView.image = (self.transfer.type == MEGATransferTypeDownload) ? [Helper downloadQueuedTransferImage] : [Helper uploadQueuedTransferImage];
+            self.arrowImageView.image = (self.transfer.type == MEGATransferTypeDownload) ? UIImage.mnz_downloadQueuedTransferImage : UIImage.mnz_uploadQueuedTransferImage;
             self.infoLabel.textColor = UIColor.mnz_gray666666;
             self.infoLabel.text = AMLocalizedString(@"paused", @"Paused");
             [self.pauseButton setImage:[UIImage imageNamed:@"resumeTransfers"] forState:UIControlStateNormal];
@@ -194,7 +195,7 @@
         }
             
         case MEGATransferStateRetrying: {
-            self.arrowImageView.image = (self.transfer.type == MEGATransferTypeDownload) ? [Helper downloadingTransferImage] : [Helper uploadingTransferImage];
+            self.arrowImageView.image = (self.transfer.type == MEGATransferTypeDownload) ? UIImage.mnz_downloadingTransferImage : UIImage.mnz_uploadingTransferImage;
             self.infoLabel.text = AMLocalizedString(@"Retrying...", @"Label for the state of a transfer when is being retrying - (String as short as possible).");
             self.pauseButton.hidden = self.cancelButton.hidden = NO;
             break;
@@ -207,7 +208,7 @@
             break;
             
         default: {
-            self.arrowImageView.image = (self.transfer.type == MEGATransferTypeDownload) ? [Helper downloadQueuedTransferImage] : [Helper uploadQueuedTransferImage];
+            self.arrowImageView.image = (self.transfer.type == MEGATransferTypeDownload) ? UIImage.mnz_downloadQueuedTransferImage : UIImage.mnz_uploadQueuedTransferImage;
             self.infoLabel.textColor = UIColor.mnz_gray666666;
             self.infoLabel.text = AMLocalizedString(@"queued", @"Queued");
             [self.pauseButton setImage:[UIImage imageNamed:@"pauseTransfers"] forState:UIControlStateNormal];
@@ -218,7 +219,7 @@
 }
 
 - (void)queuedStateLayout {
-    self.arrowImageView.image = [Helper uploadQueuedTransferImage];
+    self.arrowImageView.image = UIImage.mnz_uploadQueuedTransferImage;
     self.infoLabel.textColor = UIColor.mnz_gray666666;
     self.infoLabel.text = AMLocalizedString(@"pending", @"Label shown when a contact request is pending");
     self.pauseButton.hidden = YES;

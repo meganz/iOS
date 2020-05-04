@@ -5,7 +5,7 @@
 /* Photo library usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSPhotoLibraryUsageDescription"="MEGA는 당신이 사진/동영상을 업로드, 대화를 통한 공유와 카메라 업로드가 활성화되어있을 때 당신의 사진/동영상에 접근합니다.";
 /* Contacts Usage Description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
-"NSContactsUsageDescription"="MEGA는 당신이 저장/내보내기를 위해 연락처를 선택할 때와 당신이 다른 사람들과 연결되는 것을 도울 때 연락처에 접근합니다.";
+"NSContactsUsageDescription"="주소록에 대한 접근을 허용하면 당신과 다른 사람들이 친구를 찾는 것과 우리가 더 나은 서비스를 제공하는 것을 도울 수 있습니다.";
 /* Write-only access to the user’s photo library description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSPhotoLibraryAddUsageDescription"="MEGA가 당신의 장치 갤러리에 사진과 동영상을 추가하기 위해 사진 라이브러리에 대한 접근이 필요합니다.";
 /* Face ID usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
@@ -17,4 +17,4 @@
 /* Title of the Offline section */
 "quickActionOfflineString"="오프라인";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
-"NSLocationWhenInUseUsageDescription"="당신이 당신의 지인들과 위치를 공유하기로 선택하였을 때 MEGA는 당신의 위치에 접근합니다.";
+"NSLocationAlwaysAndWhenInUseUsageDescription"="MEGA는 당신이 당신의 연락처와 위치를 공유하거나 카메라 업로드의 \"백그라운드에서 업로드\"가 활성화되어있는 경우 당신이 장소를 이동할 때 사진과 동영상을 업로드할 수 있도록 당신의 위치에 접근합니다.";

@@ -7,8 +7,14 @@ extern NSString * const MEGAiOSAppUserAgent;
 extern NSString * const MEGAiOSAppKey;
 extern NSString * const MEGAPasswordService;
 extern NSString * const MEGAPasswordName;
+extern NSString * const MEGAFirstRun;
+extern NSString * const MEGAFirstRunValue;
 
 extern NSString * const MEGAGroupIdentifier;
+
+extern NSString * const MEGAPasscodeLogoutAfterTenFailedAttemps;
+
+extern uint64_t const MEGAInvalidHandle;
 
 #pragma mark - global notifications
 
@@ -71,6 +77,7 @@ extern NSString * const MEGAFileExtensionStorageFolder;
 extern NSString * const MEGAExtensionLogsFolder;
 extern NSString * const MEGAExtensionGroupSupportFolder;
 extern NSString * const MEGAExtensionCacheFolder;
+extern NSString * const MEGANotificationServiceExtensionCacheFolder;
 
 #pragma mark - MEGA Activity Types
 
@@ -82,8 +89,21 @@ extern NSString * const MEGAUIActivityTypeShareFolder;
 extern NSString * const MEGAUIActivityTypeSaveToCameraRoll;
 extern NSString * const MEGAUIActivityTypeSendToChat;
 
+#pragma mark - Background Task completion.
+
+extern NSString * const MEGAAllUsersNicknameLoaded;
+
 #pragma mark - MEGA Affiliate program
 
 extern NSString * const MEGALastPublicHandleAccessed;
 extern NSString * const MEGALastPublicTypeAccessed;
 extern NSString * const MEGALastPublicTimestampAccessed;
+
+#pragma mark - MEGA Contact Nickname change Notification
+
+extern NSString * const MEGContactNicknameChangeNotification;
+
+#pragma mark - DB name
+
+// Last 36 characters of the user session are used by sdk and karere to name their dbs
+extern const NSUInteger MEGALastCharactersFromSession;

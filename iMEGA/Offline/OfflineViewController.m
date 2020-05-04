@@ -105,12 +105,15 @@ static NSString *kisDirectory = @"kisDirectory";
             NSString *documentProviderLog = @"MEGAiOS.docExt.log";
             NSString *fileProviderLog = @"MEGAiOS.fileExt.log";
             NSString *shareExtensionLog = @"MEGAiOS.shareExt.log";
+            NSString *notificationServiceExtensionLog = @"MEGAiOS.NSE.log";
             [fileManager mnz_removeItemAtPath:[[self currentOfflinePath] stringByAppendingPathComponent:documentProviderLog]];
             [fileManager copyItemAtPath:[logsPath stringByAppendingPathComponent:documentProviderLog]  toPath:[[self currentOfflinePath] stringByAppendingPathComponent:documentProviderLog] error:nil];
             [fileManager mnz_removeItemAtPath:[[self currentOfflinePath] stringByAppendingPathComponent:fileProviderLog]];
             [fileManager copyItemAtPath:[logsPath stringByAppendingPathComponent:fileProviderLog] toPath:[[self currentOfflinePath] stringByAppendingPathComponent:fileProviderLog] error:nil];
             [fileManager mnz_removeItemAtPath:[[self currentOfflinePath] stringByAppendingPathComponent:shareExtensionLog]];
             [fileManager copyItemAtPath:[logsPath stringByAppendingPathComponent:shareExtensionLog] toPath:[[self currentOfflinePath] stringByAppendingPathComponent:shareExtensionLog] error:nil];
+            [fileManager mnz_removeItemAtPath:[[self currentOfflinePath] stringByAppendingPathComponent:notificationServiceExtensionLog]];
+            [fileManager copyItemAtPath:[logsPath stringByAppendingPathComponent:notificationServiceExtensionLog] toPath:[[self currentOfflinePath] stringByAppendingPathComponent:notificationServiceExtensionLog] error:nil];
         }
     }
     
@@ -337,7 +340,6 @@ static NSString *kisDirectory = @"kisDirectory";
     //Sort configuration by default is "default ascending"
     if (![[NSUserDefaults standardUserDefaults] integerForKey:@"OfflineSortOrderType"]) {
         [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"OfflineSortOrderType"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
     }
     
     MEGASortOrderType sortOrderType = [[NSUserDefaults standardUserDefaults] integerForKey:@"OfflineSortOrderType"];
@@ -758,8 +760,7 @@ static NSString *kisDirectory = @"kisDirectory";
         [self.navigationController pushViewController:offlineVC animated:YES];
         
     } else if (self.previewDocumentPath.mnz_isMultimediaPathExtension) {
-        MEGAHandleList *chatRoomIDsWithCallInProgress = [MEGASdkManager.sharedMEGAChatSdk chatCallsWithState:MEGAChatCallStatusInProgress];
-        if (chatRoomIDsWithCallInProgress.size > 0) {
+        if (MEGASdkManager.sharedMEGAChatSdk.mnz_existsActiveCall) {
             [Helper cannotPlayContentDuringACallAlert];
             return;
         }

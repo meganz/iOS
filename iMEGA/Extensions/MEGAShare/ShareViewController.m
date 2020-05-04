@@ -36,9 +36,6 @@
 
 @property (nonatomic) UINavigationController *loginRequiredNC;
 @property (nonatomic) LaunchViewController *launchVC;
-@property (nonatomic, getter=isFirstFetchNodesRequestUpdate) BOOL firstFetchNodesRequestUpdate;
-@property (nonatomic, getter=isFirstAPI_EAGAIN) BOOL firstAPI_EAGAIN;
-@property (nonatomic) NSTimer *timerAPI_EAGAIN;
 
 @property (nonatomic) NSString *session;
 @property (nonatomic) UIView *privacyView;
@@ -411,7 +408,7 @@
 
 - (void)presentPasscode {
     if (!self.passcodePresented) {
-        if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled]) {
+        if ([NSUserDefaults.standardUserDefaults boolForKey:MEGAPasscodeLogoutAfterTenFailedAttemps]) {
             [[LTHPasscodeViewController sharedUser] setMaxNumberOfAllowedFailedAttempts:10];
         }
         
@@ -428,20 +425,6 @@
     }
 }
 
-- (void)startTimerAPI_EAGAIN {
-    self.timerAPI_EAGAIN = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(showServersTooBusy) userInfo:nil repeats:NO];
-}
-
-- (void)invalidateTimerAPI_EAGAIN {
-    [self.timerAPI_EAGAIN invalidate];
-    
-    self.launchVC.label.text = @"";
-}
-
-- (void)showServersTooBusy {
-    self.launchVC.label.text = AMLocalizedString(@"takingLongerThanExpected", @"Message shown when you open the app and when it is logging in, you don't receive server response, that means that it may take some time until you log in");
-}
-
 - (void)fakeModalPresentation {
     self.view.transform = CGAffineTransformMakeTranslation(0, self.view.frame.size.height);
     [UIView animateWithDuration:MNZ_ANIMATION_TIME animations:^{
@@ -450,7 +433,6 @@
 }
 
 - (void)dismissWithCompletionHandler:(void (^)(void))completion {
-    [[ShareAttachment attachmentsArray] removeAllObjects];
     [UIView animateWithDuration:MNZ_ANIMATION_TIME
                      animations:^{
                          self.view.transform = CGAffineTransformMakeTranslation(0, self.view.frame.size.height);
@@ -530,6 +512,7 @@ void uncaughtExceptionHandler(NSException *exception) {
         return;
     }
     
+    [ShareAttachment.attachmentsArray removeAllObjects];
     NSExtensionItem *content = self.extensionContext.inputItems.firstObject;
     self.totalAssets = self.pendingAssets = content.attachments.count;
     self.progress = 0;
@@ -935,55 +918,14 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 #pragma mark - MEGARequestDelegate
 
-- (void)onRequestStart:(MEGASdk *)api request:(MEGARequest *)request {
-    switch ([request type]) {
-        case MEGARequestTypeLogin:
-        case MEGARequestTypeFetchNodes: {
-            self.launchVC.activityIndicatorView.hidden = NO;
-            [self.launchVC.activityIndicatorView startAnimating];
-            
-            self.firstAPI_EAGAIN = YES;
-            self.firstFetchNodesRequestUpdate = YES;
-            break;
-        }
-            
-        default:
-            break;
-    }
-}
-
-- (void)onRequestUpdate:(MEGASdk *)api request:(MEGARequest *)request {
-    if (request.type == MEGARequestTypeFetchNodes) {
-        [self invalidateTimerAPI_EAGAIN];
-        
-        float progress = (request.transferredBytes.floatValue / request.totalBytes.floatValue);
-        
-        if (self.isFirstFetchNodesRequestUpdate) {
-            [self.launchVC.activityIndicatorView stopAnimating];
-            self.launchVC.activityIndicatorView.hidden = YES;
-            
-            [self.launchVC.logoImageView.layer addSublayer:self.launchVC.circularShapeLayer];
-            self.launchVC.circularShapeLayer.strokeStart = 0.0f;
-        }
-        
-        if (progress > 0 && progress <= 1.0) {
-            self.launchVC.circularShapeLayer.strokeEnd = progress;
-        }
-    }
-}
-
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     switch ([request type]) {
         case MEGARequestTypeLogin: {
-            [self invalidateTimerAPI_EAGAIN];
-            
             [api fetchNodesWithDelegate:self];
             break;
         }
             
         case MEGARequestTypeFetchNodes: {
-            [self invalidateTimerAPI_EAGAIN];
-            
             self.fetchNodesDone = YES;
             [self.launchVC.view removeFromSuperview];
             [[MEGASdkManager sharedMEGAChatSdk] connectInBackground];
@@ -996,22 +938,6 @@ void uncaughtExceptionHandler(NSException *exception) {
                 [self performAttachNodeHandle:request.nodeHandle];
             } else {
                 [self onePendingLess];
-            }
-            break;
-        }
-            
-        default:
-            break;
-    }
-}
-
-- (void)onRequestTemporaryError:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-    switch (request.type) {
-        case MEGARequestTypeLogin:
-        case MEGARequestTypeFetchNodes: {
-            if (self.isFirstAPI_EAGAIN) {
-                [self startTimerAPI_EAGAIN];
-                self.firstAPI_EAGAIN = NO;
             }
             break;
         }
@@ -1075,7 +1001,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 }
 
 - (void)maxNumberOfFailedAttemptsReached {
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsEraseAllLocalDataEnabled]) {
+    if ([NSUserDefaults.standardUserDefaults boolForKey:MEGAPasscodeLogoutAfterTenFailedAttemps]) {
         [[MEGASdkManager sharedMEGASdk] logout];
     }
 }

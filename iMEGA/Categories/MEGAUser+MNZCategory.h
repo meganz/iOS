@@ -15,4 +15,8 @@
 
 @property (nonatomic, readonly) NSString *mnz_firstName;
 
+@property (nonatomic) NSString *mnz_nickname;
+
+@property (nonatomic, readonly) NSString *mnz_displayName;
+
 @end
