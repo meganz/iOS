@@ -123,6 +123,30 @@ extension ChatViewController {
         }
     }
     
+    func importMessage(_ message: ChatMessage) {
+        let megaMessage = message.message
+
+        var nodes = [MEGANode]()
+        for index in 0...megaMessage.nodeList.size.intValue - 1 {
+            var node = megaMessage.nodeList.node(at: index)
+            if chatRoom.isPreview {
+                node = MEGASdkManager.sharedMEGASdk()?.authorizeNode(node!) ?? nil
+            }
+            if node != nil {
+                nodes.append(node!)
+            }
+        }
+        
+        let navigationController = UIStoryboard.init(name: "Cloud", bundle: nil).instantiateViewController(withIdentifier: "BrowserNavigationControllerID") as! MEGANavigationController
+        
+        let browserVC = navigationController.viewControllers.first as! BrowserViewController
+        browserVC.selectedNodesArray = nodes
+        browserVC.browserAction = .import
+        
+        self.present(viewController: navigationController)
+        
+    }
+    
     func addContactMessage(_ message: ChatMessage) {
         let megaMessage =  message.message
 
