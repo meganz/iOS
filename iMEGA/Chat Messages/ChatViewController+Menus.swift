@@ -123,4 +123,15 @@ extension ChatViewController {
         }
     }
     
+    func addContactMessage(_ message: ChatMessage) {
+        let megaMessage =  message.message
+
+        let usersCount = megaMessage.usersCount
+        let inviteContactRequestDelegate = MEGAInviteContactRequestDelegate(numberOfRequests: usersCount)
+        for index in 0...usersCount - 1 {
+            let email = megaMessage.userEmail(at: index)
+            MEGASdkManager.sharedMEGASdk()?.inviteContact(withEmail: email!, message: "", action: .add, delegate: inviteContactRequestDelegate)
+        }
+        
+    }
 }

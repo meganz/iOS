@@ -309,7 +309,7 @@ class ChatViewController: MessagesViewController {
         }
         
         if action == NSSelectorFromString("addContact:") {
-
+            addContactMessage(chatMessage)
             return
         }
         
