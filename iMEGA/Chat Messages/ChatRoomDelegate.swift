@@ -165,6 +165,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
                 }
             }
         }
+        chatViewController.messagesCollectionView.reloadEmptyDataSet()
     }
     
     func onHistoryReloaded(_ api: MEGAChatSdk!, chat: MEGAChatRoom!) {
@@ -210,6 +211,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
                  self?.chatViewController.messagesCollectionView.scrollToBottom(animated: true)
              }
          })
+        chatViewController.messagesCollectionView.reloadEmptyDataSet()
      }
     
     // MARK: - Private methods
