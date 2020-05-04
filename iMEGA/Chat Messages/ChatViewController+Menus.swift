@@ -3,6 +3,11 @@ import Foundation
 
 extension ChatViewController {
     
+    func copyMessage(_ message: ChatMessage) {
+        let megaMessage = message.message
+        UIPasteboard.general.string = megaMessage.content
+    }
+    
     func forwardMessage(_ message: ChatMessage) {
         let megaMessage = message.message
         let chatStoryboard = UIStoryboard(name: "Chat", bundle: nil)
