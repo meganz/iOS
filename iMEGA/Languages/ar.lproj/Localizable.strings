@@ -578,8 +578,6 @@
 "removeUserMessage"="هل أنت متأكد أنك تريد إزالة %@ من قائمة الاتصال الخاصة بك؟";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
 "removeMultipleUsersMessage"="هل أنت متأكد أنك تريد إزالة %d مستخدمين من قائمة الاتصال الخاصة بك؟";
-/* Success message shown when the selected contacts have been removed */
-"removedContacts"="%d جهات الاتصال المحذوفة";
 /* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
 "removedContact"="جهة اتصال %@ مزالة";
 /* Label shown when a contact request is pending */
@@ -856,7 +854,7 @@
 /* Hint text where the user have to re-write the new email to confirm it */
 "confirmNewEmail"="تأكيد البريد الإلكتروني الجديد";
 /* The title of the alert dialog to change the email associated to an account. */
-"changeEmail"="تغيير البريد الإلكتروني";
+"Change Email"="تغيير البريد الإلكتروني";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
 "oldAndNewEmailMatch"="بريدك الالكتروني القديم يجب ألا يتطابق مع الجديد";
 /* Error message shown when you have not written the same email when confirming a new one */
@@ -991,10 +989,12 @@
 "logoutLabel"="الخروج";
 /* String shown when you are logging out of your account. */
 "loggingOut"="تسجيل الخروج";
-/* Button to remove avatar. Try to keep the text short (as in English) */
-"removeAvatar"="إزالة الصورة الرمزية";
-/* button that allows the user the change his avatar */
-"changeAvatar"="تغيير الصورة الرمزية";
+/* Button to remove some photo, e.g. avatar photo. Try to keep the text short (as in English) */
+"Remove Photo"="Remove Photo";
+/* Button that allows the user the change a photo, e.g. his avatar photo */
+"Change Photo"="Change Photo";
+/* Button that allows the user the add a photo, e.g avatar photo */
+"Add Photo"="Add Photo";
 /* Button title that allows the user change his name */
 "changeName"="غير الاسم";
 /* Success message when changing profile information. */
@@ -1264,8 +1264,6 @@
 "removePreview"="إزالة المشاهدة";
 /* */
 "warning"="تحذير";
-/* Alert message shown when the user perform logout and has files in the Offline directory */
-"allFilesSavedForOfflineWillBeDeletedFromYourDevice"="سيتم حذف جميع الملفات التي تم حفظها في وضع عدم الاتصال من جهازك. هل تريد متابعة تسجيل الخروج؟";
 /* Title shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_title"="حجم التراسل المتاح غير كافي";
 /* Description shown when you almost had used your available transfer quota. */
@@ -1981,6 +1979,18 @@
 "Hi, Have encrypted conversations on Mega with me and get 50GB free storage."="مرحبا! احصل على محادثات آمنة على ميغا MEGA معي واحصل على مساحة تخزين تصل إلى 50 غيغابايت.";
 /* Destination folder name of chat files */
 "My chat files"="ملفات المحادثة الخاصة بي";
+/* Title of the section about the plan in the storage tab in My Account Section */
+"Plan"="الباقة";
+/* */
+"If you lose this Recovery key and forget your password, [B]all your files, folders and messages will be inaccessible, even by MEGA[/B]."="في حال فقدانك لمفتاح الإستعادة و نسيان كلمة مرورك، [B]لن تتمكن من الوصول إلى جميع ملفاتك و مجلداتك و رسائلك، حتى عن طريق ميغا MEGA[/B].";
+/* */
+"Business"="الأعمال Business";
+/* */
+"Administrator"="مدير";
+/* */
+"Transfer"="التحميل";
+/* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
+"You cannot remove %1$s as a contact because they are part of your Business account."="لا يمكنك إزالة %1$s كجهة اتصال لأنها جزء من حساب الأعمال الخاص بك.";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
 "Require passcode"="يتطلب رمز المرور";
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
@@ -1991,6 +2001,22 @@
 "This folder has been the subject of a takedown notice."="مجلد خاضع لموضوع إشعار إنهاء الخدمة";
 /* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
 "Dispute Takedown"="تمت إزالته لشكوى";
+/* Label presented to Admins that full management of the business is only available in a desktop web browser */
+"User management is only available from a desktop web browser."="إدارة المستخدم متاحة فقط من متصفح سطح المكتب.";
+/* When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information */
+"There has been a problem with your last payment. Please access MEGA using a desktop browser for more information."="حدثت مشكلة في دفعتك الأخيرة. يرجى الوصول إلى ميغا MEGA باستخدام متصفح سطح المكتب لمزيد من المعلومات.";
+/* A dialog title shown to users when their business account is expired. */
+"Your business account is expired"="انتهت صلاحية حساب الأعمال خاصتك";
+/* Details shown when a Business account is expired. Details for the administrator of the Business account */
+"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="حدثت مشكلة أثناء معالجة دفعتك. يقتصر ميغا MEGA على العرض فقط حتى يتم إصلاح هذه المشكلة في متصفح سطح المكتب.";
+/* A dialog message which is shown to sub-users of expired business accounts. */
+"Your account is currently [B]suspended[/B]. You can only browse your data."="حسابك [B]معلق[/B] حالياً. يمكنك فقط تصفح بياناتك.";
+/* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
+"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="بينما لا تملك ميغا MEGA حق الوصول إلى بياناتك، فإن مشرفي مؤسستك لديهم القدرة على التحكم في تحميلات الكاميرا وعرضها في حساب المستخدم الخاص بك";
+/* */
+"Something went wrong"="حدث خطأ ما";
+/* Button title that goes to the section Usage where you can see how your MEGA space is used */
+"Usage"="الاستخدام";
 /* Title of the "Links" Shared Items. */
 "Links"="الروابط";
 /* Title for empty state view of "Links" in Shared Items. */
@@ -1999,6 +2025,8 @@
 "Manage Share"="إدارة المشاركات";
 /* Title of the screen that shows the users with whom the user can share a folder */
 "Share with"="مشاركة مع";
+/* A dialog message which is shown to sub-users of expired business accounts. */
+"Contact your business account administrator to resolve the issue and activate your account."="تواصل مع مشرف حساب الأعمال الخاص بك لحل هذه المشكلة وتفعيل حسابك.";
 /* Chat Notifications DND: Option that does not deactivate DND automatically */
 "Until I Turn it On Again"="حتى أقوم بتشغيلها مرة أخرى";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
@@ -2049,6 +2077,12 @@
 "Alias/ Nickname"="الاسم المستعار / اللقب";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
 "It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="ليس من الممكن الحصول على محتوى هذا الملف، حيث إنه غير مشفر في UTF-8 أو ISO/IEC 8859-1.";
+/* Business expired account Overdue payment page header. */
+"Payment overdue"="متأخر بالدفع";
+/* */
+"Active"="نشط";
+/* title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts */
+"Role:"="الدور";
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
 "Include location tags"="تشمل علامات الموقع";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
@@ -2083,6 +2117,8 @@
 "Your account is already verified"="تم التحقق من حسابك بالفعل";
 /* Place holder for enter mobile number field */
 "Your phone number"="رقم هاتفك";
+/* Text related to verified phone number. Used as title or cell description.  */
+"Phone Number"="Phone Number";
 /* Label tell user to enter received txt to below input boxes */
 "Please type the verification code sent to"="الرجاء إدخال رمز التحقق الذي تم إرساله إلى";
 /* Text message to remind user to resend verification code */
@@ -2131,5 +2167,21 @@
 "File Type"="نوع الملف";
 /* export Quality Option for Scan document */
 "best"="الأفضل";
+/* Error message appears to sub-users of a business account when they try to login and they are disabled. */
+"Your account has been disabled by your administrator. Please contact your business account administrator for further details."="تم تعطيل حسابك من قبل مديرك. يرجى الاتصال مع مدير حساب الاعمال خاصتك للحصول على مزيد من التفاصيل.";
+/* An error message which appears to sub-users of a business account when they try to login and they are deleted. */
+"Your account has been removed by your administrator. Please contact your business account administrator for further details."="تمت إزالة حسابك من قبل مشرف الحساب الخاص بك. يرجى الاتصال بمشرف حساب الأعمال لمزيد من التفاصيل.";
+/* Description of why the user should give permission to contacts */
+"Easily discover contacts from your address book on MEGA."="اكتشف جهات الاتصال بسهولة من دفتر العناوين الخاص بك على ميغا MEGA.";
+/* Detailed description of why the user should give permission to contacts */
+"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="لن تستخدم ميغا MEGA هذه البيانات لأي غرض آخر ولن تتفاعل أبداً مع جهات الاتصال الخاصة بك دون موافقتك.";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="ادخل اسم المجموعة";
+/* Warning message to alert user about logout in My Account section if has transfers in progress. */
+"When you logout, ongoing transfers will be cancelled."="عند تسجيل الخروج، سيتم إلغاء التحويلات الجارية.";
+/* Warning message to alert user about logout in My Account section if has offline files. */
+"When you logout, files from your Offline section will be deleted from your device."="عند الخروج ، سيتم حذف الملفات من قسم غير متصل إلى الانترنت من جهازك.";
+/* Warning message to alert user about logout in My Account section if has offline files and transfers in progress. */
+"When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled."="عند تسجيل الخروج، سيتم حذف الملفات من قسم غير متصل على الانترنت من جهازك وسيتم إلغاء عمليات التراسل الجارية.";
+/* Default title of an empty chat. */
+"Chat created on %s1"="تم انشاء المحادثة في %s1";

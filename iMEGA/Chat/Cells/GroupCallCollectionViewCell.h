@@ -24,5 +24,6 @@
 - (void)showUserOnFocus;
 - (void)hideUserOnFocus;
 - (void)configureConstraintsForInfoViews:(NSInteger)constant;
+- (void)localVideoMirror:(BOOL)mirror;
 
 @end

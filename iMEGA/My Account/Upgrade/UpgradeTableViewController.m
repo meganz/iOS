@@ -56,6 +56,8 @@
 
 @property (strong, nonatomic) NSNumberFormatter *numberFormatter;
 
+@property (nonatomic, getter=shouldHideSkipButton) BOOL hideSkipButton;
+
 @end
 
 @implementation UpgradeTableViewController
@@ -81,8 +83,15 @@
     
     _autorenewableDescriptionLabel.text = AMLocalizedString(@"autorenewableDescription", @"Describe how works auto-renewable subscriptions on the Apple Store");
     
+    
+    if (self.presentingViewController || self.navigationController.presentingViewController.presentedViewController == self.navigationController || [self.tabBarController.presentingViewController isKindOfClass:UITabBarController.class]) {
+        self.hideSkipButton = NO;
+        self.skipBarButtonItem.title = AMLocalizedString(@"skipButton", @"Button title that skips the current action");
+    } else {
+        self.hideSkipButton = YES;
+    }
+    
     self.navigationItem.rightBarButtonItem = (self.isChoosingTheAccountType || self.shouldHideSkipButton) ? nil : self.skipBarButtonItem;
-    self.skipBarButtonItem.title = AMLocalizedString(@"skipButton", @"Button title that skips the current action");
     
     [self getIndexPositionsForProLevels];
     

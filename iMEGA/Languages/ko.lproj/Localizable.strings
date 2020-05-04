@@ -578,8 +578,6 @@
 "removeUserMessage"="%@님을 연락처에서 삭제하시겠습니까?";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
 "removeMultipleUsersMessage"="이용자 %d명을 연락처 목록에서 삭제하시겠습니까?";
-/* Success message shown when the selected contacts have been removed */
-"removedContacts"="%d 연락처 삭제됨";
 /* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
 "removedContact"="연락처 %@ 삭제됨";
 /* Label shown when a contact request is pending */
@@ -856,7 +854,7 @@
 /* Hint text where the user have to re-write the new email to confirm it */
 "confirmNewEmail"="새 이메일 승인";
 /* The title of the alert dialog to change the email associated to an account. */
-"changeEmail"="이메일 변경";
+"Change Email"="이메일 변경";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
 "oldAndNewEmailMatch"="새 이메일과 이전 이메일이 일치하지 않아야합니다";
 /* Error message shown when you have not written the same email when confirming a new one */
@@ -991,10 +989,12 @@
 "logoutLabel"="로그아웃";
 /* String shown when you are logging out of your account. */
 "loggingOut"="로그아웃중";
-/* Button to remove avatar. Try to keep the text short (as in English) */
-"removeAvatar"="아바타 제거";
-/* button that allows the user the change his avatar */
-"changeAvatar"="아바타 변경";
+/* Button to remove some photo, e.g. avatar photo. Try to keep the text short (as in English) */
+"Remove Photo"="사진 삭제";
+/* Button that allows the user the change a photo, e.g. his avatar photo */
+"Change Photo"="사진 변경";
+/* Button that allows the user the add a photo, e.g avatar photo */
+"Add Photo"="사진 추가";
 /* Button title that allows the user change his name */
 "changeName"="이름 변경";
 /* Success message when changing profile information. */
@@ -1265,8 +1265,6 @@
 "removePreview"="미리보기 제거";
 /* */
 "warning"="경고";
-/* Alert message shown when the user perform logout and has files in the Offline directory */
-"allFilesSavedForOfflineWillBeDeletedFromYourDevice"="오프라인용으로 저장된 모든 파일이 기기에서 삭제됩니다. 로그아웃 하시겠습니까?";
 /* Title shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_title"="전송 할당량 부족";
 /* Description shown when you almost had used your available transfer quota. */
@@ -1982,6 +1980,18 @@
 "Hi, Have encrypted conversations on Mega with me and get 50GB free storage."="안녕하세요! MEGA를 사용하여 저와 암호화된 대화를 하고 최대 50GB의 무료 공간을 받읍시다.";
 /* Destination folder name of chat files */
 "My chat files"="내 대화 파일";
+/* Title of the section about the plan in the storage tab in My Account Section */
+"Plan"="요금제";
+/* */
+"If you lose this Recovery key and forget your password, [B]all your files, folders and messages will be inaccessible, even by MEGA[/B]."="만약 이 복구 키도 잃어버리고 비밀번호도 잊으셨다면, [B]MEGA 조차도 당신의 모든 파일, 폴더 그리고 메시지에 접근이 불가능합니다.[/B]";
+/* */
+"Business"="기업용";
+/* */
+"Administrator"="관리자";
+/* */
+"Transfer"="전송";
+/* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
+"You cannot remove %1$s as a contact because they are part of your Business account."="%1$s님의 연락처는 당신의 비즈니스 계정의 일부이기 때문에 삭제할 수 없습니다.";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
 "Require passcode"="비밀번호 필요";
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
@@ -1992,6 +2002,22 @@
 "This folder has been the subject of a takedown notice."="이 폴더는 게시 중단 통보 대상입니다.";
 /* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
 "Dispute Takedown"="게시중단 이의제기";
+/* Label presented to Admins that full management of the business is only available in a desktop web browser */
+"User management is only available from a desktop web browser."="이용자 관리는 데스크톱 웹 브라우저에서만 가능합니다.";
+/* When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information */
+"There has been a problem with your last payment. Please access MEGA using a desktop browser for more information."="최근 결제에 문제가 있었습니다. 자세한 정보를 보려면 데스크톱 브라우저로 MEGA에 접속하세요.";
+/* A dialog title shown to users when their business account is expired. */
+"Your business account is expired"="당신의 비즈니스 계정이 만료되었습니다";
+/* Details shown when a Business account is expired. Details for the administrator of the Business account */
+"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="결제를 처리하는 과정에 문제가 있었습니다. 이 문제가 데스크톱 브라우저에서 해결될 때까지 MEGA가 보기 전용으로 제한됩니다.";
+/* A dialog message which is shown to sub-users of expired business accounts. */
+"Your account is currently [B]suspended[/B]. You can only browse your data."="당신의 계정은 현재 [B]정지[/B]되었습니다. 당신의 데이터를 탐색만할 수 있습니다.";
+/* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
+"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="MEGA는 당신의 데이터에 접근할 수 없지만, 당신의 조직 관리자는 당신의 이용자 계정의 카메라 업로드를 보거나 제어할 수 있는 권한이 있습니다.";
+/* */
+"Something went wrong"="뭔가 잘못 됐습니다";
+/* Button title that goes to the section Usage where you can see how your MEGA space is used */
+"Usage"="사용량";
 /* Title of the "Links" Shared Items. */
 "Links"="링크";
 /* Title for empty state view of "Links" in Shared Items. */
@@ -2000,6 +2026,8 @@
 "Manage Share"="공유 관리";
 /* Title of the screen that shows the users with whom the user can share a folder */
 "Share with"="다른 사람과 공유";
+/* A dialog message which is shown to sub-users of expired business accounts. */
+"Contact your business account administrator to resolve the issue and activate your account."="문제를 해결하고 계정을 활성화하려면 비즈니스 계정 관리자에게 연락하세요.";
 /* Chat Notifications DND: Option that does not deactivate DND automatically */
 "Until I Turn it On Again"="내가 다시 켜기 전까지";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
@@ -2050,6 +2078,12 @@
 "Alias/ Nickname"="가명 / 별명";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
 "It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="이 파일이 UTF-8 또는 ISO/IEC 8859-1로 기록되지 않아서, 내용을 가져올 수 없었습니다.";
+/* Business expired account Overdue payment page header. */
+"Payment overdue"="결제 기한 초과";
+/* */
+"Active"="활성";
+/* title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts */
+"Role:"="역할:";
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
 "Include location tags"="위치 태그 포함";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
@@ -2084,6 +2118,8 @@
 "Your account is already verified"="계정이 이미 인증되었습니다";
 /* Place holder for enter mobile number field */
 "Your phone number"="당신의 전화번호";
+/* Text related to verified phone number. Used as title or cell description.  */
+"Phone Number"="전화번호";
 /* Label tell user to enter received txt to below input boxes */
 "Please type the verification code sent to"="다음으로 전송된 코드를 입력하세요";
 /* Text message to remind user to resend verification code */
@@ -2132,5 +2168,21 @@
 "File Type"="파일 유형";
 /* export Quality Option for Scan document */
 "best"="최고";
+/* Error message appears to sub-users of a business account when they try to login and they are disabled. */
+"Your account has been disabled by your administrator. Please contact your business account administrator for further details."="당신의 계정은 관리자에 의해 정지되었습니다. 자세한 사항은 비즈니스 계정 관리자에게 연락하세요.";
+/* An error message which appears to sub-users of a business account when they try to login and they are deleted. */
+"Your account has been removed by your administrator. Please contact your business account administrator for further details."="당신의 계정이 관리자에 의해 삭제되었습니다. 자세한 사항은 당신의 비즈니스 계정 관리자에게 문의하세요.";
+/* Description of why the user should give permission to contacts */
+"Easily discover contacts from your address book on MEGA."="MEGA에서 당신의 주소록에 있는 지인들을 쉽게 찾으세요.";
+/* Detailed description of why the user should give permission to contacts */
+"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA는 당신의 동의 없이 이 데이터를 다른 목적으로 사용하고 당신의 지인들과 상호 작용하지 않을 것입니다.";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="그룹 이름을 입력하세요";
+/* Warning message to alert user about logout in My Account section if has transfers in progress. */
+"When you logout, ongoing transfers will be cancelled."="로그아웃하면, 진행중인 전송은 취소됩니다.";
+/* Warning message to alert user about logout in My Account section if has offline files. */
+"When you logout, files from your Offline section will be deleted from your device."="로그아웃하면 오프라인 섹션의 파일들이 당신의 기기에서 삭제됩니다.";
+/* Warning message to alert user about logout in My Account section if has offline files and transfers in progress. */
+"When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled."="로그아웃하면, 기기의 오프라인 섹션의 파일들이 삭제되고 진행중인 전송이 취소됩니다.";
+/* Default title of an empty chat. */
+"Chat created on %s1"="%s1에 생성된 대화";

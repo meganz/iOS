@@ -210,6 +210,25 @@
     return update;
 }
 
+- (void)callUpdateVideoForCall:(MEGAChatCall *)call {
+    CXCallUpdate *callUpdate = CXCallUpdate.alloc.init;
+    callUpdate.hasVideo = NO;
+    
+    if (call.hasLocalVideo) {
+        callUpdate.hasVideo = YES;
+    } else {
+        for (int i = 0; i < call.sessionsPeerId.size; i++) {
+            MEGAChatSession *session = [call sessionForPeer:[call.sessionsPeerId megaHandleAtIndex:i] clientId:[call.sessionsClientId megaHandleAtIndex:i]];
+            if (session.hasVideo) {
+                callUpdate.hasVideo = YES;
+                break;
+            }
+        }
+    }
+    
+    [self.provider reportCallWithUUID:call.uuid updated:callUpdate];
+}
+    
 - (void)reportEndCallWithCallId:(uint64_t)callId chatId:(uint64_t)chatId {
     MEGALogDebug(@"[CallKit] Report end call with callid %@ and chatid %@", [MEGASdk base64HandleForUserHandle:callId], [MEGASdk base64HandleForUserHandle:chatId]);
     
@@ -428,6 +447,15 @@
 
 #pragma mark - MEGAChatCallDelegate
 
+- (void)onChatSessionUpdate:(MEGAChatSdk *)api chatId:(uint64_t)chatId callId:(uint64_t)callId session:(MEGAChatSession *)session{
+    MEGALogDebug(@"onChatSessionUpdate %@", session);
+    
+    if ([session hasChanged:MEGAChatSessionChangeRemoteAvFlags]) {
+        MEGAChatCall *chatCall = [MEGASdkManager.sharedMEGAChatSdk chatCallForCallId:callId];
+        [self callUpdateVideoForCall:chatCall];
+    }
+}
+
 - (void)onChatCallUpdate:(MEGAChatSdk *)api call:(MEGAChatCall *)call {
     MEGALogDebug(@"onChatCallUpdate %@", call);
     
@@ -464,14 +492,10 @@
                 self.outgoingCall = NO;
             }
             
-            if (([call hasChangedForType:MEGAChatCallChangeTypeLocalAVFlags] || [call hasChangedForType:MEGAChatCallChangeTypeRemoteAVFlags]) && ![MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:call.chatId].isGroup) {
-                CXCallUpdate *callUpdate = CXCallUpdate.alloc.init;
-                MEGAChatSession *remoteSession = [call sessionForPeer:call.peerSessionStatusChange clientId:call.clientSessionStatusChange];
-                callUpdate.hasVideo = call.hasLocalVideo || remoteSession.hasVideo;
-                
-                [self.provider reportCallWithUUID:call.uuid updated:callUpdate];
+            if ([call hasChangedForType:MEGAChatCallChangeTypeLocalAVFlags]) {
+                [self callUpdateVideoForCall:call];
             }
-            
+
             [self.missedCallsDictionary removeObjectForKey:@(call.chatId)];
             break;
         }
