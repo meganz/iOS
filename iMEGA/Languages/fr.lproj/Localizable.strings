@@ -81,7 +81,7 @@
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Veuillez vous connecter à votre compte.";
 /* Error message when a user attempts to change their email without an active login session. */
-"needToBeLoggedInToCompleteYourEmailChange"="Vous devez être connecté pour effectuer votre changement d'adresse courriel. Veuillez vous connecter de nouveau avec votre adresse courriel actuelle et recliquer ensuite sur le lien de confirmation.";
+"needToBeLoggedInToCompleteYourEmailChange"="Vous devez être connecté pour effectuer votre changement d’adresse courriel. Veuillez vous connecter de nouveau avec votre adresse courriel actuelle et recliquer ensuite sur le lien de confirmation.";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Connexion";
 /* Button title which triggers the action to create a MEGA account */
@@ -578,8 +578,6 @@
 "removeUserMessage"="Voulez-vous vraiment retirer %@ de votre liste de contacts ?";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
 "removeMultipleUsersMessage"="Voulez-vraiment retirer %d utilisateurs de votre liste de contacts ?";
-/* Success message shown when the selected contacts have been removed */
-"removedContacts"="%d contacts ont été supprimés";
 /* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
 "removedContact"="Le contact %@ a été supprimé";
 /* Label shown when a contact request is pending */
@@ -856,7 +854,7 @@
 /* Hint text where the user have to re-write the new email to confirm it */
 "confirmNewEmail"="Confirmez la nouvelle adresse courriel";
 /* The title of the alert dialog to change the email associated to an account. */
-"changeEmail"="Changer l’adresse courriel";
+"Change Email"="Changer l’adresse courriel";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
 "oldAndNewEmailMatch"="La nouvelle adresse courriel et l'ancienne ne doivent pas correspondre";
 /* Error message shown when you have not written the same email when confirming a new one */
@@ -991,10 +989,12 @@
 "logoutLabel"="Déconnexion";
 /* String shown when you are logging out of your account. */
 "loggingOut"="Déconnexion";
-/* Button to remove avatar. Try to keep the text short (as in English) */
-"removeAvatar"="Supprimer l’avatar";
-/* button that allows the user the change his avatar */
-"changeAvatar"="Changer l’avatar";
+/* Button to remove some photo, e.g. avatar photo. Try to keep the text short (as in English) */
+"Remove Photo"="Remove Photo";
+/* Button that allows the user the change a photo, e.g. his avatar photo */
+"Change Photo"="Change Photo";
+/* Button that allows the user the add a photo, e.g avatar photo */
+"Add Photo"="Add Photo";
 /* Button title that allows the user change his name */
 "changeName"="Modifier le nom";
 /* Success message when changing profile information. */
@@ -1008,7 +1008,7 @@
 /* Title for "Used" MEGA space. */
 "usedSpaceLabel"="Utilisés";
 /* Title for MEGA "Available" space. */
-"availableLabel"="Disponibles";
+"availableLabel"="Disponible";
 /* title of the My Account screen */
 "accountType"="Type de compte :";
 /* Label to indicate that the current user has a Free account. */
@@ -1265,8 +1265,6 @@
 "removePreview"="Supprimer l’aperçu";
 /* */
 "warning"="Avertissement";
-/* Alert message shown when the user perform logout and has files in the Offline directory */
-"allFilesSavedForOfflineWillBeDeletedFromYourDevice"="Tous les fichiers enregistrés hors ligne seront supprimés de votre appareil. Poursuivre la déconnexion ?";
 /* Title shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_title"="Le quota de transfert est insuffisant";
 /* Description shown when you almost had used your available transfer quota. */
@@ -1797,7 +1795,7 @@
 /* notification text */
 "A user has left the shared folder {0}"="Un utilisateur a quitté le dossier partagé {0}";
 /* This is shown in the Notification dialog when the email address of a contact is not found and access to the share is lost for some reason (e.g. share removal or contact removal). */
-"Access to folders was removed."="L'accès aux dossiers a été retiré.";
+"Access to folders was removed."="L’accès aux dossiers a été retiré.";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
 "Added 1 file"="1 fichier a été ajouté";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
@@ -1931,7 +1929,7 @@
 /* Shown when an inexisting/unavailable/removed link is tried to be opened. */
 "This chat link is no longer available"="Le lien de conversation n’est pas disponible";
 /* Text explaining users how the chat links work. */
-"People can join your group by using this link."="D'autres peuvent se joindre à votre groupe en utilisant ce lien.";
+"People can join your group by using this link."="D’autres peuvent se joindre à votre groupe en utilisant ce lien.";
 /* Subtitle shown in a chat to inform where to tap to enter in the chat details view */
 "Tap here for info"="Touchez ici pour obtenir des renseignements";
 /* In some cases, a user may try to get the link for a chat room, but if such is not set by an operator - it would say "not link available" and not auto create it. */
@@ -1982,6 +1980,18 @@
 "Hi, Have encrypted conversations on Mega with me and get 50GB free storage."="Bonjour. Conversez avec moi en toute sécurité sur MEGA et obtenez jusqu’à 50 Go d’espace de stockage gratuits.";
 /* Destination folder name of chat files */
 "My chat files"="Mes fichiers de dialogue en ligne";
+/* Title of the section about the plan in the storage tab in My Account Section */
+"Plan"="Abonnement";
+/* */
+"If you lose this Recovery key and forget your password, [B]all your files, folders and messages will be inaccessible, even by MEGA[/B]."="Si vous perdez votre clé de récupération et oubliez votre mot de passe, [B]tous vos fichiers, dossiers et messages seront inaccessibles, même pour MEGA[/B].";
+/* */
+"Business"="Pour entreprise";
+/* */
+"Administrator"="Administrateur";
+/* */
+"Transfer"="Transfert";
+/* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
+"You cannot remove %1$s as a contact because they are part of your Business account."="Vous ne pouvez pas supprimer %1$s de vos contacts, car ce contact fait parti de votre compte d’entreprise.";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
 "Require passcode"="Exiger le code d’accès";
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
@@ -1992,6 +2002,22 @@
 "This folder has been the subject of a takedown notice."="Ce dossier a été l’objet d’un avis de retrait.";
 /* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
 "Dispute Takedown"="Contester le retrait";
+/* Label presented to Admins that full management of the business is only available in a desktop web browser */
+"User management is only available from a desktop web browser."="La gestion des utilisateurs n’est accessible qu’à partir d’un navigateur Web d’ordinateur.";
+/* When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information */
+"There has been a problem with your last payment. Please access MEGA using a desktop browser for more information."="Un problème est survenu lors de votre dernier paiement. Pour plus de précisions, veuillez accéder à MEGA en utilisant un navigateur pour ordinateur.";
+/* A dialog title shown to users when their business account is expired. */
+"Your business account is expired"="Votre compte d’entreprise est expiré";
+/* Details shown when a Business account is expired. Details for the administrator of the Business account */
+"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="Un problème est survenu lors du traitement de votre paiement. MEGA sera en lecture seulement tant que ce problème n’aura pas été corrigé dans un navigateur pour ordinateur.";
+/* A dialog message which is shown to sub-users of expired business accounts. */
+"Your account is currently [B]suspended[/B]. You can only browse your data."="Votre compte est actuellement [B]désactivé[/B]. Vous ne pouvez que parcourir vos données.";
+/* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
+"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="Bien que MEGA n’ait pas accès à vos données, l’administrateur de votre compte MEGA à la possibilité de contrôler et de visualiser les téléversements de l’appareil photo dans votre compte utilisateur";
+/* */
+"Something went wrong"="Un problème est survenu";
+/* Button title that goes to the section Usage where you can see how your MEGA space is used */
+"Usage"="Utilisation";
 /* Title of the "Links" Shared Items. */
 "Links"="Liens";
 /* Title for empty state view of "Links" in Shared Items. */
@@ -2000,6 +2026,8 @@
 "Manage Share"="Gérer le lien";
 /* Title of the screen that shows the users with whom the user can share a folder */
 "Share with"="Partager avec";
+/* A dialog message which is shown to sub-users of expired business accounts. */
+"Contact your business account administrator to resolve the issue and activate your account."="Contactez l’administrateur de votre compte d’entreprise pour résoudre la situation et activer votre compte.";
 /* Chat Notifications DND: Option that does not deactivate DND automatically */
 "Until I Turn it On Again"="Jusqu’à ce que je les réactive";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
@@ -2050,6 +2078,12 @@
 "Alias/ Nickname"="Alias/pseudonyme";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
 "It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="Il n’a pas été possible d’obtenir le contenu de ce fichier, car il n’est codé ni en UTF-8 ni en ISO/IEC 8859-1.";
+/* Business expired account Overdue payment page header. */
+"Payment overdue"="Le paiement est en retard";
+/* */
+"Active"="Active";
+/* title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts */
+"Role:"="Rôle :";
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
 "Include location tags"="Inclure des géobalises";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
@@ -2084,6 +2118,8 @@
 "Your account is already verified"="Votre compte est déjà confirmé";
 /* Place holder for enter mobile number field */
 "Your phone number"="Votre numéro de téléphone";
+/* Text related to verified phone number. Used as title or cell description.  */
+"Phone Number"="Phone Number";
 /* Label tell user to enter received txt to below input boxes */
 "Please type the verification code sent to"="Veuillez saisir le code de confirmation envoyé à";
 /* Text message to remind user to resend verification code */
@@ -2132,5 +2168,21 @@
 "File Type"="Type de fichier";
 /* export Quality Option for Scan document */
 "best"="La meilleure";
+/* Error message appears to sub-users of a business account when they try to login and they are disabled. */
+"Your account has been disabled by your administrator. Please contact your business account administrator for further details."="Votre compte a été désactivé par votre administrateur. Veuillez contacter l’administrateur de votre compte d’entreprise pour obtenir plus de précisions.";
+/* An error message which appears to sub-users of a business account when they try to login and they are deleted. */
+"Your account has been removed by your administrator. Please contact your business account administrator for further details."="Votre compte a été supprimé par votre administrateur. Veuillez contacter l’administrateur de votre compte d’entreprise pour plus de précisions.";
+/* Description of why the user should give permission to contacts */
+"Easily discover contacts from your address book on MEGA."="Trouvez facilement les contacts de votre carnet d’adresses sur MEGA.";
+/* Detailed description of why the user should give permission to contacts */
+"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA n’utilisera pas ces données et n’interagira jamais avec vos contacts sans votre consentement.";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="Saisissez le nom du groupe";
+/* Warning message to alert user about logout in My Account section if has transfers in progress. */
+"When you logout, ongoing transfers will be cancelled."="Quand vous vous déconnectez, les transferts en cours sont annulés.";
+/* Warning message to alert user about logout in My Account section if has offline files. */
+"When you logout, files from your Offline section will be deleted from your device."="Quand vous vous déconnectez, les fichiers de votre section Hors ligne sont supprimés de votre appareil.";
+/* Warning message to alert user about logout in My Account section if has offline files and transfers in progress. */
+"When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled."="Vous vous déconnectez, les fichiers de votre section Hors ligne sont supprimés de votre appareil et les transferts en cours sont annulés.";
+/* Default title of an empty chat. */
+"Chat created on %s1"="Conversation créée le %s1";

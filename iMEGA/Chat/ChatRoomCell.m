@@ -12,6 +12,12 @@
 #import "UIImageView+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
 
+#ifdef MNZ_SHARE_EXTENSION
+#import "MEGAShare-Swift.h"
+#else
+#import "MEGA-Swift.h"
+#endif
+
 @interface ChatRoomCell ()
 
 @property (strong, nonatomic) NSTimer *timer;
@@ -69,7 +75,7 @@
 
     self.privateChatImageView.hidden = chatListItem.isPublicChat;
 
-    self.chatTitle.text = chatListItem.title;
+    self.chatTitle.text = self.chatListItem.chatTitle;
     [self updateLastMessageForChatListItem:chatListItem];
     
     if (chatListItem.isGroup) {

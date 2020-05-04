@@ -10,13 +10,16 @@
 #import "Helper.h"
 #import "MEGAChatAttachNodeRequestDelegate.h"
 #import "MEGAChatAttachVoiceClipRequestDelegate.h"
-#import "MEGAChatCreateChatGroupRequestDelegate.h"
 #import "MEGAChatMessage+MNZCategory.h"
-#import "MEGACopyRequestDelegate.h"
 #import "MEGACreateFolderRequestDelegate.h"
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
+#ifdef MNZ_SHARE_EXTENSION
+#import "MEGAShare-Swift.h"
+#else
+#import "MEGA-Swift.h"
+#endif
 #import "MEGAUser+MNZCategory.h"
 
 #ifdef MNZ_SHARE_EXTENSION
@@ -510,14 +513,11 @@
                             }];
                         } else {
                             MEGALogDebug(@"There is not a chat with %@, create the chat and attach", user.email);
-                            MEGAChatPeerList *peerList = [[MEGAChatPeerList alloc] init];
-                            [peerList addPeerWithHandle:user.handle privilege:MEGAChatRoomPrivilegeStandard];
-                            MEGAChatCreateChatGroupRequestDelegate *createChatGroupRequestDelegate = [[MEGAChatCreateChatGroupRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
+                            [MEGASdkManager.sharedMEGAChatSdk mnz_createChatRoomWithUserHandle:user.handle completion:^(MEGAChatRoom * _Nonnull chatRoom) {
                                 [Helper importNode:node toShareWithCompletion:^(MEGANode *node) {
                                     [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatRoom.chatId node:node.handle delegate:chatAttachNodeRequestDelegate];
                                 }];
                             }];
-                            [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:NO peers:peerList delegate:createChatGroupRequestDelegate];
                         }
                     }
                 }
@@ -564,9 +564,7 @@
                             }
                         } else {
                             MEGALogDebug(@"There is not a chat with %@, create the chat and attach", user.email);
-                            MEGAChatPeerList *peerList = [[MEGAChatPeerList alloc] init];
-                            [peerList addPeerWithHandle:user.handle privilege:MEGAChatRoomPrivilegeStandard];
-                            MEGAChatCreateChatGroupRequestDelegate *createChatGroupRequestDelegate = [[MEGAChatCreateChatGroupRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
+                            [MEGASdkManager.sharedMEGAChatSdk mnz_createChatRoomWithUserHandle:user.handle completion:^(MEGAChatRoom * _Nonnull chatRoom) {
                                 @synchronized(self.chatIdNumbers) {
                                     [self.chatIdNumbers addObject:@(chatRoom.chatId)];
                                     if (self.chatIdNumbers.count == destinationCount) {
@@ -574,7 +572,6 @@
                                     }
                                 }
                             }];
-                            [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:NO peers:peerList delegate:createChatGroupRequestDelegate];
                         }
                     }
                 }];

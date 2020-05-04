@@ -33,7 +33,7 @@
 #import "ShareFolderActivity.h"
 #import "ItemListViewController.h"
 
-@interface ContactsViewController () <CNContactPickerDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, ItemListViewControllerDelegate, UISearchControllerDelegate, UIGestureRecognizerDelegate, MEGAChatDelegate, ContactLinkQRViewControllerDelegate>
+@interface ContactsViewController () <CNContactPickerDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, ItemListViewControllerDelegate, UISearchControllerDelegate, UIGestureRecognizerDelegate, MEGAChatDelegate, ContactLinkQRViewControllerDelegate, MEGARequestDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -129,6 +129,8 @@
     [self.tableView registerNib:[UINib nibWithNibName:@"SectionTableViewCell" bundle:nil] forCellReuseIdentifier:@"SectionTableViewCellID"];
     [self.tableView registerNib:[UINib nibWithNibName:@"ContactsHeaderFooterView" bundle:nil] forHeaderFooterViewReuseIdentifier:@"ContactsHeaderFooterView"];
     
+    [MEGASdkManager.sharedMEGASdk addMEGARequestDelegate:self];
+
     if (self.contactsMode == ContactsModeChatNamingGroup) {
         self.enterGroupNameTextField.placeholder = AMLocalizedString(@"Enter group name", @"Title of the dialog shown when the user it is creating a chat link and the chat has not title");
     }
@@ -161,6 +163,10 @@
 
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
     [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
+    
+    if (self.isMovingFromParentViewController) {
+        [MEGASdkManager.sharedMEGASdk removeMEGARequestDelegate:self];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -1758,7 +1764,7 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         switch (self.contactsMode) {
             case ContactsModeDefault: {
-                MEGARemoveContactRequestDelegate *removeContactRequestDelegate = [[MEGARemoveContactRequestDelegate alloc] initWithNumberOfRequests:1 completion:^{
+                MEGARemoveContactRequestDelegate *removeContactRequestDelegate = [MEGARemoveContactRequestDelegate. alloc initWithCompletion:^{                
                     [self setTableViewEditing:NO animated:NO];
                 }];
                 MEGAUser *user = [self userAtIndexPath:indexPath];
@@ -2195,6 +2201,26 @@
 
 - (void)emailForScannedQR:(NSString *)email {
     [self inviteEmailToShareFolder:email];
+}
+
+#pragma mark - MEGARequestDelegate
+
+- (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
+    switch (request.type) {
+        case MEGARequestTypeGetAttrUser: {
+            if (error.type) {
+                return;
+            }
+            
+            if (request.paramType == MEGAUserAttributeFirstname || request.paramType == MEGAUserAttributeLastname) {
+                [self reloadUI];
+            }
+            break;
+        }
+            
+        default:
+            break;
+    }
 }
 
 @end

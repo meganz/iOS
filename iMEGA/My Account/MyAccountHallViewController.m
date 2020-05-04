@@ -2,6 +2,7 @@
 #import "MyAccountHallViewController.h"
 
 #import "AchievementsViewController.h"
+#import "ContactLinkQRViewController.h"
 #import "ContactsViewController.h"
 #import "Helper.h"
 #import "MEGAPurchase.h"
@@ -10,7 +11,7 @@
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
 #import "MyAccountHallTableViewCell.h"
-#import "MyAccountViewController.h"
+#import "MEGA-Swift.h"
 #import "NotificationsTableViewController.h"
 #import "OfflineViewController.h"
 #import "SettingsTableViewController.h"
@@ -52,6 +53,13 @@ typedef NS_ENUM(NSInteger, MyAccount) {
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *qrCodeImageView;
+
+@property (weak, nonatomic) IBOutlet UIView *tableFooterView;
+@property (weak, nonatomic) IBOutlet UILabel *tableFooterLabel;
+
 @end
 
 @implementation MyAccountHallViewController
@@ -60,11 +68,7 @@ typedef NS_ENUM(NSInteger, MyAccount) {
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.navigationItem.title = AMLocalizedString(@"myAccount", @"Title of the app section where you can see your account details");
-    
-    self.buyPROBarButtonItem.title = AMLocalizedString(@"upgrade", @"Caption of a button to upgrade the account to Pro status");
-    
+        
     self.viewAndEditProfileLabel.text = AMLocalizedString(@"viewAndEditProfile", @"Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile");
     self.viewAndEditProfileButton.accessibilityLabel = AMLocalizedString(@"viewAndEditProfile", @"Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile");
 
@@ -78,7 +82,13 @@ typedef NS_ENUM(NSInteger, MyAccount) {
 
     [[MEGAPurchase sharedInstance] setPricingsDelegate:self];
     
-    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    UITapGestureRecognizer *tapAvatarGestureRecognizer = [UITapGestureRecognizer.alloc initWithTarget:self action:@selector(avatarTapped:)];
+    self.avatarImageView.gestureRecognizers = @[tapAvatarGestureRecognizer];
+    self.avatarImageView.userInteractionEnabled = YES;
+    
+    if (@available(iOS 11.0, *)) {
+        self.avatarImageView.accessibilityIgnoresInvertColors = YES;
+    }
     self.addPhoneNumberView.hidden = YES;
     
     [self configAddPhoneNumberTexts];
@@ -109,6 +119,7 @@ typedef NS_ENUM(NSInteger, MyAccount) {
     [super viewWillDisappear:animated];
     
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
+    [MEGASdkManager.sharedMEGASdk removeMEGARequestDelegate:self];
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
@@ -166,6 +177,9 @@ typedef NS_ENUM(NSInteger, MyAccount) {
 }
 
 - (void)reloadUI {
+    [self configNavigationItem];
+    [self configTableFooterView];
+    
     self.nameLabel.text = [[[MEGASdkManager sharedMEGASdk] myUser] mnz_fullName];
     [self setUserAvatar];
     
@@ -192,6 +206,40 @@ typedef NS_ENUM(NSInteger, MyAccount) {
     [self tableView:self.tableView didSelectRowAtIndexPath:offlineIndexPath];
 }
 
+- (void)avatarTapped:(UITapGestureRecognizer *)sender {
+    if (sender.state == UIGestureRecognizerStateEnded) {
+        ContactLinkQRViewController *contactLinkVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactLinkQRViewControllerID"];
+        contactLinkVC.scanCode = NO;
+        [self presentViewController:contactLinkVC animated:YES completion:nil];
+    }
+}
+
+- (void)setUserAvatar {
+    MEGAUser *myUser = MEGASdkManager.sharedMEGASdk.myUser;
+    [self.avatarImageView mnz_setImageForUserHandle:myUser.handle];
+}
+
+- (void)configNavigationItem {
+    if (MEGASdkManager.sharedMEGASdk.isBusinessAccount) {
+        self.navigationItem.rightBarButtonItem = nil;
+        UILabel *label = [Helper customNavigationBarLabelWithTitle:AMLocalizedString(@"myAccount", @"Title of the app section where you can see your account details") subtitle:AMLocalizedString(@"Business", nil)];
+        label.frame = CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44);
+        self.navigationItem.titleView = label;
+    } else {
+        self.buyPROBarButtonItem.title = AMLocalizedString(@"upgrade", @"Caption of a button to upgrade the account to Pro status");
+        self.navigationItem.title = AMLocalizedString(@"myAccount", @"Title of the app section where you can see your account details");
+    }
+}
+
+- (void)configTableFooterView {
+    if (MEGASdkManager.sharedMEGASdk.isMasterBusinessAccount) {
+        self.tableFooterLabel.text = AMLocalizedString(@"User management is only available from a desktop web browser.", @"Label presented to Admins that full management of the business is only available in a desktop web browser");
+        self.tableView.tableFooterView = self.tableFooterView;
+    } else {
+        self.tableView.tableFooterView = [UIView.alloc initWithFrame:CGRectZero];
+    }
+}
+
 #pragma mark - IBActions
 
 - (IBAction)scanQrCode:(UIBarButtonItem *)sender {
@@ -205,7 +253,6 @@ typedef NS_ENUM(NSInteger, MyAccount) {
 - (IBAction)buyPROTouchUpInside:(UIBarButtonItem *)sender {
     if ([[MEGASdkManager sharedMEGASdk] mnz_accountDetails]) {
         UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"UpgradeAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeTableViewControllerID"];
-        upgradeTVC.hideSkipButton = YES;
         
         [self.navigationController pushViewController:upgradeTVC animated:YES];
     } else {
@@ -214,8 +261,8 @@ typedef NS_ENUM(NSInteger, MyAccount) {
 }
 
 - (IBAction)viewAndEditProfileTouchUpInside:(UIButton *)sender {
-    MyAccountViewController *myAccountVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"MyAccountViewControllerID"];
-    [self.navigationController pushViewController:myAccountVC animated:YES];
+    ProfileViewController *profileViewController = [[UIStoryboard storyboardWithName:@"Profile" bundle:nil] instantiateViewControllerWithIdentifier:@"ProfileViewControllerID"];
+    [self.navigationController pushViewController:profileViewController animated:YES];
 }
 
 - (IBAction)didTapAddPhoneNumberView {
@@ -236,6 +283,9 @@ typedef NS_ENUM(NSInteger, MyAccount) {
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *identifier = @"MyAccountHallTableViewCellID";
+    if (MEGASdkManager.sharedMEGASdk.isBusinessAccount && (indexPath.row == 0)) {
+        identifier = @"MyAccountHallBusinessUsageTableViewCellID";
+    }
     MyAccountHallTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
     if (cell == nil) {
         cell = [[MyAccountHallTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
@@ -252,14 +302,28 @@ typedef NS_ENUM(NSInteger, MyAccount) {
     
     switch (indexPath.row) {
         case MyAccountStorage: {
-            cell.iconImageView.image = [UIImage imageNamed:@"icon-storage"].imageFlippedForRightToLeftLayoutDirection;
-            cell.sectionLabel.text = AMLocalizedString(@"Storage", @"Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible).");
-            
-            if ([[MEGASdkManager sharedMEGASdk] mnz_accountDetails]) {
-                MEGAAccountDetails *accountDetails = [[MEGASdkManager sharedMEGASdk] mnz_accountDetails];
-                cell.detailLabel.text = [NSString stringWithFormat:@"%@ / %@", [Helper memoryStyleStringFromByteCount:accountDetails.storageUsed.longLongValue], [Helper memoryStyleStringFromByteCount:accountDetails.storageMax.longLongValue]];
+            if (MEGASdkManager.sharedMEGASdk.isBusinessAccount) {
+                cell.sectionLabel.text = AMLocalizedString(@"Usage", @"Button title that goes to the section Usage where you can see how your MEGA space is used");
+                cell.storageLabel.text = AMLocalizedString(@"productSpace", nil);
+                cell.transferLabel.text = AMLocalizedString(@"Transfer", nil);
+                MEGAAccountDetails *accountDetails = MEGASdkManager.sharedMEGASdk.mnz_accountDetails;
+                if (accountDetails) {
+                    cell.storageUsedLabel.text = [Helper memoryStyleStringFromByteCount:accountDetails.storageUsed.longLongValue];
+                    cell.transferUsedLabel.text = [Helper memoryStyleStringFromByteCount:accountDetails.transferOwnUsed.longLongValue];
+                } else {
+                    cell.storageUsedLabel.text = @"";
+                    cell.transferUsedLabel.text = @"";
+                }
             } else {
-                cell.detailTextLabel.text = @"";
+                cell.iconImageView.image = [UIImage imageNamed:@"icon-storage"].imageFlippedForRightToLeftLayoutDirection;
+                cell.sectionLabel.text = AMLocalizedString(@"Storage", @"Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible).");
+                
+                if (MEGASdkManager.sharedMEGASdk.mnz_accountDetails) {
+                    MEGAAccountDetails *accountDetails = MEGASdkManager.sharedMEGASdk.mnz_accountDetails;
+                    cell.detailLabel.text = [NSString stringWithFormat:@"%@ / %@", [Helper memoryStyleStringFromByteCount:accountDetails.storageUsed.longLongValue], [Helper memoryStyleStringFromByteCount:accountDetails.storageMax.longLongValue]];
+                } else {
+                    cell.detailTextLabel.text = @"";
+                }
             }
             break;
         }
@@ -333,10 +397,12 @@ typedef NS_ENUM(NSInteger, MyAccount) {
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     CGFloat heightForRow;
-    if (indexPath.row == MyAccountAchievements && ![MEGASdkManager.sharedMEGASdk isAchievementsEnabled]) {
+    if (indexPath.row == MyAccountAchievements && ![MEGASdkManager.sharedMEGASdk isAchievementsEnabled] | MEGASdkManager.sharedMEGASdk.isBusinessAccount) {
         heightForRow = 0.0f;
+    } else if (indexPath.row == 0 && MEGASdkManager.sharedMEGASdk.isBusinessAccount) {
+        heightForRow = 94;
     } else {
-        heightForRow = 60.0f;
+        heightForRow = 60;
     }
     
     return heightForRow;
@@ -425,8 +491,6 @@ typedef NS_ENUM(NSInteger, MyAccount) {
 #pragma mark - MEGARequestDelegate
 
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
-    [super onRequestFinish:api request:request error:error];
-    
     switch (request.type) {
         case MEGARequestTypeAccountDetails:
             if (error.type) {
@@ -435,6 +499,21 @@ typedef NS_ENUM(NSInteger, MyAccount) {
             [self reloadUI];
             
             break;
+            
+        case MEGARequestTypeGetAttrUser: {
+            if (error.type) {
+                return;
+            }
+            
+            if (request.file) {
+                [self setUserAvatar];
+            }
+            
+            if (request.paramType == MEGAUserAttributeFirstname || request.paramType == MEGAUserAttributeLastname) {
+                self.nameLabel.text = api.myUser.mnz_fullName;
+            }
+            break;
+        }
             
         default:
             break;
