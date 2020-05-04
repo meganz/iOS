@@ -578,8 +578,6 @@
 "removeUserMessage"="あなたの知り合いリストから%@ を取り除きますね？";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
 "removeMultipleUsersMessage"="知り合いリストからユーザー%d人、取り除きますね？";
-/* Success message shown when the selected contacts have been removed */
-"removedContacts"="知り合い%d人除外";
 /* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
 "removedContact"="知り合い%@ 除外";
 /* Label shown when a contact request is pending */
@@ -856,7 +854,7 @@
 /* Hint text where the user have to re-write the new email to confirm it */
 "confirmNewEmail"="メールアドレスを確認";
 /* The title of the alert dialog to change the email associated to an account. */
-"changeEmail"="メールを変更する";
+"Change Email"="メールを変更";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
 "oldAndNewEmailMatch"="新しいEメールは現在のEメールと違う必要があります";
 /* Error message shown when you have not written the same email when confirming a new one */
@@ -993,10 +991,12 @@
 "logoutLabel"="ログアウト";
 /* String shown when you are logging out of your account. */
 "loggingOut"="ログアウトします";
-/* Button to remove avatar. Try to keep the text short (as in English) */
-"removeAvatar"="アバターをはずす";
-/* button that allows the user the change his avatar */
-"changeAvatar"="アバターを替える";
+/* Button to remove some photo, e.g. avatar photo. Try to keep the text short (as in English) */
+"Remove Photo"="写真を削除";
+/* Button that allows the user the change a photo, e.g. his avatar photo */
+"Change Photo"="写真を変更";
+/* Button that allows the user the add a photo, e.g avatar photo */
+"Add Photo"="写真を追加";
 /* Button title that allows the user change his name */
 "changeName"="名前の変更";
 /* Success message when changing profile information. */
@@ -1037,8 +1037,6 @@
 "cloudDriveIsFull"="[S]あなたのクラウドドライブはいっぱいです。[/S]PROアカウントに[A]今すぐアップグレード[/A]し、[S]最大%@ TB（%@ GB）[/S]のクラウドストレージスペースを取得してください。";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="ストレージ";
-/* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
-"transferQuota"="転送容量制限";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
 "limited"="制限付き";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
@@ -1273,8 +1271,6 @@
 "removePreview"="プレビューを削除";
 /* */
 "warning"="警告";
-/* Alert message shown when the user perform logout and has files in the Offline directory */
-"allFilesSavedForOfflineWillBeDeletedFromYourDevice"="オフライン用に保存されたファイルはすべて、端末から削除されます。ログアウトに進みますか？　";
 /* Title shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_title"="転送容量が不十分です";
 /* Description shown when you almost had used your available transfer quota. */
@@ -1766,14 +1762,6 @@
 "Thumbnail view"="サムネールで見る";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
 "Poor connection."="接続不良。";
-/* Message shown in a chat room when there is an active group call */
-"There is an active group call. Tap to join."="有効なグループ通話があります。タップして参加します。";
-/* Message shown in a chat room for a group call in progress displaying the duration of the call */
-"Touch to return to call %@"="タッチして通話に戻る %@";
-/* Menu item to change from grid view to list view */
-"List view"="リスト一覧";
-/* Menu item to change from list view to grid view */
-"Thumbnail view"="サムネールで見る";
 /* There are no notifications to display. */
 "No notifications"="通知はありません";
 /* The header of a notification related to payments */
@@ -1998,6 +1986,18 @@
 "Hi, Have encrypted conversations on Mega with me and get 50GB free storage."="こんにちは！　私とMEGAでセキュアな会話をして、最大50GBの無料ストレージを獲得しましょう。";
 /* Destination folder name of chat files */
 "My chat files"="私のチャットファイル";
+/* Title of the section about the plan in the storage tab in My Account Section */
+"Plan"="プラン";
+/* */
+"If you lose this Recovery key and forget your password, [B]all your files, folders and messages will be inaccessible, even by MEGA[/B]."="この回復キーをなくしてパスワードをお忘れの場合、[B]MEGAでも、ユーザー様のファイル、フォルダ、メッセージすべてにアクセスできなくなります[/B]。";
+/* */
+"Business"="ビジネス";
+/* */
+"Administrator"="管理者";
+/* */
+"Transfer"="転送";
+/* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
+"You cannot remove %1$s as a contact because they are part of your Business account."="%1$sさんはあなたのビジネスアカウントの一部であるため、連絡先から削除できません。";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
 "Require passcode"="パスコードが必要です";
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
@@ -2008,6 +2008,22 @@
 "This folder has been the subject of a takedown notice."="このフォルダは削除通知の対象となっています。";
 /* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
 "Dispute Takedown"="異議申立による削除";
+/* Label presented to Admins that full management of the business is only available in a desktop web browser */
+"User management is only available from a desktop web browser."="ユーザー管理は、デスクトップウェブブラウザからのみご利用いただけます。";
+/* When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information */
+"There has been a problem with your last payment. Please access MEGA using a desktop browser for more information."="最後のお支払いに問題がございました。詳細については、デスクトップブラウザを使用してMEGAにアクセスしてください。";
+/* A dialog title shown to users when their business account is expired. */
+"Your business account is expired"="あなたのビジネスアカウントは期限切れです";
+/* Details shown when a Business account is expired. Details for the administrator of the Business account */
+"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="お支払いの処理中に問題が発生しました。MEGAは、この問題がデスクトップウェブブラウザで修正されるまで、表示のみに制限されています。";
+/* A dialog message which is shown to sub-users of expired business accounts. */
+"Your account is currently [B]suspended[/B]. You can only browse your data."="あなたのアカウントは現在[B]凍結[/B]されています。あなたのデータの閲覧のみ可能です。";
+/* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
+"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="MEGAはあなたのデータにアクセスしませんが、貴組織の管理者様は、あなたのユーザーアカウントのカメラアップロードを管理し、表示することができます。";
+/* */
+"Something went wrong"="ちょと、うまく行かなかったようです。";
+/* Button title that goes to the section Usage where you can see how your MEGA space is used */
+"Usage"="ご利用内容";
 /* Title of the "Links" Shared Items. */
 "Links"="リンク";
 /* Title for empty state view of "Links" in Shared Items. */
@@ -2016,6 +2032,8 @@
 "Manage Share"="共有を管理";
 /* Title of the screen that shows the users with whom the user can share a folder */
 "Share with"="共有先";
+/* A dialog message which is shown to sub-users of expired business accounts. */
+"Contact your business account administrator to resolve the issue and activate your account."="あなたのビジネスアカウント管理者に連絡して問題を解決し、あなたのアカウントを有効にしてください。";
 /* Chat Notifications DND: Option that does not deactivate DND automatically */
 "Until I Turn it On Again"="再びそれをオンにするまで";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
@@ -2066,6 +2084,12 @@
 "Alias/ Nickname"="エイリアス/ニックネーム";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
 "It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="このファイルの内容を取得できませんでした。なぜなら、UTF-8またはISO/IEC 8859-1でエンコードされていないからです。";
+/* Business expired account Overdue payment page header. */
+"Payment overdue"="支払い延滞";
+/* */
+"Active"="ログイン有効";
+/* title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts */
+"Role:"="役職：";
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
 "Include location tags"="場所タグを含める";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
@@ -2100,6 +2124,8 @@
 "Your account is already verified"="あなたのアカウントはすでに検証済みです";
 /* Place holder for enter mobile number field */
 "Your phone number"="あなたの電話番号";
+/* Text related to verified phone number. Used as title or cell description.  */
+"Phone Number"="電話番号";
 /* Label tell user to enter received txt to below input boxes */
 "Please type the verification code sent to"="以下に送信された検証コードを入力してください：";
 /* Text message to remind user to resend verification code */
@@ -2148,9 +2174,21 @@
 "File Type"="ファイルの種類";
 /* export Quality Option for Scan document */
 "best"="最高";
+/* Error message appears to sub-users of a business account when they try to login and they are disabled. */
+"Your account has been disabled by your administrator. Please contact your business account administrator for further details."="あなたのアカウントはあなたの管理者によって無効にされています。詳細については、あなたのビジネスアカウント管理者にお問い合わせください。";
+/* An error message which appears to sub-users of a business account when they try to login and they are deleted. */
+"Your account has been removed by your administrator. Please contact your business account administrator for further details."="あなたのアカウントはあなたの管理者によって削除されました。詳細については、あなたのビジネスアカウント管理者にお問い合わせください。";
 /* Description of why the user should give permission to contacts */
 "Easily discover contacts from your address book on MEGA."="MEGAのあなたのアドレス帳から連絡先を簡単に見つけます。";
 /* Detailed description of why the user should give permission to contacts */
 "MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGAはこのデータを他の目的に使用せず、あなたの同意なしにあなたの連絡先とやり取りすることは絶対にございません。";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="グループ名を入力";
+/* Warning message to alert user about logout in My Account section if has transfers in progress. */
+"When you logout, ongoing transfers will be cancelled."="ログアウトすると、現在進行中の転送はキャンセルされます。";
+/* Warning message to alert user about logout in My Account section if has offline files. */
+"When you logout, files from your Offline section will be deleted from your device."="ログアウトすると、あなたのオフラインセクションのファイルはお使いの端末から削除されます。";
+/* Warning message to alert user about logout in My Account section if has offline files and transfers in progress. */
+"When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled."="ログアウトすると、あなたのオフラインセクションのファイルはお使いの端末から削除され、現在進行中の転送はキャンセルされます。";
+/* Default title of an empty chat. */
+"Chat created on %s1"="%s1にチャットが作成されました";

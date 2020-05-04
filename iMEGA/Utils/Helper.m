@@ -6,6 +6,7 @@
 #import "SVProgressHUD.h"
 
 #import "NSFileManager+MNZCategory.h"
+#import "NSDate+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
@@ -634,7 +635,7 @@ static MEGAIndexer *indexer;
 }
 
 + (NSString *)sizeAndDateForNode:(MEGANode *)node api:(MEGASdk *)api {
-    return [NSString stringWithFormat:@"%@ • %@", [self sizeForNode:node api:api], [self dateWithISO8601FormatOfRawTime:node.creationTime.timeIntervalSince1970]];
+    return [NSString stringWithFormat:@"%@ • %@", [self sizeForNode:node api:api], node.creationTime.mnz_formattedDefaultDateForMedia];
 }
 
 + (NSString *)sizeForNode:(MEGANode *)node api:(MEGASdk *)api {
@@ -645,14 +646,6 @@ static MEGAIndexer *indexer;
         size = [Helper memoryStyleStringFromByteCount:[api sizeForNode:node].longLongValue];
     }
     return size;
-}
-
-+ (NSString *)dateWithISO8601FormatOfRawTime:(time_t)rawtime {
-    struct tm *timeinfo = localtime(&rawtime);
-    char buffer[80];
-    strftime(buffer, 80, "%Y-%m-%d %H:%M:%S", timeinfo);
-    
-    return [NSString stringWithCString:buffer encoding:NSUTF8StringEncoding];
 }
 
 + (NSString *)filesAndFoldersInFolderNode:(MEGANode *)node api:(MEGASdk *)api {
@@ -1107,39 +1100,6 @@ static MEGAIndexer *indexer;
     [Helper resetUserData];
     
     [Helper deletePasscode];
-}
-
-+ (void)logoutAfterPasswordReminder {
-    NSError *error;
-    NSArray *directoryContent = [NSFileManager.defaultManager contentsOfDirectoryAtPath:NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject error:&error];
-    if (error) {
-        MEGALogError(@"Contents of directory at path failed with error: %@", error);
-    }
-    
-    BOOL isInboxDirectory = NO;
-    for (NSString *directoryElement in directoryContent) {
-        if ([directoryElement isEqualToString:@"Inbox"]) {
-            NSString *inboxPath = [[Helper pathForOffline] stringByAppendingPathComponent:@"Inbox"];
-            [[NSFileManager defaultManager] fileExistsAtPath:inboxPath isDirectory:&isInboxDirectory];
-            break;
-        }
-    }
-    
-    if (directoryContent.count > 0) {
-        if (directoryContent.count == 1 && isInboxDirectory) {
-            [[MEGASdkManager sharedMEGASdk] logout];
-            return;
-        }
-        
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"warning", nil) message:AMLocalizedString(@"allFilesSavedForOfflineWillBeDeletedFromYourDevice", @"Alert message shown when the user perform logout and has files in the Offline directory") preferredStyle:UIAlertControllerStyleAlert];
-        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
-        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"logoutLabel", @"Title of the button which logs out from your account.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            [[MEGASdkManager sharedMEGASdk] logout];
-        }]];
-        [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
-    } else {
-        [[MEGASdkManager sharedMEGASdk] logout];
-    }
 }
 
 + (void)cancelAllTransfers {

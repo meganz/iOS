@@ -64,11 +64,6 @@
 @property (nonatomic, readonly) BOOL iPadMini;
 
 /**
- * @brief YES if the device is an iPad Pro 12.9-inch, otherwise NO.
- */
-@property (nonatomic, readonly) BOOL iPadPro;
-
-/**
  * @brief The max buffer for streaming, based on device RAM.
  */
 @property (nonatomic, readonly) NSUInteger maxBufferSize;

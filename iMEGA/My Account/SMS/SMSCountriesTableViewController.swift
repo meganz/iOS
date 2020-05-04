@@ -2,7 +2,7 @@
 import UIKit
 
 protocol SMSCountriesTableViewControllerDelegate: AnyObject {
-    func countriesTableViewController(_ controller: SMSCountriesTableViewController, didSelectCountry country:SMSCountry)
+    func countriesTableViewController(_ controller: SMSCountriesTableViewController?, didSelectCountry country:SMSCountry)
 }
 
 class SMSCountriesTableViewController: UITableViewController {
@@ -44,7 +44,6 @@ class SMSCountriesTableViewController: UITableViewController {
             searchController.searchBar.barTintColor = .white
             tableView.contentOffset = CGPoint(x: 0, y: searchController.searchBar.frame.height)
         }
-        definesPresentationContext = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -77,7 +76,6 @@ class SMSCountriesTableViewController: UITableViewController {
     func smsCountry(for indexPath: IndexPath) -> SMSCountry {
         isSearching ? filteredCountries[indexPath.row] : countrySections[indexPath.section][indexPath.row]
     }
-
 }
 
 // MARK: - UITableViewDataSource, UITableViewDelegate
@@ -111,7 +109,15 @@ extension SMSCountriesTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        delegate?.countriesTableViewController(self, didSelectCountry: smsCountry(for: indexPath))
+        let country = smsCountry(for: indexPath)
+        if #available(iOS 13.0, *) {
+            searchController.dismiss(animated: true) { [weak self] in
+                self?.delegate?.countriesTableViewController(self, didSelectCountry: country)
+            }
+        } else {
+            searchController.isActive = false
+            delegate?.countriesTableViewController(self, didSelectCountry: country)
+        }
     }
 }
 

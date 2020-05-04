@@ -1,7 +1,5 @@
 
-#import "MyAccountBaseViewController.h"
-
-@interface MyAccountHallViewController : MyAccountBaseViewController
+@interface MyAccountHallViewController : UIViewController
 
 - (void)openOffline;
 - (void)openAchievements;
