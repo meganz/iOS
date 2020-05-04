@@ -121,7 +121,7 @@
 /*  */
 "passwordGood"="Esta senha vai resistir aos ataques de força-bruta mais comuns. Por favor, certifique-se de que você vai lembrar dela.";
 /* Label displayed during checking the strength of the password introduced. Represents Strong security */
-"strong"="Forte";
+"strong"="Segura";
 /*  */
 "passwordStrong"="Esta senha vai resistir aos ataques de força-bruta mais sofisticados. Por favor, certifique-se de que você vai lembrar dela.";
 /*  */
@@ -974,7 +974,7 @@
 /* Description to encourage users to add phone number to their accounts when there are not achievements */
 "Add your phone number to MEGA. This makes it easier for your contacts to find you on MEGA."="Adicione o seu número de telefone ao MEGA, e assim os seus contatos o encontrarão com mais facilidade.";
 /* Description to unblock account by verifying phone number */
-"Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account."="A sua conta foi temporariamente bloqueada devido a um abuso em potencial. Confirme o seu número de telefone para desbloquear a sua conta.";
+"Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account."="A sua conta foi temporariamente bloqueada devido a uma suspeita de infração. Por favor, confirme o seu número de telefone para desbloquear a sua conta.";
 /* Verify your account title */
 "Verify Your Account"="Confirme a sua conta";
 /* Add your phone number title */

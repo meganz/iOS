@@ -2089,7 +2089,7 @@
 /* */
 "Active"="نشط";
 /* title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts */
-"Role:"="الدور";
+"Role:"="الدور:";
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
 "Include location tags"="تشمل علامات الموقع";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
