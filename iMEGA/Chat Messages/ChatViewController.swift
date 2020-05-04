@@ -640,7 +640,7 @@ class ChatViewController: MessagesViewController {
             groupCallVC.chatRoom = chatRoom
             groupCallVC.modalTransitionStyle = .crossDissolve
             groupCallVC.megaCallManager = (UIApplication.shared.delegate as! AppDelegate).megaCallManager
-            self.present(groupCallVC, animated: true, completion: nil)
+            present(viewController: groupCallVC)
         } else {
             let callVC = UIStoryboard(name: "Chat", bundle: nil).instantiateViewController(withIdentifier: "CallViewControllerID") as! CallViewController
             callVC.chatRoom = chatRoom
@@ -648,7 +648,7 @@ class ChatViewController: MessagesViewController {
             callVC.callType = active ? .active : .outgoing
             callVC.modalTransitionStyle = .crossDissolve
             callVC.megaCallManager = (UIApplication.shared.delegate as! AppDelegate).megaCallManager
-            self.present(callVC, animated: true, completion: nil)
+            present(viewController: callVC)
 
         }
         

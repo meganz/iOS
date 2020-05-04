@@ -1113,6 +1113,7 @@
 		BF7EBD512452B0A00015255F /* AddToChatMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7EBD502452B0A00015255F /* AddToChatMenu.swift */; };
 		BF9D491C2459047800D7B7DC /* AddToChatAllowAccessCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9D491A2459047800D7B7DC /* AddToChatAllowAccessCollectionCell.swift */; };
 		BF9D491D2459047800D7B7DC /* AddToChatAllowAccessCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF9D491B2459047800D7B7DC /* AddToChatAllowAccessCollectionCell.xib */; };
+		BFA55257245F849F009FE3A6 /* AddToChatMenuPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA55256245F849F009FE3A6 /* AddToChatMenuPageViewController.swift */; };
 		BFB463DD2432F2E900FB90B9 /* ChatRoomDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB463DC2432F2E900FB90B9 /* ChatRoomDelegate.swift */; };
 		BFB463E52433390600FB90B9 /* MEGAUser+Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB463E42433390600FB90B9 /* MEGAUser+Chat.swift */; };
 		BFB463E92433394500FB90B9 /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB463E82433394500FB90B9 /* ChatMessage.swift */; };
@@ -2621,6 +2622,7 @@
 		BF7EBD502452B0A00015255F /* AddToChatMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToChatMenu.swift; sourceTree = "<group>"; };
 		BF9D491A2459047800D7B7DC /* AddToChatAllowAccessCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToChatAllowAccessCollectionCell.swift; sourceTree = "<group>"; };
 		BF9D491B2459047800D7B7DC /* AddToChatAllowAccessCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddToChatAllowAccessCollectionCell.xib; sourceTree = "<group>"; };
+		BFA55256245F849F009FE3A6 /* AddToChatMenuPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToChatMenuPageViewController.swift; sourceTree = "<group>"; };
 		BFB463DC2432F2E900FB90B9 /* ChatRoomDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomDelegate.swift; sourceTree = "<group>"; };
 		BFB463E42433390600FB90B9 /* MEGAUser+Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAUser+Chat.swift"; sourceTree = "<group>"; };
 		BFB463E82433394500FB90B9 /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
@@ -5455,6 +5457,7 @@
 				BF7EBD2D244E916F0015255F /* AddToChatViewController.xib */,
 				BF6DF365245797CC00D612D0 /* AddToChatViewAnimator.swift */,
 				BF7EBD3E24526A140015255F /* AddToChatMediaCollectionSource.swift */,
+				BFA55256245F849F009FE3A6 /* AddToChatMenuPageViewController.swift */,
 				BF7EBD48245293530015255F /* AddToChatMenuViewController.swift */,
 				BF7EBD49245293530015255F /* AddToChatMenuViewController.xib */,
 			);
@@ -6862,6 +6865,7 @@
 				B6BD012521B71FB500E97086 /* NSURL+CameraUpload.m in Sources */,
 				9437B93F1F55674F0058170D /* MEGAPasswordLinkRequestDelegate.m in Sources */,
 				41D14F711B8603AF0005A27A /* ProductDetailTableViewCell.m in Sources */,
+				BFA55257245F849F009FE3A6 /* AddToChatMenuPageViewController.swift in Sources */,
 				B63F3198223BA47400B0C6A6 /* CameraUpload.xcdatamodeld in Sources */,
 				E8E6CADE1A9C8C23008A0CD2 /* OfflineTableViewCell.m in Sources */,
 				4172795F1DB663FA001AC818 /* JSQMessagesTypingView.m in Sources */,

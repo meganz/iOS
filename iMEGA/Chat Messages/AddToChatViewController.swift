@@ -5,6 +5,13 @@ protocol AddToChatViewControllerDelegate: class {
     func send(asset: PHAsset)
     func loadPhotosView()
     func showCamera()
+    func showCloudDrive()
+    func startAudioCall()
+    func startVideoCall()
+    func showVoiceClip()
+    func showContacts()
+    func startGroupChat()
+    func showLocation()
 }
 
 class AddToChatViewController: UIViewController {
@@ -24,9 +31,8 @@ class AddToChatViewController: UIViewController {
     var dismissHandler: ((AddToChatViewController) -> Void)?
     private var presentAndDismissAnimationDuration: TimeInterval = 0.4
     private var mediaCollectionSource: AddToChatMediaCollectionSource!
-    private var menuPageViewController: UIPageViewController!
+    private var menuPageViewController: AddToChatMenuPageViewController!
 
-    private var menuPages: [AddToChatMenuViewController]!
     weak var delegate: AddToChatViewControllerDelegate?
     
     // MARK:- View lifecycle methods.
@@ -51,30 +57,14 @@ class AddToChatViewController: UIViewController {
     }
     
     func setUpMenuPageViewController() {
-        let firstPageController = AddToChatMenuViewController(nibName: nil, bundle: nil)
-        firstPageController.delegate = self
-        let secondPageController = AddToChatMenuViewController(nibName: nil, bundle: nil)
-        secondPageController.delegate = self
-        if let menus = AddToChatMenu.menus() {
-            firstPageController.menus = (0..<8).map { menus[$0] }
-            secondPageController.menus = [menus[8]]
-        }
-        menuPages = [firstPageController, secondPageController]
-        
-        menuPageViewController = UIPageViewController(transitionStyle: .scroll,
-                                                      navigationOrientation: .horizontal,
-                                                      options: nil)
-        menuPageViewController.dataSource = self
-        menuPageViewController.delegate = self
+        menuPageViewController = AddToChatMenuPageViewController(transitionStyle: .scroll,
+                                                                 navigationOrientation: .horizontal,
+                                                                 options: nil)
+        menuPageViewController.menuDelegate = self
         addChild(menuPageViewController)
         menuView.addSubview(menuPageViewController.view)
         menuPageViewController.view.autoPinEdgesToSuperviewEdges()
         menuPageViewController.didMove(toParent: self)
-        
-        menuPageViewController.setViewControllers([firstPageController],
-                                                  direction: .forward,
-                                                  animated: false,
-                                                  completion: nil)
     }
     
     // MARK:- Actions.
@@ -82,67 +72,16 @@ class AddToChatViewController: UIViewController {
     @IBAction func backgroundViewTapped(_ tapGesture: UITapGestureRecognizer) {
         dismiss(animated: true, completion: nil)
     }
-}
-
-
-extension AddToChatViewController: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
     
-    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
-        guard let menuViewController = viewController as? AddToChatMenuViewController,
-            let index = menuPages.firstIndex(of: menuViewController),
-            (index + 1) == menuPages.count else {
-            return nil
-        }
-        
-        return menuPages[index - 1]
-    }
-    
-    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-        guard let menuViewController = viewController as? AddToChatMenuViewController,
-            let index = menuPages.firstIndex(of: menuViewController),
-            index == 0 else {
-                return nil
-        }
-        
-        return menuPages[index + 1]
-    }
-    
-    func presentationCount(for pageViewController: UIPageViewController) -> Int {
-        return menuPages.count
-    }
-
-    func presentationIndex(for pageViewController: UIPageViewController) -> Int {
-        return 0
-    }
-}
-
-extension AddToChatViewController: AddToChatMenuViewControllerDelegate {
-    func didTap(itemAtIndex index: Int, viewController: AddToChatMenuViewController) {
-        var actualMenuIndex = 0
-        if menuPages.first == viewController {
-            actualMenuIndex = index
-        } else {
-            guard let totalMenusInFirstPage = menuPages.first?.menus?.count else {
-                return
-            }
-            
-            actualMenuIndex = (totalMenusInFirstPage - 1) + index
-        }
-        
-        switch actualMenuIndex {
-        case 0:
-            dismiss(animated: true, completion: nil)
-            delegate?.loadPhotosView()
-        default:
-            break
-        }
+    private func loadPhotosViewAndDismiss() {
+        dismiss(animated: true, completion: nil)
+        delegate?.loadPhotosView()
     }
 }
 
 extension AddToChatViewController: AddToChatMediaCollectionSourceDelegate {
     func moreButtonTapped() {
-        dismiss(animated: true, completion: nil)
-        delegate?.loadPhotosView()
+        loadPhotosViewAndDismiss()
     }
     
     func sendAsset(asset: PHAsset) {
@@ -156,6 +95,47 @@ extension AddToChatViewController: AddToChatMediaCollectionSourceDelegate {
     func showCamera() {
         dismiss(animated: true, completion: nil)
         delegate?.showCamera()
+    }
+}
+
+extension AddToChatViewController: AddToChatMenuPageViewControllerDelegate {
+    func loadPhotosView() {
+        loadPhotosViewAndDismiss()
+    }
+    
+    func showCloudDrive() {
+        dismiss(animated: true, completion: nil)
+        delegate?.showCloudDrive()
+    }
+    
+    func startVoiceCall() {
+        dismiss(animated: true, completion: nil)
+        delegate?.startAudioCall()
+    }
+    
+    func startVideoCall() {
+        dismiss(animated: true, completion: nil)
+        delegate?.startVideoCall()
+    }
+    
+    func showVoiceClip() {
+        dismiss(animated: true, completion: nil)
+        delegate?.showVoiceClip()
+    }
+    
+    func showContacts() {
+        dismiss(animated: true, completion: nil)
+        delegate?.showContacts()
+    }
+    
+    func startGroupChat() {
+        dismiss(animated: true, completion: nil)
+        delegate?.startGroupChat()
+    }
+    
+    func showLocation() {
+        dismiss(animated: true, completion: nil)
+        delegate?.showLocation()
     }
 }
 
