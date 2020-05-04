@@ -102,4 +102,25 @@ extension ChatViewController {
         let megaMessage =  message.message
         MEGASdkManager.sharedMEGAChatSdk()?.removeRichLink(forChat: chatRoom.chatId, messageId: megaMessage.messageId)
     }
+    
+    func downloadMessage(_ message: ChatMessage) {
+        let megaMessage =  message.message
+        var downloading = false
+        
+        for index in 0...megaMessage.nodeList.size.intValue - 1 {
+            var node = megaMessage.nodeList.node(at: index)
+            if chatRoom.isPreview {
+                node = MEGASdkManager.sharedMEGASdk()?.authorizeNode(node!) ?? nil
+            }
+            
+            if node != nil {
+                Helper.downloadNode(node!, folderPath: Helper.relativePathForOffline(), isFolderLink: false, shouldOverwrite: false)
+                downloading = true
+            }
+        }
+        if downloading {
+            SVProgressHUD.show(UIImage(named: "hudDownload")!, status: AMLocalizedString("downloadStarted", "Message shown when a download starts"))
+        }
+    }
+    
 }
