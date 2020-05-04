@@ -70,3 +70,4 @@
 #import "MEGAProcessAsset.h"
 #import "MEGAImagePickerController.h"
 #import "BrowserViewController.h"
+#import "ShareLocationViewController.h"
