@@ -284,7 +284,7 @@ class ChatViewController: MessagesViewController {
         let chatMessage = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView) as! ChatMessage
         
         if action == NSSelectorFromString("copy:") {
-            
+            copyMessage(chatMessage)
             return
         }
         
