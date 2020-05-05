@@ -47,7 +47,7 @@
     self.clearRubbishBinLabel.text = AMLocalizedString(@"emptyRubbishBin", @"Section title where you can 'Empty Rubbish Bin' of your MEGA account");
     NSNumber *rubbishBinSizeNumber = [[MEGASdkManager sharedMEGASdk] sizeForNode:[[MEGASdkManager sharedMEGASdk] rubbishNode]];
     NSString *stringFromByteCount = [Helper memoryStyleStringFromByteCount:rubbishBinSizeNumber.unsignedLongLongValue];
-    self.clearRubbishBinDetailLabel.text = [self formatStringFromByteCountFormatter:stringFromByteCount];
+    self.clearRubbishBinDetailLabel.text = [NSString mnz_formatStringFromByteCountFormatter:stringFromByteCount];
     
     self.rubbishBinCleaningSchedulerLabel.text = [AMLocalizedString(@"Rubbish-Bin Cleaning Scheduler:", @"Title for the Rubbish-Bin Cleaning Scheduler feature") stringByReplacingOccurrencesOfString:@":" withString:@""];
     [self.rubbishBinCleaningSchedulerSwitch setOn:[[MEGASdkManager sharedMEGASdk] serverSideRubbishBinAutopurgeEnabled]];
@@ -67,14 +67,6 @@
     self.clearRubbishBinDetailLabel.textColor = self.removeFilesOlderThanDetailLabel.textColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
     
     [self.tableView reloadData];
-}
-
-- (NSString *)formatStringFromByteCountFormatter:(NSString *)stringFromByteCount {
-    NSArray *componentsSeparatedByStringArray = [stringFromByteCount componentsSeparatedByString:@" "];
-    NSString *countString = [NSString mnz_stringWithoutUnitOfComponents:componentsSeparatedByStringArray];
-    NSString *unitString = [NSString mnz_stringWithoutCountOfComponents:componentsSeparatedByStringArray];
-    
-    return [NSString stringWithFormat:@"%@ %@", countString, unitString];
 }
 
 - (void)scheduleRubbishBinClearingTextFieldDidChange:(UITextField *)textField {

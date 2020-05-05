@@ -100,7 +100,7 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
         unsigned long long offlineSize = [NSFileManager.defaultManager mnz_sizeOfFolderAtPath:NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject];
         self.offlineSizeString = [Helper memoryStyleStringFromByteCount:offlineSize];
-        self.offlineSizeString = [self formatStringFromByteCountFormatter:self.offlineSizeString];
+        self.offlineSizeString = [NSString mnz_formatStringFromByteCountFormatter:self.offlineSizeString];
         
         unsigned long long thumbnailsSize = [NSFileManager.defaultManager mnz_sizeOfFolderAtPath:[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"]];
         unsigned long long previewsSize = [NSFileManager.defaultManager mnz_sizeOfFolderAtPath:[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"previewsV3"]];
@@ -109,7 +109,7 @@
         unsigned long long cacheSize = thumbnailsSize + previewsSize + temporaryDirectory + groupDirectory;
         
         self.cacheSizeString = [Helper memoryStyleStringFromByteCount:cacheSize];
-        self.cacheSizeString = [self formatStringFromByteCountFormatter:self.cacheSizeString];
+        self.cacheSizeString = [NSString mnz_formatStringFromByteCountFormatter:self.cacheSizeString];
         
         dispatch_async(dispatch_get_main_queue(), ^(void){
             [self.tableView reloadData];
@@ -123,14 +123,6 @@
     [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:[groupSharedDirectoryPath stringByAppendingPathComponent:MEGAExtensionLogsFolder]];
     [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:[groupSharedDirectoryPath stringByAppendingPathComponent:MEGAFileExtensionStorageFolder]];
     [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:[groupSharedDirectoryPath stringByAppendingPathComponent:MEGAShareExtensionStorageFolder]];
-}
-
-- (NSString *)formatStringFromByteCountFormatter:(NSString *)stringFromByteCount {
-    NSArray *componentsSeparatedByStringArray = [stringFromByteCount componentsSeparatedByString:@" "];
-    NSString *countString = [NSString mnz_stringWithoutUnitOfComponents:componentsSeparatedByStringArray];
-    NSString *unitString = [NSString mnz_stringWithoutCountOfComponents:componentsSeparatedByStringArray];
-    
-    return [NSString stringWithFormat:@"%@ %@", countString, unitString];
 }
 
 #pragma mark - IBActions
@@ -198,7 +190,7 @@
         case 2: { //On MEGA - Rubbish Bin
             NSNumber *rubbishBinSizeNumber = [[MEGASdkManager sharedMEGASdk] sizeForNode:[[MEGASdkManager sharedMEGASdk] rubbishNode]];
             NSString *stringFromByteCount = [Helper memoryStyleStringFromByteCount:rubbishBinSizeNumber.unsignedLongLongValue];
-            stringFromByteCount = [self formatStringFromByteCountFormatter:stringFromByteCount];
+            stringFromByteCount = [NSString mnz_formatStringFromByteCountFormatter:stringFromByteCount];
             NSString *currentlyUsingString = AMLocalizedString(@"currentlyUsing", @"Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped");
             currentlyUsingString = [currentlyUsingString stringByReplacingOccurrencesOfString:@"%s" withString:stringFromByteCount];
             titleFooter = currentlyUsingString;
@@ -214,7 +206,7 @@
         case 4: { //File Versioning - File Versions
             long long totalNumberOfVersionsSize = [[[MEGASdkManager sharedMEGASdk] mnz_accountDetails] versionStorageUsedForHandle:[[[MEGASdkManager sharedMEGASdk] rootNode] handle]];
             NSString *stringFromByteCount = [Helper memoryStyleStringFromByteCount:totalNumberOfVersionsSize];
-            stringFromByteCount = [self formatStringFromByteCountFormatter:stringFromByteCount];
+            stringFromByteCount = [NSString mnz_formatStringFromByteCountFormatter:stringFromByteCount];
             NSString *totalFileVersionsSize = [NSString stringWithFormat:@"%@ %@", AMLocalizedString(@"Total size taken up by file versions:", @"A title message in the user’s account settings for showing the storage used for file versions."), stringFromByteCount];
             titleFooter = totalFileVersionsSize;
             break;

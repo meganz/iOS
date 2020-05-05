@@ -228,16 +228,8 @@
 
 - (NSString *)textForSizeLabels:(NSNumber *)number {
     NSString *stringFromByteCount = [Helper memoryStyleStringFromByteCount:number.longLongValue];
-    NSArray *componentsSeparatedByStringArray = [stringFromByteCount componentsSeparatedByString:@" "];
-    NSString *firstPartString = [[NSString mnz_stringWithoutUnitOfComponents:componentsSeparatedByStringArray] stringByAppendingString:@" "];
     
-    if (componentsSeparatedByStringArray.count > 1) {
-        NSString *secondPartString = [NSString mnz_stringWithoutCountOfComponents:componentsSeparatedByStringArray];
-        
-        firstPartString = [firstPartString stringByAppendingString:secondPartString];
-    }
-    
-    return firstPartString;
+    return [NSString mnz_formatStringFromByteCountFormatter:stringFromByteCount];
 }
 
 #pragma mark - IBActions
