@@ -187,13 +187,13 @@
     NSString *footerTitle;
 
     if (section == 1) {
-        footerTitle = AMLocalizedString(@"richPreviewsFooter", @"Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers.");
+        footerTitle = self.globalDNDNotificationControl.timeRemainingToDeactiveDND;
     }
     if (section == 2) {
-        footerTitle = AMLocalizedString(@"qualityOfVideosUploadedToAChat", @"Footer text to explain the meaning of the functionaly 'Video quality' for videos uploaded to a chat.");
+        footerTitle = AMLocalizedString(@"richPreviewsFooter", @"Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers.");
     }
     if (section == 3) {
-        footerTitle = self.globalDNDNotificationControl.timeRemainingToDeactiveDND;
+        footerTitle = AMLocalizedString(@"qualityOfVideosUploadedToAChat", @"Footer text to explain the meaning of the functionaly 'Video quality' for videos uploaded to a chat.");
     }
     return footerTitle;
 }
@@ -202,7 +202,7 @@
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
 
-    if (indexPath.section == 3 && indexPath.row == 0) {
+    if (indexPath.section == 1 && indexPath.row == 0) {
         [self.globalDNDNotificationControl configureWithDndSwitch:self.doNotDisturbSwitch];
     }
 }
