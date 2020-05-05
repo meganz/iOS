@@ -3,6 +3,8 @@ import MessageKit
 
 extension ChatViewController {
     
+    // MARK: - Overriden properties
+    
     override var inputAccessoryView: UIView? {
         if chatInputBar == nil {
             chatInputBar = ChatInputBar()
@@ -15,6 +17,25 @@ extension ChatViewController {
     override var canBecomeFirstResponder: Bool {
         return true
     }
+    
+    // MARK: - Interface methods.
+    
+     func present(viewController: UIViewController) {
+         if let rc = UIApplication.shared.keyWindow?.rootViewController {
+             if let tabBarController = rc as? UITabBarController {
+                 tabBarController.tabBar.isHidden = true
+             }
+             
+             present(viewController, animated: true) {
+                 if let tabBarController = rc as? UITabBarController {
+                     tabBarController.tabBar.isHidden = false
+                 }
+             }
+         }
+
+     }
+    
+    // MARK: - Private methods.
     
     private func displayAddToChatViewController() {
         if let rc = UIApplication.shared.keyWindow?.rootViewController {
@@ -32,6 +53,107 @@ extension ChatViewController {
                     tabBarController.tabBar.isHidden = false
                 }
             }
+        }
+    }
+        
+    private func presentShareLocation() {
+        let storyboard = UIStoryboard(name: "Chat", bundle: nil)
+        guard let shareLocationViewController = storyboard.instantiateViewController(withIdentifier: "ShareLocationViewControllerID") as? ShareLocationViewController else {
+            fatalError("ChatViewController: could not create an instance of ShareLocationViewController")
+        }
+        
+        shareLocationViewController.chatRoom = chatRoom
+            
+        let navController = MEGANavigationController(rootViewController: shareLocationViewController)
+        navController.addLeftDismissButton(withText: AMLocalizedString("cancel"))
+        present(viewController: navController)
+    }
+    
+    private func createGroupChat(selectedObjects: [Any]?,
+                                 groupName: String?,
+                                 keyRotationEnabled: Bool,
+                                 getChatLink:Bool) {
+        guard let selectedUsers = selectedObjects as? [MEGAUser],
+            let groupName = groupName else {
+            return
+        }
+        
+        SVProgressHUD.setDefaultMaskType(.clear)
+        SVProgressHUD.show()
+
+        let peerlist = MEGAChatPeerList()
+        selectedUsers.forEach { peerlist.addPeer(withHandle: $0.handle, privilege: 2)}
+        
+        if keyRotationEnabled {
+            let createChatGroupRequestDelegate = MEGAChatCreateChatGroupRequestDelegate { newChatRoom in
+                self.open(chatRoom: newChatRoom)
+            }
+            
+            MEGASdkManager.sharedMEGAChatSdk()?.createChatGroup(true,
+                                                                peers: peerlist,
+                                                                title: groupName,
+                                                                delegate: createChatGroupRequestDelegate)
+
+            
+        } else {
+            let createChatGroupRequestDelegate = MEGAChatCreateChatGroupRequestDelegate { newChatRoom in
+                if getChatLink {
+                    let genericRequestDelegate = MEGAChatGenericRequestDelegate { (request, error) in
+                        if error.type == .MEGAChatErrorTypeOk {
+                            let chatViewController = ChatViewController()
+                            chatViewController.publicChatWithLinkCreated = true
+                            chatViewController.publicChatLink = URL(string: request.text)
+                            self.replaceCurrentViewController(withViewController: chatViewController)
+                        }
+                    }
+                    
+                    guard let chatId = newChatRoom?.chatId else {
+                        fatalError("could not create chatlink The chat id is nil")
+                    }
+
+                    
+                    MEGASdkManager.sharedMEGAChatSdk()?.createChatLink(chatId, delegate: genericRequestDelegate)
+                } else {
+                    self.open(chatRoom: newChatRoom)
+                }
+            }
+            MEGASdkManager.sharedMEGAChatSdk()?.createPublicChat(withPeers: peerlist,
+                                                                 title: groupName,
+                                                                 delegate: createChatGroupRequestDelegate)
+        }
+    }
+    
+    private func createContactsViewController() -> (UINavigationController, ContactsViewController)? {
+        let storyboard = UIStoryboard(name: "Contacts", bundle: nil)
+        let contactsNavigationController = storyboard.instantiateViewController(withIdentifier: "ContactsNavigationControllerID")
+        
+        guard let navController = contactsNavigationController as? UINavigationController,
+            let contactsViewController = navController.viewControllers.first as? ContactsViewController else {
+                return nil
+        }
+        
+        return (navController, contactsViewController)
+    }
+    
+    private func open(chatRoom: MEGAChatRoom?) {
+        let chatViewController = ChatViewController()
+        chatViewController.chatRoom = chatRoom
+        replaceCurrentViewController(withViewController: chatViewController)
+    }
+    
+    private func replaceCurrentViewController(withViewController viewController: UIViewController,
+                                              dismissProgress: Bool = true) {
+        guard let navController = navigationController else {
+            fatalError("No navigation controller in the stack to push")
+        }
+
+        let currentIndex = navController.viewControllers.count - 1
+        navController.pushViewController(viewController, animated: false)
+        navController.viewControllers.remove(at: currentIndex)
+        
+        if dismissProgress {
+            SVProgressHUD.setDefaultMaskType(.none)
+            SVProgressHUD.dismiss()
         }
     }
 }
@@ -129,21 +251,6 @@ extension ChatViewController: ChatMessageAndAudioInputBarDelegate {
     
     func typing(withText text: String) {
         print("Started typing with text \(text)")
-    }
-    
-    func present(viewController: UIViewController) {
-        if let rc = UIApplication.shared.keyWindow?.rootViewController {
-            if let tabBarController = rc as? UITabBarController {
-                tabBarController.tabBar.isHidden = true
-            }
-            
-            present(viewController, animated: true) {
-                if let tabBarController = rc as? UITabBarController {
-                    tabBarController.tabBar.isHidden = false
-                }
-            }
-        }
-
     }
 }
 
@@ -372,106 +479,5 @@ extension ChatViewController: AddToChatViewControllerDelegate {
             }
         }
         MEGASdkManager.sharedMEGASdk()?.isGeolocationEnabled(with: genericRequestDelegate)
-    }
-    
-    private func presentShareLocation() {
-        let storyboard = UIStoryboard(name: "Chat", bundle: nil)
-        guard let shareLocationViewController = storyboard.instantiateViewController(withIdentifier: "ShareLocationViewControllerID") as? ShareLocationViewController else {
-            fatalError("ChatViewController: could not create an instance of ShareLocationViewController")
-        }
-        
-        shareLocationViewController.chatRoom = chatRoom
-            
-        let navController = MEGANavigationController(rootViewController: shareLocationViewController)
-        navController.addLeftDismissButton(withText: AMLocalizedString("cancel"))
-        present(viewController: navController)
-    }
-    
-    private func createGroupChat(selectedObjects: [Any]?,
-                                 groupName: String?,
-                                 keyRotationEnabled: Bool,
-                                 getChatLink:Bool) {
-        guard let selectedUsers = selectedObjects as? [MEGAUser],
-            let groupName = groupName else {
-            return
-        }
-        
-        SVProgressHUD.setDefaultMaskType(.clear)
-        SVProgressHUD.show()
-
-        let peerlist = MEGAChatPeerList()
-        selectedUsers.forEach { peerlist.addPeer(withHandle: $0.handle, privilege: 2)}
-        
-        if keyRotationEnabled {
-            let createChatGroupRequestDelegate = MEGAChatCreateChatGroupRequestDelegate { newChatRoom in
-                self.open(chatRoom: newChatRoom)
-            }
-            
-            MEGASdkManager.sharedMEGAChatSdk()?.createChatGroup(true,
-                                                                peers: peerlist,
-                                                                title: groupName,
-                                                                delegate: createChatGroupRequestDelegate)
-
-            
-        } else {
-            let createChatGroupRequestDelegate = MEGAChatCreateChatGroupRequestDelegate { newChatRoom in
-                if getChatLink {
-                    let genericRequestDelegate = MEGAChatGenericRequestDelegate { (request, error) in
-                        if error.type == .MEGAChatErrorTypeOk {
-                            let chatViewController = ChatViewController()
-                            chatViewController.publicChatWithLinkCreated = true
-                            chatViewController.publicChatLink = URL(string: request.text)
-                            self.replaceCurrentViewController(withViewController: chatViewController)
-                        }
-                    }
-                    
-                    guard let chatId = newChatRoom?.chatId else {
-                        fatalError("could not create chatlink The chat id is nil")
-                    }
-
-                    
-                    MEGASdkManager.sharedMEGAChatSdk()?.createChatLink(chatId, delegate: genericRequestDelegate)
-                } else {
-                    self.open(chatRoom: newChatRoom)
-                }
-            }
-            MEGASdkManager.sharedMEGAChatSdk()?.createPublicChat(withPeers: peerlist,
-                                                                 title: groupName,
-                                                                 delegate: createChatGroupRequestDelegate)
-        }
-    }
-    
-    private func createContactsViewController() -> (UINavigationController, ContactsViewController)? {
-        let storyboard = UIStoryboard(name: "Contacts", bundle: nil)
-        let contactsNavigationController = storyboard.instantiateViewController(withIdentifier: "ContactsNavigationControllerID")
-        
-        guard let navController = contactsNavigationController as? UINavigationController,
-            let contactsViewController = navController.viewControllers.first as? ContactsViewController else {
-                return nil
-        }
-        
-        return (navController, contactsViewController)
-    }
-    
-    private func open(chatRoom: MEGAChatRoom?) {
-        let chatViewController = ChatViewController()
-        chatViewController.chatRoom = chatRoom
-        replaceCurrentViewController(withViewController: chatViewController)
-    }
-    
-    private func replaceCurrentViewController(withViewController viewController: UIViewController,
-                                              dismissProgress: Bool = true) {
-        guard let navController = navigationController else {
-            fatalError("No navigation controller in the stack to push")
-        }
-
-        let currentIndex = navController.viewControllers.count - 1
-        navController.pushViewController(viewController, animated: false)
-        navController.viewControllers.remove(at: currentIndex)
-        
-        if dismissProgress {
-            SVProgressHUD.setDefaultMaskType(.none)
-            SVProgressHUD.dismiss()
-        }
     }
 }
