@@ -942,7 +942,7 @@
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
 "howItWorksTertiary"="若您邀请的是曾使用过MEGA的用户，则无法得到奖励，且您将不会收到相关通知。";
 /* Header of block with achievements bonuses. */
-"unlockedBonuses"="未解锁奖励：";
+"unlockedBonuses"="已解锁奖励：";
 /* A header/title of a section which contains information about used/available storage space on a user's cloud drive. */
 "storageQuota"="空间使用量";
 /* The header/title of a block/section which contains information about the user's used/available transfer allowance for their account. */
@@ -991,10 +991,12 @@
 "logoutLabel"="登出";
 /* String shown when you are logging out of your account. */
 "loggingOut"="正在登出";
-/* Button to remove avatar. Try to keep the text short (as in English) */
-"removeAvatar"="删除头像";
-/* button that allows the user the change his avatar */
-"changeAvatar"="变更头像";
+/* Button to remove some photo, e.g. avatar photo. Try to keep the text short (as in English) */
+"Remove Photo"="Remove Photo";
+/* Button that allows the user the change a photo, e.g. his avatar photo */
+"Change Photo"="Change Photo";
+/* Button that allows the user the add a photo, e.g avatar photo */
+"Add Photo"="Add Photo";
 /* Button title that allows the user change his name */
 "changeName"="更改名称";
 /* Success message when changing profile information. */
@@ -1269,8 +1271,6 @@
 "removePreview"="删除预览";
 /* */
 "warning"="注意";
-/* Alert message shown when the user perform logout and has files in the Offline directory */
-"allFilesSavedForOfflineWillBeDeletedFromYourDevice"="您储存之所有离线文件将会被从您的设备中删除。确定要登出吗？";
 /* Title shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_title"="传输流量不足";
 /* Description shown when you almost had used your available transfer quota. */
@@ -2124,6 +2124,8 @@
 "Your account is already verified"="您的帐户已验证";
 /* Place holder for enter mobile number field */
 "Your phone number"="您的手机号码";
+/* Text related to verified phone number. Used as title or cell description.  */
+"Phone Number"="Phone Number";
 /* Label tell user to enter received txt to below input boxes */
 "Please type the verification code sent to"="请输入验证码，已发送至";
 /* Text message to remind user to resend verification code */
@@ -2182,3 +2184,11 @@
 "MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA不会将这些数据用于任何其他目的，并且未经您的允许绝不会与您的联系人互动。";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="输入群名称";
+/* Warning message to alert user about logout in My Account section if has transfers in progress. */
+"When you logout, ongoing transfers will be cancelled."="登出帐户后，正在进行的传输将被取消。";
+/* Warning message to alert user about logout in My Account section if has offline files. */
+"When you logout, files from your Offline section will be deleted from your device."="登出帐户后，“离线”中的文件将从您的设备中删除。";
+/* Warning message to alert user about logout in My Account section if has offline files and transfers in progress. */
+"When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled."="登出帐户后，“离线”中的文件将从您的设备中删除，传输中的文件将被取消。";
+/* Default title of an empty chat. */
+"Chat created on %s1"="聊天创建于%s1";

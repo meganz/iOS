@@ -991,10 +991,12 @@
 "logoutLabel"="登出";
 /* String shown when you are logging out of your account. */
 "loggingOut"="正在登出";
-/* Button to remove avatar. Try to keep the text short (as in English) */
-"removeAvatar"="移除頭像";
-/* button that allows the user the change his avatar */
-"changeAvatar"="變更頭像";
+/* Button to remove some photo, e.g. avatar photo. Try to keep the text short (as in English) */
+"Remove Photo"="移除相片";
+/* Button that allows the user the change a photo, e.g. his avatar photo */
+"Change Photo"="更改相片";
+/* Button that allows the user the add a photo, e.g avatar photo */
+"Add Photo"="加入相片";
 /* Button title that allows the user change his name */
 "changeName"="更改名稱";
 /* Success message when changing profile information. */
@@ -1269,8 +1271,6 @@
 "removePreview"="移除預覽";
 /* */
 "warning"="警告";
-/* Alert message shown when the user perform logout and has files in the Offline directory */
-"allFilesSavedForOfflineWillBeDeletedFromYourDevice"="您儲存之所有離線檔案將會被從您的設備中刪除。確定要登出嗎？";
 /* Title shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_title"="傳輸配額不足";
 /* Description shown when you almost had used your available transfer quota. */
@@ -2124,6 +2124,8 @@
 "Your account is already verified"="您的帳戶已經通過驗證";
 /* Place holder for enter mobile number field */
 "Your phone number"="您的手機號碼";
+/* Text related to verified phone number. Used as title or cell description.  */
+"Phone Number"="手機號碼";
 /* Label tell user to enter received txt to below input boxes */
 "Please type the verification code sent to"="請輸入傳送至以下手機門號的驗證碼";
 /* Text message to remind user to resend verification code */
@@ -2182,3 +2184,11 @@
 "MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA不會將這些資料用於任何其他目的，並且未經您的同意絕不會與您的聯絡人互動。";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="輸入群組名稱";
+/* Warning message to alert user about logout in My Account section if has transfers in progress. */
+"When you logout, ongoing transfers will be cancelled."="當您登出時，正在進行中的傳輸將取消。";
+/* Warning message to alert user about logout in My Account section if has offline files. */
+"When you logout, files from your Offline section will be deleted from your device."="當您登出時，您離線下載到裝置中的檔案將會被刪除。";
+/* Warning message to alert user about logout in My Account section if has offline files and transfers in progress. */
+"When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled."="當您登出時，您離線下載到裝置中的檔案將會被刪除，而且正在進行中的傳輸將取消。";
+/* Default title of an empty chat. */
+"Chat created on %s1"="於%s1創建對話";

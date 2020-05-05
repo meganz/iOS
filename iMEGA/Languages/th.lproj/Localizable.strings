@@ -966,7 +966,7 @@
 /* %1 will be replaced by a numeric value and %2 will be 'days' or 'months', for example (Expires in [S]10[/S] days) */
 "bonusExpiresIn"="(โบนัสจะหมดอายุใน [S]%1[/S] %2)";
 /* Add Phone Number title  */
-"Add Phone Number"="เพิ่มหมายเลขโทรศัพท์";
+"Add Phone Number"="Add Phone Number";
 /* Achievement explanation for add phone number */
 "You have received %1$s storage space and %2$s transfer quota for verifying your phone number."="คุณได้รับพื้นที่เก็บข้อมูล %1$s และโควต้าการถ่ายโอน %2$s สำหรับการยืนยันหมายเลขโทรศัพท์ของคุณ";
 /* Free storage description to encourage users to add phone number to their accounts */
@@ -976,11 +976,11 @@
 /* Description to unblock account by verifying phone number */
 "Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account."="บัญชีของคุณถูกล็อกชั่วคราวเนื่องจากอาจมีการละเมิด กรุณายืนยันหมายเลขโทรศัพท์เพื่อปลดล็อกบัญชีของคุณ";
 /* Verify your account title */
-"Verify Your Account"="ตรวจสอบบัญชีของคุณ";
+"Verify Your Account"="Verify Your Account";
 /* Add your phone number title */
-"Add Your Phone Number"="เพิ่มหมายเลขโทรศัพท์ของคุณ";
+"Add Your Phone Number"="Add Your Phone Number";
 /* Choose Your Country title */
-"Choose Your Country"="เลือกประเทศของคุณ";
+"Choose Your Country"="Choose Your Country";
 /* Used to display the number of months a plan was purchased for e.g. 3 months, 6 months. */
 "months"="เดือน";
 /*  */
@@ -991,10 +991,12 @@
 "logoutLabel"="ออกจากระบบ";
 /* String shown when you are logging out of your account. */
 "loggingOut"="ออกจากระบบ";
-/* Button to remove avatar. Try to keep the text short (as in English) */
-"removeAvatar"="เอารูปโปรไฟล์ออก";
-/* button that allows the user the change his avatar */
-"changeAvatar"="เปลี่ยนรูปโปรไฟล์";
+/* Button to remove some photo, e.g. avatar photo. Try to keep the text short (as in English) */
+"Remove Photo"="Remove Photo";
+/* Button that allows the user the change a photo, e.g. his avatar photo */
+"Change Photo"="Change Photo";
+/* Button that allows the user the add a photo, e.g avatar photo */
+"Add Photo"="Add Photo";
 /* Button title that allows the user change his name */
 "changeName"="เปลี่ยนชื่อ";
 /* Success message when changing profile information. */
@@ -1269,8 +1271,6 @@
 "removePreview"="นำตัวอย่างออก";
 /* */
 "warning"="คำเตือน";
-/* Alert message shown when the user perform logout and has files in the Offline directory */
-"allFilesSavedForOfflineWillBeDeletedFromYourDevice"="ไฟล์ทั้งหมดที่บันทึกไว้สำหรับออฟไลน์จะถูกลบออกจากอุปกรณ์ของคุณ ดำเนินการออกจากระบบหรือไม่";
 /* Title shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_title"="โควตาการถ่ายโอนหมดแล้ว";
 /* Description shown when you almost had used your available transfer quota. */
@@ -1963,7 +1963,7 @@
 /* Detailed explanation about MEGA not using the contacts data without permision */
 "MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA will not use this data for any other purpose and will never interact with your contacts without your consent.";
 /* Title encouraging the user to check who of its contacts are using MEGA */
-"See who's already on MEGA"="ดูว่าใครอยู่ใน MEGA แล้ว";
+"See who's already on MEGA"="See who is already on MEGA";
 /* Title showing the user how many of his contacts are using MEGA */
 "[X] contacts found on MEGA"="พบผู้ติดต่อ [X] รายการใน MEGA";
 /* Title showing the user that one of his contacts are using MEGA */
@@ -2124,6 +2124,8 @@
 "Your account is already verified"="บัญชีของคุณได้รับการตรวจสอบแล้ว";
 /* Place holder for enter mobile number field */
 "Your phone number"="หมายเลขโทรศัพท์ของคุณ";
+/* Text related to verified phone number. Used as title or cell description.  */
+"Phone Number"="Phone Number";
 /* Label tell user to enter received txt to below input boxes */
 "Please type the verification code sent to"="กรุณากรอกรหัสยืนยันที่ส่งถึง";
 /* Text message to remind user to resend verification code */
@@ -2182,3 +2184,11 @@
 "MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA will not use this data for any other purpose and will never interact with your contacts without your consent.";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="กรอกชื่อกลุ่ม";
+/* Warning message to alert user about logout in My Account section if has transfers in progress. */
+"When you logout, ongoing transfers will be cancelled."="เมื่อคุณออกจากระบบ การถ่ายโอนที่กำลังดำเนินการอยู่จะถูกยกเลิกด้วย";
+/* Warning message to alert user about logout in My Account section if has offline files. */
+"When you logout, files from your Offline section will be deleted from your device."="เมื่อคุณออกจากระบบ ไฟล์จากส่วนออฟไลน์ของคุณจะถูกลบออกจากอุปกรณ์";
+/* Warning message to alert user about logout in My Account section if has offline files and transfers in progress. */
+"When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled."="เมื่อคุณออกจากระบบ ไฟล์จากส่วนออฟไลน์ของคุณจะถูกลบออกจากอุปกรณ์ และการถ่ายโอนที่กำลังดำเนินการอยู่จะถูกยกเลิกด้วยเช่นกัน";
+/* Default title of an empty chat. */
+"Chat created on %s1"="แชทสร้างเมื่อ %s1";

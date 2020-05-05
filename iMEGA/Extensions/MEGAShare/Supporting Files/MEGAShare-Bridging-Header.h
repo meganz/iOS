@@ -7,6 +7,7 @@
 #import "LocalizationSystem.h"
 #import "SVProgressHUD.h"
 
+#import "NSDate+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIColor+MNZCategory.h"
 

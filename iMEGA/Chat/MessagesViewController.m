@@ -639,7 +639,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             }
         }
         
-        NSString *chatRoomTitle = self.chatRoom.title ?: @"";
+        NSString *chatRoomTitle = self.chatRoom.chatTitle ?: @"";
         NSString *chatRoomState;
         if (self.tapForInfoTimer.isValid) {
             chatRoomState = AMLocalizedString(@"Tap here for info", @"Subtitle shown in a chat to inform where to tap to enter in the chat details view");

@@ -285,8 +285,9 @@
     MEGALogDebug(@"[App Lifecycle] Application did finish launching with options %@", launchOptions);
     
     [self.window makeKeyAndVisible];
-    if (application.applicationState == UIApplicationStateActive) {
+    if (application.applicationState != UIApplicationStateBackground) {
         UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+        [center removeAllPendingNotificationRequests];
         [center removeAllDeliveredNotifications];
     }
     
@@ -361,6 +362,7 @@
     [self application:application shouldHideWindows:NO];
     
     UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+    [center removeAllPendingNotificationRequests];
     [center removeAllDeliveredNotifications];
 }
 
@@ -1270,6 +1272,7 @@ void uncaughtExceptionHandler(NSException *exception) {
     
     // Call
     if ([payload.dictionaryPayload[@"megatype"] integerValue] == 4) {
+        [self initProviderDelegate];
         NSString *chatIdB64 = payload.dictionaryPayload[@"megadata"][@"chatid"];
         NSString *callIdB64 = payload.dictionaryPayload[@"megadata"][@"callid"];
         uint64_t chatId = [MEGASdk handleForBase64UserHandle:chatIdB64];

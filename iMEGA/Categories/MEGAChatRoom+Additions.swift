@@ -22,6 +22,14 @@ extension MEGAChatRoom {
         
         return self.peerFullname(byHandle: userHandle)
     }
+
+    @objc func chatTitle() -> String {
+        if isGroup && !hasCustomTitle && peerCount == 0  {
+            return AMLocalizedString("Chat created on %s1", "Default title of an empty chat.").replacingOccurrences(of: "%s1", with: NSDate(timeIntervalSince1970: TimeInterval(creationTimeStamp)).mnz_formattedDefaultDateForMedia())
+        } else {
+            return title
+        }
+    }
     
     @objc func participantsNames(withMe me: Bool) -> String {
         var meString = AMLocalizedString("me", "The title for my message in a chat. The message was sent from yourself.")

@@ -75,7 +75,7 @@
 
     self.privateChatImageView.hidden = chatListItem.isPublicChat;
 
-    self.chatTitle.text = chatListItem.title;
+    self.chatTitle.text = self.chatListItem.chatTitle;
     [self updateLastMessageForChatListItem:chatListItem];
     
     if (chatListItem.isGroup) {

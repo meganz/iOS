@@ -3,7 +3,7 @@
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -90,7 +90,7 @@
                                                                             <rect key="frame" x="81.333333333333343" y="0.0" width="238.00000000000003" height="37.666666666666664"/>
                                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         </view>
-                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="time" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="6xG-n6-aut">
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="752" text="time" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="6xG-n6-aut">
                                                                             <rect key="frame" x="323.33333333333331" y="13" width="20.666666666666686" height="12"/>
                                                                             <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="10"/>
                                                                             <color key="textColor" red="0.40000000596046448" green="0.40000000596046448" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
@@ -842,52 +842,73 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </imageView>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zo2-s1-xCp" userLabel="outgoingCallView">
-                                <rect key="frame" x="60" y="526" width="294" height="187"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zo2-s1-xCp" userLabel="outgoingCallView">
+                                <rect key="frame" x="93" y="527" width="228" height="174"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4O9-0Y-ZM5" userLabel="Hang call">
-                                        <rect key="frame" x="111" y="101" width="72" height="72"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="vuQ-eB-u0n">
+                                        <rect key="frame" x="0.0" y="0.0" width="228" height="60"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hqO-Tf-O54">
+                                                <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
+                                                <state key="normal" image="cameraOff"/>
+                                                <state key="selected" image="cameraOn"/>
+                                                <connections>
+                                                    <action selector="enableDisableVideo:" destination="m0F-zS-y46" eventType="touchUpInside" id="omp-Lv-s7E"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Ku-CZ-ZU4" userLabel="Speaker">
+                                                <rect key="frame" x="84" y="0.0" width="60" height="60"/>
+                                                <state key="normal" image="speakerOff"/>
+                                                <state key="selected" image="speakerOn"/>
+                                                <connections>
+                                                    <action selector="enableDisableSpeaker:" destination="m0F-zS-y46" eventType="touchUpInside" id="dRS-jM-Dx7"/>
+                                                </connections>
+                                            </button>
+                                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wfs-st-ace">
+                                                <rect key="frame" x="156" y="0.0" width="60" height="60"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="60" id="gxo-et-IdC"/>
+                                                </constraints>
+                                            </view>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="22a-wx-Shy">
+                                                <rect key="frame" x="168" y="0.0" width="60" height="60"/>
+                                                <state key="normal" image="micOn"/>
+                                                <state key="selected" image="micOff"/>
+                                                <connections>
+                                                    <action selector="muteOrUnmuteCall:" destination="m0F-zS-y46" eventType="touchUpInside" id="4Ej-Sg-BzR"/>
+                                                </connections>
+                                            </button>
+                                            <button hidden="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NYV-ib-69v">
+                                                <rect key="frame" x="228" y="0.0" width="0.0" height="60"/>
+                                                <state key="normal" image="rotateOFF"/>
+                                                <state key="selected" image="rotateON"/>
+                                                <connections>
+                                                    <action selector="switchCamera:" destination="m0F-zS-y46" eventType="touchUpInside" id="s7D-ds-P9J"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="jgb-OU-iLL"/>
+                                        </constraints>
+                                    </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4O9-0Y-ZM5" userLabel="Hang call">
+                                        <rect key="frame" x="82" y="110" width="64" height="64"/>
                                         <state key="normal" image="rejectCall"/>
                                         <connections>
                                             <action selector="hangCall:" destination="m0F-zS-y46" eventType="touchUpInside" id="PDm-7s-Hsz"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hqO-Tf-O54">
-                                        <rect key="frame" x="8" y="8" width="72" height="72"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" image="cameraOff"/>
-                                        <state key="selected" image="cameraOn"/>
-                                        <connections>
-                                            <action selector="enableDisableVideo:" destination="m0F-zS-y46" eventType="touchUpInside" id="omp-Lv-s7E"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="22a-wx-Shy">
-                                        <rect key="frame" x="214" y="8" width="72" height="72"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" image="micOn"/>
-                                        <state key="selected" image="micOff"/>
-                                        <connections>
-                                            <action selector="muteOrUnmuteCall:" destination="m0F-zS-y46" eventType="touchUpInside" id="4Ej-Sg-BzR"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Ku-CZ-ZU4" userLabel="Speaker">
-                                        <rect key="frame" x="111" y="8" width="72" height="72"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" image="speakerOff"/>
-                                        <state key="selected" image="speakerOn"/>
-                                        <connections>
-                                            <action selector="enableDisableSpeaker:" destination="m0F-zS-y46" eventType="touchUpInside" id="dRS-jM-Dx7"/>
-                                        </connections>
-                                    </button>
-                                    <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Wfs-st-ace">
-                                        <rect key="frame" x="111" y="8" width="72" height="72"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="vuQ-eB-u0n" firstAttribute="centerX" secondItem="4O9-0Y-ZM5" secondAttribute="centerX" id="Ow0-Eh-VRt"/>
+                                    <constraint firstItem="vuQ-eB-u0n" firstAttribute="leading" secondItem="Zo2-s1-xCp" secondAttribute="leading" id="WMY-ZN-idh"/>
+                                    <constraint firstAttribute="height" constant="174" id="ba9-dz-5AZ"/>
+                                    <constraint firstAttribute="bottom" secondItem="4O9-0Y-ZM5" secondAttribute="bottom" id="j3O-N8-bQR"/>
+                                    <constraint firstItem="4O9-0Y-ZM5" firstAttribute="centerX" secondItem="Zo2-s1-xCp" secondAttribute="centerX" id="oDM-HM-UGo"/>
+                                    <constraint firstItem="vuQ-eB-u0n" firstAttribute="top" secondItem="Zo2-s1-xCp" secondAttribute="top" id="pZx-U5-bMC"/>
+                                </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8NQ-41-n6m">
                                 <rect key="frame" x="174.33333333333334" y="7" width="65.666666666666657" height="29"/>
@@ -937,7 +958,9 @@
                             <constraint firstItem="8NQ-41-n6m" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="E7j-Hb-08n" secondAttribute="trailing" constant="5" id="4yo-d4-M45"/>
                             <constraint firstItem="fD1-GO-MnE" firstAttribute="top" secondItem="2Au-MG-eIH" secondAttribute="bottom" constant="26" id="9ss-FV-cDi"/>
                             <constraint firstItem="agW-lq-qgD" firstAttribute="top" secondItem="jfp-B6-ZWa" secondAttribute="top" constant="43" id="KQK-o6-Sic"/>
+                            <constraint firstItem="Zo2-s1-xCp" firstAttribute="centerX" secondItem="2DR-0o-zFw" secondAttribute="centerX" id="MzL-xC-YIb"/>
                             <constraint firstItem="2Au-MG-eIH" firstAttribute="top" secondItem="8NQ-41-n6m" secondAttribute="bottom" constant="9" id="TA6-RV-iPz"/>
+                            <constraint firstItem="jfp-B6-ZWa" firstAttribute="bottom" secondItem="Zo2-s1-xCp" secondAttribute="bottom" constant="35" id="Uws-R2-P2k"/>
                             <constraint firstItem="jfp-B6-ZWa" firstAttribute="top" secondItem="E7j-Hb-08n" secondAttribute="top" constant="-3" id="Ve3-Ss-GjS"/>
                             <constraint firstItem="2Au-MG-eIH" firstAttribute="leading" secondItem="agW-lq-qgD" secondAttribute="trailing" constant="8" id="ah5-xF-Bkg"/>
                             <constraint firstItem="jfp-B6-ZWa" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="8NQ-41-n6m" secondAttribute="trailing" constant="20" id="cOF-ZZ-0Pg"/>
@@ -989,6 +1012,7 @@
                         <outlet property="remoteMicImageView" destination="agW-lq-qgD" id="LHt-62-Ma7"/>
                         <outlet property="remoteVideoImageView" destination="tqR-aM-aH4" id="441-Bt-n47"/>
                         <outlet property="statusCallLabel" destination="2Au-MG-eIH" id="Jkt-cS-jRd"/>
+                        <outlet property="switchCameraButton" destination="NYV-ib-69v" id="TG5-5M-SzA"/>
                         <outlet property="volumeContainerView" destination="Wfs-st-ace" id="oeJ-g5-QFK"/>
                     </connections>
                 </viewController>
@@ -1175,7 +1199,7 @@
                                 <rect key="frame" x="0.0" y="22" width="414" height="22"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Message" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xaP-my-5lK">
-                                        <rect key="frame" x="181" y="4" width="52" height="14"/>
+                                        <rect key="frame" x="181" y="4.0000000000000009" width="52" height="14.333333333333336"/>
                                         <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="12"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -1188,52 +1212,73 @@
                                     <constraint firstAttribute="height" constant="22" id="rG5-az-h5e"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="otq-cr-6oa" userLabel="outgoingCallView">
-                                <rect key="frame" x="60" y="526" width="294" height="187"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="otq-cr-6oa" userLabel="outgoingCallView">
+                                <rect key="frame" x="93" y="527" width="228" height="174"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GXc-U0-F5K" userLabel="Hang call">
-                                        <rect key="frame" x="111" y="101" width="72" height="72"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="fa9-Dl-GtJ">
+                                        <rect key="frame" x="0.0" y="0.0" width="228" height="60"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fZi-pG-uLA">
+                                                <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
+                                                <state key="normal" image="cameraOff"/>
+                                                <state key="selected" image="cameraOn"/>
+                                                <connections>
+                                                    <action selector="enableDisableVideo:" destination="Vz1-hi-tko" eventType="touchUpInside" id="oBI-9v-uBd"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4uv-S3-2LB" userLabel="Speaker">
+                                                <rect key="frame" x="84" y="0.0" width="60" height="60"/>
+                                                <state key="normal" image="speakerOff"/>
+                                                <state key="selected" image="speakerOn"/>
+                                                <connections>
+                                                    <action selector="enableDisableSpeaker:" destination="Vz1-hi-tko" eventType="touchUpInside" id="z6K-s5-o9N"/>
+                                                </connections>
+                                            </button>
+                                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0jx-3j-E7c">
+                                                <rect key="frame" x="156" y="0.0" width="60" height="60"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="60" id="VHx-RR-IrF"/>
+                                                </constraints>
+                                            </view>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7fC-MD-Exy">
+                                                <rect key="frame" x="168" y="0.0" width="60" height="60"/>
+                                                <state key="normal" image="micOn"/>
+                                                <state key="selected" image="micOff"/>
+                                                <connections>
+                                                    <action selector="muteOrUnmuteCall:" destination="Vz1-hi-tko" eventType="touchUpInside" id="SFd-S0-Qiz"/>
+                                                </connections>
+                                            </button>
+                                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sep-o7-kEt">
+                                                <rect key="frame" x="228" y="0.0" width="0.0" height="60"/>
+                                                <state key="normal" image="rotateOFF"/>
+                                                <state key="selected" image="rotateON"/>
+                                                <connections>
+                                                    <action selector="switchCamera:" destination="Vz1-hi-tko" eventType="touchUpInside" id="pxM-Pk-KOB"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="Msc-r5-tc2"/>
+                                        </constraints>
+                                    </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GXc-U0-F5K" userLabel="Hang call">
+                                        <rect key="frame" x="82" y="110" width="64" height="64"/>
                                         <state key="normal" image="rejectCall"/>
                                         <connections>
                                             <action selector="hangCall:" destination="Vz1-hi-tko" eventType="touchUpInside" id="sVF-kp-sy1"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fZi-pG-uLA">
-                                        <rect key="frame" x="8" y="8" width="72" height="72"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" image="cameraOff"/>
-                                        <state key="selected" image="cameraOn"/>
-                                        <connections>
-                                            <action selector="enableDisableVideo:" destination="Vz1-hi-tko" eventType="touchUpInside" id="oBI-9v-uBd"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7fC-MD-Exy">
-                                        <rect key="frame" x="214" y="8" width="72" height="72"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" image="micOn"/>
-                                        <state key="selected" image="micOff"/>
-                                        <connections>
-                                            <action selector="muteOrUnmuteCall:" destination="Vz1-hi-tko" eventType="touchUpInside" id="SFd-S0-Qiz"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4uv-S3-2LB" userLabel="Speaker">
-                                        <rect key="frame" x="111" y="8" width="72" height="72"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" image="speakerOff"/>
-                                        <state key="selected" image="speakerOn"/>
-                                        <connections>
-                                            <action selector="enableDisableSpeaker:" destination="Vz1-hi-tko" eventType="touchUpInside" id="z6K-s5-o9N"/>
-                                        </connections>
-                                    </button>
-                                    <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0jx-3j-E7c">
-                                        <rect key="frame" x="111" y="8" width="72" height="72"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="GXc-U0-F5K" secondAttribute="bottom" id="3eO-zu-WiH"/>
+                                    <constraint firstAttribute="height" constant="174" id="AeK-zw-XYI"/>
+                                    <constraint firstItem="fa9-Dl-GtJ" firstAttribute="leading" secondItem="otq-cr-6oa" secondAttribute="leading" id="RNs-ya-ZAl"/>
+                                    <constraint firstItem="GXc-U0-F5K" firstAttribute="centerX" secondItem="otq-cr-6oa" secondAttribute="centerX" id="U99-yf-bKq"/>
+                                    <constraint firstItem="fa9-Dl-GtJ" firstAttribute="centerX" secondItem="otq-cr-6oa" secondAttribute="centerX" id="b1K-GF-OUG"/>
+                                    <constraint firstItem="fa9-Dl-GtJ" firstAttribute="top" secondItem="otq-cr-6oa" secondAttribute="top" id="mJc-eo-9h1"/>
+                                </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xPc-Jc-U9U">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
@@ -1253,7 +1298,7 @@
                                         <rect key="frame" x="342" y="0.0" width="60" height="44"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1/8" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mza-gC-R5I">
-                                                <rect key="frame" x="13" y="14" width="19" height="16"/>
+                                                <rect key="frame" x="13" y="14.333333333333336" width="19" height="15.666666666666664"/>
                                                 <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="13"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -1331,10 +1376,12 @@
                             <constraint firstItem="xPc-Jc-U9U" firstAttribute="top" secondItem="T7i-gV-Gx7" secondAttribute="top" id="9WZ-n4-Pip"/>
                             <constraint firstItem="fAr-Ud-Er3" firstAttribute="centerY" secondItem="ljh-eN-dUg" secondAttribute="centerY" id="DCe-hO-CS8"/>
                             <constraint firstItem="ljh-eN-dUg" firstAttribute="bottom" secondItem="ayG-gj-xo6" secondAttribute="bottom" id="Dbz-ZZ-98m"/>
+                            <constraint firstItem="otq-cr-6oa" firstAttribute="centerX" secondItem="T7i-gV-Gx7" secondAttribute="centerX" id="JPJ-eG-Cmf"/>
                             <constraint firstItem="eTZ-pY-Nh8" firstAttribute="top" secondItem="xPc-Jc-U9U" secondAttribute="bottom" constant="-22" id="Kd6-1G-7tA"/>
                             <constraint firstItem="xPc-Jc-U9U" firstAttribute="trailing" secondItem="ayG-gj-xo6" secondAttribute="trailing" id="MQR-mD-gJk"/>
                             <constraint firstItem="PQT-6z-YPf" firstAttribute="centerX" secondItem="T7i-gV-Gx7" secondAttribute="centerX" id="ZR6-EC-9F8"/>
                             <constraint firstItem="ayG-gj-xo6" firstAttribute="top" secondItem="xPc-Jc-U9U" secondAttribute="bottom" constant="-50" id="afN-g6-Duw"/>
+                            <constraint firstItem="ayG-gj-xo6" firstAttribute="bottom" secondItem="otq-cr-6oa" secondAttribute="bottom" constant="35" id="bZp-Wu-tOS"/>
                             <constraint firstItem="ayG-gj-xo6" firstAttribute="top" secondItem="xPc-Jc-U9U" secondAttribute="bottom" constant="-44" id="c7B-wu-tcF"/>
                             <constraint firstItem="ljh-eN-dUg" firstAttribute="trailing" secondItem="ayG-gj-xo6" secondAttribute="trailing" id="dEG-Vj-DCK"/>
                             <constraint firstItem="PQT-6z-YPf" firstAttribute="top" secondItem="xPc-Jc-U9U" secondAttribute="bottom" constant="20" id="fUy-Gh-oEi"/>
@@ -1388,6 +1435,7 @@
                         <outlet property="peerTalkingVideoView" destination="wJz-Nn-ULn" id="HAk-gN-F07"/>
                         <outlet property="peerTalkingView" destination="PQT-6z-YPf" id="0RD-OL-u3F"/>
                         <outlet property="peerTalkingViewHeightConstraint" destination="CSP-r3-1eQ" id="uZn-ic-Zml"/>
+                        <outlet property="switchCameraButton" destination="Sep-o7-kEt" id="8BG-hY-AcS"/>
                         <outlet property="toastLabel" destination="xaP-my-5lK" id="aC7-WR-qU0"/>
                         <outlet property="toastTopConstraint" destination="Kd6-1G-7tA" id="yr6-Xm-wKs"/>
                         <outlet property="toastView" destination="eTZ-pY-Nh8" id="Hjw-NR-6XL"/>
@@ -2461,8 +2509,8 @@
         <image name="backArrow" width="13" height="21"/>
         <image name="callSlots" width="24" height="24"/>
         <image name="callSlots(grey)" width="24" height="24"/>
-        <image name="cameraOff" width="64" height="64"/>
-        <image name="cameraOn" width="64" height="64"/>
+        <image name="cameraOff" width="60" height="60"/>
+        <image name="cameraOn" width="60" height="60"/>
         <image name="chatIcon" width="31" height="28"/>
         <image name="chatSelectedIcon" width="31" height="28"/>
         <image name="contactVerified" width="14" height="14"/>
@@ -2472,18 +2520,20 @@
         <image name="inviteToChat" width="40" height="40"/>
         <image name="location" width="28" height="28"/>
         <image name="locationPin" width="40" height="40"/>
-        <image name="micOff" width="64" height="64"/>
-        <image name="micOn" width="64" height="64"/>
+        <image name="micOff" width="60" height="60"/>
+        <image name="micOn" width="60" height="60"/>
         <image name="onACall" width="10" height="10"/>
         <image name="privateChat" width="24" height="24"/>
         <image name="readPermissions" width="24" height="24"/>
         <image name="readWritePermissions" width="24" height="24"/>
         <image name="rejectCall" width="64" height="64"/>
         <image name="remote_mic_mute" width="22" height="22"/>
+        <image name="rotateOFF" width="60" height="60"/>
+        <image name="rotateON" width="60" height="60"/>
         <image name="selectAll" width="22" height="22"/>
         <image name="sendLocation" width="40" height="40"/>
-        <image name="speakerOff" width="64" height="64"/>
-        <image name="speakerOn" width="64" height="64"/>
+        <image name="speakerOff" width="60" height="60"/>
+        <image name="speakerOn" width="60" height="60"/>
         <image name="userMuted(grey)" width="24" height="24"/>
         <image name="userMutedBig" width="24" height="24"/>
         <image name="video_list" width="22" height="22"/>
