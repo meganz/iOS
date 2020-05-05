@@ -462,20 +462,21 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     [self.navigationController pushViewController:verifyCredentialsVC animated:YES];
 }
 
-- (void)openChatRoomWithChatId:(uint64_t)chatId {
+- (void)openChatRoom:(MEGAChatRoom *)chatRoom {
     MessagesViewController *messagesVC = [[MessagesViewController alloc] init];
-    messagesVC.chatRoom                = self.chatRoom;
+    messagesVC.chatRoom = chatRoom;
+    
     [self.navigationController pushViewController:messagesVC animated:YES];
 }
 
 - (void)sendMessageToContact {
     if (self.contactDetailsMode == ContactDetailsModeDefault || self.contactDetailsMode == ContactDetailsModeFromGroupChat) {
         if (self.chatRoom) {
-            [self openChatRoomWithChatId:self.chatRoom.chatId];
+            [self openChatRoom:self.chatRoom];
         } else {
             [MEGASdkManager.sharedMEGAChatSdk mnz_createChatRoomWithUserHandle:self.userHandle completion:^(MEGAChatRoom * _Nonnull chatRoom) {
                 self.chatRoom = chatRoom;
-                [self openChatRoomWithChatId:chatRoom.chatId];
+                [self openChatRoom:self.chatRoom];
             }];
         }
     } else {
@@ -484,7 +485,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
         if (previousViewController && [previousViewController isKindOfClass:MessagesViewController.class]) {
             [self.navigationController popViewControllerAnimated:YES];
         } else {
-            [self openChatRoomWithChatId:self.chatRoom.chatId];
+            [self openChatRoom:self.chatRoom];
         }
     }
 }

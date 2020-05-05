@@ -30,6 +30,7 @@
 #import "ContactTableViewCell.h"
 #import "ContactRequestsViewController.h"
 #import "EmptyStateView.h"
+#import "MessagesViewController.h"
 #import "ShareFolderActivity.h"
 #import "ItemListViewController.h"
 
@@ -1011,6 +1012,13 @@
     }
 }
 
+- (void)openChatRoom:(MEGAChatRoom *)chatRoom {
+    MessagesViewController *messagesVC = MessagesViewController.new;
+    messagesVC.chatRoom = chatRoom;
+    
+    [self.navigationController pushViewController:messagesVC animated:YES];
+}
+
 #pragma mark - IBActions
 
 - (IBAction)selectAllAction:(UIBarButtonItem *)sender {
@@ -1566,8 +1574,16 @@
                     //TODO: New 'Groups'
                 }
             } else { //Section 1, 'Recently Added' and all the contacts
-                //TODO: Add new method from develop to open/create chat room
                 MEGAUser *user = [self userAtIndexPath:indexPath];
+                MEGAChatRoom *chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomByUser:user.handle];
+                if (chatRoom) {
+                    [self openChatRoom:chatRoom];
+                } else {
+                    [MEGASdkManager.sharedMEGAChatSdk mnz_createChatRoomWithUserHandle:user.handle completion:^(MEGAChatRoom * _Nonnull chatRoom) {
+                        [self openChatRoom:chatRoom];
+                    }];
+                }
+                
                 [MEGAStore.shareInstance updateUserWithHandle:user.handle interactedWith:YES];
             }
             break;
