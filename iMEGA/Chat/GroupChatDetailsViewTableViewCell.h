@@ -20,4 +20,6 @@
 @property (weak, nonatomic) id<GroupChatDetailsViewTableViewCellDelegate> delegate;
 
 
+@property (weak, nonatomic) IBOutlet UIImageView *verifiedImageView;
+
 @end

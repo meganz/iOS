@@ -2,7 +2,6 @@
 #import "ThumbnailViewerTableViewCell.h"
 
 #import "ItemCollectionViewCell.h"
-#import "NSDate+DateTools.h"
 
 #import "CloudDriveViewController.h"
 #import "Helper.h"

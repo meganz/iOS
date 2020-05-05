@@ -25,21 +25,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSDictionary *)fileTypesDictionary;
 
-+ (UIImage *)genericImage;
-+ (UIImage *)folderImage;
-+ (UIImage *)folderCameraUploadsImage;
-+ (UIImage *)incomingFolderImage;
-+ (UIImage *)outgoingFolderImage;
-+ (UIImage *)defaultPhotoImage;
-
-+ (UIImage *)downloadedArrowImage;
-+ (UIImage *)downloadingTransferImage;
-+ (UIImage *)uploadingTransferImage;
-+ (UIImage *)downloadQueuedTransferImage;
-+ (UIImage *)uploadQueuedTransferImage;
-
-+ (UIImage *)permissionsButtonImageForShareType:(MEGAShareType)shareType;
-
 #pragma mark - Paths
 
 + (NSString *)pathForOffline;
@@ -81,7 +66,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSString *)sizeAndDateForNode:(MEGANode *)node api:(MEGASdk *)api;
 + (NSString *)sizeForNode:(MEGANode *)node api:(MEGASdk *)api;
-+ (NSString *)dateWithISO8601FormatOfRawTime:(time_t)rawtime;
 + (NSString *)filesAndFoldersInFolderNode:(MEGANode *)node api:(MEGASdk *)api;
 
 + (void)importNode:(MEGANode *)node toShareWithCompletion:(void (^)(MEGANode *node))completion;
@@ -120,7 +104,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (void)logout;
 + (void)logoutFromConfirmAccount;
-+ (void)logoutAfterPasswordReminder;
 + (void)clearEphemeralSession;
 + (void)clearSession;
 + (void)deletePasscode;

@@ -1,6 +1,5 @@
 #import "ChatRoomCell.h"
 
-#import "DateTools.h"
 #import "UIImage+GKContact.h"
 
 #import "MEGAChatListItem.h"
@@ -8,9 +7,16 @@
 #import "MEGAStore.h"
 #import "MEGAUser+MNZCategory.h"
 #import "NSAttributedString+MNZCategory.h"
+#import "NSDate+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
+
+#ifdef MNZ_SHARE_EXTENSION
+#import "MEGAShare-Swift.h"
+#else
+#import "MEGA-Swift.h"
+#endif
 
 @interface ChatRoomCell ()
 
@@ -69,7 +75,7 @@
 
     self.privateChatImageView.hidden = chatListItem.isPublicChat;
 
-    self.chatTitle.text = chatListItem.title;
+    self.chatTitle.text = self.chatListItem.chatTitle;
     [self updateLastMessageForChatListItem:chatListItem];
     
     if (chatListItem.isGroup) {
@@ -363,8 +369,6 @@
                 default:
                     break;
             }
-            self.chatLastTime.hidden = NO;
-            self.chatLastTime.text = [item.lastMessageDate compare:self.twoDaysAgo] == NSOrderedDescending ? item.lastMessageDate.timeAgoSinceNow : item.lastMessageDate.shortTimeAgoSinceNow;
             break;
         }
             
@@ -381,9 +385,9 @@
             char SOH = 0x01;
             NSString *separator = [NSString stringWithFormat:@"%c", SOH];
             NSArray *array = [item.lastMessage componentsSeparatedByString:separator];
-            NSInteger duration = [array.firstObject integerValue];
+            NSNumber *duration = item.group ? nil : @([array.firstObject integerValue]);
             MEGAChatMessageEndCallReason endCallReason = [[array objectAtIndex:1] integerValue];
-            NSString *lastMessage = [NSString mnz_stringByEndCallReason:endCallReason userHandle:item.lastMessageSender duration:duration];
+            NSString *lastMessage = [NSString mnz_stringByEndCallReason:endCallReason userHandle:item.lastMessageSender duration:duration isGroup:item.isGroup];
             self.chatLastMessage.text = lastMessage;
             break;
         }
@@ -443,7 +447,7 @@
         }
     }
     self.chatLastTime.hidden = NO;
-    self.chatLastTime.text = [item.lastMessageDate compare:self.twoDaysAgo] == NSOrderedDescending ? item.lastMessageDate.timeAgoSinceNow : item.lastMessageDate.shortTimeAgoSinceNow;
+    self.chatLastTime.text = item.lastMessageDate.mnz_stringForLastMessageTs;
 }
 
 - (NSString *)actionAuthorNameInChatListItem:(MEGAChatListItem *)item {
