@@ -71,3 +71,4 @@
 #import "MEGAImagePickerController.h"
 #import "BrowserViewController.h"
 #import "ShareLocationViewController.h"
+#import "MEGAChatCreateChatGroupRequestDelegate.h"
