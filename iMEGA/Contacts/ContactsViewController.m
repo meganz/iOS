@@ -1005,7 +1005,7 @@
         self.searchController.active = NO;
     }
     
-    if (self.contactsMode == ContactsModeChatCreateGroup) {
+    if (self.contactsMode == ContactsModeChatCreateGroup && self.navigationController.viewControllers.count > 1) {
         [self.navigationController popViewControllerAnimated:YES];
     } else {
         [self dismissViewControllerAnimated:YES completion:nil];
