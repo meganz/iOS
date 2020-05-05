@@ -31,7 +31,9 @@ class InviteContactViewController: UIViewController {
         }
         MEGASdkManager.sharedMEGASdk().contactLinkCreateRenew(false, delegate: contactLinkCreateDelegate)
         
-        createContactsOnMegaChild()
+        if CNContactStore.authorizationStatus(for: .contacts) == .authorized && ContactsOnMegaManager.shared.contactsOnMegaCount() != 0 {
+            createContactsOnMegaChild()
+        }
         
         if !MFMessageComposeViewController.canSendText() {
             addFromContactsLabel.textColor = UIColor.mnz_gray8F8F8F()

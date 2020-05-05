@@ -21,6 +21,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *infoButton;
 
 @property (weak, nonatomic) IBOutlet UITextField *groupNameTextField;
+@property (weak, nonatomic) IBOutlet UIImageView *verifiedImageView;
 
 @property (weak, nonatomic) id<ContactTableViewCellDelegate> delegate;
 

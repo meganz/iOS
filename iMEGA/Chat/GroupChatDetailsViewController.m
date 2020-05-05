@@ -79,7 +79,7 @@
 
 - (void)updateHeadingView {
     self.chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:self.chatRoom.chatId];
-    self.nameLabel.text = self.chatRoom.title;
+    self.nameLabel.text = self.chatRoom.chatTitle;
     
     CGSize avatarSize = self.avatarImageView.frame.size;
     UIImage *avatarImage = [UIImage imageForName:self.chatRoom.title.uppercaseString size:avatarSize backgroundColor:[UIColor mnz_gray999999] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:(avatarSize.width/2.0f)]];
@@ -511,6 +511,7 @@
                 peerEmail = [self.chatRoom peerEmailByHandle:handle];
                 privilege = [self.chatRoom peerPrivilegeAtIndex:index];
             }
+            
             BOOL isNameEmpty = [[peerFullname stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""];
             if (isNameEmpty) {
                 cell = [self.tableView dequeueReusableCellWithIdentifier:@"GroupChatDetailsParticipantEmailTypeID" forIndexPath:indexPath];
@@ -544,6 +545,8 @@
             }
             [cell.permissionsButton setImage:permissionsImage forState:UIControlStateNormal];
             cell.permissionsButton.tag = indexPath.row;
+            MEGAUser *user = [MEGASdkManager.sharedMEGASdk contactForEmail:base64Handle];
+            cell.verifiedImageView.hidden = ![MEGASdkManager.sharedMEGASdk areCredentialsVerifiedOfUser:user];
             break;
         }
             

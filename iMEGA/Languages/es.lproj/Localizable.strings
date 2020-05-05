@@ -2,6 +2,8 @@
 "cancel"="Cancelar";
 /* Button title to accept something */
 "ok"="Aceptar";
+/* Button title to clear something */
+"clear"="Limpiar";
 /* */
 "yes"="Sí";
 /* */
@@ -21,7 +23,7 @@
 /* "Size" of the file or folder you are sharing */
 "size"="Tamaño";
 /* Quality title, used in changing the export quality of scaned doc */
-"Quality"="Quality";
+"Quality"="Calidad";
 /*  */
 "folder"="Carpeta";
 /* Error message shown when there's no camera available on the device */
@@ -42,6 +44,8 @@
 "Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="Tu enlace de confirmación ya no es válido. Es posible que tu cuenta ya esté activa o que hayas cancelado el registro.";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Enlace no válido";
+/* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
+"The account that created this link has been terminated due to multiple violations of our Terms of Service."="La cuenta que creó este enlace ha sido cerrada debido a múltiples infracciones de nuestros Términos de Servicio.";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="Introducir la clave de cifrado";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -147,7 +151,7 @@
 /* Title shown inside an alert if you don't have enough space on your device to download something */
 "nodeTooBig"="Tienes que liberar espacio";
 /* Message shown when you try to downlonad files bigger than the available memory. */
-"MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device."="MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device.";
+"MEGA needs a minimum of %@. Free up some space by deleting apps you no longer use or large video files in your gallery. You can also manage what MEGA stores on your device."="MEGA necesita un mínimo de %@. Libera espacio eliminando aplicaciones que ya no usas o vídeos pesados en tu galería. También puedes administrar lo que MEGA almacena en tu dispositivo.";
 /* Title for the file link view */
 "fileLink"="Enlace del Archivo";
 /* Button title to trigger the action of opening the file without downloading or opening it. */
@@ -574,8 +578,6 @@
 "removeUserMessage"="¿Seguro que quieres eliminar a %@ de la lista de contactos?";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
 "removeMultipleUsersMessage"="¿Seguro que quieres eliminar %d usuarios de la lista de contactos?";
-/* Success message shown when the selected contacts have been removed */
-"removedContacts"="%d contactos eliminados";
 /* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
 "removedContact"="Contacto %@ eliminado";
 /* Label shown when a contact request is pending */
@@ -687,7 +689,7 @@
 /* Title to show when device local storage is full */
 "%@ Storage Full"="Almacenamiento %@ lleno";
 /* Title to show when device local storage is almost full */
-"Device Storage Almost Full"="Device Storage Almost Full";
+"Device Storage Almost Full"="Almacenamiento del dispositivo casi lleno";
 /* Detail for local storage full situation */
 "You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@"="No tienes almacenamiento suficiente para más subidas de la cámara. Libera espacio eliminando aplicaciones que no utilizas, videos o música. Puedes gestionar tu almacenamiento en %@";
 /* Navigation path for Storage settings in iOS */
@@ -852,7 +854,7 @@
 /* Hint text where the user have to re-write the new email to confirm it */
 "confirmNewEmail"="Confirmar nuevo correo electrónico";
 /* The title of the alert dialog to change the email associated to an account. */
-"changeEmail"="Cambiar correo electrónico";
+"Change Email"="Cambiar correo electrónico";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
 "oldAndNewEmailMatch"="El nuevo correo electrónico no puede coincidir con el antiguo";
 /* Error message shown when you have not written the same email when confirming a new one */
@@ -889,6 +891,8 @@
 "transfers"="Transferencias";
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
 "all"="Todas";
+/* Title of one of the filters in the Transfers section. In this case "Completed" transfers. */
+"Completed"="Completado";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
 "downloads"="Descargas";
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
@@ -962,21 +966,21 @@
 /* %1 will be replaced by a numeric value and %2 will be 'days' or 'months', for example (Expires in [S]10[/S] days) */
 "bonusExpiresIn"="(El bono expira en [S]%1[/S] %2)";
 /* Add Phone Number title  */
-"Add Phone Number"="Añadir número de teléfono";
+"Add Phone Number"="Añade el número de teléfono";
 /* Achievement explanation for add phone number */
-"You have received %1$s storage space and %2$s transfer quota for verifying your phone number."="Has recibido %1$s de espacio de almacenamiento y%2$s de cuota de transferencia por haber confirmado tu número de teléfono.";
+"You have received %1$s storage space and %2$s transfer quota for verifying your phone number."="Has recibido %1$s de espacio de almacenamiento y %2$s de cuota de transferencia por haber verificado tu número de teléfono.";
 /* Free storage description to encourage users to add phone number to their accounts */
 "Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."="Obtén %@ gratis al añadir tu número de teléfono. De esta manera tus contactos te encontrarán más facilmente en MEGA.";
 /* Description to encourage users to add phone number to their accounts when there are not achievements */
 "Add your phone number to MEGA. This makes it easier for your contacts to find you on MEGA."="Añade tu número de teléfono a MEGA. Esto hará que tus contactos te encuentren de manera más fácil en MEGA.";
 /* Description to unblock account by verifying phone number */
-"Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account."="Tu cuenta ha sido bloqueada temporalmente debido a un posible mal uso de la misma. Confirma tu número de teléfono para desbloquear tu cuenta.";
+"Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account."="Tu cuenta ha sido bloqueada temporalmente debido a un posible mal uso de la misma. Verifica tu número de teléfono para desbloquear tu cuenta.";
 /* Verify your account title */
-"Verify Your Account"="Confirma tu cuenta";
+"Verify Your Account"="Verifica tu cuenta";
 /* Add your phone number title */
 "Add Your Phone Number"="Añade tu número de teléfono";
 /* Choose Your Country title */
-"Choose Your Country"="Elige tu país";
+"Choose Your Country"="Elige el país";
 /* Used to display the number of months a plan was purchased for e.g. 3 months, 6 months. */
 "months"="meses";
 /*  */
@@ -987,10 +991,12 @@
 "logoutLabel"="Desconectar";
 /* String shown when you are logging out of your account. */
 "loggingOut"="Cerrando sesión";
-/* Button to remove avatar. Try to keep the text short (as in English) */
-"removeAvatar"="Eliminar imagen del perfil";
-/* button that allows the user the change his avatar */
-"changeAvatar"="Cambiar imagen del perfil";
+/* Button to remove some photo, e.g. avatar photo. Try to keep the text short (as in English) */
+"Remove Photo"="Eliminar foto";
+/* Button that allows the user the change a photo, e.g. his avatar photo */
+"Change Photo"="Cambiar foto";
+/* Button that allows the user the add a photo, e.g avatar photo */
+"Add Photo"="Añadir foto";
 /* Button title that allows the user change his name */
 "changeName"="Cambiar nombre";
 /* Success message when changing profile information. */
@@ -1031,8 +1037,6 @@
 "cloudDriveIsFull"="[S]Tu Nube está llena.[/S] [A]Amplía tu cuenta[/A] y obtén [S]hasta %@ TB (%@ GB)[/S] de espacio de almacenamiento en la nube.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Almacenamiento";
-/* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
-"transferQuota"="Cuota de transferencia";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
 "limited"="Limitado";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
@@ -1170,9 +1174,9 @@
 /* Title to perform the action of sending a message to a contact. */
 "sendMessage"="Enviar mensaje";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
-"verifyCredentials"="Confirmar credenciales";
+"verifyCredentials"="Verificar credenciales";
 /* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
-"verify"="Confirmar";
+"verify"="Verificar";
 /* Button title */
 "verified"="Verificado";
 /* A button title to delete the history of a chat. */
@@ -1267,8 +1271,6 @@
 "removePreview"="Eliminar vista previa";
 /* */
 "warning"="Advertencia";
-/* Alert message shown when the user perform logout and has files in the Offline directory */
-"allFilesSavedForOfflineWillBeDeletedFromYourDevice"="Todo los archivos en Sin conexión serán eliminados de tu dispositivo. ¿Seguro que quieres continuar?";
 /* Title shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_title"="Cuota de transferencia insuficiente";
 /* Description shown when you almost had used your available transfer quota. */
@@ -1546,6 +1548,10 @@
 "callFailed"="Llamada fallida";
 /* When an active call of user A with user B had ended */
 "callEnded"="Fin de llamada";
+/* When an active goup call is ended */
+"Group call ended"="Llamada de grupo finalizada";
+/* When an active goup call is ended, shows the duration */
+"[A]Group call ended[/A][C]. Duration: [/C]"="[A]Llamada de grupo finalizada[/A][C]. Duración: [/C]";
 /* Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc) */
 "duration"="Duración: %@";
 /* */
@@ -1629,7 +1635,7 @@
 /* Footer text shown under the Camera setting to explain the option 'Save in Photos' */
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Guarda una copia de las imágenes y de los videos capturados desde la aplicación de MEGA en la galería del dispositivo.";
 /* Settings section title where you can enable the option to 'Spotlight search' */
-"Spotlight Search"="Spotlight Search";
+"Spotlight Search"="Búsqueda con Spotlight";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="Tú tienes las claves";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -1756,14 +1762,6 @@
 "Thumbnail view"="Vista en miniatura";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
 "Poor connection."="Mala conexión.";
-/* Message shown in a chat room when there is an active group call */
-"There is an active group call. Tap to join."="Llamada de grupo en curso. Toca para unirte.";
-/* Message shown in a chat room for a group call in progress displaying the duration of the call */
-"Touch to return to call %@"="Toca para volver a la llamada %@";
-/* Menu item to change from grid view to list view */
-"List view"="Ver como lista";
-/* Menu item to change from list view to grid view */
-"Thumbnail view"="Vista en miniatura";
 /* There are no notifications to display. */
 "No notifications"="Sin notificaciones";
 /* The header of a notification related to payments */
@@ -1947,7 +1945,7 @@
 /* Hint shown to the users, when they want to use the Location Services but they are disabled or restricted for MEGA */
 "Please go to the Privacy section in your device’s Setting. Enable Location Services and set MEGA to While Using the App or Always."="Ve a la sección Privacidad en los Ajustes de tu dispositivo. Activa la Localización y configura MEGA en \"Cuando se use la app\" o \"Siempre\".";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
-"NSLocationAlwaysAndWhenInUseUsageDescription"="MEGA accesses your location when you share it with your contacts in chat or when you enable ”Upload in Background” for Camera Uploads so your photos and videos are uploaded when your location changes.";
+"NSLocationAlwaysAndWhenInUseUsageDescription"="MEGA accede a tu ubicación cuando la compartes con tus contactos en el chat o cuando activas \"Subir en segundo plano\" en las Subidas de la cámara para que tus fotos y videos se suban cuando cambies tu ubicación.";
 /* Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
 "Mobile Data is turned off"="Los datos móviles están desactivados";
 /* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */
@@ -1959,11 +1957,13 @@
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="¿Estás seguro de que quieres cambiar a un servidor de prueba? Tu cuenta podría sufrir daños irreparables.";
 /* Title label that explains that the user is going to be asked for the contacts permission */
-"Enable Access to Contacts"="Habilitar acceso a contactos";
+"Enable Access to Your Address Book"="Activar acceso a tus contactos";
 /* Detailed explanation of why the user should give permission to contacts */
-"MEGA needs access to your contacts to help you connect with other people on MEGA."="MEGA necesita acceso a tus contactos para ayudarte a conectarse con otras personas en MEGA.";
+"Easily discover contacts from your address book on MEGA."="Descubre contactos de tu agenda que tienen MEGA.";
+/* Detailed explanation about MEGA not using the contacts data without permision */
+"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA no utilizará estos datos para ningún otro propósito y nunca interactuará con tus contactos sin tu consentimiento.";
 /* Title encouraging the user to check who of its contacts are using MEGA */
-"See who's already on MEGA"="Ver quiénes están ya en MEGA";
+"See who's already on MEGA"="Descubre quién está ya en MEGA";
 /* Title showing the user how many of his contacts are using MEGA */
 "[X] contacts found on MEGA"="[X] contactos encontrados en MEGA";
 /* Title showing the user that one of his contacts are using MEGA */
@@ -1986,6 +1986,18 @@
 "Hi, Have encrypted conversations on Mega with me and get 50GB free storage."="¡Hola! Chatea conmigo en MEGA de forma segura y obtén hasta 50 GB de almacenamiento gratuito.";
 /* Destination folder name of chat files */
 "My chat files"="Mis archivos de chat";
+/* Title of the section about the plan in the storage tab in My Account Section */
+"Plan"="Plan";
+/* */
+"If you lose this Recovery key and forget your password, [B]all your files, folders and messages will be inaccessible, even by MEGA[/B]."="Si pierdes la Clave de recuperación y la contraseña,[B] todos tus archivos, carpetas y mensajes serán inaccesibles, incluso para MEGA[/B].";
+/* */
+"Business"="Business";
+/* */
+"Administrator"="Administrador";
+/* */
+"Transfer"="Transferencia";
+/* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
+"You cannot remove %1$s as a contact because they are part of your Business account."="No puedes eliminar %1$s como contacto porque es parte de tu cuenta Business.";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
 "Require passcode"="Solicitar código";
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
@@ -1996,6 +2008,22 @@
 "This folder has been the subject of a takedown notice."="Esta carpeta ha sido sujeta a notificación y retirada.";
 /* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
 "Dispute Takedown"="Disputar la retirada";
+/* Label presented to Admins that full management of the business is only available in a desktop web browser */
+"User management is only available from a desktop web browser."="La gestión de usuarios solo está disponible desde el navegador en tu ordenador.";
+/* When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information */
+"There has been a problem with your last payment. Please access MEGA using a desktop browser for more information."="Ha habido un problema con tu último pago. Accede a MEGA utilizando el navegador del ordenador para obtener más información.";
+/* A dialog title shown to users when their business account is expired. */
+"Your business account is expired"="Tu cuenta Business ha caducado";
+/* Details shown when a Business account is expired. Details for the administrator of the Business account */
+"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="No se ha podido procesar el pago. Hasta que no soluciones el problema desde el navegador de tu ordenador solo tendrás permiso de lectura en MEGA.";
+/* A dialog message which is shown to sub-users of expired business accounts. */
+"Your account is currently [B]suspended[/B]. You can only browse your data."="Tu cuenta está [B]suspendida[/B]. Solo puedes ver tus datos.";
+/* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
+"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="Si bien MEGA no tiene acceso a tus datos, el administrador de la cuenta puede controlar y ver las Subídas de la cámara en tu cuenta de usuario";
+/* */
+"Something went wrong"="Algo ha ido mal";
+/* Button title that goes to the section Usage where you can see how your MEGA space is used */
+"Usage"="Uso";
 /* Title of the "Links" Shared Items. */
 "Links"="Enlaces";
 /* Title for empty state view of "Links" in Shared Items. */
@@ -2004,6 +2032,8 @@
 "Manage Share"="Administrar compartido";
 /* Title of the screen that shows the users with whom the user can share a folder */
 "Share with"="Compartir con";
+/* A dialog message which is shown to sub-users of expired business accounts. */
+"Contact your business account administrator to resolve the issue and activate your account."="Ponte en contacto con el administrador de tu cuenta Business para resolver el problema y activar tu cuenta.";
 /* Chat Notifications DND: Option that does not deactivate DND automatically */
 "Until I Turn it On Again"="Hasta que vuelva a activarlas";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
@@ -2045,19 +2075,35 @@
 /* Subtitle of chat screen when the chat is inactive */
 "Inactive chat"="Chat inactivo";
 /* Contact details screen: Set the alias(nickname) for a user */
-"Set Nickname"="Elige un alias";
+"Set Nickname"="Elegir alias";
 /* Contact details screen: Edit the alias(nickname) for a user */
-"Edit Nickname"="Edit Nickname";
+"Edit Nickname"="Editar alias";
 /* Edit nickname screen: Remove nickname button title */
-"Remove Nickname"="Remove Nickname";
+"Remove Nickname"="Eliminar alias";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
 "Alias/ Nickname"="Alias";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
 "It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="No se puede obtener el contenido de este archivo, ya que no está codificado ni en UTF-8 ni en ISO/IEC 8859-1.";
+/* Business expired account Overdue payment page header. */
+"Payment overdue"="Pago vencido";
+/* */
+"Active"="Activa";
+/* title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts */
+"Role:"="Rol:";
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
 "Include location tags"="Incluir etiquetas de ubicación";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
 "If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="Si activas esta opción, se subirá información sobre dónde se tomaron tus fotos y vídeos, así que ten cuidado al compartirlos.";
+/* Used in Photos app browser view to send the photos from the view to the chat. */
+"Send (%d)"="Enviar (%d)";
+/* Used in Photos app browser view to upload the photos from the view to the cloud. */
+"Upload (%d)"="Subir (%d)";
+/* Used in Photos app browser carousel view to unselect a selected photo. */
+"Unselect"="Deseleccionar";
+/* Used in Photos app browser. Shown when there are no photos or videos in the Photos app. */
+"No Photos or Videos"="No hay Fotos o Videos";
+/* Button title which, if tapped, will trigger the action of opening a folder containg this file */
+"View in Folder"="Ver en carpeta";
 /* Error message shown when opening a link with an account that not corresponds to the link */
 "This link is not related to this account. Please log in with the correct account."="El enlace no está relacionado con esta cuenta. Inicia sesión con la cuenta correcta.";
 /* Text emncouraging the user to add contacts in MEGA */
@@ -2078,16 +2124,18 @@
 "Your account is already verified"="Tu cuenta ya ha sido confirmada";
 /* Place holder for enter mobile number field */
 "Your phone number"="Tu número de teléfono";
+/* Text related to verified phone number. Used as title or cell description.  */
+"Phone Number"="Número de móvil";
 /* Label tell user to enter received txt to below input boxes */
 "Please type the verification code sent to"="Introduce el código de verificación enviado al";
 /* Text message to remind user to resend verification code */
 "You didn't receive a code?"="¿No has recibido el código?";
 /* Message shown when verify phone number successfully */
-"Your phone number has been verified successfully"="Tu número de teléfono ha sido confirmado";
+"Your phone number has been verified successfully"="Tu número de teléfono ha sido verificado";
 /* Text describing account suspended state to the user */
 "Your account has been temporarily suspended for your safety."="Tu cuenta ha sido bloqueada temporalmente por seguridad.";
 /* Text indicating the user next step to unlock suspended account. Please leave [S], [/S] as it is which is used to bolden the text. */
-"[S]Please verify your email[/S] and follow its steps to unlock your account."="Para desbloquear tu cuenta [S]Confirma tu dirección de correo electrónico[/S] siguiendo los pasos del correo de MEGA que te envíamos a tu bandeja de entrada.";
+"[S]Please verify your email[/S] and follow its steps to unlock your account."="Para desbloquear tu cuenta [S]verifica tu dirección de correo electrónico[/S] siguiendo los pasos del correo de MEGA que te envíamos a tu bandeja de entrada.";
 /* Text for button to open an helping view */
 "Why am I seeing this?"="¿Por qué estoy viendo esto?";
 /* Text to notify user an email has been sent */
@@ -2098,6 +2146,10 @@
 "It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="Es posible que estés utilizando la misma contraseña para tu cuenta de MEGA y para otros servicios, y que al menos uno de estos otros servicios haya sufrido una violación de datos.";
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="Tu contraseña se ha filtrado y está siendo utilizada por terceros para iniciar sesión en tus cuentas, incluida, entre otras, tu cuenta de MEGA.";
+/* tool bar title used in transfer widget, allow user to clear the selected items in the list */
+"Clear Selected"="Borrar seleccionados";
+/* tool bar title used in transfer widget, allow user to clear all items in the list */
+"Clear All"="Limpiar Todo";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
 "MEGA CAMERA UPLOADS FOLDER"="CARPETA DE LAS SÚBIDAS DE LA CAMARA";
 /* Action button text of folder selection screen for camera uploads */
@@ -2115,16 +2167,28 @@
 /* Description of Optimised Image Quality option */
 "Send smaller size images optimised for lower data consumption"="Envía imágenes de menor tamaño optimizadas para un menor consumo de datos.";
 /* Description of High Image Quality option */
-"Send original size, increased quality images"="Send original size, increased quality images";
+"Send original size, increased quality images"="Enviar tamaño original, imágenes de mayor calidad";
 /* Setting title for Doc scan view */
 "Save Settings"="Guardar ajustes";
 /* file type title, used in changing the export format of scaned doc */
 "File Type"="Tipo de archivo";
 /* export Quality Option for Scan document */
-"best"="Best";
+"best"="Óptima";
+/* Error message appears to sub-users of a business account when they try to login and they are disabled. */
+"Your account has been disabled by your administrator. Please contact your business account administrator for further details."="Tu cuenta ha sido desactivada por tu administrador. Ponte en contacto con el administrador de tu cuenta Business para más información.";
+/* An error message which appears to sub-users of a business account when they try to login and they are deleted. */
+"Your account has been removed by your administrator. Please contact your business account administrator for further details."="Tu cuenta ha sido eliminada por tu administrador. Ponte en contacto con el administrador de tu cuenta Business para más información.";
 /* Description of why the user should give permission to contacts */
-"Easily discover contacts from your address book on MEGA."="Easily discover contacts from your address book on MEGA.";
+"Easily discover contacts from your address book on MEGA."="Descubre contactos de tu agenda que tienen MEGA.";
 /* Detailed description of why the user should give permission to contacts */
-"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA will not use this data for any other purpose and will never interact with your contacts without your consent.";
-/* Title label that explains that the user is going to be asked for the contacts permission */
-"Enable Access to Your Address Book"="Enable Access to Your Address Book";
+"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA no utilizará estos datos para ningún otro propósito y nunca interactuará con tus contactos sin tu consentimiento.";
+/* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
+"Enter group name"="Escribe el nombre del grupo";
+/* Warning message to alert user about logout in My Account section if has transfers in progress. */
+"When you logout, ongoing transfers will be cancelled."="Cuando cierres sesión, las transferencias en curso se cancelarán.";
+/* Warning message to alert user about logout in My Account section if has offline files. */
+"When you logout, files from your Offline section will be deleted from your device."="Cuando cierres sesión, los archivos de la sección Sin conexión se eliminarán de tu dispositivo.";
+/* Warning message to alert user about logout in My Account section if has offline files and transfers in progress. */
+"When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled."="Cuando cierres sesión, los archivos de la sección Sin conexión se eliminarán de tu dispositivo y las transferencias en curso se cancelarán.";
+/* Default title of an empty chat. */
+"Chat created on %s1"="Chat creado el %s1";

@@ -1,6 +1,8 @@
 
 #import "NSDate+MNZCategory.h"
 
+#import "NSDate+DateTools.h"
+
 @implementation NSDate (MNZCategory)
 
 - (NSString *)mnz_formattedDefaultNameForMedia {
@@ -10,6 +12,18 @@
         defaultNameForMediaDateFormatter = NSDateFormatter.alloc.init;
         defaultNameForMediaDateFormatter.dateFormat = @"yyyy'-'MM'-'dd' 'HH'.'mm'.'ss";
         defaultNameForMediaDateFormatter.locale = [NSLocale.alloc initWithLocaleIdentifier:@"en_US_POSIX"];
+    });
+    
+    return [defaultNameForMediaDateFormatter stringFromDate:self];
+}
+
+- (NSString *)mnz_formattedDefaultDateForMedia {
+    static NSDateFormatter *defaultNameForMediaDateFormatter = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        defaultNameForMediaDateFormatter = NSDateFormatter.alloc.init;
+        [defaultNameForMediaDateFormatter setLocalizedDateFormatFromTemplate:@"dMMMyyyyHHmm"];
+        defaultNameForMediaDateFormatter.locale = NSLocale.autoupdatingCurrentLocale;
     });
     
     return [defaultNameForMediaDateFormatter stringFromDate:self];
@@ -40,6 +54,18 @@
     return [dateMediumStyleDateFormatter stringFromDate:self];
 }
 
+- (NSString *)mnz_formattedDateDayMonthYear {
+    static NSDateFormatter *dayMonthYearDateFormatter = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        dayMonthYearDateFormatter = NSDateFormatter.alloc.init;
+        [dayMonthYearDateFormatter setLocalizedDateFormatFromTemplate:@"ddyyMM"];
+        dayMonthYearDateFormatter.locale = NSLocale.autoupdatingCurrentLocale;
+    });
+    
+    return [dayMonthYearDateFormatter stringFromDate:self];
+}
+
 - (NSString *)mnz_formattedMonthAndYear {
     static NSDateFormatter *monthAndYearDateFormatter = nil;
     static dispatch_once_t onceToken;
@@ -50,6 +76,34 @@
     });
     
     return [monthAndYearDateFormatter stringFromDate:self];
+}
+
+- (NSString *)mnz_formattedAbbreviatedDayOfWeek {
+    static NSDateFormatter *monthAndYearDateFormatter = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        monthAndYearDateFormatter = NSDateFormatter.alloc.init;
+        monthAndYearDateFormatter.dateFormat = @"EEE";
+        monthAndYearDateFormatter.locale = NSLocale.autoupdatingCurrentLocale;
+    });
+    
+    return [monthAndYearDateFormatter stringFromDate:self];
+}
+
+- (BOOL)mnz_isInPastWeek{
+    NSDate *oneWeekAgo = [NSCalendar.currentCalendar dateByAddingUnit:NSCalendarUnitDay value:-7 toDate:NSDate.date options:0];
+
+    return [self compare:oneWeekAgo] == NSOrderedDescending;
+}
+
+- (NSString *)mnz_stringForLastMessageTs {
+    if (self.isToday) {
+        return self.mnz_formattedHourAndMinutes;
+    } else if (self.mnz_isInPastWeek) {
+        return self.mnz_formattedAbbreviatedDayOfWeek;
+    } else {
+        return self.mnz_formattedDateDayMonthYear;
+    }
 }
 
 @end
