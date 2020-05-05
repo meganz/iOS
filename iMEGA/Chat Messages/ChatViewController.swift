@@ -18,6 +18,10 @@ class ChatViewController: MessagesViewController {
     var editMessage: ChatMessage?
     var addToChatViewController: AddToChatViewController!
     
+    // transfer
+    var totalBytesToUpload = 0.0
+    var remainingBytesToUpload = 0.0
+    var totalProgressOfTransfersCompleted = 0.0
     private(set) lazy var refreshControl: UIRefreshControl = {
          let control = UIRefreshControl()
          control.addTarget(self, action: #selector(loadMoreMessages), for: .valueChanged)
@@ -530,6 +534,9 @@ class ChatViewController: MessagesViewController {
         
         navigationBarProgressView.progressTintColor = UIColor.mnz_green00BFA5()
         navigationBarProgressView.trackTintColor = .clear
+//        navigationBarProgressView.isHidden = true
+        
+//        navigationBarProgressView.progress = 0.8
     }
 
     private func registerCustomCells() {
