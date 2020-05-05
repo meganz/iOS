@@ -416,8 +416,8 @@ extension ChatViewController: AddToChatViewControllerDelegate {
         } else {
             let createChatGroupRequestDelegate = MEGAChatCreateChatGroupRequestDelegate { newChatRoom in
                 if getChatLink {
-                    let genericRequestDelegate = MEGAGenericRequestDelegate { (request, error) in
-                        if error.type == .apiOk {
+                    let genericRequestDelegate = MEGAChatGenericRequestDelegate { (request, error) in
+                        if error.type == .MEGAChatErrorTypeOk {
                             let chatViewController = ChatViewController()
                             chatViewController.publicChatWithLinkCreated = true
                             chatViewController.publicChatLink = URL(string: request.text)
@@ -425,17 +425,15 @@ extension ChatViewController: AddToChatViewControllerDelegate {
                         }
                     }
                     
-                    guard let chatId = newChatRoom?.chatId,
-                        let delegate = genericRequestDelegate as? MEGAChatRequestDelegate  else {
-                        fatalError("could not create chatlink. Either the chat id is nil or the delegate")
+                    guard let chatId = newChatRoom?.chatId else {
+                        fatalError("could not create chatlink The chat id is nil")
                     }
 
                     
-                    MEGASdkManager.sharedMEGAChatSdk()?.createChatLink(chatId, delegate: delegate)
+                    MEGASdkManager.sharedMEGAChatSdk()?.createChatLink(chatId, delegate: genericRequestDelegate)
                 } else {
                     self.open(chatRoom: newChatRoom)
                 }
-                
             }
             MEGASdkManager.sharedMEGAChatSdk()?.createPublicChat(withPeers: peerlist,
                                                                  title: groupName,
