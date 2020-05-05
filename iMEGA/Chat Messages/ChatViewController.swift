@@ -13,6 +13,7 @@ class ChatViewController: MessagesViewController {
 
     @objc var publicChatLink: URL?
     @objc var publicChatWithLinkCreated: Bool = false
+    var navigationBarProgressView: UIProgressView = UIProgressView(progressViewStyle: .bar)
     var chatInputBar: ChatInputBar!
     var editMessage: ChatMessage?
     var addToChatViewController: AddToChatViewController!
@@ -72,6 +73,7 @@ class ChatViewController: MessagesViewController {
         
         messagesCollectionView.allowsMultipleSelection = true
         configureMenus()
+        configureProgressBar()
         
     }
     
@@ -517,6 +519,17 @@ class ChatViewController: MessagesViewController {
         let removeRichLinkMenuItem = UIMenuItem(title:AMLocalizedString("removePreview","Once a preview is generated for a message which contains URLs, the user can remove it. Same button is also shown during loading of the preview - and would cancel the loading (text of the button is the same in both cases)."), action: #selector(MessageCollectionViewCell.removeRichPreview(_:)))
 
         UIMenuController.shared.menuItems = [forwardMenuItem, importMenuItem, editMenuItem, downloadMenuItem, addContactMenuItem, removeRichLinkMenuItem]
+    }
+    
+    private func configureProgressBar() {
+        navigationController?.navigationBar.addSubview(navigationBarProgressView)
+        navigationBarProgressView.autoPinEdge(toSuperviewEdge: .leading)
+        navigationBarProgressView.autoPinEdge(toSuperviewEdge: .trailing)
+        navigationBarProgressView.autoPinEdge(toSuperviewEdge: .bottom)
+        navigationBarProgressView.autoSetDimension(.height, toSize: 2)
+        
+        navigationBarProgressView.progressTintColor = UIColor.mnz_green00BFA5()
+        navigationBarProgressView.trackTintColor = .clear
     }
 
     private func registerCustomCells() {
