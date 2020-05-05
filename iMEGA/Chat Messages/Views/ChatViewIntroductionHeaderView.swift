@@ -112,7 +112,7 @@ class ChatViewIntroductionHeaderView: MessageReusableView {
         let participantsInformationHeight = max(avatarImageViewHeightConstraint.constant,
                                                 chattingWithTextLabelSize.height
                                                     + participantsLabelSize.height
-                                                    + statusLabelSize.height)
+                                                    + statusLabelSize.height + 20)
         
         let descriptionLabelSize = descriptionLabel.sizeThatFits(size)
         let confidentialityLabelSize = confidentialityTextLabel.sizeThatFits(size)
