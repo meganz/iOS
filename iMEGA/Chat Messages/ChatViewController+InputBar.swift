@@ -102,6 +102,7 @@ extension ChatViewController {
                         if error.type == .MEGAChatErrorTypeOk {
                             let chatViewController = ChatViewController()
                             chatViewController.publicChatWithLinkCreated = true
+                            chatViewController.chatRoom = newChatRoom
                             chatViewController.publicChatLink = URL(string: request.text)
                             self.replaceCurrentViewController(withViewController: chatViewController)
                         }
