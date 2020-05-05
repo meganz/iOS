@@ -23,6 +23,7 @@ class AddToChatCameraCollectionCell: UICollectionViewCell {
         
         liveFeedView.isHidden = false
         previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+        previewLayer.videoGravity = .resizeAspectFill
         liveFeedView.layer.addSublayer(previewLayer)
        
         let deviceDiscoverySession = AVCaptureDevice.default(.builtInWideAngleCamera,
