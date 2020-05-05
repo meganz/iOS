@@ -4,6 +4,7 @@ import UserNotifications
 class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationDelegate {
     private static var session: String?
     private static var isLogging = false
+    private static let genericBody = NSLocalizedString("You may have new messages", comment: "Content of the notification when there is unknown activity on the Chat")
 
     private var contentHandler: ((UNNotificationContent) -> Void)?
     private var bestAttemptContent: UNMutableNotificationContent?
@@ -18,6 +19,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         self.contentHandler = contentHandler
         bestAttemptContent = (request.content.mutableCopy() as? UNMutableNotificationContent)
         
+        removePreviousGenericNotifications()
         if NotificationService.session == nil {
             NotificationService.initExtensionProcess()
             if NotificationService.session == nil {
@@ -50,25 +52,28 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         }
         
         if let message = MEGASdkManager.sharedMEGAChatSdk()?.message(forChat: chatId, messageId: msgId) {
-            if generateNotification(with: message, immediately: false) {
+            if message.type != .unknown && generateNotification(with: message, immediately: false) {
                 postNotification(withError: nil)
+                return
             }
-            return
-        } else {
-            MEGASdkManager.sharedMEGAChatSdk()?.add(self as MEGAChatNotificationDelegate)
-            MEGASdkManager.sharedMEGAChatSdk()?.pushReceived(withBeep: true, chatId: chatId, delegate: MEGAChatGenericRequestDelegate { [weak self] request, error in
-                if error.type != .MEGAChatErrorTypeOk {
-                    self?.postNotification(withError: "Error in pushReceived \(error)")
-                    return
-                }
-            })
         }
+        
+        MEGASdkManager.sharedMEGAChatSdk()?.add(self as MEGAChatNotificationDelegate)
+        MEGASdkManager.sharedMEGAChatSdk()?.pushReceived(withBeep: true, chatId: chatId, delegate: MEGAChatGenericRequestDelegate { [weak self] request, error in
+            if error.type != .MEGAChatErrorTypeOk {
+                self?.postNotification(withError: "Error in pushReceived \(error)")
+            }
+        })
     }
     
     override func serviceExtensionTimeWillExpire() {
         if let chatId = chatId, let msgId = msgId, let message = MEGASdkManager.sharedMEGAChatSdk()?.message(forChat: chatId, messageId: msgId) {
-            let error = !generateNotification(with: message, immediately: true)
-            postNotification(withError: error ? "No chat room for message" : nil)
+            if message.type == .unknown {
+                postNotification(withError: "Unknown message")
+            } else {
+                let error = !generateNotification(with: message, immediately: true)
+                postNotification(withError: error ? "No chat room for message" : nil)
+            }
         } else {
             postNotification(withError: "Service Extension time will expire")
         }
@@ -165,7 +170,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         
         if let errorString = error {
             MEGALogError(errorString)
-            bestAttemptContent.body = AMLocalizedString("You may have new messages", "Content of the notification when there is unknown activity on the Chat")
+            bestAttemptContent.body = NotificationService.genericBody
             bestAttemptContent.sound = nil
         } else {
             if let msgId = msgId, let chatId = chatId {
@@ -178,6 +183,27 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         // Note: As soon as we call the contentHandler, no content can be retrieved from notification center.
         bestAttemptContent.badge = MEGASdkManager.sharedMEGAChatSdk()?.unreadChats as NSNumber?
         contentHandler(bestAttemptContent)
+    }
+    
+    private func removePreviousGenericNotifications() {
+        UNUserNotificationCenter.current().getPendingNotificationRequests { (requests) in
+            var identifiers = [String]()
+            for request in requests {
+                if request.content.body == NotificationService.genericBody {
+                    identifiers.append(request.identifier)
+                }
+            }
+            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: identifiers)
+        }
+        UNUserNotificationCenter.current().getDeliveredNotifications { (notifications) in
+            var identifiers = [String]()
+            for notification in notifications {
+                if notification.request.content.body == NotificationService.genericBody {
+                    identifiers.append(notification.request.identifier)
+                }
+            }
+            UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: identifiers)
+        }
     }
     
     private func path(for node: MEGANode, in sharedSandboxCacheDirectory: String) -> String? {

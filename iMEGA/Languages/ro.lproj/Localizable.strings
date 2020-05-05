@@ -991,10 +991,12 @@
 "logoutLabel"="Deconectează-te";
 /* String shown when you are logging out of your account. */
 "loggingOut"="Deconectare";
-/* Button to remove avatar. Try to keep the text short (as in English) */
-"removeAvatar"="Elimină avatarul";
-/* button that allows the user the change his avatar */
-"changeAvatar"="Schimbă avatarul";
+/* Button to remove some photo, e.g. avatar photo. Try to keep the text short (as in English) */
+"Remove Photo"="Remove Photo";
+/* Button that allows the user the change a photo, e.g. his avatar photo */
+"Change Photo"="Change Photo";
+/* Button that allows the user the add a photo, e.g avatar photo */
+"Add Photo"="Add Photo";
 /* Button title that allows the user change his name */
 "changeName"="Schimbă numele";
 /* Success message when changing profile information. */
@@ -1269,8 +1271,6 @@
 "removePreview"="Elimină previzualizarea";
 /* */
 "warning"="Avertisment";
-/* Alert message shown when the user perform logout and has files in the Offline directory */
-"allFilesSavedForOfflineWillBeDeletedFromYourDevice"="Toate fișierele salvate pentru offline vor fi șterse de pe dispozitiv. Continui spre deconectare?";
 /* Title shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_title"="Cotă de transfer insuficientă";
 /* Description shown when you almost had used your available transfer quota. */
@@ -2124,6 +2124,8 @@
 "Your account is already verified"="Contul tău este deja verificat";
 /* Place holder for enter mobile number field */
 "Your phone number"="Numărul tău de telefon";
+/* Text related to verified phone number. Used as title or cell description.  */
+"Phone Number"="Phone Number";
 /* Label tell user to enter received txt to below input boxes */
 "Please type the verification code sent to"="Te rugăm să introduci codul de verificare trimis către";
 /* Text message to remind user to resend verification code */
@@ -2182,3 +2184,11 @@
 "MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA nu va folosi aceste date în alt scop și nu va interacționa niciodată cu contactele tale fără consimțământul tău.";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="Introdu numele grupului";
+/* Warning message to alert user about logout in My Account section if has transfers in progress. */
+"When you logout, ongoing transfers will be cancelled."="Când te deconectezi, transferurile în curs vor fi anulate.";
+/* Warning message to alert user about logout in My Account section if has offline files. */
+"When you logout, files from your Offline section will be deleted from your device."="Când te deconectezi, fișierele din secțiunea Offline vor fi șterse de pe dispozitiv.";
+/* Warning message to alert user about logout in My Account section if has offline files and transfers in progress. */
+"When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled."="Când te deconectezi, fișierele din secțiunea Offline vor fi șterse de pe dispozitiv și transferurile în curs vor fi anulate.";
+/* Default title of an empty chat. */
+"Chat created on %s1"="Chat creat în %s1";
