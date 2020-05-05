@@ -263,11 +263,11 @@
 		5B8499091F13DBCE0034A36E /* MEGAAssetsPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8499081F13DBCE0034A36E /* MEGAAssetsPickerController.m */; };
 		5B8A5B1B2456D51E00EB8C6C /* SectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8A5B1A2456D51E00EB8C6C /* SectionTableViewCell.swift */; };
 		5B8A5B1D2456D65C00EB8C6C /* SectionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B8A5B1C2456D65C00EB8C6C /* SectionTableViewCell.xib */; };
+		5B8C86912448ACA900D23D43 /* MEGAChatPeerList+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8C86902448ACA900D23D43 /* MEGAChatPeerList+Additions.swift */; };
 		5B92CEE72423E9F100FE1BCC /* UpgradeAccount.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B92CEE62423E9F100FE1BCC /* UpgradeAccount.storyboard */; };
 		5B95DD94237C35610068DF97 /* EmptyStateView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BE7BEE423745FC700BBD23F /* EmptyStateView.xib */; };
-		5B9F2010243332D200F22FBA /* ContactLinkQR.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B9F200F243332D200F22FBA /* ContactLinkQR.storyboard */; };
-		5B8C86912448ACA900D23D43 /* MEGAChatPeerList+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8C86902448ACA900D23D43 /* MEGAChatPeerList+Additions.swift */; };
 		5B9E7EA62449A9E700BDECC2 /* MEGAChatSDK+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D5DB2D23E9930200B09412 /* MEGAChatSDK+Additions.swift */; };
+		5B9F2010243332D200F22FBA /* ContactLinkQR.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B9F200F243332D200F22FBA /* ContactLinkQR.storyboard */; };
 		5B9F336624448FA400E2A15B /* NSDate+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC25724220080FC0098E781 /* NSDate+MNZCategory.m */; };
 		5B9F33672444907900E2A15B /* NSDate+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC25724220080FC0098E781 /* NSDate+MNZCategory.m */; };
 		5BA81EA11FC2FF0100C8146C /* RemoveSharingActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B19713C1F2F1D1C00DE1BB2 /* RemoveSharingActivity.m */; };
@@ -1593,7 +1593,6 @@
 		5B1F74D22126E30B00F09A16 /* AwaitingEmailConfirmationView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AwaitingEmailConfirmationView.m; sourceTree = "<group>"; };
 		5B1F74D32126E30B00F09A16 /* AwaitingEmailConfirmationView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AwaitingEmailConfirmationView.xib; sourceTree = "<group>"; };
 		5B1FEE27231FE4FA001271AF /* AppearanceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppearanceManager.swift; path = iMEGA/Utils/AppearanceManager.swift; sourceTree = SOURCE_ROOT; };
-		5B205D192449AC9C00EFFC31 /* MEGAShare-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "MEGAShare-Bridging-Header.h"; path = "Supporting Files/MEGAShare-Bridging-Header.h"; sourceTree = "<group>"; };
 		5B20B00920E61DDF00511C0F /* MEGALinkManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGALinkManager.m; sourceTree = "<group>"; };
 		5B20B00B20E61DFB00511C0F /* MEGALinkManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGALinkManager.h; sourceTree = "<group>"; };
 		5B20B00F20E6300300511C0F /* MEGAGenericRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MEGAGenericRequestDelegate.h; path = API/Requests/MEGAGenericRequestDelegate.h; sourceTree = "<group>"; };
@@ -1688,9 +1687,9 @@
 		5B8499081F13DBCE0034A36E /* MEGAAssetsPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAAssetsPickerController.m; sourceTree = "<group>"; };
 		5B8A5B1A2456D51E00EB8C6C /* SectionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionTableViewCell.swift; sourceTree = "<group>"; };
 		5B8A5B1C2456D65C00EB8C6C /* SectionTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SectionTableViewCell.xib; sourceTree = "<group>"; };
+		5B8C86902448ACA900D23D43 /* MEGAChatPeerList+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MEGAChatPeerList+Additions.swift"; sourceTree = "<group>"; };
 		5B92CEE62423E9F100FE1BCC /* UpgradeAccount.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = UpgradeAccount.storyboard; sourceTree = "<group>"; };
 		5B9F200F243332D200F22FBA /* ContactLinkQR.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ContactLinkQR.storyboard; sourceTree = "<group>"; };
-		5B8C86902448ACA900D23D43 /* MEGAChatPeerList+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MEGAChatPeerList+Additions.swift"; sourceTree = "<group>"; };
 		5BADE3981F02BD1F009C9AD7 /* MEGANodeList+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MEGANodeList+MNZCategory.h"; sourceTree = "<group>"; };
 		5BADE3991F02BD1F009C9AD7 /* MEGANodeList+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MEGANodeList+MNZCategory.m"; sourceTree = "<group>"; };
 		5BB50E071F20E840000CA24D /* MEGACreateFolderRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGACreateFolderRequestDelegate.h; path = API/Requests/MEGACreateFolderRequestDelegate.h; sourceTree = "<group>"; };
@@ -2089,7 +2088,6 @@
 		A82751131E97AB79007CD9E2 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		A82751151E97AB88007CD9E2 /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
 		A8278D7E200E72A00040B076 /* incoming_voice_video_call_iOS9.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = incoming_voice_video_call_iOS9.mp3; sourceTree = "<group>"; };
-		A829AD3522D4E66700C8C9D7 /* MEGA-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MEGA-Bridging-Header.h"; sourceTree = "<group>"; };
 		A82A38CF200D32BC00883533 /* libzen.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libzen.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libzen.a; sourceTree = "<group>"; };
 		A82A38D4200D32EC00883533 /* libmediainfo.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libmediainfo.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libmediainfo.a; sourceTree = "<group>"; };
 		A82E5BC41F3465A3003C149C /* Spotlight_file@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Spotlight_file@2x.png"; path = "Spotlight/Spotlight_file@2x.png"; sourceTree = "<group>"; };
@@ -5456,8 +5454,6 @@
 				5B78F0B11F3C5362007ED721 /* MyAccountHallViewController.m */,
 				5B0062C41F3DBA16008B7A91 /* MyAccountHallTableViewCell.h */,
 				5B0062C51F3DBA16008B7A91 /* MyAccountHallTableViewCell.m */,
-				E889C9E01B55657E00ECEFDF /* MyAccountViewController.h */,
-				E889C9E11B55657E00ECEFDF /* MyAccountViewController.m */,
 				5BD5CCDB1EB9DA4800175A25 /* ChangeNameViewController.h */,
 				5BD5CCDC1EB9DA4800175A25 /* ChangeNameViewController.m */,
 			);
@@ -6182,7 +6178,6 @@
 				4147C2D41B4EE9BA00A37044 /* MEGAStore.m in Sources */,
 				5B0C55AE1EE9575E0058CBE1 /* MEGARemoveContactRequestDelegate.m in Sources */,
 				5BE689AA2419135400462134 /* CloudAppearancePreference+CoreDataProperties.swift in Sources */,
-				E889C9E21B55657E00ECEFDF /* MyAccountViewController.m in Sources */,
 				5BD5CCDD1EB9DA4800175A25 /* ChangeNameViewController.m in Sources */,
 				832E102A202B0A3900BDD30F /* NodeActionHeaderCollectionReusableView.m in Sources */,
 				945E1F0C1FE10CE8000C5E21 /* MEGAInputToolbar.m in Sources */,

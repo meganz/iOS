@@ -10,6 +10,7 @@
 
 #import "NSDate+DateTools.h"
 
+#import "Helper.h"
 #import "NSDate+MNZCategory.h"
 #import "MEGASdkManager.h"
 #import "MEGAUser+MNZCategory.h"
@@ -176,6 +177,19 @@ static NSString* const B = @"[B]";
     }
     
     return unitString;
+}
+
++ (NSString *)mnz_formatStringFromByteCountFormatter:(NSString *)stringFromByteCount {
+    NSArray *componentsSeparatedByStringArray = [stringFromByteCount componentsSeparatedByString:@" "];
+    NSString *countString = [NSString mnz_stringWithoutUnitOfComponents:componentsSeparatedByStringArray];
+    
+    if (componentsSeparatedByStringArray.count > 1) {
+        NSString *unitString = [NSString mnz_stringWithoutCountOfComponents:componentsSeparatedByStringArray];
+        
+        countString = [NSString stringWithFormat:@"%@ %@", countString, unitString];
+    }
+    
+    return countString;
 }
 
 - (NSString *_Nullable)mnz_stringBetweenString:(NSString*)start andString:(NSString*)end {

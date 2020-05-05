@@ -27,6 +27,7 @@ typedef NS_ENUM(NSInteger, MyAccountSection) {
 
 typedef NS_ENUM(NSInteger, MyAccount) {
     MyAccountStorage = 0,
+    MyAccountUsage = 0,
     MyAccountSettings = 0,
     MyAccountContacts,
     MyAccountNotifications,
@@ -39,6 +40,7 @@ typedef NS_ENUM(NSInteger, MyAccount) {
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *buyPROBarButtonItem;
 
+@property (weak, nonatomic) IBOutlet UILabel *businessLabel;
 @property (weak, nonatomic) IBOutlet UIView *profileView;
 @property (weak, nonatomic) IBOutlet UILabel *viewAndEditProfileLabel;
 @property (weak, nonatomic) IBOutlet UIButton *viewAndEditProfileButton;
@@ -58,6 +60,7 @@ typedef NS_ENUM(NSInteger, MyAccount) {
 @property (weak, nonatomic) IBOutlet UIImageView *qrCodeImageView;
 
 @property (weak, nonatomic) IBOutlet UIView *tableFooterView;
+@property (weak, nonatomic) IBOutlet UIView *tableFooterContainerView;
 @property (weak, nonatomic) IBOutlet UILabel *tableFooterLabel;
 
 @end
@@ -143,10 +146,18 @@ typedef NS_ENUM(NSInteger, MyAccount) {
     
     self.profileView.backgroundColor = [UIColor mnz_mainBarsColorForTraitCollection:self.traitCollection];
     self.viewAndEditProfileLabel.textColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
+    self.qrCodeImageView.image = [UIImage imageNamed:@"qrCodeIcon"].imageFlippedForRightToLeftLayoutDirection;
     self.profileBottomSeparatorView.backgroundColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
     
     self.addPhoneNumberView.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
     self.addPhoneNumberBottomSeparatorView.backgroundColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
+    
+    if (MEGASdkManager.sharedMEGASdk.isBusinessAccount) {
+        self.businessLabel.textColor = [UIColor mnz_subtitlesColorForTraitCollection:self.traitCollection];
+        
+        self.tableFooterContainerView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
+        self.tableFooterLabel.textColor = [UIColor mnz_subtitlesColorForTraitCollection:self.traitCollection];
+    }
 }
 
 - (void)configAddPhoneNumberTexts {
@@ -222,12 +233,12 @@ typedef NS_ENUM(NSInteger, MyAccount) {
 - (void)configNavigationItem {
     if (MEGASdkManager.sharedMEGASdk.isBusinessAccount) {
         self.navigationItem.rightBarButtonItem = nil;
-        UILabel *label = [Helper customNavigationBarLabelWithTitle:AMLocalizedString(@"myAccount", @"Title of the app section where you can see your account details") subtitle:AMLocalizedString(@"Business", nil)];
-        label.frame = CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44);
-        self.navigationItem.titleView = label;
+        self.navigationItem.title = AMLocalizedString(@"myAccount", @"Title of the app section where you can see your account details");
+        self.businessLabel.text = AMLocalizedString(@"Business", nil);
     } else {
         self.buyPROBarButtonItem.title = AMLocalizedString(@"upgrade", @"Caption of a button to upgrade the account to Pro status");
         self.navigationItem.title = AMLocalizedString(@"myAccount", @"Title of the app section where you can see your account details");
+        self.businessLabel.text = @"";
     }
 }
 
@@ -283,7 +294,7 @@ typedef NS_ENUM(NSInteger, MyAccount) {
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *identifier = @"MyAccountHallTableViewCellID";
-    if (MEGASdkManager.sharedMEGASdk.isBusinessAccount && (indexPath.row == 0)) {
+    if (MEGASdkManager.sharedMEGASdk.isBusinessAccount && (indexPath.row == MyAccountUsage && indexPath.section == MyAccountSectionMEGA)) {
         identifier = @"MyAccountHallBusinessUsageTableViewCellID";
     }
     MyAccountHallTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
@@ -304,16 +315,21 @@ typedef NS_ENUM(NSInteger, MyAccount) {
         case MyAccountStorage: {
             if (MEGASdkManager.sharedMEGASdk.isBusinessAccount) {
                 cell.sectionLabel.text = AMLocalizedString(@"Usage", @"Button title that goes to the section Usage where you can see how your MEGA space is used");
-                cell.storageLabel.text = AMLocalizedString(@"productSpace", nil);
+                cell.storageLabel.text = AMLocalizedString(@"Storage", @"Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible).");
                 cell.transferLabel.text = AMLocalizedString(@"Transfer", nil);
                 MEGAAccountDetails *accountDetails = MEGASdkManager.sharedMEGASdk.mnz_accountDetails;
                 if (accountDetails) {
-                    cell.storageUsedLabel.text = [Helper memoryStyleStringFromByteCount:accountDetails.storageUsed.longLongValue];
-                    cell.transferUsedLabel.text = [Helper memoryStyleStringFromByteCount:accountDetails.transferOwnUsed.longLongValue];
+                    NSString *storageUsedString =  [NSString mnz_formatStringFromByteCountFormatter:[Helper memoryStyleStringFromByteCount:accountDetails.storageUsed.longLongValue]];
+                    cell.storageUsedLabel.text = storageUsedString;
+                    NSString *transferUsedString = [NSString mnz_formatStringFromByteCountFormatter:[Helper memoryStyleStringFromByteCount:accountDetails.transferOwnUsed.longLongValue]];
+                    cell.transferUsedLabel.text = transferUsedString;
                 } else {
                     cell.storageUsedLabel.text = @"";
                     cell.transferUsedLabel.text = @"";
                 }
+                
+                cell.storageLabel.textColor = cell.storageUsedLabel.textColor = [UIColor mnz_chatBlueForTraitCollection:self.traitCollection];
+                cell.transferLabel.textColor = cell.transferUsedLabel.textColor = [UIColor colorFromHexString:@"34C759"];
             } else {
                 cell.iconImageView.image = [UIImage imageNamed:@"icon-storage"].imageFlippedForRightToLeftLayoutDirection;
                 cell.sectionLabel.text = AMLocalizedString(@"Storage", @"Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible).");
@@ -399,7 +415,7 @@ typedef NS_ENUM(NSInteger, MyAccount) {
     CGFloat heightForRow;
     if (indexPath.row == MyAccountAchievements && ![MEGASdkManager.sharedMEGASdk isAchievementsEnabled] | MEGASdkManager.sharedMEGASdk.isBusinessAccount) {
         heightForRow = 0.0f;
-    } else if (indexPath.row == 0 && MEGASdkManager.sharedMEGASdk.isBusinessAccount) {
+    } else if (indexPath.row == MyAccountUsage && indexPath.section == MyAccountSectionMEGA && MEGASdkManager.sharedMEGASdk.isBusinessAccount) {
         heightForRow = 94;
     } else {
         heightForRow = 60;
