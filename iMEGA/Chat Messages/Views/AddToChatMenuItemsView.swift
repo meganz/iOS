@@ -21,7 +21,7 @@ class AddToChatMenuItemsView: UIView {
         didSet {
             guard let menus = menus,
                 menuViews != nil,
-                menus.count <= 8 else {
+                menus.count <= menuViews.count else {
                 return
             }
             
