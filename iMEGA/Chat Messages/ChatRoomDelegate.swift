@@ -204,6 +204,10 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
     func insertMessage(_ message: MEGAChatMessage) {
          messages.append(ChatMessage(message: message, chatRoom: chatRoom))
         
+        if messages.count == 1 {
+            chatViewController.messagesCollectionView.reloadData()
+            return;
+        }
          chatViewController.messagesCollectionView.performBatchUpdates({
              chatViewController.messagesCollectionView.insertSections([messages.count - 1])
          }, completion: { [weak self] _ in
