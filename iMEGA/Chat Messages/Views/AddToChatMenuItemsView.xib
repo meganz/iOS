@@ -3,7 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -14,14 +14,14 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="251"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="g9m-51-yXK">
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="g9m-51-yXK">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="251"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="T0m-5x-tWu">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="110.5"/>
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="113"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pwS-dl-c8c" customClass="AddToChatMenuView" customModule="MEGA" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="0.0" width="103.5" height="110.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="103.5" height="113"/>
                                     <subviews>
                                         <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Egq-cg-GXs">
                                             <rect key="frame" x="10" y="0.0" width="83.5" height="83.5"/>
@@ -40,13 +40,13 @@
                                             </constraints>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v6a-e9-hY4">
-                                            <rect key="frame" x="0.0" y="92" width="103.5" height="13.5"/>
+                                            <rect key="frame" x="0.0" y="94.5" width="103.5" height="13.5"/>
                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="11"/>
                                             <color key="textColor" red="0.51764705882352935" green="0.51764705882352935" blue="0.51764705882352935" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jBR-iZ-Cog">
-                                            <rect key="frame" x="0.0" y="0.0" width="103.5" height="110.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="103.5" height="113"/>
                                             <connections>
                                                 <action selector="buttonTapped:" destination="iRX-7T-7LW" eventType="touchUpInside" id="T6I-WA-cp3"/>
                                             </connections>
@@ -72,7 +72,7 @@
                                     </connections>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dQ9-jQ-96C" customClass="AddToChatMenuView" customModule="MEGA" customModuleProvider="target">
-                                    <rect key="frame" x="103.5" y="0.0" width="103.5" height="110.5"/>
+                                    <rect key="frame" x="103.5" y="0.0" width="103.5" height="113"/>
                                     <subviews>
                                         <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aun-1c-vfJ">
                                             <rect key="frame" x="10" y="0.0" width="83.5" height="83.5"/>
@@ -91,13 +91,13 @@
                                             </constraints>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="41h-S1-Ym9">
-                                            <rect key="frame" x="0.0" y="92" width="103.5" height="13.5"/>
+                                            <rect key="frame" x="0.0" y="94.5" width="103.5" height="13.5"/>
                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="11"/>
                                             <color key="textColor" red="0.51764705879999995" green="0.51764705879999995" blue="0.51764705879999995" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m3S-X9-meK">
-                                            <rect key="frame" x="0.0" y="0.0" width="103.5" height="110.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="103.5" height="113"/>
                                             <connections>
                                                 <action selector="buttonTapped:" destination="iRX-7T-7LW" eventType="touchUpInside" id="mxe-9n-A2y"/>
                                             </connections>
@@ -123,7 +123,7 @@
                                     </connections>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="78g-jT-iek" customClass="AddToChatMenuView" customModule="MEGA" customModuleProvider="target">
-                                    <rect key="frame" x="207" y="0.0" width="103.5" height="110.5"/>
+                                    <rect key="frame" x="207" y="0.0" width="103.5" height="113"/>
                                     <subviews>
                                         <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xia-Qd-Rdf">
                                             <rect key="frame" x="10" y="0.0" width="83.5" height="83.5"/>
@@ -142,13 +142,13 @@
                                             </constraints>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Egb-yg-t4f">
-                                            <rect key="frame" x="0.0" y="92" width="103.5" height="13.5"/>
+                                            <rect key="frame" x="0.0" y="94.5" width="103.5" height="13.5"/>
                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="11"/>
                                             <color key="textColor" red="0.51764705879999995" green="0.51764705879999995" blue="0.51764705879999995" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vRb-rG-fhE">
-                                            <rect key="frame" x="0.0" y="0.0" width="103.5" height="110.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="103.5" height="113"/>
                                             <connections>
                                                 <action selector="buttonTapped:" destination="iRX-7T-7LW" eventType="touchUpInside" id="wr7-JW-1rT"/>
                                             </connections>
@@ -174,7 +174,7 @@
                                     </connections>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YhX-c9-aGI" customClass="AddToChatMenuView" customModule="MEGA" customModuleProvider="target">
-                                    <rect key="frame" x="310.5" y="0.0" width="103.5" height="110.5"/>
+                                    <rect key="frame" x="310.5" y="0.0" width="103.5" height="113"/>
                                     <subviews>
                                         <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S7E-0Y-cGM">
                                             <rect key="frame" x="10" y="0.0" width="83.5" height="83.5"/>
@@ -193,13 +193,13 @@
                                             </constraints>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pxp-M0-HNv">
-                                            <rect key="frame" x="0.0" y="92" width="103.5" height="13.5"/>
+                                            <rect key="frame" x="0.0" y="94.5" width="103.5" height="13.5"/>
                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="11"/>
                                             <color key="textColor" red="0.51764705879999995" green="0.51764705879999995" blue="0.51764705879999995" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HdW-56-49x">
-                                            <rect key="frame" x="0.0" y="0.0" width="103.5" height="110.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="103.5" height="113"/>
                                             <connections>
                                                 <action selector="buttonTapped:" destination="iRX-7T-7LW" eventType="touchUpInside" id="vMu-wr-lZI"/>
                                             </connections>
@@ -227,10 +227,10 @@
                             </subviews>
                         </stackView>
                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="CVU-ko-7HR">
-                            <rect key="frame" x="0.0" y="140.5" width="414" height="110.5"/>
+                            <rect key="frame" x="0.0" y="138" width="414" height="113"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yAR-H6-8Af" customClass="AddToChatMenuView" customModule="MEGA" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="0.0" width="103.5" height="110.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="103.5" height="113"/>
                                     <subviews>
                                         <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V1F-TF-c3y">
                                             <rect key="frame" x="10" y="0.0" width="83.5" height="83.5"/>
@@ -249,13 +249,13 @@
                                             </constraints>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Dz-Ez-M0H">
-                                            <rect key="frame" x="0.0" y="92" width="103.5" height="13.5"/>
+                                            <rect key="frame" x="0.0" y="94.5" width="103.5" height="13.5"/>
                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="11"/>
                                             <color key="textColor" red="0.51764705879999995" green="0.51764705879999995" blue="0.51764705879999995" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cHZ-tU-cYu">
-                                            <rect key="frame" x="0.0" y="0.0" width="103.5" height="110.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="103.5" height="113"/>
                                             <connections>
                                                 <action selector="buttonTapped:" destination="iRX-7T-7LW" eventType="touchUpInside" id="QUQ-mf-owE"/>
                                             </connections>
@@ -281,7 +281,7 @@
                                     </connections>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QYh-vH-eQi" customClass="AddToChatMenuView" customModule="MEGA" customModuleProvider="target">
-                                    <rect key="frame" x="103.5" y="0.0" width="103.5" height="110.5"/>
+                                    <rect key="frame" x="103.5" y="0.0" width="103.5" height="113"/>
                                     <subviews>
                                         <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n5c-u4-SoS">
                                             <rect key="frame" x="10" y="0.0" width="83.5" height="83.5"/>
@@ -300,13 +300,13 @@
                                             </constraints>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hYg-M1-a4f">
-                                            <rect key="frame" x="0.0" y="92" width="103.5" height="13.5"/>
+                                            <rect key="frame" x="0.0" y="94.5" width="103.5" height="13.5"/>
                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="11"/>
                                             <color key="textColor" red="0.51764705879999995" green="0.51764705879999995" blue="0.51764705879999995" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uQN-Kn-TsB">
-                                            <rect key="frame" x="0.0" y="0.0" width="103.5" height="110.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="103.5" height="113"/>
                                             <connections>
                                                 <action selector="buttonTapped:" destination="iRX-7T-7LW" eventType="touchUpInside" id="KTV-xT-s9X"/>
                                             </connections>
@@ -332,7 +332,7 @@
                                     </connections>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jCK-Ob-uMM" customClass="AddToChatMenuView" customModule="MEGA" customModuleProvider="target">
-                                    <rect key="frame" x="207" y="0.0" width="103.5" height="110.5"/>
+                                    <rect key="frame" x="207" y="0.0" width="103.5" height="113"/>
                                     <subviews>
                                         <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I7E-pA-gr8">
                                             <rect key="frame" x="10" y="0.0" width="83.5" height="83.5"/>
@@ -351,13 +351,13 @@
                                             </constraints>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bcc-dF-All">
-                                            <rect key="frame" x="0.0" y="92" width="103.5" height="13.5"/>
+                                            <rect key="frame" x="0.0" y="94.5" width="103.5" height="13.5"/>
                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="11"/>
                                             <color key="textColor" red="0.51764705879999995" green="0.51764705879999995" blue="0.51764705879999995" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RTO-q6-SRK">
-                                            <rect key="frame" x="0.0" y="0.0" width="103.5" height="110.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="103.5" height="113"/>
                                             <connections>
                                                 <action selector="buttonTapped:" destination="iRX-7T-7LW" eventType="touchUpInside" id="WeQ-qs-vHO"/>
                                             </connections>
@@ -383,7 +383,7 @@
                                     </connections>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NvN-xD-pqi" customClass="AddToChatMenuView" customModule="MEGA" customModuleProvider="target">
-                                    <rect key="frame" x="310.5" y="0.0" width="103.5" height="110.5"/>
+                                    <rect key="frame" x="310.5" y="0.0" width="103.5" height="113"/>
                                     <subviews>
                                         <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kQl-zJ-FDm">
                                             <rect key="frame" x="10" y="0.0" width="83.5" height="83.5"/>
@@ -402,13 +402,13 @@
                                             </constraints>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="83h-WU-qd9">
-                                            <rect key="frame" x="0.0" y="92" width="103.5" height="13.5"/>
+                                            <rect key="frame" x="0.0" y="94.5" width="103.5" height="13.5"/>
                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="11"/>
                                             <color key="textColor" red="0.51764705879999995" green="0.51764705879999995" blue="0.51764705879999995" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tBd-ZJ-XXd">
-                                            <rect key="frame" x="0.0" y="0.0" width="103.5" height="110.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="103.5" height="113"/>
                                             <connections>
                                                 <action selector="buttonTapped:" destination="iRX-7T-7LW" eventType="touchUpInside" id="ifv-il-JNN"/>
                                             </connections>
@@ -450,6 +450,7 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="NMQ-zc-fjI"/>
             <connections>
+                <outlet property="menuHolderStackView" destination="g9m-51-yXK" id="haF-NJ-3Gy"/>
                 <outletCollection property="menuViews" destination="pwS-dl-c8c" collectionClass="NSMutableArray" id="YLy-FC-lC0"/>
                 <outletCollection property="menuViews" destination="dQ9-jQ-96C" collectionClass="NSMutableArray" id="3Kt-ab-AOO"/>
                 <outletCollection property="menuViews" destination="78g-jT-iek" collectionClass="NSMutableArray" id="r8P-KO-oIf"/>

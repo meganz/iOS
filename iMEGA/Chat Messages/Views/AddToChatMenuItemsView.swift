@@ -9,8 +9,13 @@ class AddToChatMenuItemsView: UIView {
     
     @IBOutlet var menuViews: [AddToChatMenuView]!
     @IBOutlet var buttons: [UIButton]!
-    
+    @IBOutlet var menuHolderStackView: UIStackView!
+
     weak var delegate: AddToChatMenuItemsViewDelegate?
+    
+    var rowSpacing: CGFloat {
+        return menuHolderStackView.spacing
+    }
 
     var menus: [AddToChatMenu]? {
         didSet {

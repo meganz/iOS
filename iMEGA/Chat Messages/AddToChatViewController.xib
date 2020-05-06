@@ -3,7 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -17,6 +17,7 @@
                 <outlet property="contentViewLeadingConstraint" destination="PKo-4r-vzh" id="lXy-aw-AKp"/>
                 <outlet property="contentViewTrailingConstraint" destination="Pn1-Dl-3hC" id="ViB-Vv-mJl"/>
                 <outlet property="mediaCollectionView" destination="Zxb-mH-hnV" id="VNj-pc-nzB"/>
+                <outlet property="mediaCollectionViewBottomConstraint" destination="TKr-3S-IxU" id="vQu-ZD-0ZU"/>
                 <outlet property="menuView" destination="32M-MS-rdd" id="8CU-AU-cHZ"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -58,7 +59,7 @@
                             </collectionViewFlowLayout>
                         </collectionView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="32M-MS-rdd" userLabel="Menu View">
-                            <rect key="frame" x="0.0" y="115" width="414" height="263"/>
+                            <rect key="frame" x="0.0" y="120" width="414" height="258"/>
                         </view>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -67,7 +68,7 @@
                         <constraint firstItem="Zxb-mH-hnV" firstAttribute="leading" secondItem="hwb-7m-LMj" secondAttribute="leading" constant="5" id="JKd-ZH-8de"/>
                         <constraint firstItem="32M-MS-rdd" firstAttribute="bottom" secondItem="hwb-7m-LMj" secondAttribute="bottom" id="KUQ-gf-Whe"/>
                         <constraint firstItem="Zxb-mH-hnV" firstAttribute="top" secondItem="hwb-7m-LMj" secondAttribute="top" constant="5" id="KcC-JS-iDO"/>
-                        <constraint firstItem="32M-MS-rdd" firstAttribute="top" secondItem="Zxb-mH-hnV" secondAttribute="bottom" id="TKr-3S-IxU"/>
+                        <constraint firstItem="32M-MS-rdd" firstAttribute="top" secondItem="Zxb-mH-hnV" secondAttribute="bottom" constant="5" id="TKr-3S-IxU"/>
                         <constraint firstAttribute="trailing" secondItem="Zxb-mH-hnV" secondAttribute="trailing" constant="5" id="a4R-NR-tKw"/>
                         <constraint firstAttribute="trailing" secondItem="32M-MS-rdd" secondAttribute="trailing" id="g43-HZ-aZa"/>
                         <constraint firstAttribute="height" constant="378" id="wl7-ZE-7X9"/>
