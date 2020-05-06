@@ -128,7 +128,7 @@
     }
     
     [self.tableView registerNib:[UINib nibWithNibName:@"SectionTableViewCell" bundle:nil] forCellReuseIdentifier:@"SectionTableViewCellID"];
-    [self.tableView registerNib:[UINib nibWithNibName:@"ContactsHeaderFooterView" bundle:nil] forHeaderFooterViewReuseIdentifier:@"ContactsHeaderFooterView"];
+    [self.tableView registerNib:[UINib nibWithNibName:@"ContactsHeaderFooterView" bundle:nil] forHeaderFooterViewReuseIdentifier:@"ContactsHeaderFooterViewID"];
     
     [MEGASdkManager.sharedMEGASdk addMEGARequestDelegate:self];
 
@@ -1131,7 +1131,7 @@
         
         [self presentViewController:addContactAlertController animated:YES completion:nil];
     } else {
-        InviteContactViewController *inviteContacts = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"InviteContactViewControllerID"];
+        InviteContactViewController *inviteContacts = [[UIStoryboard storyboardWithName:@"InviteContact" bundle:nil] instantiateViewControllerWithIdentifier:@"InviteContactViewControllerID"];
         [self.navigationController pushViewController:inviteContacts animated:YES];
     }
 }
@@ -1438,7 +1438,7 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    static NSString *reuseIdentifier = @"ContactsHeaderFooterView";
+    static NSString *reuseIdentifier = @"ContactsHeaderFooterViewID";
     ContactsHeaderFooterView *headerView = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:reuseIdentifier];
     
     if (self.contactsMode == ContactsModeDefault) {

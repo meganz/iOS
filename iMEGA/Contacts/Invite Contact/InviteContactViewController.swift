@@ -8,11 +8,16 @@ class InviteContactViewController: UIViewController {
 
     var userLink = String()
 
+    @IBOutlet var mainView: UIView!
+    
     @IBOutlet weak var contactsOnMegaContainerView: UIView!
     @IBOutlet weak var addFromContactsView: UIStackView!
     @IBOutlet weak var addFromContactsLabel: UILabel!
+    @IBOutlet weak var addFromContactsSeparatorView: UIView!
     @IBOutlet weak var enterEmailLabel: UILabel!
+    @IBOutlet weak var enterEmailSeparatorView: UIView!
     @IBOutlet weak var scanQrCodeLabel: UILabel!
+    @IBOutlet weak var scanQrCodeSeparatorView: UIView!
     @IBOutlet weak var moreLabel: UILabel!
 
     // MARK: Lifecycle
@@ -38,13 +43,35 @@ class InviteContactViewController: UIViewController {
         if !MFMessageComposeViewController.canSendText() {
             addFromContactsLabel.textColor = UIColor.mnz_secondaryGray(for: self.traitCollection)
         }
+        
+        updateAppearance()
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .portrait
     }
     
-    //MARK: Private
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        if #available(iOS 13, *) {
+            if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+                self.updateAppearance()
+            }
+        }
+    }
+    
+    // MARK: - Private
+    
+    func updateAppearance() {
+        mainView.backgroundColor = UIColor.mnz_background()
+        
+        let separatorColor = UIColor.mnz_separatorColor(for: self.traitCollection)
+        addFromContactsSeparatorView.backgroundColor = separatorColor
+        enterEmailSeparatorView.backgroundColor = separatorColor
+        scanQrCodeSeparatorView.backgroundColor = separatorColor
+    }
+    
     func createContactsOnMegaChild() {
         guard let contactsOnMegaVC = storyboard?.instantiateViewController(withIdentifier: "ContactsOnMegaViewControllerID") as? ContactsOnMegaViewController else {
             return
@@ -74,7 +101,7 @@ class InviteContactViewController: UIViewController {
     }
     
     @IBAction func enterEmailButtonTapped(_ sender: Any) {
-        guard let enterEmailVC = UIStoryboard(name: "Contacts", bundle: nil).instantiateViewController(withIdentifier: "EnterEmailViewControllerID") as? EnterEmailViewController else { return }
+        guard let enterEmailVC = UIStoryboard(name: "InviteContact", bundle: nil).instantiateViewController(withIdentifier: "EnterEmailViewControllerID") as? EnterEmailViewController else { return }
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         navigationController?.pushViewController(enterEmailVC, animated: true)
     }

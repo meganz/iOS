@@ -14,6 +14,23 @@ class ContactOnMegaTableViewCell: UITableViewCell {
 
     weak var cellDelegate: ContactOnMegaTableViewCellDelegate?
 
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        setup()
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        setup()
+    }
+    
+    private func setup() {
+        emailLabel.textColor = UIColor.mnz_subtitlesColor(for: traitCollection)
+        addButton.setTitleColor(UIColor.mnz_turquoise(for: traitCollection), for: .normal)
+    }
+
     func configure(for contact: ContactOnMega, delegate: ContactOnMegaTableViewCellDelegate) {
         
         nameLabel.text = contact.name

@@ -74,7 +74,7 @@
 #pragma mark - IBActions
 
 - (IBAction)inviteTouchUpInside:(UIButton *)sender {
-    InviteContactViewController *inviteContactsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"InviteContactViewControllerID"];
+    InviteContactViewController *inviteContactsVC = [[UIStoryboard storyboardWithName:@"InviteContact" bundle:nil] instantiateViewControllerWithIdentifier:@"InviteContactViewControllerID"];
     [self.navigationController pushViewController:inviteContactsVC animated:YES];
 }
 

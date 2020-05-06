@@ -5,7 +5,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface EmptyStateView : UIView
 
-- (UIView *)initWithImage:(UIImage *)image title:(nullable NSString *)title description:(nullable NSString *)description buttonTitle:(nullable NSString *)buttonTitle;
+- (UIView *)initWithImage:(nullable UIImage *)image title:(nullable NSString *)title description:(nullable NSString *)description buttonTitle:(nullable NSString *)buttonTitle;
 
 @property (nullable, weak, nonatomic) IBOutlet UIButton *button;
 
