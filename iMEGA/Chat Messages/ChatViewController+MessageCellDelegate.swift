@@ -57,8 +57,31 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate {
                     photoBrowserVC?.delegate = self
                     photoBrowserVC?.hidesBottomBarWhenPushed = true
                     present(viewController: photoBrowserVC!)
+                } else {
+                    node?.mnz_open(in: navigationController, folderLink: false)
                 }
+            } else {
+                let chatAttachedNodesVC = UIStoryboard.init(name: "Chat", bundle: nil).instantiateViewController(withIdentifier: "ChatAttachedNodesViewControllerID") as! ChatAttachedNodesViewController
+                chatAttachedNodesVC.message = megaMessage
+                navigationController?.pushViewController(chatAttachedNodesVC, animated: true)
+            }
+            
+        case .contact:
+            if megaMessage.usersCount == 1 {
+                let userEmail = megaMessage.userEmail(at: 0)
+                let userName = megaMessage.userName(at: 0)
+                let userHandle = megaMessage.userHandle(at: 0)
                 
+                let contactDetailsVC = UIStoryboard.init(name: "Contacts", bundle: nil).instantiateViewController(withIdentifier: "ContactDetailsViewControllerID") as! ContactDetailsViewController
+                contactDetailsVC.contactDetailsMode = .default
+                contactDetailsVC.userName = userName
+                contactDetailsVC.userEmail = userEmail
+                contactDetailsVC.userHandle = userHandle
+                navigationController?.pushViewController(contactDetailsVC, animated: true)
+            } else {
+                let chatAttachedNodesVC = UIStoryboard.init(name: "Chat", bundle: nil).instantiateViewController(withIdentifier: "ChatAttachedContactsViewControllerID") as! ChatAttachedContactsViewController
+                          chatAttachedNodesVC.message = megaMessage
+                          navigationController?.pushViewController(chatAttachedNodesVC, animated: true)
             }
         default:
             return

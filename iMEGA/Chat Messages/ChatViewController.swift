@@ -81,6 +81,15 @@ class ChatViewController: MessagesViewController {
         
     }
     
+    override var hidesBottomBarWhenPushed: Bool {
+        get {
+            return true
+        }
+        set {
+            super.hidesBottomBarWhenPushed = newValue
+        }
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if (presentingViewController != nil) && parent != nil {
