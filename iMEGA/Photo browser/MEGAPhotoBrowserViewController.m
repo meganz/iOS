@@ -21,6 +21,7 @@
 #import "MEGAStartDownloadTransferDelegate.h"
 #import "NodeInfoViewController.h"
 #import "SaveToCameraRollActivity.h"
+#import "SendToViewController.h"
 
 #import "MEGANode+MNZCategory.h"
 #import "MEGANodeList+MNZCategory.h"
@@ -44,6 +45,7 @@ static const CGFloat GapBetweenPages = 10.0;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *customActionsButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *leftToolbarItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *rightToolbarItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *centerToolbarItem;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *scrollViewTrailingConstraint;
 
 @property (nonatomic) NSCache<NSNumber *, UIScrollView *> *imageViewsCache;
@@ -58,6 +60,8 @@ static const CGFloat GapBetweenPages = 10.0;
 @property (nonatomic) BOOL needsReload;
 
 @property (nonatomic) UIWindow *secondWindow;
+
+@property (nonatomic) SendLinkToChatsDelegate *sendLinkDelegate;
 
 @end
 
@@ -119,11 +123,9 @@ static const CGFloat GapBetweenPages = 10.0;
     
     switch (self.displayMode) {
         case DisplayModeFileLink:
-            self.leftToolbarItem.image = nil;
-            self.leftToolbarItem.title = AMLocalizedString(@"download", nil);
-            
-            self.rightToolbarItem.image = nil;
-            self.rightToolbarItem.title = AMLocalizedString(@"import", @"Button title that triggers the importing link action");
+            self.leftToolbarItem.image = [UIImage imageNamed:@"import"];
+            self.rightToolbarItem.image = [UIImage imageNamed:@"share"];
+            self.centerToolbarItem.image = [UIImage imageNamed:@"saveToPhotos"];
             break;
             
         case DisplayModeSharedItem:
@@ -335,6 +337,30 @@ static const CGFloat GapBetweenPages = 10.0;
             completion();
         }
     }];
+}
+
+#pragma mark - Private
+
+- (void)shareFileLink {
+    NSString *link = self.encryptedLink ? self.encryptedLink : self.publicLink;
+    
+    UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[link] applicationActivities:nil];
+    [activityVC setExcludedActivityTypes:@[UIActivityTypePrint, UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll, UIActivityTypeAddToReadingList, UIActivityTypeAirDrop]];
+    [activityVC.popoverPresentationController setBarButtonItem:self.rightToolbarItem];
+    
+    activityVC.completionWithItemsHandler = ^(UIActivityType  _Nullable activityType, BOOL completed, NSArray * _Nullable returnedItems, NSError * _Nullable activityError) {
+        [self reloadUI];
+    };
+    [self presentViewController:activityVC animated:YES completion:nil];
+}
+
+- (void)sendLinkToChat {
+    MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"SendToNavigationControllerID"];
+    SendToViewController *sendToViewController = navigationController.viewControllers.firstObject;
+    sendToViewController.sendMode = SendModeFileAndFolderLink;
+    self.sendLinkDelegate = [SendLinkToChatsDelegate.alloc initWithLink:self.encryptedLink ? self.encryptedLink : self.publicLink navigationController:self.navigationController];
+    sendToViewController.sendToViewControllerDelegate = self.sendLinkDelegate;
+    [self presentViewController:navigationController animated:YES completion:nil];
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -651,8 +677,7 @@ static const CGFloat GapBetweenPages = 10.0;
     
     switch (self.displayMode) {
         case DisplayModeFileLink:
-            [node mnz_fileLinkDownloadFromViewController:self isFolderLink:NO];
-            
+            [node mnz_fileLinkImportFromViewController:self isFolderLink:NO];
             break;
             
         default: {
@@ -673,8 +698,7 @@ static const CGFloat GapBetweenPages = 10.0;
     
     switch (self.displayMode) {
         case DisplayModeFileLink:
-            [node mnz_fileLinkImportFromViewController:self isFolderLink:NO];
-
+            [self shareFileLink];
             break;
             
         default: {
@@ -701,6 +725,19 @@ static const CGFloat GapBetweenPages = 10.0;
 
             break;
         }
+    }
+}
+
+- (IBAction)didPressCenterToolbarButton:(UIBarButtonItem *)sender {
+    MEGANode *node = [self.mediaNodes objectAtIndex:self.currentIndex];
+    
+    switch (self.displayMode) {
+        case DisplayModeFileLink:
+            [node mnz_saveToPhotosWithApi:self.api];
+            break;
+            
+        default:
+            break;
     }
 }
 
@@ -816,7 +853,7 @@ static const CGFloat GapBetweenPages = 10.0;
         if (MEGASdkManager.sharedMEGAChatSdk.mnz_existsActiveCall) {
             [Helper cannotPlayContentDuringACallAlert];
         } else {
-            UIViewController *playerVC = [node mnz_viewControllerForNodeInFolderLink:(self.api == [MEGASdkManager sharedMEGASdkFolder])];
+            UIViewController *playerVC = [node mnz_viewControllerForNodeInFolderLink:(self.api == [MEGASdkManager sharedMEGASdkFolder]) fileLink:nil];
             [self presentViewController:playerVC animated:YES completion:nil];
         }
     } else {
@@ -930,28 +967,21 @@ static const CGFloat GapBetweenPages = 10.0;
 - (void)performAction:(MegaNodeActionType)action inNode:(MEGANode *)node fromSender:(id)sender {
     switch (action) {
         case MegaNodeActionTypeShare: {
-            UIActivityViewController *activityVC;
             
             switch (self.displayMode) {
-                case DisplayModeFileLink: {
-                    NSString *link = self.encryptedLink ? self.encryptedLink : self.publicLink;
-                    activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[link] applicationActivities:nil];
-                    [activityVC setExcludedActivityTypes:@[UIActivityTypePrint, UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll, UIActivityTypeAddToReadingList, UIActivityTypeAirDrop]];
-                    [activityVC.popoverPresentationController setBarButtonItem:sender];
+                case DisplayModeFileLink:
+                    [self shareFileLink];
+                    break;
                     
+                default: {
+                    UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:@[node] sender:sender];
+                    activityVC.completionWithItemsHandler = ^(UIActivityType  _Nullable activityType, BOOL completed, NSArray * _Nullable returnedItems, NSError * _Nullable activityError) {
+                        [self reloadUI];
+                    };
+                    [self presentViewController:activityVC animated:YES completion:nil];
                     break;
                 }
-                    
-                default:
-                    activityVC = [Helper activityViewControllerForNodes:@[node] sender:sender];
-                    break;
             }
-            
-            activityVC.completionWithItemsHandler = ^(UIActivityType  _Nullable activityType, BOOL completed, NSArray * _Nullable returnedItems, NSError * _Nullable activityError) {
-                [self reloadUI];
-            };
-            [self presentViewController:activityVC animated:YES completion:nil];
-            
             break;
         }
             
@@ -1044,7 +1074,16 @@ static const CGFloat GapBetweenPages = 10.0;
             break;
             
         case MegaNodeActionTypeSendToChat:
-            [node mnz_sendToChatInViewController:self];
+            switch (self.displayMode) {
+                case DisplayModeFileLink:
+                    [self sendLinkToChat];
+                    break;
+                    
+                default: {
+                    [node mnz_sendToChatInViewController:self];
+                    break;
+                }
+            }
             break;
             
         default:

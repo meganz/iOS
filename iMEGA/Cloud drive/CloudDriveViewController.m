@@ -377,7 +377,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
             if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
                 return [self photoBrowserForMediaNode:node];
             } else {
-                UIViewController *viewController = [node mnz_viewControllerForNodeInFolderLink:NO];
+                UIViewController *viewController = [node mnz_viewControllerForNodeInFolderLink:NO fileLink:nil];
                 return viewController;
             }
             break;
@@ -1303,7 +1303,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
         [self showNode:node];
     } else {
-        [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO];
+        [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO fileLink:nil];
     }
 }
 
