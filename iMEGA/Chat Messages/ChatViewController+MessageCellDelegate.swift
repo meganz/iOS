@@ -56,7 +56,7 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate {
                                                                                      preferredIndex: UInt(idx))
                     photoBrowserVC?.delegate = self
                     photoBrowserVC?.hidesBottomBarWhenPushed = true
-                    navigationController?.pushViewController(photoBrowserVC!, animated: true)
+                    present(viewController: photoBrowserVC!)
                 }
                 
             }
