@@ -14,7 +14,6 @@ class AddToChatMediaCollectionSource: NSObject {
     private let minimumLineSpacing: CGFloat = 5.0
     private let cellDefaultWidth: CGFloat = 100.0
 
-    
     private var hasAuthorizedAccessToPhotoAlbum: Bool {
         return PHPhotoLibrary.authorizationStatus() == .authorized
     }
