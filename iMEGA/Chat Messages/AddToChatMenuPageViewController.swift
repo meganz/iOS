@@ -15,10 +15,22 @@ protocol AddToChatMenuPageViewControllerDelegate: class {
 
 class AddToChatMenuPageViewController: UIPageViewController {
     
-    private var menuPages: [AddToChatMenuViewController]!
     weak var menuDelegate: AddToChatMenuPageViewControllerDelegate?
+    var totalRequiredHeight: CGFloat {
+        let rowSpacing = AddToChatMenuViewController(nibName: nil, bundle: nil).rowSpacing
+        let eachMenuWidth = view.bounds.width / CGFloat(menuPerRow)
+        return (eachMenuWidth * CGFloat(numberOfRowsForMenu)) + rowSpacing
+    }
     
-    private let numberOfMenuPerPages = 8
+    private var menuPages: [AddToChatMenuViewController]!
+
+    private var numberOfMenuPerPages: Int {
+        return menuPerRow * numberOfRowsForMenu
+    }
+
+    private var numberOfRowsForMenu = 2
+    private var menuPerRow = 4
+    
     private lazy var menus = {
         return AddToChatMenu.menus()
     }()
@@ -83,14 +95,6 @@ extension AddToChatMenuPageViewController: UIPageViewControllerDataSource, UIPag
         }
         
         return menuPages[index + 1]
-    }
-    
-    func presentationCount(for pageViewController: UIPageViewController) -> Int {
-        return menuPages.count
-    }
-
-    func presentationIndex(for pageViewController: UIPageViewController) -> Int {
-        return 0
     }
 }
 
