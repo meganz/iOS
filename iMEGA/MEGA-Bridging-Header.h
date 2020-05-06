@@ -73,3 +73,5 @@
 #import "ShareLocationViewController.h"
 #import "MEGAChatCreateChatGroupRequestDelegate.h"
 #import "MEGAPhotoBrowserViewController.h"
+#import "ChatAttachedNodesViewController.h"
+#import "ChatAttachedContactsViewController.h"
