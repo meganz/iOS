@@ -14,7 +14,6 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate {
     func didTapMessage(in cell: MessageCollectionViewCell) {
         print("Message view tapped")
         let indexPath = messagesCollectionView.indexPath(for: cell)!
-        print(indexPath)
         guard let messagesDataSource = messagesCollectionView.messagesDataSource else { return }
            
         let chatMessage = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView) as! ChatMessage
@@ -33,13 +32,13 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate {
                     return
                 }
                 if node!.name.mnz_isImagePathExtension || node!.name.mnz_isImagePathExtension {
-                    let reverse = messages.filter { (message) -> Bool in
+                    let attachments = messages.filter { (message) -> Bool in
                         return message.message.type == .attachment
-                    }.reversed()
+                    }
                     
                     var mediaNodesArray = [MEGANode]()
                     
-                    reverse.forEach { (message) in
+                    attachments.forEach { (message) in
                         var tempNode = message.message.nodeList.node(at: 0)
                         if chatRoom.isPreview {
                             tempNode = MEGASdkManager.sharedMEGASdk()?.authorizeChatNode(tempNode!, cauth: chatRoom.authorizationToken)
@@ -48,12 +47,12 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate {
                             mediaNodesArray.append(tempNode!)
                         }
                     }
-                    let idx = mediaNodesArray.firstIndex(of:node!) ?? 0
+                    let idx = attachments.firstIndex(of: chatMessage)
                     let photoBrowserVC = MEGAPhotoBrowserViewController.photoBrowser(withMediaNodes:  NSMutableArray(array: mediaNodesArray),
                                                                                      api: MEGASdkManager.sharedMEGASdk(),
                                                                                      displayMode: .chatAttachment,
                                                                                      presenting: nil,
-                                                                                     preferredIndex: UInt(idx))
+                                                                                     preferredIndex: UInt(idx!))
                     photoBrowserVC?.delegate = self
                     photoBrowserVC?.hidesBottomBarWhenPushed = true
                     present(viewController: photoBrowserVC!)
