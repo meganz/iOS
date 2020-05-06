@@ -61,6 +61,7 @@ class ChatInputBar: UIView {
                 }
                 
                 voiceClipInputBar = VoiceClipInputBar.instanceFromNib
+                voiceClipInputBar.delegate = self
                 addSubview(voiceClipInputBar)
                 voiceClipInputBar.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
                 let voiceClipInputBarHeight = self.voiceClipInputBar.bounds.height
@@ -316,7 +317,6 @@ extension ChatInputBar: UIGestureRecognizerDelegate {
 
 
 extension ChatInputBar: MessageInputBarDelegate {
-
     func tappedAddButton() {
         if recordingViewEnabled {
             recordingViewEnabled = false
@@ -334,5 +334,15 @@ extension ChatInputBar: MessageInputBarDelegate {
 
     func typing(withText text: String) {
         delegate?.typing(withText: text)
+    }
+}
+
+extension ChatInputBar: VoiceClipInputBarDelegate {
+    func removeVoiceClipView(withClipPath path: String?) {
+        if let clipPath = path {
+            self.delegate?.tappedSendAudio(atPath: clipPath)
+        }
+        
+        recordingViewEnabled = false
     }
 }
