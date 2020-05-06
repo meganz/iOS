@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="B1s-m2-ahE">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="B1s-m2-ahE">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -818,6 +818,7 @@
                         <outlet property="activityIndicator" destination="PvF-fF-Mki" id="p1g-Gj-5GE"/>
                         <outlet property="collectionView" destination="xcl-UM-x0L" id="syf-l2-XOd"/>
                         <outlet property="imageView" destination="VJh-z4-8vz" id="LRL-gj-Q4P"/>
+                        <outlet property="importBarButtonItem" destination="MbX-7f-mZg" id="xzQ-2n-qhp"/>
                         <outlet property="moreBarButtonItem" destination="R1j-r6-Sll" id="Fif-Wa-O5U"/>
                         <outlet property="openInBarButtonItem" destination="zhj-Kc-zZm" id="6SY-XO-WHe"/>
                         <outlet property="pdfView" destination="IHv-aq-hY6" id="bor-lu-UNg"/>
@@ -839,10 +840,16 @@
                         <action selector="searchTapped:" destination="zUo-yM-mbH" id="6GC-Dr-7YH"/>
                     </connections>
                 </barButtonItem>
-                <barButtonItem title="Item" image="openWith" id="zhj-Kc-zZm">
+                <barButtonItem title="Item" image="share" id="zhj-Kc-zZm" userLabel="Share">
                     <color key="tintColor" red="0.95294117647058818" green="0.047058823529411764" blue="0.078431372549019607" alpha="1" colorSpace="calibratedRGB"/>
                     <connections>
                         <action selector="shareAction:" destination="zUo-yM-mbH" id="b1e-qb-pHG"/>
+                    </connections>
+                </barButtonItem>
+                <barButtonItem title="Item" image="import" id="MbX-7f-mZg" userLabel="Import">
+                    <color key="tintColor" red="0.95294117649999999" green="0.047058823530000002" blue="0.078431372550000003" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="importAction:" destination="zUo-yM-mbH" id="J09-Sx-Tvf"/>
                     </connections>
                 </barButtonItem>
                 <barButtonItem image="moreSelected" id="R1j-r6-Sll" userLabel="More Bar Button Item">
@@ -2625,16 +2632,17 @@ You are strictly prohibited from using the MEGA cloud service to infringe copyri
         <image name="icon-key-only" width="24" height="24"/>
         <image name="icon-link-only" width="24.5" height="24"/>
         <image name="icon-link-w-key" width="24" height="24"/>
+        <image name="import" width="28" height="28"/>
         <image name="linked" width="12" height="12"/>
         <image name="more" width="28" height="28"/>
         <image name="moreSelected" width="28" height="28"/>
         <image name="move" width="28" height="28"/>
-        <image name="openWith" width="28" height="28"/>
         <image name="readPermissions" width="24" height="24"/>
         <image name="restore" width="28" height="28"/>
         <image name="rubbishBin" width="28" height="28"/>
         <image name="search" width="28" height="28"/>
         <image name="selectAll" width="22" height="22"/>
+        <image name="share" width="28" height="28"/>
         <image name="shareGray" width="32" height="32"/>
         <image name="thumbnailsView" width="28" height="28"/>
         <image name="versioned" width="12" height="12"/>

@@ -51,6 +51,7 @@
 #import "InitialLaunchViewController.h"
 #import "MainTabBarController.h"
 #import "MEGAImagePickerController.h"
+#import "SendToViewController.h"
 #import "OnboardingViewController.h"
 #import "UpgradeTableViewController.h"
 #import "LoginViewcontroller.h"
