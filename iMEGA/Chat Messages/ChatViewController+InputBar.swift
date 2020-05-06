@@ -21,39 +21,28 @@ extension ChatViewController {
     // MARK: - Interface methods.
     
      func present(viewController: UIViewController) {
-         if let rc = UIApplication.shared.keyWindow?.rootViewController {
-             if let tabBarController = rc as? UITabBarController {
-                 tabBarController.tabBar.isHidden = true
-             }
-             
-             present(viewController, animated: true) {
-                 if let tabBarController = rc as? UITabBarController {
-                     tabBarController.tabBar.isHidden = false
-                 }
-             }
-         }
-
-     }
-    
-    // MARK: - Private methods.
-    
-    private func displayAddToChatViewController() {
         if let rc = UIApplication.shared.keyWindow?.rootViewController {
             if let tabBarController = rc as? UITabBarController {
                 tabBarController.tabBar.isHidden = true
             }
             
-            chatInputBar.dismissKeyboard()
-
-            let addToChatViewController = AddToChatViewController(nibName: nil, bundle: nil)
-            addToChatViewController.delegate = self
-            addToChatViewController.transitioningDelegate = self
-            rc.present(addToChatViewController, animated: true) {
+            rc.present(viewController, animated: true) {
                 if let tabBarController = rc as? UITabBarController {
                     tabBarController.tabBar.isHidden = false
                 }
             }
         }
+     }
+    
+    // MARK: - Private methods.
+    
+    private func displayAddToChatViewController() {
+        chatInputBar.dismissKeyboard()
+        
+        let addToChatViewController = AddToChatViewController(nibName: nil, bundle: nil)
+        addToChatViewController.delegate = self
+        addToChatViewController.transitioningDelegate = self
+        present(viewController: addToChatViewController)
     }
         
     private func presentShareLocation() {
