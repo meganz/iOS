@@ -72,3 +72,4 @@
 #import "BrowserViewController.h"
 #import "ShareLocationViewController.h"
 #import "MEGAChatCreateChatGroupRequestDelegate.h"
+#import "MEGAPhotoBrowserViewController.h"
