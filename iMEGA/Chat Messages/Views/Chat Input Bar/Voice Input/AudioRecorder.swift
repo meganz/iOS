@@ -61,9 +61,9 @@ class AudioRecorder: NSObject {
         
         if recorder.record() {
             recordStartDate = Date()
-            let displayLink = CADisplayLink(target: self, selector: #selector(update))
-            displayLink.preferredFramesPerSecond = 60
-            displayLink.add(to: .current, forMode: .common)
+            displayLink = CADisplayLink(target: self, selector: #selector(update))
+            displayLink!.preferredFramesPerSecond = 60
+            displayLink!.add(to: .current, forMode: .common)
             return true
         }
         
@@ -77,6 +77,8 @@ class AudioRecorder: NSObject {
         }
         
         recorder.stop()
+        displayLink?.invalidate()
+        displayLink = nil
         
         try AVAudioSession.sharedInstance().setMode(.voiceChat)
         try AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
