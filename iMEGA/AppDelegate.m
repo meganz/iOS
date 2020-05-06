@@ -1221,6 +1221,7 @@ void uncaughtExceptionHandler(NSException *exception) {
     
     // Call
     if ([payload.dictionaryPayload[@"megatype"] integerValue] == 4) {
+        [self initProviderDelegate];
         NSString *chatIdB64 = payload.dictionaryPayload[@"megadata"][@"chatid"];
         NSString *callIdB64 = payload.dictionaryPayload[@"megadata"][@"callid"];
         uint64_t chatId = [MEGASdk handleForBase64UserHandle:chatIdB64];
