@@ -83,8 +83,29 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate {
                           chatAttachedNodesVC.message = megaMessage
                           navigationController?.pushViewController(chatAttachedNodesVC, animated: true)
             }
+        case .containsMeta:
+            if megaMessage.containsMeta.type == .richPreview {
+                let url = URL(string: megaMessage.containsMeta.richPreview.url)
+                MEGALinkManager.linkURL = url
+                MEGALinkManager.processLinkURL(url)
+            } else if megaMessage.containsMeta.type == .geolocation {
+                let geocoder = CLGeocoder()
+                let location = CLLocation(latitude: CLLocationDegrees(megaMessage.containsMeta.geolocation.latitude), longitude: CLLocationDegrees(megaMessage.containsMeta.geolocation.longitude))
+                geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
+                    let placemark = MKPlacemark(coordinate: location.coordinate)
+                    let mapItem = MKMapItem(placemark: placemark)
+                    
+                    if (error == nil && placemarks!.count > 0) {
+                        mapItem.name = placemarks?.first?.name
+                    }
+                    mapItem.openInMaps(launchOptions: nil)
+                }
+            }
         default:
-            return
+            if megaMessage.node != nil {
+                MEGALinkManager.linkURL = megaMessage.megaLink
+                MEGALinkManager.processLinkURL(megaMessage.megaLink)
+            }
         }
     }
     
