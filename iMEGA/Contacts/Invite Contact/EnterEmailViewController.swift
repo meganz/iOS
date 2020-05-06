@@ -5,10 +5,14 @@ import UIKit
 class EnterEmailViewController: UIViewController {
 
     @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var descriptionView: UIView!
     @IBOutlet weak var instructionsLabel: UILabel!
     @IBOutlet weak var inviteContactsButton: UIButton!
+    @IBOutlet weak var tokenFieldView: UIView!
     @IBOutlet weak var tokenField: VENTokenField!
     @IBOutlet weak var tokenFieldHeightLayoutConstraint: NSLayoutConstraint!
+    @IBOutlet weak var tokenFieldBottomSeparatorView: UIView!
+    @IBOutlet weak var tokenFieldButton: UIButton!
     @IBOutlet weak var inviteContactsButtonBottomConstraint: NSLayoutConstraint!
 
     var tokens = [String]()
@@ -24,6 +28,8 @@ class EnterEmailViewController: UIViewController {
         customizeTokenField()
         
         disableInviteContactsButton()
+        
+        updateAppearance()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -34,6 +40,7 @@ class EnterEmailViewController: UIViewController {
         
         tokenField.becomeFirstResponder()
     }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
@@ -46,6 +53,16 @@ class EnterEmailViewController: UIViewController {
             self.tokenField.reloadData()
             self.tokenFieldHeightLayoutConstraint.constant = self.tokenField.frame.height
         }, completion: nil)
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        if #available(iOS 13, *) {
+            if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+                self.updateAppearance()
+            }
+        }
     }
     
     // MARK: Notifications
@@ -80,6 +97,19 @@ class EnterEmailViewController: UIViewController {
     }
     
     // MARK: Private
+    
+    func updateAppearance() {
+        view.backgroundColor = UIColor.mnz_background()
+        
+        descriptionView.backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
+        tokenFieldView.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
+        
+        customizeTokenField()
+        tokenFieldButton.tintColor = UIColor.mnz_primaryGray(for: traitCollection)
+        
+        inviteContactsButton.mnz_setupPrimary(traitCollection)
+    }
+    
     func updateBottomConstraint(_ newValue:CGFloat) {
         inviteContactsButtonBottomConstraint.constant = newValue
         view.layoutIfNeeded()
@@ -105,8 +135,6 @@ class EnterEmailViewController: UIViewController {
         tokenField.delegate = self
         
         tokenField.maxHeight = 500
-        tokenField.verticalInset = 11
-        tokenField.horizontalInset = 11
         tokenField.tokenPadding = 10
         tokenField.minInputWidth = tokenField.frame.width / 2
         
@@ -114,16 +142,16 @@ class EnterEmailViewController: UIViewController {
         tokenField.autocapitalizationType = .none
         
         tokenField.toLabelText = "";
-        tokenField.inputTextFieldTextColor = UIColor.systemRed
-        tokenField.inputTextFieldFont = UIFont.mnz_SFUIRegular(withSize: 17)
+        tokenField.inputTextFieldTextColor = UIColor.mnz_label()
+        tokenField.inputTextFieldFont = UIFont.systemFont(ofSize: 17)
         
-        tokenField.tokenFont = UIFont.mnz_SFUIRegular(withSize: 17)
+        tokenField.tokenFont = UIFont.systemFont(ofSize: 17)
         tokenField.tokenHighlightedTextColor = UIColor.mnz_label()
-        tokenField.tokenHighlightedBackgroundColor = UIColor.mnz_grayF7F7F7()
+        tokenField.tokenHighlightedBackgroundColor = UIColor.mnz_quaternaryBackground(traitCollection)
         
         tokenField.delimiters = [",", " "];
         tokenField.placeholderText = AMLocalizedString("insertYourFriendsEmails", "");
-        tokenField.setColorScheme(UIColor.mnz_redMain())
+        tokenField.setColorScheme(UIColor.mnz_turquoise(for: traitCollection))
     }
     
     // MARK: Actions

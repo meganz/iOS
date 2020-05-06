@@ -20,6 +20,23 @@ extension UIColor {
         }
     }
     
+    @objc class func mnz_quaternaryBackground(_ traitCollection: UITraitCollection) -> UIColor {
+        if #available(iOS 13.0, *) {
+            switch traitCollection.userInterfaceStyle {
+            case UIUserInterfaceStyle.unspecified, UIUserInterfaceStyle.light:
+                return UIColor.mnz_grayF7F7F7()
+                
+            case UIUserInterfaceStyle.dark:
+                return UIColor(fromHexString: "3A3A3C")
+                
+            default:
+                return UIColor(fromHexString: "3A3A3C")
+            }
+        } else {
+            return UIColor.mnz_grayF7F7F7()
+        }
+    }
+    
     @objc class func mnz_qr(_ traitCollection: UITraitCollection) -> UIColor {
         if #available(iOS 13.0, *) {
             switch traitCollection.userInterfaceStyle {

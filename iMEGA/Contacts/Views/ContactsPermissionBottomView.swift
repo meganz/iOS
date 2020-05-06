@@ -13,6 +13,29 @@ class ContactsPermissionBottomView: UITableViewHeaderFooterView {
     
     var enableButtonAction : (() -> ())?
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        updateAppearance()
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        if #available(iOS 13, *) {
+            if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+                self.updateAppearance()
+            }
+        }
+    }
+    
+    private func updateAppearance() {
+        subtitleLabel.textColor = UIColor.mnz_subtitlesColor(for: traitCollection)
+        descriptionLabel.textColor = UIColor.mnz_subtitlesColor(for: traitCollection)
+        
+        enableButton.mnz_setupPrimary(traitCollection)
+    }
+    
     func nib() -> UINib {
         return UINib.init(nibName: "ContactsPermissionBottomView", bundle: nil)
     }

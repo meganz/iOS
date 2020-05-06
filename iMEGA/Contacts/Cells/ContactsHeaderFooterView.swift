@@ -21,6 +21,8 @@ class ContactsHeaderFooterView: UITableViewHeaderFooterView {
         setup()
     }
     
+    //MARK: - Private
+    
     private func setup() {
         self.contentView.backgroundColor = UIColor.mnz_tertiaryBackground(self.traitCollection)
         
