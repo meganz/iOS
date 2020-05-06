@@ -5,6 +5,8 @@ import simd
 
 protocol ChatMessageAndAudioInputBarDelegate: MessageInputBarDelegate {
     func tappedSendAudio(atPath path: String)
+    func recordingViewShown(withAdditionalHeight height: CGFloat)
+    func recordingViewHidden()
 }
 
 class ChatInputBar: UIView {
@@ -34,6 +36,7 @@ class ChatInputBar: UIView {
 
     private let messageInputBar = MessageInputBar.instanceFromNib
     private var audioRecordingInputBar: AudioRecordingInputBar!
+    private var voiceClipInputBar: VoiceClipInputBar!
     private var initialTranslation: SIMD2<Double>?
     private var storedMessageInputBarHeight: CGFloat = 0.0
     private var voiceToTextSwitching = false
@@ -41,6 +44,72 @@ class ChatInputBar: UIView {
     // MARK:- Interface properties
 
     weak var delegate: ChatMessageAndAudioInputBarDelegate?
+    
+    var recordingViewEnabled: Bool = false {
+        didSet {
+            messageInputBar.hideRightButtonHolderView = recordingViewEnabled
+            
+            if recordingViewEnabled {
+                if let messageInputBarBottomConstraint = constraints
+                    .filter({ $0.firstAttribute == .bottom && $0.firstItem === self.messageInputBar })
+                    .first,
+                    let messageInputBarTopConstraint = constraints
+                    .filter({ $0.firstAttribute == .top && $0.firstItem === self.messageInputBar })
+                    .first {
+                    messageInputBarBottomConstraint.isActive = false
+                    messageInputBarTopConstraint.isActive = false
+                }
+                
+                voiceClipInputBar = VoiceClipInputBar.instanceFromNib
+                addSubview(voiceClipInputBar)
+                voiceClipInputBar.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
+                let voiceClipInputBarHeight = self.voiceClipInputBar.bounds.height
+                let voiceClipInputBarHeightConstraint = voiceClipInputBar.heightAnchor.constraint(equalToConstant: 0)
+                voiceClipInputBarHeightConstraint.isActive = true
+                voiceClipInputBar.autoPinEdge(.top, to: .bottom, of: messageInputBar)
+                self.layoutIfNeeded()
+                
+                UIView.animate(withDuration: 0.2, animations: {
+                    voiceClipInputBarHeightConstraint.constant = voiceClipInputBarHeight
+                    self.layoutIfNeeded()
+                }) { _ in
+                    self.messageInputBar.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+                    self.layoutIfNeeded()
+                    self.invalidateIntrinsicContentSize()
+                    self.delegate?.recordingViewShown(withAdditionalHeight: self.voiceClipInputBar.frame.height)
+                }
+            } else {
+                guard let messageInputBarTopConstraint = constraints
+                    .filter({ $0.firstAttribute == .top && $0.firstItem === self.messageInputBar })
+                    .first,
+                    let voiceClipInputBarHeightConstraint = voiceClipInputBar.constraints
+                        .filter({ $0.firstAttribute == .height })
+                        .first else {
+                        return
+                }
+                
+                messageInputBarTopConstraint.isActive = false
+                layoutIfNeeded()
+
+                UIView.animate(withDuration: 0.4, animations: {
+                    voiceClipInputBarHeightConstraint.constant = 0.0
+                    self.layoutIfNeeded()
+                }) { _ in
+                    self.messageInputBar.autoPinEdge(toSuperviewEdge: .bottom)
+                    self.messageInputBar.autoPinEdge(toSuperviewEdge: .top)
+
+                    self.voiceClipInputBar.removeFromSuperview()
+                    self.voiceClipInputBar = nil
+                    
+                    self.layoutIfNeeded()
+                    self.invalidateIntrinsicContentSize()
+                    
+                    self.delegate?.recordingViewHidden()
+                }
+            }
+            
+        }
+    }
 
     // MARK:- overriden properties and methods
 
@@ -81,6 +150,14 @@ class ChatInputBar: UIView {
     
     private func addMessageInputBar() {
         messageInputBar.delegate = self
+        messageInputBar.keyboardShown = { [weak self] in
+            guard let `self` = self,
+                self.recordingViewEnabled else {
+                return
+            }
+
+            self.recordingViewEnabled = false
+        }
         addSubview(messageInputBar)
         messageInputBar.autoPinEdgesToSuperviewEdges()
     }
@@ -227,9 +304,9 @@ class ChatInputBar: UIView {
         default:
             break
         }
-        
     }
 }
+
 extension ChatInputBar: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gesture: UIGestureRecognizer,
                            shouldRecognizeSimultaneouslyWith otherGesture: UIGestureRecognizer) -> Bool {
@@ -241,6 +318,9 @@ extension ChatInputBar: UIGestureRecognizerDelegate {
 extension ChatInputBar: MessageInputBarDelegate {
 
     func tappedAddButton() {
+        if recordingViewEnabled {
+            recordingViewEnabled = false
+        }
         delegate?.tappedAddButton()
     }
 

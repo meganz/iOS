@@ -1065,6 +1065,8 @@
 		B6E19B3A2178424600882F74 /* TransferSessionDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E19B392178424600882F74 /* TransferSessionDelegate.m */; };
 		B6E19B3D2180126500882F74 /* CameraUploadCompletionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E19B3C2180126500882F74 /* CameraUploadCompletionManager.m */; };
 		B6E6EF9422485A0300653311 /* CameraUploadNodeLoadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E6EF9322485A0300653311 /* CameraUploadNodeLoadOperation.m */; };
+		BF006CEB24613BC500C9CADE /* VoiceClipInputBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF006CEA24613BC500C9CADE /* VoiceClipInputBar.swift */; };
+		BF006CEF24613BDB00C9CADE /* VoiceClipInputBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF006CEE24613BDB00C9CADE /* VoiceClipInputBar.xib */; };
 		BF017D902448062F00FB4DFD /* AudioWavesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF017D8F2448062F00FB4DFD /* AudioWavesView.swift */; };
 		BF017D942448066100FB4DFD /* AudioWavesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF017D932448066100FB4DFD /* AudioWavesView.xib */; };
 		BF017D962448076200FB4DFD /* AudioWaveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF017D952448076200FB4DFD /* AudioWaveView.swift */; };
@@ -2572,6 +2574,8 @@
 		B6E6EF9222485A0300653311 /* CameraUploadNodeLoadOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraUploadNodeLoadOperation.h; sourceTree = "<group>"; };
 		B6E6EF9322485A0300653311 /* CameraUploadNodeLoadOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CameraUploadNodeLoadOperation.m; sourceTree = "<group>"; };
 		BF000566235E62A5005F23B6 /* MEGACD 4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "MEGACD 4.xcdatamodel"; sourceTree = "<group>"; };
+		BF006CEA24613BC500C9CADE /* VoiceClipInputBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceClipInputBar.swift; sourceTree = "<group>"; };
+		BF006CEE24613BDB00C9CADE /* VoiceClipInputBar.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VoiceClipInputBar.xib; sourceTree = "<group>"; };
 		BF017D8F2448062F00FB4DFD /* AudioWavesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioWavesView.swift; sourceTree = "<group>"; };
 		BF017D932448066100FB4DFD /* AudioWavesView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AudioWavesView.xib; sourceTree = "<group>"; };
 		BF017D952448076200FB4DFD /* AudioWaveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioWaveView.swift; sourceTree = "<group>"; };
@@ -5488,6 +5492,8 @@
 		BF7EBD2B244E8D540015255F /* Voice Input */ = {
 			isa = PBXGroup;
 			children = (
+				BF006CEA24613BC500C9CADE /* VoiceClipInputBar.swift */,
+				BF006CEE24613BDB00C9CADE /* VoiceClipInputBar.xib */,
 				BF33EF812445401800CD35AC /* AudioRecordingInputBar.swift */,
 				BF33EF7C24453FFD00CD35AC /* AudioRecordingInputBar.xib */,
 				BF33EF7324451A4700CD35AC /* TapAndHoldMessageView.swift */,
@@ -6051,6 +6057,7 @@
 				BF33EF7D24453FFD00CD35AC /* AudioRecordingInputBar.xib in Resources */,
 				4172795E1DB663FA001AC818 /* JSQMessagesTypingIndicatorFooterView.xib in Resources */,
 				5B5B50011E684FDC00DBEB3B /* SF-UI-Display-Regular.otf in Resources */,
+				BF006CEF24613BDB00C9CADE /* VoiceClipInputBar.xib in Resources */,
 				83D64E2D20178A0400E24155 /* PasswordReminder.storyboard in Resources */,
 				BF7EBD47245277EB0015255F /* AddToChatMenuItemsView.xib in Resources */,
 				83C570E722E5BFCF00216896 /* README.md in Resources */,
@@ -6690,6 +6697,7 @@
 				A802B1FD1FAB295A00AC8BB0 /* MEGAChatStartCallRequestDelegate.m in Sources */,
 				E8B3FE781DDB379C008A9C82 /* HelpModalViewController.m in Sources */,
 				B69983222294E1EC0021BE31 /* SMSNavigationViewController.swift in Sources */,
+				BF006CEB24613BC500C9CADE /* VoiceClipInputBar.swift in Sources */,
 				A83892431EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.m in Sources */,
 				415C6B921CE39D6100B13070 /* SVProgressAnimatedView.m in Sources */,
 				77F1DBE22056B752005D5F0E /* MEGAGetAttrUserRequestDelegate.m in Sources */,

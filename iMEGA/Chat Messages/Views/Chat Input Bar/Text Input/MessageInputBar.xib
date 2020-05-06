@@ -3,7 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -156,6 +156,9 @@
                 <outlet property="messageTextViewCoverViewTopConstraint" destination="fPC-Vq-M1z" id="QeO-wq-vZV"/>
                 <outlet property="messageTextViewTopConstraint" destination="UE7-5x-znS" id="Cs6-H7-fCX"/>
                 <outlet property="micButton" destination="dvx-SE-Dth" id="vkL-aN-Rtz"/>
+                <outlet property="rightButtonHolderView" destination="ckY-Kz-eqN" id="bEu-pW-EiK"/>
+                <outlet property="rightButtonHolderViewHeightConstraint" destination="eSg-B9-bf9" id="6gp-wg-LpA"/>
+                <outlet property="rightButtonHolderViewWidthConstraint" destination="GBd-gU-bRz" id="bYb-eu-Sv1"/>
                 <outlet property="semiTransparentView" destination="gyg-48-psi" id="85v-4J-eM0"/>
                 <outlet property="sendButton" destination="aIG-GH-GIp" id="RVs-PK-Uwf"/>
             </connections>
