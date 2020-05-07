@@ -152,6 +152,16 @@ class ChatViewController: MessagesViewController {
         setLastMessageAsSeen()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+        MEGASdkManager.sharedMEGAChatSdk()?.add(self)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        MEGASdkManager.sharedMEGAChatSdk()?.remove(self)
+    }
+    
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         // Very important to check this when overriding `cellForItemAt`
@@ -565,7 +575,6 @@ class ChatViewController: MessagesViewController {
         
         topBannerButton.backgroundColor = #colorLiteral(red: 0, green: 0.7490196078, blue: 0.631372549, alpha: 1)
         topBannerButton.isHidden = true
-        MEGASdkManager.sharedMEGAChatSdk()?.add(self)
     }
     
     private func registerCustomCells() {
