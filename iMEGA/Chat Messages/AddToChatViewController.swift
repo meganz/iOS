@@ -34,15 +34,17 @@ class AddToChatViewController: UIViewController {
     private var mediaCollectionSource: AddToChatMediaCollectionSource!
     private var menuPageViewController: AddToChatMenuPageViewController!
 
-    weak var delegate: AddToChatViewControllerDelegate?
+    weak var addToChatDelegate: AddToChatViewControllerDelegate?
     
     // MARK:- View lifecycle methods.
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         
-        definesPresentationContext = true
-        modalPresentationStyle = .overCurrentContext
+        if UIDevice.current.iPadDevice == false {
+            definesPresentationContext = true
+            modalPresentationStyle = .overCurrentContext
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -55,18 +57,27 @@ class AddToChatViewController: UIViewController {
         mediaCollectionSource = AddToChatMediaCollectionSource(collectionView: mediaCollectionView,
                                                                delegate: self)
         setUpMenuPageViewController()
+        
+        if UIDevice.current.iPadDevice == false {
+            contentView.layer.cornerRadius = 20.0
+        }
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        guard let menuPageViewController = menuPageViewController else {
-            return
+        if UIDevice.current.iPadDevice {
+            contentViewHeightConstraint.constant = view.bounds.height
+        } else {
+            guard let menuPageViewController = menuPageViewController else {
+                       return
+                   }
+                   
+                   contentViewHeightConstraint.constant = menuPageViewController.totalRequiredHeight
+                       + mediaCollectionView.bounds.height
+                       + mediaCollectionViewBottomConstraint.constant
         }
         
-        contentViewHeightConstraint.constant = menuPageViewController.totalRequiredHeight
-            + mediaCollectionView.bounds.height
-            + mediaCollectionViewBottomConstraint.constant
         view.layoutIfNeeded()
     }
     
@@ -89,7 +100,7 @@ class AddToChatViewController: UIViewController {
     
     private func loadPhotosViewAndDismiss() {
         dismiss(animated: true, completion: nil)
-        delegate?.loadPhotosView()
+        addToChatDelegate?.loadPhotosView()
     }
 }
 
@@ -99,7 +110,7 @@ extension AddToChatViewController: AddToChatMediaCollectionSourceDelegate {
     }
     
     func sendAsset(asset: PHAsset) {
-        if let delegate = delegate {
+        if let delegate = addToChatDelegate {
             delegate.send(asset: asset)
         }
         
@@ -108,7 +119,7 @@ extension AddToChatViewController: AddToChatMediaCollectionSourceDelegate {
     
     func showCamera() {
         dismiss(animated: true, completion: nil)
-        delegate?.showCamera()
+        addToChatDelegate?.showCamera()
     }
 }
 
@@ -119,37 +130,37 @@ extension AddToChatViewController: AddToChatMenuPageViewControllerDelegate {
     
     func showCloudDrive() {
         dismiss(animated: true, completion: nil)
-        delegate?.showCloudDrive()
+        addToChatDelegate?.showCloudDrive()
     }
     
     func startVoiceCall() {
         dismiss(animated: true, completion: nil)
-        delegate?.startAudioCall()
+        addToChatDelegate?.startAudioCall()
     }
     
     func startVideoCall() {
         dismiss(animated: true, completion: nil)
-        delegate?.startVideoCall()
+        addToChatDelegate?.startVideoCall()
     }
     
     func showVoiceClip() {
         dismiss(animated: true, completion: nil)
-        delegate?.showVoiceClip()
+        addToChatDelegate?.showVoiceClip()
     }
     
     func showContacts() {
         dismiss(animated: true, completion: nil)
-        delegate?.showContacts()
+        addToChatDelegate?.showContacts()
     }
     
     func startGroupChat() {
         dismiss(animated: true, completion: nil)
-        delegate?.startGroupChat()
+        addToChatDelegate?.startGroupChat()
     }
     
     func showLocation() {
         dismiss(animated: true, completion: nil)
-        delegate?.showLocation()
+        addToChatDelegate?.showLocation()
     }
 }
 
