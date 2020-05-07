@@ -317,11 +317,11 @@ extension ChatInputBar: UIGestureRecognizerDelegate {
 
 
 extension ChatInputBar: MessageInputBarDelegate {
-    func tappedAddButton() {
+    func tappedAddButton(_ button: UIButton) {
         if recordingViewEnabled {
             recordingViewEnabled = false
         }
-        delegate?.tappedAddButton()
+        delegate?.tappedAddButton(button)
     }
 
     func tappedSendButton(withText text: String) {
