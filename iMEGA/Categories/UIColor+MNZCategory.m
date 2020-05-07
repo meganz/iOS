@@ -43,6 +43,10 @@
     return [UIColor colorWithRed:119.0/255.0 green:119.0/255.0 blue:119.0/255.0 alpha:1.0];
 }
 
++ (UIColor *)mnz_gray8E8E93 {
+    return [UIColor colorWithRed:0.56 green:0.56 blue:0.58 alpha:1];
+}
+
 + (UIColor *)mnz_gray8F8F8F {
     return [UIColor colorWithRed:0.56 green:0.56 blue:0.56 alpha:1];
 }
@@ -91,6 +95,10 @@
 
 + (UIColor *)mnz_green00897B {
     return [UIColor colorWithRed:0.0f green:0.54 blue:0.48 alpha:1.0f];
+}
+
++ (UIColor *)mnz_green00A886 {
+    return [UIColor colorWithRed:0.0f green:0.66 blue:0.53 alpha:1.0f];
 }
 
 + (UIColor *)mnz_green00BFA5 {

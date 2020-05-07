@@ -1026,12 +1026,12 @@
             UITableViewRowAction *infoAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:AMLocalizedString(@"info", @"A button label. The button allows the user to get more info of the current context.") handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
                 [self presentGroupOrContactDetailsForChatListItem:chatListItem];
             }];
-            infoAction.backgroundColor = UIColor.mnz_grayCCCCCC;
+            infoAction.backgroundColor = UIColor.mnz_gray8E8E93;
             
             UITableViewRowAction *archiveAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:AMLocalizedString(@"archiveChat", @"Title of button to archive chats.") handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
                 [[MEGASdkManager sharedMEGAChatSdk] archiveChat:chatListItem.chatId archive:YES];
             }];
-            archiveAction.backgroundColor = UIColor.mnz_green00BFA5;
+            archiveAction.backgroundColor = UIColor.mnz_green00A886;
 
             return @[archiveAction, infoAction];
         }
@@ -1040,12 +1040,49 @@
             UITableViewRowAction *unarchiveAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:AMLocalizedString(@"unarchiveChat", @"The title of the dialog to unarchive an archived chat.") handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
                 [[MEGASdkManager sharedMEGAChatSdk] archiveChat:chatListItem.chatId archive:NO];
             }];
-            unarchiveAction.backgroundColor = UIColor.mnz_green00BFA5;
+            unarchiveAction.backgroundColor = UIColor.mnz_green00A886;
             
             return @[unarchiveAction];
         }
     }
 }
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunguarded-availability"
+
+- (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
+    MEGAChatListItem *chatListItem = [self chatListItemAtIndexPath:indexPath];
+
+    switch (self.chatRoomsType) {
+        case ChatRoomsTypeDefault: {
+            UIContextualAction *archiveAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+                [MEGASdkManager.sharedMEGAChatSdk archiveChat:chatListItem.chatId archive:YES];
+            }];
+            archiveAction.image = [UIImage imageNamed:@"archiveChat"];
+            archiveAction.backgroundColor = UIColor.mnz_green00A886;
+            
+            UIContextualAction *infoAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleDestructive title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+                [self presentGroupOrContactDetailsForChatListItem:chatListItem];
+            }];
+            infoAction.image = [UIImage imageNamed:@"moreSelected"];
+            infoAction.backgroundColor = UIColor.mnz_gray8E8E93;
+            
+            return [UISwipeActionsConfiguration configurationWithActions:@[archiveAction, infoAction]];
+        }
+            
+        case ChatRoomsTypeArchived: {
+            UIContextualAction *unarchiveAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleDestructive title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+                [MEGASdkManager.sharedMEGAChatSdk archiveChat:chatListItem.chatId archive:NO];
+            }];
+            unarchiveAction.image = [UIImage imageNamed:@"unArchiveChat"];
+            unarchiveAction.backgroundColor = UIColor.mnz_green00A886;
+            
+            return [UISwipeActionsConfiguration configurationWithActions:@[unarchiveAction]];
+        }
+    }
+}
+
+#pragma clang diagnostic pop
 
 #pragma mark - UIScrolViewDelegate
 
