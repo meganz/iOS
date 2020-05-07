@@ -542,7 +542,6 @@
                     <items>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="Ab4-Tz-z6U"/>
                         <barButtonItem enabled="NO" id="wgy-rg-Fjg" userLabel="Delete Bar Button Item">
-                            <color key="tintColor" red="0.85098040103912354" green="0.0" blue="0.027450980618596077" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="deleteAction:" destination="4jb-uN-Eto" id="C8I-CZ-g0G"/>
                             </connections>
@@ -752,6 +751,7 @@
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="dey-gY-uSF"/>
                     </view>
+                    <toolbarItems/>
                     <navigationItem key="navigationItem" id="9Ln-R8-SmM"/>
                     <connections>
                         <outlet property="contactRequestsSegmentedControl" destination="fys-Yc-m5M" id="G5e-w3-Q58"/>
