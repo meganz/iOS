@@ -951,8 +951,8 @@
 "unlockedBonuses"="Unlocked bonuses:";
 /* A header/title of a section which contains information about used/available storage space on a user's cloud drive. */
 "storageQuota"="Storage Quota";
-/* The header/title of a block/section which contains information about the user's used/available transfer allowance for their account. */
-"transferQuota"="Transfer Quota";
+/* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
+"Transfer Quota"="Transfer Quota";
 /* achievement type */
 "registrationBonus"="Registration Bonus";
 /* Message shown on the achievements dialog for achieved achievements, %1 is replaced with e.g. 20 GB */
@@ -1440,8 +1440,6 @@
 "resetQrCode"="Reset QR Code";
 /* Footer that explains what would happen if the user resets his/her QR code */
 "resetQrCodeFooter"="Previous QR codes will no longer be valid.";
-/* Title for view that displays the QR code of the user. String as short as possible. */
-"myCode"="My Code";
 /* Label for any ‘My QR code’ button, link, text, title, etc. - (String as short as possible). */
 "My QR code"="My QR code";
 /* Segmented control title for view that allows the user to scan QR codes. String as short as possible. */
@@ -2000,7 +1998,7 @@
 "Business"="Business";
 /* */
 "Administrator"="Administrator";
-/* */
+/* Label to indicate the amount of transfer quota in several places. It is a ‘noun‘ and there is an screenshot with an use example - (String as short as possible). */
 "Transfer"="Transfer";
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
 "You cannot remove %1$s as a contact because they are part of your Business account."="You cannot remove %1$s as a contact because they are part of your Business account.";
@@ -2184,10 +2182,6 @@
 "Your account has been disabled by your administrator. Please contact your business account administrator for further details."="Your account has been disabled by your administrator. Please contact your business account administrator for further details.";
 /* An error message which appears to sub-users of a business account when they try to login and they are deleted. */
 "Your account has been removed by your administrator. Please contact your business account administrator for further details."="Your account has been removed by your administrator. Please contact your business account administrator for further details.";
-/* Description of why the user should give permission to contacts */
-"Easily discover contacts from your address book on MEGA."="Easily discover contacts from your address book on MEGA.";
-/* Detailed description of why the user should give permission to contacts */
-"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA will not use this data for any other purpose and will never interact with your contacts without your consent.";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="Enter group name";
 /* Title of one of the Settings sections where you can customise the 'Appearance' of the app. */

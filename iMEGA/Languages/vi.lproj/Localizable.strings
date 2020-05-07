@@ -522,6 +522,12 @@
 "offline"="Ngoại tuyến";
 /* Title of the Contacts section */
 "contactsTitle"="Danh Bạ";
+/* Label for any ‘Requests’ button, link, text, title, etc. On iOS is used to go to the Contact request section from Contacts */
+"Requests"="Yêu cầu";
+/* Label for any ‘Groups’ button, link, text, title, etc. On iOS is used to go to the chats 'Groups' section from Contacts */
+"Groups"="Groups";
+/* Label for any ‘Recently Added’ button, link, text, title, etc. On iOS is used on a section that shows the 'Recently Added' contacts */
+"Recently Added"="Recently Added";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
 "oneFolderShared"="1 thư mục";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
@@ -943,8 +949,8 @@
 "unlockedBonuses"="Phần thưởng nhận được:";
 /* A header/title of a section which contains information about used/available storage space on a user's cloud drive. */
 "storageQuota"="Hạn Mức Lưu Trữ";
-/* The header/title of a block/section which contains information about the user's used/available transfer allowance for their account. */
-"transferQuota"="Lượng băng thông";
+/* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
+"Transfer Quota"="Lượng băng thông";
 /* achievement type */
 "registrationBonus"="Thưởng cho Đăng Ký Tạo Tài Khoản";
 /* Message shown on the achievements dialog for achieved achievements, %1 is replaced with e.g. 20 GB */
@@ -1266,7 +1272,7 @@
 /* */
 "warning"="Chú Ý";
 /* Title shown when you almost had used your available transfer quota. */
-"depletedTransferQuota_title"="Hết băng thông truyền tải";
+"depletedTransferQuota_title"="Không đủ thông truyền tải";
 /* Description shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_message"="Danh sách các phiên tải xuống đang chờ làm quá số lượng băng thông truyền tải cho phép được cấp cho tài khoản này, vì vậy sẽ có một số vấn đề xảy ra.";
 /* Button title to see the available pro plans in MEGA */
@@ -1430,8 +1436,8 @@
 "resetQrCode"="Đổi Mã QR Mới";
 /* Footer that explains what would happen if the user resets his/her QR code */
 "resetQrCodeFooter"="Các mã QR cũ sẽ bị vô hiệu hóa.";
-/* Title for view that displays the QR code of the user. String as short as possible. */
-"myCode"="Mã Hiện Tại";
+/* Label for any ‘My QR code’ button, link, text, title, etc. - (String as short as possible). */
+"My QR code"="Mã QR của tài khoản này:";
 /* Segmented control title for view that allows the user to scan QR codes. String as short as possible. */
 "scanCode"="Quét Mã";
 /* Label that encourage the user to line the QR to scan with the camera */
@@ -1667,7 +1673,7 @@
 /* Detailed explanation of why the user should give permission to deliver notifications */
 "We would like to send you notifications so you receive new messages on your device instantly."="Ứng dụng MEGA muốn gửi thông báo trên điện thoại để  báo hiệu cho bạn có tin nhắn ngay tức thời.";
 /* Button which triggers a request for a specific permission, that have been explained to the user beforehand */
-"Allow Access"="Cho phép sử dụng";
+"Allow Access"="Cho Phép Quyền Hạn";
 /* A section header which contains the file management settings. These settings allow users to remove duplicate files etc. */
 "File Management"="Quản Lý Tệp Tin";
 /* Title of the option to enable or disable file versioning on Settings section */
@@ -1988,7 +1994,7 @@
 "Business"="Doanh Nghiệp";
 /* */
 "Administrator"="Quản trị";
-/* */
+/* Label to indicate the amount of transfer quota in several places. It is a ‘noun‘ and there is an screenshot with an use example - (String as short as possible). */
 "Transfer"="Truyền Tải";
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
 "You cannot remove %1$s as a contact because they are part of your Business account."="You cannot remove %1$s as a contact because they are part of your Business account.";
@@ -2083,7 +2089,7 @@
 /* */
 "Active"="Còn";
 /* title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts */
-"Role:"="Chức vụ";
+"Role:"="Chức vụ:";
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
 "Include location tags"="Include location tags";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
@@ -2172,12 +2178,38 @@
 "Your account has been disabled by your administrator. Please contact your business account administrator for further details."="Tài khoản nhân viên của bạn đã bị đình chỉ bởi ban quản trị. Xin liên hệ với ban tổng quản lý tài khoản doanh nghiệp của bạn để tìm hiểu lý do.";
 /* An error message which appears to sub-users of a business account when they try to login and they are deleted. */
 "Your account has been removed by your administrator. Please contact your business account administrator for further details."="Your account has been removed by your administrator. Please contact your business account administrator for further details.";
-/* Description of why the user should give permission to contacts */
-"Easily discover contacts from your address book on MEGA."="Easily discover contacts from your address book on MEGA.";
-/* Detailed description of why the user should give permission to contacts */
-"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA will not use this data for any other purpose and will never interact with your contacts without your consent.";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="Điền tên nhóm";
+/* Title of one of the Settings sections where you can customise the 'Appearance' of the app. */
+"Appearance"="Appearance";
+/* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
+"Sorting And View Mode"="Sorting And View Mode";
+/* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
+"Default"="Default";
+/* Label for any ‘Day’ button, link, text, title, etc. - (String as short as possible). */
+"Day"="Ngày";
+/* Label for any ‘Night’ button, link, text, title, etc. - (String as short as possible). */
+"Night"="Night";
+/* Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible). */
+"Minimal"="Minimal";
+/* Section title inside of Settings - Appearance, where you can change the app's layout. */
+"Layout"="Layout";
+/* Section title inside of Settings - Appearance, where you can change the app's icon. */
+"App Icon"="App Icon";
+/* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
+"Configure sorting order and the default view (List or Thumbnail)."="Configure sorting order and the default view (List or Thumbnail).";
+/* Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for All'. */
+"Per Folder"="Per Folder";
+/* Same for all configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for all Folders'. */
+"Same for All"="Same for All";
+/* Section title of the 'Sorting And View Mode' view inside of Settings - Appearence - Sorting And View Mode. */
+"Sorting preference"="Tùy chỉnh việc sắp xếp";
+/* Section title of the 'Sorting And View Mode' view inside of Settings - Appearence - Sorting And View Mode. */
+"View mode preference"="Tùy chỉnh chế độ xem";
+/* Footer text explaining what means choosing a sorting preference 'Per Folder' or 'Same for All' in Settings - Appearance - Sorting And View Mode. */
+"Configure column sorting order on a per-folder basis, or use the same order for all folders."="Quyết định cách sắp xếp dữ liệu và tệp tin sẽ được áp dụng cho tất cả thư mục cho đồng bộ, hoặc tự chỉnh riêng lẻ cho từng thư mục có trong Ổ Mây.";
+/* Footer text explaining what means choosing a view mode preference 'Per Folder', 'List view' or 'Thumbnail view' in Settings - Appearance - Sorting And View Mode. */
+"Select view mode (List or Thumbnail) on a per-folder basis, or use the same view mode for all folders."="Select view mode (List or Thumbnail) on a per-folder basis, or use the same view mode for all folders.";
 /* Warning message to alert user about logout in My Account section if has transfers in progress. */
 "When you logout, ongoing transfers will be cancelled."="When you logout, ongoing transfers will be cancelled.";
 /* Warning message to alert user about logout in My Account section if has offline files. */
