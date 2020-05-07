@@ -1748,86 +1748,6 @@
     [self setTableViewEditing:NO animated:YES];
 }
 
-- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (self.contactsMode == ContactsModeChatStartConversation || self.contactsMode == ContactsModeChatNamingGroup) {
-        return UITableViewCellEditingStyleNone;
-    }
-    
-    MEGAUser *user;
-    
-    if (self.contactsMode == ContactsModeFolderSharedWith) {
-        if (indexPath.section == 0) {
-            if (indexPath.row == 0) {
-                return UITableViewCellEditingStyleNone;
-            } else {
-                user = self.visibleUsersArray[indexPath.row - 1];
-            }
-        } else {
-            return UITableViewCellEditingStyleNone;
-        }
-    } else {
-        user = [self userAtIndexPath:indexPath];
-    }
-    
-    self.selectedUsersArray = [NSMutableArray new];
-    [self.selectedUsersArray addObject:user];
-    
-    [self.deleteBarButtonItem setEnabled:YES];
-    
-    return (UITableViewCellEditingStyleDelete);
-}
-
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        switch (self.contactsMode) {
-            case ContactsModeDefault: {
-                MEGARemoveContactRequestDelegate *removeContactRequestDelegate = [MEGARemoveContactRequestDelegate. alloc initWithCompletion:^{                
-                    [self setTableViewEditing:NO animated:NO];
-                }];
-                MEGAUser *user = [self userAtIndexPath:indexPath];
-                [[MEGASdkManager sharedMEGASdk] removeContactUser:user delegate:removeContactRequestDelegate];
-                break;
-            }
-                
-            case ContactsModeShareFoldersWith:
-                break;
-                
-            case ContactsModeFolderSharedWith: {
-                if (indexPath.section == 0) {
-                    if (indexPath.row != 0) {
-                        [self deleteAction:self.deleteBarButtonItem];
-                    }
-                }
-                break;
-            }
-                
-            default:
-                break;
-        }
-    }
-}
-
-- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *titleForDeleteConfirmationButton;
-    switch (self.contactsMode) {
-        case ContactsModeShareFoldersWith:
-        case ContactsModeChatStartConversation:
-        case ContactsModeChatAddParticipant:
-        case ContactsModeChatAttachParticipant:
-        case ContactsModeChatCreateGroup:
-        case ContactsModeChatNamingGroup:
-            titleForDeleteConfirmationButton = @"";
-            break;
-        
-        case ContactsModeDefault:
-        case ContactsModeFolderSharedWith:
-            titleForDeleteConfirmationButton = AMLocalizedString(@"remove", @"Title for the action that allows to remove a file or folder");
-            break;
-    }
-    
-    return titleForDeleteConfirmationButton;
-}
-
 #pragma mark - UIViewControllerPreviewingDelegate
 
 - (UIViewController *)previewingContext:(id<UIViewControllerPreviewing>)previewingContext viewControllerForLocation:(CGPoint)location {
@@ -2060,6 +1980,7 @@
         if (([user handle] == [[[MEGASdkManager sharedMEGASdk] myUser] handle]) && (user.isOwnChange != 0)) {
             continue;
         } else if (user.isOwnChange == 0) { //If the change is external, update the modified contacts
+            [MEGAStore.shareInstance updateUserWithHandle:user.handle interactedWith:NO];
             switch (user.visibility) {
                 case MEGAUserVisibilityHidden: { //If I deleted a contact
                     if (indexPath != nil) {
@@ -2084,6 +2005,7 @@
                 [updateContactsIndexPathMutableArray addObject:indexPath];
             }
         } else if (user.isOwnChange != 0) { //If the change is internal
+            [MEGAStore.shareInstance updateUserWithHandle:user.handle interactedWith:NO];
             if (user.visibility != MEGAUserVisibilityVisible) { //If I deleted a contact
                 if (indexPath != nil) {
                     [deleteContactsIndexPathMutableDictionary setObject:user forKey:indexPath];

@@ -582,6 +582,8 @@
 "removeUserTitle"="Remove contact";
 /* Alert confirmation message shown when you want to remove one contact from your contacts list */
 "removeUserMessage"="Are you sure you want to remove %@ from your contact list?";
+/* This is shown on a confirmation message dialog when removing one or more contacts. The placeholder [X] is replaced with the contacts name. */
+"Access to any folders shared with you by [X] will be lost."="Access to any folders shared with you by [X] will be lost.";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
 "removeMultipleUsersMessage"="Are you sure you want to remove %d users from your contact list?";
 /* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */

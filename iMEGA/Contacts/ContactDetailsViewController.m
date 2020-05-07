@@ -427,15 +427,16 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
         [MEGASdkManager.sharedMEGASdk inviteContactWithEmail:self.userEmail message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
     }
 }
+
 - (void)showRemoveContactAlert {
+    NSString *title = [NSString stringWithFormat:AMLocalizedString(@"removeUserMessage", @"Alert confirmation message shown when you want to remove one contact from your contacts list"), self.user.mnz_displayName];
+    NSString *message = [AMLocalizedString(@"Access to any folders shared with you by [X] will be lost.", nil) stringByReplacingOccurrencesOfString:@"[X]" withString:self.user.mnz_displayName];
     
-    NSString *message = [NSString stringWithFormat:AMLocalizedString(@"removeUserMessage", nil), self.user.mnz_displayName];
+    UIAlertController *removeContactAlertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
     
-    UIAlertController *removeContactAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"removeUserTitle", @"Alert title shown when you want to remove one or more contacts") message:message preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *noAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"no", nil) style:UIAlertActionStyleCancel handler:nil];
     
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil];
-    
-    UIAlertAction *okAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+    UIAlertAction *yesAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"yes", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
         MEGARemoveContactRequestDelegate *removeContactRequestDelegate = [MEGARemoveContactRequestDelegate.alloc initWithCompletion:^{                    
             //TODO: Close chat room because the contact was removed
             
@@ -444,8 +445,8 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
         [[MEGASdkManager sharedMEGASdk] removeContactUser:self.user delegate:removeContactRequestDelegate];
     }];
     
-    [removeContactAlertController addAction:cancelAction];
-    [removeContactAlertController addAction:okAction];
+    [removeContactAlertController addAction:noAlertAction];
+    [removeContactAlertController addAction:yesAlertAction];
     
     [self presentViewController:removeContactAlertController animated:YES completion:nil];
 }
