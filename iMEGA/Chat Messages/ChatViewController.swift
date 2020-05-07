@@ -28,6 +28,12 @@ class ChatViewController: MessagesViewController {
          return control
      }()
     
+    var topBannerButtonTopConstraint: NSLayoutConstraint?
+    private(set) lazy var topBannerButton: UIButton = {
+        let button = UIButton()
+        return button
+    }()
+    
     var messages: [ChatMessage] {
         return chatRoomDelegate.messages
     }
@@ -78,7 +84,8 @@ class ChatViewController: MessagesViewController {
         messagesCollectionView.allowsMultipleSelection = true
         configureMenus()
         configureProgressBar()
-        
+        configureTopBannerButton()
+
     }
     
     override var hidesBottomBarWhenPushed: Bool {
@@ -543,11 +550,19 @@ class ChatViewController: MessagesViewController {
         
         navigationBarProgressView.progressTintColor = UIColor.mnz_green00BFA5()
         navigationBarProgressView.trackTintColor = .clear
-//        navigationBarProgressView.isHidden = true
-        
-//        navigationBarProgressView.progress = 0.8
     }
 
+    private func configureTopBannerButton() {
+        view.addSubview(topBannerButton)
+        topBannerButtonTopConstraint = topBannerButton.autoPinEdge(toSuperviewMargin: .top)
+        topBannerButton.autoPinEdge(toSuperviewEdge: .leading)
+        topBannerButton.autoPinEdge(toSuperviewEdge: .trailing)
+        topBannerButton.autoSetDimension(.height, toSize: 44)
+        
+        topBannerButton.setTitleColor(.white, for: .normal)
+        topBannerButton.backgroundColor = #colorLiteral(red: 0, green: 0.7490196078, blue: 0.631372549, alpha: 1)
+    }
+    
     private func registerCustomCells() {
         messagesCollectionView.register(ChatViewCallCollectionCell.nib,
                                          forCellWithReuseIdentifier: ChatViewCallCollectionCell.reuseIdentifier)
