@@ -36,13 +36,31 @@ extension ChatViewController {
     
     // MARK: - Private methods.
     
-    private func displayAddToChatViewController() {
-        chatInputBar.dismissKeyboard()
-        
+    private func displayAddToChatViewController(_ button: UIButton) {
         let addToChatViewController = AddToChatViewController(nibName: nil, bundle: nil)
-        addToChatViewController.delegate = self
-        addToChatViewController.transitioningDelegate = self
-        present(viewController: addToChatViewController)
+        addToChatViewController.addToChatDelegate = self
+        
+        chatInputBar.dismissKeyboard()
+
+        if UIDevice.current.iPadDevice {
+            let navController = MEGANavigationController(rootViewController: addToChatViewController)
+            navController.addLeftDismissButton(withText: AMLocalizedString("cancel"))
+            navController.modalPresentationStyle = .popover;
+            navController.preferredContentSize = CGSize(width: 440, height: 360)
+
+            if let popover = navController.popoverPresentationController {
+                popover.delegate = self
+
+                popover.sourceView = button
+                popover.sourceRect = button.bounds
+
+                present(navController, animated: true, completion: nil)
+            }
+        } else {
+            
+            addToChatViewController.transitioningDelegate = self
+            present(viewController: addToChatViewController)
+        }
     }
         
     private func presentShareLocation() {
@@ -150,8 +168,8 @@ extension ChatViewController {
 
 extension ChatViewController: ChatMessageAndAudioInputBarDelegate {
     
-    func tappedAddButton() {
-        displayAddToChatViewController()
+    func tappedAddButton(_ button: UIButton) {
+        displayAddToChatViewController(button)
     }
     
     func tappedSendButton(withText text: String) {
@@ -507,5 +525,16 @@ extension ChatViewController: AddToChatViewControllerDelegate {
     func recordingViewHidden() {
         // Need to reset the additional bottom inset set during `recordingViewShown` method.
         additionalBottomInset = 0
+    }
+}
+
+extension ChatViewController: UIPopoverPresentationControllerDelegate {
+//    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+//        <#code#>
+//    }
+    
+    func adaptivePresentationStyle(for controller: UIPresentationController,
+                                   traitCollection: UITraitCollection) -> UIModalPresentationStyle{
+        return .none
     }
 }
