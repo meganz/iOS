@@ -29,7 +29,7 @@ class ChatViewController: MessagesViewController {
      }()
     
     var topBannerButtonTopConstraint: NSLayoutConstraint?
-    private(set) lazy var topBannerButton: UIButton = {
+    lazy var topBannerButton: UIButton = {
         let button = UIButton()
         return button
     }()
@@ -554,7 +554,7 @@ class ChatViewController: MessagesViewController {
 
     private func configureTopBannerButton() {
         view.addSubview(topBannerButton)
-        topBannerButtonTopConstraint = topBannerButton.autoPinEdge(toSuperviewMargin: .top)
+        topBannerButtonTopConstraint = topBannerButton.autoPinEdge(toSuperviewMargin: .top, withInset: -44)
         topBannerButton.autoPinEdge(toSuperviewEdge: .leading)
         topBannerButton.autoPinEdge(toSuperviewEdge: .trailing)
         topBannerButton.autoSetDimension(.height, toSize: 44)
