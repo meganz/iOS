@@ -7,6 +7,8 @@ class SectionTableViewCell: UITableViewCell {
     @IBOutlet weak var rightDetailTextLabel: UILabel!
     
     @objc func configureContactsSection(indexPath: IndexPath) {
+        rightDetailTextLabel.textColor = UIColor.mnz_tertiaryGray(for: traitCollection)
+        
         if indexPath.row == 0 {
             leftImageView.image = UIImage(named: "contactRequests")?.imageFlippedForRightToLeftLayoutDirection()
             mainTextLabel.text = AMLocalizedString("Requests", "Label for any ‘Requests’ button, link, text, title, etc. On iOS is used to go to the Contact request section from Contacts")
