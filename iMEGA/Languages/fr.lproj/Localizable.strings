@@ -109,11 +109,11 @@
 /* Label displayed during checking the strength of the password introduced. Represents Very Weak security */
 "veryWeak"="Très vulnérable";
 /*  */
-"weak"="Faible";
+"weak"="Vulnérable";
 /*  */
 "passwordVeryWeakOrWeak"="Votre mot de passe est facile à deviner. Essayez de le rallonger. Combinez majuscules et minuscules. Ajoutez des caractères spéciaux. N’utilisez pas de noms ou de mots du dictionnaire.";
 /* Label displayed during checking the strength of the password introduced. Represents Medium security */
-"medium"="Moyenne";
+"medium"="Moyen";
 /*  */
 "passwordMedium"="Votre mot de passe est assez bon pour continuer, mais il est recommandé de le renforcer.";
 /*  */
@@ -522,6 +522,12 @@
 "offline"="Hors ligne";
 /* Title of the Contacts section */
 "contactsTitle"="Contacts";
+/* Label for any ‘Requests’ button, link, text, title, etc. On iOS is used to go to the Contact request section from Contacts */
+"Requests"="Demandes";
+/* Label for any ‘Groups’ button, link, text, title, etc. On iOS is used to go to the chats 'Groups' section from Contacts */
+"Groups"="Groups";
+/* Label for any ‘Recently Added’ button, link, text, title, etc. On iOS is used on a section that shows the 'Recently Added' contacts */
+"Recently Added"="Recently Added";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
 "oneFolderShared"="1 dossier";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
@@ -943,8 +949,8 @@
 "unlockedBonuses"="Primes déverrouillées :";
 /* A header/title of a section which contains information about used/available storage space on a user's cloud drive. */
 "storageQuota"="Quota de stockage";
-/* The header/title of a block/section which contains information about the user's used/available transfer allowance for their account. */
-"transferQuota"="Quota de transfert";
+/* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
+"Transfer Quota"="Quota de transfert";
 /* achievement type */
 "registrationBonus"="Prime d’inscription";
 /* Message shown on the achievements dialog for achieved achievements, %1 is replaced with e.g. 20 GB */
@@ -990,11 +996,11 @@
 /* String shown when you are logging out of your account. */
 "loggingOut"="Déconnexion";
 /* Button to remove some photo, e.g. avatar photo. Try to keep the text short (as in English) */
-"Remove Photo"="Remove Photo";
+"Remove Photo"="Supprimer la photo";
 /* Button that allows the user the change a photo, e.g. his avatar photo */
-"Change Photo"="Change Photo";
+"Change Photo"="Changer la photo";
 /* Button that allows the user the add a photo, e.g avatar photo */
-"Add Photo"="Add Photo";
+"Add Photo"="Ajouter une photo";
 /* Button title that allows the user change his name */
 "changeName"="Modifier le nom";
 /* Success message when changing profile information. */
@@ -1430,8 +1436,8 @@
 "resetQrCode"="Réinitialiser le code QR";
 /* Footer that explains what would happen if the user resets his/her QR code */
 "resetQrCodeFooter"="Les codes QR précédents ne seront plus valides.";
-/* Title for view that displays the QR code of the user. String as short as possible. */
-"myCode"="Mon code";
+/* Label for any ‘My QR code’ button, link, text, title, etc. - (String as short as possible). */
+"My QR code"="Mon code QR";
 /* Segmented control title for view that allows the user to scan QR codes. String as short as possible. */
 "scanCode"="Balayer un code";
 /* Label that encourage the user to line the QR to scan with the camera */
@@ -1988,7 +1994,7 @@
 "Business"="Pour entreprise";
 /* */
 "Administrator"="Administrateur";
-/* */
+/* Label to indicate the amount of transfer quota in several places. It is a ‘noun‘ and there is an screenshot with an use example - (String as short as possible). */
 "Transfer"="Transfert";
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
 "You cannot remove %1$s as a contact because they are part of your Business account."="Vous ne pouvez pas supprimer %1$s de vos contacts, car ce contact fait parti de votre compte d’entreprise.";
@@ -2119,7 +2125,7 @@
 /* Place holder for enter mobile number field */
 "Your phone number"="Votre numéro de téléphone";
 /* Text related to verified phone number. Used as title or cell description.  */
-"Phone Number"="Phone Number";
+"Phone Number"="Numéro de téléphone";
 /* Label tell user to enter received txt to below input boxes */
 "Please type the verification code sent to"="Veuillez saisir le code de confirmation envoyé à";
 /* Text message to remind user to resend verification code */
@@ -2127,7 +2133,7 @@
 /* Message shown when verify phone number successfully */
 "Your phone number has been verified successfully"="Votre numéro de téléphone a été confirmé avec succès";
 /* Text describing account suspended state to the user */
-"Your account has been temporarily suspended for your safety."="Votre compte a été verrouillé temporairement pour votre sécurité.";
+"Your account has been temporarily suspended for your safety."="Votre compte a temporairement été verrouillé pour votre sécurité.";
 /* Text indicating the user next step to unlock suspended account. Please leave [S], [/S] as it is which is used to bolden the text. */
 "[S]Please verify your email[/S] and follow its steps to unlock your account."="[S]Veuillez confirmer votre adresse courriel[/S] et suivre les étapes du courriel de MEGA afin de déverrouiller votre compte.";
 /* Text for button to open an helping view */
@@ -2172,12 +2178,38 @@
 "Your account has been disabled by your administrator. Please contact your business account administrator for further details."="Votre compte a été désactivé par votre administrateur. Veuillez contacter l’administrateur de votre compte d’entreprise pour obtenir plus de précisions.";
 /* An error message which appears to sub-users of a business account when they try to login and they are deleted. */
 "Your account has been removed by your administrator. Please contact your business account administrator for further details."="Votre compte a été supprimé par votre administrateur. Veuillez contacter l’administrateur de votre compte d’entreprise pour plus de précisions.";
-/* Description of why the user should give permission to contacts */
-"Easily discover contacts from your address book on MEGA."="Trouvez facilement les contacts de votre carnet d’adresses sur MEGA.";
-/* Detailed description of why the user should give permission to contacts */
-"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA n’utilisera pas ces données et n’interagira jamais avec vos contacts sans votre consentement.";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="Saisissez le nom du groupe";
+/* Title of one of the Settings sections where you can customise the 'Appearance' of the app. */
+"Appearance"="Appearance";
+/* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
+"Sorting And View Mode"="Sorting And View Mode";
+/* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
+"Default"="Default";
+/* Label for any ‘Day’ button, link, text, title, etc. - (String as short as possible). */
+"Day"="jour";
+/* Label for any ‘Night’ button, link, text, title, etc. - (String as short as possible). */
+"Night"="Night";
+/* Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible). */
+"Minimal"="Minimal";
+/* Section title inside of Settings - Appearance, where you can change the app's layout. */
+"Layout"="Layout";
+/* Section title inside of Settings - Appearance, where you can change the app's icon. */
+"App Icon"="App Icon";
+/* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
+"Configure sorting order and the default view (List or Thumbnail)."="Configure sorting order and the default view (List or Thumbnail).";
+/* Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for All'. */
+"Per Folder"="Per Folder";
+/* Same for all configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for all Folders'. */
+"Same for All"="Same for All";
+/* Section title of the 'Sorting And View Mode' view inside of Settings - Appearence - Sorting And View Mode. */
+"Sorting preference"="Préférence de tri ";
+/* Section title of the 'Sorting And View Mode' view inside of Settings - Appearence - Sorting And View Mode. */
+"View mode preference"="Préférence du mode d’affichage";
+/* Footer text explaining what means choosing a sorting preference 'Per Folder' or 'Same for All' in Settings - Appearance - Sorting And View Mode. */
+"Configure column sorting order on a per-folder basis, or use the same order for all folders."="Configurer l’ordre de tri des colonnes par dossier ou utiliser le même ordre pour tous les dossiers.";
+/* Footer text explaining what means choosing a view mode preference 'Per Folder', 'List view' or 'Thumbnail view' in Settings - Appearance - Sorting And View Mode. */
+"Select view mode (List or Thumbnail) on a per-folder basis, or use the same view mode for all folders."="Select view mode (List or Thumbnail) on a per-folder basis, or use the same view mode for all folders.";
 /* Warning message to alert user about logout in My Account section if has transfers in progress. */
 "When you logout, ongoing transfers will be cancelled."="Quand vous vous déconnectez, les transferts en cours sont annulés.";
 /* Warning message to alert user about logout in My Account section if has offline files. */

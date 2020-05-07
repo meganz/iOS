@@ -522,6 +522,12 @@
 "offline"="Offline";
 /* Title of the Contacts section */
 "contactsTitle"="Contatti";
+/* Label for any ‘Requests’ button, link, text, title, etc. On iOS is used to go to the Contact request section from Contacts */
+"Requests"="Richieste";
+/* Label for any ‘Groups’ button, link, text, title, etc. On iOS is used to go to the chats 'Groups' section from Contacts */
+"Groups"="Groups";
+/* Label for any ‘Recently Added’ button, link, text, title, etc. On iOS is used on a section that shows the 'Recently Added' contacts */
+"Recently Added"="Recently Added";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
 "oneFolderShared"="1 cartella";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
@@ -733,7 +739,7 @@
 /* Title for the MEGA Recovery Key */
 "masterKey"="Chiave di Recupero";
 /* Section title where you can change your MEGA's password */
-"changePasswordLabel"="Modifica password";
+"changePasswordLabel"="Cambia password";
 /* Advising the user to keep the user's master key safe. */
 "exportMasterKeyFooter"="Esportare la Chiave di Recupero e tenerla in un posto sicuro ti permette di reimpostare la password senza perdite di dati.";
 /* Question button to present a view where it's explained what is the Recovery Key */
@@ -943,8 +949,8 @@
 "unlockedBonuses"="Bonus sbloccati:";
 /* A header/title of a section which contains information about used/available storage space on a user's cloud drive. */
 "storageQuota"="Quota di archiviazione";
-/* The header/title of a block/section which contains information about the user's used/available transfer allowance for their account. */
-"transferQuota"="Quota di trasferimento";
+/* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
+"Transfer Quota"="Quota di trasferimento";
 /* achievement type */
 "registrationBonus"="Bonus registrazione";
 /* Message shown on the achievements dialog for achieved achievements, %1 is replaced with e.g. 20 GB */
@@ -994,7 +1000,7 @@
 /* Button that allows the user the change a photo, e.g. his avatar photo */
 "Change Photo"="Cambia foto";
 /* Button that allows the user the add a photo, e.g avatar photo */
-"Add Photo"="Add Photo";
+"Add Photo"="Aggiungi foto";
 /* Button title that allows the user change his name */
 "changeName"="Cambia nome";
 /* Success message when changing profile information. */
@@ -1430,8 +1436,8 @@
 "resetQrCode"="Resetta QRcode";
 /* Footer that explains what would happen if the user resets his/her QR code */
 "resetQrCodeFooter"="I QRcode precedenti non saranno più validi";
-/* Title for view that displays the QR code of the user. String as short as possible. */
-"myCode"="Il mio QR Code";
+/* Label for any ‘My QR code’ button, link, text, title, etc. - (String as short as possible). */
+"My QR code"="Il mio QRcode";
 /* Segmented control title for view that allows the user to scan QR codes. String as short as possible. */
 "scanCode"="Scansiona QR Code";
 /* Label that encourage the user to line the QR to scan with the camera */
@@ -1988,7 +1994,7 @@
 "Business"="Business";
 /* */
 "Administrator"="Amministratore";
-/* */
+/* Label to indicate the amount of transfer quota in several places. It is a ‘noun‘ and there is an screenshot with an use example - (String as short as possible). */
 "Transfer"="Trasferisci";
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
 "You cannot remove %1$s as a contact because they are part of your Business account."="Non puoi rimuovere %1$s come contatto in quanto fa parte del tuo account Business.";
@@ -2119,7 +2125,7 @@
 /* Place holder for enter mobile number field */
 "Your phone number"="Il tuo numero di telefono";
 /* Text related to verified phone number. Used as title or cell description.  */
-"Phone Number"="Phone Number";
+"Phone Number"="Numero di telefono";
 /* Label tell user to enter received txt to below input boxes */
 "Please type the verification code sent to"="Per favore, inserisci il codice di verifica inviato a";
 /* Text message to remind user to resend verification code */
@@ -2172,12 +2178,38 @@
 "Your account has been disabled by your administrator. Please contact your business account administrator for further details."="Il tuo account è stato disabilitato dal tuo amministratore. Per favore, contatta il tuo amministratore degli account business per ottenere maggiori dettagli.";
 /* An error message which appears to sub-users of a business account when they try to login and they are deleted. */
 "Your account has been removed by your administrator. Please contact your business account administrator for further details."="Il tuo account è stato rimosso dal tuo amministratore. Per favore, contatta il tuo amministratore degli account business per ottenere maggiori dettagli.";
-/* Description of why the user should give permission to contacts */
-"Easily discover contacts from your address book on MEGA."="Trova facilmente i tuoi contatti che hai in rubrica su MEGA.";
-/* Detailed description of why the user should give permission to contacts */
-"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA non utilizzerà mai questi dati per altri motivi e non interagirà mai con i tuoi contatti senza il tuo consenso.";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="Inserisci nome gruppo";
+/* Title of one of the Settings sections where you can customise the 'Appearance' of the app. */
+"Appearance"="Appearance";
+/* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
+"Sorting And View Mode"="Sorting And View Mode";
+/* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
+"Default"="Default";
+/* Label for any ‘Day’ button, link, text, title, etc. - (String as short as possible). */
+"Day"="Giorno";
+/* Label for any ‘Night’ button, link, text, title, etc. - (String as short as possible). */
+"Night"="Night";
+/* Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible). */
+"Minimal"="Minimal";
+/* Section title inside of Settings - Appearance, where you can change the app's layout. */
+"Layout"="Layout";
+/* Section title inside of Settings - Appearance, where you can change the app's icon. */
+"App Icon"="App Icon";
+/* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
+"Configure sorting order and the default view (List or Thumbnail)."="Configure sorting order and the default view (List or Thumbnail).";
+/* Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for All'. */
+"Per Folder"="Per Folder";
+/* Same for all configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for all Folders'. */
+"Same for All"="Same for All";
+/* Section title of the 'Sorting And View Mode' view inside of Settings - Appearence - Sorting And View Mode. */
+"Sorting preference"="Ordina preferenze";
+/* Section title of the 'Sorting And View Mode' view inside of Settings - Appearence - Sorting And View Mode. */
+"View mode preference"="Preferenze modalità di visualizzazione";
+/* Footer text explaining what means choosing a sorting preference 'Per Folder' or 'Same for All' in Settings - Appearance - Sorting And View Mode. */
+"Configure column sorting order on a per-folder basis, or use the same order for all folders."="Configura la colonna di ordinamento per-cartella, oppure utilizza lo stesso ordine per tutte le cartelle.";
+/* Footer text explaining what means choosing a view mode preference 'Per Folder', 'List view' or 'Thumbnail view' in Settings - Appearance - Sorting And View Mode. */
+"Select view mode (List or Thumbnail) on a per-folder basis, or use the same view mode for all folders."="Select view mode (List or Thumbnail) on a per-folder basis, or use the same view mode for all folders.";
 /* Warning message to alert user about logout in My Account section if has transfers in progress. */
 "When you logout, ongoing transfers will be cancelled."="Quando effettui il logout, i trasferimenti in corso verranno annullati.";
 /* Warning message to alert user about logout in My Account section if has offline files. */

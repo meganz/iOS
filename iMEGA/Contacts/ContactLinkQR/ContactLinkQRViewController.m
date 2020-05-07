@@ -64,7 +64,7 @@ typedef NS_ENUM(NSInteger, QRSection) {
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.segmentedControl setTitle:AMLocalizedString(@"myCode", @"Title for view that displays the QR code of the user. String as short as possible.") forSegmentAtIndex:0];
+    [self.segmentedControl setTitle:AMLocalizedString(@"My QR code", @"Label for any ‘My QR code’ button, link, text, title, etc. - (String as short as possible).") forSegmentAtIndex:0];
     [self.segmentedControl setTitle:AMLocalizedString(@"scanCode", @"Segmented control title for view that allows the user to scan QR codes. String as short as possible.") forSegmentAtIndex:1];
     [self.linkCopyButton setTitle:AMLocalizedString(@"copyLink", @"Title for a button to copy the link to the clipboard") forState:UIControlStateNormal];
     
