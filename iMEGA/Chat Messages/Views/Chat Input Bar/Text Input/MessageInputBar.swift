@@ -3,7 +3,7 @@
 import UIKit
 
 protocol MessageInputBarDelegate: class {
-    func tappedAddButton()
+    func tappedAddButton(_ button: UIButton)
     func tappedSendButton(withText text: String)
     func tappedVoiceButton()
     func typing(withText text: String)
@@ -166,7 +166,7 @@ class MessageInputBar: UIView {
             return
         }
         
-        delegate.tappedAddButton()
+        delegate.tappedAddButton(button)
     }
     
     // MARK: - Private methods
