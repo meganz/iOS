@@ -6,6 +6,7 @@
 
 #import "ContactDetailsViewController.h"
 #import "ContactsViewController.h"
+#import "ContactRequestsViewController.h"
 #import "EmptyStateView.h"
 #import "Helper.h"
 #import "MainTabBarController.h"
@@ -421,8 +422,9 @@
         case MEGAUserAlertTypeIncomingPendingContactRequest:
         case MEGAUserAlertTypeIncomingPendingContactReminder: {
             if ([[MEGASdkManager sharedMEGASdk] incomingContactRequests].size.intValue) {
-                UINavigationController *contactRequestsNC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsRequestsNavigationControllerID"];
-                [self presentViewController:contactRequestsNC animated:YES completion:nil];
+                ContactRequestsViewController *contactRequestsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsRequestsViewControllerID"];
+                
+                [self.navigationController pushViewController:contactRequestsVC animated:YES];
             }
             break;
         }

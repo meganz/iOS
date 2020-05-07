@@ -13,6 +13,11 @@
 #import "MEGASdkManager.h"
 #import "NSString+MNZCategory.h"
 
+typedef NS_ENUM(NSInteger, Segment) {
+    SegmentReceived = 0,
+    SegmentSent
+};
+
 @interface ContactRequestsViewController () <DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGARequestDelegate, MEGAGlobalDelegate>
 
 @property (nonatomic, strong) NSMutableArray *outgoingContactRequestArray;
@@ -22,6 +27,9 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property (nonatomic) NSUInteger remainingOperations;
+
+@property (nonatomic, getter=isAcceptingOrDecliningLastRequest) BOOL acceptingOrDecliningLastRequest;
+@property (nonatomic, getter=isDeletingLastRequest) BOOL deletingLastRequest;
 
 @end
 
@@ -45,8 +53,8 @@
     
     [self.navigationItem setTitle:AMLocalizedString(@"contactRequests", @"Contact requests")];
     
-    [self.contactRequestsSegmentedControl setTitle:AMLocalizedString(@"received", @"Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved.") forSegmentAtIndex:0];
-    [self.contactRequestsSegmentedControl setTitle:AMLocalizedString(@"sent", nil) forSegmentAtIndex:1];
+    [self.contactRequestsSegmentedControl setTitle:AMLocalizedString(@"received", @"Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved.") forSegmentAtIndex:SegmentReceived];
+    [self.contactRequestsSegmentedControl setTitle:AMLocalizedString(@"sent", @"Title of one of the filters in 'Contacts requests' section. If 'Sent' is selected, it will only show the requests which have been sent out.") forSegmentAtIndex:SegmentSent];
     
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     [[MEGAReachabilityManager sharedManager] retryPendingConnections];
@@ -76,7 +84,21 @@
     } completion:nil];
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateAppearance];
+        }
+    }
+}
+
 #pragma mark - Private
+
+- (void)updateAppearance {
+    self.tableView.separatorColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
+}
 
 - (void)internetConnectionChanged {
     [self.tableView reloadData];
@@ -84,11 +106,11 @@
 
 - (void)reloadUI {
     switch (self.contactRequestsSegmentedControl.selectedSegmentIndex) {
-        case 0:
+        case SegmentReceived:
             [self reloadIncomingContactsRequestsView];
             break;
             
-        case 1:
+        case SegmentSent:
             [self reloadOutgoingContactsRequestsView];
             break;
             
@@ -107,6 +129,23 @@
         MEGAContactRequest *contactRequest = [outgoingContactRequestList contactRequestAtIndex:i];
         [self.outgoingContactRequestArray addObject:contactRequest];
     }
+    
+    //If user cancel all sent requests and HAS incoming requests > Switch to Received
+    //If user cancel all sent requests and HAS NOT incoming requests > Go back to Contacts
+    if (outgoingContactRequestList.size.unsignedIntValue == 0 && self.isDeletingLastRequest) {
+        MEGAContactRequestList *incomingContactRequestList = MEGASdkManager.sharedMEGASdk.incomingContactRequests;
+        if (incomingContactRequestList.size.unsignedIntValue == 0) {
+            if (self.presentingViewController) {
+                [self dismissViewControllerAnimated:YES completion:nil];
+            } else {
+                [self.navigationController popViewControllerAnimated:YES];
+            }
+        } else {
+            self.contactRequestsSegmentedControl.selectedSegmentIndex = SegmentReceived;
+        }
+        
+        self.deletingLastRequest = NO;
+    }
 }
 
 - (void)reloadIncomingContactsRequestsView {
@@ -116,6 +155,18 @@
     for (NSInteger i = 0; i < [[incomingContactRequestList size] integerValue]; i++) {
         MEGAContactRequest *contactRequest = [incomingContactRequestList contactRequestAtIndex:i];
         [self.incomingContactRequestArray addObject:contactRequest];
+    }
+    
+    //If user accepts all received requests > Go back to Contacts
+    //If user accepts all received requests and HAS sent requests > Go back to Contacts
+    if (incomingContactRequestList.size.unsignedIntValue == 0 && self.isAcceptingOrDecliningLastRequest) {
+        if (self.presentingViewController) {
+            [self dismissViewControllerAnimated:YES completion:nil];
+        } else {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+        
+        self.acceptingOrDecliningLastRequest = NO;
     }
 }
 
@@ -129,16 +180,28 @@
     if (sender.tag < self.incomingContactRequestArray.count) {
         MEGAContactRequest *contactSelected = [self.incomingContactRequestArray objectAtIndex:sender.tag];
         [MEGASdkManager.sharedMEGASdk replyContactRequest:contactSelected action:MEGAReplyActionAccept delegate:self];
+        
+        if (self.incomingContactRequestArray.count == 1) {
+            self.acceptingOrDecliningLastRequest = YES;
+        }
     }
 }
 
 - (void)declineOrDeleteTouchUpInside:(UIButton *)sender {
-    if (self.contactRequestsSegmentedControl.selectedSegmentIndex == 0 && sender.tag < self.incomingContactRequestArray.count) {
+    if (self.contactRequestsSegmentedControl.selectedSegmentIndex == SegmentReceived && sender.tag < self.incomingContactRequestArray.count) {
         MEGAContactRequest *contactSelected = [self.incomingContactRequestArray objectAtIndex:sender.tag];
         [[MEGASdkManager sharedMEGASdk] replyContactRequest:contactSelected action:MEGAReplyActionDeny delegate:self];
+        
+        if (self.incomingContactRequestArray.count == 1) {
+            self.acceptingOrDecliningLastRequest = YES;
+        }
     } else if (sender.tag < self.outgoingContactRequestArray.count) {
         MEGAContactRequest *contactSelected = [self.outgoingContactRequestArray objectAtIndex:sender.tag];
         [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:[contactSelected targetEmail] message:@"" action:MEGAInviteActionDelete delegate:self];
+        
+        if (self.outgoingContactRequestArray.count == 1) {
+            self.deletingLastRequest = YES;
+        }
     }
 }
     
@@ -148,11 +211,11 @@
     NSInteger numberOfRows = 0;
     if ([MEGAReachabilityManager isReachable]) {
         switch (self.contactRequestsSegmentedControl.selectedSegmentIndex) {
-            case 0:
+            case SegmentReceived:
                 numberOfRows = [self.incomingContactRequestArray count];
                 break;
                 
-            case 1:
+            case SegmentSent:
                 numberOfRows = [self.outgoingContactRequestArray count];
                 break;
                 
@@ -173,7 +236,7 @@
     
     NSString *pendingString = [[@" (" stringByAppendingString:AMLocalizedString(@"pending", nil)] stringByAppendingString:@")"];
     switch (self.contactRequestsSegmentedControl.selectedSegmentIndex) {
-        case 0: { //INCOMING CONTACTS REQUESTS
+        case SegmentReceived: {
             [cell.acceptButton setHidden:NO];
             cell.acceptButton.tag = indexPath.row;
             [cell.acceptButton addTarget:self action:@selector(acceptTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
@@ -187,7 +250,7 @@
             break;
         }
             
-        case 1: { //OUTGOING CONTACTS REQUESTS
+        case SegmentSent: {
             [cell.acceptButton setHidden:YES];
             
             MEGAContactRequest *contactRequest = [self.outgoingContactRequestArray objectAtIndex:indexPath.row];
@@ -200,10 +263,6 @@
             
         default:
             break;
-    }
-    
-    if (@available(iOS 11.0, *)) {
-        cell.avatarImageView.accessibilityIgnoresInvertColors = YES;
     }
     
     return cell;

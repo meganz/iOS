@@ -178,8 +178,9 @@
         [self updatePendingContactRequestsLabel];
         
         if (!self.avoidPresentIncomingPendingContactRequests && incomingContactsLists.size.intValue > 0) {
-            UINavigationController *contactRequestsNC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsRequestsNavigationControllerID"];
-            [self presentViewController:contactRequestsNC animated:YES completion:nil];
+            ContactRequestsViewController *contactRequestsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsRequestsViewControllerID"];
+            
+            [self.navigationController pushViewController:contactRequestsVC animated:YES];
             self.avoidPresentIncomingPendingContactRequests = YES;
         }
     }
