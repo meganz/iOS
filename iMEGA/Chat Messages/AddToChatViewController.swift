@@ -25,6 +25,7 @@ class AddToChatViewController: UIViewController {
     @IBOutlet weak var contentViewTrailingConstraint: NSLayoutConstraint!
 
     @IBOutlet weak var mediaCollectionView: UICollectionView!
+    @IBOutlet weak var mediaCollectionViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var menuView: UIView!
     
     var tapHandler: (() -> Void)?
@@ -54,6 +55,19 @@ class AddToChatViewController: UIViewController {
         mediaCollectionSource = AddToChatMediaCollectionSource(collectionView: mediaCollectionView,
                                                                delegate: self)
         setUpMenuPageViewController()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        guard let menuPageViewController = menuPageViewController else {
+            return
+        }
+        
+        contentViewHeightConstraint.constant = menuPageViewController.totalRequiredHeight
+            + mediaCollectionView.bounds.height
+            + mediaCollectionViewBottomConstraint.constant
+        view.layoutIfNeeded()
     }
     
     func setUpMenuPageViewController() {

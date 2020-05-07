@@ -9,14 +9,19 @@ class AddToChatMenuItemsView: UIView {
     
     @IBOutlet var menuViews: [AddToChatMenuView]!
     @IBOutlet var buttons: [UIButton]!
-    
+    @IBOutlet var menuHolderStackView: UIStackView!
+
     weak var delegate: AddToChatMenuItemsViewDelegate?
+    
+    var rowSpacing: CGFloat {
+        return menuHolderStackView.spacing
+    }
 
     var menus: [AddToChatMenu]? {
         didSet {
             guard let menus = menus,
                 menuViews != nil,
-                menus.count <= 8 else {
+                menus.count <= menuViews.count else {
                 return
             }
             

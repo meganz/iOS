@@ -15,6 +15,10 @@ class AddToChatMenuViewController: UIViewController {
             menuView.menus = menus
         }
     }
+    
+    var rowSpacing: CGFloat {
+        return menuView.rowSpacing
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
