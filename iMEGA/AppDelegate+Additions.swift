@@ -14,7 +14,9 @@ extension AppDelegate {
             visibleViewController is UpgradeTableViewController ||
             visibleViewController is OnboardingViewController ||
             visibleViewController is UIAlertController ||
-            visibleViewController is VerifyEmailViewController { return }
+            visibleViewController is VerifyEmailViewController ||
+            visibleViewController is LoginViewController ||
+            visibleViewController is SFSafariViewController { return }
 
         if MEGASdkManager.sharedMEGASdk().smsAllowedState() != .optInAndUnblock { return }
         
@@ -29,7 +31,26 @@ extension AppDelegate {
         
         let addPhoneNumberController = UIStoryboard(name: "SMSVerification", bundle: nil).instantiateViewController(withIdentifier: "AddPhoneNumberViewControllerID")
         addPhoneNumberController.modalPresentationStyle = .fullScreen
-        UIApplication.mnz_presentingViewController()?.present(addPhoneNumberController, animated: true, completion: nil)
+        UIApplication.mnz_presentingViewController().present(addPhoneNumberController, animated: true, completion: nil)
+    }
+    
+    @objc func showEnableTwoFactorAuthenticationIfNeeded() {
+        if UserDefaults.standard.bool(forKey: "twoFactorAuthenticationAlreadySuggested") {
+            return
+        }
+        
+        MEGASdkManager.sharedMEGASdk().multiFactorAuthCheck(withEmail: MEGASdkManager.sharedMEGASdk().myEmail ?? "", delegate: MEGAGenericRequestDelegate.init(completion: { (request, error) in
+            if request.flag {
+                return //Two Factor Authentication Enabled
+            }
+            
+            let enable2FACustomModalAlert = CustomModalAlertViewController()
+            enable2FACustomModalAlert.configureForTwoFactorAuthentication(requestedByUser: false)
+
+            UIApplication.mnz_presentingViewController().present(enable2FACustomModalAlert, animated: true, completion: nil)
+            
+            UserDefaults.standard.set(true, forKey: "twoFactorAuthenticationAlreadySuggested")
+        }))
     }
     
     @objc func fetchContactsNickname() {
@@ -80,21 +101,29 @@ extension AppDelegate {
             
             let smsNavigationController = SMSNavigationViewController(rootViewController: SMSVerificationViewController.instantiate(with: .UnblockAccount))
             smsNavigationController.modalPresentationStyle = .fullScreen
-            UIApplication.mnz_presentingViewController()?.present(smsNavigationController, animated: true, completion: nil)
+            UIApplication.mnz_presentingViewController().present(smsNavigationController, animated: true, completion: nil)
         } else if suspensionType == .emailVerification {
             if UIApplication.mnz_visibleViewController() is VerifyEmailViewController || UIApplication.mnz_visibleViewController() is SFSafariViewController {
                 return
             }
             
             let verifyEmailVC = UIStoryboard(name: "VerifyEmail", bundle: nil).instantiateViewController(withIdentifier: "VerifyEmailViewControllerID")
-            UIApplication.mnz_presentingViewController()?.present(verifyEmailVC, animated: true, completion: nil)
+            UIApplication.mnz_presentingViewController().present(verifyEmailVC, animated: true, completion: nil)
         } else {
-            let alert = UIAlertController(title: AMLocalizedString("error"), message: AMLocalizedString("accountBlocked", "Error message when trying to login and the account is blocked"), preferredStyle: .alert)
+            var message: String
+            if suspensionType == .businessDisabled {
+                message = AMLocalizedString("Your account has been disabled by your administrator. Please contact your business account administrator for further details.", "Error message appears to sub-users of a business account when they try to login and they are disabled.")
+            } else if suspensionType == .businessRemoved {
+                message = AMLocalizedString("Your account has been removed by your administrator. Please contact your business account administrator for further details.", "An error message which appears to sub-users of a business account when they try to login and they are deleted.")
+            } else {
+                message = AMLocalizedString("accountBlocked", "Error message when trying to login and the account is blocked")
+            }
+            
+            let alert = UIAlertController(title: AMLocalizedString("error"), message:message, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: AMLocalizedString("ok"), style: .cancel) { _ in
                 MEGASdkManager.sharedMEGASdk().logout()
             })
-            UIApplication.mnz_presentingViewController()?.present(alert, animated: true, completion: nil)
+            UIApplication.mnz_presentingViewController().present(alert, animated: true, completion: nil)
         }
     }
 }
-

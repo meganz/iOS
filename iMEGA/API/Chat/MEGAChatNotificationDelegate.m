@@ -11,28 +11,30 @@
 #pragma mark - MEGAChatNotificationDelegate
 
 - (void)onChatNotification:(MEGAChatSdk *)api chatId:(uint64_t)chatId message:(MEGAChatMessage *)message {
-    MEGALogDebug(@"On chat %@ notification message %@", [MEGASdk base64HandleForUserHandle:chatId], message);
+    MEGALogDebug(@"[Notification] On chat %@ message %@", [MEGASdk base64HandleForUserHandle:chatId], message);
     
     [UIApplication sharedApplication].applicationIconBadgeNumber = api.unreadChats;
     
-    if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
+    MOMessage *moMessage = [MEGAStore.shareInstance fetchMessageWithChatId:chatId messageId:message.messageId];
+    if (moMessage) {
+        [MEGAStore.shareInstance deleteMessage:moMessage];
+        MEGALogDebug(@"[Notification] Already notified")
+        return;
+    }
+    
+    if (UIApplication.sharedApplication.applicationState != UIApplicationStateBackground) {
         if ([UIApplication.mnz_visibleViewController isKindOfClass:[MessagesViewController class]] && message.status != MEGAChatMessageStatusSeen) {
             MessagesViewController *messagesVC = (MessagesViewController *) UIApplication.mnz_visibleViewController;
             if (messagesVC.chatRoom.chatId == chatId) {
-                MEGALogDebug(@"The chat room %@ is opened, ignore notification", [MEGASdk base64HandleForHandle:chatId]);
+                MEGALogDebug(@"[Notification] The chat room %@ is opened, ignore notification", [MEGASdk base64HandleForHandle:chatId]);
                 return;
             }
         }
         MEGAChatRoom *chatRoom = [api chatRoomForChatId:chatId];
         if (chatRoom && message) {
             MEGALocalNotificationManager *localNotificationManager = [[MEGALocalNotificationManager alloc] initWithChatRoom:chatRoom message:message silent:YES];
-            [localNotificationManager proccessNotification];
+            [localNotificationManager processNotification];
         }
-    } else {
-        MOMessage *mMessage = [[MEGAStore shareInstance] fetchMessageWithChatId:chatId messageId:message.messageId];
-        MEGAChatRoom *chatRoom = [api chatRoomForChatId:chatId];
-        MEGALocalNotificationManager *localNotificationManager = [[MEGALocalNotificationManager alloc] initWithChatRoom:chatRoom message:message silent:mMessage ? NO : YES];
-        [localNotificationManager proccessNotification];
     }
 }
 

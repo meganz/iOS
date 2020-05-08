@@ -1,0 +1,10 @@
+
+#ifndef MEGANotifications_PrefixHeader_h
+#define MEGANotifications_PrefixHeader_h
+
+#ifdef __OBJC__
+    #import "MEGAConstants.h"
+    #import "MEGALogMacros.h"
+#endif
+
+#endif /* MEGANotifications_PrefixHeader_h */

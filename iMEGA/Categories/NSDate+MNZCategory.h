@@ -7,9 +7,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSString *)mnz_formattedDefaultNameForMedia;
 
+- (NSString *)mnz_formattedDefaultDateForMedia;
 - (NSString *)mnz_formattedHourAndMinutes;
 - (NSString *)mnz_formattedDateMediumStyle;
 - (NSString *)mnz_formattedMonthAndYear;
+- (NSString *)mnz_formattedDateDayMonthYear;
+- (NSString *)mnz_formattedAbbreviatedDayOfWeek;
+
+
+- (BOOL)mnz_isInPastWeek;
+
+- (NSString *)mnz_stringForLastMessageTs;
 
 @end
 

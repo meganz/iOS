@@ -59,4 +59,60 @@
     return ret;
 }
 
+- (BOOL)mnz_isBluetoothAudioRouteAvailable {
+    __block BOOL isBluetoothAudioRouteAvailable = NO;
+    [AVAudioSession.sharedInstance.availableInputs enumerateObjectsUsingBlock:^(AVAudioSessionPortDescription *description, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([@[AVAudioSessionPortBluetoothA2DP, AVAudioSessionPortBluetoothLE, AVAudioSessionPortBluetoothHFP] containsObject:description.portType]) {
+            isBluetoothAudioRouteAvailable = YES;
+            *stop = YES;
+        }
+    }];
+    
+    MEGALogDebug(@"[AVAudioSession] Is there any bluetooth audio available? %@", isBluetoothAudioRouteAvailable ? @"YES" : @"NO");
+    return isBluetoothAudioRouteAvailable;
+}
+
+- (NSString *)stringForAVAudioSessionRouteChangeReason:(AVAudioSessionRouteChangeReason)reason {
+    NSString *ret;
+    switch (reason) {
+        case AVAudioSessionRouteChangeReasonUnknown:
+            ret = @"Unknow";
+            break;
+        
+        case AVAudioSessionRouteChangeReasonNewDeviceAvailable:
+            ret = @"New device available";
+            break;
+        
+        case AVAudioSessionRouteChangeReasonOldDeviceUnavailable:
+            ret = @"Old device unavailable";
+            break;
+        
+        case AVAudioSessionRouteChangeReasonCategoryChange:
+            ret = @"Category change";
+            break;
+        
+        case AVAudioSessionRouteChangeReasonOverride:
+            ret = @"Override";
+            break;
+        
+        case AVAudioSessionRouteChangeReasonWakeFromSleep:
+            ret = @"Wake from sleep";
+            break;
+        
+        case AVAudioSessionRouteChangeReasonNoSuitableRouteForCategory:
+            ret = @"Suitable route for category";
+            break;
+        
+        case AVAudioSessionRouteChangeReasonRouteConfigurationChange:
+            ret = @"Route configuration change";
+            break;
+            
+        default:
+            ret = @"Default";
+            break;
+    }
+    
+    return ret;
+}
+
 @end

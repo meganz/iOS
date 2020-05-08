@@ -9,18 +9,22 @@
 #import "Helper.h"
 #import "MEGAChatAttachNodeRequestDelegate.h"
 #import "MEGAChatAttachVoiceClipRequestDelegate.h"
-#import "MEGAChatCreateChatGroupRequestDelegate.h"
 #import "MEGAChatMessage+MNZCategory.h"
-#import "MEGACopyRequestDelegate.h"
 #import "MEGACreateFolderRequestDelegate.h"
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
+#ifdef MNZ_SHARE_EXTENSION
+#import "MEGAShare-Swift.h"
+#else
+#import "MEGA-Swift.h"
+#endif
 #import "MEGAUser+MNZCategory.h"
 
 #import "ContactTableViewCell.h"
 #import "ChatRoomCell.h"
 #import "ItemListViewController.h"
+#import "NSString+MNZCategory.h"
 
 @interface SendToViewController () <UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, UISearchControllerDelegate, ItemListViewControllerDelegate, UIGestureRecognizerDelegate>
 
@@ -174,16 +178,14 @@
             MEGAChatListItem *chatListItem = a;
             first = chatListItem.title;
         } else if ([a isKindOfClass:MEGAUser.class]) {
-            MEGAUser *user = a;
-            first = user.mnz_fullName;
+            first = ((MEGAUser *)a).mnz_displayName;
         }
         
         if ([b isKindOfClass:MEGAChatListItem.class]) {
             MEGAChatListItem *chatListItem = b;
             second = chatListItem.title;
         } else if ([b isKindOfClass:MEGAUser.class]) {
-            MEGAUser *user = b;
-            second = user.mnz_fullName;
+            second = ((MEGAUser *)b).mnz_displayName;
         }
         
         return [first compare:second options:NSCaseInsensitiveSearch];
@@ -479,14 +481,11 @@
                             }];
                         } else {
                             MEGALogDebug(@"There is not a chat with %@, create the chat and attach", user.email);
-                            MEGAChatPeerList *peerList = [[MEGAChatPeerList alloc] init];
-                            [peerList addPeerWithHandle:user.handle privilege:MEGAChatRoomPrivilegeStandard];
-                            MEGAChatCreateChatGroupRequestDelegate *createChatGroupRequestDelegate = [[MEGAChatCreateChatGroupRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
+                            [MEGASdkManager.sharedMEGAChatSdk mnz_createChatRoomWithUserHandle:user.handle completion:^(MEGAChatRoom * _Nonnull chatRoom) {
                                 [Helper importNode:node toShareWithCompletion:^(MEGANode *node) {
                                     [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatRoom.chatId node:node.handle delegate:chatAttachNodeRequestDelegate];
                                 }];
                             }];
-                            [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:NO peers:peerList delegate:createChatGroupRequestDelegate];
                         }
                     }
                 }
@@ -533,9 +532,7 @@
                             }
                         } else {
                             MEGALogDebug(@"There is not a chat with %@, create the chat and attach", user.email);
-                            MEGAChatPeerList *peerList = [[MEGAChatPeerList alloc] init];
-                            [peerList addPeerWithHandle:user.handle privilege:MEGAChatRoomPrivilegeStandard];
-                            MEGAChatCreateChatGroupRequestDelegate *createChatGroupRequestDelegate = [[MEGAChatCreateChatGroupRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
+                            [MEGASdkManager.sharedMEGAChatSdk mnz_createChatRoomWithUserHandle:user.handle completion:^(MEGAChatRoom * _Nonnull chatRoom) {
                                 @synchronized(self.chatIdNumbers) {
                                     [self.chatIdNumbers addObject:@(chatRoom.chatId)];
                                     if (self.chatIdNumbers.count == destinationCount) {
@@ -543,7 +540,6 @@
                                     }
                                 }
                             }];
-                            [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:NO peers:peerList delegate:createChatGroupRequestDelegate];
                         }
                     }
                 }];
@@ -578,7 +574,11 @@
             NSPredicate *chatPredicate = [NSPredicate predicateWithFormat:@"SELF.title contains[c] %@", searchString];
             self.searchedGroupChatsMutableArray = [[self.groupChatsMutableArray filteredArrayUsingPredicate:chatPredicate] mutableCopy];
             
-            NSPredicate *usersPredicate = [NSPredicate predicateWithFormat:@"SELF.mnz_fullName contains[c] %@", searchString];
+            NSPredicate *fullnamePredicate = [NSPredicate predicateWithFormat:@"SELF.mnz_fullName contains[c] %@", searchString];
+            NSPredicate *nicknamePredicate = [NSPredicate predicateWithFormat:@"SELF.mnz_nickname contains[c] %@", searchString];
+            NSPredicate *emailPredicate = [NSPredicate predicateWithFormat:@"SELF.email contains[c] %@", searchString];
+            NSPredicate *usersPredicate = [NSCompoundPredicate orPredicateWithSubpredicates:@[fullnamePredicate, nicknamePredicate, emailPredicate]];
+            
             self.searchedUsersMutableArray = [[self.visibleUsersMutableArray filteredArrayUsingPredicate:usersPredicate] mutableCopy];
             
             [self updateMainSearchArray];
@@ -638,8 +638,7 @@
             cell.onlineStatusView.hidden = YES;
         }
         
-        NSString *userName = user.mnz_fullName;
-        cell.nameLabel.text = userName ? userName : user.email;
+        cell.nameLabel.text = user.mnz_displayName;
         cell.shareLabel.text = user.email;
         
         [cell.avatarImageView mnz_setImageForUserHandle:user.handle];

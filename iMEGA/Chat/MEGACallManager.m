@@ -7,7 +7,7 @@
 @interface MEGACallManager ()
 
 @property (nonatomic, strong) CXCallController *callController;
-@property (nonatomic, strong) NSMutableDictionary *callsDictionary;
+@property (nonatomic, strong) NSMutableDictionary <NSUUID *, NSNumber *> *callsDictionary;
 
 @end
 
@@ -24,41 +24,110 @@
     return self;
 }
 
-- (void)startCall:(MEGAChatCall *)call email:(NSString *)email {
-    MEGALogDebug(@"[CallKit] Start call %@, uuid: %@, email: %@", call, call.uuid, email);
-    CXHandle *handle = [[CXHandle alloc] initWithType:CXHandleTypeEmailAddress value:email];
+- (void)startCall:(MEGAChatCall *)call {
+    MEGALogDebug(@"[CallKit] Start call %@", call);
+    CXHandle *handle = [[CXHandle alloc] initWithType:CXHandleTypeGeneric value:[MEGASdk base64HandleForUserHandle:call.chatId]];
     CXStartCallAction *startCallAction = [[CXStartCallAction alloc] initWithCallUUID:call.uuid handle:handle];
     startCallAction.video = call.hasLocalVideo;
+    MEGAChatRoom *chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:call.chatId];
+    startCallAction.contactIdentifier = chatRoom.title;
     
     CXTransaction *transaction = [[CXTransaction alloc] init];
     [transaction addAction:startCallAction];
     [self requestTransaction:transaction];
 }
 
-- (void)endCall:(MEGAChatCall *)call {
-    NSUUID *uuid;
-    if (call.uuid) {
-        uuid = call.uuid;
-    } else {
-        NSArray *keysArray = [self.callsDictionary allKeysForObject:@(call.callId)];
-        if (keysArray.count > 0) {
-            uuid = keysArray.firstObject;
-        }
-    }
-    
+- (void)endCallWithCallId:(uint64_t)callId chatId:(uint64_t)chatId {
+    NSUUID *uuid = [self uuidForChatId:chatId callId:callId];
+    MEGALogDebug(@"[CallKit] End call %@", uuid);
     if (uuid) {
-        MEGALogDebug(@"[CallKit] End call %@, uuid: %@", call, uuid);
         CXEndCallAction *endCallAction = [[CXEndCallAction alloc] initWithCallUUID:uuid];
         CXTransaction *transaction = [[CXTransaction alloc] init];
         [transaction addAction:endCallAction];
         [self requestTransaction:transaction];
     } else {
-        MEGALogDebug(@"[CallKit] Call %@ not found in the calls dictionary. Hang the call", call);
+        MEGALogDebug(@"[CallKit] Call %@ not found in the calls dictionary. Hang the call", [MEGASdk base64HandleForUserHandle:callId]);
         [self printAllCalls];
-        [[MEGASdkManager sharedMEGAChatSdk] hangChatCall:call.chatId];
+        [MEGASdkManager.sharedMEGAChatSdk hangChatCall:chatId];
     }
 }
 
+- (void)muteUnmuteCallWithCallId:(uint64_t)callId chatId:(uint64_t)chatId muted:(BOOL)muted {
+    NSUUID *uuid = [self uuidForChatId:chatId callId:callId];
+    MEGALogDebug(@"[CallKit] %@ call %@", muted ? @"Mute" : @"Unmute", uuid);
+    if (uuid) {
+        CXSetMutedCallAction *muteCallAction = [CXSetMutedCallAction.alloc initWithCallUUID:uuid muted:muted];
+        CXTransaction *transaction = [[CXTransaction alloc] init];
+        [transaction addAction:muteCallAction];
+        [self requestTransaction:transaction];
+    } else {
+        MEGALogDebug(@"[CallKit] Call %@ not found in the calls dictionary. %@ the call", [MEGASdk base64HandleForUserHandle:callId], muted ? @"Mute" : @"Unmute");
+        [self printAllCalls];
+        if (muted) {
+            [MEGASdkManager.sharedMEGAChatSdk disableAudioForChat:chatId];
+        } else {
+            [MEGASdkManager.sharedMEGAChatSdk enableAudioForChat:chatId];
+        }
+    }
+}
+
+- (void)addCall:(MEGAChatCall *)call {
+    MEGALogDebug(@"[CallKit] Add call %@", call);
+    [self.callsDictionary setObject:@(call.callId) forKey:call.uuid];
+    [self printAllCalls];
+}
+
+- (void)addCallWithCallId:(uint64_t)callId uuid:(NSUUID *)uuid {
+    MEGALogDebug(@"[CallKit] Add call with callid %@ and uuid %@", [MEGASdk base64HandleForUserHandle:callId], uuid);
+    self.callsDictionary[uuid] = @(callId);
+    [self printAllCalls];
+}
+
+- (void)removeCallByUUID:(NSUUID *)uuid {
+    MEGALogDebug(@"[CallKit] Remove call: %@", uuid);
+    [self.callsDictionary removeObjectForKey:uuid];
+    [self printAllCalls];
+}
+
+- (void)removeAllCalls {
+    MEGALogDebug(@"Remove all calls:");
+    [self.callsDictionary removeAllObjects];
+    [self printAllCalls];
+}
+
+
+- (uint64_t)callIdForUUID:(NSUUID *)uuid {
+    [self printAllCalls];
+    uint64_t callId = [[self.callsDictionary objectForKey:uuid] unsignedLongLongValue];
+    MEGALogDebug(@"[CallKit] Call %@ for uuid: %@", [MEGASdk base64HandleForUserHandle:callId], uuid);
+    return callId;
+}
+
+- (uint64_t)chatIdForUUID:(NSUUID *)uuid {
+    unsigned char bytes[128];
+    [uuid getUUIDBytes:bytes];
+    uint64_t chatid;
+    memcpy(&chatid, bytes, sizeof(chatid));
+    MEGALogDebug(@"[CallKit] Chat %@ for uuid: %@", [MEGASdk base64HandleForUserHandle:chatid], uuid);
+    return chatid;
+}
+
+- (NSUUID *)uuidForChatId:(uint64_t)chatId callId:(uint64_t)callId {
+    unsigned char tempUuid[128];
+    memcpy(tempUuid, &chatId, sizeof(chatId));
+    memcpy(tempUuid + sizeof(chatId), &callId, sizeof(callId));
+    NSUUID *uuid = [NSUUID.alloc initWithUUIDBytes:tempUuid];
+    return uuid;
+}
+
+#pragma mark - Private
+
+- (void)printAllCalls {
+    MEGALogDebug(@"[CallKit] All calls: %tu", self.callsDictionary.count);
+    for (MEGAChatCall *call in self.callsDictionary) {
+        MEGALogDebug(@"[CallKit] call %@", call);
+    }
+}
 
 - (void)requestTransaction:(CXTransaction *)transaction {
     MEGALogDebug(@"[CallKit] Request transaction  %@", transaction);
@@ -71,51 +140,6 @@
     }];
 }
 
-- (void)addCall:(MEGAChatCall *)call {
-    MEGALogDebug(@"[CallKit] Add call %@, uuid: %@", call, call.uuid);
-    [self.callsDictionary setObject:@(call.callId) forKey:call.uuid];
-    [self printAllCalls];
-}
 
-- (void)removeCallByUUID:(NSUUID *)uuid {
-    MEGALogDebug(@"[CallKit] Remove call, uuid: %@", uuid);
-    [self.callsDictionary removeObjectForKey:uuid];
-    [self printAllCalls];
-}
-
-- (void)removeAllCalls {
-    MEGALogDebug(@"Remove all calls:");
-    [self.callsDictionary removeAllObjects];
-    [self printAllCalls];
-}
-
-
-- (MEGAChatCall *)callForUUID:(NSUUID *)uuid {
-    [self printAllCalls];
-    uint64_t callId = [[self.callsDictionary objectForKey:uuid] unsignedLongLongValue];
-    MEGAChatCall *call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForCallId:callId];
-    MEGALogDebug(@"[CallKit] Call %@ for uuid: %@", call, uuid);
-    return call;
-}
-
-- (NSUUID *)UUIDForCall:(MEGAChatCall *)call {
-    [self printAllCalls];
-    NSUUID *uuid;
-    NSArray *callsArray = [self.callsDictionary allKeysForObject:@(call.callId)];
-    if (callsArray.count) {
-        uuid = callsArray.firstObject;
-    }
-    MEGALogDebug(@"[CallKit] UUID %@ for call: %@", uuid, call);
-    return uuid;
-}
-
-- (void)printAllCalls {
-    MEGALogDebug(@"[CallKit] All calls: ");
-    for (NSUUID *key in self.callsDictionary) {
-        NSNumber *callId = [self.callsDictionary objectForKey:key];
-        NSString *base64CallId = [MEGASdk base64HandleForUserHandle:callId.unsignedLongLongValue];
-        MEGALogDebug(@"[CallKit] %@ = %@", key, base64CallId);
-    }
-}
 
 @end

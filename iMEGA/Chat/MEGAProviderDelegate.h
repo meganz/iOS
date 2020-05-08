@@ -3,16 +3,14 @@
 #import <CallKit/CallKit.h>
 
 #import "MEGACallManager.h"
-#import "MEGAChatCall+MNZCategory.h"
+
 
 @interface MEGAProviderDelegate : NSObject <CXProviderDelegate>
 
-@property (getter=isOutgoingCall) BOOL outgoingCall;
-
 - (instancetype)initWithMEGACallManager:(MEGACallManager *)megaCallManager;
 
-- (void)reportIncomingCall:(MEGAChatCall *)call;
-- (void)reportOutgoingCall:(MEGAChatCall *)call;
-- (void)reportEndCall:(MEGAChatCall *)call;
+- (void)reportIncomingCallWithCallId:(uint64_t)callId chatId:(uint64_t)chatId;
+
+- (void)invalidateProvider;
 
 @end
