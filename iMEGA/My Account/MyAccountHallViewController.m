@@ -219,7 +219,7 @@ typedef NS_ENUM(NSInteger, MyAccount) {
 
 - (void)avatarTapped:(UITapGestureRecognizer *)sender {
     if (sender.state == UIGestureRecognizerStateEnded) {
-        ContactLinkQRViewController *contactLinkVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactLinkQRViewControllerID"];
+        ContactLinkQRViewController *contactLinkVC = [[UIStoryboard storyboardWithName:@"ContactLinkQR" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactLinkQRViewControllerID"];
         contactLinkVC.scanCode = NO;
         [self presentViewController:contactLinkVC animated:YES completion:nil];
     }

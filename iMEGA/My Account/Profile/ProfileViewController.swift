@@ -555,7 +555,7 @@ extension ProfileViewController: UITableViewDelegate {
             default:
                 if !MEGASdkManager.sharedMEGASdk().isBusinessAccount {
                     if ((MEGASdkManager.sharedMEGASdk().mnz_accountDetails) != nil) {
-                        let upgradeViewController = UIStoryboard.init(name: "MyAccount", bundle: nil).instantiateViewController(withIdentifier: "UpgradeID")
+                        let upgradeViewController = UIStoryboard.init(name: "UpgradeAccount", bundle: nil).instantiateViewController(withIdentifier: "UpgradeTableViewControllerID")
                         navigationController?.pushViewController(upgradeViewController, animated: true)
                     } else {
                         MEGAReachabilityManager.isReachableHUDIfNot()
