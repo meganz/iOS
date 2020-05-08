@@ -103,6 +103,9 @@ class ChatViewController: MessagesViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        checkIfChatHasActiveCall()
+
         if (presentingViewController != nil) && parent != nil {
             navigationItem.leftBarButtonItem = UIBarButtonItem(title: AMLocalizedString("close"), style: .plain, target: self, action: #selector(dismissChatRoom))
         }
@@ -156,6 +159,7 @@ class ChatViewController: MessagesViewController {
         super.viewWillDisappear(animated)
         if isMovingFromParent || presentingViewController != nil && navigationController?.viewControllers.count == 1 {
             chatRoomDelegate.closeChatRoom()
+            MEGASdkManager.sharedMEGAChatSdk()?.remove(self)
         }
     }
     
