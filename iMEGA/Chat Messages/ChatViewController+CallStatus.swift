@@ -79,6 +79,7 @@ extension ChatViewController {
     @objc func joinActiveCall() {
         DevicePermissionsHelper.audioPermissionModal(true, forIncomingCall: false) { (granted) in
             if granted {
+                self.timer?.invalidate()
                 self.openCallViewWithVideo(videoCall: false, active: true)
             } else {
                 DevicePermissionsHelper.alertAudioPermission(forIncomingCall: false)
