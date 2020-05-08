@@ -1,6 +1,8 @@
 
 #import "MyAccountHallTableViewCell.h"
 
+#import "MEGA-Swift.h"
+
 @implementation MyAccountHallTableViewCell
 
 - (void)awakeFromNib {
@@ -20,7 +22,7 @@
 - (void)setupCell {
     self.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
     
-    self.detailLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
+    self.detailLabel.textColor = UIColor.mnz_secondaryLabel;
     
     self.pendingView.backgroundColor = [UIColor mnz_redMainForTraitCollection:self.traitCollection];
     self.pendingLabel.textColor = UIColor.whiteColor;
