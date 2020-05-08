@@ -48,6 +48,10 @@ class MessageTextView: UITextView {
             /// The content size of text view should match that of the text. Most of the time it matches.
             /// When the input accessory view containing the textview is removed to display some other view and added back after the view is dismissed the content size does not match the content.
             /// if the text is present and the difffernce is more than 5 manually setting the content size.
+            guard contentSize.width != bounds.width else {
+                return
+            }
+            
             let size = sizeThatFits(CGSize(width: bounds.width,
                                            height: CGFloat(MAXFLOAT)))
             if abs(contentSize.height - size.height) > 5
