@@ -28,9 +28,13 @@ class ChatViewController: MessagesViewController {
          return control
      }()
     
+    // topbanner
+    var timer: Timer?
     var topBannerButtonTopConstraint: NSLayoutConstraint?
-    private(set) lazy var topBannerButton: UIButton = {
+    lazy var topBannerButton: UIButton = {
         let button = UIButton()
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .caption1)
         return button
     }()
     
@@ -554,13 +558,14 @@ class ChatViewController: MessagesViewController {
 
     private func configureTopBannerButton() {
         view.addSubview(topBannerButton)
-        topBannerButtonTopConstraint = topBannerButton.autoPinEdge(toSuperviewMargin: .top)
+        topBannerButtonTopConstraint = topBannerButton.autoPinEdge(toSuperviewMargin: .top, withInset: -44)
         topBannerButton.autoPinEdge(toSuperviewEdge: .leading)
         topBannerButton.autoPinEdge(toSuperviewEdge: .trailing)
         topBannerButton.autoSetDimension(.height, toSize: 44)
         
-        topBannerButton.setTitleColor(.white, for: .normal)
         topBannerButton.backgroundColor = #colorLiteral(red: 0, green: 0.7490196078, blue: 0.631372549, alpha: 1)
+        topBannerButton.isHidden = true
+        MEGASdkManager.sharedMEGAChatSdk()?.add(self)
     }
     
     private func registerCustomCells() {
