@@ -3,6 +3,14 @@ import Foundation
 
 extension UIColor {
     
+    @objc class func mnz_secondaryLabel() -> UIColor {
+        if #available(iOS 13.0, *) {
+            return UIColor.secondaryLabel
+        } else {
+            return UIColor(fromHexString: "3C3C43").withAlphaComponent(0.6)
+        }
+    }
+    
     @objc class func mnz_tertiaryBackground(_ traitCollection: UITraitCollection) -> UIColor {
         if #available(iOS 13.0, *) {
             switch traitCollection.userInterfaceStyle {

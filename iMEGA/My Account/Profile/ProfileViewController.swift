@@ -43,6 +43,8 @@ enum SessionSectionRow: Int {
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var gradientView: GradientView!
     @IBOutlet weak var avatarViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var avatarBottomSeparatorView: UIView!
+    
     @IBOutlet weak var tableView: UITableView!
     
     private var avatarExpandedPosition: CGFloat = 0.0
@@ -83,6 +85,8 @@ enum SessionSectionRow: Int {
         configureGestures()
         
         MEGASdkManager.sharedMEGASdk().add(self)
+        
+        updateAppearance()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -101,7 +105,26 @@ enum SessionSectionRow: Int {
         }
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        if #available(iOS 13, *) {
+            if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+                updateAppearance()
+            }
+        }
+    }
+    
     // MARK: - Private
+    
+    private func updateAppearance() {
+        tableView.backgroundColor = UIColor.mnz_settingsBackground(for: traitCollection)
+        tableView.separatorColor = UIColor.mnz_separatorColor(for: traitCollection)
+        
+        nameLabel.textColor = UIColor.white
+        emailLabel.textColor = UIColor.white
+        avatarBottomSeparatorView.backgroundColor = UIColor.mnz_separatorColor(for: traitCollection)
+    }
     
     private func configureGestures() -> Void {
         let avatarFilePath: String = Helper.path(forSharedSandboxCacheDirectory: "thumbnailsV3") + "/" + (MEGASdk.base64Handle(forUserHandle: MEGASdkManager.sharedMEGASdk().myUser?.handle ??  ~0) ?? "")
@@ -422,6 +445,7 @@ extension ProfileViewController: UITableViewDataSource {
                     } catch {
                         cell.detailLabel.text = phoneNumber
                     }
+                    cell.detailLabel.textColor = UIColor.mnz_secondaryLabel()
                     cell.accessoryType = .none
                 }
             case .changePassword:
@@ -430,8 +454,10 @@ extension ProfileViewController: UITableViewDataSource {
             return cell
         case .security:
             let cell = tableView.dequeueReusableCell(withIdentifier: "RecoveryKeyID", for: indexPath) as! RecoveryKeyTableViewCell
+            cell.recoveryKeyContainerView.backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
             cell.recoveryKeyLabel.text = AMLocalizedString("masterKey", "Title for the MEGA Recovery Key")+".txt"
             cell.backupRecoveryKeyLabel.text = AMLocalizedString("backupRecoveryKey", "Label for recovery key button")
+            cell.backupRecoveryKeyLabel.textColor = UIColor.mnz_turquoise(for: traitCollection)
             return cell
         case .plan:
             let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileCellID", for: indexPath) as! ProfileTableViewCell
@@ -446,6 +472,7 @@ extension ProfileViewController: UITableViewDataSource {
                 switch accountType {
                 case .free:
                     cell.detailLabel.text = AMLocalizedString("Free", "Text relative to the MEGA account level. UPPER CASE")
+                    cell.detailLabel.textColor = UIColor.mnz_secondaryLabel()
                 case .proI:
                     cell.detailLabel.text = "Pro I"
                     cell.detailLabel.textColor = UIColor.mnz_redProI()
@@ -464,6 +491,7 @@ extension ProfileViewController: UITableViewDataSource {
                     } else {
                         cell.detailLabel.text = AMLocalizedString("Payment overdue", "Business expired account Overdue payment page header.")
                     }
+                    cell.detailLabel.textColor = UIColor.mnz_secondaryLabel()
                     cell.detailLabel.text = AMLocalizedString("Business", "")
                     cell.accessoryType = .none
                 default:
@@ -475,6 +503,7 @@ extension ProfileViewController: UITableViewDataSource {
                 } else {
                     cell.detailLabel.text = AMLocalizedString("user", "user (singular) label indicating is receiving some info, for example shared folders").capitalized
                 }
+                cell.detailLabel.textColor = UIColor.mnz_secondaryLabel()
                 cell.nameLabel.text = AMLocalizedString("Role:", "title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts").replacingOccurrences(of: ":", with: "")
                 cell.accessoryType = .none
             }
@@ -484,6 +513,7 @@ extension ProfileViewController: UITableViewDataSource {
             case .logout:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "LogoutID", for: indexPath) as! LogoutTableViewCell
                 cell.logoutLabel.text = AMLocalizedString("logoutLabel", "Title of the button which logs out from your account.")
+                cell.logoutLabel.textColor = UIColor.mnz_redMain(for: traitCollection)
                 return cell
             }
         }
