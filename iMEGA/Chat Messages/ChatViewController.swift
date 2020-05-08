@@ -10,6 +10,7 @@ class ChatViewController: MessagesViewController {
             update()
         }
     }
+    var chatCall: MEGAChatCall?
 
     @objc var publicChatLink: URL?
     @objc var publicChatWithLinkCreated: Bool = false
