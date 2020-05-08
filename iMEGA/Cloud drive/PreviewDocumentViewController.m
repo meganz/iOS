@@ -7,6 +7,7 @@
 #import "SVProgressHUD.h"
 
 #import "Helper.h"
+#import "CopyrightWarningViewController.h"
 #import "CustomActionViewController.h"
 #import "NodeInfoViewController.h"
 #import "MEGAReachabilityManager.h"
@@ -203,7 +204,7 @@
 
 - (IBAction)actionsTapped:(UIBarButtonItem *)sender {
     CustomActionViewController *actionController = [[CustomActionViewController alloc] init];
-    actionController.node = self.node;
+    actionController.node = self.node = [MEGASdkManager.sharedMEGASdk nodeForHandle:self.node.handle];
     actionController.actionDelegate = self;
     actionController.actionSender = sender;
     actionController.displayMode = self.isLink ? DisplayModeFileLink : DisplayModeCloudDrive;
@@ -364,6 +365,19 @@
         case MegaNodeActionTypeMoveToRubbishBin:
             [node mnz_moveToTheRubbishBinInViewController:self];
             break;
+            
+        case MegaNodeActionTypeManageLink:
+        case MegaNodeActionTypeGetLink: {
+            if (MEGAReachabilityManager.isReachableHUDIfNot) {
+                [CopyrightWarningViewController presentGetLinkViewControllerForNodes:@[node] inViewController:UIApplication.mnz_presentingViewController];
+            }
+            break;
+        }
+            
+        case MegaNodeActionTypeRemoveLink: {
+            [node mnz_removeLink];
+            break;
+        }
             
         default:
             break;

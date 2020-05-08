@@ -114,15 +114,15 @@
     NSString *imageQualityString;
     switch (imageQuality) {
         case ChatImageUploadQualityAuto:
-            imageQualityString = AMLocalizedString(@"Automatic", nil);
+            imageQualityString = AMLocalizedString(@"Automatic", @"Text for some option property indicating the user the action will be determine automatically by MEGA. For example: Image Quality option for chats");
             break;
             
         case ChatImageUploadQualityHigh:
-            imageQualityString = AMLocalizedString(@"high", @"High");
+            imageQualityString = AMLocalizedString(@"high", @"Property associated with something higher than the usual or average size, number, value, or amount. For example: video quality.");
             break;
             
         case ChatImageUploadQualityOptimised:
-            imageQualityString = AMLocalizedString(@"Optimised", nil);
+            imageQualityString = AMLocalizedString(@"Optimised", @"Text for some option property indicating the user the action to perform will be optimised. For example: Image Quality reduction option for chats");
             break;
             
         default:
@@ -140,7 +140,6 @@
         videoQuality = videoQualityNumber.unsignedIntegerValue;
     } else {
         [[NSUserDefaults standardUserDefaults] setObject:@(ChatVideoUploadQualityMedium) forKey:@"ChatVideoQuality"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
         videoQuality = ChatVideoUploadQualityMedium;
     }
     
@@ -197,15 +196,15 @@
         ChatImageUploadQuality imageQuality = [NSUserDefaults.standardUserDefaults integerForKey:@"chatImageQuality"];
         switch (imageQuality) {
             case ChatImageUploadQualityAuto:
-                footerTitle = AMLocalizedString(@"Send smaller size images through cellular networks and original size images through wifi", @"Automatic description");
+                footerTitle = AMLocalizedString(@"Send smaller size images through cellular networks and original size images through wifi", @"Description of Automatic Image Quality option");
                 break;
                 
             case ChatImageUploadQualityHigh:
-                footerTitle = AMLocalizedString(@"Send original size, increased quality images", @"High description");
+                footerTitle = AMLocalizedString(@"Send original size, increased quality images", @"Description of High Image Quality option");
                 break;
                 
             case ChatImageUploadQualityOptimised:
-                footerTitle = AMLocalizedString(@"Send smaller size images optimised for lower data consumption", @"Optimised description");
+                footerTitle = AMLocalizedString(@"Send smaller size images optimised for lower data consumption", @"Description of Optimised Image Quality option");
                 break;
                 
             default:

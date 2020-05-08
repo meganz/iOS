@@ -86,7 +86,6 @@
             if ([[NSUserDefaults standardUserDefaults] boolForKey:@"isSaveMediaCapturedToGalleryEnabled"]) {
                 [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"isSaveMediaCapturedToGalleryEnabled"];
             }
-            [NSUserDefaults.standardUserDefaults synchronize];
             break;
         }
             
@@ -94,7 +93,6 @@
             //If the app has 'Read and Write' access to Photos and the user didn't configure the setting to save the media captured from the MEGA app in Photos, enable it by default.
             if (![[NSUserDefaults standardUserDefaults] objectForKey:@"isSaveMediaCapturedToGalleryEnabled"]) {
                 [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isSaveMediaCapturedToGalleryEnabled"];
-                [[NSUserDefaults standardUserDefaults] synchronize];
             }
             break;
         }
@@ -124,7 +122,6 @@
         }
         
         [NSUserDefaults.standardUserDefaults setBool:settingSwitch.isOn forKey:userDefaultSetting];
-        [NSUserDefaults.standardUserDefaults synchronize];
     }];
 }
 
@@ -148,6 +145,14 @@
 }
 
 #pragma mark - UITableViewDataSource
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    if (MEGASdkManager.sharedMEGASdk.isBusinessAccount && !MEGASdkManager.sharedMEGASdk.isMasterBusinessAccount) {
+        return 3;
+    }
+    
+    return 4;
+}
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     NSString *titleHeader;

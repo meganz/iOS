@@ -92,7 +92,11 @@ class EnterEmailViewController: UIViewController {
     
     func enableInviteContactsButton() {
         inviteContactsButton.backgroundColor = UIColor.mnz_green00BFA5()
-        let inviteContactsString = tokens.count == 1 ? AMLocalizedString("Invite 1 contact", "Text showing the user one contact would be invited").replacingOccurrences(of: "[X]", with: String(tokens.count)) : AMLocalizedString("Invite [X] contacts", "Text showing the user how many contacts would be invited").replacingOccurrences(of: "[X]", with: String(tokens.count))
+        let inputText = tokenField.inputText()!
+        let tokensNumber = tokens.count + (inputText.mnz_isValidEmail() ? 1 : 0)
+        let inviteContactsString = tokensNumber == 1 ?
+            AMLocalizedString("Invite 1 contact", "Text showing the user one contact would be invited").replacingOccurrences(of: "[X]", with: String(tokensNumber)) :
+            AMLocalizedString("Invite [X] contacts", "Text showing the user how many contacts would be invited").replacingOccurrences(of: "[X]", with: String(tokensNumber))
         inviteContactsButton.setTitle(inviteContactsString, for: .normal)
     }
     
@@ -107,6 +111,7 @@ class EnterEmailViewController: UIViewController {
         tokenField.minInputWidth = tokenField.frame.width / 2
         
         tokenField.inputTextFieldKeyboardType = .emailAddress
+        tokenField.autocapitalizationType = .none
         
         tokenField.toLabelText = "";
         tokenField.inputTextFieldTextColor = UIColor.mnz_black333333()
@@ -123,6 +128,15 @@ class EnterEmailViewController: UIViewController {
     
     // MARK: Actions
     @IBAction func inviteContactsTapped(_ sender: UIButton) {
+        let inputText = tokenField.inputText()!
+        if inputText.mnz_isValidEmail() {
+            tokenField.inputTextFieldTextColor = UIColor.mnz_black333333()
+            instructionsLabel.text = AMLocalizedString("Tap space to enter multiple emails", "Text showing the user how to write more than one email in order to invite them to MEGA")
+            instructionsLabel.textColor = UIColor.mnz_gray999999()
+            tokens.append(inputText)
+            tokenField.reloadData()
+        }
+        
         guard MEGAReachabilityManager.isReachableHUDIfNot(), tokens.count > 0 else {
             return
         }
@@ -132,6 +146,7 @@ class EnterEmailViewController: UIViewController {
             weakSelf?.tokens.removeAll()
             weakSelf?.tokenField.reloadData()
             weakSelf?.disableInviteContactsButton()
+            weakSelf?.navigationController?.popViewController(animated: true)
         }
         tokens.forEach { (email) in
             MEGASdkManager.sharedMEGASdk().inviteContact(withEmail: email, message: "", action: MEGAInviteAction.add, delegate: inviteContactRequestDelegate)
@@ -196,8 +211,21 @@ extension EnterEmailViewController: VENTokenFieldDelegate {
         tokenField.reloadData()
         
         instructionsLabel.text = AMLocalizedString("Tap space to enter multiple emails", "Text showing the user how to write more than one email in order to invite them to MEGA")
-
-        if tokens.count == 0 {
+        
+        if tokens.count > 0 {
+            enableInviteContactsButton()
+        } else {
+            disableInviteContactsButton()
+        }
+    }
+    
+    func tokenField(_ tokenField: VENTokenField, didChangeText text: String?) {
+        if text!.mnz_isValidEmail() || tokens.count > 0 {
+            tokenField.inputTextFieldTextColor = UIColor.mnz_black333333()
+            instructionsLabel.text = AMLocalizedString("Tap space to enter multiple emails", "Text showing the user how to write more than one email in order to invite them to MEGA")
+            instructionsLabel.textColor = UIColor.mnz_gray999999()
+            enableInviteContactsButton()
+        } else {
             disableInviteContactsButton()
         }
     }

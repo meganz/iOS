@@ -50,6 +50,8 @@
 
 @property (strong, nonatomic) NSNumberFormatter *numberFormatter;
 
+@property (nonatomic, getter=shouldHideSkipButton) BOOL hideSkipButton;
+
 @end
 
 @implementation UpgradeTableViewController
@@ -80,8 +82,15 @@
     
     _autorenewableDescriptionLabel.text = AMLocalizedString(@"autorenewableDescription", @"Describe how works auto-renewable subscriptions on the Apple Store");
     
+    
+    if (self.presentingViewController || self.navigationController.presentingViewController.presentedViewController == self.navigationController || [self.tabBarController.presentingViewController isKindOfClass:UITabBarController.class]) {
+        self.hideSkipButton = NO;
+        self.skipBarButtonItem.title = AMLocalizedString(@"skipButton", @"Button title that skips the current action");
+    } else {
+        self.hideSkipButton = YES;
+    }
+    
     self.navigationItem.rightBarButtonItem = (self.isChoosingTheAccountType || self.shouldHideSkipButton) ? nil : self.skipBarButtonItem;
-    self.skipBarButtonItem.title = AMLocalizedString(@"skipButton", @"Button title that skips the current action");
     
     [self getIndexPositionsForProLevels];
     
@@ -274,7 +283,7 @@
 }
 
 - (NSAttributedString *)bandwidthAttributedStringForProLevelAtIndex:(NSInteger)index {
-    NSMutableAttributedString *bandwidthString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@", AMLocalizedString(@"transferQuota", @"Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'.")] attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_gray666666]}];
+    NSMutableAttributedString *bandwidthString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@", AMLocalizedString(@"Transfer Quota", @"Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'.")] attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_gray666666]}];
     
     SKProduct *product = [[MEGAPurchase sharedInstance].products objectAtIndex:index];
     NSString *bandwidthFormattedString = [self transferAndUnitsByProduct:product];
@@ -297,7 +306,7 @@
 }
 
 - (NSAttributedString *)freeTransferQuotaAttributedString {
-    NSMutableAttributedString *transferQuotaString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@", AMLocalizedString(@"transferQuota", @"Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'.")] attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_gray666666]}];
+    NSMutableAttributedString *transferQuotaString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@", AMLocalizedString(@"Transfer Quota", @"Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'.")] attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_gray666666]}];
     
     NSString *limitedTransferQuotaString = [AMLocalizedString(@"limited", @" Label for any 'Limited' button, link, text, title, etc. - (String as short as possible).") uppercaseString];
     NSMutableAttributedString *transferQuotaMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:limitedTransferQuotaString attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_black333333]}];

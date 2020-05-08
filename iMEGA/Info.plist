@@ -144,7 +144,6 @@
 	<array>
 		<string>audio</string>
 		<string>fetch</string>
-		<string>location</string>
 		<string>remote-notification</string>
 		<string>voip</string>
 	</array>
@@ -181,6 +180,8 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
+	<key>UIUserInterfaceStyle</key>
+	<string>Light</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
 </dict>
