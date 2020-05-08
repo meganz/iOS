@@ -12,19 +12,33 @@ class ContactsHeaderFooterView: UITableViewHeaderFooterView {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        setup()
+        updateAppearance()
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
         
-        setup()
+        updateAppearance()
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        if #available(iOS 13, *) {
+            if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+                updateAppearance()
+            }
+        }
     }
     
     //MARK: - Private
     
-    private func setup() {
-        self.contentView.backgroundColor = UIColor.mnz_tertiaryBackground(self.traitCollection)
+    private func updateAppearance() {
+        if (self.contentView.backgroundColor != nil) {
+            self.contentView.backgroundColor = UIColor.mnz_tertiaryBackground(self.traitCollection)
+        }
+        
+        self.titleLabel.textColor = UIColor.mnz_secondaryGray(for: self.traitCollection)
         
         self.topSeparatorView.backgroundColor = UIColor.mnz_separatorColor(for: self.traitCollection)
         self.bottomSeparatorView.backgroundColor = UIColor .mnz_separatorColor(for: self.traitCollection)
