@@ -529,9 +529,6 @@ extension ChatViewController: AddToChatViewControllerDelegate {
 }
 
 extension ChatViewController: UIPopoverPresentationControllerDelegate {
-//    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
-//        <#code#>
-//    }
     
     func adaptivePresentationStyle(for controller: UIPresentationController,
                                    traitCollection: UITraitCollection) -> UIModalPresentationStyle{

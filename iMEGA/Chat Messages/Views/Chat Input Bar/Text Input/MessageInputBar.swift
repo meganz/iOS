@@ -62,7 +62,7 @@ class MessageInputBar: UIView {
         return UIScreen.main.bounds.height -
             (messageTextViewTopConstraintValueWhenExpanded!
                 + messageTextViewBottomConstraintDefaultValue
-                + keyboardHeight)
+                + (messageTextView.isFirstResponder ? keyboardHeight : 0.0))
     }
     
     private var keyboardHeight: CGFloat?
@@ -239,7 +239,7 @@ class MessageInputBar: UIView {
         semiTransparentView.isHidden = false
 
         let topConstraintValue: CGFloat = UIScreen.main.bounds.height
-            - (keyboardHeight!
+            - ((messageTextView.isFirstResponder ? keyboardHeight! : 0.0)
                 + messageTextViewBottomConstraint.constant
                 + messageTextView.intrinsicContentSize.height)
 
