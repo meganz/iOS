@@ -25,6 +25,7 @@
 		2F2801DD24481F3A00C160D0 /* RichPreviewContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F2801DC24481F3A00C160D0 /* RichPreviewContentView.xib */; };
 		2F2801DF2449587400C160D0 /* ChatVoiceClipCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2801DE2449587400C160D0 /* ChatVoiceClipCollectionViewCell.swift */; };
 		2F73098F24636F9E00EF36F4 /* ChatRoomCallDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F73098E24636F9E00EF36F4 /* ChatRoomCallDelegate.swift */; };
+		2F7309932463B1F000EF36F4 /* ChatViewController+CallStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7309922463B1F000EF36F4 /* ChatViewController+CallStatus.swift */; };
 		2F8F5F1623691A390049603F /* UINavigationViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8F5F1523691A390049603F /* UINavigationViewController+Additions.swift */; };
 		2F91390E238C9AC4004C611A /* MEGARecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F91390D238C9AC4004C611A /* MEGARecordView.swift */; };
 		2F913910238CC3CA004C611A /* MEGARecordView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F91390F238CC3CA004C611A /* MEGARecordView.xib */; };
@@ -1284,6 +1285,7 @@
 		2F2801DC24481F3A00C160D0 /* RichPreviewContentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RichPreviewContentView.xib; sourceTree = "<group>"; };
 		2F2801DE2449587400C160D0 /* ChatVoiceClipCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatVoiceClipCollectionViewCell.swift; sourceTree = "<group>"; };
 		2F73098E24636F9E00EF36F4 /* ChatRoomCallDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomCallDelegate.swift; sourceTree = "<group>"; };
+		2F7309922463B1F000EF36F4 /* ChatViewController+CallStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatViewController+CallStatus.swift"; sourceTree = "<group>"; };
 		2F8F5F1523691A390049603F /* UINavigationViewController+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationViewController+Additions.swift"; sourceTree = "<group>"; };
 		2F91390D238C9AC4004C611A /* MEGARecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGARecordView.swift; sourceTree = "<group>"; };
 		2F91390F238CC3CA004C611A /* MEGARecordView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MEGARecordView.xib; sourceTree = "<group>"; };
@@ -5452,6 +5454,7 @@
 				2F73098E24636F9E00EF36F4 /* ChatRoomCallDelegate.swift */,
 				BF1589212435F3E7007AF9EC /* ChatViewMessagesFlowLayout.swift */,
 				BFE6DBFB242DBA4A00E2E5B4 /* ChatViewController.swift */,
+				2F7309922463B1F000EF36F4 /* ChatViewController+CallStatus.swift */,
 				2F18DEEE24592F0E00E7EE27 /* ChatViewController+Menus.swift */,
 				2FBC74C7245BE74900BE513F /* ChatViewController+EmptyDataSet.swift */,
 				BFB464152435825A00FB90B9 /* ChatViewController+MessagesDataSource.swift */,
@@ -6550,6 +6553,7 @@
 				5B222A74205A9CD40083D433 /* MEGAChatAttachNodeRequestDelegate.m in Sources */,
 				413199791BD7BD5D002CD6EA /* DTTimePeriod.m in Sources */,
 				A86B9F452316D6AB00F35E7A /* FLEXExplorerToolbar.m in Sources */,
+				2F7309932463B1F000EF36F4 /* ChatViewController+CallStatus.swift in Sources */,
 				B6E6EF9422485A0300653311 /* CameraUploadNodeLoadOperation.m in Sources */,
 				BFB463EF2434290400FB90B9 /* UIView+Additions.swift in Sources */,
 				A86B9F782316D6AB00F35E7A /* FLEXCookiesTableViewController.m in Sources */,
