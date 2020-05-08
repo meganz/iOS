@@ -166,7 +166,14 @@ class MessageInputBar: UIView {
             return
         }
         
-        delegate.tappedAddButton(button)
+        if expanded {
+            collapse {
+                delegate.tappedAddButton(button)
+            }
+        } else {
+            delegate.tappedAddButton(button)
+        }
+        
     }
     
     // MARK: - Private methods
@@ -185,8 +192,11 @@ class MessageInputBar: UIView {
         expandAnimationStart(completionHandler: expandAnimationComplete)
     }
     
-    private func collapse() {
-        collapseAnimationStart(completionHandler: collapseAnimationComplete)
+    private func collapse(_ completionHandler: (() -> Void)? = nil) {
+        collapseAnimationStart { _ in
+            self.collapseAnimationComplete()
+            completionHandler?()
+        }
     }
     
     private func collapseAnimationStart(completionHandler: ((Bool) -> Void)?) {
@@ -207,10 +217,9 @@ class MessageInputBar: UIView {
             self.semiTransparentView.alpha = 0.0
             self.layoutIfNeeded()
         }, completion: completionHandler)
-
     }
     
-    private func collapseAnimationComplete(_ animationCompletion: Bool) {
+    private func collapseAnimationComplete() {
         expandedTextViewCoverView.isHidden = true
         collapsedTextViewCoverView.isHidden = false
 
