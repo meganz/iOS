@@ -204,8 +204,6 @@
     if (@available(iOS 13.0, *)) {
         if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
             [self updateAppearance];
-            
-            [self.tableView reloadData];
         }
     }
     
@@ -1441,13 +1439,13 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     static NSString *reuseIdentifier = @"ContactsHeaderFooterViewID";
     ContactsHeaderFooterView *headerView = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:reuseIdentifier];
+    headerView.contentView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
     
     if (self.contactsMode == ContactsModeDefault) {
         if (section == 0) {
             return nil;
         } else if (section == 1) {
             headerView.titleLabel.font = [UIFont systemFontOfSize:13.f];
-            headerView.titleLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
             headerView.titleLabel.text = AMLocalizedString(@"Recently Added", @"Label for any ‘Recently Added’ button, link, text, title, etc. On iOS is used on a section that shows the 'Recently Added' contacts");
             
             return headerView;

@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "more.png",
+      "filename" : "More.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
@@ -17,7 +17,7 @@
       "scale" : "1x"
     },
     {
-      "filename" : "more@2x.png",
+      "filename" : "More@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
@@ -33,7 +33,7 @@
       "scale" : "2x"
     },
     {
-      "filename" : "more@3x.png",
+      "filename" : "More@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     },

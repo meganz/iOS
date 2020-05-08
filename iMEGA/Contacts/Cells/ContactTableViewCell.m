@@ -8,20 +8,30 @@
 
 @implementation ContactTableViewCell
 
--(void)awakeFromNib {
+- (void)awakeFromNib {
     [super awakeFromNib];
     
     if (@available(iOS 11.0, *)) {
         self.avatarImageView.accessibilityIgnoresInvertColors = YES;
     }
     
-    [self setup];
+    [self updateAppearance];
 }
 
 - (void)prepareForReuse {
     [super prepareForReuse];
     
-    [self setup];
+    [self updateAppearance];
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateAppearance];
+        }
+    }
 }
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
@@ -64,8 +74,10 @@
 
 #pragma mark - Private
 
-- (void)setup {
+- (void)updateAppearance {
     self.shareLabel.textColor = [UIColor mnz_subtitlesColorForTraitCollection:self.traitCollection];
+    
+    self.permissionsLabel.textColor = [UIColor mnz_tertiaryGrayForTraitCollection:self.traitCollection];
 }
 
 - (NSString *)userNameForUser:(MEGAUser *)user {

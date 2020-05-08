@@ -59,18 +59,20 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 @property (weak, nonatomic) IBOutlet UIView *onlineStatusView;
 @property (weak, nonatomic) IBOutlet GradientView *gradientView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *avatarViewHeightConstraint;
+@property (weak, nonatomic) IBOutlet UIView *avatarBottomSeparatorView;
+
+@property (weak, nonatomic) IBOutlet UIView *actionsView;
 @property (weak, nonatomic) IBOutlet UIButton *callButton;
 @property (weak, nonatomic) IBOutlet UIButton *videoCallButton;
 @property (weak, nonatomic) IBOutlet UIButton *messageButton;
 @property (weak, nonatomic) IBOutlet UILabel *messageLabel;
 @property (weak, nonatomic) IBOutlet UILabel *callLabel;
 @property (weak, nonatomic) IBOutlet UILabel *videoLabel;
+@property (weak, nonatomic) IBOutlet UIView *actionsBottomSeparatorView;
+
 @property (weak, nonatomic) IBOutlet UIButton *backButton;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-
-@property (weak, nonatomic) IBOutlet UIView *participantsHeaderView;
-@property (weak, nonatomic) IBOutlet UILabel *participantsHeaderViewLabel;
 
 @property (strong, nonatomic) MEGAUser *user;
 @property (strong, nonatomic) MEGANodeList *incomingNodeListForUser;
@@ -149,6 +151,10 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     }
     
     [MEGASdkManager.sharedMEGASdk addMEGARequestDelegate:self];
+    
+    [self.tableView registerNib:[UINib nibWithNibName:@"ContactsHeaderFooterView" bundle:nil] forHeaderFooterViewReuseIdentifier:@"ContactsHeaderFooterViewID"];
+    
+    [self updateAppearance];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -203,6 +209,16 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     } completion:nil];
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateAppearance];
+        }
+    }
+}
+
 #pragma mark - Private - Table view cells
 
 - (ContactTableViewCell *)cellForNicknameWithIndexPath:(NSIndexPath *)indexPath {
@@ -229,6 +245,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
     if (self.user.visibility == MEGAUserVisibilityVisible) { //Remove Contact
         cell.avatarImageView.image = [UIImage imageNamed:@"delete"];
+        cell.avatarImageView.tintColor = [UIColor mnz_redMainForTraitCollection:(self.traitCollection)];
         cell.nameLabel.text = AMLocalizedString(@"removeUserTitle", @"Alert title shown when you want to remove one or more contacts");
         cell.nameLabel.textColor = [UIColor mnz_redMainForTraitCollection:(self.traitCollection)];
     } else { //Add contact
@@ -324,6 +341,18 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 }
 
 #pragma mark - Private - Others
+
+- (void)updateAppearance {
+    self.tableView.backgroundColor = [UIColor mnz_settingsBackgroundForTraitCollection:self.traitCollection];
+    self.tableView.separatorColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
+    
+    self.messageLabel.textColor = self.callLabel.textColor = self.videoLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
+    self.avatarBottomSeparatorView.backgroundColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
+    
+    self.actionsView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
+    self.nameOrNicknameLabel.textColor = self.optionalNameLabel.textColor = self.statusLabel.textColor = self.emailLabel.textColor = UIColor.whiteColor;
+    self.actionsBottomSeparatorView.backgroundColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
+}
 
 - (void)showClearChatHistoryAlert {
     UIAlertController *clearChatHistoryAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"clearChatHistory", @"A button title to delete the history of a chat.") message:AMLocalizedString(@"clearTheFullMessageHistory", @"A confirmation message for a user to confirm that they want to clear the history of a chat.") preferredStyle:UIAlertControllerStyleAlert];
@@ -831,6 +860,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ContactTableViewCell *cell;
+    cell.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
     
     switch (self.contactDetailsSections[indexPath.section].intValue) {
         case ContactDetailsSectionNicknameVerifyCredentials:
@@ -883,18 +913,17 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     if (self.contactDetailsMode == ContactDetailsModeDefault) {
         cell.userInteractionEnabled = cell.avatarImageView.userInteractionEnabled = cell.nameLabel.enabled = MEGAReachabilityManager.isReachable;
     }
-
-    if (@available(iOS 11.0, *)) {
-        cell.avatarImageView.accessibilityIgnoresInvertColors = YES;
-    }
     
     return cell;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     if ([self isSharedFolderSection:section]) {
-        self.participantsHeaderViewLabel.text = [AMLocalizedString(@"sharedFolders", @"Title of the incoming shared folders of a user.") uppercaseString];
-        return self.participantsHeaderView;
+        ContactsHeaderFooterView *headerView = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:@"ContactsHeaderFooterViewID"];
+        headerView.titleLabel.text = [AMLocalizedString(@"sharedFolders", @"Title of the incoming shared folders of a user.") uppercaseString];
+        headerView.topSeparatorView.hidden = headerView.bottomSeparatorView.hidden = YES;
+        
+        return headerView;
     }
     
     return nil;
