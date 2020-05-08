@@ -154,7 +154,7 @@ class ChatViewController: MessagesViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        if presentingViewController != nil && navigationController?.viewControllers.count == 1 {
+        if isMovingFromParent || presentingViewController != nil && navigationController?.viewControllers.count == 1 {
             chatRoomDelegate.closeChatRoom()
         }
     }
