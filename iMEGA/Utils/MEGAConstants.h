@@ -104,6 +104,10 @@ extern NSString * const MEGALastPublicTimestampAccessed;
 
 extern NSString * const MEGContactNicknameChangeNotification;
 
+#pragma mark - Notification Service Extension
+
+extern NSString * const MEGAInvalidateNSECache;
+
 #pragma mark - DB name
 
 // Last 36 characters of the user session are used by sdk and karere to name their dbs
