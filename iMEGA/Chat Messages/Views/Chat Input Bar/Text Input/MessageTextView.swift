@@ -28,7 +28,7 @@ class MessageTextView: UITextView {
         return CGFloat(numberOfLinesBeforeScroll) * font.lineHeight
     }
     
-    private var expandedHeight: CGFloat?
+    private(set) var expandedHeight: CGFloat?
     
     private lazy var placeholderTextView: UITextView = {
         let textView = UITextView()
