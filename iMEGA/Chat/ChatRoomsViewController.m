@@ -107,7 +107,7 @@
         case ChatRoomsTypeDefault:
             self.chatListItemList = [[MEGASdkManager sharedMEGAChatSdk] chatListItems];
             self.archivedChatListItemList = [[MEGASdkManager sharedMEGAChatSdk] archivedChatListItems];
-            self.addBarButtonItem.enabled = [MEGAReachabilityManager isReachable];
+            self.addBarButtonItem.enabled = [MEGAReachabilityManager isReachable] && MEGASdkManager.sharedMEGASdk.businessStatus != BusinessStatusExpired;
             break;
             
         case ChatRoomsTypeArchived:
@@ -430,7 +430,7 @@
 }
 
 - (void)internetConnectionChanged {
-    BOOL boolValue = [MEGAReachabilityManager isReachable];
+    BOOL boolValue = [MEGAReachabilityManager isReachable] && MEGASdkManager.sharedMEGASdk.businessStatus != BusinessStatusExpired;
     self.addBarButtonItem.enabled = boolValue;
     
     [self customNavigationBarLabel];
