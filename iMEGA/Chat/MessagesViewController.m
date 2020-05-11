@@ -621,7 +621,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         self.navigationItem.hidesBackButton = YES;
     } else {
         self.navigationItem.hidesBackButton = NO;
-        self.inputToolbar.hidden = self.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo && !self.shouldShowJoinView;
+        self.inputToolbar.hidden = MEGASdkManager.sharedMEGASdk.businessStatus == BusinessStatusExpired || (self.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo && !self.shouldShowJoinView);
         [self updateJoinView];
         
         if (self.chatRoom.isGroup) {
