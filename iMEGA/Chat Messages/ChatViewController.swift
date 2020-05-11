@@ -10,6 +10,7 @@ class ChatViewController: MessagesViewController {
             update()
         }
     }
+    var chatCall: MEGAChatCall?
 
     @objc var publicChatLink: URL?
     @objc var publicChatWithLinkCreated: Bool = false
@@ -573,7 +574,7 @@ class ChatViewController: MessagesViewController {
         topBannerButton.autoPinEdge(toSuperviewEdge: .leading)
         topBannerButton.autoPinEdge(toSuperviewEdge: .trailing)
         topBannerButton.autoSetDimension(.height, toSize: 44)
-        
+        topBannerButton.addTarget(self, action: #selector(joinActiveCall), for: .touchUpInside)
         topBannerButton.backgroundColor = #colorLiteral(red: 0, green: 0.7490196078, blue: 0.631372549, alpha: 1)
         topBannerButton.isHidden = true
         MEGASdkManager.sharedMEGAChatSdk()?.add(self as MEGAChatCallDelegate)

@@ -58,6 +58,9 @@ extension ChatViewController {
             print(call.duration)
             let startTime = Date().timeIntervalSince1970
             timer = Timer(timeInterval: 1, repeats: true, block: { (timer) in
+                if self.chatCall?.status == .reconnecting {
+                    return;
+                }
                 let time = Date().timeIntervalSince1970 - (call.initialTimeStamp == 0 ? startTime : TimeInterval(call.initialTimeStamp))
 
                 self.setTopBannerButton(title: String(format: AMLocalizedString("Touch to return to call %@", "Message shown in a chat room for a group call in progress displaying the duration of the call"), NSString.mnz_string(fromTimeInterval: time)), color: UIColor.mnz_green00BFA5())
@@ -67,6 +70,9 @@ extension ChatViewController {
     }
     
     func configureTopBannerButtonForInProgressCall(_ call: MEGAChatCall) {
+        if chatCall?.status == .reconnecting {
+            setTopBannerButton(title: AMLocalizedString("You are back!", "Title shown when the user reconnect in a call."), color: UIColor.mnz_green00BFA5())
+        }
         initTimerForCall(call)
     }
     
@@ -79,6 +85,7 @@ extension ChatViewController {
     @objc func joinActiveCall() {
         DevicePermissionsHelper.audioPermissionModal(true, forIncomingCall: false) { (granted) in
             if granted {
+                self.timer?.invalidate()
                 self.openCallViewWithVideo(videoCall: false, active: true)
             } else {
                 DevicePermissionsHelper.alertAudioPermission(forIncomingCall: false)
@@ -89,7 +96,6 @@ extension ChatViewController {
 
 extension ChatViewController : MEGAChatCallDelegate {
     func onChatCallUpdate(_ api: MEGAChatSdk!, call: MEGAChatCall!) {
-        
         switch call.status {
         case .userNoPresent, .requestSent:
             configureTopBannerButtonForActiveCall(call)
@@ -105,5 +111,6 @@ extension ChatViewController : MEGAChatCallDelegate {
         default:
             return
         }
+        chatCall = call
     }
 }
