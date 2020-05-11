@@ -284,6 +284,10 @@ class MessageInputBar: UIView {
             self.keyboardHeight = keyboardFrame.size.height - inputBarHeight
             
             if self.backgroundViewTrailingButtonConstraint.isActive {
+                if let messageTextViewExpanadedHeight = self.messageTextView.expandedHeight,
+                    messageTextViewExpanadedHeight != self.expandedHeight {
+                    self.messageTextView.expand(true, expandedHeight: self.expandedHeight)
+                }
                 return
             }
             
