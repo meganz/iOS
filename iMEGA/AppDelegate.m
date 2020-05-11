@@ -100,6 +100,8 @@
 @property (strong, nonatomic) BackgroundRefreshPerformer *backgroundRefreshPerformer;
 @property (nonatomic, strong) MEGAProviderDelegate *megaProviderDelegate;
 
+@property (nonatomic) MEGAChatInit chatLastKnownInitState;
+
 @end
 
 @implementation AppDelegate
@@ -924,6 +926,7 @@
 }
 
 - (void)copyDatabasesForExtensions {
+    MEGALogDebug(@"Copy databases for extensions");
     NSError *error;
     NSFileManager *fileManager = [NSFileManager defaultManager];
     
@@ -1803,6 +1806,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 - (void)onChatInitStateUpdate:(MEGAChatSdk *)api newState:(MEGAChatInit)newState {
     MEGALogInfo(@"onChatInitStateUpdate new state: %td", newState);
+    self.chatLastKnownInitState = newState;
     if (newState == MEGAChatInitError) {
         [[MEGASdkManager sharedMEGAChatSdk] logout];
     }
@@ -1828,6 +1832,15 @@ void uncaughtExceptionHandler(NSException *exception) {
         [MEGAReachabilityManager sharedManager].chatRoomListState = MEGAChatRoomListStateOnline;
     } else if (newState >= MEGAChatConnectionLogging) {
         [MEGAReachabilityManager sharedManager].chatRoomListState = MEGAChatRoomListStateInProgress;
+    }
+}
+
+- (void)onChatListItemUpdate:(MEGAChatSdk *)api item:(MEGAChatListItem *)item {
+    if (item.changes == 0 && self.chatLastKnownInitState == MEGAChatStatusOnline) {
+        MEGALogDebug(@"New chat room, invalidate NSE cache");
+        [self copyDatabasesForExtensions];
+        NSUserDefaults *sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];
+        [sharedUserDefaults setBool:YES forKey:MEGAInvalidateNSECache];
     }
 }
 
