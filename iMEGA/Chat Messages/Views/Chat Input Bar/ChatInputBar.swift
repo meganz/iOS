@@ -40,6 +40,7 @@ class ChatInputBar: UIView {
     private var initialTranslation: SIMD2<Double>?
     private var storedMessageInputBarHeight: CGFloat = 0.0
     private var voiceToTextSwitching = false
+    private var animationDuration: TimeInterval = 0.4
     
     // MARK:- Interface properties
 
@@ -70,7 +71,7 @@ class ChatInputBar: UIView {
                 voiceClipInputBar.autoPinEdge(.top, to: .bottom, of: messageInputBar)
                 self.layoutIfNeeded()
                 
-                UIView.animate(withDuration: 0.2, animations: {
+                UIView.animate(withDuration: animationDuration, animations: {
                     voiceClipInputBarHeightConstraint.constant = voiceClipInputBarHeight
                     self.layoutIfNeeded()
                 }) { _ in
@@ -92,7 +93,7 @@ class ChatInputBar: UIView {
                 messageInputBarTopConstraint.isActive = false
                 layoutIfNeeded()
 
-                UIView.animate(withDuration: 0.4, animations: {
+                UIView.animate(withDuration: animationDuration, animations: {
                     voiceClipInputBarHeightConstraint.constant = 0.0
                     self.layoutIfNeeded()
                 }) { _ in
@@ -320,8 +321,13 @@ extension ChatInputBar: MessageInputBarDelegate {
     func tappedAddButton(_ button: UIButton) {
         if recordingViewEnabled {
             recordingViewEnabled = false
+            let time = DispatchTime.now() + Double(animationDuration/2.0)
+            DispatchQueue.main.asyncAfter(deadline: time) {
+                self.delegate?.tappedAddButton(button)
+            }
+        } else {
+            delegate?.tappedAddButton(button)
         }
-        delegate?.tappedAddButton(button)
     }
 
     func tappedSendButton(withText text: String) {
