@@ -164,6 +164,57 @@ extension ChatViewController {
             SVProgressHUD.dismiss()
         }
     }
+    
+    private func createUploadTransferDelegate() -> MEGAStartUploadTransferDelegate {
+        return MEGAStartUploadTransferDelegate(toUploadToChatWithTotalBytes: { [weak self] (transfer) in
+            guard let `self` = self,
+                let transfer = transfer else {
+                return
+            }
+            
+            let totalBytes = transfer.totalBytes.doubleValue
+            self.totalBytesToUpload += totalBytes
+            self.remainingBytesToUpload += totalBytes
+        }, progress: {  [weak self] (transfer) in
+            guard let `self` = self,
+                let transfer = transfer  else {
+                    return
+            }
+            
+            self.navigationBarProgressView.isHidden = false
+            let transferredBytes = transfer.transferredBytes.doubleValue
+            let totalBytes = transfer.totalBytes.doubleValue
+            let asignableProgresRegardWithTotal = totalBytes / self.totalBytesToUpload
+            let transferProgress = transferredBytes / totalBytes
+            var currentAsignableProgressForThisTransfer = transferProgress * asignableProgresRegardWithTotal
+            if (currentAsignableProgressForThisTransfer < asignableProgresRegardWithTotal) {
+                if (self.totalProgressOfTransfersCompleted != 0) {
+                    currentAsignableProgressForThisTransfer += self.totalProgressOfTransfersCompleted
+                }
+                
+                if (currentAsignableProgressForThisTransfer > Double(self.navigationBarProgressView.progress)) {
+                    self.navigationBarProgressView.setProgress(Float(currentAsignableProgressForThisTransfer), animated: true)
+                }
+            }
+        }, completion: { [weak self] (transfer) in
+            guard let `self` = self else {
+                return
+            }
+            
+            let totalBytes = transfer!.totalBytes.doubleValue
+            let progressCompletedRegardWithTotal = totalBytes / self.totalBytesToUpload
+            self.totalProgressOfTransfersCompleted += progressCompletedRegardWithTotal
+            self.remainingBytesToUpload -= totalBytes
+            
+            if self.remainingBytesToUpload == 0 {
+                self.navigationBarProgressView.progress = 0
+                self.navigationBarProgressView.isHidden = true
+                self.totalBytesToUpload = 0.0
+                self.totalProgressOfTransfersCompleted = 0.0;
+            }
+        })
+        
+    }
 }
 
 extension ChatViewController: ChatMessageAndAudioInputBarDelegate {
@@ -210,10 +261,6 @@ extension ChatViewController: ChatMessageAndAudioInputBarDelegate {
             
             let voiceFolderName = "My voice messages"
             
-            let transferUploadDelegate: MEGAStartUploadTransferDelegate  = MEGAStartUploadTransferDelegate { _ in
-                // SHould show the progress to the user.
-            }
-            
             let appData = ("" as NSString).mnz_appDataToAttach(toChatID: self.chatRoom.chatId, asVoiceClip: true)
             
             if let voiceMessagesNode = MEGASdkManager.sharedMEGASdk()!.node(forPath: voiceFolderName, node: result) {
@@ -221,7 +268,7 @@ extension ChatViewController: ChatMessageAndAudioInputBarDelegate {
                                                             parent: voiceMessagesNode,
                                                             appData: appData,
                                                             isSourceTemporary: true,
-                                                            delegate: transferUploadDelegate)
+                                                            delegate: self.createUploadTransferDelegate())
             } else {
                 let requestDelegate: MEGARequestDelegate = MEGACreateFolderRequestDelegate { request in
                     guard let request = request else {
@@ -234,7 +281,7 @@ extension ChatViewController: ChatMessageAndAudioInputBarDelegate {
                                                                     parent: voiceMessagesNode,
                                                                     appData: appData,
                                                                     isSourceTemporary: true,
-                                                                    delegate: transferUploadDelegate)
+                                                                    delegate: self.createUploadTransferDelegate())
                         
                     }
                 }
@@ -294,43 +341,14 @@ extension ChatViewController: AddToChatViewControllerDelegate {
                 return
             }
             
-            let processAsset = MEGAProcessAsset(toShareThroughChatWith: [asset], parentNode: resultNode, filePaths: { filePaths in
+            let processAsset = MEGAProcessAsset(toShareThroughChatWith: [asset],
+                                                parentNode: resultNode,
+                                                filePaths: { [weak self] filePaths in
                 
-                guard let filePath = filePaths?.first else {
+                guard let filePath = filePaths?.first,
+                    let `self` = self else {
                     return
                 }
-                let transferUploadDelegate: MEGAStartUploadTransferDelegate = MEGAStartUploadTransferDelegate(toUploadToChatWithTotalBytes: { (transfer) in
-                    let totalBytes = transfer!.totalBytes.doubleValue
-                    self.totalBytesToUpload += totalBytes
-                    self.remainingBytesToUpload += totalBytes
-                }, progress: { (transfer) in
-                    self.navigationBarProgressView.isHidden = false
-                    let transferredBytes = transfer!.transferredBytes.doubleValue
-                    let totalBytes = transfer!.totalBytes.doubleValue
-                    let asignableProgresRegardWithTotal = totalBytes / self.totalBytesToUpload
-                    let transferProgress = transferredBytes / totalBytes
-                    var currentAsignableProgressForThisTransfer = transferProgress * asignableProgresRegardWithTotal
-                    if (currentAsignableProgressForThisTransfer < asignableProgresRegardWithTotal) {
-                        if (self.totalProgressOfTransfersCompleted != 0) {
-                            currentAsignableProgressForThisTransfer += self.totalProgressOfTransfersCompleted
-                        }
-                        
-                        if (currentAsignableProgressForThisTransfer > Double(self.navigationBarProgressView.progress)) {
-                            self.navigationBarProgressView.setProgress(Float(currentAsignableProgressForThisTransfer), animated: true)
-                        }
-                    }
-                }, completion: { (transfer) in
-                    let totalBytes = transfer!.totalBytes.doubleValue
-                    let progressCompletedRegardWithTotal = totalBytes / self.totalBytesToUpload
-                    self.totalProgressOfTransfersCompleted += progressCompletedRegardWithTotal
-                    self.remainingBytesToUpload -= totalBytes
-                    
-                    if self.remainingBytesToUpload == 0 {
-                        self.navigationBarProgressView.progress = 0
-                        self.navigationBarProgressView.isHidden = true
-                    }
-                    
-                })
                 
                 var appData: String? = nil
                 
@@ -350,7 +368,7 @@ extension ChatViewController: AddToChatViewControllerDelegate {
                                                             parent: resultNode,
                                                             appData: appData,
                                                             isSourceTemporary: true,
-                                                            delegate: transferUploadDelegate)
+                                                            delegate: self.createUploadTransferDelegate())
                 
             }, nodes:nil) { errors in
                 guard let error = errors?.first else {
@@ -395,11 +413,7 @@ extension ChatViewController: AddToChatViewControllerDelegate {
                 (path as NSString).mnz_isImagePathExtension else {
                     return
             }
-            
-            let transferUploadDelegate: MEGAStartUploadTransferDelegate  = MEGAStartUploadTransferDelegate { _ in
-                // Should show the progress to the user.
-            }
-            
+                        
             let appData = ("" as NSString).mnz_appDataToAttach(toChatID: self.chatRoom.chatId,
                                                                asVoiceClip: false)
             
@@ -407,7 +421,7 @@ extension ChatViewController: AddToChatViewControllerDelegate {
                                                         parent: parentNode,
                                                         appData: appData,
                                                         isSourceTemporary: true,
-                                                        delegate: transferUploadDelegate)
+                                                        delegate: self.createUploadTransferDelegate())
         }
         
         present(viewController: pickerController!)
