@@ -63,7 +63,6 @@
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eNx-Kj-Phz">
                             <rect key="frame" x="0.0" y="0.0" width="55" height="55"/>
                             <connections>
-                                <action selector="sendButtonTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="Q9u-C0-Osr"/>
                                 <action selector="trashButtonTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="Ecd-mW-ngb"/>
                             </connections>
                         </button>
