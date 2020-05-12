@@ -17,6 +17,10 @@ extension AppDelegate {
             visibleViewController is LoginViewController ||
             visibleViewController is SFSafariViewController { return }
 
+        if MEGASdkManager.sharedMEGASdk().isBusinessAccount && MEGASdkManager.sharedMEGASdk().businessStatus != .active {
+            return
+        }
+        
         if MEGASdkManager.sharedMEGASdk().smsAllowedState() != .optInAndUnblock { return }
 
         if MEGASdkManager.sharedMEGASdk().smsVerifiedPhoneNumber() != nil { return }
@@ -34,7 +38,7 @@ extension AppDelegate {
     }
 
     @objc func showEnableTwoFactorAuthenticationIfNeeded() {
-        if UserDefaults.standard.bool(forKey: "twoFactorAuthenticationAlreadySuggested") {
+        if UserDefaults.standard.bool(forKey: "twoFactorAuthenticationAlreadySuggested") || UIApplication.mnz_visibleViewController() is AddPhoneNumberViewController {
             return
         }
 
