@@ -770,7 +770,7 @@ static NSString *nodeToPresentBase64Handle;
             [MEGALinkManager pushChat:chatViewController tabBar:mainTBC];
         }
     } else {
-        if ([UIApplication.mnz_visibleViewController isKindOfClass:MessagesViewController.class]) {
+        if ([UIApplication.mnz_visibleViewController isKindOfClass:ChatViewController.class]) {
             ChatViewController *currentChatViewController = (ChatViewController *)UIApplication.mnz_visibleViewController;
             if (currentChatViewController.chatRoom.chatId == chatViewController.chatRoom.chatId) {
                 [SVProgressHUD dismiss];
