@@ -26,8 +26,8 @@ extension CustomModalAlertViewController {
                     let enablingTwoFactorAuthenticationVC = UIStoryboard(name: "TwoFactorAuthentication", bundle: nil).instantiateViewController(withIdentifier: "EnablingTwoFactorAuthenticationViewControllerID") as! EnablingTwoFactorAuthenticationViewController
                     enablingTwoFactorAuthenticationVC.seed = request.text //Returns the Base32 secret code needed to configure multi-factor authentication.
                     enablingTwoFactorAuthenticationVC.hidesBottomBarWhenPushed = true
-
-                    UIApplication.mnz_visibleViewController()?.navigationController?.pushViewController(enablingTwoFactorAuthenticationVC, animated: true)
+                    
+                    UIApplication.mnz_visibleViewController().navigationController?.pushViewController(enablingTwoFactorAuthenticationVC, animated: true)
                 }))
             }
         }

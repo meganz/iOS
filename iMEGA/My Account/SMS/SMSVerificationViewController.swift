@@ -311,7 +311,7 @@ extension SMSVerificationViewController: UIScrollViewDelegate {
 // MARK: - SMSCountriesTableViewControllerDelegate
 
 extension SMSVerificationViewController: SMSCountriesTableViewControllerDelegate {
-    func countriesTableViewController(_ controller: SMSCountriesTableViewController, didSelectCountry country: SMSCountry) {
+    func countriesTableViewController(_ controller: SMSCountriesTableViewController?, didSelectCountry country: SMSCountry) {
         navigationController?.popToViewController(self, animated: true)
         configView(by: country)
     }

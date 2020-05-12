@@ -110,8 +110,9 @@ class EnterEmailViewController: UIViewController {
         tokenField.minInputWidth = tokenField.frame.width / 2
 
         tokenField.inputTextFieldKeyboardType = .emailAddress
-
-        tokenField.toLabelText = ""
+        tokenField.autocapitalizationType = .none
+        
+        tokenField.toLabelText = "";
         tokenField.inputTextFieldTextColor = UIColor.mnz_black333333()
         tokenField.inputTextFieldFont = UIFont.mnz_SFUIRegular(withSize: 17)
 

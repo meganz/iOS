@@ -262,7 +262,7 @@ extension ActionSheetViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let action = actions[indexPath.row]
-        self.dismiss(animated: true, completion: {
+        dismiss(animated: true, completion: {
             if action.style != .cancel {
                 action.action()
             }
@@ -275,23 +275,25 @@ extension ActionSheetViewController: UITableViewDataSource {
 extension ActionSheetViewController: UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate {
     open func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         let containerView = transitionContext.containerView
-
-        let fromViewController = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from)!
-        let fromView = fromViewController.view
-
-        let toViewController = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to)!
-        let toView = toViewController.view
-
+        
+        guard let fromViewController = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from),
+            let toViewController = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to),
+            let fromView = fromViewController.view,
+            let toView = toViewController.view
+            else {
+                return
+        }
+        
         if isPresenting {
-            toView?.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-            containerView.addSubview(toView!)
+            toView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+            containerView.addSubview(toView)
 
             transitionContext.completeTransition(true)
-            presentView(toView!, presentingView: fromView!, animationDuration: TimeInterval(0.3), completion: nil)
+            presentView(toView, presentingView: fromView, animationDuration: TimeInterval(0.3), completion: nil)
         } else {
-            dismissView(fromView!, presentingView: toView!, animationDuration: TimeInterval(0.3)) { completed in
+            dismissView(fromView, presentingView: toView, animationDuration: TimeInterval(0.3)) { completed in
                 if completed {
-                    fromView?.removeFromSuperview()
+                    fromView.removeFromSuperview()
                 }
                 transitionContext.completeTransition(completed)
             }
@@ -316,9 +318,9 @@ extension ActionSheetViewController: UIViewControllerAnimatedTransitioning, UIVi
 extension ActionSheetViewController: UIPopoverPresentationControllerDelegate {
     func prepareForPopoverPresentation(_ popoverPresentationController: UIPopoverPresentationController) {
         let height = CGFloat(actions.count * 60) + (headerView?.bounds.height ?? 0)
-        top?.constant = CGFloat(0)
+        top?.constant = 0.0
         tableView.isScrollEnabled = false
         backgroundView.backgroundColor = .clear
-        self.preferredContentSize = CGSize(width: 320, height: height)
+        preferredContentSize = CGSize(width: 320, height: height)
     }
 }

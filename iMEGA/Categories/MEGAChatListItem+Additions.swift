@@ -14,6 +14,15 @@ extension MEGAChatListItem {
         let fullnames = (0..<peerCount).compactMap { chatRoom.fullName(atIndex: $0)}.joined(separator: " ")
         let nicknames = (0..<peerCount).compactMap { chatRoom.userNickname(atIndex: $0) }.joined(separator: " ")
         let emails = (0..<peerCount).compactMap { chatRoom.peerEmail(byHandle: chatRoom.peerHandle(at: $0)) }.joined(separator: " ")
-        return title + " " + fullnames + " " + nicknames + " " + emails
+        
+        guard let chatRoomTitle = title else {
+            return fullnames + " " + nicknames + " " + emails
+        }
+        
+        return chatRoomTitle + " " + fullnames + " " + nicknames + " " + emails
+    }
+    
+    @objc func chatTitle() -> String {
+        return chatRoom.chatTitle()
     }
 }

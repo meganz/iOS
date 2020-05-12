@@ -6,7 +6,6 @@ class NodeActionViewController: ActionSheetViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
-
     }
 
     func configureView() {
