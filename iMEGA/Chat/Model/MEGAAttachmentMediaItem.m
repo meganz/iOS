@@ -163,12 +163,12 @@
     
     CGRect attachmentTitleRect = [title boundingRectWithSize:CGSizeMake(maxAttachmentBubbleWidth, CGFLOAT_MAX)
                                                  options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
-                                              attributes:@{NSFontAttributeName : [UIFont mnz_SFUIMediumWithSize:15.0f]}
+                                              attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:15.f weight:UIFontWeightMedium]}
                                                  context:nil];
     
     CGRect attachmentSubtitleRect = [subtitle boundingRectWithSize:CGSizeMake(maxAttachmentBubbleWidth, CGFLOAT_MAX)
                                                 options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
-                                             attributes:@{NSFontAttributeName : [UIFont mnz_SFUIRegularWithSize:13.0f]}
+                                             attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:13.0f]}
                                                 context:nil];
     
     CGFloat minimumLabelsWidth = (attachmentTitleRect.size.width > attachmentSubtitleRect.size.width) ? attachmentTitleRect.size.width : attachmentSubtitleRect.size.width;
