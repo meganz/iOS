@@ -11,7 +11,7 @@ class ActionSheetAction: NSObject {
 
     }
 
-    @objc public init(title: String?, detail: String?, image: UIImage? ,style: UIAlertAction.Style, handler: (() -> Void)? = nil) {
+    @objc init(title: String?, detail: String?, image: UIImage? , style: UIAlertAction.Style, handler: (() -> Void)? = nil) {
         self.title = title
         self.detail = detail
         self.image = image
@@ -25,7 +25,6 @@ class ActionSheetViewController: UIViewController {
     var layoutThreshold: CGFloat {
         return CGFloat(self.view.bounds.height * 0.3)
     }
-    var didSetupConstraints = false
     var tableView = UITableView.newAutoLayout()
     var headerView: UIView?
     var indicator = UIView(frame: CGRect(x: 0, y: 0, width: 36, height: 6))
@@ -119,13 +118,6 @@ extension ActionSheetViewController {
         view.setNeedsUpdateConstraints()
     }
 
-    override func updateViewConstraints() {
-        if !didSetupConstraints {
-
-            didSetupConstraints = true
-        }
-        super.updateViewConstraints()
-    }
 }
 
 extension ActionSheetViewController: UITableViewDelegate {
@@ -246,11 +238,8 @@ extension ActionSheetViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell: ActionSheetCell!
-        if cell == nil {
-            cell = ActionSheetCell(style: .value1, reuseIdentifier: "ActionSheetCell")
-        }
-        cell?.configureCell(action: actions[indexPath.row])
+        let cell: ActionSheetCell = tableView.dequeueReusableCell(withIdentifier:"ActionSheetCell") as? ActionSheetCell ?? ActionSheetCell(style: .value1, reuseIdentifier: "ActionSheetCell")
+        cell.configureCell(action: actions[indexPath.row])
 
         return cell
     }

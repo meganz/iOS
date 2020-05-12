@@ -1,6 +1,6 @@
 import UIKit
 
-class ActionSheetCell: UITableViewCell {
+final class ActionSheetCell: UITableViewCell {
 
     func configureCell(action: ActionSheetAction) {
         textLabel?.text = action.title
