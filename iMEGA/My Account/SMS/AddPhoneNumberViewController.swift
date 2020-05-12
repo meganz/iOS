@@ -45,7 +45,7 @@ class AddPhoneNumberViewController: UIViewController {
     @IBAction func didTapAddPhoneNumberButton() {
         dismiss(animated: true) {
             let smsNavigation = SMSNavigationViewController(rootViewController: SMSVerificationViewController.instantiate(with: .AddPhoneNumber))
-            UIApplication.mnz_visibleViewController()?.present(smsNavigation, animated: true, completion: nil)
+            UIApplication.mnz_visibleViewController().present(smsNavigation, animated: true, completion: nil)
         }
     }
 

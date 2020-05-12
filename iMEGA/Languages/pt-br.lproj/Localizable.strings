@@ -2,6 +2,8 @@
 "cancel"="Cancelar";
 /* Button title to accept something */
 "ok"="OK";
+/* Button title to clear something */
+"clear"="Deletar";
 /* */
 "yes"="Sim";
 /* */
@@ -42,6 +44,8 @@
 "Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="O seu link de confirmação já não é válido. A sua conta pode já estar ativa, ou você pode ter cancelado o seu registro.";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Link inválido";
+/* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
+"The account that created this link has been terminated due to multiple violations of our Terms of Service."="A conta que criou este link foi encerrada devido a várias infrações dos nossos Termos de serviço.";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="Digite a chave de decodificação";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -117,7 +121,7 @@
 /*  */
 "passwordGood"="Esta senha vai resistir aos ataques de força-bruta mais comuns. Por favor, certifique-se de que você vai lembrar dela.";
 /* Label displayed during checking the strength of the password introduced. Represents Strong security */
-"strong"="Forte";
+"strong"="Segura";
 /*  */
 "passwordStrong"="Esta senha vai resistir aos ataques de força-bruta mais sofisticados. Por favor, certifique-se de que você vai lembrar dela.";
 /*  */
@@ -518,6 +522,12 @@
 "offline"="Offline";
 /* Title of the Contacts section */
 "contactsTitle"="Contatos";
+/* Label for any ‘Requests’ button, link, text, title, etc. On iOS is used to go to the Contact request section from Contacts */
+"Requests"="Solicitações";
+/* Label for any ‘Groups’ button, link, text, title, etc. On iOS is used to go to the chats 'Groups' section from Contacts */
+"Groups"="Groups";
+/* Label for any ‘Recently Added’ button, link, text, title, etc. On iOS is used on a section that shows the 'Recently Added' contacts */
+"Recently Added"="Recently Added";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
 "oneFolderShared"="1 pasta";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
@@ -574,8 +584,6 @@
 "removeUserMessage"="Tem certeza que deseja remover %@ da sua lista de contatos?";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
 "removeMultipleUsersMessage"="Tem certeza que deseja remover %d usuários da sua lista de contatos?";
-/* Success message shown when the selected contacts have been removed */
-"removedContacts"="%d contatos removidos";
 /* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
 "removedContact"="Contato %@ removido";
 /* Label shown when a contact request is pending */
@@ -852,7 +860,7 @@
 /* Hint text where the user have to re-write the new email to confirm it */
 "confirmNewEmail"="Confirmar novo email";
 /* The title of the alert dialog to change the email associated to an account. */
-"changeEmail"="Alterar email";
+"Change Email"="Alterar email";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
 "oldAndNewEmailMatch"="O email novo e o email antigo não podem iguais";
 /* Error message shown when you have not written the same email when confirming a new one */
@@ -862,7 +870,7 @@
 /* Text shown just after tap to change an email account to remenber the user what to do to complete the change email proccess */
 "emailIsChanging_description"="Acesse a sua caixa de entrada e clique no link para confirmar o seu novo endereço de email.";
 /* Text shown on the confirm email view to remind the user what to do */
-"verifyYourEmailAddress_description"="Por favor, digite a sua senha para confirmar o seu endereço de email";
+"verifyYourEmailAddress_description"="Por favor, digite a sua senha para confirmar o seu email";
 /* The [X] will be replaced with the e-mail address. */
 "congratulationsNewEmailAddress"="Parabéns! O novo endereço de email para esta conta MEGA é: [X]";
 /* Button text to close other login sessions except the current session in use. This will log out other devices which have an active login session. */
@@ -889,6 +897,8 @@
 "transfers"="Transferências";
 /* Title of one of the filters in the Transfers section. In this case "All" transfers. */
 "all"="Todas";
+/* Title of one of the filters in the Transfers section. In this case "Completed" transfers. */
+"Completed"="Concluído";
 /* Title of one of the filters in the Transfers section. In this case "Downloads" transfers. */
 "downloads"="Downloads";
 /* Title of one of the filters in the Transfers section. In this case "Uploads" transfers. */
@@ -941,8 +951,8 @@
 "unlockedBonuses"="Bônus desbloqueados:";
 /* A header/title of a section which contains information about used/available storage space on a user's cloud drive. */
 "storageQuota"="Cota de armazenamento";
-/* The header/title of a block/section which contains information about the user's used/available transfer allowance for their account. */
-"transferQuota"="Cota de transferência";
+/* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
+"Transfer Quota"="Cota de transferência";
 /* achievement type */
 "registrationBonus"="Bônus de cadastro";
 /* Message shown on the achievements dialog for achieved achievements, %1 is replaced with e.g. 20 GB */
@@ -970,7 +980,7 @@
 /* Description to encourage users to add phone number to their accounts when there are not achievements */
 "Add your phone number to MEGA. This makes it easier for your contacts to find you on MEGA."="Adicione o seu número de telefone ao MEGA, e assim os seus contatos o encontrarão com mais facilidade.";
 /* Description to unblock account by verifying phone number */
-"Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account."="A sua conta foi temporariamente bloqueada devido a um abuso em potencial. Confirme o seu número de telefone para desbloquear a sua conta.";
+"Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account."="A sua conta foi temporariamente bloqueada devido a uma suspeita de infração. Por favor, confirme o seu número de telefone para desbloquear a sua conta.";
 /* Verify your account title */
 "Verify Your Account"="Confirme a sua conta";
 /* Add your phone number title */
@@ -987,10 +997,12 @@
 "logoutLabel"="Fazer logout";
 /* String shown when you are logging out of your account. */
 "loggingOut"="Deslogando";
-/* Button to remove avatar. Try to keep the text short (as in English) */
-"removeAvatar"="Remover avatar";
-/* button that allows the user the change his avatar */
-"changeAvatar"="Alterar avatar";
+/* Button to remove some photo, e.g. avatar photo. Try to keep the text short (as in English) */
+"Remove Photo"="Remover foto";
+/* Button that allows the user the change a photo, e.g. his avatar photo */
+"Change Photo"="Alterar foto";
+/* Button that allows the user the add a photo, e.g avatar photo */
+"Add Photo"="Adicionar foto";
 /* Button title that allows the user change his name */
 "changeName"="Alterar nome";
 /* Success message when changing profile information. */
@@ -1031,8 +1043,6 @@
 "cloudDriveIsFull"="[S]A sua Nuvem de arquivos está cheia.[/S] [A]Faça upgrade[/A] a um plano PRO e obtenha [S]até %@ TB (%@ GB)[/S] de espaço de armazenamento.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Armazenamento";
-/* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
-"transferQuota"="Cota de transferência";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
 "limited"="Limitado";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
@@ -1267,12 +1277,10 @@
 "removePreview"="Remover visualização";
 /* */
 "warning"="Aviso";
-/* Alert message shown when the user perform logout and has files in the Offline directory */
-"allFilesSavedForOfflineWillBeDeletedFromYourDevice"="Todos os arquivos salvos para uso offline serão excluídos do seu dispositivo. Você quer continuar?";
 /* Title shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_title"="Cota de transferência insuficiente";
 /* Description shown when you almost had used your available transfer quota. */
-"depletedTransferQuota_message"="O seu download excede a cota de transferência disponível para o seu endereço IP e, portanto, pode ser interrompido.";
+"depletedTransferQuota_message"="O download excede a cota de transferência disponível para o seu IP e, portanto, pode ser interrompido.";
 /* Button title to see the available pro plans in MEGA */
 "seePlans"="Veja os planos";
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
@@ -1434,8 +1442,8 @@
 "resetQrCode"="Resetar código QR";
 /* Footer that explains what would happen if the user resets his/her QR code */
 "resetQrCodeFooter"="Os códigos QR anteriores já não serão válidos.";
-/* Title for view that displays the QR code of the user. String as short as possible. */
-"myCode"="Meu código";
+/* Label for any ‘My QR code’ button, link, text, title, etc. - (String as short as possible). */
+"My QR code"="Meu código QR";
 /* Segmented control title for view that allows the user to scan QR codes. String as short as possible. */
 "scanCode"="Escanear código";
 /* Label that encourage the user to line the QR to scan with the camera */
@@ -1760,14 +1768,6 @@
 "Thumbnail view"="Visualização em miniaturas";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
 "Poor connection."="Conexão ruim.";
-/* Message shown in a chat room when there is an active group call */
-"There is an active group call. Tap to join."="Há uma chamada em grupo ativa. Toque para participar.";
-/* Message shown in a chat room for a group call in progress displaying the duration of the call */
-"Touch to return to call %@"="Toque para voltar à chamada %@";
-/* Menu item to change from grid view to list view */
-"List view"="Visualização em lista";
-/* Menu item to change from list view to grid view */
-"Thumbnail view"="Visualização em miniaturas";
 /* There are no notifications to display. */
 "No notifications"="Não há notificações";
 /* The header of a notification related to payments */
@@ -1963,11 +1963,11 @@
 /* text of the alert dialog when the user is changing the API URL to staging */
 "Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Você tem certeza de que quer alterar para um servidor de teste? A sua conta pode sofrer danos irreparáveis";
 /* Title label that explains that the user is going to be asked for the contacts permission */
-"Enable Access to Your Address Book"="Enable Access to Your Address Book";
+"Enable Access to Your Address Book"="Permitir o acesso ao seu catálogo de endereços";
 /* Detailed explanation of why the user should give permission to contacts */
-"Easily discover contacts from your address book on MEGA."="Easily discover contacts from your address book on MEGA.";
+"Easily discover contacts from your address book on MEGA."="Descubra facilmente quais são os contatos do seu catálogo de endereços que já estão no MEGA.";
 /* Detailed explanation about MEGA not using the contacts data without permision */
-"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA will not use this data for any other purpose and will never interact with your contacts without your consent.";
+"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="O MEGA não utilizará esses dados com nenhum outro propósito, e nunca irá interagir com os seus contatos sem o seu consentimento.";
 /* Title encouraging the user to check who of its contacts are using MEGA */
 "See who's already on MEGA"="Veja quem já está no MEGA";
 /* Title showing the user how many of his contacts are using MEGA */
@@ -1992,6 +1992,18 @@
 "Hi, Have encrypted conversations on Mega with me and get 50GB free storage."="Oi! Converse comigo com segurança e obtenha até 50 GB de armazenamento gratuito no MEGA.";
 /* Destination folder name of chat files */
 "My chat files"="Arquivos dos meus chats";
+/* Title of the section about the plan in the storage tab in My Account Section */
+"Plan"="Plano";
+/* */
+"If you lose this Recovery key and forget your password, [B]all your files, folders and messages will be inaccessible, even by MEGA[/B]."="Se você perder a chave de recuperação e esquecer a sua senha, [B]todos os seus arquivos, pastas e mensagens não poderão ser acessados, nem mesmo pelo MEGA[/B].";
+/* */
+"Business"="Business";
+/* */
+"Administrator"="Administrador";
+/* Label to indicate the amount of transfer quota in several places. It is a ‘noun‘ and there is an screenshot with an use example - (String as short as possible). */
+"Transfer"="Transferência";
+/* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
+"You cannot remove %1$s as a contact because they are part of your Business account."="Você não pode remover a %1$s dos seus contatos, por fazer parte da sua conta Business.";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
 "Require passcode"="Solicitar código de acesso";
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
@@ -2002,6 +2014,22 @@
 "This folder has been the subject of a takedown notice."="Esta pasta foi alvo de um aviso de remoção.";
 /* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
 "Dispute Takedown"="Disputar remoção";
+/* Label presented to Admins that full management of the business is only available in a desktop web browser */
+"User management is only available from a desktop web browser."="O gerenciamento de usuários somente está disponível no navegador de um computador.";
+/* When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information */
+"There has been a problem with your last payment. Please access MEGA using a desktop browser for more information."="Não foi possível processar o seu último pagamento. Por favor, acesse o MEGA usando um navegador em um computador para obter mais informações.";
+/* A dialog title shown to users when their business account is expired. */
+"Your business account is expired"="A sua conta business expirou";
+/* Details shown when a Business account is expired. Details for the administrator of the Business account */
+"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="Não foi possível processar o seu pagamento. O seu acesso será somente leitura até que o problema seja corrigido usando um navegador em um computador.";
+/* A dialog message which is shown to sub-users of expired business accounts. */
+"Your account is currently [B]suspended[/B]. You can only browse your data."="A sua conta [B]expirou[/B]. Somente é possível visualizar os seus dados.";
+/* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
+"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="Embora o MEGA não tenha acesso a seus dados, os administradores de sua organização podem controlar e visualizar os Uploads da câmera na sua conta de usuário.";
+/* */
+"Something went wrong"="Algo deu errado";
+/* Button title that goes to the section Usage where you can see how your MEGA space is used */
+"Usage"="Utilização";
 /* Title of the "Links" Shared Items. */
 "Links"="Links";
 /* Title for empty state view of "Links" in Shared Items. */
@@ -2010,6 +2038,8 @@
 "Manage Share"="Gerenciar compartilhamento";
 /* Title of the screen that shows the users with whom the user can share a folder */
 "Share with"="Compartilhar com";
+/* A dialog message which is shown to sub-users of expired business accounts. */
+"Contact your business account administrator to resolve the issue and activate your account."="Entre em contato com o administrador de sua conta comercial para solucionar o problema e ativar a sua conta.";
 /* Chat Notifications DND: Option that does not deactivate DND automatically */
 "Until I Turn it On Again"="Até eu ativar novamente";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
@@ -2060,10 +2090,26 @@
 "Alias/ Nickname"="Apelido";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
 "It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="Não foi possível obter o conteúdo deste arquivo, pois ele não está codificado em UTF-8 ou ISO/IEC 8859-1.";
+/* Business expired account Overdue payment page header. */
+"Payment overdue"="Pagamento atrasado";
+/* */
+"Active"="Ativa";
+/* title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts */
+"Role:"="Função:";
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
 "Include location tags"="Incluir etiquetas de localização";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
 "If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="Ao ativar, você fará o upload de informações sobre onde as suas fotos foram tiradas e os seus vídeos foram gravados; portanto, tenha cuidado ao compartilhar.";
+/* Used in Photos app browser view to send the photos from the view to the chat. */
+"Send (%d)"="Enviar (%d)";
+/* Used in Photos app browser view to upload the photos from the view to the cloud. */
+"Upload (%d)"="Fazer upload (%d)";
+/* Used in Photos app browser carousel view to unselect a selected photo. */
+"Unselect"="Remover a seleção";
+/* Used in Photos app browser. Shown when there are no photos or videos in the Photos app. */
+"No Photos or Videos"="Não há Fotos ou Vídeos";
+/* Button title which, if tapped, will trigger the action of opening a folder containg this file */
+"View in Folder"="Ver na pasta";
 /* Error message shown when opening a link with an account that not corresponds to the link */
 "This link is not related to this account. Please log in with the correct account."="Este link não corresponde a esta conta. Por favor, faça o login na conta correta.";
 /* Text emncouraging the user to add contacts in MEGA */
@@ -2084,6 +2130,8 @@
 "Your account is already verified"="Esta conta já foi confirmada";
 /* Place holder for enter mobile number field */
 "Your phone number"="O seu telefone";
+/* Text related to verified phone number. Used as title or cell description.  */
+"Phone Number"="Telefone";
 /* Label tell user to enter received txt to below input boxes */
 "Please type the verification code sent to"="Digite o código de verificação enviado a";
 /* Text message to remind user to resend verification code */
@@ -2104,6 +2152,10 @@
 "It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="É possível que você esteja usando no MEGA a mesma senha que usa em outros serviços, e que pelo menos um desses outros serviços tenha sofrido uma filtração de dados.";
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
 "Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="A sua senha foi comprometida, e agora está sendo usada por pessoas mal intencionadas para fazer login nas suas contas, incluindo a sua conta no MEGA (mas não se limitando a ela).";
+/* tool bar title used in transfer widget, allow user to clear the selected items in the list */
+"Clear Selected"="Eliminar a seleção";
+/* tool bar title used in transfer widget, allow user to clear all items in the list */
+"Clear All"="Limpar tudo";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
 "MEGA CAMERA UPLOADS FOLDER"="PASTA DOS UPLOADS DA CÂMERA NO MEGA";
 /* Action button text of folder selection screen for camera uploads */
@@ -2128,9 +2180,47 @@
 "File Type"="Tipo de arquivo";
 /* export Quality Option for Scan document */
 "best"="Superior";
-/* Description of why the user should give permission to contacts */
-"Easily discover contacts from your address book on MEGA."="Easily discover contacts from your address book on MEGA.";
-/* Detailed description of why the user should give permission to contacts */
-"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA will not use this data for any other purpose and will never interact with your contacts without your consent.";
+/* Error message appears to sub-users of a business account when they try to login and they are disabled. */
+"Your account has been disabled by your administrator. Please contact your business account administrator for further details."="A sua conta foi desativada pelo seu administrador. Você deve entrar em contato com o administrador da sua conta business para obter mais informações.";
+/* An error message which appears to sub-users of a business account when they try to login and they are deleted. */
+"Your account has been removed by your administrator. Please contact your business account administrator for further details."="A sua conta foi eliminada pelo seu administrador. Você deve entrar em contato com o administrador da sua conta business para obter mais informações.";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="Digite o nome do grupo";
+/* Title of one of the Settings sections where you can customise the 'Appearance' of the app. */
+"Appearance"="Appearance";
+/* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
+"Sorting And View Mode"="Sorting And View Mode";
+/* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
+"Default"="Default";
+/* Label for any ‘Day’ button, link, text, title, etc. - (String as short as possible). */
+"Day"="Dia";
+/* Label for any ‘Night’ button, link, text, title, etc. - (String as short as possible). */
+"Night"="Night";
+/* Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible). */
+"Minimal"="Minimal";
+/* Section title inside of Settings - Appearance, where you can change the app's layout. */
+"Layout"="Layout";
+/* Section title inside of Settings - Appearance, where you can change the app's icon. */
+"App Icon"="App Icon";
+/* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
+"Configure sorting order and the default view (List or Thumbnail)."="Configure sorting order and the default view (List or Thumbnail).";
+/* Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for All'. */
+"Per Folder"="Per Folder";
+/* Same for all configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for all Folders'. */
+"Same for All"="Same for All";
+/* Section title of the 'Sorting And View Mode' view inside of Settings - Appearence - Sorting And View Mode. */
+"Sorting preference"="Preferências de classificação";
+/* Section title of the 'Sorting And View Mode' view inside of Settings - Appearence - Sorting And View Mode. */
+"View mode preference"="Preferências de visualização";
+/* Footer text explaining what means choosing a sorting preference 'Per Folder' or 'Same for All' in Settings - Appearance - Sorting And View Mode. */
+"Configure column sorting order on a per-folder basis, or use the same order for all folders."="Configure a ordem de colunas para cada pasta, ou utilize a mesma ordem em todas as pastas.";
+/* Footer text explaining what means choosing a view mode preference 'Per Folder', 'List view' or 'Thumbnail view' in Settings - Appearance - Sorting And View Mode. */
+"Select view mode (List or Thumbnail) on a per-folder basis, or use the same view mode for all folders."="Select view mode (List or Thumbnail) on a per-folder basis, or use the same view mode for all folders.";
+/* Warning message to alert user about logout in My Account section if has transfers in progress. */
+"When you logout, ongoing transfers will be cancelled."="Quando você fizer logout, as transferências em andamento serão canceladas.";
+/* Warning message to alert user about logout in My Account section if has offline files. */
+"When you logout, files from your Offline section will be deleted from your device."="Quando você fizer logout, os arquivos da seção Offline serão deletados do seu dispositivo.";
+/* Warning message to alert user about logout in My Account section if has offline files and transfers in progress. */
+"When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled."="Quando você fizer logout, os arquivos da seção Offline serão deletados do seu dispositivo, e as transferências em andamento serão canceladas.";
+/* Default title of an empty chat. */
+"Chat created on %s1"="Chat iniciado em %s1";

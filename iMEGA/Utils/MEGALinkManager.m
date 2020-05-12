@@ -250,41 +250,7 @@ static NSString *nodeToPresentBase64Handle;
     } else {
         if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
             UIAlertController *theContentIsNotAvailableAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"theContentIsNotAvailableForThisAccount", @"") message:nil preferredStyle:UIAlertControllerStyleAlert];
-            [theContentIsNotAvailableAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
-            
-            [theContentIsNotAvailableAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"logoutLabel", @"Title of the button which logs out from your account.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-                NSError *error;
-                NSArray *directoryContent = [NSFileManager.defaultManager contentsOfDirectoryAtPath:NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject error:&error];
-                if (error) {
-                    MEGALogError(@"Contents of directory at path failed with error: %@", error);
-                }
-                
-                BOOL isInboxDirectory = NO;
-                for (NSString *directoryElement in directoryContent) {
-                    if ([directoryElement isEqualToString:@"Inbox"]) {
-                        NSString *inboxPath = [[Helper pathForOffline] stringByAppendingPathComponent:@"Inbox"];
-                        [[NSFileManager defaultManager] fileExistsAtPath:inboxPath isDirectory:&isInboxDirectory];
-                        break;
-                    }
-                }
-                
-                if (directoryContent.count > 0) {
-                    if (directoryContent.count == 1 && isInboxDirectory) {
-                        [[MEGASdkManager sharedMEGASdk] logout];
-                        return;
-                    }
-                    
-                    UIAlertController *warningAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"warning", nil) message:AMLocalizedString(@"allFilesSavedForOfflineWillBeDeletedFromYourDevice", @"Alert message shown when the user perform logout and has files in the Offline directory") preferredStyle:UIAlertControllerStyleAlert];
-                    [warningAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"") style:UIAlertActionStyleCancel handler:nil]];
-                    [warningAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"logoutLabel", @"Title of the button which logs out from your account.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-                        [[MEGASdkManager sharedMEGASdk] logout];
-                    }]];
-                    
-                    [UIApplication.mnz_presentingViewController presentViewController:warningAlertController animated:YES completion:nil];
-                } else {
-                    [[MEGASdkManager sharedMEGASdk] logout];
-                }
-            }]];
+            [theContentIsNotAvailableAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleCancel handler:nil]];
             
             [UIApplication.mnz_presentingViewController presentViewController:theContentIsNotAvailableAlertController animated:YES completion:nil];
         }
@@ -335,7 +301,12 @@ static NSString *nodeToPresentBase64Handle;
             [MEGALinkManager resetLinkAndURLType];
             break;
             
-        case URLTypeConfirmationLink:
+        case URLTypeConfirmationLink: {
+            MEGAQuerySignupLinkRequestDelegate *querySignupLinkRequestDelegate = [MEGAQuerySignupLinkRequestDelegate.alloc initWithCompletion:nil urlType:MEGALinkManager.urlType];
+            [MEGASdkManager.sharedMEGASdk querySignupLink:url.mnz_MEGAURL delegate:querySignupLinkRequestDelegate];
+            break;
+        }
+            
         case URLTypeNewSignUpLink: {
             if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
                 [MEGALinkManager resetLinkAndURLType];

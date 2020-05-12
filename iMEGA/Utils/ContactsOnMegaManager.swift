@@ -49,7 +49,7 @@ struct ContactOnMega: Codable {
         //Get all outgoing contact request emails
         let outgoingContactRequestList = MEGASdkManager.sharedMEGASdk().outgoingContactRequests()
         for i in 0 ..< outgoingContactRequestList.size.intValue {
-            contactEmailsToFilter.append(outgoingContactRequestList.contactRequest(at: i)?.targetEmail ?? "")
+            contactEmailsToFilter.append(outgoingContactRequestList.contactRequest(at: i)?.targetEmail.lowercased() ?? "")
         }
 
         //Get all visible contacts emails
@@ -57,7 +57,7 @@ struct ContactOnMega: Codable {
         for j in 0 ..< userContacts.size.intValue {
             if let user = userContacts.user(at: j) {
                 if user.visibility == .visible {
-                    contactEmailsToFilter.append(user.email)
+                    contactEmailsToFilter.append(user.email.lowercased())
                 }
             }
         }
@@ -65,7 +65,7 @@ struct ContactOnMega: Codable {
         //Filter ContactsOnMEGA from API with outgoing contact request and visible contacts
         if contactEmailsToFilter.count > 0 {
             for contact in contactsOnMega {
-                if contactEmailsToFilter.filter({$0 == contact.email}).count == 0 {
+                if contactEmailsToFilter.filter({$0 == contact.email.lowercased()}).count == 0 {
                     contactsOnMegaFiltered.append(contact)
                 }
             }
@@ -124,8 +124,9 @@ struct ContactOnMega: Codable {
                         let formatedNumber = phoneNumberKit.format(phoneNumber, toType: .e164)
                         let name = contact.givenName + " " + contact.familyName
 
-                        deviceContacts.append([formatedNumber: name])
-                    } catch {
+                        deviceContacts.append([formatedNumber:name.replacingOccurrences(of: "\"", with: "''")])
+                    }
+                    catch {
                         MEGALogError("Device contact number parser error " + label.value.stringValue)
                     }
                 }
@@ -199,7 +200,9 @@ struct ContactOnMega: Codable {
         UserDefaults.standard.set(Date(), forKey: "lastDateContactsOnMegaRequested")
         self.state = .ready
         guard let completion = completionWhenReady else { return }
-        completion()
+        DispatchQueue.main.async {
+            completion()
+        }
         completionWhenReady = nil
     }
 
