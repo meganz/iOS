@@ -1421,7 +1421,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 }
 
 - (IBAction)moreAction:(UIBarButtonItem *)sender {
-    ActionSheetViewController *vc =ActionSheetViewController.new;
+    ActionSheetViewController *vc = ActionSheetViewController.new;
     vc.modalPresentationStyle = UIModalPresentationOverFullScreen;
     
     vc.actions = @[
