@@ -6,7 +6,12 @@ extension ChatViewController {
     // MARK: - Overriden properties
     
     override var inputAccessoryView: UIView? {
-        if chatInputBar == nil {
+        if let chatRoom = chatRoom,
+            chatRoom.isPublicChat,
+            chatRoom.isPreview,
+            !chatRoomDelegate.hasChatRoomClosed {
+            return joinInputBar
+        } else if chatInputBar == nil {
             chatInputBar = ChatInputBar()
             chatInputBar.delegate = self
         }
@@ -16,6 +21,16 @@ extension ChatViewController {
     
     override var canBecomeFirstResponder: Bool {
         return true
+    }
+    
+    // MARK: - Private properties
+
+    private var joinInputBar: JoinInputBar {
+        let joinInputBar = JoinInputBar.instanceFromNib
+        joinInputBar.buttonTappedHandler = { [weak self] button in
+            self?.join(button: button)
+        }
+        return joinInputBar
     }
     
     // MARK: - Interface methods.
@@ -35,6 +50,24 @@ extension ChatViewController {
      }
     
     // MARK: - Private methods.
+    
+    private func join(button: UIButton) {
+        if MEGASdkManager.sharedMEGAChatSdk()!.initState() == .anonymous {
+            MEGALinkManager.secondaryLinkURL = publicChatLink
+            MEGALinkManager.selectedOption = .joinChatLink
+            dismissChatRoom()
+        } else {
+            let delegate = MEGAChatGenericRequestDelegate { (request, error) in
+                let chatViewController = ChatViewController()
+                chatViewController.chatRoom = MEGASdkManager.sharedMEGAChatSdk()!.chatRoom(forChatId: request.chatHandle)
+                self.replaceCurrentViewController(withViewController: chatViewController)
+                button.isEnabled = true
+            }
+            MEGASdkManager.sharedMEGAChatSdk()?.autojoinPublicChat(chatRoom.chatId,
+                                                                   delegate: delegate)
+            button.isEnabled = false
+        }
+    }
     
     private func displayAddToChatViewController(_ button: UIButton) {
         let addToChatViewController = AddToChatViewController(nibName: nil, bundle: nil)

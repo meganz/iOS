@@ -1134,6 +1134,8 @@
 		BFB464142435823400FB90B9 /* ChatViewController+MessagesDisplayDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB464132435823400FB90B9 /* ChatViewController+MessagesDisplayDelegate.swift */; };
 		BFB464162435825A00FB90B9 /* ChatViewController+MessagesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB464152435825A00FB90B9 /* ChatViewController+MessagesDataSource.swift */; };
 		BFC1795024491073004F35AB /* AudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC1794F24491073004F35AB /* AudioRecorder.swift */; };
+		BFCF841F246A1310004FA3B1 /* JoinInputBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCF841E246A1310004FA3B1 /* JoinInputBar.swift */; };
+		BFCF8423246A1326004FA3B1 /* JoinInputBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFCF8422246A1326004FA3B1 /* JoinInputBar.xib */; };
 		BFD23CCE236255A5005D4A1E /* NicknameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD23CCD236255A5005D4A1E /* NicknameViewController.swift */; };
 		BFE54778231F0F27007FB8F6 /* UIViewController+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0BBEFD230627BE001FD542 /* UIViewController+MNZCategory.m */; };
 		BFE54779231F0F29007FB8F6 /* UIViewController+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0BBEFD230627BE001FD542 /* UIViewController+MNZCategory.m */; };
@@ -2649,6 +2651,8 @@
 		BFB464132435823400FB90B9 /* ChatViewController+MessagesDisplayDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatViewController+MessagesDisplayDelegate.swift"; sourceTree = "<group>"; };
 		BFB464152435825A00FB90B9 /* ChatViewController+MessagesDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatViewController+MessagesDataSource.swift"; sourceTree = "<group>"; };
 		BFC1794F24491073004F35AB /* AudioRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorder.swift; sourceTree = "<group>"; };
+		BFCF841E246A1310004FA3B1 /* JoinInputBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinInputBar.swift; sourceTree = "<group>"; };
+		BFCF8422246A1326004FA3B1 /* JoinInputBar.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = JoinInputBar.xib; sourceTree = "<group>"; };
 		BFD23CCD236255A5005D4A1E /* NicknameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewController.swift; sourceTree = "<group>"; };
 		BFE6DBF7242D879D00E2E5B4 /* MessageKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MessageKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFE6DBFB242DBA4A00E2E5B4 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
@@ -5540,6 +5544,8 @@
 				BF15891E2435EF85007AF9EC /* ChatViewCallCollectionCell.xib */,
 				BFB463F9243456D900FB90B9 /* ChatViewIntroductionHeaderView.swift */,
 				BFB463FA243456D900FB90B9 /* ChatViewIntroductionHeaderView.xib */,
+				BFCF841E246A1310004FA3B1 /* JoinInputBar.swift */,
+				BFCF8422246A1326004FA3B1 /* JoinInputBar.xib */,
 				BF06E3DD243191B000B30FB7 /* ChatTitleView.swift */,
 				BF06E3DC243191B000B30FB7 /* ChatTitleView.xib */,
 				BF7EBD44245277EB0015255F /* AddToChatMenuItemsView.swift */,
@@ -6081,6 +6087,7 @@
 				4172793A1DB663FA001AC818 /* JSQMessagesViewController.xib in Resources */,
 				E8E1D2D51AFA860E00A9BD5B /* Main.storyboard in Resources */,
 				41BADDAF1A8E28FD008408B3 /* Photos.storyboard in Resources */,
+				BFCF8423246A1326004FA3B1 /* JoinInputBar.xib in Resources */,
 				5B6429DD2020A8CB000E0DCB /* SF-UI-Display-Semibold.otf in Resources */,
 				BF33EF7924451A6200CD35AC /* TapAndHoldMessageView.xib in Resources */,
 				E889C9E61B5565C900ECEFDF /* MyAccount.storyboard in Resources */,
@@ -6734,6 +6741,7 @@
 				BF0BBEFE230627BE001FD542 /* UIViewController+MNZCategory.m in Sources */,
 				B68C42CB216DAA85003C5A50 /* CameraUploadOperation.m in Sources */,
 				41840EEA1E811CD600D8308D /* MEGAApplication.m in Sources */,
+				BFCF841F246A1310004FA3B1 /* JoinInputBar.swift in Sources */,
 				A86B9F682316D6AB00F35E7A /* FLEXSystemLogTableViewController.m in Sources */,
 				2F18DEE92458EDC500E7EE27 /* MessageCollectionViewCell+menus.swift in Sources */,
 				4147C2D11B4EE8A400A37044 /* MEGACD.xcdatamodeld in Sources */,
