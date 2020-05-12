@@ -10,9 +10,18 @@
 
 @interface ChangeNameViewController () <UITextFieldDelegate, MEGARequestDelegate>
 
+@property (weak, nonatomic) IBOutlet UIView *firstNameView;
+@property (weak, nonatomic) IBOutlet UIView *firstNameTopSeparatorView;
+@property (weak, nonatomic) IBOutlet UILabel *firstNameLabel;
 @property (weak, nonatomic) IBOutlet UITextField *firstNameTextField;
-@property (weak, nonatomic) IBOutlet UITextField *lastNameTextField;
+@property (weak, nonatomic) IBOutlet UIView *firstNameBottomSeparatorView;
 
+@property (weak, nonatomic) IBOutlet UIView *lastNameView;
+@property (weak, nonatomic) IBOutlet UILabel *lastNameLabel;
+@property (weak, nonatomic) IBOutlet UITextField *lastNameTextField;
+@property (weak, nonatomic) IBOutlet UIView *lastNameBottomSeparatorView;
+
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *saveButton;
 
 @property (strong, nonatomic) NSString *firstName;
@@ -39,10 +48,33 @@
     self.firstNameTextField.textContentType = UITextContentTypeGivenName;
     self.lastNameTextField.textContentType = UITextContentTypeFamilyName;
     
+    self.cancelBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
     [self.saveButton setTitle:AMLocalizedString(@"save", @"Button title to 'Save' the selected option")];
+    [self.saveButton setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17.0f weight:UIFontWeightMedium]} forState:UIControlStateNormal];
+    
+    [self updateAppearance];
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateAppearance];
+        }
+    }
 }
 
 #pragma mark - Private
+
+- (void)updateAppearance {
+    self.view.backgroundColor = [UIColor mnz_settingsBackgroundForTraitCollection:self.traitCollection];
+    
+    self.firstNameView.backgroundColor = self.lastNameView.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
+    self.firstNameLabel.textColor = self.lastNameLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
+    
+    self.firstNameTopSeparatorView.backgroundColor = self.firstNameBottomSeparatorView.backgroundColor = self.lastNameBottomSeparatorView.backgroundColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
+}
 
 - (BOOL)validateNameForm {
     self.firstNameTextField.text = self.firstNameTextField.text.mnz_removeWhitespacesAndNewlinesFromBothEnds;
@@ -81,6 +113,13 @@
 }
 
 #pragma mark - IBActions
+
+- (IBAction)cancelTouchUpInside:(UIBarButtonItem *)sender {
+    [self.firstNameTextField resignFirstResponder];
+    [self.lastNameTextField resignFirstResponder];
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
 - (IBAction)saveTouchUpInside:(UIBarButtonItem *)sender {
     [self.firstNameTextField resignFirstResponder];
@@ -174,7 +213,7 @@
             }
             
             [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"youHaveSuccessfullyChangedYourProfile", @"Success message when changing profile information.")];
-            [self.navigationController popViewControllerAnimated:YES];
+            [self dismissViewControllerAnimated:YES completion:nil];
             break;
         }
             
