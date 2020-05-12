@@ -111,7 +111,7 @@ struct ContactOnMega: Codable {
         var deviceContacts = [[String:String]]()
         let contactsStore = CNContactStore()
 
-        let keysToFetch = [CNContactFamilyNameKey, CNContactGivenNameKey, CNContactPhoneNumbersKey] as [CNKeyDescriptor]
+        let keysToFetch = [CNContactFamilyNameKey, CNContactGivenNameKey, CNContactPhoneNumbersKey, CNContactEmailAddressesKey] as [CNKeyDescriptor]
 
         let predicate = CNContact.predicateForContactsInContainer(withIdentifier: contactsStore.defaultContainerIdentifier())
         do {
@@ -119,16 +119,23 @@ struct ContactOnMega: Codable {
             
             let contacts = try contactsStore.unifiedContacts(matching: predicate, keysToFetch: keysToFetch)
             contacts.forEach { (contact) in
+                let name = (contact.givenName + " " + contact.familyName)
+
                 for label in contact.phoneNumbers {
                     do {
                         let phoneNumber = try phoneNumberKit.parse(label.value.stringValue)
                         let formatedNumber = phoneNumberKit.format(phoneNumber, toType: .e164)
-                        let name = contact.givenName + " " + contact.familyName
 
-                        deviceContacts.append([formatedNumber:name.replacingOccurrences(of: "\"", with: "''")])
+                        deviceContacts.append([formatedNumber:name])
                     }
                     catch {
                         MEGALogError("Device contact number parser error " + label.value.stringValue)
+                    }
+                }
+
+                contact.emailAddresses.forEach { (email) in
+                    if email.value.mnz_isValidEmail() {
+                        deviceContacts.append([String(email.value):name])
                     }
                 }
             }
@@ -193,7 +200,7 @@ struct ContactOnMega: Codable {
                     self.persistContactsOnMega()
                 }
             })
-            MEGASdkManager.sharedMEGAChatSdk().userEmail(byUserHandle: contactOnMega.key, delegate: emailRequestDelegate)
+            MEGASdkManager.sharedMEGAChatSdk()?.userEmail(byUserHandle: contactOnMega.key, delegate: emailRequestDelegate)
         }
     }
     
