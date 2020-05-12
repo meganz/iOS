@@ -298,8 +298,8 @@ enum SessionSectionRow: Int {
         return [.logout]
     }
     
-    func pushChangeViewController(changeType: ChangeType) -> Void {
-        let changePasswordViewController = UIStoryboard.init(name: "Settings", bundle: nil).instantiateViewController(withIdentifier: "ChangePasswordViewControllerID") as! ChangePasswordViewController
+    func presentChangeViewController(changeType: ChangeType) -> Void {
+        let changePasswordViewController = UIStoryboard.init(name: "ChangeCredentials", bundle: nil).instantiateViewController(withIdentifier: "ChangePasswordViewControllerID") as! ChangePasswordViewController
         changePasswordViewController.changeType = changeType
         if changeType == .email {
             switch twoFactorAuthStatus {
@@ -314,7 +314,10 @@ enum SessionSectionRow: Int {
                         return
                     }
                     changePasswordViewController.isTwoFactorAuthenticationEnabled = request.flag
-                    self.navigationController?.pushViewController(changePasswordViewController, animated: true)
+                    let navigationController = MEGANavigationController.init(rootViewController: changePasswordViewController)
+                    navigationController.addLeftDismissButton(withText: AMLocalizedString("cancel", "Button title to cancel something"))
+                    
+                    self.present(navigationController, animated: true, completion: nil)
                  }))
                  twoFactorAuthStatus = .querying
                  tableView.reloadRows(at: [IndexPath(row: 2, section: 0)], with: .automatic)
@@ -322,10 +325,16 @@ enum SessionSectionRow: Int {
                 return
             case .disabled, .enabled:
                     changePasswordViewController.isTwoFactorAuthenticationEnabled = self.twoFactorAuthStatus == .enabled
-                    self.navigationController?.pushViewController(changePasswordViewController, animated: true)
+                    let navigationController = MEGANavigationController.init(rootViewController: changePasswordViewController)
+                    navigationController.addLeftDismissButton(withText: AMLocalizedString("cancel", "Button title to cancel something"))
+                    
+                    present(navigationController, animated: true, completion: nil)
             }
         } else {
-            navigationController?.pushViewController(changePasswordViewController, animated: true)
+            let navigationController = MEGANavigationController.init(rootViewController: changePasswordViewController)
+            navigationController.addLeftDismissButton(withText: AMLocalizedString("cancel", "Button title to cancel something"))
+            
+            present(navigationController, animated: true, completion: nil)
         }
     }
     
@@ -536,13 +545,13 @@ extension ProfileViewController: UITableViewDelegate {
                 }
                 presentChangeAvatarController(tableView:tableView, cell: cell)
             case .changeEmail:
-                pushChangeViewController(changeType: .email)
+                presentChangeViewController(changeType: .email)
             case .phoneNumber:
                 if MEGASdkManager.sharedMEGASdk().smsVerifiedPhoneNumber() == nil {
                     showAddPhoneNumber()
                 }
             case .changePassword:
-                pushChangeViewController(changeType: .password)
+                presentChangeViewController(changeType: .password)
             }
         case .security:
             switch rowsForSecuritySection()[indexPath.row] {

@@ -264,6 +264,7 @@
 		5B8A5B1B2456D51E00EB8C6C /* SectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8A5B1A2456D51E00EB8C6C /* SectionTableViewCell.swift */; };
 		5B8A5B1D2456D65C00EB8C6C /* SectionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B8A5B1C2456D65C00EB8C6C /* SectionTableViewCell.xib */; };
 		5B8C86912448ACA900D23D43 /* MEGAChatPeerList+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8C86902448ACA900D23D43 /* MEGAChatPeerList+Additions.swift */; };
+		5B8D209B246A98F8009BD3E9 /* ChangeCredentials.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B8D209A246A98F8009BD3E9 /* ChangeCredentials.storyboard */; };
 		5B92CEE72423E9F100FE1BCC /* UpgradeAccount.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B92CEE62423E9F100FE1BCC /* UpgradeAccount.storyboard */; };
 		5B95DD94237C35610068DF97 /* EmptyStateView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BE7BEE423745FC700BBD23F /* EmptyStateView.xib */; };
 		5B9E7EA62449A9E700BDECC2 /* MEGAChatSDK+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D5DB2D23E9930200B09412 /* MEGAChatSDK+Additions.swift */; };
@@ -1689,6 +1690,7 @@
 		5B8A5B1A2456D51E00EB8C6C /* SectionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionTableViewCell.swift; sourceTree = "<group>"; };
 		5B8A5B1C2456D65C00EB8C6C /* SectionTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SectionTableViewCell.xib; sourceTree = "<group>"; };
 		5B8C86902448ACA900D23D43 /* MEGAChatPeerList+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MEGAChatPeerList+Additions.swift"; sourceTree = "<group>"; };
+		5B8D209A246A98F8009BD3E9 /* ChangeCredentials.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ChangeCredentials.storyboard; sourceTree = "<group>"; };
 		5B92CEE62423E9F100FE1BCC /* UpgradeAccount.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = UpgradeAccount.storyboard; sourceTree = "<group>"; };
 		5B9F200F243332D200F22FBA /* ContactLinkQR.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ContactLinkQR.storyboard; sourceTree = "<group>"; };
 		5BA53FE82462B26000D168B9 /* InviteContact.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = InviteContact.storyboard; sourceTree = "<group>"; };
@@ -3519,8 +3521,6 @@
 				41AA1A1B1AC081C600D32691 /* SecurityOptionsTableViewController.m */,
 				E8BD127D1DB76E03003DC53F /* MasterKeyViewController.h */,
 				E8BD127E1DB76E03003DC53F /* MasterKeyViewController.m */,
-				4178409E1AC328A600713F3C /* ChangePasswordViewController.h */,
-				4178409F1AC328A600713F3C /* ChangePasswordViewController.m */,
 				777E922B203EE14B00266229 /* QRSettingsTableViewController.h */,
 				777E922C203EE14B00266229 /* QRSettingsTableViewController.m */,
 			);
@@ -4119,6 +4119,16 @@
 				5B8281481E7BE8300079C1BB /* SelectableTableViewCell.xib */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		5B8D209C246AAB45009BD3E9 /* ChangeCredentials */ = {
+			isa = PBXGroup;
+			children = (
+				4178409E1AC328A600713F3C /* ChangePasswordViewController.h */,
+				4178409F1AC328A600713F3C /* ChangePasswordViewController.m */,
+				5B8D209A246A98F8009BD3E9 /* ChangeCredentials.storyboard */,
+			);
+			path = ChangeCredentials;
 			sourceTree = "<group>";
 		};
 		5B9F20112433330000F22FBA /* ContactLinkQR */ = {
@@ -5155,6 +5165,7 @@
 		A8C93C0A22D718030030CE1B /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				5B8D209C246AAB45009BD3E9 /* ChangeCredentials */,
 				A8C93C0B22D718030030CE1B /* ProfileViewController.swift */,
 				A8C93C0D22D718440030CE1B /* RecoveryKeyTableViewCell.swift */,
 				A8C93C0F22D718BA0030CE1B /* ProfileTableViewCell.swift */,
@@ -5888,6 +5899,7 @@
 				83C570E722E5BFCF00216896 /* README.md in Resources */,
 				A82E5BC81F3465A3003C149C /* Spotlight_file@2x.png in Resources */,
 				5B6429E02020A8CF000E0DCB /* SF-UI-Text-Semibold.otf in Resources */,
+				5B8D209B246A98F8009BD3E9 /* ChangeCredentials.storyboard in Resources */,
 				A82E5BCB1F3465A3003C149C /* Spotlight_folder@3x.png in Resources */,
 				E8C289FF1BF65BAB00F7A034 /* Launch.storyboard in Resources */,
 				5B59B4CF236726D100A57229 /* DocumentPreviewer.storyboard in Resources */,

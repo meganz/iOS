@@ -186,12 +186,12 @@
     if (self.testFailedCount == 3) {
         MEGAMultiFactorAuthCheckRequestDelegate *delegate = [[MEGAMultiFactorAuthCheckRequestDelegate alloc] initWithCompletion:^(MEGARequest *request, MEGAError *error) {
             [self dismissViewControllerAnimated:YES completion:^{
-                ChangePasswordViewController *changePasswordVC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"ChangePasswordViewControllerID"];
+                ChangePasswordViewController *changePasswordVC = [[UIStoryboard storyboardWithName:@"ChangeCredentials" bundle:nil] instantiateViewControllerWithIdentifier:@"ChangePasswordViewControllerID"];
                 changePasswordVC.changeType = ChangeTypePasswordFromLogout;
                 changePasswordVC.twoFactorAuthenticationEnabled = request.flag;
-                [changePasswordVC createNavigationCancelButton];
                 
                 MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:changePasswordVC];
+                [navigationController addLeftDismissButtonWithText:AMLocalizedString(@"cancel", @"Button title to cancel something")];
                 [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:nil];
             }];
         }];
