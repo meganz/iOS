@@ -11,6 +11,12 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate {
         cell.forward(nil)
     }
     
+    func didSelectURL(_ url: URL) {
+        print("URL Selected: \(url)")
+        MEGALinkManager.linkURL = url;
+        MEGALinkManager.processLinkURL(url)
+    }
+    
     func didTapMessage(in cell: MessageCollectionViewCell) {
         print("Message view tapped")
         let indexPath = messagesCollectionView.indexPath(for: cell)!

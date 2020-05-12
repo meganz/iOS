@@ -88,6 +88,10 @@ extension ChatViewController: MessagesDisplayDelegate {
         }
     }
     
+    func enabledDetectors(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> [DetectorType] {
+        return [.url, .address, .phoneNumber, .date, .transitInformation, .mention, .hashtag]
+    }
+    
     // MARK: - Private methods
     
     private func shouldShowAccessoryView(for message: MessageType) -> Bool {
