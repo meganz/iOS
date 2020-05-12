@@ -149,7 +149,7 @@
     UIColor *percentageColor = (transfer.type == MEGATransferTypeDownload) ? UIColor.mnz_green31B500 : UIColor.mnz_blue2BA6DE;
     float percentage = (transfer.transferredBytes.floatValue / transfer.totalBytes.floatValue * 100);
     NSString *percentageCompleted = [NSString stringWithFormat:@"%.f %%", percentage];
-    NSMutableAttributedString *percentageAttributedString = [[NSMutableAttributedString alloc] initWithString:percentageCompleted attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:percentageColor}];
+    NSMutableAttributedString *percentageAttributedString = [NSMutableAttributedString.alloc initWithString:percentageCompleted attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName:percentageColor}];
     
     NSString *speed = [NSString stringWithFormat:@" %@/s", [Helper memoryStyleStringFromByteCount:transfer.speed.longLongValue]];
     NSAttributedString *speedAttributedString = [NSAttributedString.alloc initWithString:speed attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];

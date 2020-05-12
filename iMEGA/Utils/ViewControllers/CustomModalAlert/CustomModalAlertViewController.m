@@ -54,15 +54,12 @@
     self.titleLabel.text = self.viewTitle;
     
     if (self.boldInDetail) {
-        UIFont *sfMedium = [UIFont mnz_SFUIMediumWithSize:14];
         NSRange boldRange = [self.detail rangeOfString:self.boldInDetail];
         
         NSMutableAttributedString *detailAttributedString = [[NSMutableAttributedString alloc] initWithString:self.detail];
         
         [detailAttributedString beginEditing];
-        [detailAttributedString addAttribute:NSFontAttributeName
-                                       value:sfMedium
-                                       range:boldRange];
+        [detailAttributedString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14.0f weight:UIFontWeightMedium] range:boldRange];
         
         [detailAttributedString endEditing];
         self.detailLabel.attributedText = detailAttributedString;

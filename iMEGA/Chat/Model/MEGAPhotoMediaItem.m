@@ -81,7 +81,7 @@
             NSString *textContent = [NSString mnz_stringFromTimeInterval:self.node.duration];
             NSRange textRange = NSMakeRange(0, textContent.length);
             NSMutableAttributedString *textString = [[NSMutableAttributedString alloc] initWithString:textContent];
-            UIFont *font = [UIFont mnz_SFUIRegularWithSize:12];
+            UIFont *font = [UIFont systemFontOfSize:12.0f];
             [textString addAttribute:NSFontAttributeName value:font range:textRange];
             NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
             paragraphStyle.lineSpacing = 1.21;

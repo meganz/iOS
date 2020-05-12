@@ -33,11 +33,11 @@
     [super viewDidLoad];
     
     if ([[UIDevice currentDevice] iPhone4X] || [[UIDevice currentDevice] iPhone5X]) {
-        self.firstSectionLabel.font = [UIFont mnz_SFUIRegularWithSize:12.f];
+        self.firstSectionLabel.font = [UIFont systemFontOfSize:12.0f];
         self.seedQrImageTopLayoutConstraint.constant = 16.f;
         self.seedQrImageViewHeightLayoutConstraint.constant = [[UIDevice currentDevice] iPhone4X] ? 100.f : 120.f;
         self.seedQrImageViewWidthLayoutConstraint.constant = [[UIDevice currentDevice] iPhone4X] ? 100.f : 120.f;
-        self.seedTextView.font = [UIFont mnz_SFUIRegularWithSize:14.f];
+        self.seedTextView.font = [UIFont systemFontOfSize:14.0f];
     }
     
     self.navigationItem.title = AMLocalizedString(@"twoFactorAuthentication", @"");

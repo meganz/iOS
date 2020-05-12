@@ -517,7 +517,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 
 - (void)initNavigationTitleViews {
     self.navigationTitleLabel = [[UILabel alloc] init];
-    self.navigationTitleLabel.font = [UIFont mnz_SFUISemiBoldWithSize:15];
+    self.navigationTitleLabel.font = [UIFont systemFontOfSize:15.0f weight:UIFontWeightSemibold];
     self.navigationTitleLabel.textColor = UIColor.whiteColor;
     
     self.navigationStatusView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
@@ -528,7 +528,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     self.navigationStatusView.layer.borderWidth = 1;
     
     self.navigationSubtitleLabel = [[UILabel alloc] init];
-    self.navigationSubtitleLabel.font = [UIFont mnz_SFUIRegularWithSize:12];
+    self.navigationSubtitleLabel.font = [UIFont systemFontOfSize:12.0f];
     self.navigationSubtitleLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
 }
 
@@ -1042,7 +1042,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     NSString *confidentialityString = [confidentialityExplanationString mnz_stringBetweenString:@"[S]" andString:@"[/S]"];
     confidentialityExplanationString = [confidentialityExplanationString stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"[S]%@[/S]", confidentialityString] withString:@""];
     
-    NSMutableAttributedString *confidentialityAttributedString = [[NSMutableAttributedString alloc] initWithString:confidentialityString attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:15.0f], NSForegroundColorAttributeName:UIColor.mnz_redMain}];
+    NSMutableAttributedString *confidentialityAttributedString = [NSMutableAttributedString.alloc initWithString:confidentialityString attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15.0f], NSForegroundColorAttributeName:UIColor.mnz_redMain}];
     NSMutableAttributedString *confidentialityExplanationAttributedString = [NSMutableAttributedString.alloc initWithString:confidentialityExplanationString attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15.0f], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
     [confidentialityAttributedString appendAttributedString:confidentialityExplanationAttributedString];
     self.openMessageHeaderView.confidentialityLabel.attributedText = confidentialityAttributedString;
@@ -1051,7 +1051,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     NSString *authenticityString = [authenticityExplanationString mnz_stringBetweenString:@"[S]" andString:@"[/S]"];
     authenticityExplanationString = [authenticityExplanationString stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"[S]%@[/S]", authenticityString] withString:@""];
 
-    NSMutableAttributedString *authenticityAttributedString = [[NSMutableAttributedString alloc] initWithString:authenticityString attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:15.0f], NSForegroundColorAttributeName:UIColor.mnz_redMain}];
+    NSMutableAttributedString *authenticityAttributedString = [NSMutableAttributedString.alloc initWithString:authenticityString attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15.0f], NSForegroundColorAttributeName:UIColor.mnz_redMain}];
     NSMutableAttributedString *authenticityExplanationAttributedString = [NSMutableAttributedString.alloc initWithString:authenticityExplanationString attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15.0f], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
     [authenticityAttributedString appendAttributedString:authenticityExplanationAttributedString];
     self.openMessageHeaderView.authenticityLabel.attributedText = authenticityAttributedString;
