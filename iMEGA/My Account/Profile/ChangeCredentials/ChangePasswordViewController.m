@@ -28,8 +28,6 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
-
 @property (weak, nonatomic) IBOutlet InputView *currentEmailInputView;
 @property (weak, nonatomic) IBOutlet InputView *theNewEmailInputView;
 @property (weak, nonatomic) IBOutlet InputView *confirmEmailInputView;
@@ -58,6 +56,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
     
     self.passwordStrengthIndicatorViewHeightLayoutConstraint.constant = 0;
     self.confirmButton = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"save", @"save password or email associated to an account.") style:UIBarButtonItemStylePlain target:self action:@selector(confirmButtonTouchUpInside:)];
+    [self.confirmButton setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17.0f weight:UIFontWeightMedium]} forState:UIControlStateNormal];
     self.navigationItem.rightBarButtonItem = self.confirmButton;
     
     switch (self.changeType) {
@@ -137,6 +136,8 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
     [self.view addGestureRecognizer:self.tapGesture];
     
     [self registerForKeyboardNotifications];
+    
+    [self updateAppearance];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -157,15 +158,42 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }
 
-#pragma mark - Public
-
-- (void)createNavigationCancelButton {
-    UIBarButtonItem *cancel = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelAction:)];
-    [cancel setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:UIColor.whiteColor} forState:UIControlStateNormal];
-    self.navigationItem.leftBarButtonItem = cancel;
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateAppearance];
+        }
+    }
 }
 
 #pragma mark - Private
+
+- (void)updateAppearance {
+    self.view.backgroundColor = [UIColor mnz_settingsBackgroundForTraitCollection:self.traitCollection];
+    
+    switch (self.changeType) {
+        case ChangeTypePassword:
+        case ChangeTypePasswordFromLogout:
+            [self.theNewPasswordView updateAppearance];
+            [self.confirmPasswordView updateAppearance];
+            break;
+            
+        case ChangeTypeEmail:
+            [self.currentEmailInputView updateAppearance];
+            [self.theNewEmailInputView updateAppearance];
+            [self.confirmEmailInputView updateAppearance];
+            break;
+            
+        case ChangeTypeResetPassword:
+        case ChangeTypeParkAccount:
+            [self.currentEmailInputView updateAppearance];
+            [self.theNewPasswordView updateAppearance];
+            [self.confirmPasswordView updateAppearance];
+            break;
+    }
+}
 
 - (BOOL)validateForm {
     BOOL valid = YES;

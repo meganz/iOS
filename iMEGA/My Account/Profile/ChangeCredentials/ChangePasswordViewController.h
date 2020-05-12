@@ -18,6 +18,4 @@ typedef NS_ENUM(NSUInteger, ChangeType) {
 
 @property (getter=isTwoFactorAuthenticationEnabled) BOOL twoFactorAuthenticationEnabled;
 
-- (void)createNavigationCancelButton;
-
 @end
