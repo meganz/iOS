@@ -13,6 +13,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
     var isChatRoomOpen: Bool = false
     var historyMessages: [ChatMessage] = []
     var loadingState = true
+    private(set) var hasChatRoomClosed: Bool = false
     var isFullChatHistoryLoaded: Bool {
         return MEGASdkManager.sharedMEGAChatSdk()!.isFullHistoryLoaded(forChat: chatRoom.chatId)
     }
@@ -46,6 +47,16 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
                     self?.chatViewController.messagesCollectionView.scrollToBottom(animated: true)
                 }
             }
+        case .closed:
+            hasChatRoomClosed = true
+            if chatRoom.isPreview {
+                api.closeChatPreview(chat.chatId)
+                chatViewController.reloadInputViews()
+                let statusString = AMLocalizedString("linkRemoved",
+                                                     "Message shown when the link to a file or folder has been removed")
+                SVProgressHUD.showInfo(withStatus: statusString)
+            }
+
         default:
             break
         }
