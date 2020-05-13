@@ -485,11 +485,14 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:self.userEmail message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
 }
 
-- (void)pushVerifyCredentialsViewController {
+- (void)presentVerifyCredentialsViewController {
     VerifyCredentialsViewController *verifyCredentialsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"VerifyCredentialsViewControllerID"];
     verifyCredentialsVC.user = self.user;
     verifyCredentialsVC.userName = self.userName;
-    [self.navigationController pushViewController:verifyCredentialsVC animated:YES];
+    MEGANavigationController *navigationController = [MEGANavigationController.alloc initWithRootViewController:verifyCredentialsVC];
+    [navigationController addRightCancelButton];
+    
+    [self presentViewController:navigationController animated:YES completion:nil];
 }
 
 - (void)openChatRoom:(MEGAChatRoom *)chatRoom {
@@ -960,7 +963,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
                     break;
                     
                 case ContactDetailsRowVerifyCredentials:
-                    [self pushVerifyCredentialsViewController];
+                    [self presentVerifyCredentialsViewController];
                     break;
                     
                 default:

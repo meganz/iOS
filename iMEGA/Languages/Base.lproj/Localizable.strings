@@ -1195,8 +1195,8 @@
 "contactCredentials"="Contact Credentials";
 /* "Verify user" dialog description */
 "thisIsBestDoneInRealLife"="This is best done in real life by meeting face to face. If you have another already-verified channel such as verified OTR or PGP, you may also use that.";
-/* Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity */
-"yourCredentials"="Your Credentials";
+/* Title of the label in the my account section. It shows the credentials of the current user so it can be used to be verified by other contacts */
+"My credentials"="My credentials";
 /* Button to reset the password */
 "reset"="Reset";
 /* Button title */

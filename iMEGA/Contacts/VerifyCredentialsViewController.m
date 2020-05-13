@@ -3,6 +3,7 @@
 #import "SVProgressHUD.h"
 
 #import "MEGASdkManager.h"
+#import "MEGA-Swift.h"
 #import "MEGAGenericRequestDelegate.h"
 
 @interface VerifyCredentialsViewController ()
@@ -23,7 +24,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *ninthPartOfUserCredentialsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *tenthPartOfUserCredentialsLabel;
 
-
+@property (weak, nonatomic) IBOutlet UIView *myCredentialsTopSeparatorView;
 @property (weak, nonatomic) IBOutlet UIView *myCredentialsView;
 @property (weak, nonatomic) IBOutlet UIView *myCredentialsSubView;
 
@@ -81,14 +82,9 @@
     }];
     [MEGASdkManager.sharedMEGASdk getUserCredentials:self.user delegate:userCredentialsDelegate];
     
-    self.myCredentialsView.backgroundColor = UIColor.mnz_grayFAFAFA;
-    
-    self.myCredentialsSubView.backgroundColor = UIColor.whiteColor;
-    self.myCredentialsSubView.layer.borderColor = UIColor.mnz_grayF7F7F7.CGColor;
-    
     self.explanationLabel.text = AMLocalizedString(@"thisIsBestDoneInRealLife", @"'Verify user' dialog description");
     
-    self.yourCredentialsLabel.text = AMLocalizedString(@"yourCredentials", @"Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity");
+    self.yourCredentialsLabel.text = AMLocalizedString(@"My credentials", @"Title of the label in the my account section. It shows the credentials of the current user so it can be used to be verified by other contacts");
     NSString *yourCredentials = MEGASdkManager.sharedMEGASdk.myCredentials;
     if (yourCredentials.length == 40) {
         self.firstPartOfYourCredentialsLabel.text =  [yourCredentials substringWithRange:NSMakeRange(0, length)];
@@ -103,18 +99,41 @@
         self.tenthPartOfYourCredentialsLabel.text =  [yourCredentials substringWithRange:NSMakeRange((position * 9), length)];
     }
     
-    [self updateUI];
+    [self updateVerifyOrResetButton];
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateAppearance];
+        }
+    }
 }
 
 #pragma mark - Private
 
-- (void)updateUI {
+- (void)updateAppearance {
+    self.view.backgroundColor = UIColor.mnz_background;
+    
+    self.myCredentialsTopSeparatorView.backgroundColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
+    self.myCredentialsView.backgroundColor = [UIColor mnz_notificationSeenBackgroundForTraitCollection:self.traitCollection];
+    self.userEmailLabel.textColor = [UIColor mnz_subtitlesColorForTraitCollection:self.traitCollection];
+    
+    self.myCredentialsSubView.backgroundColor = [UIColor mnz_quaternaryBackground:self.traitCollection];
+    self.myCredentialsSubView.layer.borderColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection].CGColor;
+    
+    [self updateVerifyOrResetButton];
+}
+
+- (void)updateVerifyOrResetButton {
     if ([MEGASdkManager.sharedMEGASdk areCredentialsVerifiedOfUser:self.user]) {
-        [self.verifyOrResetButton setBackgroundColor:UIColor.mnz_redMain];
         [self.verifyOrResetButton setTitle:AMLocalizedString(@"reset", @"Button to reset the password") forState:UIControlStateNormal];
+        [self.verifyOrResetButton mnz_setupBasic:self.traitCollection];
     } else {
-        [self.verifyOrResetButton setBackgroundColor:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection]];
         [self.verifyOrResetButton setTitle:AMLocalizedString(@"verify", @"Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible).") forState:UIControlStateNormal];
+        [self.verifyOrResetButton mnz_setupPrimary:self.traitCollection];
     }
 }
 
@@ -126,7 +145,7 @@
             if (error.type) {
                 [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, error.name]];
             } else {
-                [self updateUI];
+                [self updateVerifyOrResetButton];
             }
         }];
         [MEGASdkManager.sharedMEGASdk resetCredentialsOfUser:self.user delegate:resetCredentialsOfUserDelegate];
@@ -137,7 +156,7 @@
             } else {
                 [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"verified", @"Button title")];
                 
-                [self updateUI];
+                [self updateVerifyOrResetButton];
             }
         }];
         [MEGASdkManager.sharedMEGASdk verifyCredentialsOfUser:self.user delegate:verifyCredentialsOfUserDelegate];
