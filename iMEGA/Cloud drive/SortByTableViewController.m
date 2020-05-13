@@ -28,6 +28,7 @@
     
     [self.cancelBarButtonItem setTitle:AMLocalizedString(@"cancel", nil)];
     [self.saveBarButtonItem setTitle:AMLocalizedString(@"save", @"Save")];
+    [self.saveBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17.0f weight:UIFontWeightMedium]} forState:UIControlStateNormal];
     
     if (self.node) {
         self.sortingPreference = [NSUserDefaults.standardUserDefaults integerForKey:MEGASortingPreference];
@@ -43,13 +44,31 @@
     self.selectedSortType = self.sortType;
     
     self.sortByArray = @[AMLocalizedString(@"nameAscending", @"Sort by option (1/6). This one orders the files alphabethically"), AMLocalizedString(@"nameDescending", @"Sort by option (2/6). This one arranges the files on reverse alphabethical order"), AMLocalizedString(@"largest", @"Sort by option (3/6). This one order the files by its size, in this case from bigger to smaller size"), AMLocalizedString(@"smallest", @"Sort by option (4/6). This one order the files by its size, in this case from smaller to bigger size"), AMLocalizedString(@"newest", @"Sort by option (5/6). This one order the files by its modification date, newer first"), AMLocalizedString(@"oldest", @"Sort by option (6/6). This one order the files by its modification date, older first")];
+    
+    [self.tableView registerNib:[UINib nibWithNibName:@"SelectableTableViewCell" bundle:nil] forCellReuseIdentifier:@"SelectableTableViewCellID"];
+    
+    [self updateAppearance];
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
     return UIInterfaceOrientationMaskAll;
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateAppearance];
+        }
+    }
+}
+
 #pragma mark - Private
+
+- (void)updateAppearance {
+    self.view.backgroundColor = [UIColor mnz_settingsBackgroundForTraitCollection:self.traitCollection];
+}
 
 - (MEGASortOrderType)orderTypeForRow:(NSInteger)row {
     MEGASortOrderType sortOrderType;
@@ -145,18 +164,18 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SortByTableViewCellID"];
+    SelectableTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SelectableTableViewCellID"];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SortByTableViewCellID"];
+        cell = [SelectableTableViewCell.alloc initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SelectableTableViewCellID"];
     }
     
     [cell.imageView setImage:[UIImage imageNamed:[self imageNameForRow:indexPath.row]]];
     cell.textLabel.text = self.sortByArray[indexPath.row];
     
     if (self.selectedSortType == [self orderTypeForRow:indexPath.row]) {
-        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+        cell.redCheckmarkImageView.hidden = NO;
     } else {
-        cell.accessoryType = UITableViewCellAccessoryNone;
+        cell.redCheckmarkImageView.hidden = YES;
     }
 
     return cell;
