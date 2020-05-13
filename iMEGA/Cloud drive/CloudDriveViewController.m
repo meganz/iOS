@@ -1423,7 +1423,8 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 - (IBAction)moreAction:(UIBarButtonItem *)sender {
     ActionSheetViewController *vc = ActionSheetViewController.new;
     vc.modalPresentationStyle = UIModalPresentationOverFullScreen;
-    
+    __weak __typeof__(self) weakSelf = self;
+
     vc.actions = @[
         ({
             [ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"upload", @"")
@@ -1431,7 +1432,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
                                              image:nil
                                              style:UIAlertActionStyleDefault
                                            handler:^{
-                [self presentUploadAlertController];
+                [weakSelf presentUploadAlertController];
             }];
         }),
         ({
@@ -1444,7 +1445,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
                                                          
                                                          [newFolderAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
                                                              textField.placeholder = AMLocalizedString(@"newFolderMessage", @"Hint text shown on the create folder alert.");
-                                                             [textField addTarget:self action:@selector(newFolderAlertTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+                                                             [textField addTarget:weakSelf action:@selector(newFolderAlertTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
                                                              textField.shouldReturnCompletion = ^BOOL(UITextField *textField) {
                                                                  return (!textField.text.mnz_isEmpty && !textField.text.mnz_containsInvalidChars);
                                                              };
@@ -1455,19 +1456,19 @@ static const NSTimeInterval kSearchTimeDelay = .5;
                                                          UIAlertAction *createFolderAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"createFolderButton", @"Title button for the create folder alert.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                                                              if ([MEGAReachabilityManager isReachableHUDIfNot]) {
                                                                  UITextField *textField = [[newFolderAlertController textFields] firstObject];
-                                                                 MEGANodeList *childrenNodeList = [[MEGASdkManager sharedMEGASdk] nodeListSearchForNode:self.parentNode searchString:textField.text recursive:NO];
+                                                                 MEGANodeList *childrenNodeList = [[MEGASdkManager sharedMEGASdk] nodeListSearchForNode:weakSelf.parentNode searchString:textField.text recursive:NO];
                                                                  if ([childrenNodeList mnz_existsFolderWithName:textField.text]) {
                                                                      [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"There is already a folder with the same name", @"A tooltip message which is shown when a folder name is duplicated during renaming or creation.")];
                                                                  } else {
                                                                      MEGACreateFolderRequestDelegate *createFolderRequestDelegate = [[MEGACreateFolderRequestDelegate alloc] initWithCompletion:nil];
-                                                                     [[MEGASdkManager sharedMEGASdk] createFolderWithName:textField.text parent:self.parentNode delegate:createFolderRequestDelegate];
+                                                                     [[MEGASdkManager sharedMEGASdk] createFolderWithName:textField.text parent:weakSelf.parentNode delegate:createFolderRequestDelegate];
                                                                  }
                                                              }
                                                          }];
                                                          createFolderAlertAction.enabled = NO;
                                                          [newFolderAlertController addAction:createFolderAlertAction];
                                                          
-                                                         [self presentViewController:newFolderAlertController animated:YES completion:nil];
+                                                         [weakSelf presentViewController:newFolderAlertController animated:YES completion:nil];
                                                      }];
         }),
         ({
@@ -1476,7 +1477,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
                                                    image:nil
                                                    style:UIAlertActionStyleDefault
                                                  handler:^{
-                      [self changeLayoutMode];
+                      [weakSelf changeLayoutMode];
                   }];
         }),
         ({
@@ -1485,7 +1486,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
                                              image:nil
                                              style:UIAlertActionStyleDefault
                                            handler:^{
-                [self presentSortByViewController];
+                [weakSelf presentSortByViewController];
             }];
         }),
         ({
@@ -1494,8 +1495,8 @@ static const NSTimeInterval kSearchTimeDelay = .5;
                                              image:nil
                                              style:UIAlertActionStyleDefault
                                            handler:^{
-                BOOL enableEditing = self.cdTableView ? !self.cdTableView.tableView.isEditing : !self.cdCollectionView.collectionView.allowsMultipleSelection;
-                [self setEditMode:enableEditing];
+                BOOL enableEditing = weakSelf.cdTableView ? !weakSelf.cdTableView.tableView.isEditing : !weakSelf.cdCollectionView.collectionView.allowsMultipleSelection;
+                [weakSelf setEditMode:enableEditing];
                 
             }];
             
@@ -1510,7 +1511,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
                 cloudDriveVC.parentNode = [[MEGASdkManager sharedMEGASdk] rubbishNode];
                 cloudDriveVC.displayMode = DisplayModeRubbishBin;
                 cloudDriveVC.title = AMLocalizedString(@"rubbishBinLabel", @"Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin'");
-                [self.navigationController pushViewController:cloudDriveVC animated:YES];
+                [weakSelf.navigationController pushViewController:cloudDriveVC animated:YES];
             }];
         }),
     ];
