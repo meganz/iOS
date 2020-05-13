@@ -40,7 +40,7 @@
     self.sdkVersionSHALabel.text = @"f25f36ed6";
     
     self.megachatSdkVersionLabel.text = AMLocalizedString(@"megachatSdkVersion", @"Title of the label where the MEGAchat SDK version is shown");
-    self.megachatSdkSHALabel.text = @"0d1b04f4";
+    self.megachatSdkSHALabel.text = @"973eb414";
     
     self.viewSourceCodeLabel.text = AMLocalizedString(@"View source code", @"Link to the public code of the ap");
     
