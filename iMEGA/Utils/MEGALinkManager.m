@@ -788,11 +788,7 @@ static NSString *nodeToPresentBase64Handle;
     for (UIViewController *viewController in chatNC.viewControllers) {
         if ([viewController isKindOfClass:ChatViewController.class]) {
             ChatViewController *currentChatViewController = (ChatViewController *)viewController;
-            if (currentChatViewController.chatRoom.chatId == chatViewController.chatRoom.chatId) {
-                return;
-            } else {
-                [[MEGASdkManager sharedMEGAChatSdk] closeChatRoom:currentChatViewController.chatRoom.chatId delegate:currentChatViewController];
-            }
+            [currentChatViewController closeChatRoom];
         }
     }
     
