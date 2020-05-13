@@ -1,4 +1,3 @@
-
 import UIKit
 
 class SMSNavigationViewController: UINavigationController {
@@ -8,11 +7,11 @@ class SMSNavigationViewController: UINavigationController {
         navigationBar.isTranslucent = true
         navigationBar.tintColor = UIColor.mnz_redMain()
     }
-    
+
     override var childForStatusBarStyle: UIViewController? {
         return topViewController
     }
-    
+
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return topViewController?.supportedInterfaceOrientations ?? .all
     }
