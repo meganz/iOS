@@ -60,6 +60,7 @@ extension ChatViewController {
             let delegate = MEGAChatGenericRequestDelegate { (request, error) in
                 let chatViewController = ChatViewController()
                 chatViewController.chatRoom = MEGASdkManager.sharedMEGAChatSdk()!.chatRoom(forChatId: request.chatHandle)
+                self.chatRoomDelegate.closeChatRoom()
                 self.replaceCurrentViewController(withViewController: chatViewController)
                 button.isEnabled = true
             }
