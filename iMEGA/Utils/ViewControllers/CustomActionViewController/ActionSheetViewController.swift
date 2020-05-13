@@ -1,12 +1,12 @@
 import UIKit
 
 class ActionSheetAction: NSObject {
-    @objc var title: String?
-    @objc var detail: String?
-    @objc var image: UIImage?
-    @objc var action = { }
-    @objc var style: UIAlertAction.Style = .default
-
+    var title: String?
+    var detail: String?
+    var image: UIImage?
+    var action = { }
+    var style: UIAlertAction.Style = .default
+    
     @objc init(title: String?, detail: String?, image: UIImage? , style: UIAlertAction.Style, handler: (() -> Void)? = nil) {
         super.init()
         self.title = title
