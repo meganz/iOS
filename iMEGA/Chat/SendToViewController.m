@@ -133,14 +133,12 @@
 
 - (void)setGroupChatsAndRecents {
     self.chatListItemList = [[MEGASdkManager sharedMEGAChatSdk] activeChatListItems];
-    self.recentsMutableArray = [[NSMutableArray alloc] init];
     self.groupChatsMutableArray = [[NSMutableArray alloc] init];
     self.selectedGroupChatsMutableArray = [[NSMutableArray alloc] init];
     if (self.chatListItemList.size) {
         for (NSUInteger i = 0; i < self.chatListItemList.size ; i++) {
             MEGAChatListItem *chatListItem = [self.chatListItemList chatListItemAtIndex:i];
             if (chatListItem.ownPrivilege >= MEGAChatRoomPrivilegeStandard) {
-                [self.recentsMutableArray addObject:chatListItem];
                 if (chatListItem.isGroup) {
                     [self.groupChatsMutableArray addObject:chatListItem];
                 }
@@ -193,7 +191,7 @@
 }
 
 - (void)sortAndFilterRecents {
-    self.recentsMutableArray = [[[self.recentsMutableArray sortedArrayUsingComparator:[self comparatorToOrderRecents]] subarrayWithRange:NSMakeRange(0, MIN(5, self.recentsMutableArray.count))] mutableCopy];
+    self.recentsMutableArray = [MEGASdkManager.sharedMEGAChatSdk recentChatsWithMax:5].mutableCopy;
     for (NSUInteger i = 0; i < self.recentsMutableArray.count; i++) {
         MEGAChatListItem *chatListItem = [self.recentsMutableArray objectAtIndex:i];
         if (!chatListItem.isGroup) {
@@ -206,14 +204,6 @@
         }
     }
     [self.usersAndGroupChatsMutableArray removeObjectsInArray:self.recentsMutableArray];
-}
-
-- (NSComparator)comparatorToOrderRecents {
-    return ^NSComparisonResult(id a, id b) {
-        NSDate *first  = [(MEGAChatListItem *)a lastMessageDate] ?: [NSDate dateWithTimeIntervalSince1970:0];
-        NSDate *second = [(MEGAChatListItem *)b lastMessageDate] ?: [NSDate dateWithTimeIntervalSince1970:0];
-        return [second compare:first];
-    };
 }
 
 - (void)updateNavigationBarTitle {
@@ -405,46 +395,6 @@
     }
 }
 
-- (NSString *)participantsNamesForChatRoom:(MEGAChatRoom *)chatRoom {
-    NSString *participantsNames = @"";
-    for (NSUInteger i = 0; i < chatRoom.peerCount; i++) {
-        NSString *peerName;
-        NSString *peerFirstname = [chatRoom peerFirstnameAtIndex:i];
-        if (peerFirstname.length > 0 && ![[peerFirstname stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""]) {
-            peerName = peerFirstname;
-        } else {
-            NSString *peerLastname = [chatRoom peerLastnameAtIndex:i];
-            if (peerLastname.length > 0 && ![[peerLastname stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""]) {
-                peerName = peerLastname;
-            }
-        }
-        
-        if (!peerName.length) {
-            peerName = [chatRoom peerEmailByHandle:[chatRoom peerHandleAtIndex:i]];
-        }
-        
-        if (chatRoom.peerCount == 1 || (i + 1) == chatRoom.peerCount) {
-            participantsNames = [participantsNames stringByAppendingString:peerName ? peerName : @"Unknown user"];
-        } else {
-            participantsNames = [participantsNames stringByAppendingString:[NSString stringWithFormat:@"%@, ", peerName]];
-        }
-    }
-    
-    NSString *myName = [[MEGASdkManager sharedMEGAChatSdk] myFullname];
-    BOOL isNameEmpty = [[myName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] isEqualToString:@""];
-    if (isNameEmpty) {
-        myName = MEGASdkManager.sharedMEGAChatSdk.myEmail;
-    }
-    myName = [NSString stringWithFormat:@"%@ (%@)", myName, AMLocalizedString(@"me", @"The title for my message in a chat. The message was sent from yourself.")];
-    if (chatRoom.peerCount) {
-        participantsNames = [participantsNames stringByAppendingString:[NSString stringWithFormat:@", %@", myName]];
-    } else {
-        participantsNames = myName;
-    }
-    
-    return participantsNames;
-}
-
 #pragma mark - IBActions
 
 - (IBAction)cancelAction:(UIBarButtonItem *)sender {
@@ -605,7 +555,7 @@
         cell.chatTitle.text = chatListItem.title;
         
         MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatListItem.chatId];
-        cell.chatLastMessage.text = [self participantsNamesForChatRoom:chatRoom];
+        cell.chatLastMessage.text = [chatRoom participantsNamesWithMe:YES];
         cell.chatLastTime.hidden = YES;
         
         if (@available(iOS 11.0, *)) {

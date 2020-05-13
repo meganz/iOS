@@ -42,6 +42,7 @@
 @property (nonatomic, strong) NSMutableArray *selectedUsersArray;
 @property (nonatomic, strong) NSMutableArray *outSharesForNodeMutableArray;
 @property (nonatomic, strong) NSMutableArray<MEGAShare *> *pendingShareUsersArray;
+@property (nonatomic) NSArray<MEGAChatListItem *> *recentsArray;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
@@ -357,6 +358,10 @@
         }
         
         self.visibleUsersArray = [[usersArray sortedArrayUsingComparator:self.userSortComparator] mutableCopy];
+    }
+    
+    if (self.contactsMode == ContactsModeChatStartConversation) {
+        self.recentsArray = [MEGASdkManager.sharedMEGAChatSdk recentChatsWithMax:3];
     }
     
     [self.tableView reloadData];
@@ -1125,6 +1130,8 @@
     if (MEGAReachabilityManager.isReachable) {
         if (self.contactsMode == ContactsModeChatStartConversation && section == 0) {
             return 3;
+        } else if (self.contactsMode == ContactsModeChatStartConversation && section == 1) {
+            return 3;
         } else if (self.contactsMode == ContactsModeChatNamingGroup && section == 0) {
             return self.selectedUsersArray.count + 1;
         } else if (self.contactsMode == ContactsModeFolderSharedWith) {
@@ -1143,13 +1150,11 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     switch (self.contactsMode) {
         case ContactsModeChatStartConversation:
+            return 3;
         case ContactsModeFolderSharedWith:
             return 2;
-            break;
-        
         default:
             return 1;
-            break;
     }
 }
 
@@ -1167,6 +1172,27 @@
         } else {
             cell.nameLabel.text = AMLocalizedString(@"New Chat Link", @"Text button for init a group chat with link.");
             cell.avatarImageView.image = [UIImage imageNamed:@"chatLink"];
+        }
+        return cell;
+    } else if (self.contactsMode == ContactsModeChatStartConversation && indexPath.section == 1) {
+        ContactTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"contactCell" forIndexPath:indexPath];
+        MEGAChatListItem *chatListItem = self.recentsArray[indexPath.row];
+        MEGAChatRoom *chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:chatListItem.chatId];
+        if (chatListItem.isGroup) {
+            cell.nameLabel.text = chatListItem.title;
+            cell.shareLabel.text = [chatRoom participantsNamesWithMe:YES];
+            cell.onlineStatusView.backgroundColor = nil;
+            cell.avatarImageView.image = [UIImage imageForName:chatListItem.title.uppercaseString size:cell.avatarImageView.frame.size backgroundColor:UIColor.mnz_gray999999 textColor:UIColor.whiteColor font:[UIFont mnz_SFUIRegularWithSize:(cell.avatarImageView.frame.size.width/2.0f)]];
+            cell.verifiedImageView.hidden = YES;
+        } else {
+            uint64_t peerHandle = chatListItem.peerHandle;
+            cell.nameLabel.text = [chatRoom userDisplayNameForUserHandle:peerHandle];
+            MEGAChatStatus userStatus = [MEGASdkManager.sharedMEGAChatSdk userOnlineStatus:peerHandle];
+            cell.shareLabel.text = [NSString chatStatusString:userStatus];
+            cell.onlineStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:userStatus];
+            [cell.avatarImageView mnz_setImageForUserHandle:peerHandle name:cell.nameLabel.text];
+            MEGAUser *user = [MEGASdkManager.sharedMEGASdk contactForEmail:[chatRoom peerEmailByHandle:peerHandle]];
+            cell.verifiedImageView.hidden = ![MEGASdkManager.sharedMEGASdk areCredentialsVerifiedOfUser:user];
         }
         return cell;
     } else {
@@ -1283,7 +1309,11 @@
         headerView.titleLabel.text = AMLocalizedString(@"participants", @"Label to describe the section where you can see the participants of a group chat").uppercaseString;
         return headerView;
     }
-    if (section == 1 && self.contactsMode >= ContactsModeChatStartConversation) {
+    if (section == 1 && self.contactsMode == ContactsModeChatStartConversation) {
+        headerView.titleLabel.text = AMLocalizedString(@"Recents", @"Title for the recents section").uppercaseString;
+        return headerView;
+    }
+    if ((section == 2 && self.contactsMode == ContactsModeChatStartConversation) || (section == 1 && self.contactsMode > ContactsModeChatStartConversation)) {
         headerView.titleLabel.text = AMLocalizedString(@"contactsTitle", @"Title of the Contacts section").uppercaseString;
         return headerView;
     }
@@ -1314,6 +1344,10 @@
             if (self.contactsMode == ContactsModeFolderSharedWith && self.pendingShareUsersArray.count > 0) {
                 heightForHeader = 50.0;
             }
+            break;
+            
+        case 2:
+            heightForHeader = 35.0f;
             break;
     }
     
@@ -1407,6 +1441,11 @@
                 } else {
                     [self newChatLink];
                 }
+            } else if (indexPath.section == 1) {
+                [self dismissViewControllerAnimated:YES completion:^{
+                    MEGAChatListItem *chatListItem = self.recentsArray[indexPath.row];
+                    self.chatSelected(chatListItem.chatId);
+                }];
             } else {
                 MEGAUser *user = [self userAtIndexPath:indexPath];
                 if (!user) {

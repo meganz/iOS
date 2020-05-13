@@ -841,14 +841,6 @@
             MEGAUser *user = users.firstObject;
             MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:user.handle];
             if (chatRoom) {
-                MEGALogInfo(@"%@", chatRoom);
-                NSInteger i = 0;
-                for (i = 0; i < self.chatListItemArray.count; i++){
-                    if (chatRoom.chatId == [(MEGAChatRoom *)[self.chatListItemArray objectAtIndex:i] chatId]) {
-                        break;
-                    }
-                }
-                
                 messagesVC.chatRoom = chatRoom;
                 dispatch_async(dispatch_get_main_queue(), ^(void){
                     [self.navigationController pushViewController:messagesVC animated:YES];
@@ -860,6 +852,13 @@
                 }];
             }
         }
+    };
+    
+    contactsVC.chatSelected = ^(uint64_t chatId) {
+        messagesVC.chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:chatId];
+        dispatch_async(dispatch_get_main_queue(), ^(void){
+            [self.navigationController pushViewController:messagesVC animated:YES];
+        });
     };
     
     contactsVC.createGroupChat = ^void(NSArray *users, NSString *groupName, BOOL keyRotation, BOOL getChatLink) {
