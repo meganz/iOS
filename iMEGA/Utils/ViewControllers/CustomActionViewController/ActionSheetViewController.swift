@@ -7,11 +7,8 @@ class ActionSheetAction: NSObject {
     @objc var action = { }
     @objc var style: UIAlertAction.Style = .default
 
-    override init() {
-
-    }
-
     @objc init(title: String?, detail: String?, image: UIImage? , style: UIAlertAction.Style, handler: (() -> Void)? = nil) {
+        super.init()
         self.title = title
         self.detail = detail
         self.image = image
@@ -35,20 +32,18 @@ class ActionSheetViewController: UIViewController {
     @objc var headerTitle: String?
 
     // MARK: - Private properties
-    fileprivate var isPresenting = false
+    private var isPresenting = false
 
     // MARK: - ActionController initializers
 
-    public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        transitioningDelegate = self
-        modalPresentationStyle = .custom
+        configureView()
     }
 
-    public required init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        transitioningDelegate = self
-        modalPresentationStyle = .custom
+        configureView()
     }
     // MARK: - View controller behavior
 
@@ -60,6 +55,11 @@ class ActionSheetViewController: UIViewController {
         backgroundView.addGestureRecognizer(tapRecognizer)
     }
 
+    private func configureView() {
+        transitioningDelegate = self
+        modalPresentationStyle = .custom
+    }
+    
     @objc func tapGestureDidRecognize(_ gesture: UITapGestureRecognizer) {
         self.dismiss(animated: true, completion: nil)
     }
@@ -115,7 +115,6 @@ extension ActionSheetViewController {
         tableView.autoPinEdge(toSuperviewEdge: .right)
         top = tableView.autoPinEdge(toSuperviewSafeArea: .top, withInset: CGFloat(view.bounds.height))
 
-        view.setNeedsUpdateConstraints()
     }
 
 }
@@ -189,7 +188,7 @@ extension ActionSheetViewController: UITableViewDelegate {
 
     }
 
-    open func presentView(_ presentedView: UIView, presentingView: UIView, animationDuration: Double, completion: ((_ completed: Bool) -> Void)?) {
+    func presentView(_ presentedView: UIView, presentingView: UIView, animationDuration: Double, completion: ((_ completed: Bool) -> Void)?) {
         self.view.layoutIfNeeded()
 
         var bottomHeight = 0
@@ -218,7 +217,7 @@ extension ActionSheetViewController: UITableViewDelegate {
         })
     }
 
-    open func dismissView(_ presentedView: UIView, presentingView: UIView, animationDuration: Double, completion: ((_ completed: Bool) -> Void)?) {
+    func dismissView(_ presentedView: UIView, presentingView: UIView, animationDuration: Double, completion: ((_ completed: Bool) -> Void)?) {
         top?.constant = CGFloat(view.bounds.height)
         UIView.animate(withDuration: animationDuration,
                        animations: { [weak self] in
