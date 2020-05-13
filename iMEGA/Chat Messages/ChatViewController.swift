@@ -159,7 +159,7 @@ class ChatViewController: MessagesViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         if isMovingFromParent || presentingViewController != nil && navigationController?.viewControllers.count == 1 {
-            chatRoomDelegate.closeChatRoom()
+            closeChatRoom()
             MEGASdkManager.sharedMEGAChatSdk()?.remove(self)
         }
     }
@@ -455,6 +455,10 @@ class ChatViewController: MessagesViewController {
     @objc func showOptions(forPeerWithHandle handle: UInt64, senderView: UIView) {
 
     }
+    
+    @objc func closeChatRoom() {
+        chatRoomDelegate.closeChatRoom()
+    }
 
     // MARK: - Internal methods used by the extension of this class
 
@@ -722,6 +726,6 @@ class ChatViewController: MessagesViewController {
     }
     
     deinit {
-        chatRoomDelegate.closeChatRoom()
+        closeChatRoom()
     }
 }
