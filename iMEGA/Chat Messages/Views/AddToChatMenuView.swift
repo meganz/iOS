@@ -7,6 +7,8 @@ class AddToChatMenuView: UIView {
     @IBOutlet weak var imageBackgroundView: UIView!
     @IBOutlet weak var label: UILabel!
     
+    var disabled: Bool = false
+    
     var menu: AddToChatMenu? {
         didSet {
             guard let menu = menu else {
@@ -23,6 +25,7 @@ class AddToChatMenuView: UIView {
     }
     
     func disable(_ disable: Bool) {
+        disabled = disable
         imageView.alpha = disable ? 0.5 : 1.0
         label.alpha = disable ? 0.5 : 1.0
     }

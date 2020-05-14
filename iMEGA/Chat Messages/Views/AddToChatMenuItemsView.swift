@@ -62,6 +62,9 @@ class AddToChatMenuItemsView: UIView {
                 return
         }
         
-        delegate.didTap(menu: menus[tappedIndex])
+        let menuView = menuViews[tappedIndex]
+        if !menuView.disabled {
+            delegate.didTap(menu: menus[tappedIndex])
+        }
     }
 }
