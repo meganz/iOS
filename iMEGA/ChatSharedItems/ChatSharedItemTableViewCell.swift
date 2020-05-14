@@ -9,11 +9,6 @@ class ChatSharedItemTableViewCell: UITableViewCell {
     @IBOutlet weak var infoLabel: UILabel!
     @IBOutlet weak var moreButton: UIButton!
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
@@ -50,9 +45,5 @@ class ChatSharedItemTableViewCell: UITableViewCell {
         } else {
             thumbnailImage.mnz_image(for: node)
         }
-    }
-    
-    @IBAction func moreButtonTapped(_ sender: Any) {
-        print("tapped more button")
     }
 }

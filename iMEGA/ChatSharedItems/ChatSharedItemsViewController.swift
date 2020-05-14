@@ -9,29 +9,29 @@ class ChatSharedItemsViewController: UIViewController {
     private var attachmentsLoading = false
 
     private var chatRoom = MEGAChatRoom()
-    lazy private var messagesArray = [MEGAChatMessage]()
+    private lazy var messagesArray = [MEGAChatMessage]()
 
-    lazy var cancelBarButton: UIBarButtonItem = UIBarButtonItem(title: AMLocalizedString("cancel", "Button title to cancel something"), style: .plain, target: self, action: #selector(cancelSelectTapped)
+    private lazy var cancelBarButton: UIBarButtonItem = UIBarButtonItem(title: AMLocalizedString("cancel", "Button title to cancel something"), style: .plain, target: self, action: #selector(cancelSelectTapped)
     )
     
-    lazy var selectBarButton: UIBarButtonItem = UIBarButtonItem(title: AMLocalizedString("select", "Button that allows you to select something"), style: .plain, target: self, action: #selector(selectTapped)
+    private lazy var selectBarButton: UIBarButtonItem = UIBarButtonItem(title: AMLocalizedString("select", "Button that allows you to select something"), style: .plain, target: self, action: #selector(selectTapped)
     )
     
-    lazy var selectAllBarButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "selectAll"), style: .plain, target: self, action: #selector(selectAllTapped)
+    private lazy var selectAllBarButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "selectAll"), style: .plain, target: self, action: #selector(selectAllTapped)
     )
     
-    lazy var forwardBarButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "forwardToolbar"), style: .plain, target: self, action: #selector(forwardTapped)
+    private lazy var forwardBarButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "forwardToolbar"), style: .plain, target: self, action: #selector(forwardTapped)
     )
     
-    lazy var downloadBarButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "download"), style: .plain, target: self, action: #selector(downloadTapped)
+    private lazy var downloadBarButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "download"), style: .plain, target: self, action: #selector(downloadTapped)
     )
     
-    lazy var importBarButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "import"), style: .plain, target: self, action: #selector(importTapped)
+    private lazy var importBarButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "import"), style: .plain, target: self, action: #selector(importTapped)
     )
     
-    lazy var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(style: .gray)
+    private lazy var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(style: .gray)
 
-    // MARK:- Init methods
+    // MARK: - Init methods
     
     @objc class func instantiate(with chatRoom: MEGAChatRoom) -> ChatSharedItemsViewController {
         let controller = UIStoryboard(name: "ChatSharedItems", bundle: nil).instantiateViewController(withIdentifier: "ChatSharedItemsID") as! ChatSharedItemsViewController
@@ -39,7 +39,7 @@ class ChatSharedItemsViewController: UIViewController {
         return controller
     }
     
-    // MARK:- View controller Lifecycle methods.
+    // MARK: - View controller Lifecycle methods.
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,7 +59,7 @@ class ChatSharedItemsViewController: UIViewController {
         super.viewWillDisappear(animated)
     }
     
-    // MARK:-Actions
+    // MARK: - Actions
     
     @IBAction func actionsTapped(_ sender: UIButton) {
         let position = sender.convert(CGPoint.zero, to: tableView)
@@ -152,7 +152,7 @@ class ChatSharedItemsViewController: UIViewController {
         importNodes(nodes)
     }
     
-    // MARK:-Private methods
+    // MARK: - Private methods
 
     private func selectedMessages() -> [MEGAChatMessage]? {
         guard let selectedMessagesIndexPaths = tableView.indexPathsForSelectedRows else {
@@ -243,7 +243,7 @@ class ChatSharedItemsViewController: UIViewController {
     }
 }
 
-// MARK:- MEGAChatNodeHistoryDelegate.
+// MARK: - MEGAChatNodeHistoryDelegate.
 
 extension ChatSharedItemsViewController: MEGAChatNodeHistoryDelegate {
     
