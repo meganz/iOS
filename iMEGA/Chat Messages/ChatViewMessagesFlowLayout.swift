@@ -10,14 +10,16 @@ class ChatViewMessagesFlowLayout: MessagesCollectionViewFlowLayout {
     lazy var chatManagmentTypeCollectionViewSizeCalculator = ChatManagmentTypeCollectionViewSizeCalculator(layout: self)
   
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-
-        guard var attributesArray = super.layoutAttributesForElements(in: rect) as? [UICollectionViewLayoutAttributes] else {
-                 return nil
-             }
-
+        
+        guard let attributesArray = super.layoutAttributesForElements(in: rect) else {
+            return nil
+        }
+        
         var editingAttributesinRect: [UICollectionViewLayoutAttributes] = [UICollectionViewLayoutAttributes]()
 
         for attributes in attributesArray where attributes.representedElementCategory == .cell {
+            
+            configureMessageCellLayoutAttributes(attributes)
             editingAttributesinRect.append(createEditingOverlayAttributesForCellAttributes(attributes))
         }
         
@@ -28,21 +30,34 @@ class ChatViewMessagesFlowLayout: MessagesCollectionViewFlowLayout {
         }
 
     }
-        
+    
+    func configureMessageCellLayoutAttributes(_ layoutAttributes : UICollectionViewLayoutAttributes) {
+
+        let dataSource = messagesDataSource
+
+        if !messagesCollectionView.isTypingIndicatorHidden && (layoutAttributes.indexPath.section == dataSource.numberOfSections(in: messagesCollectionView)) {
+            layoutAttributes.frame = layoutAttributes.frame.offsetBy(dx:50, dy: 0)
+        }
+        let message = dataSource.messageForItem(at: layoutAttributes.indexPath, in: messagesCollectionView)
+        let isFromCurrentSender = dataSource.isFromCurrentSender(message: message)
+        layoutAttributes.frame = layoutAttributes.frame.offsetBy(dx:isFromCurrentSender ? 0 : 50, dy: 0)
+
+    }
+    
     func createEditingOverlayAttributesForCellAttributes(_ layoutAttributes : UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
         
-        let attributes = MessagesCollectionViewLayoutAttributes(forSupplementaryViewOfKind: "kCollectionElementKindEditOverlay", with: layoutAttributes.indexPath)
+        let attributes = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: "kCollectionElementKindEditOverlay", with: layoutAttributes.indexPath)
         attributes.zIndex = layoutAttributes.zIndex + 1
         
         let dataSource = messagesDataSource
         
         if !messagesCollectionView.isTypingIndicatorHidden && (layoutAttributes.indexPath.section == dataSource.numberOfSections(in: messagesCollectionView)) {
-            attributes.frame = layoutAttributes.frame.offsetBy(dx:50, dy: 0)
+            attributes.frame = layoutAttributes.frame.offsetBy(dx:-50, dy: 0)
             return attributes
         }
         let message = dataSource.messageForItem(at: layoutAttributes.indexPath, in: messagesCollectionView)
         let isFromCurrentSender = dataSource.isFromCurrentSender(message: message)
-        attributes.frame = layoutAttributes.frame.offsetBy(dx:isFromCurrentSender ? 0 : 50, dy: 0)
+        attributes.frame = layoutAttributes.frame.offsetBy(dx:isFromCurrentSender ? 0 : -50, dy: 0)
 
         return attributes
     }
