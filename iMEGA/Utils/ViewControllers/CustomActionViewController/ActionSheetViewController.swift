@@ -53,11 +53,44 @@ class ActionSheetViewController: UIViewController {
         // background view
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(ActionSheetViewController.tapGestureDidRecognize(_:)))
         backgroundView.addGestureRecognizer(tapRecognizer)
+        
     }
-
+    
     private func configureView() {
         transitioningDelegate = self
         modalPresentationStyle = .custom
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        
+        guard UIDevice.current.iPhoneDevice else {
+            return
+        }
+        layoutViews(to: size)
+        UIView.animate(withDuration: 0.2,
+                       animations: { [weak self] in
+                        self?.view.layoutIfNeeded()
+            },
+                       completion: nil)
+    }
+        
+    func layoutViews(to size: CGSize) {
+        var bottomHeight = 0
+        let layoutThreshold = size.height * 0.3
+        if #available(iOS 11.0, *) {
+            bottomHeight = Int(view.safeAreaInsets.bottom)
+        }
+        let height = CGFloat(actions.count * 60 + bottomHeight + 20) + (headerView?.bounds.height ?? 0)
+        if height < size.height - layoutThreshold {
+            top?.constant = CGFloat(size.height - height)
+            tableView.isScrollEnabled = false
+            indicator.isHidden = true
+        } else {
+            top?.constant = layoutThreshold
+            tableView.isScrollEnabled = true
+            indicator.isHidden = false
+        }
     }
     
     @objc func tapGestureDidRecognize(_ gesture: UITapGestureRecognizer) {
@@ -189,21 +222,9 @@ extension ActionSheetViewController: UITableViewDelegate {
     }
 
     func presentView(_ presentedView: UIView, presentingView: UIView, animationDuration: Double, completion: ((_ completed: Bool) -> Void)?) {
-        self.view.layoutIfNeeded()
+        view.layoutIfNeeded()
 
-        var bottomHeight = 0
-        if #available(iOS 11.0, *) {
-            bottomHeight = Int(view.safeAreaInsets.bottom)
-        }
-        let height = CGFloat(actions.count * 60 + bottomHeight + 20) + (headerView?.bounds.height ?? 0)
-        if height < view.bounds.height - layoutThreshold {
-            top = tableView.autoPinEdge(toSuperviewSafeArea: .top, withInset: CGFloat(view.bounds.height - height))
-            tableView.isScrollEnabled = false
-            indicator.isHidden = true
-        } else {
-            top = tableView.autoPinEdge(toSuperviewSafeArea: .top, withInset: layoutThreshold)
-            indicator.isHidden = false
-        }
+        layoutViews(to: view.frame.size)
         backgroundView.alpha = 0
 
         UIView.animate(withDuration: animationDuration,
