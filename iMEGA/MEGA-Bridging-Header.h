@@ -27,6 +27,8 @@
 #import "UIFont+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 #import "UITableView+MNZCategory.h"
+#import "NSDate+DateTools.h"
+#import "NSFileManager+MNZCategory.h"
 
 #import "MEGAUser+MNZCategory.h"
 
@@ -59,5 +61,17 @@
 #import "MainTabBarController.h"
 #import "MEGAImagePickerController.h"
 #import "OnboardingViewController.h"
+#import "MEGANode.h"
+#import "UIImageView+MNZCategory.h"
+#import "NSDate+MNZCategory.h"
+
+#import "SendToViewController.h"
+#import "BrowserViewController.h"
+#import "MEGASdk+MNZCategory.h"
+#import "MEGAStartUploadTransferDelegate.h"
+#import "MEGAChatPeerList.h"
+#import "MEGAChatRoom.h"
+#import "MEGARequest.h"
 #import "UpgradeTableViewController.h"
 #import "LoginViewcontroller.h"
+#import <PureLayout/PureLayout.h>

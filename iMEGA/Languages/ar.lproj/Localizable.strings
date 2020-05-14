@@ -522,6 +522,12 @@
 "offline"="غير متاح";
 /* Title of the Contacts section */
 "contactsTitle"="جهات الاتصال";
+/* Label for any ‘Requests’ button, link, text, title, etc. On iOS is used to go to the Contact request section from Contacts */
+"Requests"="الطلبات";
+/* Label for any ‘Groups’ button, link, text, title, etc. On iOS is used to go to the chats 'Groups' section from Contacts */
+"Groups"="Groups";
+/* Label for any ‘Recently Added’ button, link, text, title, etc. On iOS is used on a section that shows the 'Recently Added' contacts */
+"Recently Added"="Recently Added";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
 "oneFolderShared"="مجلد واحد";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
@@ -945,8 +951,8 @@
 "unlockedBonuses"="الإضافات الممنوحة:";
 /* A header/title of a section which contains information about used/available storage space on a user's cloud drive. */
 "storageQuota"="مساحة التخزين المتاحة";
-/* The header/title of a block/section which contains information about the user's used/available transfer allowance for their account. */
-"transferQuota"="حصة النقل";
+/* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
+"Transfer Quota"="حصة النقل";
 /* achievement type */
 "registrationBonus"="مكافآت التسجيل";
 /* Message shown on the achievements dialog for achieved achievements, %1 is replaced with e.g. 20 GB */
@@ -992,11 +998,11 @@
 /* String shown when you are logging out of your account. */
 "loggingOut"="تسجيل الخروج";
 /* Button to remove some photo, e.g. avatar photo. Try to keep the text short (as in English) */
-"Remove Photo"="Remove Photo";
+"Remove Photo"="إزالة الصورة";
 /* Button that allows the user the change a photo, e.g. his avatar photo */
-"Change Photo"="Change Photo";
+"Change Photo"="غير الصورة";
 /* Button that allows the user the add a photo, e.g avatar photo */
-"Add Photo"="Add Photo";
+"Add Photo"="إضافة صورة";
 /* Button title that allows the user change his name */
 "changeName"="غير الاسم";
 /* Success message when changing profile information. */
@@ -1436,8 +1442,8 @@
 "resetQrCode"="إعادة تعيين كود QR";
 /* Footer that explains what would happen if the user resets his/her QR code */
 "resetQrCodeFooter"="أكواد QR السابقة لن تكون صالحة.";
-/* Title for view that displays the QR code of the user. String as short as possible. */
-"myCode"="الرمز الخاص بي";
+/* Label for any ‘My QR code’ button, link, text, title, etc. - (String as short as possible). */
+"My QR code"="كود QR الخاص بي";
 /* Segmented control title for view that allows the user to scan QR codes. String as short as possible. */
 "scanCode"="مسح الرمز";
 /* Label that encourage the user to line the QR to scan with the camera */
@@ -1994,7 +2000,7 @@
 "Business"="الأعمال Business";
 /* */
 "Administrator"="مدير";
-/* */
+/* Label to indicate the amount of transfer quota in several places. It is a ‘noun‘ and there is an screenshot with an use example - (String as short as possible). */
 "Transfer"="التحميل";
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
 "You cannot remove %1$s as a contact because they are part of your Business account."="لا يمكنك إزالة %1$s كجهة اتصال لأنها جزء من حساب الأعمال الخاص بك.";
@@ -2089,7 +2095,7 @@
 /* */
 "Active"="نشط";
 /* title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts */
-"Role:"="الدور";
+"Role:"="الدور:";
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
 "Include location tags"="تشمل علامات الموقع";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
@@ -2125,7 +2131,7 @@
 /* Place holder for enter mobile number field */
 "Your phone number"="رقم هاتفك";
 /* Text related to verified phone number. Used as title or cell description.  */
-"Phone Number"="Phone Number";
+"Phone Number"="رقم الهاتف";
 /* Label tell user to enter received txt to below input boxes */
 "Please type the verification code sent to"="الرجاء إدخال رمز التحقق الذي تم إرساله إلى";
 /* Text message to remind user to resend verification code */
@@ -2178,12 +2184,38 @@
 "Your account has been disabled by your administrator. Please contact your business account administrator for further details."="تم تعطيل حسابك من قبل مديرك. يرجى الاتصال مع مدير حساب الاعمال خاصتك للحصول على مزيد من التفاصيل.";
 /* An error message which appears to sub-users of a business account when they try to login and they are deleted. */
 "Your account has been removed by your administrator. Please contact your business account administrator for further details."="تمت إزالة حسابك من قبل مشرف الحساب الخاص بك. يرجى الاتصال بمشرف حساب الأعمال لمزيد من التفاصيل.";
-/* Description of why the user should give permission to contacts */
-"Easily discover contacts from your address book on MEGA."="اكتشف جهات الاتصال بسهولة من دفتر العناوين الخاص بك على ميغا MEGA.";
-/* Detailed description of why the user should give permission to contacts */
-"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="لن تستخدم ميغا MEGA هذه البيانات لأي غرض آخر ولن تتفاعل أبداً مع جهات الاتصال الخاصة بك دون موافقتك.";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="ادخل اسم المجموعة";
+/* Title of one of the Settings sections where you can customise the 'Appearance' of the app. */
+"Appearance"="Appearance";
+/* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
+"Sorting And View Mode"="Sorting And View Mode";
+/* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
+"Default"="Default";
+/* Label for any ‘Day’ button, link, text, title, etc. - (String as short as possible). */
+"Day"="يوم";
+/* Label for any ‘Night’ button, link, text, title, etc. - (String as short as possible). */
+"Night"="Night";
+/* Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible). */
+"Minimal"="Minimal";
+/* Section title inside of Settings - Appearance, where you can change the app's layout. */
+"Layout"="Layout";
+/* Section title inside of Settings - Appearance, where you can change the app's icon. */
+"App Icon"="App Icon";
+/* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
+"Configure sorting order and the default view (List or Thumbnail)."="Configure sorting order and the default view (List or Thumbnail).";
+/* Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for All'. */
+"Per Folder"="Per Folder";
+/* Same for all configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for all Folders'. */
+"Same for All"="Same for All";
+/* Section title of the 'Sorting And View Mode' view inside of Settings - Appearence - Sorting And View Mode. */
+"Sorting preference"="فرز الافضلية";
+/* Section title of the 'Sorting And View Mode' view inside of Settings - Appearence - Sorting And View Mode. */
+"View mode preference"="عرض وضع الافضلية";
+/* Footer text explaining what means choosing a sorting preference 'Per Folder' or 'Same for All' in Settings - Appearance - Sorting And View Mode. */
+"Configure column sorting order on a per-folder basis, or use the same order for all folders."="تهيئة  وفرز العمود على أساس كل مجلد، أو استخدام نفس النظام لجميع المجلدات.";
+/* Footer text explaining what means choosing a view mode preference 'Per Folder', 'List view' or 'Thumbnail view' in Settings - Appearance - Sorting And View Mode. */
+"Select view mode (List or Thumbnail) on a per-folder basis, or use the same view mode for all folders."="Select view mode (List or Thumbnail) on a per-folder basis, or use the same view mode for all folders.";
 /* Warning message to alert user about logout in My Account section if has transfers in progress. */
 "When you logout, ongoing transfers will be cancelled."="عند تسجيل الخروج، سيتم إلغاء التحويلات الجارية.";
 /* Warning message to alert user about logout in My Account section if has offline files. */
