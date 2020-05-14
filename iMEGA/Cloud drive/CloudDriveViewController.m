@@ -4,6 +4,8 @@
 #import <AVFoundation/AVCaptureDevice.h>
 #import <AVFoundation/AVMediaFormat.h>
 #import <MobileCoreServices/MobileCoreServices.h>
+#import <VisionKit/VisionKit.h>
+#import <PDFKit/PDFKit.h>
 
 #import "SVProgressHUD.h"
 #import "UIScrollView+EmptyDataSet.h"
@@ -19,6 +21,7 @@
 #import "MEGACreateFolderRequestDelegate.h"
 #import "MEGAMoveRequestDelegate.h"
 #import "MEGANode+MNZCategory.h"
+#import "NSDate+MNZCategory.h"
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGAPurchase.h"
 #import "MEGAReachabilityManager.h"
@@ -57,7 +60,7 @@
 
 static const NSTimeInterval kSearchTimeDelay = .5;
 
-@interface CloudDriveViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, CustomActionViewControllerDelegate, NodeInfoViewControllerDelegate, UITextFieldDelegate, UISearchControllerDelegate> {
+@interface CloudDriveViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, CustomActionViewControllerDelegate, NodeInfoViewControllerDelegate, UITextFieldDelegate, UISearchControllerDelegate, VNDocumentCameraViewControllerDelegate> {
     
     MEGAShareType lowShareType; //Control the actions allowed for node/nodes selected
 }
@@ -1079,6 +1082,18 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     [captureAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
     [uploadAlertController addAction:captureAlertAction];
     
+    if (@available(iOS 13.0, *)) {
+        UIAlertAction *scanDocumentAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"Scan Document", @"Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [self presentViewController:({
+                VNDocumentCameraViewController *scanVC = [VNDocumentCameraViewController.alloc init];
+                scanVC.delegate = self;
+                scanVC;
+            }) animated:YES completion:nil];
+        }];
+        [scanDocumentAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
+        [uploadAlertController addAction:scanDocumentAlertAction];
+        
+    }
     UIAlertAction *importFromAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"uploadFrom", @"Option given on the `Add` section to allow the user upload something from another cloud storage provider.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         UIDocumentMenuViewController *documentMenuViewController = [[UIDocumentMenuViewController alloc] initWithDocumentTypes:@[(__bridge NSString *) kUTTypeContent, (__bridge NSString *) kUTTypeData,(__bridge NSString *) kUTTypePackage, (@"com.apple.iwork.pages.pages"), (@"com.apple.iwork.numbers.numbers"), (@"com.apple.iwork.keynote.key")] inMode:UIDocumentPickerModeImport];
         documentMenuViewController.delegate = self;
@@ -2045,6 +2060,28 @@ static const NSTimeInterval kSearchTimeDelay = .5;
         NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
         [self.cdTableView reloadRowAtIndexPath:[self.nodesIndexPathMutableDictionary objectForKey:base64Handle]];
     }
+}
+
+#pragma mark - VNDocumentCameraViewControllerDelegate
+
+- (void)documentCameraViewController:(VNDocumentCameraViewController *)controller didFinishWithScan:(VNDocumentCameraScan *)scan  API_AVAILABLE(ios(13.0)){
+    [controller dismissViewControllerAnimated:YES completion:^{
+        
+        DocScannerSaveSettingTableViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"DocScannerSaveSettingTableViewController"];
+        vc.parentNode = self.parentNode;
+        NSMutableArray *docs = NSMutableArray.new;
+        
+        for (NSUInteger idx = 0; idx < scan.pageCount; idx ++) {
+            UIImage *doc = [scan imageOfPageAtIndex:idx];
+            [docs addObject:doc];
+        }
+        vc.docs = docs.copy;
+        [self presentViewController:({
+            MEGANavigationController *nav = [MEGANavigationController.alloc initWithRootViewController:vc];
+            [nav addLeftDismissButtonWithText:AMLocalizedString(@"ok", nil)];
+            nav;
+        }) animated:YES completion:nil];
+    }];
 }
 
 #pragma mark - CustomActionViewControllerDelegate
