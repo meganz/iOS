@@ -12,7 +12,8 @@ protocol AddToChatViewControllerDelegate: class {
     func showContacts()
     func startGroupChat()
     func showLocation()
-    func shouldDisableAudioVideoMenu() -> Bool
+    func shouldDisableAudioMenu() -> Bool
+    func shouldDisableVideoMenu() -> Bool
 }
 
 class AddToChatViewController: UIViewController {
@@ -174,8 +175,12 @@ extension AddToChatViewController: AddToChatMenuPageViewControllerDelegate {
         addToChatDelegate?.showLocation()
     }
     
-    func shouldDisableAudioVideoMenu() -> Bool {
-        return addToChatDelegate?.shouldDisableAudioVideoMenu() ?? false
+    func shouldDisableAudioMenu() -> Bool {
+        return addToChatDelegate?.shouldDisableAudioMenu() ?? false
+    }
+    
+    func shouldDisableVideoMenu() -> Bool {
+        return addToChatDelegate?.shouldDisableVideoMenu() ?? false
     }
 }
 

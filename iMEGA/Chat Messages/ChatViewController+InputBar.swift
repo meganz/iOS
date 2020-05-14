@@ -580,7 +580,15 @@ extension ChatViewController: AddToChatViewControllerDelegate {
         additionalBottomInset = 0
     }
     
-    func shouldDisableAudioVideoMenu() -> Bool {
+    func shouldDisableAudioMenu() -> Bool {
+        return shouldDisableAudioVideoCall
+    }
+    
+    func shouldDisableVideoMenu() -> Bool {
+        guard !chatRoom.isGroup else {
+            return true
+        }
+        
         return shouldDisableAudioVideoCall
     }
 }
