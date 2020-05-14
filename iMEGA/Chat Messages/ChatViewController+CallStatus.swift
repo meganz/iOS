@@ -99,6 +99,7 @@ extension ChatViewController : MEGAChatCallDelegate {
         switch call.status {
         case .userNoPresent, .requestSent:
             configureTopBannerButtonForActiveCall(call)
+            updateRightBarButtons()
         case .inProgress:
             configureTopBannerButtonForInProgressCall(call)
             print(call.duration)
@@ -107,6 +108,7 @@ extension ChatViewController : MEGAChatCallDelegate {
             setTopBannerButton(title: AMLocalizedString("Reconnecting...", "Title shown when the user lost the connection in a call, and the app will try to reconnect the user again."), color: UIColor.mnz_orangeFFA500())
         case .destroyed:
             timer?.invalidate()
+            updateRightBarButtons()
             hideTopBannerButton()
         default:
             return

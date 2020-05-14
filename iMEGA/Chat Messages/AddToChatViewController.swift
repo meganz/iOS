@@ -12,6 +12,7 @@ protocol AddToChatViewControllerDelegate: class {
     func showContacts()
     func startGroupChat()
     func showLocation()
+    func shouldDisableAudioVideoMenu() -> Bool
 }
 
 class AddToChatViewController: UIViewController {
@@ -31,8 +32,8 @@ class AddToChatViewController: UIViewController {
     var tapHandler: (() -> Void)?
     var dismissHandler: ((AddToChatViewController) -> Void)?
     private var presentAndDismissAnimationDuration: TimeInterval = 0.4
-    private var mediaCollectionSource: AddToChatMediaCollectionSource!
-    private var menuPageViewController: AddToChatMenuPageViewController!
+    private var mediaCollectionSource: AddToChatMediaCollectionSource?
+    private var menuPageViewController: AddToChatMenuPageViewController?
 
     weak var addToChatDelegate: AddToChatViewControllerDelegate?
     
@@ -85,11 +86,21 @@ class AddToChatViewController: UIViewController {
         menuPageViewController = AddToChatMenuPageViewController(transitionStyle: .scroll,
                                                                  navigationOrientation: .horizontal,
                                                                  options: nil)
-        menuPageViewController.menuDelegate = self
-        addChild(menuPageViewController)
-        menuView.addSubview(menuPageViewController.view)
-        menuPageViewController.view.autoPinEdgesToSuperviewEdges()
-        menuPageViewController.didMove(toParent: self)
+        if let menuPageViewController = menuPageViewController {
+            menuPageViewController.menuDelegate = self
+            addChild(menuPageViewController)
+            menuView.addSubview(menuPageViewController.view)
+            menuPageViewController.view.autoPinEdgesToSuperviewEdges()
+            menuPageViewController.didMove(toParent: self)
+        }
+    }
+    
+    func updateAudioVideoMenu() {
+        guard let menuPageViewController = menuPageViewController else {
+            return
+        }
+        
+        menuPageViewController.updateAudioVideoMenu()
     }
     
     // MARK:- Actions.
@@ -161,6 +172,10 @@ extension AddToChatViewController: AddToChatMenuPageViewControllerDelegate {
     func showLocation() {
         dismiss(animated: true, completion: nil)
         addToChatDelegate?.showLocation()
+    }
+    
+    func shouldDisableAudioVideoMenu() -> Bool {
+        return addToChatDelegate?.shouldDisableAudioVideoMenu() ?? false
     }
 }
 

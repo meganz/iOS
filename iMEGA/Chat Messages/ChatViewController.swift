@@ -17,7 +17,7 @@ class ChatViewController: MessagesViewController {
     var navigationBarProgressView: UIProgressView = UIProgressView(progressViewStyle: .bar)
     var chatInputBar: ChatInputBar!
     var editMessage: ChatMessage?
-    var addToChatViewController: AddToChatViewController!
+    var addToChatViewController: AddToChatViewController?
     
     // transfer
     var totalBytesToUpload = 0.0
@@ -90,7 +90,7 @@ class ChatViewController: MessagesViewController {
         configureMenus()
         configureProgressBar()
         configureTopBannerButton()
-
+        addObservers()
     }
     
     override var hidesBottomBarWhenPushed: Bool {
@@ -631,6 +631,20 @@ class ChatViewController: MessagesViewController {
         chatRoomDelegate.loadMoreMessages()
     }
 
+    private func addObservers() {
+        NotificationCenter.default.addObserver(forName: NSNotification.Name.reachabilityChanged,
+                                               object: nil,
+                                               queue: OperationQueue.main) { [weak self] _ in
+                                                self?.updateRightBarButtons()
+        }
+    }
+    
+    private func removeObservers() {
+        NotificationCenter.default.removeObserver(self,
+                                                  name: NSNotification.Name.reachabilityChanged,
+                                                  object: nil)
+    }
+    
     // MARK: - Bar Button actions
 
     @objc func startAudioCall() {
@@ -726,6 +740,7 @@ class ChatViewController: MessagesViewController {
     }
     
     deinit {
+        removeObservers()
         closeChatRoom()
     }
 }

@@ -2,6 +2,7 @@
 struct AddToChatMenu: Codable {
     let nameKey: String
     let imageKey: String
+    let dynamicKey: Bool
     
     static func menus() -> [AddToChatMenu]? {
         if let fileURL = Bundle.main.url(forResource: "AddToChatMenus",   withExtension: "plist")  {

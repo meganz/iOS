@@ -7,48 +7,64 @@
 		<string>attachGallery</string>
 		<key>nameKey</key>
 		<string>Photos</string>
+		<key>dynamicKey</key>
+		<false/>
 	</dict>
 	<dict>
 		<key>imageKey</key>
 		<string>attachCloud</string>
 		<key>nameKey</key>
 		<string>File</string>
+		<key>dynamicKey</key>
+		<false/>
 	</dict>
 	<dict>
 		<key>imageKey</key>
 		<string>attachVoiceCall</string>
 		<key>nameKey</key>
 		<string>Voice</string>
+		<key>dynamicKey</key>
+		<true/>
 	</dict>
 	<dict>
 		<key>imageKey</key>
 		<string>attachVideoCall</string>
 		<key>nameKey</key>
 		<string>Video</string>
+		<key>dynamicKey</key>
+		<true/>
 	</dict>
 	<dict>
 		<key>imageKey</key>
 		<string>attachContact</string>
 		<key>nameKey</key>
 		<string>Contact</string>
+		<key>dynamicKey</key>
+		<false/>
 	</dict>
 	<dict>
 		<key>imageKey</key>
 		<string>attachGroup</string>
 		<key>nameKey</key>
 		<string>Start Group</string>
+		<key>dynamicKey</key>
+		<false/>
 	</dict>
 	<dict>
 		<key>imageKey</key>
 		<string>attachLocation</string>
 		<key>nameKey</key>
 		<string>Location</string>
+		<key>dynamicKey</key>
+		<false/>
 	</dict>
 	<dict>
 		<key>imageKey</key>
 		<string>sendVoiceClipDefault</string>
 		<key>nameKey</key>
 		<string>Voice Clip</string>
+		<key>dynamicKey</key>
+		<false/>
 	</dict>
 </array>
 </plist>

@@ -3,11 +3,17 @@ import UIKit
 
 protocol AddToChatMenuViewControllerDelegate: class {
     func didTap(menu: AddToChatMenu)
+    func shouldDisable(menu: AddToChatMenu) -> Bool
 }
 
 class AddToChatMenuViewController: UIViewController {
     
-    lazy var menuView = AddToChatMenuItemsView.instanceFromNib
+    lazy var menuView: AddToChatMenuItemsView = {
+        let menuView = AddToChatMenuItemsView.instanceFromNib
+        menuView.delegate = self
+        return menuView
+    }()
+    
     weak var delegate: AddToChatMenuViewControllerDelegate?
     
     var menus: [AddToChatMenu]? {
@@ -23,14 +29,21 @@ class AddToChatMenuViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        menuView.delegate = self
         view.addSubview(menuView)
         menuView.autoPinEdgesToSuperviewEdges()
+    }
+    
+    func updateMenus() {
+        menuView.updateMenus()
     }
 }
 
 extension AddToChatMenuViewController: AddToChatMenuItemsViewDelegate {
     func didTap(menu: AddToChatMenu) {
         delegate?.didTap(menu: menu)
+    }
+    
+    func shouldDisable(menu: AddToChatMenu) -> Bool {
+        return delegate?.shouldDisable(menu: menu) ?? false
     }
 }

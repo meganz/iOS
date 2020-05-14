@@ -71,7 +71,12 @@ extension ChatViewController {
     }
     
     private func displayAddToChatViewController(_ button: UIButton) {
-        let addToChatViewController = AddToChatViewController(nibName: nil, bundle: nil)
+        addToChatViewController = AddToChatViewController(nibName: nil, bundle: nil)
+        
+        guard let addToChatViewController = addToChatViewController else {
+            fatalError("Could not create an instance of AddToChatViewController class")
+        }
+        
         addToChatViewController.addToChatDelegate = self
         
         chatInputBar.dismissKeyboard()
@@ -573,6 +578,10 @@ extension ChatViewController: AddToChatViewControllerDelegate {
     func recordingViewHidden() {
         // Need to reset the additional bottom inset set during `recordingViewShown` method.
         additionalBottomInset = 0
+    }
+    
+    func shouldDisableAudioVideoMenu() -> Bool {
+        return shouldDisableAudioVideoCall
     }
 }
 

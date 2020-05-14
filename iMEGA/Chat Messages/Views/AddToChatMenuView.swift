@@ -21,6 +21,11 @@ class AddToChatMenuView: UIView {
             imageBackgroundView.isHidden = false
         }
     }
+    
+    func disable(_ disable: Bool) {
+        imageView.alpha = disable ? 0.5 : 1.0
+        label.alpha = disable ? 0.5 : 1.0
+    }
 
     override func layoutSubviews() {
         super.layoutSubviews()
