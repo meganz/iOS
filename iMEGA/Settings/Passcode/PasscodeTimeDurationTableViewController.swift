@@ -1,4 +1,3 @@
-
 import UIKit
 
 @objc enum RequirePasscodeAfter: Int {
@@ -12,9 +11,9 @@ import UIKit
 }
 
 class PasscodeTimeDurationTableViewController: UITableViewController {
-    
+
     private let cellReuseId = "tableViewCellId"
-    
+
     private var passcodeDurationInfoArray: [PasscodeDurationInfo] = []
 
     override func viewDidLoad() {
@@ -22,7 +21,7 @@ class PasscodeTimeDurationTableViewController: UITableViewController {
 
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseId)
         title = AMLocalizedString("Require passcode", "Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes")
-        
+
         passcodeDurationInfoArray.append(PasscodeDurationInfo(duration: RequirePasscodeAfter.Immediatelly, title: AMLocalizedString("Immediately", "Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background.")))
         passcodeDurationInfoArray.append(PasscodeDurationInfo(duration: RequirePasscodeAfter.FiveSeconds, title: NSString.mnz_string(fromCallDuration: RequirePasscodeAfter.FiveSeconds.rawValue)))
         passcodeDurationInfoArray.append(PasscodeDurationInfo(duration: RequirePasscodeAfter.TenSeconds, title: NSString.mnz_string(fromCallDuration: RequirePasscodeAfter.TenSeconds.rawValue)))
@@ -37,15 +36,15 @@ class PasscodeTimeDurationTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return passcodeDurationInfoArray.count
     }
-    
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseId, for: indexPath)
         cell.textLabel?.textColor = UIColor.mnz_black333333()
         cell.textLabel?.font = UIFont.systemFont(ofSize: 17, weight: .regular)
         cell.textLabel?.text = passcodeDurationInfoArray[indexPath.row].title
-        
+
         let timerDuration = LTHPasscodeViewController.timerDuration()
-        
+
         if Int(timerDuration) == passcodeDurationInfoArray[indexPath.row].duration.rawValue {
             cell.accessoryView = UIImageView.init(image: UIImage.init(named: "red_checkmark"))
         } else {
@@ -54,10 +53,9 @@ class PasscodeTimeDurationTableViewController: UITableViewController {
 
         return cell
     }
-    
-    
+
     // MARK: - UITableViewDelegate
-    
+
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         LTHPasscodeViewController.saveTimerDuration(TimeInterval(passcodeDurationInfoArray[indexPath.row].duration.rawValue))

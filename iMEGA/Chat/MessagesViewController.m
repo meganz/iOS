@@ -1467,12 +1467,16 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             if (!self.chatRoom.isGroup && call.status == MEGAChatCallStatusDestroyed) {
                 return;
             }
-            if (call.status == MEGAChatCallStatusInProgress) {
-                [self configureTopBannerButtonForInProgressCall:call];
-            }  else if (call.status == MEGAChatCallStatusUserNoPresent || call.status == MEGAChatCallStatusRequestSent || call.status == MEGAChatCallStatusRingIn) {
-                [self configureTopBannerButtonForActiveCall:call];
+            if ([MEGASdkManager.sharedMEGAChatSdk chatCallsWithState:MEGAChatCallStatusInProgress].size == 1 && call.status != MEGAChatCallStatusInProgress) {
+                [self hideTopBannerButton];
+            } else {
+                if (call.status == MEGAChatCallStatusInProgress) {
+                    [self configureTopBannerButtonForInProgressCall:call];
+                }  else if (call.status == MEGAChatCallStatusUserNoPresent || call.status == MEGAChatCallStatusRequestSent || call.status == MEGAChatCallStatusRingIn) {
+                    [self configureTopBannerButtonForActiveCall:call];
+                }
+                [self showTopBannerButton];
             }
-            [self showTopBannerButton];
         } else {
             [self hideTopBannerButton];
         }
