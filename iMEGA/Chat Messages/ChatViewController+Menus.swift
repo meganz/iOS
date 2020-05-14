@@ -49,12 +49,7 @@ extension ChatViewController {
                 let chatRoom = MEGASdkManager.sharedMEGAChatSdk()?.chatRoom(forChatId: chatId!)
                 let messagesVC = ChatViewController()
                 messagesVC.chatRoom = chatRoom
-                
-                let chatNC = self.parent as! UINavigationController
-                chatNC.pushViewController(messagesVC, animated: true)
-                var viewControllers = chatNC.viewControllers
-                viewControllers.remove(at: viewControllers.count - 2)
-                chatNC.viewControllers = viewControllers
+                self.replaceCurrentViewController(withViewController: messagesVC)
             } else {
                 showSuccess = true
             }

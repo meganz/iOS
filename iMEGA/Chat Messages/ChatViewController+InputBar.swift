@@ -49,6 +49,18 @@ extension ChatViewController {
         }
      }
     
+    func replaceCurrentViewController(withViewController viewController: UIViewController,
+                                      animated: Bool = true) {
+        guard let navController = navigationController else {
+            fatalError("No navigation controller in the stack to push")
+        }
+        
+        navController.pushViewController(viewController, animated: animated)
+        var viewControllers = navController.viewControllers
+        viewControllers.remove(at: viewControllers.count - 2)
+        navController.viewControllers = viewControllers
+    }
+    
     // MARK: - Private methods.
     
     private func join(button: UIButton) {
@@ -61,7 +73,7 @@ extension ChatViewController {
                 let chatViewController = ChatViewController()
                 chatViewController.chatRoom = MEGASdkManager.sharedMEGAChatSdk()!.chatRoom(forChatId: request.chatHandle)
                 self.closeChatRoom()
-                self.replaceCurrentViewController(withViewController: chatViewController)
+                self.replaceCurrentViewController(withViewController: chatViewController, animated: false)
                 button.isEnabled = true
             }
             MEGASdkManager.sharedMEGAChatSdk()?.autojoinPublicChat(chatRoom.chatId,
@@ -151,6 +163,8 @@ extension ChatViewController {
                             chatViewController.chatRoom = newChatRoom
                             chatViewController.publicChatLink = URL(string: request.text)
                             self.replaceCurrentViewController(withViewController: chatViewController)
+                            SVProgressHUD.setDefaultMaskType(.none)
+                            SVProgressHUD.dismiss()
                         }
                     }
                     
@@ -186,22 +200,8 @@ extension ChatViewController {
         let chatViewController = ChatViewController()
         chatViewController.chatRoom = chatRoom
         replaceCurrentViewController(withViewController: chatViewController)
-    }
-    
-    private func replaceCurrentViewController(withViewController viewController: UIViewController,
-                                              dismissProgress: Bool = true) {
-        guard let navController = navigationController else {
-            fatalError("No navigation controller in the stack to push")
-        }
-
-        let currentIndex = navController.viewControllers.count - 1
-        navController.pushViewController(viewController, animated: false)
-        navController.viewControllers.remove(at: currentIndex)
-        
-        if dismissProgress {
-            SVProgressHUD.setDefaultMaskType(.none)
-            SVProgressHUD.dismiss()
-        }
+        SVProgressHUD.setDefaultMaskType(.none)
+        SVProgressHUD.dismiss()
     }
     
     private func createUploadTransferDelegate() -> MEGAStartUploadTransferDelegate {
