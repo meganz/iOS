@@ -31,9 +31,7 @@ class ChatViewMessagesFlowLayout: MessagesCollectionViewFlowLayout {
         
     func createEditingOverlayAttributesForCellAttributes(_ layoutAttributes : UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
         
-        guard let attributes = layoutAttributesForSupplementaryView(ofKind: "kCollectionElementKindEditOverlay", at: layoutAttributes.indexPath) else {
-            return UICollectionViewLayoutAttributes()
-        }
+        let attributes = MessagesCollectionViewLayoutAttributes(forSupplementaryViewOfKind: "kCollectionElementKindEditOverlay", with: layoutAttributes.indexPath)
         attributes.zIndex = layoutAttributes.zIndex + 1
         
         let dataSource = messagesDataSource
@@ -53,7 +51,10 @@ class ChatViewMessagesFlowLayout: MessagesCollectionViewFlowLayout {
         
         switch elementKind {
         case "kCollectionElementKindEditOverlay":
-            return layoutAttributesForItem(at: indexPath)
+            guard let itemAttributes = layoutAttributesForItem(at: indexPath) else {
+                return super.layoutAttributesForSupplementaryView(ofKind: elementKind, at: indexPath)
+            }
+            return createEditingOverlayAttributesForCellAttributes(itemAttributes)
             
         default:
             break
