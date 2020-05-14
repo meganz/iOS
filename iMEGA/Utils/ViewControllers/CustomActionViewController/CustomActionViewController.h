@@ -4,6 +4,8 @@
 #import "DisplayMode.h"
 #import "MegaNodeActionType.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @protocol CustomActionViewControllerDelegate <NSObject>
 
 - (void)performAction:(MegaNodeActionType)action inNode:(MEGANode *)node fromSender:(id)sender;
@@ -21,3 +23,4 @@
 
 @end
 
+NS_ASSUME_NONNULL_END
