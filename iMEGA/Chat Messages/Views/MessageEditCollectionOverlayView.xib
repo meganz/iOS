@@ -14,23 +14,23 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ma8-Vn-W9X">
-                    <rect key="frame" x="16" y="14.5" width="42" height="21"/>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="achievementsCheck" translatesAutoresizingMaskIntoConstraints="NO" id="g4T-tM-XEl">
+                    <rect key="frame" x="10" y="14" width="22" height="22"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="42" id="Bjb-UU-DiR"/>
-                        <constraint firstAttribute="height" constant="21" id="DNd-h1-zrM"/>
+                        <constraint firstAttribute="width" constant="22" id="8NI-qe-ckt"/>
+                        <constraint firstAttribute="height" constant="22" id="HVJ-Uf-hqC"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
+                </imageView>
             </subviews>
             <constraints>
-                <constraint firstItem="Ma8-Vn-W9X" firstAttribute="leading" secondItem="U6b-Vx-4bR" secondAttribute="leading" constant="16" id="411-XR-LrD"/>
-                <constraint firstItem="Ma8-Vn-W9X" firstAttribute="centerY" secondItem="U6b-Vx-4bR" secondAttribute="centerY" id="QCw-Yp-vCd"/>
+                <constraint firstItem="g4T-tM-XEl" firstAttribute="centerY" secondItem="U6b-Vx-4bR" secondAttribute="centerY" id="KVS-st-Rno"/>
+                <constraint firstItem="g4T-tM-XEl" firstAttribute="leading" secondItem="U6b-Vx-4bR" secondAttribute="leading" constant="10" id="gLX-eI-JEQ"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="VXr-Tz-HHm"/>
             <point key="canvasLocation" x="132" y="83"/>
         </collectionReusableView>
     </objects>
+    <resources>
+        <image name="achievementsCheck" width="32" height="32"/>
+    </resources>
 </document>
