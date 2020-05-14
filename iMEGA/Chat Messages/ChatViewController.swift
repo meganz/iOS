@@ -18,7 +18,8 @@ class ChatViewController: MessagesViewController {
     var chatInputBar: ChatInputBar!
     var editMessage: ChatMessage?
     var addToChatViewController: AddToChatViewController?
-    
+    var editingIndexPaths: [NSIndexPath]?
+
     // transfer
     var totalBytesToUpload = 0.0
     var remainingBytesToUpload = 0.0
@@ -76,6 +77,18 @@ class ChatViewController: MessagesViewController {
 
     // MARK: - Overriden methods
 
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        guard isEditing != editing, let chatViewMessagesFlowLayout = messagesCollectionView.messagesCollectionViewFlowLayout as? ChatViewMessagesFlowLayout else {
+            return
+        }
+        chatViewMessagesFlowLayout.editing = editing
+        let finishing = isEditing && !editing
+        
+        if finishing {
+//            to do
+        }
+    }
+    
     override func viewDidLoad() {
         messagesCollectionView = MessagesCollectionView(frame: .zero,
                                                         collectionViewLayout: ChatViewMessagesFlowLayout())
