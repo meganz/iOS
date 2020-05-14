@@ -111,8 +111,9 @@ class AddToChatViewController: UIViewController {
     }
     
     private func loadPhotosViewAndDismiss() {
-        dismiss(animated: true, completion: nil)
-        addToChatDelegate?.loadPhotosView()
+        dismiss(animated: true) {
+            self.addToChatDelegate?.loadPhotosView()
+        }
     }
 }
 
@@ -130,8 +131,9 @@ extension AddToChatViewController: AddToChatMediaCollectionSourceDelegate {
     }
     
     func showCamera() {
-        dismiss(animated: true, completion: nil)
-        addToChatDelegate?.showCamera()
+        dismiss(animated: true) {
+            self.addToChatDelegate?.showCamera()
+        }
     }
 }
 
@@ -141,38 +143,45 @@ extension AddToChatViewController: AddToChatMenuPageViewControllerDelegate {
     }
     
     func showCloudDrive() {
-        dismiss(animated: true, completion: nil)
-        addToChatDelegate?.showCloudDrive()
+        dismiss(animated: true) {
+            self.addToChatDelegate?.showCloudDrive()
+        }
     }
     
     func startVoiceCall() {
-        dismiss(animated: true, completion: nil)
-        addToChatDelegate?.startAudioCall()
+        dismiss(animated: true) {
+            self.addToChatDelegate?.startAudioCall()
+        }
     }
     
     func startVideoCall() {
-        dismiss(animated: true, completion: nil)
-        addToChatDelegate?.startVideoCall()
+        dismiss(animated: true) {
+            self.addToChatDelegate?.startVideoCall()
+        }
     }
     
     func showVoiceClip() {
-        dismiss(animated: true, completion: nil)
-        addToChatDelegate?.showVoiceClip()
+        dismiss(animated: true) {
+            self.addToChatDelegate?.showVoiceClip()
+        }
     }
     
     func showContacts() {
-        dismiss(animated: true, completion: nil)
-        addToChatDelegate?.showContacts()
+        dismiss(animated: true) {
+            self.addToChatDelegate?.showContacts()
+        }
     }
     
     func startGroupChat() {
-        dismiss(animated: true, completion: nil)
-        addToChatDelegate?.startGroupChat()
+        dismiss(animated: true) {
+            self.addToChatDelegate?.startGroupChat()
+        }
     }
     
     func showLocation() {
-        dismiss(animated: true, completion: nil)
-        addToChatDelegate?.showLocation()
+        dismiss(animated: true) {
+            self.addToChatDelegate?.showLocation()
+        }
     }
     
     func shouldDisableAudioMenu() -> Bool {
