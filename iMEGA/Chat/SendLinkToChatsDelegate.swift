@@ -1,24 +1,13 @@
 
 class SendLinkToChatsDelegate: NSObject {
 
-    var openedChatIds = Set<NSNumber>()
-    var sendToCount = NSInteger()
-    var sendToTotal = NSInteger()
-    let link: String
-    let navigationController: UINavigationController?
+    private let link: String
+    private let navigationController: UINavigationController?
     
     @objc init(link: String, navigationController: UINavigationController?) {
         self.link = link
         self.navigationController = navigationController
         super.init()
-    }
-    
-    private func send(message: String, toChatId chatId: UInt64) {
-        if !openedChatIds.contains(NSNumber(value: chatId)) {
-            MEGASdkManager.sharedMEGAChatSdk()?.openChatRoom(chatId, delegate: self)
-            openedChatIds.insert(NSNumber(value: chatId))
-        }
-        MEGASdkManager.sharedMEGAChatSdk()?.sendMessage(toChat: chatId, message: message)
     }
 }
 
@@ -30,12 +19,8 @@ extension SendLinkToChatsDelegate: SendToViewControllerDelegate {
             viewController.dismiss(animated: true, completion: nil)
         }
         
-        openedChatIds.removeAll()
-        sendToTotal = chats.count + users.count
-        sendToCount = 0
-        
         chats.forEach {
-            send(message: link, toChatId: $0.chatId)
+            MEGASdkManager.sharedMEGAChatSdk()?.sendMessage(toChat: $0.chatId, message: link)
         }
         
         users.forEach {
@@ -44,30 +29,16 @@ extension SendLinkToChatsDelegate: SendToViewControllerDelegate {
                 guard let chatId = chatRoom?.chatId else {
                     return
                 }
-                send(message: link, toChatId: chatId)
+                MEGASdkManager.sharedMEGAChatSdk()?.sendMessage(toChat: chatId, message: link)
             } else {
                 MEGALogDebug("There is not a chat with %@, create the chat and send message", $0.email)
                 MEGASdkManager.sharedMEGAChatSdk()?.mnz_createChatRoom(userHandle: $0.handle, completion: {
-                    self.send(message: self.link, toChatId: $0.chatId)
+                    MEGASdkManager.sharedMEGAChatSdk()?.sendMessage(toChat: $0.chatId, message: self.link)
                 })
             }
         }
-    }
-}
-
-extension SendLinkToChatsDelegate: MEGAChatRoomDelegate {
-    func onMessageUpdate(_ api: MEGAChatSdk!, message: MEGAChatMessage!) {
-        if message.hasChanged(for: .status) {
-            if message.status == .serverReceived {
-                sendToCount += 1
-                if sendToCount == sendToTotal {
-                    openedChatIds.forEach {
-                        MEGASdkManager.sharedMEGAChatSdk()?.closeChatRoom($0.uint64Value, delegate: self)
-                    }
-                    let message = sendToTotal == 1 ? AMLocalizedString("fileSentToChat", "Toast text upon sending a single file to chat") : String(format: AMLocalizedString("fileSentToXChats", "Success message when the attachment has been sent to a many chats"), sendToTotal)
-                    SVProgressHUD.showSuccess(withStatus: message)
-                }
-            }
-        }
+        
+        let message =  (chats.count + users.count) == 1 ? AMLocalizedString("fileSentToChat", "Toast text upon sending a single file to chat") : String(format: AMLocalizedString("fileSentToXChats", "Success message when the attachment has been sent to a many chats"), (chats.count + users.count))
+        SVProgressHUD.showSuccess(withStatus: message)
     }
 }
