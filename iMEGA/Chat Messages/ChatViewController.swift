@@ -386,6 +386,18 @@ class ChatViewController: MessagesViewController {
             return true
         }
     }
+    
+    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        
+        switch kind {
+        case "kCollectionElementKindEditOverlay":
+            return collectionView.dequeueReusableSupplementaryView(ofKind: "kCollectionElementKindEditOverlay", withReuseIdentifier: MessageEditCollectionOverlayView.reuseIdentifier, for: indexPath)
+        default:
+            break
+        }
+        
+        return super.collectionView(collectionView, viewForSupplementaryElementOfKind: kind, at: indexPath)
+    }
 
     func customCell(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UICollectionViewCell {
 
@@ -534,6 +546,10 @@ class ChatViewController: MessagesViewController {
                                         forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
                                         withReuseIdentifier: ChatViewIntroductionHeaderView.reuseIdentifier)
 
+        messagesCollectionView.register(MessageEditCollectionOverlayView.nib,
+                                        forSupplementaryViewOfKind: "kCollectionElementKindEditOverlay",
+                                        withReuseIdentifier: MessageEditCollectionOverlayView.reuseIdentifier)
+        
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messagesLayoutDelegate = self
         messagesCollectionView.messagesDisplayDelegate = self

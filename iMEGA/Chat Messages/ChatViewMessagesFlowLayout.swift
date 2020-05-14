@@ -9,8 +9,43 @@ class ChatViewMessagesFlowLayout: MessagesCollectionViewFlowLayout {
     lazy var chatlocationCollectionViewSizeCalculator = ChatlocationCollectionViewSizeCalculator(layout: self)
     lazy var chatManagmentTypeCollectionViewSizeCalculator = ChatManagmentTypeCollectionViewSizeCalculator(layout: self)
   
+    override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+        
+        
+        let attributesInRect = super.layoutAttributesForElements(in: rect)
+        
+        var editingAttributesinRect = [UICollectionViewLayoutAttributes]()
+        attributesInRect?.forEach({ (attributesItem) in
+                
+            editingAttributesinRect.append(createEditingOverlayAttributesForCellAttributes(attributesItem))
+        })
+        
+        if(editingAttributesinRect.count > 0) {
+            return attributesInRect! + editingAttributesinRect;
+        } else {
+            return attributesInRect;
+        }
+        
+    }
+    
+    func createEditingOverlayAttributesForCellAttributes(_ layoutAttributes : UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
+        
+        let attributes = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: "kCollectionElementKindEditOverlay", with: layoutAttributes.indexPath)
+        attributes.zIndex = layoutAttributes.zIndex + 1
+        
+        
+        return attributes
+    }
     
     override func layoutAttributesForSupplementaryView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+        
+        switch elementKind {
+        case "kCollectionElementKindEditOverlay":
+            return super.layoutAttributesForSupplementaryView(ofKind: elementKind, at: indexPath)
+            break
+        default:
+            break
+        }
         return super.layoutAttributesForSupplementaryView(ofKind: elementKind, at: indexPath)
     }
     
@@ -72,5 +107,11 @@ class ChatViewMessagesFlowLayout: MessagesCollectionViewFlowLayout {
             chatManagmentTypeCollectionViewSizeCalculator
         ])
         return calculators
+    }
+    
+    
+    func createEditingOverlayAttributesForCellAttributes(layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes? {
+        let attribiutes = self.layoutAttributesForSupplementaryView(ofKind: "kCollectionElementKindEditOverlay", at: layoutAttributes.indexPath)!
+        return attribiutes
     }
 }
