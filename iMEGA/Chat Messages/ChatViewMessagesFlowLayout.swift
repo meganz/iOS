@@ -35,7 +35,16 @@ class ChatViewMessagesFlowLayout: MessagesCollectionViewFlowLayout {
             return UICollectionViewLayoutAttributes()
         }
         attributes.zIndex = layoutAttributes.zIndex + 1
-        attributes.frame = layoutAttributes.frame.offsetBy(dx: 50, dy: 0);
+        
+        let dataSource = messagesDataSource
+        
+        if !messagesCollectionView.isTypingIndicatorHidden && (layoutAttributes.indexPath.section == dataSource.numberOfSections(in: messagesCollectionView)) {
+            attributes.frame = layoutAttributes.frame.offsetBy(dx:50, dy: 0)
+            return attributes
+        }
+        let message = dataSource.messageForItem(at: layoutAttributes.indexPath, in: messagesCollectionView)
+        let isFromCurrentSender = dataSource.isFromCurrentSender(message: message)
+        attributes.frame = layoutAttributes.frame.offsetBy(dx:isFromCurrentSender ? 0 : 50, dy: 0)
 
         return attributes
     }
