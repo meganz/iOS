@@ -89,8 +89,14 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
             
             messages = historyMessages + messages
             historyMessages.removeAll()
-            chatViewController.messagesCollectionView.reloadDataAndKeepOffset()
-            chatViewController.messagesCollectionView.refreshControl?.endRefreshing()
+            
+            if (chatViewController.messagesCollectionView.refreshControl != nil) {
+                chatViewController.messagesCollectionView.reloadDataAndKeepOffset()
+                chatViewController.messagesCollectionView.refreshControl?.endRefreshing()
+            } else {
+                chatViewController.messagesCollectionView.reloadData()
+                chatViewController.messagesCollectionView.scrollToBottom()
+            }
         }
     }
     
