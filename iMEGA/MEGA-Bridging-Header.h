@@ -25,6 +25,8 @@
 #import "UIDevice+MNZCategory.h"
 #import "UIFont+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
+#import "NSDate+DateTools.h"
+#import "NSFileManager+MNZCategory.h"
 
 #import "MEGAUser+MNZCategory.h"
 

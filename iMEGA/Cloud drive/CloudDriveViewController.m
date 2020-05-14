@@ -170,6 +170,9 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     if (@available(iOS 13.0, *)) {
         [self configPreviewingRegistration];
     }
+    
+    StorageFullModalAlertViewController *warningVC = StorageFullModalAlertViewController.alloc.init;
+    [warningVC showStorageAlertIfNeeded];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
