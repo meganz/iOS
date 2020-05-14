@@ -36,7 +36,7 @@ class ChatSharedItemTableViewCell: UITableViewCell {
             if FileManager.default.fileExists(atPath: thumbnailFilePath) {
                 thumbnailImage.image = UIImage(contentsOfFile: thumbnailFilePath)
             } else {
-                MEGASdkManager.sharedMEGASdk()?.getThumbnailNode(node, destinationFilePath: thumbnailFilePath, delegate: MEGAGetThumbnailRequestDelegate.init(completion: { [weak self] request in
+                MEGASdkManager.sharedMEGASdk()?.getThumbnailNode(node, destinationFilePath: thumbnailFilePath, delegate: MEGAGenericRequestDelegate.init(completion: { [weak self] request, error in
                     if request.nodeHandle == node.handle {
                         self?.thumbnailImage.image = UIImage(contentsOfFile: request.file)
                     }
