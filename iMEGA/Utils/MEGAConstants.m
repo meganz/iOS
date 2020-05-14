@@ -106,3 +106,7 @@ NSString * const MEGContactNicknameChangeNotification = @"MEGAContactNicknameCha
 #pragma mark - DB name
 
 const NSUInteger MEGALastCharactersFromSession = 36;
+
+#pragma mark - File size
+
+const long long MEGAMaxFileLinkAutoOpenSize = 10000000; //10Megabytes
