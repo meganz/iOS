@@ -19,7 +19,7 @@ extension ChatViewController {
         return barButtons
     }
     
-    private var shouldDisableAudioVideoCall: Bool {
+    var shouldDisableAudioVideoCall: Bool {
         let chatConnection = MEGASdkManager.sharedMEGAChatSdk()!.chatConnectionState(chatRoom.chatId)
         
         return chatRoom.ownPrivilege.rawValue < MEGAChatRoomPrivilege.standard.rawValue
@@ -36,14 +36,22 @@ extension ChatViewController {
         setTitleView()
     }
     
-    private func addRightBarButtons() {
-        navigationItem.rightBarButtonItems = rightBarButtons
+    func updateRightBarButtons() {
+        audioCallBarButtonItem.isEnabled = !shouldDisableAudioVideoCall
+        videoCallBarButtonItem.isEnabled = !shouldDisableAudioVideoCall
         
-        let shouldEnableAudioVideoCall = !shouldDisableAudioVideoCall
-        audioCallBarButtonItem.isEnabled = shouldEnableAudioVideoCall
-        videoCallBarButtonItem.isEnabled = shouldEnableAudioVideoCall
+        guard let addToChatViewController = addToChatViewController else {
+            return
+        }
+        
+        addToChatViewController.updateAudioVideoMenu()
     }
     
+    private func addRightBarButtons() {
+        navigationItem.rightBarButtonItems = rightBarButtons
+        updateRightBarButtons()
+    }
+        
     private func setTitleView() {
         let titleView = ChatTitleView.instanceFromNib
         titleView.chatRoom = chatRoom

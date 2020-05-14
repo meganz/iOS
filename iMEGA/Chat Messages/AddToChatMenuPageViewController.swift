@@ -11,6 +11,7 @@ protocol AddToChatMenuPageViewControllerDelegate: class {
     func showContacts()
     func startGroupChat()
     func showLocation()
+    func shouldDisableAudioVideoMenu() -> Bool
 }
 
 class AddToChatMenuPageViewController: UIPageViewController {
@@ -72,6 +73,16 @@ class AddToChatMenuPageViewController: UIPageViewController {
         dataSource = self
         delegate = self
     }
+    
+    func updateAudioVideoMenu() {
+        guard let menuPages = menuPages else {
+            return
+        }
+        
+        menuPages.forEach { menuViewController in
+            menuViewController.updateMenus()
+        }
+    }
 }
 
 extension AddToChatMenuPageViewController: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
@@ -120,5 +131,9 @@ extension AddToChatMenuPageViewController: AddToChatMenuViewControllerDelegate {
         default:
             break
         }
+    }
+    
+    func shouldDisable(menu: AddToChatMenu) -> Bool {
+        return menuDelegate?.shouldDisableAudioVideoMenu() ?? false
     }
 }
