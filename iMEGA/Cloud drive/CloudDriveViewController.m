@@ -1033,12 +1033,13 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     [self presentViewController:navigationController animated:YES completion:nil];
 }
 
-- (void)presentFromMoreBarButtonItemTheAlertController:(UIAlertController *)alertController {
+- (void)presentFromMoreBarButtonItemTheAlertController:(ActionSheetViewController *)alertController {
     if ([[UIDevice currentDevice] iPadDevice]) {
         alertController.modalPresentationStyle = UIModalPresentationPopover;
         UIPopoverPresentationController *popoverPresentationController = [alertController popoverPresentationController];
         popoverPresentationController.barButtonItem = self.navigationItem.rightBarButtonItems.firstObject;
         popoverPresentationController.sourceView = self.view;
+        popoverPresentationController.delegate = alertController;
     }
     [self presentViewController:alertController animated:YES completion:nil];
 }
