@@ -18,7 +18,8 @@ class ChatViewController: MessagesViewController {
     var chatInputBar: ChatInputBar?
     var editMessage: ChatMessage?
     var addToChatViewController: AddToChatViewController?
-    
+    var editingIndexPaths: [NSIndexPath]?
+
     // transfer
     var totalBytesToUpload = 0.0
     var remainingBytesToUpload = 0.0
@@ -76,6 +77,18 @@ class ChatViewController: MessagesViewController {
 
     // MARK: - Overriden methods
 
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        guard isEditing != editing, let chatViewMessagesFlowLayout = messagesCollectionView.messagesCollectionViewFlowLayout as? ChatViewMessagesFlowLayout else {
+            return
+        }
+        chatViewMessagesFlowLayout.editing = editing
+        let finishing = isEditing && !editing
+        
+        if finishing {
+//            to do
+        }
+    }
+    
     override func viewDidLoad() {
         messagesCollectionView = MessagesCollectionView(frame: .zero,
                                                         collectionViewLayout: ChatViewMessagesFlowLayout())
@@ -393,6 +406,18 @@ class ChatViewController: MessagesViewController {
             return true
         }
     }
+    
+    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        
+        switch kind {
+        case "kCollectionElementKindEditOverlay":
+            return collectionView.dequeueReusableSupplementaryView(ofKind: "kCollectionElementKindEditOverlay", withReuseIdentifier: MessageEditCollectionOverlayView.reuseIdentifier, for: indexPath)
+        default:
+            break
+        }
+        
+        return super.collectionView(collectionView, viewForSupplementaryElementOfKind: kind, at: indexPath)
+    }
 
     func customCell(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UICollectionViewCell {
 
@@ -541,6 +566,10 @@ class ChatViewController: MessagesViewController {
                                         forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
                                         withReuseIdentifier: ChatViewIntroductionHeaderView.reuseIdentifier)
 
+        messagesCollectionView.register(MessageEditCollectionOverlayView.nib,
+                                        forSupplementaryViewOfKind: "kCollectionElementKindEditOverlay",
+                                        withReuseIdentifier: MessageEditCollectionOverlayView.reuseIdentifier)
+        
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messagesLayoutDelegate = self
         messagesCollectionView.messagesDisplayDelegate = self
