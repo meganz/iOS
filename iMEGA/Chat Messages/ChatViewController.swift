@@ -85,8 +85,12 @@ class ChatViewController: MessagesViewController {
         let finishing = isEditing && !editing
         
         if finishing {
-//            to do
+            selectedEditingIndexPaths.removeAll()
         }
+        UIView.animate(withDuration: 0.25) {
+            self.messagesCollectionView.collectionViewLayout.invalidateLayout()
+        }
+        
     }
     
     override func viewDidLoad() {

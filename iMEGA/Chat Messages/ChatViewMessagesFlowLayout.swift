@@ -18,12 +18,16 @@ class ChatViewMessagesFlowLayout: MessagesCollectionViewFlowLayout {
     lazy var chatlocationCollectionViewSizeCalculator = ChatlocationCollectionViewSizeCalculator(layout: self)
     lazy var chatManagmentTypeCollectionViewSizeCalculator = ChatManagmentTypeCollectionViewSizeCalculator(layout: self)
   
-    var editing = false
+    var editing = false {
+        didSet {
+            invalidateLayout()
+        }
+    }
     
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         
-        guard let attributesArray = super.layoutAttributesForElements(in: rect) else {
-            return nil
+        guard let attributesArray = super.layoutAttributesForElements(in: rect), editing else {
+            return super.layoutAttributesForElements(in: rect)
         }
         
         var editingAttributesinRect: [UICollectionViewLayoutAttributes] = [UICollectionViewLayoutAttributes]()
