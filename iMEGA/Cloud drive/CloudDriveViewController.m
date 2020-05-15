@@ -384,7 +384,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
             if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
                 return [self photoBrowserForMediaNode:node];
             } else {
-                UIViewController *viewController = [node mnz_viewControllerForNodeInFolderLink:NO];
+                UIViewController *viewController = [node mnz_viewControllerForNodeInFolderLink:NO fileLink:nil];
                 return viewController;
             }
             break;
@@ -1096,8 +1096,8 @@ static const NSTimeInterval kSearchTimeDelay = .5;
         }];
         [scanDocumentAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
         [uploadAlertController addAction:scanDocumentAlertAction];
-        
     }
+    
     UIAlertAction *importFromAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"uploadFrom", @"Option given on the `Add` section to allow the user upload something from another cloud storage provider.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         UIDocumentMenuViewController *documentMenuViewController = [[UIDocumentMenuViewController alloc] initWithDocumentTypes:@[(__bridge NSString *) kUTTypeContent, (__bridge NSString *) kUTTypeData,(__bridge NSString *) kUTTypePackage, (@"com.apple.iwork.pages.pages"), (@"com.apple.iwork.numbers.numbers"), (@"com.apple.iwork.keynote.key")] inMode:UIDocumentPickerModeImport];
         documentMenuViewController.delegate = self;
@@ -1323,7 +1323,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
         [self showNode:node];
     } else {
-        [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO];
+        [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO fileLink:nil];
     }
 }
 

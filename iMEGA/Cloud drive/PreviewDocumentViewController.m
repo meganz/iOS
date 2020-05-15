@@ -16,6 +16,7 @@
 #import "CloudDriveViewController.h"
 #import "MainTabBarController.h"
 #import "SearchInPdfViewController.h"
+#import "SendToViewController.h"
 #import "MEGALinkManager.h"
 
 #import "MEGANode+MNZCategory.h"
@@ -39,6 +40,7 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *searchBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *openInBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *moreBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *importBarButtonItem;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
 @property (nonatomic) QLPreviewController *previewController;
@@ -46,6 +48,8 @@
 @property (nonatomic) NSCache<NSNumber *, UIImage *> *thumbnailCache;
 @property (nonatomic) BOOL thumbnailsPopulated;
 @property (nonatomic) PDFSelection *searchedItem NS_AVAILABLE_IOS(11.0);
+
+@property (nonatomic) SendLinkToChatsDelegate *sendLinkDelegate;
 
 @end
 
@@ -172,11 +176,69 @@
     [self.view addSubview:self.previewController.view];
 }
 
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if ([keyPath isEqualToString:@"self.previewController.title"]) {
+        UILabel *titleLabel = [Helper customNavigationBarLabelWithTitle:[self.filesPathsArray objectAtIndex:self.previewController.currentPreviewItemIndex].lastPathComponent subtitle:self.previewController.title color:[UIColor mnz_black333333]];
+        titleLabel.adjustsFontSizeToFitWidth = YES;
+        titleLabel.minimumScaleFactor = 0.8f;
+        self.navigationItem.titleView = titleLabel;
+        [self.navigationItem.titleView sizeToFit];
+    }
+}
+
+- (void)presentMEGAQlPreviewController {
+    MEGAQLPreviewController *previewController = [[MEGAQLPreviewController alloc] initWithFilePath:previewDocumentTransfer.path];
+    
+    [self dismissViewControllerAnimated:YES completion:^{
+        [UIApplication.mnz_presentingViewController presentViewController:previewController animated:YES completion:nil];
+    }];
+}
+
+- (void)presentWebCodeViewController {
+    WebCodeViewController *webCodeVC = [WebCodeViewController.alloc initWithFilePath:previewDocumentTransfer.path];
+    MEGANavigationController *navigationController = [MEGANavigationController.alloc initWithRootViewController:webCodeVC];
+    [navigationController addLeftDismissButtonWithText:AMLocalizedString(@"ok", nil)];
+    
+    [self dismissViewControllerAnimated:YES completion:^{
+        [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:nil];
+    }];
+}
+
+- (void)import {
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+        MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
+        [self presentViewController:navigationController animated:YES completion:nil];
+        
+        BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
+        browserVC.selectedNodesArray = @[self.node];
+        browserVC.browserAction = BrowserActionImport;
+    }
+}
+
+- (void)sendLinkToChat {
+    UIStoryboard *chatStoryboard = [UIStoryboard storyboardWithName:@"Chat" bundle:[NSBundle bundleForClass:SendToViewController.class]];
+    SendToViewController *sendToViewController = [chatStoryboard instantiateViewControllerWithIdentifier:@"SendToViewControllerID"];
+    sendToViewController.sendMode = SendModeFileAndFolderLink;
+    self.sendLinkDelegate = [SendLinkToChatsDelegate.alloc initWithLink:self.fileLink navigationController:self.navigationController];
+    sendToViewController.sendToViewControllerDelegate = self.sendLinkDelegate;
+    [self.navigationController pushViewController:sendToViewController animated:YES];
+}
+
+- (void)share {
+    if (self.isLink && self.fileLink) {
+        UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[self.fileLink] applicationActivities:nil];
+        activityVC.popoverPresentationController.barButtonItem = self.self.moreBarButtonItem;
+        [self presentViewController:activityVC animated:YES completion:nil];
+    } else {
+        UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:@[self.node] sender:self.moreBarButtonItem];
+        [self presentViewController:activityVC animated:YES completion:nil];
+    }
+}
+
+#pragma mark - IBActions
+
 - (IBAction)shareAction:(id)sender {
-    NSString *filePath = self.filesPathsArray ? [self.filesPathsArray objectAtIndex:self.previewController.currentPreviewItemIndex] : self.nodeFilePath;
-    UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[filePath.lastPathComponent, [NSURL fileURLWithPath:filePath]] applicationActivities:nil];
-    activityVC.popoverPresentationController.barButtonItem = sender;
-    [self presentViewController:activityVC animated:YES completion:nil];
+    [self share];
 }
 
 - (IBAction)doneTapped:(id)sender {
@@ -204,7 +266,10 @@
 
 - (IBAction)actionsTapped:(UIBarButtonItem *)sender {
     CustomActionViewController *actionController = [[CustomActionViewController alloc] init];
-    actionController.node = self.node = [MEGASdkManager.sharedMEGASdk nodeForHandle:self.node.handle];
+    if (!self.isLink) {
+        self.node = [MEGASdkManager.sharedMEGASdk nodeForHandle:self.node.handle];
+    }
+    actionController.node = self.node;
     actionController.actionDelegate = self;
     actionController.actionSender = sender;
     actionController.displayMode = self.isLink ? DisplayModeFileLink : DisplayModeCloudDrive;
@@ -220,32 +285,8 @@
     [self presentViewController:actionController animated:YES completion:nil];
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if ([keyPath isEqualToString:@"self.previewController.title"]) {
-        UILabel *titleLabel = [Helper customNavigationBarLabelWithTitle:[self.filesPathsArray objectAtIndex:self.previewController.currentPreviewItemIndex].lastPathComponent subtitle:self.previewController.title color:[UIColor mnz_black333333]];
-        titleLabel.adjustsFontSizeToFitWidth = YES;
-        titleLabel.minimumScaleFactor = 0.8f;
-        self.navigationItem.titleView = titleLabel;
-        [self.navigationItem.titleView sizeToFit];
-    }
-}
-
-- (void)presentMEGAQlPreviewController {
-    MEGAQLPreviewController *previewController = [[MEGAQLPreviewController alloc] initWithFilePath:previewDocumentTransfer.path];
-    
-    [self dismissViewControllerAnimated:YES completion:^{
-        [UIApplication.mnz_presentingViewController presentViewController:previewController animated:YES completion:nil];
-    }];
-}
-
-- (void)presentWebCodeViewController {
-    WebCodeViewController *webCodeVC = [WebCodeViewController.alloc initWithFilePath:previewDocumentTransfer.path];
-    MEGANavigationController *navigationController = [MEGANavigationController.alloc initWithRootViewController:webCodeVC];
-    [navigationController addLeftDismissButtonWithText:AMLocalizedString(@"ok", nil)];
-    
-    [self dismissViewControllerAnimated:YES completion:^{
-        [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:nil];
-    }];
+- (IBAction)importAction:(id)sender {
+    [self import];
 }
 
 #pragma mark - QLPreviewControllerDataSource
@@ -317,11 +358,9 @@
 
 - (void)performAction:(MegaNodeActionType)action inNode:(MEGANode *)node fromSender:(id)sender{
     switch (action) {
-        case MegaNodeActionTypeShare: {
-            UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:@[self.node] sender:sender];
-            [self presentViewController:activityVC animated:YES completion:nil];
+        case MegaNodeActionTypeShare:
+            [self share];
             break;
-        }
             
         case MegaNodeActionTypeDownload:
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
@@ -341,18 +380,13 @@
         case MegaNodeActionTypeCopy:
             [node mnz_copyInViewController:self];
             break;
+            
         case MegaNodeActionTypeMove:
             [node mnz_moveInViewController:self];
             break;
+            
         case MegaNodeActionTypeImport:
-            if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-                MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
-                [self presentViewController:navigationController animated:YES completion:nil];
-                
-                BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
-                browserVC.selectedNodesArray = @[node];
-                browserVC.browserAction = BrowserActionImport;
-            }
+            [self import];
             break;
             
         case MegaNodeActionTypeRename: {
@@ -378,6 +412,18 @@
             [node mnz_removeLink];
             break;
         }
+            
+        case MegaNodeActionTypeSendToChat:
+            if (self.isLink && self.fileLink) {
+                [self sendLinkToChat];
+            } else {
+                [node mnz_sendToChatInViewController:self];
+            }
+            break;
+            
+        case MegaNodeActionTypeThumbnailView:
+            [self thumbnailTapped:nil];
+            break;
             
         default:
             break;
@@ -412,7 +458,7 @@
         self.imageView.hidden = YES;
         
         UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-        [self setToolbarItems:@[self.thumbnailBarButtonItem, flexibleItem, self.searchBarButtonItem, flexibleItem, self.openInBarButtonItem] animated:YES];
+        [self setToolbarItems:@[self.isLink ? self.importBarButtonItem : self.thumbnailBarButtonItem, flexibleItem, self.searchBarButtonItem, flexibleItem, self.openInBarButtonItem] animated:YES];
         [self.navigationController setToolbarHidden:NO animated:YES];
         self.navigationItem.rightBarButtonItem = self.node ? self.moreBarButtonItem : nil;
         

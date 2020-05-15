@@ -7,6 +7,7 @@ typedef NS_ENUM (NSInteger, DisplayMode) {
     DisplayModeNodeVersions,
     DisplayModeFolderLink,
     DisplayModeFileLink,
+    DisplayModeNodeInsideFolderLink,
     DisplayModeRecents,
     DisplayModeChatAttachment,
     DisplayModeChatSharedFiles,

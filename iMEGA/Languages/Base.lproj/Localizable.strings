@@ -477,7 +477,7 @@
 /* Success message for sharing multiple folders. */
 "sharedFolders_success"="%d folders shared successfully.";
 /* Button title that triggers the importing link action */
-"import"="Import";
+"Import to Cloud Drive"="Import to Cloud Drive";
 /* Message shown when a file has been imported */
 "fileImported"="File imported";
 /* Message shown when some files have been imported */
@@ -2228,3 +2228,7 @@
 "Chat created on %s1"="Chat created on %s1";
 /* Title shown when there are no shared files */
 "No Shared Files"="No Shared Files";
+/* Error message shown when opening a folder link which doesn’t exist */
+"Folder link unavailable"="Folder link unavailable";
+/* Error message shown when opening a file link which doesn’t exist */
+"File link unavailable"="File link unavailable";

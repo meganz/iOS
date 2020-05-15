@@ -111,3 +111,7 @@ extern NSString * const MEGAInvalidateNSECache;
 
 // Last 36 characters of the user session are used by sdk and karere to name their dbs
 extern const NSUInteger MEGALastCharactersFromSession;
+
+#pragma mark - File size
+
+extern const long long MEGAMaxFileLinkAutoOpenSize;

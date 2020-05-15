@@ -834,7 +834,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
         
         return photoBrowserVC;
     } else {
-        return [node mnz_viewControllerForNodeInFolderLink:NO];
+        return [node mnz_viewControllerForNodeInFolderLink:NO fileLink:nil];
     }
     
     return nil;

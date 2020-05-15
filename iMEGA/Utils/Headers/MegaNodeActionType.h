@@ -22,5 +22,6 @@ typedef NS_ENUM (NSInteger, MegaNodeActionType) {
     MegaNodeActionTypeManageLink,
     MegaNodeActionTypeGetLink,
     MegaNodeActionTypeSendToChat,
+    MegaNodeActionTypeThumbnailView,
     MegaNodeActionTypeForward,
 };
