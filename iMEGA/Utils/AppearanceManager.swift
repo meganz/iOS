@@ -38,6 +38,8 @@ class AppearanceManager: NSObject {
         
         UISwitch.appearance().onTintColor = UIColor.mnz_turquoise(for: traitCollection)
         
+        UIView.appearance(whenContainedInInstancesOf: [UIAlertController.self]).tintColor = UIColor.mnz_primaryGray(for: traitCollection)
+        
         let barButtonItemFont = UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.regular)
         UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font: barButtonItemFont], for: .normal)
         UIBarButtonItem.appearance(whenContainedInInstancesOf: [UIToolbar.self]).tintColor = UIColor.mnz_primaryGray(for: traitCollection)

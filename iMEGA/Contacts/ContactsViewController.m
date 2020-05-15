@@ -20,7 +20,6 @@
 #import "MEGAUser+MNZCategory.h"
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
-#import "UIAlertAction+MNZCategory.h"
 #import "UIImage+MNZCategory.h"
 #import "UITextField+MNZCategory.h"
 #import "UIViewController+MNZCategory.h"
@@ -175,8 +174,6 @@
     
     if (self.contactsMode == ContactsModeDefault) {
         MEGAContactRequestList *incomingContactsLists = [[MEGASdkManager sharedMEGASdk] incomingContactRequests];
-        [self updatePendingContactRequestsLabel];
-        
         if (!self.avoidPresentIncomingPendingContactRequests && incomingContactsLists.size.intValue > 0) {
             ContactRequestsViewController *contactRequestsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsRequestsViewControllerID"];
             
@@ -526,19 +523,16 @@
     UIAlertAction *fullAccessAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"fullAccess", @"Permissions given to the user you share your folder with") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self shareNodesWithLevel:MEGAShareTypeAccessFull];
     }];
-    [fullAccessAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
     [shareFolderAlertController addAction:fullAccessAlertAction];
     
     UIAlertAction *readAndWritetAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"readAndWrite", @"Permissions given to the user you share your folder with") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self shareNodesWithLevel:MEGAShareTypeAccessReadWrite];
     }];
-    [readAndWritetAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
     [shareFolderAlertController addAction:readAndWritetAlertAction];
     
     UIAlertAction *readOnlyAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self shareNodesWithLevel:MEGAShareTypeAccessRead];
     }];
-    [readOnlyAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
     [shareFolderAlertController addAction:readOnlyAlertAction];
     
     shareFolderAlertController.modalPresentationStyle = UIModalPresentationPopover;
@@ -1094,7 +1088,6 @@
             
             [self presentViewController:addContactFromEmailAlertController animated:YES completion:nil];
         }];
-        [addFromEmailAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
         [addContactAlertController addAction:addFromEmailAlertAction];
         
         UIAlertAction *addFromContactsAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"addFromContacts", @"Item menu option to add a contact through your device app Contacts") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
@@ -1103,7 +1096,6 @@
             }
             [self showEmailContactPicker];
         }];
-        [addFromContactsAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
         [addContactAlertController addAction:addFromContactsAlertAction];
         
         UIAlertAction *scanCodeAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"scanCode", @"Segmented control title for view that allows the user to scan QR codes. String as short as possible.") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -1115,7 +1107,6 @@
             }
             [self presentViewController:contactLinkVC animated:YES completion:nil];
         }];
-        [scanCodeAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
         [addContactAlertController addAction:scanCodeAlertAction];
         
         addContactAlertController.modalPresentationStyle = UIModalPresentationPopover;
@@ -1363,6 +1354,7 @@
             if (self.searchController.isActive && ![self.searchController.searchBar.text isEqual: @""]) {
                 cell = [self dequeueOrInitCellWithIdentifier:@"contactCell" indexPath:indexPath];
                 [cell configureDefaultCellForUser:user newUser:NO];
+                cell.contactDetailsButton.hidden = NO;
                 
                 return cell;
             }
@@ -1375,6 +1367,7 @@
             } else {
                 cell = [self dequeueOrInitCellWithIdentifier:@"contactCell" indexPath:indexPath];
                 [cell configureDefaultCellForUser:user newUser:(indexPath.section == 1)];
+                cell.contactDetailsButton.hidden = NO;
             }
             break;
         }

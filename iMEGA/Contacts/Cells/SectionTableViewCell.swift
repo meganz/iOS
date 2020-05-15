@@ -7,7 +7,7 @@ class SectionTableViewCell: UITableViewCell {
     @IBOutlet weak var rightDetailTextLabel: UILabel!
     
     @objc func configureContactsSection(indexPath: IndexPath) {
-        rightDetailTextLabel.textColor = UIColor.mnz_tertiaryGray(for: traitCollection)
+        rightDetailTextLabel.textColor = UIColor.mnz_secondaryLabel()
         
         if indexPath.row == 0 {
             leftImageView.image = UIImage(named: "contactRequests")?.imageFlippedForRightToLeftLayoutDirection()

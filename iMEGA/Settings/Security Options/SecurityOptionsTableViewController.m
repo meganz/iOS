@@ -7,6 +7,7 @@
 #import "MEGAMultiFactorAuthCheckRequestDelegate.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
+#import "MEGA-Swift.h"
 
 #import "AwaitingEmailConfirmationView.h"
 #import "SetupTwoFactorAuthenticationTableViewController.h"
@@ -40,9 +41,7 @@
     
     self.closeOtherSessionsLabel.text = AMLocalizedString(@"closeOtherSessions", @"Button text to close other login sessions except the current session in use. This will log out other devices which have an active login session.");
     
-    self.closeOtherSessionsLabel.textColor = [UIColor mnz_redMainForTraitCollection:self.traitCollection];
-    self.twoFactorAuthenticationRightDetailLabel.textColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
-    self.tableView.backgroundColor = [UIColor mnz_settingsBackgroundForTraitCollection:self.traitCollection];
+    [self updateAppearance];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -59,6 +58,8 @@
     if (@available(iOS 13.0, *)) {
         if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
             [self updateAppearance];
+            
+            [self.tableView reloadData];
         }
     }
 }
@@ -69,7 +70,9 @@
     self.tableView.separatorColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
     self.tableView.backgroundColor = [UIColor mnz_settingsBackgroundForTraitCollection:self.traitCollection];
     
-    [self.tableView reloadData];
+    self.twoFactorAuthenticationRightDetailLabel.textColor = UIColor.mnz_secondaryLabel;
+    
+    self.closeOtherSessionsLabel.textColor = [UIColor mnz_redMainForTraitCollection:self.traitCollection];
 }
 
 - (void)twoFactorAuthenticationStatus {

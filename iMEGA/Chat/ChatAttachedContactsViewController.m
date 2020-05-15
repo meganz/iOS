@@ -4,7 +4,6 @@
 #import "MEGAInviteContactRequestDelegate.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
-#import "UIAlertAction+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 
 #import "ContactDetailsViewController.h"
@@ -296,7 +295,6 @@
             MEGAInviteContactRequestDelegate *inviteContactRequestDelegate = [[MEGAInviteContactRequestDelegate alloc] initWithNumberOfRequests:1];
             [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:userEmailSelected message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
         }];
-        [addContactAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
         [addContactAlertController addAction:addContactAlertAction];
         
         addContactAlertController.modalPresentationStyle = UIModalPresentationPopover;

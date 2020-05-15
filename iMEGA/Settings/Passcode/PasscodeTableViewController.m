@@ -115,7 +115,7 @@
 #pragma mark - Private
 
 - (void)updateAppearance {
-    self.requirePasscodeDetailLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
+    self.requirePasscodeDetailLabel.textColor = UIColor.mnz_secondaryLabel;
     
     self.tableView.separatorColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
     self.tableView.backgroundColor = [UIColor mnz_settingsBackgroundForTraitCollection:self.traitCollection];

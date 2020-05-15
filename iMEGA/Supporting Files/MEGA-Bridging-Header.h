@@ -19,7 +19,6 @@
 #import "NSFileManager+MNZCategory.h"
 #import "NSDate+MNZCategory.h"
 #import "NSString+MNZCategory.h"
-#import "UIAlertAction+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
 #import "UIColor+MNZCategory.h"
 #import "UIDevice+MNZCategory.h"

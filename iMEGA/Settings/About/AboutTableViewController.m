@@ -2,6 +2,7 @@
 #import "AboutTableViewController.h"
 
 #import "Helper.h"
+#import "MEGA-Swift.h"
 #import "NSURL+MNZCategory.h"
 
 @interface AboutTableViewController ()
@@ -76,7 +77,7 @@
     self.tableView.separatorColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
     self.tableView.backgroundColor = [UIColor mnz_settingsBackgroundForTraitCollection:self.traitCollection];
     
-    self.versionNumberLabel.textColor = self.sdkVersionSHALabel.textColor = self.megachatSdkSHALabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
+    self.versionNumberLabel.textColor = self.sdkVersionSHALabel.textColor = self.megachatSdkSHALabel.textColor = UIColor.mnz_secondaryLabel;
     
     [self.tableView reloadData];
 }

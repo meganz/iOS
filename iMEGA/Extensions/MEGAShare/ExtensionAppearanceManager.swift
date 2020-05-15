@@ -4,24 +4,16 @@ import Foundation
 class ExtensionAppearanceManager: NSObject {
     
     @objc class func setupAppearance(_ traitCollection: UITraitCollection) {
-        UINavigationBar.appearance().barTintColor = UIColor.mnz_mainBarsColor(for: traitCollection)
-        UINavigationBar.appearance().backgroundColor = UIColor.mnz_mainBarsColor(for: traitCollection)
-        UINavigationBar.appearance().backIndicatorImage = UIImage(named: "backArrow")
-        UINavigationBar.appearance().backIndicatorTransitionMaskImage = UIImage(named: "backArrow")
-        let navigationBarFont = UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.semibold)
-        UINavigationBar.appearance().tintColor = UIColor.mnz_primaryGray(for: traitCollection)
-        UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.font: navigationBarFont, NSAttributedString.Key.foregroundColor: UIColor.mnz_label()!]
-        
-        //Remove the line under the top navigation bar
-        UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
-        UINavigationBar.appearance().shadowImage = UIImage()
+        setupNavigationAppearance(traitCollection)
         
         //To tint the color of the prompt.
         UILabel.appearance(whenContainedInInstancesOf: [UINavigationBar.self]).textColor = UIColor.mnz_label()
         
         UISearchBar.appearance().isTranslucent = false
-        UISearchBar.appearance().backgroundColor = UIColor.mnz_background()
+        UISearchBar.appearance().tintColor = UIColor.mnz_primaryGray(for: traitCollection)
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = UIColor.mnz_background()
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).textColor = UIColor.mnz_label()
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).font = UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.regular)
         
         let segmentedControlFont = UIFont.systemFont(ofSize: 13, weight: UIFont.Weight.regular)
         UISegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.font: segmentedControlFont], for: .normal)
@@ -86,6 +78,38 @@ class ExtensionAppearanceManager: NSObject {
                 view.removeFromSuperview()
                 window.addSubview(view)
             }
+        }
+    }
+    
+    // MARK: - Private
+    
+    private class func setupNavigationAppearance(_ traitCollection: UITraitCollection) {
+        let navigationBarFont = UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.semibold)
+        UINavigationBar.appearance().tintColor = UIColor.mnz_primaryGray(for: traitCollection)
+        UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.font: navigationBarFont, NSAttributedString.Key.foregroundColor: UIColor.mnz_label()!]
+        
+        if #available(iOS 13.0, *) {
+            let navigationBarAppearance = UINavigationBarAppearance()
+            navigationBarAppearance.configureWithOpaqueBackground()
+            navigationBarAppearance.backgroundColor = UIColor.mnz_mainBarsColor(for: traitCollection)
+            
+            navigationBarAppearance.shadowImage = nil
+            navigationBarAppearance.shadowColor = nil
+            
+            let backArrowImage = UIImage(named: "backArrow")
+            navigationBarAppearance.setBackIndicatorImage(backArrowImage, transitionMaskImage: backArrowImage)
+            
+            UINavigationBar.appearance().standardAppearance = navigationBarAppearance
+            UINavigationBar.appearance().scrollEdgeAppearance = navigationBarAppearance
+        } else {
+            UINavigationBar.appearance().barTintColor = UIColor.mnz_mainBarsColor(for: traitCollection)
+            UINavigationBar.appearance().backgroundColor = UIColor.mnz_mainBarsColor(for: traitCollection)
+            
+            UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
+            UINavigationBar.appearance().shadowImage = UIImage()
+            
+            UINavigationBar.appearance().backIndicatorImage = UIImage(named: "backArrow")
+            UINavigationBar.appearance().backIndicatorTransitionMaskImage = UIImage(named: "backArrow")
         }
     }
 }

@@ -936,7 +936,7 @@
 /* title of the introduction for the achievements screen */
 "inviteFriendsAndGetForEachReferral"="Get %1$s of storage and %2$s of transfers for each referral";
 /* Text shown to explain how and where you can invite friends */
-"inviteYourFriendsExplanation"="Select contacts from your phone’s contact list or enter multiple email addresses.";
+"Select from phone contacts or enter multiple email addresses"="Select from phone contacts or enter multiple email addresses";
 /*  */
 "insertYourFriendsEmails"="Insert your friend’s email(s):";
 /*  */

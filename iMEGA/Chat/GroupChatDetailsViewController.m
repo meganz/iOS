@@ -4,7 +4,6 @@
 #import "SVProgressHUD.h"
 
 #import "MEGAReachabilityManager.h"
-#import "UIAlertAction+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 #import "UITextField+MNZCategory.h"
 
@@ -173,7 +172,7 @@
             [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:[self.chatRoom peerEmailByHandle:userHandle] message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
         }
     }];
-    [sendParticipantContactRequest mnz_setTitleTextColor:UIColor.mnz_label];
+    
     return sendParticipantContactRequest;
 }
 
@@ -300,26 +299,22 @@
         
         UIAlertController *permissionsAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
         UIAlertAction *cancelAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil];
-        [cancelAlertAction mnz_setTitleTextColor:[UIColor mnz_redMainForTraitCollection:(self.traitCollection)]];
         [permissionsAlertController addAction:cancelAlertAction];
         
         if (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator) {
             UIAlertAction *moderatorAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"moderator", @"The Moderator permission level in chat. With moderator permissions a participant can manage the chat.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                 [[MEGASdkManager sharedMEGAChatSdk] updateChatPermissions:self.chatRoom.chatId userHandle:userHandle privilege:MEGAChatRoomPrivilegeModerator delegate:self];
             }];
-            [moderatorAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
             [permissionsAlertController addAction:moderatorAlertAction];
             
             UIAlertAction *standartAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"standard", @"The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                 [[MEGASdkManager sharedMEGAChatSdk] updateChatPermissions:self.chatRoom.chatId userHandle:userHandle privilege:MEGAChatRoomPrivilegeStandard delegate:self];
             }];
-            [standartAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
             [permissionsAlertController addAction:standartAlertAction];
             
             UIAlertAction *readOnlyAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                 [[MEGASdkManager sharedMEGAChatSdk] updateChatPermissions:self.chatRoom.chatId userHandle:userHandle privilege:MEGAChatRoomPrivilegeRo delegate:self];
             }];
-            [readOnlyAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
             [permissionsAlertController addAction:readOnlyAlertAction];
             
             MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:[self.chatRoom peerEmailByHandle:userHandle]];

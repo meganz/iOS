@@ -62,7 +62,7 @@ class SortingAndViewModeTableViewController: UITableViewController {
     // MARK: - Private
     
     func updateAppearance() {
-        sortingPreferenceSameForAllDetailLabel.textColor = UIColor.mnz_secondaryGray(for: traitCollection)
+        sortingPreferenceSameForAllDetailLabel.textColor = UIColor.mnz_secondaryLabel()
         
         tableView.separatorColor = UIColor.mnz_separatorColor(for: traitCollection)
         tableView.backgroundColor = UIColor.mnz_settingsBackground(for: traitCollection)

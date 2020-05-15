@@ -8,6 +8,7 @@
 #import "MEGASdkManager.h"
 #import "MEGASdk+MNZCategory.h"
 #import "MEGAStore.h"
+#import "MEGA-Swift.h"
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 
@@ -90,7 +91,7 @@
     self.tableView.separatorColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
     self.tableView.backgroundColor = [UIColor mnz_settingsBackgroundForTraitCollection:self.traitCollection];
     
-    self.fileVersionsDetailLabel.textColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
+    self.fileVersionsDetailLabel.textColor = UIColor.mnz_secondaryLabel;
     self.deleteOldVersionsLabel.textColor = [UIColor mnz_redMainForTraitCollection:self.traitCollection];
     
     [self.tableView reloadData];
