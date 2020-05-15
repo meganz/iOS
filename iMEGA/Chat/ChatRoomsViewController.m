@@ -552,47 +552,66 @@
 }
 
 - (void)presentChangeOnlineStatusAlertController {
-    UIAlertController *changeOnlineStatusAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    [changeOnlineStatusAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+    ActionSheetViewController *actionSheetVC = ActionSheetViewController.new;
+    actionSheetVC.modalPresentationStyle = UIModalPresentationOverFullScreen;
     
-    MEGAChatStatus onlineStatus = [[MEGASdkManager sharedMEGAChatSdk] onlineStatus];
+    NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
+    MEGAChatStatus onlineStatus = MEGASdkManager.sharedMEGAChatSdk.onlineStatus;
+    
     if (MEGAChatStatusOnline != onlineStatus) {
-        UIAlertAction *onlineAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"online", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            [self changeToOnlineStatus:MEGAChatStatusOnline];
-        }];
-        [onlineAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
-        [changeOnlineStatusAlertController addAction:onlineAlertAction];
+            ActionSheetAction *onlineAction = [ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"online", @"")
+                                                                              detail:nil
+                                                                               image:nil
+                                                                               style:UIAlertActionStyleDefault
+                                                                             handler:^{
+                [self changeToOnlineStatus:MEGAChatStatusOnline];
+            }];
+        [actions addObject:onlineAction];
     }
     
     if (MEGAChatStatusAway != onlineStatus) {
-        UIAlertAction *awayAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"away", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        ActionSheetAction *awayAction = [ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"away", @"")
+                                                                        detail:nil
+                                                                         image:nil
+                                                                         style:UIAlertActionStyleDefault
+                                                                       handler:^{
             [self changeToOnlineStatus:MEGAChatStatusAway];
         }];
-        [awayAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
-        [changeOnlineStatusAlertController addAction:awayAlertAction];
+        [actions addObject:awayAction];
     }
     
     if (MEGAChatStatusBusy != onlineStatus) {
-        UIAlertAction *busyAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"busy", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            [self changeToOnlineStatus:MEGAChatStatusBusy];
-        }];
-        [busyAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
-        [changeOnlineStatusAlertController addAction:busyAlertAction];
+            ActionSheetAction *busyAction = [ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"busy", @"")
+                                                                            detail:nil
+                                                                             image:nil
+                                                                             style:UIAlertActionStyleDefault
+                                                                           handler:^{
+                [self changeToOnlineStatus:MEGAChatStatusBusy];
+            }];
+        [actions addObject:busyAction];
     }
     
     if (MEGAChatStatusOffline != onlineStatus) {
-        UIAlertAction *offlineAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"offline", @"Title of the Offline section") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            [self changeToOnlineStatus:MEGAChatStatusOffline];
-        }];
-        [offlineAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
-        [changeOnlineStatusAlertController addAction:offlineAlertAction];
+            ActionSheetAction *offlineAction = [ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"offline", @"")
+                                                                               detail:nil
+                                                                                image:nil
+                                                                                style:UIAlertActionStyleDefault
+                                                                              handler:^{
+                [self changeToOnlineStatus:MEGAChatStatusOffline];
+            }];
+        [actions addObject:offlineAction];
     }
     
-    changeOnlineStatusAlertController.modalPresentationStyle = UIModalPresentationPopover;
-    changeOnlineStatusAlertController.popoverPresentationController.sourceView = self.view.superview;
-    changeOnlineStatusAlertController.popoverPresentationController.sourceRect = self.navigationController.navigationBar.frame;
+    actionSheetVC.actions = actions;
     
-    [self presentViewController:changeOnlineStatusAlertController animated:YES completion:nil];
+    if (UIDevice.currentDevice.iPadDevice) {
+        actionSheetVC.modalPresentationStyle = UIModalPresentationPopover;
+        UIPopoverPresentationController *popoverPresentationController = actionSheetVC.popoverPresentationController;
+        popoverPresentationController.barButtonItem = self.navigationItem.rightBarButtonItems.firstObject;
+        popoverPresentationController.sourceView = self.view;
+        popoverPresentationController.delegate = actionSheetVC;
+    }
+    [self presentViewController:actionSheetVC animated:YES completion:nil];
 }
 
 - (void)changeToOnlineStatus:(MEGAChatStatus)chatStatus {
@@ -909,7 +928,28 @@
 
 - (IBAction)optionsTapped:(UIBarButtonItem *)sender {
     if (MEGASdkManager.sharedMEGAChatSdk.presenceConfig) {
-        [self presentChangeOnlineStatusAlertController];
+        ActionSheetViewController *actionSheetVC = ActionSheetViewController.new;
+        actionSheetVC.modalPresentationStyle = UIModalPresentationOverFullScreen;
+        
+        ActionSheetAction *statusAction = [ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"status", @"Title that refers to the status of the chat (Either Online or Offline)")
+                                                                          detail:[NSString chatStatusString:MEGASdkManager.sharedMEGAChatSdk.onlineStatus]
+                                                                           image:nil
+                                                                           style:UIAlertActionStyleDefault
+                                                                         handler:^{
+            [self presentChangeOnlineStatusAlertController];
+        }];
+        // TODO: Add DND settings when available
+        
+        actionSheetVC.actions = @[statusAction];
+        
+        if (UIDevice.currentDevice.iPadDevice) {
+            actionSheetVC.modalPresentationStyle = UIModalPresentationPopover;
+            UIPopoverPresentationController *popoverPresentationController = actionSheetVC.popoverPresentationController;
+            popoverPresentationController.barButtonItem = self.navigationItem.rightBarButtonItems.firstObject;
+            popoverPresentationController.sourceView = self.view;
+            popoverPresentationController.delegate = actionSheetVC;
+        }
+        [self presentViewController:actionSheetVC animated:YES completion:nil];
     }
 }
 
