@@ -242,11 +242,16 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         }
         setupLogging()
         
+        var checkDates = true
         if let sharedUserDefaults = UserDefaults.init(suiteName: MEGAGroupIdentifier) {
+            if sharedUserDefaults.object(forKey: MEGAInvalidateNSECache) == nil || sharedUserDefaults.bool(forKey: MEGAInvalidateNSECache) {
+                checkDates = false
+            }
             sharedUserDefaults.set(false, forKey: MEGAInvalidateNSECache)
         }
         
-        copyDatabasesFromMainApp()
+        copyDatabasesFromMainApp(checkingDates: checkDates)
+
         initChat()
         loginToMEGA(with: session)
     }
@@ -280,7 +285,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
     }
 
     // As part of the lean init, a cache is required. It will not be generated from scratch.
-    private static func copyDatabasesFromMainApp() {
+    private static func copyDatabasesFromMainApp(checkingDates: Bool) {
         let fileManager = FileManager.default
         
         guard let groupContainerURL = fileManager.containerURL(forSecurityApplicationGroupIdentifier: MEGAGroupIdentifier) else {
@@ -302,15 +307,17 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
             MEGALogError("Failed to locate/create \(nseCacheURL.path) directory");
         }
         
-        guard let incomingDate = try? newestMegaclientModificationDateForDirectory(at: groupSupportURL),
-            let extensionDate = try? newestMegaclientModificationDateForDirectory(at: nseCacheURL)
-            else {
-                MEGALogError("Exception in newestMegaclientModificationDateForDirectory")
+        if checkingDates {
+            guard let incomingDate = try? newestMegaclientModificationDateForDirectory(at: groupSupportURL),
+                let extensionDate = try? newestMegaclientModificationDateForDirectory(at: nseCacheURL)
+                else {
+                    MEGALogError("Exception in newestMegaclientModificationDateForDirectory")
+                    return
+            }
+            
+            if incomingDate <= extensionDate {
                 return
-        }
-
-        if incomingDate <= extensionDate {
-            return
+            }
         }
         
         guard let nseCacheContent = try? fileManager.contentsOfDirectory(atPath: nseCacheURL.path),
