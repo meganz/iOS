@@ -7,6 +7,7 @@ protocol ChatMessageAndAudioInputBarDelegate: MessageInputBarDelegate {
     func tappedSendAudio(atPath path: String)
     func recordingViewShown(withAdditionalHeight height: CGFloat)
     func recordingViewHidden()
+    func canRecordAudio() -> Bool
 }
 
 class ChatInputBar: UIView {
@@ -246,8 +247,10 @@ class ChatInputBar: UIView {
         }
 
         let loc = longPressGesture.location(in: longPressGesture.view)
-        if messageInputBar.superview != nil
-            && messageInputBar.isMicButtonPresent(atLocation: loc) {
+        if messageInputBar.superview != nil,
+            messageInputBar.isMicButtonPresent(atLocation: loc),
+            let delegate = delegate,
+            delegate.canRecordAudio() {
             textInputToVoiceInputBarSwitch()
         }
     }
