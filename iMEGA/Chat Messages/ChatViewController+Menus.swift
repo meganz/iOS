@@ -9,6 +9,9 @@ extension ChatViewController {
     }
     
     func forwardMessage(_ message: ChatMessage) {
+        
+        self.setEditing(true, animated: true)
+        return
         let megaMessage = message.message
         let chatStoryboard = UIStoryboard(name: "Chat", bundle: nil)
         let sendToNC = chatStoryboard.instantiateViewController(withIdentifier: "SendToNavigationControllerID") as! UINavigationController
