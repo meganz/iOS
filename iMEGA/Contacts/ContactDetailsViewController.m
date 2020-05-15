@@ -3,7 +3,6 @@
 #import "SVProgressHUD.h"
 
 #import "Helper.h"
-#import "UIAlertAction+MNZCategory.h"
 #import "UIImage+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 #import "NSString+MNZCategory.h"
@@ -406,25 +405,21 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     
     UIAlertController *permissionsAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     UIAlertAction *cancelAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil];
-    [cancelAlertAction mnz_setTitleTextColor:[UIColor mnz_redMainForTraitCollection:(self.traitCollection)]];
     [permissionsAlertController addAction:cancelAlertAction];
     
     UIAlertAction *moderatorAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"moderator", @"The Moderator permission level in chat. With moderator permissions a participant can manage the chat.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [MEGASdkManager.sharedMEGAChatSdk updateChatPermissions:self.groupChatRoom.chatId userHandle:self.userHandle privilege:MEGAChatRoomPrivilegeModerator delegate:delegate];
     }];
-    [moderatorAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
     [permissionsAlertController addAction:moderatorAlertAction];
     
     UIAlertAction *standartAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"standard", @"The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [MEGASdkManager.sharedMEGAChatSdk updateChatPermissions:self.groupChatRoom.chatId userHandle:self.userHandle privilege:MEGAChatRoomPrivilegeStandard delegate:delegate];
     }];
-    [standartAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
     [permissionsAlertController addAction:standartAlertAction];
     
     UIAlertAction *readOnlyAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [MEGASdkManager.sharedMEGAChatSdk updateChatPermissions:self.groupChatRoom.chatId userHandle:self.userHandle privilege:MEGAChatRoomPrivilegeRo delegate:delegate];
     }];
-    [readOnlyAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
     [permissionsAlertController addAction:readOnlyAlertAction];
     
     if (permissionsAlertController.actions.count > 1) {

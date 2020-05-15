@@ -218,7 +218,6 @@ enum SessionSectionRow: Int {
                 }
             })
         }
-        fromPhotosAlertAction.mnz_setTitleTextColor(UIColor.mnz_secondaryGray(for: traitCollection))
         changeAvatarAlertController.addAction(fromPhotosAlertAction)
         
         let captureAlertAction = UIAlertAction.init(title: AMLocalizedString("capturePhotoVideo", "Menu option from the `Add` section that allows the user to capture a video or a photo and upload it directly to MEGA."), style: .default) { (UIAlertAction) in
@@ -238,7 +237,6 @@ enum SessionSectionRow: Int {
                 }
             })
         }
-        captureAlertAction.mnz_setTitleTextColor(UIColor.mnz_secondaryGray(for: traitCollection))
         changeAvatarAlertController.addAction(captureAlertAction)
         
         changeAvatarAlertController.modalPresentationStyle = .popover;
@@ -251,7 +249,6 @@ enum SessionSectionRow: Int {
             let removeAvatarAlertAction = UIAlertAction.init(title: AMLocalizedString("Remove Photo", "Button to remove some photo, e.g. avatar photo. Try to keep the text short (as in English)"), style: .default) { (UIAlertAction) in
                 MEGASdkManager.sharedMEGASdk().setAvatarUserWithSourceFilePath(nil)
             }
-            removeAvatarAlertAction.mnz_setTitleTextColor(UIColor.mnz_secondaryGray(for: traitCollection))
             changeAvatarAlertController.addAction(removeAvatarAlertAction)
         }
         

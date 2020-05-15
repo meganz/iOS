@@ -15,7 +15,6 @@
 #import "QRSettingsTableViewController.h"
 
 #import "NSString+MNZCategory.h"
-#import "UIAlertAction+MNZCategory.h"
 #import "UIImage+GKContact.h"
 #import "UIImage+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
@@ -258,7 +257,6 @@ typedef NS_ENUM(NSInteger, QRSection) {
             
             [self presentViewController:activityVC animated:YES completion:nil];
         }];
-        [shareAlertAction mnz_setTitleTextColor:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]];
         [moreAlertController addAction:shareAlertAction];
     }
     
@@ -266,14 +264,12 @@ typedef NS_ENUM(NSInteger, QRSection) {
         UINavigationController *qrSettingsNC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"QRSettingsNavigationControllerID"];
         [self presentViewController:qrSettingsNC animated:YES completion:nil];
     }];
-    [settingsAlertAction mnz_setTitleTextColor:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]];
     [moreAlertController addAction:settingsAlertAction];
     
     UIAlertAction *resetAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"resetQrCode", @"Action to reset the current valid QR code of the user") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         self.qrImageView.image = nil;
         [[MEGASdkManager sharedMEGASdk] contactLinkCreateRenew:YES delegate:self.contactLinkCreateDelegate];
     }];
-    [resetAlertAction mnz_setTitleTextColor:[UIColor mnz_redMainForTraitCollection:self.traitCollection]];
     [moreAlertController addAction:resetAlertAction];
     
     moreAlertController.modalPresentationStyle = UIModalPresentationPopover;

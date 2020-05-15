@@ -1,5 +1,8 @@
 
 #import "VideoUploadsTableViewController.h"
+
+#import "MEGA-Swift.h"
+
 #import "CameraUploadManager+Settings.h"
 
 typedef NS_ENUM(NSUInteger, VideoUploadsSection) {
@@ -105,7 +108,7 @@ typedef NS_ENUM(NSUInteger, VideoUploadsSectionFormatRow) {
 }
 
 - (void)updateAppearance {
-    self.videoQualityRightDetailLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
+    self.videoQualityRightDetailLabel.textColor = UIColor.mnz_secondaryLabel;
     
     self.tableView.separatorColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
     self.tableView.backgroundColor = [UIColor mnz_settingsBackgroundForTraitCollection:self.traitCollection];

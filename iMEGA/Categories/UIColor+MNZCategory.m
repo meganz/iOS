@@ -49,11 +49,7 @@
             }
                 
             case UIUserInterfaceStyleDark: {
-                if (traitCollection.accessibilityContrast == UIAccessibilityContrastHigh) {
-                    return UIColor.tertiarySystemBackgroundColor;
-                } else {
-                    return UIColor.secondarySystemBackgroundColor;
-                }
+                return UIColor.secondarySystemBackgroundColor;
             }
         }
     } else {

@@ -15,7 +15,6 @@
 #import "MEGASdkManager.h"
 #import "NSString+MNZCategory.h"
 #import "MEGA-Swift.h"
-#import "UIAlertAction+MNZCategory.h"
 #import "UITableView+MNZCategory.h"
 #import "UIViewController+MNZCategory.h"
 
@@ -546,7 +545,6 @@
         UIAlertAction *onlineAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"online", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             [self changeToOnlineStatus:MEGAChatStatusOnline];
         }];
-        [onlineAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
         [changeOnlineStatusAlertController addAction:onlineAlertAction];
     }
     
@@ -554,7 +552,6 @@
         UIAlertAction *awayAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"away", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             [self changeToOnlineStatus:MEGAChatStatusAway];
         }];
-        [awayAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
         [changeOnlineStatusAlertController addAction:awayAlertAction];
     }
     
@@ -562,7 +559,6 @@
         UIAlertAction *busyAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"busy", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             [self changeToOnlineStatus:MEGAChatStatusBusy];
         }];
-        [busyAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
         [changeOnlineStatusAlertController addAction:busyAlertAction];
     }
     
@@ -570,7 +566,6 @@
         UIAlertAction *offlineAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"offline", @"Title of the Offline section") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             [self changeToOnlineStatus:MEGAChatStatusOffline];
         }];
-        [offlineAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
         [changeOnlineStatusAlertController addAction:offlineAlertAction];
     }
     

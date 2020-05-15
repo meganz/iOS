@@ -23,7 +23,7 @@ class EnterEmailViewController: UIViewController {
         
         navigationItem.title = AMLocalizedString("Enter Email", "Text used as a section title or similar")
         
-        descriptionLabel.text = AMLocalizedString("inviteYourFriendsExplanation", "Text shown to explain how and where you can invite friends")
+        descriptionLabel.text = AMLocalizedString("Select from phone contacts or enter multiple email addresses", "Text shown to explain how and where you can invite friends")
         instructionsLabel.text = AMLocalizedString("Tap space to enter multiple emails", "Text showing the user how to write more than one email in order to invite them to MEGA")
         customizeTokenField()
         

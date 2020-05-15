@@ -3,7 +3,6 @@
 
 #import "NSDate+MNZCategory.h"
 #import "NSString+MNZCategory.h"
-#import "UIAlertAction+MNZCategory.h"
 #import "UIImage+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 
@@ -79,8 +78,6 @@ static NSString *kPath = @"kPath";
     UIAlertAction *removeItemAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"remove", @"Title for the action that allows to remove a file or folder") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self.offline removeOfflineNodeCell:itemPath];
     }];
-    
-    [removeItemAction mnz_setTitleTextColor:UIColor.mnz_label];
     [infoAlertController addAction:removeItemAction];
     
     BOOL isDirectory;
@@ -110,8 +107,6 @@ static NSString *kPath = @"kPath";
             
             [self presentViewController:activityViewController animated:YES completion:nil];
         }];
-        
-        [shareItemAction mnz_setTitleTextColor:UIColor.mnz_label];
         [infoAlertController addAction:shareItemAction];
     }
     

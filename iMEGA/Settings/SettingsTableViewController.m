@@ -5,6 +5,7 @@
 
 #import "CameraUploadManager+Settings.h"
 #import "MEGAReachabilityManager.h"
+#import "MEGA-Swift.h"
 #import "NSURL+MNZCategory.h"
 
 @interface SettingsTableViewController () <UITableViewDataSource, UITableViewDelegate>
@@ -99,7 +100,7 @@
 }
 
 - (void)updateAppearance {
-    self.cameraUploadsDetailLabel.textColor = self.passcodeDetailLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
+    self.cameraUploadsDetailLabel.textColor = self.passcodeDetailLabel.textColor = UIColor.mnz_secondaryLabel;
     
     self.tableView.separatorColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
     self.tableView.backgroundColor = [UIColor mnz_settingsBackgroundForTraitCollection:self.traitCollection];

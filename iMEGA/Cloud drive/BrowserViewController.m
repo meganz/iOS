@@ -12,7 +12,6 @@
 #import "NSFileManager+MNZCategory.h"
 #import "NSMutableArray+MNZCategory.h"
 #import "NSString+MNZCategory.h"
-#import "UIAlertAction+MNZCategory.h"
 #import "UIImage+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 #import "UITextField+MNZCategory.h"

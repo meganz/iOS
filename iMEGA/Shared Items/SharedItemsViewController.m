@@ -15,7 +15,6 @@
 #import "MEGAShareRequestDelegate.h"
 #import "NSMutableArray+MNZCategory.h"
 #import "NSString+MNZCategory.h"
-#import "UIAlertAction+MNZCategory.h"
 #import "UIImage+MNZCategory.h"
 #import "UIViewController+MNZCategory.h"
 
@@ -546,7 +545,6 @@
                 [self reloadUI];
                 [NSUserDefaults.standardUserDefaults setInteger:self.sortOrderType forKey:@"SharedItemsSortOrderType"];
             }];
-            [sortAscendingAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
             [sortByAlertController addAction:sortAscendingAlertAction];
             
             NSString *descendingSortTitle = [NSString stringWithFormat:@"%@%@", AMLocalizedString(@"nameDescending", @"Sort by option (2/6). This one arranges the files on reverse alphabethical order"), self.sortOrderType == MEGASortOrderTypeAlphabeticalDesc ? @" ✓" : @""];
@@ -555,7 +553,6 @@
                 [self reloadUI];
                 [NSUserDefaults.standardUserDefaults setInteger:self.sortOrderType forKey:@"SharedItemsSortOrderType"];
             }];
-            [sortDescendingAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
             [sortByAlertController addAction:sortDescendingAlertAction];
             
             if (UIDevice.currentDevice.iPadDevice) {
@@ -566,7 +563,6 @@
             }
             [self presentViewController:sortByAlertController animated:YES completion:nil];
         }];
-        [sortByAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
         [moreAlertController addAction:sortByAlertAction];
         
         UIAlertAction *selectAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"select", @"Button that allows you to select a given folder") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
@@ -578,7 +574,6 @@
             [self toolbarItemsForSharedItems];
             [self toolbarItemsSetEnabled:NO];
         }];
-        [selectAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
         [moreAlertController addAction:selectAlertAction];
         
         if (UIDevice.currentDevice.iPadDevice) {

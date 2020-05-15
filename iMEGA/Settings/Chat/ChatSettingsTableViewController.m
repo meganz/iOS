@@ -6,6 +6,7 @@
 #import "MEGAGetAttrUserRequestDelegate.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
+#import "MEGA-Swift.h"
 #import "NSString+MNZCategory.h"
 
 #import "ChatStatusTableViewController.h"
@@ -94,7 +95,7 @@
 #pragma mark - Private
 
 - (void)updateAppearance {
-    self.statusRightDetailLabel.textColor = self.videoQualityRightDetailLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
+    self.statusRightDetailLabel.textColor = self.videoQualityRightDetailLabel.textColor = UIColor.mnz_secondaryLabel;
     
     self.tableView.separatorColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
     self.tableView.backgroundColor = [UIColor mnz_settingsBackgroundForTraitCollection:self.traitCollection];

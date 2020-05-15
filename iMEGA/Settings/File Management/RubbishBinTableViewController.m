@@ -12,6 +12,7 @@
 #import "CustomModalAlertViewController.h"
 #import "MEGASdkManager.h"
 #import "MEGASdk+MNZCategory.h"
+#import "MEGA-Swift.h"
 #import "UpgradeTableViewController.h"
 
 @interface RubbishBinTableViewController () <MEGARequestDelegate>
@@ -64,7 +65,7 @@
     self.tableView.backgroundColor = [UIColor mnz_settingsBackgroundForTraitCollection:self.traitCollection];
     
     self.clearRubbishBinLabel.textColor = [UIColor mnz_redMainForTraitCollection:self.traitCollection];
-    self.clearRubbishBinDetailLabel.textColor = self.removeFilesOlderThanDetailLabel.textColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
+    self.clearRubbishBinDetailLabel.textColor = self.removeFilesOlderThanDetailLabel.textColor = UIColor.mnz_secondaryLabel;
     
     [self.tableView reloadData];
 }

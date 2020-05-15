@@ -36,7 +36,6 @@
 #import "NSDate+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIImage+MNZCategory.h"
-#import "UIAlertAction+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
 #import "UIView+MNZCategory.h"
 
@@ -1410,7 +1409,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     UIAlertAction *cancelAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
         self.inputToolbar.hidden = self.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo;
     }];
-    [cancelAlertAction mnz_setTitleTextColor:UIColor.mnz_redMain];
     [userAlertController addAction:cancelAlertAction];
     
     UIAlertAction *infoAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"info", @"A button label. The button allows the user to get more info of the current context.") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -1422,7 +1420,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         contactDetailsVC.groupChatRoom = self.chatRoom;
         [self.navigationController pushViewController:contactDetailsVC animated:YES];
     }];
-    [infoAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
     [userAlertController addAction:infoAlertAction];
     
     MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:[self.chatRoom peerEmailByHandle:userHandle]];
@@ -1434,7 +1431,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
                 self.inputToolbar.hidden = self.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo;
             }
         }];
-        [addContactAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
         [userAlertController addAction:addContactAlertAction];
     }
     
@@ -2033,13 +2029,11 @@ static NSMutableSet<NSString *> *tapForInfoSet;
                     }
                 };
             }];
-            [sendFromCloudDriveAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
             [selectOptionAlertController addAction:sendFromCloudDriveAlertAction];
             
             UIAlertAction *sendContactAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"contact", @"referring to a contact in the contact list of the user") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                 [self presentAddOrAttachParticipantToGroup:nil];
             }];
-            [sendContactAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
             [selectOptionAlertController addAction:sendContactAlertAction];
             
             UIAlertAction *sendLocationAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"location", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
@@ -2071,7 +2065,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
                 
                 [[MEGASdkManager sharedMEGASdk] isGeolocationEnabledWithDelegate:isGeolocationEnabledDelegate];
             }];
-            [sendLocationAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
             [selectOptionAlertController addAction:sendLocationAlertAction];
             
             selectOptionAlertController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
@@ -2859,7 +2852,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
                     break;
             }
         }];
-        [retryAlertAction mnz_setTitleTextColor:UIColor.mnz_label];
         [alertController addAction:retryAlertAction];
         
         [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"deleteMessage", @"Button which allows to delete message in chat conversation.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
