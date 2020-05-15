@@ -12,11 +12,17 @@ extension ChatViewController: ChatViewMessagesLayoutDelegate {
     }
     
     func collectionView(_ collectionView: MessagesCollectionView, editingOverlayAt indexPath: IndexPath, become selected: Bool) {
-        
+        if selected {
+            selectedEditingIndexPaths.insert(indexPath)
+        } else {
+            selectedEditingIndexPaths.remove(indexPath)
+        }
     }
     
     func collectionView(_ collectionView: MessagesCollectionView, layout collectionViewLayout: MessagesCollectionViewFlowLayout, shouldEditItemAt indexPath: IndexPath) -> Bool {
-        return true
+        let message = messages[indexPath.section]
+        return !message.message.isManagementMessage
+             
     }
     
 
