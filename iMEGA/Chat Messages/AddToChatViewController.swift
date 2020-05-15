@@ -14,6 +14,7 @@ protocol AddToChatViewControllerDelegate: class {
     func showLocation()
     func shouldDisableAudioMenu() -> Bool
     func shouldDisableVideoMenu() -> Bool
+    func canRecordAudio() -> Bool
 }
 
 class AddToChatViewController: UIViewController {
@@ -161,8 +162,11 @@ extension AddToChatViewController: AddToChatMenuPageViewControllerDelegate {
     }
     
     func showVoiceClip() {
-        dismiss(animated: true) {
-            self.addToChatDelegate?.showVoiceClip()
+        if let delegate = addToChatDelegate,
+            delegate.canRecordAudio() {
+            dismiss(animated: true) {
+                self.addToChatDelegate?.showVoiceClip()
+            }
         }
     }
     
