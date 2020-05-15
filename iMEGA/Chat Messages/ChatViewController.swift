@@ -15,7 +15,7 @@ class ChatViewController: MessagesViewController {
     @objc var publicChatLink: URL?
     @objc var publicChatWithLinkCreated: Bool = false
     var navigationBarProgressView: UIProgressView = UIProgressView(progressViewStyle: .bar)
-    var chatInputBar: ChatInputBar!
+    var chatInputBar: ChatInputBar?
     var editMessage: ChatMessage?
     var addToChatViewController: AddToChatViewController?
     
@@ -102,6 +102,11 @@ class ChatViewController: MessagesViewController {
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        MEGASdkManager.sharedMEGAChatSdk()?.add(self as MEGAChatDelegate)
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -158,9 +163,11 @@ class ChatViewController: MessagesViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        MEGASdkManager.sharedMEGAChatSdk()?.remove(self as MEGAChatDelegate)
+
         if isMovingFromParent || presentingViewController != nil && navigationController?.viewControllers.count == 1 {
             closeChatRoom()
-            MEGASdkManager.sharedMEGAChatSdk()?.remove(self)
+            MEGASdkManager.sharedMEGAChatSdk()?.remove(self as MEGAChatCallDelegate)
         }
     }
     

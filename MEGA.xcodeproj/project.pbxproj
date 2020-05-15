@@ -1134,6 +1134,7 @@
 		BFB464142435823400FB90B9 /* ChatViewController+MessagesDisplayDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB464132435823400FB90B9 /* ChatViewController+MessagesDisplayDelegate.swift */; };
 		BFB464162435825A00FB90B9 /* ChatViewController+MessagesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB464152435825A00FB90B9 /* ChatViewController+MessagesDataSource.swift */; };
 		BFC1795024491073004F35AB /* AudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC1794F24491073004F35AB /* AudioRecorder.swift */; };
+		BFCEA856246E074B00FA2451 /* ChatViewController+ChatDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCEA855246E074B00FA2451 /* ChatViewController+ChatDelegate.swift */; };
 		BFCF841F246A1310004FA3B1 /* JoinInputBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCF841E246A1310004FA3B1 /* JoinInputBar.swift */; };
 		BFCF8423246A1326004FA3B1 /* JoinInputBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFCF8422246A1326004FA3B1 /* JoinInputBar.xib */; };
 		BFD23CCE236255A5005D4A1E /* NicknameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD23CCD236255A5005D4A1E /* NicknameViewController.swift */; };
@@ -2651,6 +2652,7 @@
 		BFB464132435823400FB90B9 /* ChatViewController+MessagesDisplayDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatViewController+MessagesDisplayDelegate.swift"; sourceTree = "<group>"; };
 		BFB464152435825A00FB90B9 /* ChatViewController+MessagesDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatViewController+MessagesDataSource.swift"; sourceTree = "<group>"; };
 		BFC1794F24491073004F35AB /* AudioRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorder.swift; sourceTree = "<group>"; };
+		BFCEA855246E074B00FA2451 /* ChatViewController+ChatDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatViewController+ChatDelegate.swift"; sourceTree = "<group>"; };
 		BFCF841E246A1310004FA3B1 /* JoinInputBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinInputBar.swift; sourceTree = "<group>"; };
 		BFCF8422246A1326004FA3B1 /* JoinInputBar.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = JoinInputBar.xib; sourceTree = "<group>"; };
 		BFD23CCD236255A5005D4A1E /* NicknameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewController.swift; sourceTree = "<group>"; };
@@ -5463,6 +5465,7 @@
 				BF1589212435F3E7007AF9EC /* ChatViewMessagesFlowLayout.swift */,
 				BFE6DBFB242DBA4A00E2E5B4 /* ChatViewController.swift */,
 				2F7309922463B1F000EF36F4 /* ChatViewController+CallStatus.swift */,
+				BFCEA855246E074B00FA2451 /* ChatViewController+ChatDelegate.swift */,
 				2F18DEEE24592F0E00E7EE27 /* ChatViewController+Menus.swift */,
 				2FBC74C7245BE74900BE513F /* ChatViewController+EmptyDataSet.swift */,
 				BFB464152435825A00FB90B9 /* ChatViewController+MessagesDataSource.swift */,
@@ -6512,6 +6515,7 @@
 				E81616731A8397B5002EFDD7 /* FolderLinkViewController.m in Sources */,
 				A8C262B01FA1D876006172CE /* MEGALocalImageView.m in Sources */,
 				E88E6D801CF355FA00C9AD9E /* UIColor+MNZCategory.m in Sources */,
+				BFCEA856246E074B00FA2451 /* ChatViewController+ChatDelegate.swift in Sources */,
 				41D21E601D01AEC3002E6296 /* CTAssetScrollView.m in Sources */,
 				836B956F2063EADE003E279B /* SearchInPdfViewController.m in Sources */,
 				B6A4A11421A256B0007E7EEC /* MEGABackgroundTaskOperation.m in Sources */,
