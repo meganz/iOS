@@ -86,7 +86,11 @@ class ChatViewController: MessagesViewController {
         
         if finishing {
             selectedEditingIndexPaths.removeAll()
+            navigationController?.setToolbarHidden(true, animated: true)
+        } else {
+            navigationController?.setToolbarHidden(false, animated: true)
         }
+        
         UIView.animate(withDuration: 0.25) {
             self.messagesCollectionView.collectionViewLayout.invalidateLayout()
         }
