@@ -1,11 +1,11 @@
 import MessageKit
 
 public protocol ChatViewMessagesLayoutDelegate: MessagesLayoutDelegate {
-    func collectionView(_ collectionView: MessagesViewController, layout collectionViewLayout: MessagesCollectionViewFlowLayout, shouldEditItemAt indexPath: IndexPath) -> Bool
+    func collectionView(_ collectionView: MessagesCollectionView, layout collectionViewLayout: MessagesCollectionViewFlowLayout, shouldEditItemAt indexPath: IndexPath) -> Bool
     
-    func collectionView(_ collectionView: MessagesViewController, layout collectionViewLayout: MessagesCollectionViewFlowLayout, editingOffsetForCellAt indexPath: IndexPath) -> CGFloat
+    func collectionView(_ collectionView: MessagesCollectionView, layout collectionViewLayout: MessagesCollectionViewFlowLayout, editingOffsetForCellAt indexPath: IndexPath) -> CGFloat
     
-    func collectionView(_ collectionView: MessagesViewController, editingOverlayAt indexPath: IndexPath, become selected:Bool)
+    func collectionView(_ collectionView: MessagesCollectionView, editingOverlayAt indexPath: IndexPath, become selected:Bool)
     
 }
 
@@ -43,15 +43,12 @@ class ChatViewMessagesFlowLayout: MessagesCollectionViewFlowLayout {
     }
     
     func configureMessageCellLayoutAttributes(_ layoutAttributes : UICollectionViewLayoutAttributes) {
-
-        let dataSource = messagesDataSource
-
-        if !messagesCollectionView.isTypingIndicatorHidden && (layoutAttributes.indexPath.section == dataSource.numberOfSections(in: messagesCollectionView)) {
-            layoutAttributes.frame = layoutAttributes.frame.offsetBy(dx:50, dy: 0)
+        guard let chatLayoutDelegate = messagesCollectionView.messagesLayoutDelegate as? ChatViewMessagesLayoutDelegate  else {
+            return
         }
-        let message = dataSource.messageForItem(at: layoutAttributes.indexPath, in: messagesCollectionView)
-        let isFromCurrentSender = dataSource.isFromCurrentSender(message: message)
-        layoutAttributes.frame = layoutAttributes.frame.offsetBy(dx:isFromCurrentSender ? 0 : 50, dy: 0)
+
+        let offset = chatLayoutDelegate.collectionView(messagesCollectionView, layout: self, editingOffsetForCellAt: layoutAttributes.indexPath)
+        layoutAttributes.frame = layoutAttributes.frame.offsetBy(dx:offset, dy: 0)
 
     }
     

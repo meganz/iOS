@@ -1,15 +1,21 @@
 import MessageKit
 
 extension ChatViewController: ChatViewMessagesLayoutDelegate {
-    func collectionView(_ collectionView: MessagesViewController, layout collectionViewLayout: MessagesCollectionViewFlowLayout, editingOffsetForCellAt indexPath: IndexPath) -> CGFloat {
-        return 0
+    func collectionView(_ collectionView: MessagesCollectionView, layout collectionViewLayout: MessagesCollectionViewFlowLayout, editingOffsetForCellAt indexPath: IndexPath) -> CGFloat {
+        let message = messages[indexPath.section]
+
+        guard !message.message.isManagementMessage else {
+            return 0
+        }
+        
+        return isFromCurrentSender(message: message) ? 0 : 50
     }
     
-    func collectionView(_ collectionView: MessagesViewController, editingOverlayAt indexPath: IndexPath, become selected: Bool) {
+    func collectionView(_ collectionView: MessagesCollectionView, editingOverlayAt indexPath: IndexPath, become selected: Bool) {
         
     }
     
-    func collectionView(_ collectionView: MessagesViewController, layout collectionViewLayout: MessagesCollectionViewFlowLayout, shouldEditItemAt indexPath: IndexPath) -> Bool {
+    func collectionView(_ collectionView: MessagesCollectionView, layout collectionViewLayout: MessagesCollectionViewFlowLayout, shouldEditItemAt indexPath: IndexPath) -> Bool {
         return true
     }
     
