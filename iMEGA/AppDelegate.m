@@ -13,7 +13,6 @@
 
 #import "Helper.h"
 #import "DevicePermissionsHelper.h"
-#import "MEGA-Swift.h"
 #import "MEGAApplication.h"
 #import "MEGAIndexer.h"
 #import "MEGALinkManager.h"
@@ -46,7 +45,6 @@
 #import "ProductDetailViewController.h"
 #import "UpgradeTableViewController.h"
 
-#import "MEGAChatCreateChatGroupRequestDelegate.h"
 #import "MEGAChatNotificationDelegate.h"
 #import "MEGAChatGenericRequestDelegate.h"
 #import "MEGACreateAccountRequestDelegate.h"
@@ -54,12 +52,13 @@
 #import "MEGAInviteContactRequestDelegate.h"
 #import "MEGALocalNotificationManager.h"
 #import "MEGALoginRequestDelegate.h"
+#import "MEGAProviderDelegate.h"
 #import "MEGAShowPasswordReminderRequestDelegate.h"
 #import "CameraUploadManager+Settings.h"
 #import "TransferSessionManager.h"
 #import "BackgroundRefreshPerformer.h"
 
-#import "MEGAProviderDelegate.h"
+#import "MEGA-Swift.h"
 
 @interface AppDelegate () <PKPushRegistryDelegate, UIApplicationDelegate, UNUserNotificationCenterDelegate, LTHPasscodeViewControllerDelegate, LaunchViewControllerDelegate, MEGAApplicationDelegate, MEGAChatDelegate, MEGAChatRequestDelegate, MEGAGlobalDelegate, MEGAPurchasePricingDelegate, MEGARequestDelegate, MEGATransferDelegate> {
     BOOL isAccountFirstLogin;
@@ -95,10 +94,13 @@
 
 @property (nonatomic, getter=wasAppSuspended) BOOL appSuspended;
 @property (nonatomic, getter=isUpgradeVCPresented) BOOL upgradeVCPresented;
+@property (nonatomic, getter=isAccountExpiredPresented) BOOL accountExpiredPresented;
 
 @property (strong, nonatomic) dispatch_queue_t indexSerialQueue;
 @property (strong, nonatomic) BackgroundRefreshPerformer *backgroundRefreshPerformer;
 @property (nonatomic, strong) MEGAProviderDelegate *megaProviderDelegate;
+
+@property (nonatomic) MEGAChatInit chatLastKnownInitState;
 
 @end
 
@@ -285,8 +287,9 @@
     MEGALogDebug(@"[App Lifecycle] Application did finish launching with options %@", launchOptions);
     
     [self.window makeKeyAndVisible];
-    if (application.applicationState == UIApplicationStateActive) {
+    if (application.applicationState != UIApplicationStateBackground) {
         UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+        [center removeAllPendingNotificationRequests];
         [center removeAllDeliveredNotifications];
     }
     
@@ -361,6 +364,7 @@
     [self application:application shouldHideWindows:NO];
     
     UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+    [center removeAllPendingNotificationRequests];
     [center removeAllDeliveredNotifications];
 }
 
@@ -378,6 +382,8 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     MEGALogDebug(@"[App Lifecycle] Application will terminate");
+    
+    [MEGASdkManager destroySharedMEGAChatSdk];
     
     [[SKPaymentQueue defaultQueue] removeTransactionObserver:[MEGAPurchase sharedInstance]];
     
@@ -490,9 +496,7 @@
                         }
                     } else {
                         MEGALogDebug(@"There is not a chat with %@, create the chat and inmediatelly perform the call", self.email);
-                        MEGAChatPeerList *peerList = [[MEGAChatPeerList alloc] init];
-                        [peerList addPeerWithHandle:userHandle privilege:MEGAChatRoomPrivilegeStandard];
-                        MEGAChatCreateChatGroupRequestDelegate *createChatGroupRequestDelegate = [[MEGAChatCreateChatGroupRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
+                        [MEGASdkManager.sharedMEGAChatSdk mnz_createChatRoomWithUserHandle:userHandle completion:^(MEGAChatRoom * _Nonnull chatRoom) {
                             self.chatRoom = chatRoom;
                             MEGAChatConnection chatConnection = [[MEGASdkManager sharedMEGAChatSdk] chatConnectionState:self.chatRoom.chatId];
                             MEGALogDebug(@"Chat %@ connection state: %ld", [MEGASdk base64HandleForUserHandle:self.chatRoom.chatId], (long)chatConnection);
@@ -500,7 +504,6 @@
                                 [self performCall];
                             }
                         }];
-                        [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:NO peers:peerList delegate:createChatGroupRequestDelegate];
                     }
                 }
             } if (personHandle.type == INPersonHandleTypeUnknown) {
@@ -923,6 +926,7 @@
 }
 
 - (void)copyDatabasesForExtensions {
+    MEGALogDebug(@"Copy databases for extensions");
     NSError *error;
     NSFileManager *fileManager = [NSFileManager defaultManager];
     
@@ -1121,6 +1125,53 @@ void uncaughtExceptionHandler(NSException *exception) {
     }
 }
 
+- (void)presentAccountExpiredAlertIfNeeded {
+    if (!self.isAccountExpiredPresented && ![UIApplication.mnz_visibleViewController isKindOfClass:BusinessExpiredViewController.class]) {
+        NSString *alertTitle = AMLocalizedString(@"Your business account is expired", @"A dialog title shown to users when their business account is expired.");
+        NSString *alertMessage;
+        if (MEGASdkManager.sharedMEGASdk.isMasterBusinessAccount) {
+            alertMessage = AMLocalizedString(@"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser.", @"Details shown when a Business account is expired. Details for the administrator of the Business account");
+        } else {
+            alertMessage = [[[[AMLocalizedString(@"Your account is currently [B]suspended[/B]. You can only browse your data.", @"A dialog message which is shown to sub-users of expired business accounts.") stringByReplacingOccurrencesOfString:@"[B]" withString:@""] stringByReplacingOccurrencesOfString:@"[/B]" withString:@""] stringByAppendingString:@"\n\n"] stringByAppendingString:AMLocalizedString(@"Contact your business account administrator to resolve the issue and activate your account.", @"A dialog message which is shown to sub-users of expired business accounts.")];
+        }
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:alertTitle message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"dismiss", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            self.accountExpiredPresented = NO;
+        }]];
+        
+        self.accountExpiredPresented = YES;
+        [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
+    }
+}
+
+- (void)presentBusinessExpiredViewIfNeeded {
+    if (MEGASdkManager.sharedMEGASdk.businessStatus == BusinessStatusGracePeriod) {
+        if (MEGASdkManager.sharedMEGASdk.isMasterBusinessAccount) {
+            CustomModalAlertViewController *customModalAlertVC = CustomModalAlertViewController.alloc.init;
+            customModalAlertVC.modalPresentationStyle = UIModalPresentationOverFullScreen;
+            customModalAlertVC.image = [UIImage imageNamed:@"paymentOverdue"];
+            customModalAlertVC.viewTitle = AMLocalizedString(@"Something went wrong", @"");
+            customModalAlertVC.detail = AMLocalizedString(@"There has been a problem with your last payment. Please access MEGA using a desktop browser for more information.", @"When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information");
+            customModalAlertVC.dismissButtonTitle = AMLocalizedString(@"dismiss", @"");
+            __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;
+            customModalAlertVC.dismissCompletion = ^{
+                [weakCustom dismissViewControllerAnimated:YES completion:^{
+                    if (![self.window.rootViewController isKindOfClass:MainTabBarController.class] && ![self.window.rootViewController isKindOfClass:InitialLaunchViewController.class]) {
+                        [self showMainTabBar];
+                    }
+                }];
+            };
+            
+            [UIApplication.mnz_presentingViewController presentViewController:customModalAlertVC animated:YES completion:nil];
+        }
+    }
+    
+    if (MEGASdkManager.sharedMEGASdk.businessStatus == BusinessStatusExpired) {
+        BusinessExpiredViewController *businessStatusVC = BusinessExpiredViewController.alloc.init;
+        [UIApplication.mnz_presentingViewController presentViewController:businessStatusVC animated:YES completion:nil];
+    }
+}
+
 #pragma mark - LTHPasscodeViewControllerDelegate
 
 - (void)passcodeWasEnteredSuccessfully {
@@ -1266,6 +1317,9 @@ void uncaughtExceptionHandler(NSException *exception) {
 #pragma mark - LaunchViewControllerDelegate
 
 - (void)setupFinished {
+    if (MEGASdkManager.sharedMEGASdk.businessStatus == BusinessStatusGracePeriod &&             [UIApplication.mnz_presentingViewController isKindOfClass:CustomModalAlertViewController.class]) {
+        return;
+    }
     [self showMainTabBar];
 }
 
@@ -1408,6 +1462,10 @@ void uncaughtExceptionHandler(NSException *exception) {
             break;
         }
             
+        case EventBusinessStatus:
+            [self presentBusinessExpiredViewIfNeeded];
+            break;
+            
         case EventMiscFlagsReady:
             [self showAddPhoneNumberIfNeeded];
             break;
@@ -1529,6 +1587,10 @@ void uncaughtExceptionHandler(NSException *exception) {
                 break;
             }
                 
+            case MEGAErrorTypeApiEBusinessPastDue:
+                [self presentAccountExpiredAlertIfNeeded];
+                break;
+                
             default:
                 break;
         }
@@ -1635,6 +1697,8 @@ void uncaughtExceptionHandler(NSException *exception) {
                 user = me;
             } else if (request.email.length > 0) {
                 user = [api contactForEmail:request.email];
+            } else if (request.email == nil) {
+                user = me;
             }
                         
             if (user) {
@@ -1743,6 +1807,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 - (void)onChatInitStateUpdate:(MEGAChatSdk *)api newState:(MEGAChatInit)newState {
     MEGALogInfo(@"onChatInitStateUpdate new state: %td", newState);
+    self.chatLastKnownInitState = newState;
     if (newState == MEGAChatInitError) {
         [[MEGASdkManager sharedMEGAChatSdk] logout];
     }
@@ -1768,6 +1833,15 @@ void uncaughtExceptionHandler(NSException *exception) {
         [MEGAReachabilityManager sharedManager].chatRoomListState = MEGAChatRoomListStateOnline;
     } else if (newState >= MEGAChatConnectionLogging) {
         [MEGAReachabilityManager sharedManager].chatRoomListState = MEGAChatRoomListStateInProgress;
+    }
+}
+
+- (void)onChatListItemUpdate:(MEGAChatSdk *)api item:(MEGAChatListItem *)item {
+    if (item.changes == 0 && self.chatLastKnownInitState == MEGAChatStatusOnline) {
+        MEGALogDebug(@"New chat room, invalidate NSE cache");
+        [self copyDatabasesForExtensions];
+        NSUserDefaults *sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];
+        [sharedUserDefaults setBool:YES forKey:MEGAInvalidateNSECache];
     }
 }
 
@@ -1859,6 +1933,10 @@ void uncaughtExceptionHandler(NSException *exception) {
                 [NSNotificationCenter.defaultCenter postNotificationName:MEGAStorageOverQuotaNotification object:self];
                 break;
             }
+                
+            case MEGAErrorTypeApiEBusinessPastDue:
+                [self presentAccountExpiredAlertIfNeeded];
+                break;
                 
             default: {
                 if (error.type != MEGAErrorTypeApiESid && error.type != MEGAErrorTypeApiESSL && error.type != MEGAErrorTypeApiEExist && error.type != MEGAErrorTypeApiEIncomplete) {

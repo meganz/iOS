@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "micOff.png",
+      "filename" : "muteON.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "micOff@2x.png",
+      "filename" : "muteON@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "micOff@3x.png",
+      "filename" : "muteON@3x.png",
       "scale" : "3x"
     }
   ],

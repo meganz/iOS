@@ -27,4 +27,11 @@
 
 - (void)mnz_moveItemAtPath:(NSString *)srcPath toPath:(NSString *)dstPath;
 
+#pragma mark - Utils
+
+/** YES if there are files or folders in Documents directory, otherwise NO
+ * NOTE: temporal files (.mega) and Inbox are not having into account
+ */
+- (BOOL)mnz_existsOfflineFiles;
+
 @end

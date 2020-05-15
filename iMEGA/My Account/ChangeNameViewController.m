@@ -10,8 +10,6 @@
 
 @interface ChangeNameViewController () <UITextFieldDelegate, MEGARequestDelegate>
 
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
-
 @property (weak, nonatomic) IBOutlet UITextField *firstNameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *lastNameTextField;
 
@@ -29,7 +27,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.cancelBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
     self.navigationItem.title = AMLocalizedString(@"changeName", @"Button title that allows the user change his name");
     
     MOUser *moUser = [[MEGAStore shareInstance] fetchUserWithUserHandle:[[[MEGASdkManager sharedMEGASdk] myUser] handle]];
@@ -84,13 +81,6 @@
 }
 
 #pragma mark - IBActions
-
-- (IBAction)cancelAction:(UIBarButtonItem *)sender {
-    [self.firstNameTextField resignFirstResponder];
-    [self.lastNameTextField resignFirstResponder];
-    
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
 
 - (IBAction)saveTouchUpInside:(UIBarButtonItem *)sender {
     [self.firstNameTextField resignFirstResponder];
@@ -184,7 +174,7 @@
             }
             
             [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"youHaveSuccessfullyChangedYourProfile", @"Success message when changing profile information.")];
-            [self dismissViewControllerAnimated:YES completion:nil];
+            [self.navigationController popViewControllerAnimated:YES];
             break;
         }
             

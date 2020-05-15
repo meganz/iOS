@@ -102,7 +102,7 @@
             
             [Helper showExportMasterKeyInView:self completion:^{
                 if (weakSelf.isLoggingOut) {
-                    [Helper logoutAfterPasswordReminder];
+                    [MEGASdkManager.sharedMEGASdk logout];
                 }
             }];
         }
@@ -116,7 +116,7 @@
     
     [self dismissViewControllerAnimated:YES completion:^{
         if (self.isLoggingOut) {
-            [Helper logoutAfterPasswordReminder];
+            [MEGASdkManager.sharedMEGASdk logout];
         }
     }];
 }
