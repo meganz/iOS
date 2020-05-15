@@ -10,15 +10,7 @@ extension ChatViewController: ChatViewMessagesLayoutDelegate {
         
         return isFromCurrentSender(message: message) ? 0 : 50
     }
-    
-    func collectionView(_ collectionView: MessagesCollectionView, editingOverlayAt indexPath: IndexPath, become selected: Bool) {
-        if selected {
-            selectedEditingIndexPaths.insert(indexPath)
-        } else {
-            selectedEditingIndexPaths.remove(indexPath)
-        }
-    }
-    
+
     func collectionView(_ collectionView: MessagesCollectionView, layout collectionViewLayout: MessagesCollectionViewFlowLayout, shouldEditItemAt indexPath: IndexPath) -> Bool {
         let message = messages[indexPath.section]
         return !message.message.isManagementMessage
@@ -46,5 +38,19 @@ extension ChatViewController: ChatViewMessagesLayoutDelegate {
         }
 
         return .zero
+    }
+}
+
+extension ChatViewController: MessagesEditCollectionOverlayViewDelegate {
+    func editOverlayView(_ editOverlayView: MessageEditCollectionOverlayView, activated: Bool) {
+        guard let indexPath = editOverlayView.indexPath else {
+            return
+        }
+        
+        if activated {
+            selectedEditingIndexPaths.insert(indexPath)
+        } else {
+            selectedEditingIndexPaths.remove(indexPath)
+        }        
     }
 }

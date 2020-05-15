@@ -411,7 +411,13 @@ class ChatViewController: MessagesViewController {
         
         switch kind {
         case "kCollectionElementKindEditOverlay":
-            return collectionView.dequeueReusableSupplementaryView(ofKind: "kCollectionElementKindEditOverlay", withReuseIdentifier: MessageEditCollectionOverlayView.reuseIdentifier, for: indexPath)
+            guard let overlayView = collectionView.dequeueReusableSupplementaryView(ofKind: "kCollectionElementKindEditOverlay", withReuseIdentifier: MessageEditCollectionOverlayView.reuseIdentifier, for: indexPath) as? MessageEditCollectionOverlayView else {
+                return super.collectionView(collectionView, viewForSupplementaryElementOfKind: kind, at: indexPath)
+            }
+            overlayView.delegate = self
+            overlayView.indexPath = indexPath
+            overlayView.configureDisplaying(isActive: selectedEditingIndexPaths.contains(indexPath))
+            return overlayView
         default:
             break
         }

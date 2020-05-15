@@ -5,7 +5,7 @@ public protocol ChatViewMessagesLayoutDelegate: MessagesLayoutDelegate {
     
     func collectionView(_ collectionView: MessagesCollectionView, layout collectionViewLayout: MessagesCollectionViewFlowLayout, editingOffsetForCellAt indexPath: IndexPath) -> CGFloat
     
-    func collectionView(_ collectionView: MessagesCollectionView, editingOverlayAt indexPath: IndexPath, become selected:Bool)
+//    func collectionView(_ collectionView: MessagesCollectionView, editingOverlayAt indexPath: IndexPath, become selected:Bool)
     
 }
 
