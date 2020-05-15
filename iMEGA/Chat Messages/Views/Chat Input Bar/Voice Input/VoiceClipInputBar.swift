@@ -66,11 +66,10 @@ class VoiceClipInputBar: UIView {
         self.recordTimeLabel.isHidden = false
         
         do {
-            //FIXME: - handle the error cases
             let success = try audioRecorder.start()
-            print("audio start succeeded: \(success)")
+            MEGALogDebug("started audio recording successfully: \(success)")
         } catch {
-            print(error.localizedDescription)
+            MEGALogDebug("error starting the audio recorder \(error.localizedDescription)")
         }
         
         audioRecorder.updateHandler = {[weak self] timeString, level in
@@ -86,22 +85,20 @@ class VoiceClipInputBar: UIView {
     @discardableResult
     func stopRecording(_ ignoreFile: Bool = false) -> String? {
         do {
-            //FIXME: - handle the error cases
-            if let path = try? audioRecorder.stopRecording() {
-                let audioPlayer = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
-                if audioPlayer.duration > 1.0 && !ignoreFile {
-                    UINotificationFeedbackGenerator().notificationOccurred(.success)
-                    return path
-                } else {
-                    do {
-                        try FileManager.default.removeItem(atPath: path)
-                    } catch {
-                        print(error.localizedDescription)
-                    }
+            let path = try audioRecorder.stopRecording()
+            let audioPlayer = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
+            if audioPlayer.duration > 1.0 && !ignoreFile {
+                UINotificationFeedbackGenerator().notificationOccurred(.success)
+                return path
+            } else {
+                do {
+                    try FileManager.default.removeItem(atPath: path)
+                } catch {
+                    MEGALogDebug("error removing audio recorded file with error: \(error.localizedDescription)")
                 }
             }
         } catch {
-            //
+            MEGALogDebug("error stopping the audio recorder \(error.localizedDescription)")
         }
         
         UINotificationFeedbackGenerator().notificationOccurred(.error)
