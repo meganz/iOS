@@ -6,7 +6,7 @@ extension MEGAChatRoom {
         let userHandle = peerHandle(at: index)
         return userNickname(forUserHandle: userHandle)
     }
-    
+
     func userNickname(forUserHandle userHandle: UInt64) -> String? {
         let user = MEGAStore.shareInstance().fetchUser(withUserHandle: userHandle)
         return user?.nickname
@@ -14,12 +14,12 @@ extension MEGAChatRoom {
     
     @objc func userDisplayName(forUserHandle userHandle: UInt64) -> String? {
         let user = MEGAStore.shareInstance().fetchUser(withUserHandle: userHandle)
-        
+
         if let userName = user?.displayName,
             userName.count > 0 {
             return userName
         }
-        
+
         return self.peerFullname(byHandle: userHandle)
     }
 

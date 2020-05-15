@@ -417,26 +417,18 @@ static NSString *nodeToPresentBase64Handle;
 }
 
 + (void)showLinkNotValid {
-    [MEGALinkManager showEmptyStateViewWithImageNamed:@"invalidFileLink" title:AMLocalizedString(@"linkNotValid", @"Message shown when the user clicks on an link that is not valid") text:@""];
-    
-    [MEGALinkManager resetLinkAndURLType];
-}
-
-+ (void)showEmptyStateViewWithImageNamed:(NSString *)imageName title:(NSString *)title text:(NSString *)text {
     UnavailableLinkView *unavailableLinkView = [[[NSBundle mainBundle] loadNibNamed:@"UnavailableLinkView" owner:self options:nil] firstObject];
-    unavailableLinkView.imageView.image = [UIImage imageNamed:imageName];
-    unavailableLinkView.imageView.contentMode = UIViewContentModeScaleAspectFit;
-    unavailableLinkView.titleLabel.text = title;
-    unavailableLinkView.textLabel.text = text;
+    [unavailableLinkView configureInvalidQueryLink];
     unavailableLinkView.frame = [[UIScreen mainScreen] bounds];
     
     UIViewController *viewController = [[UIViewController alloc] init];
     [viewController.view addSubview:unavailableLinkView];
-    viewController.navigationItem.title = title;
+    viewController.navigationItem.title = AMLocalizedString(@"linkNotValid", @"Message shown when the user clicks on an link that is not valid");
     
     MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:viewController];
     [navigationController addRightCancelButton];
     [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:nil];
+    [MEGALinkManager resetLinkAndURLType];
 }
 
 + (void)presentConfirmViewWithURLType:(URLType)urlType link:(NSString *)link email:(NSString *)email {

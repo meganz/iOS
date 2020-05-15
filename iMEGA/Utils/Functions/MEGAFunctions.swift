@@ -1,4 +1,3 @@
-
 import Foundation
 
 func AMLocalizedString(_ key: String, _ comment: String? = nil) -> String {

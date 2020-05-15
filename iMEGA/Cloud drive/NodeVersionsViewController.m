@@ -159,7 +159,7 @@
             
             [self.navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
         } else {
-            [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO];
+            [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO fileLink:nil];
         }
     }
 }
