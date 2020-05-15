@@ -578,8 +578,6 @@
 "removeUserMessage"="Apakah anda yakin ingin menghapus %@ dari daftar kontak anda?";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
 "removeMultipleUsersMessage"="Anda yakin ingin menghapus %d pengguna dari daftar kontak anda?";
-/* Success message shown when the selected contacts have been removed */
-"removedContacts"="%d kontak telah terhapus";
 /* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
 "removedContact"="Kontak %@ telah terhapus!";
 /* Label shown when a contact request is pending */
@@ -856,7 +854,7 @@
 /* Hint text where the user have to re-write the new email to confirm it */
 "confirmNewEmail"="Konfirmasi email baru";
 /* The title of the alert dialog to change the email associated to an account. */
-"changeEmail"="Ganti email";
+"Change Email"="Ubah Email";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
 "oldAndNewEmailMatch"="Email baru dan lama harus cocok";
 /* Error message shown when you have not written the same email when confirming a new one */
@@ -993,10 +991,12 @@
 "logoutLabel"="Keluar";
 /* String shown when you are logging out of your account. */
 "loggingOut"="Sedang keluar";
-/* Button to remove avatar. Try to keep the text short (as in English) */
-"removeAvatar"="Hapus avatar";
-/* button that allows the user the change his avatar */
-"changeAvatar"="Ganti Avatar";
+/* Button to remove some photo, e.g. avatar photo. Try to keep the text short (as in English) */
+"Remove Photo"="Remove Photo";
+/* Button that allows the user the change a photo, e.g. his avatar photo */
+"Change Photo"="Change Photo";
+/* Button that allows the user the add a photo, e.g avatar photo */
+"Add Photo"="Add Photo";
 /* Button title that allows the user change his name */
 "changeName"="Ganti Nama";
 /* Success message when changing profile information. */
@@ -1037,8 +1037,6 @@
 "cloudDriveIsFull"="[S]Cloud Drive Anda penuh.[/S] [A]Tingkatkan sekarang[/A] ke akun PRO dan dapatkan [S]hingga %@ TB (%@ GB) [/S] ruang penyimpanan cloud.";
 /* Storage related with the MEGA PRO account level you can subscribe */
 "productSpace"="Gudang";
-/* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
-"transferQuota"="Kuota Transfer";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
 "limited"="Terbatas";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
@@ -1273,8 +1271,6 @@
 "removePreview"="Hapus preview";
 /* */
 "warning"="Peringatan";
-/* Alert message shown when the user perform logout and has files in the Offline directory */
-"allFilesSavedForOfflineWillBeDeletedFromYourDevice"="Semua file yang disimpan untuk Offline akan dihapus dari perangkat Anda. Lanjutkan keluar?";
 /* Title shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_title"="Kuota transfer tidak cukup";
 /* Description shown when you almost had used your available transfer quota. */
@@ -1766,14 +1762,6 @@
 "Thumbnail view"="Thumbnail view";
 /* Message to inform the local user is having a bad quality network with someone in the current group call */
 "Poor connection."="Koneksi lemah.";
-/* Message shown in a chat room when there is an active group call */
-"There is an active group call. Tap to join."="Ada panggilan grup aktif. Ketuk untuk bergabung.";
-/* Message shown in a chat room for a group call in progress displaying the duration of the call */
-"Touch to return to call %@"="Sentuh untuk kembali ke panggilan %@";
-/* Menu item to change from grid view to list view */
-"List view"="List view";
-/* Menu item to change from list view to grid view */
-"Thumbnail view"="Thumbnail view";
 /* There are no notifications to display. */
 "No notifications"="Tidak ada notifikasi";
 /* The header of a notification related to payments */
@@ -1998,6 +1986,18 @@
 "Hi, Have encrypted conversations on Mega with me and get 50GB free storage."="Hai! Miliki percakapan aman di MEGA dengan saya dan dapatkan penyimpanan gratis hingga 50GB.";
 /* Destination folder name of chat files */
 "My chat files"="File obrolan saya";
+/* Title of the section about the plan in the storage tab in My Account Section */
+"Plan"="Plan";
+/* */
+"If you lose this Recovery key and forget your password, [B]all your files, folders and messages will be inaccessible, even by MEGA[/B]."="Jika Anda kehilangan kunci Pemulihan ini dan lupa kata sandi Anda, [B]semua file, folder, dan pesan Anda tidak dapat diakses, bahkan oleh MEGA[/B].";
+/* */
+"Business"="Bisnis";
+/* */
+"Administrator"="Administrator";
+/* */
+"Transfer"="Transfer";
+/* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
+"You cannot remove %1$s as a contact because they are part of your Business account."="Anda tidak dapat menghapus %1$s sebagai kontak karena itu adalah bagian dari akun Bisnis anda.";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
 "Require passcode"="Membutuhkan kode sandi";
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
@@ -2008,6 +2008,22 @@
 "This folder has been the subject of a takedown notice."="Folder ini telah menjadi subjek pencopotan.";
 /* File Manager -> Context menu item for taken down file or folder, for dispute takedown. */
 "Dispute Takedown"="Penghapusan Perselisihan";
+/* Label presented to Admins that full management of the business is only available in a desktop web browser */
+"User management is only available from a desktop web browser."="Manajemen pengguna hanya tersedia dari browser web desktop.";
+/* When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information */
+"There has been a problem with your last payment. Please access MEGA using a desktop browser for more information."="Ada masalah dengan pembayaran terakhir anda. Silakan akses MEGA menggunakan browser desktop untuk informasi lebih lanjut.";
+/* A dialog title shown to users when their business account is expired. */
+"Your business account is expired"="Akun bisnis Anda kedaluwarsa";
+/* Details shown when a Business account is expired. Details for the administrator of the Business account */
+"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="Terjadi masalah saat memproses pembayaran anda. MEGA terbatas hanya untuk melihat sampai masalah ini telah diperbaiki di browser web desktop.";
+/* A dialog message which is shown to sub-users of expired business accounts. */
+"Your account is currently [B]suspended[/B]. You can only browse your data."="Akun Anda saat ini [B]ditangguhkan[/B]. Anda hanya dapat menelusuri data Anda.";
+/* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
+"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="Meskipun MEGA tidak memiliki akses ke data anda, administrator organisasi anda memiliki kemampuan untuk mengontrol dan melihat Unggahan Kamera di akun pengguna anda";
+/* */
+"Something went wrong"="Ada yang salah";
+/* Button title that goes to the section Usage where you can see how your MEGA space is used */
+"Usage"="Pemakaian";
 /* Title of the "Links" Shared Items. */
 "Links"="Tautan";
 /* Title for empty state view of "Links" in Shared Items. */
@@ -2016,6 +2032,8 @@
 "Manage Share"="Kelola berbagi";
 /* Title of the screen that shows the users with whom the user can share a folder */
 "Share with"="Berbagi dengan";
+/* A dialog message which is shown to sub-users of expired business accounts. */
+"Contact your business account administrator to resolve the issue and activate your account."="Hubungi administrator akun bisnis Anda untuk menyelesaikan masalah dan aktifkan akun Anda.";
 /* Chat Notifications DND: Option that does not deactivate DND automatically */
 "Until I Turn it On Again"="Sampai aku menyalakannya lagi";
 /* Chat Notifications DND: Option that deactivates DND after 30 minutes */
@@ -2066,6 +2084,12 @@
 "Alias/ Nickname"="Alias / Nama Panggilan";
 /* Error message shown when the user tries to open a file with an unsupported encoding */
 "It was not possible to obtain the content of this file, as it is not encoded in either UTF-8 or ISO/IEC 8859-1."="Tidak mungkin mendapatkan konten file ini, karena tidak dikodekan dalam UTF-8 atau ISO / IEC 8859-1.";
+/* Business expired account Overdue payment page header. */
+"Payment overdue"="Pembayaran lewat jatuh tempo";
+/* */
+"Active"="Aktif";
+/* title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts */
+"Role:"="Wewenang:";
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
 "Include location tags"="Sertakan tag lokasi";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
@@ -2100,6 +2124,8 @@
 "Your account is already verified"="Akun anda sudah diverifikasi";
 /* Place holder for enter mobile number field */
 "Your phone number"="Nomor telepon Anda";
+/* Text related to verified phone number. Used as title or cell description.  */
+"Phone Number"="Phone Number";
 /* Label tell user to enter received txt to below input boxes */
 "Please type the verification code sent to"="Silakan ketik kode verifikasi yang dikirim ke";
 /* Text message to remind user to resend verification code */
@@ -2148,9 +2174,21 @@
 "File Type"="Jenis File";
 /* export Quality Option for Scan document */
 "best"="Terbaik";
+/* Error message appears to sub-users of a business account when they try to login and they are disabled. */
+"Your account has been disabled by your administrator. Please contact your business account administrator for further details."="Akun Anda telah dinonaktifkan oleh administrator Anda. Anda dapat menghubungi administrator akun bisnis Anda untuk rincian lebih lanjut.";
+/* An error message which appears to sub-users of a business account when they try to login and they are deleted. */
+"Your account has been removed by your administrator. Please contact your business account administrator for further details."="Akun Anda telah dihapus oleh administrator Anda. Silakan hubungi administrator akun bisnis Anda untuk rincian lebih lanjut.";
 /* Description of why the user should give permission to contacts */
 "Easily discover contacts from your address book on MEGA."="Temukan kontak dari buku alamat Anda dengan mudah di MEGA.";
 /* Detailed description of why the user should give permission to contacts */
 "MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA tidak akan menggunakan data ini untuk tujuan lain apa pun dan tidak akan pernah berinteraksi dengan kontak anda tanpa persetujuan anda.";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="Masukan nama grup";
+/* Warning message to alert user about logout in My Account section if has transfers in progress. */
+"When you logout, ongoing transfers will be cancelled."="Saat Anda keluar, transfer yang sedang berlangsung akan dibatalkan.";
+/* Warning message to alert user about logout in My Account section if has offline files. */
+"When you logout, files from your Offline section will be deleted from your device."="Saat Anda keluar, file dari bagian Offline Anda akan dihapus dari perangkat Anda.";
+/* Warning message to alert user about logout in My Account section if has offline files and transfers in progress. */
+"When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled."="Saat Anda keluar, file dari bagian Offline Anda akan dihapus dari perangkat Anda dan transfer yang sedang berlangsung akan dibatalkan.";
+/* Default title of an empty chat. */
+"Chat created on %s1"="Chat dibuat pada %s1";

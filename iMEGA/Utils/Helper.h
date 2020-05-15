@@ -104,7 +104,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (void)logout;
 + (void)logoutFromConfirmAccount;
-+ (void)logoutAfterPasswordReminder;
 + (void)clearEphemeralSession;
 + (void)clearSession;
 + (void)deletePasscode;

@@ -23,6 +23,7 @@ extern NSString * const MEGANodesCurrentNotification;
 extern NSString * const MEGAStorageOverQuotaNotification;
 extern NSString * const MEGAStorageEventDidChangeNotification;
 extern NSString * const MEGAMediaInfoReadyNotification;
+extern NSString * const MEGAOpenChatRoomFromPushNotification;
 
 #pragma mark - global notification keys
 
@@ -102,6 +103,10 @@ extern NSString * const MEGALastPublicTimestampAccessed;
 #pragma mark - MEGA Contact Nickname change Notification
 
 extern NSString * const MEGContactNicknameChangeNotification;
+
+#pragma mark - Notification Service Extension
+
+extern NSString * const MEGAInvalidateNSECache;
 
 #pragma mark - DB name
 
