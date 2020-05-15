@@ -18,7 +18,7 @@ class ChatViewController: MessagesViewController {
     var chatInputBar: ChatInputBar?
     var editMessage: ChatMessage?
     var addToChatViewController: AddToChatViewController?
-    var editingIndexPaths: [NSIndexPath]?
+    var selectedEditingIndexPaths: Set<NSIndexPath>?
 
     // transfer
     var totalBytesToUpload = 0.0

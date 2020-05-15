@@ -1,6 +1,19 @@
 import MessageKit
 
-extension ChatViewController: MessagesLayoutDelegate {
+extension ChatViewController: ChatViewMessagesLayoutDelegate {
+    func collectionView(_ collectionView: MessagesViewController, layout collectionViewLayout: MessagesCollectionViewFlowLayout, editingOffsetForCellAt indexPath: IndexPath) -> CGFloat {
+        return 0
+    }
+    
+    func collectionView(_ collectionView: MessagesViewController, editingOverlayAt indexPath: IndexPath, become selected: Bool) {
+        
+    }
+    
+    func collectionView(_ collectionView: MessagesViewController, layout collectionViewLayout: MessagesCollectionViewFlowLayout, shouldEditItemAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+
 
     func cellTopLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
         return isDateLabelVisible(for: indexPath) ? 30.0 : 0.0
