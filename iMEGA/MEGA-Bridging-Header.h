@@ -60,6 +60,7 @@
 #import "SendToViewController.h"
 #import "MainTabBarController.h"
 #import "MEGAImagePickerController.h"
+#import "SendToViewController.h"
 #import "OnboardingViewController.h"
 #import "MEGANode.h"
 #import "UIImageView+MNZCategory.h"

@@ -191,10 +191,10 @@
     
     if (self.displayMode == DisplayModeFolderLink) {
         [actions addObject:[self actionImport]];
+        [actions addObject:[self actionSendToChat]];
         if (self.node.isFile && (self.node.name.mnz_imagePathExtension || (self.node.name.mnz_videoPathExtension && self.node.mnz_isPlayable))) {
             [actions addObject:[self actionSaveToPhotos]];
         }
-        [actions addObject:[self actionDownload]];
         if (self.node.isFile) {
             [actions addObject:[self actionOpen]];
         } else {
@@ -203,11 +203,19 @@
         }
     } else if (self.displayMode == DisplayModeFileLink) {
         [actions addObject:[self actionImport]];
+        [actions addObject:[self actionSendToChat]];
         if (self.node.name.mnz_imagePathExtension || (self.node.name.mnz_videoPathExtension && self.node.mnz_isPlayable)) {
             [actions addObject:[self actionSaveToPhotos]];
         }
-        [actions addObject:[self actionDownload]];
         [actions addObject:[self actionShare]];
+        if ([self.node.name.pathExtension.lowercaseString isEqualToString:@"pdf"]) {
+            [actions addObject:[self actionThumbnailPdfView]];
+        }
+    } else if (self.displayMode == DisplayModeNodeInsideFolderLink) {
+        [actions addObject:[self actionImport]];
+        if (self.node.name.mnz_imagePathExtension || (self.node.name.mnz_videoPathExtension && self.node.mnz_isPlayable)) {
+            [actions addObject:[self actionSaveToPhotos]];
+        }
     } else if (self.displayMode == DisplayModeChatSharedFiles) {
         [actions addObject:[self actionForward]];
         if (self.node.name.mnz_imagePathExtension || (self.node.name.mnz_videoPathExtension && self.node.mnz_isPlayable)) {
@@ -418,7 +426,7 @@
 }
 
 - (MegaActionNode *)actionImport {
-    return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"import", nil) iconName: @"import" andActionType:MegaNodeActionTypeImport];
+    return [MegaActionNode.alloc initWithTitle:AMLocalizedString(@"Import to Cloud Drive", @"Button title that triggers the importing link action") iconName: @"import" andActionType:MegaNodeActionTypeImport];
 }
 
 - (MegaActionNode *)actionOpen {
@@ -447,6 +455,10 @@
 
 - (MegaActionNode *)actionSendToChat {
     return [[MegaActionNode alloc] initWithTitle:AMLocalizedString(@"sendToContact", @"") iconName:@"sendMessage" andActionType:MegaNodeActionTypeSendToChat];
+}
+
+- (MegaActionNode *)actionThumbnailPdfView {
+    return [MegaActionNode.alloc initWithTitle:AMLocalizedString(@"Thumbnail view", @"Text shown for switching from list view to thumbnail view.") iconName:@"thumbnailsView" andActionType:MegaNodeActionTypeThumbnailView];
 }
 
 - (MegaActionNode *)actionForward {

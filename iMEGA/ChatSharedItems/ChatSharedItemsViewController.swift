@@ -393,12 +393,11 @@ extension ChatSharedItemsViewController: UITableViewDelegate {
             } else {
                 if chatRoom.isPreview {
                     guard let authNode = MEGASdkManager.sharedMEGASdk().authorizeChatNode(selectedNode, cauth: chatRoom.authorizationToken) else { return }
-                    authNode.mnz_open(in: navigationController, folderLink: false)
+                    authNode.mnz_open(in: navigationController, folderLink: false, fileLink: nil)
                 } else {
-                    selectedNode.mnz_open(in: navigationController, folderLink: false)
+                    selectedNode.mnz_open(in: navigationController, folderLink: false, fileLink: nil)
                 }
             }
-            
         }
     }
     
