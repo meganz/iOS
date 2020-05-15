@@ -8,9 +8,9 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MessageEditCollectionOverlayView" customModule="MEGA" customModuleProvider="target"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionReusableView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MessageEditCollectionOverlayView" id="U6b-Vx-4bR">
+        <collectionReusableView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MessageEditCollectionOverlayView" id="U6b-Vx-4bR" customClass="MessageEditCollectionOverlayView" customModule="MEGA" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
@@ -22,12 +22,13 @@
                     </constraints>
                 </imageView>
             </subviews>
+            <gestureRecognizers/>
             <constraints>
                 <constraint firstItem="g4T-tM-XEl" firstAttribute="centerY" secondItem="U6b-Vx-4bR" secondAttribute="centerY" id="KVS-st-Rno"/>
                 <constraint firstItem="g4T-tM-XEl" firstAttribute="leading" secondItem="U6b-Vx-4bR" secondAttribute="leading" constant="10" id="gLX-eI-JEQ"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="VXr-Tz-HHm"/>
-            <point key="canvasLocation" x="132" y="83"/>
+            <point key="canvasLocation" x="-64" y="-102"/>
         </collectionReusableView>
     </objects>
     <resources>
