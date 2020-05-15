@@ -84,7 +84,7 @@
                                                     </subviews>
                                                 </stackView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Orb-rk-RbC">
-                                                    <rect key="frame" x="354" y="0.0" width="60" height="60"/>
+                                                    <rect key="frame" x="414" y="0.0" width="0.0" height="60"/>
                                                     <subviews>
                                                         <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n9Y-RE-TXN">
                                                             <rect key="frame" x="0.0" y="0.0" width="50" height="60"/>
@@ -127,7 +127,7 @@
                                                                 <constraint firstAttribute="width" relation="lessThanOrEqual" constant="50" id="xbo-ub-J4E"/>
                                                             </constraints>
                                                         </view>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5i9-h8-VSE">
+                                                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5i9-h8-VSE">
                                                             <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="60" id="6pC-h0-eBh"/>
@@ -176,6 +176,7 @@
                                         <inset key="separatorInset" minX="60" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <connections>
                                             <outlet property="avatarImageView" destination="bSg-qg-OLn" id="HO4-Jk-MWX"/>
+                                            <outlet property="contactDetailsButton" destination="5i9-h8-VSE" id="oty-QF-p65"/>
                                             <outlet property="contactNewLabel" destination="Kay-Gx-1a2" id="0oz-qD-fBg"/>
                                             <outlet property="contactNewLabelView" destination="BHB-SU-C4S" id="6mD-7U-onn"/>
                                             <outlet property="contactNewView" destination="n9Y-RE-TXN" id="gTJ-4g-urk"/>
@@ -927,13 +928,6 @@
                                         <gestureRecognizers/>
                                         <variation key="heightClass=compact" hidden="YES"/>
                                     </view>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="DUY-Qz-ows">
-                                        <rect key="frame" x="382" y="50" width="12" height="12"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="12" id="Fzj-SB-QE7"/>
-                                            <constraint firstAttribute="width" constant="12" id="kDP-w5-kyg"/>
-                                        </constraints>
-                                    </imageView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="6RY-7f-66v">
                                         <rect key="frame" x="20" y="106" width="128" height="93.666666666666686"/>
                                         <subviews>
@@ -1004,7 +998,6 @@
                                     <constraint firstAttribute="bottom" secondItem="cZc-zU-BZ8" secondAttribute="bottom" id="2la-PU-h3p"/>
                                     <constraint firstItem="pdV-p4-ktb" firstAttribute="leading" secondItem="I0p-vt-iGh" secondAttribute="leading" id="8K7-E8-6Nz"/>
                                     <constraint firstAttribute="trailing" secondItem="cZc-zU-BZ8" secondAttribute="trailing" id="9ec-VM-FM2"/>
-                                    <constraint firstItem="DUY-Qz-ows" firstAttribute="top" secondItem="zaL-ex-F72" secondAttribute="top" constant="50" id="AfA-VE-8jZ"/>
                                     <constraint firstItem="cZc-zU-BZ8" firstAttribute="leading" secondItem="I0p-vt-iGh" secondAttribute="leading" id="ByL-37-0aq"/>
                                     <constraint firstAttribute="trailing" secondItem="pdV-p4-ktb" secondAttribute="trailing" id="FEl-Qa-GFn"/>
                                     <constraint firstItem="zaL-ex-F72" firstAttribute="top" secondItem="I0p-vt-iGh" secondAttribute="top" id="JDX-56-E76"/>
@@ -1015,7 +1008,6 @@
                                     <constraint firstItem="6RY-7f-66v" firstAttribute="leading" secondItem="I0p-vt-iGh" secondAttribute="leading" constant="20" id="ipF-Ul-cuL"/>
                                     <constraint firstItem="zaL-ex-F72" firstAttribute="leading" secondItem="I0p-vt-iGh" secondAttribute="leading" id="oX2-id-Yc2"/>
                                     <constraint firstAttribute="bottom" secondItem="zaL-ex-F72" secondAttribute="bottom" id="s6d-wr-Z0Z"/>
-                                    <constraint firstAttribute="trailing" secondItem="DUY-Qz-ows" secondAttribute="trailing" constant="20" id="woF-cu-Tpg"/>
                                     <constraint firstItem="cZc-zU-BZ8" firstAttribute="top" secondItem="I0p-vt-iGh" secondAttribute="top" id="y7Z-Tb-FsI"/>
                                 </constraints>
                                 <variation key="default">
@@ -1508,7 +1500,6 @@
                         <outlet property="optionalNameLabel" destination="pJ8-7a-ID7" id="RNi-nC-LNa"/>
                         <outlet property="statusLabel" destination="wgN-dK-iZJ" id="GaO-1o-0VL"/>
                         <outlet property="tableView" destination="IEd-9Z-WGw" id="0Rx-ff-qK9"/>
-                        <outlet property="verifiedImageView" destination="DUY-Qz-ows" id="vHJ-NE-uVl"/>
                         <outlet property="videoCallButton" destination="91O-pL-jXO" id="2fa-nG-v1q"/>
                         <outlet property="videoLabel" destination="a89-zu-PvG" id="gIu-iK-kiO"/>
                     </connections>
