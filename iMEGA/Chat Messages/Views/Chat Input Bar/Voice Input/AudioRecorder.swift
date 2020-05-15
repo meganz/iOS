@@ -47,9 +47,7 @@ class AudioRecorder: NSObject {
                                                     withIntermediateDirectories: true,
                                                     attributes: nil)
         }
-        
 
-        
         recorder = try AVAudioRecorder(url: destinationURL, settings: recorderSettings)
         
         guard let recorder = recorder else {

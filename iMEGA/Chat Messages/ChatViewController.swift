@@ -585,6 +585,7 @@ class ChatViewController: MessagesViewController {
         messagesCollectionView.emptyDataSetDelegate = self
         
         messagesCollectionView.refreshControl = refreshControl
+        maintainPositionOnKeyboardFrameChanged = true
     }
     
     private func configureMenus() {
