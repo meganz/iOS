@@ -16,6 +16,8 @@
 @property (weak, nonatomic) IBOutlet UIView *contactNewLabelView;
 @property (weak, nonatomic) IBOutlet UILabel *contactNewLabel;
 
+@property (weak, nonatomic) IBOutlet UIButton *contactDetailsButton;
+
 @property (weak, nonatomic) IBOutlet UIButton *infoButton;
 
 @property (weak, nonatomic) IBOutlet UITextField *groupNameTextField;
