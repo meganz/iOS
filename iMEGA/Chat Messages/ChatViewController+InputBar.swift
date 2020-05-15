@@ -591,6 +591,21 @@ extension ChatViewController: AddToChatViewControllerDelegate {
         
         return shouldDisableAudioVideoCall
     }
+    
+    func canRecordAudio() -> Bool {
+        guard let chatSDK = MEGASdkManager.sharedMEGAChatSdk() else {
+            return false
+        }
+        
+        if chatSDK.mnz_existsActiveCall {
+            let message = AMLocalizedString("It is not possible to record voice messages while there is a call in progress", "Message shown when there is an ongoing call and the user tries to record a voice message")
+            SVProgressHUD.setDefaultMaskType(.clear)
+            SVProgressHUD.showError(withStatus: message)
+            return false
+        }
+        
+        return true
+    }
 }
 
 extension ChatViewController: UIPopoverPresentationControllerDelegate {
