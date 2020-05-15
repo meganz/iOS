@@ -216,6 +216,13 @@
         if (self.node.name.mnz_imagePathExtension || (self.node.name.mnz_videoPathExtension && self.node.mnz_isPlayable)) {
             [actions addObject:[self actionSaveToPhotos]];
         }
+    } else if (self.displayMode == DisplayModeChatSharedFiles) {
+        [actions addObject:[self actionForward]];
+        if (self.node.name.mnz_imagePathExtension || (self.node.name.mnz_videoPathExtension && self.node.mnz_isPlayable)) {
+            [actions addObject:[self actionSaveToPhotos]];
+        }
+        [actions addObject:[self actionDownload]];
+        [actions addObject:[self actionImport]];
     } else {
         switch (accessType) {
             case MEGAShareTypeAccessUnknown:
@@ -452,6 +459,10 @@
 
 - (MegaActionNode *)actionThumbnailPdfView {
     return [MegaActionNode.alloc initWithTitle:AMLocalizedString(@"Thumbnail view", @"Text shown for switching from list view to thumbnail view.") iconName:@"thumbnailsView" andActionType:MegaNodeActionTypeThumbnailView];
+}
+
+- (MegaActionNode *)actionForward {
+    return [MegaActionNode.alloc initWithTitle:AMLocalizedString(@"forward", @"Item of a menu to forward a message chat to another chatroom") iconName:@"forwardToolbar" andActionType:MegaNodeActionTypeForward];
 }
 
 #pragma mark - IBActions
