@@ -931,8 +931,15 @@
         ActionSheetViewController *actionSheetVC = ActionSheetViewController.new;
         actionSheetVC.modalPresentationStyle = UIModalPresentationOverFullScreen;
         
+        MEGAChatStatus myStatus = MEGASdkManager.sharedMEGAChatSdk.onlineStatus;
+        NSString *chatStatusString = [NSString chatStatusString:myStatus];
+        UIView *accessoryView = [UIView.alloc initWithFrame:CGRectMake(0.0f, 0.0f, 6.0f, 6.0f)];
+        accessoryView.layer.cornerRadius = 3;
+        accessoryView.backgroundColor = [UIColor mnz_colorForStatusChange:myStatus];
+        
         ActionSheetAction *statusAction = [ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"status", @"Title that refers to the status of the chat (Either Online or Offline)")
-                                                                          detail:[NSString chatStatusString:MEGASdkManager.sharedMEGAChatSdk.onlineStatus]
+                                                                          detail:chatStatusString
+                                                                   accessoryView:accessoryView
                                                                            image:nil
                                                                            style:UIAlertActionStyleDefault
                                                                          handler:^{

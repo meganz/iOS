@@ -3,6 +3,7 @@ import UIKit
 class ActionSheetAction: NSObject {
     var title: String?
     var detail: String?
+    var accessoryView: UIView?
     var image: UIImage?
     var action = { }
     var style: UIAlertAction.Style = .default
@@ -11,6 +12,16 @@ class ActionSheetAction: NSObject {
         super.init()
         self.title = title
         self.detail = detail
+        self.image = image
+        self.style = style
+        self.action = handler ?? {}
+    }
+    
+    @objc init(title: String?, detail: String?, accessoryView: UIView?, image: UIImage? , style: UIAlertAction.Style, handler: (() -> Void)? = nil) {
+        super.init()
+        self.title = title
+        self.detail = detail
+        self.accessoryView = accessoryView
         self.image = image
         self.style = style
         self.action = handler ?? {}
