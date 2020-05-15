@@ -103,6 +103,14 @@ NSString * const MEGALastPublicTimestampAccessed = @"kLastPublicTimestampAccesse
 
 NSString * const MEGContactNicknameChangeNotification = @"MEGAContactNicknameChangeNotification";
 
+#pragma mark - Notification Service Extension
+
+NSString * const MEGAInvalidateNSECache = @"MEGAInvalidateNSECache";
+
 #pragma mark - DB name
 
 const NSUInteger MEGALastCharactersFromSession = 36;
+
+#pragma mark - File size
+
+const long long MEGAMaxFileLinkAutoOpenSize = 10000000; //10Megabytes

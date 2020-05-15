@@ -8,6 +8,7 @@
 #import "MEGALinkManager.h"
 #import "MEGAPhotoBrowserViewController.h"
 #import "MEGASdkManager.h"
+#import "MEGA-Swift.h"
 #import "MEGAReachabilityManager.h"
 #import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
@@ -15,6 +16,7 @@
 #import "UITextField+MNZCategory.h"
 
 #import "CustomActionViewController.h"
+#import "SendToViewController.h"
 #import "UnavailableLinkView.h"
 
 @interface FileLinkViewController () <CustomActionViewControllerDelegate>
@@ -25,19 +27,22 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *moreBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *importBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *downloadBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *sendToBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *shareBarButtonItem;
 
 @property (weak, nonatomic) IBOutlet UIView *mainView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *sizeLabel;
-@property (weak, nonatomic) IBOutlet UIButton *previewButton;
+@property (weak, nonatomic) IBOutlet UIButton *openButton;
+@property (weak, nonatomic) IBOutlet UIButton *importButton;
 
 @property (weak, nonatomic) IBOutlet UIImageView *thumbnailImageView;
 
 @property (nonatomic, getter=isFolderEmpty) BOOL folderEmpty;
 
 @property (nonatomic) BOOL decryptionAlertControllerHasBeenPresented;
+
+@property (nonatomic) SendLinkToChatsDelegate *sendLinkDelegate;
 
 @end
 
@@ -54,15 +59,13 @@
     self.navigationItem.leftBarButtonItem = self.cancelBarButtonItem;
     self.navigationItem.rightBarButtonItem = self.moreBarButtonItem;
     
-    self.importBarButtonItem.title = AMLocalizedString(@"import", nil);
-    self.downloadBarButtonItem.title = AMLocalizedString(@"downloadButton", @"Download");
-    
     self.navigationController.topViewController.toolbarItems = self.toolbar.items;
     [self.navigationController setToolbarHidden:NO animated:YES];
     self.navigationController.toolbar.barTintColor = UIColor.whiteColor;
     self.navigationController.toolbar.backgroundColor = UIColor.whiteColor;
 
-    [self.previewButton setTitle:AMLocalizedString(@"previewContent", @"Title to preview document") forState:UIControlStateNormal];
+    [self.openButton setTitle:AMLocalizedString(@"openButton", @"Button title to trigger the action of opening the file without downloading or opening it.") forState:UIControlStateNormal];
+    [self.importButton setTitle:AMLocalizedString(@"Import to Cloud Drive", @"Button title that triggers the importing link action") forState:UIControlStateNormal];
     
     [self setUIItemsHidden:YES];
     
@@ -104,7 +107,7 @@
                 if (self.decryptionAlertControllerHasBeenPresented) {
                     [self showDecryptionKeyNotValidAlert];
                 } else {
-                    [self showLinkNotValid];
+                    [self showUnavailableLinkView];
                 }
                 break;
             }
@@ -115,7 +118,7 @@
             }
                 
             case MEGAErrorTypeApiETooMany:
-                [self showLinkNotValidForTooManyError];
+                [self showUnavailableLinkView];
                 break;
                 
             case MEGAErrorTypeApiEIncomplete: {
@@ -134,7 +137,7 @@
         if (self.decryptionAlertControllerHasBeenPresented) { //Link without key, after entering a bad one
             [self showDecryptionKeyNotValidAlert];
         } else { //Link with invalid key
-            [self showLinkNotValid];
+            [self showUnavailableLinkView];
         }
         return;
     }
@@ -149,7 +152,14 @@
             [UIApplication.mnz_presentingViewController presentViewController:photoBrowserVC animated:YES completion:nil];
         }];
     } else {
-        [self setNodeInfo];
+        if (self.node.size.longLongValue < MEGAMaxFileLinkAutoOpenSize) {
+            [self dismissViewControllerAnimated:YES completion:^{
+                NSString *link = self.linkEncryptedString ? self.linkEncryptedString : self.publicLinkString;
+                [UIApplication.mnz_presentingViewController presentViewController:[self.node mnz_viewControllerForNodeInFolderLink:YES fileLink:link] animated:YES completion:nil];
+            }];
+        } else {
+            [self setNodeInfo];
+        }
     }
 }
 
@@ -166,39 +176,15 @@
 
 - (void)setUIItemsHidden:(BOOL)boolValue {
     self.mainView.hidden = boolValue;
-    self.previewButton.hidden = boolValue;
+    self.openButton.hidden = boolValue;
 }
 
 - (void)showUnavailableLinkView {
-    self.moreBarButtonItem.enabled = self.downloadBarButtonItem.enabled = self.importBarButtonItem.enabled = NO;
-    
-    NSString *fileLinkUnavailableText = [NSString stringWithFormat:@"%@\n%@\n%@\n%@", AMLocalizedString(@"fileLinkUnavailableText1", nil), AMLocalizedString(@"fileLinkUnavailableText2", nil), AMLocalizedString(@"fileLinkUnavailableText3", nil), AMLocalizedString(@"fileLinkUnavailableText4", nil)];
-    
-    [self showEmptyStateViewWithTitle:AMLocalizedString(@"linkUnavailable", nil) text:fileLinkUnavailableText];
-}
-
-- (void)showEmptyStateViewWithTitle:(NSString *)title text:(NSString *)text {
-    self.moreBarButtonItem.enabled = self.downloadBarButtonItem.enabled = self.importBarButtonItem.enabled = NO;
+    self.moreBarButtonItem.enabled = self.shareBarButtonItem.enabled = self.sendToBarButtonItem.enabled = NO;
     UnavailableLinkView *unavailableLinkView = [[[NSBundle mainBundle] loadNibNamed:@"UnavailableLinkView" owner:self options: nil] firstObject];
+    [unavailableLinkView configureInvalidFileLink];
     unavailableLinkView.frame = self.view.bounds;
-    unavailableLinkView.imageView.image = [UIImage imageNamed:@"invalidFileLink"];
-    unavailableLinkView.titleLabel.text = title;
-    unavailableLinkView.textLabel.text = text;
-    
-    unavailableLinkView.imageViewCenterYLayoutConstraint.constant = -(self.navigationController.navigationBar.frame.size.height + self.toolbar.frame.size.height);
-    if ([[UIDevice currentDevice] iPhone4X] && ![text isEqualToString:@""]) {
-        unavailableLinkView.imageViewCenterYLayoutConstraint.constant *= 2;
-    }
-    
     [self.view addSubview:unavailableLinkView];
-}
-
-- (void)showLinkNotValid {
-    [self showEmptyStateViewWithTitle:AMLocalizedString(@"linkNotValid", nil) text:@""];
-}
-
-- (void)showLinkNotValidForTooManyError {
-    [self showEmptyStateViewWithTitle:AMLocalizedString(@"linkNotValid", nil) text:AMLocalizedString(@"The account that created this link has been terminated due to multiple violations of our Terms of Service.", @"An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service.")];
 }
 
 - (void)showDecryptionAlert {
@@ -269,6 +255,37 @@
     }
 }
 
+- (void)import {
+    [self.node mnz_fileLinkImportFromViewController:self isFolderLink:NO];
+}
+
+- (void)open {
+    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+        NSString *link = self.linkEncryptedString ? self.linkEncryptedString : self.publicLinkString;
+        [self.node mnz_openNodeInNavigationController:self.navigationController folderLink:YES fileLink:link];
+    }
+}
+
+- (void)shareFileLink {
+    NSString *link = self.linkEncryptedString ? self.linkEncryptedString : self.publicLinkString;
+    UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[link] applicationActivities:nil];
+    activityVC.popoverPresentationController.barButtonItem = self.shareBarButtonItem;
+    [self presentViewController:activityVC animated:YES completion:nil];
+}
+
+- (void)saveToPhotos {
+    [self.node mnz_saveToPhotosWithApi:[MEGASdkManager sharedMEGASdk]];
+}
+
+- (void)sendFileLinkToChat {
+    UIStoryboard *chatStoryboard = [UIStoryboard storyboardWithName:@"Chat" bundle:[NSBundle bundleForClass:SendToViewController.class]];
+    SendToViewController *sendToViewController = [chatStoryboard instantiateViewControllerWithIdentifier:@"SendToViewControllerID"];
+    sendToViewController.sendMode = SendModeFileAndFolderLink;
+    self.sendLinkDelegate = [SendLinkToChatsDelegate.alloc initWithLink:self.linkEncryptedString ? self.linkEncryptedString : self.publicLinkString navigationController:self.navigationController];
+    sendToViewController.sendToViewControllerDelegate = self.sendLinkDelegate;
+    [self.navigationController pushViewController:sendToViewController animated:YES];
+}
+
 #pragma mark - IBActions
 
 - (IBAction)cancelTouchUpInside:(UIBarButtonItem *)sender {
@@ -279,16 +296,20 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (IBAction)importAction:(UIBarButtonItem *)sender {
+- (IBAction)importAction:(UIButton *)sender {
     [self import];
 }
 
-- (IBAction)downloadAction:(UIBarButtonItem *)sender {
-    [self download];
+- (IBAction)shareAction:(UIBarButtonItem *)sender {
+    [self shareFileLink];
 }
 
 - (IBAction)openAction:(UIBarButtonItem *)sender {
     [self open];
+}
+
+- (IBAction)sendToContactAction:(UIBarButtonItem *)sender {
+    [self sendFileLinkToChat];
 }
 
 - (IBAction)moreAction:(UIBarButtonItem *)sender {
@@ -308,46 +329,24 @@
     [self presentViewController:actionController animated:YES completion:nil];
 }
 
-- (void)import {
-    [self.node mnz_fileLinkImportFromViewController:self isFolderLink:NO];
-}
-
-- (void)download {
-    [self.node mnz_fileLinkDownloadFromViewController:self isFolderLink:NO];
-}
-
-- (void)open {
-    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        [self.node mnz_openNodeInNavigationController:self.navigationController folderLink:YES];
-    }
-}
-
 #pragma mark - CustomActionViewControllerDelegate
 
 - (void)performAction:(MegaNodeActionType)action inNode:(MEGANode *)node fromSender:(id)sender{
     switch (action) {
-        case MegaNodeActionTypeDownload:
-            [self download];
-            break;
-            
-        case MegaNodeActionTypeOpen:
-            [self open];
-            break;
-            
         case MegaNodeActionTypeImport:
             [self import];
             break;
             
-        case MegaNodeActionTypeShare: {
-            NSString *link = self.linkEncryptedString ? self.linkEncryptedString : self.publicLinkString;
-            UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[link] applicationActivities:nil];
-            activityVC.popoverPresentationController.barButtonItem = sender;
-            [self presentViewController:activityVC animated:YES completion:nil];
+        case MegaNodeActionTypeSendToChat:
+            [self sendFileLinkToChat];
             break;
-        }
+            
+        case MegaNodeActionTypeShare:
+            [self shareFileLink];
+            break;
             
         case MegaNodeActionTypeSaveToPhotos:
-            [node mnz_saveToPhotosWithApi:[MEGASdkManager sharedMEGASdk]];
+            [self saveToPhotos];
             break;
             
         default:
