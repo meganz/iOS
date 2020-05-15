@@ -3,6 +3,7 @@
 
 #import "Helper.h"
 #import "MEGASdkManager.h"
+#import "MEGA-Swift.h"
 #import "UIApplication+MNZCategory.h"
 
 @interface EnabledTwoFactorAuthenticationViewController () <MEGARequestDelegate>
@@ -53,7 +54,29 @@
     return UIInterfaceOrientationMaskAll;
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateAppearance];
+        }
+    }
+}
+
 #pragma mark - Private
+
+- (void)updateAppearance {
+    self.view.backgroundColor = [UIColor mnz_mainBarsColorForTraitCollection:self.traitCollection];
+    
+    self.firstLabel.textColor = self.secondLabel.textColor = [UIColor mnz_subtitlesColorForTraitCollection:self.traitCollection];
+    
+    self.recoveryKeyView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
+    self.recoveryKeyView.layer.borderColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection].CGColor;
+    
+    [self.exportRecoveryButton mnz_setupPrimary:self.traitCollection];
+    [self.closeButton mnz_setupBasic:self.traitCollection];
+}
 
 - (void)showSaveYourRecoveryKeyAlert {
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"pleaseSaveYourRecoveryKey", @"A warning message on the Backup Recovery Key dialog to tell the user to backup their Recovery Key to their local computer.") message:nil preferredStyle:UIAlertControllerStyleAlert];

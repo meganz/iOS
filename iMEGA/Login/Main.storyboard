@@ -3,7 +3,7 @@
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -132,7 +132,7 @@
                                                     <action selector="forgotPasswordTouchUpInside:" destination="y7g-EC-7mD" eventType="touchUpInside" id="0iO-Wq-K0q"/>
                                                 </connections>
                                             </button>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="forgotPasswordQuestionMark" translatesAutoresizingMaskIntoConstraints="NO" id="Ssu-EP-cXE">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="littleQuestionMark" translatesAutoresizingMaskIntoConstraints="NO" id="Ssu-EP-cXE">
                                                 <rect key="frame" x="385" y="343" width="12" height="12"/>
                                             </imageView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EcF-LZ-UjW">
@@ -766,10 +766,10 @@
     <resources>
         <image name="checkBox" width="20" height="20"/>
         <image name="checkBoxSelected" width="20" height="20"/>
-        <image name="forgotPasswordQuestionMark" width="12" height="12"/>
         <image name="icon-key-only" width="24" height="24"/>
         <image name="icon-link-only" width="24.666666030883789" height="24"/>
         <image name="icon-link-w-key" width="24" height="24"/>
+        <image name="littleQuestionMark" width="12" height="12"/>
         <image name="mail" width="24" height="24"/>
         <image name="mailBig" width="124" height="96"/>
         <image name="megaThePrivacyCompanyLogo" width="170" height="54"/>
