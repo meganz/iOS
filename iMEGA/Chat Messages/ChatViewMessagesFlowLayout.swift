@@ -1,5 +1,14 @@
 import MessageKit
 
+public protocol ChatViewMessagesLayoutDelegate: MessagesLayoutDelegate {
+    func collectionView(_ collectionView: MessagesViewController, layout collectionViewLayout: MessagesCollectionViewFlowLayout, shouldEditItemAt indexPath: IndexPath) -> Bool
+    
+    func collectionView(_ collectionView: MessagesViewController, layout collectionViewLayout: MessagesCollectionViewFlowLayout, editingOffsetForCellAt indexPath: IndexPath) -> CGFloat
+    
+    func collectionView(_ collectionView: MessagesViewController, editingOverlayAt indexPath: IndexPath, become selected:Bool)
+    
+}
+
 class ChatViewMessagesFlowLayout: MessagesCollectionViewFlowLayout {
     lazy var chatViewCallCollectionCellCalculator = ChatViewCallCollectionCellCalculator(layout: self)
     lazy var chatViewAttachmentCellCalculator = ChatViewAttachmentCellCalculator(layout: self)
