@@ -67,7 +67,7 @@ extension ChatViewController {
     
     func editMessage(_ message: ChatMessage) {
         editMessage = message
-        chatInputBar.set(text: editMessage!.message.content)
+        chatInputBar?.set(text: editMessage!.message.content)
     }
     
     func deleteMessage(_ message: ChatMessage) {

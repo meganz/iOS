@@ -13,7 +13,7 @@ extension ChatViewController {
             return joinInputBar
         } else if chatInputBar == nil {
             chatInputBar = ChatInputBar()
-            chatInputBar.delegate = self
+            chatInputBar?.delegate = self
         }
         
         return chatInputBar
@@ -91,7 +91,7 @@ extension ChatViewController {
         
         addToChatViewController.addToChatDelegate = self
         
-        chatInputBar.dismissKeyboard()
+        chatInputBar?.dismissKeyboard()
 
         if UIDevice.current.iPadDevice {
             let navController = MEGANavigationController(rootViewController: addToChatViewController)
@@ -492,7 +492,7 @@ extension ChatViewController: AddToChatViewControllerDelegate {
     }
     
     func showVoiceClip() {
-        chatInputBar.recordingViewEnabled = true
+        chatInputBar?.recordingViewEnabled = true
     }
     
     func showContacts() {
