@@ -91,10 +91,11 @@ class ChatViewController: MessagesViewController {
             navigationController?.setToolbarHidden(false, animated: true)
         }
         
+        super.setEditing(editing, animated: animated)
         UIView.animate(withDuration: 0.25) {
             self.messagesCollectionView.collectionViewLayout.invalidateLayout()
         }
-        
+        reloadInputViews()
     }
     
     override func viewDidLoad() {
