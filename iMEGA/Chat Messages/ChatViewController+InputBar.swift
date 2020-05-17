@@ -6,6 +6,10 @@ extension ChatViewController {
     // MARK: - Overriden properties
     
     override var inputAccessoryView: UIView? {
+        guard !isEditing else {
+            return nil
+        }
+        
         if let chatRoom = chatRoom,
             chatRoom.isPublicChat,
             chatRoom.isPreview,
