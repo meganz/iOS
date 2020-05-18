@@ -477,7 +477,7 @@
 /* Success message for sharing multiple folders. */
 "sharedFolders_success"="%d dossiers ont été partagés avec succès.";
 /* Button title that triggers the importing link action */
-"import"="Importer";
+"Import to Cloud Drive"="Importer vers le disque nuagique";
 /* Message shown when a file has been imported */
 "fileImported"="Le fichier a été importé";
 /* Message shown when some files have been imported */
@@ -525,9 +525,9 @@
 /* Label for any ‘Requests’ button, link, text, title, etc. On iOS is used to go to the Contact request section from Contacts */
 "Requests"="Demandes";
 /* Label for any ‘Groups’ button, link, text, title, etc. On iOS is used to go to the chats 'Groups' section from Contacts */
-"Groups"="Groups";
+"Groups"="Groupes";
 /* Label for any ‘Recently Added’ button, link, text, title, etc. On iOS is used on a section that shows the 'Recently Added' contacts */
-"Recently Added"="Recently Added";
+"Recently Added"="Ajoutés récemment";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
 "oneFolderShared"="1 dossier";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
@@ -606,7 +606,7 @@
 "shareFolder"="Partager un dossier";
 /* Button title which, if tapped, will trigger the action of sharing the folders selected */
 "shareFolders"="Partager des dossiers";
-/* Button that allows you to select a given folder */
+/* Button that allows you to select something (a folder, a message...) */
 "select"="Sélectionner";
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
 "permissions"="Droits";
@@ -733,7 +733,7 @@
 /* Title of the label where the MEGAchat SDK version is shown */
 "megachatSdkVersion"="Version de la trousse SDK de MEGAchat";
 /* Link to the public code of the app */
-"View source code"="Voir le code source";
+"View source code"="Afficher le code source";
 /* Title for the section "Acknowledgements" of the app */
 "acknowledgements"="Mentions";
 /* Title for the MEGA Recovery Key */
@@ -922,7 +922,7 @@
 /* Caption of a button to upgrade the account to Pro status */
 "upgrade"="Surclasser le compte";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
-"viewAndEditProfile"="Visualiser ou modifier le profil";
+"viewAndEditProfile"="Afficher ou modifier le profil";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
 "profile"="Profil";
 /* Title of the Achievements section */
@@ -940,7 +940,7 @@
 /*  */
 "insertYourFriendsEmails"="Saisissez les adresses courriel de votre ami :";
 /*  */
-"howItWorks"="Comment cela fonctionne-t-il ?";
+"howItWorks"="Fonctionnement";
 /*  */
 "howItWorksMain"="Votre ami doit créer un compte gratuit sur MEGA et [S]installer au moins une application client MEGA[/S] (soit le client de synchro, soit l’une de nos applis mobiles)";
 /*  */
@@ -1267,8 +1267,10 @@
 "enableRichUrlPreviews"="Activer les aperçus d’URL enrichis";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "alwaysAllow"="Toujours autoriser";
-/* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
+/* Text indicating to the user that some action will be postpone. E.g. used for 'rich previews' and management of disk storage. */
 "notNow"="Pas maintenant";
+/* Text indicating to the user some action should be addressed. E.g. Navigate to Settings/File Management to clear cache. */
+"Manage"="Gérer";
 /* */
 "never"="Jamais";
 /* After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings. */
@@ -1711,7 +1713,7 @@
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
 "The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="La corbeille peut être vidée pour vous automatiquement. La fréquence minimale est 7 jours.";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
-"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Pour désactiver le programmateur de vidage de la corbeille ou pour définir une période de rétention plus longue, vous devez détenir un abonnement PRO.";
+"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Pour désactiver le programmateur de vidage de la corbeille ou pour définir une période de conservation plus longue, vous devez détenir un abonnement PRO.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
 "Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="Souhaitez-vous fermer toutes les autres sessions ? Cela vous déconnectera de toutes les autres sessions, sauf la session actuelle.";
 /* Message to inform the local user that someone has joined the current group call */
@@ -2109,7 +2111,7 @@
 /* Used in Photos app browser. Shown when there are no photos or videos in the Photos app. */
 "No Photos or Videos"="Aucune photo ni vidéo";
 /* Button title which, if tapped, will trigger the action of opening a folder containg this file */
-"View in Folder"="Visualiser dans le dossier";
+"View in Folder"="Afficher dans le dossier";
 /* Error message shown when opening a link with an account that not corresponds to the link */
 "This link is not related to this account. Please log in with the correct account."="Ce lien n'est pas associé à ce compte. Veuillez vous connecter avec le bon compte.";
 /* Text emncouraging the user to add contacts in MEGA */
@@ -2143,7 +2145,7 @@
 /* Text indicating the user next step to unlock suspended account. Please leave [S], [/S] as it is which is used to bolden the text. */
 "[S]Please verify your email[/S] and follow its steps to unlock your account."="[S]Veuillez confirmer votre adresse courriel[/S] et suivre les étapes du courriel de MEGA afin de déverrouiller votre compte.";
 /* Text for button to open an helping view */
-"Why am I seeing this?"="Pourquoi est-ce que je vois ceci ?";
+"Why am I seeing this?"="Pourquoi vois-je ceci ?";
 /* Text to notify user an email has been sent */
 "Email sent"="Le courriel a été envoyé";
 /* Title of a helping view about locked accounts */
@@ -2187,27 +2189,27 @@
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="Saisissez le nom du groupe";
 /* Title of one of the Settings sections where you can customise the 'Appearance' of the app. */
-"Appearance"="Appearance";
+"Appearance"="Apparence";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
-"Sorting And View Mode"="Sorting And View Mode";
+"Sorting And View Mode"="Tri et mode d’affichage";
 /* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
-"Default"="Default";
+"Default"="Par défaut";
 /* Label for any ‘Day’ button, link, text, title, etc. - (String as short as possible). */
 "Day"="jour";
 /* Label for any ‘Night’ button, link, text, title, etc. - (String as short as possible). */
-"Night"="Night";
+"Night"="Nuit";
 /* Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible). */
 "Minimal"="Minimal";
 /* Section title inside of Settings - Appearance, where you can change the app's layout. */
-"Layout"="Layout";
+"Layout"="Agencement";
 /* Section title inside of Settings - Appearance, where you can change the app's icon. */
-"App Icon"="App Icon";
+"App Icon"="Icône de l’appli";
 /* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
-"Configure sorting order and the default view (List or Thumbnail)."="Configure sorting order and the default view (List or Thumbnail).";
+"Configure sorting order and the default view (List or Thumbnail)."="Configurez l’ordre de tri et la vue par défaut (en liste ou en imagettes)";
 /* Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for All'. */
-"Per Folder"="Per Folder";
+"Per Folder"="Par dossier";
 /* Same for all configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for all Folders'. */
-"Same for All"="Same for All";
+"Same for All"="Identique pour tous";
 /* Section title of the 'Sorting And View Mode' view inside of Settings - Appearence - Sorting And View Mode. */
 "Sorting preference"="Préférence de tri ";
 /* Section title of the 'Sorting And View Mode' view inside of Settings - Appearence - Sorting And View Mode. */
@@ -2215,7 +2217,7 @@
 /* Footer text explaining what means choosing a sorting preference 'Per Folder' or 'Same for All' in Settings - Appearance - Sorting And View Mode. */
 "Configure column sorting order on a per-folder basis, or use the same order for all folders."="Configurer l’ordre de tri des colonnes par dossier ou utiliser le même ordre pour tous les dossiers.";
 /* Footer text explaining what means choosing a view mode preference 'Per Folder', 'List view' or 'Thumbnail view' in Settings - Appearance - Sorting And View Mode. */
-"Select view mode (List or Thumbnail) on a per-folder basis, or use the same view mode for all folders."="Select view mode (List or Thumbnail) on a per-folder basis, or use the same view mode for all folders.";
+"Select view mode (List or Thumbnail) on a per-folder basis, or use the same view mode for all folders."="Sélectionnez le mode d’affichage (en liste ou en imagettes) pour chaque dossier ou utilisez le même mode d’affichage pour tous les dossiers.";
 /* Warning message to alert user about logout in My Account section if has transfers in progress. */
 "When you logout, ongoing transfers will be cancelled."="Quand vous vous déconnectez, les transferts en cours sont annulés.";
 /* Warning message to alert user about logout in My Account section if has offline files. */
@@ -2224,3 +2226,9 @@
 "When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled."="Vous vous déconnectez, les fichiers de votre section Hors ligne sont supprimés de votre appareil et les transferts en cours sont annulés.";
 /* Default title of an empty chat. */
 "Chat created on %s1"="Conversation créée le %s1";
+/* Title shown when there are no shared files */
+"No Shared Files"="No Shared Files";
+/* Error message shown when opening a folder link which doesn’t exist */
+"Folder link unavailable"="Lien de dossier non disponible";
+/* Error message shown when opening a file link which doesn’t exist */
+"File link unavailable"="Lien de fichier non disponible";
