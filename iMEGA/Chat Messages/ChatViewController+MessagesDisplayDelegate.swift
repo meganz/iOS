@@ -4,23 +4,25 @@ extension ChatViewController: MessagesDisplayDelegate {
     func backgroundColor(for message: MessageType,
                          at indexPath: IndexPath,
                          in messagesCollectionView: MessagesCollectionView) -> UIColor {
-        switch message.kind {
-        case .custom:
-            guard let chatMessage = message as? ChatMessage else {
-                return isFromCurrentSender(message: message) ? UIColor(fromHexString: "#009476") : UIColor(fromHexString: "#EEEEEE")
-            }
-
-            if chatMessage.message.isManagementMessage {
+        
+        guard let chatMessage = message as? ChatMessage else {
+            return isFromCurrentSender(message: message) ? UIColor(fromHexString: "#009476") : UIColor(fromHexString: "#EEEEEE")
+        }
+        
+        if chatMessage.message.isManagementMessage {
+            return .clear
+        }
+        
+        switch chatMessage.message.type {
+        case .contact, .attachment:
+            return .clear
+        case .normal:
+            if (chatMessage.message.content as NSString).mnz_isPureEmojiString() {
                 return .clear
             }
             
-            switch chatMessage.message.type {
-            case .contact, .attachment:
-                return .clear
-            default:
-                return isFromCurrentSender(message: message) ? UIColor(fromHexString: "#009476") : UIColor(fromHexString: "#EEEEEE")
-                
-            }
+            return isFromCurrentSender(message: message) ? UIColor(fromHexString: "#009476") : UIColor(fromHexString: "#EEEEEE")
+            
         default:
             return isFromCurrentSender(message: message) ? UIColor(fromHexString: "#009476") : UIColor(fromHexString: "#EEEEEE")
             
@@ -54,6 +56,10 @@ extension ChatViewController: MessagesDisplayDelegate {
             if chatMessage.message.isManagementMessage {
                 containerView.layer.borderColor = #colorLiteral(red: 0.8941176471, green: 0.9215686275, blue: 0.9176470588, alpha: 0).cgColor
                 return
+            }
+            
+            if chatMessage.message.type == .normal && (chatMessage.message.content as NSString).mnz_isPureEmojiString() {
+                containerView.layer.borderColor = #colorLiteral(red: 0.8941176471, green: 0.9215686275, blue: 0.9176470588, alpha: 0).cgColor
             }
         }
     }
