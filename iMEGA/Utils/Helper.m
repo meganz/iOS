@@ -681,7 +681,7 @@ static MEGAIndexer *indexer;
     }
 }
 
-+ (UIActivityViewController *)activityViewControllerForChatMessages:(NSArray<MEGAChatMessage *> *)messages sender:(id)sender {
++ (UIActivityViewController *_Nullable)activityViewControllerForChatMessages:(NSArray<MEGAChatMessage *> *)messages sender:(id)sender {
     NSUInteger stringCount = 0, fileCount = 0;
 
     NSMutableArray *activityItemsMutableArray = [[NSMutableArray alloc] init];
