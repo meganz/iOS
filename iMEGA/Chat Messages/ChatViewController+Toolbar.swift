@@ -131,5 +131,12 @@ extension ChatViewController {
             })
         }
     }
+    
+    func updateToolbarState() {
+        let isEnabled = selectedMessages.count > 0
+        forwardBarButtonItem.isEnabled = isEnabled
+        shareBarButtonItem.isEnabled = isEnabled
+        deleteBarButtonItem.isEnabled = isEnabled
+    }
 }
 
