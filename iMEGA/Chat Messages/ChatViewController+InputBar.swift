@@ -293,19 +293,14 @@ extension ChatViewController: ChatInputBarDelegate {
     }
     
     func tappedSendAudio(atPath path: String) {
-        
-        // TODO: Refactor the below code.
-        // Handle errors and show the progress as well
         MEGASdkManager.sharedMEGASdk()!.getMyChatFilesFolder {[weak self] result in
             guard let `self` = self else {
                 return
             }
-            
-            let voiceFolderName = "My voice messages"
-            
+                        
             let appData = ("" as NSString).mnz_appDataToAttach(toChatID: self.chatRoom.chatId, asVoiceClip: true)
             
-            if let voiceMessagesNode = MEGASdkManager.sharedMEGASdk()!.node(forPath: voiceFolderName, node: result) {
+            if let voiceMessagesNode = MEGASdkManager.sharedMEGASdk()!.node(forPath: MEGAVoiceMessagesFolderName, node: result) {
                 MEGASdkManager.sharedMEGASdk()!.startUpload(withLocalPath: path,
                                                             parent: voiceMessagesNode,
                                                             appData: appData,
@@ -325,10 +320,12 @@ extension ChatViewController: ChatInputBarDelegate {
                                                                     isSourceTemporary: true,
                                                                     delegate: self.createUploadTransferDelegate())
                         
+                    } else {
+                        MEGALogDebug("Voice folder not created")
                     }
                 }
                 
-                MEGASdkManager.sharedMEGASdk()!.createFolder(withName: voiceFolderName,
+                MEGASdkManager.sharedMEGASdk()!.createFolder(withName: MEGAVoiceMessagesFolderName,
                                                              parent: result,
                                                              delegate: requestDelegate)
             }
