@@ -47,10 +47,14 @@ extension ChatViewController: MessagesEditCollectionOverlayViewDelegate {
             return
         }
         
+        let message = messages[indexPath.section]
+        
         if activated {
-            selectedEditingIndexPaths.insert(indexPath)
+//            selectedEditingIndexPaths.insert(indexPath)
+            selectedMessages.insert(message)
         } else {
-            selectedEditingIndexPaths.remove(indexPath)
+//            selectedEditingIndexPaths.remove(indexPath)
+            selectedMessages.remove(message)
         }        
     }
 }
