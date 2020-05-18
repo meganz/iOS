@@ -95,7 +95,6 @@ class ChatViewController: MessagesViewController {
 //            selectedEditingIndexPaths.removeAll()
             navigationController?.setToolbarHidden(true, animated: true)
         } else {
-            customToolbar(type: .forward)
             navigationController?.setToolbarHidden(false, animated: true)
         }
         

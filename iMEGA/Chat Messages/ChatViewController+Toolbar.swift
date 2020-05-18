@@ -20,6 +20,30 @@ extension ChatViewController {
     
     @objc func deleteSelectedMessages() {
         
+        for chatMessage in selectedMessages {
+            
+            let megaMessage =  chatMessage.message
+            
+            if megaMessage.type == .attachment ||
+                megaMessage.type == .voiceClip {
+                
+            } else {
+                let index = messages.firstIndex(of: chatMessage)!
+                if megaMessage.status == .sending {
+                    chatRoomDelegate.messages.remove(at: index)
+                    messagesCollectionView.performBatchUpdates({
+                        messagesCollectionView.deleteSections([index])
+                    }, completion: nil)
+                } else {
+                    let messageId = megaMessage.status == .sending ? megaMessage.temporalId : megaMessage.messageId
+                    let deleteMessage = MEGASdkManager.sharedMEGAChatSdk()?.deleteMessage(forChat: chatRoom.chatId, messageId: messageId)
+                    deleteMessage?.chatId = chatRoom.chatId
+                    chatRoomDelegate.messages[index] = ChatMessage(message: deleteMessage!, chatRoom: chatRoom)
+                }
+            }
+            
+        }
+        setEditing(false, animated: true)
     }
     
     @objc func forwardSelectedMessages() {
