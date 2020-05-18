@@ -9,6 +9,7 @@ extension ChatViewController {
     }
     
     func forwardMessage(_ message: ChatMessage) {
+        customToolbar(type: .forward)
         self.setEditing(true, animated: true)
     }
     
@@ -19,26 +20,8 @@ extension ChatViewController {
     }
     
     func deleteMessage(_ message: ChatMessage) {
-    
-        let megaMessage =  message.message
-        
-        if megaMessage.type == .attachment ||
-        megaMessage.type == .voiceClip {
-            
-        } else {
-            let index = messages.firstIndex(of: message)!
-            if megaMessage.status == .sending {
-                chatRoomDelegate.messages.remove(at: index)
-                messagesCollectionView.performBatchUpdates({
-                    messagesCollectionView.deleteSections([index])
-                }, completion: nil)
-            } else {
-                let messageId = megaMessage.status == .sending ? megaMessage.temporalId : megaMessage.messageId
-                let deleteMessage = MEGASdkManager.sharedMEGAChatSdk()?.deleteMessage(forChat: chatRoom.chatId, messageId: messageId)
-                deleteMessage?.chatId = chatRoom.chatId
-                chatRoomDelegate.messages[index] = ChatMessage(message: deleteMessage!, chatRoom: chatRoom)
-            }
-        }
+        customToolbar(type: .delete)
+        self.setEditing(true, animated: true)
     }
     
     func removeRichPreview(_ message: ChatMessage) {
