@@ -3,7 +3,7 @@
 import UIKit
 import simd
 
-protocol ChatMessageAndAudioInputBarDelegate: MessageInputBarDelegate {
+protocol ChatInputBarDelegate: MessageInputBarDelegate {
     func tappedSendAudio(atPath path: String)
     func recordingViewShown(withAdditionalHeight height: CGFloat)
     func recordingViewHidden()
@@ -45,7 +45,7 @@ class ChatInputBar: UIView {
     
     // MARK:- Interface properties
 
-    weak var delegate: ChatMessageAndAudioInputBarDelegate?
+    weak var delegate: ChatInputBarDelegate?
     
     var recordingViewEnabled: Bool = false {
         didSet {
