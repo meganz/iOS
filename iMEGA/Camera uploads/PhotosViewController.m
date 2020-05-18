@@ -21,6 +21,8 @@
 #import "CustomModalAlertViewController.h"
 #import "UploadStats.h"
 #import "UIViewController+MNZCategory.h"
+#import "MEGA-Swift.h"
+
 @import StoreKit;
 @import Photos;
 
@@ -763,19 +765,8 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 }
 
 - (void)showLocalDiskIsFullWarningScreen {
-    CustomModalAlertViewController *warningVC = [[CustomModalAlertViewController alloc] init];
-    warningVC.modalPresentationStyle = UIModalPresentationOverFullScreen;
-    warningVC.image = [UIImage imageNamed:@"disk_storage_full"];
-    warningVC.viewTitle = [NSString stringWithFormat:AMLocalizedString(@"%@ Storage Full", nil), UIDevice.currentDevice.localizedModel];
-    NSString *storageSettingPath = [NSString stringWithFormat:AMLocalizedString(@"Settings > General > %@ Storage", nil), UIDevice.currentDevice.localizedModel];
-    warningVC.detail = [NSString stringWithFormat:AMLocalizedString(@"You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@", nil), storageSettingPath];
-    warningVC.boldInDetail = storageSettingPath;
-    warningVC.firstButtonTitle = AMLocalizedString(@"ok", nil);
-    warningVC.firstCompletion = ^{
-        [self dismissViewControllerAnimated:YES completion:nil];
-    };
-    
-    [self presentViewController:warningVC animated:YES completion:nil];
+    StorageFullModalAlertViewController *warningVC = StorageFullModalAlertViewController.alloc.init;
+    [warningVC show];
 }
 
 #pragma mark - UILongPressGestureRecognizer
@@ -834,7 +825,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
         
         return photoBrowserVC;
     } else {
-        return [node mnz_viewControllerForNodeInFolderLink:NO];
+        return [node mnz_viewControllerForNodeInFolderLink:NO fileLink:nil];
     }
     
     return nil;

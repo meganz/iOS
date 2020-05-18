@@ -40,7 +40,8 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
     ContactDetailsSectionArchiveChat,
     ContactDetailsSectionAddParticipantToContact,
     ContactDetailsSectionRemoveParticipant,
-    ContactDetailsSectionSetPermission
+    ContactDetailsSectionSetPermission,
+    ContactDetailsSectionSharedItems,
 };
 
 typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
@@ -208,6 +209,16 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 }
 
 #pragma mark - Private - Table view cells
+
+- (ContactTableViewCell *)cellForSharedItemsWithIndexPath:(NSIndexPath *)indexPath {
+    ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
+    cell.avatarImageView.image = [UIImage imageNamed:@"sharedFiles"];
+    cell.nameLabel.text = AMLocalizedString(@"sharedItems", @"Title of Shared Items section");
+    cell.nameLabel.textColor = UIColor.mnz_black333333;
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+
+    return cell;
+}
 
 - (ContactTableViewCell *)cellForNicknameWithIndexPath:(NSIndexPath *)indexPath {
     ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
@@ -534,11 +545,6 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 }
 
 - (void)openCallViewWithVideo:(BOOL)videoCall active:(BOOL)active {
-    if ([[UIDevice currentDevice] orientation] != UIInterfaceOrientationPortrait) {
-        NSNumber *value = [NSNumber numberWithInt:UIInterfaceOrientationPortrait];
-        [[UIDevice currentDevice] setValue:value forKey:@"orientation"];
-    }
-
     CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
     callVC.chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomByUser:self.userHandle];
     callVC.videoCall = videoCall;
@@ -639,6 +645,10 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     }
 }
 
+- (void)showSharedItemsNameViewContoller {
+    [self.navigationController pushViewController:[ChatSharedItemsViewController instantiateWith:self.chatRoom] animated:YES];
+}
+
 - (void)showNickNameViewContoller {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Contacts" bundle:nil];
     UINavigationController *navigationController = [storyboard instantiateViewControllerWithIdentifier:@"AddNickNameNavigationControllerID"];
@@ -705,7 +715,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
         return [self addSharedFoldersSectionIfNeededToSections:@[@(ContactDetailsSectionClearChatHistory), @(ContactDetailsSectionArchiveChat)]];
     }
     
-    return [self addSharedFoldersSectionIfNeededToSections:@[@(ContactDetailsSectionNicknameVerifyCredentials), @(ContactDetailsSectionClearChatHistory), @(ContactDetailsSectionArchiveChat)]];
+    return [self addSharedFoldersSectionIfNeededToSections:@[@(ContactDetailsSectionNicknameVerifyCredentials), @(ContactDetailsSectionSharedItems), @(ContactDetailsSectionClearChatHistory), @(ContactDetailsSectionArchiveChat)]];
 }
 
 - (NSArray<NSNumber *> *)sectionsForContactFromGroupChat {
@@ -829,6 +839,10 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     ContactTableViewCell *cell;
     
     switch (self.contactDetailsSections[indexPath.section].intValue) {
+        case ContactDetailsSectionSharedItems:
+            cell = [self cellForSharedItemsWithIndexPath:indexPath];
+            break;
+            
         case ContactDetailsSectionNicknameVerifyCredentials:
             switch (self.rowsForNicknameAndVerify[indexPath.row].intValue) {
                 case ContactDetailsRowNickname:
@@ -921,6 +935,10 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     switch (self.contactDetailsSections[indexPath.section].intValue) {
+        case ContactDetailsSectionSharedItems:
+            [self showSharedItemsNameViewContoller];
+            break;
+            
         case ContactDetailsSectionNicknameVerifyCredentials:
             switch (self.rowsForNicknameAndVerify[indexPath.row].intValue) {
                 case ContactDetailsRowNickname:

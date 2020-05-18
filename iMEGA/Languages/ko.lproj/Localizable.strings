@@ -522,6 +522,12 @@
 "offline"="오프라인";
 /* Title of the Contacts section */
 "contactsTitle"="연락처";
+/* Label for any ‘Requests’ button, link, text, title, etc. On iOS is used to go to the Contact request section from Contacts */
+"Requests"="요청";
+/* Label for any ‘Groups’ button, link, text, title, etc. On iOS is used to go to the chats 'Groups' section from Contacts */
+"Groups"="그룹";
+/* Label for any ‘Recently Added’ button, link, text, title, etc. On iOS is used on a section that shows the 'Recently Added' contacts */
+"Recently Added"="최근 추가됨";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
 "oneFolderShared"="폴더 1개";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
@@ -945,8 +951,8 @@
 "unlockedBonuses"="해제된 보너스:";
 /* A header/title of a section which contains information about used/available storage space on a user's cloud drive. */
 "storageQuota"="저장공간 할당량";
-/* The header/title of a block/section which contains information about the user's used/available transfer allowance for their account. */
-"transferQuota"="전송 할당량";
+/* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
+"Transfer Quota"="전송 할당량";
 /* achievement type */
 "registrationBonus"="가입 보너스";
 /* Message shown on the achievements dialog for achieved achievements, %1 is replaced with e.g. 20 GB */
@@ -991,10 +997,12 @@
 "logoutLabel"="로그아웃";
 /* String shown when you are logging out of your account. */
 "loggingOut"="로그아웃중";
-/* Button to remove avatar. Try to keep the text short (as in English) */
-"removeAvatar"="아바타 제거";
-/* button that allows the user the change his avatar */
-"changeAvatar"="아바타 변경";
+/* Button to remove some photo, e.g. avatar photo. Try to keep the text short (as in English) */
+"Remove Photo"="사진 삭제";
+/* Button that allows the user the change a photo, e.g. his avatar photo */
+"Change Photo"="사진 변경";
+/* Button that allows the user the add a photo, e.g avatar photo */
+"Add Photo"="사진 추가";
 /* Button title that allows the user change his name */
 "changeName"="이름 변경";
 /* Success message when changing profile information. */
@@ -1269,8 +1277,6 @@
 "removePreview"="미리보기 제거";
 /* */
 "warning"="경고";
-/* Alert message shown when the user perform logout and has files in the Offline directory */
-"allFilesSavedForOfflineWillBeDeletedFromYourDevice"="오프라인용으로 저장된 모든 파일이 기기에서 삭제됩니다. 로그아웃 하시겠습니까?";
 /* Title shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_title"="전송 할당량 부족";
 /* Description shown when you almost had used your available transfer quota. */
@@ -1436,8 +1442,8 @@
 "resetQrCode"="QR 코드 초기화";
 /* Footer that explains what would happen if the user resets his/her QR code */
 "resetQrCodeFooter"="이전 QR 코드는 더 이상 유효하지 않게 됩니다";
-/* Title for view that displays the QR code of the user. String as short as possible. */
-"myCode"="내 코드";
+/* Label for any ‘My QR code’ button, link, text, title, etc. - (String as short as possible). */
+"My QR code"="내 QR 코드";
 /* Segmented control title for view that allows the user to scan QR codes. String as short as possible. */
 "scanCode"="코드 스캔";
 /* Label that encourage the user to line the QR to scan with the camera */
@@ -1994,7 +2000,7 @@
 "Business"="기업용";
 /* */
 "Administrator"="관리자";
-/* */
+/* Label to indicate the amount of transfer quota in several places. It is a ‘noun‘ and there is an screenshot with an use example - (String as short as possible). */
 "Transfer"="전송";
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
 "You cannot remove %1$s as a contact because they are part of your Business account."="%1$s님의 연락처는 당신의 비즈니스 계정의 일부이기 때문에 삭제할 수 없습니다.";
@@ -2124,6 +2130,8 @@
 "Your account is already verified"="계정이 이미 인증되었습니다";
 /* Place holder for enter mobile number field */
 "Your phone number"="당신의 전화번호";
+/* Text related to verified phone number. Used as title or cell description.  */
+"Phone Number"="전화번호";
 /* Label tell user to enter received txt to below input boxes */
 "Please type the verification code sent to"="다음으로 전송된 코드를 입력하세요";
 /* Text message to remind user to resend verification code */
@@ -2176,9 +2184,43 @@
 "Your account has been disabled by your administrator. Please contact your business account administrator for further details."="당신의 계정은 관리자에 의해 정지되었습니다. 자세한 사항은 비즈니스 계정 관리자에게 연락하세요.";
 /* An error message which appears to sub-users of a business account when they try to login and they are deleted. */
 "Your account has been removed by your administrator. Please contact your business account administrator for further details."="당신의 계정이 관리자에 의해 삭제되었습니다. 자세한 사항은 당신의 비즈니스 계정 관리자에게 문의하세요.";
-/* Description of why the user should give permission to contacts */
-"Easily discover contacts from your address book on MEGA."="MEGA에서 당신의 주소록에 있는 지인들을 쉽게 찾으세요.";
-/* Detailed description of why the user should give permission to contacts */
-"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA는 당신의 동의 없이 이 데이터를 다른 목적으로 사용하고 당신의 지인들과 상호 작용하지 않을 것입니다.";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="그룹 이름을 입력하세요";
+/* Title of one of the Settings sections where you can customise the 'Appearance' of the app. */
+"Appearance"="외관";
+/* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
+"Sorting And View Mode"="정렬과 보기 모드";
+/* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
+"Default"="기본";
+/* Label for any ‘Day’ button, link, text, title, etc. - (String as short as possible). */
+"Day"="일";
+/* Label for any ‘Night’ button, link, text, title, etc. - (String as short as possible). */
+"Night"="밤";
+/* Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible). */
+"Minimal"="최소";
+/* Section title inside of Settings - Appearance, where you can change the app's layout. */
+"Layout"="레이아웃";
+/* Section title inside of Settings - Appearance, where you can change the app's icon. */
+"App Icon"="앱 아이콘";
+/* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
+"Configure sorting order and the default view (List or Thumbnail)."="정렬 순서와 기본 보기 설정 (리스트 또는 미리 보기)";
+/* Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for All'. */
+"Per Folder"="폴더마다";
+/* Same for all configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for all Folders'. */
+"Same for All"="모두 동일";
+/* Section title of the 'Sorting And View Mode' view inside of Settings - Appearence - Sorting And View Mode. */
+"Sorting preference"="정렬 설정";
+/* Section title of the 'Sorting And View Mode' view inside of Settings - Appearence - Sorting And View Mode. */
+"View mode preference"="보기 모드 설정";
+/* Footer text explaining what means choosing a sorting preference 'Per Folder' or 'Same for All' in Settings - Appearance - Sorting And View Mode. */
+"Configure column sorting order on a per-folder basis, or use the same order for all folders."="정렬 순서를 개별 폴더 별로 다르게 하거나, 모든 폴더에 같은 순서를 사용하도록 설정하세요.";
+/* Footer text explaining what means choosing a view mode preference 'Per Folder', 'List view' or 'Thumbnail view' in Settings - Appearance - Sorting And View Mode. */
+"Select view mode (List or Thumbnail) on a per-folder basis, or use the same view mode for all folders."="보기 모드 (목록 또는 미리 보기)를 폴더마다 설정할지, 또는 모든 폴더에 같은 보기 모드를 적용할지 선택하세요.";
+/* Warning message to alert user about logout in My Account section if has transfers in progress. */
+"When you logout, ongoing transfers will be cancelled."="로그아웃하면, 진행중인 전송은 취소됩니다.";
+/* Warning message to alert user about logout in My Account section if has offline files. */
+"When you logout, files from your Offline section will be deleted from your device."="로그아웃하면 오프라인 섹션의 파일들이 당신의 기기에서 삭제됩니다.";
+/* Warning message to alert user about logout in My Account section if has offline files and transfers in progress. */
+"When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled."="로그아웃하면, 기기의 오프라인 섹션의 파일들이 삭제되고 진행중인 전송이 취소됩니다.";
+/* Default title of an empty chat. */
+"Chat created on %s1"="%s1에 생성된 대화";

@@ -23,6 +23,7 @@ NSString * const MEGANodesCurrentNotification = @"nz.mega.nodesCurrent";
 NSString * const MEGAStorageOverQuotaNotification = @"nz.mega.storageOverQuota";
 NSString * const MEGAStorageEventDidChangeNotification = @"nz.mega.event.storage";
 NSString * const MEGAMediaInfoReadyNotification = @"nz.mega.mediaInfoReady";
+NSString * const MEGAOpenChatRoomFromPushNotification = @"nz.mega.openChatRoomFromPush";
 
 #pragma mark - global notification keys
 
@@ -103,6 +104,14 @@ NSString * const MEGALastPublicTimestampAccessed = @"kLastPublicTimestampAccesse
 
 NSString * const MEGContactNicknameChangeNotification = @"MEGAContactNicknameChangeNotification";
 
+#pragma mark - Notification Service Extension
+
+NSString * const MEGAInvalidateNSECache = @"MEGAInvalidateNSECache";
+
 #pragma mark - DB name
 
 const NSUInteger MEGALastCharactersFromSession = 36;
+
+#pragma mark - File size
+
+const long long MEGAMaxFileLinkAutoOpenSize = 10000000; //10Megabytes
