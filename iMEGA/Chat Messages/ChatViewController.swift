@@ -28,6 +28,7 @@ class ChatViewController: MessagesViewController {
     var totalBytesToUpload = 0.0
     var remainingBytesToUpload = 0.0
     var totalProgressOfTransfersCompleted = 0.0
+    var sendTypingTimer: Timer?
     private(set) lazy var refreshControl: UIRefreshControl = {
          let control = UIRefreshControl()
          control.addTarget(self, action: #selector(loadMoreMessages), for: .valueChanged)

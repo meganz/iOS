@@ -260,14 +260,14 @@ extension ChatViewController {
     }
 }
 
-extension ChatViewController: ChatMessageAndAudioInputBarDelegate {
+extension ChatViewController: ChatInputBarDelegate {
     
     func tappedAddButton(_ button: UIButton) {
         displayAddToChatViewController(button)
     }
     
     func tappedSendButton(withText text: String) {
-        print("Send button tapped with text \(text)")
+        MEGASdkManager.sharedMEGAChatSdk()?.sendStopTypingNotification(forChat: chatRoom.chatId)
         var message : MEGAChatMessage?
         if editMessage != nil {
             if editMessage?.message.content != text {
@@ -293,7 +293,6 @@ extension ChatViewController: ChatMessageAndAudioInputBarDelegate {
     }
     
     func tappedSendAudio(atPath path: String) {
-        print("send audio at path \(path)")
         
         // TODO: Refactor the below code.
         // Handle errors and show the progress as well
@@ -348,7 +347,24 @@ extension ChatViewController: ChatMessageAndAudioInputBarDelegate {
     }
     
     func typing(withText text: String) {
-        print("Started typing with text \(text)")
+        if text.isEmpty {
+            MEGASdkManager.sharedMEGAChatSdk()?.sendStopTypingNotification(forChat: chatRoom.chatId)
+            if sendTypingTimer != nil {
+                self.sendTypingTimer?.invalidate()
+                self.sendTypingTimer = nil
+            }
+        } else if !text.isEmpty && sendTypingTimer == nil {
+            sendTypingTimer = Timer.scheduledTimer(withTimeInterval: 4.0, repeats: false) { [weak self] _ in
+                guard let `self` = self,
+                    let timer = self.sendTypingTimer else {
+                    return
+                }
+                
+                timer.invalidate()
+                self.sendTypingTimer = nil
+            }
+            MEGASdkManager.sharedMEGAChatSdk()?.sendTypingNotification(forChat: chatRoom.chatId)
+        }
     }
 }
 
