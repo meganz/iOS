@@ -1051,7 +1051,7 @@
             if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
                 [self.navigationController presentViewController:[self photoBrowserForMediaNode:node] animated:YES completion:nil];
             } else {
-                [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO];
+                [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO fileLink:nil];
             }
             break;
         }

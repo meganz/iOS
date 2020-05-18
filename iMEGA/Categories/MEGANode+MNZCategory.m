@@ -80,7 +80,7 @@
                 
                 [navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
             } else {
-                [self mnz_openNodeInNavigationController:navigationController folderLink:NO];
+                [self mnz_openNodeInNavigationController:navigationController folderLink:NO fileLink:nil];
             }
             break;
         }
@@ -90,18 +90,18 @@
     }
 }
 
-- (void)mnz_openNodeInNavigationController:(UINavigationController *)navigationController folderLink:(BOOL)isFolderLink {
+- (void)mnz_openNodeInNavigationController:(UINavigationController *)navigationController folderLink:(BOOL)isFolderLink fileLink:(NSString *)fileLink {
     if (self.name.mnz_isMultimediaPathExtension && MEGASdkManager.sharedMEGAChatSdk.mnz_existsActiveCall) {
         [Helper cannotPlayContentDuringACallAlert];
     } else {
-        UIViewController *viewController = [self mnz_viewControllerForNodeInFolderLink:isFolderLink];
+        UIViewController *viewController = [self mnz_viewControllerForNodeInFolderLink:isFolderLink fileLink:fileLink];
         if (viewController) {
             [navigationController presentViewController:viewController animated:YES completion:nil];
         }
     }
 }
 
-- (UIViewController *)mnz_viewControllerForNodeInFolderLink:(BOOL)isFolderLink {
+- (UIViewController *)mnz_viewControllerForNodeInFolderLink:(BOOL)isFolderLink fileLink:(NSString *)fileLink {
     MEGASdk *api = isFolderLink ? [MEGASdkManager sharedMEGASdkFolder] : [MEGASdkManager sharedMEGASdk];
     MEGASdk *apiForStreaming = [MEGASdkManager sharedMEGASdk].isLoggedIn ? [MEGASdkManager sharedMEGASdk] : [MEGASdkManager sharedMEGASdkFolder];
     
@@ -142,6 +142,7 @@
                     previewController.nodeFileIndex = 0;
                     previewController.node = self;
                     previewController.isLink = isFolderLink;
+                    previewController.fileLink = fileLink;
                     
                     return navigationController;
                 }
@@ -171,6 +172,7 @@
             previewController.node = self;
             previewController.api = api;
             previewController.isLink = isFolderLink;
+            previewController.fileLink = fileLink;
             return navigationController;
         }
         return nil;
