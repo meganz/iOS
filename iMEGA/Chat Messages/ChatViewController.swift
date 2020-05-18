@@ -18,11 +18,12 @@ class ChatViewController: MessagesViewController {
     var chatInputBar: ChatInputBar?
     var editMessage: ChatMessage?
     var addToChatViewController: AddToChatViewController?
-    var selectedEditingIndexPaths = Set<IndexPath>()
+//    var selectedEditingIndexPaths = Set<IndexPath>()
+    var selectedMessages = Set<ChatMessage>()
     
-    let shareBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: nil)
-    let forwardBarButtonItem = UIBarButtonItem(image: UIImage(named: "forwardToolbar")?.imageFlippedForRightToLeftLayoutDirection(), style: .done, target: self, action: nil)
-    let deleteBarButtonItem = UIBarButtonItem()
+    let shareBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(ChatViewController.shareSelectedMessages))
+    let forwardBarButtonItem = UIBarButtonItem(image: UIImage(named: "forwardToolbar")?.imageFlippedForRightToLeftLayoutDirection(), style: .done, target: self, action: #selector(ChatViewController.forwardSelectedMessages))
+    let deleteBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(ChatViewController.deleteSelectedMessages))
     
     // transfer
     var totalBytesToUpload = 0.0
@@ -90,9 +91,11 @@ class ChatViewController: MessagesViewController {
         let finishing = isEditing && !editing
         
         if finishing {
-            selectedEditingIndexPaths.removeAll()
+            selectedMessages.removeAll()
+//            selectedEditingIndexPaths.removeAll()
             navigationController?.setToolbarHidden(true, animated: true)
         } else {
+            customToolbar(type: .forward)
             navigationController?.setToolbarHidden(false, animated: true)
         }
         
@@ -430,7 +433,8 @@ class ChatViewController: MessagesViewController {
             }
             overlayView.delegate = self
             overlayView.indexPath = indexPath
-            overlayView.configureDisplaying(isActive: selectedEditingIndexPaths.contains(indexPath))
+            let message = messages[indexPath.section]
+            overlayView.configureDisplaying(isActive: selectedMessages.contains(message))
             return overlayView
         default:
             break

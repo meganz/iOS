@@ -7,17 +7,27 @@ enum ToolbarType {
 
 extension ChatViewController {
     func customToolbar(type: ToolbarType) {
+        let flexibleItem = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        
         switch type {
         case .forward:
-            
-            
-            
-            break
+            setToolbarItems([shareBarButtonItem, flexibleItem, forwardBarButtonItem], animated: true)
         case .delete:
-            break
-        default:
-            break
+            setToolbarItems([deleteBarButtonItem], animated: true)
         }
+    }
+    
+    
+    @objc func deleteSelectedMessages() {
+        
+    }
+    
+    @objc func forwardSelectedMessages() {
+//        ind
+    }
+    
+    @objc func shareSelectedMessages() {
+        
     }
 }
 
