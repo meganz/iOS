@@ -15,6 +15,6 @@
 /*  */
 "quickActionUploadString"="Загрузить";
 /* Title of the Offline section */
-"quickActionOfflineString"="Не в сети";
+"quickActionOfflineString"="На устройстве";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
 "NSLocationAlwaysAndWhenInUseUsageDescription"="MEGA получает доступ к вашему местоположению, когда вы делитесь им со своими контактами в чате или когда вы включаете «Загружать в фоновом режиме» для загрузок из камеры, чтобы ваши фотографии и видео загружались при изменении вашего местоположения.";

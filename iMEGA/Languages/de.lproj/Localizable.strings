@@ -522,6 +522,12 @@
 "offline"="Offline";
 /* Title of the Contacts section */
 "contactsTitle"="Kontakte";
+/* Label for any ‘Requests’ button, link, text, title, etc. On iOS is used to go to the Contact request section from Contacts */
+"Requests"="Anfragen";
+/* Label for any ‘Groups’ button, link, text, title, etc. On iOS is used to go to the chats 'Groups' section from Contacts */
+"Groups"="Groups";
+/* Label for any ‘Recently Added’ button, link, text, title, etc. On iOS is used on a section that shows the 'Recently Added' contacts */
+"Recently Added"="Recently Added";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
 "oneFolderShared"="1 Ordner";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
@@ -945,8 +951,8 @@
 "unlockedBonuses"="Erhaltene Boni:";
 /* A header/title of a section which contains information about used/available storage space on a user's cloud drive. */
 "storageQuota"="Speicherplatz";
-/* The header/title of a block/section which contains information about the user's used/available transfer allowance for their account. */
-"transferQuota"="Übertragungsvolumen";
+/* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
+"Transfer Quota"="Übertragungsvolumen";
 /* achievement type */
 "registrationBonus"="Bonus für neue Nutzer";
 /* Message shown on the achievements dialog for achieved achievements, %1 is replaced with e.g. 20 GB */
@@ -976,11 +982,11 @@
 /* Description to unblock account by verifying phone number */
 "Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account."="Your account has been locked temporarily due to potential abuse. Please verify your phone number to unlock your account.";
 /* Verify your account title */
-"Verify Your Account"="Account verifizieren";
+"Verify Your Account"="Verify Your Account";
 /* Add your phone number title */
-"Add Your Phone Number"="Mobiltelefon hinzufügen";
+"Add Your Phone Number"="Add Your Phone Number";
 /* Choose Your Country title */
-"Choose Your Country"="Wählen Sie Ihr Land";
+"Choose Your Country"="Choose Your Country";
 /* Used to display the number of months a plan was purchased for e.g. 3 months, 6 months. */
 "months"="Monate";
 /*  */
@@ -991,10 +997,12 @@
 "logoutLabel"="Ausloggen";
 /* String shown when you are logging out of your account. */
 "loggingOut"="Logge aus";
-/* Button to remove avatar. Try to keep the text short (as in English) */
-"removeAvatar"="Avatar löschen";
-/* button that allows the user the change his avatar */
-"changeAvatar"="Avatar ändern";
+/* Button to remove some photo, e.g. avatar photo. Try to keep the text short (as in English) */
+"Remove Photo"="Remove Photo";
+/* Button that allows the user the change a photo, e.g. his avatar photo */
+"Change Photo"="Change Photo";
+/* Button that allows the user the add a photo, e.g avatar photo */
+"Add Photo"="Add Photo";
 /* Button title that allows the user change his name */
 "changeName"="Namen ändern";
 /* Success message when changing profile information. */
@@ -1269,8 +1277,6 @@
 "removePreview"="URL-Ansicht entfernen";
 /* */
 "warning"="Achtung";
-/* Alert message shown when the user perform logout and has files in the Offline directory */
-"allFilesSavedForOfflineWillBeDeletedFromYourDevice"="Alle für Offline-Nutzung gespeicherten Dateien werden beim Logout gelöscht. Fortfahren?";
 /* Title shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_title"="Transfervolumen nicht ausreichend";
 /* Description shown when you almost had used your available transfer quota. */
@@ -1436,8 +1442,8 @@
 "resetQrCode"="QR-Code zurücksetzen";
 /* Footer that explains what would happen if the user resets his/her QR code */
 "resetQrCodeFooter"="Ältere QR-Codes verlieren ihre Gültigkeit";
-/* Title for view that displays the QR code of the user. String as short as possible. */
-"myCode"="Mein Code";
+/* Label for any ‘My QR code’ button, link, text, title, etc. - (String as short as possible). */
+"My QR code"="Mein QR-Code";
 /* Segmented control title for view that allows the user to scan QR codes. String as short as possible. */
 "scanCode"="Code scannen";
 /* Label that encourage the user to line the QR to scan with the camera */
@@ -1994,7 +2000,7 @@
 "Business"="Business";
 /* */
 "Administrator"="Administrator";
-/* */
+/* Label to indicate the amount of transfer quota in several places. It is a ‘noun‘ and there is an screenshot with an use example - (String as short as possible). */
 "Transfer"="Transfer";
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
 "You cannot remove %1$s as a contact because they are part of your Business account."="You cannot remove %1$s as a contact because they are part of your Business account.";
@@ -2124,6 +2130,8 @@
 "Your account is already verified"="Your account is already verified";
 /* Place holder for enter mobile number field */
 "Your phone number"="Ihre Mobilnummer";
+/* Text related to verified phone number. Used as title or cell description.  */
+"Phone Number"="Phone Number";
 /* Label tell user to enter received txt to below input boxes */
 "Please type the verification code sent to"="Please enter the verification code sent to";
 /* Text message to remind user to resend verification code */
@@ -2176,9 +2184,43 @@
 "Your account has been disabled by your administrator. Please contact your business account administrator for further details."="Ihr Account wurde von Ihrem Administrator gesperrt. Bitte setzen Sie sich für weitere Informationen direkt mit ihm in Verbindung.";
 /* An error message which appears to sub-users of a business account when they try to login and they are deleted. */
 "Your account has been removed by your administrator. Please contact your business account administrator for further details."="Ihr Account wurde von Ihrem Administrator entfernt. Bitte setzen Sie sich mit ihm in Verbindung.";
-/* Description of why the user should give permission to contacts */
-"Easily discover contacts from your address book on MEGA."="Easily discover contacts from your address book on MEGA.";
-/* Detailed description of why the user should give permission to contacts */
-"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA will not use this data for any other purpose and will never interact with your contacts without your consent.";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="Benennen Sie den Gruppenchat";
+/* Title of one of the Settings sections where you can customise the 'Appearance' of the app. */
+"Appearance"="Appearance";
+/* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
+"Sorting And View Mode"="Sorting And View Mode";
+/* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
+"Default"="Default";
+/* Label for any ‘Day’ button, link, text, title, etc. - (String as short as possible). */
+"Day"="Day";
+/* Label for any ‘Night’ button, link, text, title, etc. - (String as short as possible). */
+"Night"="Night";
+/* Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible). */
+"Minimal"="Minimal";
+/* Section title inside of Settings - Appearance, where you can change the app's layout. */
+"Layout"="Layout";
+/* Section title inside of Settings - Appearance, where you can change the app's icon. */
+"App Icon"="App Icon";
+/* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
+"Configure sorting order and the default view (List or Thumbnail)."="Configure sorting order and the default view (List or Thumbnail).";
+/* Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for All'. */
+"Per Folder"="Per Folder";
+/* Same for all configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for all Folders'. */
+"Same for All"="Same for All";
+/* Section title of the 'Sorting And View Mode' view inside of Settings - Appearence - Sorting And View Mode. */
+"Sorting preference"="Spaltensortierung";
+/* Section title of the 'Sorting And View Mode' view inside of Settings - Appearence - Sorting And View Mode. */
+"View mode preference"="Ordnerdarstellung";
+/* Footer text explaining what means choosing a sorting preference 'Per Folder' or 'Same for All' in Settings - Appearance - Sorting And View Mode. */
+"Configure column sorting order on a per-folder basis, or use the same order for all folders."="Ordnerspezifische Spaltensortierung oder identische Einstellung für alle Ordner";
+/* Footer text explaining what means choosing a view mode preference 'Per Folder', 'List view' or 'Thumbnail view' in Settings - Appearance - Sorting And View Mode. */
+"Select view mode (List or Thumbnail) on a per-folder basis, or use the same view mode for all folders."="Select view mode (List or Thumbnail) on a per-folder basis, or use the same view mode for all folders.";
+/* Warning message to alert user about logout in My Account section if has transfers in progress. */
+"When you logout, ongoing transfers will be cancelled."="Durch den Logout werden alle laufenden Transfers abgebrochen.";
+/* Warning message to alert user about logout in My Account section if has offline files. */
+"When you logout, files from your Offline section will be deleted from your device."="Sobald Sie sich ausloggen, werden alle lokal gespeicherten Offline-Dateien gelöscht.";
+/* Warning message to alert user about logout in My Account section if has offline files and transfers in progress. */
+"When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled."="Sobald Sie sich ausloggen, werden Ihre Offline-Dateien gelöscht und alle laufenden Transfers abgebrochen.";
+/* Default title of an empty chat. */
+"Chat created on %s1"="Chat vom %s1";

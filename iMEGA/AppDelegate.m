@@ -100,6 +100,8 @@
 @property (strong, nonatomic) BackgroundRefreshPerformer *backgroundRefreshPerformer;
 @property (nonatomic, strong) MEGAProviderDelegate *megaProviderDelegate;
 
+@property (nonatomic) MEGAChatInit chatLastKnownInitState;
+
 @end
 
 @implementation AppDelegate
@@ -285,8 +287,9 @@
     MEGALogDebug(@"[App Lifecycle] Application did finish launching with options %@", launchOptions);
     
     [self.window makeKeyAndVisible];
-    if (application.applicationState == UIApplicationStateActive) {
+    if (application.applicationState != UIApplicationStateBackground) {
         UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+        [center removeAllPendingNotificationRequests];
         [center removeAllDeliveredNotifications];
     }
     
@@ -361,6 +364,7 @@
     [self application:application shouldHideWindows:NO];
     
     UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+    [center removeAllPendingNotificationRequests];
     [center removeAllDeliveredNotifications];
 }
 
@@ -922,6 +926,7 @@
 }
 
 - (void)copyDatabasesForExtensions {
+    MEGALogDebug(@"Copy databases for extensions");
     NSError *error;
     NSFileManager *fileManager = [NSFileManager defaultManager];
     
@@ -1270,6 +1275,7 @@ void uncaughtExceptionHandler(NSException *exception) {
     
     // Call
     if ([payload.dictionaryPayload[@"megatype"] integerValue] == 4) {
+        [self initProviderDelegate];
         NSString *chatIdB64 = payload.dictionaryPayload[@"megadata"][@"chatid"];
         NSString *callIdB64 = payload.dictionaryPayload[@"megadata"][@"callid"];
         uint64_t chatId = [MEGASdk handleForBase64UserHandle:chatIdB64];
@@ -1801,6 +1807,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 - (void)onChatInitStateUpdate:(MEGAChatSdk *)api newState:(MEGAChatInit)newState {
     MEGALogInfo(@"onChatInitStateUpdate new state: %td", newState);
+    self.chatLastKnownInitState = newState;
     if (newState == MEGAChatInitError) {
         [[MEGASdkManager sharedMEGAChatSdk] logout];
     }
@@ -1826,6 +1833,15 @@ void uncaughtExceptionHandler(NSException *exception) {
         [MEGAReachabilityManager sharedManager].chatRoomListState = MEGAChatRoomListStateOnline;
     } else if (newState >= MEGAChatConnectionLogging) {
         [MEGAReachabilityManager sharedManager].chatRoomListState = MEGAChatRoomListStateInProgress;
+    }
+}
+
+- (void)onChatListItemUpdate:(MEGAChatSdk *)api item:(MEGAChatListItem *)item {
+    if (item.changes == 0 && self.chatLastKnownInitState == MEGAChatStatusOnline) {
+        MEGALogDebug(@"New chat room, invalidate NSE cache");
+        [self copyDatabasesForExtensions];
+        NSUserDefaults *sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];
+        [sharedUserDefaults setBool:YES forKey:MEGAInvalidateNSECache];
     }
 }
 

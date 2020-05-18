@@ -32,6 +32,13 @@
 #import "RemoveSharingActivity.h"
 #import "ShareFolderActivity.h"
 #import "SendToChatActivity.h"
+#ifdef MNZ_SHARE_EXTENSION
+#import "MEGAShare-Swift.h"
+#elif MNZ_PICKER_EXTENSION
+#import "MEGAPicker-Swift.h"
+#else
+#import "MEGA-Swift.h"
+#endif
 
 static MEGAIndexer *indexer;
 
@@ -345,17 +352,8 @@ static MEGAIndexer *indexer;
     
     NSNumber *freeSizeNumber = [[[NSFileManager defaultManager] attributesOfFileSystemForPath:NSHomeDirectory() error:nil] objectForKey:NSFileSystemFreeSize];
     if ([freeSizeNumber longLongValue] < [nodeSizeNumber longLongValue]) {
-        UIAlertController *alertController;
-        
-        if ([node type] == MEGANodeTypeFile) {
-            alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"nodeTooBig", @"Title shown inside an alert if you don't have enough space on your device to download something") message:AMLocalizedString(@"fileTooBigMessage", @"The file you are trying to download is bigger than the avaliable memory.") preferredStyle:UIAlertControllerStyleAlert];
-            [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-        } else if ([node type] == MEGANodeTypeFolder) {
-            alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"nodeTooBig", @"Title shown inside an alert if you don't have enough space on your device to download something") message:AMLocalizedString(@"folderTooBigMessage", @"The folder you are trying to download is bigger than the avaliable memory.") preferredStyle:UIAlertControllerStyleAlert];
-            [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-        }
-        
-        [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
+        StorageFullModalAlertViewController *warningVC = StorageFullModalAlertViewController.alloc.init;
+        [warningVC showWithRequiredStorage:nodeSizeNumber.longLongValue];
         return NO;
     }
     return YES;
