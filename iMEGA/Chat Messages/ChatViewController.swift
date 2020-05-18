@@ -19,7 +19,11 @@ class ChatViewController: MessagesViewController {
     var editMessage: ChatMessage?
     var addToChatViewController: AddToChatViewController?
     var selectedEditingIndexPaths = Set<IndexPath>()
-
+    
+    let shareBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: nil)
+    let forwardBarButtonItem = UIBarButtonItem(image: UIImage(named: "forwardToolbar").imageFlippedForRightToLeftLayoutDirection(), style: .done, target: self, action: nil)
+    let deleteBarButtonItem = UIBarButtonItem()
+    
     // transfer
     var totalBytesToUpload = 0.0
     var remainingBytesToUpload = 0.0
@@ -92,10 +96,11 @@ class ChatViewController: MessagesViewController {
             navigationController?.setToolbarHidden(false, animated: true)
         }
         
+        super.setEditing(editing, animated: animated)
         UIView.animate(withDuration: 0.25) {
             self.messagesCollectionView.collectionViewLayout.invalidateLayout()
         }
-        
+        reloadInputViews()
     }
     
     override func viewDidLoad() {
