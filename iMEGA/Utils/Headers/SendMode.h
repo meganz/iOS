@@ -2,5 +2,6 @@
 typedef NS_ENUM(NSUInteger, SendMode) {
     SendModeCloud,
     SendModeShareExtension,
-    SendModeForward
+    SendModeForward,
+    SendModeFileAndFolderLink,
 };
