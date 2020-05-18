@@ -19,7 +19,11 @@ class ChatViewController: MessagesViewController {
     var editMessage: ChatMessage?
     var addToChatViewController: AddToChatViewController?
     var selectedEditingIndexPaths = Set<IndexPath>()
-
+    
+    let shareBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: nil)
+    let forwardBarButtonItem = UIBarButtonItem(image: UIImage(named: "forwardToolbar")?.imageFlippedForRightToLeftLayoutDirection(), style: .done, target: self, action: nil)
+    let deleteBarButtonItem = UIBarButtonItem()
+    
     // transfer
     var totalBytesToUpload = 0.0
     var remainingBytesToUpload = 0.0
