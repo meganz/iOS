@@ -9,10 +9,10 @@ extension ChatViewController {
     }
     
     func forwardMessage(_ message: ChatMessage) {
+        selectedMessages.insert(message)
         customToolbar(type: .forward)
-        self.setEditing(true, animated: true)
+        setEditing(true, animated: true)
     }
-    
     
     func editMessage(_ message: ChatMessage) {
         editMessage = message
@@ -20,8 +20,9 @@ extension ChatViewController {
     }
     
     func deleteMessage(_ message: ChatMessage) {
+        selectedMessages.insert(message)
         customToolbar(type: .delete)
-        self.setEditing(true, animated: true)
+        setEditing(true, animated: true)
     }
     
     func removeRichPreview(_ message: ChatMessage) {
@@ -69,7 +70,7 @@ extension ChatViewController {
         browserVC.selectedNodesArray = nodes
         browserVC.browserAction = .import
         
-        self.present(viewController: navigationController)
+        present(viewController: navigationController)
         
     }
     

@@ -109,8 +109,27 @@ extension ChatViewController {
     }
     
     
-    @objc func shareSelectedMessages() {
+    @objc func shareSelectedMessages(sender: UIBarButtonItem) {
+        SVProgressHUD.show()
+        var megaMessages = [MEGAChatMessage]()
+        for chatMessage in selectedMessages {
+            megaMessages.append(chatMessage.message)
+        }
+        megaMessages = megaMessages.sorted(by: { (obj1, obj2) -> Bool in
+            obj1.messageIndex < obj2.messageIndex
+        })
         
+        DispatchQueue.global(qos: .default).async {
+            guard let activityViewController = Helper.activityViewController(for: megaMessages, sender: sender) else {
+                SVProgressHUD.showError(withStatus: AMLocalizedString("linkUnavailable", nil))
+                return
+            }
+            
+            DispatchQueue.main.async(execute: {
+                SVProgressHUD.dismiss()
+                self.present(viewController: activityViewController)
+            })
+        }
     }
 }
 

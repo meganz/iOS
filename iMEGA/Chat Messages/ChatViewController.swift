@@ -80,6 +80,9 @@ class ChatViewController: MessagesViewController {
                                action: #selector(addParticipant))
     }()
     
+    lazy var cancelBarButtonItem = {
+        return UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelSelecting))
+     }()
 
     // MARK: - Overriden methods
 
@@ -92,9 +95,9 @@ class ChatViewController: MessagesViewController {
         
         if finishing {
             selectedMessages.removeAll()
-//            selectedEditingIndexPaths.removeAll()
             navigationController?.setToolbarHidden(true, animated: true)
         } else {
+            chatInputBar?.dismissKeyboard()
             navigationController?.setToolbarHidden(false, animated: true)
         }
         
@@ -103,6 +106,7 @@ class ChatViewController: MessagesViewController {
             self.messagesCollectionView.collectionViewLayout.invalidateLayout()
         }
         reloadInputViews()
+        updateRightBarButtons()
     }
     
     override func viewDidLoad() {
@@ -198,6 +202,8 @@ class ChatViewController: MessagesViewController {
             closeChatRoom()
             MEGASdkManager.sharedMEGAChatSdk()?.remove(self as MEGAChatCallDelegate)
         }
+        
+        setEditing(false, animated: true)
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -771,6 +777,10 @@ class ChatViewController: MessagesViewController {
             })
         }
         present(navigationController, animated: true, completion: nil)
+    }
+    
+    @objc func cancelSelecting() {
+        setEditing(false, animated: true)
     }
 
     func openCallViewWithVideo(videoCall: Bool, active: Bool) {

@@ -37,6 +37,12 @@ extension ChatViewController {
     }
     
     func updateRightBarButtons() {
+        guard !isEditing else {
+            navigationItem.rightBarButtonItems = [cancelBarButtonItem]
+            return
+        }
+        navigationItem.rightBarButtonItems = rightBarButtons
+
         audioCallBarButtonItem.isEnabled = !shouldDisableAudioVideoCall
         videoCallBarButtonItem.isEnabled = !shouldDisableAudioVideoCall
         
