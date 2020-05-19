@@ -81,7 +81,6 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
                 }
             }
         } else {
-            loadingState = false
 
             if messages.count == 0 {
                 messages = historyMessages
@@ -94,13 +93,14 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
             messages = historyMessages + messages
             historyMessages.removeAll()
             
-            if (chatViewController.messagesCollectionView.refreshControl != nil) {
+            if (loadingState) {
                 chatViewController.messagesCollectionView.reloadDataAndKeepOffset()
                 chatViewController.messagesCollectionView.refreshControl?.endRefreshing()
             } else {
-                chatViewController.messagesCollectionView.reloadData()
-                chatViewController.messagesCollectionView.scrollToBottom()
+                chatViewController.messagesCollectionView.reloadDataAndKeepOffset()
             }
+            
+            loadingState = false
         }
     }
     
