@@ -7,6 +7,8 @@
 #import "MEGAReachabilityManager.h"
 #import "UIApplication+MNZCategory.h"
 #import "NSFileManager+MNZCategory.h"
+#import "MEGAGenericRequestDelegate.h"
+#import "MEGASdkManager.h"
 
 @implementation NSURL (MNZCategory)
 
@@ -24,10 +26,28 @@
     }
     
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        SFSafariViewController *safariViewController = [[SFSafariViewController alloc] initWithURL:self];
-        safariViewController.preferredControlTintColor = UIColor.mnz_redMain;
-        [UIApplication.mnz_visibleViewController presentViewController:safariViewController animated:YES completion:nil];
+        if ([self.absoluteString containsString:RequireTransferSession]) {
+            NSUInteger location = [self.absoluteString rangeOfString:RequireTransferSession].location + RequireTransferSession.length;
+            NSString *path = [self.absoluteString substringFromIndex:location];
+            MEGAGenericRequestDelegate *delegate = [MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
+                if (error.type == MEGAErrorTypeApiOk) {
+                    [self presentSafariViewControllerWithLURL:[NSURL URLWithString:request.link]];
+                } else {
+                    [self presentSafariViewControllerWithLURL:self];
+                }
+            }];
+            
+            [MEGASdkManager.sharedMEGASdk getSessionTransferURL:path delegate:delegate];
+        } else {
+            [self presentSafariViewControllerWithLURL:self];
+        }
     }
+}
+
+- (void)presentSafariViewControllerWithLURL:(NSURL *)url {
+    SFSafariViewController *safariViewController = [SFSafariViewController.alloc initWithURL:url];
+    safariViewController.preferredControlTintColor = UIColor.mnz_redMain;
+    [UIApplication.mnz_visibleViewController presentViewController:safariViewController animated:YES completion:nil];
 }
 
 - (URLType)mnz_type {
