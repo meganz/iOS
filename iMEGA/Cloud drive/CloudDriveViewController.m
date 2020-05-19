@@ -39,7 +39,6 @@
 #import "CloudDriveCollectionViewController.h"
 #import "ContactsViewController.h"
 #import "CopyrightWarningViewController.h"
-#import "CustomActionViewController.h"
 #import "CustomModalAlertViewController.h"
 #import "MEGAAssetsPickerController.h"
 #import "MEGAImagePickerController.h"
@@ -60,7 +59,7 @@
 
 static const NSTimeInterval kSearchTimeDelay = .5;
 
-@interface CloudDriveViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, CustomActionViewControllerDelegate, NodeInfoViewControllerDelegate, UITextFieldDelegate, UISearchControllerDelegate, VNDocumentCameraViewControllerDelegate> {
+@interface CloudDriveViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, NodeActionViewControllerDelegate, NodeInfoViewControllerDelegate, UITextFieldDelegate, UISearchControllerDelegate, VNDocumentCameraViewControllerDelegate> {
     
     MEGAShareType lowShareType; //Control the actions allowed for node/nodes selected
 }
@@ -1799,37 +1798,9 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     [self presentSortByViewController];
 }
 
-- (IBAction)infoTouchUpInside:(UIButton *)sender {
-    if (self.cdTableView.tableView.isEditing) {
-        return;
-    }
-    
-    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.cdTableView.tableView];
-    NSIndexPath *indexPath = [self.cdTableView.tableView indexPathForRowAtPoint:buttonPosition];
-    
-    MEGANode *node = self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : [self.nodes nodeAtIndex:indexPath.row];
-    
-    [self showCustomActionsForNode:node sender:sender];
-}
-
 - (void)showCustomActionsForNode:(MEGANode *)node sender:(UIButton *)sender {
-    
-    CustomActionViewController *actionController = [[CustomActionViewController alloc] init];
-    actionController.node = node;
-    actionController.displayMode = self.displayMode;
-    actionController.incomingShareChildView = self.isIncomingShareChildView;
-    actionController.actionDelegate = self;
-    actionController.actionSender = sender;
-    
-    if ([[UIDevice currentDevice] iPadDevice]) {
-        actionController.modalPresentationStyle = UIModalPresentationPopover;
-        actionController.popoverPresentationController.delegate = actionController;
-        actionController.popoverPresentationController.sourceView = sender;
-        actionController.popoverPresentationController.sourceRect = CGRectMake(0, 0, sender.frame.size.width/2, sender.frame.size.height/2);
-    } else {
-        actionController.modalPresentationStyle = UIModalPresentationOverFullScreen;
-    }
-    [self presentViewController:actionController animated:YES completion:nil];
+    NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:node delegate:self displayMode:self.displayMode isIncoming:self.isIncomingShareChildView sender:sender];
+    [self presentViewController:nodeActions animated:YES completion:nil];
 }
 
 - (IBAction)restoreTouchUpInside:(UIBarButtonItem *)sender {
@@ -2065,9 +2036,9 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     }];
 }
 
-#pragma mark - CustomActionViewControllerDelegate
+#pragma mark - NodeActionViewControllerDelegate
 
-- (void)performAction:(MegaNodeActionType)action inNode:(MEGANode *)node fromSender:(id)sender{
+- (void)nodeAction:(NodeActionViewController *)nodeAction didSelect:(MegaNodeActionType)action for:(MEGANode *)node from:(id)sender {
     switch (action) {
         case MegaNodeActionTypeDownload:
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", @"Message shown when a download starts")];

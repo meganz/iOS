@@ -8,7 +8,6 @@
 
 #import "Helper.h"
 #import "CopyrightWarningViewController.h"
-#import "CustomActionViewController.h"
 #import "NodeInfoViewController.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGANavigationController.h"
@@ -28,7 +27,7 @@
 #import "MEGA-Swift.h"
 #import "UIView+MNZCategory.h"
 
-@interface PreviewDocumentViewController () <QLPreviewControllerDataSource, QLPreviewControllerDelegate, MEGATransferDelegate, UICollectionViewDelegate, UICollectionViewDataSource, CustomActionViewControllerDelegate, NodeInfoViewControllerDelegate, SearchInPdfViewControllerProtocol, UIGestureRecognizerDelegate, PDFViewDelegate> {
+@interface PreviewDocumentViewController () <QLPreviewControllerDataSource, QLPreviewControllerDelegate, MEGATransferDelegate, UICollectionViewDelegate, UICollectionViewDataSource, NodeActionViewControllerDelegate, NodeInfoViewControllerDelegate, SearchInPdfViewControllerProtocol, UIGestureRecognizerDelegate, PDFViewDelegate> {
     MEGATransfer *previewDocumentTransfer;
 }
 
@@ -265,24 +264,12 @@
 }
 
 - (IBAction)actionsTapped:(UIBarButtonItem *)sender {
-    CustomActionViewController *actionController = [[CustomActionViewController alloc] init];
     if (!self.isLink) {
         self.node = [MEGASdkManager.sharedMEGASdk nodeForHandle:self.node.handle];
     }
-    actionController.node = self.node;
-    actionController.actionDelegate = self;
-    actionController.actionSender = sender;
-    actionController.displayMode = self.isLink ? DisplayModeFileLink : DisplayModeCloudDrive;
     
-    if ([[UIDevice currentDevice] iPadDevice]) {
-        actionController.modalPresentationStyle = UIModalPresentationPopover;
-        actionController.popoverPresentationController.delegate = actionController;
-        actionController.popoverPresentationController.barButtonItem = sender;
-    } else {
-        actionController.modalPresentationStyle = UIModalPresentationOverFullScreen;
-    }
-    
-    [self presentViewController:actionController animated:YES completion:nil];
+    NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:self.node delegate:self displayMode:self.isLink ? DisplayModeFileLink : DisplayModeCloudDrive isIncoming:NO sender:sender];
+    [self presentViewController:nodeActions animated:YES completion:nil];
 }
 
 - (IBAction)importAction:(id)sender {
@@ -354,9 +341,9 @@
     }
 }
 
-#pragma mark - CustomActionViewControllerDelegate
+#pragma mark - NodeActionViewControllerDelegate
 
-- (void)performAction:(MegaNodeActionType)action inNode:(MEGANode *)node fromSender:(id)sender{
+- (void)nodeAction:(NodeActionViewController *)nodeAction didSelect:(MegaNodeActionType)action for:(MEGANode *)node from:(id)sender {
     switch (action) {
         case MegaNodeActionTypeShare:
             [self share];
