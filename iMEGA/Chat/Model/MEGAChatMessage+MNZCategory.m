@@ -335,9 +335,13 @@ static const void *richTitleTagKey = &richTitleTagKey;
         text = @"Message contains invalid meta";
     } else {
         UIColor *textColor = self.userHandle == myHandle ? [UIColor whiteColor] : [UIColor mnz_black333333];
-        
+        UIFont *textFont = textFontRegular;
+        if (self.content.mnz_isPureEmojiString) {
+            textFont = [UIFont mnz_defaultFontForPureEmojiStringWithEmojis:[self.content mnz_emojiCount]];
+        }
+            
         self.attributedText = [NSAttributedString mnz_attributedStringFromMessage:self.content
-                                                                             font:textFontRegular
+                                                                             font:textFont
                                                                             color:textColor];
         
         if (self.isEdited && self.type != MEGAChatMessageTypeContainsMeta) {
