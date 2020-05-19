@@ -34,6 +34,10 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
         
         switch chat.changes {
         case .userTyping:
+            guard !chatViewController.isEditing else {
+                return
+            }
+            
             if (chat.userTypingHandle != api.myUserHandle) {
                 chatViewController.setTypingIndicatorViewHidden(false, animated: true ,whilePerforming: nil) { [weak self] success in
                     if success, self?.isLastSectionVisible() == true {
