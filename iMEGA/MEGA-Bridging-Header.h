@@ -62,6 +62,7 @@
 #import "MEGAImagePickerController.h"
 #import "SendToViewController.h"
 #import "OnboardingViewController.h"
+#import "ChatImageUploadQuality.h"
 #import "MEGANode.h"
 #import "UIImageView+MNZCategory.h"
 #import "NSDate+MNZCategory.h"
