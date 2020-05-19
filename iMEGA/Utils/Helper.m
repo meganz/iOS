@@ -11,6 +11,7 @@
 #import "UIApplication+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 
+#import "MEGAIndexer.h"
 #import "MEGAActivityItemProvider.h"
 #import "MEGACopyRequestDelegate.h"
 #import "MEGACreateFolderRequestDelegate.h"
@@ -40,7 +41,6 @@
 #import "MEGA-Swift.h"
 #endif
 
-static MEGAIndexer *indexer;
 
 @implementation Helper
 
@@ -640,7 +640,7 @@ static MEGAIndexer *indexer;
     
     if (reindex) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-            [indexer index:node];
+            [MEGAIndexer.sharedIndexer index:node];
         });
     }
 }
@@ -945,9 +945,6 @@ static MEGAIndexer *indexer;
     return [filesURLMutableArray copy];
 }
 
-+ (void)setIndexer:(MEGAIndexer* )megaIndexer {
-    indexer = megaIndexer;
-}
 
 #pragma mark - Utils for empty states
 

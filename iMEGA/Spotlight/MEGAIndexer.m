@@ -8,11 +8,13 @@
 #import "MEGASDKManager.h"
 #import "MEGANodeList+MNZCategory.h"
 #import "NSString+MNZCategory.h"
+#import "LTHPasscodeViewController.h"
 
 #define MNZ_PERSIST_EACH 1000
 
-@interface MEGAIndexer () <MEGATreeProcessorDelegate>
+@interface MEGAIndexer () <MEGATreeProcessorDelegate, MEGAGlobalDelegate, MEGARequestDelegate>
 
+@property (strong, nonatomic) dispatch_queue_t indexSerialQueue;
 @property (nonatomic) dispatch_semaphore_t semaphore;
 @property (nonatomic) NSMutableArray *base64HandlesToIndex;
 @property (nonatomic) NSMutableArray *base64HandlesIndexed;
@@ -32,9 +34,19 @@
 
 @implementation MEGAIndexer
 
++ (instancetype)sharedIndexer {
+    static MEGAIndexer *indexer = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        indexer = MEGAIndexer.alloc.init;
+    });
+    return indexer;
+}
+
 - (instancetype)init {
     self = [super init];
     if (self) {
+        _indexSerialQueue = dispatch_queue_create("nz.mega.spotlight.nodesIndexing", DISPATCH_QUEUE_SERIAL);
         _shouldStop = NO;
         _searchableIndex = [CSSearchableIndex defaultSearchableIndex];
         if ([[UIScreen mainScreen] scale] == 1) {
@@ -54,8 +66,46 @@
             MEGALogDebug(@"[Spotlight] %lu nodes pending after loading from pList", (unsigned long)_base64HandlesToIndex.count);
             _base64HandlesIndexed = [[NSMutableArray alloc] init];
         }
+        
+        [MEGASdkManager.sharedMEGASdk addMEGAGlobalDelegate:self];
     }
     return self;
+}
+
+- (void)reindexSpotlightIfNeeded {
+    if (!self.enableSpotlight) {
+        return;
+    }
+    dispatch_async(self.indexSerialQueue, ^{
+        if (![self.sharedUserDefaults boolForKey:@"treeCompleted"]) {
+            [self generateAndSaveTree];
+        }
+        @try {
+            [self indexTree];
+        } @catch (NSException *exception) {
+            MEGALogError(@"Exception during spotlight indexing: %@", exception);
+        }
+    });
+    
+}
+
+- (void)setEnableSpotlight:(BOOL)enableSpotlight {
+    if (self.enableSpotlight == enableSpotlight) {
+        return;
+    }
+    [NSUserDefaults.standardUserDefaults setBool:!enableSpotlight forKey:@"spotlightDisabled"];
+    
+    if (enableSpotlight) {
+        [self reindexSpotlightIfNeeded];
+    } else {
+        NSUserDefaults *sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];
+        [sharedUserDefaults removeObjectForKey:@"treeCompleted"];
+        [MEGAIndexer.sharedIndexer deleteIndexTree];
+    }
+}
+
+- (BOOL)enableSpotlight {
+    return ![NSUserDefaults.standardUserDefaults boolForKey:@"spotlightDisabled"];
 }
 
 - (void)generateAndSaveTree {
@@ -118,6 +168,17 @@
 - (void)stopIndexing {
     MEGALogDebug(@"Stopping spotlight indexing");
     self.shouldStop = YES;
+}
+
+- (void)deleteIndexTree {
+    // Delete Spotlight index
+    [self.searchableIndex deleteSearchableItemsWithDomainIdentifiers:@[@"nodes"] completionHandler:^(NSError * _Nullable error) {
+        if (error) {
+            MEGALogError(@"Error deleting spotligth index");
+        } else {
+            MEGALogInfo(@"Spotlight index deleted");
+        }
+    }];
 }
 
 #pragma mark - Spotlight
@@ -214,5 +275,21 @@
     }
     return YES;
 }
+
+#pragma mark - MEGAGlobalDelegate
+
+- (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
+    if (!nodeList) {
+        return;
+    }
+    dispatch_async(self.indexSerialQueue, ^{
+        NSArray<MEGANode *> *nodesToIndex = [nodeList mnz_nodesArrayFromNodeList];
+        MEGALogDebug(@"Spotlight indexing %tu nodes updated", nodesToIndex.count);
+        for (MEGANode *node in nodesToIndex) {
+            [self index:node];
+        }
+    });
+}
+
 
 @end
