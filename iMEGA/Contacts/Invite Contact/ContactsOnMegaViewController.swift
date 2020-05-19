@@ -27,7 +27,7 @@ import UIKit
             searchFixedView.addSubview(searchController.searchBar)
         }
         
-        tableView.register(UINib(nibName: "ContactsHeaderFooterView", bundle: nil), forHeaderFooterViewReuseIdentifier: "ContactsHeaderFooterViewID")
+        tableView.register(UINib(nibName: "GenericHeaderFooterView", bundle: nil), forHeaderFooterViewReuseIdentifier: "GenericHeaderFooterViewID")
         tableView.register(ContactsPermissionBottomView().nib(), forHeaderFooterViewReuseIdentifier: ContactsPermissionBottomView().bottomReuserIdentifier())
         
         tableView.tableFooterView = UIView()  // This remove the separator line between empty cells
@@ -182,7 +182,7 @@ extension ContactsOnMegaViewController: UITableViewDataSource {
 extension ContactsOnMegaViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "ContactsHeaderFooterViewID") as? ContactsHeaderFooterView else {
+        guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "GenericHeaderFooterViewID") as? GenericHeaderFooterView else {
             return UIView(frame: .zero)
         }
         header.titleLabel.text = AMLocalizedString("CONTACTS ON MEGA", "Text used as a section title or similar showing the user the phone contacts using MEGA")

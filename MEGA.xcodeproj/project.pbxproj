@@ -217,6 +217,7 @@
 		5B40B3AA2422ABF200B5FF13 /* SortingPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B40B3A92422ABF200B5FF13 /* SortingPreference.swift */; };
 		5B40B3AB2422ACB900B5FF13 /* SortingPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B40B3A92422ABF200B5FF13 /* SortingPreference.swift */; };
 		5B40B3AC2422ACB900B5FF13 /* SortingPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B40B3A92422ABF200B5FF13 /* SortingPreference.swift */; };
+		5B419EE42473E60C008C3D06 /* GenericHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D726582316903D007B2E58 /* GenericHeaderFooterView.swift */; };
 		5B46D96924333D6100404ED4 /* Achievements.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B46D96824333D6100404ED4 /* Achievements.storyboard */; };
 		5B48F8031F4C73FE001E3A29 /* AchievementsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B48F8021F4C73FE001E3A29 /* AchievementsViewController.m */; };
 		5B48F8061F4C80F4001E3A29 /* AchievementsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B48F8051F4C80F4001E3A29 /* AchievementsTableViewCell.m */; };
@@ -594,8 +595,8 @@
 		83C570EF22E5BFCF00216896 /* PhoneNumberParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C570DD22E5BFCF00216896 /* PhoneNumberParser.swift */; };
 		83D5DB2E23E9930200B09412 /* MEGAChatSDK+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D5DB2D23E9930200B09412 /* MEGAChatSDK+Additions.swift */; };
 		83D64E2D20178A0400E24155 /* PasswordReminder.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83D64E2C20178A0400E24155 /* PasswordReminder.storyboard */; };
-		83D726592316903D007B2E58 /* ContactsHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D726582316903D007B2E58 /* ContactsHeaderFooterView.swift */; };
-		83D7265B23169067007B2E58 /* ContactsHeaderFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83D7265A23169067007B2E58 /* ContactsHeaderFooterView.xib */; };
+		83D726592316903D007B2E58 /* GenericHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D726582316903D007B2E58 /* GenericHeaderFooterView.swift */; };
+		83D7265B23169067007B2E58 /* GenericHeaderFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83D7265A23169067007B2E58 /* GenericHeaderFooterView.xib */; };
 		83E076F52179D7BC00058409 /* NodeCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E076F42179D7BC00058409 /* NodeCollectionViewCell.m */; };
 		83FA7B512386197B00887630 /* UserDefaults+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FA7B502386197B00887630 /* UserDefaults+Additions.swift */; };
 		83FB1431219AC7CD00418BE6 /* OfflineTableViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83FB1430219AC7CD00418BE6 /* OfflineTableViewViewController.m */; };
@@ -1927,8 +1928,8 @@
 		83C570DD22E5BFCF00216896 /* PhoneNumberParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhoneNumberParser.swift; sourceTree = "<group>"; };
 		83D5DB2D23E9930200B09412 /* MEGAChatSDK+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAChatSDK+Additions.swift"; sourceTree = "<group>"; };
 		83D64E2C20178A0400E24155 /* PasswordReminder.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PasswordReminder.storyboard; sourceTree = "<group>"; };
-		83D726582316903D007B2E58 /* ContactsHeaderFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsHeaderFooterView.swift; sourceTree = "<group>"; };
-		83D7265A23169067007B2E58 /* ContactsHeaderFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContactsHeaderFooterView.xib; sourceTree = "<group>"; };
+		83D726582316903D007B2E58 /* GenericHeaderFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericHeaderFooterView.swift; sourceTree = "<group>"; };
+		83D7265A23169067007B2E58 /* GenericHeaderFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GenericHeaderFooterView.xib; sourceTree = "<group>"; };
 		83E076F32179D7BC00058409 /* NodeCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NodeCollectionViewCell.h; sourceTree = "<group>"; };
 		83E076F42179D7BC00058409 /* NodeCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NodeCollectionViewCell.m; sourceTree = "<group>"; };
 		83FA7B502386197B00887630 /* UserDefaults+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Additions.swift"; sourceTree = "<group>"; };
@@ -4061,6 +4062,8 @@
 				5B8281461E7BE8300079C1BB /* SelectableTableViewCell.h */,
 				5B8281471E7BE8300079C1BB /* SelectableTableViewCell.m */,
 				5B8281481E7BE8300079C1BB /* SelectableTableViewCell.xib */,
+				83D726582316903D007B2E58 /* GenericHeaderFooterView.swift */,
+				83D7265A23169067007B2E58 /* GenericHeaderFooterView.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -4354,8 +4357,6 @@
 				4182B4EE1BF4ADD400E6FFB8 /* ContactRequestsTableViewCell.m */,
 				835223AF205957DD00A47438 /* ItemCollectionViewCell.h */,
 				835223B0205957DD00A47438 /* ItemCollectionViewCell.m */,
-				83D726582316903D007B2E58 /* ContactsHeaderFooterView.swift */,
-				83D7265A23169067007B2E58 /* ContactsHeaderFooterView.xib */,
 				8315B91522DF52DD000CA232 /* ContactOnMegaTableViewCell.swift */,
 				5B8A5B1A2456D51E00EB8C6C /* SectionTableViewCell.swift */,
 				5B8A5B1C2456D65C00EB8C6C /* SectionTableViewCell.xib */,
@@ -5751,7 +5752,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				83D7265B23169067007B2E58 /* ContactsHeaderFooterView.xib in Resources */,
+				83D7265B23169067007B2E58 /* GenericHeaderFooterView.xib in Resources */,
 				5B1F74D52126E30C00F09A16 /* AwaitingEmailConfirmationView.xib in Resources */,
 				A82E5BF51F3470B5003C149C /* Spotlight_folder.png in Resources */,
 				41D21E6D1D01AEC3002E6296 /* CTAssetsPickerController.bundle in Resources */,
@@ -6071,7 +6072,7 @@
 				4131997A1BD7BD5D002CD6EA /* DTTimePeriodChain.m in Sources */,
 				A86B9F602316D6AB00F35E7A /* FLEXWebViewController.m in Sources */,
 				B6B959412193A9140064334D /* ThumbnailUploadOperation.m in Sources */,
-				83D726592316903D007B2E58 /* ContactsHeaderFooterView.swift in Sources */,
+				83D726592316903D007B2E58 /* GenericHeaderFooterView.swift in Sources */,
 				8315B91622DF52DD000CA232 /* ContactOnMegaTableViewCell.swift in Sources */,
 				A85740C52032F6B80033034C /* MOChatDraft+CoreDataClass.m in Sources */,
 				5B12D03B241273D5006C3907 /* MEGAStore+CloudAppearancePreference.swift in Sources */,
@@ -6773,6 +6774,7 @@
 				5BEF1AF5244DD44300BD2183 /* MEGAFunctions.swift in Sources */,
 				94892C981EFBF03800AEAC25 /* SVProgressHUD.m in Sources */,
 				5BE689882417C91600462134 /* MEGAFunctions.swift in Sources */,
+				5B419EE42473E60C008C3D06 /* GenericHeaderFooterView.swift in Sources */,
 				5B2E78CD1FA0C3310096C9BE /* MEGACreateFolderRequestDelegate.m in Sources */,
 				941135501F00FFAB00D33428 /* BrowserViewController.m in Sources */,
 				94892CA11EFBF20800AEAC25 /* UIFont+MNZCategory.m in Sources */,

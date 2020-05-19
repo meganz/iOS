@@ -42,16 +42,6 @@
 @property (weak, nonatomic) IBOutlet UIView *itemListView;
 @property (weak, nonatomic) IBOutlet UIView *searchView;
 
-@property (weak, nonatomic) IBOutlet UIView *topSeparatorRecentsHeaderView;
-@property (weak, nonatomic) IBOutlet UIView *recentsHeaderView;
-@property (weak, nonatomic) IBOutlet UILabel *recentsHeaderViewLabel;
-@property (weak, nonatomic) IBOutlet UIView *bottomSeparatorRecentsHeaderView;
-
-@property (weak, nonatomic) IBOutlet UIView *topSeparatorChatsHeaderView;
-@property (weak, nonatomic) IBOutlet UIView *chatsHeaderView;
-@property (weak, nonatomic) IBOutlet UILabel *chatsHeaderViewLabel;
-@property (weak, nonatomic) IBOutlet UIView *bottomSeparatorChatsHeaderView;
-
 @property (nonatomic, strong) UISearchController *searchController;
 
 @property (nonatomic, strong) NSMutableArray *usersAndGroupChatsMutableArray;
@@ -108,12 +98,6 @@
     
     self.navigationItem.title = AMLocalizedString(@"selectDestination", @"Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them.");
     
-    self.tableView.separatorColor = self.topSeparatorRecentsHeaderView.backgroundColor = self.bottomSeparatorRecentsHeaderView.backgroundColor = self.topSeparatorRecentsHeaderView.backgroundColor = self.bottomSeparatorRecentsHeaderView.backgroundColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
-    self.recentsHeaderViewLabel.text = AMLocalizedString(@"Recents", @"Title for the recents section").uppercaseString;
-    self.recentsHeaderViewLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
-    self.chatsHeaderViewLabel.text = AMLocalizedString(@"My chats", @"Column header of my contacts/chats at copy dialog").uppercaseString;
-    self.chatsHeaderViewLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
-    
     self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
     self.searchController.definesPresentationContext = YES;
     self.searchController.hidesNavigationBarDuringPresentation = NO;
@@ -129,6 +113,8 @@
     
     self.panOnTable = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(shouldDismissSearchController)];
     self.panOnTable.delegate = self;
+    
+    [self.tableView registerNib:[UINib nibWithNibName:@"GenericHeaderFooterView" bundle:nil] forHeaderFooterViewReuseIdentifier:@"GenericHeaderFooterViewID"];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -157,11 +143,17 @@
             [AppearanceManager setupAppearance:self.traitCollection];
             [AppearanceManager invalidateViews];
 #endif
+            
+            [self updateAppearance];
         }
     }
 }
 
 #pragma mark - Private
+
+- (void)updateAppearance {
+    self.searchView.backgroundColor = UIColor.mnz_background;
+}
 
 - (void)setGroupChatsAndRecents {
     self.chatListItemList = [[MEGASdkManager sharedMEGAChatSdk] activeChatListItems];
@@ -731,12 +723,20 @@
         return nil;
     }
     
+    GenericHeaderFooterView *headerView = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:@"GenericHeaderFooterViewID"];
+    headerView.topSeparatorView.hidden = YES;
+    headerView.titleLabel.font = [UIFont systemFontOfSize:14.0f weight:UIFontWeightMedium];
     switch (section) {
-        case 0:
-            return self.searchController.isActive ? self.chatsHeaderView : self.recentsHeaderView;
+        case 0: {
+            headerView.titleLabel.text = self.searchController.isActive ? AMLocalizedString(@"My chats", @"Column header of my contacts/chats at copy dialog").uppercaseString : AMLocalizedString(@"Recents", @"Title for the recents section").uppercaseString;
             
-        case 1:
-            return self.chatsHeaderView;
+            return headerView;
+        }
+            
+        case 1: {
+            headerView.titleLabel.text = AMLocalizedString(@"My chats", @"Column header of my contacts/chats at copy dialog").uppercaseString;
+            return headerView;
+        }
             
         default:
             return nil;

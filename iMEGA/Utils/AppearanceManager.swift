@@ -58,6 +58,7 @@ class AppearanceManager: NSObject {
         UITabBar.appearance().barTintColor = UIColor.mnz_mainBarsColor(for: traitCollection)
         
         UITableView.appearance().backgroundColor = UIColor.mnz_background()
+        UITableView.appearance().separatorColor = UIColor.mnz_separatorColor(for: traitCollection)
         UIButton.appearance(whenContainedInInstancesOf: [UITableViewCell.self]).tintColor = UIColor.mnz_tertiaryGray(for: traitCollection)
         UITableViewCell.appearance().tintColor = UIColor.mnz_turquoise(for: traitCollection)
         

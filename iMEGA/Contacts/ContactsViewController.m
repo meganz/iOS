@@ -127,7 +127,7 @@
     }
     
     [self.tableView registerNib:[UINib nibWithNibName:@"SectionTableViewCell" bundle:nil] forCellReuseIdentifier:@"SectionTableViewCellID"];
-    [self.tableView registerNib:[UINib nibWithNibName:@"ContactsHeaderFooterView" bundle:nil] forHeaderFooterViewReuseIdentifier:@"ContactsHeaderFooterViewID"];
+    [self.tableView registerNib:[UINib nibWithNibName:@"GenericHeaderFooterView" bundle:nil] forHeaderFooterViewReuseIdentifier:@"GenericHeaderFooterViewID"];
     
     [MEGASdkManager.sharedMEGASdk addMEGARequestDelegate:self];
 
@@ -1430,8 +1430,8 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    static NSString *reuseIdentifier = @"ContactsHeaderFooterViewID";
-    ContactsHeaderFooterView *headerView = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:reuseIdentifier];
+    static NSString *reuseIdentifier = @"GenericHeaderFooterViewID";
+    GenericHeaderFooterView *headerView = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:reuseIdentifier];
     headerView.contentView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
     
     if (self.contactsMode == ContactsModeDefault) {

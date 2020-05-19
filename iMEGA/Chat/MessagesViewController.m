@@ -773,6 +773,8 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         groupCallVC.chatRoom = self.chatRoom;
         groupCallVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
         groupCallVC.megaCallManager = ((AppDelegate *)UIApplication.sharedApplication.delegate).megaCallManager;
+        groupCallVC.modalPresentationStyle = UIModalPresentationFullScreen;
+        
         [self presentViewController:groupCallVC animated:YES completion:nil];
     } else {
         CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
@@ -781,6 +783,8 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         callVC.callType = active ? CallTypeActive : CallTypeOutgoing;
         callVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
         callVC.megaCallManager = ((AppDelegate *)UIApplication.sharedApplication.delegate).megaCallManager;
+        callVC.modalPresentationStyle = UIModalPresentationFullScreen;
+        
         [self presentViewController:callVC animated:YES completion:nil];
     }
 }
