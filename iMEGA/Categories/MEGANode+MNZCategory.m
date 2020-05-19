@@ -34,7 +34,6 @@
 #import "PreviewDocumentViewController.h"
 #import "SharedItemsViewController.h"
 #import "SendToViewController.h"
-#import "MEGA-Swift.h"
 
 @implementation MEGANode (MNZCategory)
 
