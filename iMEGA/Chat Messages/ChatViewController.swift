@@ -429,6 +429,16 @@ class ChatViewController: MessagesViewController {
         }
     }
     
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        print("scroll")
+        if scrollView.contentOffset.y < 200 {
+            guard !chatRoomDelegate.loadingState && !chatRoomDelegate.isFullChatHistoryLoaded else {
+                return
+            }
+            chatRoomDelegate.loadMoreMessages()
+        }
+    }
+    
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         
         switch kind {

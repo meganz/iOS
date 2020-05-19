@@ -87,6 +87,8 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
                 historyMessages.removeAll()
                 chatViewController.messagesCollectionView.reloadData()
                 chatViewController.messagesCollectionView.scrollToBottom()
+                
+                loadingState = false
                 return
             }
             
