@@ -76,9 +76,15 @@
     self.searchController.dimsBackgroundDuringPresentation = YES;
     self.searchController.searchBar.searchBarStyle = UISearchBarStyleMinimal;
     self.searchController.searchBar.translucent = NO;
-    self.searchController.searchBar.frame = CGRectMake(0, 0, self.view.frame.size.width, self.searchController.searchBar.frame.size.height);
-    self.searchController.searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-    [self.view addSubview:self.searchController.searchBar];
+    if (@available(iOS 11.0, *)) {
+        self.navigationItem.searchController = self.searchController;
+    } else {
+        self.searchController.searchBar.searchBarStyle = UISearchBarStyleMinimal;
+        self.searchController.searchBar.translucent = NO;
+        self.searchController.searchBar.frame = CGRectMake(0, 0, self.view.frame.size.width, self.searchController.searchBar.frame.size.height);
+        self.searchController.searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        [self.view addSubview:self.searchController.searchBar];
+    }
     
     self.navigationItem.title = AMLocalizedString(@"Send Location", @"Alert title shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm");
 }
@@ -88,7 +94,23 @@
     [self.locationManager stopUpdatingLocation];
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateAppearance];
+        }
+    }
+}
+
 #pragma mark - Private
+
+- (void)updateAppearance {
+    self.mapOptionsView.backgroundColor = self.sendLocationView.backgroundColor = [UIColor.mnz_background colorWithAlphaComponent:0.8];
+    
+    self.subtitleLabel.textColor = [UIColor mnz_subtitlesColorForTraitCollection:self.traitCollection];
+}
 
 - (void)sendGeolocationWithCoordinate2d:(CLLocationCoordinate2D)coordinate {
     MKMapSnapshotOptions *mapSnapshotOptions = [[MKMapSnapshotOptions alloc] init];

@@ -38,6 +38,8 @@
     self.chatLastTime.adjustsFontForContentSizeCategory = YES;
     self.unreadCount.adjustsFontForContentSizeCategory = YES;
     self.twoDaysAgo = [NSCalendar.currentCalendar dateByAddingUnit:NSCalendarUnitDay value:-2 toDate:NSDate.date options:0];
+    
+    [self updateAppearance];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -58,9 +60,34 @@
     }
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateAppearance];
+        }
+    }
+}
+
+#pragma mark - Private
+
+- (void)updateAppearance {
+    self.chatLastMessage.textColor = [UIColor mnz_subtitlesColorForTraitCollection:self.traitCollection];
+    
+    self.chatLastTime.textColor = self.unreadView.hidden ? [UIColor mnz_subtitlesColorForTraitCollection:self.traitCollection] : [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
+    
+    self.unreadView.backgroundColor = [UIColor mnz_redMainForTraitCollection:self.traitCollection];
+    self.unreadCount.textColor = UIColor.whiteColor;
+    
+    self.onCallDuration.textColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
+}
+
 #pragma mark - Public
 
 - (void)configureCellForArchivedChat {
+    self.chatLastMessage.textColor = UIColor.mnz_secondaryLabel;
+    
     self.unreadView.hidden = NO;
     self.unreadView.backgroundColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
     self.unreadView.layer.cornerRadius = 4;

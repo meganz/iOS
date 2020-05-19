@@ -342,6 +342,7 @@
             groupCallVC.chatRoom = chatRoom;
             groupCallVC.megaCallManager = self.megaCallManager;
             groupCallVC.callId = callId;
+            groupCallVC.modalPresentationStyle = UIModalPresentationFullScreen;
             
             if ([UIApplication.mnz_presentingViewController isKindOfClass:CallViewController.class]) {
                 [UIApplication.mnz_presentingViewController dismissViewControllerAnimated:YES completion:^{
@@ -361,6 +362,7 @@
             callVC.callType = CallTypeIncoming;
             callVC.megaCallManager = self.megaCallManager;
             callVC.callId = callId;
+            callVC.modalPresentationStyle = UIModalPresentationFullScreen;
             
             if ([UIApplication.mnz_presentingViewController isKindOfClass:CallViewController.class] || [UIApplication.mnz_presentingViewController isKindOfClass:MEGANavigationController.class])  {
                 [UIApplication.mnz_presentingViewController dismissViewControllerAnimated:YES completion:^{

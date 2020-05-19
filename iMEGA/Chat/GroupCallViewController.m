@@ -198,6 +198,16 @@
     } completion:nil];
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateAppearance];
+        }
+    }
+}
+
 #pragma mark - UICollectionViewDataSource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
@@ -468,6 +478,13 @@
 }
 
 #pragma mark - Private
+
+- (void)updateAppearance {
+    self.participantsLabel.textColor = UIColor.whiteColor;
+    
+    self.toastView.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
+    self.toastLabel.textColor = UIColor.whiteColor;
+}
 
 - (void)answerChatCall {
     if ([MEGASdkManager.sharedMEGAChatSdk chatConnectionState:self.chatRoom.chatId] == MEGAChatConnectionOnline) {
