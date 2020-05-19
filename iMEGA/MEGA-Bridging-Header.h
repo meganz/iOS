@@ -75,3 +75,4 @@
 #import "MEGAPhotoBrowserViewController.h"
 #import "ChatAttachedNodesViewController.h"
 #import "ChatAttachedContactsViewController.h"
+#import "MEGALoadingMessagesHeaderView.h"

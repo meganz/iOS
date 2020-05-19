@@ -595,6 +595,10 @@ class ChatViewController: MessagesViewController {
                                         forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
                                         withReuseIdentifier: ChatViewIntroductionHeaderView.reuseIdentifier)
 
+        messagesCollectionView.register(LoadingMessageReusableView.nib,
+        forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+        withReuseIdentifier: LoadingMessageReusableView.reuseIdentifier)
+        
         messagesCollectionView.register(MessageEditCollectionOverlayView.nib,
                                         forSupplementaryViewOfKind: "kCollectionElementKindEditOverlay",
                                         withReuseIdentifier: MessageEditCollectionOverlayView.reuseIdentifier)
