@@ -28,15 +28,21 @@ extension ChatViewController: ChatViewMessagesLayoutDelegate {
     }
 
     func headerViewSize(for section: Int, in messagesCollectionView: MessagesCollectionView) -> CGSize {
-        if chatRoomDelegate.isFullChatHistoryLoaded && section == 0 {
-            let chatMessageHeaderView = ChatViewIntroductionHeaderView.instanceFromNib
-            chatMessageHeaderView.chatRoom = chatRoom
-            return chatMessageHeaderView.sizeThatFits(
-                CGSize(width: messagesCollectionView.bounds.width,
-                       height: .greatestFiniteMagnitude)
-            )
+        if section == 0 {
+            if chatRoomDelegate.isFullChatHistoryLoaded {
+                let chatMessageHeaderView = ChatViewIntroductionHeaderView.instanceFromNib
+                chatMessageHeaderView.chatRoom = chatRoom
+                return chatMessageHeaderView.sizeThatFits(
+                    CGSize(width: messagesCollectionView.bounds.width,
+                           height: .greatestFiniteMagnitude)
+                )
+            } else {
+                return CGSize(width: messagesCollectionView.bounds.width,
+                              height: 200)
+            }
+            
         }
-
+        
         return .zero
     }
 }
