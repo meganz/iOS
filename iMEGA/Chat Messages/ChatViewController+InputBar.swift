@@ -492,13 +492,11 @@ extension ChatViewController: AddToChatViewControllerDelegate {
                     return
                 }
                 
-                // TODO: Handle the error
                 selectedNodes.forEach { node in
                     Helper.import(node) { newNode in
                         MEGASdkManager.sharedMEGAChatSdk()?.attachNode(toChat: self.chatRoom.chatId, node: newNode.handle)
                     }
                 }
-                
             }
         }
         
