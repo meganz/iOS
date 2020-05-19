@@ -514,12 +514,14 @@ extension ChatViewController: AddToChatViewControllerDelegate {
             
         contactsViewController.contactsMode = .chatAttachParticipant
 
-        contactsViewController.userSelected = { users in
+        contactsViewController.userSelected = { [weak self] users in
+            guard let `self` = self else {
+                return
+            }
+            
             if let message = MEGASdkManager.sharedMEGAChatSdk()?.attachContacts(toChat: self.chatRoom.chatId,
                                                                                 contacts: users) {
-                //TODO: Add the message to model and reload the cell.
-                print(message)
-                
+                self.chatRoomDelegate.insertMessage(message)
             }
         }
         
