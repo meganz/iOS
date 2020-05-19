@@ -268,28 +268,27 @@ extension ChatViewController: ChatInputBarDelegate {
     
     func tappedSendButton(withText text: String) {
         MEGASdkManager.sharedMEGAChatSdk()?.sendStopTypingNotification(forChat: chatRoom.chatId)
-        var message : MEGAChatMessage?
-        if editMessage != nil {
-            if editMessage?.message.content != text {
-                let messageId = editMessage?.message.status == .sending ? editMessage?.message.temporalId : editMessage?.message.messageId
-                message = MEGASdkManager.sharedMEGAChatSdk()?.editMessage(forChat: chatRoom.chatId, messageId: messageId!, message: text)!
-                message?.chatId = chatRoom.chatId
-                let index = messages.firstIndex(of: editMessage!)
-                if index != NSNotFound {
-                    chatRoomDelegate.messages[index!] = ChatMessage(message: message!, chatRoom: chatRoom)
+        
+        if let editMessage = editMessage {
+            let messageId = (editMessage.message.status == .sending) ? editMessage.message.temporalId : editMessage.message.messageId
+
+            if editMessage.message.content != text,
+                let message = MEGASdkManager.sharedMEGAChatSdk()?.editMessage(forChat: chatRoom.chatId, messageId: messageId, message: text) {
+                message.chatId = chatRoom.chatId
+            
+                if let index = messages.firstIndex(of: editMessage),
+                    index != NSNotFound {
+                    chatRoomDelegate.messages[index] = ChatMessage(message: message, chatRoom: chatRoom)
                     messagesCollectionView.reloadDataAndKeepOffset()
                 }
             }
             
-            editMessage = nil
+            self.editMessage = nil
         } else {
-            message = MEGASdkManager.sharedMEGAChatSdk()?.sendMessage(toChat: chatRoom.chatId, message: text)
-            print(message!.status)
-            
-            chatRoomDelegate.insertMessage(message!)
-            
+            if let message = MEGASdkManager.sharedMEGAChatSdk()?.sendMessage(toChat: chatRoom.chatId, message: text) {
+                chatRoomDelegate.insertMessage(message)
+            }
         }
-        MEGASdkManager.sharedMEGAChatSdk()?.sendStopTypingNotification(forChat: chatRoom.chatId)
     }
     
     func tappedSendAudio(atPath path: String) {
