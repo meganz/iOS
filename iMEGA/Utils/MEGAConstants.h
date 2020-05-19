@@ -16,6 +16,8 @@ extern NSString * const MEGAPasscodeLogoutAfterTenFailedAttemps;
 
 extern uint64_t const MEGAInvalidHandle;
 
+extern NSString * const MEGAVoiceMessagesFolderName;
+
 #pragma mark - global notifications
 
 extern NSString * const MEGALogoutNotification;
