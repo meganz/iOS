@@ -223,19 +223,20 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
     
     
     func insertMessage(_ message: MEGAChatMessage) {
-         messages.append(ChatMessage(message: message, chatRoom: chatRoom))
+        let lastSectionVisible = isLastSectionVisible()
+        messages.append(ChatMessage(message: message, chatRoom: chatRoom))
         
         if messages.count == 1 {
             chatViewController.messagesCollectionView.reloadData()
             return;
         }
-         chatViewController.messagesCollectionView.performBatchUpdates({
-             chatViewController.messagesCollectionView.insertSections([messages.count - 1])
-         }, completion: { [weak self] _ in
-             if self?.isLastSectionVisible() == true {
-                 self?.chatViewController.messagesCollectionView.scrollToBottom(animated: true)
-             }
-         })
+        chatViewController.messagesCollectionView.performBatchUpdates({
+            chatViewController.messagesCollectionView.insertSections([messages.count - 1])
+        }, completion: { [weak self] _ in
+            if lastSectionVisible == true {
+                self?.chatViewController.messagesCollectionView.scrollToBottom(animated: true)
+            }
+        })
         chatViewController.messagesCollectionView.reloadEmptyDataSet()
      }
     
