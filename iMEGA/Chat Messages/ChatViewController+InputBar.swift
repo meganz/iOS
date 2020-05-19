@@ -271,11 +271,11 @@ extension ChatViewController: ChatInputBarDelegate {
         
         if let editMessage = editMessage {
             let messageId = (editMessage.message.status == .sending) ? editMessage.message.temporalId : editMessage.message.messageId
-
+            
             if editMessage.message.content != text,
                 let message = MEGASdkManager.sharedMEGAChatSdk()?.editMessage(forChat: chatRoom.chatId, messageId: messageId, message: text) {
                 message.chatId = chatRoom.chatId
-            
+                
                 if let index = messages.firstIndex(of: editMessage),
                     index != NSNotFound {
                     chatRoomDelegate.messages[index] = ChatMessage(message: message, chatRoom: chatRoom)
@@ -284,10 +284,8 @@ extension ChatViewController: ChatInputBarDelegate {
             }
             
             self.editMessage = nil
-        } else {
-            if let message = MEGASdkManager.sharedMEGAChatSdk()?.sendMessage(toChat: chatRoom.chatId, message: text) {
-                chatRoomDelegate.insertMessage(message)
-            }
+        } else if let message = MEGASdkManager.sharedMEGAChatSdk()?.sendMessage(toChat: chatRoom.chatId, message: text) {
+            chatRoomDelegate.insertMessage(message)
         }
     }
     
@@ -333,13 +331,13 @@ extension ChatViewController: ChatInputBarDelegate {
     
     func tappedVoiceButton() {
         let myViews = view.subviews.filter { $0 is TapAndHoldMessageView }
-        guard myViews.count == 0  else {
+        guard let inputAccessoryView = inputAccessoryView,
+            myViews.count == 0  else {
             return
         }
         
-        
         let tapAndHoldMessageView = TapAndHoldMessageView.instanceFromNib
-        tapAndHoldMessageView.add(toView: view, bottom: inputAccessoryView!.frame.height)
+        tapAndHoldMessageView.add(toView: view, bottom: inputAccessoryView.frame.height)
     }
     
     func typing(withText text: String) {
@@ -388,9 +386,6 @@ extension ChatViewController: UIViewControllerTransitioningDelegate {
 
 extension ChatViewController: AddToChatViewControllerDelegate {
     func send(asset: PHAsset) {
-        print("send the asset")
-        
-        //TODO: Refactor this function.
         MEGASdkManager.sharedMEGASdk()!.getMyChatFilesFolder {[weak self] resultNode in
             guard let `self` = self else {
                 return
@@ -410,14 +405,8 @@ extension ChatViewController: AddToChatViewControllerDelegate {
                 if let cordinates = (filePath as NSString).mnz_coordinatesOfPhotoOrVideo() {
                     appData = NSString().mnz_appData(toSaveCoordinates: cordinates)
                 }
-                
-                if appData == nil {
-                    appData = ("" as NSString).mnz_appDataToAttach(toChatID: self.chatRoom.chatId,
-                                                                   asVoiceClip: false)
-                } else {
-                    appData = appData!.mnz_appDataToAttach(toChatID: self.chatRoom.chatId,
-                                                           asVoiceClip: false)
-                }
+                                                    
+                appData = ((appData ?? "") as NSString).mnz_appDataToAttach(toChatID: self.chatRoom.chatId, asVoiceClip: false)
                 
                 MEGASdkManager.sharedMEGASdk()!.startUpload(withLocalPath: filePath,
                                                             parent: resultNode,
@@ -426,14 +415,23 @@ extension ChatViewController: AddToChatViewControllerDelegate {
                                                             delegate: self.createUploadTransferDelegate())
                 
             }, nodes:nil) { errors in
-                guard let error = errors?.first else {
+                guard let errors = errors else {
                     return
                 }
                 
-                let alertController = UIAlertController(title: AMLocalizedString("error", nil),
-                                                        message: error.localizedDescription,
+                var message: String?
+                
+                if let error = errors.first,
+                    errors.count == 1 {
+                    message = error.localizedDescription
+                } else {
+                    message = AMLocalizedString("shareExtensionUnsupportedAssets")
+                }
+                
+                let alertController = UIAlertController(title: AMLocalizedString("error"),
+                                                        message: message,
                                                         preferredStyle: .alert)
-                alertController.addAction(UIAlertAction(title: AMLocalizedString("ok", nil),
+                alertController.addAction(UIAlertAction(title: AMLocalizedString("ok"),
                                                         style: .cancel,
                                                         handler: nil))
                 
