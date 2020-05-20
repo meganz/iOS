@@ -29,7 +29,6 @@
 #import "MEGAStartUploadTransferDelegate.h"
 #import "MEGASdk+MNZCategory.h"
 #import "MEGAStore.h"
-#import "MEGAToolbarContentView.h"
 #import "MEGATransfer+MNZCategory.h"
 #import "MEGAVoiceClipMediaItem.h"
 #import "NSAttributedString+MNZCategory.h"
@@ -267,7 +266,8 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     self.loadingState = YES;
     self.collectionView.emptyDataSetSource = self;
     self.collectionView.emptyDataSetDelegate = self;
-    [self.collectionView reloadData];
+    
+    [self updateAppearance];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -503,7 +503,23 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     } completion:nil];
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateAppearance];
+        }
+    }
+}
+
 #pragma mark - Private
+
+- (void)updateAppearance {
+    self.view.backgroundColor = self.collectionView.backgroundColor = UIColor.mnz_background;
+    
+    [self.collectionView reloadData];
+}
 
 - (void)configureNavigationBar {    
     [self createRightBarButtonItems];
@@ -517,7 +533,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 - (void)initNavigationTitleViews {
     self.navigationTitleLabel = [[UILabel alloc] init];
     self.navigationTitleLabel.font = [UIFont systemFontOfSize:15.0f weight:UIFontWeightSemibold];
-    self.navigationTitleLabel.textColor = UIColor.whiteColor;
+    self.navigationTitleLabel.textColor = UIColor.mnz_label;
     
     self.navigationStatusView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
     [[self.navigationStatusView.widthAnchor constraintEqualToConstant:10] setActive:YES];
@@ -528,7 +544,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     
     self.navigationSubtitleLabel = [[UILabel alloc] init];
     self.navigationSubtitleLabel.font = [UIFont systemFontOfSize:12.0f];
-    self.navigationSubtitleLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
+    self.navigationSubtitleLabel.textColor = [UIColor mnz_subtitlesColorForTraitCollection:self.traitCollection];
 }
 
 - (void)instantiateNavigationTitle {
@@ -848,7 +864,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     [self.collectionView registerNib:MEGALoadingMessagesHeaderView.nib forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:MEGALoadingMessagesHeaderView.headerReuseIdentifier];
     
     self.collectionView.accessoryDelegate = self;
-    self.collectionView.backgroundColor = UIColor.whiteColor;
     
     //Register custom menu actions for cells.
     [JSQMessagesCollectionViewCell registerMenuAction:@selector(edit:message:)];
@@ -860,7 +875,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     [JSQMessagesCollectionViewCell registerMenuAction:@selector(delete:)];
     
     JSQMessagesBubbleImageFactory *bubbleFactory = [[JSQMessagesBubbleImageFactory alloc] initWithBubbleImage:[UIImage imageNamed:@"bubble_tailless"] capInsets:UIEdgeInsetsZero layoutDirection:UIApplication.sharedApplication.userInterfaceLayoutDirection];
-    self.outgoingBubbleImageData = [bubbleFactory outgoingMessagesBubbleImageWithColor:[UIColor mnz_chatBlueForTraitCollection:self.traitCollection]];
+    self.outgoingBubbleImageData = [bubbleFactory outgoingMessagesBubbleImageWithColor:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection]];
     self.incomingBubbleImageData = [bubbleFactory incomingMessagesBubbleImageWithColor:[UIColor mnz_chatGrayForTraitCollection:self.traitCollection]];
 }
 
@@ -880,6 +895,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 
 - (void)customToolbarContentView {
     self.inputToolbar.contentView.textView.jsq_pasteDelegate = self;
+    self.inputToolbar.contentView.textView.backgroundColor = UIColor.mnz_background;
     self.inputToolbar.contentView.textView.placeHolderTextColor = [UIColor mnz_tertiaryGrayForTraitCollection:self.traitCollection];
     self.inputToolbar.contentView.textView.font = [UIFont systemFontOfSize:15.0f];
     self.inputToolbar.contentView.textView.textColor = UIColor.mnz_label;
@@ -2318,7 +2334,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         cell.textView.attributedText = message.attributedText;
     } else if (!message.isMediaMessage) {
         cell.textView.font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
-        cell.textView.textColor = [message.senderId isEqualToString:self.senderId] ? UIColor.whiteColor : UIColor.mnz_label;
+        cell.textView.textColor = [message.senderId isEqualToString:self.senderId] ? UIColor.whiteColor : [UIColor mnz_labelInverted:self.traitCollection];
         
         cell.textView.linkTextAttributes = @{ NSForegroundColorAttributeName : cell.textView.textColor,
                                               NSUnderlineStyleAttributeName : @(NSUnderlineStyleSingle | NSUnderlinePatternSolid) };

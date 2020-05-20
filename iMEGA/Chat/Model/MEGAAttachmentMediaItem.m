@@ -67,7 +67,7 @@
         
         // Colors:
         if (self.message.userHandle == [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
-            contactView.backgroundColor = [UIColor mnz_chatBlueForTraitCollection:UIScreen.mainScreen.traitCollection];
+            contactView.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:UIScreen.mainScreen.traitCollection];
             contactView.titleLabel.textColor = [UIColor whiteColor];
             contactView.detailLabel.textColor = [UIColor whiteColor];
         } else {

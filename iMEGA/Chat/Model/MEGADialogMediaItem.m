@@ -123,7 +123,7 @@
     
     // Colors:
     if (self.message.userHandle == [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
-        dialogView.backgroundColor = [UIColor mnz_chatBlueForTraitCollection:UIScreen.mainScreen.traitCollection];
+        dialogView.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:UIScreen.mainScreen.traitCollection];
         dialogView.headingLabel.textColor = [UIColor whiteColor];
     } else {
         dialogView.backgroundColor = [UIColor mnz_chatGrayForTraitCollection:UIScreen.mainScreen.traitCollection];
@@ -141,7 +141,7 @@
             [dialogView.notNowButton setTitle:AMLocalizedString(@"notNow", @"Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers.") forState:UIControlStateNormal];
             
             [dialogView.neverButton removeFromSuperview];
-            [dialogView.lineView removeFromSuperview];
+            [dialogView.secondLineView removeFromSuperview];
             
             break;
             
@@ -162,7 +162,7 @@
             [dialogView.notNowButton setTitle:AMLocalizedString(@"no", nil) forState:UIControlStateNormal];
             
             [dialogView.neverButton removeFromSuperview];
-            [dialogView.lineView removeFromSuperview];
+            [dialogView.secondLineView removeFromSuperview];
 
             break;
             

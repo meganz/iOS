@@ -10,6 +10,7 @@
 #import "MEGAMessageRichPreviewView.h"
 #import "MEGAChatMessage+MNZCategory.h"
 #import "MEGASdkManager.h"
+#import "MEGA-Swift.h"
 #import "NSString+MNZCategory.h"
 #import "NSURL+MNZCategory.h"
 #import "UIFont+MNZCategory.h"
@@ -92,11 +93,11 @@
     
     // Colors:
     if (self.message.userHandle == [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
-        dialogView.backgroundColor = [UIColor mnz_chatBlueForTraitCollection:UIScreen.mainScreen.traitCollection];
+        dialogView.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:UIScreen.mainScreen.traitCollection];
         dialogView.contentTextView.textColor = [UIColor whiteColor];
     } else {
         dialogView.backgroundColor = [UIColor mnz_chatGrayForTraitCollection:UIScreen.mainScreen.traitCollection];
-        dialogView.contentTextView.textColor = [UIColor blackColor];
+        dialogView.contentTextView.textColor = [UIColor mnz_labelInverted:UIScreen.mainScreen.traitCollection];
     }
     dialogView.contentTextView.linkTextAttributes = @{ NSForegroundColorAttributeName : dialogView.contentTextView.textColor,
                                                        NSUnderlineStyleAttributeName : @(NSUnderlineStyleSingle | NSUnderlinePatternSolid) };

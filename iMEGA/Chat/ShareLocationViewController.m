@@ -107,7 +107,7 @@
 #pragma mark - Private
 
 - (void)updateAppearance {
-    self.mapOptionsView.backgroundColor = self.sendLocationView.backgroundColor = [UIColor.mnz_background colorWithAlphaComponent:0.8];
+    self.mapOptionsView.backgroundColor = self.sendLocationView.backgroundColor = UIColor.mnz_background;
     
     self.subtitleLabel.textColor = [UIColor mnz_subtitlesColorForTraitCollection:self.traitCollection];
 }
