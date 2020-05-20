@@ -70,7 +70,6 @@ extension AddToChatMediaCollectionSource: UICollectionViewDataSource {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AddToChatImageCell.reuseIdentifier,
                                                               for: indexPath) as! AddToChatImageCell
                 cell.asset = fetchResult.object(at: indexPath.item-1)
-                cell.selectedView.isHidden = !(lastSelectedIndexPath == indexPath) 
                 
                 if indexPath.item == (collectionView.numberOfItems(inSection: 0) - 1) {
                     cell.cellType = .more
@@ -91,15 +90,14 @@ extension AddToChatMediaCollectionSource: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView,
                         willDisplay cell: UICollectionViewCell,
                         forItemAt indexPath: IndexPath) {
-        guard let cameraCell = cell as? AddToChatCameraCollectionCell,
-            !cameraCell.isCurrentShowingLiveFeed else {
-            return
-        }
-        
-        do {
-            try cameraCell.showLiveFeed()
-        } catch {
-            print("camera live feed error \(error.localizedDescription)")
+        if let cameraCell = cell as? AddToChatCameraCollectionCell, !cameraCell.isCurrentShowingLiveFeed {
+            do {
+                try cameraCell.showLiveFeed()
+            } catch {
+                MEGALogDebug("camera live feed error \(error.localizedDescription)")
+            }
+        } else if let imageCell = cell as? AddToChatImageCell {
+            imageCell.selectedView.isHidden = !(lastSelectedIndexPath == indexPath)
         }
     }
     
@@ -124,8 +122,8 @@ extension AddToChatMediaCollectionSource: UICollectionViewDelegate {
                 delegate.sendAsset(asset: asset)
             } else {
                 if let lastSelectedIndexPath = lastSelectedIndexPath,
-                    let imageCell = collectionView.cellForItem(at: lastSelectedIndexPath) as? AddToChatImageCell {
-                    imageCell.toggleSelection()
+                    let previousSelectedCell = collectionView.cellForItem(at: lastSelectedIndexPath) as? AddToChatImageCell {
+                    previousSelectedCell.toggleSelection()
                 }
                 
                 self.lastSelectedIndexPath = indexPath
