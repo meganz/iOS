@@ -39,14 +39,14 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="dZ8-bF-ZqB">
                                                     <rect key="frame" x="10" y="12" width="394" height="55"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dTo-eS-oy4">
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vVG-YG-CPz" customClass="AvatarView" customModule="MEGA" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="7.6666666666666679" width="40" height="40"/>
-                                                            <color key="tintColor" red="0.80477464200000004" green="0.0" blue="0.041726302360000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="height" constant="40" id="0jA-Et-2m4"/>
-                                                                <constraint firstAttribute="width" constant="40" id="aFo-7D-qiL"/>
+                                                                <constraint firstAttribute="height" constant="40" id="Y7J-9b-6XI"/>
+                                                                <constraint firstAttribute="width" constant="40" id="ark-Zr-NWl"/>
                                                             </constraints>
-                                                        </imageView>
+                                                        </view>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="zAA-U7-NU5">
                                                             <rect key="frame" x="50" y="0.0" width="344" height="55"/>
                                                             <subviews>
@@ -179,7 +179,7 @@
                                         <inset key="separatorInset" minX="60" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <connections>
                                             <outlet property="activeCallImageView" destination="Z2z-gC-vIF" id="AuH-IY-dGE"/>
-                                            <outlet property="avatarImageView" destination="dTo-eS-oy4" id="9b5-Ey-sel"/>
+                                            <outlet property="avatarView" destination="vVG-YG-CPz" id="ZIG-Yz-7zM"/>
                                             <outlet property="chatLastMessage" destination="lpz-9f-lNv" id="2ZL-gl-eBy"/>
                                             <outlet property="chatLastTime" destination="6xG-n6-aut" id="Hrr-Zv-HWx"/>
                                             <outlet property="chatTitle" destination="7PO-mE-tsu" id="2ag-pX-u1G"/>
@@ -204,14 +204,15 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="xCQ-kJ-Yo3">
                                                     <rect key="frame" x="15" y="10" width="387" height="39"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="EjH-u2-ZM3">
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xAY-It-Fen" customClass="AvatarView" customModule="MEGA" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="5.6666666666666643" width="28" height="28"/>
+                                                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                             <color key="tintColor" red="0.95294117647058818" green="0.047058823529411764" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="width" constant="28" id="26b-c2-oRp"/>
-                                                                <constraint firstAttribute="height" constant="28" id="oRT-Sr-cMB"/>
+                                                                <constraint firstAttribute="height" constant="28" id="Qvv-YM-xf6"/>
+                                                                <constraint firstAttribute="width" constant="28" id="oBP-zx-eSc"/>
                                                             </constraints>
-                                                        </imageView>
+                                                        </view>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W4j-FT-gw0">
                                                             <rect key="frame" x="43" y="10.666666666666668" width="271.33333333333331" height="18"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
@@ -250,7 +251,7 @@
                                         <color key="tintColor" red="0.0" green="0.74901960779999999" blue="0.64705882349999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <inset key="separatorInset" minX="58" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <connections>
-                                            <outlet property="avatarImageView" destination="EjH-u2-ZM3" id="zFU-PN-Xrh"/>
+                                            <outlet property="avatarView" destination="xAY-It-Fen" id="okf-5c-bnJ"/>
                                             <outlet property="chatLastMessage" destination="6Li-Tj-WWS" id="sZ6-qO-ISh"/>
                                             <outlet property="chatTitle" destination="W4j-FT-gw0" id="gn9-uL-nmG"/>
                                         </connections>
@@ -616,13 +617,14 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Jsg-U8-KqV">
                                                     <rect key="frame" x="10" y="10" width="394" height="40"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="sDG-dM-Z8r">
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4YQ-BN-oTU" customClass="AvatarView" customModule="MEGA" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
-                                                            <color key="tintColor" red="0.80477464200000004" green="0.0" blue="0.041726302360000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="width" constant="40" id="Hl1-rT-hKT"/>
+                                                                <constraint firstAttribute="height" constant="40" id="QH7-l1-f1o"/>
+                                                                <constraint firstAttribute="width" constant="40" id="qel-9c-Aec"/>
                                                             </constraints>
-                                                        </imageView>
+                                                        </view>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="lxn-8r-2S7">
                                                             <rect key="frame" x="50" y="0.0" width="344" height="40"/>
                                                             <subviews>
@@ -630,13 +632,13 @@
                                                                     <rect key="frame" x="0.0" y="0.0" width="344" height="24"/>
                                                                     <subviews>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hz3-Pg-6k4">
-                                                                            <rect key="frame" x="0.0" y="3" width="39" height="18"/>
+                                                                            <rect key="frame" x="0.0" y="3" width="250" height="18"/>
                                                                             <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="15"/>
                                                                             <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HgH-aK-lkc">
-                                                                            <rect key="frame" x="43" y="9" width="6" height="6"/>
+                                                                            <rect key="frame" x="254" y="9" width="6" height="6"/>
                                                                             <color key="backgroundColor" red="0.1921568662" green="0.70980393890000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="width" constant="6" id="jyp-y8-uE5"/>
@@ -649,14 +651,14 @@
                                                                             </userDefinedRuntimeAttributes>
                                                                         </view>
                                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="privateChat" translatesAutoresizingMaskIntoConstraints="NO" id="xVJ-GH-9W1">
-                                                                            <rect key="frame" x="53" y="0.0" width="24" height="24"/>
+                                                                            <rect key="frame" x="264" y="0.0" width="24" height="24"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="width" constant="24" id="6Ki-6m-aP0"/>
                                                                                 <constraint firstAttribute="height" constant="24" id="gjb-MK-a5b"/>
                                                                             </constraints>
                                                                         </imageView>
                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SH8-jb-TmS">
-                                                                            <rect key="frame" x="81" y="0.0" width="263" height="24"/>
+                                                                            <rect key="frame" x="292" y="0.0" width="52" height="24"/>
                                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         </view>
                                                                     </subviews>
@@ -683,7 +685,7 @@
                                         <color key="tintColor" red="0.0" green="0.74901960779999999" blue="0.64705882349999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <inset key="separatorInset" minX="98" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <connections>
-                                            <outlet property="avatarImageView" destination="sDG-dM-Z8r" id="iTS-wP-yMo"/>
+                                            <outlet property="avatarView" destination="4YQ-BN-oTU" id="Vfd-Ff-YOa"/>
                                             <outlet property="chatLastMessage" destination="QFT-EL-Sir" id="1ay-fh-rlq"/>
                                             <outlet property="chatTitle" destination="Hz3-Pg-6k4" id="b8V-fh-9L9"/>
                                             <outlet property="onlineStatusView" destination="HgH-aK-lkc" id="TfD-nW-wWk"/>
