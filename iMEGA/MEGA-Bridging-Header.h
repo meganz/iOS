@@ -19,6 +19,7 @@
 #import "UIColor+MNZCategory.h"
 #import "UIDevice+MNZCategory.h"
 #import "UIFont+MNZCategory.h"
+#import "UIView+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 #import "UIImage+MNZCategory.h"
 #import "MEGAUser+MNZCategory.h"
