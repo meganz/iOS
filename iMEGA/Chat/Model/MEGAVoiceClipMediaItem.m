@@ -81,7 +81,7 @@ NSNotificationName kVoiceClipsShouldPauseNotification = @"kVoiceClipsShouldPause
     
     // Colors:
     if (self.message.userHandle == [MEGASdkManager sharedMEGAChatSdk].myUserHandle) {
-        voiceClipView.backgroundColor = [UIColor mnz_chatBlueForTraitCollection:UIScreen.mainScreen.traitCollection];
+        voiceClipView.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:UIScreen.mainScreen.traitCollection];
         [voiceClipView.playerSlider setThumbImage:[UIImage imageNamed:@"thumbSliderWhite"] forState:UIControlStateNormal];
         voiceClipView.playerSlider.minimumTrackTintColor = UIColor.whiteColor;
         voiceClipView.timeLabel.textColor = UIColor.whiteColor;
@@ -91,6 +91,7 @@ NSNotificationName kVoiceClipsShouldPauseNotification = @"kVoiceClipsShouldPause
         voiceClipView.playerSlider.minimumTrackTintColor = [UIColor mnz_turquoiseForTraitCollection:UIScreen.mainScreen.traitCollection];
         voiceClipView.timeLabel.textColor = UIColor.mnz_label;
     }
+    [self updatePlayAndPauseButtonAppearance];
     
     // Content:
     MEGANode *node = [self.message.nodeList nodeAtIndex:0];
@@ -208,15 +209,25 @@ NSNotificationName kVoiceClipsShouldPauseNotification = @"kVoiceClipsShouldPause
 
 #pragma mark - Private
 
+- (void)updatePlayAndPauseButtonAppearance {
+    NSString *playPauseButtonImageName;
+    if (self.message.userHandle == MEGASdkManager.sharedMEGAChatSdk.myUserHandle) {
+        playPauseButtonImageName = self.isPlaying ? @"outgoing_pauseVoiceClip" : @"outgoing_playVoiceClip";
+    } else {
+        playPauseButtonImageName = self.isPlaying ? @"pauseVoiceClip" : @"playVoiceClip";
+    }
+    
+    [self.cachedVoiceClipView.playPauseButton setImage:[UIImage imageNamed:playPauseButtonImageName] forState:UIControlStateNormal];
+}
+
 - (void)updateUI {
     dispatch_async(dispatch_get_main_queue(), ^{
+        [self updatePlayAndPauseButtonAppearance];
         if (self.isPlaying) {
-            [self.cachedVoiceClipView.playPauseButton setImage:[UIImage imageNamed:@"pauseVoiceClip"] forState:UIControlStateNormal];
             if ([AVAudioSession.sharedInstance mnz_isOutputEqualToPortType:AVAudioSessionPortBuiltInSpeaker]) {
                 UIDevice.currentDevice.proximityMonitoringEnabled = YES;
             }
         } else {
-            [self.cachedVoiceClipView.playPauseButton setImage:[UIImage imageNamed:@"playVoiceClip"] forState:UIControlStateNormal];
             if (!UIDevice.currentDevice.proximityState) {
                 UIDevice.currentDevice.proximityMonitoringEnabled = NO;
             }
