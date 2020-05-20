@@ -70,10 +70,7 @@ extension AddToChatMediaCollectionSource: UICollectionViewDataSource {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AddToChatImageCell.reuseIdentifier,
                                                               for: indexPath) as! AddToChatImageCell
                 cell.asset = fetchResult.object(at: indexPath.item-1)
-                
-                if indexPath.item == (collectionView.numberOfItems(inSection: 0) - 1) {
-                    cell.cellType = .more
-                }
+                cell.cellType = (indexPath.item == (collectionView.numberOfItems(inSection: 0) - 1)) ? .more : .media
                 
                 return cell
             } else {
@@ -96,8 +93,8 @@ extension AddToChatMediaCollectionSource: UICollectionViewDelegate {
             } catch {
                 MEGALogDebug("camera live feed error \(error.localizedDescription)")
             }
-        } else if let imageCell = cell as? AddToChatImageCell {
-            imageCell.selectedView.isHidden = !(lastSelectedIndexPath == indexPath)
+        } else if let imageCell = cell as? AddToChatImageCell, imageCell.cellType == .media {
+            imageCell.foregroundView.isHidden = !(lastSelectedIndexPath == indexPath)
         }
     }
     
