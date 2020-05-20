@@ -99,13 +99,22 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
     ///   - message: The `MessageType` that contain the audio item to be played.
     ///   - audioCell: The `AudioMessageCell` that needs to be updated while audio is playing.
     open func playSound(for message: MessageType, in audioCell: AudioMessageCell) {
-        switch message.kind {
-        case .audio(let item):
+        
+        guard let chatMessage = message as? ChatMessage else {
+            return
+        }
+        
+        switch chatMessage.message.type {
+        case .voiceClip:
             playingCell = audioCell
             playingMessage = message
-            guard let player = try? AVAudioPlayer(contentsOf: item.url) else {
-                print("Failed to create audio player for URL: \(item.url)")
-                return
+            
+            let node = chatMessage.message.nodeList.node(at: 0)!
+            let nodePath = node.mnz_temporaryPath(forDownloadCreatingDirectories: true)
+            guard FileManager.default.fileExists(atPath: nodePath),
+                let player = try? AVAudioPlayer(contentsOf: URL(fileURLWithPath: nodePath)) else {
+                    print("Failed to create audio player for URL: \(nodePath)")
+                    return
             }
             audioPlayer = player
             audioPlayer?.prepareToPlay()

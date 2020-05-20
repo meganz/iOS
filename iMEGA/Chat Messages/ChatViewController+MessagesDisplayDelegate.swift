@@ -98,6 +98,17 @@ extension ChatViewController: MessagesDisplayDelegate {
         return [.url, .address, .phoneNumber, .date, .transitInformation, .mention, .hashtag]
     }
     
+    // MARK: - Audio Messages
+    
+    func audioTintColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
+        return isFromCurrentSender(message: message) ? .white : .black
+    }
+    
+    func configureAudioCell(_ cell: AudioMessageCell, message: MessageType) {
+        audioController.configureAudioCell(cell, message: message) // this is needed especily when the cell is reconfigure while is playing sound
+    }
+    
+    
     // MARK: - Private methods
     
     private func shouldShowAccessoryView(for message: MessageType) -> Bool {
