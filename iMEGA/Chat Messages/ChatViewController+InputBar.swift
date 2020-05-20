@@ -15,6 +15,8 @@ extension ChatViewController {
             chatRoom.isPreview,
             !chatRoomDelegate.hasChatRoomClosed {
             return joinInputBar
+        } else if chatRoom.ownPrivilege.rawValue <= MEGAChatRoomPrivilege.ro.rawValue {
+            return nil
         } else if chatInputBar == nil {
             chatInputBar = ChatInputBar()
             chatInputBar?.delegate = self
@@ -545,9 +547,7 @@ extension ChatViewController: AddToChatViewControllerDelegate {
                 
                 let message = AMLocalizedString("This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform.", "Message shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm")
                 
-                let cancelAction = UIAlertAction(title: AMLocalizedString("cancel"), style: .cancel) { _ in
-                    //TODO: Logic if check if the input bar hidden or not.
-                }
+                let cancelAction = UIAlertAction(title: AMLocalizedString("cancel"), style: .cancel, handler: nil)
                 
                 let continueAction = UIAlertAction(title: AMLocalizedString("continue"), style: .default) { _ in
                     let enableGeolocationDelegate = MEGAGenericRequestDelegate { (request, error) in
@@ -556,11 +556,8 @@ extension ChatViewController: AddToChatViewControllerDelegate {
                             let alertMessage = String(format: "Enable geolocation failed. Error: %@", error.name)
                             
                             let enableGeolocationAlertAction = UIAlertAction(title: AMLocalizedString("ok"),
-                                                                             style: .default) { _ in
-                                                                                //TODO: Logic if check if the input bar hidden or not.
-                                                                                
-                            }
-                            
+                                                                             style: .default,
+                                                                             handler: nil)
                             let enableGeolocationAlertController = UIAlertController(title: alertTitle,
                                                                                      message: alertMessage,
                                                                                      preferredStyle: .alert)
