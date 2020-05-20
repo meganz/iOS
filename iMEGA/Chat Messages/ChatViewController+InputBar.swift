@@ -258,7 +258,53 @@ extension ChatViewController {
                 self.totalProgressOfTransfersCompleted = 0.0;
             }
         })
+    }
+    
+    private func uploadAsset(withFilePath filePath: String, parentNode: MEGANode) {
+        var appData: String? = nil
         
+        if let cordinates = (filePath as NSString).mnz_coordinatesOfPhotoOrVideo() {
+            appData = NSString().mnz_appData(toSaveCoordinates: cordinates)
+        }
+                                            
+        appData = ((appData ?? "") as NSString).mnz_appDataToAttach(toChatID: self.chatRoom.chatId, asVoiceClip: false)
+        
+        MEGASdkManager.sharedMEGASdk()!.startUpload(withLocalPath: filePath,
+                                                    parent: parentNode,
+                                                    appData: appData,
+                                                    isSourceTemporary: true,
+                                                    delegate: self.createUploadTransferDelegate())
+    }
+    
+    private func uploadVideo(withFilePath path: String, parentNode: MEGANode) {
+        let videoURL = URL(fileURLWithPath: NSHomeDirectory().append(pathComponent: path))
+        
+        let processAsset = MEGAProcessAsset(toShareThroughChatWithVideoURL: videoURL,
+                                            parentNode: parentNode,
+                                            filePath: { [weak self] path in
+            guard let filePath = path,
+                let `self` = self else {
+                MEGALogDebug("Video processing `MEGAProcessAsset` issue with file path as nil")
+                return
+            }
+            
+            self.uploadAsset(withFilePath: filePath, parentNode: parentNode)
+        }, node: nil) { [weak self] error in
+            guard let `self` = self else {
+                return
+            }
+            
+            let title = AMLocalizedString("error");
+            let message = error?.localizedDescription
+            let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: AMLocalizedString("ok"), style: .cancel, handler: nil))
+            
+            DispatchQueue.main.async {
+                self.present(alertController, animated: true, completion: nil)
+            }
+        }
+        
+        processAsset?.prepare()
     }
 }
 
@@ -402,20 +448,7 @@ extension ChatViewController: AddToChatViewControllerDelegate {
                     return
                 }
                 
-                var appData: String? = nil
-                
-                if let cordinates = (filePath as NSString).mnz_coordinatesOfPhotoOrVideo() {
-                    appData = NSString().mnz_appData(toSaveCoordinates: cordinates)
-                }
-                                                    
-                appData = ((appData ?? "") as NSString).mnz_appDataToAttach(toChatID: self.chatRoom.chatId, asVoiceClip: false)
-                
-                MEGASdkManager.sharedMEGASdk()!.startUpload(withLocalPath: filePath,
-                                                            parent: resultNode,
-                                                            appData: appData,
-                                                            isSourceTemporary: true,
-                                                            delegate: self.createUploadTransferDelegate())
-                
+                self.uploadAsset(withFilePath: filePath, parentNode: resultNode)
             }, nodes:nil) { errors in
                 guard let errors = errors else {
                     return
@@ -462,21 +495,20 @@ extension ChatViewController: AddToChatViewControllerDelegate {
     }
     
     func showCamera() {
-        let pickerController = MEGAImagePickerController(toShareThroughChatWith: .camera) { (filePath, sourceType, node) in
+        let pickerController = MEGAImagePickerController(toShareThroughChatWith: .camera) { [weak self] (filePath, sourceType, node) in
             guard let path = filePath,
                 let parentNode = node,
-                (path as NSString).mnz_isImagePathExtension else {
+                let `self` = self else {
                     return
             }
-                        
-            let appData = ("" as NSString).mnz_appDataToAttach(toChatID: self.chatRoom.chatId,
-                                                               asVoiceClip: false)
             
-            MEGASdkManager.sharedMEGASdk()!.startUpload(withLocalPath: path,
-                                                        parent: parentNode,
-                                                        appData: appData,
-                                                        isSourceTemporary: true,
-                                                        delegate: self.createUploadTransferDelegate())
+            if (path as NSString).mnz_isImagePathExtension  {
+                self.uploadAsset(withFilePath: path, parentNode: parentNode)
+            } else if (path as NSString).mnz_isVideoPathExtension {
+                self.uploadVideo(withFilePath: path, parentNode: parentNode)
+            } else {
+                MEGALogDebug("showCamera: Unknown media type found and cannot be uploaded.")
+            }
         }
         
         present(viewController: pickerController!)
