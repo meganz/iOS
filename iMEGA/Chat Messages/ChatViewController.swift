@@ -18,7 +18,6 @@ class ChatViewController: MessagesViewController {
     var chatInputBar: ChatInputBar?
     var editMessage: ChatMessage?
     var addToChatViewController: AddToChatViewController?
-//    var selectedEditingIndexPaths = Set<IndexPath>()
     var selectedMessages = Set<ChatMessage>()
     
     let shareBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(ChatViewController.shareSelectedMessages))
@@ -36,6 +35,8 @@ class ChatViewController: MessagesViewController {
          return control
      }()
     
+    open lazy var audioController = BasicAudioController(messageCollectionView: messagesCollectionView)
+
     // topbanner
     var timer: Timer?
     var topBannerButtonTopConstraint: NSLayoutConstraint?
@@ -202,7 +203,8 @@ class ChatViewController: MessagesViewController {
             closeChatRoom()
             MEGASdkManager.sharedMEGAChatSdk()?.remove(self as MEGAChatCallDelegate)
         }
-        
+        audioController.stopAnyOngoingPlaying()
+
         setEditing(false, animated: true)
     }
     
