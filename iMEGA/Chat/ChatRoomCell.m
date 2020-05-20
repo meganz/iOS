@@ -12,12 +12,6 @@
 #import "UIImageView+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
 
-#ifdef MNZ_SHARE_EXTENSION
-#import "MEGAShare-Swift.h"
-#else
-#import "MEGA-Swift.h"
-#endif
-
 @interface ChatRoomCell ()
 
 @property (strong, nonatomic) NSTimer *timer;
@@ -78,11 +72,10 @@
     self.chatTitle.text = self.chatListItem.chatTitle;
     [self updateLastMessageForChatListItem:chatListItem];
     
+    [self configureAvatar:chatListItem];
     if (chatListItem.isGroup) {
         self.onlineStatusView.hidden = YES;
-        self.avatarImageView.image = [UIImage imageForName:chatListItem.title.uppercaseString size:self.avatarImageView.frame.size backgroundColor:UIColor.mnz_gray999999 textColor:UIColor.whiteColor font:[UIFont mnz_SFUIRegularWithSize:(self.avatarImageView.frame.size.width/2.0f)]];
     } else {
-        [self.avatarImageView mnz_setImageForUserHandle:chatListItem.peerHandle name:chatListItem.title];
         UIColor *statusColor = [UIColor mnz_colorForStatusChange:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:chatListItem.peerHandle]];
         if (statusColor) {
             self.onlineStatusView.backgroundColor = statusColor;
@@ -90,10 +83,6 @@
         } else {
             self.onlineStatusView.hidden = YES;
         }
-    }
-    
-    if (@available(iOS 11.0, *)) {
-        self.avatarImageView.accessibilityIgnoresInvertColors = YES;
     }
     
     self.activeCallImageView.hidden = ![[MEGASdkManager sharedMEGAChatSdk] hasCallInChatRoom:chatListItem.chatId] && MEGAReachabilityManager.isReachable;
@@ -138,7 +127,8 @@
     self.chatTitle.text = user.mnz_displayName;
     self.chatLastMessage.text = AMLocalizedString(@"noConversationHistory", @"Information if there are no history messages in current chat conversation");
     
-    [self.avatarImageView mnz_setImageForUserHandle:user.handle name:[user mnz_fullName]];
+    [self.avatarView.avatarImageView mnz_setImageForUserHandle:user.handle name:[user mnz_fullName]];
+    [self.avatarView configureWithMode:AvatarViewModeSingle];
     UIColor *statusColor = [UIColor mnz_colorForStatusChange:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:user.handle]];
     if (statusColor) {
         self.onlineStatusView.backgroundColor = statusColor;
@@ -147,15 +137,37 @@
         self.onlineStatusView.hidden = YES;
     }
     
-    if (@available(iOS 11.0, *)) {
-        self.avatarImageView.accessibilityIgnoresInvertColors = YES;
-    }
-    
     self.activeCallImageView.hidden = YES;
     self.onCallInfoView.hidden = YES;
     self.chatLastTime.hidden = YES;
     
     [self updateUnreadCountChange:0];
+}
+
+- (void)configureAvatar:(MEGAChatListItem *)chatListItem {
+    if (chatListItem.isGroup) {
+        MEGAChatRoom *chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:chatListItem.chatId];
+        if (chatRoom.peerCount == 0) {
+            self.avatarView.avatarImageView.image = [UIImage imageForName:chatListItem.title.uppercaseString size:self.avatarView.avatarImageView.frame.size backgroundColor:UIColor.mnz_gray999999 textColor:UIColor.whiteColor font:[UIFont mnz_SFUIRegularWithSize:(self.avatarView.avatarImageView.frame.size.width/2.0f)]];
+            [self.avatarView configureWithMode:AvatarViewModeSingle];
+        } else {
+            uint64_t firstPeerHandle = [chatRoom peerHandleAtIndex:0];
+            NSString *firstPeerName = [chatRoom userDisplayNameAtIndex:0];
+            if (chatRoom.peerCount == 1) {
+                [self.avatarView.avatarImageView mnz_setImageForUserHandle:firstPeerHandle name:firstPeerName];
+                [self.avatarView configureWithMode:AvatarViewModeSingle];
+            } else {
+                uint64_t secondPeerHandle = [chatRoom peerHandleAtIndex:1];
+                NSString *secondPeerName = [chatRoom userDisplayNameAtIndex:1];
+                [self.avatarView.firstPeerAvatarImageView mnz_setImageForUserHandle:firstPeerHandle name:firstPeerName];
+                [self.avatarView.secondPeerAvatarImageView mnz_setImageForUserHandle:secondPeerHandle name:secondPeerName];
+                [self.avatarView configureWithMode:AvatarViewModeMultiple];
+            }
+        }
+    } else {
+        [self.avatarView.avatarImageView mnz_setImageForUserHandle:chatListItem.peerHandle name:chatListItem.title];
+        [self.avatarView configureWithMode:AvatarViewModeSingle];
+    }
 }
 
 - (void)updateDuration {

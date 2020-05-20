@@ -1,10 +1,16 @@
 #import <UIKit/UIKit.h>
 
+#ifdef MNZ_SHARE_EXTENSION
+#import "MEGAShare-Swift.h"
+#else
+#import "MEGA-Swift.h"
+#endif
+
 @class MEGAChatListItem;
 
 @interface ChatRoomCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
+@property (weak, nonatomic) IBOutlet AvatarView *avatarView;
 @property (weak, nonatomic) IBOutlet UILabel *chatTitle;
 @property (weak, nonatomic) IBOutlet UILabel *chatLastMessage;
 @property (weak, nonatomic) IBOutlet UILabel *chatLastTime;
@@ -24,5 +30,6 @@
 - (void)updateLastMessageForChatListItem:(MEGAChatListItem *)item;
 - (void)configureCellForChatListItem:(MEGAChatListItem *)chatListItem;
 - (void)configureCellForUser:(MEGAUser *)user;
+- (void)configureAvatar:(MEGAChatListItem *)chatListItem;
 
 @end
