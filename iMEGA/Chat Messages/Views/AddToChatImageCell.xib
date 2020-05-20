@@ -3,7 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -85,10 +85,10 @@
             </userDefinedRuntimeAttributes>
             <connections>
                 <outlet property="blurView" destination="iGN-Ue-ibQ" id="wBV-bA-S7h"/>
+                <outlet property="foregoundLabel" destination="eqx-Ww-k93" id="bjP-OY-Jry"/>
+                <outlet property="foregroundImageView" destination="oIE-uq-0xX" id="WoL-ih-gav"/>
+                <outlet property="foregroundView" destination="zxd-pW-fVV" id="30o-TQ-1YU"/>
                 <outlet property="imageView" destination="B63-Dg-j5n" id="5ky-1m-9qR"/>
-                <outlet property="selectedImageView" destination="oIE-uq-0xX" id="WoL-ih-gav"/>
-                <outlet property="selectedLabel" destination="eqx-Ww-k93" id="bjP-OY-Jry"/>
-                <outlet property="selectedView" destination="zxd-pW-fVV" id="30o-TQ-1YU"/>
                 <outlet property="selectionBackgroundView" destination="8HN-gE-OpX" id="Y4q-qW-dKz"/>
             </connections>
             <point key="canvasLocation" x="137.68115942028987" y="152.67857142857142"/>

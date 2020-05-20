@@ -10,12 +10,12 @@ class AddToChatImageCell: UICollectionViewCell {
     
     @IBOutlet weak var imageView: UIImageView!
     
-    @IBOutlet weak var selectedView: UIView!
+    @IBOutlet weak var foregroundView: UIView!
     @IBOutlet weak var selectionBackgroundView: UIView!
     @IBOutlet weak var blurView: UIVisualEffectView!
 
-    @IBOutlet weak var selectedImageView: UIImageView!
-    @IBOutlet weak var selectedLabel: UILabel!
+    @IBOutlet weak var foregroundImageView: UIImageView!
+    @IBOutlet weak var foregoundLabel: UILabel!
 
     
     private var imageRequestID: PHImageRequestID?
@@ -23,15 +23,15 @@ class AddToChatImageCell: UICollectionViewCell {
     var cellType: CellType = .media {
         didSet {
             if cellType == .media {
-                selectedLabel.text = AMLocalizedString("Send")
+                foregoundLabel.text = AMLocalizedString("Send")
                 let sendImage = UIImage(named: "sendChatDisabled")?.withRenderingMode(.alwaysTemplate)
-                selectedImageView.image = sendImage
+                foregroundImageView.image = sendImage
             } else {
-                selectedLabel.text = AMLocalizedString("more")
+                foregoundLabel.text = AMLocalizedString("more")
                 let moreImage = UIImage(named: "moreSelected")?.withRenderingMode(.alwaysTemplate)
-                selectedImageView.image = moreImage
+                foregroundImageView.image = moreImage
                 selectionBackgroundView.isHidden = true
-                selectedView.isHidden = false
+                foregroundView.isHidden = false
                 blurView.isHidden = false
             }
         }
@@ -60,7 +60,7 @@ class AddToChatImageCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        selectedView.isHidden = true
+        foregroundView.isHidden = true
         selectionBackgroundView.isHidden = false
         blurView.isHidden = true
         
@@ -77,19 +77,19 @@ class AddToChatImageCell: UICollectionViewCell {
     func toggleSelection() {
         let animationDuration = 0.2
         
-        if selectedView.isHidden {
-            selectedView.alpha = 0.0
-            selectedView.isHidden = false
+        if foregroundView.isHidden {
+            foregroundView.alpha = 0.0
+            foregroundView.isHidden = false
             UIView.animate(withDuration: animationDuration) {
-                self.selectedView.alpha = 1.0
+                self.foregroundView.alpha = 1.0
             }
         } else {
             UIView.animate(withDuration: animationDuration,
                            animations: {
-                            self.selectedView.alpha = 0.0
+                            self.foregroundView.alpha = 0.0
             }) { _ in
-                self.selectedView.isHidden = true
-                self.selectedView.alpha = 1.0
+                self.foregroundView.isHidden = true
+                self.foregroundView.alpha = 1.0
             }
         }
     }
