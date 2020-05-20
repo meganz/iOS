@@ -42,6 +42,7 @@ class ChatVoiceClipCollectionViewCell: AudioMessageCell {
         //        messageContainerView.addSubview(durationLabel)
         //        messageContainerView.addSubview(playIconView)
         //        messageContainerView.addSubview(waveView)
+        
         setupConstraints()
     }
     
@@ -62,7 +63,7 @@ class ChatVoiceClipCollectionViewCell: AudioMessageCell {
         
         let textColor = displayDelegate.textColor(for: message, at: indexPath, in: messagesCollectionView)
         durationLabel.textColor = textColor
-        
+        progressView.trackTintColor = .lightGray
         let node = megaMessage.nodeList.node(at: 0)!
         let duration = max(node.duration, 0)
         durationLabel.text = NSString.mnz_string(fromTimeInterval: TimeInterval(duration))
