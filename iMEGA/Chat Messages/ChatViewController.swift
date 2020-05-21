@@ -88,7 +88,7 @@ class ChatViewController: MessagesViewController {
     // MARK: - Overriden methods
 
     override func setEditing(_ editing: Bool, animated: Bool) {
-        guard isEditing != editing, let chatViewMessagesFlowLayout = messagesCollectionView.messagesCollectionViewFlowLayout as? ChatViewMessagesFlowLayout else {
+        guard let chatViewMessagesFlowLayout = messagesCollectionView.messagesCollectionViewFlowLayout as? ChatViewMessagesFlowLayout else {
             return
         }
         chatViewMessagesFlowLayout.editing = editing
