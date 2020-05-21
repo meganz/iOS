@@ -7,15 +7,15 @@ class BaseAction: NSObject {
 }
 
 class ActionSheetAction: BaseAction {
-    var action = { }
-    
-    @objc init(title: String?, detail: String?, image: UIImage? , style: UIAlertAction.Style, handler: (() -> Void)? = nil) {
+    var actionHandler : () -> Void
+
+    @objc init(title: String?, detail: String?, image: UIImage?, style: UIAlertAction.Style, actionHandler: @escaping () -> Void) {
+        self.actionHandler = actionHandler
         super.init()
         self.title = title
         self.detail = detail
         self.image = image
         self.style = style
-        self.action = handler ?? {}
     }
 }
 

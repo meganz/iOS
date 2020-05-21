@@ -19,6 +19,8 @@
 #import "UIImage+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 
+#import "MEGA-Swift.h"
+
 @interface ContactLinkQRViewController () <AVCaptureMetadataOutputObjectsDelegate>
 
 @property (weak, nonatomic) IBOutlet UIButton *backButton;
@@ -208,40 +210,32 @@
 }
 
 - (IBAction)moreButtonTapped:(UIButton *)sender {
-    UIAlertController *moreAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    [moreAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+    __weak __typeof__(self) weakSelf = self;
     
-    if (self.contactLinkLabel.text.length>0) {
-        UIAlertAction *shareAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"share", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[self.contactLinkLabel.text] applicationActivities:nil];
-            [activityVC.popoverPresentationController setSourceView:self.view];
+    NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
+    
+    if (self.contactLinkLabel.text.length > 0) {
+        [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"share", nil) detail:nil image:nil style:UIAlertActionStyleDefault actionHandler:^{
+            UIActivityViewController *activityVC = [UIActivityViewController.alloc initWithActivityItems:@[weakSelf.contactLinkLabel.text] applicationActivities:nil];
+            [activityVC.popoverPresentationController setSourceView:weakSelf.view];
             [activityVC.popoverPresentationController setSourceRect:sender.frame];
             
-            [self presentViewController:activityVC animated:YES completion:nil];
-        }];
-        [shareAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
-        [moreAlertController addAction:shareAlertAction];
+            [weakSelf presentViewController:activityVC animated:YES completion:nil];
+        }]];
     }
     
-    UIAlertAction *settingsAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"settingsTitle", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"settingsTitle", nil) detail:nil image:nil style:UIAlertActionStyleDefault actionHandler:^{
         UINavigationController *qrSettingsNC = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"QRSettingsNavigationControllerID"];
-        [self presentViewController:qrSettingsNC animated:YES completion:nil];
-    }];
-    [settingsAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
-    [moreAlertController addAction:settingsAlertAction];
+        [weakSelf presentViewController:qrSettingsNC animated:YES completion:nil];
+    }]];
     
-    UIAlertAction *resetAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"resetQrCode", @"Action to reset the current valid QR code of the user") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        self.qrImageView.image = nil;
-        [[MEGASdkManager sharedMEGASdk] contactLinkCreateRenew:YES delegate:self.contactLinkCreateDelegate];
-    }];
-    [resetAlertAction mnz_setTitleTextColor:[UIColor redColor]];
-    [moreAlertController addAction:resetAlertAction];
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"resetQrCode", @"Action to reset the current valid QR code of the user") detail:nil image:nil style:UIAlertActionStyleDefault actionHandler:^{
+        weakSelf.qrImageView.image = nil;
+        [[MEGASdkManager sharedMEGASdk] contactLinkCreateRenew:YES delegate:weakSelf.contactLinkCreateDelegate];
+    }]];
     
-    moreAlertController.modalPresentationStyle = UIModalPresentationPopover;
-    moreAlertController.popoverPresentationController.sourceRect = sender.frame;
-    moreAlertController.popoverPresentationController.sourceView = sender.superview;
-
-    [self presentViewController:moreAlertController animated:YES completion:nil];
+    ActionSheetViewController *moreActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:nil dismissCompletion:nil sender:sender]; //TODO: review porque no se pinta
+    [self presentViewController:moreActionSheet animated:YES completion:nil];
 }
 
 #pragma mark - QR recognizing
