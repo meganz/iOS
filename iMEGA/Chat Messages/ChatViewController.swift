@@ -29,6 +29,7 @@ class ChatViewController: MessagesViewController {
     var remainingBytesToUpload = 0.0
     var totalProgressOfTransfersCompleted = 0.0
     var sendTypingTimer: Timer?
+    var keyboardVisible = false
     private(set) lazy var refreshControl: UIRefreshControl = {
          let control = UIRefreshControl()
          control.addTarget(self, action: #selector(loadMoreMessages), for: .valueChanged)
@@ -717,14 +718,50 @@ class ChatViewController: MessagesViewController {
                                                queue: OperationQueue.main) { [weak self] _ in
                                                 self?.updateRightBarButtons()
         }
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(handleKeyboardShown(_:)),
+                                               name: UIResponder.keyboardDidShowNotification,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(handleKeyboardHidden(_:)),
+                                               name: UIResponder.keyboardWillHideNotification,
+                                               object: nil)
     }
     
     private func removeObservers() {
         NotificationCenter.default.removeObserver(self,
                                                   name: NSNotification.Name.reachabilityChanged,
                                                   object: nil)
+        NotificationCenter.default.removeObserver(self,
+                                                  name: UIResponder.keyboardDidShowNotification,
+                                                  object: nil)
+        NotificationCenter.default.removeObserver(self,
+                                                  name: UIResponder.keyboardWillHideNotification,
+                                                  object: nil)
+    }
+        
+    @objc private func handleKeyboardShown(_ notification: Notification) {
+        // When there are no messages and the introduction text is shown and the keyboard appears the content inset is not added automatically and we do need to add the inset to the collection
+        guard chatRoomDelegate.messages.count == 0 else {
+            return
+        }
+        
+        guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect,
+            let inputAccessoryView = inputAccessoryView  else {
+            return
+        }
+        
+        additionalBottomInset = keyboardFrame.height + inputAccessoryView.frame.height
+        messagesCollectionView.scrollToBottom()
+        keyboardVisible = true
     }
     
+    @objc private func handleKeyboardHidden(_ notification: Notification) {
+        additionalBottomInset = 0
+        keyboardVisible = false
+    }
+
     // MARK: - Bar Button actions
 
     @objc func startAudioCall() {
