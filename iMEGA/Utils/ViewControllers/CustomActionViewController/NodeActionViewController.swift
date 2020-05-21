@@ -18,18 +18,10 @@ class NodeActionViewController: ActionSheetViewController {
         self.displayMode = displayMode
         self.isIncomingShareChildView = isIncoming
         self.sender = sender
+        
         super.init(nibName: nil, bundle: nil)
         
-        if UIDevice.current.iPadDevice {
-            modalPresentationStyle = .popover
-            popoverPresentationController?.delegate = self
-            if let barButtonSender = sender as? UIBarButtonItem {
-                popoverPresentationController?.barButtonItem = barButtonSender
-            } else if let buttonSender = sender as? UIButton {
-                popoverPresentationController?.sourceView = buttonSender
-                popoverPresentationController?.sourceRect = CGRect(origin: .zero, size: CGSize(width: buttonSender.frame.width/2, height: buttonSender.frame.height/2))
-            }
-        }
+        configurePresentationStyle(from: sender)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -39,7 +31,7 @@ class NodeActionViewController: ActionSheetViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         getActions()
-        configureView()
+        configureNodeHeaderView()
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -51,8 +43,9 @@ class NodeActionViewController: ActionSheetViewController {
         })
     }
     
-    func configureView() {
+    func configureNodeHeaderView() {
         headerView?.frame = CGRect(x: 0, y: 0, width: 320, height: 80)
+        headerView?.backgroundColor = UIColor.mnz_grayF7F7F7()
         let imageView = UIImageView.newAutoLayout()
         imageView.mnz_setThumbnail(by: node)
         headerView?.addSubview(imageView)

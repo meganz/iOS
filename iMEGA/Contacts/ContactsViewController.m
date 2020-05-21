@@ -433,55 +433,35 @@
 
 - (void)selectPermissionsFromButton:(UIBarButtonItem *)sourceButton {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        UIAlertController *shareFolderAlertController = [self prepareShareFolderAlertController];
-        
-        if (sourceButton) {
-            shareFolderAlertController.popoverPresentationController.barButtonItem = sourceButton;
-        } else {
-            shareFolderAlertController.popoverPresentationController.sourceRect = self.view.frame;
-            shareFolderAlertController.popoverPresentationController.sourceView = self.view;
-        }
-        
-        [self presentViewController:shareFolderAlertController animated:YES completion:nil];
+        id sender = sourceButton ? sourceButton : self.view;
+        ActionSheetViewController *shareFolderActionSheet = [self prepareShareFolderAlertControllerFromSender:sender];
+        [self presentViewController:shareFolderActionSheet animated:YES completion:nil];
     }
 }
 
-- (void)selectPermissionsFromCellRect:(CGRect)cellRect {
+- (void)selectPermissionsFromCell:(ContactTableViewCell *)cell {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        UIAlertController *shareFolderAlertController = [self prepareShareFolderAlertController];
-        
-        shareFolderAlertController.popoverPresentationController.sourceRect = cellRect;
-        shareFolderAlertController.popoverPresentationController.sourceView = self.tableView;
-        
-        [self presentViewController:shareFolderAlertController animated:YES completion:nil];
+        ActionSheetViewController *shareFolderActionSheet = [self prepareShareFolderAlertControllerFromSender:cell.permissionsImageView];
+        [self presentViewController:shareFolderActionSheet animated:YES completion:nil];
     }
 }
 
-- (UIAlertController *)prepareShareFolderAlertController {
-    UIAlertController *shareFolderAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"permissions", @"Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    [shareFolderAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
-    
-    UIAlertAction *fullAccessAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"fullAccess", @"Permissions given to the user you share your folder with") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [self shareNodesWithLevel:MEGAShareTypeAccessFull];
-    }];
-    [fullAccessAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
-    [shareFolderAlertController addAction:fullAccessAlertAction];
-    
-    UIAlertAction *readAndWritetAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"readAndWrite", @"Permissions given to the user you share your folder with") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [self shareNodesWithLevel:MEGAShareTypeAccessReadWrite];
-    }];
-    [readAndWritetAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
-    [shareFolderAlertController addAction:readAndWritetAlertAction];
-    
-    UIAlertAction *readOnlyAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [self shareNodesWithLevel:MEGAShareTypeAccessRead];
-    }];
-    [readOnlyAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
-    [shareFolderAlertController addAction:readOnlyAlertAction];
-    
-    shareFolderAlertController.modalPresentationStyle = UIModalPresentationPopover;
-    
-    return shareFolderAlertController;
+- (ActionSheetViewController *)prepareShareFolderAlertControllerFromSender:(id)sender {
+    __weak __typeof__(self) weakSelf = self;
+
+    NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"fullAccess", @"Permissions given to the user you share your folder with") detail:nil image:[UIImage imageNamed:@"fullAccessPermissions"] style:UIAlertActionStyleDefault actionHandler:^{
+        [weakSelf shareNodesWithLevel:MEGAShareTypeAccessFull];
+    }]];
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"readAndWrite", @"Permissions given to the user you share your folder with") detail:nil image:[UIImage imageNamed:@"readWritePermissions"] style:UIAlertActionStyleDefault actionHandler:^{
+        [weakSelf shareNodesWithLevel:MEGAShareTypeAccessReadWrite];
+    }]];
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with") detail:nil image:[UIImage imageNamed:@"readPermissions"] style:UIAlertActionStyleDefault actionHandler:^{
+        [weakSelf shareNodesWithLevel:MEGAShareTypeAccessRead];
+    }]];
+    ActionSheetViewController *shareFolderActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:AMLocalizedString(@"permissions", @"Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder") dismissCompletion:nil sender:sender];
+
+    return shareFolderActionSheet;
 }
 
 - (void)shareNodesWithLevel:(MEGAShareType)shareType {
@@ -911,15 +891,15 @@
     }
     
     if (self.contactsMode == ContactsModeShareFoldersWith) {
-        UIAlertController *addContactAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"inviteContact", @"Text shown when the user tries to make a call and the receiver is not a contact") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-        [addContactAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+        __weak __typeof__(self) weakSelf = self;
         
-        UIAlertAction *addFromEmailAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"addFromEmail", @"Item menu option to add a contact writting his/her email") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
+        [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"addFromEmail", @"Item menu option to add a contact writting his/her email") detail:nil image:nil style:UIAlertActionStyleDefault actionHandler:^{
             UIAlertController *addContactFromEmailAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email") message:nil preferredStyle:UIAlertControllerStyleAlert];
             
             [addContactFromEmailAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
                 textField.placeholder = AMLocalizedString(@"contactEmail", @"Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list");
-                [textField addTarget:self action:@selector(addContactAlertTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+                [textField addTarget:weakSelf action:@selector(addContactAlertTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
                 textField.shouldReturnCompletion = ^BOOL(UITextField *textField) {
                     return (!textField.text.mnz_isEmpty && textField.text.mnz_isValidEmail);
                 };
@@ -929,56 +909,31 @@
             
             UIAlertAction *addContactAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"addContactButton", @"Button title to 'Add' the contact to your contacts list") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                 UITextField *textField = addContactFromEmailAlertController.textFields.firstObject;
-                if (self.contactsMode == ContactsModeShareFoldersWith) {
-                    [self inviteEmailToShareFolder:textField.text];
-                } else {
-                    if (MEGAReachabilityManager.isReachableHUDIfNot) {
-                        MEGAInviteContactRequestDelegate *inviteContactRequestDelegate = [MEGAInviteContactRequestDelegate.alloc initWithNumberOfRequests:1];
-                        [MEGASdkManager.sharedMEGASdk inviteContactWithEmail:textField.text message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
-                        [addContactAlertController dismissViewControllerAnimated:YES completion:nil];
-                    }
-                }
+                [weakSelf inviteEmailToShareFolder:textField.text];
             }];
             addContactAlertAction.enabled = NO;
             [addContactFromEmailAlertController addAction:addContactAlertAction];
             
-            [self presentViewController:addContactFromEmailAlertController animated:YES completion:nil];
-        }];
-        [addFromEmailAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
-        [addContactAlertController addAction:addFromEmailAlertAction];
-        
-        UIAlertAction *addFromContactsAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"addFromContacts", @"Item menu option to add a contact through your device app Contacts") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            if (self.presentedViewController != nil) {
-                [self.presentedViewController dismissViewControllerAnimated:NO completion:nil];
+            [weakSelf presentViewController:addContactFromEmailAlertController animated:YES completion:nil];
+        }]];
+        [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"addFromContacts", @"Item menu option to add a contact through your device app Contacts") detail:nil image:nil style:UIAlertActionStyleDefault actionHandler:^{
+            if (weakSelf.presentedViewController != nil) {
+                [weakSelf.presentedViewController dismissViewControllerAnimated:NO completion:nil];
             }
-            [self showEmailContactPicker];
-        }];
-        [addFromContactsAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
-        [addContactAlertController addAction:addFromContactsAlertAction];
-        
-        UIAlertAction *scanCodeAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"scanCode", @"Segmented control title for view that allows the user to scan QR codes. String as short as possible.") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [weakSelf showEmailContactPicker];
+        }]] ;
+        [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"scanCode", @"Segmented control title for view that allows the user to scan QR codes. String as short as possible.") detail:nil image:nil style:UIAlertActionStyleDefault actionHandler:^{
             ContactLinkQRViewController *contactLinkVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactLinkQRViewControllerID"];
             contactLinkVC.scanCode = YES;
-            if (self.contactsMode == ContactsModeShareFoldersWith) {
+            if (weakSelf.contactsMode == ContactsModeShareFoldersWith) {
                 contactLinkVC.contactLinkQRType = ContactLinkQRTypeShareFolder;
-                contactLinkVC.contactLinkQRDelegate = self;
+                contactLinkVC.contactLinkQRDelegate = weakSelf;
             }
-            [self presentViewController:contactLinkVC animated:YES completion:nil];
-        }];
-        [scanCodeAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
-        [addContactAlertController addAction:scanCodeAlertAction];
-        
-        addContactAlertController.modalPresentationStyle = UIModalPresentationPopover;
-        if (self.addBarButtonItem) {
-            addContactAlertController.popoverPresentationController.barButtonItem = self.addBarButtonItem;
-        } else if (self.insertAnEmailBarButtonItem) {
-            addContactAlertController.popoverPresentationController.barButtonItem = self.insertAnEmailBarButtonItem;
-        } else {
-            addContactAlertController.popoverPresentationController.sourceRect = sender.frame;
-            addContactAlertController.popoverPresentationController.sourceView = sender.superview;
-        }
-        
-        [self presentViewController:addContactAlertController animated:YES completion:nil];
+            [weakSelf presentViewController:contactLinkVC animated:YES completion:nil];
+        }]];
+
+        ActionSheetViewController *addContactActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:nil dismissCompletion:nil sender:sender];
+        [self presentViewController:addContactActionSheet animated:YES completion:nil];
     } else {
         InviteContactViewController *inviteContacts = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"InviteContactViewControllerID"];
         [self.navigationController pushViewController:inviteContacts animated:YES];
@@ -1375,8 +1330,7 @@
                     }
                     
                     self.userTapped = user;
-                    CGRect cellRect = [self.tableView rectForRowAtIndexPath:indexPath];
-                    [self selectPermissionsFromCellRect:cellRect];
+                    [self selectPermissionsFromCell:[self.tableView cellForRowAtIndexPath:indexPath]];
                 }
             } else {
                 if (!tableView.isEditing) {
@@ -1550,15 +1504,16 @@
         switch (self.contactsMode) {
             case ContactsModeDefault: {
                 MEGAUser *user = [self userAtIndexPath:indexPath];
-                UIAlertController *removeContactAlertController = [Helper removeUserContactWithConfirmAction:^{
+                NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
+                [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"removeUserTitle", @"Alert title shown when you want to remove one or more contacts") detail:nil image:nil style:UIAlertActionStyleDefault actionHandler:^{
                     MEGARemoveContactRequestDelegate *removeContactRequestDelegate = [MEGARemoveContactRequestDelegate. alloc initWithCompletion:^{
                         [self setTableViewEditing:NO animated:NO];
                     }];
                     [[MEGASdkManager sharedMEGASdk] removeContactUser:user delegate:removeContactRequestDelegate];
-                }];
+                }]];
                 
-                [self presentViewController:removeContactAlertController animated:YES completion:nil];
-                break;
+                ActionSheetViewController *removeContactActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:nil dismissCompletion:nil sender:nil];
+                [self presentViewController:removeContactActionSheet animated:YES completion:nil];
             }
                 
             case ContactsModeShareFoldersWith:

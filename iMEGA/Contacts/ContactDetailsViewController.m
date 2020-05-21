@@ -392,39 +392,21 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
             [self.tableView reloadData];
         }
     }];
+    __weak __typeof__(self) weakSelf = self;
     
-    UIAlertController *permissionsAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    UIAlertAction *cancelAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil];
-    [cancelAlertAction mnz_setTitleTextColor:UIColor.mnz_redMain];
-    [permissionsAlertController addAction:cancelAlertAction];
+    NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"moderator", @"The Moderator permission level in chat. With moderator permissions a participant can manage the chat.") detail:nil image:nil style:UIAlertActionStyleDefault actionHandler:^{
+        [MEGASdkManager.sharedMEGAChatSdk updateChatPermissions:weakSelf.groupChatRoom.chatId userHandle:weakSelf.userHandle privilege:MEGAChatRoomPrivilegeModerator delegate:delegate];
+    }]];
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"standard", @"The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat.") detail:nil image:nil style:UIAlertActionStyleDefault actionHandler:^{
+        [MEGASdkManager.sharedMEGAChatSdk updateChatPermissions:weakSelf.groupChatRoom.chatId userHandle:weakSelf.userHandle privilege:MEGAChatRoomPrivilegeStandard delegate:delegate];
+    }]];
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with") detail:nil image:nil style:UIAlertActionStyleDefault actionHandler:^{
+        [MEGASdkManager.sharedMEGAChatSdk updateChatPermissions:weakSelf.groupChatRoom.chatId userHandle:weakSelf.userHandle privilege:MEGAChatRoomPrivilegeRo delegate:delegate];
+    }]];
     
-    UIAlertAction *moderatorAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"moderator", @"The Moderator permission level in chat. With moderator permissions a participant can manage the chat.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [MEGASdkManager.sharedMEGAChatSdk updateChatPermissions:self.groupChatRoom.chatId userHandle:self.userHandle privilege:MEGAChatRoomPrivilegeModerator delegate:delegate];
-    }];
-    [moderatorAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
-    [permissionsAlertController addAction:moderatorAlertAction];
-    
-    UIAlertAction *standartAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"standard", @"The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [MEGASdkManager.sharedMEGAChatSdk updateChatPermissions:self.groupChatRoom.chatId userHandle:self.userHandle privilege:MEGAChatRoomPrivilegeStandard delegate:delegate];
-    }];
-    [standartAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
-    [permissionsAlertController addAction:standartAlertAction];
-    
-    UIAlertAction *readOnlyAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [MEGASdkManager.sharedMEGAChatSdk updateChatPermissions:self.groupChatRoom.chatId userHandle:self.userHandle privilege:MEGAChatRoomPrivilegeRo delegate:delegate];
-    }];
-    [readOnlyAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
-    [permissionsAlertController addAction:readOnlyAlertAction];
-    
-    if (permissionsAlertController.actions.count > 1) {
-        if (UIDevice.currentDevice.iPadDevice) {
-            permissionsAlertController.modalPresentationStyle = UIModalPresentationPopover;
-            permissionsAlertController.popoverPresentationController.sourceRect = sourceView.frame;
-            permissionsAlertController.popoverPresentationController.sourceView = sourceView;
-        }
-        
-        [self presentViewController:permissionsAlertController animated:YES completion:nil];
-    }
+    ActionSheetViewController *permissionsActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:nil dismissCompletion:nil sender:sourceView];
+    [self presentViewController:permissionsActionSheet animated:YES completion:nil];
 }
 
 - (void)removeParticipantFromGroup {
@@ -445,17 +427,19 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
         [MEGASdkManager.sharedMEGASdk inviteContactWithEmail:self.userEmail message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
     }
 }
-- (void)showRemoveContactAlert {
-    UIAlertController *removeContactAlertController = [Helper removeUserContactWithConfirmAction:^{
+- (void)showRemoveContactConfirmation {
+    NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"removeUserTitle", @"Alert title shown when you want to remove one or more contacts") detail:nil image:nil style:UIAlertActionStyleDefault actionHandler:^{
         MEGARemoveContactRequestDelegate *removeContactRequestDelegate = [MEGARemoveContactRequestDelegate.alloc initWithCompletion:^{
             //TODO: Close chat room because the contact was removed
             
             [self.navigationController popViewControllerAnimated:YES];
         }];
         [[MEGASdkManager sharedMEGASdk] removeContactUser:self.user delegate:removeContactRequestDelegate];
-    }];
+    }]];
     
-    [self presentViewController:removeContactAlertController animated:YES completion:nil];
+    ActionSheetViewController *removeContactActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:nil dismissCompletion:nil sender:nil];
+    [self presentViewController:removeContactActionSheet animated:YES completion:nil];
 }
 
 - (void)sendInviteContact {
@@ -942,7 +926,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
             
         case ContactDetailsSectionAddAndRemoveContact:
             if (self.user.visibility == MEGAUserVisibilityVisible) {
-                [self showRemoveContactAlert];
+                [self showRemoveContactConfirmation];
             } else {
                 [self sendInviteContact];
             }
