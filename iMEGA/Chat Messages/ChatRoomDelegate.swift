@@ -230,6 +230,10 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
         
         if messages.count == 1 {
             chatViewController.messagesCollectionView.reloadData()
+            if chatViewController.keyboardVisible {
+                chatViewController.additionalBottomInset = 0
+                chatViewController.messagesCollectionView.scrollToBottom()
+            }
             return;
         }
         chatViewController.messagesCollectionView.performBatchUpdates({
