@@ -13,36 +13,13 @@ class ChatVoiceClipCollectionViewCell: AudioMessageCell {
         return waveView
     }()
     
-    //    open var durationLabel: MessageLabel = {
-    //        let label = MessageLabel()
-    //        return label
-    //    }()
-    
     // MARK: - Methods
     
-    /// Responsible for setting up the constraints of the cell's subviews.
-    //    open override func setupConstraints() {
-    //        playIconView.autoPinEdge(toSuperviewEdge: .leading, withInset: 10)
-    //        playIconView.autoAlignAxis(toSuperviewAxis: .horizontal)
-    //        playIconView.autoSetDimensions(to: CGSize(width: 20, height: 20))
-    //
-    //        durationLabel.autoPinEdge(.leading, to: .trailing, of: playIconView, withOffset: 10)
-    //        durationLabel.autoPinEdge(.trailing, to: .leading, of: waveView, withOffset: 10)
-    //        durationLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
-    //
-    //        waveView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 10)
-    //        waveView.autoAlignAxis(toSuperviewAxis: .horizontal)
-    //        waveView.autoSetDimensions(to: CGSize(width: 55, height: 33))
-    //
-    //
-    //    }
     
     open override func setupSubviews() {
         super.setupSubviews()
-        //        messageContainerView.addSubview(durationLabel)
-        //        messageContainerView.addSubview(playIconView)
-        //        messageContainerView.addSubview(waveView)
-        
+    
+        playButton.setImage(UIImage(named: "playButton"), for: .normal)
         setupConstraints()
     }
     
@@ -75,7 +52,6 @@ class ChatVoiceClipCollectionViewCell: AudioMessageCell {
             }, onError: nil))
         }
     }
-    //    }
 }
 
 open class ChatVoiceClipCollectionViewSizeCalculator: MessageSizeCalculator {
