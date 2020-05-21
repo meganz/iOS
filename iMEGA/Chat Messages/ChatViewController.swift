@@ -30,7 +30,6 @@ class ChatViewController: MessagesViewController {
     var totalProgressOfTransfersCompleted = 0.0
     var sendTypingTimer: Timer?
     var keyboardVisible = false
- 
     
     open lazy var audioController = BasicAudioController(messageCollectionView: messagesCollectionView)
 
