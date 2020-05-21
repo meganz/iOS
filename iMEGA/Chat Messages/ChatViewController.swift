@@ -30,11 +30,7 @@ class ChatViewController: MessagesViewController {
     var totalProgressOfTransfersCompleted = 0.0
     var sendTypingTimer: Timer?
     var keyboardVisible = false
-    private(set) lazy var refreshControl: UIRefreshControl = {
-         let control = UIRefreshControl()
-         control.addTarget(self, action: #selector(loadMoreMessages), for: .valueChanged)
-         return control
-     }()
+ 
     
     open lazy var audioController = BasicAudioController(messageCollectionView: messagesCollectionView)
 
@@ -622,7 +618,6 @@ class ChatViewController: MessagesViewController {
         messagesCollectionView.emptyDataSetSource = self
         messagesCollectionView.emptyDataSetDelegate = self
         
-        messagesCollectionView.refreshControl = refreshControl
         maintainPositionOnKeyboardFrameChanged = true
     }
     

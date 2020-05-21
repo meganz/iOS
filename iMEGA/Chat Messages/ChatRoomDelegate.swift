@@ -68,9 +68,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
     
     func onMessageLoaded(_ api: MEGAChatSdk!, message: MEGAChatMessage!) {
         MEGALogInfo("ChatRoomDelegate: onMessageLoaded")
-        if isFullChatHistoryLoaded {
-            chatViewController.messagesCollectionView.refreshControl = nil
-        }
+        
         
         if let chatMessage = message {
             if !chatMessage.isDeleted {
@@ -97,7 +95,6 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
             
             if (loadingState) {
                 chatViewController.messagesCollectionView.reloadDataAndKeepOffset()
-                chatViewController.messagesCollectionView.refreshControl?.endRefreshing()
             } else {
                 chatViewController.messagesCollectionView.reloadDataAndKeepOffset()
             }
