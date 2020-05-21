@@ -1773,6 +1773,12 @@ void uncaughtExceptionHandler(NSException *exception) {
     
     if (request.type == MEGAChatRequestTypeImportMessages) {
         MEGALogDebug(@"Imported messages %lld", request.number);
+        NSManagedObjectContext *childQueueContext = MEGAStore.shareInstance.childPrivateQueueContext;
+        if (childQueueContext) {
+            [childQueueContext performBlock:^{
+                [MEGAStore.shareInstance deleteAllMessagesWithContext:childQueueContext];
+            }];
+        }
     }
     
     MEGALogInfo(@"onChatRequestFinish request type: %td", request.type);
