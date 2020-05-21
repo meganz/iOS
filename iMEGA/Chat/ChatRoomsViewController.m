@@ -192,6 +192,8 @@
     if ([DevicePermissionsHelper shouldAskForNotificationsPermissions]) {
         [DevicePermissionsHelper modalNotificationsPermission];
     }
+    
+    self.navigationController.toolbarHidden = true;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

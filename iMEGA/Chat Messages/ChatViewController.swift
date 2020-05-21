@@ -204,8 +204,6 @@ class ChatViewController: MessagesViewController {
             MEGASdkManager.sharedMEGAChatSdk()?.remove(self as MEGAChatCallDelegate)
         }
         audioController.stopAnyOngoingPlaying()
-
-        setEditing(false, animated: true)
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
