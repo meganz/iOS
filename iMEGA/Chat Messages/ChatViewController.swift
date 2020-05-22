@@ -550,10 +550,10 @@ class ChatViewController: MessagesViewController {
             return false
         }
         
-        let latestVisibleTimeIndexPath = previousIndexPathOfVisibleTimeLabel(for: previousIndexPath)
-        if isMessageSentAtSameMinute(between: indexPath, and: latestVisibleTimeIndexPath) {
-            return false
-        }
+//        let latestVisibleTimeIndexPath = previousIndexPathOfVisibleTimeLabel(for: previousIndexPath)
+//        if isMessageSentAtSameMinute(between: indexPath, and: latestVisibleTimeIndexPath) {
+//            return false
+//        }
         
         return true
     }
