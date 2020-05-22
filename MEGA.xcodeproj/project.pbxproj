@@ -489,10 +489,6 @@
 		8320213622B78D530057D96F /* ContactsOnMegaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8320213522B78D530057D96F /* ContactsOnMegaViewController.swift */; };
 		8326F383229FC032009BA19A /* MEGALoadingMessagesHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8326F381229FC032009BA19A /* MEGALoadingMessagesHeaderView.m */; };
 		8326F384229FC032009BA19A /* MEGALoadingMessagesHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8326F382229FC032009BA19A /* MEGALoadingMessagesHeaderView.xib */; };
-		832E1025202B09AE00BDD30F /* NodeActionCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 832E1023202B09AE00BDD30F /* NodeActionCollectionViewCell.m */; };
-		832E1026202B09AE00BDD30F /* NodeActionCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 832E1024202B09AE00BDD30F /* NodeActionCollectionViewCell.xib */; };
-		832E102A202B0A3900BDD30F /* NodeActionHeaderCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 832E1028202B0A3900BDD30F /* NodeActionHeaderCollectionReusableView.m */; };
-		832E102B202B0A3900BDD30F /* NodeActionHeaderCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 832E1029202B0A3900BDD30F /* NodeActionHeaderCollectionReusableView.xib */; };
 		832E102F202CB8AE00BDD30F /* NodeInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 832E102E202CB8AE00BDD30F /* NodeInfoViewController.m */; };
 		832E1032202D8E6900BDD30F /* NodePropertyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 832E1031202D8E6900BDD30F /* NodePropertyTableViewCell.m */; };
 		832E1035202DE10500BDD30F /* NodeTappablePropertyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 832E1034202DE10500BDD30F /* NodeTappablePropertyTableViewCell.m */; };
@@ -1787,12 +1783,6 @@
 		8326F380229FC032009BA19A /* MEGALoadingMessagesHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGALoadingMessagesHeaderView.h; sourceTree = "<group>"; };
 		8326F381229FC032009BA19A /* MEGALoadingMessagesHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGALoadingMessagesHeaderView.m; sourceTree = "<group>"; };
 		8326F382229FC032009BA19A /* MEGALoadingMessagesHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MEGALoadingMessagesHeaderView.xib; sourceTree = "<group>"; };
-		832E1022202B09AE00BDD30F /* NodeActionCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NodeActionCollectionViewCell.h; sourceTree = "<group>"; };
-		832E1023202B09AE00BDD30F /* NodeActionCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NodeActionCollectionViewCell.m; sourceTree = "<group>"; };
-		832E1024202B09AE00BDD30F /* NodeActionCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NodeActionCollectionViewCell.xib; sourceTree = "<group>"; };
-		832E1027202B0A3900BDD30F /* NodeActionHeaderCollectionReusableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NodeActionHeaderCollectionReusableView.h; sourceTree = "<group>"; };
-		832E1028202B0A3900BDD30F /* NodeActionHeaderCollectionReusableView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NodeActionHeaderCollectionReusableView.m; sourceTree = "<group>"; };
-		832E1029202B0A3900BDD30F /* NodeActionHeaderCollectionReusableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NodeActionHeaderCollectionReusableView.xib; sourceTree = "<group>"; };
 		832E102D202CB8AE00BDD30F /* NodeInfoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NodeInfoViewController.h; sourceTree = "<group>"; };
 		832E102E202CB8AE00BDD30F /* NodeInfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NodeInfoViewController.m; sourceTree = "<group>"; };
 		832E1030202D8E6900BDD30F /* NodePropertyTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NodePropertyTableViewCell.h; sourceTree = "<group>"; };
@@ -4168,13 +4158,7 @@
 		832E1021202B099800BDD30F /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				832E1022202B09AE00BDD30F /* NodeActionCollectionViewCell.h */,
 				2FCE04A7241B019800EE7842 /* ActionSheetCell.swift */,
-				832E1023202B09AE00BDD30F /* NodeActionCollectionViewCell.m */,
-				832E1024202B09AE00BDD30F /* NodeActionCollectionViewCell.xib */,
-				832E1027202B0A3900BDD30F /* NodeActionHeaderCollectionReusableView.h */,
-				832E1028202B0A3900BDD30F /* NodeActionHeaderCollectionReusableView.m */,
-				832E1029202B0A3900BDD30F /* NodeActionHeaderCollectionReusableView.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -5676,7 +5660,6 @@
 				A8F2629A1FA8F7C3000B2768 /* incoming_voice_video_call.mp3 in Resources */,
 				E8D36F791AD677C6006D4D40 /* Transfers.storyboard in Resources */,
 				A82E5BF41F3470B5003C149C /* Spotlight_file.png in Resources */,
-				832E102B202B0A3900BDD30F /* NodeActionHeaderCollectionReusableView.xib in Resources */,
 				777615B12175D88C00A7796D /* InputView.xib in Resources */,
 				4152268B1A692ECC00EC7BB6 /* Cloud.storyboard in Resources */,
 				B6A11A0E2283987D0017CD59 /* SMSVerification.storyboard in Resources */,
@@ -5744,7 +5727,6 @@
 				5BE484BF215BB3CD003B291D /* ChatSettings.storyboard in Resources */,
 				417279591DB663FA001AC818 /* JSQMessagesLoadEarlierHeaderView.xib in Resources */,
 				E8C289F71BF5FCDD00F7A034 /* SF-UI-Text-Regular.otf in Resources */,
-				832E1026202B09AE00BDD30F /* NodeActionCollectionViewCell.xib in Resources */,
 				E84CDB011A7292C9003F4C77 /* Links.storyboard in Resources */,
 				836AEDE22018AD0C00868FC7 /* PasswordView.xib in Resources */,
 			);
@@ -5854,7 +5836,6 @@
 				B658D3B8218F9357004C0D64 /* PhotoUploadOperation.m in Sources */,
 				9419B6C01F20D1D700FEBE31 /* MEGAIndexer.m in Sources */,
 				B6B73E6E22C5713700ACAD48 /* SMSCountriesTableViewController.swift in Sources */,
-				832E1025202B09AE00BDD30F /* NodeActionCollectionViewCell.m in Sources */,
 				A8C93C0C22D718030030CE1B /* ProfileViewController.swift in Sources */,
 				41B3B8301AD591A80093A88D /* PasscodeTableViewController.m in Sources */,
 				836370372461D2EA00842E38 /* SendLinkToChatsDelegate.swift in Sources */,
@@ -6013,7 +5994,6 @@
 				4147C2D41B4EE9BA00A37044 /* MEGAStore.m in Sources */,
 				5B0C55AE1EE9575E0058CBE1 /* MEGARemoveContactRequestDelegate.m in Sources */,
 				5BD5CCDD1EB9DA4800175A25 /* ChangeNameViewController.m in Sources */,
-				832E102A202B0A3900BDD30F /* NodeActionHeaderCollectionReusableView.m in Sources */,
 				945E1F0C1FE10CE8000C5E21 /* MEGAInputToolbar.m in Sources */,
 				41ADA9F21ADE7AC100641BB4 /* HelpTableViewController.m in Sources */,
 				A8B354D421354680002018A9 /* MEGAChatNotificationDelegate.m in Sources */,

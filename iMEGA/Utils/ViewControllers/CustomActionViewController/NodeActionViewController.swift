@@ -12,11 +12,6 @@ class NodeActionViewController: ActionSheetViewController {
     private var isIncomingShareChildView: Bool
     private var sender: Any
     
-    private var nodeImageView = UIImageView.newAutoLayout()
-    private var titleLabel = UILabel.newAutoLayout()
-    private var subtitleLabel = UILabel.newAutoLayout()
-    private var separatorLineView = UIView.newAutoLayout()
-
     // MARK: - NodeActionViewController initializers
 
     @objc init(node: MEGANode, delegate: NodeActionViewControllerDelegate, displayMode: DisplayMode, isIncoming: Bool = false, sender: Any) {
@@ -42,14 +37,6 @@ class NodeActionViewController: ActionSheetViewController {
         getActions()
         configureNodeHeaderView()
     }
-
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
-        
-        coordinator.animate(alongsideTransition: { [weak self] _ in
-            self?.layoutHeader()
-        }, completion: nil)
-    }
     
     // MARK: - UITableViewDelegate
 
@@ -64,47 +51,31 @@ class NodeActionViewController: ActionSheetViewController {
     
     // MARK: - Private
 
-    private func layoutHeader() {
-        headerView?.subviews.forEach { $0.removeFromSuperview() }
+    private func configureNodeHeaderView() {
         
         headerView?.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: 80)
-        
+        headerView?.backgroundColor = UIColor.mnz_grayF7F7F7()
+
+        let nodeImageView = UIImageView.newAutoLayout()
         headerView?.addSubview(nodeImageView)
-        var leftSafeAreaInset = 0
-        if #available(iOS 11.0, *) {
-            leftSafeAreaInset = Int(UIApplication.shared.keyWindow?.safeAreaInsets.left ?? 0)
-        }
         nodeImageView.autoSetDimensions(to: CGSize(width: 40, height: 40))
-        nodeImageView.autoPinEdge(toSuperviewEdge: .leading, withInset: 8 + CGFloat(leftSafeAreaInset))
+        nodeImageView.autoPinEdge(toSuperviewSafeArea: .leading, withInset: 8)
         nodeImageView.autoAlignAxis(toSuperviewAxis: .horizontal)
-        
+        nodeImageView.mnz_setThumbnail(by: node)
+
+        let titleLabel = UILabel.newAutoLayout()
         headerView?.addSubview(titleLabel)
         titleLabel.autoPinEdge(.leading, to: .trailing, of: nodeImageView, withOffset: 8)
         titleLabel.autoPinEdge(.trailing, to: .trailing, of: headerView!, withOffset: -8)
         titleLabel.autoAlignAxis(.horizontal, toSameAxisOf: headerView!, withOffset: -8)
+        titleLabel.text = node.name
+        titleLabel.font = .systemFont(ofSize: 15)
         
+        let subtitleLabel = UILabel.newAutoLayout()
         headerView?.addSubview(subtitleLabel)
         subtitleLabel.autoPinEdge(.leading, to: .trailing, of: nodeImageView, withOffset: 8)
         subtitleLabel.autoPinEdge(.trailing, to: .trailing, of: headerView!, withOffset: -8)
         subtitleLabel.autoAlignAxis(.horizontal, toSameAxisOf: headerView!, withOffset: 8)
-        
-        headerView?.addSubview(separatorLineView)
-        separatorLineView.autoPinEdge(toSuperviewEdge: .leading)
-        separatorLineView.autoPinEdge(toSuperviewEdge: .trailing)
-        separatorLineView.autoPinEdge(toSuperviewEdge: .bottom)
-        separatorLineView.autoSetDimension(.height, toSize: 1/UIScreen.main.scale)
-    }
-    
-    private func configureNodeHeaderView() {
-        layoutHeader()
-        
-        headerView?.backgroundColor = UIColor.mnz_grayF7F7F7()
-        
-        nodeImageView.mnz_setThumbnail(by: node)
-        
-        titleLabel.text = node.name
-        titleLabel.font = .systemFont(ofSize: 15)
-        
         subtitleLabel.textColor = .systemGray
         subtitleLabel.font = .systemFont(ofSize: 12)
         if node.isFile() {
@@ -113,6 +84,12 @@ class NodeActionViewController: ActionSheetViewController {
             subtitleLabel.text = Helper.filesAndFolders(inFolderNode: node, api: MEGASdkManager.sharedMEGASdk())
         }
         
+        let separatorLineView = UIView.newAutoLayout()
+        headerView?.addSubview(separatorLineView)
+        separatorLineView.autoPinEdge(toSuperviewEdge: .leading)
+        separatorLineView.autoPinEdge(toSuperviewEdge: .trailing)
+        separatorLineView.autoPinEdge(toSuperviewEdge: .bottom)
+        separatorLineView.autoSetDimension(.height, toSize: 1/UIScreen.main.scale)
         separatorLineView.backgroundColor = tableView.separatorColor
     }
     
