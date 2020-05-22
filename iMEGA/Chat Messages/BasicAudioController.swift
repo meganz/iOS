@@ -66,6 +66,23 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
     public init(messageCollectionView: MessagesCollectionView) {
         self.messageCollectionView = messageCollectionView
         super.init()
+        
+    }
+    
+    func setProximitySensorEnabled(_ enabled: Bool) {
+        let device = UIDevice.current
+        device.isProximityMonitoringEnabled = enabled
+        if device.isProximityMonitoringEnabled {
+            NotificationCenter.default.addObserver(self, selector: #selector(proximityChanged), name: UIDevice.proximityStateDidChangeNotification, object: device)
+        } else {
+            NotificationCenter.default.removeObserver(self, name: UIDevice.proximityStateDidChangeNotification, object: nil)
+        }
+    }
+
+    @objc func proximityChanged(_ notification: Notification) {
+        if let device = notification.object as? UIDevice {
+            print("\(device) detected!")
+        }
     }
 
     // MARK: - Methods
@@ -125,6 +142,7 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
             audioCell.playButton.isSelected = true  // show pause button on audio cell
             startProgressTimer()
             audioCell.delegate?.didStartAudio(in: audioCell)
+            setProximitySensorEnabled(true)
         default:
             print("BasicAudioPlayer failed play sound becasue given message kind is not Audio")
         }
@@ -143,6 +161,7 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
         state = .pause
         audioCell.playButton.isSelected = false // show play button on audio cell
         progressTimer?.invalidate()
+        setProximitySensorEnabled(false)
         if let cell = playingCell {
             cell.delegate?.didPauseAudio(in: cell)
             audioCell.waveView.stopAnimating()
@@ -173,6 +192,7 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
         audioPlayer = nil
         playingMessage = nil
         playingCell = nil
+        setProximitySensorEnabled(false)
     }
 
     /// Resume a currently pause audio sound
@@ -228,6 +248,10 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
 
     open func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
         stopAnyOngoingPlaying()
+    }
+    
+    deinit {
+         setProximitySensorEnabled(false)
     }
 
 }
