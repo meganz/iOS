@@ -5,6 +5,7 @@ class ChatVoiceClipCollectionViewCell: AudioMessageCell {
     open var waveView: YYAnimatedImageView = {
         let waveView = YYAnimatedImageView(image: YYImage(named: "pia"))
         waveView.frame = CGRect(x: 0, y: 0, width: 55, height: 33)
+        waveView.autoPlayAnimatedImage = false
         return waveView
     }()
     
@@ -26,7 +27,6 @@ class ChatVoiceClipCollectionViewCell: AudioMessageCell {
     override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
         //        durationLabel.configure {
         super.configure(with: message, at: indexPath, and: messagesCollectionView)
-        
         guard let chatMessage = message as? ChatMessage else {
             return
         }
