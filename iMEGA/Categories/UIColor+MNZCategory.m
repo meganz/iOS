@@ -55,12 +55,20 @@
     return [UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1.0];
 }
 
++ (UIColor *)mnz_grayC2C2C2 {
+    return [UIColor colorFromHexString:@"C2C2C2"];
+}
+
 + (UIColor *)mnz_grayCCCCCC {
     return [UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1.0];
 }
 
 + (UIColor *)mnz_grayD8D8D8 {
     return [UIColor colorWithRed:0.85f green:0.85f blue:0.85f alpha:1.0];
+}
+
++ (UIColor *)mnz_grayDBDBDB {
+    return [UIColor colorFromHexString:@"DBDBDB"];
 }
 
 + (UIColor *)mnz_grayE2EAEA {

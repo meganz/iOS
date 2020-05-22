@@ -148,7 +148,7 @@
     if (chatListItem.isGroup) {
         MEGAChatRoom *chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:chatListItem.chatId];
         if (chatRoom.peerCount == 0) {
-            self.avatarView.avatarImageView.image = [UIImage imageForName:chatListItem.title.uppercaseString size:self.avatarView.avatarImageView.frame.size backgroundColor:UIColor.mnz_gray999999 textColor:UIColor.whiteColor font:[UIFont mnz_SFUIRegularWithSize:(self.avatarView.avatarImageView.frame.size.width/2.0f)]];
+            self.avatarView.avatarImageView.image = [UIImage imageForName:chatListItem.title.uppercaseString size:self.avatarView.avatarImageView.frame.size backgroundColor:UIColor.mnz_grayC2C2C2 backgroundGradientColor:UIColor.mnz_grayDBDBDB textColor:UIColor.whiteColor font:[UIFont mnz_SFUIRegularWithSize:(self.avatarView.avatarImageView.frame.size.width/2.0f)]];
             [self.avatarView configureWithMode:AvatarViewModeSingle];
         } else {
             uint64_t firstPeerHandle = [chatRoom peerHandleAtIndex:0];

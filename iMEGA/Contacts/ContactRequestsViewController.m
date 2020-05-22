@@ -183,7 +183,8 @@
             
             MEGAContactRequest *contactRequest = [self.incomingContactRequestArray objectAtIndex:indexPath.row];
             NSString *avatarColorString = [MEGASdk avatarColorForBase64UserHandle:[MEGASdk base64HandleForUserHandle:contactRequest.handle]];
-            cell.avatarImageView.image = [UIImage imageForName:contactRequest.sourceEmail.mnz_initialForAvatar size:cell.avatarImageView.frame.size backgroundColor:[UIColor colorFromHexString:avatarColorString] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:(cell.avatarImageView.frame.size.width/2.0f)]];
+            NSString *avatarSecondaryColorString = [MEGASdk avatarSecondaryColorForBase64UserHandle:[MEGASdk base64HandleForUserHandle:contactRequest.handle]];
+            cell.avatarImageView.image = [UIImage imageForName:contactRequest.sourceEmail.mnz_initialForAvatar size:cell.avatarImageView.frame.size backgroundColor:[UIColor colorFromHexString:avatarColorString] backgroundGradientColor:[UIColor colorFromHexString:avatarSecondaryColorString] textColor:UIColor.whiteColor font:[UIFont mnz_SFUIRegularWithSize:(cell.avatarImageView.frame.size.width/2.0f)]];
             cell.nameLabel.text = [contactRequest sourceEmail];
             cell.timeAgoLabel.text = [[[contactRequest modificationTime] timeAgoSinceNow] stringByAppendingString:pendingString];
             
@@ -195,7 +196,8 @@
             
             MEGAContactRequest *contactRequest = [self.outgoingContactRequestArray objectAtIndex:indexPath.row];
             NSString *avatarColorString = [MEGASdk avatarColorForBase64UserHandle:[MEGASdk base64HandleForUserHandle:contactRequest.handle]];
-            cell.avatarImageView.image = [UIImage imageForName:contactRequest.targetEmail.mnz_initialForAvatar size:cell.avatarImageView.frame.size backgroundColor:[UIColor colorFromHexString:avatarColorString] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:(cell.avatarImageView.frame.size.width/2.0f)]];
+            NSString *avatarSecondaryColorString = [MEGASdk avatarSecondaryColorForBase64UserHandle:[MEGASdk base64HandleForUserHandle:contactRequest.handle]];
+            cell.avatarImageView.image = [UIImage imageForName:contactRequest.targetEmail.mnz_initialForAvatar size:cell.avatarImageView.frame.size backgroundColor:[UIColor colorFromHexString:avatarColorString] backgroundGradientColor:[UIColor colorFromHexString:avatarSecondaryColorString] textColor:UIColor.whiteColor font:[UIFont mnz_SFUIRegularWithSize:(cell.avatarImageView.frame.size.width/2.0f)]];
             cell.nameLabel.text = [contactRequest targetEmail];
             cell.timeAgoLabel.text = [[[contactRequest modificationTime] timeAgoSinceNow] stringByAppendingString:pendingString];
             break;

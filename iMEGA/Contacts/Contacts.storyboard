@@ -440,8 +440,8 @@
                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="LwT-Iz-dOE">
                                             <rect key="frame" x="0.0" y="10" width="375" height="40"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="addGroupAvatar" translatesAutoresizingMaskIntoConstraints="NO" id="m8P-lC-gVO">
-                                                    <rect key="frame" x="12" y="0.0" width="40" height="40"/>
+                                                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="addGroupAvatar" translatesAutoresizingMaskIntoConstraints="NO" id="m8P-lC-gVO">
+                                                    <rect key="frame" x="0.0" y="0.0" width="0.0" height="40"/>
                                                     <color key="tintColor" red="0.80477464200000004" green="0.0" blue="0.041726302360000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </imageView>
                                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter group name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lWL-Ao-V9E">
