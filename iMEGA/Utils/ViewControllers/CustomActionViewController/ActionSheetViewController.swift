@@ -2,32 +2,42 @@ import UIKit
 
 class ActionSheetViewController: UIViewController {
 
-    var layoutThreshold: CGFloat {
-        return CGFloat(self.view.bounds.height * 0.3)
-    }
     var tableView = UITableView.newAutoLayout()
     var headerView: UIView?
-    var indicator = UIView(frame: CGRect(x: 0, y: 0, width: 36, height: 6))
-    var backgroundView = UIView.newAutoLayout()
-    var top: NSLayoutConstraint?
 
-    @objc var actions: [BaseAction] = []
-    @objc var headerTitle: String?
+    var actions: [BaseAction] = []
+    var headerTitle: String?
+    var dismissCompletion: (() -> Void)?
 
     // MARK: - Private properties
     private var isPresenting = false
-
+    private var indicator = UIView(frame: CGRect(x: 0, y: 0, width: 36, height: 6))
+    private var backgroundView = UIView.newAutoLayout()
+    private var top: NSLayoutConstraint?
+    private var layoutThreshold: CGFloat {
+        return CGFloat(self.view.bounds.height * 0.3)
+    }
+    
     // MARK: - ActionController initializers
 
+    @objc convenience init(actions: [BaseAction], headerTitle: String?, dismissCompletion: (() -> Void)?, sender: Any?) {
+        self.init(nibName: nil, bundle: nil)
+        
+        self.actions = actions
+        self.headerTitle = headerTitle
+        self.dismissCompletion = dismissCompletion
+
+        configurePresentationStyle(from: sender as Any)
+    }
+    
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        configureView()
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        configureView()
     }
+    
     // MARK: - View controller behavior
 
     override func viewDidLoad() {
@@ -36,12 +46,23 @@ class ActionSheetViewController: UIViewController {
         // background view
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(ActionSheetViewController.tapGestureDidRecognize(_:)))
         backgroundView.addGestureRecognizer(tapRecognizer)
-        
     }
     
-    private func configureView() {
-        transitioningDelegate = self
-        modalPresentationStyle = .custom
+    func configurePresentationStyle(from sender: Any) {
+        if UIDevice.current.iPadDevice && (sender is UIBarButtonItem || sender is UIView) {
+            modalPresentationStyle = .popover
+            popoverPresentationController?.delegate = self
+            popoverPresentationController?.permittedArrowDirections = .any
+            if let barButtonSender = sender as? UIBarButtonItem {
+                popoverPresentationController?.barButtonItem = barButtonSender
+            } else if let viewSender = sender as? UIView {
+                popoverPresentationController?.sourceView = viewSender
+                popoverPresentationController?.sourceRect = viewSender.bounds
+            }
+        } else {
+            transitioningDelegate = self
+            modalPresentationStyle = .custom
+        }
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -62,7 +83,7 @@ class ActionSheetViewController: UIViewController {
         var bottomHeight = 0
         let layoutThreshold = size.height * 0.3
         if #available(iOS 11.0, *) {
-            bottomHeight = Int(view.safeAreaInsets.bottom)
+            bottomHeight = Int(view.safeAreaInsets.bottom) * 2
         }
         let height = CGFloat(actions.count * 60 + bottomHeight + 20) + (headerView?.bounds.height ?? 0)
         if height < size.height - layoutThreshold {
@@ -77,9 +98,9 @@ class ActionSheetViewController: UIViewController {
     }
     
     @objc func tapGestureDidRecognize(_ gesture: UITapGestureRecognizer) {
+        dismissCompletion?()
         self.dismiss(animated: true, completion: nil)
     }
-
 }
 
 // MARK: PureLayout Implementation
@@ -130,9 +151,7 @@ extension ActionSheetViewController {
         tableView.autoPinEdge(toSuperviewEdge: .left)
         tableView.autoPinEdge(toSuperviewEdge: .right)
         top = tableView.autoPinEdge(toSuperviewSafeArea: .top, withInset: CGFloat(view.bounds.height))
-
     }
-
 }
 
 extension ActionSheetViewController: UITableViewDelegate {
@@ -257,9 +276,7 @@ extension ActionSheetViewController: UITableViewDataSource {
             return
         }
         dismiss(animated: true, completion: {
-            if action.style != .cancel {
-                action.action()
-            }
+            action.actionHandler()
         })
 
     }
