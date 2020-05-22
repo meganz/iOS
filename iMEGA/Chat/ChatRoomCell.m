@@ -73,11 +73,11 @@
 #pragma mark - Private
 
 - (void)updateAppearance {
-    self.chatLastMessage.textColor = [UIColor mnz_subtitlesColorForTraitCollection:self.traitCollection];
+    self.chatLastMessage.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
     
-    self.chatLastTime.textColor = self.unreadView.hidden ? [UIColor mnz_subtitlesColorForTraitCollection:self.traitCollection] : [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
+    self.chatLastTime.textColor = self.unreadView.hidden ? [UIColor mnz_subtitlesForTraitCollection:self.traitCollection] : [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
     
-    self.unreadView.backgroundColor = [UIColor mnz_redMainForTraitCollection:self.traitCollection];
+    self.unreadView.backgroundColor = [UIColor mnz_redForTraitCollection:self.traitCollection];
     self.unreadCount.textColor = UIColor.whiteColor;
     
     self.onCallDuration.textColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
@@ -110,7 +110,7 @@
         self.avatarImageView.image = [UIImage imageForName:chatListItem.title.uppercaseString size:self.avatarImageView.frame.size backgroundColor:[UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection] textColor:UIColor.whiteColor font:[UIFont systemFontOfSize:(self.avatarImageView.frame.size.width/2.0f)]];
     } else {
         [self.avatarImageView mnz_setImageForUserHandle:chatListItem.peerHandle name:chatListItem.title];
-        UIColor *statusColor = [UIColor mnz_colorForStatusChange:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:chatListItem.peerHandle]];
+        UIColor *statusColor = [UIColor mnz_colorForChatStatus:[MEGASdkManager.sharedMEGAChatSdk userOnlineStatus:chatListItem.peerHandle]];
         if (statusColor) {
             self.onlineStatusView.backgroundColor = statusColor;
             self.onlineStatusView.hidden = NO;
@@ -175,7 +175,7 @@
     self.chatLastMessage.text = AMLocalizedString(@"noConversationHistory", @"Information if there are no history messages in current chat conversation");
     
     [self.avatarImageView mnz_setImageForUserHandle:user.handle name:[user mnz_fullName]];
-    UIColor *statusColor = [UIColor mnz_colorForStatusChange:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:user.handle]];
+    UIColor *statusColor = [UIColor mnz_colorForChatStatus:[MEGASdkManager.sharedMEGAChatSdk userOnlineStatus:user.handle]];
     if (statusColor) {
         self.onlineStatusView.backgroundColor = statusColor;
         self.onlineStatusView.hidden = NO;
@@ -209,7 +209,7 @@
     } else {
         if (unreadCount != 0) {
             self.chatLastMessage.font = [[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1] fontWithWeight:UIFontWeightMedium];
-            self.chatLastMessage.textColor = [UIColor mnz_subtitlesColorForTraitCollection:self.traitCollection];
+            self.chatLastMessage.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
             
             self.chatLastTime.font = [[UIFont preferredFontForTextStyle:UIFontTextStyleCaption2] fontWithWeight:UIFontWeightMedium];
             self.chatLastTime.textColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
@@ -467,7 +467,7 @@
                 }
             }
             
-            NSString *lastMessage = [NSAttributedString mnz_attributedStringFromMessage:item.lastMessage font:[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1] color:UIColor.blackColor].string;
+            NSString *lastMessage = [NSAttributedString mnz_attributedStringFromMessage:item.lastMessage font:[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1] color:UIColor.mnz_label].string;
             self.chatLastMessage.text = senderString ? [NSString stringWithFormat:@"%@: %@",senderString, lastMessage] : lastMessage;
             break;
         }

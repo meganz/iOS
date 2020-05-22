@@ -30,8 +30,8 @@ class ContactsPermissionBottomView: UITableViewHeaderFooterView {
     }
     
     private func updateAppearance() {
-        subtitleLabel.textColor = UIColor.mnz_subtitlesColor(for: traitCollection)
-        descriptionLabel.textColor = UIColor.mnz_subtitlesColor(for: traitCollection)
+        subtitleLabel.textColor = UIColor.mnz_subtitles(for: traitCollection)
+        descriptionLabel.textColor = UIColor.mnz_subtitles(for: traitCollection)
         
         enableButton.mnz_setupPrimary(traitCollection)
     }

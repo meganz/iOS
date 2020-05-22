@@ -63,7 +63,7 @@ class VerificationCodeViewController: UIViewController {
     
     private func configViewContents() {
         resendButton.tintColor = UIColor.mnz_turquoise(for: self.traitCollection)
-        didnotReceiveCodeLabel.textColor = UIColor.gray
+        didnotReceiveCodeLabel.textColor = UIColor.mnz_primaryGray(for: traitCollection)
         errorImageView.tintColor = UIColor.mnz_redError()
         errorMessageLabel.textColor = UIColor.mnz_redError()
         verificationCodeSentToLabel.text = AMLocalizedString("Please type the verification code sent to")

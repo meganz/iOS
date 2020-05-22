@@ -343,7 +343,7 @@ static const CGFloat GapBetweenPages = 10.0;
 }
 
 - (void)updateAppearance {
-    self.statusBarBackground.backgroundColor = self.navigationBar.backgroundColor = self.toolbar.barTintColor = [UIColor mnz_mainBarsColorForTraitCollection:self.traitCollection];
+    self.statusBarBackground.backgroundColor = self.navigationBar.backgroundColor = self.toolbar.barTintColor = [UIColor mnz_mainBarsForTraitCollection:self.traitCollection];
     self.navigationBar.tintColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
     [self reloadTitle];
     

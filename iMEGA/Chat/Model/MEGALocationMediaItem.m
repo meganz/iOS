@@ -9,6 +9,7 @@
 #import "MEGAMessageGeoLocationView.h"
 #import "MEGAChatMessage+MNZCategory.h"
 #import "MEGASdkManager.h"
+#import "MEGA-Swift.h"
 #import "NSString+MNZCategory.h"
 #import "NSURL+MNZCategory.h"
 #import "UIDevice+MNZCategory.h"
@@ -71,11 +72,11 @@
     
     // Colors:
     if (self.message.userHandle == [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
-        geolocationView.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:UIScreen.mainScreen.traitCollection];
+        geolocationView.backgroundColor = [UIColor mnz_chatOutgoingBubble:UIScreen.mainScreen.traitCollection];
     } else {
-        geolocationView.backgroundColor = [UIColor mnz_chatGrayForTraitCollection:UIScreen.mainScreen.traitCollection];
+        geolocationView.backgroundColor = [UIColor mnz_chatIncomingBubble:UIScreen.mainScreen.traitCollection];
     }
-    geolocationView.subtitleLabel.textColor = [UIColor mnz_subtitlesColorForTraitCollection:UIScreen.mainScreen.traitCollection];
+    geolocationView.subtitleLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:UIScreen.mainScreen.traitCollection];
     
     NSData *imageData = [[NSData alloc] initWithBase64EncodedString:self.message.containsMeta.geolocation.image options:NSDataBase64DecodingIgnoreUnknownCharacters];
     UIImage *image = [UIImage imageWithData:imageData];

@@ -484,17 +484,17 @@
 }
 
 - (void)updateSelector {
-    self.selectorView.backgroundColor = [UIColor mnz_mainBarsColorForTraitCollection:self.traitCollection];
+    self.selectorView.backgroundColor = [UIColor mnz_mainBarsForTraitCollection:self.traitCollection];
     
     self.cloudDriveButton.titleLabel.font = self.cloudDriveButton.selected ? [UIFont systemFontOfSize:15.0f weight:UIFontWeightMedium] : [UIFont systemFontOfSize:15.0f];
     [self.cloudDriveButton setTitleColor:[UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)] forState:UIControlStateNormal];
-    [self.cloudDriveButton setTitleColor:[UIColor mnz_redMainForTraitCollection:(self.traitCollection)] forState:UIControlStateSelected];
-    self.cloudDriveLineView.backgroundColor = self.cloudDriveButton.selected ? [UIColor mnz_redMainForTraitCollection:self.traitCollection] : nil;
+    [self.cloudDriveButton setTitleColor:[UIColor mnz_redForTraitCollection:(self.traitCollection)] forState:UIControlStateSelected];
+    self.cloudDriveLineView.backgroundColor = self.cloudDriveButton.selected ? [UIColor mnz_redForTraitCollection:self.traitCollection] : nil;
     
     self.incomingButton.titleLabel.font = self.incomingButton.selected ? [UIFont systemFontOfSize:15.0f weight:UIFontWeightMedium] : [UIFont systemFontOfSize:15.0f];
     [self.incomingButton setTitleColor:[UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)] forState:UIControlStateNormal];
-    [self.incomingButton setTitleColor:[UIColor mnz_redMainForTraitCollection:(self.traitCollection)] forState:UIControlStateSelected];
-    self.incomingLineView.backgroundColor = self.incomingButton.selected ? [UIColor mnz_redMainForTraitCollection:self.traitCollection] : nil;
+    [self.incomingButton setTitleColor:[UIColor mnz_redForTraitCollection:(self.traitCollection)] forState:UIControlStateSelected];
+    self.incomingLineView.backgroundColor = self.incomingButton.selected ? [UIColor mnz_redForTraitCollection:self.traitCollection] : nil;
 }
 
 #pragma mark - IBActions
@@ -693,7 +693,7 @@
     
     cell.node = node;
     
-    cell.infoLabel.textColor = [UIColor mnz_subtitlesColorForTraitCollection:self.traitCollection];
+    cell.infoLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
     if (self.cloudDriveButton.selected) {
         if (node.isFile) {
             cell.infoLabel.text = [Helper sizeAndDateForNode:node api:[MEGASdkManager sharedMEGASdk]];

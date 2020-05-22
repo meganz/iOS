@@ -85,7 +85,7 @@
             self.passwordView.passwordTextField.enabled = self.confirmPasswordView.passwordTextField.enabled = NO;
             [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:4]].userInteractionEnabled = NO;
             self.encryptWithPasswordLabel.text = AMLocalizedString(@"encrypted", @"The button text on the Export Link dialog to indicate that the link has been encrypted successfully.");
-            self.encryptWithPasswordLabel.textColor = [UIColor mnz_green31B500];
+            self.encryptWithPasswordLabel.textColor = UIColor.systemGreenColor;
             [SVProgressHUD dismiss];
         }
     } multipleLinks:self.nodesToExport.count > 1];
@@ -315,7 +315,7 @@
     
     if (sender.isOn) {
         self.encryptWithPasswordLabel.text = AMLocalizedString(@"encrypt", @"The text of a button. This button will encrypt a link with a password.");
-        self.encryptWithPasswordLabel.textColor = [UIColor mnz_chatBlueForTraitCollection:self.traitCollection];
+        self.encryptWithPasswordLabel.textColor = [UIColor mnz_blueForTraitCollection:self.traitCollection];
         
         self.encryptedLinks = [NSMutableArray new];
         self.selectedArray = self.encryptedLinks;

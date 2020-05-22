@@ -1237,7 +1237,7 @@
         NSIndexPath *indexPath = [self.chatIdIndexPathDictionary objectForKey:@(chatId)];
         if ([self.tableView.indexPathsForVisibleRows containsObject:indexPath]) {
             ChatRoomCell *cell = (ChatRoomCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-            cell.onlineStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:userHandle]];
+            cell.onlineStatusView.backgroundColor = [UIColor mnz_colorForChatStatus:[MEGASdkManager.sharedMEGAChatSdk userOnlineStatus:userHandle]];
         }
     }
 }
@@ -1278,7 +1278,7 @@
             
         case MEGAChatCallStatusReconnecting:
             self.reconnecting = YES;
-            [self setTopBannerButtonTitle:AMLocalizedString(@"Reconnecting...", @"Title shown when the user lost the connection in a call, and the app will try to reconnect the user again.") color:UIColor.mnz_orangeFFA500];
+            [self setTopBannerButtonTitle:AMLocalizedString(@"Reconnecting...", @"Title shown when the user lost the connection in a call, and the app will try to reconnect the user again.") color:UIColor.systemOrangeColor];
             break;
             
         case MEGAChatCallStatusDestroyed: {

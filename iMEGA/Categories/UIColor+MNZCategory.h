@@ -5,27 +5,31 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus);
 
 @interface UIColor (MNZCategory)
 
-#pragma mark - Objects
+#pragma mark - Background
 
-+ (UIColor *)mnz_mainBarsColorForTraitCollection:(UITraitCollection *)traitCollection;
++ (UIColor *)mnz_mainBarsForTraitCollection:(UITraitCollection *)traitCollection;
 
 + (UIColor *)mnz_background;
 + (UIColor *)mnz_secondaryBackgroundForTraitCollection:(UITraitCollection *)traitCollection;
 
-+ (UIColor *)mnz_accountViewsBackgroundColorForTraitCollection:(UITraitCollection *)traitCollection;
+#pragma mark Background grouped
 
-+ (UIColor *)mnz_label;
++ (UIColor *)mnz_backgroundGroupedForTraitCollection:(UITraitCollection *)traitCollection;
+
+#pragma mark Background miscellany
+
++ (UIColor *)mnz_notificationSeenBackgroundForTraitCollection:(UITraitCollection *)traitCollection;
+
+#pragma mark - Objects
 
 + (UIColor *)mnz_basicButtonForTraitCollection:(UITraitCollection *)traitCollection;
 
-+ (UIColor *)mnz_subtitlesColorForTraitCollection:(UITraitCollection *)traitCollection;
++ (UIColor *)mnz_separatorForTraitCollection:(UITraitCollection *)traitCollection;
 
-+ (UIColor *)mnz_separatorColorForTraitCollection:(UITraitCollection *)traitCollection;
+#pragma mark - Text
 
-+ (UIColor *)mnz_settingsBackgroundForTraitCollection:(UITraitCollection *)traitCollection;
-
-+ (UIColor *)mnz_notificationSeenBackgroundForTraitCollection:(UITraitCollection *)traitCollection;
-+ (UIColor *)mnz_notificationUnseenBackgroundForTraitCollection:(UITraitCollection *)traitCollection;
++ (UIColor *)mnz_label;
++ (UIColor *)mnz_subtitlesForTraitCollection:(UITraitCollection *)traitCollection;
 
 #pragma mark - Black
 
@@ -33,17 +37,13 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus);
 
 #pragma mark - Blue
 
-+ (UIColor *)mnz_chatBlueForTraitCollection:(UITraitCollection *)traitCollection;
-
-+ (UIColor *)mnz_blue2BA6DE;
++ (UIColor *)mnz_blueForTraitCollection:(UITraitCollection *)traitCollection;
 
 #pragma mark - Gray
 
 + (UIColor *)mnz_primaryGrayForTraitCollection:(UITraitCollection *)traitCollection;
 + (UIColor *)mnz_secondaryGrayForTraitCollection:(UITraitCollection *)traitCollection;
 + (UIColor *)mnz_tertiaryGrayForTraitCollection:(UITraitCollection *)traitCollection;
-
-+ (UIColor *)mnz_chatGrayForTraitCollection:(UITraitCollection *)traitCollection;
 
 + (UIColor *)mnz_grayFAFAFA;
 + (UIColor *)mnz_grayF7F7F7;
@@ -52,22 +52,10 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus);
 
 + (UIColor *)mnz_turquoiseForTraitCollection:(UITraitCollection *)traitCollection;
 
-// This is used for the Contacts label in notifications and will stay the same for light and dark
-+ (UIColor *)mnz_green00897B;
-+ (UIColor *)mnz_green31B500;
-
-#pragma mark - Orange
-
-// This is used for the Incoming & Outgoing label in notifications and will stay the same for light and dark
-+ (UIColor *)mnz_orangeFFA500;
-// This is used for the Incoming & Outgoing label in notifications and will stay the same for light and dark
-+ (UIColor *)mnz_orangeFFD300;
-
 #pragma mark - Red
 
-+ (UIColor *)mnz_redMainForTraitCollection:(UITraitCollection *)traitCollection;
++ (UIColor *)mnz_redForTraitCollection:(UITraitCollection *)traitCollection;
 
-+ (UIColor *)mnz_redMain;
 + (UIColor *)mnz_redError;
 
 #pragma mark - White
@@ -76,7 +64,7 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus);
 
 #pragma mark - Utils
 
-+ (UIColor *)colorFromHexString:(NSString *)hexString;
-+ (UIColor *)mnz_colorForStatusChange:(MEGAChatStatus)onlineStatus;
++ (UIColor *)mnz_fromHexString:(NSString *)hexString;
++ (UIColor *)mnz_colorForChatStatus:(MEGAChatStatus)onlineStatus;
 
 @end

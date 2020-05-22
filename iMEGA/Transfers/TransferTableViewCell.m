@@ -77,7 +77,7 @@
     
     [self configureCellWithTransferState:transfer.state];
     
-    self.separatorView.layer.borderColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection].CGColor;
+    self.separatorView.layer.borderColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection].CGColor;
     self.separatorView.layer.borderWidth = 0.5;
 }
 
@@ -146,7 +146,7 @@
 }
 
 - (void)updatePercentAndSpeedLabelsForTransfer:(MEGATransfer *)transfer {
-    UIColor *percentageColor = (transfer.type == MEGATransferTypeDownload) ? UIColor.mnz_green31B500 : UIColor.mnz_blue2BA6DE;
+    UIColor *percentageColor = (transfer.type == MEGATransferTypeDownload) ? UIColor.systemGreenColor : [UIColor mnz_blueForTraitCollection:self.traitCollection];
     float percentage = (transfer.transferredBytes.floatValue / transfer.totalBytes.floatValue * 100);
     NSString *percentageCompleted = [NSString stringWithFormat:@"%.f %%", percentage];
     NSMutableAttributedString *percentageAttributedString = [NSMutableAttributedString.alloc initWithString:percentageCompleted attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName:percentageColor}];
@@ -202,7 +202,7 @@
         }
             
         case MEGATransferStateCompleting:
-            self.infoLabel.textColor = (self.transfer.type == MEGATransferTypeDownload) ? UIColor.mnz_green31B500 : UIColor.mnz_blue2BA6DE;
+            self.infoLabel.textColor = (self.transfer.type == MEGATransferTypeDownload) ? UIColor.systemGreenColor : [UIColor mnz_blueForTraitCollection:self.traitCollection];
             self.infoLabel.text = AMLocalizedString(@"Completing...", @"Label for the state of a transfer when is being completing - (String as short as possible).");
             self.pauseButton.hidden = self.cancelButton.hidden = YES;
             break;

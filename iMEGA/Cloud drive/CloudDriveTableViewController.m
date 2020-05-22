@@ -33,7 +33,7 @@
 
     //White background for the view behind the table view
     self.tableView.backgroundView = UIView.alloc.init;
-    self.tableView.separatorColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
+    self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -61,7 +61,7 @@
     
     if (@available(iOS 13.0, *)) {
         if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-            self.tableView.separatorColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
+            self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
         }
     }
 }

@@ -134,7 +134,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
         self.statusLabel.text = [NSString chatStatusString:userStatus];
         [self configureShadowInLayer:self.statusLabel.layer];
         
-        self.onlineStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:[MEGASdkManager.sharedMEGAChatSdk userOnlineStatus:self.user.handle]];
+        self.onlineStatusView.backgroundColor = [UIColor mnz_colorForChatStatus:[MEGASdkManager.sharedMEGAChatSdk userOnlineStatus:self.user.handle]];
         [self configureShadowInLayer:self.onlineStatusView.layer];
         self.onlineStatusView.layer.borderWidth = 1;
         self.onlineStatusView.layer.borderColor = UIColor.whiteColor.CGColor;
@@ -244,9 +244,9 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
     if (self.user.visibility == MEGAUserVisibilityVisible) { //Remove Contact
         cell.avatarImageView.image = [UIImage imageNamed:@"delete"];
-        cell.avatarImageView.tintColor = [UIColor mnz_redMainForTraitCollection:(self.traitCollection)];
+        cell.avatarImageView.tintColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
         cell.nameLabel.text = AMLocalizedString(@"removeUserTitle", @"Alert title shown when you want to remove one or more contacts");
-        cell.nameLabel.textColor = [UIColor mnz_redMainForTraitCollection:(self.traitCollection)];
+        cell.nameLabel.textColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
     } else { //Add contact
         cell.avatarImageView.image = [UIImage imageNamed:@"add"];
         cell.avatarImageView.tintColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
@@ -285,7 +285,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
     cell.avatarImageView.image = self.chatRoom.isArchived ? [UIImage imageNamed:@"unArchiveChat"] : [UIImage imageNamed:@"archiveChat"];
     cell.nameLabel.text = self.chatRoom.isArchived ? AMLocalizedString(@"unarchiveChat", @"The title of the dialog to unarchive an archived chat.") : AMLocalizedString(@"archiveChat", @"Title of button to archive chats.");
-    cell.nameLabel.textColor = self.chatRoom.isArchived ? [UIColor mnz_redMainForTraitCollection:(self.traitCollection)] : UIColor.mnz_label;
+    cell.nameLabel.textColor = self.chatRoom.isArchived ? [UIColor mnz_redForTraitCollection:(self.traitCollection)] : UIColor.mnz_label;
     cell.userInteractionEnabled = cell.avatarImageView.userInteractionEnabled = cell.nameLabel.enabled = MEGAReachabilityManager.isReachable && [MEGASdkManager.sharedMEGAChatSdk chatConnectionState:self.chatRoom.chatId] == MEGAChatConnectionOnline;
     
     return cell;
@@ -333,7 +333,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
     cell.avatarImageView.image = [UIImage imageNamed:@"delete"];
     cell.nameLabel.text = AMLocalizedString(@"removeParticipant", @"A button title which removes a participant from a chat.");
-    cell.nameLabel.textColor = [UIColor mnz_redMainForTraitCollection:(self.traitCollection)];
+    cell.nameLabel.textColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
     cell.userInteractionEnabled = cell.avatarImageView.userInteractionEnabled = cell.nameLabel.enabled = MEGAReachabilityManager.isReachable && [MEGASdkManager.sharedMEGAChatSdk chatConnectionState:self.groupChatRoom.chatId] == MEGAChatConnectionOnline;
     
     return cell;
@@ -342,15 +342,15 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 #pragma mark - Private - Others
 
 - (void)updateAppearance {
-    self.tableView.backgroundColor = [UIColor mnz_settingsBackgroundForTraitCollection:self.traitCollection];
-    self.tableView.separatorColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
+    self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
+    self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     
     self.messageLabel.textColor = self.callLabel.textColor = self.videoLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
-    self.avatarBottomSeparatorView.backgroundColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
+    self.avatarBottomSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     
     self.actionsView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
     self.nameOrNicknameLabel.textColor = self.optionalNameLabel.textColor = self.statusLabel.textColor = self.emailLabel.textColor = UIColor.whiteColor;
-    self.actionsBottomSeparatorView.backgroundColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
+    self.actionsBottomSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
 }
 
 - (void)showClearChatHistoryAlert {
@@ -1052,7 +1052,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     }
     
     if (userHandle == self.user.handle) {
-        self.onlineStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:onlineStatus];
+        self.onlineStatusView.backgroundColor = [UIColor mnz_colorForChatStatus:onlineStatus];
         self.statusLabel.text = [NSString chatStatusString:onlineStatus];
         if (onlineStatus < MEGAChatStatusOnline) {
             [MEGASdkManager.sharedMEGAChatSdk requestLastGreen:self.user.handle];

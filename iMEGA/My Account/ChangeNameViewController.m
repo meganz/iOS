@@ -68,12 +68,12 @@
 #pragma mark - Private
 
 - (void)updateAppearance {
-    self.view.backgroundColor = [UIColor mnz_settingsBackgroundForTraitCollection:self.traitCollection];
+    self.view.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
     
     self.firstNameView.backgroundColor = self.lastNameView.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
     self.firstNameLabel.textColor = self.lastNameLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
     
-    self.firstNameTopSeparatorView.backgroundColor = self.firstNameBottomSeparatorView.backgroundColor = self.lastNameBottomSeparatorView.backgroundColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
+    self.firstNameTopSeparatorView.backgroundColor = self.firstNameBottomSeparatorView.backgroundColor = self.lastNameBottomSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
 }
 
 - (BOOL)validateNameForm {

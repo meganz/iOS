@@ -24,7 +24,7 @@
     
     self.detailLabel.textColor = UIColor.mnz_secondaryLabel;
     
-    self.pendingView.backgroundColor = [UIColor mnz_redMainForTraitCollection:self.traitCollection];
+    self.pendingView.backgroundColor = [UIColor mnz_redForTraitCollection:self.traitCollection];
     self.pendingLabel.textColor = UIColor.whiteColor;
 }
 

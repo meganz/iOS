@@ -61,13 +61,13 @@
     self.view.backgroundColor = UIColor.mnz_background;
     
     self.inviteYourFriendsView.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
-    self.inviteYourFriendsSubtitleLabel.textColor = [UIColor mnz_subtitlesColorForTraitCollection:self.traitCollection];
+    self.inviteYourFriendsSubtitleLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
     
     [self.inviteButton mnz_setupPrimary:self.traitCollection];
     
     self.howItWorksView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
-    self.howItWorksTopSeparatorView.backgroundColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
-    self.howItWorksFirstParagraphLabel.textColor = self.howItWorksSecondParagraphLabel.textColor = [UIColor mnz_subtitlesColorForTraitCollection:self.traitCollection];
+    self.howItWorksTopSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+    self.howItWorksFirstParagraphLabel.textColor = self.howItWorksSecondParagraphLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
     self.howItWorksThirdParagraphLabel.textColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
 }
 

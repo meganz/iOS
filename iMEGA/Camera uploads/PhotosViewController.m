@@ -78,7 +78,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     self.photosCollectionView.emptyDataSetSource = self;
     self.photosCollectionView.emptyDataSetDelegate = self;
     
-    self.stateView.backgroundColor = [UIColor mnz_mainBarsColorForTraitCollection:self.traitCollection];
+    self.stateView.backgroundColor = [UIColor mnz_mainBarsForTraitCollection:self.traitCollection];
     self.enableCameraUploadsButton.tintColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
     [self.enableCameraUploadsButton setTitle:AMLocalizedString(@"enable", nil) forState:UIControlStateNormal];
     
@@ -173,7 +173,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     
     if (@available(iOS 13.0, *)) {
         if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-            self.stateView.backgroundColor = [UIColor mnz_mainBarsColorForTraitCollection:self.traitCollection];
+            self.stateView.backgroundColor = [UIColor mnz_mainBarsForTraitCollection:self.traitCollection];
         }
     }
     

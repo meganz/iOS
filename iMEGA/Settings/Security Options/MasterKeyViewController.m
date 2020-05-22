@@ -78,11 +78,11 @@
 - (void)updateAppearance {
     self.view.backgroundColor = UIColor.mnz_background;
     
-    self.illustrationView.backgroundColor = [UIColor mnz_accountViewsBackgroundColorForTraitCollection:self.traitCollection];
+    self.illustrationView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
     [self.carbonCopyMasterKeyButton mnz_setupBasic:self.traitCollection];
     [self.saveMasterKey mnz_setupPrimary:self.traitCollection];
     
-    self.whyDoINeedARecoveryKeyTopSeparatorView.backgroundColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
+    self.whyDoINeedARecoveryKeyTopSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     self.whyDoINeedARecoveryKeyView.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
     self.whyDoINeedARecoveryKeyLabel.textColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
 }

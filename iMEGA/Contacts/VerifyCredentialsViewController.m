@@ -117,12 +117,12 @@
 - (void)updateAppearance {
     self.view.backgroundColor = UIColor.mnz_background;
     
-    self.myCredentialsTopSeparatorView.backgroundColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
+    self.myCredentialsTopSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     self.myCredentialsView.backgroundColor = [UIColor mnz_notificationSeenBackgroundForTraitCollection:self.traitCollection];
-    self.userEmailLabel.textColor = [UIColor mnz_subtitlesColorForTraitCollection:self.traitCollection];
+    self.userEmailLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
     
-    self.myCredentialsSubView.backgroundColor = [UIColor mnz_quaternaryBackground:self.traitCollection];
-    self.myCredentialsSubView.layer.borderColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection].CGColor;
+    self.myCredentialsSubView.backgroundColor = [UIColor mnz_tertiaryBackgroundElevated:self.traitCollection];
+    self.myCredentialsSubView.layer.borderColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection].CGColor;
     
     [self updateVerifyOrResetButton];
 }

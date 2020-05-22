@@ -85,7 +85,7 @@
 - (void)updateAppearance {
     self.view.backgroundColor = UIColor.mnz_background;
     
-    self.descriptionLabel.textColor = [UIColor mnz_subtitlesColorForTraitCollection:self.traitCollection];
+    self.descriptionLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
     
     [self.setupButton mnz_setupPrimary:self.traitCollection];
     [self.skipButton mnz_setupBasic:self.traitCollection];

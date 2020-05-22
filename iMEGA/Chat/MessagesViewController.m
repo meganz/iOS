@@ -544,7 +544,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     
     self.navigationSubtitleLabel = [[UILabel alloc] init];
     self.navigationSubtitleLabel.font = [UIFont systemFontOfSize:12.0f];
-    self.navigationSubtitleLabel.textColor = [UIColor mnz_subtitlesColorForTraitCollection:self.traitCollection];
+    self.navigationSubtitleLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
 }
 
 - (void)instantiateNavigationTitle {
@@ -639,7 +639,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             if (userStatus == MEGAChatStatusInvalid) {
                 self.navigationStatusView.hidden = YES;
             } else {
-                self.navigationStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:userStatus];
+                self.navigationStatusView.backgroundColor = [UIColor mnz_colorForChatStatus:userStatus];
                 self.navigationStatusView.hidden = NO;
             }
         }
@@ -875,8 +875,8 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     [JSQMessagesCollectionViewCell registerMenuAction:@selector(delete:)];
     
     JSQMessagesBubbleImageFactory *bubbleFactory = [[JSQMessagesBubbleImageFactory alloc] initWithBubbleImage:[UIImage imageNamed:@"bubble_tailless"] capInsets:UIEdgeInsetsZero layoutDirection:UIApplication.sharedApplication.userInterfaceLayoutDirection];
-    self.outgoingBubbleImageData = [bubbleFactory outgoingMessagesBubbleImageWithColor:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection]];
-    self.incomingBubbleImageData = [bubbleFactory incomingMessagesBubbleImageWithColor:[UIColor mnz_chatGrayForTraitCollection:self.traitCollection]];
+    self.outgoingBubbleImageData = [bubbleFactory outgoingMessagesBubbleImageWithColor:[UIColor mnz_chatOutgoingBubble:self.traitCollection]];
+    self.incomingBubbleImageData = [bubbleFactory incomingMessagesBubbleImageWithColor:[UIColor mnz_chatIncomingBubble:self.traitCollection]];
 }
 
 - (void)customiseCollectionViewLayout {
@@ -1061,7 +1061,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     NSString *confidentialityString = [confidentialityExplanationString mnz_stringBetweenString:@"[S]" andString:@"[/S]"];
     confidentialityExplanationString = [confidentialityExplanationString stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"[S]%@[/S]", confidentialityString] withString:@""];
     
-    NSMutableAttributedString *confidentialityAttributedString = [NSMutableAttributedString.alloc initWithString:confidentialityString attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15.0f], NSForegroundColorAttributeName:UIColor.mnz_redMain}];
+    NSMutableAttributedString *confidentialityAttributedString = [NSMutableAttributedString.alloc initWithString:confidentialityString attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15.0f], NSForegroundColorAttributeName:[UIColor mnz_redForTraitCollection:self.traitCollection]}];
     NSMutableAttributedString *confidentialityExplanationAttributedString = [NSMutableAttributedString.alloc initWithString:confidentialityExplanationString attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15.0f], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
     [confidentialityAttributedString appendAttributedString:confidentialityExplanationAttributedString];
     self.openMessageHeaderView.confidentialityLabel.attributedText = confidentialityAttributedString;
@@ -1070,7 +1070,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     NSString *authenticityString = [authenticityExplanationString mnz_stringBetweenString:@"[S]" andString:@"[/S]"];
     authenticityExplanationString = [authenticityExplanationString stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"[S]%@[/S]", authenticityString] withString:@""];
 
-    NSMutableAttributedString *authenticityAttributedString = [NSMutableAttributedString.alloc initWithString:authenticityString attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15.0f], NSForegroundColorAttributeName:UIColor.mnz_redMain}];
+    NSMutableAttributedString *authenticityAttributedString = [NSMutableAttributedString.alloc initWithString:authenticityString attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15.0f], NSForegroundColorAttributeName:[UIColor mnz_redForTraitCollection:self.traitCollection]}];
     NSMutableAttributedString *authenticityExplanationAttributedString = [NSMutableAttributedString.alloc initWithString:authenticityExplanationString attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15.0f], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
     [authenticityAttributedString appendAttributedString:authenticityExplanationAttributedString];
     self.openMessageHeaderView.authenticityLabel.attributedText = authenticityAttributedString;
@@ -2092,7 +2092,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             selectOptionAlertController.popoverPresentationController.sourceRect = self.inputToolbar.contentView.accessoryUploadButton.frame;
             
             [self presentViewController:selectOptionAlertController animated:YES completion:nil];
-            selectOptionAlertController.view.tintColor = UIColor.mnz_redMain;
+            selectOptionAlertController.view.tintColor = [UIColor mnz_redForTraitCollection:self.traitCollection];
 
             break;
         }
@@ -2279,7 +2279,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     BOOL showMessageBubbleTopLabel = [self showHourForMessage:message withIndexPath:indexPath];
     if (showMessageBubbleTopLabel) {
         NSString *hour = message.date.mnz_formattedHourAndMinutes;
-        NSAttributedString *hourAttributed = [[NSAttributedString alloc] initWithString:hour attributes:@{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1], NSForegroundColorAttributeName:UIColor.grayColor}];
+        NSAttributedString *hourAttributed = [NSAttributedString.alloc initWithString:hour attributes:@{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
         NSMutableAttributedString *topCellAttributed = [[NSMutableAttributedString alloc] init];
         
         if (self.chatRoom.isGroup && !message.isManagementMessage) {
@@ -2287,7 +2287,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             if (!fullname.length) {
                 fullname = @"";
             }
-            NSAttributedString *fullnameAttributed = [[NSAttributedString alloc] initWithString:[fullname stringByAppendingString:@"   "] attributes:@{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1], NSForegroundColorAttributeName:UIColor.grayColor}];
+            NSAttributedString *fullnameAttributed = [NSAttributedString.alloc initWithString:[fullname stringByAppendingString:@"   "] attributes:@{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
             [topCellAttributed appendAttributedString:fullnameAttributed];
             [topCellAttributed appendAttributedString:hourAttributed];
         } else {
@@ -2325,7 +2325,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     
     if (message.isDeleted) {
         cell.textView.font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline].italic;
-        cell.textView.textColor = UIColor.mnz_blue2BA6DE;
+        cell.textView.textColor = [UIColor mnz_blueForTraitCollection:self.traitCollection];
     } else if (message.isManagementMessage) {
         cell.textView.font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
         cell.textView.linkTextAttributes = @{NSForegroundColorAttributeName: UIColor.mnz_label,
@@ -3427,7 +3427,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             
         case MEGAChatCallStatusReconnecting:
             self.reconnecting = YES;
-            [self setTopBannerButtonTitle:AMLocalizedString(@"Reconnecting...", @"Title shown when the user lost the connection in a call, and the app will try to reconnect the user again.") color:UIColor.mnz_orangeFFA500];
+            [self setTopBannerButtonTitle:AMLocalizedString(@"Reconnecting...", @"Title shown when the user lost the connection in a call, and the app will try to reconnect the user again.") color:UIColor.systemOrangeColor];
             break;
             
         case MEGAChatCallStatusDestroyed:

@@ -212,7 +212,7 @@
 - (void)updateAppearance {
     self.view.backgroundColor = UIColor.mnz_background;
     
-    self.tableView.separatorColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
+    self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     self.tableView.sectionIndexColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
 }
 
@@ -2102,7 +2102,7 @@
         NSIndexPath *indexPath = [self.indexPathsMutableDictionary objectForKey:base64Handle];
         if ([self.tableView.indexPathsForVisibleRows containsObject:indexPath]) {
             ContactTableViewCell *cell = (ContactTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-            cell.onlineStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:onlineStatus];
+            cell.onlineStatusView.backgroundColor = [UIColor mnz_colorForChatStatus:onlineStatus];
             cell.shareLabel.text = [NSString chatStatusString:onlineStatus];
             if (onlineStatus < MEGAChatStatusOnline) {
                 [MEGASdkManager.sharedMEGAChatSdk requestLastGreen:userHandle];

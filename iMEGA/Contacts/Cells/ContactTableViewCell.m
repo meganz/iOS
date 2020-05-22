@@ -75,7 +75,7 @@
 #pragma mark - Private
 
 - (void)updateAppearance {
-    self.shareLabel.textColor = [UIColor mnz_subtitlesColorForTraitCollection:self.traitCollection];
+    self.shareLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
     
     self.permissionsLabel.textColor = [UIColor mnz_tertiaryGrayForTraitCollection:self.traitCollection];
 }
@@ -100,7 +100,7 @@
     
     MEGAChatStatus userStatus = [MEGASdkManager.sharedMEGAChatSdk userOnlineStatus:user.handle];
     self.shareLabel.text = [NSString chatStatusString:userStatus];
-    self.onlineStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:userStatus];
+    self.onlineStatusView.backgroundColor = [UIColor mnz_colorForChatStatus:userStatus];
     if (userStatus < MEGAChatStatusOnline) {
         [MEGASdkManager.sharedMEGAChatSdk requestLastGreen:user.handle];
     }
@@ -136,7 +136,7 @@
     } else if (indexPath.section == 1) {
         self.shareLabel.hidden = YES;
         self.permissionsImageView.image = [UIImage imageNamed:@"delete"];
-        self.permissionsImageView.tintColor = [UIColor mnz_redMainForTraitCollection:(self.traitCollection)];
+        self.permissionsImageView.tintColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
     }
 }
 

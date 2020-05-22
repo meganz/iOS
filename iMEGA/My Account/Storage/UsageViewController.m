@@ -110,12 +110,12 @@
     self.usagePageControl.currentPageIndicatorTintColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
     self.usagePageControl.pageIndicatorTintColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
     
-    self.usageBottomSeparatorView.backgroundColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
+    self.usageBottomSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     
     self.cloudDriveView.backgroundColor = self.rubbishBinView.backgroundColor = self.incomingSharesView.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
     
     self.cloudDriveSizeLabel.textColor = self.rubbishBinSizeLabel.textColor = self.incomingSharesSizeLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
-    self.cloudDriveBottomSeparatorView.backgroundColor = self.rubbishBinBottomSeparatorView.backgroundColor = self.incomingSharesBottomSeparatorView.backgroundColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
+    self.cloudDriveBottomSeparatorView.backgroundColor = self.rubbishBinBottomSeparatorView.backgroundColor = self.incomingSharesBottomSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
 }
 
 - (void)initializeStorageInfo {

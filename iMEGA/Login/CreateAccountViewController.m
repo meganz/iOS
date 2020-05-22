@@ -342,7 +342,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 }
 
 - (void)updateAppearance {
-    self.view.backgroundColor = [UIColor mnz_accountViewsBackgroundColorForTraitCollection:self.traitCollection];
+    self.view.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
     
     [self.firstNameInputView updateAppearance];
     [self.lastNameInputView updateAppearance];

@@ -142,21 +142,21 @@ typedef NS_ENUM(NSInteger, MyAccount) {
 - (void)updateAppearance {
     self.view.backgroundColor = UIColor.mnz_background;
     
-    self.tableView.separatorColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
+    self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     
-    self.profileView.backgroundColor = [UIColor mnz_mainBarsColorForTraitCollection:self.traitCollection];
+    self.profileView.backgroundColor = [UIColor mnz_mainBarsForTraitCollection:self.traitCollection];
     self.viewAndEditProfileLabel.textColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
     self.qrCodeImageView.image = [UIImage imageNamed:@"qrCodeIcon"].imageFlippedForRightToLeftLayoutDirection;
-    self.profileBottomSeparatorView.backgroundColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
+    self.profileBottomSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     
     self.addPhoneNumberView.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
-    self.addPhoneNumberBottomSeparatorView.backgroundColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
+    self.addPhoneNumberBottomSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     
     if (MEGASdkManager.sharedMEGASdk.isBusinessAccount) {
-        self.businessLabel.textColor = [UIColor mnz_subtitlesColorForTraitCollection:self.traitCollection];
+        self.businessLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
         
         self.tableFooterContainerView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
-        self.tableFooterLabel.textColor = [UIColor mnz_subtitlesColorForTraitCollection:self.traitCollection];
+        self.tableFooterLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
     }
 }
 
@@ -328,8 +328,8 @@ typedef NS_ENUM(NSInteger, MyAccount) {
                     cell.transferUsedLabel.text = @"";
                 }
                 
-                cell.storageLabel.textColor = cell.storageUsedLabel.textColor = [UIColor mnz_chatBlueForTraitCollection:self.traitCollection];
-                cell.transferLabel.textColor = cell.transferUsedLabel.textColor = [UIColor colorFromHexString:@"34C759"];
+                cell.storageLabel.textColor = cell.storageUsedLabel.textColor = [UIColor mnz_blueForTraitCollection:self.traitCollection];
+                cell.transferLabel.textColor = cell.transferUsedLabel.textColor = UIColor.systemGreenColor;
             } else {
                 cell.iconImageView.image = [UIImage imageNamed:@"icon-storage"].imageFlippedForRightToLeftLayoutDirection;
                 cell.sectionLabel.text = AMLocalizedString(@"Storage", @"Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible).");

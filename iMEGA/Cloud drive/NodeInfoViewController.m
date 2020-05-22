@@ -128,11 +128,11 @@
 }
 
 - (void)updateAppearance {
-    self.nodeTopSeparatorView.backgroundColor = self.nodeBottomSeparatorView.backgroundColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
+    self.nodeTopSeparatorView.backgroundColor = self.nodeBottomSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     
     self.infoButton.tintColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
     
-    self.tableView.backgroundColor = [UIColor mnz_settingsBackgroundForTraitCollection:self.traitCollection];
+    self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
     self.nodeView.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection]; //Review this color
 }
 
@@ -185,7 +185,7 @@
     }
     
     UIView *separatorView = [sectionHeader viewWithTag:2];
-    separatorView.backgroundColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
+    separatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     
     return sectionHeader;
 }
@@ -194,7 +194,7 @@
     UITableViewCell *sectionFooter = [self.tableView dequeueReusableCellWithIdentifier:@"nodeInfoFooter"];
     
     UIView *separatorView = [sectionFooter viewWithTag:2];
-    separatorView.backgroundColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
+    separatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
 
     return sectionFooter;
 }
@@ -394,7 +394,7 @@
     cell.iconImageView.tintColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
     cell.iconImageView.image = [UIImage imageNamed:@"versions"];
     cell.titleLabel.text = [AMLocalizedString(@"xVersions", @"Message to display the number of historical versions of files.") stringByReplacingOccurrencesOfString:@"[X]" withString: [NSString stringWithFormat:@"%ld", (long)self.node.mnz_numberOfVersions]];
-    cell.separatorView.backgroundColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
+    cell.separatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     cell.separatorView.hidden = YES;
     
     return cell;
@@ -404,7 +404,7 @@
     NodeTappablePropertyTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"nodeTappablePropertyCell" forIndexPath:indexPath];
     cell.iconImageView.image = [UIImage imageNamed:@"shareFolder"];
     cell.iconImageView.tintColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
-    cell.separatorView.backgroundColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
+    cell.separatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     if (self.node.isShared) {
         cell.titleLabel.text = AMLocalizedString(@"sharedWidth", @"Label title indicating the number of users having a node shared");
         NSMutableArray *outSharesMutableArray = self.node.outShares;
@@ -427,7 +427,7 @@
     } else {
         cell.titleLabel.text = AMLocalizedString(@"getLink", @"Title shown under the action that allows you to get a link to file or folder");
     }
-    cell.separatorView.backgroundColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
+    cell.separatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     cell.separatorView.hidden = YES;
     
     return cell;

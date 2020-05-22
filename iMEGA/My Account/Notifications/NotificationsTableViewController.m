@@ -14,6 +14,7 @@
 #import "MEGAReachabilityManager.h"
 #import "MEGASDKManager.h"
 #import "MEGAStore.h"
+#import "MEGA-Swift.h"
 #import "MEGAUser+MNZCategory.h"
 #import "MEGAUserAlert.h"
 #import "MEGAUserAlertList+MNZCategory.h"
@@ -46,7 +47,7 @@
     self.boldFont = [UIFont boldSystemFontOfSize:14.0f];
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-    self.tableView.separatorColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
+    self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -77,7 +78,7 @@
     
     if (@available(iOS 13.0, *)) {
         if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-            self.tableView.separatorColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
+            self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
             [self.tableView reloadData];
         }
     }
@@ -100,7 +101,7 @@
         case MEGAUserAlertTypeUpdatePendingContactOutgoingAccepted:
         case MEGAUserAlertTypeUpdatePendingContactOutgoingDenied:
             typeLabel.text = AMLocalizedString(@"contactsTitle", @"Title of the Contacts section").uppercaseString;
-            typeLabel.textColor = UIColor.mnz_green00897B;
+            typeLabel.textColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
             break;
             
         case MEGAUserAlertTypeNewShare:
@@ -108,28 +109,28 @@
         case MEGAUserAlertTypeNewShareNodes:
         case MEGAUserAlertTypeRemovedSharesNodes:
             typeLabel.text = AMLocalizedString(@"shared", @"Title of the tab bar item for the Shared Items section").uppercaseString;
-            typeLabel.textColor = UIColor.mnz_orangeFFA500;
+            typeLabel.textColor = UIColor.systemOrangeColor;
             break;
             
         case MEGAUserAlertTypePaymentSucceeded:
         case MEGAUserAlertTypePaymentFailed:
             typeLabel.text = AMLocalizedString(@"Payment info", @"The header of a notification related to payments").uppercaseString;
-            typeLabel.textColor = [UIColor mnz_redMainForTraitCollection:(self.traitCollection)];
+            typeLabel.textColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
             break;
             
         case MEGAUserAlertTypePaymentReminder:
             typeLabel.text = AMLocalizedString(@"PRO membership plan expiring soon", @"A title for a notification saying the user’s pricing plan will expire soon.").uppercaseString;
-            typeLabel.textColor = [UIColor mnz_redMainForTraitCollection:(self.traitCollection)];
+            typeLabel.textColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
             break;
             
         case MEGAUserAlertTypeTakedown:
             typeLabel.text = AMLocalizedString(@"Takedown notice", @"The header of a notification indicating that a file or folder has been taken down due to infringement or other reason.").uppercaseString;
-            typeLabel.textColor = [UIColor mnz_redMainForTraitCollection:(self.traitCollection)];
+            typeLabel.textColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
             break;
             
         case MEGAUserAlertTypeTakedownReinstated:
             typeLabel.text = AMLocalizedString(@"Takedown reinstated", @"The header of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice.").uppercaseString;
-            typeLabel.textColor = [UIColor mnz_redMainForTraitCollection:(self.traitCollection)];
+            typeLabel.textColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
             break;
             
         default:
@@ -399,7 +400,7 @@
         cell.backgroundColor = [UIColor mnz_notificationSeenBackgroundForTraitCollection:self.traitCollection];
     } else {
         cell.theNewView.hidden = NO;
-        cell.backgroundColor = [UIColor mnz_notificationUnseenBackgroundForTraitCollection:self.traitCollection];
+        cell.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
     }
     [self configureHeadingLabel:cell.headingLabel forAlert:userAlert];
     [self configureContentLabel:cell.contentLabel forAlert:userAlert];

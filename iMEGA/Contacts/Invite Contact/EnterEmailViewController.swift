@@ -147,7 +147,7 @@ class EnterEmailViewController: UIViewController {
         
         tokenField.tokenFont = UIFont.systemFont(ofSize: 17)
         tokenField.tokenHighlightedTextColor = UIColor.mnz_label()
-        tokenField.tokenHighlightedBackgroundColor = UIColor.mnz_quaternaryBackground(traitCollection)
+        tokenField.tokenHighlightedBackgroundColor = UIColor.mnz_tertiaryBackgroundElevated(traitCollection)
         
         tokenField.delimiters = [",", " "];
         tokenField.placeholderText = AMLocalizedString("insertYourFriendsEmails", "");
@@ -229,7 +229,7 @@ extension EnterEmailViewController: VENTokenFieldDelegate {
                 enableInviteContactsButton()
             }
         } else {
-            tokenField.inputTextFieldTextColor = UIColor.mnz_redMain()
+            tokenField.inputTextFieldTextColor = UIColor.mnz_red(for: traitCollection)
             instructionsLabel.text = AMLocalizedString("theEmailAddressFormatIsInvalid", "Add contacts and share dialog error message when user try to add wrong email address")
         }
     }
@@ -275,7 +275,7 @@ extension EnterEmailViewController: CNContactPickerDelegate {
             instructionsLabel.textColor = UIColor.mnz_secondaryGray(for: self.traitCollection)
         } else {
             instructionsLabel.text = AMLocalizedString("theEmailAddressFormatIsInvalid", "Add contacts and share dialog error message when user try to add wrong email address") + ": " + email + "\n"
-            instructionsLabel.textColor = UIColor.mnz_redMain()
+            instructionsLabel.textColor = UIColor.mnz_red(for: traitCollection)
         }
         
         tokenField.reloadData()

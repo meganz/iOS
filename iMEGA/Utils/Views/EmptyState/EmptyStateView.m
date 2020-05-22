@@ -76,7 +76,7 @@
 #pragma mark - Private
 
 - (void)updateAppearance {
-    self.descriptionLabel.textColor = [UIColor mnz_subtitlesColorForTraitCollection:self.traitCollection];
+    self.descriptionLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
     
     [self.button mnz_setupPrimary:self.traitCollection];
 }

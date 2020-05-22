@@ -33,7 +33,7 @@ class ExtensionAppearanceManager: NSObject {
         UICollectionView.appearance().backgroundColor = UIColor.mnz_background()
         UIButton.appearance(whenContainedInInstancesOf: [UICollectionViewCell.self]).tintColor = UIColor.mnz_tertiaryGray(for: traitCollection)
         
-        UIToolbar.appearance().barTintColor = UIColor.mnz_mainBarsColor(for: traitCollection)
+        UIToolbar.appearance().barTintColor = UIColor.mnz_mainBars(for: traitCollection)
         UIToolbar.appearance().tintColor = UIColor.mnz_primaryGray(for: traitCollection)
         
         self.setupThirdPartyAppereance(traitCollection)
@@ -91,7 +91,7 @@ class ExtensionAppearanceManager: NSObject {
         if #available(iOS 13.0, *) {
             let navigationBarAppearance = UINavigationBarAppearance()
             navigationBarAppearance.configureWithOpaqueBackground()
-            navigationBarAppearance.backgroundColor = UIColor.mnz_mainBarsColor(for: traitCollection)
+            navigationBarAppearance.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
             
             navigationBarAppearance.shadowImage = nil
             navigationBarAppearance.shadowColor = nil
@@ -102,8 +102,8 @@ class ExtensionAppearanceManager: NSObject {
             UINavigationBar.appearance().standardAppearance = navigationBarAppearance
             UINavigationBar.appearance().scrollEdgeAppearance = navigationBarAppearance
         } else {
-            UINavigationBar.appearance().barTintColor = UIColor.mnz_mainBarsColor(for: traitCollection)
-            UINavigationBar.appearance().backgroundColor = UIColor.mnz_mainBarsColor(for: traitCollection)
+            UINavigationBar.appearance().barTintColor = UIColor.mnz_mainBars(for: traitCollection)
+            UINavigationBar.appearance().backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
             
             UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
             UINavigationBar.appearance().shadowImage = UIImage()

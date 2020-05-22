@@ -171,7 +171,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
 #pragma mark - Private
 
 - (void)updateAppearance {
-    self.view.backgroundColor = [UIColor mnz_settingsBackgroundForTraitCollection:self.traitCollection];
+    self.view.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
     
     switch (self.changeType) {
         case ChangeTypePassword:

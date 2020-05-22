@@ -119,10 +119,10 @@
 - (void)updateAppearance {
     self.view.backgroundColor = UIColor.mnz_background;
     
-    self.descriptionLabel.textColor = [UIColor mnz_subtitlesColorForTraitCollection:self.traitCollection];
+    self.descriptionLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
     
     self.doNotShowMeAgainView.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
-    self.doNotShowMeAgainTopSeparatorView.backgroundColor = self.doNotShowMeAgainBottomSeparatorView.backgroundColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
+    self.doNotShowMeAgainTopSeparatorView.backgroundColor = self.doNotShowMeAgainBottomSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     
     [self.testPasswordButton mnz_setupBasic:self.traitCollection];
     [self.backupKeyButton mnz_setupPrimary:self.traitCollection];

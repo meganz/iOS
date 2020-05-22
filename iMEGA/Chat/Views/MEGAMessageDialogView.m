@@ -28,12 +28,12 @@
 - (void)updateAppearance {
     self.contentView.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
     
-    self.descriptionLabel.textColor = [UIColor mnz_subtitlesColorForTraitCollection:self.traitCollection];
+    self.descriptionLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
     
     self.alwaysAllowButton.titleLabel.textColor = self.notNowButton.titleLabel.textColor = UIColor.mnz_label;
-    self.neverButton.titleLabel.textColor = [UIColor mnz_redMainForTraitCollection:self.traitCollection];
+    self.neverButton.titleLabel.textColor = [UIColor mnz_redForTraitCollection:self.traitCollection];
     
-    self.firstLineView.backgroundColor = self.secondLineView.backgroundColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
+    self.firstLineView.backgroundColor = self.secondLineView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
 }
 
 @end

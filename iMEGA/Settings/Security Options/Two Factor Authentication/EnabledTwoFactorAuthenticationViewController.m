@@ -67,12 +67,12 @@
 #pragma mark - Private
 
 - (void)updateAppearance {
-    self.view.backgroundColor = [UIColor mnz_mainBarsColorForTraitCollection:self.traitCollection];
+    self.view.backgroundColor = [UIColor mnz_mainBarsForTraitCollection:self.traitCollection];
     
-    self.firstLabel.textColor = self.secondLabel.textColor = [UIColor mnz_subtitlesColorForTraitCollection:self.traitCollection];
+    self.firstLabel.textColor = self.secondLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
     
     self.recoveryKeyView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
-    self.recoveryKeyView.layer.borderColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection].CGColor;
+    self.recoveryKeyView.layer.borderColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection].CGColor;
     
     [self.exportRecoveryButton mnz_setupPrimary:self.traitCollection];
     [self.closeButton mnz_setupBasic:self.traitCollection];

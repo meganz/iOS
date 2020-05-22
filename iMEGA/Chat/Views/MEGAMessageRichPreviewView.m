@@ -24,7 +24,7 @@
 - (void)updateAppearance {
     self.richPreviewView.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
     
-    self.descriptionLabel.textColor = self.linkLabel.textColor = [UIColor mnz_subtitlesColorForTraitCollection:self.traitCollection];
+    self.descriptionLabel.textColor = self.linkLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
 }
 
 @end

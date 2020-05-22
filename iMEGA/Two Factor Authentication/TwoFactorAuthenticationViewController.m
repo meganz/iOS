@@ -76,7 +76,7 @@
     
     self.firstDigitContainerView.backgroundColor = self.secondDigitContainerView.backgroundColor = self.thirdDigitContainerView.backgroundColor = self.fourthDigitContainerView.backgroundColor = self.fifthDigitContainerView.backgroundColor = self.sixthDigitContainerView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
     
-    self.firstDigitContainerView.layer.borderColor = self.secondDigitContainerView.layer.borderColor = self.thirdDigitContainerView.layer.borderColor = self.fourthDigitContainerView.layer.borderColor = self.fifthDigitContainerView.layer.borderColor = self.sixthDigitContainerView.layer.borderColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection].CGColor;
+    self.firstDigitContainerView.layer.borderColor = self.secondDigitContainerView.layer.borderColor = self.thirdDigitContainerView.layer.borderColor = self.fourthDigitContainerView.layer.borderColor = self.fifthDigitContainerView.layer.borderColor = self.sixthDigitContainerView.layer.borderColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection].CGColor;
     
     self.invalidCodeLabel.textColor = UIColor.mnz_redError;
 }
