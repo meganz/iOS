@@ -66,6 +66,24 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
     public init(messageCollectionView: MessagesCollectionView) {
         self.messageCollectionView = messageCollectionView
         super.init()
+        
+        setProximitySensorEnabled(true)
+    }
+    
+    func setProximitySensorEnabled(_ enabled: Bool) {
+        let device = UIDevice.current
+        device.isProximityMonitoringEnabled = enabled
+        if device.isProximityMonitoringEnabled {
+            NotificationCenter.default.addObserver(self, selector: #selector(proximityChanged), name: UIDevice.proximityStateDidChangeNotification, object: device)
+        } else {
+            NotificationCenter.default.removeObserver(self, name: UIDevice.proximityStateDidChangeNotification, object: nil)
+        }
+    }
+
+    @objc func proximityChanged(_ notification: Notification) {
+        if let device = notification.object as? UIDevice {
+            print("\(device) detected!")
+        }
     }
 
     // MARK: - Methods
@@ -228,6 +246,10 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
 
     open func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
         stopAnyOngoingPlaying()
+    }
+    
+    deinit {
+         setProximitySensorEnabled(false)
     }
 
 }
