@@ -122,6 +122,10 @@ class MessageInputBar: UIView {
         updateTextUI()
     }
     
+    func isTextViewTheFirstResponder() -> Bool {
+        return messageTextView.isFirstResponder
+    }
+    
     // MARK: - Actions
     
     @IBAction func exapandCollapseButtonTapped(_ button: UIButton) {
