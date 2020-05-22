@@ -67,7 +67,6 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
         self.messageCollectionView = messageCollectionView
         super.init()
         
-        setProximitySensorEnabled(true)
     }
     
     func setProximitySensorEnabled(_ enabled: Bool) {
@@ -143,6 +142,7 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
             audioCell.playButton.isSelected = true  // show pause button on audio cell
             startProgressTimer()
             audioCell.delegate?.didStartAudio(in: audioCell)
+            setProximitySensorEnabled(true)
         default:
             print("BasicAudioPlayer failed play sound becasue given message kind is not Audio")
         }
@@ -161,6 +161,7 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
         state = .pause
         audioCell.playButton.isSelected = false // show play button on audio cell
         progressTimer?.invalidate()
+        setProximitySensorEnabled(false)
         if let cell = playingCell {
             cell.delegate?.didPauseAudio(in: cell)
             audioCell.waveView.stopAnimating()
@@ -191,6 +192,7 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
         audioPlayer = nil
         playingMessage = nil
         playingCell = nil
+        setProximitySensorEnabled(false)
     }
 
     /// Resume a currently pause audio sound
