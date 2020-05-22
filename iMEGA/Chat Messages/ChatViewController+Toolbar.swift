@@ -8,7 +8,6 @@ enum ToolbarType {
 extension ChatViewController {
     func customToolbar(type: ToolbarType) {
         let flexibleItem = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        
         switch type {
         case .forward:
             setToolbarItems([shareBarButtonItem, flexibleItem, forwardBarButtonItem], animated: true)
