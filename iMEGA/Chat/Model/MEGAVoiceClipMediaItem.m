@@ -81,14 +81,14 @@ NSNotificationName kVoiceClipsShouldPauseNotification = @"kVoiceClipsShouldPause
     
     // Colors:
     if (self.message.userHandle == [MEGASdkManager sharedMEGAChatSdk].myUserHandle) {
-        voiceClipView.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:UIScreen.mainScreen.traitCollection];
+        voiceClipView.backgroundColor = [UIColor mnz_chatOutgoingBubble:UIScreen.mainScreen.traitCollection];
         [voiceClipView.playerSlider setThumbImage:[UIImage imageNamed:@"thumbSliderWhite"] forState:UIControlStateNormal];
         voiceClipView.playerSlider.minimumTrackTintColor = UIColor.whiteColor;
         voiceClipView.timeLabel.textColor = UIColor.whiteColor;
     } else {
-        voiceClipView.backgroundColor = [UIColor mnz_chatGrayForTraitCollection:UIScreen.mainScreen.traitCollection];
+        voiceClipView.backgroundColor = [UIColor mnz_chatIncomingBubble:UIScreen.mainScreen.traitCollection];
         [voiceClipView.playerSlider setThumbImage:[UIImage imageNamed:@"thumbSliderGreen"] forState:UIControlStateNormal];
-        voiceClipView.playerSlider.minimumTrackTintColor = [UIColor mnz_turquoiseForTraitCollection:UIScreen.mainScreen.traitCollection];
+        voiceClipView.playerSlider.minimumTrackTintColor = [UIColor mnz_chatOutgoingBubble:UIScreen.mainScreen.traitCollection];
         voiceClipView.timeLabel.textColor = UIColor.mnz_label;
     }
     [self updatePlayAndPauseButtonAppearance];

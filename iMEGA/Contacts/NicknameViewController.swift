@@ -157,17 +157,17 @@ class NicknameViewController: UIViewController {
     }
     
     private func updateAppearance() {
-        view.backgroundColor = UIColor.mnz_settingsBackground(for: traitCollection)
+        view.backgroundColor = UIColor.mnz_backgroundGrouped(for: traitCollection)
         
         nicknameView.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
         nicknameLabel.textColor = UIColor.mnz_secondaryGray(for: traitCollection)
-        nicknameTopSeparatorView.backgroundColor = UIColor.mnz_separatorColor(for: traitCollection)
-        nicknameBottomSeparatorView.backgroundColor = UIColor.mnz_separatorColor(for: traitCollection)
+        nicknameTopSeparatorView.backgroundColor = UIColor.mnz_separator(for: traitCollection)
+        nicknameBottomSeparatorView.backgroundColor = UIColor.mnz_separator(for: traitCollection)
         
         removeNicknameButton.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
-        removeNicknameButton.setTitleColor(UIColor.mnz_redMain(), for: .normal)
-        removeNicknameButtonTopSeparatorView.backgroundColor = UIColor.mnz_separatorColor(for: traitCollection)
-        removeNicknameButtonBottomSeparatorView.backgroundColor = UIColor.mnz_separatorColor(for: traitCollection)
+        removeNicknameButton.setTitleColor(UIColor.mnz_red(for: traitCollection), for: .normal)
+        removeNicknameButtonTopSeparatorView.backgroundColor = UIColor.mnz_separator(for: traitCollection)
+        removeNicknameButtonBottomSeparatorView.backgroundColor = UIColor.mnz_separator(for: traitCollection)
     }
 }
 

@@ -66,7 +66,7 @@ class InviteContactViewController: UIViewController {
     func updateAppearance() {
         mainView.backgroundColor = UIColor.mnz_background()
         
-        let separatorColor = UIColor.mnz_separatorColor(for: self.traitCollection)
+        let separatorColor = UIColor.mnz_separator(for: self.traitCollection)
         addFromContactsSeparatorView.backgroundColor = separatorColor
         enterEmailSeparatorView.backgroundColor = separatorColor
         scanQrCodeSeparatorView.backgroundColor = separatorColor

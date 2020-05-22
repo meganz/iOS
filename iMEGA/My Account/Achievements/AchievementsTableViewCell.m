@@ -20,8 +20,8 @@
 - (void)setupCell {
     self.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
     
-    self.storageQuotaRewardView.backgroundColor = UIColor.mnz_blue2BA6DE;
-    self.transferQuotaRewardView.backgroundColor = UIColor.mnz_green31B500;
+    self.storageQuotaRewardView.backgroundColor = [UIColor mnz_blueForTraitCollection:self.traitCollection];
+    self.transferQuotaRewardView.backgroundColor = UIColor.systemGreenColor;
     self.storageQuotaRewardLabel.textColor = self.transferQuotaRewardLabel.textColor = UIColor.whiteColor;
 }
 

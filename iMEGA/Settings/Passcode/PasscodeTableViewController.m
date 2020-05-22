@@ -57,7 +57,7 @@
     wasPasscodeAlreadyEnabled = [LTHPasscodeViewController doesPasscodeExist];
     [[LTHPasscodeViewController sharedUser] setHidesCancelButton:NO];
     
-    LTHPasscodeViewController.sharedUser.navigationBarTintColor = [UIColor mnz_mainBarsColorForTraitCollection:self.traitCollection];
+    LTHPasscodeViewController.sharedUser.navigationBarTintColor = [UIColor mnz_mainBarsForTraitCollection:self.traitCollection];
     LTHPasscodeViewController.sharedUser.navigationTintColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
     LTHPasscodeViewController.sharedUser.navigationTitleColor = UIColor.mnz_label;
 
@@ -117,8 +117,8 @@
 - (void)updateAppearance {
     self.requirePasscodeDetailLabel.textColor = UIColor.mnz_secondaryLabel;
     
-    self.tableView.separatorColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
-    self.tableView.backgroundColor = [UIColor mnz_settingsBackgroundForTraitCollection:self.traitCollection];
+    self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+    self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
     
     [self.tableView reloadData];
 }

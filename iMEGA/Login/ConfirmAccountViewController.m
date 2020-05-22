@@ -184,7 +184,7 @@
 }
 
 - (void)updateAppearance {
-    self.view.backgroundColor = [UIColor mnz_accountViewsBackgroundColorForTraitCollection:self.traitCollection];
+    self.view.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
     
     [self.emailInputView updateAppearance];
     [self.passwordView updateAppearance];

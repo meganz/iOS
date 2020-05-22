@@ -108,8 +108,8 @@ static const NSInteger MaxAutoawayTimeout = 1457; // 87420 seconds
 #pragma mark - Private
 
 - (void)updateAppearance {
-    self.tableView.separatorColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
-    self.tableView.backgroundColor = [UIColor mnz_settingsBackgroundForTraitCollection:self.traitCollection];
+    self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+    self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
     
     self.autoAwayTimeTextField.textColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
     [self.autoAwayTimeSaveButton setTitleColor:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection] forState:UIControlStateNormal];

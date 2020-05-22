@@ -9,6 +9,7 @@
 #import "MEGAChatMessage+MNZCategory.h"
 #import "MEGAMessageDialogView.h"
 #import "MEGASdkManager.h"
+#import "MEGA-Swift.h"
 
 @interface MEGADialogMediaItem () <MEGAMessageDialogViewDelegate>
 
@@ -123,10 +124,10 @@
     
     // Colors:
     if (self.message.userHandle == [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
-        dialogView.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:UIScreen.mainScreen.traitCollection];
+        dialogView.backgroundColor = [UIColor mnz_chatOutgoingBubble:UIScreen.mainScreen.traitCollection];
         dialogView.headingLabel.textColor = [UIColor whiteColor];
     } else {
-        dialogView.backgroundColor = [UIColor mnz_chatGrayForTraitCollection:UIScreen.mainScreen.traitCollection];
+        dialogView.backgroundColor = [UIColor mnz_chatIncomingBubble:UIScreen.mainScreen.traitCollection];
     }
     
     // Content:

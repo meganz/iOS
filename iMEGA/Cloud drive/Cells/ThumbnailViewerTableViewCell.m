@@ -101,7 +101,7 @@
     
     self.timeLabel.text = recentActionBucket.timestamp.mnz_formattedHourAndMinutes;
     
-    self.infoLabel.textColor = self.timeLabel.textColor = [UIColor mnz_subtitlesColorForTraitCollection:self.traitCollection];
+    self.infoLabel.textColor = self.timeLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
     
     self.nodesArray = recentActionBucket.nodesList.mnz_nodesArrayFromNodeList;
     [self.thumbnailViewerCollectionView reloadData];

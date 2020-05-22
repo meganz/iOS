@@ -33,7 +33,7 @@
 #pragma mark - Private
 
 - (void)updateAppearance {
-    self.chattingWithLabel.textColor = [UIColor mnz_redMainForTraitCollection:self.traitCollection];
+    self.chattingWithLabel.textColor = [UIColor mnz_redForTraitCollection:self.traitCollection];
     self.introductionLabel.textColor = self.confidentialityLabel.textColor = self.authenticityLabel.textColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
 }
 

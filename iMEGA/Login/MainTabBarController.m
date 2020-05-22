@@ -35,7 +35,7 @@
         UITabBarItem *tabBarItem = [[defaultViewControllersMutableArray objectAtIndex:i] tabBarItem];
         tabBarItem.title = nil;
         tabBarItem.badgeColor = UIColor.clearColor;
-        [tabBarItem setBadgeTextAttributes:@{NSForegroundColorAttributeName: [UIColor mnz_redMainForTraitCollection:(self.traitCollection)]} forState:UIControlStateNormal];
+        [tabBarItem setBadgeTextAttributes:@{NSForegroundColorAttributeName:[UIColor mnz_redForTraitCollection:(self.traitCollection)]} forState:UIControlStateNormal];
         [self reloadInsetsForTabBarItem:tabBarItem];
         switch (tabBarItem.tag) {
             case CLOUD:
@@ -62,7 +62,7 @@
     
     self.viewControllers = defaultViewControllersMutableArray;
     
-    self.view.tintColor = [UIColor mnz_redMainForTraitCollection:(self.traitCollection)];
+    self.view.tintColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
     
     [self setDelegate:self];
     

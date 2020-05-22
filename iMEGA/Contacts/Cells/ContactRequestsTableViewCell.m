@@ -22,7 +22,7 @@
 #pragma mark - Private
 
 - (void)setup {
-    self.timeAgoLabel.textColor = [UIColor mnz_subtitlesColorForTraitCollection:self.traitCollection];
+    self.timeAgoLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
 }
 
 @end

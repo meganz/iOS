@@ -23,7 +23,7 @@
     
     self.dateLabel.textColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
     
-    self.bottomSeparatorView.layer.borderColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection].CGColor;
+    self.bottomSeparatorView.layer.borderColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection].CGColor;
 }
 
 @end

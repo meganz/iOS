@@ -654,7 +654,7 @@
         MEGAUser *user = itemAtIndex;
         ContactTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"contactCell" forIndexPath:indexPath];
         
-        UIColor *color = [UIColor mnz_colorForStatusChange:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:user.handle]];
+        UIColor *color = [UIColor mnz_colorForChatStatus:[MEGASdkManager.sharedMEGAChatSdk userOnlineStatus:user.handle]];
         if (color) {
             cell.onlineStatusView.backgroundColor = color;
             cell.onlineStatusView.hidden = NO;

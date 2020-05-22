@@ -74,8 +74,8 @@ class AppearanceTableViewController: UITableViewController {
     // MARK: - Private
     
     func updateAppearance() {
-        tableView.separatorColor = UIColor.mnz_separatorColor(for: traitCollection)
-        tableView.backgroundColor = UIColor.mnz_settingsBackground(for: traitCollection)
+        tableView.separatorColor = UIColor.mnz_separator(for: traitCollection)
+        tableView.backgroundColor = UIColor.mnz_backgroundGrouped(for: traitCollection)
         
         tableView.reloadData()
     }

@@ -43,7 +43,7 @@
 - (void)updateAppearance {
     self.enableLabel.textColor = self.rightLabel.textColor = UIColor.mnz_secondaryLabel;
     
-    self.emailLabel.textColor = [UIColor mnz_subtitlesColorForTraitCollection:self.traitCollection];
+    self.emailLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
 }
 
 @end

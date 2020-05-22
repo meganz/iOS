@@ -733,11 +733,11 @@
     [[LTHPasscodeViewController sharedUser] enablePasscodeWhenApplicationEntersBackground];
 }
 
-- (void)showToastMessage:(NSString *)message color:(NSString *)color shouldHide:(BOOL)shouldHide {
+- (void)showToastMessage:(NSString *)message color:(UIColor *)color shouldHide:(BOOL)shouldHide {
     if (self.toastView.hidden) {
         self.toastTopConstraint.constant = -22;
         self.toastLabel.text = message;
-        self.toastView.backgroundColor = [UIColor colorFromHexString:color];
+        self.toastView.backgroundColor = color;
         self.toastView.hidden = NO;
         
         [UIView animateWithDuration:.25 animations:^{
@@ -1121,7 +1121,7 @@
         }
         
         if (session.networkQuality < 2) {
-            [self showToastMessage:AMLocalizedString(@"Poor connection.", @"Message to inform the local user is having a bad quality network with someone in the current group call") color:@"#FFBF00" shouldHide:YES];
+            [self showToastMessage:AMLocalizedString(@"Poor connection.", @"Message to inform the local user is having a bad quality network with someone in the current group call") color:UIColor.systemYellowColor shouldHide:YES];
         }
     }
     
@@ -1173,7 +1173,7 @@
             if (self.isReconnecting) {
                 self.reconnecting = NO;
                 self.toastView.hidden = YES;
-                [self showToastMessage:AMLocalizedString(@"You are back!", @"Title shown when the user reconnect in a call.") color:@"#00BFA5" shouldHide:YES];
+                [self showToastMessage:AMLocalizedString(@"You are back!", @"Title shown when the user reconnect in a call.") color:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection] shouldHide:YES];
             }
             
             if ([call hasChangedForType:MEGAChatCallChangeTypeCallComposition]) {
@@ -1181,11 +1181,11 @@
 
                 switch (call.callCompositionChange) {
                     case MEGAChatCallCompositionChangePeerRemoved:
-                        [self showToastMessage:[NSString stringWithFormat:AMLocalizedString(@"%@ left the call.", @"Message to inform the local user that someone has left the current group call"), [self.chatRoom userDisplayNameForUserHandle:call.peeridCallCompositionChange]] color:@"#00BFA5" shouldHide:YES];
+                        [self showToastMessage:[NSString stringWithFormat:AMLocalizedString(@"%@ left the call.", @"Message to inform the local user that someone has left the current group call"), [self.chatRoom userDisplayNameForUserHandle:call.peeridCallCompositionChange]] color:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection] shouldHide:YES];
                         break;
                         
                     case MEGAChatCallCompositionChangePeerAdded:
-                        [self showToastMessage:[NSString stringWithFormat:AMLocalizedString(@"%@ joined the call.", @"Message to inform the local user that someone has joined the current group call"), [self.chatRoom userDisplayNameForUserHandle:call.peeridCallCompositionChange]] color:@"#00BFA5" shouldHide:YES];
+                        [self showToastMessage:[NSString stringWithFormat:AMLocalizedString(@"%@ joined the call.", @"Message to inform the local user that someone has joined the current group call"), [self.chatRoom userDisplayNameForUserHandle:call.peeridCallCompositionChange]] color:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection] shouldHide:YES];
                         break;
                         
                     default:

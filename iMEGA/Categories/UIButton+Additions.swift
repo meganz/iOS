@@ -19,7 +19,7 @@ extension UIButton {
     
     @objc func mnz_setupDestructive(_ traitCollection: UITraitCollection) {
         backgroundColor = UIColor.mnz_basicButton(for: traitCollection)
-        setTitleColor(UIColor.mnz_redMain(for: traitCollection), for: UIControl.State.normal)
+        setTitleColor(UIColor.mnz_red(for: traitCollection), for: UIControl.State.normal)
         
         setupLayer()
     }

@@ -279,7 +279,7 @@ static NSString *kisDirectory = @"kisDirectory";
     self.offlineTableView.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.offlineTableView.tableView.emptyDataSetDelegate = self;
     self.offlineTableView.tableView.emptyDataSetSource = self;
-    self.offlineTableView.tableView.separatorColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
+    self.offlineTableView.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
 }
 
 - (void)initCollection {

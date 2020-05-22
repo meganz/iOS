@@ -86,14 +86,14 @@
         
     if (node.isTakenDown) {
         self.nameLabel.attributedText = [node mnz_attributedTakenDownNameWithHeight:self.nameLabel.font.capHeight];
-        self.nameLabel.textColor = [UIColor mnz_redMainForTraitCollection:(self.traitCollection)];
+        self.nameLabel.textColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
     } else {
         self.nameLabel.text = node.name;
         self.nameLabel.textColor = UIColor.mnz_label;
-        self.subtitleLabel.textColor = [UIColor mnz_subtitlesColorForTraitCollection:self.traitCollection];
+        self.subtitleLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
     }
     
-    self.infoLabel.textColor = [UIColor mnz_subtitlesColorForTraitCollection:self.traitCollection];
+    self.infoLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
     if (node.isFile) {
         self.infoLabel.text = self.recentActionBucket ? [NSString stringWithFormat:@"%@ • %@", [Helper sizeForNode:node api:MEGASdkManager.sharedMEGASdk], node.creationTime.mnz_formattedHourAndMinutes] : [Helper sizeAndDateForNode:node api:api];
         self.versionedImageView.hidden = ![[MEGASdkManager sharedMEGASdk] hasVersionsForNode:node];
@@ -109,7 +109,7 @@
         self.delegate = delegate;
     }
     
-    self.separatorView.backgroundColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
+    self.separatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
 }
 
 - (void)configureForRecentAction:(MEGARecentActionBucket *)recentActionBucket {
@@ -169,7 +169,7 @@
     
     self.timeLabel.text = recentActionBucket.timestamp.mnz_formattedHourAndMinutes;
     
-    self.subtitleLabel.textColor = self.infoLabel.textColor = self.timeLabel.textColor = [UIColor mnz_subtitlesColorForTraitCollection:self.traitCollection];
+    self.subtitleLabel.textColor = self.infoLabel.textColor = self.timeLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
 }
 
 #pragma mark - IBActions

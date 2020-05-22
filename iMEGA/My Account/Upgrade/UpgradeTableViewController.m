@@ -140,13 +140,13 @@
 #pragma mark - Private
 
 - (void)updateAppearance {
-    self.tableView.separatorColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
+    self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     
     if (@available(iOS 13.0, *)) {
         switch (self.traitCollection.userInterfaceStyle) {
             case UIUserInterfaceStyleUnspecified:
             case UIUserInterfaceStyleLight: {
-                self.view.backgroundColor = self.tableView.backgroundColor = [UIColor mnz_mainBarsColorForTraitCollection:self.traitCollection];
+                self.view.backgroundColor = self.tableView.backgroundColor = [UIColor mnz_mainBarsForTraitCollection:self.traitCollection];
                 break;
             }
                 
@@ -156,7 +156,7 @@
             }
         }
     } else {
-        self.view.backgroundColor = self.tableView.backgroundColor = [UIColor mnz_mainBarsColorForTraitCollection:self.traitCollection];
+        self.view.backgroundColor = self.tableView.backgroundColor = [UIColor mnz_mainBarsForTraitCollection:self.traitCollection];
     }
     
     [self setupCurrentPlanView];
@@ -172,25 +172,25 @@
 
 - (void)setupCurrentPlanView {
     self.currentPlanLabel.textColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
-    self.currentPlanLabelLineView.backgroundColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
+    self.currentPlanLabelLineView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     
     self.currentPlanNameLabel.textColor = UIColor.whiteColor;
     NSNumber *userProLevelIndexNumber = [self.proLevelsIndexesMutableDictionary objectForKey:[NSNumber numberWithInteger:self.userProLevel]];
     self.currentPlanStorageLabel.attributedText = [self storageAttributedStringForProLevelAtIndex:userProLevelIndexNumber.integerValue];
     self.currentPlanBandwidthLabel.attributedText = [self bandwidthAttributedStringForProLevelAtIndex:userProLevelIndexNumber.integerValue];
     self.currentPlanCellView.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
-    self.currentPlanBottomLineCellView.backgroundColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
+    self.currentPlanBottomLineCellView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
 }
 
 - (void)setupTableViewHeaderAndFooter {
-    self.chooseFromOneOfThePlansBottomLineView.backgroundColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
+    self.chooseFromOneOfThePlansBottomLineView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     
-    self.chooseFromOneOfThePlansPROBottomLineView.backgroundColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
+    self.chooseFromOneOfThePlansPROBottomLineView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     
-    self.footerTopLineView.backgroundColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
+    self.footerTopLineView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     
     self.twoMonthsFreeLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
-    NSMutableAttributedString *asteriskMutableAttributedString = [NSMutableAttributedString.alloc initWithString:@"* " attributes: @{NSFontAttributeName:[UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_redMainForTraitCollection:(self.traitCollection)]}];
+    NSMutableAttributedString *asteriskMutableAttributedString = [NSMutableAttributedString.alloc initWithString:@"* " attributes: @{NSFontAttributeName:[UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_redForTraitCollection:(self.traitCollection)]}];
     NSAttributedString *twoMonthsFreeAttributedString = [NSAttributedString.alloc initWithString:AMLocalizedString(@"twoMonthsFree", @"Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments") attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection]}];
     [asteriskMutableAttributedString appendAttributedString:twoMonthsFreeAttributedString];
     self.twoMonthsFreeLabel.attributedText = asteriskMutableAttributedString;
@@ -343,7 +343,7 @@
     NSMutableAttributedString *storageMutableAttributedString = [NSMutableAttributedString.alloc initWithString:@"50 GB" attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName:UIColor.mnz_label}];
     [storageMutableAttributedString appendAttributedString:storageString];
     
-    NSAttributedString *superscriptOneAttributedString = [NSAttributedString.alloc initWithString:@" ¹" attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_redMainForTraitCollection:(self.traitCollection)]}];
+    NSAttributedString *superscriptOneAttributedString = [NSAttributedString.alloc initWithString:@" ¹" attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_redForTraitCollection:(self.traitCollection)]}];
     [storageMutableAttributedString appendAttributedString:superscriptOneAttributedString];
     
     return storageMutableAttributedString;
@@ -438,7 +438,7 @@
     ProductTableViewCell *cell;
     if (self.isChoosingTheAccountType && indexPath.row == 0) {
         cell = [tableView dequeueReusableCellWithIdentifier:@"freeProductCell" forIndexPath:indexPath];
-        NSMutableAttributedString *superscriptOneAttributedString = [NSMutableAttributedString.alloc initWithString:@"¹ " attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_redMainForTraitCollection:(self.traitCollection)]}];
+        NSMutableAttributedString *superscriptOneAttributedString = [NSMutableAttributedString.alloc initWithString:@"¹ " attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_redForTraitCollection:(self.traitCollection)]}];
         
         NSAttributedString *subjectToYourParticipationAttributedString = [NSAttributedString.alloc initWithString:AMLocalizedString(@"subjectToYourParticipationInOurAchievementsProgram", @"") attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
         [superscriptOneAttributedString appendAttributedString:subjectToYourParticipationAttributedString];
@@ -461,7 +461,7 @@
     SKProduct *product = [[MEGAPurchase sharedInstance].products objectAtIndex:proLevelIndexNumber.integerValue];
     
     NSString *productPriceString = [NSString stringWithFormat:AMLocalizedString(@"productPricePerMonth", @"Price asociated with the MEGA PRO account level you can subscribe"), [self.numberFormatter stringFromNumber:product.price]];
-    NSAttributedString *asteriskAttributedString = [NSAttributedString.alloc initWithString:@" *" attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_redMainForTraitCollection:(self.traitCollection)]}];
+    NSAttributedString *asteriskAttributedString = [NSAttributedString.alloc initWithString:@" *" attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_redForTraitCollection:(self.traitCollection)]}];
     NSMutableAttributedString *productPriceMutableAttributedString = [NSMutableAttributedString.alloc initWithString:productPriceString attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName : [UIColor mnz_colorWithProLevel:proLevelNumber.integerValue]}];
     [productPriceMutableAttributedString appendAttributedString:asteriskAttributedString];
     cell.productPriceLabel.attributedText = productPriceMutableAttributedString;

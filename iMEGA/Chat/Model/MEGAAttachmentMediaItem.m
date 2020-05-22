@@ -10,6 +10,7 @@
 #import "UIDevice+MNZCategory.h"
 #import "Helper.h"
 #import "MEGASdkManager.h"
+#import "MEGA-Swift.h"
 #import "UIImageView+MNZCategory.h"
 
 @interface MEGAAttachmentMediaItem ()
@@ -67,11 +68,11 @@
         
         // Colors:
         if (self.message.userHandle == [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
-            contactView.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:UIScreen.mainScreen.traitCollection];
+            contactView.backgroundColor = [UIColor mnz_chatOutgoingBubble:UIScreen.mainScreen.traitCollection];
             contactView.titleLabel.textColor = [UIColor whiteColor];
             contactView.detailLabel.textColor = [UIColor whiteColor];
         } else {
-            contactView.backgroundColor = [UIColor mnz_chatGrayForTraitCollection:UIScreen.mainScreen.traitCollection];
+            contactView.backgroundColor = [UIColor mnz_chatIncomingBubble:UIScreen.mainScreen.traitCollection];
             contactView.titleLabel.textColor = UIColor.mnz_label;
             contactView.detailLabel.textColor = [UIColor mnz_primaryGrayForTraitCollection:UIScreen.mainScreen.traitCollection];
         }

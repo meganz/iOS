@@ -99,7 +99,7 @@
 }
 
 - (void)updateAppearance {
-    self.tableView.backgroundColor = [UIColor mnz_settingsBackgroundForTraitCollection:self.traitCollection];
+    self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
 }
 
 #pragma mark - UITableViewDataSource
@@ -225,7 +225,7 @@
     }
     
     UIView *separatorView = [sectionHeader viewWithTag:3];
-    separatorView.backgroundColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
+    separatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     
     return sectionHeader;
 }
@@ -234,7 +234,7 @@
     UITableViewCell *sectionFooter = [self.tableView dequeueReusableCellWithIdentifier:@"nodeInfoFooter"];
     
     UIView *separatorView = [sectionFooter viewWithTag:1];
-    separatorView.backgroundColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
+    separatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     
     return sectionFooter;
 }
@@ -267,7 +267,7 @@
         [self removeAction:nil];
     }];
     removeAction.image = [UIImage imageNamed:@"delete"];
-    removeAction.backgroundColor = [UIColor mnz_redMainForTraitCollection:(self.traitCollection)];
+    removeAction.backgroundColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
     [rightActions addObject:removeAction];
     
     if (indexPath.section != 0) {
@@ -521,7 +521,7 @@
         NSMutableArray *rightButtons = [NSMutableArray new];
         self.selectedNodesArray = [NSMutableArray arrayWithObject:node];
 
-        MGSwipeButton *deleteButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"delete"] backgroundColor:[UIColor mnz_redMainForTraitCollection:(self.traitCollection)] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
+        MGSwipeButton *deleteButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"delete"] backgroundColor:[UIColor mnz_redForTraitCollection:(self.traitCollection)] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
             [self removeAction:nil];
             return YES;
         }];

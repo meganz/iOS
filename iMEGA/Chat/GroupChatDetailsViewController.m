@@ -84,11 +84,11 @@
 #pragma mark - Private
 
 - (void)updateAppearance {
-    self.view.backgroundColor = [UIColor mnz_settingsBackgroundForTraitCollection:self.traitCollection];
+    self.view.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
     
     self.groupInfoView.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
-    self.participantsLabel.textColor = [UIColor mnz_subtitlesColorForTraitCollection:self.traitCollection];
-    self.groupInfoBottomSeparatorView.backgroundColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
+    self.participantsLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
+    self.groupInfoBottomSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
 }
 
 - (void)updateHeadingView {
@@ -452,13 +452,13 @@
         case 3:
             cell.leftImageView.image = self.chatRoom.isArchived ? [UIImage imageNamed:@"unArchiveChat"] : [UIImage imageNamed:@"archiveChat"];
             cell.nameLabel.text = self.chatRoom.isArchived ? AMLocalizedString(@"unarchiveChat", @"The title of the dialog to unarchive an archived chat.") : AMLocalizedString(@"archiveChat", @"Title of button to archive chats.");
-            cell.nameLabel.textColor = self.chatRoom.isArchived ? [UIColor mnz_redMainForTraitCollection:(self.traitCollection)] : UIColor.mnz_label;
+            cell.nameLabel.textColor = self.chatRoom.isArchived ? [UIColor mnz_redForTraitCollection:(self.traitCollection)] : UIColor.mnz_label;
             break;
             
         case 4:
             cell.leftImageView.image = [UIImage imageNamed:@"leaveGroup"];
             cell.nameLabel.text = self.chatRoom.isPreview ? AMLocalizedString(@"close", nil) : AMLocalizedString(@"leaveGroup", @"Button title that allows the user to leave a group chat.");
-            cell.nameLabel.textColor = [UIColor mnz_redMainForTraitCollection:(self.traitCollection)];            
+            cell.nameLabel.textColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];            
             break;
                         
         case 5:
@@ -517,7 +517,7 @@
             }
             
             [cell.leftImageView mnz_setImageForUserHandle:handle];
-            cell.onlineStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:handle]];
+            cell.onlineStatusView.backgroundColor = [UIColor mnz_colorForChatStatus:[MEGASdkManager.sharedMEGAChatSdk userOnlineStatus:handle]];
             
             cell.emailLabel.text = peerEmail;
             
@@ -927,7 +927,7 @@
         NSIndexPath *indexPath = [self.indexPathsMutableDictionary objectForKey:base64Handle];
         if ([self.tableView.indexPathsForVisibleRows containsObject:indexPath]) {
             GroupChatDetailsViewTableViewCell *cell = (GroupChatDetailsViewTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-            cell.onlineStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:onlineStatus];
+            cell.onlineStatusView.backgroundColor = [UIColor mnz_colorForChatStatus:onlineStatus];
         }
     }
 }

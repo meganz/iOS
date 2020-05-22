@@ -118,12 +118,12 @@ enum SessionSectionRow: Int {
     // MARK: - Private
     
     private func updateAppearance() {
-        tableView.backgroundColor = UIColor.mnz_settingsBackground(for: traitCollection)
-        tableView.separatorColor = UIColor.mnz_separatorColor(for: traitCollection)
+        tableView.backgroundColor = UIColor.mnz_backgroundGrouped(for: traitCollection)
+        tableView.separatorColor = UIColor.mnz_separator(for: traitCollection)
         
         nameLabel.textColor = UIColor.white
         emailLabel.textColor = UIColor.white
-        avatarBottomSeparatorView.backgroundColor = UIColor.mnz_separatorColor(for: traitCollection)
+        avatarBottomSeparatorView.backgroundColor = UIColor.mnz_separator(for: traitCollection)
     }
     
     private func configureGestures() -> Void {
@@ -490,7 +490,7 @@ extension ProfileViewController: UITableViewDataSource {
                     cell.detailLabel.textColor = UIColor.mnz_redProIII()
                 case .lite:
                     cell.detailLabel.text = "Lite"
-                    cell.detailLabel.textColor = UIColor.mnz_orangeFFA500()
+                    cell.detailLabel.textColor = UIColor.systemOrange
                 case .business:
                     if MEGASdkManager.sharedMEGASdk().businessStatus == .active {
                         cell.detailLabel.text = AMLocalizedString("Active", "")
@@ -519,7 +519,7 @@ extension ProfileViewController: UITableViewDataSource {
             case .logout:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "LogoutID", for: indexPath) as! LogoutTableViewCell
                 cell.logoutLabel.text = AMLocalizedString("logoutLabel", "Title of the button which logs out from your account.")
-                cell.logoutLabel.textColor = UIColor.mnz_redMain(for: traitCollection)
+                cell.logoutLabel.textColor = UIColor.mnz_red(for: traitCollection)
                 return cell
             }
         }

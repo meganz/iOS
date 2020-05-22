@@ -99,7 +99,7 @@ import UIKit
     func updateAppearance() {
         view.backgroundColor = UIColor.mnz_background()
         
-        tableView.separatorColor = UIColor.mnz_separatorColor(for: traitCollection)
+        tableView.separatorColor = UIColor.mnz_separator(for: traitCollection)
         
         tableView.reloadData()
     }

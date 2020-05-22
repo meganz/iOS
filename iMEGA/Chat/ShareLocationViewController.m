@@ -61,7 +61,7 @@
     self.sendLocationLabel.text = AMLocalizedString(@"Send This Location", @"Title of the button to share a location in a chat.");
     
     UIView *separatorBetweenButtonsLayer = [UIView.alloc initWithFrame:CGRectMake(0, self.mapOptionsView.frame.size.height / 2, self.mapOptionsView.frame.size.width, 0.5)];
-    separatorBetweenButtonsLayer.backgroundColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
+    separatorBetweenButtonsLayer.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     [self.mapOptionsView addSubview:separatorBetweenButtonsLayer];
     
     LocationSearchTableViewController *locationSearchTVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"LocationSearchTableViewControllerID"];
@@ -109,7 +109,7 @@
 - (void)updateAppearance {
     self.mapOptionsView.backgroundColor = self.sendLocationView.backgroundColor = UIColor.mnz_background;
     
-    self.subtitleLabel.textColor = [UIColor mnz_subtitlesColorForTraitCollection:self.traitCollection];
+    self.subtitleLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
 }
 
 - (void)sendGeolocationWithCoordinate2d:(CLLocationCoordinate2D)coordinate {

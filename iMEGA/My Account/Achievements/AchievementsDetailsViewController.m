@@ -112,7 +112,7 @@
     
     self.bonusExpireInView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
     
-    self.howItWorksTopSeparatorView.backgroundColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
+    self.howItWorksTopSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     self.howItWorksView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
 }
 
@@ -127,8 +127,8 @@
     
     if (awardExpirationdDate.daysUntil == 0) {
         bonusExpiresIn = AMLocalizedString(@"expired", @"Label to show that an error related with expiration occurs during a SDK operation.");
-        self.bonusExpireInLabel.textColor = [UIColor mnz_redMainForTraitCollection:(self.traitCollection)];
-        self.bonusExpireInView.layer.borderColor = [UIColor mnz_redMainForTraitCollection:(self.traitCollection)].CGColor;
+        self.bonusExpireInLabel.textColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
+        self.bonusExpireInView.layer.borderColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)].CGColor;
     } else {
         self.bonusExpireInView.layer.borderColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.14].CGColor;
         

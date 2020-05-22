@@ -90,10 +90,10 @@
 #pragma mark - Private
 
 - (void)updateAppearance {
-    self.cancelAccountLabel.textColor = [UIColor mnz_redMainForTraitCollection:self.traitCollection];
+    self.cancelAccountLabel.textColor = [UIColor mnz_redForTraitCollection:self.traitCollection];
     
-    self.tableView.separatorColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
-    self.tableView.backgroundColor = [UIColor mnz_settingsBackgroundForTraitCollection:self.traitCollection];
+    self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+    self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
     
     [self.tableView reloadData];
 }

@@ -51,15 +51,13 @@ class VerifyEmailViewController: UIViewController {
     }
     
     func updateAppearance() {
-        hintButton.backgroundColor = UIColor.white
-        resendButton.backgroundColor = UIColor.white
+        hintButton.mnz_setupPrimary(traitCollection)
+        resendButton.mnz_setupBasic(traitCollection)
 
-        topSeparatorView.backgroundColor = UIColor.lightGray
-        bottomSeparatorView.backgroundColor = UIColor.lightGray
+        topSeparatorView.backgroundColor = UIColor.mnz_separator(for: traitCollection)
+        bottomSeparatorView.backgroundColor = UIColor.mnz_separator(for: traitCollection)
         
-        hintLabel.textColor = UIColor.gray
-        topDescriptionLabel.textColor = UIColor.black
-        bottomDescriptionLabel.textColor = UIColor.black
+        hintLabel.textColor = UIColor .mnz_subtitles(for: traitCollection)
     }
     
     func addGradientBackground () {

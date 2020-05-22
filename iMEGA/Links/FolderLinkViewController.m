@@ -671,7 +671,7 @@
         cell.selectedBackgroundView = nil;
     }
     
-    cell.separatorView.layer.borderColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection].CGColor;
+    cell.separatorView.layer.borderColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection].CGColor;
     cell.separatorView.layer.borderWidth = 0.5;
     
     if (@available(iOS 11.0, *)) {

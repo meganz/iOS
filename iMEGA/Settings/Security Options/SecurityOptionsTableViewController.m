@@ -67,12 +67,12 @@
 #pragma mark - Private
 
 - (void)updateAppearance {
-    self.tableView.separatorColor = [UIColor mnz_separatorColorForTraitCollection:self.traitCollection];
-    self.tableView.backgroundColor = [UIColor mnz_settingsBackgroundForTraitCollection:self.traitCollection];
+    self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+    self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
     
     self.twoFactorAuthenticationRightDetailLabel.textColor = UIColor.mnz_secondaryLabel;
     
-    self.closeOtherSessionsLabel.textColor = [UIColor mnz_redMainForTraitCollection:self.traitCollection];
+    self.closeOtherSessionsLabel.textColor = [UIColor mnz_redForTraitCollection:self.traitCollection];
 }
 
 - (void)twoFactorAuthenticationStatus {
