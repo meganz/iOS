@@ -26,7 +26,12 @@ extension ChatViewController {
             
             if megaMessage.type == .attachment ||
                 megaMessage.type == .voiceClip {
-                
+                if audioController.playingMessage?.messageId == chatMessage.messageId {
+                    if audioController.state == .playing {
+                        audioController.stopAnyOngoingPlaying()
+                    }
+                }
+                MEGASdkManager.sharedMEGAChatSdk()?.revokeAttachmentMessage(forChat: chatRoom.chatId, messageId: megaMessage.messageId)
             } else {
                 let index = messages.firstIndex(of: chatMessage)!
                 if megaMessage.status == .sending {
