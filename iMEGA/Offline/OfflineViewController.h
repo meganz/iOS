@@ -22,6 +22,7 @@
 - (void)itemTapped:(NSString *)name atIndexPath:(NSIndexPath *)indexPath;
 - (void)enableButtonsByNumberOfItems;
 - (void)enableButtonsBySelectedItems;
+- (void)showInfoFilePath:(NSString *)itemPath at:(NSIndexPath *)indexPath from:(UIButton *)sender;
 - (void)showRemoveAlertWithConfirmAction:(void (^)(void))confirmAction andCancelAction:(void (^ _Nullable)(void))cancelAction;
 - (void)setEditMode:(BOOL)editMode;
 
