@@ -183,7 +183,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     self.avatarImages = NSMutableDictionary.new;
     
     if (self.chatRoom.isGroup) {
-        self.peerAvatar = [UIImage imageForName:self.chatRoom.title.uppercaseString size:CGSizeMake(80.0f, 80.0f) backgroundColor:UIColor.mnz_gray999999 textColor:UIColor.whiteColor font:[UIFont mnz_SFUIRegularWithSize:40.0f]];
+        self.peerAvatar = [UIImage imageForName:self.chatRoom.title.uppercaseString size:CGSizeMake(80.0f, 80.0f) backgroundColor:UIColor.mnz_grayC2C2C2 backgroundGradientColor:UIColor.mnz_grayDBDBDB textColor:UIColor.whiteColor font:[UIFont mnz_SFUIRegularWithSize:40.0f]];
     } else {
         uint64_t userHandle = [self.chatRoom peerHandleAtIndex:0];
         self.peerAvatar = [UIImage mnz_imageForUserHandle:userHandle name:self.chatRoom.title size:CGSizeMake(80.0f, 80.0f) delegate:nil];

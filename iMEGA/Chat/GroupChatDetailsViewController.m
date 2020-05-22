@@ -76,7 +76,7 @@
     self.nameLabel.text = self.chatRoom.chatTitle;
     
     CGSize avatarSize = self.avatarImageView.frame.size;
-    UIImage *avatarImage = [UIImage imageForName:self.chatRoom.title.uppercaseString size:avatarSize backgroundColor:[UIColor mnz_gray999999] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:(avatarSize.width/2.0f)]];
+    UIImage *avatarImage = [UIImage imageForName:self.chatRoom.title.uppercaseString size:avatarSize backgroundColor:UIColor.mnz_grayC2C2C2 backgroundGradientColor:UIColor.mnz_grayDBDBDB textColor:UIColor.whiteColor font:[UIFont mnz_SFUIRegularWithSize:(avatarSize.width/2.0f)]];
     self.avatarImageView.image = avatarImage;
     
     if (self.chatRoom.ownPrivilege < MEGAChatRoomPrivilegeRo) {

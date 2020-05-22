@@ -92,7 +92,7 @@
                     totalSize += [[[self.message.nodeList nodeAtIndex:i] size] unsignedIntegerValue];
                 }
                 size = [Helper memoryStyleStringFromByteCount:totalSize];
-                UIImage *avatar = [UIImage imageForName:[NSString stringWithFormat:@"%tu", totalNodes] size:contactView.avatarImage.frame.size backgroundColor:[UIColor mnz_gray999999] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:(contactView.avatarImage.frame.size.width/2.0f)]];
+                UIImage *avatar = [UIImage imageForName:[NSString stringWithFormat:@"%tu", totalNodes] size:contactView.avatarImage.frame.size backgroundColor:UIColor.mnz_grayC2C2C2 backgroundGradientColor:UIColor.mnz_grayDBDBDB textColor:UIColor.whiteColor font:[UIFont mnz_SFUIRegularWithSize:(contactView.avatarImage.frame.size.width/2.0f)]];
                 contactView.avatarImage.image = avatar;
             }
             contactView.titleLabel.text = filename;
@@ -106,7 +106,7 @@
                 NSNumber *users = [NSNumber numberWithUnsignedInteger:self.message.usersCount];
                 NSString *usersString = AMLocalizedString(@"XContactsSelected", nil);
                 usersString = [usersString stringByReplacingOccurrencesOfString:@"[X]" withString:users.stringValue];
-                UIImage *avatar = [UIImage imageForName:[NSString stringWithFormat:@"%lu", (unsigned long)self.message.usersCount] size:contactView.avatarImage.frame.size backgroundColor:[UIColor mnz_gray999999] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:(contactView.avatarImage.frame.size.width/2.0f)]];                
+                UIImage *avatar = [UIImage imageForName:[NSString stringWithFormat:@"%lu", (unsigned long)self.message.usersCount] size:contactView.avatarImage.frame.size backgroundColor:UIColor.mnz_grayC2C2C2 backgroundGradientColor:UIColor.mnz_grayDBDBDB textColor:UIColor.whiteColor font:[UIFont mnz_SFUIRegularWithSize:(contactView.avatarImage.frame.size.width/2.0f)]];                
                 contactView.avatarImage.image = avatar;
                 contactView.titleLabel.text = usersString;
                 NSString *emails = [self.message userEmailAtIndex:0];
