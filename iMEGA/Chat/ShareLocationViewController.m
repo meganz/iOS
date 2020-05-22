@@ -10,8 +10,6 @@
 
 #import "LocationSearchTableViewController.h"
 
-#import "MEGA-Swift.h"
-
 @interface ShareLocationViewController () <MKMapViewDelegate, CLLocationManagerDelegate, LocationSearchTableViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
@@ -155,28 +153,34 @@
 #pragma mark - IBAction
 
 - (IBAction)infoButtonTouchUpInside:(UIButton *)sender {
-    __weak __typeof__(self) weakSelf = self;
-
-    NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
-
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"Map settings", @"Title of the alert that allows change between different maps: Standar, Satellite or Hybrid.") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     if (self.mapView.mapType != MKMapTypeStandard) {
-        [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"Standard", @"Standard") detail:nil image:nil style:UIAlertActionStyleDefault actionHandler:^{
-            weakSelf.mapView.mapType = MKMapTypeStandard;
+        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"Standard", @"Standard") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            self.mapView.mapType = MKMapTypeStandard;
         }]];
     }
     if (self.mapView.mapType != MKMapTypeSatellite) {
-        [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"Satellite", @"Satellite") detail:nil image:nil style:UIAlertActionStyleDefault actionHandler:^{
-            weakSelf.mapView.mapType = MKMapTypeSatellite;
+        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"Satellite", @"Satellite") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            self.mapView.mapType = MKMapTypeSatellite;
         }]];
     }
     if (self.mapView.mapType != MKMapTypeHybrid) {
-        [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"Hybrid", @"Hybrid") detail:nil image:nil style:UIAlertActionStyleDefault actionHandler:^{
-            weakSelf.mapView.mapType = MKMapTypeHybrid;
+        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"Hybrid", @"Hybrid") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            self.mapView.mapType = MKMapTypeHybrid;
         }]];
     }
-        
-    ActionSheetViewController *infoActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:AMLocalizedString(@"Map settings", @"Title of the alert that allows change between different maps: Standar, Satellite or Hybrid.") dismissCompletion:nil sender:self.mapOptionsView];
-    [self presentViewController:infoActionSheet animated:YES completion:nil];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+    
+    if ([[UIDevice currentDevice] iPadDevice]) {
+        alertController.modalPresentationStyle = UIModalPresentationPopover;
+        UIPopoverPresentationController *popoverPresentationController = [alertController popoverPresentationController];
+        CGRect rect = CGRectMake(self.mapOptionsView.frame.origin.x, self.mapOptionsView.frame.origin.y, self.mapOptionsView.frame.size.width, self.mapOptionsView.frame.size.height - 45);
+        popoverPresentationController.sourceRect = rect;
+        popoverPresentationController.sourceView = self.view;
+    }
+    
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 - (IBAction)currentLocationTouchUpInside:(UIButton *)sender {    

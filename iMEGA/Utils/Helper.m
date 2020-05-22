@@ -596,6 +596,22 @@
     [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
 }
 
++ (UIAlertController *)removeUserContactFromSender:(UIView *)sender withConfirmAction:(void (^)(void))confirmAction {
+
+    UIAlertController *removeContactAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+
+    [removeContactAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
+
+    [removeContactAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"removeUserTitle", @"Alert title shown when you want to remove one or more contacts") style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+        confirmAction();
+    }]];
+
+    removeContactAlertController.popoverPresentationController.sourceView = sender;
+    removeContactAlertController.popoverPresentationController.sourceRect = sender.bounds;
+    
+    return removeContactAlertController;
+}
+
 #pragma mark - Utils for nodes
 
 + (void)thumbnailForNode:(MEGANode *)node api:(MEGASdk *)api cell:(id)cell {

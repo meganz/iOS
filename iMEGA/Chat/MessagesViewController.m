@@ -2014,7 +2014,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             
             NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
             
-            [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"fromCloudDrive", @"") detail:nil image:nil style:UIAlertActionStyleDefault actionHandler:^{
+            [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"fromCloudDrive", @"") detail:nil image:[UIImage imageNamed:@"fromCloudDrive"] style:UIAlertActionStyleDefault actionHandler:^{
                 MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
                 [weakSelf presentViewController:navigationController animated:YES completion:nil];
                 
@@ -2029,11 +2029,11 @@ static NSMutableSet<NSString *> *tapForInfoSet;
                 };
             }]];
             
-            [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"contact", @"referring to a contact in the contact list of the user") detail:nil image:nil style:UIAlertActionStyleDefault actionHandler:^{
+            [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"contact", @"referring to a contact in the contact list of the user") detail:nil image:[UIImage imageNamed:@"sendContact"] style:UIAlertActionStyleDefault actionHandler:^{
                 [weakSelf presentAddOrAttachParticipantToGroup:nil];
             }]];
 
-            [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"location", @"") detail:nil image:nil style:UIAlertActionStyleDefault actionHandler:^{
+            [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"location", @"") detail:nil image:[UIImage imageNamed:@"sendLocation"] style:UIAlertActionStyleDefault actionHandler:^{
                 MEGAGenericRequestDelegate *isGeolocationEnabledDelegate = [MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest *request, MEGAError *error) {
                     if (error.type) {
                         UIAlertController *sendLocationAlert = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"Send Location", @"Alert title shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm") message:AMLocalizedString(@"This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform.", @"Message shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm") preferredStyle:UIAlertControllerStyleAlert];

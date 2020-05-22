@@ -891,15 +891,15 @@
     }
     
     if (self.contactsMode == ContactsModeShareFoldersWith) {
-        __weak __typeof__(self) weakSelf = self;
+        UIAlertController *addContactAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"inviteContact", @"Text shown when the user tries to make a call and the receiver is not a contact") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+        [addContactAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
         
-        NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
-        [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"addFromEmail", @"Item menu option to add a contact writting his/her email") detail:nil image:nil style:UIAlertActionStyleDefault actionHandler:^{
+        UIAlertAction *addFromEmailAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"addFromEmail", @"Item menu option to add a contact writting his/her email") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             UIAlertController *addContactFromEmailAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email") message:nil preferredStyle:UIAlertControllerStyleAlert];
             
             [addContactFromEmailAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
                 textField.placeholder = AMLocalizedString(@"contactEmail", @"Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list");
-                [textField addTarget:weakSelf action:@selector(addContactAlertTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+                [textField addTarget:self action:@selector(addContactAlertTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
                 textField.shouldReturnCompletion = ^BOOL(UITextField *textField) {
                     return (!textField.text.mnz_isEmpty && textField.text.mnz_isValidEmail);
                 };
@@ -909,31 +909,56 @@
             
             UIAlertAction *addContactAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"addContactButton", @"Button title to 'Add' the contact to your contacts list") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                 UITextField *textField = addContactFromEmailAlertController.textFields.firstObject;
-                [weakSelf inviteEmailToShareFolder:textField.text];
+                if (self.contactsMode == ContactsModeShareFoldersWith) {
+                    [self inviteEmailToShareFolder:textField.text];
+                } else {
+                    if (MEGAReachabilityManager.isReachableHUDIfNot) {
+                        MEGAInviteContactRequestDelegate *inviteContactRequestDelegate = [MEGAInviteContactRequestDelegate.alloc initWithNumberOfRequests:1];
+                        [MEGASdkManager.sharedMEGASdk inviteContactWithEmail:textField.text message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
+                        [addContactAlertController dismissViewControllerAnimated:YES completion:nil];
+                    }
+                }
             }];
             addContactAlertAction.enabled = NO;
             [addContactFromEmailAlertController addAction:addContactAlertAction];
             
-            [weakSelf presentViewController:addContactFromEmailAlertController animated:YES completion:nil];
-        }]];
-        [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"addFromContacts", @"Item menu option to add a contact through your device app Contacts") detail:nil image:nil style:UIAlertActionStyleDefault actionHandler:^{
-            if (weakSelf.presentedViewController != nil) {
-                [weakSelf.presentedViewController dismissViewControllerAnimated:NO completion:nil];
+            [self presentViewController:addContactFromEmailAlertController animated:YES completion:nil];
+        }];
+        [addFromEmailAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
+        [addContactAlertController addAction:addFromEmailAlertAction];
+        
+        UIAlertAction *addFromContactsAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"addFromContacts", @"Item menu option to add a contact through your device app Contacts") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            if (self.presentedViewController != nil) {
+                [self.presentedViewController dismissViewControllerAnimated:NO completion:nil];
             }
-            [weakSelf showEmailContactPicker];
-        }]] ;
-        [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"scanCode", @"Segmented control title for view that allows the user to scan QR codes. String as short as possible.") detail:nil image:nil style:UIAlertActionStyleDefault actionHandler:^{
+            [self showEmailContactPicker];
+        }];
+        [addFromContactsAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
+        [addContactAlertController addAction:addFromContactsAlertAction];
+        
+        UIAlertAction *scanCodeAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"scanCode", @"Segmented control title for view that allows the user to scan QR codes. String as short as possible.") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             ContactLinkQRViewController *contactLinkVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactLinkQRViewControllerID"];
             contactLinkVC.scanCode = YES;
-            if (weakSelf.contactsMode == ContactsModeShareFoldersWith) {
+            if (self.contactsMode == ContactsModeShareFoldersWith) {
                 contactLinkVC.contactLinkQRType = ContactLinkQRTypeShareFolder;
-                contactLinkVC.contactLinkQRDelegate = weakSelf;
+                contactLinkVC.contactLinkQRDelegate = self;
             }
-            [weakSelf presentViewController:contactLinkVC animated:YES completion:nil];
-        }]];
-
-        ActionSheetViewController *addContactActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:nil dismissCompletion:nil sender:sender];
-        [self presentViewController:addContactActionSheet animated:YES completion:nil];
+            [self presentViewController:contactLinkVC animated:YES completion:nil];
+        }];
+        [scanCodeAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
+        [addContactAlertController addAction:scanCodeAlertAction];
+        
+        addContactAlertController.modalPresentationStyle = UIModalPresentationPopover;
+        if (self.addBarButtonItem) {
+            addContactAlertController.popoverPresentationController.barButtonItem = self.addBarButtonItem;
+        } else if (self.insertAnEmailBarButtonItem) {
+            addContactAlertController.popoverPresentationController.barButtonItem = self.insertAnEmailBarButtonItem;
+        } else {
+            addContactAlertController.popoverPresentationController.sourceRect = sender.frame;
+            addContactAlertController.popoverPresentationController.sourceView = sender.superview;
+        }
+        
+        [self presentViewController:addContactAlertController animated:YES completion:nil];
     } else {
         InviteContactViewController *inviteContacts = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"InviteContactViewControllerID"];
         [self.navigationController pushViewController:inviteContacts animated:YES];
@@ -1504,16 +1529,15 @@
         switch (self.contactsMode) {
             case ContactsModeDefault: {
                 MEGAUser *user = [self userAtIndexPath:indexPath];
-                NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
-                [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"removeUserTitle", @"Alert title shown when you want to remove one or more contacts") detail:nil image:nil style:UIAlertActionStyleDefault actionHandler:^{
+                UIAlertController *removeContactAlertController = [Helper removeUserContactFromSender:[tableView cellForRowAtIndexPath:indexPath] withConfirmAction:^{
                     MEGARemoveContactRequestDelegate *removeContactRequestDelegate = [MEGARemoveContactRequestDelegate. alloc initWithCompletion:^{
                         [self setTableViewEditing:NO animated:NO];
                     }];
                     [[MEGASdkManager sharedMEGASdk] removeContactUser:user delegate:removeContactRequestDelegate];
-                }]];
+                }];
                 
-                ActionSheetViewController *removeContactActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:nil dismissCompletion:nil sender:nil];
-                [self presentViewController:removeContactActionSheet animated:YES completion:nil];
+                [self presentViewController:removeContactAlertController animated:YES completion:nil];
+                break;
             }
                 
             case ContactsModeShareFoldersWith:

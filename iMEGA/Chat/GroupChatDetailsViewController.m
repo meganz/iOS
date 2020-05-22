@@ -292,28 +292,42 @@
         
         __weak __typeof__(self) weakSelf = self;
 
+        MEGAChatRoomPrivilege privilege = [self.chatRoom peerPrivilegeByHandle:userHandle];
+
         if (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator) {
-            [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"moderator", @"The Moderator permission level in chat. With moderator permissions a participant can manage the chat.") detail:nil image:nil style:UIAlertActionStyleDefault actionHandler:^{
+            [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"moderator", @"The Moderator permission level in chat. With moderator permissions a participant can manage the chat.") detail:privilege == MEGAChatRoomPrivilegeModerator ? @"✓" : @"" image:[UIImage imageNamed:@"moderator"] style:UIAlertActionStyleDefault actionHandler:^{
                 [MEGASdkManager.sharedMEGAChatSdk updateChatPermissions:weakSelf.chatRoom.chatId userHandle:userHandle privilege:MEGAChatRoomPrivilegeModerator delegate:weakSelf];
             }]];
-            [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"standard", @"The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat.") detail:nil image:nil style:UIAlertActionStyleDefault actionHandler:^{
+            [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"standard", @"The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat.") detail:privilege == MEGAChatRoomPrivilegeStandard ? @"✓" : @"" image:[UIImage imageNamed:@"standard"] style:UIAlertActionStyleDefault actionHandler:^{
                 [MEGASdkManager.sharedMEGAChatSdk updateChatPermissions:weakSelf.chatRoom.chatId userHandle:userHandle privilege:MEGAChatRoomPrivilegeStandard delegate:weakSelf];
             }]];
-            [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with") detail:nil image:nil style:UIAlertActionStyleDefault actionHandler:^{
+            [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with") detail:privilege == MEGAChatRoomPrivilegeRo ? @"✓" : @"" image:[UIImage imageNamed:@"readOnly"] style:UIAlertActionStyleDefault actionHandler:^{
                 [MEGASdkManager.sharedMEGAChatSdk updateChatPermissions:weakSelf.chatRoom.chatId userHandle:userHandle privilege:MEGAChatRoomPrivilegeRo delegate:weakSelf];
             }]];
-        }
-        if (!user || user.visibility != MEGAUserVisibilityVisible) {
-            [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email") detail:nil image:nil style:UIAlertActionStyleDefault actionHandler:^{
-                if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-                    MEGAInviteContactRequestDelegate *inviteContactRequestDelegate = [MEGAInviteContactRequestDelegate.alloc initWithNumberOfRequests:1];
-                    [MEGASdkManager.sharedMEGASdk inviteContactWithEmail:[self.chatRoom peerEmailByHandle:userHandle] message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
-                }
+            if (!user || user.visibility != MEGAUserVisibilityVisible) {
+                [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email") detail:nil image:[UIImage imageNamed:@"add"] style:UIAlertActionStyleDefault actionHandler:^{
+                    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+                        MEGAInviteContactRequestDelegate *inviteContactRequestDelegate = [MEGAInviteContactRequestDelegate.alloc initWithNumberOfRequests:1];
+                        [MEGASdkManager.sharedMEGASdk inviteContactWithEmail:[self.chatRoom peerEmailByHandle:userHandle] message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
+                    }
+                }]];
+            }
+            [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"removeParticipant", @"A button title which removes a participant from a chat.") detail:nil image:[UIImage imageNamed:@"delete"] style:UIAlertActionStyleDestructive actionHandler:^{
+                [MEGASdkManager.sharedMEGAChatSdk updateChatPermissions:weakSelf.chatRoom.chatId userHandle:userHandle privilege:MEGAChatRoomPrivilegeRo delegate:weakSelf];
             }]];
+        } else {
+            if (!user || user.visibility != MEGAUserVisibilityVisible) {
+                [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email") detail:nil image:[UIImage imageNamed:@"add"] style:UIAlertActionStyleDefault actionHandler:^{
+                    if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+                        MEGAInviteContactRequestDelegate *inviteContactRequestDelegate = [MEGAInviteContactRequestDelegate.alloc initWithNumberOfRequests:1];
+                        [MEGASdkManager.sharedMEGASdk inviteContactWithEmail:[self.chatRoom peerEmailByHandle:userHandle] message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
+                    }
+                }]];
+            }
         }
         
         if (actions.count > 0) {
-            ActionSheetViewController *permissionsActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:nil dismissCompletion:nil sender:sender];
+            ActionSheetViewController *permissionsActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:AMLocalizedString(@"permissions", @"Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder ") dismissCompletion:nil sender:sender];
             [self presentViewController:permissionsActionSheet animated:YES completion:nil];
         }
     }
