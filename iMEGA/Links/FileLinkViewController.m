@@ -15,11 +15,10 @@
 #import "UIImageView+MNZCategory.h"
 #import "UITextField+MNZCategory.h"
 
-#import "CustomActionViewController.h"
 #import "SendToViewController.h"
 #import "UnavailableLinkView.h"
 
-@interface FileLinkViewController () <CustomActionViewControllerDelegate>
+@interface FileLinkViewController () <NodeActionViewControllerDelegate>
 
 @property (strong, nonatomic) MEGANode *node;
 
@@ -313,25 +312,13 @@
 }
 
 - (IBAction)moreAction:(UIBarButtonItem *)sender {
-    CustomActionViewController *actionController = [[CustomActionViewController alloc] init];
-    actionController.node = self.node;
-    actionController.displayMode = DisplayModeFileLink;
-    actionController.actionDelegate = self;
-    actionController.actionSender = sender;
-    
-    if ([[UIDevice currentDevice] iPadDevice]) {
-        actionController.modalPresentationStyle = UIModalPresentationPopover;
-        actionController.popoverPresentationController.delegate = actionController;
-        actionController.popoverPresentationController.barButtonItem = sender;
-    } else {
-        actionController.modalPresentationStyle = UIModalPresentationOverFullScreen;
-    }
-    [self presentViewController:actionController animated:YES completion:nil];
+    NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:self.node delegate:self displayMode:DisplayModeFileLink isIncoming:NO sender:sender];
+    [self presentViewController:nodeActions animated:YES completion:nil];
 }
 
-#pragma mark - CustomActionViewControllerDelegate
+#pragma mark - NodeActionViewControllerDelegate
 
-- (void)performAction:(MegaNodeActionType)action inNode:(MEGANode *)node fromSender:(id)sender{
+- (void)nodeAction:(NodeActionViewController *)nodeAction didSelect:(MegaNodeActionType)action for:(MEGANode *)node from:(id)sender {
     switch (action) {
         case MegaNodeActionTypeImport:
             [self import];

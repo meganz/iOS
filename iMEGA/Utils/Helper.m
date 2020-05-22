@@ -11,6 +11,7 @@
 #import "UIApplication+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 
+#import "MEGAIndexer.h"
 #import "MEGAActivityItemProvider.h"
 #import "MEGACopyRequestDelegate.h"
 #import "MEGACreateFolderRequestDelegate.h"
@@ -40,7 +41,6 @@
 #import "MEGA-Swift.h"
 #endif
 
-static MEGAIndexer *indexer;
 
 @implementation Helper
 
@@ -596,6 +596,19 @@ static MEGAIndexer *indexer;
     [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
 }
 
++ (UIAlertController *)removeUserContactWithConfirmAction:(void (^)(void))confirmAction {
+
+    UIAlertController *removeContactAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    [removeContactAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
+    
+    [removeContactAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"removeUserTitle", @"Alert title shown when you want to remove one or more contacts") style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+        confirmAction();
+    }]];
+    
+    return removeContactAlertController;
+}
+
 #pragma mark - Utils for nodes
 
 + (void)thumbnailForNode:(MEGANode *)node api:(MEGASdk *)api cell:(id)cell {
@@ -627,7 +640,7 @@ static MEGAIndexer *indexer;
     
     if (reindex) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-            [indexer index:node];
+            [MEGAIndexer.sharedIndexer index:node];
         });
     }
 }
@@ -932,9 +945,6 @@ static MEGAIndexer *indexer;
     return [filesURLMutableArray copy];
 }
 
-+ (void)setIndexer:(MEGAIndexer* )megaIndexer {
-    indexer = megaIndexer;
-}
 
 #pragma mark - Utils for empty states
 

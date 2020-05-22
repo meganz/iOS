@@ -1,22 +1,5 @@
 import UIKit
 
-class ActionSheetAction: NSObject {
-    var title: String?
-    var detail: String?
-    var image: UIImage?
-    var action = { }
-    var style: UIAlertAction.Style = .default
-    
-    @objc init(title: String?, detail: String?, image: UIImage? , style: UIAlertAction.Style, handler: (() -> Void)? = nil) {
-        super.init()
-        self.title = title
-        self.detail = detail
-        self.image = image
-        self.style = style
-        self.action = handler ?? {}
-    }
-}
-
 class ActionSheetViewController: UIViewController {
 
     var layoutThreshold: CGFloat {
@@ -28,7 +11,7 @@ class ActionSheetViewController: UIViewController {
     var backgroundView = UIView.newAutoLayout()
     var top: NSLayoutConstraint?
 
-    @objc var actions: [ActionSheetAction] = []
+    @objc var actions: [BaseAction] = []
     @objc var headerTitle: String?
 
     // MARK: - Private properties
@@ -270,7 +253,9 @@ extension ActionSheetViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let action = actions[indexPath.row]
+        guard let action = actions[indexPath.row] as? ActionSheetAction else {
+            return
+        }
         dismiss(animated: true, completion: {
             if action.style != .cancel {
                 action.action()

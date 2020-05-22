@@ -7,7 +7,6 @@
 
 #import "BrowserViewController.h"
 #import "CloudDriveViewController.h"
-#import "CustomActionViewController.h"
 #import "Helper.h"
 #import "MainTabBarController.h"
 #import "MEGAActivityItemProvider.h"
@@ -34,7 +33,7 @@
 
 static const CGFloat GapBetweenPages = 10.0;
 
-@interface MEGAPhotoBrowserViewController () <UIScrollViewDelegate, UIViewControllerTransitioningDelegate, MEGAPhotoBrowserPickerDelegate, PieChartViewDelegate, PieChartViewDataSource, CustomActionViewControllerDelegate, NodeInfoViewControllerDelegate, MEGADelegate>
+@interface MEGAPhotoBrowserViewController () <UIScrollViewDelegate, UIViewControllerTransitioningDelegate, MEGAPhotoBrowserPickerDelegate, PieChartViewDelegate, PieChartViewDataSource, NodeActionViewControllerDelegate, NodeInfoViewControllerDelegate, MEGADelegate>
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
@@ -651,25 +650,13 @@ static const CGFloat GapBetweenPages = 10.0;
 }
 
 - (IBAction)didPressActionsButton:(UIBarButtonItem *)sender {
-    CustomActionViewController *actionController = [[CustomActionViewController alloc] init];
     MEGANode *node = [MEGASdkManager.sharedMEGASdk nodeForHandle:[self.mediaNodes objectAtIndex:self.currentIndex].handle];
     if (node) {
         [self.mediaNodes setObject:node atIndexedSubscript:self.currentIndex];
     }
-    actionController.node = [self.mediaNodes objectAtIndex:self.currentIndex];
-    actionController.actionDelegate = self;
-    actionController.actionSender = sender;
-    actionController.displayMode = self.displayMode;
     
-    if ([[UIDevice currentDevice] iPadDevice]) {
-        actionController.modalPresentationStyle = UIModalPresentationPopover;
-        actionController.popoverPresentationController.delegate = actionController;
-        actionController.popoverPresentationController.barButtonItem = sender;
-    } else {
-        actionController.modalPresentationStyle = UIModalPresentationOverFullScreen;
-    }
-    
-    [self presentViewController:actionController animated:YES completion:nil];
+    NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:[self.mediaNodes objectAtIndex:self.currentIndex] delegate:self displayMode:self.displayMode isIncoming:NO sender:sender];
+    [self presentViewController:nodeActions animated:YES completion:nil];
 }
 
 - (IBAction)didPressLeftToolbarButton:(UIBarButtonItem *)sender {
@@ -962,9 +949,9 @@ static const CGFloat GapBetweenPages = 10.0;
     return valueForSlice < 0 ? 0 : valueForSlice;
 }
 
-#pragma mark - CustomActionViewControllerDelegate
+#pragma mark - NodeActionViewControllerDelegate
 
-- (void)performAction:(MegaNodeActionType)action inNode:(MEGANode *)node fromSender:(id)sender {
+- (void)nodeAction:(NodeActionViewController *)nodeAction didSelect:(MegaNodeActionType)action for:(MEGANode *)node from:(id)sender {
     switch (action) {
         case MegaNodeActionTypeShare: {
             
