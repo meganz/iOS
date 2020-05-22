@@ -30,6 +30,12 @@ class AvatarView: UIView {
             addSubview(view)
             view.frame = bounds
         }
+        
+        firstPeerAvatarImageView.layer.masksToBounds = true
+        firstPeerAvatarImageView.layer.borderWidth = 1
+        firstPeerAvatarImageView.layer.borderColor = UIColor.white.cgColor
+        firstPeerAvatarImageView.layer.cornerRadius = firstPeerAvatarImageView.bounds.width / 2
+        
         if #available(iOS 11.0, *) {
             avatarImageView.accessibilityIgnoresInvertColors            = true
             firstPeerAvatarImageView.accessibilityIgnoresInvertColors   = true
