@@ -1588,11 +1588,15 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         switch (self.contactsMode) {
             case ContactsModeDefault: {
-                MEGARemoveContactRequestDelegate *removeContactRequestDelegate = [MEGARemoveContactRequestDelegate. alloc initWithCompletion:^{                
-                    [self setTableViewEditing:NO animated:NO];
-                }];
                 MEGAUser *user = [self userAtIndexPath:indexPath];
-                [[MEGASdkManager sharedMEGASdk] removeContactUser:user delegate:removeContactRequestDelegate];
+                UIAlertController *removeContactAlertController = [Helper removeUserContactWithConfirmAction:^{
+                    MEGARemoveContactRequestDelegate *removeContactRequestDelegate = [MEGARemoveContactRequestDelegate. alloc initWithCompletion:^{
+                        [self setTableViewEditing:NO animated:NO];
+                    }];
+                    [[MEGASdkManager sharedMEGASdk] removeContactUser:user delegate:removeContactRequestDelegate];
+                }];
+                
+                [self presentViewController:removeContactAlertController animated:YES completion:nil];
                 break;
             }
                 

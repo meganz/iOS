@@ -265,7 +265,9 @@ static NSString *kPath = @"kPath";
     NSString *itemPath = [[self.offline currentOfflinePath] stringByAppendingPathComponent:cell.nameLabel.text];
     
     UIAlertAction *removeItemAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"remove", @"Title for the action that allows to remove a file or folder") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [self.offline removeOfflineNodeCell:itemPath];
+        [self.offline showRemoveAlertWithConfirmAction:^{
+            [self.offline removeOfflineNodeCell:itemPath];
+        } andCancelAction:nil];
     }];
     [removeItemAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
     [infoAlertController addAction:removeItemAction];

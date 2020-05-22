@@ -436,22 +436,6 @@
 "renameNodeMessage"="Enter the new name";
 /* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
 "moveToTheRubbishBin"="Move to the Rubbish Bin";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 file' */
-"moveFileToRubbishBinMessage"="Are you sure you want to move 1 file to the Rubbish Bin?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin '{1+} files' */
-"moveFilesToRubbishBinMessage"="Are you sure you want to move %d files to the Rubbish Bin?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 folder' */
-"moveFolderToRubbishBinMessage"="Are you sure you want to move 1 folder to the Rubbish Bin?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} folders" */
-"moveFoldersToRubbishBinMessage"="Are you sure you want to move %d folders to the Rubbish Bin?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and 1 folder" */
-"moveFileFolderToRubbishBinMessage"="Are you sure you want to move 1 file and 1 folder to the Rubbish Bin?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and {1+} folders" */
-"moveFileFoldersToRubbishBinMessage"="Are you sure you want to move 1 file and %d folders to the Rubbish Bin?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files and 1 folder" */
-"moveFilesFolderToRubbishBinMessage"="Are you sure you want to move %d files and 1 folder to the Rubbish Bin?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "[A] = {1+} files and [B] = {1+} folders" */
-"moveFilesFoldersToRubbishBinMessage"="Are you sure you want to move [A] files and [B] folders to the Rubbish Bin?";
 /* Success message shown when you have moved 1 file to the rubbish bin */
 "fileMovedToRubbishBinMessage"="1 file moved to the Rubbish Bin";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
@@ -477,7 +461,7 @@
 /* Success message for sharing multiple folders. */
 "sharedFolders_success"="%d folders shared successfully.";
 /* Button title that triggers the importing link action */
-"import"="Import";
+"Import to Cloud Drive"="Import to Cloud Drive";
 /* Message shown when a file has been imported */
 "fileImported"="File imported";
 /* Message shown when some files have been imported */
@@ -580,8 +564,6 @@
 "theUsersHaveBeenInvited"="The users have been invited and will appear in your contact list once accepted.";
 /* Alert title shown when you want to remove one or more contacts */
 "removeUserTitle"="Remove contact";
-/* Alert confirmation message shown when you want to remove one contact from your contacts list */
-"removeUserMessage"="Are you sure you want to remove %@ from your contact list?";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
 "removeMultipleUsersMessage"="Are you sure you want to remove %d users from your contact list?";
 /* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
@@ -606,7 +588,7 @@
 "shareFolder"="Share folder";
 /* Button title which, if tapped, will trigger the action of sharing the folders selected */
 "shareFolders"="Share folders";
-/* Button that allows you to select a given folder */
+/* Button that allows you to select something (a folder, a message...) */
 "select"="Select";
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
 "permissions"="Permissions";
@@ -1267,8 +1249,10 @@
 "enableRichUrlPreviews"="Enable rich URL previews";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "alwaysAllow"="Always Allow";
-/* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
+/* Text indicating to the user that some action will be postpone. E.g. used for 'rich previews' and management of disk storage. */
 "notNow"="Not Now";
+/* Text indicating to the user some action should be addressed. E.g. Navigate to Settings/File Management to clear cache. */
+"Manage"="Manage";
 /* */
 "never"="Never";
 /* After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings. */
@@ -1426,7 +1410,7 @@
 "videoQuality"="Video quality";
 /* Property associated with something smaller than the usual or average size, number, value, or amount. For example: option to encode a video with low quality. */
 "low"="Low";
-/* Option to upload videos with the same resolution and same framerate than the original one, but converting them to MP4. */
+/* Property associated with something higher than the usual or average size, number, value, or amount. For example: video quality. */
 "high"="High";
 /* Property associated with the first one made and not a copy. For example: Get the original video, without encoding.  */
 "original"="Original";
@@ -1642,6 +1626,10 @@
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Save a copy of the images and videos taken from the MEGA app in your device’s media library.";
 /* Settings section title where you can enable the option to 'Spotlight search' */
 "Spotlight Search"="Spotlight Search";
+/* Title of the Spotlight Search section */
+"Search"="Search";
+/* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="When enabled, allow search and look up MEGA files/folders in Spotlight Search.";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="You hold the keys";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -2164,11 +2152,11 @@
 "Choose Folder"="Choose Folder";
 /* Label used near to the option selected to encode the images uploaded to a chat (Low, Medium, Original) */
 "Image quality"="Image quality";
-/* Title of Image Quality option */
+/* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
 "Automatic"="Automatic";
 /* Description of Automatic Image Quality option */
 "Send smaller size images through cellular networks and original size images through wifi"="Send smaller size images through cellular networks and original size images through Wi-Fi";
-/* Title of Image Quality option */
+/* Text for some option property indicating the user the action to perform will be optimised. For example: Image Quality reduction option for chats */
 "Optimised"="Optimised";
 /* Description of Optimised Image Quality option */
 "Send smaller size images optimised for lower data consumption"="Send smaller size images optimised for lower data consumption";
@@ -2224,3 +2212,9 @@
 "When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled."="When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled.";
 /* Default title of an empty chat. */
 "Chat created on %s1"="Chat created on %s1";
+/* Title shown when there are no shared files */
+"No Shared Files"="No Shared Files";
+/* Error message shown when opening a folder link which doesn’t exist */
+"Folder link unavailable"="Folder link unavailable";
+/* Error message shown when opening a file link which doesn’t exist */
+"File link unavailable"="File link unavailable";

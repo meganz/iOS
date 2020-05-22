@@ -2,8 +2,8 @@
 @interface MEGANode (MNZCategory) <UITextFieldDelegate>
 
 - (void)navigateToParentAndPresent;
-- (void)mnz_openNodeInNavigationController:(UINavigationController *)navigationController folderLink:(BOOL)isFolderLink;
-- (UIViewController *)mnz_viewControllerForNodeInFolderLink:(BOOL)isFolderLink;
+- (void)mnz_openNodeInNavigationController:(UINavigationController *)navigationController folderLink:(BOOL)isFolderLink fileLink:(NSString *)fileLink;
+- (UIViewController *)mnz_viewControllerForNodeInFolderLink:(BOOL)isFolderLink fileLink:(NSString *)fileLink;
 
 - (void)mnz_generateThumbnailForVideoAtPath:(NSURL *)path;
 

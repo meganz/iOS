@@ -249,7 +249,7 @@ extension DocScannerSaveSettingTableViewController: BrowserViewControllerDelegat
 }
 
 extension DocScannerSaveSettingTableViewController: SendToViewControllerDelegate {
-    func send(toChats chats: [MEGAChatListItem]!, andUsers users: [MEGAUser]!) {
+    func send(_ viewController: SendToViewController!, toChats chats: [MEGAChatListItem]!, andUsers users: [MEGAUser]!) {
         MEGASdkManager.sharedMEGASdk()?.getMyChatFilesFolder(completion: { (node) in
             if #available(iOS 11.0, *) {
                 let fileType = DocScanExportFileType(rawValue: UserDefaults.standard.string(forKey: keys.docScanExportFileTypeKey)!)

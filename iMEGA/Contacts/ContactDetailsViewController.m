@@ -18,7 +18,6 @@
 
 #import "BrowserViewController.h"
 #import "CloudDriveViewController.h"
-#import "CustomActionViewController.h"
 #import "ContactTableViewCell.h"
 #import "CallViewController.h"
 #import "GroupCallViewController.h"
@@ -40,7 +39,8 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
     ContactDetailsSectionArchiveChat,
     ContactDetailsSectionAddParticipantToContact,
     ContactDetailsSectionRemoveParticipant,
-    ContactDetailsSectionSetPermission
+    ContactDetailsSectionSetPermission,
+    ContactDetailsSectionSharedItems,
 };
 
 typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
@@ -48,7 +48,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     ContactDetailsRowVerifyCredentials
 };
 
-@interface ContactDetailsViewController () <CustomActionViewControllerDelegate, MEGAChatDelegate, MEGAChatCallDelegate, MEGAGlobalDelegate, MEGARequestDelegate>
+@interface ContactDetailsViewController () <NodeActionViewControllerDelegate, MEGAChatDelegate, MEGAChatCallDelegate, MEGAGlobalDelegate, MEGARequestDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *verifiedImageView;
@@ -208,6 +208,16 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 }
 
 #pragma mark - Private - Table view cells
+
+- (ContactTableViewCell *)cellForSharedItemsWithIndexPath:(NSIndexPath *)indexPath {
+    ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
+    cell.avatarImageView.image = [UIImage imageNamed:@"sharedFiles"];
+    cell.nameLabel.text = AMLocalizedString(@"sharedItems", @"Title of Shared Items section");
+    cell.nameLabel.textColor = UIColor.mnz_black333333;
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+
+    return cell;
+}
 
 - (ContactTableViewCell *)cellForNicknameWithIndexPath:(NSIndexPath *)indexPath {
     ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
@@ -436,24 +446,14 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     }
 }
 - (void)showRemoveContactAlert {
-    
-    NSString *message = [NSString stringWithFormat:AMLocalizedString(@"removeUserMessage", nil), self.user.mnz_displayName];
-    
-    UIAlertController *removeContactAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"removeUserTitle", @"Alert title shown when you want to remove one or more contacts") message:message preferredStyle:UIAlertControllerStyleAlert];
-    
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil];
-    
-    UIAlertAction *okAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-        MEGARemoveContactRequestDelegate *removeContactRequestDelegate = [MEGARemoveContactRequestDelegate.alloc initWithCompletion:^{                    
+    UIAlertController *removeContactAlertController = [Helper removeUserContactWithConfirmAction:^{
+        MEGARemoveContactRequestDelegate *removeContactRequestDelegate = [MEGARemoveContactRequestDelegate.alloc initWithCompletion:^{
             //TODO: Close chat room because the contact was removed
             
             [self.navigationController popViewControllerAnimated:YES];
         }];
         [[MEGASdkManager sharedMEGASdk] removeContactUser:self.user delegate:removeContactRequestDelegate];
     }];
-    
-    [removeContactAlertController addAction:cancelAction];
-    [removeContactAlertController addAction:okAction];
     
     [self presentViewController:removeContactAlertController animated:YES completion:nil];
 }
@@ -544,11 +544,6 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 }
 
 - (void)openCallViewWithVideo:(BOOL)videoCall active:(BOOL)active {
-    if ([[UIDevice currentDevice] orientation] != UIInterfaceOrientationPortrait) {
-        NSNumber *value = [NSNumber numberWithInt:UIInterfaceOrientationPortrait];
-        [[UIDevice currentDevice] setValue:value forKey:@"orientation"];
-    }
-
     CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
     callVC.chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomByUser:self.userHandle];
     callVC.videoCall = videoCall;
@@ -649,6 +644,10 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     }
 }
 
+- (void)showSharedItemsNameViewContoller {
+    [self.navigationController pushViewController:[ChatSharedItemsViewController instantiateWith:self.chatRoom] animated:YES];
+}
+
 - (void)showNickNameViewContoller {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Contacts" bundle:nil];
     UINavigationController *navigationController = [storyboard instantiateViewControllerWithIdentifier:@"AddNickNameNavigationControllerID"];
@@ -715,7 +714,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
         return [self addSharedFoldersSectionIfNeededToSections:@[@(ContactDetailsSectionClearChatHistory), @(ContactDetailsSectionArchiveChat)]];
     }
     
-    return [self addSharedFoldersSectionIfNeededToSections:@[@(ContactDetailsSectionNicknameVerifyCredentials), @(ContactDetailsSectionClearChatHistory), @(ContactDetailsSectionArchiveChat)]];
+    return [self addSharedFoldersSectionIfNeededToSections:@[@(ContactDetailsSectionNicknameVerifyCredentials), @(ContactDetailsSectionSharedItems), @(ContactDetailsSectionClearChatHistory), @(ContactDetailsSectionArchiveChat)]];
 }
 
 - (NSArray<NSNumber *> *)sectionsForContactFromGroupChat {
@@ -767,21 +766,8 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     
     MEGANode *node = [self.incomingNodeListForUser nodeAtIndex:indexPath.row];
     
-    CustomActionViewController *actionController = [[CustomActionViewController alloc] init];
-    actionController.node = node;
-    actionController.displayMode = DisplayModeSharedItem;
-    actionController.actionDelegate = self;
-    actionController.incomingShareChildView = YES;
-    if ([[UIDevice currentDevice] iPadDevice]) {
-        actionController.modalPresentationStyle = UIModalPresentationPopover;
-        actionController.popoverPresentationController.delegate = actionController;
-        actionController.popoverPresentationController.sourceView = sender;
-        actionController.popoverPresentationController.sourceRect = CGRectMake(0, 0, sender.frame.size.width / 2, sender.frame.size.height / 2);
-    } else {
-        actionController.modalPresentationStyle = UIModalPresentationOverFullScreen;
-    }
-    
-    [self presentViewController:actionController animated:YES completion:nil];
+    NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:node delegate:self displayMode:DisplayModeSharedItem isIncoming:YES sender:sender];
+    [self presentViewController:nodeActions animated:YES completion:nil];
 }
 
 - (IBAction)backTouchUpInside:(id)sender {
@@ -839,6 +825,10 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     ContactTableViewCell *cell;
     
     switch (self.contactDetailsSections[indexPath.section].intValue) {
+        case ContactDetailsSectionSharedItems:
+            cell = [self cellForSharedItemsWithIndexPath:indexPath];
+            break;
+            
         case ContactDetailsSectionNicknameVerifyCredentials:
             switch (self.rowsForNicknameAndVerify[indexPath.row].intValue) {
                 case ContactDetailsRowNickname:
@@ -931,6 +921,10 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     switch (self.contactDetailsSections[indexPath.section].intValue) {
+        case ContactDetailsSectionSharedItems:
+            [self showSharedItemsNameViewContoller];
+            break;
+            
         case ContactDetailsSectionNicknameVerifyCredentials:
             switch (self.rowsForNicknameAndVerify[indexPath.row].intValue) {
                 case ContactDetailsRowNickname:
@@ -986,9 +980,9 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
-#pragma mark - CustomActionViewControllerDelegate
+#pragma mark - NodeActionViewControllerDelegate
 
-- (void)performAction:(MegaNodeActionType)action inNode:(MEGANode *)node fromSender:(id)sender {
+- (void)nodeAction:(NodeActionViewController *)nodeAction didSelect:(MegaNodeActionType)action for:(MEGANode *)node from:(id)sender {
     switch (action) {
         case MegaNodeActionTypeDownload:
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
