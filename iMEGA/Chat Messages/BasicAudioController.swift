@@ -100,7 +100,7 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
     ///   - audioCell: The `AudioMessageCell` that needs to be updated while audio is playing.
     open func playSound(for message: MessageType, in audioCell: AudioMessageCell) {
         
-        guard let chatMessage = message as? ChatMessage else {
+        guard let chatMessage = message as? ChatMessage, let audioCell = audioCell as? ChatVoiceClipCollectionViewCell else {
             return
         }
         
@@ -116,6 +116,7 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
                     print("Failed to create audio player for URL: \(nodePath)")
                     return
             }
+            audioCell.waveView.startAnimating()
             audioPlayer = player
             audioPlayer?.prepareToPlay()
             audioPlayer?.delegate = self
@@ -135,12 +136,16 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
     ///   - message: The `MessageType` that contain the audio item to be pause.
     ///   - audioCell: The `AudioMessageCell` that needs to be updated by the pause action.
     open func pauseSound(for message: MessageType, in audioCell: AudioMessageCell) {
+        guard let audioCell = audioCell as? ChatVoiceClipCollectionViewCell else {
+            return
+        }
         audioPlayer?.pause()
         state = .pause
         audioCell.playButton.isSelected = false // show play button on audio cell
         progressTimer?.invalidate()
         if let cell = playingCell {
             cell.delegate?.didPauseAudio(in: cell)
+            audioCell.waveView.stopAnimating()
         }
     }
 
@@ -150,6 +155,11 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
         player.stop()
         state = .stopped
         if let cell = playingCell {
+            guard let audioCell = cell as? ChatVoiceClipCollectionViewCell else {
+                return
+            }
+            audioCell.waveView.stopAnimating()
+            
             cell.progressView.progress = 0.0
             cell.playButton.isSelected = false
             guard let displayDelegate = collectionView.messagesDisplayDelegate else {
