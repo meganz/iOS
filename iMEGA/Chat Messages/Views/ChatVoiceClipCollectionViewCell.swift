@@ -1,26 +1,26 @@
 import MessageKit
 
 class ChatVoiceClipCollectionViewCell: AudioMessageCell {
-    open var playIconView: UIImageView = {
-        let playIconView = UIImageView(image: UIImage(named: "playButton"))
-        playIconView.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
-        return playIconView
-    }()
     
-    open var waveView: UIImageView = {
-        let waveView = UIImageView(image: UIImage(named: "voiceWave"))
+    open var waveView: YYAnimatedImageView = {
+        let waveView = YYAnimatedImageView(image: YYImage(named: "pia"))
         waveView.frame = CGRect(x: 0, y: 0, width: 55, height: 33)
         return waveView
     }()
     
     // MARK: - Methods
-    
+    override func setupConstraints() {
+        super.setupConstraints()
+        waveView.autoPinEdge(.leading, to: .trailing, of: playButton, withOffset: 5)
+        waveView.autoPinEdge(.trailing, to: .leading, of: durationLabel, withOffset: 5)
+        waveView.autoAlignAxis(toSuperviewAxis: .horizontal)
+    }
     
     open override func setupSubviews() {
+        messageContainerView.addSubview(waveView)
         super.setupSubviews()
-    
         playButton.setImage(UIImage(named: "playButton"), for: .normal)
-        setupConstraints()
+        progressView.isHidden = true
     }
     
     override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
