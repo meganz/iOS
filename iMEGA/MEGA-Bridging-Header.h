@@ -24,6 +24,7 @@
 #import "UIImage+MNZCategory.h"
 #import "MEGAUser+MNZCategory.h"
 #import "MEGANode+MNZCategory.h"
+#import "AVAudioSession+MNZCategory.h"
 #import "MEGAChatMessage+MNZCategory.h"
 #import "NSURL+MNZCategory.h"
 
