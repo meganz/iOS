@@ -140,6 +140,11 @@ class ChatInputBar: UIView {
         messageInputBar.dismissKeyboard()
     }
     
+    func isTextViewTheFirstResponder() -> Bool {
+        return messageInputBar.isTextViewTheFirstResponder()
+    }
+
+    
     //MARK: - Interface methods.
     
     func set(text: String) {
