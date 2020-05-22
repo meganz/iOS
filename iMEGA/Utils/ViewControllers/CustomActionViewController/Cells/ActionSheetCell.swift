@@ -2,7 +2,7 @@ import UIKit
 
 final class ActionSheetCell: UITableViewCell {
 
-    func configureCell(action: ActionSheetAction) {
+    func configureCell(action: BaseAction) {
         textLabel?.text = action.title
         detailTextLabel?.text = action.detail
         accessoryView = action.accessoryView

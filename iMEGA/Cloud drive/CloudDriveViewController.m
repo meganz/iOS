@@ -39,7 +39,6 @@
 #import "CloudDriveCollectionViewController.h"
 #import "ContactsViewController.h"
 #import "CopyrightWarningViewController.h"
-#import "CustomActionViewController.h"
 #import "CustomModalAlertViewController.h"
 #import "MEGAAssetsPickerController.h"
 #import "MEGAImagePickerController.h"
@@ -60,7 +59,7 @@
 
 static const NSTimeInterval kSearchTimeDelay = .5;
 
-@interface CloudDriveViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, CustomActionViewControllerDelegate, NodeInfoViewControllerDelegate, UITextFieldDelegate, UISearchControllerDelegate, VNDocumentCameraViewControllerDelegate> {
+@interface CloudDriveViewController () <UINavigationControllerDelegate, UIDocumentPickerDelegate, UIDocumentMenuDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, NodeActionViewControllerDelegate, NodeInfoViewControllerDelegate, UITextFieldDelegate, UISearchControllerDelegate, VNDocumentCameraViewControllerDelegate> {
     
     MEGAShareType lowShareType; //Control the actions allowed for node/nodes selected
 }
@@ -170,6 +169,9 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     if (@available(iOS 13.0, *)) {
         [self configPreviewingRegistration];
     }
+    
+    StorageFullModalAlertViewController *warningVC = StorageFullModalAlertViewController.alloc.init;
+    [warningVC showStorageAlertIfNeeded];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -381,7 +383,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
             if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
                 return [self photoBrowserForMediaNode:node];
             } else {
-                UIViewController *viewController = [node mnz_viewControllerForNodeInFolderLink:NO];
+                UIViewController *viewController = [node mnz_viewControllerForNodeInFolderLink:NO fileLink:nil];
                 return viewController;
             }
             break;
@@ -1093,8 +1095,8 @@ static const NSTimeInterval kSearchTimeDelay = .5;
         }];
         [scanDocumentAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
         [uploadAlertController addAction:scanDocumentAlertAction];
-        
     }
+    
     UIAlertAction *importFromAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"uploadFrom", @"Option given on the `Add` section to allow the user upload something from another cloud storage provider.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         UIDocumentMenuViewController *documentMenuViewController = [[UIDocumentMenuViewController alloc] initWithDocumentTypes:@[(__bridge NSString *) kUTTypeContent, (__bridge NSString *) kUTTypeData,(__bridge NSString *) kUTTypePackage, (@"com.apple.iwork.pages.pages"), (@"com.apple.iwork.numbers.numbers"), (@"com.apple.iwork.keynote.key")] inMode:UIDocumentPickerModeImport];
         documentMenuViewController.delegate = self;
@@ -1320,7 +1322,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
         [self showNode:node];
     } else {
-        [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO];
+        [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO fileLink:nil];
     }
 }
 
@@ -1334,6 +1336,53 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     }
     
     [self.navigationController pushViewController:cloudDriveVC animated:YES];
+}
+
+- (void)confirmDeleteActionFiles:(NSUInteger)numFilesAction andFolders:(NSUInteger)numFoldersAction {
+    NSString *alertTitle;
+    NSString *message;
+    if (numFilesAction == 0) {
+        if (numFoldersAction == 1) {
+            message = AMLocalizedString(@"removeFolderToRubbishBinMessage", nil);
+        } else { //folders > 1
+            message = [NSString stringWithFormat:AMLocalizedString(@"removeFoldersToRubbishBinMessage", nil), numFoldersAction];
+        }
+    } else if (numFilesAction == 1) {
+        if (numFoldersAction == 0) {
+            message = AMLocalizedString(@"removeFileToRubbishBinMessage", nil);
+        } else if (numFoldersAction == 1) {
+            message = AMLocalizedString(@"removeFileFolderToRubbishBinMessage", nil);
+        } else {
+            message = [NSString stringWithFormat:AMLocalizedString(@"removeFileFoldersToRubbishBinMessage", nil), numFoldersAction];
+        }
+    } else {
+        if (numFoldersAction == 0) {
+            message = [NSString stringWithFormat:AMLocalizedString(@"removeFilesToRubbishBinMessage", nil), numFilesAction];
+        } else if (numFoldersAction == 1) {
+            message = [NSString stringWithFormat:AMLocalizedString(@"removeFilesFolderToRubbishBinMessage", nil), numFilesAction];
+        } else {
+            message = AMLocalizedString(@"removeFilesFoldersToRubbishBinMessage", nil);
+            NSString *filesString = [NSString stringWithFormat:@"%ld", (long)numFilesAction];
+            NSString *foldersString = [NSString stringWithFormat:@"%ld", (long)numFoldersAction];
+            message = [message stringByReplacingOccurrencesOfString:@"[A]" withString:filesString];
+            message = [message stringByReplacingOccurrencesOfString:@"[B]" withString:foldersString];
+        }
+        alertTitle = AMLocalizedString(@"removeNodeFromRubbishBinTitle", @"Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account");
+    }
+    
+    UIAlertController *removeAlertController = [UIAlertController alertControllerWithTitle:alertTitle message:message preferredStyle:UIAlertControllerStyleAlert];
+    [removeAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+    
+    [removeAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to cancel something") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        MEGARemoveRequestDelegate *removeRequestDelegate = [MEGARemoveRequestDelegate.alloc initWithMode:DisplayModeRubbishBin files:numFilesAction folders:numFoldersAction completion:^{
+            [self setEditMode:NO];;
+        }];
+        for (MEGANode *node in self.selectedNodesArray) {
+            [MEGASdkManager.sharedMEGASdk removeNode:node delegate:removeRequestDelegate];
+        }
+    }]];
+    
+    [self presentViewController:removeAlertController animated:YES completion:nil];
 }
 
 #pragma mark - IBActions
@@ -1713,95 +1762,25 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     NSUInteger numFilesAction = [numberOfFilesAndFoldersArray.firstObject unsignedIntegerValue];
     NSUInteger numFoldersAction = [[numberOfFilesAndFoldersArray objectAtIndex:1] unsignedIntegerValue];
     
-    NSString *alertTitle;
-    NSString *message;
-    void (^handler)(UIAlertAction *action);
-    void (^completion)(void) = ^{
-        [self setEditMode:NO];
-    };
-    if (self.displayMode == DisplayModeCloudDrive) {
-        if (numFilesAction == 0) {
-            if (numFoldersAction == 1) {
-                message = AMLocalizedString(@"moveFolderToRubbishBinMessage", nil);
-            } else { //folders > 1
-                message = [NSString stringWithFormat:AMLocalizedString(@"moveFoldersToRubbishBinMessage", nil), numFoldersAction];
-            }
-        } else if (numFilesAction == 1) {
-            if (numFoldersAction == 0) {
-                message = AMLocalizedString(@"moveFileToRubbishBinMessage", nil);
-            } else if (numFoldersAction == 1) {
-                message = AMLocalizedString(@"moveFileFolderToRubbishBinMessage", nil);
-            } else {
-                message = [NSString stringWithFormat:AMLocalizedString(@"moveFileFoldersToRubbishBinMessage", nil), numFoldersAction];
-            }
-        } else {
-            if (numFoldersAction == 0) {
-                message = [NSString stringWithFormat:AMLocalizedString(@"moveFilesToRubbishBinMessage", nil), numFilesAction];
-            } else if (numFoldersAction == 1) {
-                message = [NSString stringWithFormat:AMLocalizedString(@"moveFilesFolderToRubbishBinMessage", nil), numFilesAction];
-            } else {
-                message = AMLocalizedString(@"moveFilesFoldersToRubbishBinMessage", nil);
-                NSString *filesString = [NSString stringWithFormat:@"%ld", (long)numFilesAction];
-                NSString *foldersString = [NSString stringWithFormat:@"%ld", (long)numFoldersAction];
-                message = [message stringByReplacingOccurrencesOfString:@"[A]" withString:filesString];
-                message = [message stringByReplacingOccurrencesOfString:@"[B]" withString:foldersString];
-            }
-        }
-        
-        alertTitle = AMLocalizedString(@"moveToTheRubbishBin", @"Title for the action that allows you to 'Move to the Rubbish Bin' files or folders");
-        
-        handler = ^(UIAlertAction *action) {
-            MEGAMoveRequestDelegate *moveRequestDelegate = [[MEGAMoveRequestDelegate alloc] initToMoveToTheRubbishBinWithFiles:numFilesAction folders:numFoldersAction completion:completion];
-            MEGANode *rubbishBinNode = [[MEGASdkManager sharedMEGASdk] rubbishNode];
+    switch (self.displayMode) {
+        case DisplayModeCloudDrive: {
+            MEGAMoveRequestDelegate *moveRequestDelegate = [MEGAMoveRequestDelegate.alloc initToMoveToTheRubbishBinWithFiles:numFilesAction folders:numFoldersAction completion:^{
+                [self setEditMode:NO];;
+            }];
             for (MEGANode *node in self.selectedNodesArray) {
-                [[MEGASdkManager sharedMEGASdk] moveNode:node newParent:rubbishBinNode delegate:moveRequestDelegate];
+                [MEGASdkManager.sharedMEGASdk moveNode:node newParent:MEGASdkManager.sharedMEGASdk.rubbishNode delegate:moveRequestDelegate];
             }
-        };
-    } else {
-        if (numFilesAction == 0) {
-            if (numFoldersAction == 1) {
-                message = AMLocalizedString(@"removeFolderToRubbishBinMessage", nil);
-            } else { //folders > 1
-                message = [NSString stringWithFormat:AMLocalizedString(@"removeFoldersToRubbishBinMessage", nil), numFoldersAction];
-            }
-        } else if (numFilesAction == 1) {
-            if (numFoldersAction == 0) {
-                message = AMLocalizedString(@"removeFileToRubbishBinMessage", nil);
-            } else if (numFoldersAction == 1) {
-                message = AMLocalizedString(@"removeFileFolderToRubbishBinMessage", nil);
-            } else {
-                message = [NSString stringWithFormat:AMLocalizedString(@"removeFileFoldersToRubbishBinMessage", nil), numFoldersAction];
-            }
-        } else {
-            if (numFoldersAction == 0) {
-                message = [NSString stringWithFormat:AMLocalizedString(@"removeFilesToRubbishBinMessage", nil), numFilesAction];
-            } else if (numFoldersAction == 1) {
-                message = [NSString stringWithFormat:AMLocalizedString(@"removeFilesFolderToRubbishBinMessage", nil), numFilesAction];
-            } else {
-                message = AMLocalizedString(@"removeFilesFoldersToRubbishBinMessage", nil);
-                NSString *filesString = [NSString stringWithFormat:@"%ld", (long)numFilesAction];
-                NSString *foldersString = [NSString stringWithFormat:@"%ld", (long)numFoldersAction];
-                message = [message stringByReplacingOccurrencesOfString:@"[A]" withString:filesString];
-                message = [message stringByReplacingOccurrencesOfString:@"[B]" withString:foldersString];
-            }
+            break;
         }
-        
-        alertTitle = AMLocalizedString(@"removeNodeFromRubbishBinTitle", @"Alert title shown on the Rubbish Bin when you want to remove some files and folders of your MEGA account");
-        
-        handler = ^(UIAlertAction *action) {
-            MEGARemoveRequestDelegate *removeRequestDelegate = [[MEGARemoveRequestDelegate alloc] initWithMode:DisplayModeRubbishBin files:numFilesAction folders:numFoldersAction completion:completion];
-            for (MEGANode *node in self.selectedNodesArray) {
-                [[MEGASdkManager sharedMEGASdk] removeNode:node delegate:removeRequestDelegate];
-            }
-        };
+            
+        case DisplayModeRubbishBin: {
+            [self confirmDeleteActionFiles:numFilesAction andFolders:numFoldersAction];
+            break;
+        }
+            
+        default:
+            break;
     }
-    
-    UIAlertController *removeAlertController = [UIAlertController alertControllerWithTitle:alertTitle message:message preferredStyle:UIAlertControllerStyleAlert];
-    [removeAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
-    
-    [removeAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to cancel something") style:UIAlertActionStyleDefault handler:handler]];
-    
-    [self presentViewController:removeAlertController animated:YES completion:nil];
 }
 
 - (IBAction)copyAction:(UIBarButtonItem *)sender {
@@ -1819,37 +1798,9 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     [self presentSortByViewController];
 }
 
-- (IBAction)infoTouchUpInside:(UIButton *)sender {
-    if (self.cdTableView.tableView.isEditing) {
-        return;
-    }
-    
-    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.cdTableView.tableView];
-    NSIndexPath *indexPath = [self.cdTableView.tableView indexPathForRowAtPoint:buttonPosition];
-    
-    MEGANode *node = self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : [self.nodes nodeAtIndex:indexPath.row];
-    
-    [self showCustomActionsForNode:node sender:sender];
-}
-
 - (void)showCustomActionsForNode:(MEGANode *)node sender:(UIButton *)sender {
-    
-    CustomActionViewController *actionController = [[CustomActionViewController alloc] init];
-    actionController.node = node;
-    actionController.displayMode = self.displayMode;
-    actionController.incomingShareChildView = self.isIncomingShareChildView;
-    actionController.actionDelegate = self;
-    actionController.actionSender = sender;
-    
-    if ([[UIDevice currentDevice] iPadDevice]) {
-        actionController.modalPresentationStyle = UIModalPresentationPopover;
-        actionController.popoverPresentationController.delegate = actionController;
-        actionController.popoverPresentationController.sourceView = sender;
-        actionController.popoverPresentationController.sourceRect = CGRectMake(0, 0, sender.frame.size.width/2, sender.frame.size.height/2);
-    } else {
-        actionController.modalPresentationStyle = UIModalPresentationOverFullScreen;
-    }
-    [self presentViewController:actionController animated:YES completion:nil];
+    NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:node delegate:self displayMode:self.displayMode isIncoming:self.isIncomingShareChildView sender:sender];
+    [self presentViewController:nodeActions animated:YES completion:nil];
 }
 
 - (IBAction)restoreTouchUpInside:(UIBarButtonItem *)sender {
@@ -2085,9 +2036,9 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     }];
 }
 
-#pragma mark - CustomActionViewControllerDelegate
+#pragma mark - NodeActionViewControllerDelegate
 
-- (void)performAction:(MegaNodeActionType)action inNode:(MEGANode *)node fromSender:(id)sender{
+- (void)nodeAction:(NodeActionViewController *)nodeAction didSelect:(MegaNodeActionType)action for:(MEGANode *)node from:(id)sender {
     switch (action) {
         case MegaNodeActionTypeDownload:
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", @"Message shown when a download starts")];

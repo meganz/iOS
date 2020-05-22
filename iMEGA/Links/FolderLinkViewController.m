@@ -12,6 +12,7 @@
 #import "MEGAPhotoBrowserViewController.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
+#import "MEGA-Swift.h"
 
 #import "NSString+MNZCategory.h"
 #import "MEGALinkManager.h"
@@ -20,15 +21,15 @@
 #import "UITextField+MNZCategory.h"
 
 #import "BrowserViewController.h"
-#import "CustomActionViewController.h"
 #import "NodeTableViewCell.h"
 #import "MainTabBarController.h"
 #import "OnboardingViewController.h"
 #import "LoginViewController.h"
 #import "LinkOption.h"
+#import "SendToViewController.h"
 #import "UnavailableLinkView.h"
 
-@interface FolderLinkViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, CustomActionViewControllerDelegate, UISearchControllerDelegate>
+@interface FolderLinkViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, NodeActionViewControllerDelegate, UISearchControllerDelegate>
 
 @property (nonatomic, getter=isLoginDone) BOOL loginDone;
 @property (nonatomic, getter=isFetchNodesDone) BOOL fetchNodesDone;
@@ -41,7 +42,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *importBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *downloadBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *shareBarButtonItem;
 
 @property (strong, nonatomic) UISearchController *searchController;
 
@@ -53,6 +54,8 @@
 @property (nonatomic, strong) NSMutableArray *cloudImages;
 @property (nonatomic, strong) NSMutableArray *selectedNodesArray;
 @property (nonatomic, getter=areAllNodesSelected) BOOL allNodesSelected;
+
+@property (nonatomic) SendLinkToChatsDelegate *sendLinkDelegate;
 
 @end
 
@@ -102,9 +105,6 @@
     self.moreBarButtonItem.title = nil;
     self.moreBarButtonItem.image = [UIImage imageNamed:@"moreSelected"];
     self.navigationItem.rightBarButtonItems = @[self.moreBarButtonItem];
-    
-    self.importBarButtonItem.title = AMLocalizedString(@"import", nil);
-    self.downloadBarButtonItem.title = AMLocalizedString(@"downloadButton", @"Download");
 
     self.navigationController.topViewController.toolbarItems = self.toolbar.items;
     [self.navigationController setToolbarHidden:NO animated:YES];
@@ -231,16 +231,7 @@
     [self disableUIItems];
     
     UnavailableLinkView *unavailableLinkView = [[[NSBundle mainBundle] loadNibNamed:@"UnavailableLinkView" owner:self options: nil] firstObject];
-    unavailableLinkView.imageView.image = [UIImage imageNamed:@"invalidFolderLink"];
-    unavailableLinkView.titleLabel.text = AMLocalizedString(@"linkUnavailable", nil);
-    
-    NSString *folderLinkUnavailableText = [NSString stringWithFormat:@"%@\n%@\n%@\n%@", AMLocalizedString(@"folderLinkUnavailableText1", nil), AMLocalizedString(@"folderLinkUnavailableText2", nil), AMLocalizedString(@"folderLinkUnavailableText3", nil), AMLocalizedString(@"folderLinkUnavailableText4", nil)];
-
-    unavailableLinkView.textLabel.text = folderLinkUnavailableText;
-    
-    if ([[UIDevice currentDevice] iPhone4X]) {
-        unavailableLinkView.imageViewCenterYLayoutConstraint.constant = -64;
-    }
+    [unavailableLinkView configureInvalidFolderLink];
     
     [self.tableView setBackgroundView:unavailableLinkView];
 }
@@ -258,7 +249,7 @@
     [_moreBarButtonItem setEnabled:boolValue];
     
     [_importBarButtonItem setEnabled:boolValue];
-    [_downloadBarButtonItem setEnabled:boolValue];
+    [_shareBarButtonItem setEnabled:boolValue];
 }
 
 - (void)internetConnectionChanged {
@@ -271,7 +262,7 @@
 }
 
 - (void)setToolbarButtonsEnabled:(BOOL)boolValue {
-    [self.downloadBarButtonItem setEnabled:boolValue];
+    [self.shareBarButtonItem setEnabled:boolValue];
     [self.importBarButtonItem setEnabled:boolValue];
 }
 
@@ -286,15 +277,6 @@
     if (!self.searchController.isActive) {
         self.tableView.tableHeaderView = nil;
     }
-}
-
-- (void)showLinkNotValid {
-    self.folderLinkNotValid = YES;
-    
-    [self disableUIItems];
-    
-    [SVProgressHUD dismiss];
-    [self.tableView reloadData];
 }
 
 - (void)showDecryptionAlert {
@@ -362,7 +344,7 @@
                     if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
                         [self presentMediaNode:node];
                     } else {
-                        [node mnz_openNodeInNavigationController:self.navigationController folderLink:YES];
+                        [node mnz_openNodeInNavigationController:self.navigationController folderLink:YES fileLink:nil];
                     }
                 }
             }
@@ -422,20 +404,8 @@
         return;
     }
     
-    CustomActionViewController *actionController = [[CustomActionViewController alloc] init];
-    actionController.node = self.parentNode;
-    actionController.displayMode = DisplayModeFolderLink;
-    actionController.actionDelegate = self;
-    actionController.actionSender = sender;
-    
-    if ([[UIDevice currentDevice] iPadDevice]) {
-        actionController.modalPresentationStyle = UIModalPresentationPopover;
-        actionController.popoverPresentationController.delegate = actionController;
-        actionController.popoverPresentationController.barButtonItem = sender;
-    } else {
-        actionController.modalPresentationStyle = UIModalPresentationOverFullScreen;
-    }
-    [self presentViewController:actionController animated:YES completion:nil];
+    NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:self.parentNode delegate:self displayMode:DisplayModeFolderLink isIncoming:NO sender:sender];
+    [self presentViewController:nodeActions animated:YES completion:nil];
 }
 
 - (IBAction)editAction:(UIBarButtonItem *)sender {
@@ -505,64 +475,15 @@
     
     MEGANode *node = self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : [self.nodeList nodeAtIndex:indexPath.row];
         
-    CustomActionViewController *actionController = [[CustomActionViewController alloc] init];
-    actionController.node = node;
-    actionController.displayMode = DisplayModeFolderLink;
-    actionController.actionDelegate = self;
-    actionController.actionSender = sender;
-    
-    if ([[UIDevice currentDevice] iPadDevice]) {
-        actionController.modalPresentationStyle = UIModalPresentationPopover;
-        actionController.popoverPresentationController.delegate = actionController;
-        actionController.popoverPresentationController.sourceView = sender;
-        actionController.popoverPresentationController.sourceRect = CGRectMake(0, 0, sender.frame.size.width/2, sender.frame.size.height/2);
-    } else {
-        actionController.modalPresentationStyle = UIModalPresentationOverFullScreen;
-    }
-    [self presentViewController:actionController animated:YES completion:nil];
+    NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:node delegate:self displayMode:DisplayModeNodeInsideFolderLink isIncoming:NO sender:sender];
+    [self presentViewController:nodeActions animated:YES completion:nil];
 }
 
-- (IBAction)downloadAction:(UIBarButtonItem *)sender {
-    //TODO: If documents have been opened for preview and the user download the folder link after that, move the dowloaded documents to Offline and avoid re-downloading.
-    if (self.selectedNodesArray.count != 0) {
-        for (MEGANode *node in _selectedNodesArray) {
-            if (![Helper isFreeSpaceEnoughToDownloadNode:node isFolderLink:YES]) {
-                [self setEditing:NO animated:YES];
-                return;
-            }
-        }
-    } else {
-        if (![Helper isFreeSpaceEnoughToDownloadNode:_parentNode isFolderLink:YES]) {
-            return;
-        }
-    }
-    
-    if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
-        if (self.selectedNodesArray.count) {
-            for (MEGANode *node in self.selectedNodesArray) {
-                [Helper downloadNode:node folderPath:Helper.relativePathForOffline isFolderLink:YES shouldOverwrite:NO];
-            }
-        } else {
-            [Helper downloadNode:self.parentNode folderPath:Helper.relativePathForOffline isFolderLink:YES shouldOverwrite:NO];
-        }
-        
-        //FIXME: Temporal fix. This lets the SDK process some transfers before going back to the Transfers view (In case it is on the navigation stack)
-        [SVProgressHUD show];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
-            [self dismissViewControllerAnimated:YES completion:nil];
-        });
-    } else {
-        if (self.selectedNodesArray.count != 0) {
-            [MEGALinkManager.nodesFromLinkMutableArray addObjectsFromArray:self.selectedNodesArray];
-        } else {
-            [MEGALinkManager.nodesFromLinkMutableArray addObject:self.parentNode];
-        }
-        
-        MEGALinkManager.selectedOption = LinkOptionDownloadFolderOrNodes;
-        
-        [self.navigationController pushViewController:[OnboardingViewController instanciateOnboardingWithType:OnboardingTypeDefault] animated:YES];
-    }
+- (IBAction)shareAction:(UIBarButtonItem *)sender {
+    NSString *link = self.linkEncryptedString ? self.linkEncryptedString : self.publicLinkString;
+    UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[link] applicationActivities:nil];
+    activityVC.popoverPresentationController.barButtonItem = sender;
+    [self presentViewController:activityVC animated:YES completion:nil];
 }
 
 - (IBAction)importAction:(UIBarButtonItem *)sender {
@@ -605,9 +526,18 @@
         if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
             [self presentMediaNode:node];
         } else {
-            [node mnz_openNodeInNavigationController:self.navigationController folderLink:YES];
+            [node mnz_openNodeInNavigationController:self.navigationController folderLink:YES fileLink:nil];
         }
     }
+}
+
+- (void)sendFolderLinkToChat {
+    UIStoryboard *chatStoryboard = [UIStoryboard storyboardWithName:@"Chat" bundle:[NSBundle bundleForClass:SendToViewController.class]];
+    SendToViewController *sendToViewController = [chatStoryboard instantiateViewControllerWithIdentifier:@"SendToViewControllerID"];
+    sendToViewController.sendMode = SendModeFileAndFolderLink;
+    self.sendLinkDelegate = [SendLinkToChatsDelegate.alloc initWithLink:self.linkEncryptedString ? self.linkEncryptedString : self.publicLinkString navigationController:self.navigationController];
+    sendToViewController.sendToViewControllerDelegate = self.sendLinkDelegate;
+    [self.navigationController pushViewController:sendToViewController animated:YES];
 }
 
 #pragma mark - UITableViewDataSource
@@ -718,7 +648,7 @@
             if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
                 [self presentMediaNode:node];
             } else {
-                [node mnz_openNodeInNavigationController:self.navigationController folderLink:YES];
+                [node mnz_openNodeInNavigationController:self.navigationController folderLink:YES fileLink:nil];
             }
             break;
         }
@@ -946,7 +876,7 @@
                     if (self.isValidatingDecryptionKey) { //If the user have written the key
                         [self showDecryptionKeyNotValidAlert];
                     } else {
-                        [self showLinkNotValid];
+                        [self showUnavailableLinkView];
                     }
                 } else if (request.type == MEGARequestTypeFetchNodes) {
                     [self showUnavailableLinkView];
@@ -956,7 +886,7 @@
                 
             case MEGAErrorTypeApiENoent: {
                 if (request.type == MEGARequestTypeFetchNodes) {
-                    [self showLinkNotValid];
+                    [self showUnavailableLinkView];
                 }
                 break;
             }
@@ -998,7 +928,7 @@
                 if (self.isValidatingDecryptionKey) { //Link without key, after entering a bad one
                     [self showDecryptionKeyNotValidAlert];
                 } else { //Link with invalid key
-                    [self showLinkNotValid];
+                    [self showUnavailableLinkView];
                 }
                 return;
             }
@@ -1047,21 +977,18 @@
     }
 }
 
-#pragma mark - CustomActionViewControllerDelegate
+#pragma mark - NodeActionViewControllerDelegate
 
-- (void)performAction:(MegaNodeActionType)action inNode:(MEGANode *)node fromSender:(id)sender{
+- (void)nodeAction:(NodeActionViewController *)nodeAction didSelect:(MegaNodeActionType)action for:(MEGANode *)node from:(id)sender {
     switch (action) {
-        case MegaNodeActionTypeDownload:
-            self.selectedNodesArray = [NSMutableArray arrayWithObject:node];
-            [self downloadAction:nil];
-            break;
-            
         case MegaNodeActionTypeOpen:
             [self openNode:node];
             break;
             
         case MegaNodeActionTypeImport:
-            self.selectedNodesArray = [NSMutableArray arrayWithObject:node];
+            if (node.handle != self.parentNode.handle) {
+                self.selectedNodesArray = [NSMutableArray arrayWithObject:node];
+            }
             [self importAction:nil];
             break;
             
@@ -1071,16 +998,16 @@
             break;
         }
             
-        case MegaNodeActionTypeShare: {
-            NSString *link = self.linkEncryptedString ? self.linkEncryptedString : self.publicLinkString;
-            UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[link] applicationActivities:nil];
-            activityVC.popoverPresentationController.barButtonItem = sender;
-            [self presentViewController:activityVC animated:YES completion:nil];
+        case MegaNodeActionTypeShare:
+            [self shareAction:self.moreBarButtonItem];
             break;
-        }
             
         case MegaNodeActionTypeSaveToPhotos:
             [node mnz_saveToPhotosWithApi:[MEGASdkManager sharedMEGASdkFolder]];
+            break;
+            
+        case MegaNodeActionTypeSendToChat:
+            [self sendFolderLinkToChat];
             break;
             
         default:
