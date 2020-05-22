@@ -543,26 +543,21 @@ class ChatViewController: MessagesViewController {
 
     func isTimeLabelVisible(at indexPath: IndexPath) -> Bool {
         guard let previousIndexPath = indexPath.previousSectionIndexPath else { return true }
-
-        if isPreviousMessageSameSender(at: indexPath)
-            && isTimeLabelVisible(at: previousIndexPath)
-            && isPreviousMessageSentSameTime(at: indexPath) {
-            return false
-        }
         
-//        let latestVisibleTimeIndexPath = previousIndexPathOfVisibleTimeLabel(for: previousIndexPath)
-//        if isMessageSentAtSameMinute(between: indexPath, and: latestVisibleTimeIndexPath) {
-//            return false
-//        }
+        if let latestVisibleTimeIndexPath = previousIndexPathOfVisibleTimeLabel(for: previousIndexPath) {
+            return !isMessageSentAtSameMinute(between: indexPath, and: latestVisibleTimeIndexPath)
+        }
         
         return true
     }
     
-    func previousIndexPathOfVisibleTimeLabel(for indexPath: IndexPath) -> IndexPath {
+    func previousIndexPathOfVisibleTimeLabel(for indexPath: IndexPath) -> IndexPath? {
         guard let previousIndexPath = indexPath.previousSectionIndexPath else { return indexPath }
-
-        if isTimeLabelVisible(at: previousIndexPath) {
-            return previousIndexPath
+        
+        if !isPreviousMessageSameSender(at: indexPath) {
+            return nil
+        } else if !isMessageSentAtSameMinute(between: indexPath, and: previousIndexPath) {
+            return indexPath
         }
         
         return previousIndexPathOfVisibleTimeLabel(for: previousIndexPath)
