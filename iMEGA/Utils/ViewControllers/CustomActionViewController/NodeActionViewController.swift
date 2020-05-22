@@ -11,6 +11,13 @@ class NodeActionViewController: ActionSheetViewController {
     private var displayMode: DisplayMode
     private var isIncomingShareChildView: Bool
     private var sender: Any
+    
+    private var nodeImageView = UIImageView.newAutoLayout()
+    private var titleLabel = UILabel.newAutoLayout()
+    private var subtitleLabel = UILabel.newAutoLayout()
+    private var separatorLineView = UIView.newAutoLayout()
+
+    // MARK: - NodeActionViewController initializers
 
     @objc init(node: MEGANode, delegate: NodeActionViewControllerDelegate, displayMode: DisplayMode, isIncoming: Bool = false, sender: Any) {
         self.node = node
@@ -28,11 +35,23 @@ class NodeActionViewController: ActionSheetViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Lifecycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
         getActions()
         configureNodeHeaderView()
     }
+
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        
+        coordinator.animate(alongsideTransition: { [weak self] _ in
+            self?.layoutHeader()
+        }, completion: nil)
+    }
+    
+    // MARK: - UITableViewDelegate
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let action = actions[indexPath.row] as? NodeAction else {
@@ -43,48 +62,58 @@ class NodeActionViewController: ActionSheetViewController {
         })
     }
     
-    func configureNodeHeaderView() {
-        headerView?.frame = CGRect(x: 0, y: 0, width: 320, height: 80)
-        headerView?.backgroundColor = UIColor.mnz_grayF7F7F7()
-        let imageView = UIImageView.newAutoLayout()
-        imageView.mnz_setThumbnail(by: node)
-        headerView?.addSubview(imageView)
-        imageView.autoSetDimensions(to: CGSize(width: 40, height: 40))
-        imageView.autoPinEdge(toSuperviewEdge: .leading, withInset: 8)
-        imageView.autoAlignAxis(toSuperviewAxis: .horizontal)
+    // MARK: - Private
 
-        let title = UILabel.newAutoLayout()
-        title.text = node.name
-        title.font = .systemFont(ofSize: 15)
-        headerView?.addSubview(title)
-
-        title.autoPinEdge(.leading, to: .trailing, of: imageView, withOffset: 8)
-        title.autoPinEdge(.trailing, to: .trailing, of: headerView!, withOffset: -8)
-        title.autoAlignAxis(.horizontal, toSameAxisOf: headerView!, withOffset: -8)
-
-        let subtitle = UILabel.newAutoLayout()
-        subtitle.textColor = .systemGray
-        subtitle.font = .systemFont(ofSize: 12)
-        headerView?.addSubview(subtitle)
-
-        subtitle.autoPinEdge(.leading, to: .trailing, of: imageView, withOffset: 8)
-        subtitle.autoPinEdge(.trailing, to: .trailing, of: headerView!, withOffset: -8)
-        subtitle.autoAlignAxis(.horizontal, toSameAxisOf: headerView!, withOffset: 8)
-
-        let separatorLine = UIView.newAutoLayout()
-        separatorLine.backgroundColor = tableView.separatorColor
-        headerView?.addSubview(separatorLine)
-
-        separatorLine.autoPinEdge(toSuperviewEdge: .leading)
-        separatorLine.autoPinEdge(toSuperviewEdge: .trailing)
-        separatorLine.autoPinEdge(toSuperviewEdge: .bottom)
-        separatorLine.autoSetDimension(.height, toSize: 1/UIScreen.main.scale)
+    private func layoutHeader() {
+        headerView?.subviews.forEach { $0.removeFromSuperview() }
         
-        if node.isFile() {
-            subtitle.text = Helper.sizeAndDate(for: node, api: MEGASdkManager.sharedMEGASdk())
-        } else {
-            subtitle.text = Helper.filesAndFolders(inFolderNode: node, api: MEGASdkManager.sharedMEGASdk())
+        headerView?.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: 80)
+        
+        headerView?.addSubview(nodeImageView)
+        var leftSafeAreaInset = 0
+        if #available(iOS 11.0, *) {
+            leftSafeAreaInset = Int(UIApplication.shared.keyWindow?.safeAreaInsets.left ?? 0)
         }
+        nodeImageView.autoSetDimensions(to: CGSize(width: 40, height: 40))
+        nodeImageView.autoPinEdge(toSuperviewEdge: .leading, withInset: 8 + CGFloat(leftSafeAreaInset))
+        nodeImageView.autoAlignAxis(toSuperviewAxis: .horizontal)
+        
+        headerView?.addSubview(titleLabel)
+        titleLabel.autoPinEdge(.leading, to: .trailing, of: nodeImageView, withOffset: 8)
+        titleLabel.autoPinEdge(.trailing, to: .trailing, of: headerView!, withOffset: -8)
+        titleLabel.autoAlignAxis(.horizontal, toSameAxisOf: headerView!, withOffset: -8)
+        
+        headerView?.addSubview(subtitleLabel)
+        subtitleLabel.autoPinEdge(.leading, to: .trailing, of: nodeImageView, withOffset: 8)
+        subtitleLabel.autoPinEdge(.trailing, to: .trailing, of: headerView!, withOffset: -8)
+        subtitleLabel.autoAlignAxis(.horizontal, toSameAxisOf: headerView!, withOffset: 8)
+        
+        headerView?.addSubview(separatorLineView)
+        separatorLineView.autoPinEdge(toSuperviewEdge: .leading)
+        separatorLineView.autoPinEdge(toSuperviewEdge: .trailing)
+        separatorLineView.autoPinEdge(toSuperviewEdge: .bottom)
+        separatorLineView.autoSetDimension(.height, toSize: 1/UIScreen.main.scale)
+    }
+    
+    private func configureNodeHeaderView() {
+        layoutHeader()
+        
+        headerView?.backgroundColor = UIColor.mnz_grayF7F7F7()
+        
+        nodeImageView.mnz_setThumbnail(by: node)
+        
+        titleLabel.text = node.name
+        titleLabel.font = .systemFont(ofSize: 15)
+        
+        subtitleLabel.textColor = .systemGray
+        subtitleLabel.font = .systemFont(ofSize: 12)
+        if node.isFile() {
+            subtitleLabel.text = Helper.sizeAndDate(for: node, api: MEGASdkManager.sharedMEGASdk())
+        } else {
+            subtitleLabel.text = Helper.filesAndFolders(inFolderNode: node, api: MEGASdkManager.sharedMEGASdk())
+        }
+        
+        separatorLineView.backgroundColor = tableView.separatorColor
     }
     
     private func getActions() {
