@@ -23,6 +23,7 @@ extern NSString * const MEGANodesCurrentNotification;
 extern NSString * const MEGAStorageOverQuotaNotification;
 extern NSString * const MEGAStorageEventDidChangeNotification;
 extern NSString * const MEGAMediaInfoReadyNotification;
+extern NSString * const MEGAOpenChatRoomFromPushNotification;
 
 #pragma mark - global notification keys
 
@@ -69,6 +70,7 @@ extern NSString * const H264Format;
 #pragma mark - MEGA URLS
 
 extern NSString * const MEGADisputeURL;
+extern NSString * const RequireTransferSession;
 
 #pragma mark - Group Shared Directory
 

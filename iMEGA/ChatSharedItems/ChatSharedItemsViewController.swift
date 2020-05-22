@@ -66,23 +66,9 @@ class ChatSharedItemsViewController: UIViewController {
         guard let indexPath = tableView.indexPathForRow(at: position), let node = messagesArray[indexPath.row].nodeList.node(at: 0) else {
             return
         }
-
-        let actionsController = CustomActionViewController.init()
-        actionsController.node = node
-        actionsController.actionDelegate = self
-        actionsController.actionSender = sender
-        actionsController.displayMode = .chatSharedFiles
         
-        if UIDevice.current.iPadDevice {
-            actionsController.modalPresentationStyle = .popover
-            actionsController.popoverPresentationController?.delegate = actionsController
-            actionsController.popoverPresentationController?.sourceView = sender
-            actionsController.popoverPresentationController?.sourceRect = CGRect(origin: .zero, size: CGSize(width: sender.frame.width/2, height: sender.frame.height/2))
-        } else {
-            actionsController.modalPresentationStyle = .overFullScreen
-        }
-        
-        present(actionsController, animated: true, completion: nil)
+        let nodeActions = NodeActionViewController(node: node, delegate: self, displayMode: .chatSharedFiles, sender: sender)
+        present(nodeActions, animated: true, completion: nil)
     }
     
     @objc private func selectTapped() {
@@ -431,10 +417,10 @@ extension ChatSharedItemsViewController: DZNEmptyDataSetSource {
     }
 }
 
-// MARK: - CustomActionViewControllerDelegate
+// MARK: - NodeActionViewControllerDelegate
 
-extension ChatSharedItemsViewController: CustomActionViewControllerDelegate {
-    func perform(_ action: MegaNodeActionType, in node: MEGANode, fromSender sender: Any) {
+extension ChatSharedItemsViewController: NodeActionViewControllerDelegate {
+    func nodeAction(_ nodeAction: NodeActionViewController, didSelect action: MegaNodeActionType, for node: MEGANode, from sender: Any) {
         switch action {
         case .forward:
             guard let message = messagesArray.first(where: { $0.nodeList.node(at: 0)?.handle == node.handle } ) else {

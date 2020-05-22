@@ -28,11 +28,12 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         }
         
         if NotificationService.session == nil {
+            guard NotificationService.initExtensionProcess(with: session) else {
+                return
+            }
             NotificationService.session = session
-            NotificationService.initExtensionProcess(with: session)
         } else {
             if NotificationService.session != session {
-                NotificationService.session = session
                 restartExtensionProcess(with: session)
                 return
             }
@@ -224,6 +225,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
     }
     
     private func restartExtensionProcess(with session: String) {
+        NotificationService.session = nil
         MEGASdkManager.sharedMEGASdk()?.localLogout(with: MEGAGenericRequestDelegate {
             request, error in
             if error.type != .apiOk {
@@ -236,8 +238,10 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
                     self.postNotification(withError: "MEGAChat error in localLogout \(error)")
                     return
                 }
-                NotificationService.initExtensionProcess(with: session)
-                self.processNotification()
+                if NotificationService.initExtensionProcess(with: session) {
+                    NotificationService.session = session
+                    self.processNotification()
+                }
             })
         })
     }
@@ -273,20 +277,24 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
 
     // MARK: - Lean init, login and connect
     
-    private static func initExtensionProcess(with session: String) {
+    private static func initExtensionProcess(with session: String) -> Bool {
         NSSetUncaughtExceptionHandler { (exception) in
             MEGALogError("Exception name: \(exception.name)\nreason: \(String(describing: exception.reason))\nuser info: \(String(describing: exception.userInfo))\n")
             MEGALogError("Stack trace: \(exception.callStackSymbols)")
         }
         setupLogging()
         
-        if let sharedUserDefaults = UserDefaults.init(suiteName: MEGAGroupIdentifier) {
-            sharedUserDefaults.set(false, forKey: MEGAInvalidateNSECache)
+        copyDatabasesFromMainApp(with: session)
+
+        let success = initChat(with: session)
+        if success {
+            loginToMEGA(with: session)
+            if let sharedUserDefaults = UserDefaults.init(suiteName: MEGAGroupIdentifier) {
+                sharedUserDefaults.set(false, forKey: MEGAInvalidateNSECache)
+            }
         }
         
-        copyDatabasesFromMainApp()
-        initChat()
-        loginToMEGA(with: session)
+        return success
     }
     
     private static func setupLogging() {
@@ -318,7 +326,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
     }
 
     // As part of the lean init, a cache is required. It will not be generated from scratch.
-    private static func copyDatabasesFromMainApp() {
+    private static func copyDatabasesFromMainApp(with session: String) {
         let fileManager = FileManager.default
         
         guard let groupContainerURL = fileManager.containerURL(forSecurityApplicationGroupIdentifier: MEGAGroupIdentifier) else {
@@ -340,17 +348,6 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
             MEGALogError("Failed to locate/create \(nseCacheURL.path) directory");
         }
         
-        guard let incomingDate = try? newestMegaclientModificationDateForDirectory(at: groupSupportURL),
-            let extensionDate = try? newestMegaclientModificationDateForDirectory(at: nseCacheURL)
-            else {
-                MEGALogError("Exception in newestMegaclientModificationDateForDirectory")
-                return
-        }
-
-        if incomingDate <= extensionDate {
-            return
-        }
-        
         guard let nseCacheContent = try? fileManager.contentsOfDirectory(atPath: nseCacheURL.path),
             let groupSupportPathContent = try? fileManager.contentsOfDirectory(atPath: groupSupportURL.path)
             else {
@@ -358,9 +355,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
                 return
         }
         
-        guard let cacheSessionName = session?.suffix(Int(MEGALastCharactersFromSession)) else {
-            return
-        }
+        let cacheSessionName = session.suffix(Int(MEGALastCharactersFromSession))
         for filename in nseCacheContent {
             if filename.contains(cacheSessionName) {
                 let pathToRemove = nseCacheURL.appendingPathComponent(filename).path
@@ -381,34 +376,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         }
     }
     
-    private static func newestMegaclientModificationDateForDirectory(at url: URL) throws -> Date {
-        let fileManager = FileManager.default
-        var newestDate = Date(timeIntervalSince1970: 0)
-        var pathContent: [String]
-        do {
-            pathContent = try fileManager.contentsOfDirectory(atPath: url.path)
-        } catch {
-            throw error
-        }
-        for filename in pathContent {
-            if filename.contains("megaclient") || filename.contains("karere") {
-                do {
-                    let attributes = try fileManager.attributesOfItem(atPath: url.appendingPathComponent(filename).path)
-                    guard let date = attributes[.modificationDate] as? Date else {
-                        continue
-                    }
-                    if date > newestDate {
-                        newestDate = date
-                    }
-                } catch {
-                    throw error
-                }
-            }
-        }
-        return newestDate
-    }
-    
-    private static func initChat() {
+    private static func initChat(with session: String) -> Bool {
         if MEGASdkManager.sharedMEGAChatSdk() == nil {
             MEGASdkManager.createSharedMEGAChatSdk()
         }
@@ -416,13 +384,16 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         var chatInit = MEGASdkManager.sharedMEGAChatSdk()?.initState()
         if chatInit == .notDone {
             chatInit = MEGASdkManager.sharedMEGAChatSdk()?.initKarereLeanMode(withSid: session)
-            MEGASdkManager.sharedMEGAChatSdk()?.resetClientId()
             if chatInit == .error {
                 MEGASdkManager.sharedMEGAChatSdk()?.logout()
+                return false
             }
+            MEGASdkManager.sharedMEGAChatSdk()?.resetClientId()
         } else {
             MEGAReachabilityManager.shared()?.reconnect()
         }
+        
+        return true
     }
     
     private static func loginToMEGA(with session: String) {

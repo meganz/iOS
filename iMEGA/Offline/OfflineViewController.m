@@ -658,23 +658,13 @@ static NSString *kisDirectory = @"kisDirectory";
 }
 
 - (IBAction)deleteTapped:(UIBarButtonItem *)sender {
-    NSString *message;
-    if (self.selectedItems.count == 1) {
-        message = AMLocalizedString(@"removeItemFromOffline", nil);
-    } else {
-        message = AMLocalizedString(@"removeItemsFromOffline", nil);
-    }
-    
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"remove", nil) message:message preferredStyle:UIAlertControllerStyleAlert];
-    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    [self showRemoveAlertWithConfirmAction:^{
         for (NSURL *url in self.selectedItems) {
             [self removeOfflineNodeCell:url.path];
         }
         [self reloadUI];
         [self setEditMode:NO];
-    }]];
-    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
-    [self presentViewController:alertController animated:YES completion:nil];
+    } andCancelAction:nil];
 }
 
 - (IBAction)sortByTapped:(UIBarButtonItem *)sender {
@@ -928,6 +918,26 @@ static NSString *kisDirectory = @"kisDirectory";
         pathString = [pathString stringByAppendingPathComponent:self.folderPathFromOffline];
     }
     return pathString;
+}
+
+- (void)showRemoveAlertWithConfirmAction:(void (^)(void))confirmAction andCancelAction:(void (^ _Nullable)(void))cancelAction{
+    NSString *message;
+    if (self.selectedItems.count > 1) {
+        message = AMLocalizedString(@"removeItemsFromOffline", nil);
+    } else {
+        message = AMLocalizedString(@"removeItemFromOffline", nil);
+    }
+    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"remove", nil) message:message preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        confirmAction();
+    }]];
+    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        if (cancelAction) {
+            cancelAction();
+        }
+    }]];
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 #pragma mark - UISearchBarDelegate

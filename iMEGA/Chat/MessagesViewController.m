@@ -223,6 +223,13 @@ static NSMutableSet<NSString *> *tapForInfoSet;
                                                     }
     }];
     
+    [NSNotificationCenter.defaultCenter addObserverForName:MEGAOpenChatRoomFromPushNotification
+                                                    object:nil
+                                                     queue:NSOperationQueue.mainQueue
+                                                usingBlock:^(NSNotification * _Nonnull note) {
+                                                    [weakself customNavigationBarLabel];
+    }];
+    
     [[UNUserNotificationCenter currentNotificationCenter] removeDeliveredNotificationsWithIdentifiers:@[[MEGASdk base64HandleForUserHandle:self.chatRoom.chatId]]];
     [[UNUserNotificationCenter currentNotificationCenter] removePendingNotificationRequestsWithIdentifiers:@[[MEGASdk base64HandleForUserHandle:self.chatRoom.chatId]]];
     self.collectionView.prefetchingEnabled = NO;
@@ -624,7 +631,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         self.navigationItem.hidesBackButton = YES;
     } else {
         self.navigationItem.hidesBackButton = NO;
-        self.inputToolbar.hidden = self.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo && !self.shouldShowJoinView;
+        self.inputToolbar.hidden = MEGASdkManager.sharedMEGASdk.businessStatus == BusinessStatusExpired || (self.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo && !self.shouldShowJoinView);
         [self updateJoinView];
         
         if (self.chatRoom.isGroup) {
@@ -777,10 +784,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 }
 
 - (void)openCallViewWithVideo:(BOOL)videoCall active:(BOOL)active {
-    if (UIDevice.currentDevice.orientation != UIInterfaceOrientationPortrait) {
-        NSNumber *value = [NSNumber numberWithInt:UIInterfaceOrientationPortrait];
-        [UIDevice.currentDevice setValue:value forKey:@"orientation"];
-    }
     if (self.chatRoom.isGroup) {
         GroupCallViewController *groupCallVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupCallViewControllerID"];
         groupCallVC.callType = active ? CallTypeActive : [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId] ? CallTypeActive : CallTypeOutgoing;

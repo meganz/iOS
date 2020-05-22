@@ -107,7 +107,7 @@
         case ChatRoomsTypeDefault:
             self.chatListItemList = [[MEGASdkManager sharedMEGAChatSdk] chatListItems];
             self.archivedChatListItemList = [[MEGASdkManager sharedMEGAChatSdk] archivedChatListItems];
-            self.addBarButtonItem.enabled = [MEGAReachabilityManager isReachable];
+            self.addBarButtonItem.enabled = [MEGAReachabilityManager isReachable] && MEGASdkManager.sharedMEGASdk.businessStatus != BusinessStatusExpired;
             break;
             
         case ChatRoomsTypeArchived:
@@ -412,6 +412,7 @@
                 if (viewControllers.count != 2) {
                     [self.navigationController popToViewController:currentMessagesVC animated:YES];
                 }
+                [NSNotificationCenter.defaultCenter postNotificationName:MEGAOpenChatRoomFromPushNotification object:nil];
                 return;
             } else {
                 [[MEGASdkManager sharedMEGAChatSdk] closeChatRoom:currentMessagesVC.chatRoom.chatId delegate:currentMessagesVC];
@@ -429,7 +430,7 @@
 }
 
 - (void)internetConnectionChanged {
-    BOOL boolValue = [MEGAReachabilityManager isReachable];
+    BOOL boolValue = [MEGAReachabilityManager isReachable] && MEGASdkManager.sharedMEGASdk.businessStatus != BusinessStatusExpired;
     self.addBarButtonItem.enabled = boolValue;
     
     [self customNavigationBarLabel];

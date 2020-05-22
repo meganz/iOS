@@ -93,6 +93,10 @@
                                 waitForThumbnail = YES;
                                 NSString *thumbnailFilePath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
                                 MEGAGetThumbnailRequestDelegate *getThumbnailRequestDelegate = [[MEGAGetThumbnailRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
+                                    MEGAChatMessage *message = [MEGASdkManager.sharedMEGAChatSdk messageForChat:self.chatRoom.chatId messageId:self.message.messageId];
+                                    if (message.status == MEGAChatMessageStatusSeen) {
+                                        return;
+                                    }
                                     UNNotificationAttachment *notificationAttachment = [self notificationAttachmentFor:request.file withIdentifier:node.base64Handle];
                                     if (notificationAttachment) {
                                         content.attachments = @[notificationAttachment];
