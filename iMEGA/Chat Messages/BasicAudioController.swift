@@ -79,10 +79,18 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
         }
     }
 
-    @objc func proximityChanged(_ notification: Notification) {
-        if let device = notification.object as? UIDevice {
-            print("\(device) detected!")
-        }
+    @objc func proximityChanged() {
+       
+//            guard AVAudioSession.sharedInstance().mnz_isOutputEqual(toPortType: .builtInReceiver), AVAudioSession.sharedInstance().mnz_isOutputEqual(toPortType: .builtInSpeaker)  else {
+//                return
+//            }
+            
+            if UIDevice.current.proximityState {
+               try? AVAudioSession.sharedInstance().overrideOutputAudioPort(.none)
+            } else {
+               try? AVAudioSession.sharedInstance().overrideOutputAudioPort(.speaker)
+            }
+       
     }
 
     // MARK: - Methods
@@ -120,6 +128,8 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
         guard let chatMessage = message as? ChatMessage, let audioCell = audioCell as? ChatVoiceClipCollectionViewCell else {
             return
         }
+
+        proximityChanged()
         
         switch chatMessage.message.type {
         case .voiceClip:
@@ -245,13 +255,13 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
     open func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         stopAnyOngoingPlaying()
     }
-
+    
     open func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
         stopAnyOngoingPlaying()
     }
     
     deinit {
-         setProximitySensorEnabled(false)
+        setProximitySensorEnabled(false)
     }
-
+    
 }
