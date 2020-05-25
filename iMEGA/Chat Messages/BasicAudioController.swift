@@ -249,6 +249,7 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
         progressTimer?.invalidate()
         progressTimer = nil
         progressTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(BasicAudioController.didFireProgressTimer(_:)), userInfo: nil, repeats: true)
+        RunLoop.main.add(progressTimer!, forMode: .common)
     }
 
     // MARK: - AVAudioPlayerDelegate
