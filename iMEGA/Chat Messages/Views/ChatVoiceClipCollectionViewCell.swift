@@ -1,13 +1,24 @@
 import MessageKit
 
 class ChatVoiceClipCollectionViewCell: AudioMessageCell {
-    
+
     open var waveView: YYAnimatedImageView = {
-        let waveView = YYAnimatedImageView(image: YYImage(named: "pia"))
+
+        var imageData:[Data] = []
+        for i in 0...59 {
+            let name = "waveform_000\(i)"
+            guard let data = UIImage(named: name)?.withRenderingMode(.alwaysTemplate).pngData() else {
+                return YYAnimatedImageView()
+            }
+            imageData.append(data)
+        }
+        let image = YYFrameImage(imageDataArray: imageData, oneFrameDuration: 1/60, loopCount: 0)
+        let waveView = YYAnimatedImageView(image: image)
         waveView.frame = CGRect(x: 0, y: 0, width: 55, height: 33)
         waveView.autoPlayAnimatedImage = false
         return waveView
     }()
+    
     
     // MARK: - Methods
     override func setupConstraints() {
@@ -39,12 +50,12 @@ class ChatVoiceClipCollectionViewCell: AudioMessageCell {
         }
         
         let textColor = displayDelegate.textColor(for: message, at: indexPath, in: messagesCollectionView)
+        messageContainerView.tintColor = textColor
         durationLabel.textColor = textColor
         progressView.trackTintColor = .lightGray
         let node = megaMessage.nodeList.node(at: 0)!
         let duration = max(node.duration, 0)
         durationLabel.text = NSString.mnz_string(fromTimeInterval: TimeInterval(duration))
-        
         let nodePath = node.mnz_temporaryPath(forDownloadCreatingDirectories: true)
         if !FileManager.default.fileExists(atPath: nodePath) {
             MEGASdkManager.sharedMEGASdk()?.startDownloadTopPriority(with: node, localPath: nodePath, appData: nil, delegate: MEGAStartDownloadTransferDelegate(progress: nil, completion: { (transfer) in
