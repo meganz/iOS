@@ -28,11 +28,10 @@ class AudioRecordingInputBar: UIView {
         audioWavesView.autoPinEdgesToSuperviewEdges()
         
         do {
-            //FIXME: - handle the error cases
             let success = try audioRecorder.start()
-            print("audio start succeeded: \(success)")
+            MEGALogDebug("Audio recorder started \(success)")
         } catch {
-            print(error.localizedDescription)
+            MEGALogDebug("Audio recorder failed to start with error: \(error.localizedDescription)")
         }
         
         audioRecorder.updateHandler = {[weak self] timeString, level in
@@ -96,7 +95,6 @@ class AudioRecordingInputBar: UIView {
     @discardableResult
     func stopRecording(_ ignoreFile: Bool = false) -> String? {
         do {
-            //FIXME: - handle the error cases
             if let path = try? audioRecorder.stopRecording() {
                 let audioPlayer = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
                 if audioPlayer.duration > 1.0 && !ignoreFile {
@@ -106,12 +104,12 @@ class AudioRecordingInputBar: UIView {
                     do {
                         try FileManager.default.removeItem(atPath: path)
                     } catch {
-                        print(error.localizedDescription)
+                        MEGALogDebug("Failed to remove item at path - \(path): \(error.localizedDescription)")
                     }
                 }
             }
         } catch {
-            //
+            MEGALogDebug("Audio recorder failed to stop with error: \(error.localizedDescription)")
         }
         
         UINotificationFeedbackGenerator().notificationOccurred(.error)
