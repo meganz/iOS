@@ -12,7 +12,11 @@ class AudioRecordingInputBar: UIView {
     @IBOutlet weak var viewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var placeholderViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var audioWavesholderViewTrailingConstraint: NSLayoutConstraint!
-
+    
+    enum RecordError: Error {
+        case durationShorterThanASecond
+    }
+    
     var audioWavesView: AudioWavesView!
     var locked = false
     
@@ -93,31 +97,28 @@ class AudioRecordingInputBar: UIView {
     }
     
     @discardableResult
-    func stopRecording(_ ignoreFile: Bool = false) -> String? {
-        do {
-            if let path = try? audioRecorder.stopRecording() {
-                let audioPlayer = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
-                if audioPlayer.duration > 1.0 && !ignoreFile {
-                    UINotificationFeedbackGenerator().notificationOccurred(.success)
-                    return path
-                } else {
-                    do {
-                        try FileManager.default.removeItem(atPath: path)
-                    } catch {
-                        MEGALogDebug("Failed to remove item at path - \(path): \(error.localizedDescription)")
-                    }
-                }
+    func stopRecording(_ ignoreFile: Bool = false) throws -> String? {
+        let path = try audioRecorder.stopRecording()
+        
+        let audioPlayer = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
+        if audioPlayer.duration >= 1.0 && !ignoreFile {
+            return path
+        } else {
+            if audioPlayer.duration < 1.0 && !ignoreFile {
+                throw RecordError.durationShorterThanASecond
             }
-        } catch {
-            MEGALogDebug("Audio recorder failed to stop with error: \(error.localizedDescription)")
+            try FileManager.default.removeItem(atPath: path)
         }
         
-        UINotificationFeedbackGenerator().notificationOccurred(.error)
         return nil
     }
     
     func cancelRecording() {
-        stopRecording(true)
+        do {
+            try stopRecording(true)
+        } catch {
+            MEGALogDebug("Stop recording error \(error.localizedDescription)")
+        }
     }
     
     @IBAction func trashButtonTapped(_ button: UIButton) {

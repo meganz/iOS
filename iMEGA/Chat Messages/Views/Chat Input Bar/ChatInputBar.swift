@@ -8,6 +8,7 @@ protocol ChatInputBarDelegate: MessageInputBarDelegate {
     func recordingViewShown(withAdditionalHeight height: CGFloat)
     func recordingViewHidden()
     func canRecordAudio() -> Bool
+    func showTapAndHoldMessage()
 }
 
 class ChatInputBar: UIView {
@@ -171,7 +172,7 @@ class ChatInputBar: UIView {
         messageInputBar.autoPinEdgesToSuperviewEdges()
     }
     
-    private func voiceInputBarToTextInputSwitch() {
+    private func voiceInputBarToTextInputSwitch(completionBlock: (() -> Void)? = nil) {
         voiceToTextSwitching = true
         
         messageInputBar.alpha = 0.0
@@ -189,6 +190,10 @@ class ChatInputBar: UIView {
             self.audioRecordingInputBar.removeFromSuperview()
             self.audioRecordingInputBar = nil
             self.voiceToTextSwitching = false
+            
+            if let handler = completionBlock {
+                handler()
+            }
         }
     }
     
@@ -222,11 +227,22 @@ class ChatInputBar: UIView {
     }
     
     private func stopRecordingAndSwitchToTextInput() {
-        if let clipPath = audioRecordingInputBar.stopRecording() {
-            self.delegate?.tappedSendAudio(atPath: clipPath)
+        do {
+            if let clipPath = try audioRecordingInputBar.stopRecording() {
+                self.delegate?.tappedSendAudio(atPath: clipPath)
+                UINotificationFeedbackGenerator().notificationOccurred(.success)
+            }
+            voiceInputBarToTextInputSwitch()
+        } catch AudioRecordingInputBar.RecordError.durationShorterThanASecond {
+            UINotificationFeedbackGenerator().notificationOccurred(.error)
+            voiceInputBarToTextInputSwitch {
+                self.delegate?.showTapAndHoldMessage()
+            }
+        } catch {
+            MEGALogDebug("Recording error \(error.localizedDescription)")
+            UINotificationFeedbackGenerator().notificationOccurred(.error)
+            voiceInputBarToTextInputSwitch()
         }
-        
-        voiceInputBarToTextInputSwitch()
     }
     
     private func cancelRecordingAndSwitchToTextInput() {

@@ -4,6 +4,8 @@ import UIKit
 class AddToChatCameraCollectionCell: UICollectionViewCell {
     
     @IBOutlet weak var liveFeedView: UIView!
+    @IBOutlet weak var cameraIconImageView: UIImageView!
+
     var previewLayer: AVCaptureVideoPreviewLayer!
     var isCurrentShowingLiveFeed = false
     
@@ -15,6 +17,7 @@ class AddToChatCameraCollectionCell: UICollectionViewCell {
     
     func showLiveFeed() throws {
         if DevicePermissionsHelper.shouldAskForVideoPermissions() {
+            cameraIconImageView.image = #imageLiteral(resourceName: "cameraIcon")
             throw LiveFeedError.askForPermission
         }
         
@@ -44,6 +47,7 @@ class AddToChatCameraCollectionCell: UICollectionViewCell {
         captureSession.startRunning()
         liveFeedView.isHidden = false
         isCurrentShowingLiveFeed = true
+        cameraIconImageView.image = #imageLiteral(resourceName: "cameraIconWhite")
     }
     
     func hideLiveFeedView() {
