@@ -2,7 +2,12 @@ import UserNotifications
 
 class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationDelegate {
     private static var session: String?
-    private static var isLogging = false
+    private static var isLogging = { () -> Bool in
+        guard let logsURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: MEGAGroupIdentifier)?.appendingPathComponent(MEGAExtensionLogsFolder).appendingPathComponent("MEGAiOS.NSE.log") else {
+            return false
+        }
+        return FileManager.default.fileExists(atPath: logsURL.path)
+    }
     private static let genericBody = NSLocalizedString("You may have new messages", comment: "Content of the notification when there is unknown activity on the Chat")
 
     private var contentHandler: ((UNNotificationContent) -> Void)?
@@ -260,30 +265,31 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
     }
     
     private static func setupLogging() {
-        if let sharedUserDefaults = UserDefaults.init(suiteName: MEGAGroupIdentifier) {
-            if !isLogging && sharedUserDefaults.bool(forKey: "logging") {
-                guard let logsFolderURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: MEGAGroupIdentifier)?.appendingPathComponent(MEGAExtensionLogsFolder) else {
+        guard let sharedUserDefaults = UserDefaults.init(suiteName: MEGAGroupIdentifier) else {
+            return
+        }
+        
+        if sharedUserDefaults.bool(forKey: "logging") && !isLogging() {
+            guard let logsFolderURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: MEGAGroupIdentifier)?.appendingPathComponent(MEGAExtensionLogsFolder) else {
+                return
+            }
+            if !FileManager.default.fileExists(atPath: logsFolderURL.path) {
+                do {
+                    try FileManager.default.createDirectory(atPath: logsFolderURL.path, withIntermediateDirectories: false, attributes: nil)
+                } catch {
+                    MEGALogError("Error creating logs directory: \(logsFolderURL.path)")
                     return
                 }
-                if !FileManager.default.fileExists(atPath: logsFolderURL.path) {
-                    do {
-                        try FileManager.default.createDirectory(atPath: logsFolderURL.path, withIntermediateDirectories: false, attributes: nil)
-                    } catch {
-                        MEGALogError("Error creating logs directory: \(logsFolderURL.path)")
-                        return
-                    }
-                }
-                let logsPath = logsFolderURL.appendingPathComponent("MEGAiOS.NSE.log").path
-                MEGALogger.shared()?.startLogging(toFile: logsPath)
-#if DEBUG
-                MEGASdk.setLogLevel(.max)
-                MEGAChatSdk.setCatchException(false)
-#else
-                MEGASdk.setLogLevel(.fatal)
-#endif
-                MEGASdk.setLogToConsole(true)
-                isLogging = true
             }
+            let logsPath = logsFolderURL.appendingPathComponent("MEGAiOS.NSE.log").path
+            MEGALogger.shared()?.startLogging(toFile: logsPath)
+#if DEBUG
+            MEGASdk.setLogLevel(.max)
+            MEGAChatSdk.setCatchException(false)
+#else
+            MEGASdk.setLogLevel(.fatal)
+#endif
+            MEGASdk.setLogToConsole(true)
         }
     }
 
