@@ -2,12 +2,7 @@ import UserNotifications
 
 class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationDelegate {
     private static var session: String?
-    private static var isLogging = { () -> Bool in
-        guard let logsURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: MEGAGroupIdentifier)?.appendingPathComponent(MEGAExtensionLogsFolder).appendingPathComponent("MEGAiOS.NSE.log") else {
-            return false
-        }
-        return FileManager.default.fileExists(atPath: logsURL.path)
-    }
+    private static var setLogToConsole = false
     private static let genericBody = NSLocalizedString("You may have new messages", comment: "Content of the notification when there is unknown activity on the Chat")
 
     private var contentHandler: ((UNNotificationContent) -> Void)?
@@ -249,7 +244,6 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
             MEGALogError("Exception name: \(exception.name)\nreason: \(String(describing: exception.reason))\nuser info: \(String(describing: exception.userInfo))\n")
             MEGALogError("Stack trace: \(exception.callStackSymbols)")
         }
-        setupLogging()
         
         copyDatabasesFromMainApp(with: session)
 
@@ -265,11 +259,16 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
     }
     
     private static func setupLogging() {
+        if !setLogToConsole {
+            setLogToConsole = true
+            MEGASdk.setLogToConsole(true)
+        }
+        
         guard let sharedUserDefaults = UserDefaults.init(suiteName: MEGAGroupIdentifier) else {
             return
         }
         
-        if sharedUserDefaults.bool(forKey: "logging") && !isLogging() {
+        if sharedUserDefaults.bool(forKey: "logging") {
             guard let logsFolderURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: MEGAGroupIdentifier)?.appendingPathComponent(MEGAExtensionLogsFolder) else {
                 return
             }
@@ -289,7 +288,6 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
 #else
             MEGASdk.setLogLevel(.fatal)
 #endif
-            MEGASdk.setLogToConsole(true)
         }
     }
 
