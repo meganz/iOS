@@ -43,10 +43,11 @@ class ChatVoiceClipCollectionViewCell: AudioMessageCell {
     open override func setupSubviews() {
         messageContainerView.addSubview(waveView)
         super.setupSubviews()
-        playButton.setImage(UIImage(named: "playButton")?.withRenderingMode(.alwaysTemplate), for: .normal)
-//        playButton.setImage(UIImage(named: "PauseButton")?.withRenderingMode(.alwaysTemplate), for: .selected)
+        playButton.setImage(UIImage(named: "playVoiceClip")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        playButton.setImage(UIImage(named: "pauseVoiceClip")?.withRenderingMode(.alwaysTemplate), for: .selected)
         progressView.isHidden = true
         durationLabel.textAlignment = .left
+        durationLabel.font = UIFont.systemFont(ofSize: 15)
     }
     
     override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
