@@ -48,7 +48,6 @@
 		2FA6DA62243E919D007A8E81 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FA6DA61243E919D007A8E81 /* Accelerate.framework */; };
 		2FA6DAA5243ED07E007A8E81 /* MEGAGetPreviewRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8EC55B31F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.m */; };
 		2FA6DAA7243ED07F007A8E81 /* MEGAGetPreviewRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8EC55B31F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.m */; };
-		2FAB67DD24774B5D00878FF4 /* pia@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FAB67DA24774B5D00878FF4 /* pia@2x.png */; };
 		2FBC74C8245BE74900BE513F /* ChatViewController+EmptyDataSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBC74C7245BE74900BE513F /* ChatViewController+EmptyDataSet.swift */; };
 		410AD3C11C883AA900BF939E /* MEGAAVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 410AD3C01C883AA900BF939E /* MEGAAVViewController.m */; };
 		411504941CEB183600BF38E3 /* SaveToCameraRollActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 411504931CEB183600BF38E3 /* SaveToCameraRollActivity.m */; };
@@ -1313,7 +1312,6 @@
 		2FA6D9DA243E8CB4007A8E81 /* ChatMediaCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatMediaCollectionViewCell.swift; sourceTree = "<group>"; };
 		2FA6DA5C243E915F007A8E81 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		2FA6DA61243E919D007A8E81 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
-		2FAB67DA24774B5D00878FF4 /* pia@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pia@2x.png"; sourceTree = "<group>"; };
 		2FBC74C7245BE74900BE513F /* ChatViewController+EmptyDataSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatViewController+EmptyDataSet.swift"; sourceTree = "<group>"; };
 		410333D71B9993A000380FF3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		410333E11B99948600380FF3 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
@@ -5555,7 +5553,6 @@
 				2F147789244D2E2A0069B264 /* GeoLocationView.swift */,
 				2F147787244D2DF30069B264 /* GeoLocationView.xib */,
 				2F2801DE2449587400C160D0 /* ChatVoiceClipCollectionViewCell.swift */,
-				2FAB67DA24774B5D00878FF4 /* pia@2x.png */,
 				2F2801D22447C8FD00C160D0 /* ChatRichPreviewMediaCollectionViewCell.swift */,
 				2F2801D824481EFD00C160D0 /* RichPreviewContentView.swift */,
 				2F2801DC24481F3A00C160D0 /* RichPreviewContentView.xib */,
@@ -6056,7 +6053,6 @@
 				BF017D942448066100FB4DFD /* AudioWavesView.xib in Resources */,
 				BF9D491D2459047800D7B7DC /* AddToChatAllowAccessCollectionCell.xib in Resources */,
 				A82E5BF41F3470B5003C149C /* Spotlight_file.png in Resources */,
-				2FAB67DD24774B5D00878FF4 /* pia@2x.png in Resources */,
 				832E102B202B0A3900BDD30F /* NodeActionHeaderCollectionReusableView.xib in Resources */,
 				777615B12175D88C00A7796D /* InputView.xib in Resources */,
 				4152268B1A692ECC00EC7BB6 /* Cloud.storyboard in Resources */,

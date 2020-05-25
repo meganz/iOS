@@ -16,7 +16,6 @@ class ChatVoiceClipCollectionViewCell: AudioMessageCell {
         waveView.animationImages = imageData
         waveView.animationDuration = 1
         waveView.frame = CGRect(x: 0, y: 0, width: 55, height: 33)
-//        waveView.autoPlayAnimatedImage = false
         return waveView
     }()
     
@@ -32,7 +31,7 @@ class ChatVoiceClipCollectionViewCell: AudioMessageCell {
     open override func setupSubviews() {
         messageContainerView.addSubview(waveView)
         super.setupSubviews()
-        playButton.setImage(UIImage(named: "playButton"), for: .normal)
+        playButton.setImage(UIImage(named: "playButton")?.withRenderingMode(.alwaysTemplate), for: .normal)
         progressView.isHidden = true
     }
     
@@ -74,6 +73,6 @@ open class ChatVoiceClipCollectionViewSizeCalculator: MessageSizeCalculator {
     }
     
     open override func messageContainerSize(for message: MessageType) -> CGSize {
-        return CGSize(width: 170, height: 50)
+        return CGSize(width: 140, height: 50)
     }
 }
