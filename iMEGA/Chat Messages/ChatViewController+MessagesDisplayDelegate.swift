@@ -108,6 +108,9 @@ extension ChatViewController: MessagesDisplayDelegate {
         audioController.configureAudioCell(cell, message: message) // this is needed especily when the cell is reconfigure while is playing sound
     }
     
+    func audioProgressTextFormat(_ duration: Float, for audioCell: AudioMessageCell, in messageCollectionView: MessagesCollectionView) -> String {
+        return NSString.mnz_string(fromTimeInterval: TimeInterval(duration))
+    }
     
     // MARK: - Private methods
     
