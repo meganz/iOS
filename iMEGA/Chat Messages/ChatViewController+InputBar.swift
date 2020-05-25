@@ -617,16 +617,6 @@ extension ChatViewController: AddToChatViewControllerDelegate {
         MEGASdkManager.sharedMEGASdk()?.isGeolocationEnabled(with: genericRequestDelegate)
     }
     
-    func recordingViewShown(withAdditionalHeight height: CGFloat) {
-        // Messagekit calculates the inset intially, keyboard shown or hidden, textview text changed. In other cases we need to add the height manually.
-        additionalBottomInset = height
-    }
-    
-    func recordingViewHidden() {
-        // Need to reset the additional bottom inset set during `recordingViewShown` method.
-        additionalBottomInset = 0
-    }
-    
     func shouldDisableAudioMenu() -> Bool {
         return shouldDisableAudioVideoCall
     }
