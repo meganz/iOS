@@ -7,7 +7,7 @@ class AddToChatViewAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         case dismiss
     }
 
-    let duration = 0.4
+    let duration = 0.2
     let type: TransitionType
 
     init(type: TransitionType) {
