@@ -378,14 +378,7 @@ extension ChatViewController: ChatInputBarDelegate {
     }
     
     func tappedVoiceButton() {
-        let myViews = view.subviews.filter { $0 is TapAndHoldMessageView }
-        guard let inputAccessoryView = inputAccessoryView,
-            myViews.count == 0  else {
-            return
-        }
-        
-        let tapAndHoldMessageView = TapAndHoldMessageView.instanceFromNib
-        tapAndHoldMessageView.add(toView: view, bottom: inputAccessoryView.frame.height)
+        showTapAndHoldMessage()
     }
     
     func typing(withText text: String) {
@@ -407,6 +400,17 @@ extension ChatViewController: ChatInputBarDelegate {
             }
             MEGASdkManager.sharedMEGAChatSdk()?.sendTypingNotification(forChat: chatRoom.chatId)
         }
+    }
+    
+    func showTapAndHoldMessage() {
+        let myViews = view.subviews.filter { $0 is TapAndHoldMessageView }
+        guard let inputAccessoryView = inputAccessoryView,
+            myViews.count == 0  else {
+            return
+        }
+        
+        let tapAndHoldMessageView = TapAndHoldMessageView.instanceFromNib
+        tapAndHoldMessageView.add(toView: view, bottom: inputAccessoryView.frame.height)
     }
 }
 

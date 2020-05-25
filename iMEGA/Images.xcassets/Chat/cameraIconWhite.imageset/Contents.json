@@ -5,12 +5,12 @@
       "scale" : "1x"
     },
     {
-      "filename" : "addAttachment@2x.png",
+      "filename" : "cameraIconWhite@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "addAttachment@3x.png",
+      "filename" : "cameraIconWhite@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
