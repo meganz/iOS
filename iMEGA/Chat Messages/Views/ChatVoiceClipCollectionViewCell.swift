@@ -15,24 +15,38 @@ class ChatVoiceClipCollectionViewCell: AudioMessageCell {
         let waveView = UIImageView(image: UIImage(named: "waveform_0000"))
         waveView.animationImages = imageData
         waveView.animationDuration = 1
-        waveView.frame = CGRect(x: 0, y: 0, width: 55, height: 33)
+        waveView.frame = CGRect(x: 0, y: 0, width: 42, height: 25)
         return waveView
     }()
     
     
     // MARK: - Methods
     override func setupConstraints() {
-        super.setupConstraints()
-        waveView.autoPinEdge(.leading, to: .trailing, of: playButton, withOffset: 5)
-        waveView.autoPinEdge(.trailing, to: .leading, of: durationLabel, withOffset: 5)
+//        super.setupConstraints()
+        playButton.autoPinEdge(toSuperviewEdge: .leading, withInset: 10)
+        playButton.autoAlignAxis(toSuperviewAxis: .horizontal)
+        playButton.autoSetDimensions(to: CGSize(width: 20, height: 20))
+        
+        durationLabel.autoPinEdge(.leading, to: .trailing, of: playButton, withOffset: 10)
+        durationLabel.autoPinEdge(.trailing, to: .leading, of: waveView, withOffset: 10)
+        durationLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
+        
+        waveView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 10)
         waveView.autoAlignAxis(toSuperviewAxis: .horizontal)
+        waveView.autoSetDimensions(to: CGSize(width: 42, height: 25))
+
+//        waveView.autoPinEdge(.leading, to: .trailing, of: playButton, withOffset: 5)
+//        waveView.autoPinEdge(.trailing, to: .leading, of: durationLabel, withOffset: 5)
+//        waveView.autoAlignAxis(toSuperviewAxis: .horizontal)
     }
     
     open override func setupSubviews() {
         messageContainerView.addSubview(waveView)
         super.setupSubviews()
         playButton.setImage(UIImage(named: "playButton")?.withRenderingMode(.alwaysTemplate), for: .normal)
+//        playButton.setImage(UIImage(named: "PauseButton")?.withRenderingMode(.alwaysTemplate), for: .selected)
         progressView.isHidden = true
+        durationLabel.textAlignment = .left
     }
     
     override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
