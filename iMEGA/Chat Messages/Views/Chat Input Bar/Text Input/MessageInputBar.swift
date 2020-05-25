@@ -83,8 +83,6 @@ class MessageInputBar: UIView {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        setPlaceholderTextWhenKeyboardHidden()
-
         messageTextView.collapsedMaxHeightReachedAction = { [weak self] collapsedMaxHeightReached in
             guard let `self` = self, !self.expanded else {
                 return
@@ -298,9 +296,7 @@ class MessageInputBar: UIView {
             if let keyboardShownHandler = self.keyboardShown {
                 keyboardShownHandler()
             }
-            
-            self.setPlaceholderTextWhenKeyboardShown()
-            
+                        
             self.sendButton.alpha = 0.0
             self.sendButton.isHidden = false
 
@@ -331,8 +327,6 @@ class MessageInputBar: UIView {
             self.micButton.alpha = 0.0
             self.micButton.isHidden = false
             
-            self.setPlaceholderTextWhenKeyboardHidden()
-
             if self.messageTextView.text.count == 0 {
                 UIView.animate(withDuration: 0.4, animations: {
                     self.backgroundViewTrailingButtonConstraint.isActive = false
@@ -346,22 +340,6 @@ class MessageInputBar: UIView {
                 }
             }
         }
-    }
-    
-    private func setPlaceholderTextWhenKeyboardShown() {
-        guard messageTextView.text.isEmpty else {
-            return
-        }
-        
-        messageTextView.placeholderText = AMLocalizedString("Message...", "Chat: This is the placeholder text for text view when keyboard is shown")
-    }
-    
-    private func setPlaceholderTextWhenKeyboardHidden() {
-        guard messageTextView.text.isEmpty else {
-            return
-        }
-        
-        messageTextView.placeholderText = AMLocalizedString("Write message to", "Chat: This is the placeholder text for text view when keyboard is hidden")
     }
     
     private func updateTextUI() {
