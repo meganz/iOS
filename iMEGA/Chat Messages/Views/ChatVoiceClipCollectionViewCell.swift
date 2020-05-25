@@ -2,20 +2,21 @@ import MessageKit
 
 class ChatVoiceClipCollectionViewCell: AudioMessageCell {
 
-    open var waveView: YYAnimatedImageView = {
+    open var waveView: UIImageView = {
 
-        var imageData:[Data] = []
+        var imageData:[UIImage] = []
         for i in 0...59 {
             let name = "waveform_000\(i)"
-            guard let data = UIImage(named: name)?.withRenderingMode(.alwaysTemplate).pngData() else {
+            guard let data = UIImage(named: name)?.withRenderingMode(.alwaysTemplate) else {
                 return YYAnimatedImageView()
             }
             imageData.append(data)
         }
-        let image = YYFrameImage(imageDataArray: imageData, oneFrameDuration: 1/60, loopCount: 0)
-        let waveView = YYAnimatedImageView(image: image)
+        let waveView = UIImageView(image: UIImage(named: "waveform_0000"))
+        waveView.animationImages = imageData
+        waveView.animationDuration = 1
         waveView.frame = CGRect(x: 0, y: 0, width: 55, height: 33)
-        waveView.autoPlayAnimatedImage = false
+//        waveView.autoPlayAnimatedImage = false
         return waveView
     }()
     
@@ -53,6 +54,7 @@ class ChatVoiceClipCollectionViewCell: AudioMessageCell {
         messageContainerView.tintColor = textColor
         durationLabel.textColor = textColor
         progressView.trackTintColor = .lightGray
+        waveView.tintColor = textColor
         let node = megaMessage.nodeList.node(at: 0)!
         let duration = max(node.duration, 0)
         durationLabel.text = NSString.mnz_string(fromTimeInterval: TimeInterval(duration))

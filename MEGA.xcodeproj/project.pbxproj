@@ -25,6 +25,7 @@
 		2F2801DD24481F3A00C160D0 /* RichPreviewContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F2801DC24481F3A00C160D0 /* RichPreviewContentView.xib */; };
 		2F2801DF2449587400C160D0 /* ChatVoiceClipCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2801DE2449587400C160D0 /* ChatVoiceClipCollectionViewCell.swift */; };
 		2F3B13D42471F5E60026DE64 /* ChatViewController+Toolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3B13D32471F5E60026DE64 /* ChatViewController+Toolbar.swift */; };
+		2F496B13247B524300622DCC /* UIImageView+WMLTemplatedAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F496B12247B524300622DCC /* UIImageView+WMLTemplatedAnimation.m */; };
 		2F528CAD24739053006DE5C2 /* LoadingMessageReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F528CAB24739053006DE5C2 /* LoadingMessageReusableView.swift */; };
 		2F528CAE24739053006DE5C2 /* LoadingMessageReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F528CAC24739053006DE5C2 /* LoadingMessageReusableView.xib */; };
 		2F528CBA2474C0CE006DE5C2 /* BasicAudioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F528CB72474C0CE006DE5C2 /* BasicAudioController.swift */; };
@@ -1295,6 +1296,8 @@
 		2F2801DC24481F3A00C160D0 /* RichPreviewContentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RichPreviewContentView.xib; sourceTree = "<group>"; };
 		2F2801DE2449587400C160D0 /* ChatVoiceClipCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatVoiceClipCollectionViewCell.swift; sourceTree = "<group>"; };
 		2F3B13D32471F5E60026DE64 /* ChatViewController+Toolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatViewController+Toolbar.swift"; sourceTree = "<group>"; };
+		2F496B11247B524300622DCC /* UIImageView+WMLTemplatedAnimation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImageView+WMLTemplatedAnimation.h"; sourceTree = "<group>"; };
+		2F496B12247B524300622DCC /* UIImageView+WMLTemplatedAnimation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+WMLTemplatedAnimation.m"; sourceTree = "<group>"; };
 		2F528CAB24739053006DE5C2 /* LoadingMessageReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingMessageReusableView.swift; sourceTree = "<group>"; };
 		2F528CAC24739053006DE5C2 /* LoadingMessageReusableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingMessageReusableView.xib; sourceTree = "<group>"; };
 		2F528CB72474C0CE006DE5C2 /* BasicAudioController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicAudioController.swift; sourceTree = "<group>"; };
@@ -5469,6 +5472,8 @@
 				BFB463EA2433FD6A00FB90B9 /* MegaDataFormatter.swift */,
 				2F528CB72474C0CE006DE5C2 /* BasicAudioController.swift */,
 				BFB463E42433390600FB90B9 /* MEGAUser+Chat.swift */,
+				2F496B11247B524300622DCC /* UIImageView+WMLTemplatedAnimation.h */,
+				2F496B12247B524300622DCC /* UIImageView+WMLTemplatedAnimation.m */,
 				BFB463E82433394500FB90B9 /* ChatMessage.swift */,
 				BF33EF6F243DA31D00CD35AC /* ChatViewAttachmentCellViewModel.swift */,
 				BFB463DC2432F2E900FB90B9 /* ChatRoomDelegate.swift */,
@@ -6830,6 +6835,7 @@
 				417279421DB663FA001AC818 /* JSQMessagesBubblesSizeCalculator.m in Sources */,
 				A86B9F4F2316D6AB00F35E7A /* FLEXArgumentInputView.m in Sources */,
 				A8E10D8021A5677900ACD42F /* ShareLocationViewController.m in Sources */,
+				2F496B13247B524300622DCC /* UIImageView+WMLTemplatedAnimation.m in Sources */,
 				4172794F1DB663FA001AC818 /* JSQMessagesCollectionView.m in Sources */,
 				411C8B6B1DECBD87006A0D8C /* MEGAUser+MNZCategory.m in Sources */,
 				836AEDE52018AD1F00868FC7 /* PasswordView.m in Sources */,
