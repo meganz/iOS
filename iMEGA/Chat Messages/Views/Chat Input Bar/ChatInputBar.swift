@@ -5,8 +5,6 @@ import simd
 
 protocol ChatInputBarDelegate: MessageInputBarDelegate {
     func tappedSendAudio(atPath path: String)
-    func recordingViewShown(withAdditionalHeight height: CGFloat)
-    func recordingViewHidden()
     func canRecordAudio() -> Bool
     func showTapAndHoldMessage()
 }
@@ -81,7 +79,6 @@ class ChatInputBar: UIView {
                     self.messageInputBar.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
                     self.layoutIfNeeded()
                     self.invalidateIntrinsicContentSize()
-                    self.delegate?.recordingViewShown(withAdditionalHeight: self.voiceClipInputBar.frame.height)
                 }
             } else {
                 guard let messageInputBarTopConstraint = constraints
@@ -108,8 +105,6 @@ class ChatInputBar: UIView {
                     
                     self.layoutIfNeeded()
                     self.invalidateIntrinsicContentSize()
-                    
-                    self.delegate?.recordingViewHidden()
                 }
             }
             
