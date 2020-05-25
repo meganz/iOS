@@ -16,7 +16,6 @@ class ChatVoiceClipCollectionViewCell: AudioMessageCell {
         waveView.animationImages = imageData
         waveView.animationDuration = 1
         waveView.frame = CGRect(x: 0, y: 0, width: 55, height: 33)
-//        waveView.autoPlayAnimatedImage = false
         return waveView
     }()
     
