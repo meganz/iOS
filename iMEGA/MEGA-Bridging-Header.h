@@ -26,6 +26,7 @@
 #import "MEGANode+MNZCategory.h"
 #import "AVAudioSession+MNZCategory.h"
 #import "MEGAChatMessage+MNZCategory.h"
+#import "UIImageView+WMLTemplatedAnimation.h"
 #import "NSURL+MNZCategory.h"
 
 #import "MEGAAssetsPickerController.h"

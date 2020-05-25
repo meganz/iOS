@@ -143,7 +143,7 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
                     print("Failed to create audio player for URL: \(nodePath)")
                     return
             }
-            audioCell.waveView.startAnimating()
+            audioCell.waveView.wml_startAnimating()
             audioPlayer = player
             audioPlayer?.prepareToPlay()
             audioPlayer?.delegate = self
@@ -174,7 +174,7 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
         setProximitySensorEnabled(false)
         if let cell = playingCell {
             cell.delegate?.didPauseAudio(in: cell)
-            audioCell.waveView.stopAnimating()
+            audioCell.waveView.wml_stopAnimating()
         }
     }
 
@@ -187,7 +187,7 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
             guard let audioCell = cell as? ChatVoiceClipCollectionViewCell else {
                 return
             }
-            audioCell.waveView.stopAnimating()
+            audioCell.waveView.wml_stopAnimating()
             
             cell.progressView.progress = 0.0
             cell.playButton.isSelected = false
