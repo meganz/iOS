@@ -345,6 +345,7 @@
 		7759700C219EBCE700B31671 /* Notifications.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7759700B219EBCE700B31671 /* Notifications.storyboard */; };
 		7759700F219EC2D700B31671 /* NotificationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7759700E219EC2D700B31671 /* NotificationTableViewCell.m */; };
 		775D9C0B20EA0D49001BF1E8 /* ShareAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = 775D9C0A20EA0D49001BF1E8 /* ShareAttachment.m */; };
+		7767C39F247BB723001166A8 /* Chat.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F3083BB2428169E0058DF91 /* Chat.storyboard */; };
 		777615AF2175D87D00A7796D /* InputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 777615AE2175D87D00A7796D /* InputView.m */; };
 		777615B12175D88C00A7796D /* InputView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 777615B02175D88C00A7796D /* InputView.xib */; };
 		777AC33E21AD3CC500E987A4 /* MEGAChatAttachVoiceClipRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 777AC33D21AD3CC500E987A4 /* MEGAChatAttachVoiceClipRequestDelegate.m */; };
@@ -5777,6 +5778,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7767C39F247BB723001166A8 /* Chat.storyboard in Resources */,
 				7720C5CE206AB2EB00F995D1 /* SF-UI-Text-Light.otf in Resources */,
 				9411354F1F00FD1500D33428 /* Cloud.storyboard in Resources */,
 				943F8B3D1EF2888000AFD89F /* Launch.storyboard in Resources */,
