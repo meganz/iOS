@@ -49,7 +49,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     ContactDetailsRowVerifyCredentials
 };
 
-@interface ContactDetailsViewController () <NodeActionViewControllerDelegate, MEGAChatDelegate, MEGAChatCallDelegate, MEGAGlobalDelegate, MEGARequestDelegate, PushNotificationControlProtocol>
+@interface ContactDetailsViewController () <NodeActionViewControllerDelegate, MEGAChatDelegate, MEGAChatCallDelegate, MEGAGlobalDelegate, MEGARequestDelegate, PushNotificationControlProtocol, ContactTableViewCellDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *verifiedImageView;
@@ -218,7 +218,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     [self.chatNotificationControl configureWithCell:(id<ChatNotificationControlCellProtocol>)cell
                                              chatId:self.chatRoom.chatId];
     cell.delegate = self;
-    return cell
+    return cell;
 }
 
 - (ContactTableViewCell *)cellForSharedItemsWithIndexPath:(NSIndexPath *)indexPath {

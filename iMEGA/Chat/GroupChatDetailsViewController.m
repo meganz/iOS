@@ -347,9 +347,9 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     if (self.participantsMutableArray.count == 1 && [self.participantsMutableArray[0] isEqual:[NSNumber numberWithUnsignedLongLong:MEGASdkManager.sharedMEGAChatSdk.myUserHandle]]) {
-        return 8;
-    } else {
         return 9;
+    } else {
+        return 10;
     }
 }
 
@@ -846,7 +846,7 @@
                 break;
             }
                 
-            case 8:
+            case 9:
                 if (!MEGASdkManager.sharedMEGASdk.isLoggedIn) {
                     break;
                 }
