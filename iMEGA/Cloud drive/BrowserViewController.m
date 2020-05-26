@@ -156,7 +156,7 @@
         case BrowserActionImportFromFolderLink: {
             [self setupDefaultElements];
             
-            self.toolBarCopyBarButtonItem.title = AMLocalizedString(@"import", @"Button title that triggers the importing link action");
+            self.toolBarCopyBarButtonItem.title = AMLocalizedString(@"Import to Cloud Drive", @"Button title that triggers the importing link action");
             [self.toolBarCopyBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIMediumWithSize:17.0f]}  forState:UIControlStateNormal];
             [self setToolbarItems:@[self.toolBarNewFolderBarButtonItem, flexibleItem, self.toolBarCopyBarButtonItem]];
             break;

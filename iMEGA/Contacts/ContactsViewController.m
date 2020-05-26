@@ -433,55 +433,35 @@
 
 - (void)selectPermissionsFromButton:(UIBarButtonItem *)sourceButton {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        UIAlertController *shareFolderAlertController = [self prepareShareFolderAlertController];
-        
-        if (sourceButton) {
-            shareFolderAlertController.popoverPresentationController.barButtonItem = sourceButton;
-        } else {
-            shareFolderAlertController.popoverPresentationController.sourceRect = self.view.frame;
-            shareFolderAlertController.popoverPresentationController.sourceView = self.view;
-        }
-        
-        [self presentViewController:shareFolderAlertController animated:YES completion:nil];
+        id sender = sourceButton ? sourceButton : self.view;
+        ActionSheetViewController *shareFolderActionSheet = [self prepareShareFolderAlertControllerFromSender:sender];
+        [self presentViewController:shareFolderActionSheet animated:YES completion:nil];
     }
 }
 
-- (void)selectPermissionsFromCellRect:(CGRect)cellRect {
+- (void)selectPermissionsFromCell:(ContactTableViewCell *)cell {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        UIAlertController *shareFolderAlertController = [self prepareShareFolderAlertController];
-        
-        shareFolderAlertController.popoverPresentationController.sourceRect = cellRect;
-        shareFolderAlertController.popoverPresentationController.sourceView = self.tableView;
-        
-        [self presentViewController:shareFolderAlertController animated:YES completion:nil];
+        ActionSheetViewController *shareFolderActionSheet = [self prepareShareFolderAlertControllerFromSender:cell.permissionsImageView];
+        [self presentViewController:shareFolderActionSheet animated:YES completion:nil];
     }
 }
 
-- (UIAlertController *)prepareShareFolderAlertController {
-    UIAlertController *shareFolderAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"permissions", @"Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    [shareFolderAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
-    
-    UIAlertAction *fullAccessAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"fullAccess", @"Permissions given to the user you share your folder with") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [self shareNodesWithLevel:MEGAShareTypeAccessFull];
-    }];
-    [fullAccessAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
-    [shareFolderAlertController addAction:fullAccessAlertAction];
-    
-    UIAlertAction *readAndWritetAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"readAndWrite", @"Permissions given to the user you share your folder with") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [self shareNodesWithLevel:MEGAShareTypeAccessReadWrite];
-    }];
-    [readAndWritetAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
-    [shareFolderAlertController addAction:readAndWritetAlertAction];
-    
-    UIAlertAction *readOnlyAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [self shareNodesWithLevel:MEGAShareTypeAccessRead];
-    }];
-    [readOnlyAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
-    [shareFolderAlertController addAction:readOnlyAlertAction];
-    
-    shareFolderAlertController.modalPresentationStyle = UIModalPresentationPopover;
-    
-    return shareFolderAlertController;
+- (ActionSheetViewController *)prepareShareFolderAlertControllerFromSender:(id)sender {
+    __weak __typeof__(self) weakSelf = self;
+
+    NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"fullAccess", @"Permissions given to the user you share your folder with") detail:nil image:[UIImage imageNamed:@"fullAccessPermissions"] style:UIAlertActionStyleDefault actionHandler:^{
+        [weakSelf shareNodesWithLevel:MEGAShareTypeAccessFull];
+    }]];
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"readAndWrite", @"Permissions given to the user you share your folder with") detail:nil image:[UIImage imageNamed:@"readWritePermissions"] style:UIAlertActionStyleDefault actionHandler:^{
+        [weakSelf shareNodesWithLevel:MEGAShareTypeAccessReadWrite];
+    }]];
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with") detail:nil image:[UIImage imageNamed:@"readPermissions"] style:UIAlertActionStyleDefault actionHandler:^{
+        [weakSelf shareNodesWithLevel:MEGAShareTypeAccessRead];
+    }]];
+    ActionSheetViewController *shareFolderActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:AMLocalizedString(@"permissions", @"Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder") dismissCompletion:nil sender:sender];
+
+    return shareFolderActionSheet;
 }
 
 - (void)shareNodesWithLevel:(MEGAShareType)shareType {
@@ -1375,8 +1355,7 @@
                     }
                     
                     self.userTapped = user;
-                    CGRect cellRect = [self.tableView rectForRowAtIndexPath:indexPath];
-                    [self selectPermissionsFromCellRect:cellRect];
+                    [self selectPermissionsFromCell:[self.tableView cellForRowAtIndexPath:indexPath]];
                 }
             } else {
                 if (!tableView.isEditing) {
@@ -1549,11 +1528,15 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         switch (self.contactsMode) {
             case ContactsModeDefault: {
-                MEGARemoveContactRequestDelegate *removeContactRequestDelegate = [MEGARemoveContactRequestDelegate. alloc initWithCompletion:^{                
-                    [self setTableViewEditing:NO animated:NO];
-                }];
                 MEGAUser *user = [self userAtIndexPath:indexPath];
-                [[MEGASdkManager sharedMEGASdk] removeContactUser:user delegate:removeContactRequestDelegate];
+                UIAlertController *removeContactAlertController = [Helper removeUserContactFromSender:[tableView cellForRowAtIndexPath:indexPath] withConfirmAction:^{
+                    MEGARemoveContactRequestDelegate *removeContactRequestDelegate = [MEGARemoveContactRequestDelegate. alloc initWithCompletion:^{
+                        [self setTableViewEditing:NO animated:NO];
+                    }];
+                    [[MEGASdkManager sharedMEGASdk] removeContactUser:user delegate:removeContactRequestDelegate];
+                }];
+                
+                [self presentViewController:removeContactAlertController animated:YES completion:nil];
                 break;
             }
                 

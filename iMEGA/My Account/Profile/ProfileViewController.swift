@@ -464,7 +464,7 @@ extension ProfileViewController: UITableViewDataSource {
                     } else {
                         cell.detailLabel.text = AMLocalizedString("Payment overdue", "Business expired account Overdue payment page header.")
                     }
-                    cell.detailLabel.text = AMLocalizedString("Business", "")
+                    cell.nameLabel.text = AMLocalizedString("Business", "")
                     cell.accessoryType = .none
                 default:
                     cell.detailLabel.text = "..."

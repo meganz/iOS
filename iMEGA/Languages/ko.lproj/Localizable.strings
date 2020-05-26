@@ -436,22 +436,6 @@
 "renameNodeMessage"="새 이름을 입력하세요";
 /* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
 "moveToTheRubbishBin"="휴지통으로 이동";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 file' */
-"moveFileToRubbishBinMessage"="파일 1개를 휴지통으로 이동하시겠습니까?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin '{1+} files' */
-"moveFilesToRubbishBinMessage"="파일 %d개를 휴지통으로 이동하시겠습니까?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 folder' */
-"moveFolderToRubbishBinMessage"="폴더 1개를 휴지통으로 이동하시겠습니까?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} folders" */
-"moveFoldersToRubbishBinMessage"="폴더 %d개를 휴지통으로 이동하시겠습니까?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and 1 folder" */
-"moveFileFolderToRubbishBinMessage"="파일 1개와 폴더 1개를 휴지통으로 이동하시겠습니까?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and {1+} folders" */
-"moveFileFoldersToRubbishBinMessage"="파일 1개와 폴더 %d개를 휴지통으로 이동하시겠습니까?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files and 1 folder" */
-"moveFilesFolderToRubbishBinMessage"="파일 %d개와 폴더 1개를 휴지통으로 이동하시겠습니까?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "[A] = {1+} files and [B] = {1+} folders" */
-"moveFilesFoldersToRubbishBinMessage"="[A] 파일과 [B] 폴더를 휴지통으로 이동하시겠습니까?";
 /* Success message shown when you have moved 1 file to the rubbish bin */
 "fileMovedToRubbishBinMessage"="파일 1개가 휴지통으로 이동됨";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
@@ -477,7 +461,7 @@
 /* Success message for sharing multiple folders. */
 "sharedFolders_success"="%d개의 폴더가 성공적으로 공유되었습니다.";
 /* Button title that triggers the importing link action */
-"import"="들여오기";
+"Import to Cloud Drive"="클라우드 드라이브로 들여오기";
 /* Message shown when a file has been imported */
 "fileImported"="파일 들여옴";
 /* Message shown when some files have been imported */
@@ -522,6 +506,12 @@
 "offline"="오프라인";
 /* Title of the Contacts section */
 "contactsTitle"="연락처";
+/* Label for any ‘Requests’ button, link, text, title, etc. On iOS is used to go to the Contact request section from Contacts */
+"Requests"="요청";
+/* Label for any ‘Groups’ button, link, text, title, etc. On iOS is used to go to the chats 'Groups' section from Contacts */
+"Groups"="그룹";
+/* Label for any ‘Recently Added’ button, link, text, title, etc. On iOS is used on a section that shows the 'Recently Added' contacts */
+"Recently Added"="최근 추가됨";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
 "oneFolderShared"="폴더 1개";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
@@ -574,8 +564,6 @@
 "theUsersHaveBeenInvited"="이용자들이 초대되었으며 수락되면 당신의 연락처 목록에 나타날 것입니다.";
 /* Alert title shown when you want to remove one or more contacts */
 "removeUserTitle"="연락처 삭제";
-/* Alert confirmation message shown when you want to remove one contact from your contacts list */
-"removeUserMessage"="%@님을 연락처에서 삭제하시겠습니까?";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
 "removeMultipleUsersMessage"="이용자 %d명을 연락처 목록에서 삭제하시겠습니까?";
 /* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
@@ -600,7 +588,7 @@
 "shareFolder"="폴더 공유";
 /* Button title which, if tapped, will trigger the action of sharing the folders selected */
 "shareFolders"="폴더 공유";
-/* Button that allows you to select a given folder */
+/* Button that allows you to select something (a folder, a message...) */
 "select"="선택";
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
 "permissions"="권한";
@@ -945,8 +933,8 @@
 "unlockedBonuses"="해제된 보너스:";
 /* A header/title of a section which contains information about used/available storage space on a user's cloud drive. */
 "storageQuota"="저장공간 할당량";
-/* The header/title of a block/section which contains information about the user's used/available transfer allowance for their account. */
-"transferQuota"="전송 할당량";
+/* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
+"Transfer Quota"="전송 할당량";
 /* achievement type */
 "registrationBonus"="가입 보너스";
 /* Message shown on the achievements dialog for achieved achievements, %1 is replaced with e.g. 20 GB */
@@ -1261,8 +1249,10 @@
 "enableRichUrlPreviews"="Rich URL 미리보기 활성화";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "alwaysAllow"="항상 허용";
-/* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
+/* Text indicating to the user that some action will be postpone. E.g. used for 'rich previews' and management of disk storage. */
 "notNow"="나중에";
+/* Text indicating to the user some action should be addressed. E.g. Navigate to Settings/File Management to clear cache. */
+"Manage"="관리";
 /* */
 "never"="절대 안함";
 /* After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings. */
@@ -1420,7 +1410,7 @@
 "videoQuality"="동영상 품질";
 /* Property associated with something smaller than the usual or average size, number, value, or amount. For example: option to encode a video with low quality. */
 "low"="낮음";
-/* Option to upload videos with the same resolution and same framerate than the original one, but converting them to MP4. */
+/* Property associated with something higher than the usual or average size, number, value, or amount. For example: video quality. */
 "high"="높음";
 /* Property associated with the first one made and not a copy. For example: Get the original video, without encoding.  */
 "original"="원본";
@@ -1436,8 +1426,8 @@
 "resetQrCode"="QR 코드 초기화";
 /* Footer that explains what would happen if the user resets his/her QR code */
 "resetQrCodeFooter"="이전 QR 코드는 더 이상 유효하지 않게 됩니다";
-/* Title for view that displays the QR code of the user. String as short as possible. */
-"myCode"="내 코드";
+/* Label for any ‘My QR code’ button, link, text, title, etc. - (String as short as possible). */
+"My QR code"="내 QR 코드";
 /* Segmented control title for view that allows the user to scan QR codes. String as short as possible. */
 "scanCode"="코드 스캔";
 /* Label that encourage the user to line the QR to scan with the camera */
@@ -1636,6 +1626,10 @@
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="MEGA 앱에서 촬영한 이미지 또는 동영상의 사본을 기기의 미디어 라이브러리에 저장합니다.";
 /* Settings section title where you can enable the option to 'Spotlight search' */
 "Spotlight Search"="스포트라이트 검색";
+/* Title of the Spotlight Search section */
+"Search"="검색";
+/* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="When enabled, allow search and look up MEGA files/folders in Spotlight Search.";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="당신이 열쇠를 갖습니다";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -1994,7 +1988,7 @@
 "Business"="기업용";
 /* */
 "Administrator"="관리자";
-/* */
+/* Label to indicate the amount of transfer quota in several places. It is a ‘noun‘ and there is an screenshot with an use example - (String as short as possible). */
 "Transfer"="전송";
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
 "You cannot remove %1$s as a contact because they are part of your Business account."="%1$s님의 연락처는 당신의 비즈니스 계정의 일부이기 때문에 삭제할 수 없습니다.";
@@ -2158,11 +2152,11 @@
 "Choose Folder"="폴더 선택";
 /* Label used near to the option selected to encode the images uploaded to a chat (Low, Medium, Original) */
 "Image quality"="사진 품질";
-/* Title of Image Quality option */
+/* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
 "Automatic"="자동";
 /* Description of Automatic Image Quality option */
 "Send smaller size images through cellular networks and original size images through wifi"="셀룰러 네트워크를 통해서는 작은 크기의 이미지를 보내고 Wi-Fi를 통해서는 원본 크기의 이미지를 보냅니다";
-/* Title of Image Quality option */
+/* Text for some option property indicating the user the action to perform will be optimised. For example: Image Quality reduction option for chats */
 "Optimised"="최적화";
 /* Description of Optimised Image Quality option */
 "Send smaller size images optimised for lower data consumption"="작은 크기의 이미지는 적은 데이터 소비에 최적화되어 있습니다";
@@ -2178,12 +2172,38 @@
 "Your account has been disabled by your administrator. Please contact your business account administrator for further details."="당신의 계정은 관리자에 의해 정지되었습니다. 자세한 사항은 비즈니스 계정 관리자에게 연락하세요.";
 /* An error message which appears to sub-users of a business account when they try to login and they are deleted. */
 "Your account has been removed by your administrator. Please contact your business account administrator for further details."="당신의 계정이 관리자에 의해 삭제되었습니다. 자세한 사항은 당신의 비즈니스 계정 관리자에게 문의하세요.";
-/* Description of why the user should give permission to contacts */
-"Easily discover contacts from your address book on MEGA."="MEGA에서 당신의 주소록에 있는 지인들을 쉽게 찾으세요.";
-/* Detailed description of why the user should give permission to contacts */
-"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA는 당신의 동의 없이 이 데이터를 다른 목적으로 사용하고 당신의 지인들과 상호 작용하지 않을 것입니다.";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="그룹 이름을 입력하세요";
+/* Title of one of the Settings sections where you can customise the 'Appearance' of the app. */
+"Appearance"="외관";
+/* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
+"Sorting And View Mode"="정렬과 보기 모드";
+/* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
+"Default"="기본";
+/* Label for any ‘Day’ button, link, text, title, etc. - (String as short as possible). */
+"Day"="일";
+/* Label for any ‘Night’ button, link, text, title, etc. - (String as short as possible). */
+"Night"="밤";
+/* Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible). */
+"Minimal"="최소";
+/* Section title inside of Settings - Appearance, where you can change the app's layout. */
+"Layout"="레이아웃";
+/* Section title inside of Settings - Appearance, where you can change the app's icon. */
+"App Icon"="앱 아이콘";
+/* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
+"Configure sorting order and the default view (List or Thumbnail)."="정렬 순서와 기본 보기 설정 (리스트 또는 미리 보기)";
+/* Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for All'. */
+"Per Folder"="폴더마다";
+/* Same for all configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for all Folders'. */
+"Same for All"="모두 동일";
+/* Section title of the 'Sorting And View Mode' view inside of Settings - Appearence - Sorting And View Mode. */
+"Sorting preference"="정렬 설정";
+/* Section title of the 'Sorting And View Mode' view inside of Settings - Appearence - Sorting And View Mode. */
+"View mode preference"="보기 모드 설정";
+/* Footer text explaining what means choosing a sorting preference 'Per Folder' or 'Same for All' in Settings - Appearance - Sorting And View Mode. */
+"Configure column sorting order on a per-folder basis, or use the same order for all folders."="정렬 순서를 개별 폴더 별로 다르게 하거나, 모든 폴더에 같은 순서를 사용하도록 설정하세요.";
+/* Footer text explaining what means choosing a view mode preference 'Per Folder', 'List view' or 'Thumbnail view' in Settings - Appearance - Sorting And View Mode. */
+"Select view mode (List or Thumbnail) on a per-folder basis, or use the same view mode for all folders."="보기 모드 (목록 또는 미리 보기)를 폴더마다 설정할지, 또는 모든 폴더에 같은 보기 모드를 적용할지 선택하세요.";
 /* Warning message to alert user about logout in My Account section if has transfers in progress. */
 "When you logout, ongoing transfers will be cancelled."="로그아웃하면, 진행중인 전송은 취소됩니다.";
 /* Warning message to alert user about logout in My Account section if has offline files. */
@@ -2192,3 +2212,9 @@
 "When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled."="로그아웃하면, 기기의 오프라인 섹션의 파일들이 삭제되고 진행중인 전송이 취소됩니다.";
 /* Default title of an empty chat. */
 "Chat created on %s1"="%s1에 생성된 대화";
+/* Title shown when there are no shared files */
+"No Shared Files"="공유된 파일 없음";
+/* Error message shown when opening a folder link which doesn’t exist */
+"Folder link unavailable"="폴더 링크가 사용불가입니다";
+/* Error message shown when opening a file link which doesn’t exist */
+"File link unavailable"="파일 링크가 사용불가능합니다";
