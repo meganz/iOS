@@ -118,6 +118,11 @@ class MessageTextView: UITextView {
         becomeFirstResponder()
     }
     
+    func reset() {
+        self.text = nil
+        updatePlaceholder()
+    }
+    
     //MARK: - Private methods
     
     private func updatePlaceholder() {
