@@ -17,12 +17,14 @@ class FingerLiftupGestureRecognizer: UIGestureRecognizer {
     //MARK: - Overriden methods.
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent) {
+        super.touchesEnded(touches, with: event)
         if state == .possible {
             state = .ended
         }
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent) {
+        super.touchesCancelled(touches, with: event)
         if state == .possible {
             state = .ended
         }
