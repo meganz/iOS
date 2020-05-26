@@ -7,6 +7,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
     
     // MARK: - Properties
 
+    var transfers: [MEGATransfer] = []
     let chatRoom: MEGAChatRoom
     weak var chatViewController: ChatViewController!
     var messages: [ChatMessage] = []
@@ -24,6 +25,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
         self.chatRoom = chatRoom
         self.chatViewController = chatViewController
         super.init()
+        MEGASdkManager.sharedMEGASdk()?.add(self)
     }
     
     // MARK: - MEGAChatRoomDelegate methods
@@ -266,4 +268,9 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
             MEGALogError("loadMessagesForChat: unknown case executed")
         }
     }
+}
+
+extension ChatRoomDelegate: MEGATransferDelegate {
+    // MARK: - MEGATransferDelegate methods
+
 }
