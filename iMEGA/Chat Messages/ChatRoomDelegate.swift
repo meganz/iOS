@@ -26,6 +26,9 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
         self.chatViewController = chatViewController
         super.init()
         MEGASdkManager.sharedMEGASdk()?.add(self)
+        
+        reloadTransferData()
+
     }
     
     // MARK: - MEGAChatRoomDelegate methods
@@ -245,6 +248,28 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
         chatViewController.messagesCollectionView.reloadEmptyDataSet()
      }
     
+    func insertTransfer(_ transer: MEGATransfer) {
+        let lastSectionVisible = isLastSectionVisible()
+        messages.append(ChatMessage(transfer: transer, chatRoom: chatRoom))
+        
+        if messages.count == 1 {
+            chatViewController.messagesCollectionView.reloadData()
+            if chatViewController.keyboardVisible {
+                chatViewController.additionalBottomInset = 0
+                chatViewController.messagesCollectionView.scrollToBottom()
+            }
+            return;
+        }
+        chatViewController.messagesCollectionView.performBatchUpdates({
+            chatViewController.messagesCollectionView.insertSections([messages.count - 1])
+        }, completion: { [weak self] _ in
+            if lastSectionVisible == true {
+                self?.chatViewController.messagesCollectionView.scrollToBottom(animated: true)
+            }
+        })
+        chatViewController.messagesCollectionView.reloadEmptyDataSet()
+     }
+    
     // MARK: - Private methods
 
     private func isLastSectionVisible() -> Bool {
@@ -268,9 +293,45 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
             MEGALogError("loadMessagesForChat: unknown case executed")
         }
     }
+    
+    private func reloadTransferData() {
+        guard let allTransfers: [MEGATransfer] =         MEGASdkManager.sharedMEGASdk()?.transfers.mnz_transfersArrayFromTranferList() else {
+            return
+        }
+        transfers = allTransfers.filter { (transfer) -> Bool in
+            
+            guard transfer.appData.contains("attachToChatID")
+                || transfer.appData.contains("attachVoiceClipToChatID") else {
+                    return false
+            }
+            let appDataComponentsArray = transfer.appData.components(separatedBy: ">")
+            if appDataComponentsArray.count > 0 {
+                
+            }
+            return true
+        }
+        
+        
+    }
 }
 
 extension ChatRoomDelegate: MEGATransferDelegate {
     // MARK: - MEGATransferDelegate methods
+    func onTransferStart(_ api: MEGASdk, transfer: MEGATransfer) {
+        
+    }
+    
+    
+    func onTransferFinish(_ api: MEGASdk, transfer: MEGATransfer, error: MEGAError) {
+        reloadTransferData()
 
+    }
+    
+    func onTransferUpdate(_ api: MEGASdk, transfer: MEGATransfer) {
+        reloadTransferData()
+    }
+    
+    func onTransferTemporaryError(_ api: MEGASdk, transfer: MEGATransfer, error: MEGAError) {
+        
+    }
 }
