@@ -207,7 +207,7 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
 
     /// Resume a currently pause audio sound
     open func resumeSound() {
-        guard let player = audioPlayer, let cell = playingCell else {
+        guard let player = audioPlayer, let cell = playingCell as? ChatVoiceClipCollectionViewCell else {
             stopAnyOngoingPlaying()
             return
         }
@@ -217,6 +217,7 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
         startProgressTimer()
         cell.playButton.isSelected = true // show pause button on audio cell
         cell.delegate?.didStartAudio(in: cell)
+        cell.waveView.wml_startAnimating()
     }
 
     // MARK: - Fire Methods
