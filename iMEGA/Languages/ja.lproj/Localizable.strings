@@ -436,22 +436,6 @@
 "renameNodeMessage"="新しい名前を入力して下さい。";
 /* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
 "moveToTheRubbishBin"="ゴミ箱へ";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 file' */
-"moveFileToRubbishBinMessage"="ファイル１こ、ゴミ箱に移しますね？";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin '{1+} files' */
-"moveFilesToRubbishBinMessage"="ファイル %dこ、ゴミ箱に移しますね？";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 folder' */
-"moveFolderToRubbishBinMessage"="フォルダ１こ、ゴミ箱に移しますね？";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} folders" */
-"moveFoldersToRubbishBinMessage"="フォルダ%dこ、ゴミ箱に移しますね？";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and 1 folder" */
-"moveFileFolderToRubbishBinMessage"="ファイル１こ、フォルダ１こ、ゴミ箱に移しますね？";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and {1+} folders" */
-"moveFileFoldersToRubbishBinMessage"="ファイル１こ、フォルダ %d こ、ゴミ箱に移しますね？";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files and 1 folder" */
-"moveFilesFolderToRubbishBinMessage"="ファイル %d こ、フォルダ１こ、ゴミ箱に移しますね？";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "[A] = {1+} files and [B] = {1+} folders" */
-"moveFilesFoldersToRubbishBinMessage"="[A]ファイルと[B]フォルダをごみ箱に移動してもよろしいですか？　";
 /* Success message shown when you have moved 1 file to the rubbish bin */
 "fileMovedToRubbishBinMessage"="ゴミ箱にファイル１こ、移動しました。";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
@@ -477,7 +461,7 @@
 /* Success message for sharing multiple folders. */
 "sharedFolders_success"="%d フォルダ共有成功";
 /* Button title that triggers the importing link action */
-"import"="インポート";
+"Import to Cloud Drive"="クラウドドライブにインポート";
 /* Message shown when a file has been imported */
 "fileImported"="ファイルのインポート完了";
 /* Message shown when some files have been imported */
@@ -522,6 +506,12 @@
 "offline"="オフライン";
 /* Title of the Contacts section */
 "contactsTitle"="知り合い";
+/* Label for any ‘Requests’ button, link, text, title, etc. On iOS is used to go to the Contact request section from Contacts */
+"Requests"="リクエスト";
+/* Label for any ‘Groups’ button, link, text, title, etc. On iOS is used to go to the chats 'Groups' section from Contacts */
+"Groups"="グループ";
+/* Label for any ‘Recently Added’ button, link, text, title, etc. On iOS is used on a section that shows the 'Recently Added' contacts */
+"Recently Added"="最近追加";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
 "oneFolderShared"="フォルダ1こ";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
@@ -574,8 +564,6 @@
 "theUsersHaveBeenInvited"="複数のユーザーが招待されています。あなたが認めれば、知り合いのリストに載ります。";
 /* Alert title shown when you want to remove one or more contacts */
 "removeUserTitle"="知り合いを削除";
-/* Alert confirmation message shown when you want to remove one contact from your contacts list */
-"removeUserMessage"="あなたの知り合いリストから%@ を取り除きますね？";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
 "removeMultipleUsersMessage"="知り合いリストからユーザー%d人、取り除きますね？";
 /* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
@@ -600,7 +588,7 @@
 "shareFolder"="フォルダを共有する";
 /* Button title which, if tapped, will trigger the action of sharing the folders selected */
 "shareFolders"="フォルダを共有する";
-/* Button that allows you to select a given folder */
+/* Button that allows you to select something (a folder, a message...) */
 "select"="選択";
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
 "permissions"="許可";
@@ -945,8 +933,8 @@
 "unlockedBonuses"="解除ボーナス：";
 /* A header/title of a section which contains information about used/available storage space on a user's cloud drive. */
 "storageQuota"="ストレージ容量制限";
-/* The header/title of a block/section which contains information about the user's used/available transfer allowance for their account. */
-"transferQuota"="転送容量制限";
+/* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
+"Transfer Quota"="転送容量制限";
 /* achievement type */
 "registrationBonus"="登録実績";
 /* Message shown on the achievements dialog for achieved achievements, %1 is replaced with e.g. 20 GB */
@@ -1261,8 +1249,10 @@
 "enableRichUrlPreviews"="リッチURLプレビューを有効にする";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "alwaysAllow"="常に許可";
-/* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
+/* Text indicating to the user that some action will be postpone. E.g. used for 'rich previews' and management of disk storage. */
 "notNow"="今はやめます";
+/* Text indicating to the user some action should be addressed. E.g. Navigate to Settings/File Management to clear cache. */
+"Manage"="管理";
 /* */
 "never"="変更なし";
 /* After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings. */
@@ -1420,7 +1410,7 @@
 "videoQuality"="動画の品質";
 /* Property associated with something smaller than the usual or average size, number, value, or amount. For example: option to encode a video with low quality. */
 "low"="低い";
-/* Option to upload videos with the same resolution and same framerate than the original one, but converting them to MP4. */
+/* Property associated with something higher than the usual or average size, number, value, or amount. For example: video quality. */
 "high"="高い";
 /* Property associated with the first one made and not a copy. For example: Get the original video, without encoding.  */
 "original"="オリジナル";
@@ -1436,8 +1426,8 @@
 "resetQrCode"="QRコードをリセット";
 /* Footer that explains what would happen if the user resets his/her QR code */
 "resetQrCodeFooter"="以前のQRコードは無効になります。";
-/* Title for view that displays the QR code of the user. String as short as possible. */
-"myCode"="私のコード";
+/* Label for any ‘My QR code’ button, link, text, title, etc. - (String as short as possible). */
+"My QR code"="私のQRコード";
 /* Segmented control title for view that allows the user to scan QR codes. String as short as possible. */
 "scanCode"="コードをスキャン";
 /* Label that encourage the user to line the QR to scan with the camera */
@@ -1636,6 +1626,10 @@
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="MEGAアプリから取得した画像と動画のコピーをあなたの端末のメディアライブラリに保存します。";
 /* Settings section title where you can enable the option to 'Spotlight search' */
 "Spotlight Search"="スポットライト検索";
+/* Title of the Spotlight Search section */
+"Search"="検索";
+/* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="When enabled, allow search and look up MEGA files/folders in Spotlight Search.";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="あなたがキーを持っています";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -1994,7 +1988,7 @@
 "Business"="ビジネス";
 /* */
 "Administrator"="管理者";
-/* */
+/* Label to indicate the amount of transfer quota in several places. It is a ‘noun‘ and there is an screenshot with an use example - (String as short as possible). */
 "Transfer"="転送";
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
 "You cannot remove %1$s as a contact because they are part of your Business account."="%1$sさんはあなたのビジネスアカウントの一部であるため、連絡先から削除できません。";
@@ -2158,11 +2152,11 @@
 "Choose Folder"="フォルダを選択";
 /* Label used near to the option selected to encode the images uploaded to a chat (Low, Medium, Original) */
 "Image quality"="画質";
-/* Title of Image Quality option */
+/* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
 "Automatic"="自動";
 /* Description of Automatic Image Quality option */
 "Send smaller size images through cellular networks and original size images through wifi"="セルラーネットワークを介してより小さいサイズの画像を送信したり、Wi-Fiを介して元のサイズの画像を送信します。";
-/* Title of Image Quality option */
+/* Text for some option property indicating the user the action to perform will be optimised. For example: Image Quality reduction option for chats */
 "Optimised"="最適化";
 /* Description of Optimised Image Quality option */
 "Send smaller size images optimised for lower data consumption"="データ消費低減用に最適化された小さいサイズの画像を送信します";
@@ -2178,12 +2172,38 @@
 "Your account has been disabled by your administrator. Please contact your business account administrator for further details."="あなたのアカウントはあなたの管理者によって無効にされています。詳細については、あなたのビジネスアカウント管理者にお問い合わせください。";
 /* An error message which appears to sub-users of a business account when they try to login and they are deleted. */
 "Your account has been removed by your administrator. Please contact your business account administrator for further details."="あなたのアカウントはあなたの管理者によって削除されました。詳細については、あなたのビジネスアカウント管理者にお問い合わせください。";
-/* Description of why the user should give permission to contacts */
-"Easily discover contacts from your address book on MEGA."="MEGAのあなたのアドレス帳から連絡先を簡単に見つけます。";
-/* Detailed description of why the user should give permission to contacts */
-"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGAはこのデータを他の目的に使用せず、あなたの同意なしにあなたの連絡先とやり取りすることは絶対にございません。";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="グループ名を入力";
+/* Title of one of the Settings sections where you can customise the 'Appearance' of the app. */
+"Appearance"="外観";
+/* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
+"Sorting And View Mode"="並べ替えと表示モード";
+/* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
+"Default"="デフォルト";
+/* Label for any ‘Day’ button, link, text, title, etc. - (String as short as possible). */
+"Day"="日";
+/* Label for any ‘Night’ button, link, text, title, etc. - (String as short as possible). */
+"Night"="夜";
+/* Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible). */
+"Minimal"="最小";
+/* Section title inside of Settings - Appearance, where you can change the app's layout. */
+"Layout"="レイアウト";
+/* Section title inside of Settings - Appearance, where you can change the app's icon. */
+"App Icon"="アプリアイコン";
+/* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
+"Configure sorting order and the default view (List or Thumbnail)."="並べ替え順序とデフォルトビュー（リストまたはサムネイル）を構成します。";
+/* Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for All'. */
+"Per Folder"="フォルダごと";
+/* Same for all configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for all Folders'. */
+"Same for All"="すべてに同じ";
+/* Section title of the 'Sorting And View Mode' view inside of Settings - Appearence - Sorting And View Mode. */
+"Sorting preference"="ソート設定";
+/* Section title of the 'Sorting And View Mode' view inside of Settings - Appearence - Sorting And View Mode. */
+"View mode preference"="ビューモード設定";
+/* Footer text explaining what means choosing a sorting preference 'Per Folder' or 'Same for All' in Settings - Appearance - Sorting And View Mode. */
+"Configure column sorting order on a per-folder basis, or use the same order for all folders."="フォルダごとにコラムのソート順列を設定する、又は全てのフォルダを同じ順列にする。";
+/* Footer text explaining what means choosing a view mode preference 'Per Folder', 'List view' or 'Thumbnail view' in Settings - Appearance - Sorting And View Mode. */
+"Select view mode (List or Thumbnail) on a per-folder basis, or use the same view mode for all folders."="フォルダごとに表示モード（リストまたはサムネイル）を選択するか、すべてのフォルダに同じ表示モードを使用します。";
 /* Warning message to alert user about logout in My Account section if has transfers in progress. */
 "When you logout, ongoing transfers will be cancelled."="ログアウトすると、現在進行中の転送はキャンセルされます。";
 /* Warning message to alert user about logout in My Account section if has offline files. */
@@ -2192,3 +2212,9 @@
 "When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled."="ログアウトすると、あなたのオフラインセクションのファイルはお使いの端末から削除され、現在進行中の転送はキャンセルされます。";
 /* Default title of an empty chat. */
 "Chat created on %s1"="%s1にチャットが作成されました";
+/* Title shown when there are no shared files */
+"No Shared Files"="No Shared Files";
+/* Error message shown when opening a folder link which doesn’t exist */
+"Folder link unavailable"="利用できないリンク";
+/* Error message shown when opening a file link which doesn’t exist */
+"File link unavailable"="ファイルリンクがありません";

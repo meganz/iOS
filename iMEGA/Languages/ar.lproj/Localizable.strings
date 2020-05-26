@@ -436,22 +436,6 @@
 "renameNodeMessage"="أدخل الاسم الجديد";
 /* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
 "moveToTheRubbishBin"="نقل إلى سلة المحذوفات";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 file' */
-"moveFileToRubbishBinMessage"="هل أنت متأكد أنك تريد نقل ملف 1 إلى سلة القمامة؟";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin '{1+} files' */
-"moveFilesToRubbishBinMessage"="هل أنت متأكد أنك تريد نقل الملفات %d لسلة القمامة؟";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 folder' */
-"moveFolderToRubbishBinMessage"="هل أنت متأكد أنك تريد نقل مجلد 1 إلى سلة القمامة؟";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} folders" */
-"moveFoldersToRubbishBinMessage"="هل أنت متأكد أنك تريد نقل المجلدات %d إلى سلة القمامة؟";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and 1 folder" */
-"moveFileFolderToRubbishBinMessage"="هل أنت متأكد أنك تريد نقل ملف 1 و مجلد 1 إلى سلة القمامة؟";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and {1+} folders" */
-"moveFileFoldersToRubbishBinMessage"="هل أنت متأكد أنك تريد نقل الملف 1 و %d مجلدات إلى سلة القمامة؟";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files and 1 folder" */
-"moveFilesFolderToRubbishBinMessage"="هل أنت متأكد أنك تريد نقل الملفات %d و 1 مجلد إلى سلة القمامة؟";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "[A] = {1+} files and [B] = {1+} folders" */
-"moveFilesFoldersToRubbishBinMessage"="هل أنت متأكد أنك تريد نقل [A] الملفات و [B] المجلدات إلى سلة القمامة؟";
 /* Success message shown when you have moved 1 file to the rubbish bin */
 "fileMovedToRubbishBinMessage"="1 ملف تم نقله لسلة المحذوفات";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
@@ -477,7 +461,7 @@
 /* Success message for sharing multiple folders. */
 "sharedFolders_success"="%d مجلدات تم مشاركتها بنجاح";
 /* Button title that triggers the importing link action */
-"import"="استيراد";
+"Import to Cloud Drive"="إستيراد لوحدة التخزين السحابي";
 /* Message shown when a file has been imported */
 "fileImported"="تم استيراد الملف";
 /* Message shown when some files have been imported */
@@ -522,6 +506,12 @@
 "offline"="غير متاح";
 /* Title of the Contacts section */
 "contactsTitle"="جهات الاتصال";
+/* Label for any ‘Requests’ button, link, text, title, etc. On iOS is used to go to the Contact request section from Contacts */
+"Requests"="الطلبات";
+/* Label for any ‘Groups’ button, link, text, title, etc. On iOS is used to go to the chats 'Groups' section from Contacts */
+"Groups"="مجموعات";
+/* Label for any ‘Recently Added’ button, link, text, title, etc. On iOS is used on a section that shows the 'Recently Added' contacts */
+"Recently Added"="أضيف مؤخراً";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
 "oneFolderShared"="مجلد واحد";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
@@ -574,8 +564,6 @@
 "theUsersHaveBeenInvited"="لقد تمت دعوة المستخدمين وسوف تجدهم في جهات الاتصال عند موافقتهم.";
 /* Alert title shown when you want to remove one or more contacts */
 "removeUserTitle"="حذف جهة الاتصال";
-/* Alert confirmation message shown when you want to remove one contact from your contacts list */
-"removeUserMessage"="هل أنت متأكد أنك تريد إزالة %@ من قائمة الاتصال الخاصة بك؟";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
 "removeMultipleUsersMessage"="هل أنت متأكد أنك تريد إزالة %d مستخدمين من قائمة الاتصال الخاصة بك؟";
 /* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
@@ -600,7 +588,7 @@
 "shareFolder"="مجلد المشاركة";
 /* Button title which, if tapped, will trigger the action of sharing the folders selected */
 "shareFolders"="الملفات المشاركة";
-/* Button that allows you to select a given folder */
+/* Button that allows you to select something (a folder, a message...) */
 "select"="تحديد";
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
 "permissions"="الرّخص";
@@ -945,8 +933,8 @@
 "unlockedBonuses"="الإضافات الممنوحة:";
 /* A header/title of a section which contains information about used/available storage space on a user's cloud drive. */
 "storageQuota"="مساحة التخزين المتاحة";
-/* The header/title of a block/section which contains information about the user's used/available transfer allowance for their account. */
-"transferQuota"="حصة النقل";
+/* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
+"Transfer Quota"="حصة النقل";
 /* achievement type */
 "registrationBonus"="مكافآت التسجيل";
 /* Message shown on the achievements dialog for achieved achievements, %1 is replaced with e.g. 20 GB */
@@ -992,11 +980,11 @@
 /* String shown when you are logging out of your account. */
 "loggingOut"="تسجيل الخروج";
 /* Button to remove some photo, e.g. avatar photo. Try to keep the text short (as in English) */
-"Remove Photo"="Remove Photo";
+"Remove Photo"="إزالة الصورة";
 /* Button that allows the user the change a photo, e.g. his avatar photo */
-"Change Photo"="Change Photo";
+"Change Photo"="غير الصورة";
 /* Button that allows the user the add a photo, e.g avatar photo */
-"Add Photo"="Add Photo";
+"Add Photo"="إضافة صورة";
 /* Button title that allows the user change his name */
 "changeName"="غير الاسم";
 /* Success message when changing profile information. */
@@ -1261,8 +1249,10 @@
 "enableRichUrlPreviews"="تفعيل اظهار الروابط الأنيقة";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "alwaysAllow"="السماح دائما";
-/* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
+/* Text indicating to the user that some action will be postpone. E.g. used for 'rich previews' and management of disk storage. */
 "notNow"="ليس الآن";
+/* Text indicating to the user some action should be addressed. E.g. Navigate to Settings/File Management to clear cache. */
+"Manage"="إدارة";
 /* */
 "never"="أبدا";
 /* After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings. */
@@ -1420,7 +1410,7 @@
 "videoQuality"="جودة الفيديو";
 /* Property associated with something smaller than the usual or average size, number, value, or amount. For example: option to encode a video with low quality. */
 "low"="منخفضة";
-/* Option to upload videos with the same resolution and same framerate than the original one, but converting them to MP4. */
+/* Property associated with something higher than the usual or average size, number, value, or amount. For example: video quality. */
 "high"="مرتفعة";
 /* Property associated with the first one made and not a copy. For example: Get the original video, without encoding.  */
 "original"="الأصلي";
@@ -1436,8 +1426,8 @@
 "resetQrCode"="إعادة تعيين كود QR";
 /* Footer that explains what would happen if the user resets his/her QR code */
 "resetQrCodeFooter"="أكواد QR السابقة لن تكون صالحة.";
-/* Title for view that displays the QR code of the user. String as short as possible. */
-"myCode"="الرمز الخاص بي";
+/* Label for any ‘My QR code’ button, link, text, title, etc. - (String as short as possible). */
+"My QR code"="كود QR الخاص بي";
 /* Segmented control title for view that allows the user to scan QR codes. String as short as possible. */
 "scanCode"="مسح الرمز";
 /* Label that encourage the user to line the QR to scan with the camera */
@@ -1636,6 +1626,10 @@
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="احفظ نسخة من الصور والفيديوهات المأخوذة من تطبيق MEGA في مكتبة الوسائط على جهازك.";
 /* Settings section title where you can enable the option to 'Spotlight search' */
 "Spotlight Search"="البحث الذكي Spotlight";
+/* Title of the Spotlight Search section */
+"Search"="البحث";
+/* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="When enabled, allow search and look up MEGA files/folders in Spotlight Search.";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="انت تحتفظ بالمفتاح";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -1994,7 +1988,7 @@
 "Business"="الأعمال Business";
 /* */
 "Administrator"="مدير";
-/* */
+/* Label to indicate the amount of transfer quota in several places. It is a ‘noun‘ and there is an screenshot with an use example - (String as short as possible). */
 "Transfer"="التحميل";
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
 "You cannot remove %1$s as a contact because they are part of your Business account."="لا يمكنك إزالة %1$s كجهة اتصال لأنها جزء من حساب الأعمال الخاص بك.";
@@ -2089,7 +2083,7 @@
 /* */
 "Active"="نشط";
 /* title of a field to show the role or position (you can use whichever is best for translation) of the user in business accounts */
-"Role:"="الدور";
+"Role:"="الدور:";
 /* Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file */
 "Include location tags"="تشمل علامات الموقع";
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
@@ -2125,7 +2119,7 @@
 /* Place holder for enter mobile number field */
 "Your phone number"="رقم هاتفك";
 /* Text related to verified phone number. Used as title or cell description.  */
-"Phone Number"="Phone Number";
+"Phone Number"="رقم الهاتف";
 /* Label tell user to enter received txt to below input boxes */
 "Please type the verification code sent to"="الرجاء إدخال رمز التحقق الذي تم إرساله إلى";
 /* Text message to remind user to resend verification code */
@@ -2158,11 +2152,11 @@
 "Choose Folder"="اختر مجلد";
 /* Label used near to the option selected to encode the images uploaded to a chat (Low, Medium, Original) */
 "Image quality"="جودة الصورة";
-/* Title of Image Quality option */
+/* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
 "Automatic"="تلقائي";
 /* Description of Automatic Image Quality option */
 "Send smaller size images through cellular networks and original size images through wifi"="أرسل صوراً أصغر حجماً عبر شبكات هاتف المحمول وصوراً بالحجم الأصلي عبر الشبكات اللاسلكية Wi-Fi";
-/* Title of Image Quality option */
+/* Text for some option property indicating the user the action to perform will be optimised. For example: Image Quality reduction option for chats */
 "Optimised"="الأمثل";
 /* Description of Optimised Image Quality option */
 "Send smaller size images optimised for lower data consumption"="أرسل صوراً أصغر حجماً مثالية لتقليل استهلاك البيانات";
@@ -2178,12 +2172,38 @@
 "Your account has been disabled by your administrator. Please contact your business account administrator for further details."="تم تعطيل حسابك من قبل مديرك. يرجى الاتصال مع مدير حساب الاعمال خاصتك للحصول على مزيد من التفاصيل.";
 /* An error message which appears to sub-users of a business account when they try to login and they are deleted. */
 "Your account has been removed by your administrator. Please contact your business account administrator for further details."="تمت إزالة حسابك من قبل مشرف الحساب الخاص بك. يرجى الاتصال بمشرف حساب الأعمال لمزيد من التفاصيل.";
-/* Description of why the user should give permission to contacts */
-"Easily discover contacts from your address book on MEGA."="اكتشف جهات الاتصال بسهولة من دفتر العناوين الخاص بك على ميغا MEGA.";
-/* Detailed description of why the user should give permission to contacts */
-"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="لن تستخدم ميغا MEGA هذه البيانات لأي غرض آخر ولن تتفاعل أبداً مع جهات الاتصال الخاصة بك دون موافقتك.";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="ادخل اسم المجموعة";
+/* Title of one of the Settings sections where you can customise the 'Appearance' of the app. */
+"Appearance"="المظهر";
+/* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
+"Sorting And View Mode"="شكل الفرز والعرض";
+/* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
+"Default"="الإفتراضي";
+/* Label for any ‘Day’ button, link, text, title, etc. - (String as short as possible). */
+"Day"="يوم";
+/* Label for any ‘Night’ button, link, text, title, etc. - (String as short as possible). */
+"Night"="ليلي";
+/* Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible). */
+"Minimal"="الحد الأدنى";
+/* Section title inside of Settings - Appearance, where you can change the app's layout. */
+"Layout"="التنسيق";
+/* Section title inside of Settings - Appearance, where you can change the app's icon. */
+"App Icon"="ايقونة التطبيق";
+/* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
+"Configure sorting order and the default view (List or Thumbnail)."="إعداد ترتيب الفرز والعرض الافتراضي (قائمة أو صور مصغرة).";
+/* Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for All'. */
+"Per Folder"="لكل مجلد";
+/* Same for all configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for all Folders'. */
+"Same for All"="للجميع";
+/* Section title of the 'Sorting And View Mode' view inside of Settings - Appearence - Sorting And View Mode. */
+"Sorting preference"="فرز الافضلية";
+/* Section title of the 'Sorting And View Mode' view inside of Settings - Appearence - Sorting And View Mode. */
+"View mode preference"="عرض وضع الافضلية";
+/* Footer text explaining what means choosing a sorting preference 'Per Folder' or 'Same for All' in Settings - Appearance - Sorting And View Mode. */
+"Configure column sorting order on a per-folder basis, or use the same order for all folders."="تهيئة  وفرز العمود على أساس كل مجلد، أو استخدام نفس النظام لجميع المجلدات.";
+/* Footer text explaining what means choosing a view mode preference 'Per Folder', 'List view' or 'Thumbnail view' in Settings - Appearance - Sorting And View Mode. */
+"Select view mode (List or Thumbnail) on a per-folder basis, or use the same view mode for all folders."="اختر شكل العرض (قائمة أو صور مصغرة) على أساس كل مجلد، أو استخدم نفس شكل العرض لجميع المجلدات.";
 /* Warning message to alert user about logout in My Account section if has transfers in progress. */
 "When you logout, ongoing transfers will be cancelled."="عند تسجيل الخروج، سيتم إلغاء التحويلات الجارية.";
 /* Warning message to alert user about logout in My Account section if has offline files. */
@@ -2192,3 +2212,9 @@
 "When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled."="عند تسجيل الخروج، سيتم حذف الملفات من قسم غير متصل على الانترنت من جهازك وسيتم إلغاء عمليات التراسل الجارية.";
 /* Default title of an empty chat. */
 "Chat created on %s1"="تم انشاء المحادثة في %s1";
+/* Title shown when there are no shared files */
+"No Shared Files"="لا توجد ملفات مشتركة";
+/* Error message shown when opening a folder link which doesn’t exist */
+"Folder link unavailable"="رابط المجلد غير متوفر";
+/* Error message shown when opening a file link which doesn’t exist */
+"File link unavailable"="رابط الملف غير متوفر";
