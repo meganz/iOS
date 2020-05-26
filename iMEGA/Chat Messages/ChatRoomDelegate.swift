@@ -299,16 +299,30 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
             return
         }
         transfers = allTransfers.filter { (transfer) -> Bool in
-            
-            guard transfer.appData.contains("attachToChatID")
-                || transfer.appData.contains("attachVoiceClipToChatID") else {
+
+            guard let appData = transfer.appData,
+                   appData.contains("attachToChatID")
+                || appData.contains("attachVoiceClipToChatID") else {
                     return false
             }
             let appDataComponentsArray = transfer.appData.components(separatedBy: ">")
             if appDataComponentsArray.count > 0 {
-                
+                for appDataComponent in appDataComponentsArray {
+                    let appDataComponentComponentsArray = appDataComponent.components(separatedBy: "=")
+                    guard let appDataType = appDataComponentComponentsArray.first else {
+                        return false
+                    }
+                    if appDataType == "attachToChatID"
+                        || appDataType == "attachVoiceClipToChatID" {
+                        let tempAppDataComponent = appDataComponent.replacingOccurrences(of: "!", with: "")
+                        if UInt64(tempAppDataComponent) == chatRoom.chatId {
+                            return true
+                        }
+                        
+                    }
+                }
             }
-            return true
+            return false
         }
         
         
