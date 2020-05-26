@@ -17,18 +17,20 @@ class ChatInputBar: UIView {
         let recognizer = UILongPressGestureRecognizer(target: self, action:#selector(longPress))
         recognizer.minimumPressDuration = 0.1
         recognizer.delegate = self
+        recognizer.cancelsTouchesInView = false
         return recognizer
     }()
     
     private lazy var panGesture: UIPanGestureRecognizer = {
         let recognizer = UIPanGestureRecognizer(target: self, action:#selector(pan))
         recognizer.delegate = self
+        recognizer.cancelsTouchesInView = false
         return recognizer
     }()
     
     private lazy var fingerLiftupGesture: FingerLiftupGestureRecognizer = {
         let recognizer = FingerLiftupGestureRecognizer(target: self, action: #selector(fingerLiftUpDetected))
-        recognizer.cancelsTouchesInView = false;
+        recognizer.cancelsTouchesInView = false
         recognizer.delegate = self
         return recognizer
     }()
