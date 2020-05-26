@@ -644,22 +644,26 @@
             break;
             
         case 2:
-            height = ((self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeRo) && self.chatRoom.isPublicChat  && !self.chatRoom.isPreview) ? 10.0f : 0.1f;
-            break;
-            
-        case 3:
             height = (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) ? 10.0f : 0.1f;
             break;
             
+        case 3:
+            height = ((self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeRo) && self.chatRoom.isPublicChat  && !self.chatRoom.isPreview) ? 10.0f : 0.1f;
+            break;
+            
         case 4:
-            height = self.chatRoom.isPreview ? 0.1f : 10.0f;
+            height = (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) ? 10.0f : 0.1f;
             break;
             
         case 5:
+            height = self.chatRoom.isPreview ? 0.1f : 10.0f;
+            break;
+            
+        case 6:
             height = 10.0f;
             break;
             
-        case 6: {
+        case 7: {
             if (self.chatRoom.isPublicChat) {
                 height = (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) ? UITableViewAutomaticDimension : 0.1f;
             } else {
@@ -668,17 +672,18 @@
             break;
         }
             
-        case 7:
+        case 8:
             height = self.chatRoom.previewersCount ? 10.0f : 0.1f;
             break;
             
-        case 8:
+        case 9:
             height = 20.0f;
             break;
             
         default:
             height = 0.1f;
             break;
+           
     }
     
     return height;
