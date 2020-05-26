@@ -109,7 +109,7 @@ extension ActionSheetViewController {
         super.loadView()
         view.backgroundColor = .clear
 
-        backgroundView.backgroundColor = .init(white: 0, alpha: 0.8)
+        backgroundView.backgroundColor = .init(white: 0, alpha: 0.4)
         view.addSubview(backgroundView)
 
         indicator.layer.cornerRadius = 3
