@@ -120,6 +120,7 @@ enum SessionSectionRow: Int {
     private func updateAppearance() {
         tableView.backgroundColor = UIColor.mnz_backgroundGrouped(for: traitCollection)
         tableView.separatorColor = UIColor.mnz_separator(for: traitCollection)
+        tableView.reloadData()
         
         nameLabel.textColor = UIColor.white
         emailLabel.textColor = UIColor.white
@@ -460,7 +461,7 @@ extension ProfileViewController: UITableViewDataSource {
             return cell
         case .security:
             let cell = tableView.dequeueReusableCell(withIdentifier: "RecoveryKeyID", for: indexPath) as! RecoveryKeyTableViewCell
-            cell.recoveryKeyContainerView.backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
+            cell.recoveryKeyContainerView.backgroundColor = UIColor.mnz_tertiaryBackgroundGrouped(traitCollection)
             cell.recoveryKeyLabel.text = AMLocalizedString("masterKey", "Title for the MEGA Recovery Key")+".txt"
             cell.backupRecoveryKeyLabel.text = AMLocalizedString("backupRecoveryKey", "Label for recovery key button")
             cell.backupRecoveryKeyLabel.textColor = UIColor.mnz_turquoise(for: traitCollection)
@@ -529,6 +530,10 @@ extension ProfileViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 
 extension ProfileViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.backgroundColor = UIColor.mnz_secondaryBackgroundGrouped(traitCollection)
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch tableViewSections()[indexPath.section] {
         case .profile:

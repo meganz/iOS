@@ -132,14 +132,14 @@
     
     self.infoButton.tintColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
     
-    self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
-    self.nodeView.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection]; //Review this color
+    self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedElevated:self.traitCollection];
+    self.nodeView.backgroundColor = [UIColor mnz_secondaryBackgroundGroupedElevated:self.traitCollection];
 }
 
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    cell.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
+    cell.backgroundColor = [UIColor mnz_secondaryBackgroundGroupedElevated:self.traitCollection];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

@@ -168,7 +168,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     
     [self setupCollectionView];
     [self setupMenuController:[UIMenuController sharedMenuController]];
-    [self customToolbarContentView];
     
     self.showLoadEarlierMessagesHeader = YES;
     self.areAllMessagesSeen = NO;
@@ -521,6 +520,8 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     JSQMessagesBubbleImageFactory *bubbleFactory = [[JSQMessagesBubbleImageFactory alloc] initWithBubbleImage:[UIImage imageNamed:@"bubble_tailless"] capInsets:UIEdgeInsetsZero layoutDirection:UIApplication.sharedApplication.userInterfaceLayoutDirection];
     self.outgoingBubbleImageData = [bubbleFactory outgoingMessagesBubbleImageWithColor:[UIColor mnz_chatOutgoingBubble:self.traitCollection]];
     self.incomingBubbleImageData = [bubbleFactory incomingMessagesBubbleImageWithColor:[UIColor mnz_chatIncomingBubble:self.traitCollection]];
+    
+    [self customToolbarContentView];
     
     [self.collectionView reloadData];
 }
@@ -895,7 +896,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 
 - (void)customToolbarContentView {
     self.inputToolbar.contentView.textView.jsq_pasteDelegate = self;
-    self.inputToolbar.contentView.textView.backgroundColor = UIColor.mnz_background;
+    self.inputToolbar.contentView.textView.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
     self.inputToolbar.contentView.textView.placeHolderTextColor = [UIColor mnz_tertiaryGrayForTraitCollection:self.traitCollection];
     self.inputToolbar.contentView.textView.font = [UIFont systemFontOfSize:15.0f];
     self.inputToolbar.contentView.textView.textColor = UIColor.mnz_label;
