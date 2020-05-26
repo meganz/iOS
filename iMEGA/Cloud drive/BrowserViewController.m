@@ -9,6 +9,13 @@
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGAMoveRequestDelegate.h"
 #import "MEGAReachabilityManager.h"
+#ifdef MNZ_SHARE_EXTENSION
+#import "MEGAShare-Swift.h"
+#elif MNZ_PICKER_EXTENSION
+#import "MEGAPicker-Swift.h"
+#else
+#import "MEGA-Swift.h"
+#endif
 #import "NSFileManager+MNZCategory.h"
 #import "NSMutableArray+MNZCategory.h"
 #import "NSString+MNZCategory.h"
@@ -63,7 +70,6 @@
     
     //White background for the view behind the table view
     self.tableView.backgroundView = UIView.alloc.init;
-    self.navigationController.navigationBar.translucent = NO;
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;
     
@@ -133,9 +139,12 @@
 
 #pragma mark - Private
 
+- (void)updateAppearance {
+    self.view.backgroundColor = [UIColor mnz_secondaryBackgroundElevated:self.traitCollection];
+}
+
 - (void)setupBrowser {
     self.parentBrowser = !self.isChildBrowser;
-    
     
     UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     

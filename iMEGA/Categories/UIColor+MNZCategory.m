@@ -22,7 +22,7 @@
                 if (traitCollection.accessibilityContrast == UIAccessibilityContrastHigh) {
                     return UIColor.whiteColor;
                 } else {
-                    return [UIColor.mnz_grayF7F7F7 colorWithAlphaComponent:0.8];
+                    return UIColor.mnz_grayF7F7F7;
                 }
             }
                 
@@ -30,12 +30,12 @@
                 if (traitCollection.accessibilityContrast == UIAccessibilityContrastHigh) {
                     return UIColor.blackColor;
                 } else {
-                    return [UIColor.mnz_black161616 colorWithAlphaComponent:0.8];
+                    return UIColor.mnz_black161616;
                 }
             }
         }
     } else {
-        return [UIColor.mnz_grayF7F7F7 colorWithAlphaComponent:0.8];
+        return UIColor.mnz_grayF7F7F7;
     }
 }
 
@@ -46,7 +46,6 @@
         return UIColor.whiteColor;
     }
 }
-
 
 + (UIColor *)mnz_secondaryBackgroundForTraitCollection:(UITraitCollection *)traitCollection {
     if (@available(iOS 13.0, *)) {

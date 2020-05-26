@@ -7,8 +7,7 @@
 #import "Helper.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
-
-#import "SelectableTableViewCell.h"
+#import "MEGA-Swift.h"
 
 static const NSInteger MaxAutoawayTimeout = 1457; // 87420 seconds
 
@@ -291,7 +290,7 @@ static const NSInteger MaxAutoawayTimeout = 1457; // 87420 seconds
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    cell.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
+    cell.backgroundColor = [UIColor mnz_secondaryBackgroundGrouped:self.traitCollection];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
