@@ -261,6 +261,12 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
     private static func setupLogging() {
         if !setLogToConsole {
             setLogToConsole = true
+#if DEBUG
+            MEGASdk.setLogLevel(.max)
+            MEGAChatSdk.setCatchException(false)
+#else
+            MEGASdk.setLogLevel(.fatal)
+#endif
             MEGASdk.setLogToConsole(true)
         }
         
@@ -282,12 +288,6 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
             }
             let logsPath = logsFolderURL.appendingPathComponent("MEGAiOS.NSE.log").path
             MEGALogger.shared()?.startLogging(toFile: logsPath)
-#if DEBUG
-            MEGASdk.setLogLevel(.max)
-            MEGAChatSdk.setCatchException(false)
-#else
-            MEGASdk.setLogLevel(.fatal)
-#endif
         }
     }
 
