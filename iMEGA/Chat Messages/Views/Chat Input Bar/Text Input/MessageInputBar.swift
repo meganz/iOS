@@ -143,7 +143,7 @@ class MessageInputBar: UIView {
             return
         }
         
-        messageTextView.text = nil
+        messageTextView.reset()
         
         if expanded {
             expanded = false
@@ -320,16 +320,14 @@ class MessageInputBar: UIView {
                 + self.messageTextViewTopConstraint.constant
             self.keyboardHeight = keyboardFrame.size.height - inputBarHeight
             
-            if self.backgroundViewTrailingButtonConstraint.isActive {
-                if let messageTextViewExpanadedHeight = self.messageTextView.expandedHeight,
-                    messageTextViewExpanadedHeight != self.expandedHeight {
-                    self.messageTextView.expand(true, expandedHeight: self.expandedHeight)
-                }
-                return
-            }
-            
             if let keyboardShownHandler = self.keyboardShown {
                 keyboardShownHandler()
+            }
+            
+            if self.backgroundViewTrailingButtonConstraint.isActive,
+                let messageTextViewExpanadedHeight = self.messageTextView.expandedHeight,
+                messageTextViewExpanadedHeight != self.expandedHeight {
+                self.messageTextView.expand(true, expandedHeight: self.expandedHeight)
             }
         }
     }
