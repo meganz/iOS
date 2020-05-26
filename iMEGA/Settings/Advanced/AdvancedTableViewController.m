@@ -158,10 +158,10 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     if (MEGASdkManager.sharedMEGASdk.isBusinessAccount && !MEGASdkManager.sharedMEGASdk.isMasterBusinessAccount) {
-        return 3;
+        return 4;
     }
     
-    return 4;
+    return 5;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {

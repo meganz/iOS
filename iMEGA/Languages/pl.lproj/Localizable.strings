@@ -436,22 +436,6 @@
 "renameNodeMessage"="Wprowadź nową nazwę";
 /* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
 "moveToTheRubbishBin"="Przenieś do kosza";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 file' */
-"moveFileToRubbishBinMessage"="Czy na pewno chcesz przenieść 1 plik do kosza?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin '{1+} files' */
-"moveFilesToRubbishBinMessage"="Czy na pewno chcesz przenieść %d plików do kosza?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 folder' */
-"moveFolderToRubbishBinMessage"="Czy na pewno chcesz przenieść 1 katalog do kosza?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} folders" */
-"moveFoldersToRubbishBinMessage"="Czy na pewno chcesz przenieść %d katalogów do kosza?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and 1 folder" */
-"moveFileFolderToRubbishBinMessage"="Czy na pewno chcesz przenieść 1 plik i 1 katalog do kosza?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and {1+} folders" */
-"moveFileFoldersToRubbishBinMessage"="Czy na pewno chcesz przenieść 1 pliki i %d katalogów do kosza?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files and 1 folder" */
-"moveFilesFolderToRubbishBinMessage"="Czy na pewno chcesz przenieść %d plików i 1 katalog do kosza?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "[A] = {1+} files and [B] = {1+} folders" */
-"moveFilesFoldersToRubbishBinMessage"="Czy na pewno chcesz przenieść [A] plików i [B] katalogów do kosza?";
 /* Success message shown when you have moved 1 file to the rubbish bin */
 "fileMovedToRubbishBinMessage"="1 plik przeniesiony do kosza";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
@@ -580,8 +564,6 @@
 "theUsersHaveBeenInvited"="Użytkownik został zaproszony i pojawi się na liście Twoich kontaktów po akceptacji zaproszenia.";
 /* Alert title shown when you want to remove one or more contacts */
 "removeUserTitle"="Usuń kontakt";
-/* Alert confirmation message shown when you want to remove one contact from your contacts list */
-"removeUserMessage"="Czy na pewno chcesz usunąć %@ z Twoich kontaktów?";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
 "removeMultipleUsersMessage"="Czy na pewno chcesz usunąć %d użytkowników z Twoich kontatków?";
 /* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
@@ -1428,7 +1410,7 @@
 "videoQuality"="Jakość filmu";
 /* Property associated with something smaller than the usual or average size, number, value, or amount. For example: option to encode a video with low quality. */
 "low"="Niska";
-/* Option to upload videos with the same resolution and same framerate than the original one, but converting them to MP4. */
+/* Property associated with something higher than the usual or average size, number, value, or amount. For example: video quality. */
 "high"="Wysoka";
 /* Property associated with the first one made and not a copy. For example: Get the original video, without encoding.  */
 "original"="Oryginalny";
@@ -1644,6 +1626,10 @@
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Zapisz kopię zdjęć i filmów pobranych z aplikacji MEGA w bibliotece multimediów urządzenia.";
 /* Settings section title where you can enable the option to 'Spotlight search' */
 "Spotlight Search"="Wyszukiwanie Spotlight";
+/* Title of the Spotlight Search section */
+"Search"="Szukaj";
+/* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="When enabled, allow search and look up MEGA files/folders in Spotlight Search.";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="Ty przechowujesz klucze";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -2166,11 +2152,11 @@
 "Choose Folder"="Wybierz katalog";
 /* Label used near to the option selected to encode the images uploaded to a chat (Low, Medium, Original) */
 "Image quality"="Jakość obrazu";
-/* Title of Image Quality option */
+/* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
 "Automatic"="Automatyczny";
 /* Description of Automatic Image Quality option */
 "Send smaller size images through cellular networks and original size images through wifi"="Wysyłaj obrazy o mniejszych rozmiarach przez sieci komórkowe i obrazy o oryginalnych rozmiarach przez Wi-Fi";
-/* Title of Image Quality option */
+/* Text for some option property indicating the user the action to perform will be optimised. For example: Image Quality reduction option for chats */
 "Optimised"="Zoptymalizowany";
 /* Description of Optimised Image Quality option */
 "Send smaller size images optimised for lower data consumption"="Wysyłaj obrazy o mniejszych rozmiarach zoptymalizowane pod kątem mniejszego zużycia danych";

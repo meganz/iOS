@@ -436,22 +436,6 @@
 "renameNodeMessage"="新しい名前を入力して下さい。";
 /* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
 "moveToTheRubbishBin"="ゴミ箱へ";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 file' */
-"moveFileToRubbishBinMessage"="ファイル１こ、ゴミ箱に移しますね？";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin '{1+} files' */
-"moveFilesToRubbishBinMessage"="ファイル %dこ、ゴミ箱に移しますね？";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 folder' */
-"moveFolderToRubbishBinMessage"="フォルダ１こ、ゴミ箱に移しますね？";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} folders" */
-"moveFoldersToRubbishBinMessage"="フォルダ%dこ、ゴミ箱に移しますね？";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and 1 folder" */
-"moveFileFolderToRubbishBinMessage"="ファイル１こ、フォルダ１こ、ゴミ箱に移しますね？";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and {1+} folders" */
-"moveFileFoldersToRubbishBinMessage"="ファイル１こ、フォルダ %d こ、ゴミ箱に移しますね？";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files and 1 folder" */
-"moveFilesFolderToRubbishBinMessage"="ファイル %d こ、フォルダ１こ、ゴミ箱に移しますね？";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "[A] = {1+} files and [B] = {1+} folders" */
-"moveFilesFoldersToRubbishBinMessage"="[A]ファイルと[B]フォルダをごみ箱に移動してもよろしいですか？　";
 /* Success message shown when you have moved 1 file to the rubbish bin */
 "fileMovedToRubbishBinMessage"="ゴミ箱にファイル１こ、移動しました。";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
@@ -580,8 +564,6 @@
 "theUsersHaveBeenInvited"="複数のユーザーが招待されています。あなたが認めれば、知り合いのリストに載ります。";
 /* Alert title shown when you want to remove one or more contacts */
 "removeUserTitle"="知り合いを削除";
-/* Alert confirmation message shown when you want to remove one contact from your contacts list */
-"removeUserMessage"="あなたの知り合いリストから%@ を取り除きますね？";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
 "removeMultipleUsersMessage"="知り合いリストからユーザー%d人、取り除きますね？";
 /* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
@@ -1428,7 +1410,7 @@
 "videoQuality"="動画の品質";
 /* Property associated with something smaller than the usual or average size, number, value, or amount. For example: option to encode a video with low quality. */
 "low"="低い";
-/* Option to upload videos with the same resolution and same framerate than the original one, but converting them to MP4. */
+/* Property associated with something higher than the usual or average size, number, value, or amount. For example: video quality. */
 "high"="高い";
 /* Property associated with the first one made and not a copy. For example: Get the original video, without encoding.  */
 "original"="オリジナル";
@@ -1644,6 +1626,10 @@
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="MEGAアプリから取得した画像と動画のコピーをあなたの端末のメディアライブラリに保存します。";
 /* Settings section title where you can enable the option to 'Spotlight search' */
 "Spotlight Search"="スポットライト検索";
+/* Title of the Spotlight Search section */
+"Search"="検索";
+/* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="When enabled, allow search and look up MEGA files/folders in Spotlight Search.";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="あなたがキーを持っています";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -2166,11 +2152,11 @@
 "Choose Folder"="フォルダを選択";
 /* Label used near to the option selected to encode the images uploaded to a chat (Low, Medium, Original) */
 "Image quality"="画質";
-/* Title of Image Quality option */
+/* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
 "Automatic"="自動";
 /* Description of Automatic Image Quality option */
 "Send smaller size images through cellular networks and original size images through wifi"="セルラーネットワークを介してより小さいサイズの画像を送信したり、Wi-Fiを介して元のサイズの画像を送信します。";
-/* Title of Image Quality option */
+/* Text for some option property indicating the user the action to perform will be optimised. For example: Image Quality reduction option for chats */
 "Optimised"="最適化";
 /* Description of Optimised Image Quality option */
 "Send smaller size images optimised for lower data consumption"="データ消費低減用に最適化された小さいサイズの画像を送信します";
