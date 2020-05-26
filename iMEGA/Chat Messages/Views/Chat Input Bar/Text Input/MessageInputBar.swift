@@ -49,7 +49,8 @@ class MessageInputBar: UIView {
     var keyboardShown: (() -> Void)?
         
     // MARK:- Private properties
-
+    
+    private var keyboardWillShowObserver: NSObjectProtocol!
     private var keyboardShowObserver: NSObjectProtocol!
     private var keyboardHideObserver: NSObjectProtocol!
     
@@ -183,9 +184,11 @@ class MessageInputBar: UIView {
     private func registerKeyboardNotifications() {
         keyboardHideObserver = keyboardHideNotification()
         keyboardShowObserver = keyboardShowNotification()
+        keyboardWillShowObserver = keyboardWillShowNotification()
     }
     
     private func removeKeyboardNotifications() {
+        NotificationCenter.default.removeObserver(keyboardWillShowObserver!)
         NotificationCenter.default.removeObserver(keyboardShowObserver!)
         NotificationCenter.default.removeObserver(keyboardHideObserver!)
     }
@@ -266,6 +269,38 @@ class MessageInputBar: UIView {
         expandCollapseButton.setImage(#imageLiteral(resourceName: "collapse"), for: .normal)
     }
     
+    private func keyboardWillShowNotification() -> NSObjectProtocol {
+        return NotificationCenter.default.addObserver(
+            forName: UIResponder.keyboardWillShowNotification,
+            object: nil,
+            queue: .main
+        ) { [weak self] notification in
+            guard let `self` = self else {
+                return
+            }
+                        
+            if !self.messageTextView.isFirstResponder
+                || self.backgroundViewTrailingButtonConstraint.isActive {
+                return
+            }
+                        
+            self.sendButton.alpha = 0.0
+            self.sendButton.isHidden = false
+
+            UIView.animate(withDuration: 0.4, animations: {
+                self.backgroundViewTrailingTextViewConstraint.isActive = false
+                self.backgroundViewTrailingButtonConstraint.isActive = true
+                self.micButton.alpha = 0.0
+                self.sendButton.alpha = 1.0
+                self.layoutIfNeeded()
+
+            }) { _ in
+                self.micButton.isHidden = true
+                self.micButton.alpha = 1.0
+            }
+        }
+    }
+    
     private func keyboardShowNotification() -> NSObjectProtocol {
         return NotificationCenter.default.addObserver(
             forName: UIResponder.keyboardDidShowNotification,
@@ -295,21 +330,6 @@ class MessageInputBar: UIView {
             
             if let keyboardShownHandler = self.keyboardShown {
                 keyboardShownHandler()
-            }
-                        
-            self.sendButton.alpha = 0.0
-            self.sendButton.isHidden = false
-
-            UIView.animate(withDuration: 0.4, animations: {
-                self.backgroundViewTrailingTextViewConstraint.isActive = false
-                self.backgroundViewTrailingButtonConstraint.isActive = true
-                self.micButton.alpha = 0.0
-                self.sendButton.alpha = 1.0
-                self.layoutIfNeeded()
-
-            }) { _ in
-                self.micButton.isHidden = true
-                self.micButton.alpha = 1.0
             }
         }
     }
