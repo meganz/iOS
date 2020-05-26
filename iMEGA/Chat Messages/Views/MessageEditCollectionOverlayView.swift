@@ -12,7 +12,7 @@ class MessageEditCollectionOverlayView : MessageReusableView {
             if isActive {
                 leftIconView.image = UIImage(named: "checkBoxSelected")
             } else {
-                leftIconView.image = UIImage(named: "checkBoxUnselected")
+                leftIconView.image = UIImage(named: "checkBox")
             }
         }
     }
