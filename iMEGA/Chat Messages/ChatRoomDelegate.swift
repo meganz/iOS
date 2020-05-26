@@ -315,7 +315,10 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
                     if appDataType == "attachToChatID"
                         || appDataType == "attachVoiceClipToChatID" {
                         let tempAppDataComponent = appDataComponent.replacingOccurrences(of: "!", with: "")
-                        if UInt64(tempAppDataComponent) == chatRoom.chatId {
+                        guard let chatID = tempAppDataComponent.components(separatedBy: "=").last else {
+                            return false
+                        }
+                        if UInt64(chatID) == chatRoom.chatId {
                             return true
                         }
                         
@@ -332,7 +335,8 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
 extension ChatRoomDelegate: MEGATransferDelegate {
     // MARK: - MEGATransferDelegate methods
     func onTransferStart(_ api: MEGASdk, transfer: MEGATransfer) {
-        
+        reloadTransferData()
+
     }
     
     
