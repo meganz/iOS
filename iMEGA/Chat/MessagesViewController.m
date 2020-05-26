@@ -518,6 +518,10 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 - (void)updateAppearance {
     self.view.backgroundColor = self.collectionView.backgroundColor = UIColor.mnz_background;
     
+    JSQMessagesBubbleImageFactory *bubbleFactory = [[JSQMessagesBubbleImageFactory alloc] initWithBubbleImage:[UIImage imageNamed:@"bubble_tailless"] capInsets:UIEdgeInsetsZero layoutDirection:UIApplication.sharedApplication.userInterfaceLayoutDirection];
+    self.outgoingBubbleImageData = [bubbleFactory outgoingMessagesBubbleImageWithColor:[UIColor mnz_chatOutgoingBubble:self.traitCollection]];
+    self.incomingBubbleImageData = [bubbleFactory incomingMessagesBubbleImageWithColor:[UIColor mnz_chatIncomingBubble:self.traitCollection]];
+    
     [self.collectionView reloadData];
 }
 
@@ -873,10 +877,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     [JSQMessagesCollectionViewCell registerMenuAction:@selector(addContact:message:)];
     [JSQMessagesCollectionViewCell registerMenuAction:@selector(removeRichPreview:message:indexPath:)];
     [JSQMessagesCollectionViewCell registerMenuAction:@selector(delete:)];
-    
-    JSQMessagesBubbleImageFactory *bubbleFactory = [[JSQMessagesBubbleImageFactory alloc] initWithBubbleImage:[UIImage imageNamed:@"bubble_tailless"] capInsets:UIEdgeInsetsZero layoutDirection:UIApplication.sharedApplication.userInterfaceLayoutDirection];
-    self.outgoingBubbleImageData = [bubbleFactory outgoingMessagesBubbleImageWithColor:[UIColor mnz_chatOutgoingBubble:self.traitCollection]];
-    self.incomingBubbleImageData = [bubbleFactory incomingMessagesBubbleImageWithColor:[UIColor mnz_chatIncomingBubble:self.traitCollection]];
 }
 
 - (void)customiseCollectionViewLayout {
