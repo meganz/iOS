@@ -7,6 +7,8 @@ protocol ChatInputBarDelegate: MessageInputBarDelegate {
     func tappedSendAudio(atPath path: String)
     func canRecordAudio() -> Bool
     func showTapAndHoldMessage()
+    func didDisplayVoiceRecordingView()
+    func didHideVoiceRecordingView()
 }
 
 class ChatInputBar: UIView {
@@ -49,11 +51,11 @@ class ChatInputBar: UIView {
 
     weak var delegate: ChatInputBarDelegate?
     
-    var recordingViewEnabled: Bool = false {
+    var voiceRecordingViewEnabled: Bool = false {
         didSet {
-            messageInputBar.hideRightButtonHolderView = recordingViewEnabled
+            messageInputBar.hideRightButtonHolderView = voiceRecordingViewEnabled
             
-            if recordingViewEnabled {
+            if voiceRecordingViewEnabled {
                 if let messageInputBarBottomConstraint = constraints
                     .filter({ $0.firstAttribute == .bottom && $0.firstItem === self.messageInputBar })
                     .first,
@@ -81,6 +83,7 @@ class ChatInputBar: UIView {
                     self.messageInputBar.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
                     self.layoutIfNeeded()
                     self.invalidateIntrinsicContentSize()
+                    self.delegate?.didDisplayVoiceRecordingView()
                 }
             } else {
                 guard let messageInputBarTopConstraint = constraints
@@ -94,7 +97,7 @@ class ChatInputBar: UIView {
                 
                 messageInputBarTopConstraint.isActive = false
                 layoutIfNeeded()
-
+                
                 UIView.animate(withDuration: animationDuration, animations: {
                     voiceClipInputBarHeightConstraint.constant = 0.0
                     self.layoutIfNeeded()
@@ -107,9 +110,9 @@ class ChatInputBar: UIView {
                     
                     self.layoutIfNeeded()
                     self.invalidateIntrinsicContentSize()
+                    self.delegate?.didHideVoiceRecordingView()
                 }
             }
-            
         }
     }
 
@@ -159,11 +162,11 @@ class ChatInputBar: UIView {
         messageInputBar.delegate = self
         messageInputBar.keyboardShown = { [weak self] in
             guard let `self` = self,
-                self.recordingViewEnabled else {
+                self.voiceRecordingViewEnabled else {
                 return
             }
 
-            self.recordingViewEnabled = false
+            self.voiceRecordingViewEnabled = false
         }
         addSubview(messageInputBar)
         messageInputBar.autoPinEdgesToSuperviewEdges()
@@ -341,8 +344,8 @@ extension ChatInputBar: UIGestureRecognizerDelegate {
 
 extension ChatInputBar: MessageInputBarDelegate {
     func tappedAddButton(_ button: UIButton) {
-        if recordingViewEnabled {
-            recordingViewEnabled = false
+        if voiceRecordingViewEnabled {
+            voiceRecordingViewEnabled = false
             let time = DispatchTime.now() + Double(animationDuration/2.0)
             DispatchQueue.main.asyncAfter(deadline: time) {
                 self.delegate?.tappedAddButton(button)
