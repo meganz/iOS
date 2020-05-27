@@ -49,4 +49,14 @@ class AudioWavesView: UIView {
         addAudioView(withLevel: level)
         stackView.arrangedSubviews.first?.removeFromSuperview()
     }
+    
+    func reset() {
+        stackView.arrangedSubviews.forEach { view in
+            guard let audioWaveView = view as? AudioWaveView else {
+                return
+            }
+            
+            audioWaveView.reset()
+        }
+    }
 }
