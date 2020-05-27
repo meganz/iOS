@@ -7,10 +7,15 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
     
     // MARK: - Properties
 
-    var transfers: [MEGATransfer] = []
+    var transfers: [ChatMessage] = []
     let chatRoom: MEGAChatRoom
-    weak var chatViewController: ChatViewController!
-    var messages: [ChatMessage] = []
+    weak var chatViewController: ChatViewController?
+    var chatMessage: [ChatMessage] = []
+    var messages : [ChatMessage] {
+        get {
+          return  chatMessage + transfers
+        }
+    }
     var isChatRoomOpen: Bool = false
     var historyMessages: [ChatMessage] = []
     var loadingState = true
@@ -35,32 +40,32 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
 
     func onChatRoomUpdate(_ api: MEGAChatSdk!, chat: MEGAChatRoom!) {
         MEGALogInfo("ChatRoomDelegate: onChatRoomUpdate \(chatRoom)")
-        chatViewController.chatRoom = chat
+        chatViewController?.chatRoom = chat
         
         switch chat.changes {
         case .userTyping:
-            guard !chatViewController.isEditing else {
+            guard !(chatViewController?.isEditing ?? false)  else {
                 return
             }
             
             if (chat.userTypingHandle != api.myUserHandle) {
-                chatViewController.setTypingIndicatorViewHidden(false, animated: true ,whilePerforming: nil) { [weak self] success in
+                chatViewController?.setTypingIndicatorViewHidden(false, animated: true ,whilePerforming: nil) { [weak self] success in
                     if success, self?.isLastSectionVisible() == true {
-                        self?.chatViewController.messagesCollectionView.scrollToBottom(animated: true)
+                        self?.chatViewController?.messagesCollectionView.scrollToBottom(animated: true)
                     }
                 }
             }
         case .userStopTyping:
-            chatViewController.setTypingIndicatorViewHidden(true, animated: true ,whilePerforming: nil)  { [weak self] success in
+            chatViewController?.setTypingIndicatorViewHidden(true, animated: true ,whilePerforming: nil)  { [weak self] success in
                 if success, self?.isLastSectionVisible() == true {
-                    self?.chatViewController.messagesCollectionView.scrollToBottom(animated: true)
+                    self?.chatViewController?.messagesCollectionView.scrollToBottom(animated: true)
                 }
             }
         case .closed:
             hasChatRoomClosed = true
             if chatRoom.isPreview {
                 api.closeChatPreview(chat.chatId)
-                chatViewController.reloadInputViews()
+                chatViewController?.reloadInputViews()
                 let statusString = AMLocalizedString("linkRemoved",
                                                      "Message shown when the link to a file or folder has been removed")
                 SVProgressHUD.showInfo(withStatus: statusString)
@@ -85,23 +90,23 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
             }
         } else {
 
-            if messages.count == 0 {
+            if chatMessage.count == 0 {
                 loadingState = false
-                messages = historyMessages
+                chatMessage = historyMessages
                 historyMessages.removeAll()
-                chatViewController.messagesCollectionView.reloadData()
-                chatViewController.messagesCollectionView.scrollToBottom()
+                chatViewController?.messagesCollectionView.reloadData()
+                chatViewController?.messagesCollectionView.scrollToBottom()
                 
                 return
             }
             
-            messages = historyMessages + messages
+            chatMessage = historyMessages + chatMessage
             historyMessages.removeAll()
             
             if (loadingState) {
-                chatViewController.messagesCollectionView.reloadDataAndKeepOffset()
+                chatViewController?.messagesCollectionView.reloadDataAndKeepOffset()
             } else {
-                chatViewController.messagesCollectionView.reloadDataAndKeepOffset()
+                chatViewController?.messagesCollectionView.reloadDataAndKeepOffset()
             }
             
             loadingState = false
@@ -115,7 +120,6 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
             MEGALogError("ChatRoomDelegate: onMessageReceived - message is nil")
             return
         }
-        
         if UIApplication.shared.applicationState == .active
         && UIApplication.mnz_visibleViewController() == self {
             MEGASdkManager.sharedMEGAChatSdk()?.setMessageSeenForChat(chatRoom.chatId, messageId: message.messageId)
@@ -133,21 +137,23 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
             case .unknown, .sending, .sendingManual:
                 break
             case .serverReceived:
-                let filteredArray = messages.filter { chatMessage in
+                transfers.removeAll()
+//                chatViewController?.messagesCollectionView.reloadData()
+                let filteredArray = chatMessage.filter { chatMessage in
                     return chatMessage.message.temporalId == message.temporalId
                 }
-              
+                
                 if filteredArray.count > 0 {
                     let oldMessage = filteredArray.first!
-//                    if oldMessage.warningDialog.r > MEGAChatMessageWarningDialogNone {
+                    //                    if oldMessage.warningDialog.r > MEGAChatMessageWarningDialogNone {
 //
 //                    }
                     
-                    let index = messages.firstIndex(of: oldMessage)!
+                    let index = chatMessage.firstIndex(of: oldMessage)!
                     let receivedMessage = ChatMessage(message: message, chatRoom: chatRoom)
-                    messages[index] = receivedMessage
-                    chatViewController.messagesCollectionView.performBatchUpdates({
-                        chatViewController.messagesCollectionView.reloadSections([index])
+                    chatMessage[index] = receivedMessage
+                    chatViewController?.messagesCollectionView.performBatchUpdates({
+                        chatViewController?.messagesCollectionView.reloadSections([index])
                     }, completion: nil)
                     if message.type == .attachment {
                         
@@ -164,33 +170,33 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
         
         if message.hasChanged(for: .content) {
             if message.isDeleted || message.isEdited {
-                let filteredArray = messages.filter { chatMessage in
+                let filteredArray = chatMessage.filter { chatMessage in
                     return chatMessage.message.messageId == message.messageId
                 }
                 if filteredArray.count > 0 {
                     let oldMessage = filteredArray.first!
                     
-                    let index = messages.firstIndex(of: oldMessage)!
+                    let index = chatMessage.firstIndex(of: oldMessage)!
                     let receivedMessage = ChatMessage(message: message, chatRoom: chatRoom)
                     
                     if message.isEdited {
-                        messages[index] = receivedMessage
-                        chatViewController.messagesCollectionView.performBatchUpdates({
-                            chatViewController.messagesCollectionView.reloadSections([index])
+                        chatMessage[index] = receivedMessage
+                        chatViewController?.messagesCollectionView.performBatchUpdates({
+                            chatViewController?.messagesCollectionView.reloadSections([index])
                         }, completion: nil)
                     }
                     
                     if message.isDeleted {
-                        messages.remove(at: index)
-                        chatViewController.messagesCollectionView.performBatchUpdates({
-                            chatViewController.messagesCollectionView.deleteSections([index])
+                        chatMessage.remove(at: index)
+                        chatViewController?.messagesCollectionView.performBatchUpdates({
+                            chatViewController?.messagesCollectionView.deleteSections([index])
                         }, completion: nil)
                     }
                     
                 }
             }
         }
-        chatViewController.messagesCollectionView.reloadEmptyDataSet()
+        chatViewController?.messagesCollectionView.reloadEmptyDataSet()
     }
     
     func onHistoryReloaded(_ api: MEGAChatSdk!, chat: MEGAChatRoom!) {
@@ -228,30 +234,26 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
     
     func insertMessage(_ message: MEGAChatMessage) {
         let lastSectionVisible = isLastSectionVisible()
-        messages.append(ChatMessage(message: message, chatRoom: chatRoom))
+        chatMessage.append(ChatMessage(message: message, chatRoom: chatRoom))
         
-        if messages.count == 1 {
-            chatViewController.messagesCollectionView.reloadData()
-            if chatViewController.keyboardVisible {
-                chatViewController.additionalBottomInset = 0
-                chatViewController.messagesCollectionView.scrollToBottom()
+        if chatMessage.count == 1 {
+            chatViewController?.messagesCollectionView.reloadData()
+            if chatViewController?.keyboardVisible ?? false {
+                chatViewController?.additionalBottomInset = 0
+                chatViewController?.messagesCollectionView.scrollToBottom()
             }
             return;
         }
-        chatViewController.messagesCollectionView.performBatchUpdates({
-            chatViewController.messagesCollectionView.insertSections([messages.count - 1])
-        }, completion: { [weak self] _ in
-            if lastSectionVisible == true {
-                self?.chatViewController.messagesCollectionView.scrollToBottom(animated: true)
-            }
-        })
-        chatViewController.messagesCollectionView.reloadEmptyDataSet()
-     }
+        chatViewController?.messagesCollectionView.reloadData()
+        if lastSectionVisible == true {
+            chatViewController?.messagesCollectionView.scrollToBottom(animated: true)
+        }
+    }
     
     func insertTransfer(_ transer: MEGATransfer) {
         let lastSectionVisible = isLastSectionVisible()
-        messages.append(ChatMessage(transfer: transer, chatRoom: chatRoom))
-        
+        transfers.append(ChatMessage(transfer: transer, chatRoom: chatRoom))
+        guard let chatViewController = self.chatViewController else { return }
         if messages.count == 1 {
             chatViewController.messagesCollectionView.reloadData()
             if chatViewController.keyboardVisible {
@@ -260,14 +262,10 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
             }
             return;
         }
-        chatViewController.messagesCollectionView.performBatchUpdates({
-            chatViewController.messagesCollectionView.insertSections([messages.count - 1])
-        }, completion: { [weak self] _ in
-            if lastSectionVisible == true {
-                self?.chatViewController.messagesCollectionView.scrollToBottom(animated: true)
-            }
-        })
-        chatViewController.messagesCollectionView.reloadEmptyDataSet()
+        chatViewController.messagesCollectionView.reloadData()
+        if lastSectionVisible == true {
+            chatViewController.messagesCollectionView.scrollToBottom(animated: true)
+        }
      }
     
     // MARK: - Private methods
@@ -276,7 +274,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
         guard !messages.isEmpty else { return false }
         
         let lastIndexPath = IndexPath(item: 0, section: messages.count - 1)
-        return chatViewController.messagesCollectionView.indexPathsForVisibleItems.contains(lastIndexPath)
+        return chatViewController?.messagesCollectionView.indexPathsForVisibleItems.contains(lastIndexPath) ?? false
     }
     
     private func loadMessages(count: Int = 32) {
@@ -298,7 +296,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
         guard let allTransfers: [MEGATransfer] =         MEGASdkManager.sharedMEGASdk()?.transfers.mnz_transfersArrayFromTranferList() else {
             return
         }
-        transfers = allTransfers.filter { (transfer) -> Bool in
+        let transfers = allTransfers.filter { (transfer) -> Bool in
 
             guard let appData = transfer.appData,
                    appData.contains("attachToChatID")
@@ -319,6 +317,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
                             return false
                         }
                         if UInt64(chatID) == chatRoom.chatId {
+//                            insertTransfer(transfer)
                             return true
                         }
                         
@@ -328,25 +327,37 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
             return false
         }
         
-        
+//        self.transfers = transfers.map({ (transfer) -> ChatMessage in
+//            return ChatMessage(transfer: transfer, chatRoom: chatRoom)
+//        })
+        guard transfers.count > 0 else {
+            return
+        }
+//        chatViewController.messagesCollectionView.reloadEmptyDataSet()
     }
 }
 
 extension ChatRoomDelegate: MEGATransferDelegate {
     // MARK: - MEGATransferDelegate methods
     func onTransferStart(_ api: MEGASdk, transfer: MEGATransfer) {
-        reloadTransferData()
-
+        guard let appData = transfer.appData else {
+            return
+        }
+        if appData.contains("\(chatRoom.chatId)") {
+            insertTransfer(transfer)
+        }
     }
     
     
     func onTransferFinish(_ api: MEGASdk, transfer: MEGATransfer, error: MEGAError) {
-        reloadTransferData()
-
+   
+//        chatViewController.messagesCollectionView.performBatchUpdates({
+//            chatViewController.messagesCollectionView.deleteSections([index])
+//        }, completion: nil)
+        //        reloadTransferData()
     }
     
     func onTransferUpdate(_ api: MEGASdk, transfer: MEGATransfer) {
-        reloadTransferData()
     }
     
     func onTransferTemporaryError(_ api: MEGASdk, transfer: MEGATransfer, error: MEGAError) {

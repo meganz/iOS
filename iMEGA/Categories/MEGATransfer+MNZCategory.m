@@ -77,6 +77,18 @@
 
 #pragma mark - App data
 
+- (MEGAChatMessageType)transferChatMessageType {
+    if ([self.appData containsString:@"attachToChatID"]) {
+        return MEGAChatMessageTypeAttachment;
+    }
+    
+    if ([self.appData containsString:@"attachVoiceClipToChatID"]) {
+         return MEGAChatMessageTypeVoiceClip;
+    }
+    
+    return MEGAChatMessageTypeUnknown;
+}
+
 - (void)mnz_parseAppData {
     if (!self.appData) {
         return;

@@ -36,7 +36,10 @@ extension ChatMessage: MessageType {
     }
 
     var sentDate: Date {
-        return message.timestamp
+        guard let timestamp = message.timestamp else {
+            return Date()
+        }
+        return timestamp
     }
     
     var kind: MessageKind {
@@ -74,6 +77,10 @@ extension ChatMessage: SenderType {
         if message.isManagementMessage {
             return "0"
         }
+        if transfer != nil {
+            return String(format: "%llu", MEGASdkManager.sharedMEGASdk()!.myUser!.handle) 
+        }
+        
         return String(format: "%llu", message.userHandle)
     }
 
