@@ -66,6 +66,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)setThumbnailForNode:(MEGANode *)node api:(MEGASdk *)api cell:(id)cell reindexNode:(BOOL)reindex;
 
 + (NSString *)sizeAndDateForNode:(MEGANode *)node api:(MEGASdk *)api;
++ (NSString *)sizeAndModicationDateForNode:(MEGANode *)node api:(MEGASdk *)api;
 + (NSString *)sizeForNode:(MEGANode *)node api:(MEGASdk *)api;
 + (NSString *)filesAndFoldersInFolderNode:(MEGANode *)node api:(MEGASdk *)api;
 
