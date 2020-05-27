@@ -10,6 +10,7 @@
 #import "MEGAUserAlertList+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
+#import "MEGA-Swift.h"
 #import "MyAccountHallTableViewCell.h"
 #import "NotificationsTableViewController.h"
 #import "OfflineViewController.h"
@@ -17,7 +18,6 @@
 #import "TransfersViewController.h"
 #import "UpgradeTableViewController.h"
 #import "UsageViewController.h"
-#import "MEGA-Swift.h"
 
 typedef NS_ENUM(NSInteger, MyAccountSection) {
     MyAccountSectionMEGA = 0,
@@ -139,8 +139,9 @@ typedef NS_ENUM(NSInteger, MyAccount) {
 #pragma mark - Private
 
 - (void)updateAppearance {
-    self.view.backgroundColor = UIColor.mnz_background;
+    self.view.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
     
+    self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
     self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     
     self.profileView.backgroundColor = [UIColor mnz_mainBarsForTraitCollection:self.traitCollection];
@@ -148,13 +149,13 @@ typedef NS_ENUM(NSInteger, MyAccount) {
     self.qrCodeImageView.image = [UIImage imageNamed:@"qrCodeIcon"].imageFlippedForRightToLeftLayoutDirection;
     self.profileBottomSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     
-    self.addPhoneNumberView.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
+    self.addPhoneNumberView.backgroundColor = [UIColor mnz_secondaryBackgroundGrouped:self.traitCollection];
     self.addPhoneNumberBottomSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     
     if (MEGASdkManager.sharedMEGASdk.isBusinessAccount) {
         self.businessLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
         
-        self.tableFooterContainerView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
+        self.tableFooterContainerView.backgroundColor = [UIColor mnz_tertiaryBackgroundGrouped:self.traitCollection];
         self.tableFooterLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
     }
 }

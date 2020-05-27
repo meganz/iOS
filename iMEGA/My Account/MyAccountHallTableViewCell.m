@@ -20,7 +20,7 @@
 #pragma mark - Private
 
 - (void)setupCell {
-    self.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
+    self.backgroundColor = [UIColor mnz_secondaryBackgroundGrouped:self.traitCollection];
     
     self.detailLabel.textColor = UIColor.mnz_secondaryLabel;
     

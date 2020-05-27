@@ -26,7 +26,53 @@ extension UIColor {
         }
     }
     
-    // MARK: Background Elevated
+    // MARK: Background elevated
+    
+    @objc class func mnz_primaryBackgroundElevated(_ traitCollection: UITraitCollection) -> UIColor {
+        if #available(iOS 13.0, *) {
+            switch traitCollection.userInterfaceStyle {
+            case .unspecified, .light:
+                return white
+                
+            case .dark:
+                if traitCollection.accessibilityContrast == .high {
+                    return mnz_black2C2C2E()
+                } else {
+                    return mnz_black1C1C1E()
+                }
+                
+            default:
+                return white
+            }
+        } else {
+            return white
+        }
+    }
+    
+    @objc class func mnz_secondaryBackgroundElevated(_ traitCollection: UITraitCollection) -> UIColor {
+        if #available(iOS 13.0, *) {
+            switch traitCollection.userInterfaceStyle {
+            case .unspecified, .light:
+                if traitCollection.accessibilityContrast == .high {
+                    return mnz_grayE6E6E6()
+                } else {
+                    return mnz_grayF7F7F7()
+                }
+                
+            case .dark:
+                if traitCollection.accessibilityContrast == .high {
+                    return mnz_gray3A3A3C()
+                } else {
+                    return mnz_black2C2C2E()
+                }
+                
+            default:
+                return mnz_grayF7F7F7()
+            }
+        } else {
+            return mnz_grayF7F7F7()
+        }
+    }
     
     @objc class func mnz_tertiaryBackgroundElevated(_ traitCollection: UITraitCollection) -> UIColor {
         if #available(iOS 13.0, *) {
@@ -46,6 +92,51 @@ extension UIColor {
             }
         } else {
             return UIColor.white
+        }
+    }
+    
+    // MARK: Background grouped
+    
+    @objc class func mnz_secondaryBackgroundGrouped(_ traitCollection: UITraitCollection) -> UIColor {
+        return mnz_primaryBackgroundElevated(traitCollection)
+    }
+    
+    @objc class func mnz_tertiaryBackgroundGrouped(_ traitCollection: UITraitCollection) -> UIColor {
+        return mnz_secondaryBackgroundElevated(traitCollection)
+    }
+    
+    // MARK: Background grouped elevated
+    
+    @objc class func mnz_backgroundGroupedElevated(_ traitCollection: UITraitCollection) -> UIColor {
+        return mnz_secondaryBackground(for: traitCollection)
+    }
+    
+    @objc class func mnz_secondaryBackgroundGroupedElevated(_ traitCollection: UITraitCollection) -> UIColor {
+        return mnz_tertiaryBackground(traitCollection)
+    }
+    
+    @objc class func mnz_tertiaryBackgroundGroupedElevated(_ traitCollection: UITraitCollection) -> UIColor {
+        if #available(iOS 13.0, *) {
+            switch traitCollection.userInterfaceStyle {
+            case .unspecified, .light:
+                if traitCollection.accessibilityContrast == .high {
+                    return mnz_grayE6E6E6()
+                } else {
+                    return mnz_grayF7F7F7()
+                }
+                
+            case .dark:
+                if traitCollection.accessibilityContrast == .high {
+                    return mnz_gray545458()
+                } else {
+                    return mnz_gray3A3A3C()
+                }
+                
+            default:
+                return white
+            }
+        } else {
+            return white
         }
     }
     

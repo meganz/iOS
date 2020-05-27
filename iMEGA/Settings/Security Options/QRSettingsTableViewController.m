@@ -7,6 +7,7 @@
 #import "MEGAGetAttrUserRequestDelegate.h"
 #import "MEGASetAttrUserRequestDelegate.h"
 #import "MEGASdkManager.h"
+#import "MEGA-Swift.h"
 
 @interface QRSettingsTableViewController ()
 
@@ -83,7 +84,7 @@
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    cell.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
+    cell.backgroundColor = [UIColor mnz_secondaryBackgroundGrouped:self.traitCollection];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
