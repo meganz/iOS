@@ -1,5 +1,6 @@
 
 #import <Foundation/Foundation.h>
+#import "MEGAChatMessage.h"
 
 @interface MEGATransfer (MNZCategory)
 
@@ -7,6 +8,7 @@
 
 - (void)mnz_createThumbnailAndPreview;
 - (void)mnz_renameOrRemoveThumbnailAndPreview;
+- (MEGAChatMessageType)transferChatMessageType;
 
 #pragma mark - App data
 
