@@ -6,16 +6,16 @@ class GlobalDNDNotificationControl: PushNotificationControl {
     
     @objc var timeRemainingToDeactiveDND: String? {
         guard let settings = pushNotificationSettings,
-            settings.isGlobalDNDEnabled else {
+            settings.globalChatsDndEnabled else {
                 return nil
         }
         
-        let globalDNDTimestamp = settings.globalDNDTimestamp
+        let globalDNDTimestamp = settings.globalChatsDNDTimestamp
         return string(from: Int64(globalDNDTimestamp))
     }
     
     @objc var isGlobalDNDEnabled: Bool {
-        return pushNotificationSettings?.isGlobalDNDEnabled ?? false
+        return pushNotificationSettings?.globalChatsDndEnabled ?? false
     }
     
     @objc func turnOnDND(_ sender: UIView) {
@@ -25,7 +25,7 @@ class GlobalDNDNotificationControl: PushNotificationControl {
     
     @objc func turnOffDND() {
         updatePushNotificationSettings {
-            self.pushNotificationSettings?.disableGlobalDND()
+            self.pushNotificationSettings?.globalChatsDndEnabled = false;
         }
     }
     
@@ -41,9 +41,9 @@ extension GlobalDNDNotificationControl {
     private func turnOnDND(dndTurnOnOption: DNDTurnOnOption) {
         updatePushNotificationSettings {
             if dndTurnOnOption == .forever {
-                self.pushNotificationSettings?.setGlobalEnabled(false)
+                self.pushNotificationSettings?.globalChatsDndEnabled = true
             } else {
-                self.pushNotificationSettings?.globalDNDTimestamp = dndTimeInterval(dndTurnOnOption: dndTurnOnOption)
+                self.pushNotificationSettings?.globalChatsDNDTimestamp = dndTimeInterval(dndTurnOnOption: dndTurnOnOption)
             }
         }
     }
