@@ -36,4 +36,8 @@ extension UIView {
             layer.borderWidth = newValue
         }
     }
+    
+    static var reuseIdentifier: String {
+      return String(describing: self)
+    }
 }

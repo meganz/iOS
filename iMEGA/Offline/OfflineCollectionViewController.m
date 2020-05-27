@@ -258,54 +258,10 @@ static NSString *kPath = @"kPath";
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.collectionView];
     NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:buttonPosition];
     
-    UIAlertController *infoAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    [infoAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
-    
     NodeCollectionViewCell *cell = (NodeCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
     NSString *itemPath = [[self.offline currentOfflinePath] stringByAppendingPathComponent:cell.nameLabel.text];
     
-    UIAlertAction *removeItemAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"remove", @"Title for the action that allows to remove a file or folder") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [self.offline removeOfflineNodeCell:itemPath];
-    }];
-    [infoAlertController addAction:removeItemAction];
-    
-    BOOL isDirectory;
-    BOOL fileExistsAtPath = [[NSFileManager defaultManager] fileExistsAtPath:itemPath isDirectory:&isDirectory];
-    if (fileExistsAtPath && !isDirectory) {
-        UIAlertAction *shareItemAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"share", @"Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected ") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            
-            NSMutableArray *activitiesMutableArray = [[NSMutableArray alloc] init];
-            
-            OpenInActivity *openInActivity = [[OpenInActivity alloc] initOnView:self.view];
-            [activitiesMutableArray addObject:openInActivity];
-            
-            NSURL *itemPathURL = [NSURL fileURLWithPath:itemPath];
-            
-            NSMutableArray *selectedItems = [NSMutableArray arrayWithCapacity:1];
-            [selectedItems addObject:itemPathURL];
-            
-            UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:selectedItems applicationActivities:activitiesMutableArray];
-            
-            [activityViewController setCompletionWithItemsHandler:nil];
-                        
-            if (UIDevice.currentDevice.iPadDevice) {
-                activityViewController.modalPresentationStyle = UIModalPresentationPopover;
-                activityViewController.popoverPresentationController.sourceView = sender;
-                activityViewController.popoverPresentationController.sourceRect = CGRectMake(0, 0, sender.frame.size.width/2, sender.frame.size.height/2);
-            }
-            
-            [self presentViewController:activityViewController animated:YES completion:nil];
-        }];
-        [infoAlertController addAction:shareItemAction];
-    }
-    
-    if ([[UIDevice currentDevice] iPadDevice]) {
-        infoAlertController.modalPresentationStyle = UIModalPresentationPopover;
-        infoAlertController.popoverPresentationController.sourceView = sender;
-        infoAlertController.popoverPresentationController.sourceRect = CGRectMake(0, 0, sender.frame.size.width/2, sender.frame.size.height/2);
-    }
-    
-    [self presentViewController:infoAlertController animated:YES completion:nil];
+    [self.offline showInfoFilePath:itemPath at:indexPath from:sender];
 }
 
 @end

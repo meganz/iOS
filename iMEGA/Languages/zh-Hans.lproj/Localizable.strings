@@ -436,22 +436,6 @@
 "renameNodeMessage"="输入新名字";
 /* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
 "moveToTheRubbishBin"="移至垃圾桶";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 file' */
-"moveFileToRubbishBinMessage"="您确定要移动1 个文件至垃圾箱吗？";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin '{1+} files' */
-"moveFilesToRubbishBinMessage"="您确定要移动%d 个文件至垃圾箱吗？";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 folder' */
-"moveFolderToRubbishBinMessage"="您确定要移动1 个文件夹至垃圾箱吗？";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} folders" */
-"moveFoldersToRubbishBinMessage"="您确定要移动%d 个文件夹至垃圾箱吗？";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and 1 folder" */
-"moveFileFolderToRubbishBinMessage"="您确定要移动1 个文件和1 个文件夹至垃圾箱吗？";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and {1+} folders" */
-"moveFileFoldersToRubbishBinMessage"="您确定要移动1 个文件和%d 个文件夹至垃圾箱吗？";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files and 1 folder" */
-"moveFilesFolderToRubbishBinMessage"="您确定要移动%d 个文件和1 个文件夹至垃圾箱吗？";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "[A] = {1+} files and [B] = {1+} folders" */
-"moveFilesFoldersToRubbishBinMessage"="您确定要将[A] 文件和[B] 文件夹移至垃圾桶吗？";
 /* Success message shown when you have moved 1 file to the rubbish bin */
 "fileMovedToRubbishBinMessage"="1个文件已移放进垃圾桶";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
@@ -477,7 +461,7 @@
 /* Success message for sharing multiple folders. */
 "sharedFolders_success"="已成功分享%d 文件夹.";
 /* Button title that triggers the importing link action */
-"import"="输入";
+"Import to Cloud Drive"="导入云盘";
 /* Message shown when a file has been imported */
 "fileImported"="文件已导入";
 /* Message shown when some files have been imported */
@@ -525,9 +509,9 @@
 /* Label for any ‘Requests’ button, link, text, title, etc. On iOS is used to go to the Contact request section from Contacts */
 "Requests"="联系人邀请";
 /* Label for any ‘Groups’ button, link, text, title, etc. On iOS is used to go to the chats 'Groups' section from Contacts */
-"Groups"="Groups";
+"Groups"="群组";
 /* Label for any ‘Recently Added’ button, link, text, title, etc. On iOS is used on a section that shows the 'Recently Added' contacts */
-"Recently Added"="Recently Added";
+"Recently Added"="最近添加";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
 "oneFolderShared"="1个文件夹";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
@@ -580,8 +564,6 @@
 "theUsersHaveBeenInvited"="该用户已被邀请。该邀请被接受后，他将会出现在您的联系人列表中。";
 /* Alert title shown when you want to remove one or more contacts */
 "removeUserTitle"="删除联系人";
-/* Alert confirmation message shown when you want to remove one contact from your contacts list */
-"removeUserMessage"="您确定要把%@ 从您的联系簿删除吗？";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
 "removeMultipleUsersMessage"="您确定要从联系簿删除%d 个联系人吗？";
 /* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
@@ -606,7 +588,7 @@
 "shareFolder"="共享文件夹";
 /* Button title which, if tapped, will trigger the action of sharing the folders selected */
 "shareFolders"="分享文件夹";
-/* Button that allows you to select a given folder */
+/* Button that allows you to select something (a folder, a message...) */
 "select"="选择";
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
 "permissions"="允许";
@@ -1261,8 +1243,10 @@
 "enableRichUrlPreviews"="启用扩展网址预览";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "alwaysAllow"="始终允许";
-/* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
+/* Text indicating to the user that some action will be postpone. E.g. used for 'rich previews' and management of disk storage. */
 "notNow"="现在不用";
+/* Text indicating to the user some action should be addressed. E.g. Navigate to Settings/File Management to clear cache. */
+"Manage"="管理";
 /* */
 "never"="从不";
 /* After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings. */
@@ -1420,7 +1404,7 @@
 "videoQuality"="视频画质";
 /* Property associated with something smaller than the usual or average size, number, value, or amount. For example: option to encode a video with low quality. */
 "low"="低";
-/* Option to upload videos with the same resolution and same framerate than the original one, but converting them to MP4. */
+/* Property associated with something higher than the usual or average size, number, value, or amount. For example: video quality. */
 "high"="高";
 /* Property associated with the first one made and not a copy. For example: Get the original video, without encoding.  */
 "original"="原版的";
@@ -1636,6 +1620,10 @@
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="将MEGA应用程序中拍摄的照片与视频的副本保存在您设备的媒体资料库中。";
 /* Settings section title where you can enable the option to 'Spotlight search' */
 "Spotlight Search"="搜索热点";
+/* Title of the Spotlight Search section */
+"Search"="搜索";
+/* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="When enabled, allow search and look up MEGA files/folders in Spotlight Search.";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="您持有这把密钥";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -1653,7 +1641,7 @@
 /* Description shown in a page of the onboarding screens explaining the camera uploads feature */
 "Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="相机上传是任何移动设备的基本功能，我们已为您开启。 立即创建您的帐户。";
 /* Button which triggers the initial setup */
-"Setup MEGA"="安装MEGA";
+"Setup MEGA"="设置MEGA";
 /* Detailed explanation of why the user should give some permissions to MEGA */
 "To fully take advantage of your MEGA account we need to ask you some permissions."="要充分利用您的MEGA帐户，我们需要得到您的允许。";
 /* Message warning the user about the risk of not setting up permissions */
@@ -2158,11 +2146,11 @@
 "Choose Folder"="选择文件夹";
 /* Label used near to the option selected to encode the images uploaded to a chat (Low, Medium, Original) */
 "Image quality"="图片质量";
-/* Title of Image Quality option */
+/* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
 "Automatic"="自动";
 /* Description of Automatic Image Quality option */
 "Send smaller size images through cellular networks and original size images through wifi"="使用蜂窝网络时发送较小尺寸图片，使用Wi-Fi时发送原始图片";
-/* Title of Image Quality option */
+/* Text for some option property indicating the user the action to perform will be optimised. For example: Image Quality reduction option for chats */
 "Optimised"="优化";
 /* Description of Optimised Image Quality option */
 "Send smaller size images optimised for lower data consumption"="发送较小尺寸的图片，优化以降低数据消耗";
@@ -2181,27 +2169,27 @@
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="输入群名称";
 /* Title of one of the Settings sections where you can customise the 'Appearance' of the app. */
-"Appearance"="Appearance";
+"Appearance"="外观";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
-"Sorting And View Mode"="Sorting And View Mode";
+"Sorting And View Mode"="排序和视图模式";
 /* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
-"Default"="Default";
+"Default"="默认";
 /* Label for any ‘Day’ button, link, text, title, etc. - (String as short as possible). */
 "Day"="天";
 /* Label for any ‘Night’ button, link, text, title, etc. - (String as short as possible). */
-"Night"="Night";
+"Night"="夜间模式";
 /* Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible). */
-"Minimal"="Minimal";
+"Minimal"="最小化";
 /* Section title inside of Settings - Appearance, where you can change the app's layout. */
-"Layout"="Layout";
+"Layout"="布局";
 /* Section title inside of Settings - Appearance, where you can change the app's icon. */
-"App Icon"="App Icon";
+"App Icon"="App图标";
 /* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
-"Configure sorting order and the default view (List or Thumbnail)."="Configure sorting order and the default view (List or Thumbnail).";
+"Configure sorting order and the default view (List or Thumbnail)."="配置排序顺序和默认视图（列表或缩略图）。";
 /* Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for All'. */
-"Per Folder"="Per Folder";
+"Per Folder"="按文件夹";
 /* Same for all configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for all Folders'. */
-"Same for All"="Same for All";
+"Same for All"="全部相同";
 /* Section title of the 'Sorting And View Mode' view inside of Settings - Appearence - Sorting And View Mode. */
 "Sorting preference"="文件夹排序设定";
 /* Section title of the 'Sorting And View Mode' view inside of Settings - Appearence - Sorting And View Mode. */
@@ -2209,7 +2197,7 @@
 /* Footer text explaining what means choosing a sorting preference 'Per Folder' or 'Same for All' in Settings - Appearance - Sorting And View Mode. */
 "Configure column sorting order on a per-folder basis, or use the same order for all folders."="排序模式的设定只应用于单个文件夹，或将该设定引用至所有文件夹";
 /* Footer text explaining what means choosing a view mode preference 'Per Folder', 'List view' or 'Thumbnail view' in Settings - Appearance - Sorting And View Mode. */
-"Select view mode (List or Thumbnail) on a per-folder basis, or use the same view mode for all folders."="Select view mode (List or Thumbnail) on a per-folder basis, or use the same view mode for all folders.";
+"Select view mode (List or Thumbnail) on a per-folder basis, or use the same view mode for all folders."="在每个文件夹中选择视图模式（列表或缩略图），或对所有文件夹使用相同的视图模式。";
 /* Warning message to alert user about logout in My Account section if has transfers in progress. */
 "When you logout, ongoing transfers will be cancelled."="登出帐户后，正在进行的传输将被取消。";
 /* Warning message to alert user about logout in My Account section if has offline files. */
@@ -2218,3 +2206,9 @@
 "When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled."="登出帐户后，“离线”中的文件将从您的设备中删除，传输中的文件将被取消。";
 /* Default title of an empty chat. */
 "Chat created on %s1"="聊天创建于%s1";
+/* Title shown when there are no shared files */
+"No Shared Files"="No Shared Files";
+/* Error message shown when opening a folder link which doesn’t exist */
+"Folder link unavailable"="文件夹链接无法使用";
+/* Error message shown when opening a file link which doesn’t exist */
+"File link unavailable"="这不是有效的文件链接";

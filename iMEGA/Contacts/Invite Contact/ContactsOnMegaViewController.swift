@@ -1,23 +1,23 @@
-
 import Contacts
 import UIKit
-
 
 @objc class ContactsOnMegaViewController: UIViewController {
 
     var searchController = UISearchController()
     var contactsOnMega = [ContactOnMega]()
     var searchingContactsOnMega = [ContactOnMega]()
-    
+
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var inviteContactView: UIStackView!
     @IBOutlet weak var inviteContactLabel: UILabel!
     @IBOutlet weak var searchFixedView: UIView!
-    
+    @IBOutlet var contactsOnMegaHeader: UIView!
+    @IBOutlet weak var contactsOnMegaHeaderTitle: UILabel!
+
     // MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         navigationItem.title = AMLocalizedString("On MEGA", "Text used as a section title or similar showing the user the phone contacts using MEGA")
         inviteContactLabel.text = AMLocalizedString("inviteContact", "Text shown when the user tries to make a call and the receiver is not a contact")
         
@@ -29,15 +29,15 @@ import UIKit
         
         tableView.register(UINib(nibName: "GenericHeaderFooterView", bundle: nil), forHeaderFooterViewReuseIdentifier: "GenericHeaderFooterViewID")
         tableView.register(ContactsPermissionBottomView().nib(), forHeaderFooterViewReuseIdentifier: ContactsPermissionBottomView().bottomReuserIdentifier())
-        
+
         tableView.tableFooterView = UIView()  // This remove the separator line between empty cells
         
         updateAppearance()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-       
+
         contactsOnMega = ContactsOnMegaManager.shared.fetchContactsOnMega() ?? []
         self.tableView.layoutIfNeeded()
         tableView.reloadData()
@@ -47,10 +47,10 @@ import UIKit
             SVProgressHUD.show()
         }
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+
         //Fix to avoid ContactsPermissionBottomView button not being rendered correctly in small screens and iOS10
         if CNContactStore.authorizationStatus(for: CNEntityType.contacts) != CNAuthorizationStatus.authorized {
             tableView.reloadData()
@@ -74,10 +74,10 @@ import UIKit
         
         inviteContactView.isHidden = true
     }
-    
+
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
-        
+
         coordinator.animate(alongsideTransition: nil) { [unowned self] _ in
             self.tableView.reloadData()
             self.searchController.searchBar.frame.size.width = self.searchFixedView.frame.size.width
@@ -166,21 +166,21 @@ extension ContactsOnMegaViewController: UITableViewDataSource {
             return 0
         }
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "contactOnMegaCell", for: indexPath) as? ContactOnMegaTableViewCell else {
             fatalError("Could not dequeue cell with identifier contactOnMegaCell")
         }
-        
+
         cell.configure(for: contacts()[indexPath.row], delegate: self)
-        
+
         return cell
     }
 }
 
 // MARK: - UITableViewDelegate
 extension ContactsOnMegaViewController: UITableViewDelegate {
-    
+
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "GenericHeaderFooterViewID") as? GenericHeaderFooterView else {
             return UIView(frame: .zero)
@@ -189,19 +189,18 @@ extension ContactsOnMegaViewController: UITableViewDelegate {
         
         return header
     }
-    
+
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 38
     }
-    
+
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         switch CNContactStore.authorizationStatus(for: CNEntityType.contacts) {
         case .notDetermined:
             guard let bottomView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ContactsPermissionBottomView().bottomReuserIdentifier()) as? ContactsPermissionBottomView else {
                 return UIView(frame: .zero)
             }
-            bottomView.configureForRequestingPermission ( action: {
-                SVProgressHUD.show()
+            bottomView.configureForRequestingPermission( action: {
                 DevicePermissionsHelper.contactsPermission { (granted) in
                     if granted {
                         ContactsOnMegaManager.shared.configureContactsOnMega(completion: {
@@ -218,7 +217,7 @@ extension ContactsOnMegaViewController: UITableViewDelegate {
                 }
             })
             return bottomView
-            
+
         case .restricted, .denied:
             guard let bottomView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ContactsPermissionBottomView().bottomReuserIdentifier()) as? ContactsPermissionBottomView else {
                 return UIView(frame: CGRect.zero)
@@ -226,12 +225,12 @@ extension ContactsOnMegaViewController: UITableViewDelegate {
             bottomView.configureForOpenSettingsPermission( action: {
                 UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!, options: [:], completionHandler: nil)
             })
-            
+
             return bottomView
-            
+
         case .authorized:
             return UIView(frame: CGRect.zero)
-            
+
         @unknown default:
             return UIView(frame: CGRect.zero)
         }

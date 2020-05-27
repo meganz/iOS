@@ -9,6 +9,8 @@
 #import "ContactDetailsViewController.h"
 #import "ContactTableViewCell.h"
 
+#import "MEGA-Swift.h"
+
 @interface ChatAttachedContactsViewController ()
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -288,28 +290,14 @@
             return;
         }
         
-        UIAlertController *addContactAlertController = [UIAlertController alertControllerWithTitle:userEmailSelected message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-        [addContactAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+        NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
+        [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email") detail:nil image:nil style:UIAlertActionStyleDefault actionHandler:^{
+            MEGAInviteContactRequestDelegate *inviteContactRequestDelegate = [MEGAInviteContactRequestDelegate.alloc initWithNumberOfRequests:1];
+            [MEGASdkManager.sharedMEGASdk inviteContactWithEmail:userEmailSelected message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
+        }]];
         
-        UIAlertAction *addContactAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            MEGAInviteContactRequestDelegate *inviteContactRequestDelegate = [[MEGAInviteContactRequestDelegate alloc] initWithNumberOfRequests:1];
-            [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:userEmailSelected message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
-        }];
-        [addContactAlertController addAction:addContactAlertAction];
-        
-        addContactAlertController.modalPresentationStyle = UIModalPresentationPopover;
-        addContactAlertController.popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionAny;
-        
-        if ([[UIDevice currentDevice] iPad]) {
-            CGRect cellRect = [self.tableView rectForRowAtIndexPath:indexPath];
-            addContactAlertController.popoverPresentationController.sourceRect = cellRect;
-            addContactAlertController.popoverPresentationController.sourceView = self.view;
-        } else {
-            addContactAlertController.popoverPresentationController.sourceRect = self.view.frame;
-            addContactAlertController.popoverPresentationController.sourceView = self.view;
-        }
-        
-        [self presentViewController:addContactAlertController animated:YES completion:nil];
+        ActionSheetViewController *moreActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:userEmailSelected dismissCompletion:nil sender:[tableView cellForRowAtIndexPath:indexPath]];
+        [self presentViewController:moreActionSheet animated:YES completion:nil];
     }
     
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];

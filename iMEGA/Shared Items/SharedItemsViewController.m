@@ -22,14 +22,15 @@
 #import "CloudDriveViewController.h"
 #import "ContactsViewController.h"
 #import "CopyrightWarningViewController.h"
-#import "CustomActionViewController.h"
 #import "EmptyStateView.h"
+#import "SharedItemsTableViewCell.h"
 #import "MEGAPhotoBrowserViewController.h"
 #import "NodeInfoViewController.h"
 #import "NodeTableViewCell.h"
-#import "SharedItemsTableViewCell.h"
 
-@interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, MGSwipeTableCellDelegate, NodeInfoViewControllerDelegate, CustomActionViewControllerDelegate> {
+#import "MEGA-Swift.h"
+
+@interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, MGSwipeTableCellDelegate, NodeInfoViewControllerDelegate, NodeActionViewControllerDelegate> {
     BOOL allNodesSelected;
 }
 
@@ -532,57 +533,37 @@
     if (self.tableView.isEditing) {
         [self setEditing:NO animated:YES];
     } else {
-        UIAlertController *moreAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-        [moreAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+        __weak __typeof__(self) weakSelf = self;
         
-        UIAlertAction *sortByAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"sortTitle", @"Section title of the 'Sort by'") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            UIAlertController *sortByAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-            [sortByAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
-            
-            NSString *ascendingSortTitle = [NSString stringWithFormat:@"%@%@", AMLocalizedString(@"nameAscending", @"Sort by option (1/6). This one orders the files alphabethically"), self.sortOrderType == MEGASortOrderTypeAlphabeticalAsc ? @" ✓" : @""];
-            UIAlertAction *sortAscendingAlertAction = [UIAlertAction actionWithTitle:ascendingSortTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-                self.sortOrderType = MEGASortOrderTypeAlphabeticalAsc;
-                [self reloadUI];
+        NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
+        [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"sortTitle", @"Section title of the 'Sort by'") detail:nil image:[UIImage imageNamed:@"sort"] style:UIAlertActionStyleDefault actionHandler:^{
+            NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
+            [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"nameAscending", @"Sort by option (1/6). This one orders the files alphabethically") detail:self.sortOrderType == MEGASortOrderTypeAlphabeticalAsc ? @"✓" : @"" image:[UIImage imageNamed:@"ascending"] style:UIAlertActionStyleDefault actionHandler:^{
+                weakSelf.sortOrderType = MEGASortOrderTypeAlphabeticalAsc;
+                [weakSelf reloadUI];
                 [NSUserDefaults.standardUserDefaults setInteger:self.sortOrderType forKey:@"SharedItemsSortOrderType"];
-            }];
-            [sortByAlertController addAction:sortAscendingAlertAction];
-            
-            NSString *descendingSortTitle = [NSString stringWithFormat:@"%@%@", AMLocalizedString(@"nameDescending", @"Sort by option (2/6). This one arranges the files on reverse alphabethical order"), self.sortOrderType == MEGASortOrderTypeAlphabeticalDesc ? @" ✓" : @""];
-            UIAlertAction *sortDescendingAlertAction = [UIAlertAction actionWithTitle:descendingSortTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-                self.sortOrderType = MEGASortOrderTypeAlphabeticalDesc;
-                [self reloadUI];
+            }]];
+            [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"nameDescending", @"Sort by option (2/6). This one arranges the files on reverse alphabethical order") detail:self.sortOrderType == MEGASortOrderTypeAlphabeticalDesc ? @"✓" : @"" image:[UIImage imageNamed:@"descending"] style:UIAlertActionStyleDefault actionHandler:^{
+                weakSelf.sortOrderType = MEGASortOrderTypeAlphabeticalDesc;
+                [weakSelf reloadUI];
                 [NSUserDefaults.standardUserDefaults setInteger:self.sortOrderType forKey:@"SharedItemsSortOrderType"];
-            }];
-            [sortByAlertController addAction:sortDescendingAlertAction];
+            }]];
             
-            if (UIDevice.currentDevice.iPadDevice) {
-                sortByAlertController.modalPresentationStyle = UIModalPresentationPopover;
-                UIPopoverPresentationController *popoverPresentationController = sortByAlertController.popoverPresentationController;
-                popoverPresentationController.barButtonItem = self.navigationItem.rightBarButtonItems.firstObject;
-                popoverPresentationController.sourceView = self.view;
-            }
-            [self presentViewController:sortByAlertController animated:YES completion:nil];
-        }];
-        [moreAlertController addAction:sortByAlertAction];
+            ActionSheetViewController *sortByActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:nil dismissCompletion:nil sender:self.navigationItem.rightBarButtonItems.firstObject];
+            [weakSelf presentViewController:sortByActionSheet animated:YES completion:nil];
+        }]];
+        [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"select", @"Button that allows you to select a given folder") detail:nil image:[UIImage imageNamed:@"selected"] style:UIAlertActionStyleDefault actionHandler:^{
+            [weakSelf setEditing:YES animated:YES];
+            
+            weakSelf.selectedNodesMutableArray = NSMutableArray.alloc.init;
+            weakSelf.selectedSharesMutableArray = NSMutableArray.alloc.init;
+            
+            [weakSelf toolbarItemsForSharedItems];
+            [weakSelf toolbarItemsSetEnabled:NO];
+        }]];
         
-        UIAlertAction *selectAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"select", @"Button that allows you to select a given folder") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            [self setEditing:YES animated:YES];
-            
-            self.selectedNodesMutableArray = NSMutableArray.alloc.init;
-            self.selectedSharesMutableArray = NSMutableArray.alloc.init;
-            
-            [self toolbarItemsForSharedItems];
-            [self toolbarItemsSetEnabled:NO];
-        }];
-        [moreAlertController addAction:selectAlertAction];
-        
-        if (UIDevice.currentDevice.iPadDevice) {
-            moreAlertController.modalPresentationStyle = UIModalPresentationPopover;
-            UIPopoverPresentationController *popoverPresentationController = moreAlertController.popoverPresentationController;
-            popoverPresentationController.barButtonItem = self.navigationItem.rightBarButtonItems.firstObject;
-            popoverPresentationController.sourceView = self.view;
-        }
-        [self presentViewController:moreAlertController animated:YES completion:nil];
+        ActionSheetViewController *moreActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:nil dismissCompletion:nil sender:self.navigationItem.rightBarButtonItems.firstObject];
+        [self presentViewController:moreActionSheet animated:YES completion:nil];
     }
 }
 
@@ -718,22 +699,8 @@
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
     
-    MEGANode *node = [self nodeAtIndexPath:indexPath];
-    CustomActionViewController *actionController = CustomActionViewController.alloc.init;
-    actionController.node = node;
-    actionController.displayMode = self.linksButton.selected ? DisplayModeCloudDrive : DisplayModeSharedItem;
-    actionController.actionDelegate = self;
-    actionController.actionSender = sender;
-    actionController.incomingShareChildView = self.incomingButton.selected;
-    if ([[UIDevice currentDevice] iPadDevice]) {
-        actionController.modalPresentationStyle = UIModalPresentationPopover;
-        actionController.popoverPresentationController.delegate = actionController;
-        actionController.popoverPresentationController.sourceView = sender;
-        actionController.popoverPresentationController.sourceRect = CGRectMake(0, 0, sender.frame.size.width/2, sender.frame.size.height/2);
-    } else {
-        actionController.modalPresentationStyle = UIModalPresentationOverFullScreen;
-    }
-    [self presentViewController:actionController animated:YES completion:nil];
+    NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:[self nodeAtIndexPath:indexPath] delegate:self displayMode:self.linksButton.selected ? DisplayModeCloudDrive : DisplayModeSharedItem isIncoming:self.incomingButton.selected sender:sender];
+    [self presentViewController:nodeActions animated:YES completion:nil];
 }
 
 - (IBAction)downloadAction:(UIBarButtonItem *)sender {
@@ -1027,7 +994,7 @@
             if (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension) {
                 [self.navigationController presentViewController:[self photoBrowserForMediaNode:node] animated:YES completion:nil];
             } else {
-                [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO];
+                [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO fileLink:nil];
             }
             break;
         }
@@ -1369,9 +1336,9 @@
     }
 }
 
-#pragma mark - CustomActionViewControllerDelegate
+#pragma mark - NodeActionViewControllerDelegate
 
-- (void)performAction:(MegaNodeActionType)action inNode:(MEGANode *)node fromSender:(id)sender{
+- (void)nodeAction:(NodeActionViewController *)nodeAction didSelect:(MegaNodeActionType)action for:(MEGANode *)node from:(id)sender {
     switch (action) {
         case MegaNodeActionTypeDownload:
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", nil)];
