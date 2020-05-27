@@ -93,7 +93,9 @@
     }
     
     if (node.isFile) {
-        self.infoLabel.text = self.recentActionBucket ? [NSString stringWithFormat:@"%@ • %@", [Helper sizeForNode:node api:MEGASdkManager.sharedMEGASdk], node.creationTime.mnz_formattedHourAndMinutes] : [Helper sizeAndDateForNode:node api:api];
+        self.infoLabel.text = self.recentActionBucket ?
+            [Helper sizeAndModicationDateForNode:node api:[MEGASdkManager sharedMEGASdk]] :
+            [Helper sizeAndModicationDateForNode:node api:api];
         self.versionedImageView.hidden = ![[MEGASdkManager sharedMEGASdk] hasVersionsForNode:node];
     } else if (node.isFolder) {
         self.infoLabel.text = [Helper filesAndFoldersInFolderNode:node api:api];

@@ -652,6 +652,10 @@
     return [NSString stringWithFormat:@"%@ • %@", [self sizeForNode:node api:api], node.creationTime.mnz_formattedDefaultDateForMedia];
 }
 
++ (NSString *)sizeAndModicationDateForNode:(MEGANode *)node api:(MEGASdk *)api {
+    return [NSString stringWithFormat:@"%@ • %@", [self sizeForNode:node api:api], node.modificationTime.mnz_formattedDefaultDateForMedia];
+}
+
 + (NSString *)sizeForNode:(MEGANode *)node api:(MEGASdk *)api {
     NSString *size;
     if ([node isFile]) {
