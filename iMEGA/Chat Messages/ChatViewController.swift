@@ -480,7 +480,7 @@ class ChatViewController: MessagesViewController {
             let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatRichPreviewMediaCollectionViewCell.reuseIdentifier, for: indexPath) as! ChatRichPreviewMediaCollectionViewCell
             cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
             return cell
-        } else if chatMessage.message.type == .voiceClip {
+        } else if chatMessage.message.type == .voiceClip || chatMessage.transfer?.transferChatMessageType() == .voiceClip {
             let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatVoiceClipCollectionViewCell.reuseIdentifier, for: indexPath) as! ChatVoiceClipCollectionViewCell
             cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
             return cell
