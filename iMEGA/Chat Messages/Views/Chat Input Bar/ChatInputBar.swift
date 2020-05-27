@@ -369,8 +369,6 @@ extension ChatInputBar: VoiceClipInputBarDelegate {
     func removeVoiceClipView(withClipPath path: String?) {
         if let clipPath = path {
             self.delegate?.tappedSendAudio(atPath: clipPath)
-        }
-        
-        recordingViewEnabled = false
+        }        
     }
 }

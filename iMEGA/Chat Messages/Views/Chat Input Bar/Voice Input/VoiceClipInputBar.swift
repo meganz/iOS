@@ -36,6 +36,22 @@ class VoiceClipInputBar: UIView {
     }
 
     @IBAction func recordButtonTapped(_ sender: UIButton) {
+        recordingStartedAnimation()
+    }
+    
+    @IBAction func trashButtonTapped(_ sender: UIButton) {
+        delegate?.removeVoiceClipView(withClipPath: stopRecording(true))
+        recordingCompletedAnimation()
+    }
+    
+    @IBAction func sendButtonTapped(_ sender: UIButton) {
+        delegate?.removeVoiceClipView(withClipPath: stopRecording())
+        recordingCompletedAnimation()
+    }
+    
+    // MARK:- Private methods
+    
+    private func recordingStartedAnimation() {
         sendView.isHidden = false
         trashView.isHidden = false
         
@@ -53,13 +69,24 @@ class VoiceClipInputBar: UIView {
             self.startRecordingView.alpha = 1.0
         })
     }
-    
-    @IBAction func trashButtonTapped(_ sender: UIButton) {
-        delegate?.removeVoiceClipView(withClipPath: stopRecording(true))
-    }
-    
-    @IBAction func sendButtonTapped(_ sender: UIButton) {
-        delegate?.removeVoiceClipView(withClipPath: stopRecording())
+
+    private func recordingCompletedAnimation() {
+        self.recordTimeLabel.isHidden = true
+        self.audioWavesView.reset()
+        self.startRecordingView.alpha = 0.0
+        self.startRecordingView.isHidden = false
+
+        UIView.animate(withDuration: 0.4, animations: {
+            self.sendViewTrailingConstraint.isActive = false
+            self.trashViewLeadingConstraint.isActive = false
+            self.sendViewHorizontalConstraint.isActive = true
+            self.trashViewHorizontalConstraint.isActive = true
+            self.startRecordingView.alpha = 1.0
+            self.layoutIfNeeded()
+        }, completion: { _ in
+            self.sendView.isHidden = true
+            self.trashView.isHidden = true
+        })
     }
     
     private func startRecordingAudio() {
