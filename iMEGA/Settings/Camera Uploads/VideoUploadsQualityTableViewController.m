@@ -1,5 +1,8 @@
 
 #import "VideoUploadsQualityTableViewController.h"
+
+#import "MEGA-Swift.h"
+
 #import "SelectableTableViewCell.h"
 #import "CameraUploadManager+Settings.h"
 
@@ -61,7 +64,7 @@
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    cell.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
+    cell.backgroundColor = [UIColor mnz_secondaryBackgroundGrouped:self.traitCollection];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
