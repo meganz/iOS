@@ -129,6 +129,10 @@ class ChatViewMessagesFlowLayout: MessagesCollectionViewFlowLayout {
                 if chatMessage.message.isManagementMessage {
                     return chatManagmentTypeCollectionViewSizeCalculator
                 }
+                if chatMessage.transfer?.transferChatMessageType() == .voiceClip {
+                    return chatVoiceClipCollectionViewSizeCalculator
+                }
+                
                 return super.cellSizeCalculatorForItem(at: indexPath)
             }
         }

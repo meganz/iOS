@@ -19,6 +19,12 @@ class ChatVoiceClipCollectionViewCell: AudioMessageCell {
         return waveView
     }()
     
+    open var loadingIndicator: UIActivityIndicatorView = {
+        let loadingIndicator = UIActivityIndicatorView()
+        loadingIndicator.startAnimating()
+        loadingIndicator.isHidden = true
+        return loadingIndicator
+    }()
     
     // MARK: - Methods
     override func setupConstraints() {
@@ -35,6 +41,10 @@ class ChatVoiceClipCollectionViewCell: AudioMessageCell {
         waveView.autoAlignAxis(toSuperviewAxis: .horizontal)
         waveView.autoSetDimensions(to: CGSize(width: 42, height: 25))
 
+        loadingIndicator.autoPinEdge(.left, to: .left, of: playButton)
+        loadingIndicator.autoPinEdge(.right, to: .right, of: playButton)
+        loadingIndicator.autoPinEdge(.top, to: .top, of: playButton)
+        loadingIndicator.autoPinEdge(.bottom, to: .bottom, of: playButton)
 //        waveView.autoPinEdge(.leading, to: .trailing, of: playButton, withOffset: 5)
 //        waveView.autoPinEdge(.trailing, to: .leading, of: durationLabel, withOffset: 5)
 //        waveView.autoAlignAxis(toSuperviewAxis: .horizontal)
@@ -42,6 +52,7 @@ class ChatVoiceClipCollectionViewCell: AudioMessageCell {
     
     open override func setupSubviews() {
         messageContainerView.addSubview(waveView)
+        messageContainerView.addSubview(loadingIndicator)
         super.setupSubviews()
         playButton.setImage(UIImage(named: "playVoiceClip")?.withRenderingMode(.alwaysTemplate), for: .normal)
         playButton.setImage(UIImage(named: "pauseVoiceClip")?.withRenderingMode(.alwaysTemplate), for: .selected)
@@ -69,15 +80,26 @@ class ChatVoiceClipCollectionViewCell: AudioMessageCell {
         durationLabel.textColor = textColor
         progressView.trackTintColor = .lightGray
         waveView.tintColor = textColor
-        let node = megaMessage.nodeList.node(at: 0)!
-        let duration = max(node.duration, 0)
-        durationLabel.text = NSString.mnz_string(fromTimeInterval: TimeInterval(duration))
-        let nodePath = node.mnz_temporaryPath(forDownloadCreatingDirectories: true)
-        if !FileManager.default.fileExists(atPath: nodePath) {
-            MEGASdkManager.sharedMEGASdk()?.startDownloadTopPriority(with: node, localPath: nodePath, appData: nil, delegate: MEGAStartDownloadTransferDelegate(progress: nil, completion: { (transfer) in
-                messagesCollectionView.reloadItems(at: [indexPath])
-            }, onError: nil))
+        loadingIndicator.color = textColor
+        
+        guard chatMessage.transfer != nil else {
+            guard let nodeList = megaMessage.nodeList, let node = nodeList.node(at: 0) else { return }
+                let duration = max(node.duration, 0)
+                durationLabel.text = NSString.mnz_string(fromTimeInterval: TimeInterval(duration))
+                let nodePath = node.mnz_temporaryPath(forDownloadCreatingDirectories: true)
+                if !FileManager.default.fileExists(atPath: nodePath) {
+                    MEGASdkManager.sharedMEGASdk()?.startDownloadTopPriority(with: node, localPath: nodePath, appData: nil, delegate: MEGAStartDownloadTransferDelegate(progress: nil, completion: { (transfer) in
+                        messagesCollectionView.reloadItems(at: [indexPath])
+                    }, onError: nil))
+                }
+            
+            loadingIndicator.isHidden = true
+            playButton.isHidden = false
+            return
         }
+        loadingIndicator.startAnimating()
+        loadingIndicator.isHidden = false
+        playButton.isHidden = true
     }
 }
 

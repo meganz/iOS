@@ -68,6 +68,11 @@ extension ChatMessage: MessageType {
             return .custom(message)
         }
         
+        if transfer?.transferChatMessageType() == .voiceClip {
+            return .custom(message)
+        }
+        
+        
         return .text(message.type.description)
     }
 }
