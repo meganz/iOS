@@ -321,7 +321,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
                 return
         }
         
-        let cacheSessionName = session.suffix(Int(MEGALastCharactersFromSession))
+        let cacheSessionName = session.dropFirst(Int(MEGADropFirstCharactersFromSession))
         for filename in nseCacheContent {
             if filename.contains(cacheSessionName) {
                 let pathToRemove = nseCacheURL.appendingPathComponent(filename).path
