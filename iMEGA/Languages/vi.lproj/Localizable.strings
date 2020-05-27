@@ -436,22 +436,6 @@
 "renameNodeMessage"="Nhập tên mới";
 /* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
 "moveToTheRubbishBin"="Chuyển vào Thùng Rác";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 file' */
-"moveFileToRubbishBinMessage"="Bạn có chắc muốn chuyển 1 tệp tin này vào Thùng Rác không?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin '{1+} files' */
-"moveFilesToRubbishBinMessage"="Bạn có chắc muốn chuyển %d tệp tin vào Thùng Rác không?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 folder' */
-"moveFolderToRubbishBinMessage"="Bạn có chắc muốn chuyển 1 thư mục vào Thùng Rác không?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} folders" */
-"moveFoldersToRubbishBinMessage"="Bạn có chắc muốn chuyển %d thư mục vào Thùng rác không?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and 1 folder" */
-"moveFileFolderToRubbishBinMessage"="Bạn có chắc muốn chuyển 1 tệp tin và thư mục này vào Thùng Rác?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and {1+} folders" */
-"moveFileFoldersToRubbishBinMessage"="Bạn có chắc muốn chuyển 1 tệp tin và %d thư mục vào Thùng Rác?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files and 1 folder" */
-"moveFilesFolderToRubbishBinMessage"="Bạn có chắc muốn chuyển %d tệp tin và 1 thư mục vào Thùng Rác?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "[A] = {1+} files and [B] = {1+} folders" */
-"moveFilesFoldersToRubbishBinMessage"="Bạn có chắc muốn chuyển [A] tệp tin và [B] thư mục vào Thùng Rác không?";
 /* Success message shown when you have moved 1 file to the rubbish bin */
 "fileMovedToRubbishBinMessage"="1 tệp tin được chuyển vào Thùng Rác";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
@@ -477,7 +461,7 @@
 /* Success message for sharing multiple folders. */
 "sharedFolders_success"="Đã chia sẻ %d thư mục thành công.";
 /* Button title that triggers the importing link action */
-"import"="Chuyển nhập";
+"Import to Cloud Drive"="Chuyển nhập vào Ổ Mây";
 /* Message shown when a file has been imported */
 "fileImported"="Đã nhập tệp tin!";
 /* Message shown when some files have been imported */
@@ -580,8 +564,6 @@
 "theUsersHaveBeenInvited"="Tên của những người quý khách vừa mời sẽ xuất hiện trong danh bạ sau khi họ dùng lời mời của quý khách để tạo tài khoản.";
 /* Alert title shown when you want to remove one or more contacts */
 "removeUserTitle"="Xóa liên hệ";
-/* Alert confirmation message shown when you want to remove one contact from your contacts list */
-"removeUserMessage"="Bạn có chắc muốn xóa tên %@ khỏi danh bạ của bạn không?";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
 "removeMultipleUsersMessage"="Bạn có chắc muốn xóa %d tên khỏi danh bạ của bạn không?";
 /* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
@@ -606,7 +588,7 @@
 "shareFolder"="Chia sẻ thư mục này";
 /* Button title which, if tapped, will trigger the action of sharing the folders selected */
 "shareFolders"="Chia sẻ thư mục";
-/* Button that allows you to select a given folder */
+/* Button that allows you to select something (a folder, a message...) */
 "select"="Chọn";
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
 "permissions"="Cấp phép";
@@ -739,7 +721,7 @@
 /* Title for the MEGA Recovery Key */
 "masterKey"="Mã Khóa Phục Hồi";
 /* Section title where you can change your MEGA's password */
-"changePasswordLabel"="Đổi mật khẩu";
+"changePasswordLabel"="Change Password";
 /* Advising the user to keep the user's master key safe. */
 "exportMasterKeyFooter"="Xuất ra Mã Phục Hồi và giữ mã ở một nơi an toàn và dễ nhớ sẽ giúp bạn tránh việc mất dữ liệu khi quên mật khẩu.";
 /* Question button to present a view where it's explained what is the Recovery Key */
@@ -1261,8 +1243,10 @@
 "enableRichUrlPreviews"="Bật hiển thị xem trước nội dung tóm tắt của URL";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "alwaysAllow"="Luôn Thực Hiện";
-/* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
+/* Text indicating to the user that some action will be postpone. E.g. used for 'rich previews' and management of disk storage. */
 "notNow"="Không Phải Lúc Này";
+/* Text indicating to the user some action should be addressed. E.g. Navigate to Settings/File Management to clear cache. */
+"Manage"="Quản lý";
 /* */
 "never"="Không bao giờ";
 /* After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings. */
@@ -1420,7 +1404,7 @@
 "videoQuality"="Chất lượng video";
 /* Property associated with something smaller than the usual or average size, number, value, or amount. For example: option to encode a video with low quality. */
 "low"="Thấp";
-/* Option to upload videos with the same resolution and same framerate than the original one, but converting them to MP4. */
+/* Property associated with something higher than the usual or average size, number, value, or amount. For example: video quality. */
 "high"="Cao";
 /* Property associated with the first one made and not a copy. For example: Get the original video, without encoding.  */
 "original"="Giữ nguyên gốc";
@@ -1636,6 +1620,10 @@
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Giữ một bản sao của hình ảnh và videos được chụp từ app MEGA vào kho thư viện ảnh của máy.";
 /* Settings section title where you can enable the option to 'Spotlight search' */
 "Spotlight Search"="Spotlight Search";
+/* Title of the Spotlight Search section */
+"Search"="Tìm kiếm";
+/* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="When enabled, allow search and look up MEGA files/folders in Spotlight Search.";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="Chính bạn là người giữ chìa khóa";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -2158,11 +2146,11 @@
 "Choose Folder"="Chọn Thư Mục";
 /* Label used near to the option selected to encode the images uploaded to a chat (Low, Medium, Original) */
 "Image quality"="Image quality";
-/* Title of Image Quality option */
+/* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
 "Automatic"="Tự động";
 /* Description of Automatic Image Quality option */
 "Send smaller size images through cellular networks and original size images through wifi"="Send smaller size images through cellular networks and original size images through Wi-Fi";
-/* Title of Image Quality option */
+/* Text for some option property indicating the user the action to perform will be optimised. For example: Image Quality reduction option for chats */
 "Optimised"="Optimised";
 /* Description of Optimised Image Quality option */
 "Send smaller size images optimised for lower data consumption"="Send smaller size images optimised for lower data consumption";
@@ -2218,3 +2206,9 @@
 "When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled."="When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled.";
 /* Default title of an empty chat. */
 "Chat created on %s1"="Cuộc chát được tạo vào ngày %s1";
+/* Title shown when there are no shared files */
+"No Shared Files"="No Shared Files";
+/* Error message shown when opening a folder link which doesn’t exist */
+"Folder link unavailable"="Liên kết thư mục bất khả dụng";
+/* Error message shown when opening a file link which doesn’t exist */
+"File link unavailable"="Đường liên kết này không còn tồn tại";

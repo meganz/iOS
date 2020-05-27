@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="eDp-9x-QPr">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="eDp-9x-QPr">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -2366,7 +2366,7 @@
         <image name="rotateOFF" width="60" height="60"/>
         <image name="rotateON" width="60" height="60"/>
         <image name="selectAll" width="22" height="22"/>
-        <image name="sendLocation" width="40" height="40"/>
+        <image name="sendLocation" width="28" height="28"/>
         <image name="speakerOff" width="60" height="60"/>
         <image name="speakerOn" width="60" height="60"/>
         <image name="standardDisclosureIndicator" width="7.6666665077209473" height="12"/>

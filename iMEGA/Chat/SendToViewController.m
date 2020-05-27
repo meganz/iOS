@@ -22,12 +22,6 @@
 #endif
 #import "MEGAUser+MNZCategory.h"
 
-#ifdef MNZ_SHARE_EXTENSION
-#import "MEGAShare-Swift.h"
-#else
-#import "MEGA-Swift.h"
-#endif
-
 #import "ContactTableViewCell.h"
 #import "ChatRoomCell.h"
 #import "ItemListViewController.h"
@@ -83,13 +77,12 @@
     switch (self.sendMode) {
         case SendModeCloud:
         case SendModeForward:
+        case SendModeFileAndFolderLink:
             self.cancelBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
-            
             break;
             
         case SendModeShareExtension:
             self.navigationItem.leftBarButtonItem = nil;
-            
             break;
     }
     
@@ -524,8 +517,8 @@
             }
                 
             case SendModeShareExtension:
-                [self.sendToViewControllerDelegate sendToChats:self.selectedGroupChatsMutableArray andUsers:self.selectedUsersMutableArray];
-                
+            case SendModeFileAndFolderLink:
+                [self.sendToViewControllerDelegate sendToViewController:self toChats:self.selectedGroupChatsMutableArray andUsers:self.selectedUsersMutableArray];
                 break;
                 
             case SendModeForward: {

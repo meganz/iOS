@@ -218,7 +218,7 @@
             
             [self.cloudDrive.navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
         } else {
-            [node mnz_openNodeInNavigationController:self.cloudDrive.navigationController folderLink:NO];
+            [node mnz_openNodeInNavigationController:self.cloudDrive.navigationController folderLink:NO fileLink:nil];
         }
     } else {
         if (recentActionBucket.isMedia) {

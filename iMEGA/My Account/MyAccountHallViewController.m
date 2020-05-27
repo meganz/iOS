@@ -11,7 +11,6 @@
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
 #import "MyAccountHallTableViewCell.h"
-#import "MEGA-Swift.h"
 #import "NotificationsTableViewController.h"
 #import "OfflineViewController.h"
 #import "SettingsTableViewController.h"

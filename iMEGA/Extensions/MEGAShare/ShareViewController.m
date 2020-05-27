@@ -868,7 +868,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 #pragma mark - SendToViewControllerDelegate
 
-- (void)sendToChats:(NSArray<MEGAChatListItem *> *)chats andUsers:(NSArray<MEGAUser *> *)users {
+- (void)sendToViewController:(SendToViewController *)viewController toChats:(NSArray<MEGAChatListItem *> *)chats andUsers:(NSArray<MEGAUser *> *)users {
     self.chats = chats;
     self.users = users;
     

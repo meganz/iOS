@@ -6,7 +6,6 @@
 #import "BrowserViewController.h"
 #import "ContactsViewController.h"
 #import "CopyrightWarningViewController.h"
-#import "CustomActionViewController.h"
 #import "DisplayMode.h"
 #import "Helper.h"
 #import "MEGAGetFolderInfoRequestDelegate.h"
@@ -23,6 +22,8 @@
 #import "UIApplication+MNZCategory.h"
 #import "UIImage+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
+
+#import "MEGA-Swift.h"
 
 @interface MegaNodeProperty : NSObject
 
@@ -44,7 +45,7 @@
 
 @end
 
-@interface NodeInfoViewController () <UITableViewDelegate, UITableViewDataSource, CustomActionViewControllerDelegate, MEGAGlobalDelegate>
+@interface NodeInfoViewController () <UITableViewDelegate, UITableViewDataSource, NodeActionViewControllerDelegate, MEGAGlobalDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -337,23 +338,8 @@
 }
 
 - (IBAction)infoTouchUpInside:(UIButton *)sender {
-    CustomActionViewController *actionController = [[CustomActionViewController alloc] init];
-    actionController.node = self.node;
-    actionController.displayMode = DisplayModeNodeInfo;
-    actionController.actionDelegate = self;
-    actionController.actionSender = sender;
-    actionController.incomingShareChildView = self.incomingShareChildView;
-    
-    if ([[UIDevice currentDevice] iPadDevice]) {
-        actionController.modalPresentationStyle = UIModalPresentationPopover;
-        actionController.popoverPresentationController.delegate = actionController;
-        actionController.popoverPresentationController.sourceView = sender;
-        actionController.popoverPresentationController.sourceRect = CGRectMake(0, 0, sender.frame.size.width/2, sender.frame.size.height/2);
-    } else {
-        actionController.modalPresentationStyle = UIModalPresentationOverFullScreen;
-    }
-    
-    [self presentViewController:actionController animated:YES completion:nil];
+    NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:self.node delegate:self displayMode:DisplayModeNodeInfo isIncoming:self.incomingShareChildView sender:sender];
+    [self presentViewController:nodeActions animated:YES completion:nil];
 }
 
 #pragma mark - Private
@@ -492,9 +478,9 @@
     [self.navigationController pushViewController:nodeVersions animated:YES];
 }
 
-#pragma mark - CustomActionViewControllerDelegate
-
-- (void)performAction:(MegaNodeActionType)action inNode:(MEGANode *)node fromSender:(id)sender {
+#pragma mark - NodeActionDelegate
+    
+- (void)nodeAction:(NodeActionViewController *)nodeAction didSelect:(MegaNodeActionType)action for:(MEGANode *)node from:(id)sender {
     switch (action) {
             
         case MegaNodeActionTypeDownload:
