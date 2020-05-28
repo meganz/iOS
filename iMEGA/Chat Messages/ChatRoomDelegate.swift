@@ -137,15 +137,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
             case .unknown, .sending, .sendingManual:
                 break
             case .serverReceived:
-//                reloadTransferData()
-//                let filteredTransfers = transfers.filter { chatMessage in
-//
-//                    let node = chatMessage.message.nodeList.node(at: 0)!
-//
-//                           return chatMessage.message.temporalId == message.temporalId
-//                       }
-                
-//                chatViewController?.messagesCollectionView.reloadData()
+                reloadTransferData()
                 let filteredArray = chatMessage.filter { chatMessage in
                     return chatMessage.message.temporalId == message.temporalId
                 }
@@ -334,12 +326,12 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
             return false
         }
         
-//        self.transfers = transfers.map({ (transfer) -> ChatMessage in
-//            return ChatMessage(transfer: transfer, chatRoom: chatRoom)
-//        })
-        guard transfers.count > 0 else {
-            return
-        }
+        self.transfers = transfers.map({ (transfer) -> ChatMessage in
+            return ChatMessage(transfer: transfer, chatRoom: chatRoom)
+        })
+//        guard transfers.count > 0 else {
+//            return
+//        }
 //        chatViewController.messagesCollectionView.reloadEmptyDataSet()
     }
 }
@@ -361,13 +353,15 @@ extension ChatRoomDelegate: MEGATransferDelegate {
             return
         }
         if appData.contains("\(chatRoom.chatId)") {
-            transfers = transfers.filter({ (chatMessage) -> Bool in
+            transfers = transfers.map({ (chatMessage) -> ChatMessage in
                 if chatMessage.transfer?.tag == transfer.tag {
-                    return false
+                    return ChatMessage(transfer: transfer, chatRoom: chatRoom)
                 }
-                return true
+                
+                return chatMessage
+                
             })
-//            chatViewController?.messagesCollectionView.reloadData()
+            
         }
         
     }
