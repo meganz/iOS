@@ -16,10 +16,9 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
     }()
     
     open var loadingIndicator: UIActivityIndicatorView = {
-        let loadingIndicator = UIActivityIndicatorView()
+        let loadingIndicator = UIActivityIndicatorView(style: .gray)
         loadingIndicator.startAnimating()
         loadingIndicator.isHidden = true
-        loadingIndicator.color = .white
         return loadingIndicator
     }()
     

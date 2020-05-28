@@ -229,7 +229,6 @@ extension ChatViewController {
                     return
             }
             
-            self.navigationBarProgressView.isHidden = false
             let transferredBytes = transfer.transferredBytes.doubleValue
             let totalBytes = transfer.totalBytes.doubleValue
             let asignableProgresRegardWithTotal = totalBytes / self.totalBytesToUpload
@@ -240,9 +239,9 @@ extension ChatViewController {
                     currentAsignableProgressForThisTransfer += self.totalProgressOfTransfersCompleted
                 }
                 
-                if (currentAsignableProgressForThisTransfer > Double(self.navigationBarProgressView.progress)) {
-                    self.navigationBarProgressView.setProgress(Float(currentAsignableProgressForThisTransfer), animated: true)
-                }
+//                if (currentAsignableProgressForThisTransfer > Double(self.navigationBarProgressView.progress)) {
+////                    self.navigationBarProgressView.setProgress(Float(currentAsignableProgressForThisTransfer), animated: true)
+//                }
             }
         }, completion: { [weak self] (transfer) in
             guard let `self` = self else {
@@ -255,8 +254,8 @@ extension ChatViewController {
             self.remainingBytesToUpload -= totalBytes
             
             if self.remainingBytesToUpload == 0 {
-                self.navigationBarProgressView.progress = 0
-                self.navigationBarProgressView.isHidden = true
+//                self.navigationBarProgressView.progress = 0
+//                self.navigationBarProgressView.isHidden = true
                 self.totalBytesToUpload = 0.0
                 self.totalProgressOfTransfersCompleted = 0.0;
             }

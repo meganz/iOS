@@ -15,10 +15,10 @@
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkBoxUnselected" translatesAutoresizingMaskIntoConstraints="NO" id="g4T-tM-XEl">
-                    <rect key="frame" x="10" y="14" width="22" height="22"/>
+                    <rect key="frame" x="10" y="13" width="24" height="24"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="22" id="8NI-qe-ckt"/>
-                        <constraint firstAttribute="height" constant="22" id="HVJ-Uf-hqC"/>
+                        <constraint firstAttribute="width" constant="24" id="8NI-qe-ckt"/>
+                        <constraint firstAttribute="height" constant="24" id="HVJ-Uf-hqC"/>
                     </constraints>
                 </imageView>
             </subviews>
