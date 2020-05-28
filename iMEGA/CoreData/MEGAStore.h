@@ -68,6 +68,7 @@
 
 - (void)insertMessage:(uint64_t)messageId chatId:(uint64_t)chatId;
 - (void)deleteMessage:(MOMessage *)message;
+- (void)deleteAllMessagesWithContext:(NSManagedObjectContext *)context;
 - (MOMessage *)fetchMessageWithChatId:(uint64_t)chatId messageId:(uint64_t)messageId;
 - (BOOL)areTherePendingMessages;
 

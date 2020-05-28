@@ -77,13 +77,12 @@
     switch (self.sendMode) {
         case SendModeCloud:
         case SendModeForward:
+        case SendModeFileAndFolderLink:
             self.cancelBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
-            
             break;
             
         case SendModeShareExtension:
             self.navigationItem.leftBarButtonItem = nil;
-            
             break;
     }
     
@@ -510,8 +509,8 @@
             }
                 
             case SendModeShareExtension:
-                [self.sendToViewControllerDelegate sendToChats:self.selectedGroupChatsMutableArray andUsers:self.selectedUsersMutableArray];
-                
+            case SendModeFileAndFolderLink:
+                [self.sendToViewControllerDelegate sendToViewController:self toChats:self.selectedGroupChatsMutableArray andUsers:self.selectedUsersMutableArray];
                 break;
                 
             case SendModeForward: {

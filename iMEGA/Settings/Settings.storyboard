@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="qvR-uV-YnP">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="qvR-uV-YnP">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -995,10 +995,55 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection footerTitle="When enabled, allow search and look up MEGA files/folders in Spotlight Search." id="pGL-cB-m7l" userLabel="Spotlight">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="44" id="rvh-uH-KnI" userLabel="Spotlight Table View Cell">
+                                        <rect key="frame" x="0.0" y="493.99999618530273" width="414" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="rvh-uH-KnI" id="l5D-4C-dIA">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="hNO-Re-dtO">
+                                                    <rect key="frame" x="345" y="6.6666666666666679" width="51" height="31.000000000000004"/>
+                                                    <color key="onTintColor" red="0.0" green="0.74901960779999999" blue="0.64705882349999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <connections>
+                                                        <action selector="spotlightValueChanged:" destination="RbN-4G-5On" eventType="valueChanged" id="OAl-IF-s1u"/>
+                                                        <action selector="spotlightValueChanged:" destination="Zqt-Yf-u7D" eventType="valueChanged" id="fez-Sz-qMk"/>
+                                                    </connections>
+                                                </switch>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Spotlight Search" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DCP-MM-WMD">
+                                                    <rect key="frame" x="20" y="12" width="127" height="20"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="hNO-Re-dtO" firstAttribute="trailing" secondItem="l5D-4C-dIA" secondAttribute="trailingMargin" id="0ll-Je-c4x"/>
+                                                <constraint firstItem="DCP-MM-WMD" firstAttribute="leading" secondItem="l5D-4C-dIA" secondAttribute="leadingMargin" constant="15" id="2pN-55-lhs"/>
+                                                <constraint firstItem="DCP-MM-WMD" firstAttribute="centerY" secondItem="l5D-4C-dIA" secondAttribute="centerY" id="9aW-b6-oI6"/>
+                                                <constraint firstItem="DCP-MM-WMD" firstAttribute="trailing" secondItem="l5D-4C-dIA" secondAttribute="trailingMargin" id="Fxt-HW-Ylf"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="hNO-Re-dtO" secondAttribute="trailing" id="aJu-Zg-20Q"/>
+                                                <constraint firstItem="DCP-MM-WMD" firstAttribute="leading" secondItem="l5D-4C-dIA" secondAttribute="leadingMargin" id="jIH-ha-Am4"/>
+                                                <constraint firstItem="hNO-Re-dtO" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="DCP-MM-WMD" secondAttribute="trailing" constant="8" id="lbx-BX-NAv"/>
+                                                <constraint firstItem="hNO-Re-dtO" firstAttribute="centerY" secondItem="l5D-4C-dIA" secondAttribute="centerY" id="rBT-U6-p3Q"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="2pN-55-lhs"/>
+                                                    <exclude reference="Fxt-HW-Ylf"/>
+                                                    <exclude reference="0ll-Je-c4x"/>
+                                                </mask>
+                                            </variation>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                             <tableViewSection id="Aud-92-mag" userLabel="Cancel account">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="Cab-ov-Gol" style="IBUITableViewCellStyleDefault" id="v47-Zp-rZ5" userLabel="Clear Offline Files Table View Cell">
-                                        <rect key="frame" x="0.0" y="493.99999618530273" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="601.99999618530273" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="v47-Zp-rZ5" id="Zjj-Ay-Iax">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
@@ -1035,6 +1080,8 @@
                         <outlet property="savePhotosLabel" destination="gFD-P4-mTY" id="tda-4j-GxT"/>
                         <outlet property="saveVideosLabel" destination="IIQ-d9-Fdl" id="r3m-el-iaA"/>
                         <outlet property="saveVideosSwitch" destination="7Cc-dW-hDg" id="B5Z-6l-2hG"/>
+                        <outlet property="spotlightLabel" destination="DCP-MM-WMD" id="mHa-0Z-aq4"/>
+                        <outlet property="spotlightSwitch" destination="hNO-Re-dtO" id="r4F-s3-1tx"/>
                         <outlet property="useHttpsOnlySwitch" destination="Vyq-Yn-Bxz" id="eDN-vd-W8p"/>
                     </connections>
                 </tableViewController>

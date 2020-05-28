@@ -436,22 +436,6 @@
 "renameNodeMessage"="Vul de nieuwe naam in";
 /* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
 "moveToTheRubbishBin"="Verplaats naar de Vuilnisbak";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 file' */
-"moveFileToRubbishBinMessage"="Weet u ezeker dat u 1 bestand naar de Vuilnisbak wilt verplaatsen?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin '{1+} files' */
-"moveFilesToRubbishBinMessage"="Weet u zeker dat u %d bestanden naar de Vuilnisbak wilt verplaatsen?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 folder' */
-"moveFolderToRubbishBinMessage"="Weet u zeker dat u 1 map naar de Vuilnisbak wilt verplaatsen?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} folders" */
-"moveFoldersToRubbishBinMessage"="Weet u zeker dat u %d mappen naar de Vuilnisbak wilt verplaatsen?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and 1 folder" */
-"moveFileFolderToRubbishBinMessage"="Weet u zeker dat u 1 bestand en 1 map wilt verplaatsen naar de Vuilnisbak?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and {1+} folders" */
-"moveFileFoldersToRubbishBinMessage"="Weet u zeker dat u 1 bestand en %d mappen wilt verplaatsen naar de Vuilnisbak?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files and 1 folder" */
-"moveFilesFolderToRubbishBinMessage"="Weet u zeker dat u %d bestanden en 1 map wilt verplaatsen naar de Vuilnisbak?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "[A] = {1+} files and [B] = {1+} folders" */
-"moveFilesFoldersToRubbishBinMessage"="Weet u zeker dat u [A] bestanden en [B] mappen wil verplaatsen naar de prullenbak?";
 /* Success message shown when you have moved 1 file to the rubbish bin */
 "fileMovedToRubbishBinMessage"="1 bestand verplaatst naar de prullenbak";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
@@ -477,7 +461,7 @@
 /* Success message for sharing multiple folders. */
 "sharedFolders_success"="%d mappen met succes gedeeld.";
 /* Button title that triggers the importing link action */
-"import"="Importeren";
+"Import to Cloud Drive"="Importeren naar Cloud Schijf";
 /* Message shown when a file has been imported */
 "fileImported"="Bestand geïmporteerd!";
 /* Message shown when some files have been imported */
@@ -525,9 +509,9 @@
 /* Label for any ‘Requests’ button, link, text, title, etc. On iOS is used to go to the Contact request section from Contacts */
 "Requests"="Aanvragen";
 /* Label for any ‘Groups’ button, link, text, title, etc. On iOS is used to go to the chats 'Groups' section from Contacts */
-"Groups"="Groups";
+"Groups"="Groepen";
 /* Label for any ‘Recently Added’ button, link, text, title, etc. On iOS is used on a section that shows the 'Recently Added' contacts */
-"Recently Added"="Recently Added";
+"Recently Added"="Recent Toegevoegd";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
 "oneFolderShared"="1 map";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
@@ -580,8 +564,6 @@
 "theUsersHaveBeenInvited"="De gebruikers zijn uitgenodigd en zullen, eenmaal geaccepteerd, in uw lijst met contactpersonen verschijnen.";
 /* Alert title shown when you want to remove one or more contacts */
 "removeUserTitle"="Contact verwijderen";
-/* Alert confirmation message shown when you want to remove one contact from your contacts list */
-"removeUserMessage"="Weet u zeker dat u %@ uit uw contactenlijst wilt verwijderen?";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
 "removeMultipleUsersMessage"="Weet u zeker dat u %d gebruikers uit uw contactenlijst wilt verwijderen?";
 /* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
@@ -606,7 +588,7 @@
 "shareFolder"="Gedeelde map";
 /* Button title which, if tapped, will trigger the action of sharing the folders selected */
 "shareFolders"="Deel mappen";
-/* Button that allows you to select a given folder */
+/* Button that allows you to select something (a folder, a message...) */
 "select"="Selecteer";
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
 "permissions"="Toestemmingen";
@@ -1261,8 +1243,10 @@
 "enableRichUrlPreviews"="Rijke URL weergave inschakelen";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "alwaysAllow"="Altijd Toestaan";
-/* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
+/* Text indicating to the user that some action will be postpone. E.g. used for 'rich previews' and management of disk storage. */
 "notNow"="Niet Nu";
+/* Text indicating to the user some action should be addressed. E.g. Navigate to Settings/File Management to clear cache. */
+"Manage"="Beheer";
 /* */
 "never"="Nooit";
 /* After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings. */
@@ -1420,7 +1404,7 @@
 "videoQuality"="Video kwaliteit";
 /* Property associated with something smaller than the usual or average size, number, value, or amount. For example: option to encode a video with low quality. */
 "low"="Laag";
-/* Option to upload videos with the same resolution and same framerate than the original one, but converting them to MP4. */
+/* Property associated with something higher than the usual or average size, number, value, or amount. For example: video quality. */
 "high"="Hoog";
 /* Property associated with the first one made and not a copy. For example: Get the original video, without encoding.  */
 "original"="Orgineel";
@@ -1636,6 +1620,10 @@
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Maak een kopie van de afbeeldingen en video's die gemaakt zijn van de MEGA applicatie in de media bibliotheek van uw apparaat.";
 /* Settings section title where you can enable the option to 'Spotlight search' */
 "Spotlight Search"="Spotlight zoeken";
+/* Title of the Spotlight Search section */
+"Search"="Zoek";
+/* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="When enabled, allow search and look up MEGA files/folders in Spotlight Search.";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="U heeft de sleutels";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -2158,11 +2146,11 @@
 "Choose Folder"="Kies Map";
 /* Label used near to the option selected to encode the images uploaded to a chat (Low, Medium, Original) */
 "Image quality"="Afbeelding kwaliteit";
-/* Title of Image Quality option */
+/* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
 "Automatic"="Automatisch";
 /* Description of Automatic Image Quality option */
 "Send smaller size images through cellular networks and original size images through wifi"="Verzend afbeeldingen met een kleiner formaat via mobiele netwerken en afbeeldingen met een origineel formaat via Wi-Fi";
-/* Title of Image Quality option */
+/* Text for some option property indicating the user the action to perform will be optimised. For example: Image Quality reduction option for chats */
 "Optimised"="Geoptimaliseerd";
 /* Description of Optimised Image Quality option */
 "Send smaller size images optimised for lower data consumption"="Verstuur kleinere formaat afbeeldingen geoptimaliseerd voor lagere data consumptie";
@@ -2181,27 +2169,27 @@
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="Voer groep naam in";
 /* Title of one of the Settings sections where you can customise the 'Appearance' of the app. */
-"Appearance"="Appearance";
+"Appearance"="Verschijning";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
-"Sorting And View Mode"="Sorting And View Mode";
+"Sorting And View Mode"="Sorteer- en Weergavemodus";
 /* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
-"Default"="Default";
+"Default"="Standaard";
 /* Label for any ‘Day’ button, link, text, title, etc. - (String as short as possible). */
 "Day"="Dag";
 /* Label for any ‘Night’ button, link, text, title, etc. - (String as short as possible). */
-"Night"="Night";
+"Night"="Nacht";
 /* Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible). */
-"Minimal"="Minimal";
+"Minimal"="Minimaal";
 /* Section title inside of Settings - Appearance, where you can change the app's layout. */
-"Layout"="Layout";
+"Layout"="Indeling";
 /* Section title inside of Settings - Appearance, where you can change the app's icon. */
-"App Icon"="App Icon";
+"App Icon"="Applicatie-pictogram";
 /* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
-"Configure sorting order and the default view (List or Thumbnail)."="Configure sorting order and the default view (List or Thumbnail).";
+"Configure sorting order and the default view (List or Thumbnail)."="Configureer de sorteervolgorde en de standaardweergave (Lijst of Miniatuur).";
 /* Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for All'. */
-"Per Folder"="Per Folder";
+"Per Folder"="Per Map";
 /* Same for all configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for all Folders'. */
-"Same for All"="Same for All";
+"Same for All"="Hetzelfde voor Alles";
 /* Section title of the 'Sorting And View Mode' view inside of Settings - Appearence - Sorting And View Mode. */
 "Sorting preference"="Sorteer voorkeur";
 /* Section title of the 'Sorting And View Mode' view inside of Settings - Appearence - Sorting And View Mode. */
@@ -2209,7 +2197,7 @@
 /* Footer text explaining what means choosing a sorting preference 'Per Folder' or 'Same for All' in Settings - Appearance - Sorting And View Mode. */
 "Configure column sorting order on a per-folder basis, or use the same order for all folders."="Configureer het sorteren van een column per map, of gebruik dezelfde volgorde voor alle mappen.";
 /* Footer text explaining what means choosing a view mode preference 'Per Folder', 'List view' or 'Thumbnail view' in Settings - Appearance - Sorting And View Mode. */
-"Select view mode (List or Thumbnail) on a per-folder basis, or use the same view mode for all folders."="Select view mode (List or Thumbnail) on a per-folder basis, or use the same view mode for all folders.";
+"Select view mode (List or Thumbnail) on a per-folder basis, or use the same view mode for all folders."="Selecteer de weergavemodus (Lijst of Miniatuur) per map of gebruik dezelfde weergavemodus voor alle mappen.";
 /* Warning message to alert user about logout in My Account section if has transfers in progress. */
 "When you logout, ongoing transfers will be cancelled."="Wanneer u uitlogt, worden voortgaande overdrachten geannuleerd.";
 /* Warning message to alert user about logout in My Account section if has offline files. */
@@ -2218,3 +2206,9 @@
 "When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled."="Wanneer u uitlogt, worden bestanden van uw Offline sectie verwijderd van uw apparaat en voortgaande overdrachten worden geannuleerd.";
 /* Default title of an empty chat. */
 "Chat created on %s1"="Gesprek gecreëerd op %s1";
+/* Title shown when there are no shared files */
+"No Shared Files"="Geen gedeelde bestanden";
+/* Error message shown when opening a folder link which doesn’t exist */
+"Folder link unavailable"="Koppeling naar map is niet beschikbaar";
+/* Error message shown when opening a file link which doesn’t exist */
+"File link unavailable"="Bestandskoppeling onbeschikbaar";

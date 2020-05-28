@@ -413,6 +413,14 @@ extension UIColor {
         return UIColor.init(red: 244.0/255.0, green: 244.0/255.0, blue: 244.0/255.0, alpha: 1.0)
     }
     
+    @objc class func mnz_gray04040F() -> UIColor {
+        return UIColor(red: 0.02, green: 0.02, blue: 0.06, alpha: 1.00)
+    }
+    
+    @objc class func mnz_grayEBEBF5() -> UIColor {
+        return UIColor(red: 0.92, green: 0.92, blue: 0.96, alpha: 1.00)
+    }
+
     // MARK: Blue
     
     @objc class func mnz_blue0089C7() -> UIColor {

@@ -5,6 +5,7 @@
 
 #import "DevicePermissionsHelper.h"
 #import "Helper.h"
+#import "MEGAIndexer.h"
 #import "MEGAMultiFactorAuthCheckRequestDelegate.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
@@ -29,6 +30,9 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *saveMediaInGalleryLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *saveMediaInGallerySwitch;
+
+@property (weak, nonatomic) IBOutlet UILabel *spotlightLabel;
+@property (weak, nonatomic) IBOutlet UISwitch *spotlightSwitch;
 
 @property (getter=isTwoFactorAuthenticationEnabled) BOOL twoFactorAuthenticationEnabled;
 
@@ -62,7 +66,7 @@
     self.savePhotosLabel.text = AMLocalizedString(@"Save Images in Photos", @"Settings section title where you can enable the option to 'Save Images in Photos'");
     self.saveVideosLabel.text = AMLocalizedString(@"Save Videos in Photos", @"Settings section title where you can enable the option to 'Save Videos in Photos'");
     self.saveMediaInGalleryLabel.text = AMLocalizedString(@"Save in Photos", @"Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app");
-    
+    self.spotlightLabel.text = AMLocalizedString(@"Spotlight Search", @"Settings section title where you can enable the option to 'Spotlight search'");
     BOOL useHttpsOnly = [[NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier] boolForKey:@"useHttpsOnly"];
     [self.useHttpsOnlySwitch setOn:useHttpsOnly];
     
@@ -75,6 +79,8 @@
     BOOL isSaveMediaCapturedToGalleryEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:@"isSaveMediaCapturedToGalleryEnabled"];
     [self.saveMediaInGallerySwitch setOn:isSaveMediaCapturedToGalleryEnabled];
     
+    BOOL isSpotlightEnabled = MEGAIndexer.sharedIndexer.enableSpotlight;
+    [self.spotlightSwitch setOn:isSpotlightEnabled];
     [self.tableView reloadData];
 }
 
@@ -168,14 +174,18 @@
     [self checkPhotosPermissionForUserDefaultSetting:@"isSaveMediaCapturedToGalleryEnabled" settingSwitch:self.saveMediaInGallerySwitch];
 }
 
+- (IBAction)spotlightValueChanged:(UISwitch *)sender {
+    MEGAIndexer.sharedIndexer.enableSpotlight = sender.isOn;
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     if (MEGASdkManager.sharedMEGASdk.isBusinessAccount && !MEGASdkManager.sharedMEGASdk.isMasterBusinessAccount) {
-        return 3;
+        return 4;
     }
     
-    return 4;
+    return 5;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
@@ -192,6 +202,11 @@
         case 2: //Camera
             titleHeader = AMLocalizedString(@"Camera", @"Setting associated with the 'Camera' of the device");
             break;
+      
+        case 3:  //Spotlight
+            titleHeader = AMLocalizedString(@"Search", @"Title of the Spotlight Search section");
+            break;
+        
     }
     
     return titleHeader;
@@ -214,6 +229,11 @@
             titleFooter = AMLocalizedString(@"Save a copy of the images and videos taken from the MEGA app in your device’s media library.", @"Footer text shown under the Camera setting to explain the option 'Save in Photos'");
             break;
         }
+            
+        case 3: { //Spotlight
+            titleFooter = AMLocalizedString(@"When enabled, allow search and look up MEGA files/folders in Spotlight Search.", @"Footer text shown under the Spotlight search setting to explain the option 'Spotlight search'");
+            break;
+        }
     }
     
     return titleFooter;
@@ -227,7 +247,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     switch (indexPath.section) {
-        case 3: { //Cancel account
+        case 4: { //Cancel account
             if ([MEGAReachabilityManager isReachableHUDIfNot]) {
                 UIAlertController *cancelAccountAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"youWillLooseAllData", @"Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted.") message:nil preferredStyle:UIAlertControllerStyleAlert];
                 [cancelAccountAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];

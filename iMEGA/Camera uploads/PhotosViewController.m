@@ -24,6 +24,8 @@
 #import "CustomModalAlertViewController.h"
 #import "UploadStats.h"
 #import "UIViewController+MNZCategory.h"
+#import "MEGA-Swift.h"
+
 @import StoreKit;
 @import Photos;
 
@@ -563,27 +565,18 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 }
 
 - (IBAction)deleteAction:(UIBarButtonItem *)sender {
-    NSString *message = (self.selectedItemsDictionary.count > 1) ? [NSString stringWithFormat:AMLocalizedString(@"moveFilesToRubbishBinMessage", @"Alert message to confirm if the user wants to move to the Rubbish Bin '{1+} files'"), self.selectedItemsDictionary.count] : [NSString stringWithString:AMLocalizedString(@"moveFileToRubbishBinMessage", @"Alert message to confirm if the user wants to move to the Rubbish Bin '1 file'")];
-    UIAlertController *moveToTheRubbishBinAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"moveToTheRubbishBin", @"Title for the action that allows you to 'Move to the Rubbish Bin' files or folders") message:message preferredStyle:UIAlertControllerStyleAlert];
+    NSUInteger count = self.selectedItemsDictionary.count;
+    NSArray *selectedItemsArray = [self.selectedItemsDictionary allValues];
+    MEGANode *rubbishBinNode = [[MEGASdkManager sharedMEGASdk] rubbishNode];
+    MEGAMoveRequestDelegate *moveRequestDelegate = [[MEGAMoveRequestDelegate alloc] initToMoveToTheRubbishBinWithFiles:selectedItemsArray.count folders:0 completion:^{
+        [self setEditing:NO animated:NO];
+    }];
     
-    [moveToTheRubbishBinAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
+    for (NSUInteger i = 0; i < count; i++) {
+        [[MEGASdkManager sharedMEGASdk] moveNode:[selectedItemsArray objectAtIndex:i] newParent:rubbishBinNode delegate:moveRequestDelegate];
+    }
     
-    [moveToTheRubbishBinAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        NSUInteger count = self.selectedItemsDictionary.count;
-        NSArray *selectedItemsArray = [self.selectedItemsDictionary allValues];
-        MEGANode *rubbishBinNode = [[MEGASdkManager sharedMEGASdk] rubbishNode];
-        MEGAMoveRequestDelegate *moveRequestDelegate = [[MEGAMoveRequestDelegate alloc] initToMoveToTheRubbishBinWithFiles:selectedItemsArray.count folders:0 completion:^{
-            [self setEditing:NO animated:NO];
-        }];
-        
-        for (NSUInteger i = 0; i < count; i++) {
-            [[MEGASdkManager sharedMEGASdk] moveNode:[selectedItemsArray objectAtIndex:i] newParent:rubbishBinNode delegate:moveRequestDelegate];
-        }
-        
-        [self setEditing:NO animated:YES];
-    }]];
-    
-    [self presentViewController:moveToTheRubbishBinAlertController animated:YES completion:nil];
+    [self setEditing:NO animated:YES];
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -789,19 +782,8 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 }
 
 - (void)showLocalDiskIsFullWarningScreen {
-    CustomModalAlertViewController *warningVC = [[CustomModalAlertViewController alloc] init];
-    warningVC.modalPresentationStyle = UIModalPresentationOverFullScreen;
-    warningVC.image = [UIImage imageNamed:@"disk_storage_full"];
-    warningVC.viewTitle = [NSString stringWithFormat:AMLocalizedString(@"%@ Storage Full", nil), UIDevice.currentDevice.localizedModel];
-    NSString *storageSettingPath = [NSString stringWithFormat:AMLocalizedString(@"Settings > General > %@ Storage", nil), UIDevice.currentDevice.localizedModel];
-    warningVC.detail = [NSString stringWithFormat:AMLocalizedString(@"You do not have enough storage to upload camera. Free up space by deleting unneeded apps, videos or music. You can manage your storage in %@", nil), storageSettingPath];
-    warningVC.boldInDetail = storageSettingPath;
-    warningVC.firstButtonTitle = AMLocalizedString(@"ok", nil);
-    warningVC.firstCompletion = ^{
-        [self dismissViewControllerAnimated:YES completion:nil];
-    };
-    
-    [self presentViewController:warningVC animated:YES completion:nil];
+    StorageFullModalAlertViewController *warningVC = StorageFullModalAlertViewController.alloc.init;
+    [warningVC show];
 }
 
 #pragma mark - UILongPressGestureRecognizer
@@ -860,7 +842,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
         
         return photoBrowserVC;
     } else {
-        return [node mnz_viewControllerForNodeInFolderLink:NO];
+        return [node mnz_viewControllerForNodeInFolderLink:NO fileLink:nil];
     }
     
     return nil;

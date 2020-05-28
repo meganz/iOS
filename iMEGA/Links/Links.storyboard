@@ -294,10 +294,10 @@
                     </navigationItem>
                     <connections>
                         <outlet property="closeBarButtonItem" destination="D67-ek-Mq7" id="NiK-Vg-RJp"/>
-                        <outlet property="downloadBarButtonItem" destination="3v0-rP-iq6" id="ahj-QD-8uC"/>
                         <outlet property="importBarButtonItem" destination="UE7-2a-Z7U" id="Gdc-hQ-k02"/>
                         <outlet property="moreBarButtonItem" destination="wnU-Yc-6PL" id="Zj5-hn-uzQ"/>
                         <outlet property="selectAllBarButtonItem" destination="zfR-jK-5T1" id="E25-XE-D5X"/>
+                        <outlet property="shareBarButtonItem" destination="3v0-rP-iq6" id="0Z0-9C-Ero"/>
                         <outlet property="tableView" destination="lUT-Rt-g8P" id="TcE-in-x0L"/>
                         <outlet property="toolbar" destination="XS0-b6-FQU" id="gsd-9e-1KP"/>
                     </connections>
@@ -324,15 +324,15 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <viewLayoutGuide key="safeArea" id="TRc-6b-pxN"/>
                     <items>
-                        <barButtonItem tag="2" title="Download" id="3v0-rP-iq6">
+                        <barButtonItem tag="1" image="import" id="UE7-2a-Z7U">
                             <connections>
-                                <action selector="downloadAction:" destination="9ZV-tM-uu1" id="BGc-xk-nCV"/>
+                                <action selector="importAction:" destination="9ZV-tM-uu1" id="vyb-wJ-QPk"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="SvX-Wp-F0v"/>
-                        <barButtonItem tag="1" title="Import" id="UE7-2a-Z7U">
+                        <barButtonItem tag="2" image="share" id="3v0-rP-iq6">
                             <connections>
-                                <action selector="importAction:" destination="9ZV-tM-uu1" id="vyb-wJ-QPk"/>
+                                <action selector="shareAction:" destination="9ZV-tM-uu1" id="2Y6-km-Zvi"/>
                             </connections>
                         </barButtonItem>
                     </items>
@@ -371,7 +371,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" verticalHuggingPriority="249" horizontalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="GzC-xY-ksk">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="249"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="311.5"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4lW-Ow-gtQ">
                                                 <rect key="frame" x="127.5" y="64.5" width="120" height="120"/>
@@ -380,67 +380,105 @@
                                                     <constraint firstAttribute="height" constant="120" id="uR2-8D-Rpe"/>
                                                 </constraints>
                                             </imageView>
-                                        </subviews>
-                                        <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.94901960784313721" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <constraints>
-                                            <constraint firstItem="4lW-Ow-gtQ" firstAttribute="centerY" secondItem="GzC-xY-ksk" secondAttribute="centerY" id="FOx-hV-FwA"/>
-                                            <constraint firstItem="4lW-Ow-gtQ" firstAttribute="centerX" secondItem="GzC-xY-ksk" secondAttribute="centerX" id="XWF-HA-J6z"/>
-                                        </constraints>
-                                    </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YBb-De-ukf">
-                                        <rect key="frame" x="0.0" y="249" width="375" height="374"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="middleTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JP0-wf-1Tc" userLabel="Name Label">
-                                                <rect key="frame" x="20" y="50" width="335" height="0.0"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                                <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zOn-5Q-P3K" userLabel="Info Label">
-                                                <rect key="frame" x="20" y="58" width="335" height="0.0"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jw5-t8-g06">
-                                                <rect key="frame" x="37.5" y="267" width="300" height="57"/>
-                                                <color key="backgroundColor" red="0.95294117647058818" green="0.047058823529411764" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YjN-vg-oJP">
+                                                <rect key="frame" x="0.0" y="310.5" width="375" height="1"/>
+                                                <color key="backgroundColor" red="0.23529411764705882" green="0.23529411764705882" blue="0.23529411764705882" alpha="0.28904103708791207" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="57" id="0CW-ww-hgQ"/>
-                                                    <constraint firstAttribute="width" constant="300" id="Stc-Uk-Yag"/>
+                                                    <constraint firstAttribute="height" constant="1" id="jLv-b6-UOK"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
-                                                <state key="normal" title="Preview Content">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </state>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                        <integer key="value" value="4"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="titleLabel.adjustsFontSizeToFitWidth" value="YES"/>
-                                                </userDefinedRuntimeAttributes>
-                                                <connections>
-                                                    <action selector="openAction:" destination="2U9-0D-RuC" eventType="touchUpInside" id="nwM-tZ-gbO"/>
-                                                </connections>
-                                            </button>
+                                            </view>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="mXD-0f-xGC">
+                                                <rect key="frame" x="16" y="245.5" width="343" height="57"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="International Modern Archit ec ture.pdf dafs dsdaf" lineBreakMode="middleTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JP0-wf-1Tc" userLabel="Name Label">
+                                                        <rect key="frame" x="0.0" y="0.0" width="307.5" height="38.5"/>
+                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                                        <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="500MB" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zOn-5Q-P3K" userLabel="Info Label">
+                                                        <rect key="frame" x="0.0" y="42.5" width="41" height="14.5"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                        <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                            </stackView>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstAttribute="bottom" secondItem="Jw5-t8-g06" secondAttribute="bottom" constant="50" id="9Sa-uT-FCO"/>
-                                            <constraint firstItem="zOn-5Q-P3K" firstAttribute="top" secondItem="JP0-wf-1Tc" secondAttribute="bottom" constant="8" id="DAD-88-BYy"/>
-                                            <constraint firstItem="zOn-5Q-P3K" firstAttribute="leading" secondItem="YBb-De-ukf" secondAttribute="leading" constant="20" id="Nh4-jZ-JJm"/>
-                                            <constraint firstItem="Jw5-t8-g06" firstAttribute="centerX" secondItem="YBb-De-ukf" secondAttribute="centerX" id="Sko-xW-m6H"/>
-                                            <constraint firstItem="JP0-wf-1Tc" firstAttribute="leading" secondItem="YBb-De-ukf" secondAttribute="leading" constant="20" id="XXA-TL-U8a"/>
-                                            <constraint firstItem="JP0-wf-1Tc" firstAttribute="top" secondItem="YBb-De-ukf" secondAttribute="top" constant="50" id="eEK-lh-Eia"/>
-                                            <constraint firstAttribute="trailing" secondItem="zOn-5Q-P3K" secondAttribute="trailing" constant="20" id="kDA-9q-EMV"/>
-                                            <constraint firstItem="JP0-wf-1Tc" firstAttribute="centerX" secondItem="YBb-De-ukf" secondAttribute="centerX" id="qa1-UM-Q5w"/>
-                                            <constraint firstAttribute="trailing" secondItem="JP0-wf-1Tc" secondAttribute="trailing" constant="20" id="vnE-tB-kYw"/>
-                                            <constraint firstItem="zOn-5Q-P3K" firstAttribute="centerX" secondItem="YBb-De-ukf" secondAttribute="centerX" id="xCv-Yb-Ta1"/>
+                                            <constraint firstAttribute="bottom" secondItem="YjN-vg-oJP" secondAttribute="bottom" id="8VS-5p-YGp"/>
+                                            <constraint firstItem="YjN-vg-oJP" firstAttribute="leading" secondItem="GzC-xY-ksk" secondAttribute="leading" id="B6r-Sx-er7"/>
+                                            <constraint firstItem="4lW-Ow-gtQ" firstAttribute="centerY" secondItem="GzC-xY-ksk" secondAttribute="centerY" multiplier="0.8" id="FOx-hV-FwA"/>
+                                            <constraint firstAttribute="trailing" secondItem="mXD-0f-xGC" secondAttribute="trailing" constant="16" id="QIl-sG-xRI"/>
+                                            <constraint firstItem="YjN-vg-oJP" firstAttribute="top" secondItem="mXD-0f-xGC" secondAttribute="bottom" constant="8" id="XG4-4E-jvh"/>
+                                            <constraint firstItem="4lW-Ow-gtQ" firstAttribute="centerX" secondItem="GzC-xY-ksk" secondAttribute="centerX" id="XWF-HA-J6z"/>
+                                            <constraint firstAttribute="trailing" secondItem="YjN-vg-oJP" secondAttribute="trailing" id="i7i-75-Khh"/>
+                                            <constraint firstItem="mXD-0f-xGC" firstAttribute="leading" secondItem="GzC-xY-ksk" secondAttribute="leading" constant="16" id="q9d-Yu-KNh"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YBb-De-ukf">
+                                        <rect key="frame" x="0.0" y="311.5" width="375" height="311.5"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="QLD-dk-7iA">
+                                                <rect key="frame" x="37.5" y="156.5" width="300" height="130"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CVa-wS-olB">
+                                                        <rect key="frame" x="0.0" y="0.0" width="300" height="57"/>
+                                                        <color key="backgroundColor" red="0.95294117649999999" green="0.047058823530000002" blue="0.078431372550000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="300" id="V7Q-eF-e0r"/>
+                                                            <constraint firstAttribute="height" constant="57" id="Y2C-AO-S1l"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                                        <state key="normal" title="Import">
+                                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </state>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                <integer key="value" value="4"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="boolean" keyPath="titleLabel.adjustsFontSizeToFitWidth" value="YES"/>
+                                                        </userDefinedRuntimeAttributes>
+                                                        <connections>
+                                                            <action selector="importAction:" destination="2U9-0D-RuC" eventType="touchUpInside" id="rlY-JR-r7A"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jw5-t8-g06">
+                                                        <rect key="frame" x="0.0" y="73" width="300" height="57"/>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="57" id="0CW-ww-hgQ"/>
+                                                            <constraint firstAttribute="width" constant="300" id="Stc-Uk-Yag"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                                        <state key="normal" title="Open">
+                                                            <color key="titleColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </state>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                <integer key="value" value="4"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="boolean" keyPath="titleLabel.adjustsFontSizeToFitWidth" value="YES"/>
+                                                        </userDefinedRuntimeAttributes>
+                                                        <connections>
+                                                            <action selector="openAction:" destination="2U9-0D-RuC" eventType="touchUpInside" id="nwM-tZ-gbO"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                        <color key="backgroundColor" red="0.96862745098039216" green="0.96862745098039216" blue="0.96862745098039216" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstItem="QLD-dk-7iA" firstAttribute="centerX" secondItem="YBb-De-ukf" secondAttribute="centerX" id="4hY-rO-P1o"/>
+                                            <constraint firstAttribute="bottom" secondItem="QLD-dk-7iA" secondAttribute="bottom" constant="25" id="Gfh-Ba-Fi5"/>
                                         </constraints>
                                     </view>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="YBb-De-ukf" firstAttribute="width" secondItem="iqn-3S-XJb" secondAttribute="width" id="O2e-Gw-6Dg"/>
+                                    <constraint firstAttribute="trailing" secondItem="YBb-De-ukf" secondAttribute="trailing" id="UuI-Br-sG4"/>
+                                    <constraint firstItem="YBb-De-ukf" firstAttribute="leading" secondItem="iqn-3S-XJb" secondAttribute="leading" id="huY-le-u4P"/>
                                     <constraint firstItem="GzC-xY-ksk" firstAttribute="width" secondItem="iqn-3S-XJb" secondAttribute="width" id="mU3-HS-W63"/>
                                 </constraints>
                             </stackView>
@@ -450,7 +488,7 @@
                             <constraint firstItem="4B9-F0-3U8" firstAttribute="trailing" secondItem="iqn-3S-XJb" secondAttribute="trailing" id="Fr0-qB-a0r"/>
                             <constraint firstItem="iqn-3S-XJb" firstAttribute="top" secondItem="4B9-F0-3U8" secondAttribute="top" id="LiX-b8-0tx"/>
                             <constraint firstItem="4B9-F0-3U8" firstAttribute="bottom" secondItem="iqn-3S-XJb" secondAttribute="bottom" id="Lwe-WM-4c4"/>
-                            <constraint firstItem="GzC-xY-ksk" firstAttribute="height" secondItem="iPt-fM-G85" secondAttribute="height" multiplier="0.4" id="ate-bL-i5t"/>
+                            <constraint firstItem="GzC-xY-ksk" firstAttribute="height" secondItem="iPt-fM-G85" secondAttribute="height" multiplier="0.5" id="ate-bL-i5t"/>
                             <constraint firstItem="iqn-3S-XJb" firstAttribute="leading" secondItem="4B9-F0-3U8" secondAttribute="leading" id="ykt-Yg-vO2"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="4B9-F0-3U8"/>
@@ -461,12 +499,13 @@
                     </navigationItem>
                     <connections>
                         <outlet property="cancelBarButtonItem" destination="4wR-WW-9ce" id="Iku-jO-YKe"/>
-                        <outlet property="downloadBarButtonItem" destination="tCc-eK-W9t" id="aCK-gr-36f"/>
-                        <outlet property="importBarButtonItem" destination="mCa-gQ-sq9" id="LpZ-df-cGQ"/>
+                        <outlet property="importButton" destination="CVa-wS-olB" id="Wsc-Hn-jNu"/>
                         <outlet property="mainView" destination="GzC-xY-ksk" id="qVK-lQ-voh"/>
                         <outlet property="moreBarButtonItem" destination="kO4-pI-oRB" id="0jT-ds-EvU"/>
                         <outlet property="nameLabel" destination="JP0-wf-1Tc" id="MBz-LK-AJ3"/>
-                        <outlet property="previewButton" destination="Jw5-t8-g06" id="Ag1-Or-6j0"/>
+                        <outlet property="openButton" destination="Jw5-t8-g06" id="Ag1-Or-6j0"/>
+                        <outlet property="sendToBarButtonItem" destination="mCa-gQ-sq9" id="LpZ-df-cGQ"/>
+                        <outlet property="shareBarButtonItem" destination="tCc-eK-W9t" id="aCK-gr-36f"/>
                         <outlet property="sizeLabel" destination="zOn-5Q-P3K" id="AmD-4N-6rY"/>
                         <outlet property="thumbnailImageView" destination="4lW-Ow-gtQ" id="aW2-mM-DMU"/>
                         <outlet property="toolbar" destination="6vY-o5-7Ao" id="uKP-CE-JdE"/>
@@ -489,15 +528,15 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <viewLayoutGuide key="safeArea" id="aI3-gc-4ar"/>
                     <items>
-                        <barButtonItem tag="2" title="Download" id="tCc-eK-W9t">
+                        <barButtonItem tag="1" title="Import" image="sendMessage" id="mCa-gQ-sq9">
                             <connections>
-                                <action selector="downloadAction:" destination="2U9-0D-RuC" id="SxN-0S-V9t"/>
+                                <action selector="sendToContactAction:" destination="2U9-0D-RuC" id="oLr-Kw-8s4"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="JdF-Ry-rzp"/>
-                        <barButtonItem tag="1" title="Import" id="mCa-gQ-sq9">
+                        <barButtonItem tag="2" title="Download" image="share" id="tCc-eK-W9t" userLabel="Share">
                             <connections>
-                                <action selector="importAction:" destination="2U9-0D-RuC" id="pq8-rd-zjG"/>
+                                <action selector="shareAction:" destination="2U9-0D-RuC" id="SxN-0S-V9t"/>
                             </connections>
                         </barButtonItem>
                     </items>
@@ -528,9 +567,12 @@
     </scenes>
     <resources>
         <image name="cancel" width="46" height="44"/>
+        <image name="import" width="28" height="28"/>
         <image name="more" width="28" height="28.5"/>
         <image name="moreSelected" width="28" height="28"/>
         <image name="selectAll" width="22" height="22"/>
+        <image name="sendMessage" width="28" height="28"/>
+        <image name="share" width="28" height="28"/>
         <image name="video_list" width="22" height="22"/>
     </resources>
 </document>

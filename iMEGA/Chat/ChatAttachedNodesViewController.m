@@ -74,7 +74,7 @@
     
     self.downloadBarButtonItem.title = AMLocalizedString(@"saveForOffline", @"List option shown on the details of a file or folder");
     [self.downloadBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_redForTraitCollection:self.traitCollection]} forState:UIControlStateNormal];
-    self.importBarButtonItem.title = AMLocalizedString(@"import", @"Button title that triggers the importing link action");
+    self.importBarButtonItem.title = AMLocalizedString(@"Import to Cloud Drive", @"Button title that triggers the importing link action");
     [self.importBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17.0f weight:UIFontWeightMedium], NSForegroundColorAttributeName:[UIColor mnz_redForTraitCollection:self.traitCollection]} forState:UIControlStateNormal];
     UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
@@ -304,7 +304,7 @@
             
             [self.navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
         } else {
-            [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO];
+            [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO fileLink:nil];
         }
     }
     

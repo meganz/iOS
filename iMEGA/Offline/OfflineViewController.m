@@ -14,7 +14,6 @@
 #import "Helper.h"
 #import "MEGAReachabilityManager.h"
 #import "OpenInActivity.h"
-#import "SortByTableViewController.h"
 #import "MEGAStore.h"
 #import "MEGA-Swift.h"
 #import "MEGAAVViewController.h"
@@ -679,66 +678,72 @@ static NSString *kisDirectory = @"kisDirectory";
 }
 
 - (IBAction)deleteTapped:(UIBarButtonItem *)sender {
-    NSString *message;
-    if (self.selectedItems.count == 1) {
-        message = AMLocalizedString(@"removeItemFromOffline", nil);
-    } else {
-        message = AMLocalizedString(@"removeItemsFromOffline", nil);
-    }
-    
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"remove", nil) message:message preferredStyle:UIAlertControllerStyleAlert];
-    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    [self showRemoveAlertWithConfirmAction:^{
         for (NSURL *url in self.selectedItems) {
             [self removeOfflineNodeCell:url.path];
         }
         [self reloadUI];
         [self setEditMode:NO];
-    }]];
-    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
-    [self presentViewController:alertController animated:YES completion:nil];
+    } andCancelAction:nil];
 }
 
 - (IBAction)sortByTapped:(UIBarButtonItem *)sender {
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Cloud" bundle:nil];
-    SortByTableViewController *sortByTableViewController = [storyboard instantiateViewControllerWithIdentifier:@"sortByTableViewControllerID"];
-    sortByTableViewController.path = self.currentOfflinePath;
+    MEGASortOrderType sortType = [Helper sortTypeFor:self.currentOfflinePath];
+
+    NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"nameAscending", nil) detail:sortType == MEGASortOrderTypeDefaultAsc ? @"✓" : @"" image:[UIImage imageNamed:@"ascending"] style:UIAlertActionStyleDefault actionHandler:^{
+        [Helper saveSortOrder:MEGASortOrderTypeDefaultAsc for:self.currentOfflinePath];
+        [self reloadUI];
+    }]];
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"nameDescending", nil) detail:sortType == MEGASortOrderTypeDefaultDesc ? @"✓" : @"" image:[UIImage imageNamed:@"descending"] style:UIAlertActionStyleDefault actionHandler:^{
+        [Helper saveSortOrder:MEGASortOrderTypeDefaultDesc for:self.currentOfflinePath];
+        [self reloadUI];
+    }]];
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"largest", nil) detail:sortType == MEGASortOrderTypeSizeDesc ? @"✓" : @"" image:[UIImage imageNamed:@"largest"] style:UIAlertActionStyleDefault actionHandler:^{
+        [Helper saveSortOrder:MEGASortOrderTypeSizeDesc for:self.currentOfflinePath];
+        [self reloadUI];
+    }]];
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"smallest", nil) detail:sortType == MEGASortOrderTypeSizeAsc ? @"✓" : @"" image:[UIImage imageNamed:@"smallest"] style:UIAlertActionStyleDefault actionHandler:^{
+        [Helper saveSortOrder:MEGASortOrderTypeSizeAsc for:self.currentOfflinePath];
+        [self reloadUI];
+    }]];
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"newest", nil) detail:sortType == MEGASortOrderTypeModificationDesc ? @"✓" : @"" image:[UIImage imageNamed:@"newest"] style:UIAlertActionStyleDefault actionHandler:^{
+        [Helper saveSortOrder:MEGASortOrderTypeModificationDesc for:self.currentOfflinePath];
+        [self reloadUI];
+    }]];
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"oldest", nil) detail:sortType == MEGASortOrderTypeModificationAsc ? @"✓" : @"" image:[UIImage imageNamed:@"oldest"] style:UIAlertActionStyleDefault actionHandler:^{
+        [Helper saveSortOrder:MEGASortOrderTypeModificationAsc for:self.currentOfflinePath];
+        [self reloadUI];
+    }]];
     
-    MEGANavigationController *megaNavigationController = [[MEGANavigationController alloc] initWithRootViewController:sortByTableViewController];
-    
-    [self presentViewController:megaNavigationController animated:YES completion:nil];
+    ActionSheetViewController *sortByActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:nil dismissCompletion:nil sender:self.navigationItem.rightBarButtonItems.firstObject];
+    [self presentViewController:sortByActionSheet animated:YES completion:nil];
 }
 
 - (IBAction)moreAction:(UIBarButtonItem *)sender {
-    UIAlertController *moreAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    [moreAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
-    
+    __weak __typeof__(self) weakSelf = self;
+
+    NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
     if ([self numberOfRows]) {
-        NSString *changeViewTitle = (self.viewModePreference == ViewModePreferenceList) ? AMLocalizedString(@"Thumbnail view", @"Text shown for switching from list view to thumbnail view.") : AMLocalizedString(@"List view", @"Text shown for switching from thumbnail view to list view.");
-        UIAlertAction *changeViewAlertAction = [UIAlertAction actionWithTitle:changeViewTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            [self changeViewModePreference];
-        }];
-        [moreAlertController addAction:changeViewAlertAction];
+        NSString *title = (self.viewModePreference == ViewModePreferenceList) ? AMLocalizedString(@"Thumbnail view", @"Text shown for switching from list view to thumbnail view.") : AMLocalizedString(@"List view", @"Text shown for switching from thumbnail view to list view.");
+        UIImage *image = (self.viewModePreference == ViewModePreferenceList) ? [UIImage imageNamed:@"thumbnailsThin"] : [UIImage imageNamed:@"gridThin"];
+        [actions addObject:[ActionSheetAction.alloc initWithTitle:title detail:nil image:image style:UIAlertActionStyleDefault actionHandler:^{
+            [weakSelf changeViewModePreference];
+        }]];
     }
     
-    UIAlertAction *sortByAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"sortTitle", @"Section title of the 'Sort by'") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [self sortByTapped:self.sortByBarButtonItem];
-    }];
-    [moreAlertController addAction:sortByAlertAction];
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"sortTitle", @"Section title of the 'Sort by'") detail:[NSString localizedSortOrderType:[Helper sortTypeFor:self.currentOfflinePath]] image:[UIImage imageNamed:@"sort"] style:UIAlertActionStyleDefault actionHandler:^{
+        [weakSelf sortByTapped:self.sortByBarButtonItem];
+    }]];
     
     if (self.offlineSortedItems.count) {
-        UIAlertAction *selectAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"select", @"Button that allows you to select a given folder") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            [self editTapped:self.editButtonItem];
-        }];
-        [moreAlertController addAction:selectAlertAction];
+        [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"select", @"Button that allows you to select a given folder") detail:nil image:[UIImage imageNamed:@"select"] style:UIAlertActionStyleDefault actionHandler:^{
+            [weakSelf editTapped:self.editButtonItem];
+        }]];
     }
-    
-    if ([[UIDevice currentDevice] iPadDevice]) {
-        moreAlertController.modalPresentationStyle = UIModalPresentationPopover;
-        moreAlertController.popoverPresentationController.barButtonItem = self.moreBarButtonItem;
-        moreAlertController.popoverPresentationController.sourceView = self.view;
-    }
-    
-    [self presentViewController:moreAlertController animated:YES completion:nil];
+
+    ActionSheetViewController *moreActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:nil dismissCompletion:nil sender:self.moreBarButtonItem];
+    [self presentViewController:moreActionSheet animated:YES completion:nil];
 }
 
 #pragma mark - Public
@@ -957,6 +962,68 @@ static NSString *kisDirectory = @"kisDirectory";
         pathString = [pathString stringByAppendingPathComponent:self.folderPathFromOffline];
     }
     return pathString;
+}
+
+- (void)showRemoveAlertWithConfirmAction:(void (^)(void))confirmAction andCancelAction:(void (^ _Nullable)(void))cancelAction{
+    NSString *message;
+    if (self.selectedItems.count > 1) {
+        message = AMLocalizedString(@"removeItemsFromOffline", nil);
+    } else {
+        message = AMLocalizedString(@"removeItemFromOffline", nil);
+    }
+    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"remove", nil) message:message preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        confirmAction();
+    }]];
+    [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        if (cancelAction) {
+            cancelAction();
+        }
+    }]];
+    [self presentViewController:alertController animated:YES completion:nil];
+}
+
+- (void)showInfoFilePath:(NSString *)itemPath at:(NSIndexPath *)indexPath from:(UIButton *)sender {
+    __weak __typeof__(self) weakSelf = self;
+    
+    NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"remove", @"Title for the action that allows to remove a file or folder") detail:nil image:[UIImage imageNamed:@"remove"] style:UIAlertActionStyleDefault actionHandler:^{
+        [self showRemoveAlertWithConfirmAction:^{
+            [self removeOfflineNodeCell:itemPath];
+        } andCancelAction:nil];
+    }]];
+    
+    BOOL isDirectory;
+    BOOL fileExistsAtPath = [[NSFileManager defaultManager] fileExistsAtPath:itemPath isDirectory:&isDirectory];
+    if (fileExistsAtPath && !isDirectory) {
+        [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"share", @"Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected ") detail:nil image:[UIImage imageNamed:@"share"] style:UIAlertActionStyleDefault actionHandler:^{
+            NSMutableArray *activitiesMutableArray = NSMutableArray.alloc.init;
+            
+            OpenInActivity *openInActivity = [OpenInActivity.alloc initOnView:self.view];
+            [activitiesMutableArray addObject:openInActivity];
+            
+            NSURL *itemPathURL = [NSURL fileURLWithPath:itemPath];
+            
+            NSMutableArray *selectedItems = [NSMutableArray arrayWithCapacity:1];
+            [selectedItems addObject:itemPathURL];
+            
+            UIActivityViewController *activityViewController = [UIActivityViewController.alloc initWithActivityItems:selectedItems applicationActivities:activitiesMutableArray];
+            
+            [activityViewController setCompletionWithItemsHandler:nil];
+            
+            if (UIDevice.currentDevice.iPadDevice) {
+                activityViewController.modalPresentationStyle = UIModalPresentationPopover;
+                activityViewController.popoverPresentationController.sourceView = sender;
+                activityViewController.popoverPresentationController.sourceRect = CGRectMake(0, 0, sender.frame.size.width/2, sender.frame.size.height/2);
+            }
+            
+            [weakSelf presentViewController:activityViewController animated:YES completion:nil];
+        }]];
+    }
+    
+    ActionSheetViewController *fileInfoActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:nil dismissCompletion:nil sender:sender];
+    [self presentViewController:fileInfoActionSheet animated:YES completion:nil];
 }
 
 #pragma mark - UISearchBarDelegate

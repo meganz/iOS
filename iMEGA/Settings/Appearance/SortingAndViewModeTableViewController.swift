@@ -189,9 +189,33 @@ class SortingAndViewModeTableViewController: UITableViewController {
                 
                 sortingPreferenceSameForAllDetailLabel.text = AMLocalizedString("choosePhotoVideo", "Menu option from the `Add` section that allows the user to choose a photo or video to upload it to MEGA.")
             } else {
-                guard let sortByNavigationController = UIStoryboard(name: "Cloud", bundle: nil).instantiateViewController(withIdentifier: "sortByNavigationControllerID") as? MEGANavigationController else { return }
+                var actions = [ActionSheetAction]()
+                let sortType = Helper.sortType(for: nil)
+
+                actions.append(ActionSheetAction(title: AMLocalizedString("nameAscending"), detail: sortType == .defaultAsc ? "✓" : "", image: UIImage(named: "ascending"), style: .default) {
+                    Helper.save(.defaultAsc, for: nil)
+                })
+                actions.append(ActionSheetAction(title: AMLocalizedString("nameDescending"), detail: sortType == .defaultDesc ? "✓" : "", image: UIImage(named: "descending"), style: .default) {
+                    Helper.save(.defaultDesc, for: nil)
+                })
+                actions.append(ActionSheetAction(title: AMLocalizedString("nameDescending"), detail: sortType == .defaultDesc ? "✓" : "", image: UIImage(named: "descending"), style: .default) {
+                    Helper.save(.defaultDesc, for: nil)
+                })
+                actions.append(ActionSheetAction(title: AMLocalizedString("largest"), detail: sortType == .sizeDesc ? "✓" : "", image: UIImage(named: "largest"), style: .default) {
+                    Helper.save(.sizeDesc, for: nil)
+                })
+                actions.append(ActionSheetAction(title: AMLocalizedString("smallest"), detail: sortType == .sizeAsc ? "✓" : "", image: UIImage(named: "smallest"), style: .default) {
+                    Helper.save(.sizeAsc, for: nil)
+                })
+                actions.append(ActionSheetAction(title: AMLocalizedString("newest"), detail: sortType == .modificationDesc ? "✓" : "", image: UIImage(named: "newest"), style: .default) {
+                    Helper.save(.modificationDesc, for: nil)
+                })
+                actions.append(ActionSheetAction(title: AMLocalizedString("oldest"), detail: sortType == .modificationAsc ? "✓" : "", image: UIImage(named: "oldest"), style: .default) {
+                    Helper.save(.modificationAsc, for: nil)
+                })
                 
-                self.present(sortByNavigationController, animated: true, completion: nil)
+                let sortByActionSheet = ActionSheetViewController(actions: actions, headerTitle: nil, dismissCompletion: nil, sender: tableView.cellForRow(at: indexPath))
+                present(sortByActionSheet, animated: true, completion: nil)
             }
             
         case SortingAndViewSection.viewModePreference.rawValue:

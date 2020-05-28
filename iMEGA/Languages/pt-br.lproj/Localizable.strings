@@ -436,22 +436,6 @@
 "renameNodeMessage"="Digite o novo nome";
 /* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
 "moveToTheRubbishBin"="Mover para a Lixeira";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 file' */
-"moveFileToRubbishBinMessage"="Este aplicativo não tem acesso às suas fotos ou vídeos.";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin '{1+} files' */
-"moveFilesToRubbishBinMessage"="Tem a certeza que pretende mover  %d arquivos para a Lixeira?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 folder' */
-"moveFolderToRubbishBinMessage"="Tem a certeza que pretende mover 1 pasta para a Lixeira?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} folders" */
-"moveFoldersToRubbishBinMessage"="Tem a certeza que pretende mover %d pastas para  a Lixeira?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and 1 folder" */
-"moveFileFolderToRubbishBinMessage"="Tem a certeza que deseja mover 1 arquivo e 1 pasta para a Lixeira?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and {1+} folders" */
-"moveFileFoldersToRubbishBinMessage"="Tem a certeza que deseja mover 1 arquivo e %d pastas para a Lixeira?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files and 1 folder" */
-"moveFilesFolderToRubbishBinMessage"="Tem a certeza que deseja mover %d arquivos e 1 pasta para a Lixeira?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "[A] = {1+} files and [B] = {1+} folders" */
-"moveFilesFoldersToRubbishBinMessage"="Tem certeza de que deseja mover [A] arquivos e pastas [B] para o Lixo Bin?";
 /* Success message shown when you have moved 1 file to the rubbish bin */
 "fileMovedToRubbishBinMessage"="1 arquivo movido para a Lixeira";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
@@ -477,7 +461,7 @@
 /* Success message for sharing multiple folders. */
 "sharedFolders_success"="%d pastas compartilhadas corretamente.";
 /* Button title that triggers the importing link action */
-"import"="Importar";
+"Import to Cloud Drive"="Importar para a Cloud Drive";
 /* Message shown when a file has been imported */
 "fileImported"="Arquivo importado!";
 /* Message shown when some files have been imported */
@@ -525,9 +509,9 @@
 /* Label for any ‘Requests’ button, link, text, title, etc. On iOS is used to go to the Contact request section from Contacts */
 "Requests"="Solicitações";
 /* Label for any ‘Groups’ button, link, text, title, etc. On iOS is used to go to the chats 'Groups' section from Contacts */
-"Groups"="Groups";
+"Groups"="Grupos";
 /* Label for any ‘Recently Added’ button, link, text, title, etc. On iOS is used on a section that shows the 'Recently Added' contacts */
-"Recently Added"="Recently Added";
+"Recently Added"="Adicionado recentemente";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
 "oneFolderShared"="1 pasta";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
@@ -580,8 +564,6 @@
 "theUsersHaveBeenInvited"="Os usuários foram convidados e aparecerão na sua lista de contatos assim que aceitarem.";
 /* Alert title shown when you want to remove one or more contacts */
 "removeUserTitle"="Remover contato";
-/* Alert confirmation message shown when you want to remove one contact from your contacts list */
-"removeUserMessage"="Tem certeza que deseja remover %@ da sua lista de contatos?";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
 "removeMultipleUsersMessage"="Tem certeza que deseja remover %d usuários da sua lista de contatos?";
 /* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
@@ -606,7 +588,7 @@
 "shareFolder"="Compartilhar pasta";
 /* Button title which, if tapped, will trigger the action of sharing the folders selected */
 "shareFolders"="Pastas compartilhadas";
-/* Button that allows you to select a given folder */
+/* Button that allows you to select something (a folder, a message...) */
 "select"="Selecionar";
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
 "permissions"="Permissão";
@@ -1261,8 +1243,10 @@
 "enableRichUrlPreviews"="Ativar a visualização de URLs avançadas";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "alwaysAllow"="Permitir sempre";
-/* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
+/* Text indicating to the user that some action will be postpone. E.g. used for 'rich previews' and management of disk storage. */
 "notNow"="Agora não";
+/* Text indicating to the user some action should be addressed. E.g. Navigate to Settings/File Management to clear cache. */
+"Manage"="Gerenciar";
 /* */
 "never"="Nunca";
 /* After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings. */
@@ -1420,7 +1404,7 @@
 "videoQuality"="Qualidade dos vídeos";
 /* Property associated with something smaller than the usual or average size, number, value, or amount. For example: option to encode a video with low quality. */
 "low"="Baixa";
-/* Option to upload videos with the same resolution and same framerate than the original one, but converting them to MP4. */
+/* Property associated with something higher than the usual or average size, number, value, or amount. For example: video quality. */
 "high"="Alta";
 /* Property associated with the first one made and not a copy. For example: Get the original video, without encoding.  */
 "original"="Original";
@@ -1636,6 +1620,10 @@
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Salve uma cópia das fotos tiradas e dos vídeos gravados com o aplicativo do MEGA na biblioteca multimídia do seu dispositivo.";
 /* Settings section title where you can enable the option to 'Spotlight search' */
 "Spotlight Search"="Pesquisa Spotlight";
+/* Title of the Spotlight Search section */
+"Search"="Pesquisar";
+/* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="When enabled, allow search and look up MEGA files/folders in Spotlight Search.";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="Você tem a chave";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -2158,11 +2146,11 @@
 "Choose Folder"="Escolher pasta";
 /* Label used near to the option selected to encode the images uploaded to a chat (Low, Medium, Original) */
 "Image quality"="Qualidade da imagem";
-/* Title of Image Quality option */
+/* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
 "Automatic"="Automático";
 /* Description of Automatic Image Quality option */
 "Send smaller size images through cellular networks and original size images through wifi"="Reduzir o tamanho das imagens enviadas por meio de redes móveis e enviar imagens com o tamanho original por Wi-Fi";
-/* Title of Image Quality option */
+/* Text for some option property indicating the user the action to perform will be optimised. For example: Image Quality reduction option for chats */
 "Optimised"="Otimizada";
 /* Description of Optimised Image Quality option */
 "Send smaller size images optimised for lower data consumption"="Reduzir o tamanho das imagens enviadas, para um menor consumo de dados";
@@ -2181,27 +2169,27 @@
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="Digite o nome do grupo";
 /* Title of one of the Settings sections where you can customise the 'Appearance' of the app. */
-"Appearance"="Appearance";
+"Appearance"="Aparência";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
-"Sorting And View Mode"="Sorting And View Mode";
+"Sorting And View Mode"="Classificação e tipo de visualização";
 /* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
-"Default"="Default";
+"Default"="Predeterminado";
 /* Label for any ‘Day’ button, link, text, title, etc. - (String as short as possible). */
 "Day"="Dia";
 /* Label for any ‘Night’ button, link, text, title, etc. - (String as short as possible). */
-"Night"="Night";
+"Night"="Noturno";
 /* Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible). */
-"Minimal"="Minimal";
+"Minimal"="Mínimo";
 /* Section title inside of Settings - Appearance, where you can change the app's layout. */
 "Layout"="Layout";
 /* Section title inside of Settings - Appearance, where you can change the app's icon. */
-"App Icon"="App Icon";
+"App Icon"="Ícone do aplicativo";
 /* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
-"Configure sorting order and the default view (List or Thumbnail)."="Configure sorting order and the default view (List or Thumbnail).";
+"Configure sorting order and the default view (List or Thumbnail)."="Escolha a ordem de classificação e tipo de visualização predeterminados (lista ou miniatura).";
 /* Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for All'. */
-"Per Folder"="Per Folder";
+"Per Folder"="Por pasta";
 /* Same for all configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for all Folders'. */
-"Same for All"="Same for All";
+"Same for All"="Igual em todas as pastas";
 /* Section title of the 'Sorting And View Mode' view inside of Settings - Appearence - Sorting And View Mode. */
 "Sorting preference"="Preferências de classificação";
 /* Section title of the 'Sorting And View Mode' view inside of Settings - Appearence - Sorting And View Mode. */
@@ -2209,7 +2197,7 @@
 /* Footer text explaining what means choosing a sorting preference 'Per Folder' or 'Same for All' in Settings - Appearance - Sorting And View Mode. */
 "Configure column sorting order on a per-folder basis, or use the same order for all folders."="Configure a ordem de colunas para cada pasta, ou utilize a mesma ordem em todas as pastas.";
 /* Footer text explaining what means choosing a view mode preference 'Per Folder', 'List view' or 'Thumbnail view' in Settings - Appearance - Sorting And View Mode. */
-"Select view mode (List or Thumbnail) on a per-folder basis, or use the same view mode for all folders."="Select view mode (List or Thumbnail) on a per-folder basis, or use the same view mode for all folders.";
+"Select view mode (List or Thumbnail) on a per-folder basis, or use the same view mode for all folders."="Escolha o tipo de visualização predeterminado (lista ou miniaturas) para cada pasta, ou utilize o mesmo tipo em todas as pastas.";
 /* Warning message to alert user about logout in My Account section if has transfers in progress. */
 "When you logout, ongoing transfers will be cancelled."="Quando você fizer logout, as transferências em andamento serão canceladas.";
 /* Warning message to alert user about logout in My Account section if has offline files. */
@@ -2218,3 +2206,9 @@
 "When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled."="Quando você fizer logout, os arquivos da seção Offline serão deletados do seu dispositivo, e as transferências em andamento serão canceladas.";
 /* Default title of an empty chat. */
 "Chat created on %s1"="Chat iniciado em %s1";
+/* Title shown when there are no shared files */
+"No Shared Files"="Não há arquivos compartilhados";
+/* Error message shown when opening a folder link which doesn’t exist */
+"Folder link unavailable"="O link da pasta não está disponível";
+/* Error message shown when opening a file link which doesn’t exist */
+"File link unavailable"="Link de arquivo indisponível";

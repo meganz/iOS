@@ -13,10 +13,11 @@
 #import "Helper.h"
 #import "NodeTableViewCell.h"
 
-#import "CustomActionViewController.h"
 #import "MEGAPhotoBrowserViewController.h"
 
-@interface NodeVersionsViewController () <UITableViewDelegate, UITableViewDataSource, MGSwipeTableCellDelegate, CustomActionViewControllerDelegate, MEGADelegate> {
+#import "MEGA-Swift.h"
+
+@interface NodeVersionsViewController () <UITableViewDelegate, UITableViewDataSource, MGSwipeTableCellDelegate, NodeActionViewControllerDelegate, MEGADelegate> {
     BOOL allNodesSelected;
 }
 
@@ -180,7 +181,7 @@
             
             [self.navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
         } else {
-            [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO];
+            [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO fileLink:nil];
         }
     }
 }
@@ -455,25 +456,8 @@
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
     
-    CustomActionViewController *actionController = [[CustomActionViewController alloc] init];
-    actionController.node = [self nodeForIndexPath:indexPath];
-    actionController.displayMode = DisplayModeNodeVersions;
-    actionController.actionDelegate = self;
-    actionController.actionSender = sender;
-    if (indexPath.section == 0) {
-        actionController.excludedActions = @[@(MegaNodeActionTypeRevertVersion)];
-    }
-    
-    if ([[UIDevice currentDevice] iPadDevice]) {
-        actionController.modalPresentationStyle = UIModalPresentationPopover;
-        actionController.popoverPresentationController.delegate = actionController;
-        actionController.popoverPresentationController.sourceView = sender;
-        actionController.popoverPresentationController.sourceRect = CGRectMake(0, 0, sender.frame.size.width/2, sender.frame.size.height/2);
-    } else {
-        actionController.modalPresentationStyle = UIModalPresentationOverFullScreen;
-    }
-    
-    [self presentViewController:actionController animated:YES completion:nil];
+    NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:[self nodeForIndexPath:indexPath] delegate:self displayMode:DisplayModeNodeVersions isIncoming:NO sender:sender];
+    [self presentViewController:nodeActions animated:YES completion:nil];
 }
 
 #pragma mark - MGSwipeTableCellDelegate
@@ -544,11 +528,10 @@
     }
 }
 
-#pragma mark - CustomActionViewControllerDelegate
+#pragma mark - NodeActionViewControllerDelegate
 
-- (void)performAction:(MegaNodeActionType)action inNode:(MEGANode *)node fromSender:(id)sender {
+- (void)nodeAction:(NodeActionViewController *)nodeAction didSelect:(MegaNodeActionType)action for:(MEGANode *)node from:(id)sender {
     switch (action) {
-            
         case MegaNodeActionTypeDownload:
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
             [node mnz_downloadNodeOverwriting:YES];

@@ -170,6 +170,31 @@
     }
 }
 
++ (UIColor *)mnz_handlebarForTraitCollection:(UITraitCollection *)traitCollection {
+    if (@available(iOS 13.0, *)) {
+        switch (traitCollection.userInterfaceStyle) {
+            case UIUserInterfaceStyleUnspecified:
+            case UIUserInterfaceStyleLight: {
+                if (traitCollection.accessibilityContrast == UIAccessibilityContrastHigh) {
+                    return [UIColor.mnz_gray04040F colorWithAlphaComponent:0.4];
+                } else {
+                    return [UIColor.mnz_gray04040F colorWithAlphaComponent:0.15];
+                }
+            }
+                
+            case UIUserInterfaceStyleDark: {
+                if (traitCollection.accessibilityContrast == UIAccessibilityContrastHigh) {
+                    return [UIColor.mnz_grayEBEBF5 colorWithAlphaComponent:0.6];;
+                } else {
+                    return [UIColor.mnz_grayEBEBF5 colorWithAlphaComponent:0.3];
+                }
+            }
+        }
+    } else {
+        return [UIColor.mnz_gray04040F colorWithAlphaComponent:0.15];
+    }
+}
+
 #pragma mark - Text
 
 + (UIColor *)mnz_label {

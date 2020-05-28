@@ -1,4 +1,3 @@
-
 import UIKit
 
 protocol ContactOnMegaTableViewCellDelegate: NSObject {
@@ -32,14 +31,14 @@ class ContactOnMegaTableViewCell: UITableViewCell {
     }
 
     func configure(for contact: ContactOnMega, delegate: ContactOnMegaTableViewCellDelegate) {
-        
+
         nameLabel.text = contact.name
         emailLabel.text = contact.email
         avatarImageView.mnz_setImage(forUserHandle: contact.handle, name: contact.name)
         addButton.setTitle(AMLocalizedString("addContactButton", "Button title to 'Add' the contact to your contacts list"), for: .normal)
         cellDelegate = delegate
     }
-    
+
     @IBAction func addButtonTouchUpInside(_ sender: Any) {
         if MEGAReachabilityManager.isReachableHUDIfNot() {
             let inviteContactRequestDelegate = MEGAInviteContactRequestDelegate.init(numberOfRequests: 1, presentSuccessOver: UIApplication.mnz_visibleViewController()) {
