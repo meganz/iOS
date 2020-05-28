@@ -542,7 +542,7 @@ extension ChatViewController: AddToChatViewControllerDelegate {
     }
     
     func showVoiceClip() {
-        chatInputBar?.recordingViewEnabled = true
+        chatInputBar?.voiceRecordingViewEnabled = true
     }
     
     func showContacts() {
@@ -642,6 +642,14 @@ extension ChatViewController: AddToChatViewControllerDelegate {
         }
         
         return true
+    }
+    
+    func didDisplayVoiceRecordingView() {
+        messagesCollectionView.isScrollEnabled = false
+    }
+    
+    func didHideVoiceRecordingView() {
+        messagesCollectionView.isScrollEnabled = true
     }
 }
 

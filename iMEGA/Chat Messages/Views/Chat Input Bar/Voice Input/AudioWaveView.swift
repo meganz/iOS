@@ -7,7 +7,6 @@ class AudioWaveView: UIView {
     
     @IBOutlet weak var representationView: UIView!
 
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         proportionalDefaultMultiplier = proportionalHeightConstraint.multiplier
@@ -29,5 +28,9 @@ class AudioWaveView: UIView {
                                                                                       multiplier: multiplier)
             proportionalHeightConstraint.isActive = true
         }
+    }
+    
+    func reset() {
+        level = 1
     }
 }
