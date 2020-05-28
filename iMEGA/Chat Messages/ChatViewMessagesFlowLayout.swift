@@ -129,6 +129,13 @@ class ChatViewMessagesFlowLayout: MessagesCollectionViewFlowLayout {
                 if chatMessage.message.isManagementMessage {
                     return chatManagmentTypeCollectionViewSizeCalculator
                 }
+                if chatMessage.transfer?.transferChatMessageType() == .voiceClip {
+                    return chatVoiceClipCollectionViewSizeCalculator
+                }
+                if chatMessage.transfer?.transferChatMessageType() == .attachment {
+                    return chatMediaCollectionViewSizeCalculator
+                }
+                
                 return super.cellSizeCalculatorForItem(at: indexPath)
             }
         }

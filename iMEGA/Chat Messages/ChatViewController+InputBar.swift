@@ -260,7 +260,7 @@ extension ChatViewController {
         })
     }
     
-    private func uploadAsset(withFilePath filePath: String, parentNode: MEGANode) {
+    private func uploadAsset(withFilePath filePath: String, parentNode: MEGANode, localIdentifier: String) {
         var appData: String? = nil
         
         if let cordinates = (filePath as NSString).mnz_coordinatesOfPhotoOrVideo() {
@@ -268,7 +268,8 @@ extension ChatViewController {
         }
                                             
         appData = ((appData ?? "") as NSString).mnz_appDataToAttach(toChatID: self.chatRoom.chatId, asVoiceClip: false)
-        
+        appData = ((appData ?? "") as NSString).mnz_appData(toLocalIdentifier: localIdentifier)
+
         MEGASdkManager.sharedMEGASdk()!.startUpload(withLocalPath: filePath,
                                                     parent: parentNode,
                                                     appData: appData,
@@ -288,7 +289,7 @@ extension ChatViewController {
                 return
             }
             
-            self.uploadAsset(withFilePath: filePath, parentNode: parentNode)
+            self.uploadAsset(withFilePath: filePath, parentNode: parentNode, localIdentifier: "")
         }, node: nil) { [weak self] error in
             guard let `self` = self else {
                 return
@@ -451,8 +452,7 @@ extension ChatViewController: AddToChatViewControllerDelegate {
                     let `self` = self else {
                     return
                 }
-                
-                self.uploadAsset(withFilePath: filePath, parentNode: resultNode)
+                self.uploadAsset(withFilePath: filePath, parentNode: resultNode, localIdentifier: asset.localIdentifier)
             }, nodes:nil) { errors in
                 guard let errors = errors else {
                     return
@@ -507,7 +507,7 @@ extension ChatViewController: AddToChatViewControllerDelegate {
             }
             
             if (path as NSString).mnz_isImagePathExtension  {
-                self.uploadAsset(withFilePath: path, parentNode: parentNode)
+                self.uploadAsset(withFilePath: path, parentNode: parentNode, localIdentifier: "")
             } else if (path as NSString).mnz_isVideoPathExtension {
                 self.uploadVideo(withFilePath: path, parentNode: parentNode)
             } else {

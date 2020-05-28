@@ -458,11 +458,19 @@ class ChatViewController: MessagesViewController {
 
         guard let messagesDataSource = messagesCollectionView.messagesDataSource else {
               fatalError("Ouch. nil data source for messages")
-          }
+        }
 
         let chatMessage = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView) as! ChatMessage
 
-        if chatMessage.message.type == .attachment
+        if chatMessage.transfer?.transferChatMessageType() == .voiceClip  {
+             let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatVoiceClipCollectionViewCell.reuseIdentifier, for: indexPath) as! ChatVoiceClipCollectionViewCell
+                       cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
+                       return cell
+        } else if chatMessage.transfer?.transferChatMessageType() == .attachment {
+            let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatMediaCollectionViewCell.reuseIdentifier, for: indexPath) as! ChatMediaCollectionViewCell
+            cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
+            return cell
+        } else if chatMessage.message.type == .attachment
             || chatMessage.message.type == .contact {
             if (chatMessage.message.nodeList?.size?.intValue ?? 0 == 1) {
                 let node = chatMessage.message.nodeList.node(at: 0)!
