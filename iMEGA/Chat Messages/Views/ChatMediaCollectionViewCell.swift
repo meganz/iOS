@@ -58,6 +58,7 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
         durationLabel.autoSetDimension(.height, toSize: 14)
         
         loadingIndicator.autoCenterInSuperview()
+        loadingIndicator.autoSetDimensions(to: CGSize(width: 20, height: 20))
     }
 
     open override func setupSubviews() {
@@ -81,21 +82,10 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
         if chatMessage.transfer != nil {
             loadingIndicator.isHidden = false
             loadingIndicator.startAnimating()
-//            PHAsset *asset = [PHAsset fetchAssetsWithLocalIdentifiers:@[uploadTransfer.localIdentifier] options:nil].firstObject;
-//            NSString *localIdentifier = [transfer.appData mnz_stringBetweenString:@">localIdentifier=" andString:@""];
+         
+            let path = NSHomeDirectory().append(pathComponent: chatMessage.transfer!.path)
 
-           
-            guard  let identifier = (chatMessage.transfer?.appData as NSString?)?.mnz_stringBetweenString(">localIdentifier=", andString: ""),
-                let asset = PHAsset.fetchAssets(withLocalIdentifiers: [identifier], options: nil).firstObject else { return }
-            PHImageManager.default().requestImage(for: asset,
-                                                                   targetSize: bounds.size,
-                                                                   contentMode: .aspectFill,
-                                                                   options: nil,
-                                                                   resultHandler: { [weak self] (image, _) in
-                                                                    self?.imageView.image = image
-            })
-//            let asset = asset
-//            imageView.
+            imageView.yy_imageURL = URL(fileURLWithPath: path)
             return
         }
         
@@ -109,7 +99,7 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
         
         durationLabel.isHidden = true
         playIconView.isHidden = true
-        
+        loadingIndicator.isHidden = true
         if name.pathExtension == "gif" {
             let originalImagePath = Helper.path(for: node, inSharedSandboxCacheDirectory: "originalV3")
             if FileManager.default.fileExists(atPath: originalImagePath) {
@@ -146,7 +136,6 @@ open class ChatMediaCollectionViewSizeCalculator: MessageSizeCalculator {
         super.init(layout: layout)
         configureAccessoryView()
     }
-    
     open override func messageContainerSize(for message: MessageType) -> CGSize {
         switch message.kind {
         case .custom:
@@ -155,29 +144,46 @@ open class ChatMediaCollectionViewSizeCalculator: MessageSizeCalculator {
             guard let chatMessage = message as? ChatMessage else {
                 return .zero
             }
-            if chatMessage.transfer != nil {
-                return CGSize(width: 200, height: 200)
-            }
             
-            let megaMessage = chatMessage.message
-            let node = megaMessage.nodeList.node(at: 0)!
-            let previewFilePath = Helper.path(for: node, inSharedSandboxCacheDirectory: "previewsV3")
-         
             var width: CGFloat = 200
             var height: CGFloat = 200
-
-            if FileManager.default.fileExists(atPath: previewFilePath) {
-                let previewImage = YYImage(contentsOfFile: previewFilePath)
-                width = previewImage!.size.width
-                height = previewImage!.size.height
-            }
-            if node.hasPreview() &&
-                node.height > 0 &&
-                node.width > 0 {
-                width = CGFloat(node.width)
-                height = CGFloat(node.height)
-            }
             
+            if chatMessage.transfer != nil {
+                
+                let path = NSHomeDirectory().append(pathComponent: chatMessage.transfer!.path)
+                
+                if FileManager.default.fileExists(atPath: path) {
+                    let previewImage = YYImage(contentsOfFile: path)
+                    width = previewImage!.size.width
+                    height = previewImage!.size.height
+                    
+                    let ratio = width / height
+                    if ratio > 1 {
+                        width = min(maxWidth, width)
+                        height = width / ratio
+                    } else {
+                        height = min(maxHeight, height)
+                        width = height * ratio
+                    }
+                    
+                }
+            } else {
+                let megaMessage = chatMessage.message
+                let node = megaMessage.nodeList.node(at: 0)!
+                let previewFilePath = Helper.path(for: node, inSharedSandboxCacheDirectory: "previewsV3")
+                
+                if FileManager.default.fileExists(atPath: previewFilePath) {
+                    let previewImage = YYImage(contentsOfFile: previewFilePath)
+                    width = previewImage!.size.width
+                    height = previewImage!.size.height
+                }
+                if node.hasPreview() &&
+                    node.height > 0 &&
+                    node.width > 0 {
+                    width = CGFloat(node.width)
+                    height = CGFloat(node.height)
+                }
+            }
             let ratio = width / height
             if ratio > 1 {
                 width = min(maxWidth, width)
