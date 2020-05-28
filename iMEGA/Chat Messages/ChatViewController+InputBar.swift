@@ -43,14 +43,17 @@ extension ChatViewController {
     
      func present(viewController: UIViewController) {
         if let rc = UIApplication.shared.keyWindow?.rootViewController {
-            if let tabBarController = rc as? UITabBarController {
+            if let tabBarController = rc as? UITabBarController,
+                !tabBarController.tabBar.isHidden {
                 tabBarController.tabBar.isHidden = true
-            }
-            
-            rc.present(viewController, animated: true) {
-                if let tabBarController = rc as? UITabBarController {
-                    tabBarController.tabBar.isHidden = false
+                
+                rc.present(viewController, animated: true) {
+                    if let tabBarController = rc as? UITabBarController {
+                        tabBarController.tabBar.isHidden = false
+                    }
                 }
+            } else {
+                rc.present(viewController, animated: true)
             }
         }
      }
