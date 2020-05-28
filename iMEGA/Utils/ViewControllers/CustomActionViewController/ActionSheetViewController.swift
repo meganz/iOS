@@ -17,7 +17,8 @@ class ActionSheetViewController: UIViewController {
     private var layoutThreshold: CGFloat {
         return CGFloat(self.view.bounds.height * 0.3)
     }
-    
+    private let titleLabel = UILabel()
+
     // MARK: - ActionController initializers
 
     @objc convenience init(actions: [BaseAction], headerTitle: String?, dismissCompletion: (() -> Void)?, sender: Any?) {
@@ -79,6 +80,22 @@ class ActionSheetViewController: UIViewController {
                        completion: nil)
     }
         
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        if #available(iOS 13.0, *) {
+            if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+                updateAppearance()
+            }
+        }
+    }
+    
+    func updateAppearance() {
+        tableView.backgroundColor = UIColor.mnz_primaryBackgroundElevated(traitCollection)
+        titleLabel.textColor = UIColor.mnz_label()
+        indicator.backgroundColor = UIColor.mnz_handlebar(for: traitCollection)
+    }
+    
     func layoutViews(to size: CGSize) {
         var bottomHeight = 0
         let layoutThreshold = size.height * 0.3
@@ -114,7 +131,6 @@ extension ActionSheetViewController {
 
         indicator.layer.cornerRadius = 3
         indicator.clipsToBounds = true
-        indicator.backgroundColor = UIColor(red: 4/255, green: 4/255, blue: 15/255, alpha: 0.15)
         indicator.isHidden = true
         if headerView == nil {
             headerView = UIView(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
@@ -125,13 +141,11 @@ extension ActionSheetViewController {
         indicator.autoSetDimension(.width, toSize: 36)
         indicator.autoPinEdge(toSuperviewEdge: .top, withInset: CGFloat(6))
 
-        let title = UILabel()
-        title.text = headerTitle
-        title.textColor = .systemGray
-        title.font = .boldSystemFont(ofSize: 15)
-        title.sizeToFit()
-        headerView?.addSubview(title)
-        title.autoCenterInSuperview()
+        titleLabel.text = headerTitle
+        titleLabel.font = .boldSystemFont(ofSize: 15)
+        titleLabel.sizeToFit()
+        headerView?.addSubview(titleLabel)
+        titleLabel.autoCenterInSuperview()
 
         if headerTitle == nil {
             headerView?.frame = CGRect(x: 0, y: 0, width: 320, height: 10)

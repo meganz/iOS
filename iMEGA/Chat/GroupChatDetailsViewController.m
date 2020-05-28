@@ -424,7 +424,7 @@
     
     switch (indexPath.section) {
         case 0:
-            cell.leftImageView.image = [UIImage imageNamed:@"renameGroup"];
+            cell.leftImageView.image = [UIImage imageNamed:@"rename"];
             cell.leftImageView.tintColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
             cell.nameLabel.text = AMLocalizedString(@"renameGroup", @"The title of a menu button which allows users to rename a group chat.");
             break;
