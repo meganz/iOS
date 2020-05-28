@@ -67,6 +67,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSString *)sizeAndDateForNode:(MEGANode *)node api:(MEGASdk *)api;
 + (NSString *)sizeAndModicationDateForNode:(MEGANode *)node api:(MEGASdk *)api;
++ (NSString *)sizeAndShareLinkCreateDateForSharedLinkNode:(MEGANode *)node api:(MEGASdk *)api;
+
 + (NSString *)sizeForNode:(MEGANode *)node api:(MEGASdk *)api;
 + (NSString *)filesAndFoldersInFolderNode:(MEGANode *)node api:(MEGASdk *)api;
 
