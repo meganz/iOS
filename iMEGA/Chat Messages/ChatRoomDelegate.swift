@@ -137,8 +137,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
             case .unknown, .sending, .sendingManual:
                 break
             case .serverReceived:
-                transfers.removeAll()
-//                chatViewController?.messagesCollectionView.reloadData()
+                reloadTransferData()
                 let filteredArray = chatMessage.filter { chatMessage in
                     return chatMessage.message.temporalId == message.temporalId
                 }
@@ -327,12 +326,12 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
             return false
         }
         
-//        self.transfers = transfers.map({ (transfer) -> ChatMessage in
-//            return ChatMessage(transfer: transfer, chatRoom: chatRoom)
-//        })
-        guard transfers.count > 0 else {
-            return
-        }
+        self.transfers = transfers.map({ (transfer) -> ChatMessage in
+            return ChatMessage(transfer: transfer, chatRoom: chatRoom)
+        })
+//        guard transfers.count > 0 else {
+//            return
+//        }
 //        chatViewController.messagesCollectionView.reloadEmptyDataSet()
     }
 }
@@ -350,14 +349,40 @@ extension ChatRoomDelegate: MEGATransferDelegate {
     
     
     func onTransferFinish(_ api: MEGASdk, transfer: MEGATransfer, error: MEGAError) {
-   
-//        chatViewController.messagesCollectionView.performBatchUpdates({
-//            chatViewController.messagesCollectionView.deleteSections([index])
-//        }, completion: nil)
-        //        reloadTransferData()
+        guard let appData = transfer.appData else {
+            return
+        }
+        if appData.contains("\(chatRoom.chatId)") {
+            transfers = transfers.map({ (chatMessage) -> ChatMessage in
+                if chatMessage.transfer?.tag == transfer.tag {
+                    return ChatMessage(transfer: transfer, chatRoom: chatRoom)
+                }
+                
+                return chatMessage
+                
+            })
+            
+        }
+        
     }
     
     func onTransferUpdate(_ api: MEGASdk, transfer: MEGATransfer) {
+        guard let appData = transfer.appData else {
+            return
+        }
+        if appData.contains("\(chatRoom.chatId)") {
+            transfers = transfers.map({ (chatMessage) -> ChatMessage in
+                if chatMessage.transfer?.tag == transfer.tag {
+                    return ChatMessage(transfer: transfer, chatRoom: chatRoom)
+                }
+                
+                return chatMessage
+                
+            })
+            
+        }
+        
+        print(transfer.tag)
     }
     
     func onTransferTemporaryError(_ api: MEGASdk, transfer: MEGATransfer, error: MEGAError) {

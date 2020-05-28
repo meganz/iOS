@@ -5547,12 +5547,12 @@
 			isa = PBXGroup;
 			children = (
 				2FA6D9DA243E8CB4007A8E81 /* ChatMediaCollectionViewCell.swift */,
+				2F2801DE2449587400C160D0 /* ChatVoiceClipCollectionViewCell.swift */,
 				2F18DEE82458EDC500E7EE27 /* MessageCollectionViewCell+menus.swift */,
 				2F029233244FD6D90071A6E2 /* ChatManagmentTypeCollectionViewCell.swift */,
 				2F147783244D1C950069B264 /* ChatLocationCollectionViewCell.swift */,
 				2F147789244D2E2A0069B264 /* GeoLocationView.swift */,
 				2F147787244D2DF30069B264 /* GeoLocationView.xib */,
-				2F2801DE2449587400C160D0 /* ChatVoiceClipCollectionViewCell.swift */,
 				2F2801D22447C8FD00C160D0 /* ChatRichPreviewMediaCollectionViewCell.swift */,
 				2F2801D824481EFD00C160D0 /* RichPreviewContentView.swift */,
 				2F2801DC24481F3A00C160D0 /* RichPreviewContentView.xib */,
