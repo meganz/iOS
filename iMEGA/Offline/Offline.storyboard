@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="faa-Ut-As6">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="faa-Ut-As6">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15508"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -17,7 +17,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XWz-nR-M7D">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="574"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
                             </view>
                         </subviews>
                         <constraints>
@@ -30,7 +30,7 @@
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" id="VKp-HB-43t">
-                        <barButtonItem key="backBarButtonItem" title=" " id="kjM-8U-Phg"/>
+                        <barButtonItem key="backBarButtonItem" title=" " style="plain" id="kjM-8U-Phg"/>
                     </navigationItem>
                     <connections>
                         <outlet property="activityBarButtonItem" destination="Gqs-Ra-NdD" id="m5E-PG-hy8"/>
@@ -43,12 +43,12 @@
                         <outlet property="toolbar" destination="e3i-Bd-kAN" id="E6b-k9-wcd"/>
                     </connections>
                 </viewController>
-                <barButtonItem image="moreSelected" width="22" id="LK7-dJ-cZu" userLabel="More Bar Button Item">
+                <barButtonItem image="moreSelected" width="22" style="plain" id="LK7-dJ-cZu" userLabel="More Bar Button Item">
                     <connections>
                         <action selector="moreAction:" destination="cPA-hf-QcT" id="Cd1-7X-WzH"/>
                     </connections>
                 </barButtonItem>
-                <barButtonItem title="Edit" width="22" id="n7R-gV-EFI" userLabel="Edit Bar Button Item">
+                <barButtonItem title="Edit" width="22" style="plain" id="n7R-gV-EFI" userLabel="Edit Bar Button Item">
                     <connections>
                         <action selector="editTapped:" destination="cPA-hf-QcT" id="MRD-2B-qxf"/>
                     </connections>
@@ -56,29 +56,25 @@
                 <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" id="e3i-Bd-kAN">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" red="0.97647058959999999" green="0.97647058959999999" blue="0.97647058959999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <viewLayoutGuide key="safeArea" id="Ccc-J8-e5q"/>
                     <items/>
-                    <color key="tintColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </toolbar>
-                <barButtonItem enabled="NO" image="shareGray" width="32" id="Gqs-Ra-NdD" userLabel="Activity Bar Button Item">
-                    <color key="tintColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                <barButtonItem enabled="NO" image="shareGray" width="32" style="plain" id="Gqs-Ra-NdD" userLabel="Activity Bar Button Item">
                     <connections>
                         <action selector="activityTapped:" destination="cPA-hf-QcT" id="unK-9U-A8u"/>
                     </connections>
                 </barButtonItem>
-                <barButtonItem image="selectAll" width="22" id="Rfg-dz-CVh" userLabel="Select All Bar Button Item">
+                <barButtonItem image="selectAll" width="22" style="plain" id="Rfg-dz-CVh" userLabel="Select All Bar Button Item">
                     <connections>
                         <action selector="selectAllAction:" destination="cPA-hf-QcT" id="vAK-mC-SnE"/>
                     </connections>
                 </barButtonItem>
-                <barButtonItem width="22" id="JRb-pO-nXf" userLabel="Sort by Bar Button Item">
+                <barButtonItem width="22" style="plain" id="JRb-pO-nXf" userLabel="Sort by Bar Button Item">
                     <connections>
                         <action selector="sortByTapped:" destination="cPA-hf-QcT" id="u93-tb-JVN"/>
                     </connections>
                 </barButtonItem>
-                <barButtonItem enabled="NO" image="remove" width="32" id="fzs-mP-547" userLabel="Delete Bar Button Item">
-                    <color key="tintColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                <barButtonItem enabled="NO" image="remove" width="32" style="plain" id="fzs-mP-547" userLabel="Delete Bar Button Item">
                     <connections>
                         <action selector="deleteTapped:" destination="cPA-hf-QcT" id="Fih-zp-oub"/>
                     </connections>
@@ -358,9 +354,7 @@
         <scene sceneID="O2u-iM-yft">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="faa-Ut-As6" customClass="MEGANavigationController" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" tag="7" title="" image="offlineIcon" id="GmS-Ox-gbf"/>
                     <toolbarItems/>
-                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="nZ8-2M-caH">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -379,7 +373,6 @@
         <image name="checkBoxUnselected" width="24" height="24"/>
         <image name="more" width="28" height="28.5"/>
         <image name="moreSelected" width="28" height="28"/>
-        <image name="offlineIcon" width="26" height="24"/>
         <image name="remove" width="28" height="28"/>
         <image name="selectAll" width="22" height="22"/>
         <image name="shareGray" width="32" height="32"/>

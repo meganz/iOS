@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -98,12 +98,12 @@
                         <viewLayoutGuide key="safeArea" id="g6N-nT-s3x"/>
                     </view>
                     <navigationItem key="navigationItem" id="HWB-rp-yxf">
-                        <barButtonItem key="leftBarButtonItem" systemItem="stop" id="uL1-bJ-jlX">
+                        <barButtonItem key="leftBarButtonItem" style="plain" systemItem="stop" id="uL1-bJ-jlX">
                             <connections>
                                 <action selector="doneTapped:" destination="zUo-yM-mbH" id="hdo-Vw-jfA"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="vj5-kf-txr">
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="action" id="vj5-kf-txr">
                             <connections>
                                 <action selector="shareAction:" destination="zUo-yM-mbH" id="dZX-DX-gKG"/>
                             </connections>
@@ -122,22 +122,22 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iif-bv-Vsk" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <barButtonItem image="thumbnailsView" id="vvK-JU-zPC" userLabel="Item">
+                <barButtonItem image="thumbnailsView" style="plain" id="vvK-JU-zPC" userLabel="Item">
                     <connections>
                         <action selector="thumbnailTapped:" destination="zUo-yM-mbH" id="O05-bw-iff"/>
                     </connections>
                 </barButtonItem>
-                <barButtonItem image="search" id="XMA-eg-oSl">
+                <barButtonItem image="search" style="plain" id="XMA-eg-oSl">
                     <connections>
                         <action selector="searchTapped:" destination="zUo-yM-mbH" id="6GC-Dr-7YH"/>
                     </connections>
                 </barButtonItem>
-                <barButtonItem title="Item" image="openWith" id="zhj-Kc-zZm">
+                <barButtonItem title="Item" image="openWith" style="plain" id="zhj-Kc-zZm">
                     <connections>
                         <action selector="shareAction:" destination="zUo-yM-mbH" id="b1e-qb-pHG"/>
                     </connections>
                 </barButtonItem>
-                <barButtonItem image="moreSelected" id="R1j-r6-Sll" userLabel="More Bar Button Item">
+                <barButtonItem image="moreSelected" style="plain" id="R1j-r6-Sll" userLabel="More Bar Button Item">
                     <connections>
                         <action selector="actionsTapped:" destination="zUo-yM-mbH" id="M4Z-Io-Yhl"/>
                     </connections>

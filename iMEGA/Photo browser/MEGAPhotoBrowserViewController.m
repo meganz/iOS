@@ -226,6 +226,9 @@ static const CGFloat GapBetweenPages = 10.0;
 
     if (@available(iOS 13.0, *)) {
         if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [AppearanceManager forceNavigationBarUpdate:self.navigationBar traitCollection:self.traitCollection];
+            [AppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];
+            
             [self updateAppearance];
         }
     }
@@ -343,8 +346,8 @@ static const CGFloat GapBetweenPages = 10.0;
 }
 
 - (void)updateAppearance {
-    self.statusBarBackground.backgroundColor = self.navigationBar.backgroundColor = self.toolbar.barTintColor = [UIColor mnz_mainBarsForTraitCollection:self.traitCollection];
-    self.navigationBar.tintColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
+    self.statusBarBackground.backgroundColor = self.navigationBar.backgroundColor = [UIColor mnz_mainBarsForTraitCollection:self.traitCollection];
+    
     [self reloadTitle];
     
     self.view.backgroundColor = UIColor.mnz_background;

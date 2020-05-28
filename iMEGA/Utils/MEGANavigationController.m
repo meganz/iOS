@@ -1,6 +1,14 @@
 
 #import "MEGANavigationController.h"
 
+#ifdef MNZ_SHARE_EXTENSION
+#import "MEGAShare-Swift.h"
+#elif MNZ_PICKER_EXTENSION
+#import "MEGAPicker-Swift.h"
+#else
+#import "MEGA-Swift.h"
+#endif
+
 @implementation MEGANavigationController
 
 #pragma mark - Lifecycle
@@ -39,6 +47,24 @@
         return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown;
     } else {
         return UIInterfaceOrientationMaskAll;
+    }
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            #ifdef MNZ_SHARE_EXTENSION
+            [ExtensionAppearanceManager forceNavigationBarUpdate:self.navigationBar traitCollection:self.traitCollection];
+            [ExtensionAppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];
+            #elif MNZ_PICKER_EXTENSION
+            
+            #else
+            [AppearanceManager forceNavigationBarUpdate:self.navigationBar traitCollection:self.traitCollection];
+            [AppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];
+            #endif
+        }
     }
 }
 
