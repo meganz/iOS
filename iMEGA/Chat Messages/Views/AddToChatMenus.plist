@@ -60,7 +60,7 @@
 	</dict>
 	<dict>
 		<key>imageKey</key>
-		<string>sendVoiceClipDefault</string>
+		<string>attachVoiceClip</string>
 		<key>nameKey</key>
 		<string>Voice Clip</string>
 		<key>dynamicKey</key>
