@@ -6,6 +6,7 @@
 
 #import "Helper.h"
 #import "MEGASdkManager.h"
+#import "MEGA-Swift.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGANavigationController.h"
 #import "MEGANode+MNZCategory.h"
@@ -94,7 +95,7 @@
     
     self.definesPresentationContext = YES;
     
-    [self updateSelector];
+    [self updateAppearance];
     
     //White background for the view behind the table view
     self.tableView.backgroundView = UIView.alloc.init;
@@ -175,7 +176,9 @@
     
     if (@available(iOS 13.0, *)) {
         if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-            [self updateSelector];
+            [AppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];
+            
+            [self updateAppearance];
         }
     }
     
@@ -183,6 +186,12 @@
 }
 
 #pragma mark - Private
+
+- (void)updateAppearance {
+    self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+    
+    [self updateSelector];
+}
 
 - (void)reloadUI {
     if (self.incomingButton.selected) {

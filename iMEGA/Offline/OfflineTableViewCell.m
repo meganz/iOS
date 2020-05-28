@@ -2,6 +2,15 @@
 
 @implementation OfflineTableViewCell
 
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    
+    self.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
+    self.thumbnailPlayImageView.accessibilityIgnoresInvertColors = YES;
+    
+    [self updateAppearance];
+}
+
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
     [super setEditing:editing animated:animated];
     
@@ -23,5 +32,22 @@
         }];
     }
 }
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateAppearance];
+        }
+    }
+}
+
+#pragma mark - Private
+
+- (void)updateAppearance {
+    self.infoLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
+}
+
 
 @end
