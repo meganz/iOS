@@ -47,9 +47,7 @@ class ChatViewController: MessagesViewController {
         return chatRoomDelegate.messages
     }
 
-    var myUser: MEGAUser {
-        return MEGASdkManager.sharedMEGASdk()!.myUser!
-    }
+    var myUser = User(senderId: String(format: "%llu", MEGASdkManager.sharedMEGAChatSdk()!.myUserHandle), displayName: "")
 
     lazy var chatRoomDelegate: ChatRoomDelegate = {
         return ChatRoomDelegate(chatRoom: chatRoom,
@@ -538,7 +536,7 @@ class ChatViewController: MessagesViewController {
     // MARK: - Internal methods used by the extension of this class
 
     func isFromCurrentSender(message: MessageType) -> Bool {
-        return UInt64(message.sender.senderId) == myUser.handle
+        return UInt64(message.sender.senderId) == MEGASdkManager.sharedMEGAChatSdk()?.myUserHandle
     }
 
     func isDateLabelVisible(for indexPath: IndexPath) -> Bool {
