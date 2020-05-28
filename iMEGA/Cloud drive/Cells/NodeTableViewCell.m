@@ -93,9 +93,20 @@
     }
     
     if (node.isFile) {
-        self.infoLabel.text = self.recentActionBucket ?
-            [Helper sizeAndModicationDateForNode:node api:[MEGASdkManager sharedMEGASdk]] :
-            [Helper sizeAndModicationDateForNode:node api:api];
+        MEGASdk *megaSDK = self.recentActionBucket ? MEGASdkManager.sharedMEGASdk : api;
+        NSString *nodeDisplayDateTime;
+        switch (_cellFlavor) {
+            case NodeTableViewCellFlavorVersions:
+            case NodeTableViewCellFlavorRecentAction:
+            case NodeTableViewCellFlavorCloudDrive:
+                nodeDisplayDateTime = [Helper sizeAndModicationDateForNode:node api:megaSDK];
+                break;
+            case NodeTableViewCellFlavorSharedLink:
+                nodeDisplayDateTime = [Helper sizeAndShareLinkCreateDateForSharedLinkNode:node api:megaSDK];
+                break;
+        }
+
+        self.infoLabel.text = nodeDisplayDateTime;
         self.versionedImageView.hidden = ![[MEGASdkManager sharedMEGASdk] hasVersionsForNode:node];
     } else if (node.isFolder) {
         self.infoLabel.text = [Helper filesAndFoldersInFolderNode:node api:api];
@@ -111,6 +122,7 @@
 }
 
 - (void)configureForRecentAction:(MEGARecentActionBucket *)recentActionBucket {
+    self.cellFlavor = NodeTableViewCellFlavorRecentAction;
     self.recentActionBucket = recentActionBucket;
     NSArray *nodesArray = recentActionBucket.nodesList.mnz_nodesArrayFromNodeList;
     
