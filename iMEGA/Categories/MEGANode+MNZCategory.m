@@ -135,13 +135,14 @@
         } else {
             if (@available(iOS 11.0, *)) {
                 if ([previewDocumentPath.pathExtension isEqualToString:@"pdf"]) {
-                    MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];
+                    MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"DocumentPreviewer" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];
                     PreviewDocumentViewController *previewController = navigationController.viewControllers.firstObject;
                     previewController.api = api;
                     previewController.filesPathsArray = @[previewDocumentPath];
                     previewController.nodeFileIndex = 0;
                     previewController.node = self;
                     previewController.isLink = isFolderLink;
+                    navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
                     
                     return navigationController;
                 }
