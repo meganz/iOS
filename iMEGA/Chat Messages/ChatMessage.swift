@@ -1,5 +1,10 @@
 import MessageKit
 
+struct User: SenderType {
+    var senderId: String
+    var displayName: String
+}
+
 struct ChatMessage {
     let message: MEGAChatMessage
     let chatRoom: MEGAChatRoom
@@ -83,7 +88,7 @@ extension ChatMessage: SenderType {
             return "0"
         }
         if transfer != nil {
-            return String(format: "%llu", MEGASdkManager.sharedMEGASdk()!.myUser!.handle) 
+            return String(format: "%llu", MEGASdkManager.sharedMEGAChatSdk()!.myUserHandle)
         }
         
         return String(format: "%llu", message.userHandle)
