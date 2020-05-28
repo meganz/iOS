@@ -11,7 +11,16 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
 
     open var playIconView: UIImageView = {
         let playIconView = UIImageView(image: UIImage(named: "playButton"))
+        playIconView.isHidden = true
         return playIconView
+    }()
+    
+    open var loadingIndicator: UIActivityIndicatorView = {
+        let loadingIndicator = UIActivityIndicatorView()
+        loadingIndicator.startAnimating()
+        loadingIndicator.isHidden = true
+        loadingIndicator.color = .white
+        return loadingIndicator
     }()
     
     open var durationLabel: UILabel = {
@@ -22,6 +31,7 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
         label.layer.shadowOffset = CGSize(width: 0, height: 1)
         label.layer.shadowRadius = 2
         label.layer.shadowOpacity = 1
+        label.isHidden = true
         return label
     }()
     
@@ -46,11 +56,14 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
         durationLabel.autoPinEdge(toSuperviewEdge: .trailing, withInset: 10)
         durationLabel.autoPinEdge(toSuperviewEdge: .bottom, withInset: 10)
         durationLabel.autoSetDimension(.height, toSize: 14)
+        
+        loadingIndicator.autoCenterInSuperview()
     }
 
     open override func setupSubviews() {
         super.setupSubviews()
         messageContainerView.addSubview(imageView)
+        messageContainerView.addSubview(loadingIndicator)
         imageView.addSubview(playIconView)
         imageView.addSubview(durationLabel)
         setupConstraints()
@@ -64,11 +77,33 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
         }
 
         let megaMessage = chatMessage.message
+        
+        if chatMessage.transfer != nil {
+            loadingIndicator.isHidden = false
+            loadingIndicator.startAnimating()
+//            PHAsset *asset = [PHAsset fetchAssetsWithLocalIdentifiers:@[uploadTransfer.localIdentifier] options:nil].firstObject;
+//            NSString *localIdentifier = [transfer.appData mnz_stringBetweenString:@">localIdentifier=" andString:@""];
+
+           
+            guard  let identifier = (chatMessage.transfer?.appData as NSString?)?.mnz_stringBetweenString(">localIdentifier=", andString: ""),
+                let asset = PHAsset.fetchAssets(withLocalIdentifiers: [identifier], options: nil).firstObject else { return }
+            PHImageManager.default().requestImage(for: asset,
+                                                                   targetSize: bounds.size,
+                                                                   contentMode: .aspectFill,
+                                                                   options: nil,
+                                                                   resultHandler: { [weak self] (image, _) in
+                                                                    self?.imageView.image = image
+            })
+//            let asset = asset
+//            imageView.
+            return
+        }
+        
         let node = megaMessage.nodeList.node(at: 0)!
         currentNode = node
         let name = node.name! as NSString
         
-        self.imageView.mnz_setPreview(by: node) {(request) in
+        imageView.mnz_setPreview(by: node) {(request) in
             messagesCollectionView.reloadItems(at: [indexPath])
         }
         
@@ -120,7 +155,10 @@ open class ChatMediaCollectionViewSizeCalculator: MessageSizeCalculator {
             guard let chatMessage = message as? ChatMessage else {
                 return .zero
             }
-           
+            if chatMessage.transfer != nil {
+                return CGSize(width: 200, height: 200)
+            }
+            
             let megaMessage = chatMessage.message
             let node = megaMessage.nodeList.node(at: 0)!
             let previewFilePath = Helper.path(for: node, inSharedSandboxCacheDirectory: "previewsV3")
