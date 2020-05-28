@@ -129,14 +129,6 @@
     
     if (@available(iOS 13.0, *)) {
         if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-#ifdef MNZ_SHARE_EXTENSION
-            [ExtensionAppearanceManager setupAppearance:self.traitCollection];
-            [ExtensionAppearanceManager invalidateViews];
-#else
-            [AppearanceManager setupAppearance:self.traitCollection];
-            [AppearanceManager invalidateViews];
-#endif
-            
             [self updateAppearance];
         }
     }

@@ -983,6 +983,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 - (void)showChooseAccountType {
     UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"UpgradeAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeTableViewControllerID"];
     MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
+    navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
     upgradeTVC.chooseAccountType = YES;
     
     [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:nil];

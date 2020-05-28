@@ -98,8 +98,6 @@
     
     if (@available(iOS 13.0, *)) {
         if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-            [AppearanceManager setupAppearance:self.traitCollection];
-            [AppearanceManager invalidateViews];
             
             [self updateAppearance];
             

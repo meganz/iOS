@@ -242,7 +242,7 @@
     if (@available(iOS 13.0, *)) {
         if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
             [ExtensionAppearanceManager setupAppearance:self.traitCollection];
-            [ExtensionAppearanceManager invalidateViews];
+            [ExtensionAppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar traitCollection:self.traitCollection];
         }
     }
 }
