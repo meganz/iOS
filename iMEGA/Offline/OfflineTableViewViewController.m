@@ -204,7 +204,6 @@ static NSString *kPath = @"kPath";
         cell.infoLabel.text = [NSString stringWithFormat:@"%@ • %@", [Helper memoryStyleStringFromByteCount:size], modificationDate.mnz_formattedDefaultDateForMedia];
     }
     cell.nameLabel.text = [[MEGASdkManager sharedMEGASdk] unescapeFsIncompatible:nameString];
-    cell.infoLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
     
     if (self.tableView.isEditing) {
         for (NSURL *url in self.offline.selectedItems) {
@@ -218,10 +217,7 @@ static NSString *kPath = @"kPath";
         cell.selectedBackgroundView = view;
     }
     
-    if (@available(iOS 11.0, *)) {
-        cell.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
-        cell.thumbnailPlayImageView.accessibilityIgnoresInvertColors = YES;
-    } else {
+    if (@available(iOS 11.0, *)) {} else {
         cell.delegate = self;
     }
     

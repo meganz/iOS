@@ -4,7 +4,7 @@ import Foundation
 class ExtensionAppearanceManager: NSObject {
     
     @objc class func setupAppearance(_ traitCollection: UITraitCollection) {
-        setupNavigationAppearance(traitCollection)
+        setupNavigationBarAppearance(traitCollection)
         
         //To tint the color of the prompt.
         UILabel.appearance(whenContainedInInstancesOf: [UINavigationBar.self]).textColor = UIColor.mnz_label()
@@ -63,35 +63,40 @@ class ExtensionAppearanceManager: NSObject {
         SVProgressHUD.setErrorImage(UIImage(named: "hudError")!)
     }
     
-    /// Reload the current view that was configured using UIAppearance
-    @objc class func invalidateViews() {
-        let currentView = UIApplication.shared.delegate?.window??.rootViewController?.view
-        let superview = currentView?.superview
-        currentView?.removeFromSuperview()
-        superview?.addSubview(currentView!)
+    @available(iOS 13.0, *)
+    @objc class func forceNavigationBarUpdate(_ navigationBar: UINavigationBar, traitCollection: UITraitCollection) {
+        navigationBar.standardAppearance.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
+        navigationBar.scrollEdgeAppearance?.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
+        navigationBar.standardAppearance.buttonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.mnz_primaryGray(for: traitCollection)!]
+        navigationBar.standardAppearance.doneButtonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.mnz_primaryGray(for: traitCollection)!]
         
-        UIApplication.shared.windows.forEach { window in
-            window.rootViewController?.setNeedsStatusBarAppearanceUpdate()
-            window.rootViewController?.children.forEach({ $0.setNeedsStatusBarAppearanceUpdate() })
-
-            window.subviews.forEach { view in
-                view.removeFromSuperview()
-                window.addSubview(view)
-            }
+        navigationBar.tintColor = UIColor.mnz_primaryGray(for: traitCollection)
+    }
+    
+    @available(iOS 13.0, *)
+    @objc class func forceToolbarUpdate(_ toolbar: UIToolbar, traitCollection: UITraitCollection) {
+        toolbar.standardAppearance.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
+        toolbar.standardAppearance.buttonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.mnz_primaryGray(for: traitCollection)!]
+        
+        let numberOfBarButtonItems: Int = toolbar.items?.count ?? 0
+        for i in 0..<numberOfBarButtonItems {
+            let barButtonItem = toolbar.items?[i]
+            barButtonItem?.tintColor = UIColor.mnz_primaryGray(for: traitCollection)
         }
     }
     
     // MARK: - Private
     
-    private class func setupNavigationAppearance(_ traitCollection: UITraitCollection) {
-        let navigationBarFont = UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.semibold)
+    private class func setupNavigationBarAppearance(_ traitCollection: UITraitCollection) {
         UINavigationBar.appearance().tintColor = UIColor.mnz_primaryGray(for: traitCollection)
-        UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.font: navigationBarFont, NSAttributedString.Key.foregroundColor: UIColor.mnz_label()!]
         
         if #available(iOS 13.0, *) {
             let navigationBarAppearance = UINavigationBarAppearance()
             navigationBarAppearance.configureWithOpaqueBackground()
             navigationBarAppearance.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
+            
+            let navigationBarFont = UIFont.systemFont(ofSize: 17, weight: .semibold)
+            navigationBarAppearance.titleTextAttributes = [.font: navigationBarFont]
             
             navigationBarAppearance.shadowImage = nil
             navigationBarAppearance.shadowColor = nil
@@ -104,6 +109,9 @@ class ExtensionAppearanceManager: NSObject {
         } else {
             UINavigationBar.appearance().barTintColor = UIColor.mnz_mainBars(for: traitCollection)
             UINavigationBar.appearance().backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
+            
+            let navigationBarFont = UIFont.systemFont(ofSize: 17, weight: .semibold)
+            UINavigationBar.appearance().titleTextAttributes = [.font: navigationBarFont]
             
             UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
             UINavigationBar.appearance().shadowImage = UIImage()

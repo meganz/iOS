@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="B1s-m2-ahE">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="B1s-m2-ahE">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -609,27 +609,27 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UcK-nc-stP" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <barButtonItem title="New folder" id="Rgo-oZ-vnm" userLabel="New Folder Bar Button Item">
+                <barButtonItem title="New folder" style="plain" id="Rgo-oZ-vnm" userLabel="New Folder Bar Button Item">
                     <connections>
                         <action selector="newFolder:" destination="Z2F-Nr-ypX" id="UKy-Qz-pfk"/>
                     </connections>
                 </barButtonItem>
-                <barButtonItem title="Move" id="7Sv-uf-KA4" userLabel="Move Bar Button Item">
+                <barButtonItem title="Move" style="plain" id="7Sv-uf-KA4" userLabel="Move Bar Button Item">
                     <connections>
                         <action selector="moveNode:" destination="Z2F-Nr-ypX" id="ufS-m8-fHx"/>
                     </connections>
                 </barButtonItem>
-                <barButtonItem title="Copy" id="szH-Sn-BED" userLabel="Copy Bar Button Item">
+                <barButtonItem title="Copy" style="plain" id="szH-Sn-BED" userLabel="Copy Bar Button Item">
                     <connections>
                         <action selector="copyNode:" destination="Z2F-Nr-ypX" id="cOl-yf-Y7w"/>
                     </connections>
                 </barButtonItem>
-                <barButtonItem title="Upload" id="haa-Y0-WYS" userLabel="Upload to MEGA Bar Button Item">
+                <barButtonItem title="Upload" style="plain" id="haa-Y0-WYS" userLabel="Upload to MEGA Bar Button Item">
                     <connections>
                         <action selector="uploadToMega:" destination="Z2F-Nr-ypX" id="I9K-ql-n04"/>
                     </connections>
                 </barButtonItem>
-                <barButtonItem title="Send" id="o2i-Qg-G0n" userLabel="Send Bar Button Item">
+                <barButtonItem title="Send" style="plain" id="o2i-Qg-G0n" userLabel="Send Bar Button Item">
                     <connections>
                         <action selector="sendNodes:" destination="Z2F-Nr-ypX" id="2YC-fK-zah"/>
                     </connections>
@@ -1197,39 +1197,37 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mUB-Tm-S4E" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <barButtonItem title="Edit" width="22" id="ylv-i6-D9T" userLabel="Edit Bar Button Item">
+                <barButtonItem title="Edit" width="22" style="plain" id="ylv-i6-D9T" userLabel="Edit Bar Button Item">
                     <connections>
                         <action selector="editTapped:" destination="MwH-YC-3hO" id="H7S-a5-7Tg"/>
                     </connections>
                 </barButtonItem>
-                <barButtonItem image="moreSelected" width="22" id="TfH-jP-898" userLabel="More Minimized Bar Button Item">
+                <barButtonItem image="moreSelected" width="22" style="plain" id="TfH-jP-898" userLabel="More Minimized Bar Button Item">
                     <connections>
                         <action selector="moreMinimizedAction:" destination="MwH-YC-3hO" id="4Dd-LR-xOs"/>
                     </connections>
                 </barButtonItem>
-                <barButtonItem image="moreSelected" width="22" id="2Iu-Lu-YlT" userLabel="More Recents Bar Button Item">
+                <barButtonItem image="moreSelected" width="22" style="plain" id="2Iu-Lu-YlT" userLabel="More Recents Bar Button Item">
                     <connections>
                         <action selector="moreRecentsAction:" destination="MwH-YC-3hO" id="qso-tq-xbV"/>
                     </connections>
                 </barButtonItem>
-                <barButtonItem enabled="NO" image="shareGray" width="32" id="ZLw-VN-spf" userLabel="Share Bar Button Item">
-                    <color key="tintColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                <barButtonItem enabled="NO" image="shareGray" width="32" style="plain" id="ZLw-VN-spf" userLabel="Share Bar Button Item">
                     <connections>
                         <action selector="shareAction:" destination="MwH-YC-3hO" id="FF8-kZ-90c"/>
                     </connections>
                 </barButtonItem>
-                <barButtonItem image="selectAll" width="22" id="i2g-E4-PNq" userLabel="Select All Bar Button Item">
+                <barButtonItem image="selectAll" width="22" style="plain" id="i2g-E4-PNq" userLabel="Select All Bar Button Item">
                     <connections>
                         <action selector="selectAllAction:" destination="MwH-YC-3hO" id="UVu-sE-Ne4"/>
                     </connections>
                 </barButtonItem>
-                <barButtonItem image="moreSelected" width="22" id="xmA-ZO-bvH" userLabel="More Bar Button Item">
+                <barButtonItem image="moreSelected" width="22" style="plain" id="xmA-ZO-bvH" userLabel="More Bar Button Item">
                     <connections>
                         <action selector="moreAction:" destination="MwH-YC-3hO" id="5dm-9a-qDF"/>
                     </connections>
                 </barButtonItem>
-                <barButtonItem enabled="NO" image="rubbishBin" width="32" id="T78-eD-QmZ" userLabel="Rubbish Bin Delete Bar Button Item">
-                    <color key="tintColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                <barButtonItem enabled="NO" image="rubbishBin" width="32" style="plain" id="T78-eD-QmZ" userLabel="Rubbish Bin Delete Bar Button Item">
                     <connections>
                         <action selector="deleteAction:" destination="MwH-YC-3hO" id="kfp-Ql-4cd"/>
                     </connections>
@@ -1237,32 +1235,26 @@
                 <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" id="fEo-QQ-FwW">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" red="0.97647058959999999" green="0.97647058959999999" blue="0.97647058959999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <viewLayoutGuide key="safeArea" id="DE7-Mb-4Kk"/>
                     <items/>
-                    <color key="tintColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </toolbar>
-                <barButtonItem enabled="NO" image="download" width="32" id="JAE-WG-FSu" userLabel="Download Bar Button Item">
-                    <color key="tintColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                <barButtonItem enabled="NO" image="download" width="32" style="plain" id="JAE-WG-FSu" userLabel="Download Bar Button Item">
                     <connections>
                         <action selector="downloadAction:" destination="MwH-YC-3hO" id="vC2-JP-BEv"/>
                     </connections>
                 </barButtonItem>
-                <barButtonItem enabled="NO" image="restore" id="J5v-Rg-QUN" userLabel="Restore Bar Button Item">
-                    <color key="tintColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                <barButtonItem enabled="NO" image="restore" style="plain" id="J5v-Rg-QUN" userLabel="Restore Bar Button Item">
                     <connections>
                         <action selector="restoreTouchUpInside:" destination="MwH-YC-3hO" id="fww-hy-Lrb"/>
                     </connections>
                 </barButtonItem>
-                <barButtonItem systemItem="flexibleSpace" id="f43-7O-RtS"/>
-                <barButtonItem enabled="NO" image="move" width="32" id="M5b-JU-elC" userLabel="Move Bar Button Item">
-                    <color key="tintColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                <barButtonItem style="plain" systemItem="flexibleSpace" id="f43-7O-RtS"/>
+                <barButtonItem enabled="NO" image="move" width="32" style="plain" id="M5b-JU-elC" userLabel="Move Bar Button Item">
                     <connections>
                         <action selector="moveAction:" destination="MwH-YC-3hO" id="wjw-6W-1q3"/>
                     </connections>
                 </barButtonItem>
-                <barButtonItem enabled="NO" image="copy" width="32" id="vGK-lg-Cye" userLabel="Copy Bar Button Item">
-                    <color key="tintColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                <barButtonItem enabled="NO" image="copy" width="32" style="plain" id="vGK-lg-Cye" userLabel="Copy Bar Button Item">
                     <connections>
                         <action selector="copyAction:" destination="MwH-YC-3hO" id="8Sh-PE-KpC"/>
                     </connections>

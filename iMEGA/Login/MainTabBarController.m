@@ -62,8 +62,6 @@
     
     self.viewControllers = defaultViewControllersMutableArray;
     
-    self.view.tintColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
-    
     [self setDelegate:self];
     
     [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
@@ -131,7 +129,11 @@
     if (@available(iOS 13.0, *)) {
         if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
             [AppearanceManager setupAppearance:self.traitCollection];
-            [AppearanceManager invalidateViews];
+            
+           //Force appearance changes on the tab bar
+            self.tabBar.barTintColor = [UIColor mnz_mainBarsForTraitCollection:self.traitCollection];
+            self.tabBar.tintColor = [UIColor mnz_redForTraitCollection:self.traitCollection];
+            self.tabBar.unselectedItemTintColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
         }
     }
     

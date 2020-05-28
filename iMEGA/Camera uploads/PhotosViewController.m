@@ -8,6 +8,7 @@
 #import "MEGANode+MNZCategory.h"
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
+#import "MEGA-Swift.h"
 #import "NSDate+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "MEGAPhotoBrowserViewController.h"
@@ -78,8 +79,6 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     self.photosCollectionView.emptyDataSetSource = self;
     self.photosCollectionView.emptyDataSetDelegate = self;
     
-    self.stateView.backgroundColor = [UIColor mnz_mainBarsForTraitCollection:self.traitCollection];
-    self.enableCameraUploadsButton.tintColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
     [self.enableCameraUploadsButton setTitle:AMLocalizedString(@"enable", nil) forState:UIControlStateNormal];
     
     self.selectedItemsDictionary = [[NSMutableDictionary alloc] init];
@@ -96,6 +95,8 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     if (@available(iOS 13.0, *)) {
         [self configPreviewingRegistration];
     }
+    
+    [self updateAppearance];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -173,7 +174,9 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     
     if (@available(iOS 13.0, *)) {
         if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-            self.stateView.backgroundColor = [UIColor mnz_mainBarsForTraitCollection:self.traitCollection];
+            [AppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];
+            
+            [self updateAppearance];
         }
     }
     
@@ -326,6 +329,12 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 }
 
 #pragma mark - Private
+
+- (void)updateAppearance {
+    self.stateView.backgroundColor = [UIColor mnz_mainBarsForTraitCollection:self.traitCollection];
+    
+    self.enableCameraUploadsButton.tintColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
+}
 
 - (void)reloadUI {
     MEGALogDebug(@"[Camera Upload] reload photos collection view");
