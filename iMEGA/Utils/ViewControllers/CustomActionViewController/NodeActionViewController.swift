@@ -12,6 +12,10 @@ class NodeActionViewController: ActionSheetViewController {
     private var isIncomingShareChildView: Bool
     private var sender: Any
     
+    private let titleLabel = UILabel.newAutoLayout()
+    private let subtitleLabel = UILabel.newAutoLayout()
+    private let separatorLineView = UIView.newAutoLayout()
+
     // MARK: - NodeActionViewController initializers
 
     @objc init(node: MEGANode, delegate: NodeActionViewControllerDelegate, displayMode: DisplayMode, isIncoming: Bool = false, sender: Any) {
@@ -38,6 +42,25 @@ class NodeActionViewController: ActionSheetViewController {
         configureNodeHeaderView()
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        if #available(iOS 13.0, *) {
+            if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+                updateAppearance()
+            }
+        }
+    }
+    
+    override func updateAppearance() {
+        super.updateAppearance()
+        
+        headerView?.backgroundColor = UIColor.mnz_secondaryBackgroundElevated(traitCollection)
+        titleLabel.textColor = UIColor.mnz_label()
+        subtitleLabel.textColor = UIColor.mnz_subtitles(for: traitCollection)
+        separatorLineView.backgroundColor = UIColor.mnz_separator(for: traitCollection)
+    }
+    
     // MARK: - UITableViewDelegate
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -54,7 +77,6 @@ class NodeActionViewController: ActionSheetViewController {
     private func configureNodeHeaderView() {
         
         headerView?.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: 80)
-        headerView?.backgroundColor = UIColor.mnz_grayF7F7F7()
 
         let nodeImageView = UIImageView.newAutoLayout()
         headerView?.addSubview(nodeImageView)
@@ -63,20 +85,17 @@ class NodeActionViewController: ActionSheetViewController {
         nodeImageView.autoAlignAxis(toSuperviewAxis: .horizontal)
         nodeImageView.mnz_setThumbnail(by: node)
 
-        let titleLabel = UILabel.newAutoLayout()
         headerView?.addSubview(titleLabel)
         titleLabel.autoPinEdge(.leading, to: .trailing, of: nodeImageView, withOffset: 8)
         titleLabel.autoPinEdge(.trailing, to: .trailing, of: headerView!, withOffset: -8)
-        titleLabel.autoAlignAxis(.horizontal, toSameAxisOf: headerView!, withOffset: -8)
+        titleLabel.autoAlignAxis(.horizontal, toSameAxisOf: headerView!, withOffset: -10)
         titleLabel.text = node.name
         titleLabel.font = .systemFont(ofSize: 15)
         
-        let subtitleLabel = UILabel.newAutoLayout()
         headerView?.addSubview(subtitleLabel)
         subtitleLabel.autoPinEdge(.leading, to: .trailing, of: nodeImageView, withOffset: 8)
         subtitleLabel.autoPinEdge(.trailing, to: .trailing, of: headerView!, withOffset: -8)
-        subtitleLabel.autoAlignAxis(.horizontal, toSameAxisOf: headerView!, withOffset: 8)
-        subtitleLabel.textColor = .systemGray
+        subtitleLabel.autoAlignAxis(.horizontal, toSameAxisOf: headerView!, withOffset: 10)
         subtitleLabel.font = .systemFont(ofSize: 12)
         if node.isFile() {
             subtitleLabel.text = Helper.sizeAndDate(for: node, api: MEGASdkManager.sharedMEGASdk())
@@ -84,13 +103,11 @@ class NodeActionViewController: ActionSheetViewController {
             subtitleLabel.text = Helper.filesAndFolders(inFolderNode: node, api: MEGASdkManager.sharedMEGASdk())
         }
         
-        let separatorLineView = UIView.newAutoLayout()
         headerView?.addSubview(separatorLineView)
         separatorLineView.autoPinEdge(toSuperviewEdge: .leading)
         separatorLineView.autoPinEdge(toSuperviewEdge: .trailing)
         separatorLineView.autoPinEdge(toSuperviewEdge: .bottom)
         separatorLineView.autoSetDimension(.height, toSize: 1/UIScreen.main.scale)
-        separatorLineView.backgroundColor = tableView.separatorColor
     }
     
     private func getActions() {

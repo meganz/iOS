@@ -735,7 +735,7 @@ static NSString *kisDirectory = @"kisDirectory";
     }]];
     
     if (self.offlineSortedItems.count) {
-        [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"select", @"Button that allows you to select a given folder") detail:nil image:[UIImage imageNamed:@"selected"] style:UIAlertActionStyleDefault actionHandler:^{
+        [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"select", @"Button that allows you to select a given folder") detail:nil image:[UIImage imageNamed:@"select"] style:UIAlertActionStyleDefault actionHandler:^{
             [weakSelf editTapped:self.editButtonItem];
         }]];
     }

@@ -1538,7 +1538,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"sortTitle", @"Section title of the 'Sort by'") detail:[NSString localizedSortOrderType:[Helper sortTypeFor:self.parentNode]] image:[UIImage imageNamed:@"sort"] style:UIAlertActionStyleDefault actionHandler:^{
         [weakSelf presentSortByActionSheet];
     }]];
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"select", @"Button that allows you to select a given folder") detail:nil image:[UIImage imageNamed:@"selected"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"select", @"Button that allows you to select a given folder") detail:nil image:[UIImage imageNamed:@"select"] style:UIAlertActionStyleDefault actionHandler:^{
         BOOL enableEditing = weakSelf.cdTableView ? !weakSelf.cdTableView.tableView.isEditing : !weakSelf.cdCollectionView.collectionView.allowsMultipleSelection;
         [weakSelf setEditMode:enableEditing];
         
@@ -1571,7 +1571,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
         [weakSelf presentSortByActionSheet];
     }]];
     
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"select", @"Button that allows you to select a given folder") detail:nil image:[UIImage imageNamed:@"selected"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"select", @"Button that allows you to select a given folder") detail:nil image:[UIImage imageNamed:@"select"] style:UIAlertActionStyleDefault actionHandler:^{
         BOOL enableEditing = weakSelf.cdTableView ? !weakSelf.cdTableView.tableView.isEditing : !weakSelf.cdCollectionView.collectionView.allowsMultipleSelection;
         [weakSelf setEditMode:enableEditing];
     }]];
