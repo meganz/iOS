@@ -1,12 +1,11 @@
-
 import UIKit
 
 class VerificationCodeViewController: UIViewController {
-    
+
     private let verificationCodeCount = 6
     private let resendCheckTimeInterval = 30.0
     private var verificationCodeFields = [UITextField]()
-    
+
     @IBOutlet private weak var resendButton: UIButton!
     @IBOutlet private weak var confirmButton: UIButton!
     @IBOutlet private weak var didnotReceiveCodeLabel: UILabel!
@@ -17,40 +16,40 @@ class VerificationCodeViewController: UIViewController {
     @IBOutlet private weak var errorMessageLabel: UILabel!
     @IBOutlet private weak var errorView: UIStackView!
     @IBOutlet private weak var resendStackView: UIStackView!
-    
+
     private var phoneNumber: PhoneNumber!
     private var verificationType: SMSVerificationType = .UnblockAccount
-    
+
     private var verificationCode: String {
         return verificationCodeFields.compactMap { $0.text }.joined()
     }
-    
+
     class func instantiate(with phoneNumber: PhoneNumber, verificationType: SMSVerificationType) -> VerificationCodeViewController {
         let controller = UIStoryboard(name: "SMSVerification", bundle: nil).instantiateViewController(withIdentifier: "VerificationCodeViewControllerID") as! VerificationCodeViewController
         controller.phoneNumber = phoneNumber
         controller.verificationType = verificationType
         return controller
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         configViewContents()
         configCodeFieldsAppearance()
         configResendView()
 
         verificationCodeFields = codeFieldsContainerView.subviews.compactMap { $0 as? UITextField }
         verificationCodeFields.first?.becomeFirstResponder()
-        
+
         phoneNumberLabel.text = PhoneNumberKit().format(phoneNumber, toType: .international)
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+
         navigationController?.isNavigationBarHidden = false
     }
-    
+
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         if UIDevice.current.userInterfaceIdiom == .phone {
             return [.portrait, .portraitUpsideDown]
@@ -58,9 +57,9 @@ class VerificationCodeViewController: UIViewController {
             return .all
         }
     }
-    
+
     // MARK: - Config views
-    
+
     private func configViewContents() {
         resendButton.tintColor = UIColor.mnz_turquoise(for: self.traitCollection)
         didnotReceiveCodeLabel.textColor = UIColor.mnz_primaryGray(for: traitCollection)
@@ -77,18 +76,18 @@ class VerificationCodeViewController: UIViewController {
             title = AMLocalizedString("Verify Your Account")
         }
     }
-    
+
     private func configResendView() {
         resendStackView.isHidden = true
         DispatchQueue.main.asyncAfter(deadline: .now() + resendCheckTimeInterval) {
             guard self.verificationCode.count == 0 else { return }
-            
+
             UIView.animate(withDuration: 0.75, animations: {
                 self.resendStackView.isHidden = false
             })
         }
     }
-    
+
     private func configCodeFieldsAppearance(with error: MEGAError? = nil) {
         if let error = error {
             DispatchQueue.main.asyncAfter(deadline: .now() + resendCheckTimeInterval) {
@@ -100,13 +99,13 @@ class VerificationCodeViewController: UIViewController {
             verificationCodeFields.forEach {
                 $0.layer.cornerRadius = 8
                 $0.layer.borderWidth = 2
-                $0.layer.borderColor = UIColor(red:1, green:0.2, blue:0.23, alpha:0.4).cgColor
+                $0.layer.borderColor = UIColor(red: 1, green: 0.2, blue: 0.23, alpha: 0.4).cgColor
                 $0.layer.shadowOffset = CGSize(width: 0, height: 1)
                 $0.layer.shadowColor = UIColor.mnz_black000000_01()?.cgColor
                 $0.layer.shadowOpacity = 1
                 $0.layer.shadowRadius = 0
             }
-            
+
             var errorMessage: String?
             switch error.type {
             case .apiEAccess: // you have reached the verification limits.
@@ -132,20 +131,20 @@ class VerificationCodeViewController: UIViewController {
             }
         }
     }
-    
+
     // MARK: - UI Actions
-    
+
     @IBAction private func didTapResendButton() {
         navigationController?.popViewController(animated: true)
     }
-    
+
     @IBAction private func didTapConfirmButton() {
         let code = verificationCode
         guard code.count == verificationCodeCount else { return }
-        
+
         SVProgressHUD.show()
-        MEGASdkManager.sharedMEGASdk()?.checkSMSVerificationCode(code, delegate: MEGAGenericRequestDelegate() {
-            [weak self] request, error in
+        MEGASdkManager.sharedMEGASdk()?.checkSMSVerificationCode(code, delegate: MEGAGenericRequestDelegate {
+            [weak self] _, error in
             SVProgressHUD.dismiss()
             if error.type == .apiOk {
                 self?.checkSMSVerificationCodeSucceeded()
@@ -154,19 +153,19 @@ class VerificationCodeViewController: UIViewController {
             }
         })
     }
-    
+
     @IBAction private func didEditingChangeInTextField(_ textField: UITextField) {
         confirmButton.isEnabled = verificationCode.count == verificationCodeCount
     }
-    
+
     private func checkSMSVerificationCodeSucceeded() {
         SVProgressHUD.showInfo(withStatus: AMLocalizedString("Your phone number has been verified successfully"))
         setEditing(false, animated: true)
         configCodeFieldsAppearance(with: nil)
         dismiss(animated: true, completion: nil)
-        
+
         if verificationType == .UnblockAccount {
-            if let session = SAMKeychain.password(forService: MEGAPasswordService, account: MEGAPasswordName)  {
+            if let session = SAMKeychain.password(forService: MEGAPasswordService, account: MEGAPasswordName) {
                 MEGASdkManager.sharedMEGASdk()?.fastLogin(withSession: session, delegate: MEGALoginRequestDelegate())
             } else {
                 (UIApplication.shared.delegate as? AppDelegate)?.showOnboarding()
@@ -182,39 +181,39 @@ extension VerificationCodeViewController: UITextFieldDelegate {
         guard string.mnz_isDecimalNumber else {
             return false
         }
-        
+
         if string.count >= verificationCodeCount {
             distributeCodeString(string)
             didEditingChangeInTextField(textField)
             return false
         }
-        
+
         if string.count > 0 {
             textField.text = String(string[string.startIndex])
             makeNextCodeFieldBecomeFirstResponder(for: textField)
             didEditingChangeInTextField(textField)
             return false
         }
-        
+
         return  true
     }
-    
+
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         didTapResendButton()
         return false
     }
-    
+
     private func distributeCodeString(_ string: String) {
         for (code, field) in zip(string, verificationCodeFields) {
             field.text = String(code)
         }
     }
-    
+
     private func makeNextCodeFieldBecomeFirstResponder(for textField: UITextField) {
         guard let currentIndex = verificationCodeFields.firstIndex(of: textField), currentIndex < verificationCodeFields.count - 1 else { return }
         verificationCodeFields[currentIndex + 1].becomeFirstResponder()
     }
-    
+
     private func makePreviousCodeFieldBecomeFirstResponder(for textField: UITextField) {
         guard let currentIndex = verificationCodeFields.firstIndex(of: textField), currentIndex > 0 else { return }
         verificationCodeFields[currentIndex - 1].becomeFirstResponder()

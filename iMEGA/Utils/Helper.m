@@ -11,6 +11,7 @@
 #import "UIApplication+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 
+#import "MEGAIndexer.h"
 #import "MEGAActivityItemProvider.h"
 #import "MEGACopyRequestDelegate.h"
 #import "MEGACreateFolderRequestDelegate.h"
@@ -40,8 +41,14 @@
 #import "RemoveSharingActivity.h"
 #import "ShareFolderActivity.h"
 #import "SendToChatActivity.h"
+#ifdef MNZ_SHARE_EXTENSION
+#import "MEGAShare-Swift.h"
+#elif MNZ_PICKER_EXTENSION
+#import "MEGAPicker-Swift.h"
+#else
+#import "MEGA-Swift.h"
+#endif
 
-static MEGAIndexer *indexer;
 
 @implementation Helper
 
@@ -353,17 +360,8 @@ static MEGAIndexer *indexer;
     
     NSNumber *freeSizeNumber = [[[NSFileManager defaultManager] attributesOfFileSystemForPath:NSHomeDirectory() error:nil] objectForKey:NSFileSystemFreeSize];
     if ([freeSizeNumber longLongValue] < [nodeSizeNumber longLongValue]) {
-        UIAlertController *alertController;
-        
-        if ([node type] == MEGANodeTypeFile) {
-            alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"nodeTooBig", @"Title shown inside an alert if you don't have enough space on your device to download something") message:AMLocalizedString(@"fileTooBigMessage", @"The file you are trying to download is bigger than the avaliable memory.") preferredStyle:UIAlertControllerStyleAlert];
-            [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-        } else if ([node type] == MEGANodeTypeFolder) {
-            alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"nodeTooBig", @"Title shown inside an alert if you don't have enough space on your device to download something") message:AMLocalizedString(@"folderTooBigMessage", @"The folder you are trying to download is bigger than the avaliable memory.") preferredStyle:UIAlertControllerStyleAlert];
-            [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-        }
-        
-        [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
+        StorageFullModalAlertViewController *warningVC = StorageFullModalAlertViewController.alloc.init;
+        [warningVC showWithRequiredStorage:nodeSizeNumber.longLongValue];
         return NO;
     }
     return YES;
@@ -545,20 +543,55 @@ static MEGAIndexer *indexer;
 
 #pragma mark - Utils
 
-+ (MEGASortOrderType)sortTypeFor:(id)object {
-    MEGASortOrderType sortType;
++ (void)saveSortOrder:(MEGASortOrderType)selectedSortOrderType for:(_Nullable id)object {
     SortingPreference sortingPreference = [NSUserDefaults.standardUserDefaults integerForKey:MEGASortingPreference];
-    if (sortingPreference == SortingPreferencePerFolder) {
+
+    if (object && sortingPreference == SortingPreferencePerFolder) {
+        MEGASortOrderType currentSortOrderType = [Helper sortTypeFor:object];
+        
+        if (currentSortOrderType == selectedSortOrderType) {
+            return;
+        }
+        
         if ([object isKindOfClass:MEGANode.class]) {
             MEGANode *node = (MEGANode *)object;
-            CloudAppearancePreference *cloudAppearancePreference = [MEGAStore.shareInstance fetchCloudAppearancePreferenceWithHandle:node.handle];
-            sortType = cloudAppearancePreference ? cloudAppearancePreference.sortType.integerValue : MEGASortOrderTypeDefaultAsc;
+            [MEGAStore.shareInstance insertOrUpdateCloudSortTypeWithHandle:node.handle sortType:selectedSortOrderType];
         } else if ([object isKindOfClass:NSString.class]) {
             NSString *offlinePath = (NSString *)object;
-            OfflineAppearancePreference *offlineAppearancePreference = [MEGAStore.shareInstance fetchOfflineAppearancePreferenceWithPath:offlinePath];
-            sortType = offlineAppearancePreference ? offlineAppearancePreference.sortType.integerValue : MEGASortOrderTypeDefaultAsc;
+            [MEGAStore.shareInstance insertOrUpdateOfflineSortTypeWithPath:offlinePath sortType:selectedSortOrderType];
+        }
+                
+        [NSNotificationCenter.defaultCenter postNotificationName:MEGASortingPreference object:self userInfo:@{MEGASortingPreference : @(sortingPreference), MEGASortingPreferenceType : @(selectedSortOrderType)}];
+    } else {
+        [NSUserDefaults.standardUserDefaults setInteger:SortingPreferenceSameForAll forKey:MEGASortingPreference];
+        [NSUserDefaults.standardUserDefaults setInteger:selectedSortOrderType forKey:MEGASortingPreferenceType];
+        if (@available(iOS 12.0, *)) {} else {
+            [NSUserDefaults.standardUserDefaults synchronize];
+        }
+        
+        [NSNotificationCenter.defaultCenter postNotificationName:MEGASortingPreference object:self userInfo:@{MEGASortingPreference : @(SortingPreferenceSameForAll), MEGASortingPreferenceType : @(selectedSortOrderType)}];
+    }
+}
+
++ (MEGASortOrderType)sortTypeFor:(_Nullable id)object {
+    MEGASortOrderType sortType;
+    SortingPreference sortingPreference = [NSUserDefaults.standardUserDefaults integerForKey:MEGASortingPreference];
+    if (object) {
+        if (sortingPreference == SortingPreferencePerFolder) {
+            if ([object isKindOfClass:MEGANode.class]) {
+                MEGANode *node = (MEGANode *)object;
+                CloudAppearancePreference *cloudAppearancePreference = [MEGAStore.shareInstance fetchCloudAppearancePreferenceWithHandle:node.handle];
+                sortType = cloudAppearancePreference ? cloudAppearancePreference.sortType.integerValue : MEGASortOrderTypeDefaultAsc;
+            } else if ([object isKindOfClass:NSString.class]) {
+                NSString *offlinePath = (NSString *)object;
+                OfflineAppearancePreference *offlineAppearancePreference = [MEGAStore.shareInstance fetchOfflineAppearancePreferenceWithPath:offlinePath];
+                sortType = offlineAppearancePreference ? offlineAppearancePreference.sortType.integerValue : MEGASortOrderTypeDefaultAsc;
+            } else {
+                sortType = MEGASortOrderTypeDefaultAsc;
+            }
         } else {
-            sortType = MEGASortOrderTypeDefaultAsc;
+            MEGASortOrderType currentSortType = [NSUserDefaults.standardUserDefaults integerForKey:MEGASortingPreferenceType];
+            sortType = currentSortType ? currentSortType : Helper.defaultSortType;
         }
     } else {
         MEGASortOrderType currentSortType = [NSUserDefaults.standardUserDefaults integerForKey:MEGASortingPreferenceType];
@@ -636,6 +669,22 @@ static MEGAIndexer *indexer;
     [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
 }
 
++ (UIAlertController *)removeUserContactFromSender:(UIView *)sender withConfirmAction:(void (^)(void))confirmAction {
+
+    UIAlertController *removeContactAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+
+    [removeContactAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
+
+    [removeContactAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"removeUserTitle", @"Alert title shown when you want to remove one or more contacts") style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+        confirmAction();
+    }]];
+
+    removeContactAlertController.popoverPresentationController.sourceView = sender;
+    removeContactAlertController.popoverPresentationController.sourceRect = sender.bounds;
+    
+    return removeContactAlertController;
+}
+
 #pragma mark - Utils for nodes
 
 + (void)thumbnailForNode:(MEGANode *)node api:(MEGASdk *)api cell:(id)cell {
@@ -667,7 +716,7 @@ static MEGAIndexer *indexer;
     
     if (reindex) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-            [indexer index:node];
+            [MEGAIndexer.sharedIndexer index:node];
         });
     }
 }
@@ -972,9 +1021,6 @@ static MEGAIndexer *indexer;
     return [filesURLMutableArray copy];
 }
 
-+ (void)setIndexer:(MEGAIndexer* )megaIndexer {
-    indexer = megaIndexer;
-}
 
 #pragma mark - Utils for UI
 
