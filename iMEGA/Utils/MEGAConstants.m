@@ -116,7 +116,7 @@ NSString * const MEGAInvalidateNSECache = @"MEGAInvalidateNSECache";
 
 #pragma mark - DB name
 
-const NSUInteger MEGALastCharactersFromSession = 36;
+const NSUInteger MEGADropFirstCharactersFromSession = 44;
 
 #pragma mark - File size
 
