@@ -1,5 +1,7 @@
 #import "RecentsTableViewHeaderFooterView.h"
 
+#import "MEGA-Swift.h"
+
 @implementation RecentsTableViewHeaderFooterView 
 
 - (void)awakeFromNib {
@@ -19,7 +21,7 @@
 #pragma mark - Private
 
 - (void)setup {
-    self.contentView.backgroundColor = [UIColor mnz_notificationSeenBackgroundForTraitCollection:self.traitCollection];
+    self.contentView.backgroundColor = [UIColor mnz_secondaryBackgroundGrouped:self.traitCollection];
     
     self.dateLabel.textColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
     
