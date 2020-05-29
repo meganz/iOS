@@ -594,7 +594,8 @@ class ChatViewController: MessagesViewController {
             let user = MEGASdkManager.sharedMEGASdk()?.contact(forEmail: peerEmail) else {
                 return nil
         }
-        return user.avatarImage(withDelegate: nil)
+        
+        return UIImage.mnz_image(forUserHandle: user.handle, name: message.sender.displayName, size: CGSize(width: 24, height: 24), delegate: MEGABaseRequestDelegate())
     }
 
     func initials(for message: MessageType) -> String {
