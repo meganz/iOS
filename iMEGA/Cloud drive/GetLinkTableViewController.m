@@ -8,6 +8,7 @@
 #import "MEGAPasswordLinkRequestDelegate.h"
 #import "MEGASdk+MNZCategory.h"
 #import "MEGASDKManager.h"
+#import "MEGA-Swift.h"
 #import "NSDate+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "PasswordStrengthIndicatorView.h"
@@ -136,7 +137,23 @@
     self.toolbarCopyLinkBarButtonItem.title = AMLocalizedString(@"copyLink", @"Title for a button to copy the link to the clipboard");
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateAppearance];
+            
+            [self.tableView reloadData];
+        }
+    }
+}
+
 #pragma mark - Private
+
+- (void)updateAppearance {
+    self.view.backgroundColor = [UIColor mnz_backgroundGroupedElevated:self.traitCollection];
+}
 
 - (void)setNavigationBarTitle {
     BOOL areExportedNodes = YES;
@@ -379,7 +396,12 @@
     }
 }
 
-#pragma mark - TableViewDelegate
+#pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    cell.backgroundColor = [UIColor mnz_secondaryBackgroundGroupedElevated:self.traitCollection];
+    cell.tintColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {

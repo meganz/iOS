@@ -1107,20 +1107,20 @@
                         </connections>
                     </tableView>
                     <toolbarItems>
-                        <barButtonItem title="Share" id="Iod-rc-wj6">
+                        <barButtonItem title="Share" style="plain" id="Iod-rc-wj6">
                             <connections>
                                 <action selector="shareAction:" destination="Lpo-hP-uLZ" id="OCw-no-Cuz"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem systemItem="flexibleSpace" id="FXh-BB-LD2"/>
-                        <barButtonItem title="Copy link" id="Ihj-cZ-Oxo">
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="FXh-BB-LD2"/>
+                        <barButtonItem title="Copy link" style="plain" id="Ihj-cZ-Oxo">
                             <connections>
                                 <action selector="copyLinkTapped:" destination="Lpo-hP-uLZ" id="0zA-Ww-jhd"/>
                             </connections>
                         </barButtonItem>
                     </toolbarItems>
                     <navigationItem key="navigationItem" id="RuD-LE-Jxn">
-                        <barButtonItem key="rightBarButtonItem" title="Done" id="Bb8-Kf-AnR">
+                        <barButtonItem key="rightBarButtonItem" title="Done" style="plain" id="Bb8-Kf-AnR">
                             <connections>
                                 <action selector="doneTapped:" destination="Lpo-hP-uLZ" id="Pjf-7W-xAn"/>
                             </connections>
