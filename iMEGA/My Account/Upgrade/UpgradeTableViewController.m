@@ -140,24 +140,10 @@
 #pragma mark - Private
 
 - (void)updateAppearance {
+    self.view.backgroundColor = self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
     self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     
-    if (@available(iOS 13.0, *)) {
-        switch (self.traitCollection.userInterfaceStyle) {
-            case UIUserInterfaceStyleUnspecified:
-            case UIUserInterfaceStyleLight: {
-                self.view.backgroundColor = self.tableView.backgroundColor = [UIColor mnz_mainBarsForTraitCollection:self.traitCollection];
-                break;
-            }
-                
-            case UIUserInterfaceStyleDark: {
-                self.view.backgroundColor = self.tableView.backgroundColor = UIColor.mnz_background;
-                break;
-            }
-        }
-    } else {
-        self.view.backgroundColor = self.tableView.backgroundColor = [UIColor mnz_mainBarsForTraitCollection:self.traitCollection];
-    }
+    self.chooseFromOneOfThePlansHeaderView.backgroundColor = self.chooseFromOneOfThePlansPROHeaderView.backgroundColor = [UIColor mnz_mainBarsForTraitCollection:self.traitCollection];
     
     [self setupCurrentPlanView];
     
@@ -178,7 +164,7 @@
     NSNumber *userProLevelIndexNumber = [self.proLevelsIndexesMutableDictionary objectForKey:[NSNumber numberWithInteger:self.userProLevel]];
     self.currentPlanStorageLabel.attributedText = [self storageAttributedStringForProLevelAtIndex:userProLevelIndexNumber.integerValue];
     self.currentPlanBandwidthLabel.attributedText = [self bandwidthAttributedStringForProLevelAtIndex:userProLevelIndexNumber.integerValue];
-    self.currentPlanCellView.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
+    self.currentPlanCellView.backgroundColor = [UIColor mnz_secondaryBackgroundGrouped:self.traitCollection];
     self.currentPlanBottomLineCellView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
 }
 

@@ -97,7 +97,8 @@ import UIKit
     // MARK: - Private
     
     func updateAppearance() {
-        view.backgroundColor = UIColor.mnz_background()
+        view.backgroundColor = .mnz_backgroundGrouped(for: traitCollection)
+        tableView.backgroundColor = .mnz_backgroundGrouped(for: traitCollection)
         
         tableView.separatorColor = UIColor.mnz_separator(for: traitCollection)
         

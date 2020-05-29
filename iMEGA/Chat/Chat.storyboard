@@ -663,12 +663,12 @@
                         <viewLayoutGuide key="safeArea" id="Vwt-Bg-0NF"/>
                     </view>
                     <navigationItem key="navigationItem" id="h4O-NG-5Rw">
-                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="BSW-QW-4SV">
+                        <barButtonItem key="leftBarButtonItem" title="Cancel" style="plain" id="BSW-QW-4SV">
                             <connections>
                                 <action selector="cancelAction:" destination="GTK-NT-bBf" id="l4W-HK-gOT"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Send" id="bDu-LY-wcy">
+                        <barButtonItem key="rightBarButtonItem" title="Send" style="plain" id="bDu-LY-wcy">
                             <connections>
                                 <action selector="sendAction:" destination="GTK-NT-bBf" id="8sK-oD-D2w"/>
                             </connections>
@@ -2341,7 +2341,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="add" width="22" height="22"/>
+        <image name="add" width="28" height="28"/>
         <image name="archiveChat" width="28" height="28"/>
         <image name="backArrow" width="13" height="21"/>
         <image name="callSlots" width="24" height="24"/>
@@ -2366,7 +2366,7 @@
         <image name="rotateOFF" width="60" height="60"/>
         <image name="rotateON" width="60" height="60"/>
         <image name="selectAll" width="22" height="22"/>
-        <image name="sendLocation" width="28" height="28"/>
+        <image name="sendLocation" width="40" height="40"/>
         <image name="speakerOff" width="60" height="60"/>
         <image name="speakerOn" width="60" height="60"/>
         <image name="standardDisclosureIndicator" width="7.6666665077209473" height="12"/>

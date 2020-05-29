@@ -83,7 +83,7 @@
     [self.saveMasterKey mnz_setupPrimary:self.traitCollection];
     
     self.whyDoINeedARecoveryKeyTopSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
-    self.whyDoINeedARecoveryKeyView.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
+    self.whyDoINeedARecoveryKeyView.backgroundColor = [UIColor mnz_secondaryBackgroundGrouped:self.traitCollection];
     self.whyDoINeedARecoveryKeyLabel.textColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
 }
 

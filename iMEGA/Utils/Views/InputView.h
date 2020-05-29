@@ -14,6 +14,8 @@ IB_DESIGNABLE
 @property (weak, nonatomic) IBOutlet UILabel *topLabel;
 @property (weak, nonatomic) IBOutlet UITextField *inputTextField;
 
+@property (nonatomic, getter=isUsingDefaultBackgroundColor) BOOL usingDefaultBackgroundColor;
+
 - (void)setErrorState:(BOOL)error withText:(NSString *)text;
 
 - (void)updateAppearance;

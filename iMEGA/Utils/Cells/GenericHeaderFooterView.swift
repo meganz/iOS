@@ -8,6 +8,7 @@ class GenericHeaderFooterView: UITableViewHeaderFooterView {
     @IBOutlet weak var bottomSeparatorView: UIView!
     @IBOutlet weak var backgroundColorView: UIView!
     
+    var usingDefaultBackgroundColor: Bool = false
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -34,8 +35,11 @@ class GenericHeaderFooterView: UITableViewHeaderFooterView {
     //MARK: - Private
     
     private func updateAppearance() {
-        if (self.contentView.backgroundColor != nil) {
-            self.contentView.backgroundColor = UIColor.mnz_tertiaryBackground(self.traitCollection)
+        if (self.contentView.backgroundColor != nil && !usingDefaultBackgroundColor) {
+            self.contentView.backgroundColor = .mnz_backgroundGroupedElevated(traitCollection)
+        } else {
+            self.contentView.backgroundColor = .mnz_backgroundGrouped(for: traitCollection)
+            usingDefaultBackgroundColor = true
         }
         
         self.titleLabel.textColor = UIColor.mnz_secondaryGray(for: self.traitCollection)

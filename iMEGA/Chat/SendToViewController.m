@@ -137,7 +137,8 @@
 #pragma mark - Private
 
 - (void)updateAppearance {
-    self.searchView.backgroundColor = UIColor.mnz_background;
+    self.view.backgroundColor = self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedElevated:self.traitCollection];
+    self.searchView.backgroundColor = [UIColor mnz_mainBarsForTraitCollection:self.traitCollection];
 }
 
 - (void)setGroupChatsAndRecents {
@@ -605,6 +606,7 @@
     if ([itemAtIndex isKindOfClass:MEGAChatListItem.class]) {
         MEGAChatListItem *chatListItem = itemAtIndex;
         ChatRoomCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"chatRoomCell" forIndexPath:indexPath];
+        cell.backgroundColor = [UIColor mnz_secondaryBackgroundGroupedElevated:self.traitCollection];
         
         cell.onlineStatusView.hidden = YES;
         
@@ -638,6 +640,7 @@
     if ([itemAtIndex isKindOfClass:MEGAUser.class]) {
         MEGAUser *user = itemAtIndex;
         ContactTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"contactCell" forIndexPath:indexPath];
+        cell.backgroundColor = [UIColor mnz_secondaryBackgroundGroupedElevated:self.traitCollection];
         
         UIColor *color = [UIColor mnz_colorForChatStatus:[MEGASdkManager.sharedMEGAChatSdk userOnlineStatus:user.handle]];
         if (color) {

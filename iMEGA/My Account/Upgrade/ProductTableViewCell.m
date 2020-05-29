@@ -1,5 +1,7 @@
 #import "ProductTableViewCell.h"
 
+#import "MEGA-Swift.h"
+
 @implementation ProductTableViewCell
 
 - (void)awakeFromNib {
@@ -33,7 +35,7 @@
 #pragma mark - Private
 
 - (void)setupCell {
-    self.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
+    self.backgroundColor = [UIColor mnz_secondaryBackgroundGrouped:self.traitCollection];
     
     self.productNameLabel.textColor = UIColor.whiteColor;
 }

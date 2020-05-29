@@ -7,6 +7,7 @@ class SectionTableViewCell: UITableViewCell {
     @IBOutlet weak var rightDetailTextLabel: UILabel!
     
     @objc func configureContactsSection(indexPath: IndexPath) {
+        backgroundColor = .mnz_secondaryBackgroundGrouped(traitCollection)
         rightDetailTextLabel.textColor = UIColor.mnz_secondaryLabel()
         
         if indexPath.row == 0 {

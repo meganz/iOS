@@ -23,6 +23,8 @@ IB_DESIGNABLE
 
 @property (assign, nonatomic) IBOutlet id<PasswordViewDelegate> delegate;
 
+@property (nonatomic, getter=isUsingDefaultBackgroundColor) BOOL usingDefaultBackgroundColor;
+
 - (void)configureSecureTextEntry;
 - (void)setErrorState:(BOOL)error;
 - (void)setErrorState:(BOOL)error withText:(NSString *)text;
