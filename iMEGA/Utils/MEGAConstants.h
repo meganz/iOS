@@ -116,8 +116,8 @@ extern NSString * const MEGAInvalidateNSECache;
 
 #pragma mark - DB name
 
-// Last 36 characters of the user session are used by sdk and karere to name their dbs
-extern const NSUInteger MEGALastCharactersFromSession;
+// Droping the first 44 characters of the user session the last ones are used by sdk and karere to name their dbs
+extern const NSUInteger MEGADropFirstCharactersFromSession;
 
 #pragma mark - File size
 
