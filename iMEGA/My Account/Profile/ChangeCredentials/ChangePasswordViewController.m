@@ -2,6 +2,7 @@
 #import "ChangePasswordViewController.h"
 
 #import "MEGASdkManager.h"
+#import "MEGA-Swift.h"
 #import "MEGAReachabilityManager.h"
 #import "NSString+MNZCategory.h"
 #import "SVProgressHUD.h"
@@ -171,7 +172,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
 #pragma mark - Private
 
 - (void)updateAppearance {
-    self.view.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
+    self.view.backgroundColor = [UIColor mnz_backgroundGroupedElevated:self.traitCollection];
     
     switch (self.changeType) {
         case ChangeTypePassword:

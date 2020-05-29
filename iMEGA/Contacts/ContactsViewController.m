@@ -201,6 +201,8 @@
     if (@available(iOS 13.0, *)) {
         if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
             [self updateAppearance];
+            
+            [self.tableView reloadData];
         }
     }
     
@@ -210,7 +212,7 @@
 #pragma mark - Private
 
 - (void)updateAppearance {
-    self.view.backgroundColor = UIColor.mnz_background;
+    self.view.backgroundColor = self.tableView.backgroundColor = (self.contactsMode == ContactsModeDefault) ? [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection] : [UIColor mnz_backgroundGroupedElevated:self.traitCollection];
     
     self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     self.tableView.sectionIndexColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
@@ -1332,6 +1334,7 @@
     [self.indexPathsMutableDictionary setObject:indexPath forKey:base64Handle];
     
     ContactTableViewCell *cell;
+    cell.backgroundColor = (self.contactsMode == ContactsModeDefault) ? [UIColor mnz_secondaryBackgroundGrouped:self.traitCollection] : [UIColor mnz_secondaryBackgroundGroupedElevated:self.traitCollection];
     switch (self.contactsMode) {
         case ContactsModeDefault: {
             if (self.searchController.isActive && ![self.searchController.searchBar.text isEqual: @""]) {
@@ -1415,7 +1418,7 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     static NSString *reuseIdentifier = @"GenericHeaderFooterViewID";
     GenericHeaderFooterView *headerView = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:reuseIdentifier];
-    headerView.contentView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
+    headerView.contentView.backgroundColor = (self.contactsMode == ContactsModeDefault) ? [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection] : [UIColor mnz_backgroundGroupedElevated:self.traitCollection];
     
     if (self.contactsMode == ContactsModeDefault) {
         if (section == 0) {

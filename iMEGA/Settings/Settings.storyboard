@@ -1236,7 +1236,7 @@
                             <constraint firstItem="iif-ej-krY" firstAttribute="left" secondItem="pPu-oh-inR" secondAttribute="left" id="DsO-H0-eCH"/>
                             <constraint firstItem="iif-ej-krY" firstAttribute="top" secondItem="pPu-oh-inR" secondAttribute="top" id="Kpl-y6-JJq"/>
                             <constraint firstItem="jaA-3A-VfQ" firstAttribute="leading" secondItem="pPu-oh-inR" secondAttribute="leading" id="XEz-XU-qvC"/>
-                            <constraint firstItem="pPu-oh-inR" firstAttribute="bottom" secondItem="jaA-3A-VfQ" secondAttribute="bottom" id="jLz-tg-CRj"/>
+                            <constraint firstAttribute="bottom" secondItem="jaA-3A-VfQ" secondAttribute="bottom" id="jLz-tg-CRj"/>
                             <constraint firstItem="pPu-oh-inR" firstAttribute="trailing" secondItem="jaA-3A-VfQ" secondAttribute="trailing" id="q6q-HS-55y"/>
                             <constraint firstItem="jaA-3A-VfQ" firstAttribute="top" secondItem="iif-ej-krY" secondAttribute="bottom" id="wc8-4c-kgF"/>
                         </constraints>

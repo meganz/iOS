@@ -28,7 +28,7 @@ extension UIColor {
     
     // MARK: Background elevated
     
-    @objc class func mnz_primaryBackgroundElevated(_ traitCollection: UITraitCollection) -> UIColor {
+    @objc class func mnz_backgroundElevated(_ traitCollection: UITraitCollection) -> UIColor {
         if #available(iOS 13.0, *) {
             switch traitCollection.userInterfaceStyle {
             case .unspecified, .light:
@@ -82,7 +82,7 @@ extension UIColor {
                 
             case .dark:
                 if traitCollection.accessibilityContrast == .high {
-                    return UIColor.mnz_(fromHexString: "545457")
+                    return mnz_gray545457()
                 } else {
                     return UIColor.mnz_gray3A3A3C()
                 }
@@ -98,7 +98,7 @@ extension UIColor {
     // MARK: Background grouped
     
     @objc class func mnz_secondaryBackgroundGrouped(_ traitCollection: UITraitCollection) -> UIColor {
-        return mnz_primaryBackgroundElevated(traitCollection)
+        return mnz_backgroundElevated(traitCollection)
     }
     
     @objc class func mnz_tertiaryBackgroundGrouped(_ traitCollection: UITraitCollection) -> UIColor {
@@ -367,6 +367,10 @@ extension UIColor {
     
     @objc class func mnz_gray545458() -> UIColor {
         return UIColor.init(red: 84.0/255.0, green: 84.0/255.0, blue: 88.0/255.0, alpha: 1.0)
+    }
+    
+    class func mnz_gray545457() -> UIColor {
+        return UIColor.init(red: 84.0/255.0, green: 84.0/255.0, blue: 87.0/255.0, alpha: 1.0)
     }
     
     @objc class func mnz_gray676767() -> UIColor {

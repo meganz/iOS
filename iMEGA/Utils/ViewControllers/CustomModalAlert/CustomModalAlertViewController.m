@@ -113,7 +113,7 @@
 #pragma mark - Private
 
 - (void)updateAppearance {
-    self.mainView.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
+    self.mainView.backgroundColor = [UIColor mnz_backgroundElevated:self.traitCollection];
     
     self.linkView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
     

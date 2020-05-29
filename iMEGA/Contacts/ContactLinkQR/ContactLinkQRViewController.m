@@ -150,7 +150,7 @@ typedef NS_ENUM(NSInteger, QRSection) {
 - (void)updateAppearance {
     switch (self.segmentedControl.selectedSegmentIndex) {
         case QRSectionMyCode: {
-            self.view.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
+            self.view.backgroundColor = [UIColor mnz_backgroundElevated:self.traitCollection];
             self.backButton.tintColor = self.moreButton.tintColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
             
             if (@available(iOS 13.0, *)) {

@@ -26,6 +26,8 @@ class ContactOnMegaTableViewCell: UITableViewCell {
     }
     
     private func updateAppearance() {
+        backgroundColor = .mnz_secondaryBackgroundGrouped(traitCollection)
+        
         emailLabel.textColor = UIColor.mnz_subtitles(for: traitCollection)
         addButton.setTitleColor(UIColor.mnz_turquoise(for: traitCollection), for: .normal)
     }

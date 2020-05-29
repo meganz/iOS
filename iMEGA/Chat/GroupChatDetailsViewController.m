@@ -84,9 +84,9 @@
 #pragma mark - Private
 
 - (void)updateAppearance {
-    self.view.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
+    self.view.backgroundColor = self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
     
-    self.groupInfoView.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
+    self.groupInfoView.backgroundColor = [UIColor mnz_secondaryBackgroundGrouped:self.traitCollection];
     self.participantsLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
     self.groupInfoBottomSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
 }
@@ -416,7 +416,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     GroupChatDetailsViewTableViewCell *cell;
-    cell.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
+    cell.backgroundColor = [UIColor mnz_secondaryBackgroundGrouped:self.traitCollection];
     
     if (indexPath.section != 8 && indexPath.section != 7) {
         cell = [self.tableView dequeueReusableCellWithIdentifier:@"GroupChatDetailsLeaveGroupTypeID" forIndexPath:indexPath];
