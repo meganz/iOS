@@ -12,7 +12,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "moderatorDark-1.png",
+      "filename" : "moderatorDark.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
@@ -28,7 +28,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "moderatorDark@2x-1.png",
+      "filename" : "moderatorDark@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
@@ -44,7 +44,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "moderatorDark@3x-1.png",
+      "filename" : "moderatorDark@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

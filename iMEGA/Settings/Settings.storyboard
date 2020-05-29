@@ -1815,6 +1815,7 @@ You may still receive file versions from shared folders if your contacts have th
                     <connections>
                         <outlet property="clearCacheLabel" destination="3R5-CK-znG" id="jhC-mb-6WK"/>
                         <outlet property="clearOfflineFilesLabel" destination="WbE-QH-DWS" id="u6w-OJ-Oug"/>
+                        <outlet property="deleteOldVersionCell" destination="UHz-cJ-fhW" id="o06-UF-cQ1"/>
                         <outlet property="deleteOldVersionsLabel" destination="82S-4G-jFG" id="tWy-zy-JSy"/>
                         <outlet property="fileVersioningLabel" destination="pTR-ca-8uK" id="Fn2-fU-Jj9"/>
                         <outlet property="fileVersioningSwitch" destination="DdX-Za-PDc" id="hHr-Xp-gwp"/>

@@ -551,7 +551,7 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    if (section == 7) {
+    if (section == 8) {
         GenericHeaderFooterView *headerView = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:@"GenericHeaderFooterViewID"];
         headerView.topSeparatorView.hidden = headerView.bottomSeparatorView.hidden = YES;
         headerView.titleLabel.font = [UIFont systemFontOfSize:12.0f weight:UIFontWeightMedium];

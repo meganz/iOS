@@ -15,8 +15,6 @@
 
 #import "MEGAPhotoBrowserViewController.h"
 
-#import "MEGA-Swift.h"
-
 @interface NodeVersionsViewController () <UITableViewDelegate, UITableViewDataSource, MGSwipeTableCellDelegate, NodeActionViewControllerDelegate, MEGADelegate> {
     BOOL allNodesSelected;
 }

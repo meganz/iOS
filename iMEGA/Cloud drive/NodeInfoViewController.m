@@ -23,8 +23,6 @@
 #import "UIImage+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 
-#import "MEGA-Swift.h"
-
 @interface MegaNodeProperty : NSObject
 
 @property (strong, nonatomic) NSString *title;

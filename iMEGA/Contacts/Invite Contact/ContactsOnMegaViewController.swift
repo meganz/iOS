@@ -139,7 +139,7 @@ extension ContactsOnMegaViewController: UISearchResultsUpdating {
             if searchString == "" {
                 searchingContactsOnMega.removeAll()
             } else {
-                searchingContactsOnMega = contactsOnMega.filter( {$0.name.contains(searchString)} )
+                searchingContactsOnMega = contactsOnMega.filter({$0.name.contains(searchString)})
             }
         }
         tableView.reloadData()
