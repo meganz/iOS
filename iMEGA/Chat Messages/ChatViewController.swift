@@ -760,6 +760,10 @@ class ChatViewController: MessagesViewController {
     }
     
     @objc private func handleKeyboardHidden(_ notification: Notification) {
+        guard keyboardVisible else {
+            return
+        }
+        
         additionalBottomInset = 0
         keyboardVisible = false
     }
