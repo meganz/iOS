@@ -30,7 +30,9 @@ class ChatSharedItemTableViewCell: UITableViewCell {
     func configure(for node:MEGANode, owner: String) {
         nameLabel.text = node.name
         ownerNameLabel.text = owner
+        ownerNameLabel.textColor = .mnz_subtitles(for: traitCollection)
         infoLabel.text = Helper.sizeAndDate(for: node, api: MEGASdkManager.sharedMEGASdk())
+        infoLabel.textColor = .mnz_subtitles(for: traitCollection)
         if node.hasThumbnail() {
             let thumbnailFilePath = Helper.path(for: node, inSharedSandboxCacheDirectory: "thumbnailsV3")
             if FileManager.default.fileExists(atPath: thumbnailFilePath) {
