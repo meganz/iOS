@@ -95,7 +95,7 @@
     if (node.isFile) {
         MEGASdk *megaSDK = self.recentActionBucket ? MEGASdkManager.sharedMEGASdk : api;
         NSString *nodeDisplayDateTime;
-        switch (_cellFlavor) {
+        switch (self.cellFlavor) {
             case NodeTableViewCellFlavorVersions:
             case NodeTableViewCellFlavorRecentAction:
             case NodeTableViewCellFlavorCloudDrive:
