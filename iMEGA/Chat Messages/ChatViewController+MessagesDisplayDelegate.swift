@@ -94,6 +94,15 @@ extension ChatViewController: MessagesDisplayDelegate {
         }
     }
     
+    func detectorAttributes(for detector: DetectorType, and message: MessageType, at indexPath: IndexPath) -> [NSAttributedString.Key: Any] {
+        let color = textColor(for: message, at: indexPath, in: messagesCollectionView)
+        return [.foregroundColor: color,
+                .underlineStyle: NSUnderlineStyle.single.rawValue,
+                .underlineColor: color
+        ]
+        
+    }
+    
     func enabledDetectors(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> [DetectorType] {
         return [.url, .address, .phoneNumber, .date, .transitInformation, .mention, .hashtag]
     }
