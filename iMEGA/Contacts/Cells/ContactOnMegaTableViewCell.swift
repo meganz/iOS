@@ -16,22 +16,21 @@ class ContactOnMegaTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        setup()
+        updateAppearance()
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
         
-        setup()
+        updateAppearance()
     }
     
-    private func setup() {
+    private func updateAppearance() {
         emailLabel.textColor = UIColor.mnz_subtitles(for: traitCollection)
         addButton.setTitleColor(UIColor.mnz_turquoise(for: traitCollection), for: .normal)
     }
 
     func configure(for contact: ContactOnMega, delegate: ContactOnMegaTableViewCellDelegate) {
-
         nameLabel.text = contact.name
         emailLabel.text = contact.email
         avatarImageView.mnz_setImage(forUserHandle: contact.handle, name: contact.name)

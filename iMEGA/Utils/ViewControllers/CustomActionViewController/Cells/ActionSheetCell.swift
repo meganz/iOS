@@ -6,12 +6,12 @@ final class ActionSheetCell: UITableViewCell {
         textLabel?.text = action.title
         detailTextLabel?.text = action.detail
         if detailTextLabel?.text == "✓" {
-            detailTextLabel?.textColor =  UIColor.mnz_green00A886()
+            detailTextLabel?.textColor =  .mnz_turquoise(for: traitCollection)
         }
         imageView?.image = action.image
         switch action.style {
         case .cancel, .destructive:
-            textLabel?.textColor = .systemRed
+            textLabel?.textColor = .mnz_red(for: traitCollection)
         default: break
         }
     }

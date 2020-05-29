@@ -29,8 +29,6 @@
 #import "NodeInfoViewController.h"
 #import "NodeTableViewCell.h"
 
-#import "MEGA-Swift.h"
-
 @interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, MGSwipeTableCellDelegate, NodeInfoViewControllerDelegate, NodeActionViewControllerDelegate> {
     BOOL allNodesSelected;
 }

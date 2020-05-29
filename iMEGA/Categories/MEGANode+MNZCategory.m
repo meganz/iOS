@@ -315,13 +315,6 @@
     }
 }
 
-- (void)mnz_moveToTheRubbishBinWithCompletion:(void (^)(void))completion {
-    if (MEGAReachabilityManager.isReachableHUDIfNot) {
-        MEGAMoveRequestDelegate *moveRequestDelegate = [MEGAMoveRequestDelegate.alloc initToMoveToTheRubbishBinWithFiles:(self.isFile ? 1 : 0) folders:(self.isFolder ? 1 : 0) completion:completion];
-        [MEGASdkManager.sharedMEGASdk moveNode:self newParent:MEGASdkManager.sharedMEGASdk.rubbishNode delegate:moveRequestDelegate];
-    }
-}
-
 - (void)mnz_removeInViewController:(UIViewController *)viewController {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         NSString *alertTitle = AMLocalizedString(@"remove", @"Title for the action that allows to remove a file or folder");

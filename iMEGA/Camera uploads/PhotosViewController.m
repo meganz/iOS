@@ -24,7 +24,6 @@
 #import "CustomModalAlertViewController.h"
 #import "UploadStats.h"
 #import "UIViewController+MNZCategory.h"
-#import "MEGA-Swift.h"
 
 @import StoreKit;
 @import Photos;

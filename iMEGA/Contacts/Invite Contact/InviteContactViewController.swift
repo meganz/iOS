@@ -1,4 +1,3 @@
-
 import Contacts
 import ContactsUI
 import MessageUI
@@ -29,7 +28,7 @@ class InviteContactViewController: UIViewController {
         enterEmailLabel.text = AMLocalizedString("Enter Email", "Text used as a section title or similar")
         scanQrCodeLabel.text = AMLocalizedString("scanCode")
         moreLabel.text = AMLocalizedString("more")
-        
+
         let contactLinkCreateDelegate = MEGAContactLinkCreateRequestDelegate { (request) in
             guard let base64Handle = MEGASdk.base64Handle(forHandle: request.nodeHandle) else { return }
             self.userLink = String(format: "https://mega.nz/C!%@", base64Handle)
@@ -46,7 +45,7 @@ class InviteContactViewController: UIViewController {
         
         updateAppearance()
     }
-    
+
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .portrait
     }
@@ -84,34 +83,34 @@ class InviteContactViewController: UIViewController {
         contactsOnMegaVC.inviteContactView.isHidden = true
         contactsOnMegaVC.hideSearchAndInviteViews()
     }
-    
+
     // MARK: Actions
     @IBAction func addFromContactsButtonTapped(_ sender: Any) {
         guard MFMessageComposeViewController.canSendText() else {
             return
         }
-        
+
         let contactsPickerVC = CNContactPickerViewController()
         contactsPickerVC.predicateForEnablingContact = NSPredicate(format: "phoneNumbers.@count > 0")
         contactsPickerVC.predicateForSelectionOfProperty = NSPredicate(format: "key == 'phoneNumbers'")
         contactsPickerVC.displayedPropertyKeys = [CNContactPhoneNumbersKey]
         contactsPickerVC.delegate = self
-        
+
         present(contactsPickerVC, animated: true, completion: nil)
     }
-    
+
     @IBAction func enterEmailButtonTapped(_ sender: Any) {
         guard let enterEmailVC = UIStoryboard(name: "InviteContact", bundle: nil).instantiateViewController(withIdentifier: "EnterEmailViewControllerID") as? EnterEmailViewController else { return }
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         navigationController?.pushViewController(enterEmailVC, animated: true)
     }
-    
+
     @IBAction func scanQrCodeButtonTapped(_ sender: Any) {
         guard let contactLinkVC = UIStoryboard(name: "ContactLinkQR", bundle: nil).instantiateViewController(withIdentifier: "ContactLinkQRViewControllerID") as? ContactLinkQRViewController  else { return }
         contactLinkVC.scanCode = true
         present(contactLinkVC, animated: true, completion: nil)
     }
-    
+
     @IBAction func moreButtonTapped(_ sender: Any) {
         let items = [AMLocalizedString("Hi, Have encrypted conversations on Mega with me and get 50GB free storage.", "Text to send as SMS message to user contacts inviting them to MEGA"), userLink]
         let activity = UIActivityViewController(activityItems: items, applicationActivities: [])
@@ -144,7 +143,7 @@ extension InviteContactViewController: MFMessageComposeViewControllerDelegate {
         switch result {
         case .failed:
             controller.present(UIAlertController(title: "Something went wrong", message: "Try it later", preferredStyle: .alert), animated: true, completion: nil)
-            
+
         case .cancelled, .sent:
             controller.dismiss(animated: true, completion: nil)
 
