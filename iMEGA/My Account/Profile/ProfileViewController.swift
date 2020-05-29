@@ -50,7 +50,7 @@ enum SessionSectionRow: Int {
     
     private lazy var dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .short
+        dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .none
         dateFormatter.locale = NSLocale.autoupdatingCurrent
         return dateFormatter
