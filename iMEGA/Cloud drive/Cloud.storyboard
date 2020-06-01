@@ -1889,13 +1889,13 @@
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1HV-OI-YFL">
                                 <rect key="frame" x="0.0" y="579" width="375" height="44"/>
                                 <items>
-                                    <barButtonItem title="Disagree" id="3yM-Mt-swH" userLabel="Disagree">
+                                    <barButtonItem title="Disagree" style="plain" id="3yM-Mt-swH" userLabel="Disagree">
                                         <connections>
                                             <action selector="disagreeTapped:" destination="n0k-ng-oPN" id="1vl-1t-Jiy"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem systemItem="flexibleSpace" id="N3v-gy-33b"/>
-                                    <barButtonItem title="Agree" id="igh-Iv-yxF" userLabel="Agree">
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="N3v-gy-33b"/>
+                                    <barButtonItem title="Agree" style="plain" id="igh-Iv-yxF" userLabel="Agree">
                                         <connections>
                                             <action selector="agreeTapped:" destination="n0k-ng-oPN" id="zrC-zW-ToG"/>
                                         </connections>
@@ -1935,6 +1935,7 @@ You are strictly prohibited from using the MEGA cloud service to infringe copyri
                         <outlet property="copyrightWarningLabel" destination="i9P-WD-gV6" id="3ny-6R-qPJ"/>
                         <outlet property="copyrightWarningNavigationItem" destination="uYa-3A-h7U" id="MfI-hb-f5F"/>
                         <outlet property="disagreeBarButtonItem" destination="3yM-Mt-swH" id="qb6-Cp-AHO"/>
+                        <outlet property="toolbar" destination="1HV-OI-YFL" id="1zD-fB-t0H"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lLt-dj-Mzk" userLabel="First Responder" sceneMemberID="firstResponder"/>
