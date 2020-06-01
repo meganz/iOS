@@ -25,13 +25,6 @@ class MEGAPresentationController: UIPresentationController {
     func setupDimmingView() {
         dimmingView.backgroundColor = UIColor(white: 0.0, alpha: 0.4)
         dimmingView.alpha = 0.0
-        
-        let recognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap(recognizer:)))
-        dimmingView.addGestureRecognizer(recognizer)
-    }
-    
-    @objc func handleTap(recognizer: UITapGestureRecognizer) {
-        presentingViewController.dismiss(animated: true)
     }
     
     override func presentationTransitionWillBegin() {

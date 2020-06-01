@@ -83,7 +83,7 @@ extension NodeAction {
     }
     
     class func manageLinkAction() -> NodeAction {
-        return NodeAction(title: AMLocalizedString("manageLink", "Item menu option upon right click on one or multiple files"), detail: nil, image: UIImage(named: "Link_grey"), type: .manageLink)
+        return NodeAction(title: AMLocalizedString("manageLink", "Item menu option upon right click on one or multiple files"), detail: nil, image: UIImage(named: "link"), type: .manageLink)
     }
     
     class func removeLinkAction() -> NodeAction {
