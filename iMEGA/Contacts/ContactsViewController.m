@@ -706,6 +706,14 @@
     }
 }
 
+- (MEGAUser *)getUserAndSetIndexPath:(NSIndexPath *)indexPath {
+    MEGAUser *user = [self userAtIndexPath:indexPath];
+    NSString *base64Handle = [MEGASdk base64HandleForUserHandle:user.handle];
+    [self.indexPathsMutableDictionary setObject:indexPath forKey:base64Handle];
+    
+    return user;
+}
+
 - (MEGAUser *)userAtIndexPath:(NSIndexPath *)indexPath {
     if (!indexPath) {
         return nil;
@@ -1329,16 +1337,14 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    MEGAUser *user = [self userAtIndexPath:indexPath];
-    NSString *base64Handle = [MEGASdk base64HandleForUserHandle:user.handle];
-    [self.indexPathsMutableDictionary setObject:indexPath forKey:base64Handle];
-    
+    MEGAUser *user;
     ContactTableViewCell *cell;
     cell.backgroundColor = (self.contactsMode == ContactsModeDefault) ? [UIColor mnz_secondaryBackgroundGrouped:self.traitCollection] : [UIColor mnz_secondaryBackgroundGroupedElevated:self.traitCollection];
     switch (self.contactsMode) {
         case ContactsModeDefault: {
             if (self.searchController.isActive && ![self.searchController.searchBar.text isEqual: @""]) {
                 cell = [self dequeueOrInitCellWithIdentifier:@"contactCell" indexPath:indexPath];
+                user = [self getUserAndSetIndexPath:indexPath];
                 [cell configureDefaultCellForUser:user newUser:NO];
                 cell.contactDetailsButton.hidden = NO;
                 
@@ -1352,6 +1358,7 @@
                 return cell;
             } else {
                 cell = [self dequeueOrInitCellWithIdentifier:@"contactCell" indexPath:indexPath];
+                user = [self getUserAndSetIndexPath:indexPath];
                 [cell configureDefaultCellForUser:user newUser:(indexPath.section == 1)];
                 cell.contactDetailsButton.hidden = NO;
             }
@@ -1360,6 +1367,7 @@
             
         case ContactsModeFolderSharedWith: {
             cell = [self dequeueOrInitCellWithIdentifier:@"ContactPermissionsNameTableViewCellID" indexPath:indexPath];
+            user = [self getUserAndSetIndexPath:indexPath];
             [cell configureCellForContactsModeFolderSharedWith:user indexPath:indexPath];
             
             if (indexPath.section == 0) {
@@ -1383,6 +1391,7 @@
                 return cell;
             } else {
                 cell = [self dequeueOrInitCellWithIdentifier:@"contactCell" indexPath:indexPath];
+                user = [self getUserAndSetIndexPath:indexPath];
                 [cell configureDefaultCellForUser:user newUser:NO];
             }
             break;
@@ -1390,6 +1399,7 @@
             
         default: { //ContactsModeShareFoldersWith, ContactsModeChatAddParticipant, ContactsModeChatAttachParticipant, ContactsModeChatCreateGroup and ContactsModeChatNamingGroup
             cell = [self dequeueOrInitCellWithIdentifier:@"contactCell" indexPath:indexPath];
+            user = [self getUserAndSetIndexPath:indexPath];
             [cell configureDefaultCellForUser:user newUser:NO];
             //TODO: Tag as new? => Method to check the ts
             break;
