@@ -22,6 +22,7 @@ class DocScannerActionTableViewCell: UITableViewCell {
             actionImageView.image = UIImage(named: "upload")
             actionLabel.text = NSLocalizedString("uploadToMega", comment: "")
         case .sendMessage:
+            actionImageView.tintColor = #colorLiteral(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)
             actionImageView.image = UIImage(named: "sendMessage")
             actionLabel.text = NSLocalizedString("sendToContact", comment: "")
         }
