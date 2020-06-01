@@ -746,7 +746,6 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 
 - (void)showCameraUploadBoardingScreen {
     CustomModalAlertViewController *boardingAlertVC = [[CustomModalAlertViewController alloc] init];
-    boardingAlertVC.modalPresentationStyle = UIModalPresentationOverFullScreen;
     boardingAlertVC.image = [UIImage imageNamed:@"cameraUploadsBoarding"];
     boardingAlertVC.viewTitle = AMLocalizedString(@"enableCameraUploadsButton", @"Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA");
     boardingAlertVC.detail = AMLocalizedString(@"Automatically backup your photos and videos to the Cloud Drive.", nil);

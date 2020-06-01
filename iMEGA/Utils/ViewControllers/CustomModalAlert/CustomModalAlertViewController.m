@@ -26,15 +26,24 @@
 @property (weak, nonatomic) IBOutlet UIButton *secondButton;
 @property (weak, nonatomic) IBOutlet UIButton *dismissButton;
 
-@property (weak, nonatomic) IBOutlet UIView *alphaView;
 @property (weak, nonatomic) IBOutlet UIView *mainView;
 
 @property (weak, nonatomic) IBOutlet UIView *linkView;
 @property (weak, nonatomic) IBOutlet CopyableLabel *linkLabel;
 
+@property (nonatomic) MEGAPresentationManager *presentationManager;
+
 @end
 
 @implementation CustomModalAlertViewController
+
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    self.presentationManager = MEGAPresentationManager.new;
+    self.transitioningDelegate = self.presentationManager;
+    self.modalPresentationStyle = UIModalPresentationCustom;
+    return self;
+}
 
 #pragma mark - Lifecycle
 
@@ -95,11 +104,6 @@
     [self updateAppearance];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    [self fadeInBackgroundCompletion:nil];
-}
-
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
@@ -132,57 +136,31 @@
     self.firstButton.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
 }
 
-- (void)fadeInBackgroundCompletion:(void (^ __nullable)(void))fadeInCompletion {
-    [UIView animateWithDuration:.3 animations:^{
-        [self.alphaView setAlpha:0.5];
-    } completion:^(BOOL finished) {
-        if (fadeInCompletion && finished) {
-            fadeInCompletion();
-        }
-    }];
-}
-
-- (void)fadeOutBackgroundCompletion:(void (^ __nullable)(void))fadeOutCompletion {
-    [UIView animateWithDuration:.2 animations:^{
-        [self.alphaView setAlpha:.0];
-    } completion:^(BOOL finished) {
-        if (fadeOutCompletion && finished) {
-            fadeOutCompletion();
-        }
-    }];
-}
-
 #pragma mark - IBActions
 
 - (IBAction)firstButtonTouchUpInside:(UIButton *)sender {
-    [self fadeOutBackgroundCompletion:^ {
-        if (self.firstCompletion) self.firstCompletion();
-    }];
+    if (self.firstCompletion) self.firstCompletion();
 }
 
 - (IBAction)dismissTouchUpInside:(UIButton *)sender {
-    [self fadeOutBackgroundCompletion:^ {
-        if (self.dismissCompletion) {
-            self.dismissCompletion();
-        } else {
-            [self dismissViewControllerAnimated:YES completion:nil];
-        }
-    }];
+    if (self.dismissCompletion) {
+        self.dismissCompletion();
+    } else {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 
 - (IBAction)secondButtonTouchUpInside:(UIButton *)sender {
-    [self fadeOutBackgroundCompletion:^ {
-        if (self.secondCompletion) {
-            self.secondCompletion();
-        } else {
-            [self dismissViewControllerAnimated:YES completion:^{
-                AchievementsViewController *achievementsVC = [[UIStoryboard storyboardWithName:@"Achievements" bundle:nil] instantiateViewControllerWithIdentifier:@"AchievementsViewControllerID"];
-                achievementsVC.enableCloseBarButton = YES;
-                UINavigationController *navigation = [[UINavigationController alloc] initWithRootViewController:achievementsVC];
-                [UIApplication.mnz_presentingViewController presentViewController:navigation animated:YES completion:nil];
-            }];
-        }
-    }];
+    if (self.secondCompletion) {
+        self.secondCompletion();
+    } else {
+        [self dismissViewControllerAnimated:YES completion:^{
+            AchievementsViewController *achievementsVC = [[UIStoryboard storyboardWithName:@"Achievements" bundle:nil] instantiateViewControllerWithIdentifier:@"AchievementsViewControllerID"];
+            achievementsVC.enableCloseBarButton = YES;
+            UINavigationController *navigation = [[UINavigationController alloc] initWithRootViewController:achievementsVC];
+            [UIApplication.mnz_presentingViewController presentViewController:navigation animated:YES completion:nil];
+        }];
+    }
 }
 
 @end

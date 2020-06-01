@@ -929,7 +929,6 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 - (void)presentInviteContactCustomAlertViewController {
     CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
-    customModalAlertVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
     
     BOOL isInOutgoingContactRequest = NO;
     MEGAContactRequestList *outgoingContactRequestList = [[MEGASdkManager sharedMEGASdk] outgoingContactRequests];
@@ -1001,7 +1000,6 @@ void uncaughtExceptionHandler(NSException *exception) {
 - (void)presentUpgradeViewControllerTitle:(NSString *)title detail:(NSString *)detail image:(UIImage *)image {
     if (!self.isUpgradeVCPresented && ![UIApplication.mnz_visibleViewController isKindOfClass:UpgradeTableViewController.class] && ![UIApplication.mnz_visibleViewController isKindOfClass:ProductDetailViewController.class]) {
         CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
-        customModalAlertVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
         customModalAlertVC.image = image;
         customModalAlertVC.viewTitle = title;
         customModalAlertVC.detail = detail;
@@ -1100,7 +1098,6 @@ void uncaughtExceptionHandler(NSException *exception) {
     if (MEGASdkManager.sharedMEGASdk.businessStatus == BusinessStatusGracePeriod) {
         if (MEGASdkManager.sharedMEGASdk.isMasterBusinessAccount) {
             CustomModalAlertViewController *customModalAlertVC = CustomModalAlertViewController.alloc.init;
-            customModalAlertVC.modalPresentationStyle = UIModalPresentationOverFullScreen;
             customModalAlertVC.image = [UIImage imageNamed:@"paymentOverdue"];
             customModalAlertVC.viewTitle = AMLocalizedString(@"Something went wrong", @"");
             customModalAlertVC.detail = AMLocalizedString(@"There has been a problem with your last payment. Please access MEGA using a desktop browser for more information.", @"When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information");

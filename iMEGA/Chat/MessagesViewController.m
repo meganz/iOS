@@ -355,7 +355,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     
     if (self.isPublicChatWithLinkCreated) {
         CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
-        customModalAlertVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
         customModalAlertVC.image = [UIImage imageNamed:@"chatLinkCreation"];
         customModalAlertVC.viewTitle = self.chatRoom.title;
         customModalAlertVC.detail = AMLocalizedString(@"People can join your group by using this link.", @"Text explaining users how the chat links work.");

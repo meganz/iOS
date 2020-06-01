@@ -595,7 +595,6 @@ static NSString *nodeToPresentBase64Handle;
 
 + (void)presentInviteModalForEmail:(NSString *)email fullName:(NSString *)fullName contactLinkHandle:(uint64_t)contactLinkHandle image:(NSString *)imageOnBase64URLEncoding {
     CustomModalAlertViewController *inviteOrDismissModal = [[CustomModalAlertViewController alloc] init];
-    inviteOrDismissModal.modalPresentationStyle = UIModalPresentationOverCurrentContext;
     
     if (imageOnBase64URLEncoding.mnz_isEmpty) {
         inviteOrDismissModal.image = [UIImage imageForName:fullName.mnz_initialForAvatar size:CGSizeMake(128.0f, 128.0f) backgroundColor:[UIColor mnz_fromHexString:[MEGASdk avatarColorForBase64UserHandle:[MEGASdk base64HandleForUserHandle:contactLinkHandle]]] textColor:UIColor.whiteColor font:[UIFont systemFontOfSize:64.0f]];

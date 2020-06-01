@@ -88,7 +88,6 @@ class VerifyEmailViewController: UIViewController {
 
     func showWhyIAmBlocked() {
         let customModal = CustomModalAlertViewController.init()
-        customModal.modalPresentationStyle = .overCurrentContext
 
         customModal.image = UIImage(named: "lockedAccounts")
         customModal.viewTitle = AMLocalizedString("Locked Accounts", "Title of a helping view about locked accounts")
