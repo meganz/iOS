@@ -1306,7 +1306,7 @@
                     <viewLayoutGuide key="safeArea" id="DE7-Mb-4Kk"/>
                     <items/>
                 </toolbar>
-                <barButtonItem enabled="NO" image="download" width="32" style="plain" id="JAE-WG-FSu" userLabel="Download Bar Button Item">
+                <barButtonItem enabled="NO" image="offline" width="32" style="plain" id="JAE-WG-FSu" userLabel="Download Bar Button Item">
                     <connections>
                         <action selector="downloadAction:" destination="MwH-YC-3hO" id="vC2-JP-BEv"/>
                     </connections>
@@ -2340,6 +2340,7 @@ You are strictly prohibited from using the MEGA cloud service to infringe copyri
         <image name="more" width="28" height="28.5"/>
         <image name="moreSelected" width="28" height="28"/>
         <image name="move" width="28" height="28"/>
+        <image name="offline" width="28" height="28"/>
         <image name="readPermissions" width="24" height="24"/>
         <image name="restore" width="28" height="28"/>
         <image name="rubbishBin" width="28" height="28"/>

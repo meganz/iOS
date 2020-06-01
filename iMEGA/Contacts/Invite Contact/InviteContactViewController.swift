@@ -63,7 +63,7 @@ class InviteContactViewController: UIViewController {
     // MARK: - Private
     
     func updateAppearance() {
-        mainView.backgroundColor = UIColor.mnz_background()
+        mainView.backgroundColor = (presentingViewController == nil) ? .mnz_backgroundGrouped(for: traitCollection) : .mnz_backgroundGroupedElevated(traitCollection)
         
         let separatorColor = UIColor.mnz_separator(for: self.traitCollection)
         addFromContactsSeparatorView.backgroundColor = separatorColor

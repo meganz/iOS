@@ -22,7 +22,7 @@
 #pragma mark - Private
 
 - (void)updateAppearance {
-    self.richPreviewView.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
+    self.richPreviewView.backgroundColor = UIColor.mnz_background;
     
     self.descriptionLabel.textColor = self.linkLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
 }
