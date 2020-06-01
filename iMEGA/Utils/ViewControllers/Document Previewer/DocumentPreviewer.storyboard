@@ -113,6 +113,7 @@
                         <outlet property="activityIndicator" destination="PvF-fF-Mki" id="p1g-Gj-5GE"/>
                         <outlet property="collectionView" destination="xcl-UM-x0L" id="syf-l2-XOd"/>
                         <outlet property="imageView" destination="VJh-z4-8vz" id="LRL-gj-Q4P"/>
+                        <outlet property="importBarButtonItem" destination="vTK-Lp-W8C" id="Cfb-Zr-1Ra"/>
                         <outlet property="moreBarButtonItem" destination="R1j-r6-Sll" id="Fif-Wa-O5U"/>
                         <outlet property="openInBarButtonItem" destination="zhj-Kc-zZm" id="6SY-XO-WHe"/>
                         <outlet property="pdfView" destination="IHv-aq-hY6" id="bor-lu-UNg"/>
@@ -140,6 +141,11 @@
                 <barButtonItem image="moreSelected" style="plain" id="R1j-r6-Sll" userLabel="More Bar Button Item">
                     <connections>
                         <action selector="actionsTapped:" destination="zUo-yM-mbH" id="M4Z-Io-Yhl"/>
+                    </connections>
+                </barButtonItem>
+                <barButtonItem title="Item" image="import" style="plain" id="vTK-Lp-W8C" userLabel="Import">
+                    <connections>
+                        <action selector="importAction:" destination="zUo-yM-mbH" id="pBE-HU-HM5"/>
                     </connections>
                 </barButtonItem>
             </objects>
@@ -259,6 +265,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="import" width="28" height="28"/>
         <image name="moreSelected" width="28" height="28"/>
         <image name="openWith" width="28" height="28"/>
         <image name="search" width="28" height="28"/>
