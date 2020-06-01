@@ -82,6 +82,7 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
             if let filenameCell = tableView.dequeueReusableCell(withIdentifier: DocScannerFileNameTableCell.reuseIdentifier,
                                                                 for: indexPath) as? DocScannerFileNameTableCell {
                 let fileType = UserDefaults.standard.string(forKey: keys.docScanExportFileTypeKey)
+                filenameCell.delegate = self
                 filenameCell.configure(filename: fileName, fileType: fileType)
                 cell = filenameCell
             }
@@ -190,6 +191,10 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
 
 extension DocScannerSaveSettingTableViewController: DocScannerFileInfoTableCellDelegate {
     func filenameChanged(_ newFilename: String) {
+        guard !newFilename.isEmpty else {
+            fileName = "Scan \(NSDate().mnz_formattedDefaultNameForMedia())"
+            return
+        }
         fileName = newFilename
     }
 }
