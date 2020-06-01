@@ -97,10 +97,11 @@ import UIKit
     // MARK: - Private
     
     func updateAppearance() {
-        view.backgroundColor = .mnz_backgroundGrouped(for: traitCollection)
-        tableView.backgroundColor = .mnz_backgroundGrouped(for: traitCollection)
-        
+        view.backgroundColor = (presentingViewController == nil) ? .mnz_backgroundGrouped(for: traitCollection) : .mnz_backgroundGroupedElevated(traitCollection)
+        tableView.backgroundColor = (presentingViewController == nil) ? .mnz_backgroundGrouped(for: traitCollection) : .mnz_backgroundGroupedElevated(traitCollection)
         tableView.separatorColor = UIColor.mnz_separator(for: traitCollection)
+        
+        inviteContactView.backgroundColor = (presentingViewController == nil) ? .mnz_secondaryBackgroundGrouped(traitCollection) : .mnz_secondaryBackgroundElevated(traitCollection)
         
         tableView.reloadData()
     }

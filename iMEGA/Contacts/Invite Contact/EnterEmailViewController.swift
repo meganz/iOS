@@ -98,10 +98,9 @@ class EnterEmailViewController: UIViewController {
     // MARK: Private
     
     func updateAppearance() {
-        view.backgroundColor = UIColor.mnz_background()
+        view.backgroundColor = (presentingViewController == nil) ? .mnz_backgroundGrouped(for: traitCollection) : .mnz_backgroundGroupedElevated(traitCollection)
         
-        descriptionView.backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
-        tokenFieldView.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
+        tokenFieldView.backgroundColor = (presentingViewController == nil) ? .mnz_secondaryBackgroundGrouped(traitCollection) : .mnz_secondaryBackgroundElevated(traitCollection)
         
         customizeTokenField()
         tokenFieldButton.tintColor = UIColor.mnz_primaryGray(for: traitCollection)

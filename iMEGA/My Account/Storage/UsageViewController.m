@@ -5,6 +5,7 @@
 #import "NSString+MNZCategory.h"
 #import "MEGASdkManager.h"
 #import "MEGASdk+MNZCategory.h"
+#import "MEGA-Swift.h"
 
 #import "Helper.h"
 
@@ -111,8 +112,6 @@
     self.usagePageControl.pageIndicatorTintColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
     
     self.usageBottomSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
-    
-    self.cloudDriveView.backgroundColor = self.rubbishBinView.backgroundColor = self.incomingSharesView.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
     
     self.cloudDriveSizeLabel.textColor = self.rubbishBinSizeLabel.textColor = self.incomingSharesSizeLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
     self.cloudDriveBottomSeparatorView.backgroundColor = self.rubbishBinBottomSeparatorView.backgroundColor = self.incomingSharesBottomSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
