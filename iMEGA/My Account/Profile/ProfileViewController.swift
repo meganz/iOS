@@ -56,6 +56,15 @@ enum SessionSectionRow: Int {
         return dateFormatter
     }()
     
+    private lazy var longDateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = ""
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .none
+        dateFormatter.locale = NSLocale.autoupdatingCurrent
+        return dateFormatter
+    }()
+
     private var twoFactorAuthStatus:TwoFactorAuthStatus = .unknown
     
     // MARK: - Lifecycle
@@ -312,6 +321,15 @@ enum SessionSectionRow: Int {
         present(addPhoneNumberController, animated: true, completion: nil)
     }
     
+    func expiryDateFormatterOfProfessionalAccountExpiryDate(_ expiryDate: Date) -> DateFormatter {
+        let now = Date()
+        guard let daysOfDistance = now.dayDistance(toFutureDate: expiryDate, on: Calendar.autoupdatingCurrent),
+            daysOfDistance > 7 else {
+            return dateFormatter
+        }
+        return longDateFormatter
+    }
+
     // MARK: - IBActions
     
     @IBAction func backTouchUpInside(_ sender: UIButton) {
