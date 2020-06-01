@@ -434,7 +434,7 @@
             break;
             
         case 2:
-            cell.leftImageView.image = [UIImage imageNamed:@"Link_grey"];
+            cell.leftImageView.image = [UIImage imageNamed:@"link"];
             cell.nameLabel.text = AMLocalizedString(@"Get Chat Link", @"");
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             break;
