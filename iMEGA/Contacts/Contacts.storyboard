@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="CSm-b8-KOc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="CSm-b8-KOc">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -321,10 +321,18 @@
                         <outlet property="createGroupBarButtonItem" destination="xiQ-pP-FgM" id="BrK-3Y-gaG"/>
                         <outlet property="deleteBarButtonItem" destination="wgy-rg-Fjg" id="idp-L0-R7m"/>
                         <outlet property="editBarButtonItem" destination="EF0-GJ-VNE" id="UsC-Ca-lDB"/>
+                        <outlet property="encryptedKeyRotationBottomSeparatorView" destination="fJN-ip-ueM" id="9fy-uB-joY"/>
                         <outlet property="encryptedKeyRotationLabel" destination="ize-4t-bbK" id="lvM-oN-QEW"/>
+                        <outlet property="encryptedKeyRotationTopSeparatorView" destination="5CW-AL-Qd5" id="ewk-Mx-fzi"/>
+                        <outlet property="encryptedKeyRotationView" destination="ps2-Z3-HpU" id="E18-1u-dgK"/>
+                        <outlet property="enterGroupNameBottomSeparatorView" destination="d5W-5C-LAs" id="Lqy-Nf-Ed9"/>
                         <outlet property="enterGroupNameTextField" destination="lWL-Ao-V9E" id="bgy-6P-koU"/>
+                        <outlet property="enterGroupNameView" destination="bRd-S9-XCZ" id="eGU-rM-2ZM"/>
+                        <outlet property="getChatLinkBottomSeparatorView" destination="Qal-MZ-b5c" id="ICG-1k-2fo"/>
                         <outlet property="getChatLinkLabel" destination="4DZ-js-4xR" id="ayf-UB-FxW"/>
                         <outlet property="getChatLinkStackView" destination="p0z-32-XnB" id="Z4J-hI-SGb"/>
+                        <outlet property="getChatLinkTopSeparatorView" destination="U36-hv-0ot" id="48a-Vc-M9K"/>
+                        <outlet property="getChatLinkView" destination="NeF-Yr-Pu6" id="eKp-kS-cbT"/>
                         <outlet property="insertAnEmailBarButtonItem" destination="EYv-wx-auj" id="SJD-wz-lKl"/>
                         <outlet property="inviteContactButton" destination="zK0-Pj-pEl" id="Ws7-Pp-x29"/>
                         <outlet property="itemListView" destination="nEj-Ji-K4x" id="xz1-HU-QcL"/>
@@ -349,81 +357,103 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="CPA-ks-w1n">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="272.66666666666669"/>
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="273"/>
                             <subviews>
-                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Vf3-m0-tJG">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="60.666666666666664"/>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bRd-S9-XCZ">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="61"/>
                                     <subviews>
-                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="LwT-Iz-dOE">
-                                            <rect key="frame" x="0.0" y="10" width="375" height="40"/>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Vf3-m0-tJG">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="61"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="addGroupAvatar" translatesAutoresizingMaskIntoConstraints="NO" id="m8P-lC-gVO">
-                                                    <rect key="frame" x="12" y="0.0" width="40" height="40"/>
-                                                </imageView>
-                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter group name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lWL-Ao-V9E">
-                                                    <rect key="frame" x="60" y="0.0" width="303" height="40"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences" textContentType="name"/>
-                                                    <connections>
-                                                        <action selector="groupNameCanged:" destination="4jb-uN-Eto" eventType="editingChanged" id="ig6-jE-o3M"/>
-                                                    </connections>
-                                                </textField>
-                                            </subviews>
-                                            <directionalEdgeInsets key="directionalLayoutMargins" top="0.0" leading="12" bottom="0.0" trailing="12"/>
-                                        </stackView>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d5W-5C-LAs" userLabel="lineView">
-                                            <rect key="frame" x="0.0" y="60" width="375" height="0.6666666666666643"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="0.5" id="rju-ff-M0L"/>
-                                            </constraints>
-                                        </view>
-                                    </subviews>
-                                    <directionalEdgeInsets key="directionalLayoutMargins" top="10" leading="0.0" bottom="0.0" trailing="0.0"/>
-                                </stackView>
-                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="YGf-Ok-ZRU">
-                                    <rect key="frame" x="0.0" y="80.666666666666686" width="375" height="172"/>
-                                    <subviews>
-                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="E6H-3f-pcm">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                                            <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5CW-AL-Qd5" userLabel="lineView">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="0.33333333333333331"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="0.5" id="jDC-cu-m3K"/>
-                                                    </constraints>
-                                                </view>
-                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="99S-tp-viM">
-                                                    <rect key="frame" x="0.0" y="6.3333333333333286" width="375" height="31"/>
+                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="LwT-Iz-dOE">
+                                                    <rect key="frame" x="0.0" y="10" width="375" height="40.666666666666664"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Encrypted Key Rotation" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ize-4t-bbK" userLabel="Encrypted Key Rotation">
-                                                            <rect key="frame" x="12" y="0.0" width="297" height="31"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                            <nil key="textColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="QkQ-EH-xFV">
-                                                            <rect key="frame" x="314" y="0.0" width="51" height="31"/>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="addGroupAvatar" translatesAutoresizingMaskIntoConstraints="NO" id="m8P-lC-gVO">
+                                                            <rect key="frame" x="12" y="0.0" width="40" height="40.666666666666664"/>
+                                                        </imageView>
+                                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter group name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lWL-Ao-V9E">
+                                                            <rect key="frame" x="60" y="0.0" width="303" height="40.666666666666664"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences" textContentType="name"/>
                                                             <connections>
-                                                                <action selector="keyRotationSwitchValueChanged:" destination="4jb-uN-Eto" eventType="valueChanged" id="TrN-bM-Bvx"/>
+                                                                <action selector="groupNameCanged:" destination="4jb-uN-Eto" eventType="editingChanged" id="ig6-jE-o3M"/>
                                                             </connections>
-                                                        </switch>
+                                                        </textField>
                                                     </subviews>
                                                     <directionalEdgeInsets key="directionalLayoutMargins" top="0.0" leading="12" bottom="0.0" trailing="12"/>
                                                 </stackView>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fJN-ip-ueM" userLabel="lineView">
-                                                    <rect key="frame" x="0.0" y="43.333333333333329" width="375" height="0.6666666666666643"/>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d5W-5C-LAs" userLabel="lineView">
+                                                    <rect key="frame" x="0.0" y="60.666666666666664" width="375" height="0.3333333333333357"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="0.5" id="k9d-hB-Nfm"/>
+                                                        <constraint firstAttribute="height" constant="0.5" id="rju-ff-M0L"/>
                                                     </constraints>
                                                 </view>
                                             </subviews>
+                                            <directionalEdgeInsets key="directionalLayoutMargins" top="10" leading="0.0" bottom="0.0" trailing="0.0"/>
                                         </stackView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="Vf3-m0-tJG" firstAttribute="top" secondItem="bRd-S9-XCZ" secondAttribute="top" id="IKf-XQ-oZq"/>
+                                        <constraint firstAttribute="bottom" secondItem="Vf3-m0-tJG" secondAttribute="bottom" id="QOj-fV-j9t"/>
+                                        <constraint firstAttribute="trailing" secondItem="Vf3-m0-tJG" secondAttribute="trailing" id="g7u-Zu-8iZ"/>
+                                        <constraint firstItem="Vf3-m0-tJG" firstAttribute="leading" secondItem="bRd-S9-XCZ" secondAttribute="leading" id="lva-rv-Saz"/>
+                                        <constraint firstAttribute="height" constant="61" id="np5-nx-1Fx"/>
+                                    </constraints>
+                                </view>
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="YGf-Ok-ZRU">
+                                    <rect key="frame" x="0.0" y="81" width="375" height="172"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ps2-Z3-HpU">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="E6H-3f-pcm">
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                                    <subviews>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5CW-AL-Qd5">
+                                                            <rect key="frame" x="0.0" y="0.0" width="375" height="0.66666666666666663"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="0.5" id="jDC-cu-m3K"/>
+                                                            </constraints>
+                                                        </view>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="99S-tp-viM">
+                                                            <rect key="frame" x="0.0" y="6.6666666666666714" width="375" height="31"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Encrypted Key Rotation" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ize-4t-bbK" userLabel="Encrypted Key Rotation">
+                                                                    <rect key="frame" x="12" y="0.0" width="297" height="31"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="QkQ-EH-xFV">
+                                                                    <rect key="frame" x="314" y="0.0" width="51" height="31"/>
+                                                                    <connections>
+                                                                        <action selector="keyRotationSwitchValueChanged:" destination="4jb-uN-Eto" eventType="valueChanged" id="TrN-bM-Bvx"/>
+                                                                    </connections>
+                                                                </switch>
+                                                            </subviews>
+                                                            <directionalEdgeInsets key="directionalLayoutMargins" top="0.0" leading="12" bottom="0.0" trailing="12"/>
+                                                        </stackView>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fJN-ip-ueM">
+                                                            <rect key="frame" x="0.0" y="43.666666666666671" width="375" height="0.3333333333333357"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="0.5" id="k9d-hB-Nfm"/>
+                                                            </constraints>
+                                                        </view>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="E6H-3f-pcm" firstAttribute="top" secondItem="ps2-Z3-HpU" secondAttribute="top" id="J1l-Xy-USO"/>
+                                                <constraint firstItem="E6H-3f-pcm" firstAttribute="leading" secondItem="ps2-Z3-HpU" secondAttribute="leading" id="gYn-0g-x9q"/>
+                                                <constraint firstAttribute="trailing" secondItem="E6H-3f-pcm" secondAttribute="trailing" id="prG-SZ-kEZ"/>
+                                                <constraint firstAttribute="bottom" secondItem="E6H-3f-pcm" secondAttribute="bottom" id="uBE-XE-YBg"/>
+                                            </constraints>
+                                        </view>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="lvw-mC-8e3">
-                                            <rect key="frame" x="0.0" y="63.999999999999986" width="375" height="43"/>
+                                            <rect key="frame" x="0.0" y="64" width="375" height="43"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rws-iP-l4q">
                                                     <rect key="frame" x="12" y="0.0" width="351" height="43"/>
-                                                    <color key="backgroundColor" red="0.9882352941176471" green="0.9882352941176471" blue="0.9882352941176471" alpha="1" colorSpace="calibratedRGB"/>
                                                     <string key="text">Key rotation is slightly more secure, but does not allow you to create a link to the chat and new participants will not see past messages.</string>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <nil key="textColor"/>
@@ -432,50 +462,62 @@
                                             </subviews>
                                             <directionalEdgeInsets key="directionalLayoutMargins" top="0.0" leading="12" bottom="0.0" trailing="12"/>
                                         </stackView>
-                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="11" translatesAutoresizingMaskIntoConstraints="NO" id="p0z-32-XnB">
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NeF-Yr-Pu6">
                                             <rect key="frame" x="0.0" y="127" width="375" height="45"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U36-hv-0ot" userLabel="lineView">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="0.33333333333333331"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="0.5" id="IOh-PA-Lbc"/>
-                                                    </constraints>
-                                                </view>
-                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="gaT-j6-me1">
-                                                    <rect key="frame" x="0.0" y="11.333333333333343" width="375" height="22"/>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="11" translatesAutoresizingMaskIntoConstraints="NO" id="p0z-32-XnB">
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="45"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Get Chat Link" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4DZ-js-4xR" userLabel="Get Chat Link">
-                                                            <rect key="frame" x="12" y="0.0" width="324" height="22"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                            <nil key="textColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bMY-LC-cQ1" userLabel="Checkbox">
-                                                            <rect key="frame" x="341" y="0.0" width="22" height="22"/>
-                                                            <accessibility key="accessibilityConfiguration" hint="You agree MEGA Term of Services"/>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U36-hv-0ot" userLabel="lineView">
+                                                            <rect key="frame" x="0.0" y="0.0" width="375" height="0.66666666666666663"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="width" constant="22" id="Bib-nx-SeW"/>
+                                                                <constraint firstAttribute="height" constant="0.5" id="IOh-PA-Lbc"/>
                                                             </constraints>
-                                                            <state key="normal" image="checkBox">
-                                                                <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            </state>
-                                                            <state key="selected" image="checkBoxSelected"/>
-                                                            <connections>
-                                                                <action selector="checkboxTouchUpInside:" destination="4jb-uN-Eto" eventType="touchUpInside" id="xXJ-8p-A99"/>
-                                                            </connections>
-                                                        </button>
+                                                        </view>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="gaT-j6-me1">
+                                                            <rect key="frame" x="0.0" y="11.666666666666657" width="375" height="22"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Get Chat Link" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4DZ-js-4xR" userLabel="Get Chat Link">
+                                                                    <rect key="frame" x="12" y="0.0" width="324" height="22"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bMY-LC-cQ1" userLabel="Checkbox">
+                                                                    <rect key="frame" x="341" y="0.0" width="22" height="22"/>
+                                                                    <accessibility key="accessibilityConfiguration" hint="You agree MEGA Term of Services"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="22" id="Bib-nx-SeW"/>
+                                                                    </constraints>
+                                                                    <state key="normal" image="checkBox">
+                                                                        <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    </state>
+                                                                    <state key="selected" image="checkBoxSelected"/>
+                                                                    <connections>
+                                                                        <action selector="checkboxTouchUpInside:" destination="4jb-uN-Eto" eventType="touchUpInside" id="xXJ-8p-A99"/>
+                                                                    </connections>
+                                                                </button>
+                                                            </subviews>
+                                                            <directionalEdgeInsets key="directionalLayoutMargins" top="0.0" leading="12" bottom="0.0" trailing="12"/>
+                                                        </stackView>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qal-MZ-b5c" userLabel="lineView">
+                                                            <rect key="frame" x="0.0" y="44.666666666666657" width="375" height="0.3333333333333357"/>
+                                                            <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="0.5" id="Oli-B7-ncJ"/>
+                                                            </constraints>
+                                                        </view>
                                                     </subviews>
-                                                    <directionalEdgeInsets key="directionalLayoutMargins" top="0.0" leading="12" bottom="0.0" trailing="12"/>
                                                 </stackView>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qal-MZ-b5c" userLabel="lineView">
-                                                    <rect key="frame" x="0.0" y="44.333333333333343" width="375" height="0.6666666666666643"/>
-                                                    <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="0.5" id="Oli-B7-ncJ"/>
-                                                    </constraints>
-                                                </view>
                                             </subviews>
-                                        </stackView>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="p0z-32-XnB" secondAttribute="bottom" id="6Et-tz-LGs"/>
+                                                <constraint firstAttribute="trailing" secondItem="p0z-32-XnB" secondAttribute="trailing" id="PZK-b9-qi5"/>
+                                                <constraint firstItem="p0z-32-XnB" firstAttribute="top" secondItem="NeF-Yr-Pu6" secondAttribute="top" id="QBc-45-JXy"/>
+                                                <constraint firstItem="p0z-32-XnB" firstAttribute="leading" secondItem="NeF-Yr-Pu6" secondAttribute="leading" id="XmJ-fp-95Z"/>
+                                                <constraint firstAttribute="height" constant="45" id="azb-Jc-BH9"/>
+                                            </constraints>
+                                        </view>
                                     </subviews>
                                 </stackView>
                             </subviews>
@@ -488,7 +530,7 @@
                     </constraints>
                     <viewLayoutGuide key="safeArea" id="mNH-Zj-w3r"/>
                 </view>
-                <barButtonItem title="Group" id="26Z-bH-E7m" userLabel="Add Participant Bar Button Item">
+                <barButtonItem title="Group" style="plain" id="26Z-bH-E7m" userLabel="Add Participant Bar Button Item">
                     <connections>
                         <action selector="addParticipantAction:" destination="4jb-uN-Eto" id="A2p-ae-oUW"/>
                     </connections>
@@ -498,12 +540,12 @@
                         <action selector="createGroupAction:" destination="4jb-uN-Eto" id="oyN-2E-0VA"/>
                     </connections>
                 </barButtonItem>
-                <barButtonItem image="selectAll" id="Llm-yt-C3F" userLabel="Select All Bar Button Item">
+                <barButtonItem image="selectAll" style="plain" id="Llm-yt-C3F" userLabel="Select All Bar Button Item">
                     <connections>
                         <action selector="selectAllAction:" destination="4jb-uN-Eto" id="hCu-lV-fHf"/>
                     </connections>
                 </barButtonItem>
-                <barButtonItem title="Edit" width="22" id="EF0-GJ-VNE" userLabel="Edit Bar Button Item">
+                <barButtonItem title="Edit" width="22" style="plain" id="EF0-GJ-VNE" userLabel="Edit Bar Button Item">
                     <connections>
                         <action selector="editTapped:" destination="4jb-uN-Eto" id="H4V-sU-Tak"/>
                     </connections>
@@ -523,7 +565,7 @@
                         <action selector="shareFolderWithAction:" destination="4jb-uN-Eto" id="OXg-S3-u1w"/>
                     </connections>
                 </barButtonItem>
-                <barButtonItem image="backArrow" id="GTy-dq-ErY">
+                <barButtonItem image="backArrow" style="plain" id="GTy-dq-ErY">
                     <connections>
                         <action selector="backAction:" destination="4jb-uN-Eto" id="DNc-pl-fGr"/>
                     </connections>
@@ -534,7 +576,7 @@
                     <viewLayoutGuide key="safeArea" id="SRo-8V-cud"/>
                     <items>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="Ab4-Tz-z6U"/>
-                        <barButtonItem enabled="NO" id="wgy-rg-Fjg" userLabel="Delete Bar Button Item">
+                        <barButtonItem enabled="NO" style="plain" id="wgy-rg-Fjg" userLabel="Delete Bar Button Item">
                             <connections>
                                 <action selector="deleteAction:" destination="4jb-uN-Eto" id="C8I-CZ-g0G"/>
                             </connections>
@@ -608,7 +650,6 @@
         <scene sceneID="f3U-Vs-uPq">
             <objects>
                 <navigationController storyboardIdentifier="ContactsNavigationControllerID" automaticallyAdjustsScrollViewInsets="NO" id="CSm-b8-KOc" customClass="MEGANavigationController" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" tag="5" title="" id="VTz-ma-hFC"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="x1n-xa-jFN">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>

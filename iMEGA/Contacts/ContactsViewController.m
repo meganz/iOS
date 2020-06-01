@@ -80,12 +80,24 @@
 @property (nonatomic) UIPanGestureRecognizer *panOnTable;
 
 @property (weak, nonatomic) IBOutlet UIView *tableViewHeader;
+
+@property (weak, nonatomic) IBOutlet UIView *enterGroupNameView;
 @property (weak, nonatomic) IBOutlet UITextField *enterGroupNameTextField;
+@property (weak, nonatomic) IBOutlet UIView *enterGroupNameBottomSeparatorView;
+
+@property (weak, nonatomic) IBOutlet UIView *encryptedKeyRotationView;
+@property (weak, nonatomic) IBOutlet UIView *encryptedKeyRotationTopSeparatorView;
 @property (weak, nonatomic) IBOutlet UILabel *encryptedKeyRotationLabel;
+@property (weak, nonatomic) IBOutlet UIView *encryptedKeyRotationBottomSeparatorView;
 @property (weak, nonatomic) IBOutlet UILabel *getChatLinkLabel;
 @property (weak, nonatomic) IBOutlet UILabel *keyRotationFooterLabel;
 @property (weak, nonatomic) IBOutlet UIButton *checkboxButton;
+
+@property (weak, nonatomic) IBOutlet UIView *getChatLinkTopSeparatorView;
+@property (weak, nonatomic) IBOutlet UIView *getChatLinkView;
 @property (weak, nonatomic) IBOutlet UIStackView *getChatLinkStackView;
+@property (weak, nonatomic) IBOutlet UIView *getChatLinkBottomSeparatorView;
+
 @property (weak, nonatomic) IBOutlet UIStackView *optionsStackView;
 
 @property (weak, nonatomic) IBOutlet UIView *tableViewFooter;
@@ -213,6 +225,29 @@
 
 - (void)updateAppearance {
     self.view.backgroundColor = self.tableView.backgroundColor = (self.contactsMode == ContactsModeDefault) ? [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection] : [UIColor mnz_backgroundGroupedElevated:self.traitCollection];
+    
+    switch (self.contactsMode) {
+        case ContactsModeChatAddParticipant:
+            self.itemListView.backgroundColor = [UIColor mnz_backgroundGroupedElevated:self.traitCollection];
+            break;
+            
+        case ContactsModeChatNamingGroup: {
+            self.tableViewHeader.backgroundColor = [UIColor mnz_backgroundGroupedElevated:self.traitCollection];
+            
+            self.enterGroupNameView.backgroundColor = [UIColor mnz_secondaryBackgroundGroupedElevated:self.traitCollection];
+            self.enterGroupNameBottomSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+            
+            self.encryptedKeyRotationView.backgroundColor = [UIColor mnz_secondaryBackgroundGroupedElevated:self.traitCollection];
+            self.encryptedKeyRotationTopSeparatorView.backgroundColor = self.encryptedKeyRotationBottomSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+            
+            self.getChatLinkView.backgroundColor = [UIColor mnz_secondaryBackgroundGroupedElevated:self.traitCollection];
+            self.getChatLinkTopSeparatorView.backgroundColor = self.getChatLinkBottomSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+            break;
+        }
+            
+        default:
+            break;
+    }
     
     self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     self.tableView.sectionIndexColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
@@ -1226,9 +1261,9 @@
 
 - (IBAction)keyRotationSwitchValueChanged:(UISwitch *)sender {
     self.keyRotationEnabled = sender.on;
-    self.getChatLinkStackView.hidden = sender.on;
+    self.getChatLinkView.hidden = sender.on;
     if (sender.on) {
-        self.tableViewHeader.frame = CGRectMake(0, 0, self.tableViewHeader.frame.size.width, 266 - self.getChatLinkStackView.frame.size.height - 23);
+        self.tableViewHeader.frame = CGRectMake(0, 0, self.tableViewHeader.frame.size.width, 266 - self.getChatLinkView.frame.size.height - 23);
     } else {
         self.tableViewHeader.frame = CGRectMake(0, 0, self.tableViewHeader.frame.size.width, 266);
     }
@@ -1462,6 +1497,7 @@
         return headerView;
     }
     if (section == 0 && self.contactsMode == ContactsModeChatNamingGroup) {
+        headerView.topSeparatorView.hidden = YES;
         headerView.titleLabel.text = AMLocalizedString(@"participants", @"Label to describe the section where you can see the participants of a group chat").uppercaseString;
         return headerView;
     }
