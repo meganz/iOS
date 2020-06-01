@@ -77,19 +77,6 @@ NS_ASSUME_NONNULL_BEGIN
 + (UIActivityViewController *)activityViewControllerForChatMessages:(NSArray<MEGAChatMessage *> *)messages sender:(id)sender;
 + (UIActivityViewController *)activityViewControllerForNodes:(NSArray *)nodesArray sender:(id _Nullable)sender;
 
-#pragma mark - Utils for empty states
-
-+ (UIEdgeInsets)capInsetsForEmptyStateButton;
-+ (UIEdgeInsets)rectInsetsForEmptyStateButton;
-
-+ (CGFloat)verticalOffsetForEmptyStateWithNavigationBarSize:(CGSize)navigationBarSize searchBarActive:(BOOL)isSearchBarActive;
-+ (CGFloat)spaceHeightForEmptyState;
-+ (CGFloat)spaceHeightForEmptyStateWithDescription;
-
-+ (NSDictionary *)titleAttributesForEmptyState;
-+ (NSDictionary *)descriptionAttributesForEmptyState;
-+ (NSDictionary *)buttonTextAttributesForEmptyState;
-
 #pragma mark - Utils for UI
 
 + (UILabel *)customNavigationBarLabelWithTitle:(NSString *)title subtitle:(NSString *)subtitle;
