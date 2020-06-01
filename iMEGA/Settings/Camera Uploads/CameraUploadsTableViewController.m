@@ -345,7 +345,6 @@
 
 - (void)showBackgroundUploadBoardingScreen {
     CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
-    customModalAlertVC.modalPresentationStyle = UIModalPresentationOverFullScreen;
     customModalAlertVC.image = [UIImage imageNamed:@"backgroundUploadLocation"];
     customModalAlertVC.viewTitle = AMLocalizedString(@"Enable location services for background upload", nil);
     NSString *actionTitle;

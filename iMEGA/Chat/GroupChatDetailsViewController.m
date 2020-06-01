@@ -239,7 +239,6 @@
 
 - (void)presentNoChatLinkAvailable {
     CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
-    customModalAlertVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
     customModalAlertVC.image = [UIImage imageNamed:@"chatLinkCreation"];
     customModalAlertVC.viewTitle = self.chatRoom.title;
     customModalAlertVC.firstButtonTitle = AMLocalizedString(@"close", @"A button label. The button allows the user to close the conversation.");
@@ -254,7 +253,6 @@
 
 - (void)presentChatLinkOptionsWithLink:(NSString *)link {
     CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
-    customModalAlertVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
     customModalAlertVC.image = [UIImage imageNamed:@"chatLinkCreation"];
     customModalAlertVC.viewTitle = self.chatRoom.title;
     customModalAlertVC.detail = AMLocalizedString(@"People can join your group by using this link.", @"Text explaining users how the chat links work.");
@@ -820,7 +818,6 @@
                 
             case 6: {
                 CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
-                customModalAlertVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
                 customModalAlertVC.image = [UIImage imageNamed:@"lock"];
                 customModalAlertVC.viewTitle = AMLocalizedString(@"Enable Encrypted Key Rotation", @"Title show in a cell where the users can enable the 'Encrypted Key Rotation'");
                 customModalAlertVC.detail = AMLocalizedString(@"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages.", @"Footer text to explain what means 'Encrypted Key Rotation'");

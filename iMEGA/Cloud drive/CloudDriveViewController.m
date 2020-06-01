@@ -39,7 +39,6 @@
 #import "CloudDriveCollectionViewController.h"
 #import "ContactsViewController.h"
 #import "CopyrightWarningViewController.h"
-#import "CustomModalAlertViewController.h"
 #import "EmptyStateView.h"
 #import "MEGAAssetsPickerController.h"
 #import "MEGAImagePickerController.h"
