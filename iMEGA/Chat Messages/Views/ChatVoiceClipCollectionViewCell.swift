@@ -89,6 +89,11 @@ class ChatVoiceClipCollectionViewCell: AudioMessageCell {
                 let nodePath = node.mnz_temporaryPath(forDownloadCreatingDirectories: true)
                 if !FileManager.default.fileExists(atPath: nodePath) {
                     MEGASdkManager.sharedMEGASdk()?.startDownloadTopPriority(with: node, localPath: nodePath, appData: nil, delegate: MEGAStartDownloadTransferDelegate(progress: nil, completion: { (transfer) in
+                        let visibleIndexPaths = messagesCollectionView.indexPathsForVisibleItems
+                        guard visibleIndexPaths.contains(indexPath) else {
+                            return
+                        }
+                        
                         messagesCollectionView.reloadItems(at: [indexPath])
                     }, onError: nil))
                 }
