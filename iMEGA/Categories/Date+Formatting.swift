@@ -135,6 +135,7 @@ extension DateFormatStyle: DateFormatterProvidable {
         formatter.calendar = calendar
         formatter.dateStyle = dateStyle
         formatter.timeStyle = timeStyle
+        formatter.doesRelativeDateFormatting = relativeDateFormatting
         return formatter
     }
 }

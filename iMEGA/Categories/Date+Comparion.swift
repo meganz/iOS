@@ -35,8 +35,24 @@ extension Date {
     ///   - calendar: A calendar object on which the calendar days to be based on.
     /// - Returns:
     func dayDistance(toPastDate pastDate: Date, on calendar: Calendar) -> NumberOfDays? {
-        assert(pastDate <= self)
         guard pastDate <= self else { return nil }
         return calendar.dateComponents([.day], from: self, to: pastDate).day.map(abs)
+    }
+}
+
+extension Date {
+
+    /// Indicates the invoker on the given calendar is *Today*.
+    /// - Parameter calendar: The calendar which is used to consult *Today* information from.
+    /// - Returns: True if invoker is today on calendar, else false.
+    func isToday(on calendar: Calendar) -> Bool {
+        return calendar.isDateInToday(self)
+    }
+
+    /// Indicates the invoker on the given calendar is *Tomorrow*.
+    /// - Parameter calendar: The calendar which is used to consult  *Tomorrow* information from.
+    /// - Returns: True if invoker is tomorrow on calendar, else false.
+    func isTomorrow(on calendar: Calendar) -> Bool {
+        return calendar.isDateInTomorrow(self)
     }
 }
