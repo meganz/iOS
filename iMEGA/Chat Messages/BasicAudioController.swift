@@ -81,9 +81,9 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
 
     @objc func proximityChanged() {
        
-//            guard AVAudioSession.sharedInstance().mnz_isOutputEqual(toPortType: .builtInReceiver), AVAudioSession.sharedInstance().mnz_isOutputEqual(toPortType: .builtInSpeaker)  else {
-//                return
-//            }
+            guard AVAudioSession.sharedInstance().mnz_isOutputEqual(toPortType: .builtInReceiver), AVAudioSession.sharedInstance().mnz_isOutputEqual(toPortType: .builtInSpeaker)  else {
+                return
+            }
             
             if UIDevice.current.proximityState {
                try? AVAudioSession.sharedInstance().overrideOutputAudioPort(.none)
