@@ -13,7 +13,6 @@
 		2F0CB57123DFD209009F09A2 /* DocScannerSaveSettingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0CB56F23DFD209009F09A2 /* DocScannerSaveSettingTableViewController.swift */; };
 		2F20C5E9240F434A00A1544C /* MEGAIndexer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9419B6BF1F20D1D700FEBE31 /* MEGAIndexer.m */; };
 		2F20C5EA240F434B00A1544C /* MEGAIndexer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9419B6BF1F20D1D700FEBE31 /* MEGAIndexer.m */; };
-		2F25A2D9240C8407005EF524 /* MEGAFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B695E57F23275A4E00D12B9E /* MEGAFunctions.swift */; };
 		2F25A2DA240C840A005EF524 /* MEGAFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B695E57F23275A4E00D12B9E /* MEGAFunctions.swift */; };
 		2F25A2DC240C92C0005EF524 /* StorageFullModalAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5EC89E24075BA30017F334 /* StorageFullModalAlertViewController.swift */; };
 		2F25A2DD240C92C1005EF524 /* StorageFullModalAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5EC89E24075BA30017F334 /* StorageFullModalAlertViewController.swift */; };
@@ -259,7 +258,6 @@
 		5B72739E240D4310005816AB /* defaultIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B72739C240D430F005816AB /* defaultIcon@3x.png */; };
 		5B72739F240D4310005816AB /* defaultIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B72739D240D4310005816AB /* defaultIcon@2x.png */; };
 		5B7273A1240D4F71005816AB /* SortingAndViewModeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B7273A0240D4F71005816AB /* SortingAndViewModeTableViewController.swift */; };
-		5B7273B0240FAFA3005816AB /* UIView+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B7273AF240FAFA3005816AB /* UIView+Additions.swift */; };
 		5B78F0B21F3C5362007ED721 /* MyAccountHallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B78F0B11F3C5362007ED721 /* MyAccountHallViewController.m */; };
 		5B7B4CA21EE5AC1200DA6A8D /* MEGAInviteContactRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7B4C9F1EE5AC1200DA6A8D /* MEGAInviteContactRequestDelegate.m */; };
 		5B7B4CA31EE5AC1200DA6A8D /* MEGAShareRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7B4CA11EE5AC1200DA6A8D /* MEGAShareRequestDelegate.m */; };
@@ -301,7 +299,6 @@
 		5BD8F2BE2212F319003F2BDE /* Recents.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BD8F2BD2212F319003F2BDE /* Recents.storyboard */; };
 		5BE484BF215BB3CD003B291D /* ChatSettings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BE484BE215BB3CD003B291D /* ChatSettings.storyboard */; };
 		5BE689872417C91500462134 /* MEGAFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B695E57F23275A4E00D12B9E /* MEGAFunctions.swift */; };
-		5BE689882417C91600462134 /* MEGAFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B695E57F23275A4E00D12B9E /* MEGAFunctions.swift */; };
 		5BE689892417CB3C00462134 /* MEGAStore+CloudAppearancePreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B12D03A241273D4006C3907 /* MEGAStore+CloudAppearancePreference.swift */; };
 		5BE6898A2417CB3D00462134 /* MEGAStore+CloudAppearancePreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B12D03A241273D4006C3907 /* MEGAStore+CloudAppearancePreference.swift */; };
 		5BE689932417CC2100462134 /* SelectableTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8281471E7BE8300079C1BB /* SelectableTableViewCell.m */; };
@@ -6478,7 +6475,6 @@
 				772BA5722243C7D100F062CB /* UITableView+MNZCategory.m in Sources */,
 				A86B9F802316D6AB00F35E7A /* FLEXUtility.m in Sources */,
 				4172794B1DB663FA001AC818 /* JSQMessagesBubbleImage.m in Sources */,
-				5B7273B0240FAFA3005816AB /* UIView+Additions.swift in Sources */,
 				A8F1381C21D3ABF2003C7364 /* LocationSearchTableViewController.m in Sources */,
 				41CD14701DB150F600E545BC /* MessagesViewController.m in Sources */,
 				777615AF2175D87D00A7796D /* InputView.m in Sources */,
@@ -6673,7 +6669,6 @@
 				B644B6B721ABA27B00A3B8E7 /* MEGAConstants.m in Sources */,
 				A85740C62032F6E70033034C /* MOChatDraft+CoreDataClass.m in Sources */,
 				A85740C72032F6E70033034C /* MOChatDraft+CoreDataProperties.m in Sources */,
-				2F25A2D9240C8407005EF524 /* MEGAFunctions.swift in Sources */,
 				9432294A1EDD9CAA007DB542 /* UIDevice+MNZCategory.m in Sources */,
 				945605491EDD6FAC0094EF0F /* Helper.m in Sources */,
 				9432294E1EDD9CEE007DB542 /* NSString+MNZCategory.m in Sources */,
@@ -6823,7 +6818,6 @@
 				77F3C30321C12F800049A1BA /* UITextField+MNZCategory.m in Sources */,
 				941135551F01002E00D33428 /* OpenInActivity.m in Sources */,
 				94892C981EFBF03800AEAC25 /* SVProgressHUD.m in Sources */,
-				5BE689882417C91600462134 /* MEGAFunctions.swift in Sources */,
 				5B419EE42473E60C008C3D06 /* GenericHeaderFooterView.swift in Sources */,
 				5B2E78CD1FA0C3310096C9BE /* MEGACreateFolderRequestDelegate.m in Sources */,
 				941135501F00FFAB00D33428 /* BrowserViewController.m in Sources */,

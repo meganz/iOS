@@ -1220,7 +1220,7 @@
             
         case MEGAChatCallStatusReconnecting: {
             self.reconnecting = YES;
-            [self showToastMessage:AMLocalizedString(@"Reconnecting...", @"Title shown when the user lost the connection in a call, and the app will try to reconnect the user again") color:@"#F5A623" shouldHide:NO];
+            [self showToastMessage:AMLocalizedString(@"Reconnecting...", @"Title shown when the user lost the connection in a call, and the app will try to reconnect the user again") color:UIColor.systemOrangeColor shouldHide:NO];
             NSUInteger size = call.sessionsPeerId.size;
             for (int i = 0; i < size; i++) {
                 MEGAChatSession *chatSession = [call sessionForPeer:[call.sessionsPeerId megaHandleAtIndex:i] clientId:[call.sessionsClientId megaHandleAtIndex:i]];

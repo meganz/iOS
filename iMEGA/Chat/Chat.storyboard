@@ -2201,9 +2201,9 @@
                                 <rect key="frame" x="15" y="636" width="384" height="70"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="0iB-i8-ike">
-                                        <rect key="frame" x="12" y="15" width="148" height="40"/>
+                                        <rect key="frame" x="12" y="15" width="181.66666666666666" height="40"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sendLocation" translatesAutoresizingMaskIntoConstraints="NO" id="T9w-q6-r9Z">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sendThisLocation" translatesAutoresizingMaskIntoConstraints="NO" id="T9w-q6-r9Z">
                                                 <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="40" id="4pj-a4-Tfk"/>
@@ -2211,10 +2211,10 @@
                                                 </constraints>
                                             </imageView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="Sap-RV-jhp">
-                                                <rect key="frame" x="48" y="0.0" width="100" height="40"/>
+                                                <rect key="frame" x="48" y="0.0" width="133.66666666666666" height="40"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Send Location" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dpa-fh-Pet">
-                                                        <rect key="frame" x="0.0" y="0.0" width="100" height="22.666666666666668"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Send This Location" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dpa-fh-Pet">
+                                                        <rect key="frame" x="0.0" y="0.0" width="133.66666666666666" height="22.666666666666668"/>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -2366,7 +2366,7 @@
         <image name="rotateOFF" width="60" height="60"/>
         <image name="rotateON" width="60" height="60"/>
         <image name="selectAll" width="22" height="22"/>
-        <image name="sendLocation" width="40" height="40"/>
+        <image name="sendThisLocation" width="40" height="40"/>
         <image name="speakerOff" width="60" height="60"/>
         <image name="speakerOn" width="60" height="60"/>
         <image name="standardDisclosureIndicator" width="7.6666665077209473" height="12"/>

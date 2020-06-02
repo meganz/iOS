@@ -310,7 +310,13 @@
                 [viewController dismissViewControllerAnimated:YES completion:nil];
             };
         }
-        MEGAMoveRequestDelegate *moveRequestDelegate = [[MEGAMoveRequestDelegate alloc] initToMoveToTheRubbishBinWithFiles:(self.isFile ? 1 : 0) folders:(self.isFolder ? 1 : 0) completion:completion];
+        [self mnz_moveToTheRubbishBinWithCompletion:completion];
+    }
+}
+
+- (void)mnz_moveToTheRubbishBinWithCompletion:(void (^)(void))completion {
+    if (MEGAReachabilityManager.isReachableHUDIfNot) {
+        MEGAMoveRequestDelegate *moveRequestDelegate = [MEGAMoveRequestDelegate.alloc initToMoveToTheRubbishBinWithFiles:(self.isFile ? 1 : 0) folders:(self.isFolder ? 1 : 0) completion:completion];
         [MEGASdkManager.sharedMEGASdk moveNode:self newParent:MEGASdkManager.sharedMEGASdk.rubbishNode delegate:moveRequestDelegate];
     }
 }
