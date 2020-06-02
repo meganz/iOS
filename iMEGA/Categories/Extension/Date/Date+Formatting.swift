@@ -8,21 +8,6 @@
 
 import Foundation
 
-extension DateFormatter {
-
-    // MARK: - Date Formatter
-
-    /// Monday Jun 1, 2020
-    static let dateMediumWithWeekday = DateFormatterPool.shared.dateFormatter(of: .dateMediumWithWeekday)
-    /// Jun 1, 2020
-    static let dateMedium = DateFormatterPool.shared.dateFormatter(of: .dateMedium)
-
-    // MARK: - Relative date formatter, e.g. date in the next day will be "Tomorrow" etc.
-
-    /// Jun 1, 2020 or "Tomorrow", "Today", "Yesterday"
-    static let dateMediumRelative = DateFormatterPool.shared.dateFormatter(of: .dateMediumRelative)
-}
-
 enum DateTemplateFormatting {
     /// Monday Jun 1, 2020
     case dateMediumWithWeekday
@@ -53,6 +38,7 @@ enum DateStyleFormatting {
 
 /// A  date formatter pool that holds date formatter used in MEGA. As `DateFormatter` is a heavy object, so making a  cache pool to hold popular
 /// date formatters saving time.
+/// NOTE: This shared object is *NOT* thread safe.
 final class DateFormatterPool {
 
     // MARK: - Cache for date formatter
