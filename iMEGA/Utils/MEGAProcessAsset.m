@@ -158,7 +158,7 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
         dispatch_async(dispatch_get_main_queue(), ^(void) {
             [self.alertController dismissViewControllerAnimated:YES completion:^{
                 if (self.exportAssetFailed) {
-                    NSString *message = message = AMLocalizedString(@"shareExtensionUnsupportedAssets", @"Inform user that there were unsupported assets in the share extension.");
+                    NSString *message = AMLocalizedString(@"shareExtensionUnsupportedAssets", @"Inform user that there were unsupported assets in the share extension.");
                     UIAlertController  *videoExportFailedController = [UIAlertController alertControllerWithTitle:nil message:message preferredStyle:UIAlertControllerStyleAlert];
                     [videoExportFailedController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDestructive handler:nil]];
                     [UIApplication.mnz_presentingViewController presentViewController:videoExportFailedController animated:YES completion:nil];

@@ -5,8 +5,10 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     
-    self.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
-    self.thumbnailPlayImageView.accessibilityIgnoresInvertColors = YES;
+    if (@available(iOS 11.0, *)) {
+        self.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
+        self.thumbnailPlayImageView.accessibilityIgnoresInvertColors = YES;
+    }
     
     [self updateAppearance];
 }

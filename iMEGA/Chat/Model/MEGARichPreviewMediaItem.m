@@ -97,7 +97,7 @@
         dialogView.contentTextView.textColor = [UIColor whiteColor];
     } else {
         dialogView.backgroundColor = [UIColor mnz_chatIncomingBubble:UIScreen.mainScreen.traitCollection];
-        dialogView.contentTextView.textColor = [UIColor mnz_labelInverted:UIScreen.mainScreen.traitCollection];
+        dialogView.contentTextView.textColor = UIColor.mnz_label;
     }
     dialogView.contentTextView.linkTextAttributes = @{ NSForegroundColorAttributeName : dialogView.contentTextView.textColor,
                                                        NSUnderlineStyleAttributeName : @(NSUnderlineStyleSingle | NSUnderlinePatternSolid) };
