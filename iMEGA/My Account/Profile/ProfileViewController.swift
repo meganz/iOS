@@ -48,23 +48,6 @@ enum SessionSectionRow: Int {
     private var avatarExpandedPosition: CGFloat = 0.0
     private var avatarCollapsedPosition: CGFloat = 0.0
     
-    private lazy var dateFormatter: DateFormatter = {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .medium
-        dateFormatter.timeStyle = .none
-        dateFormatter.locale = NSLocale.autoupdatingCurrent
-        return dateFormatter
-    }()
-    
-    private lazy var longDateFormatter: DateFormatter = {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = ""
-        dateFormatter.dateStyle = .medium
-        dateFormatter.timeStyle = .none
-        dateFormatter.locale = NSLocale.autoupdatingCurrent
-        return dateFormatter
-    }()
-
     private var twoFactorAuthStatus:TwoFactorAuthStatus = .unknown
     
     // MARK: - Lifecycle
@@ -322,12 +305,22 @@ enum SessionSectionRow: Int {
     }
     
     func expiryDateFormatterOfProfessionalAccountExpiryDate(_ expiryDate: Date) -> DateFormatter {
-        let now = Date()
-        guard let daysOfDistance = now.dayDistance(toFutureDate: expiryDate, on: Calendar.current),
-            daysOfDistance > 7 else {
+        let calendar = Calendar.current
+        let startingOfToday = Date().startOfDay(on: calendar)
+        guard let daysOfDistance = startingOfToday?.dayDistance(toFutureDate: expiryDate,
+                                                                on: Calendar.current) else {
             return DateFormatter.dateMedium
         }
-        return DateFormatter.dateMediumRelative
+        let numberOfDaysAWeek = 7
+        if daysOfDistance > numberOfDaysAWeek  {
+            return DateFormatter.dateMedium
+        }
+
+        if expiryDate.isToday(on: calendar) || expiryDate.isTomorrow(on: calendar) {
+            return DateFormatter.dateMediumRelative
+        }
+
+        return DateFormatter.dateMediumWithWeekday
     }
 
     // MARK: - IBActions
@@ -379,13 +372,14 @@ extension ProfileViewController: UITableViewDataSource {
                 return nil
             }
             var planFooterString = ""
+
             if accountDetails.type != .free {
                 if accountDetails.subscriptionRenewTime > 0 {
                     let renewDate = Date(timeIntervalSince1970: TimeInterval(accountDetails.subscriptionRenewTime))
-                    planFooterString = AMLocalizedString("Renews on", "Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible).") + " " + dateFormatter.string(from: renewDate)
+                    planFooterString = AMLocalizedString("Renews on", "Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible).") + " " + expiryDateFormatterOfProfessionalAccountExpiryDate(renewDate).string(from: renewDate)
                 } else if accountDetails.proExpiration > 0 && accountDetails.type != .business {
                     let renewDate = Date(timeIntervalSince1970: TimeInterval(accountDetails.proExpiration))
-                    planFooterString = String(format: AMLocalizedString("expiresOn", "Text that shows the expiry date of the account PRO level"), dateFormatter.string(from: renewDate))
+                    planFooterString = String(format: AMLocalizedString("expiresOn", "Text that shows the expiry date of the account PRO level"), expiryDateFormatterOfProfessionalAccountExpiryDate(renewDate).string(from: renewDate))
                 }
             }
             return planFooterString
