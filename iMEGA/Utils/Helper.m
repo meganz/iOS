@@ -374,7 +374,7 @@
         api = [MEGASdkManager sharedMEGASdk];
     }
     
-    NSString *offlineNameString = [api escapeFsIncompatible:node.name];
+    NSString *offlineNameString = [api escapeFsIncompatible:node.name destinationPath:[NSHomeDirectory() stringByAppendingString:@"/"]];
     NSString *relativeFilePath = [folderPath stringByAppendingPathComponent:offlineNameString];
     
     if (node.type == MEGANodeTypeFile) {
