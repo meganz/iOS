@@ -34,8 +34,7 @@ class AddToChatViewController: UIViewController {
     @IBOutlet weak var menuView: UIView!
     @IBOutlet weak var menuViewBottomConstraint: NSLayoutConstraint!
 
-    var tapHandler: (() -> Void)?
-    var dismissHandler: ((AddToChatViewController) -> Void)?
+    var dismissHandler: (() -> Void)?
     private var presentAndDismissAnimationDuration: TimeInterval = 0.4
     private var mediaCollectionSource: AddToChatMediaCollectionSource?
     private var menuPageViewController: AddToChatMenuPageViewController?
@@ -110,14 +109,21 @@ class AddToChatViewController: UIViewController {
         menuPageViewController.updateAudioVideoMenu()
     }
     
+    private func dismiss(completionBlock: (() -> Void)? = nil){
+        dismiss(animated: true) {
+            self.dismissHandler?()
+            completionBlock?()
+        }
+    }
+    
     // MARK:- Actions.
 
     @IBAction func backgroundViewTapped(_ tapGesture: UITapGestureRecognizer) {
-        dismiss(animated: true, completion: nil)
+        dismiss()
     }
     
     private func loadPhotosViewAndDismiss() {
-        dismiss(animated: true) {
+        dismiss() {
             self.addToChatDelegate?.loadPhotosView()
         }
     }
@@ -133,11 +139,11 @@ extension AddToChatViewController: AddToChatMediaCollectionSourceDelegate {
             delegate.send(asset: asset)
         }
         
-        dismiss(animated: true, completion: nil)
+        dismiss()
     }
     
     func showCamera() {
-        dismiss(animated: true) {
+        dismiss() {
             self.addToChatDelegate?.showCamera()
         }
     }
@@ -149,19 +155,19 @@ extension AddToChatViewController: AddToChatMenuPageViewControllerDelegate {
     }
     
     func showCloudDrive() {
-        dismiss(animated: true) {
+        dismiss() {
             self.addToChatDelegate?.showCloudDrive()
         }
     }
     
     func startVoiceCall() {
-        dismiss(animated: true) {
+        dismiss() {
             self.addToChatDelegate?.startAudioCall()
         }
     }
     
     func startVideoCall() {
-        dismiss(animated: true) {
+        dismiss() {
             self.addToChatDelegate?.startVideoCall()
         }
     }
@@ -169,26 +175,26 @@ extension AddToChatViewController: AddToChatMenuPageViewControllerDelegate {
     func showVoiceClip() {
         if let delegate = addToChatDelegate,
             delegate.canRecordAudio() {
-            dismiss(animated: true) {
+            dismiss() {
                 self.addToChatDelegate?.showVoiceClip()
             }
         }
     }
     
     func showContacts() {
-        dismiss(animated: true) {
+        dismiss() {
             self.addToChatDelegate?.showContacts()
         }
     }
     
     func startGroupChat() {
-        dismiss(animated: true) {
+        dismiss() {
             self.addToChatDelegate?.startGroupChat()
         }
     }
     
     func showLocation() {
-        dismiss(animated: true) {
+        dismiss() {
             self.addToChatDelegate?.showLocation()
         }
     }
