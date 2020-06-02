@@ -49,7 +49,7 @@
     [super onRequestFinish:api request:request error:error];
     
     if ([error type] && !self.forDecryption) {
-        [SVProgressHUD showErrorWithStatus:error.name];
+        [SVProgressHUD showErrorWithStatus:AMLocalizedString(error.name, nil)];
         return;
     }
     

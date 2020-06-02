@@ -165,7 +165,7 @@ struct ContactOnMega: Codable {
                     }
                 })
             } else {
-                MEGALogError("Error getting contacts on MEGA: " + error.name)
+                MEGALogError("Error getting contacts on MEGA: " + AMLocalizedString(error.name, nil))
                 self.state = .error
             }
 
