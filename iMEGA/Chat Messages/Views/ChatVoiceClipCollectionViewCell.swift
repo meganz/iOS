@@ -28,7 +28,6 @@ class ChatVoiceClipCollectionViewCell: AudioMessageCell {
     
     // MARK: - Methods
     override func setupConstraints() {
-//        super.setupConstraints()
         playButton.autoPinEdge(toSuperviewEdge: .leading, withInset: 10)
         playButton.autoAlignAxis(toSuperviewAxis: .horizontal)
         playButton.autoSetDimensions(to: CGSize(width: 20, height: 20))
@@ -45,9 +44,6 @@ class ChatVoiceClipCollectionViewCell: AudioMessageCell {
         loadingIndicator.autoPinEdge(.right, to: .right, of: playButton)
         loadingIndicator.autoPinEdge(.top, to: .top, of: playButton)
         loadingIndicator.autoPinEdge(.bottom, to: .bottom, of: playButton)
-//        waveView.autoPinEdge(.leading, to: .trailing, of: playButton, withOffset: 5)
-//        waveView.autoPinEdge(.trailing, to: .leading, of: durationLabel, withOffset: 5)
-//        waveView.autoAlignAxis(toSuperviewAxis: .horizontal)
     }
     
     open override func setupSubviews() {
@@ -62,7 +58,6 @@ class ChatVoiceClipCollectionViewCell: AudioMessageCell {
     }
     
     override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
-        //        durationLabel.configure {
         super.configure(with: message, at: indexPath, and: messagesCollectionView)
         guard let chatMessage = message as? ChatMessage else {
             return
