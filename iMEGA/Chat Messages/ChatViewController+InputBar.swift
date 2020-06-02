@@ -99,6 +99,13 @@ extension ChatViewController {
         }
         
         addToChatViewController.addToChatDelegate = self
+        addToChatViewController.dismissHandler = { [weak self] in
+            guard let `self` = self else {
+                return
+            }
+            
+            self.adjustMessageCollectionBottomInset()
+        }
         
         chatInputBar?.dismissKeyboard()
 
@@ -117,9 +124,38 @@ extension ChatViewController {
                 present(navController, animated: true, completion: nil)
             }
         } else {
-            
             addToChatViewController.transitioningDelegate = self
             present(viewController: addToChatViewController)
+        }
+    }
+    
+    // This method has be added to overcome this issue. https://github.com/MessageKit/MessageKit/issues/993
+    // The fix is suppose to be added in the milestone https://github.com/MessageKit/MessageKit/milestone/22
+    // Once Messagekit 4.0 is released try removing this method.
+    private func adjustMessageCollectionBottomInset() {
+        guard let accessoryView = inputAccessoryView,
+            let window = view.window else {
+                return
+        }
+        
+        var collectionViewInset = accessoryView.frame.height
+        if #available(iOS 11.0, *) {
+            collectionViewInset -= window.safeAreaInsets.bottom
+        }
+        
+        
+        if messagesCollectionView.contentInset.bottom != collectionViewInset {
+            var oldInset = messagesCollectionView.contentInset.bottom
+            if #available(iOS 11.0, *) {
+                oldInset = messagesCollectionView.adjustedContentInset.bottom
+            }
+            
+            messagesCollectionView.contentInset.bottom = collectionViewInset
+            messagesCollectionView.scrollIndicatorInsets.bottom = collectionViewInset
+            
+            var contentOffset = messagesCollectionView.contentOffset
+            contentOffset.y += (messagesCollectionView.contentInset.bottom + oldInset)
+            messagesCollectionView.contentOffset = contentOffset
         }
     }
         
