@@ -8,8 +8,23 @@
 
 import Foundation
 
+extension DateFormatter {
+
+    // MARK: - Date Formatter
+
+    /// Monday Jun 1, 2020
+    static let dateMediumWithWeekday = DateFormatterPool.shared.dateFormatter(of: .dateMediumWithWeekday)
+    /// Jun 1, 2020
+    static let dateMedium = DateFormatterPool.shared.dateFormatter(of: .dateMedium)
+
+    // MARK: - Relative date formatter, e.g. date in the next day will be "Tomorrow" etc.
+
+    /// Jun 1, 2020 or "Tomorrow", "Today", "Yesterday"
+    static let dateMediumRelative = DateFormatterPool.shared.dateFormatter(of: .dateMediumRelative)
+}
+
 enum DateTemplateFormatting {
-    // Monday Jun 1, 2020
+    /// Monday Jun 1, 2020
     case dateMediumWithWeekday
 
     fileprivate var style: StringTemplateStyle {
@@ -21,13 +36,17 @@ enum DateTemplateFormatting {
 }
 
 enum DateStyleFormatting {
-    // Jun 1, 2020
+    /// Jun 1, 2020
     case dateMedium
+    /// Jun 1, 2020 or "Tomorrow", "Today", "Yesterday"
+    case dateMediumRelative
 
     fileprivate var style: DateFormatStyle {
         switch self {
         case .dateMedium:
-            return DateFormatStyle(dateStyle: .medium, timeStyle: .none)
+            return DateFormatStyle(dateStyle: .medium, timeStyle: .none, relativeDateFormatting: false)
+        case .dateMediumRelative:
+            return DateFormatStyle(dateStyle: .medium, timeStyle: .none, relativeDateFormatting: true)
         }
     }
 }
@@ -99,9 +118,15 @@ extension StringTemplateStyle: DateFormatterProvidable {
 
 /// A formatter provided style configuration
 fileprivate struct DateFormatStyle: Hashable {
+
     let calendar: Calendar = .current
     let dateStyle: DateFormatter.Style
     let timeStyle: DateFormatter.Style
+
+    /// If a date formatter uses relative date formatting, where possible it replaces the date component of its output with a phrase—such as
+    ///  “today” or “tomorrow”—that indicates a relative date. The available phrases depend on the locale for the date formatter; whereas,
+    ///  for dates in the future, English may only allow “tomorrow,” French may allow “the day after the day after tomorrow,”
+    let relativeDateFormatting: Bool
 }
 
 extension DateFormatStyle: DateFormatterProvidable {

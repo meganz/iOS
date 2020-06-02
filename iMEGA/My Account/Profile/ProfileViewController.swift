@@ -323,11 +323,11 @@ enum SessionSectionRow: Int {
     
     func expiryDateFormatterOfProfessionalAccountExpiryDate(_ expiryDate: Date) -> DateFormatter {
         let now = Date()
-        guard let daysOfDistance = now.dayDistance(toFutureDate: expiryDate, on: Calendar.autoupdatingCurrent),
+        guard let daysOfDistance = now.dayDistance(toFutureDate: expiryDate, on: Calendar.current),
             daysOfDistance > 7 else {
-            return dateFormatter
+            return DateFormatter.dateMedium
         }
-        return longDateFormatter
+        return DateFormatter.dateMediumRelative
     }
 
     // MARK: - IBActions
