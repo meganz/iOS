@@ -42,7 +42,7 @@
         if (error.type == MEGAErrorTypeApiEBusinessPastDue) {
             [SVProgressHUD dismiss];
         } else {
-            [SVProgressHUD showErrorWithStatus:error.name];
+            [SVProgressHUD showErrorWithStatus:AMLocalizedString(error.name, nil)];
         }
         return;
     }

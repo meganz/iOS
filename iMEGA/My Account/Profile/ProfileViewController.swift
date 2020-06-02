@@ -574,7 +574,7 @@ extension ProfileViewController: MEGARequestDelegate {
             let paramType = MEGAUserAttribute(rawValue: request.paramType)
             if paramType == .avatar {
                 if error.type != .apiOk {
-                    SVProgressHUD.showError(withStatus: request.requestString+" "+error.name)
+                    SVProgressHUD.showError(withStatus: request.requestString + " " + AMLocalizedString(error.name, nil))
                     return
                 }
             }

@@ -386,7 +386,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 - (void)showPermissionAlertWithSourceView:(UIView *)sourceView {
     MEGAChatGenericRequestDelegate *delegate = [MEGAChatGenericRequestDelegate.alloc initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
         if (error.type) {
-            [SVProgressHUD showErrorWithStatus:error.name];
+            [SVProgressHUD showErrorWithStatus:AMLocalizedString(error.name, nil)];
         } else {
             self.groupChatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:request.chatHandle];
             [self.tableView reloadData];
@@ -414,7 +414,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 - (void)removeParticipantFromGroup {
     MEGAChatGenericRequestDelegate *delegate = [MEGAChatGenericRequestDelegate.alloc initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
         if (error.type) {
-            [SVProgressHUD showErrorWithStatus:error.name];
+            [SVProgressHUD showErrorWithStatus:AMLocalizedString(error.name, nil)];
         } else {
             [self.navigationController popViewControllerAnimated:YES];
         }
