@@ -58,7 +58,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (void)cannotPlayContentDuringACallAlert;
 
-+ (UIAlertController *)removeUserContactWithConfirmAction:(void (^)(void))confirmAction;
++ (UIAlertController *)removeUserContactFromSender:(UIView *)sender withConfirmAction:(void (^)(void))confirmAction;
 
 #pragma mark - Utils for nodes
 

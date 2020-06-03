@@ -436,22 +436,6 @@
 "renameNodeMessage"="Masukkan nama baru";
 /* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
 "moveToTheRubbishBin"="Pindahkan ke Sampah";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 file' */
-"moveFileToRubbishBinMessage"="Apakah anda yakin ingin memindahkan 1 file ke Sampah?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin '{1+} files' */
-"moveFilesToRubbishBinMessage"="Apakah anda yakin ingin memindahkan %d file ke Sampah?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 folder' */
-"moveFolderToRubbishBinMessage"="Apakah anda yakin ingin memindahkan 1 folder ke Sampah?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} folders" */
-"moveFoldersToRubbishBinMessage"="Apakah anda yakin ingin memindahkan %d folder ke Sampah?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and 1 folder" */
-"moveFileFolderToRubbishBinMessage"="Anda yakin ingin memindahkan 1 file dan 1 folder ke Sampah?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and {1+} folders" */
-"moveFileFoldersToRubbishBinMessage"="Anda yakin ingin memindahkan 1 file dan %d folder ke Sampah?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files and 1 folder" */
-"moveFilesFolderToRubbishBinMessage"="Anda yakin ingin memindahkan %d file dan 1 folder ke Sampah?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "[A] = {1+} files and [B] = {1+} folders" */
-"moveFilesFoldersToRubbishBinMessage"="Anda yakin ingin memindahkan [A] file dan [B] folder ke Sampah?";
 /* Success message shown when you have moved 1 file to the rubbish bin */
 "fileMovedToRubbishBinMessage"="1 file dipindahkan ke Sampah";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
@@ -580,8 +564,6 @@
 "theUsersHaveBeenInvited"="Pengguna telah diundang dan akan muncul dalam daftar kontak anda setelah undangan anda diterima.";
 /* Alert title shown when you want to remove one or more contacts */
 "removeUserTitle"="Hapus kontak";
-/* Alert confirmation message shown when you want to remove one contact from your contacts list */
-"removeUserMessage"="Apakah anda yakin ingin menghapus %@ dari daftar kontak anda?";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
 "removeMultipleUsersMessage"="Anda yakin ingin menghapus %d pengguna dari daftar kontak anda?";
 /* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
@@ -1378,6 +1360,34 @@
 "Read error"="Baca bermasalah";
 /* Label to show that an error related with an invalid or missing application key occurs during a SDK operation. */
 "Invalid application key"="Application key salah";
+/* Error shown when terms of service are breached during download. */
+"Terms of Service breached"="Ketentuan Layanan dilanggar";
+/* SDK error returned when an upload would produce recursivity */
+"Upload produces recursivity"="Upload produces recursivity";
+/* Error shown when download a file that has violated ToS/AUP. */
+"Not accessible due to ToS/AUP violation"="Tidak dapat diakses karena pelanggaran ToS / AUP";
+/* Error shown when SSL check has failed */
+"SSL verification failed"="Verifikasi SSL gagal";
+/* Label shown when current account does not have enough quota to complete the operation */
+"Not enough quota"="Kuota tidak cukup";
+/* SDK error returned when a MFA is required to perform an operation */
+"Multi-factor authentication required"="Multi-factor authentication required";
+/* SDK error returned for operations only allowed for business master users */
+"Access denied for users"="Access denied for users";
+/* SDK error returned when a business account has expired */
+"Business account has expired"="Business account has expired";
+/* SDK error returned when the credit card has been rejected */
+"Credit card rejected"="Credit card rejected";
+/* SDK error returned when the billing failed */
+"Billing failed"="Billing failed";
+/* SDK error returned when an operation is rejected due to fraud protection */
+"Rejected by fraud protection"="Rejected by fraud protection";
+/* SDK error returned when there are too many requests */
+"Too many requests"="Too many requests";
+/* SDK error returned when there is a balance error */
+"Balance error"="Balance error";
+/* SDK error returned upon a HTTP error */
+"HTTP error"="HTTP error";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Error tidak diketahui";
 /* Text shown in an alert when the user is about to change the language of the app */
@@ -1428,7 +1438,7 @@
 "videoQuality"="Kualitas video";
 /* Property associated with something smaller than the usual or average size, number, value, or amount. For example: option to encode a video with low quality. */
 "low"="Rendah";
-/* Option to upload videos with the same resolution and same framerate than the original one, but converting them to MP4. */
+/* Property associated with something higher than the usual or average size, number, value, or amount. For example: video quality. */
 "high"="Tinggi";
 /* Property associated with the first one made and not a copy. For example: Get the original video, without encoding.  */
 "original"="Original";
@@ -1644,6 +1654,10 @@
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Simpan salinan gambar dan video yang diambil dari aplikasi MEGA di pustaka media perangkat Anda.";
 /* Settings section title where you can enable the option to 'Spotlight search' */
 "Spotlight Search"="Pencarian Spotlight";
+/* Title of the Spotlight Search section */
+"Search"="Cari";
+/* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="When enabled, allow search and look up MEGA files/folders in Spotlight Search.";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="Anda memegang kunci";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -2166,11 +2180,11 @@
 "Choose Folder"="Pilih Folder";
 /* Label used near to the option selected to encode the images uploaded to a chat (Low, Medium, Original) */
 "Image quality"="Kualitas gambar";
-/* Title of Image Quality option */
+/* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
 "Automatic"="Otomatis";
 /* Description of Automatic Image Quality option */
 "Send smaller size images through cellular networks and original size images through wifi"="Kirim gambar berukuran lebih kecil melalui jaringan seluler dan gambar ukuran asli melalui Wi-Fi";
-/* Title of Image Quality option */
+/* Text for some option property indicating the user the action to perform will be optimised. For example: Image Quality reduction option for chats */
 "Optimised"="Dioptimalkan";
 /* Description of Optimised Image Quality option */
 "Send smaller size images optimised for lower data consumption"="Kirim gambar berukuran lebih kecil yang dioptimalkan untuk konsumsi data yang lebih rendah";

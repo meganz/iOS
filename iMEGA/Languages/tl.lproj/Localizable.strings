@@ -436,22 +436,6 @@
 "renameNodeMessage"="Ilagay ang pangalan";
 /* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
 "moveToTheRubbishBin"="Ilipat sa Basurahan";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 file' */
-"moveFileToRubbishBinMessage"="Gusto mo bang ilipat ang isang file na ito sa Basurahan?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin '{1+} files' */
-"moveFilesToRubbishBinMessage"="Gusto mo bang itapon ang mga %d files na ito sa Basurahan?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 folder' */
-"moveFolderToRubbishBinMessage"="Gusto mo bang itapon ang isang folder na ito sa Basurahan?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} folders" */
-"moveFoldersToRubbishBinMessage"="Gusto mo bang ilagay ang %d na folders sa iyong Basurahan?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and 1 folder" */
-"moveFileFolderToRubbishBinMessage"="Gusto mo bang itapon sa Basurahan ang isang file at isang folder na ito?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and {1+} folders" */
-"moveFileFoldersToRubbishBinMessage"="Gusto mo bang ilagay ang isang file at ang %d na folders sa Basurahan?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files and 1 folder" */
-"moveFilesFolderToRubbishBinMessage"="Gusto mo bang ilagay ang %d na files at isang folder sa Basurahan?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "[A] = {1+} files and [B] = {1+} folders" */
-"moveFilesFoldersToRubbishBinMessage"="Gusto mo bang ilipat ang [A] files sa [B] folders sa Basurahan?";
 /* Success message shown when you have moved 1 file to the rubbish bin */
 "fileMovedToRubbishBinMessage"="isang file ang tinapon sa Basurahan";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
@@ -580,8 +564,6 @@
 "theUsersHaveBeenInvited"="Ang users ay naimbitahan at lalabas sa inyong contact list sa oras na tanggapin mo sila.";
 /* Alert title shown when you want to remove one or more contacts */
 "removeUserTitle"="Alisin ang contact";
-/* Alert confirmation message shown when you want to remove one contact from your contacts list */
-"removeUserMessage"="Gusto mo bang tanggalin si %@ sa inyong listahan ng contact?";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
 "removeMultipleUsersMessage"="Gusto mo bang tanggalin ang %d na users sa inyong listahan ng contact?";
 /* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
@@ -1378,6 +1360,34 @@
 "Read error"="Read error";
 /* Label to show that an error related with an invalid or missing application key occurs during a SDK operation. */
 "Invalid application key"="Maling application key";
+/* Error shown when terms of service are breached during download. */
+"Terms of Service breached"="Terms of Service breached";
+/* SDK error returned when an upload would produce recursivity */
+"Upload produces recursivity"="Upload produces recursivity";
+/* Error shown when download a file that has violated ToS/AUP. */
+"Not accessible due to ToS/AUP violation"="Not accessible due to ToS/AUP violation";
+/* Error shown when SSL check has failed */
+"SSL verification failed"="SSL verification failed";
+/* Label shown when current account does not have enough quota to complete the operation */
+"Not enough quota"="Not enough quota";
+/* SDK error returned when a MFA is required to perform an operation */
+"Multi-factor authentication required"="Multi-factor authentication required";
+/* SDK error returned for operations only allowed for business master users */
+"Access denied for users"="Access denied for users";
+/* SDK error returned when a business account has expired */
+"Business account has expired"="Business account has expired";
+/* SDK error returned when the credit card has been rejected */
+"Credit card rejected"="Credit card rejected";
+/* SDK error returned when the billing failed */
+"Billing failed"="Billing failed";
+/* SDK error returned when an operation is rejected due to fraud protection */
+"Rejected by fraud protection"="Rejected by fraud protection";
+/* SDK error returned when there are too many requests */
+"Too many requests"="Too many requests";
+/* SDK error returned when there is a balance error */
+"Balance error"="Balance error";
+/* SDK error returned upon a HTTP error */
+"HTTP error"="HTTP error";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Di matukoy na error";
 /* Text shown in an alert when the user is about to change the language of the app */
@@ -1428,7 +1438,7 @@
 "videoQuality"="Quality ng video";
 /* Property associated with something smaller than the usual or average size, number, value, or amount. For example: option to encode a video with low quality. */
 "low"="Low";
-/* Option to upload videos with the same resolution and same framerate than the original one, but converting them to MP4. */
+/* Property associated with something higher than the usual or average size, number, value, or amount. For example: video quality. */
 "high"="High";
 /* Property associated with the first one made and not a copy. For example: Get the original video, without encoding.  */
 "original"="Original";
@@ -1644,6 +1654,10 @@
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Magtabi ng copy ng images at videos na nakuha sa MEGA app ng inyong media library sa device mo";
 /* Settings section title where you can enable the option to 'Spotlight search' */
 "Spotlight Search"="Spotlight Search";
+/* Title of the Spotlight Search section */
+"Search"="Maghanap";
+/* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="When enabled, allow search and look up MEGA files/folders in Spotlight Search.";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="Hawak mo ang susi";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -2166,11 +2180,11 @@
 "Choose Folder"="Pumili ng Folder";
 /* Label used near to the option selected to encode the images uploaded to a chat (Low, Medium, Original) */
 "Image quality"="Image quality";
-/* Title of Image Quality option */
+/* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
 "Automatic"="Automatik";
 /* Description of Automatic Image Quality option */
 "Send smaller size images through cellular networks and original size images through wifi"="Send smaller size images through cellular networks and original size images through Wi-Fi";
-/* Title of Image Quality option */
+/* Text for some option property indicating the user the action to perform will be optimised. For example: Image Quality reduction option for chats */
 "Optimised"="Optimised";
 /* Description of Optimised Image Quality option */
 "Send smaller size images optimised for lower data consumption"="Send smaller size images optimised for lower data consumption";

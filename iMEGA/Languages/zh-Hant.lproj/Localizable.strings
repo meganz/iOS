@@ -436,22 +436,6 @@
 "renameNodeMessage"="輸入新名字";
 /* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
 "moveToTheRubbishBin"="移至垃圾桶";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 file' */
-"moveFileToRubbishBinMessage"="您確定要移動 1 個檔案至垃圾箱嗎？";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin '{1+} files' */
-"moveFilesToRubbishBinMessage"="您確定要移動 %d 個檔案至垃圾箱嗎？";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 folder' */
-"moveFolderToRubbishBinMessage"="您確定要移動 1 個資料夾至垃圾箱嗎？";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} folders" */
-"moveFoldersToRubbishBinMessage"="您確定要移動 %d 個資料夾至垃圾箱嗎？";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and 1 folder" */
-"moveFileFolderToRubbishBinMessage"="您確定要移動 1 個檔案和 1 個資料夾至垃圾箱嗎？";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and {1+} folders" */
-"moveFileFoldersToRubbishBinMessage"="您確定要移動 1 個檔案和 %d 個資料夾至垃圾箱嗎？";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files and 1 folder" */
-"moveFilesFolderToRubbishBinMessage"="您確定要移動 %d 個檔案和 1 個資料夾至垃圾箱嗎？";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "[A] = {1+} files and [B] = {1+} folders" */
-"moveFilesFoldersToRubbishBinMessage"="您確定要將 [A] 檔案和 [B] 資料夾移至垃圾桶嗎？";
 /* Success message shown when you have moved 1 file to the rubbish bin */
 "fileMovedToRubbishBinMessage"="1 個檔案已被移動到垃圾桶";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
@@ -580,8 +564,6 @@
 "theUsersHaveBeenInvited"="該用戶已被邀請。該邀請被接受後，他將會出現在您的聯絡人列表中。";
 /* Alert title shown when you want to remove one or more contacts */
 "removeUserTitle"="移除聯絡人";
-/* Alert confirmation message shown when you want to remove one contact from your contacts list */
-"removeUserMessage"="您確定要把 %@ 從您的聯絡簿刪除嗎？";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
 "removeMultipleUsersMessage"="您確定要從聯絡簿刪除 %d 個聯絡人嗎？";
 /* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
@@ -1378,6 +1360,34 @@
 "Read error"="讀取錯誤";
 /* Label to show that an error related with an invalid or missing application key occurs during a SDK operation. */
 "Invalid application key"="無效應用程式金鑰";
+/* Error shown when terms of service are breached during download. */
+"Terms of Service breached"="已違反服務條款";
+/* SDK error returned when an upload would produce recursivity */
+"Upload produces recursivity"="Upload produces recursivity";
+/* Error shown when download a file that has violated ToS/AUP. */
+"Not accessible due to ToS/AUP violation"="由於ToS/AUP違規而無法存取";
+/* Error shown when SSL check has failed */
+"SSL verification failed"="SSL驗證失敗";
+/* Label shown when current account does not have enough quota to complete the operation */
+"Not enough quota"="配額不足";
+/* SDK error returned when a MFA is required to perform an operation */
+"Multi-factor authentication required"="Multi-factor authentication required";
+/* SDK error returned for operations only allowed for business master users */
+"Access denied for users"="Access denied for users";
+/* SDK error returned when a business account has expired */
+"Business account has expired"="Business account has expired";
+/* SDK error returned when the credit card has been rejected */
+"Credit card rejected"="Credit card rejected";
+/* SDK error returned when the billing failed */
+"Billing failed"="Billing failed";
+/* SDK error returned when an operation is rejected due to fraud protection */
+"Rejected by fraud protection"="Rejected by fraud protection";
+/* SDK error returned when there are too many requests */
+"Too many requests"="Too many requests";
+/* SDK error returned when there is a balance error */
+"Balance error"="Balance error";
+/* SDK error returned upon a HTTP error */
+"HTTP error"="HTTP error";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="未知的錯誤";
 /* Text shown in an alert when the user is about to change the language of the app */
@@ -1428,7 +1438,7 @@
 "videoQuality"="影片品質";
 /* Property associated with something smaller than the usual or average size, number, value, or amount. For example: option to encode a video with low quality. */
 "low"="低";
-/* Option to upload videos with the same resolution and same framerate than the original one, but converting them to MP4. */
+/* Property associated with something higher than the usual or average size, number, value, or amount. For example: video quality. */
 "high"="高";
 /* Property associated with the first one made and not a copy. For example: Get the original video, without encoding.  */
 "original"="原始檔";
@@ -1601,23 +1611,23 @@
 /* Title of empty state view for archived chats. */
 "noArchivedChats"="沒有封存的對話";
 /* A title for the Two-Factor Authentication section on the My Account - Security page. */
-"twoFactorAuthentication"="兩階段驗證功能";
+"twoFactorAuthentication"="雙重驗證";
 /* Button title to start the setup of a feature. For example 'Begin Setup' for Two-Factor Authentication */
 "beginSetup"="開始設定";
 /* A message on the Verify Login page telling the user to enter their 2FA code. */
 "pleaseEnterTheSixDigitCode"="請輸入您的驗證程式所生成的6位碼。";
 /* Title of the dialog displayed to start setup the Two-Factor Authentication */
-"whyYouDoNeedTwoFactorAuthentication"="為什麼需要兩階段身份驗證？";
+"whyYouDoNeedTwoFactorAuthentication"="為什麼需要雙重驗證？";
 /* Description for the ‘Two-Factor Authentication’ in the security settings section. */
-"whatIsTwoFactorAuthentication"="兩階段身份驗證是您帳戶的第二層安全保護。";
+"whatIsTwoFactorAuthentication"="雙重驗證是您帳戶的第二層安全保護。";
 /* Description text of the dialog displayed to start setup the Two-Factor Authentication */
-"whyYouDoNeedTwoFactorAuthenticationDescription"="兩階段身份驗證是您帳戶的第二層安全保護。這意味著，即使有人知道您的密碼，他們也無法存取您的帳戶，且無法獲得只有您能讀取的六位碼。";
+"whyYouDoNeedTwoFactorAuthenticationDescription"="雙重驗證是您帳戶的第二層安全保護。這意味著，即使有人知道您的密碼，他們也無法存取您的帳戶，且無法獲得只有您能讀取的六位碼。";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
-"youNeedATwoFactorAuthenticationApp"="您需要在此設備上使用兩階段身份驗證程式";
+"youNeedATwoFactorAuthenticationApp"="您需要在此設備上使用雙重驗證程式";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device and tap on the question mark */
-"You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="您需要驗證用的應用程式才能在MEGA上啟用2FA認證。您在手機或平板電腦裡下載並安裝Google Authenticator、Duo Mobile，Authy或Microsoft Authenticator app。";
+"You need an authenticator app to enable 2FA on MEGA. You can download and install the Google Authenticator, Duo Mobile, Authy or Microsoft Authenticator app for your phone or tablet."="您需要驗證用的應用程式才能在MEGA上啟用雙重驗證。您在手機或平板電腦裡下載並安裝Google Authenticator、Duo Mobile，Authy或Microsoft Authenticator app。";
 /* A title on the mobile web client page showing that 2FA has been enabled successfully. */
-"twoFactorAuthenticationEnabled"="已啟用兩階段驗證";
+"twoFactorAuthenticationEnabled"="已啟用雙重驗證";
 /* A message on the dialog shown after 2FA was successfully enabled. */
 "twoFactorAuthenticationEnabledDescription"="下次登入您的帳戶時，系統會要求您輸入驗證程式提供的6位碼。";
 /* A warning message on the Backup Recovery Key dialog to tell the user to backup their Recovery Key to their local computer. */
@@ -1625,7 +1635,7 @@
 /* An informational message on the Backup Recovery Key dialog. */
 "twoFactorAuthenticationEnabledWarning"="如果您在啟用兩階段驗證後無法登入自己的帳戶，並且尚未備份還原金鑰，則MEGA無法幫助您再次存取該帳戶。";
 /* A message on a dialog to say that 2FA has been successfully disabled. */
-"twoFactorAuthenticationDisabled"="已停用兩階段驗證";
+"twoFactorAuthenticationDisabled"="已停用雙重驗證";
 /* A message on the setup two-factor authentication page on the mobile web client. */
 "scanOrCopyTheSeed"="請掃描或複製種子到您的身份驗證App中。請務必將此種子備份於安全之處，以防設備遺失所帶來的風險。";
 /* A button to help them restore their account if they have lost their 2FA device. */
@@ -1644,6 +1654,10 @@
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="在您設備的媒體庫中保存於MEGA應用程式中拍攝的圖像和影片的副本。";
 /* Settings section title where you can enable the option to 'Spotlight search' */
 "Spotlight Search"="Spotlight搜尋";
+/* Title of the Spotlight Search section */
+"Search"="搜尋";
+/* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="When enabled, allow search and look up MEGA files/folders in Spotlight Search.";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="您握有鑰匙";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -2166,11 +2180,11 @@
 "Choose Folder"="選擇資料夾";
 /* Label used near to the option selected to encode the images uploaded to a chat (Low, Medium, Original) */
 "Image quality"="影像品質";
-/* Title of Image Quality option */
+/* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
 "Automatic"="自動";
 /* Description of Automatic Image Quality option */
 "Send smaller size images through cellular networks and original size images through wifi"="通過行動網路傳送較小尺寸的圖像，並透過Wi-Fi傳送原始尺寸的圖像";
-/* Title of Image Quality option */
+/* Text for some option property indicating the user the action to perform will be optimised. For example: Image Quality reduction option for chats */
 "Optimised"="最佳化";
 /* Description of Optimised Image Quality option */
 "Send smaller size images optimised for lower data consumption"="傳送優化過的較小尺寸圖像以降低數據消耗";
@@ -2227,7 +2241,7 @@
 /* Default title of an empty chat. */
 "Chat created on %s1"="於%s1創建對話";
 /* Title shown when there are no shared files */
-"No Shared Files"="No Shared Files";
+"No Shared Files"="無共享的檔案";
 /* Error message shown when opening a folder link which doesn’t exist */
 "Folder link unavailable"="資料夾連結無法使用";
 /* Error message shown when opening a file link which doesn’t exist */

@@ -436,22 +436,6 @@
 "renameNodeMessage"="输入新名字";
 /* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
 "moveToTheRubbishBin"="移至垃圾桶";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 file' */
-"moveFileToRubbishBinMessage"="您确定要移动1 个文件至垃圾箱吗？";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin '{1+} files' */
-"moveFilesToRubbishBinMessage"="您确定要移动%d 个文件至垃圾箱吗？";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 folder' */
-"moveFolderToRubbishBinMessage"="您确定要移动1 个文件夹至垃圾箱吗？";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} folders" */
-"moveFoldersToRubbishBinMessage"="您确定要移动%d 个文件夹至垃圾箱吗？";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and 1 folder" */
-"moveFileFolderToRubbishBinMessage"="您确定要移动1 个文件和1 个文件夹至垃圾箱吗？";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and {1+} folders" */
-"moveFileFoldersToRubbishBinMessage"="您确定要移动1 个文件和%d 个文件夹至垃圾箱吗？";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files and 1 folder" */
-"moveFilesFolderToRubbishBinMessage"="您确定要移动%d 个文件和1 个文件夹至垃圾箱吗？";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "[A] = {1+} files and [B] = {1+} folders" */
-"moveFilesFoldersToRubbishBinMessage"="您确定要将[A] 文件和[B] 文件夹移至垃圾桶吗？";
 /* Success message shown when you have moved 1 file to the rubbish bin */
 "fileMovedToRubbishBinMessage"="1个文件已移放进垃圾桶";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
@@ -580,8 +564,6 @@
 "theUsersHaveBeenInvited"="该用户已被邀请。该邀请被接受后，他将会出现在您的联系人列表中。";
 /* Alert title shown when you want to remove one or more contacts */
 "removeUserTitle"="删除联系人";
-/* Alert confirmation message shown when you want to remove one contact from your contacts list */
-"removeUserMessage"="您确定要把%@ 从您的联系簿删除吗？";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
 "removeMultipleUsersMessage"="您确定要从联系簿删除%d 个联系人吗？";
 /* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
@@ -1378,6 +1360,34 @@
 "Read error"="读取错误";
 /* Label to show that an error related with an invalid or missing application key occurs during a SDK operation. */
 "Invalid application key"="无效应用程序金钥";
+/* Error shown when terms of service are breached during download. */
+"Terms of Service breached"="已违反服务条款";
+/* SDK error returned when an upload would produce recursivity */
+"Upload produces recursivity"="Upload produces recursivity";
+/* Error shown when download a file that has violated ToS/AUP. */
+"Not accessible due to ToS/AUP violation"="由于违反ToS服务条款或AUP可接受的使用政策而无法访问";
+/* Error shown when SSL check has failed */
+"SSL verification failed"="SSL验证失败";
+/* Label shown when current account does not have enough quota to complete the operation */
+"Not enough quota"="流量不足";
+/* SDK error returned when a MFA is required to perform an operation */
+"Multi-factor authentication required"="Multi-factor authentication required";
+/* SDK error returned for operations only allowed for business master users */
+"Access denied for users"="Access denied for users";
+/* SDK error returned when a business account has expired */
+"Business account has expired"="Business account has expired";
+/* SDK error returned when the credit card has been rejected */
+"Credit card rejected"="Credit card rejected";
+/* SDK error returned when the billing failed */
+"Billing failed"="Billing failed";
+/* SDK error returned when an operation is rejected due to fraud protection */
+"Rejected by fraud protection"="Rejected by fraud protection";
+/* SDK error returned when there are too many requests */
+"Too many requests"="Too many requests";
+/* SDK error returned when there is a balance error */
+"Balance error"="Balance error";
+/* SDK error returned upon a HTTP error */
+"HTTP error"="HTTP error";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="未知的错误";
 /* Text shown in an alert when the user is about to change the language of the app */
@@ -1428,7 +1438,7 @@
 "videoQuality"="视频画质";
 /* Property associated with something smaller than the usual or average size, number, value, or amount. For example: option to encode a video with low quality. */
 "low"="低";
-/* Option to upload videos with the same resolution and same framerate than the original one, but converting them to MP4. */
+/* Property associated with something higher than the usual or average size, number, value, or amount. For example: video quality. */
 "high"="高";
 /* Property associated with the first one made and not a copy. For example: Get the original video, without encoding.  */
 "original"="原版的";
@@ -1644,6 +1654,10 @@
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="将MEGA应用程序中拍摄的照片与视频的副本保存在您设备的媒体资料库中。";
 /* Settings section title where you can enable the option to 'Spotlight search' */
 "Spotlight Search"="搜索热点";
+/* Title of the Spotlight Search section */
+"Search"="搜索";
+/* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="When enabled, allow search and look up MEGA files/folders in Spotlight Search.";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="您持有这把密钥";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -1661,7 +1675,7 @@
 /* Description shown in a page of the onboarding screens explaining the camera uploads feature */
 "Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="相机上传是任何移动设备的基本功能，我们已为您开启。 立即创建您的帐户。";
 /* Button which triggers the initial setup */
-"Setup MEGA"="安装MEGA";
+"Setup MEGA"="设置MEGA";
 /* Detailed explanation of why the user should give some permissions to MEGA */
 "To fully take advantage of your MEGA account we need to ask you some permissions."="要充分利用您的MEGA帐户，我们需要得到您的允许。";
 /* Message warning the user about the risk of not setting up permissions */
@@ -2166,11 +2180,11 @@
 "Choose Folder"="选择文件夹";
 /* Label used near to the option selected to encode the images uploaded to a chat (Low, Medium, Original) */
 "Image quality"="图片质量";
-/* Title of Image Quality option */
+/* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
 "Automatic"="自动";
 /* Description of Automatic Image Quality option */
 "Send smaller size images through cellular networks and original size images through wifi"="使用蜂窝网络时发送较小尺寸图片，使用Wi-Fi时发送原始图片";
-/* Title of Image Quality option */
+/* Text for some option property indicating the user the action to perform will be optimised. For example: Image Quality reduction option for chats */
 "Optimised"="优化";
 /* Description of Optimised Image Quality option */
 "Send smaller size images optimised for lower data consumption"="发送较小尺寸的图片，优化以降低数据消耗";
@@ -2227,7 +2241,7 @@
 /* Default title of an empty chat. */
 "Chat created on %s1"="聊天创建于%s1";
 /* Title shown when there are no shared files */
-"No Shared Files"="No Shared Files";
+"No Shared Files"="无共享文件";
 /* Error message shown when opening a folder link which doesn’t exist */
 "Folder link unavailable"="文件夹链接无法使用";
 /* Error message shown when opening a file link which doesn’t exist */
