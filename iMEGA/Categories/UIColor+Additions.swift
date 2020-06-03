@@ -159,6 +159,23 @@ extension UIColor {
         }
     }
     
+    @objc class func mnz_chatLoadingBubble(_ traitCollection: UITraitCollection) -> UIColor {
+        if #available(iOS 13.0, *) {
+            switch traitCollection.userInterfaceStyle {
+            case .unspecified, .light:
+                return UIColor.black.withAlphaComponent(0.6)
+                
+            case .dark:
+                return UIColor.white.withAlphaComponent(0.15)
+                
+            default:
+                return UIColor.black.withAlphaComponent(0.6)
+            }
+        } else {
+            return UIColor.black.withAlphaComponent(0.6)
+        }
+    }
+    
     // MARK: - Objects
     @objc class func mnz_chatIncomingBubble(_ traitCollection: UITraitCollection) -> UIColor {
         if #available(iOS 13.0, *) {

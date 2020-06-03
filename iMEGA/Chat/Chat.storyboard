@@ -316,9 +316,8 @@
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="info_sharedWithArrow" translatesAutoresizingMaskIntoConstraints="NO" id="424-CV-VwL">
+                                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="standardDisclosureIndicator" translatesAutoresizingMaskIntoConstraints="NO" id="424-CV-VwL">
                                                                 <rect key="frame" x="49.666666666666686" y="2.6666666666666643" width="15" height="15"/>
-                                                                <color key="tintColor" red="0.95294117649999999" green="0.047058823530000002" blue="0.078431372550000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="15" id="Thl-CY-LCl"/>
                                                                     <constraint firstAttribute="width" constant="15" id="iS3-A0-MAs"/>
@@ -364,7 +363,7 @@
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="info_sharedWithArrow" translatesAutoresizingMaskIntoConstraints="NO" id="om6-aw-QNY">
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="standardDisclosureIndicator" translatesAutoresizingMaskIntoConstraints="NO" id="om6-aw-QNY">
                                                         <rect key="frame" x="385" y="8" width="15" height="44"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="15" id="FxG-08-V5R"/>
@@ -818,7 +817,7 @@
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E7j-Hb-08n">
-                                <rect key="frame" x="31" y="3" width="34" height="36"/>
+                                <rect key="frame" x="31" y="3" width="34" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="34" id="aJ7-uU-vbc"/>
                                 </constraints>
@@ -2350,8 +2349,7 @@
         <image name="cameraOn" width="60" height="60"/>
         <image name="chatIcon" width="31" height="28"/>
         <image name="contactVerified" width="14" height="14"/>
-        <image name="down-arrow" width="24" height="24"/>
-        <image name="info_sharedWithArrow" width="22" height="22"/>
+        <image name="down-arrow" width="28" height="28"/>
         <image name="inviteToChat" width="40" height="40"/>
         <image name="location" width="28" height="28"/>
         <image name="locationPin" width="40" height="40"/>
