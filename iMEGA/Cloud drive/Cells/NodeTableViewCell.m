@@ -99,13 +99,9 @@
             case NodeTableViewCellFlavorVersions:
             case NodeTableViewCellFlavorRecentAction:
             case NodeTableViewCellFlavorCloudDrive:
-                if (self.recentActionBucket) {
-                    nodeDisplayDateTime = [NSString stringWithFormat:@"%@ • %@",
-                                           [Helper sizeForNode:node api:megaSDK],
-                                           node.creationTime.mnz_formattedHourAndMinutes];
-                } else {
-                    nodeDisplayDateTime = [Helper sizeAndModicationDateForNode:node api:megaSDK];
-                }
+                nodeDisplayDateTime =
+                    self.recentActionBucket ? [Helper sizeAndCreationHourAndMininuteForNode:node api:megaSDK] :
+                    [Helper sizeAndModicationDateForNode:node api:megaSDK];
                 break;
             case NodeTableViewCellFlavorSharedLink:
                 nodeDisplayDateTime = [Helper sizeAndShareLinkCreateDateForSharedLinkNode:node api:megaSDK];
