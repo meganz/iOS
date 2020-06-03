@@ -17,9 +17,95 @@
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qBf-ZQ-uPc">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="778"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JaV-Gi-51f">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="778"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Data is at Risk!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="xZu-ci-M0D">
+                                    <rect key="frame" x="95" y="317" width="209" height="21"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nx5-ul-1O7">
+                                    <rect key="frame" x="16" y="354" width="343" height="83.666666666666686"/>
+                                    <string key="text">We have contacted you by email to bk@mega.nz on March 1 2020,  March 30 2020, April 30 2020 and May 15 2020, but you still have 45302 files taking up 234.54 GB in your MEGA account, which requires you to upgrade to PRO Lite. </string>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="StorageFull" translatesAutoresizingMaskIntoConstraints="NO" id="Xrq-u4-x9U">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="291"/>
+                                </imageView>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="agc-Ke-lvT">
+                                    <rect key="frame" x="43.666666666666657" y="621" width="288" height="50"/>
+                                    <color key="backgroundColor" red="0.11588243400000001" green="0.65814155340000002" blue="0.52589106559999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="50" id="7qA-Tn-Uio"/>
+                                        <constraint firstAttribute="width" constant="288" id="WyO-pG-yKh"/>
+                                    </constraints>
+                                    <state key="normal" title="Upgrade"/>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MCk-xj-VIQ">
+                                    <rect key="frame" x="43.666666666666657" y="687" width="288" height="50"/>
+                                    <color key="backgroundColor" red="0.11588243400000001" green="0.65814155340000002" blue="0.52589106559999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="50" id="O1f-t8-q5E"/>
+                                        <constraint firstAttribute="width" constant="288" id="RwQ-Ne-ral"/>
+                                    </constraints>
+                                    <state key="normal" title="Dismiss"/>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            <constraints>
+                                <constraint firstAttribute="bottom" secondItem="MCk-xj-VIQ" secondAttribute="bottom" constant="41" id="1h4-MJ-rHM"/>
+                                <constraint firstAttribute="trailing" secondItem="Xrq-u4-x9U" secondAttribute="trailing" id="5Ik-lG-eM0"/>
+                                <constraint firstItem="nx5-ul-1O7" firstAttribute="top" secondItem="xZu-ci-M0D" secondAttribute="bottom" constant="16" id="6nT-WJ-CYF"/>
+                                <constraint firstItem="MCk-xj-VIQ" firstAttribute="leading" secondItem="agc-Ke-lvT" secondAttribute="leading" id="8Wm-sT-tXE"/>
+                                <constraint firstItem="Xrq-u4-x9U" firstAttribute="leading" secondItem="JaV-Gi-51f" secondAttribute="leading" id="JKB-kl-9Uf"/>
+                                <constraint firstItem="MCk-xj-VIQ" firstAttribute="top" secondItem="agc-Ke-lvT" secondAttribute="bottom" constant="16" id="RVx-FE-Yty"/>
+                                <constraint firstAttribute="trailing" secondItem="nx5-ul-1O7" secondAttribute="trailing" constant="16" id="ej6-hD-sp6"/>
+                                <constraint firstItem="MCk-xj-VIQ" firstAttribute="trailing" secondItem="agc-Ke-lvT" secondAttribute="trailing" id="jjM-6d-O7l"/>
+                                <constraint firstItem="xZu-ci-M0D" firstAttribute="top" secondItem="Xrq-u4-x9U" secondAttribute="bottom" constant="26" id="jrZ-4w-12o"/>
+                                <constraint firstItem="agc-Ke-lvT" firstAttribute="centerX" secondItem="JaV-Gi-51f" secondAttribute="centerX" id="odE-lg-l9L"/>
+                                <constraint firstItem="Xrq-u4-x9U" firstAttribute="top" secondItem="JaV-Gi-51f" secondAttribute="top" id="qbM-ch-tCU"/>
+                                <constraint firstItem="nx5-ul-1O7" firstAttribute="leading" secondItem="JaV-Gi-51f" secondAttribute="leading" constant="16" id="sHV-5n-dir"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="JaV-Gi-51f" firstAttribute="top" secondItem="qBf-ZQ-uPc" secondAttribute="top" id="1FS-v9-nit"/>
+                        <constraint firstItem="JaV-Gi-51f" firstAttribute="centerX" secondItem="qBf-ZQ-uPc" secondAttribute="centerX" id="T05-SI-wlc"/>
+                        <constraint firstAttribute="bottom" secondItem="JaV-Gi-51f" secondAttribute="bottom" id="hk0-z4-G4M"/>
+                        <constraint firstItem="JaV-Gi-51f" firstAttribute="trailing" secondItem="qBf-ZQ-uPc" secondAttribute="trailing" id="mCL-Lu-AtH"/>
+                        <constraint firstItem="JaV-Gi-51f" firstAttribute="leading" secondItem="qBf-ZQ-uPc" secondAttribute="leading" id="sdx-cT-rv2"/>
+                        <constraint firstItem="JaV-Gi-51f" firstAttribute="centerY" secondItem="qBf-ZQ-uPc" secondAttribute="centerY" id="uxv-jH-SHu"/>
+                    </constraints>
+                </scrollView>
+            </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+            <constraints>
+                <constraint firstItem="qBf-ZQ-uPc" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="G86-Xh-rPs"/>
+                <constraint firstItem="qBf-ZQ-uPc" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="MXf-Be-5n2"/>
+                <constraint firstItem="qBf-ZQ-uPc" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="PQx-mZ-K6w"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="qBf-ZQ-uPc" secondAttribute="trailing" id="UxN-kk-LsP"/>
+            </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <point key="canvasLocation" x="139" y="135"/>
+            <point key="canvasLocation" x="136.80000000000001" y="132.26600985221674"/>
+        </view>
+        <view contentMode="scaleToFill" id="KLC-cG-Mlx">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+            <viewLayoutGuide key="safeArea" id="56q-hv-bmG"/>
+            <point key="canvasLocation" x="135" y="807"/>
         </view>
     </objects>
+    <resources>
+        <image name="StorageFull" width="375" height="291"/>
+    </resources>
 </document>
