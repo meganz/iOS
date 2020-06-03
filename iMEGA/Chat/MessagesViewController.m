@@ -631,7 +631,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         self.navigationItem.hidesBackButton = YES;
     } else {
         self.navigationItem.hidesBackButton = NO;
-        self.inputToolbar.hidden = MEGASdkManager.sharedMEGASdk.businessStatus == BusinessStatusExpired || (self.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo && !self.shouldShowJoinView);
+        [self showOrHideInputToolbar];
         [self updateJoinView];
         
         if (self.chatRoom.isGroup) {
@@ -1405,7 +1405,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             if (MEGAReachabilityManager.isReachableHUDIfNot) {
                 MEGAInviteContactRequestDelegate *inviteContactRequestDelegate = [[MEGAInviteContactRequestDelegate alloc] initWithNumberOfRequests:1];
                 [MEGASdkManager.sharedMEGASdk inviteContactWithEmail:userEmail message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
-                weakSelf.inputToolbar.hidden = weakSelf.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo;
+                [weakSelf showOrHideInputToolbar];
             }
         }]];
     }
@@ -1413,16 +1413,20 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     if (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator && self.chatRoom.isGroup) {
         [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"removeParticipant", @"A button title which removes a participant from a chat.") detail:nil image:nil style:UIAlertActionStyleDefault actionHandler:^{
             [MEGASdkManager.sharedMEGAChatSdk removeFromChat:weakSelf.chatRoom.chatId userHandle:userHandle delegate:weakSelf];
-            weakSelf.inputToolbar.hidden = weakSelf.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo;
+            [weakSelf showOrHideInputToolbar];
         }]];
     }
     
     ActionSheetViewController *userActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:userName dismissCompletion:^{
-        weakSelf.inputToolbar.hidden = weakSelf.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo;
+        [weakSelf showOrHideInputToolbar];
     } sender:senderView];
     
     self.inputToolbar.hidden = UIDevice.currentDevice.iPad ? NO : YES;
     [self presentViewController:userActionSheet animated:YES completion:nil];
+}
+
+- (void)showOrHideInputToolbar {
+    self.inputToolbar.hidden = MEGASdkManager.sharedMEGASdk.businessStatus == BusinessStatusExpired || (self.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo && !self.shouldShowJoinView);
 }
 
 #pragma mark - TopBannerButton
@@ -2014,14 +2018,14 @@ static NSMutableSet<NSString *> *tapForInfoSet;
                     if (error.type) {
                         UIAlertController *sendLocationAlert = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"Send Location", @"Alert title shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm") message:AMLocalizedString(@"This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform.", @"Message shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm") preferredStyle:UIAlertControllerStyleAlert];
                         [sendLocationAlert addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                            weakSelf.inputToolbar.hidden = weakSelf.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo;
+                            [weakSelf showOrHideInputToolbar];
                         }]];
                         [sendLocationAlert addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"continue", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                             MEGAGenericRequestDelegate *enableGeolocationDelegate = [[MEGAGenericRequestDelegate alloc] initWithCompletion:^(MEGARequest *request, MEGAError *error) {
                                 if (error.type) {
                                     UIAlertController *enableGeolocationAlert = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", @"") message:[NSString stringWithFormat:@"Enable geolocation failed. Error: %@", AMLocalizedString(error.name, nil)] preferredStyle:UIAlertControllerStyleAlert];
                                     [enableGeolocationAlert addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                                        weakSelf.inputToolbar.hidden = weakSelf.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo;
+                                        [weakSelf showOrHideInputToolbar];
                                     }]];
                                     [weakSelf presentViewController:enableGeolocationAlert animated:YES completion:nil];
                                 } else {
@@ -2040,7 +2044,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             }]];
             
             ActionSheetViewController *uploadOptionsActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:AMLocalizedString(@"send", @"Label for any 'Send' button, link, text, title, etc. - (String as short as possible).") dismissCompletion:^{
-                weakSelf.inputToolbar.hidden = weakSelf.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo;
+                [weakSelf showOrHideInputToolbar];
             } sender:nil];
             [self presentViewController:uploadOptionsActionSheet animated:YES completion:nil];
             break;
