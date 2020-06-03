@@ -31,6 +31,8 @@
 		2F528CBA2474C0CE006DE5C2 /* BasicAudioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F528CB72474C0CE006DE5C2 /* BasicAudioController.swift */; };
 		2F73098F24636F9E00EF36F4 /* ChatRoomCallDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F73098E24636F9E00EF36F4 /* ChatRoomCallDelegate.swift */; };
 		2F7309932463B1F000EF36F4 /* ChatViewController+CallStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7309922463B1F000EF36F4 /* ChatViewController+CallStatus.swift */; };
+		2F85306F24885F9100064E83 /* PreviewersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F85306E24885F9100064E83 /* PreviewersView.swift */; };
+		2F85307324885FAB00064E83 /* PreviewersView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F85307224885FAB00064E83 /* PreviewersView.xib */; };
 		2F8772FC2468FA8C00E8854F /* MessageEditCollectionOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8772FA2468FA8C00E8854F /* MessageEditCollectionOverlayView.swift */; };
 		2F8772FD2468FA8C00E8854F /* MessageEditCollectionOverlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F8772FB2468FA8C00E8854F /* MessageEditCollectionOverlayView.xib */; };
 		2F8F5F1623691A390049603F /* UINavigationViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8F5F1523691A390049603F /* UINavigationViewController+Additions.swift */; };
@@ -1302,6 +1304,8 @@
 		2F528CB72474C0CE006DE5C2 /* BasicAudioController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicAudioController.swift; sourceTree = "<group>"; };
 		2F73098E24636F9E00EF36F4 /* ChatRoomCallDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomCallDelegate.swift; sourceTree = "<group>"; };
 		2F7309922463B1F000EF36F4 /* ChatViewController+CallStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatViewController+CallStatus.swift"; sourceTree = "<group>"; };
+		2F85306E24885F9100064E83 /* PreviewersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewersView.swift; sourceTree = "<group>"; };
+		2F85307224885FAB00064E83 /* PreviewersView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PreviewersView.xib; sourceTree = "<group>"; };
 		2F8772FA2468FA8C00E8854F /* MessageEditCollectionOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageEditCollectionOverlayView.swift; sourceTree = "<group>"; };
 		2F8772FB2468FA8C00E8854F /* MessageEditCollectionOverlayView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageEditCollectionOverlayView.xib; sourceTree = "<group>"; };
 		2F8F5F1523691A390049603F /* UINavigationViewController+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationViewController+Additions.swift"; sourceTree = "<group>"; };
@@ -5581,6 +5585,8 @@
 				2F8772FB2468FA8C00E8854F /* MessageEditCollectionOverlayView.xib */,
 				2F528CAB24739053006DE5C2 /* LoadingMessageReusableView.swift */,
 				2F528CAC24739053006DE5C2 /* LoadingMessageReusableView.xib */,
+				2F85306E24885F9100064E83 /* PreviewersView.swift */,
+				2F85307224885FAB00064E83 /* PreviewersView.xib */,
 				BF7EBD29244E8D120015255F /* Chat Input Bar */,
 			);
 			path = Views;
@@ -6115,6 +6121,7 @@
 				94AAA9AA1FD6D1C20029D6EB /* SF-UI-Text-BoldItalic.otf in Resources */,
 				A82E5BC91F3465A3003C149C /* Spotlight_file@3x.png in Resources */,
 				A819B3421EAFA844004592F9 /* CustomModalAlertViewController.xib in Resources */,
+				2F85307324885FAB00064E83 /* PreviewersView.xib in Resources */,
 				A85665BD21A468D400B010F8 /* MEGAMessageGeoLocationView.xib in Resources */,
 				E8D5BF661BF35A4B00955550 /* SharedItems.storyboard in Resources */,
 				2F8772FD2468FA8C00E8854F /* MessageEditCollectionOverlayView.xib in Resources */,
@@ -6868,6 +6875,7 @@
 				837A88C520B45C11007B55D1 /* SendToViewController.m in Sources */,
 				417279481DB663FA001AC818 /* JSQMediaItem.m in Sources */,
 				A86B9F4C2316D6AB00F35E7A /* FLEXFieldEditorViewController.m in Sources */,
+				2F85306F24885F9100064E83 /* PreviewersView.swift in Sources */,
 				83C570E322E5BFCF00216896 /* MetadataParsing.swift in Sources */,
 				41A66D071AE7900F007D7E20 /* UpgradeTableViewController.m in Sources */,
 				5B20B01120E6300300511C0F /* MEGAGenericRequestDelegate.m in Sources */,
