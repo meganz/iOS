@@ -110,6 +110,6 @@ open class ChatVoiceClipCollectionViewSizeCalculator: MessageSizeCalculator {
     }
     
     open override func messageContainerSize(for message: MessageType) -> CGSize {
-        return CGSize(width: 140, height: 50)
+        return CGSize(width: 140, height: 40)
     }
 }
