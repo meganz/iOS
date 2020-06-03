@@ -91,12 +91,12 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
         } else {
 
             if chatMessage.count == 0 {
-                loadingState = false
                 chatMessage = historyMessages
                 historyMessages.removeAll()
                 chatViewController?.messagesCollectionView.reloadData()
-                chatViewController?.messagesCollectionView.scrollToBottom()
-                
+                chatViewController?.messagesCollectionView.scrollToBottom(animated: true)
+                loadingState = false
+
                 return
             }
             
@@ -206,7 +206,8 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
 
     func loadMoreMessages() {
         if !isFullChatHistoryLoaded {
-            loadMessages()
+            loadingState = true
+         
         }
     }
     
@@ -239,7 +240,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
             chatViewController?.messagesCollectionView.reloadData()
             if chatViewController?.keyboardVisible ?? false {
                 chatViewController?.additionalBottomInset = 0
-                chatViewController?.messagesCollectionView.scrollToBottom()
+                chatViewController?.messagesCollectionView.scrollToLastItem()
             }
             return;
         }
