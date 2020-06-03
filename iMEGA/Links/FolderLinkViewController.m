@@ -575,7 +575,7 @@
             [cell.thumbnailImageView mnz_imageForNode:node];
         }
         
-        cell.infoLabel.text = [Helper sizeAndDateForNode:node api:[MEGASdkManager sharedMEGASdkFolder]];
+        cell.infoLabel.text = [Helper sizeAndCreationDateForNode:node api:[MEGASdkManager sharedMEGASdkFolder]];
     } else if (node.isFolder) {
         [cell.thumbnailImageView mnz_imageForNode:node];
         
