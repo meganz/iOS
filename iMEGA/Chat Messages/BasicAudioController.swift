@@ -66,7 +66,8 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
     public init(messageCollectionView: MessagesCollectionView) {
         self.messageCollectionView = messageCollectionView
         super.init()
-        
+//        NotificationCenter.default.addObserver(self, selector: #selector(didChangeAudioRoute), name: AVAudioSession.routeChangeNotification, object: nil)
+
     }
     
     func setProximitySensorEnabled(_ enabled: Bool) {
@@ -79,18 +80,22 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
         }
     }
 
+    @objc func didChangeAudioRoute() {
+
+    }
+    
     @objc func proximityChanged() {
        
-            guard AVAudioSession.sharedInstance().mnz_isOutputEqual(toPortType: .builtInReceiver), AVAudioSession.sharedInstance().mnz_isOutputEqual(toPortType: .builtInSpeaker)  else {
-                return
-            }
+//            guard AVAudioSession.sharedInstance().mnz_isOutputEqual(toPortType: .builtInReceiver), AVAudioSession.sharedInstance().mnz_isOutputEqual(toPortType: .builtInSpeaker)  else {
+//                return
+//            }
             
-            if UIDevice.current.proximityState {
-               try? AVAudioSession.sharedInstance().overrideOutputAudioPort(.none)
-            } else {
-               try? AVAudioSession.sharedInstance().overrideOutputAudioPort(.speaker)
-            }
-       
+        if UIDevice.current.proximityState {
+            try? AVAudioSession.sharedInstance().overrideOutputAudioPort(.none)
+        } else {
+            try? AVAudioSession.sharedInstance().overrideOutputAudioPort(.speaker)
+        }
+        
     }
 
     // MARK: - Methods
@@ -153,6 +158,11 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
             startProgressTimer()
             audioCell.delegate?.didStartAudio(in: audioCell)
             setProximitySensorEnabled(true)
+            do {
+                try AVAudioSession.sharedInstance().setMode(.default)
+            } catch {
+                
+            }
         default:
             print("BasicAudioPlayer failed play sound becasue given message kind is not Audio")
         }
