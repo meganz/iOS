@@ -1,11 +1,3 @@
-//
-//  Date+Manipulation.swift
-//  MEGA
-//
-//  Created by Jun Meng on 31/5/20.
-//  Copyright © 2020 MEGA. All rights reserved.
-//
-
 import Foundation
 
 typealias MNZTimestap = Date

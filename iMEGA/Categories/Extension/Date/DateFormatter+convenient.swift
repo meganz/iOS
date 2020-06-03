@@ -1,11 +1,3 @@
-//
-//  DateFormatter+convenient.swift
-//  MEGA
-//
-//  Created by Jun Meng on 2/6/20.
-//  Copyright © 2020 MEGA. All rights reserved.
-//
-
 import Foundation
 
 extension DateFormatter {

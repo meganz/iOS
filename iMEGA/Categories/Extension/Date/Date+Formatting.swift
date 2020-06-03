@@ -1,11 +1,3 @@
-//
-//  Date+Formatting.swift
-//  MEGA
-//
-//  Created by Jun Meng on 1/6/20.
-//  Copyright © 2020 MEGA. All rights reserved.
-//
-
 import Foundation
 
 enum DateTemplateFormatting {
@@ -36,7 +28,7 @@ enum DateStyleFormatting {
     }
 }
 
-/// A  date formatter pool that holds date formatter used in MEGA. As `DateFormatter` is a heavy object, so making a  cache pool to hold popular
+/// A  date formatter pool that holds date formatter used in MEGA. As `DateFormatter` is a heavy object, so making a cache pool to hold popular
 /// date formatters saving time.
 /// NOTE: This shared object is *NOT* thread safe.
 final class DateFormatterPool {
