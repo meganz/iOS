@@ -125,7 +125,6 @@
     return [UIColor colorWithRed:0.54 green:0.61 blue:0.61 alpha:1];
 }
 
-
 #pragma mark - Orange
 
 + (UIColor *)mnz_orangeFFA500 {

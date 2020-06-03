@@ -436,22 +436,6 @@
 "renameNodeMessage"="أدخل الاسم الجديد";
 /* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
 "moveToTheRubbishBin"="نقل إلى سلة المحذوفات";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 file' */
-"moveFileToRubbishBinMessage"="هل أنت متأكد أنك تريد نقل ملف 1 إلى سلة القمامة؟";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin '{1+} files' */
-"moveFilesToRubbishBinMessage"="هل أنت متأكد أنك تريد نقل الملفات %d لسلة القمامة؟";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 folder' */
-"moveFolderToRubbishBinMessage"="هل أنت متأكد أنك تريد نقل مجلد 1 إلى سلة القمامة؟";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} folders" */
-"moveFoldersToRubbishBinMessage"="هل أنت متأكد أنك تريد نقل المجلدات %d إلى سلة القمامة؟";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and 1 folder" */
-"moveFileFolderToRubbishBinMessage"="هل أنت متأكد أنك تريد نقل ملف 1 و مجلد 1 إلى سلة القمامة؟";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and {1+} folders" */
-"moveFileFoldersToRubbishBinMessage"="هل أنت متأكد أنك تريد نقل الملف 1 و %d مجلدات إلى سلة القمامة؟";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files and 1 folder" */
-"moveFilesFolderToRubbishBinMessage"="هل أنت متأكد أنك تريد نقل الملفات %d و 1 مجلد إلى سلة القمامة؟";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "[A] = {1+} files and [B] = {1+} folders" */
-"moveFilesFoldersToRubbishBinMessage"="هل أنت متأكد أنك تريد نقل [A] الملفات و [B] المجلدات إلى سلة القمامة؟";
 /* Success message shown when you have moved 1 file to the rubbish bin */
 "fileMovedToRubbishBinMessage"="1 ملف تم نقله لسلة المحذوفات";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
@@ -580,8 +564,6 @@
 "theUsersHaveBeenInvited"="لقد تمت دعوة المستخدمين وسوف تجدهم في جهات الاتصال عند موافقتهم.";
 /* Alert title shown when you want to remove one or more contacts */
 "removeUserTitle"="حذف جهة الاتصال";
-/* Alert confirmation message shown when you want to remove one contact from your contacts list */
-"removeUserMessage"="هل أنت متأكد أنك تريد إزالة %@ من قائمة الاتصال الخاصة بك؟";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
 "removeMultipleUsersMessage"="هل أنت متأكد أنك تريد إزالة %d مستخدمين من قائمة الاتصال الخاصة بك؟";
 /* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
@@ -1378,6 +1360,34 @@
 "Read error"="قراءة الخطأ";
 /* Label to show that an error related with an invalid or missing application key occurs during a SDK operation. */
 "Invalid application key"="مفتاح التطبيق غير صالح";
+/* Error shown when terms of service are breached during download. */
+"Terms of Service breached"="تم خرق شروط الخدمة";
+/* SDK error returned when an upload would produce recursivity */
+"Upload produces recursivity"="Upload produces recursivity";
+/* Error shown when download a file that has violated ToS/AUP. */
+"Not accessible due to ToS/AUP violation"="لا يمكن الوصول إليها بسبب انتهاك شروط استخدام الخدمة أو سياسة الاستخدام المقبول";
+/* Error shown when SSL check has failed */
+"SSL verification failed"="فشل مصادقة شهادة التشفير SSL";
+/* Label shown when current account does not have enough quota to complete the operation */
+"Not enough quota"="لا يوجد حجم متاح كافي";
+/* SDK error returned when a MFA is required to perform an operation */
+"Multi-factor authentication required"="Multi-factor authentication required";
+/* SDK error returned for operations only allowed for business master users */
+"Access denied for users"="Access denied for users";
+/* SDK error returned when a business account has expired */
+"Business account has expired"="Business account has expired";
+/* SDK error returned when the credit card has been rejected */
+"Credit card rejected"="Credit card rejected";
+/* SDK error returned when the billing failed */
+"Billing failed"="Billing failed";
+/* SDK error returned when an operation is rejected due to fraud protection */
+"Rejected by fraud protection"="Rejected by fraud protection";
+/* SDK error returned when there are too many requests */
+"Too many requests"="Too many requests";
+/* SDK error returned when there is a balance error */
+"Balance error"="Balance error";
+/* SDK error returned upon a HTTP error */
+"HTTP error"="HTTP error";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="خطأ غير معروف";
 /* Text shown in an alert when the user is about to change the language of the app */
@@ -1428,7 +1438,7 @@
 "videoQuality"="جودة الفيديو";
 /* Property associated with something smaller than the usual or average size, number, value, or amount. For example: option to encode a video with low quality. */
 "low"="منخفضة";
-/* Option to upload videos with the same resolution and same framerate than the original one, but converting them to MP4. */
+/* Property associated with something higher than the usual or average size, number, value, or amount. For example: video quality. */
 "high"="مرتفعة";
 /* Property associated with the first one made and not a copy. For example: Get the original video, without encoding.  */
 "original"="الأصلي";
@@ -1644,6 +1654,10 @@
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="احفظ نسخة من الصور والفيديوهات المأخوذة من تطبيق MEGA في مكتبة الوسائط على جهازك.";
 /* Settings section title where you can enable the option to 'Spotlight search' */
 "Spotlight Search"="البحث الذكي Spotlight";
+/* Title of the Spotlight Search section */
+"Search"="البحث";
+/* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="When enabled, allow search and look up MEGA files/folders in Spotlight Search.";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="انت تحتفظ بالمفتاح";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -2166,11 +2180,11 @@
 "Choose Folder"="اختر مجلد";
 /* Label used near to the option selected to encode the images uploaded to a chat (Low, Medium, Original) */
 "Image quality"="جودة الصورة";
-/* Title of Image Quality option */
+/* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
 "Automatic"="تلقائي";
 /* Description of Automatic Image Quality option */
 "Send smaller size images through cellular networks and original size images through wifi"="أرسل صوراً أصغر حجماً عبر شبكات هاتف المحمول وصوراً بالحجم الأصلي عبر الشبكات اللاسلكية Wi-Fi";
-/* Title of Image Quality option */
+/* Text for some option property indicating the user the action to perform will be optimised. For example: Image Quality reduction option for chats */
 "Optimised"="الأمثل";
 /* Description of Optimised Image Quality option */
 "Send smaller size images optimised for lower data consumption"="أرسل صوراً أصغر حجماً مثالية لتقليل استهلاك البيانات";
@@ -2227,7 +2241,7 @@
 /* Default title of an empty chat. */
 "Chat created on %s1"="تم انشاء المحادثة في %s1";
 /* Title shown when there are no shared files */
-"No Shared Files"="No Shared Files";
+"No Shared Files"="لا توجد ملفات مشتركة";
 /* Error message shown when opening a folder link which doesn’t exist */
 "Folder link unavailable"="رابط المجلد غير متوفر";
 /* Error message shown when opening a file link which doesn’t exist */
