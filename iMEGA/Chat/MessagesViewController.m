@@ -2019,7 +2019,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
                         [sendLocationAlert addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"continue", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                             MEGAGenericRequestDelegate *enableGeolocationDelegate = [[MEGAGenericRequestDelegate alloc] initWithCompletion:^(MEGARequest *request, MEGAError *error) {
                                 if (error.type) {
-                                    UIAlertController *enableGeolocationAlert = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", @"") message:[NSString stringWithFormat:@"Enable geolocation failed. Error: %@", error.name] preferredStyle:UIAlertControllerStyleAlert];
+                                    UIAlertController *enableGeolocationAlert = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", @"") message:[NSString stringWithFormat:@"Enable geolocation failed. Error: %@", AMLocalizedString(error.name, nil)] preferredStyle:UIAlertControllerStyleAlert];
                                     [enableGeolocationAlert addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                                         weakSelf.inputToolbar.hidden = weakSelf.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo;
                                     }]];
@@ -3317,9 +3317,37 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 - (void)onChatRequestFinish:(MEGAChatSdk *)api request:(MEGAChatRequest *)request error:(MEGAChatError *)error {
     switch (request.type) {
         case MEGAChatRequestTypeGetPeerAttributes:
-            if (error.type) return;
+            if (error.type) {
+                return;
+            }
             [self customNavigationBarLabel];
             break;
+
+        case MEGAChatRequestTypeInviteToChatRoom: {
+            switch (error.type) {
+                case MEGAChatErrorTypeArgs: //If the chat is not a group chat (cannot invite peers)
+                case MEGAChatErrorTypeAccess: //If the logged in user doesn't have privileges to invite peers.
+                case MEGAChatErrorTypeNoEnt: //If there isn't any chat with the specified chatid.
+                    self.stopInvitingContacts = YES;
+                    [SVProgressHUD showErrorWithStatus:AMLocalizedString(error.name, nil)];
+                    break;
+                    
+                default:
+                    if (error.type) {
+                        [SVProgressHUD showErrorWithStatus:AMLocalizedString(error.name, nil)];
+                    }
+                    break;
+            }
+            break;
+        }
+            
+        case MEGAChatRequestTypeNodeMessage: {
+            if (error.type) {
+                [SVProgressHUD showErrorWithStatus:AMLocalizedString(error.name, nil)];
+                return;
+            }
+            break;
+        }
             
         default:
             break;

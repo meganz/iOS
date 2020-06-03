@@ -1360,6 +1360,34 @@
 "Read error"="Ошибка чтения";
 /* Label to show that an error related with an invalid or missing application key occurs during a SDK operation. */
 "Invalid application key"="Неверный ключ приложения";
+/* Error shown when terms of service are breached during download. */
+"Terms of Service breached"="Нарушены условия предоставления услуг";
+/* SDK error returned when an upload would produce recursivity */
+"Upload produces recursivity"="Upload produces recursivity";
+/* Error shown when download a file that has violated ToS/AUP. */
+"Not accessible due to ToS/AUP violation"="Недоступно из-за нарушения условий предоставления услуг/политики допустимого использования";
+/* Error shown when SSL check has failed */
+"SSL verification failed"="Сбой проверки SSL";
+/* Label shown when current account does not have enough quota to complete the operation */
+"Not enough quota"="Недостаточно квоты";
+/* SDK error returned when a MFA is required to perform an operation */
+"Multi-factor authentication required"="Multi-factor authentication required";
+/* SDK error returned for operations only allowed for business master users */
+"Access denied for users"="Access denied for users";
+/* SDK error returned when a business account has expired */
+"Business account has expired"="Business account has expired";
+/* SDK error returned when the credit card has been rejected */
+"Credit card rejected"="Credit card rejected";
+/* SDK error returned when the billing failed */
+"Billing failed"="Billing failed";
+/* SDK error returned when an operation is rejected due to fraud protection */
+"Rejected by fraud protection"="Rejected by fraud protection";
+/* SDK error returned when there are too many requests */
+"Too many requests"="Too many requests";
+/* SDK error returned when there is a balance error */
+"Balance error"="Balance error";
+/* SDK error returned upon a HTTP error */
+"HTTP error"="HTTP error";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Неизвестная ошибка";
 /* Text shown in an alert when the user is about to change the language of the app */
