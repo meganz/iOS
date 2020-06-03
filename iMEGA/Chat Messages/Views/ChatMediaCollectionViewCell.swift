@@ -93,6 +93,11 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
         let name = node.name! as NSString
         
         imageView.mnz_setPreview(by: node) {(request) in
+            let visibleIndexPaths = messagesCollectionView.indexPathsForVisibleItems
+            guard visibleIndexPaths.contains(indexPath) else {
+                return
+            }
+            
             messagesCollectionView.reloadItems(at: [indexPath])
         }
         
