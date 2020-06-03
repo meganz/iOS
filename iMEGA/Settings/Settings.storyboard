@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="qvR-uV-YnP">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="qvR-uV-YnP">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -2014,9 +2014,11 @@ You may still receive file versions from shared folders if your contacts have th
                     <navigationItem key="navigationItem" title="File Management" id="01j-VE-GHk">
                         <barButtonItem key="backBarButtonItem" title=" " id="OKe-Df-Xs3"/>
                     </navigationItem>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="clearCacheLabel" destination="3R5-CK-znG" id="jhC-mb-6WK"/>
                         <outlet property="clearOfflineFilesLabel" destination="WbE-QH-DWS" id="u6w-OJ-Oug"/>
+                        <outlet property="deleteOldVersionCell" destination="UHz-cJ-fhW" id="o06-UF-cQ1"/>
                         <outlet property="deleteOldVersionsLabel" destination="82S-4G-jFG" id="tWy-zy-JSy"/>
                         <outlet property="fileVersioningLabel" destination="pTR-ca-8uK" id="Fn2-fU-Jj9"/>
                         <outlet property="fileVersioningSwitch" destination="DdX-Za-PDc" id="hHr-Xp-gwp"/>

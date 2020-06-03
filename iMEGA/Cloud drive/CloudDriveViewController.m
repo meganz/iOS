@@ -1528,7 +1528,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     [actions addObject:[ActionSheetAction.alloc initWithTitle:title detail:nil image:image style:UIAlertActionStyleDefault actionHandler:^{
         [weakSelf changeLayoutMode];
     }]];
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"sortTitle", @"Section title of the 'Sort by'") detail:nil image:[UIImage imageNamed:@"sort"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"sortTitle", @"Section title of the 'Sort by'") detail:[NSString selectedSortTypeForKey:@"SortOrderType"] image:[UIImage imageNamed:@"sort"] style:UIAlertActionStyleDefault actionHandler:^{
         [weakSelf presentSortByActionSheet];
     }]];
     [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"select", @"Button that allows you to select a given folder") detail:nil image:[UIImage imageNamed:@"selected"] style:UIAlertActionStyleDefault actionHandler:^{
@@ -1536,7 +1536,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
         [weakSelf setEditMode:enableEditing];
         
     }]];
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"rubbishBinLabel", @"Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin'") detail:nil image:[UIImage imageNamed:@"rubbishBin"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"rubbishBinLabel", @"Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin'") detail:[Helper sizeForNode:MEGASdkManager.sharedMEGASdk.rubbishNode api:MEGASdkManager.sharedMEGASdk] image:[UIImage imageNamed:@"rubbishBin"] style:UIAlertActionStyleDefault actionHandler:^{
         CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
         cloudDriveVC.parentNode = [[MEGASdkManager sharedMEGASdk] rubbishNode];
         cloudDriveVC.displayMode = DisplayModeRubbishBin;
@@ -1560,7 +1560,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
         }]];
     }
     
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"sortTitle", @"Section title of the 'Sort by'") detail:nil image:[UIImage imageNamed:@"sort"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"sortTitle", @"Section title of the 'Sort by'") detail:[NSString selectedSortTypeForKey:@"SortOrderType"] image:[UIImage imageNamed:@"sort"] style:UIAlertActionStyleDefault actionHandler:^{
         [weakSelf presentSortByActionSheet];
     }]];
     
@@ -1593,7 +1593,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"upload", @"") detail:nil image:[UIImage imageNamed:@"upload"] style:UIAlertActionStyleDefault actionHandler:^{
         [weakSelf presentUploadAlertController];
     }]];
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"rubbishBinLabel", @"Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin'") detail:nil image:[UIImage imageNamed:@"rubbishBin"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"rubbishBinLabel", @"Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin'") detail:[Helper sizeForNode:MEGASdkManager.sharedMEGASdk.rubbishNode api:MEGASdkManager.sharedMEGASdk] image:[UIImage imageNamed:@"rubbishBin"] style:UIAlertActionStyleDefault actionHandler:^{
         CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
         cloudDriveVC.parentNode = [[MEGASdkManager sharedMEGASdk] rubbishNode];
         cloudDriveVC.displayMode = DisplayModeRubbishBin;

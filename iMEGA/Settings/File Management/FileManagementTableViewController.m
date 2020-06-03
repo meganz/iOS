@@ -24,6 +24,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *fileVersionsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *fileVersionsDetailLabel;
 
+@property (weak, nonatomic) IBOutlet UITableViewCell *deleteOldVersionCell;
 @property (weak, nonatomic) IBOutlet UILabel *deleteOldVersionsLabel;
 
 @property (nonatomic, copy) NSString *offlineSizeString;
@@ -61,6 +62,7 @@
     [MEGASdkManager.sharedMEGASdk getAccountDetailsWithDelegate:self];
     
     self.deleteOldVersionsLabel.text = AMLocalizedString(@"Delete previous versions", @"Text of a button which deletes all historical versions of files in the users entire account.");
+    [self updateDeleteVersionsUIBy:[self totalNumberOfFileVersionsOfCurrentAccount]];
     
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     
@@ -91,6 +93,17 @@
             [self.tableView reloadData];
         });
     });
+}
+
+- (long long)totalNumberOfFileVersionsOfCurrentAccount {
+    return [MEGASdkManager.sharedMEGASdk.mnz_accountDetails numberOfVersionFilesForHandle:MEGASdkManager.sharedMEGASdk.rootNode.handle];
+}
+
+- (void)updateDeleteVersionsUIBy:(long long)totalNumberOfVersions {
+    self.fileVersionsDetailLabel.text = [NSString stringWithFormat:@"%lld", totalNumberOfVersions];
+    BOOL shouldEnableDeleteVersionsCell = totalNumberOfVersions > 0;
+    self.deleteOldVersionCell.userInteractionEnabled = shouldEnableDeleteVersionsCell;
+    self.deleteOldVersionsLabel.enabled = shouldEnableDeleteVersionsCell;
 }
 
 - (void)removeGroupSharedDirectoryContents {
@@ -312,8 +325,7 @@
     
     if (request.type == MEGARequestTypeAccountDetails) {
         if (!error.type) {
-            long long totalNumberOfVersions = [MEGASdkManager.sharedMEGASdk.mnz_accountDetails numberOfVersionFilesForHandle:MEGASdkManager.sharedMEGASdk.rootNode.handle];
-            self.fileVersionsDetailLabel.text = [NSString stringWithFormat:@"%lld", totalNumberOfVersions];
+            [self updateDeleteVersionsUIBy:[self totalNumberOfFileVersionsOfCurrentAccount]];
             [self.tableView reloadData];
         }
     }
