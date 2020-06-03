@@ -283,6 +283,8 @@
 		5BFA346F1FAC5850005BFC4E /* MEGAMoveRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFA346D1FAB6282005BFC4E /* MEGAMoveRequestDelegate.m */; };
 		5BFA34701FAC5857005BFC4E /* MEGAMoveRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFA346D1FAB6282005BFC4E /* MEGAMoveRequestDelegate.m */; };
 		5BFA34711FAC5BFB005BFC4E /* MEGARemoveRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFA34691FAB4168005BFC4E /* MEGARemoveRequestDelegate.m */; };
+		5DAB28F224875269004B5D5A /* OverDiskQuotaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DAB28F024875269004B5D5A /* OverDiskQuotaViewController.swift */; };
+		5DAB28F324875269004B5D5A /* OverDiskQuotaViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5DAB28F124875269004B5D5A /* OverDiskQuotaViewController.xib */; };
 		7714901520F7592100769BD4 /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7714901420F7592000769BD4 /* Contacts.framework */; };
 		771A932723A24DB300CB0ED7 /* UIView+FLEX_Layout.m in Sources */ = {isa = PBXBuildFile; fileRef = 771A932523A24DB300CB0ED7 /* UIView+FLEX_Layout.m */; };
 		771A932823A24DB300CB0ED7 /* UIPasteboard+FLEX.m in Sources */ = {isa = PBXBuildFile; fileRef = 771A932623A24DB300CB0ED7 /* UIPasteboard+FLEX.m */; };
@@ -1648,6 +1650,8 @@
 		5BFA346A1FAB4169005BFC4E /* MEGARemoveRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGARemoveRequestDelegate.h; path = API/Requests/MEGARemoveRequestDelegate.h; sourceTree = "<group>"; };
 		5BFA346C1FAB6282005BFC4E /* MEGAMoveRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGAMoveRequestDelegate.h; path = API/Requests/MEGAMoveRequestDelegate.h; sourceTree = "<group>"; };
 		5BFA346D1FAB6282005BFC4E /* MEGAMoveRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGAMoveRequestDelegate.m; path = API/Requests/MEGAMoveRequestDelegate.m; sourceTree = "<group>"; };
+		5DAB28F024875269004B5D5A /* OverDiskQuotaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverDiskQuotaViewController.swift; sourceTree = "<group>"; };
+		5DAB28F124875269004B5D5A /* OverDiskQuotaViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OverDiskQuotaViewController.xib; sourceTree = "<group>"; };
 		7714901420F7592000769BD4 /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = System/Library/Frameworks/Contacts.framework; sourceTree = SDKROOT; };
 		771A1B5E21C9220C00A8555D /* OnboardingViewType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OnboardingViewType.h; sourceTree = "<group>"; };
 		771A1B5F21C9227A00A8555D /* OnboardingType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OnboardingType.h; sourceTree = "<group>"; };
@@ -2976,6 +2980,7 @@
 		415226681A692ECC00EC7BB6 /* Cloud drive */ = {
 			isa = PBXGroup;
 			children = (
+				5DAB28EF24875217004B5D5A /* OverDiskQuota */,
 				A811CE2922EAFB1700B24E76 /* Operations */,
 				E8F791731BC5754A00C58676 /* Activities */,
 				832E102C202CB21700BDD30F /* Cells */,
@@ -4036,6 +4041,15 @@
 				5B64D4ED2111D5DE004CD155 /* EnabledTwoFactorAuthenticationViewController.m */,
 			);
 			path = "Two Factor Authentication";
+			sourceTree = "<group>";
+		};
+		5DAB28EF24875217004B5D5A /* OverDiskQuota */ = {
+			isa = PBXGroup;
+			children = (
+				5DAB28F024875269004B5D5A /* OverDiskQuotaViewController.swift */,
+				5DAB28F124875269004B5D5A /* OverDiskQuotaViewController.xib */,
+			);
+			path = OverDiskQuota;
 			sourceTree = "<group>";
 		};
 		7747B2D5208623550011814E /* Network */ = {
@@ -5714,6 +5728,7 @@
 				94AAA9AA1FD6D1C20029D6EB /* SF-UI-Text-BoldItalic.otf in Resources */,
 				A82E5BC91F3465A3003C149C /* Spotlight_file@3x.png in Resources */,
 				A819B3421EAFA844004592F9 /* CustomModalAlertViewController.xib in Resources */,
+				5DAB28F324875269004B5D5A /* OverDiskQuotaViewController.xib in Resources */,
 				A85665BD21A468D400B010F8 /* MEGAMessageGeoLocationView.xib in Resources */,
 				E8D5BF661BF35A4B00955550 /* SharedItems.storyboard in Resources */,
 				5B4429411E6D705D00BCACC0 /* SF-UI-Text-Medium.otf in Resources */,
@@ -5944,6 +5959,7 @@
 				A86B9F442316D6AB00F35E7A /* FLEXToolbarItem.m in Sources */,
 				41AC66481AB1D493003FE8DA /* AboutTableViewController.m in Sources */,
 				A86B9F502316D6AB00F35E7A /* FLEXArgumentInputSwitchView.m in Sources */,
+				5DAB28F224875269004B5D5A /* OverDiskQuotaViewController.swift in Sources */,
 				B6D11AD7219BAE6D00446B86 /* MOAssetUploadFileNameRecord+CoreDataClass.m in Sources */,
 				41D21E5D1D01AEC3002E6296 /* CTAssetCollectionViewController.m in Sources */,
 				A86B9F262316D6AB00F35E7A /* FLEXScopeCarousel.m in Sources */,
