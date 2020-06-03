@@ -52,13 +52,22 @@
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MCk-xj-VIQ">
                                     <rect key="frame" x="43.666666666666657" y="687" width="288" height="50"/>
-                                    <color key="backgroundColor" red="0.11588243400000001" green="0.65814155340000002" blue="0.52589106559999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="50" id="O1f-t8-q5E"/>
                                         <constraint firstAttribute="width" constant="288" id="RwQ-Ne-ral"/>
                                     </constraints>
-                                    <state key="normal" title="Dismiss"/>
+                                    <state key="normal" title="Dismiss">
+                                        <color key="titleColor" red="0.11588243400000001" green="0.65814155340000002" blue="0.52589106559999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </state>
                                 </button>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mks-ns-rRK" customClass="OverDisckQuotaWarningView" customModule="MEGA" customModuleProvider="target">
+                                    <rect key="frame" x="16" y="469.66666666666669" width="343" height="60.000000000000057"/>
+                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="60" id="XpK-GE-h5X"/>
+                                    </constraints>
+                                </view>
                             </subviews>
                             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             <constraints>
@@ -66,7 +75,9 @@
                                 <constraint firstAttribute="trailing" secondItem="Xrq-u4-x9U" secondAttribute="trailing" id="5Ik-lG-eM0"/>
                                 <constraint firstItem="nx5-ul-1O7" firstAttribute="top" secondItem="xZu-ci-M0D" secondAttribute="bottom" constant="16" id="6nT-WJ-CYF"/>
                                 <constraint firstItem="MCk-xj-VIQ" firstAttribute="leading" secondItem="agc-Ke-lvT" secondAttribute="leading" id="8Wm-sT-tXE"/>
+                                <constraint firstItem="mks-ns-rRK" firstAttribute="top" secondItem="nx5-ul-1O7" secondAttribute="bottom" constant="32" id="Gi0-g9-KlQ"/>
                                 <constraint firstItem="Xrq-u4-x9U" firstAttribute="leading" secondItem="JaV-Gi-51f" secondAttribute="leading" id="JKB-kl-9Uf"/>
+                                <constraint firstAttribute="trailing" secondItem="mks-ns-rRK" secondAttribute="trailing" constant="16" id="Puz-Of-TTG"/>
                                 <constraint firstItem="MCk-xj-VIQ" firstAttribute="top" secondItem="agc-Ke-lvT" secondAttribute="bottom" constant="16" id="RVx-FE-Yty"/>
                                 <constraint firstAttribute="trailing" secondItem="nx5-ul-1O7" secondAttribute="trailing" constant="16" id="ej6-hD-sp6"/>
                                 <constraint firstItem="MCk-xj-VIQ" firstAttribute="trailing" secondItem="agc-Ke-lvT" secondAttribute="trailing" id="jjM-6d-O7l"/>
@@ -74,6 +85,7 @@
                                 <constraint firstItem="agc-Ke-lvT" firstAttribute="centerX" secondItem="JaV-Gi-51f" secondAttribute="centerX" id="odE-lg-l9L"/>
                                 <constraint firstItem="Xrq-u4-x9U" firstAttribute="top" secondItem="JaV-Gi-51f" secondAttribute="top" id="qbM-ch-tCU"/>
                                 <constraint firstItem="nx5-ul-1O7" firstAttribute="leading" secondItem="JaV-Gi-51f" secondAttribute="leading" constant="16" id="sHV-5n-dir"/>
+                                <constraint firstItem="mks-ns-rRK" firstAttribute="leading" secondItem="JaV-Gi-51f" secondAttribute="leading" constant="16" id="skm-v3-6Ai"/>
                             </constraints>
                         </view>
                     </subviews>
@@ -96,13 +108,6 @@
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="136.80000000000001" y="132.26600985221674"/>
-        </view>
-        <view contentMode="scaleToFill" id="KLC-cG-Mlx">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-            <viewLayoutGuide key="safeArea" id="56q-hv-bmG"/>
-            <point key="canvasLocation" x="135" y="807"/>
         </view>
     </objects>
     <resources>
