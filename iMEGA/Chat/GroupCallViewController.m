@@ -964,7 +964,7 @@
             NSString *displayName = [self.chatRoom userDisplayNameForUserHandle:chatSession.peerId];
             remoteUser.name = displayName;
         }];
-        [MEGASdkManager.sharedMEGAChatSdk loadUserAttributesForChatId:self.chatRoom.chatId usersHandles:@[@(chatSession.peerId)] authorizationToken:self.chatRoom.authorizationToken delegate:delegate];
+        [MEGASdkManager.sharedMEGAChatSdk loadUserAttributesForChatId:self.chatRoom.chatId usersHandles:@[@(chatSession.peerId)] delegate:delegate];
     }
     
     [self.peersInCall insertObject:remoteUser atIndex:0];
@@ -1188,7 +1188,7 @@
                                 self.chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:self.chatRoom.chatId];
                                 [self showToastMessage:[NSString stringWithFormat:AMLocalizedString(@"%@ left the call.", @"Message to inform the local user that someone has left the current group call"), [self.chatRoom userDisplayNameForUserHandle:call.peeridCallCompositionChange]] color:@"#00BFA5" shouldHide:YES];
                             }];
-                            [MEGASdkManager.sharedMEGAChatSdk loadUserAttributesForChatId:self.chatRoom.chatId usersHandles:@[@(call.peeridCallCompositionChange)] authorizationToken:self.chatRoom.authorizationToken delegate:delegate];
+                            [MEGASdkManager.sharedMEGAChatSdk loadUserAttributesForChatId:self.chatRoom.chatId usersHandles:@[@(call.peeridCallCompositionChange)] delegate:delegate];
                         }
                         
                         break;
@@ -1207,7 +1207,7 @@
                                 self.chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:self.chatRoom.chatId];
                                 [self showToastMessage:[NSString stringWithFormat:AMLocalizedString(@"%@ joined the call.", @"Message to inform the local user that someone has joined the current group call"), [self.chatRoom userDisplayNameForUserHandle:call.peeridCallCompositionChange]] color:@"#00BFA5" shouldHide:YES];
                             }];
-                            [MEGASdkManager.sharedMEGAChatSdk loadUserAttributesForChatId:self.chatRoom.chatId usersHandles:@[@(call.peeridCallCompositionChange)] authorizationToken:self.chatRoom.authorizationToken delegate:delegate];
+                            [MEGASdkManager.sharedMEGAChatSdk loadUserAttributesForChatId:self.chatRoom.chatId usersHandles:@[@(call.peeridCallCompositionChange)] delegate:delegate];
                         }
                         
                         break;

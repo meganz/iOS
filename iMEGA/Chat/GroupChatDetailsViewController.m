@@ -124,7 +124,7 @@
         }
     }
     if (usersHandles.count) {
-        [MEGASdkManager.sharedMEGAChatSdk loadUserAttributesForChatId:self.chatRoom.chatId usersHandles:usersHandles authorizationToken:self.chatRoom.authorizationToken];
+        [MEGASdkManager.sharedMEGAChatSdk loadUserAttributesForChatId:self.chatRoom.chatId usersHandles:usersHandles delegate:self];
     }
 }
 

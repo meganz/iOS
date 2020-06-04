@@ -129,7 +129,7 @@
             self.chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:self.chatRoom.chatId];
             self.nameLabel.text = [self.chatRoom userDisplayNameForUserHandle:peerHandle];
         }];
-        [MEGASdkManager.sharedMEGAChatSdk loadUserAttributesForChatId:self.chatRoom.chatId usersHandles:@[@(peerHandle)] authorizationToken:self.chatRoom.authorizationToken delegate:delegate];
+        [MEGASdkManager.sharedMEGAChatSdk loadUserAttributesForChatId:self.chatRoom.chatId usersHandles:@[@(peerHandle)] delegate:delegate];
     }
     
 }

@@ -124,7 +124,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
                 self.userName = [[MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:request.chatHandle] userDisplayNameForUserHandle:self.userHandle];
                 [self updateUserDetails];
             }];
-            [MEGASdkManager.sharedMEGAChatSdk loadUserAttributesForChatId:chatRoom.chatId usersHandles:@[@(self.userHandle)] authorizationToken:chatRoom.authorizationToken delegate:delegate];
+            [MEGASdkManager.sharedMEGAChatSdk loadUserAttributesForChatId:chatRoom.chatId usersHandles:@[@(self.userHandle)] delegate:delegate];
         }
     } else {
         if (self.userName.length == 0) {
