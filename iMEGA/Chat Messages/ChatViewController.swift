@@ -440,6 +440,10 @@ class ChatViewController: MessagesViewController {
         }
     }
     
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        hideJumpToBottom()
+    }
+    
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if !decelerate {
             showOrHideJumpToBottom()
