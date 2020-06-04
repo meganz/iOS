@@ -70,7 +70,9 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
                                                      "Message shown when the link to a file or folder has been removed")
                 SVProgressHUD.showInfo(withStatus: statusString)
             }
-
+        case .updatePreviewers:
+            chatViewController?.previewerView.isHidden = chatRoom.previewersCount == 0
+            chatViewController?.previewerView.previewersLabel.text = "\(chatRoom.previewersCount)"
         default:
             break
         }

@@ -137,6 +137,9 @@ class ChatViewController: MessagesViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         MEGASdkManager.sharedMEGAChatSdk()?.add(self as MEGAChatDelegate)
+        
+        previewerView.isHidden = chatRoom.previewersCount == 0
+        previewerView.previewersLabel.text = "\(chatRoom.previewersCount)"
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -673,9 +676,10 @@ class ChatViewController: MessagesViewController {
     
     private func configurePreviewerButton() {
         view.addSubview(previewerView)
-        previewerView.autoPinEdge(toSuperviewMargin: .top, withInset: 8)
+        previewerView.autoPinEdge(toSuperviewMargin: .top, withInset: 12)
         previewerView.autoAlignAxis(toSuperviewAxis: .vertical)
         previewerView.autoSetDimensions(to: CGSize(width: 75, height: 34))
+        previewerView.isHidden = true
     }
     
     private func registerCustomCells() {
