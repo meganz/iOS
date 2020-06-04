@@ -820,7 +820,7 @@ class ChatViewController: MessagesViewController {
         view.addSubview(chatBottomInfoScreen)
         chatBottomInfoScreen.translatesAutoresizingMaskIntoConstraints = false
         
-        chatBottomInfoScreenBottomConstraint = chatBottomInfoScreen.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
+        chatBottomInfoScreenBottomConstraint = chatBottomInfoScreen.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20)
         NSLayoutConstraint.activate([
             chatBottomInfoScreen.heightAnchor.constraint(equalToConstant: chatBottomInfoScreen.bounds.height),
             chatBottomInfoScreenBottomConstraint!,
