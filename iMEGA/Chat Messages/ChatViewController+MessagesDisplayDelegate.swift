@@ -87,6 +87,13 @@ extension ChatViewController: MessagesDisplayDelegate {
                              at indexPath: IndexPath,
                              in messagesCollectionView: MessagesCollectionView) {
         if !isFromCurrentSender(message: message) {
+            if indexPath.section < messages.count - 1 {
+                guard messages[indexPath.section + 1].sender.senderId != message.sender.senderId else {
+                    avatarView.isHidden = true
+                    return
+                }
+            }
+
             let chatInitials = initials(for: message)
             let avatar = Avatar(image: avatarImage(for: message), initials: chatInitials)
             avatarView.set(avatar: avatar)
