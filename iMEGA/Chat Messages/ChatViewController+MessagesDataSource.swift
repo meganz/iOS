@@ -14,11 +14,18 @@ extension ChatViewController: MessagesDataSource {
                                in messagesCollectionView: MessagesCollectionView) -> MessageType {
         return messages[indexPath.section]
     }
-
+    
     func messageTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
         if isTimeLabelVisible(at: indexPath) {
+            var topLabelString: String = message.sentDate.string(withDateFormat: "hh:mm")
+            
+            if !isFromCurrentSender(message: messages[indexPath.section]) && chatRoom.isGroup {
+                let message = messages[indexPath.section]
+                topLabelString = message.displayName + " " + topLabelString
+            }
+            
             return NSAttributedString(
-                string: message.sentDate.string(withDateFormat: "hh:mm") ,
+                string: topLabelString,
                 attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13.0, weight: .medium),
                              NSAttributedString.Key.foregroundColor: UIColor(fromHexString: "#848484") ?? .black])
         }
