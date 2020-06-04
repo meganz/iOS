@@ -580,23 +580,12 @@ class ChatViewController: MessagesViewController {
     func isTimeLabelVisible(at indexPath: IndexPath) -> Bool {
         guard let previousIndexPath = indexPath.previousSectionIndexPath else { return true }
         
-        if let latestVisibleTimeIndexPath = previousIndexPathOfVisibleTimeLabel(for: previousIndexPath) {
-            return !isMessageSentAtSameMinute(between: indexPath, and: latestVisibleTimeIndexPath)
+        if !isPreviousMessageSameSender(at: indexPath)
+            || !isMessageSentAtSameMinute(between: indexPath, and: previousIndexPath) {
+            return true
         }
         
-        return true
-    }
-    
-    func previousIndexPathOfVisibleTimeLabel(for indexPath: IndexPath) -> IndexPath? {
-        guard let previousIndexPath = indexPath.previousSectionIndexPath else { return indexPath }
-        
-        if !isPreviousMessageSameSender(at: indexPath) {
-            return nil
-        } else if !isMessageSentAtSameMinute(between: indexPath, and: previousIndexPath) {
-            return indexPath
-        }
-        
-        return previousIndexPathOfVisibleTimeLabel(for: previousIndexPath)
+        return false
     }
 
     func isPreviousMessageSentSameDay(at indexPath: IndexPath) -> Bool {
@@ -614,6 +603,7 @@ class ChatViewController: MessagesViewController {
     
     func isMessageSentAtSameMinute(between indexPath1: IndexPath, and indexPath2: IndexPath) -> Bool {
         let previousMessageDate = messages[indexPath1.section].sentDate
+        print("index path \(indexPath1.section) date \(previousMessageDate) - indexpath2 \(indexPath2.section) date \(messages[indexPath2.section].sentDate)")
         return messages[indexPath2.section].sentDate.isSameMinute(date: previousMessageDate)
     }
 
