@@ -29,6 +29,8 @@
 
 @interface GroupCallViewController () <UICollectionViewDataSource, MEGAChatCallDelegate, UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate>
 
+@property (strong, nonatomic) IBOutlet UIView *containerView;
+
 @property (nonatomic, strong) MEGAChatCall *call;
 
 @property (weak, nonatomic) IBOutlet UIView *callControlsView;
@@ -115,6 +117,8 @@
             [self instantiatePeersInCall];
         }
     }
+    
+    [self updateAppearance];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -480,6 +484,8 @@
 #pragma mark - Private
 
 - (void)updateAppearance {
+    self.containerView.backgroundColor = self.collectionView.backgroundColor = UIColor.blackColor;
+    
     self.participantsLabel.textColor = UIColor.whiteColor;
     
     self.toastView.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];

@@ -1247,7 +1247,6 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="eTZ-pY-Nh8" firstAttribute="leading" secondItem="ayG-gj-xo6" secondAttribute="leading" id="2ip-lG-oYD"/>
                             <constraint firstItem="xPc-Jc-U9U" firstAttribute="top" secondItem="T7i-gV-Gx7" secondAttribute="top" id="9WZ-n4-Pip"/>
@@ -1298,6 +1297,7 @@
                         <outlet property="collectionActivity" destination="fAr-Ud-Er3" id="oAC-eW-cho"/>
                         <outlet property="collectionView" destination="ljh-eN-dUg" id="ZGn-sR-1zO"/>
                         <outlet property="collectionViewBottomConstraint" destination="Dbz-ZZ-98m" id="M7k-3P-AOI"/>
+                        <outlet property="containerView" destination="T7i-gV-Gx7" id="oIX-VN-emY"/>
                         <outlet property="enableDisableSpeaker" destination="4uv-S3-2LB" id="bJA-ys-6xu"/>
                         <outlet property="enableDisableVideoButton" destination="fZi-pG-uLA" id="dT2-PR-3NL"/>
                         <outlet property="minimizeButton" destination="rPI-Vv-ZsG" id="oiP-ZE-egA"/>
