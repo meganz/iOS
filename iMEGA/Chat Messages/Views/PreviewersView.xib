@@ -15,7 +15,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VHh-Zb-gDE" customClass="PreviewersView" customModule="MEGA" customModuleProvider="target">
+        <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VHh-Zb-gDE" customClass="PreviewersView" customModule="MEGA" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="74.5" height="34"/>
             <subviews>
                 <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="88b-7U-Vsv">
@@ -57,6 +57,7 @@
                 <constraint firstAttribute="bottom" secondItem="88b-7U-Vsv" secondAttribute="bottom" id="JJe-Kh-hmW"/>
                 <constraint firstAttribute="trailing" secondItem="88b-7U-Vsv" secondAttribute="trailing" id="YRe-VL-c20"/>
                 <constraint firstAttribute="height" constant="34" id="cwC-BO-0vt"/>
+                <constraint firstItem="abB-Ju-5i7" firstAttribute="bottom" secondItem="88b-7U-Vsv" secondAttribute="bottom" id="wXN-DF-G6H"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="abB-Ju-5i7"/>

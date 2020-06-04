@@ -42,6 +42,11 @@ class ChatViewController: MessagesViewController {
         return button
     }()
     
+    lazy var previewerView: PreviewersView = {
+        let view = PreviewersView.instanceFromNib
+        return view
+    }()
+    
     var messages: [ChatMessage] {
         return chatRoomDelegate.messages
     }
@@ -116,6 +121,7 @@ class ChatViewController: MessagesViewController {
         messagesCollectionView.allowsMultipleSelection = true
         configureMenus()
         configureTopBannerButton()
+        configurePreviewerButton()
         addObservers()
     }
     
@@ -663,6 +669,13 @@ class ChatViewController: MessagesViewController {
         topBannerButton.backgroundColor = #colorLiteral(red: 0, green: 0.7490196078, blue: 0.631372549, alpha: 1)
         topBannerButton.isHidden = true
         MEGASdkManager.sharedMEGAChatSdk()?.add(self as MEGAChatCallDelegate)
+    }
+    
+    private func configurePreviewerButton() {
+        view.addSubview(previewerView)
+        previewerView.autoPinEdge(toSuperviewMargin: .top, withInset: 8)
+        previewerView.autoAlignAxis(toSuperviewAxis: .vertical)
+        previewerView.autoSetDimensions(to: CGSize(width: 75, height: 34))
     }
     
     private func registerCustomCells() {
