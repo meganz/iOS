@@ -6,4 +6,9 @@ extension UINavigationController {
 
         return super.preferredStatusBarStyle
     }
+
+    func setTitleStyle(_ textStyle: TextStyle) {
+        let textAttributes = textStyle.styleTextAttributes([:])
+        navigationBar.titleTextAttributes = textAttributes
+    }
 }
