@@ -82,6 +82,15 @@ class ChatViewController: MessagesViewController {
     lazy var cancelBarButtonItem = {
         return UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelSelecting))
      }()
+    
+    private lazy var chatBottomInfoScreen: ChatBottomInfoScreen? = {
+        let chatBottomInfoScreen = ChatBottomInfoScreen.instanceFromNib
+        chatBottomInfoScreen.isHidden = true
+        return chatBottomInfoScreen
+    }()
+    
+    private var chatBottomInfoScreenBottomConstraint: NSLayoutConstraint?
+
 
     // MARK: - Overriden methods
 
@@ -123,6 +132,7 @@ class ChatViewController: MessagesViewController {
         configureTopBannerButton()
         configurePreviewerButton()
         addObservers()
+        addChatBottomInfoScreenToView()
     }
     
     override var hidesBottomBarWhenPushed: Bool {
@@ -437,6 +447,20 @@ class ChatViewController: MessagesViewController {
             }
             chatRoomDelegate.loadMoreMessages()
         }
+    }
+    
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        hideJumpToBottom()
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if !decelerate {
+            showOrHideJumpToBottom()
+        }
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        showOrHideJumpToBottom()
     }
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -783,6 +807,79 @@ class ChatViewController: MessagesViewController {
         
         additionalBottomInset = 0
         keyboardVisible = false
+    }
+    
+    private func addChatBottomInfoScreenToView() {
+        guard let chatBottomInfoScreen = chatBottomInfoScreen else {
+            return
+        }
+        
+        chatBottomInfoScreen.tapHandler = { [weak self] in
+            guard let `self` = self else {
+                return
+            }
+            
+            self.messagesCollectionView.scrollToBottom(animated: true)
+            self.hideJumpToBottom()
+        }
+        
+        view.addSubview(chatBottomInfoScreen)
+        chatBottomInfoScreen.translatesAutoresizingMaskIntoConstraints = false
+        
+        chatBottomInfoScreenBottomConstraint = chatBottomInfoScreen.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
+        NSLayoutConstraint.activate([
+            chatBottomInfoScreen.heightAnchor.constraint(equalToConstant: chatBottomInfoScreen.bounds.height),
+            chatBottomInfoScreenBottomConstraint!,
+            chatBottomInfoScreen.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0)
+        ])
+    }
+    
+    private func showOrHideJumpToBottom() {
+        let verticalIncrementToShow = view.frame.size.height * 1.5
+        let bottomContentOffsetValue = messagesCollectionView.contentSize.height - messagesCollectionView.contentOffset.y
+        if bottomContentOffsetValue < verticalIncrementToShow {
+            hideJumpToBottom()
+        } else {
+            showJumpToBottom()
+        }
+    }
+    
+    private func showJumpToBottom() {
+        guard let chatBottomInfoScreen = chatBottomInfoScreen else {
+            return
+        }
+        
+        var contentInset = messagesCollectionView.contentInset.bottom
+        if #available(iOS 11.0, *) {
+            contentInset = messagesCollectionView.adjustedContentInset.bottom
+        }
+        
+        chatBottomInfoScreenBottomConstraint?.constant = -contentInset
+        view.layoutIfNeeded()
+        
+        guard chatBottomInfoScreen.isHidden == true else {
+            return
+        }
+        
+        chatBottomInfoScreen.alpha = 0.0
+        chatBottomInfoScreen.isHidden = false
+        
+        UIView.animate(withDuration: 0.2, delay: 0.3, options: .curveEaseInOut, animations: {
+            chatBottomInfoScreen.alpha = 1.0
+        }, completion: nil)
+    }
+    
+    private func hideJumpToBottom() {
+        guard let chatBottomInfoScreen = chatBottomInfoScreen else {
+            return
+        }
+        
+        UIView.animate(withDuration: 0.2, animations: {
+            chatBottomInfoScreen.alpha = 0.0
+        }) { _ in
+            chatBottomInfoScreen.isHidden = true
+            chatBottomInfoScreen.alpha = 1.0
+        }
     }
 
     // MARK: - Bar Button actions
