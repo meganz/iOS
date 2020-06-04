@@ -207,7 +207,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
     func loadMoreMessages() {
         if !isFullChatHistoryLoaded {
             loadingState = true
-         
+            loadMessages()
         }
     }
     
