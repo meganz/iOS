@@ -27,7 +27,4 @@ extension ChatViewController: DZNEmptyDataSetDelegate {
         return true
     }
     
-    func emptyDataSetShouldDisplay(_ scrollView: UIScrollView) -> Bool {
-        return chatRoomDelegate.loadingState
-    }
 }

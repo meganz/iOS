@@ -93,12 +93,12 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
         } else {
 
             if chatMessage.count == 0 {
+                loadingState = false
+
                 chatMessage = historyMessages
                 historyMessages.removeAll()
                 chatViewController?.messagesCollectionView.reloadData()
                 chatViewController?.messagesCollectionView.scrollToBottom(animated: true)
-                loadingState = false
-
                 return
             }
             
