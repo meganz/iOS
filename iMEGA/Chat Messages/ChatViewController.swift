@@ -552,7 +552,11 @@ class ChatViewController: MessagesViewController {
     // MARK: - Interface methods
 
     @objc func updateUnreadLabel() {
-
+        let unreadChats = MEGASdkManager.sharedMEGAChatSdk()?.unreadChats ?? 0
+        let unreadChatsString = unreadChats > 0 ? "\(unreadChats)" : ""
+        
+        let backBarButton = UIBarButtonItem(title: unreadChatsString, style: .plain, target: nil, action: nil)
+        navigationController?.viewControllers.first?.navigationItem.backBarButtonItem = backBarButton
     }
 
     @objc func showOptions(forPeerWithHandle handle: UInt64, senderView: UIView) {
