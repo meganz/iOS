@@ -89,7 +89,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         
         var readyToPost = true
         if displayName == nil {
-            MEGASdkManager.sharedMEGAChatSdk()?.loadUserAttributes(forChatId: chatId, usersHandles: [message.userHandle] as [NSNumber], authorizationToken: chatRoom.authorizationToken, delegate: MEGAChatGenericRequestDelegate { [weak self] request, error in
+            MEGASdkManager.sharedMEGAChatSdk()?.loadUserAttributes(forChatId: chatId, usersHandles: [message.userHandle] as [NSNumber], delegate: MEGAChatGenericRequestDelegate { [weak self] request, error in
                 if error.type != .MEGAChatErrorTypeOk {
                     return
                 }

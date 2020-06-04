@@ -75,7 +75,7 @@
                                 [self postNotificationWithIdentifier:identifier content:content trigger:trigger];
                             }
                         }];
-                        [MEGASdkManager.sharedMEGAChatSdk loadUserAttributesForChatId:self.chatRoom.chatId usersHandles:@[@(self.message.userHandle)] authorizationToken:self.chatRoom.authorizationToken delegate:delegate];
+                        [MEGASdkManager.sharedMEGAChatSdk loadUserAttributesForChatId:self.chatRoom.chatId usersHandles:@[@(self.message.userHandle)] delegate:delegate];
                     }
                 }
                 

@@ -88,7 +88,7 @@ extension MEGAChatRoom {
         }
         
         if handlesToLoad.count > 0 {
-            MEGASdkManager.sharedMEGAChatSdk()?.loadUserAttributes(forChatId: chatId, usersHandles: handlesToLoad as [NSNumber], authorizationToken: authorizationToken)
+            MEGASdkManager.sharedMEGAChatSdk()?.loadUserAttributes(forChatId: chatId, usersHandles: handlesToLoad as [NSNumber])
         }
         
         return participantsNames
