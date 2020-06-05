@@ -33,6 +33,7 @@
 		2F7309932463B1F000EF36F4 /* ChatViewController+CallStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7309922463B1F000EF36F4 /* ChatViewController+CallStatus.swift */; };
 		2F85306F24885F9100064E83 /* PreviewersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F85306E24885F9100064E83 /* PreviewersView.swift */; };
 		2F85307324885FAB00064E83 /* PreviewersView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F85307224885FAB00064E83 /* PreviewersView.xib */; };
+		2F8606212489F10A004D9100 /* ChatTextMessageViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8606202489F10A004D9100 /* ChatTextMessageViewCell.swift */; };
 		2F8772FC2468FA8C00E8854F /* MessageEditCollectionOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8772FA2468FA8C00E8854F /* MessageEditCollectionOverlayView.swift */; };
 		2F8772FD2468FA8C00E8854F /* MessageEditCollectionOverlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F8772FB2468FA8C00E8854F /* MessageEditCollectionOverlayView.xib */; };
 		2F8F5F1623691A390049603F /* UINavigationViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8F5F1523691A390049603F /* UINavigationViewController+Additions.swift */; };
@@ -1308,6 +1309,7 @@
 		2F7309922463B1F000EF36F4 /* ChatViewController+CallStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatViewController+CallStatus.swift"; sourceTree = "<group>"; };
 		2F85306E24885F9100064E83 /* PreviewersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewersView.swift; sourceTree = "<group>"; };
 		2F85307224885FAB00064E83 /* PreviewersView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PreviewersView.xib; sourceTree = "<group>"; };
+		2F8606202489F10A004D9100 /* ChatTextMessageViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatTextMessageViewCell.swift; sourceTree = "<group>"; };
 		2F8772FA2468FA8C00E8854F /* MessageEditCollectionOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageEditCollectionOverlayView.swift; sourceTree = "<group>"; };
 		2F8772FB2468FA8C00E8854F /* MessageEditCollectionOverlayView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageEditCollectionOverlayView.xib; sourceTree = "<group>"; };
 		2F8F5F1523691A390049603F /* UINavigationViewController+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationViewController+Additions.swift"; sourceTree = "<group>"; };
@@ -5556,6 +5558,7 @@
 			children = (
 				2FA6D9DA243E8CB4007A8E81 /* ChatMediaCollectionViewCell.swift */,
 				2F2801DE2449587400C160D0 /* ChatVoiceClipCollectionViewCell.swift */,
+				2F8606202489F10A004D9100 /* ChatTextMessageViewCell.swift */,
 				2F18DEE82458EDC500E7EE27 /* MessageCollectionViewCell+menus.swift */,
 				2F029233244FD6D90071A6E2 /* ChatManagmentTypeCollectionViewCell.swift */,
 				2F147783244D1C950069B264 /* ChatLocationCollectionViewCell.swift */,
@@ -7015,6 +7018,7 @@
 				5B39DAA21EF916D900BC2319 /* ChatAttachedContactsViewController.m in Sources */,
 				5BB50E091F20E840000CA24D /* MEGACreateFolderRequestDelegate.m in Sources */,
 				2F528CAD24739053006DE5C2 /* LoadingMessageReusableView.swift in Sources */,
+				2F8606212489F10A004D9100 /* ChatTextMessageViewCell.swift in Sources */,
 				A81AD7391F3099F800CA4059 /* MEGAProcessAsset.m in Sources */,
 				417279531DB663FA001AC818 /* JSQMessagesCollectionViewCellOutgoing.m in Sources */,
 				2FBC74C8245BE74900BE513F /* ChatViewController+EmptyDataSet.swift in Sources */,
