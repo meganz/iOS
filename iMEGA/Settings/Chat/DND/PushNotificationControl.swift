@@ -58,10 +58,10 @@ class PushNotificationControl: NSObject {
 extension PushNotificationControl {
     func string(from timeLeft: Int64) -> String? {
         if timeLeft == 0 {
-            return AMLocalizedString("Muted forever", "Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch")
+            return AMLocalizedString("Notifications will be silenced until Do Not Disturb is turned off", "Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch")
         } else {
-            let remainingTime = Int(ceil(Double(timeLeft) - NSDate().timeIntervalSince1970))
-            return remainingTime.timeLeftString()
+            let remainingTime = ceil(TimeInterval(timeLeft) - NSDate().timeIntervalSince1970)
+            return remainingTime.dndFormattedString
         }
     }
     
