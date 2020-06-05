@@ -916,7 +916,7 @@
 /* title of the introduction for the achievements screen */
 "inviteFriendsAndGetForEachReferral"="Получите %1$s места на диске и %2$s трафика за каждого, кто примет приглашение";
 /* Text shown to explain how and where you can invite friends */
-"inviteYourFriendsExplanation"="Выберите контакты из телефонного списка контактов или введите адреса электронной почты.";
+"Select from phone contacts or enter multiple email addresses"="Select from phone contacts or enter multiple email addresses";
 /*  */
 "insertYourFriendsEmails"="Введите e-mail друга:";
 /*  */
@@ -1015,10 +1015,8 @@
 "cloudDriveIsAlmostFull"="[S]Ваш облачный диск почти заполнен.[/S] [A]Улучшите аккаунт сейчас[/A] до PRO и получите [S]до %@ ТБ (%@ ГБ)[/S] места в облаке.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
 "cloudDriveIsFull"="[S]Ваш облачный диск заполнен.[/S] [A]Улучшите его сейчас[/A] до PRO и получите [S]до %@ ТБ (%@ ГБ)[/S] свободного места в облаке.";
-/* Storage related with the MEGA PRO account level you can subscribe */
+/* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
 "Storage"="свободного места";
-/* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
-"transferQuota"="Квота на передачу";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
 "limited"="Ограничено";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
@@ -1173,8 +1171,8 @@
 "contactCredentials"="Учетные Данные Контакта";
 /* "Verify user" dialog description */
 "thisIsBestDoneInRealLife"="Лучше всего это сделать в реальной жизни, встречаясь лицом к лицу. Если у вас есть другой проверенный канал, например, проверенный OTR или PGP, вы также можете его использовать.";
-/* Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity */
-"yourCredentials"="Ваши Учетные Данные";
+/* Title of the label in the my account section. It shows the credentials of the current user so it can be used to be verified by other contacts */
+"My credentials"="Мои учётные данные";
 /* Button to reset the password */
 "reset"="Сбросить";
 /* Button title */
@@ -2064,26 +2062,10 @@
 "Mute chat Notifications for"="Отключить уведомления чата на";
 /* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
 "Muted forever"="Выключен постоянно";
-/* Chat Notifications DND: Remaining time left to deactivate DND - 1 minute left */
-"1 minute left"="Осталась 1 минута";
-/* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 minute left */
-"%d minutes left"="Осталось %d мин.";
-/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour left */
-"1 hour left"="Остался 1 час";
-/* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 hour left */
-"%d hours left"="Осталось %d час.";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="Уведомления чата";
 /* Chat settings: This text appears with the Do Not Disturb switch */
 "Do Not Disturb"="Не беспокоить";
-/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, 1 minute left */
-"1 hour, 1 minute left"="Остался 1 час 1 минута";
-/* Chat Notifications DND: Remaining time left to deactivate DND - X hours, X minutes left */
-"%d hours, %d minutes left"="Осталось %d ч., %d мин.";
-/* Chat Notifications DND: Remaining time left to deactivate DND - X hours, 1 minute left */
-"%d hours, 1 minute left"="Осталось %d ч., 1 минута";
-/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, X minutes left */
-"1 hour, %d minutes left"="Остался 1 час, %d мин.";
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
 "Reconnecting..."="Переподключение…";
 /* Title shown when the user reconnect in a call. */
