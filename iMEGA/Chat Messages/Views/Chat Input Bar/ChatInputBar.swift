@@ -7,8 +7,6 @@ protocol ChatInputBarDelegate: MessageInputBarDelegate {
     func tappedSendAudio(atPath path: String)
     func canRecordAudio() -> Bool
     func showTapAndHoldMessage()
-    func didDisplayVoiceRecordingView()
-    func didHideVoiceRecordingView()
 }
 
 class ChatInputBar: UIView {
@@ -66,6 +64,9 @@ class ChatInputBar: UIView {
                     messageInputBarTopConstraint.isActive = false
                 }
                 
+                self.messageInputBar.messageTextView.isScrollEnabled = false
+                self.messageInputBar.expandCollapseButton.isHidden = true
+
                 voiceClipInputBar = VoiceClipInputBar.instanceFromNib
                 voiceClipInputBar.delegate = self
                 addSubview(voiceClipInputBar)
@@ -83,7 +84,6 @@ class ChatInputBar: UIView {
                     self.messageInputBar.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
                     self.layoutIfNeeded()
                     self.invalidateIntrinsicContentSize()
-                    self.delegate?.didDisplayVoiceRecordingView()
                 }
             } else {
                 guard let messageInputBarTopConstraint = constraints
@@ -108,9 +108,11 @@ class ChatInputBar: UIView {
                     self.voiceClipInputBar.removeFromSuperview()
                     self.voiceClipInputBar = nil
                     
+                    self.messageInputBar.messageTextView.isScrollEnabled = true
+                    self.messageInputBar.expandCollapseButton.isHidden = false
+                    
                     self.layoutIfNeeded()
                     self.invalidateIntrinsicContentSize()
-                    self.delegate?.didHideVoiceRecordingView()
                 }
             }
         }
