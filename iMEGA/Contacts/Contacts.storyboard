@@ -11,13 +11,13 @@
         <!--Contacts-->
         <scene sceneID="OPQ-8S-Sk3">
             <objects>
-                <viewController storyboardIdentifier="ContactsViewControllerID" hidesBottomBarWhenPushed="YES" id="4jb-uN-Eto" customClass="ContactsViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ContactsViewControllerID" extendedLayoutIncludesOpaqueBars="YES" hidesBottomBarWhenPushed="YES" id="4jb-uN-Eto" customClass="ContactsViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="fkF-VR-LpX">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="692"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" allowsSelectionDuringEditing="YES" allowsMultipleSelectionDuringEditing="YES" rowHeight="60" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="nKV-wF-xCm">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="692"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="692"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="contactCell" rowHeight="60" id="pNm-oN-god" customClass="ContactTableViewCell">
@@ -45,13 +45,13 @@
                                                             <rect key="frame" x="0.0" y="0.0" width="52.666666666666664" height="18"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wFx-RQ-rS3">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="38.666666666666664" height="18"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="38.333333333333336" height="18"/>
                                                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EdR-aC-dWr">
-                                                                    <rect key="frame" x="42.666666666666671" y="5.9999999999999982" width="6" height="6"/>
+                                                                    <rect key="frame" x="42.333333333333329" y="5.9999999999999982" width="6" height="6"/>
                                                                     <accessibility key="accessibilityConfiguration">
                                                                         <accessibilityTraits key="traits" notEnabled="YES"/>
                                                                     </accessibility>
@@ -68,7 +68,7 @@
                                                             </subviews>
                                                             <constraints>
                                                                 <constraint firstItem="wFx-RQ-rS3" firstAttribute="centerY" secondItem="r7x-NA-1JP" secondAttribute="centerY" id="JB4-g9-d2i"/>
-                                                                <constraint firstAttribute="trailing" secondItem="EdR-aC-dWr" secondAttribute="trailing" constant="4" id="Kj0-X6-dtM"/>
+                                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="EdR-aC-dWr" secondAttribute="trailing" constant="4" id="Kj0-X6-dtM"/>
                                                                 <constraint firstAttribute="height" constant="18" id="blE-cZ-RBt"/>
                                                                 <constraint firstItem="EdR-aC-dWr" firstAttribute="centerY" secondItem="wFx-RQ-rS3" secondAttribute="centerY" id="ggh-Wm-WV6"/>
                                                                 <constraint firstItem="wFx-RQ-rS3" firstAttribute="leading" secondItem="r7x-NA-1JP" secondAttribute="leading" id="mcm-ha-DgN"/>
@@ -277,13 +277,13 @@
                                 </connections>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nEj-Ji-K4x">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="0.0"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="0.0"/>
                                 <constraints>
                                     <constraint firstAttribute="height" id="zPE-QJ-FoW"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pPF-c3-Klm">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="0.0"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="0.0"/>
                                 <constraints>
                                     <constraint firstAttribute="height" id="HZ6-gj-bzt"/>
                                 </constraints>
@@ -303,7 +303,6 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="iIe-3e-qN1"/>
                     </view>
-                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" title="Contacts" id="vJy-vO-UwT">
                         <barButtonItem key="backBarButtonItem" title=" " id="St3-x7-f8D"/>
                         <barButtonItem key="rightBarButtonItem" image="addContact" id="JdI-ia-m0c" userLabel="Add Bar Button Item">
@@ -317,6 +316,7 @@
                         <outlet property="addParticipantBarButtonItem" destination="26Z-bH-E7m" id="DqC-vj-IW6"/>
                         <outlet property="backBarButtonItem" destination="GTy-dq-ErY" id="8Fm-6h-apb"/>
                         <outlet property="cancelBarButtonItem" destination="Zqr-qV-bMs" id="jRX-zv-vU1"/>
+                        <outlet property="chatNamingGroupTableViewHeader" destination="bkJ-IK-b68" id="2XD-uQ-QIF"/>
                         <outlet property="checkboxButton" destination="bMY-LC-cQ1" id="jVy-0s-kYz"/>
                         <outlet property="createGroupBarButtonItem" destination="xiQ-pP-FgM" id="BrK-3Y-gaG"/>
                         <outlet property="deleteBarButtonItem" destination="wgy-rg-Fjg" id="idp-L0-R7m"/>
@@ -347,7 +347,6 @@
                         <outlet property="shareFolderWithBarButtonItem" destination="43b-TZ-Eh5" id="0tk-cU-sUm"/>
                         <outlet property="tableView" destination="nKV-wF-xCm" id="70Y-aH-yDi"/>
                         <outlet property="tableViewFooter" destination="ZFf-iU-Kxb" id="jSE-cK-Pw1"/>
-                        <outlet property="tableViewHeader" destination="bkJ-IK-b68" id="2XD-uQ-QIF"/>
                         <outlet property="toolbar" destination="jvh-Sx-iEq" id="8PY-cj-jej"/>
                     </connections>
                 </viewController>
@@ -2022,7 +2021,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mUd-5W-ttl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2578" y="-2012"/>
+            <point key="canvasLocation" x="2512" y="-2305"/>
         </scene>
     </scenes>
     <resources>
