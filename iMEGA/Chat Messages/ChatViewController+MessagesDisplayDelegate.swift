@@ -69,17 +69,18 @@ extension ChatViewController: MessagesDisplayDelegate {
         // ensure any subviews are removed if not needed
         accessoryView.subviews.forEach { $0.removeFromSuperview() }
         accessoryView.backgroundColor = .clear
-        
-        guard shouldShowAccessoryView(for: message) else {
+        guard shouldShowAccessoryView(for: message), !isEditing else {
+            accessoryView.isHidden = true
             return
         }
+        accessoryView.isHidden = false
 
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "forwardChat"), for: .normal)
         accessoryView.addSubview(button)
         button.frame = accessoryView.bounds
         button.isUserInteractionEnabled = false // respond to accessoryView tap through `MessageCellDelegate`
-        accessoryView.layer.cornerRadius = accessoryView.frame.height / 2
+        accessoryView.clipsToBounds = true
     }
     
     func configureAvatarView(_ avatarView: AvatarView,
@@ -131,7 +132,9 @@ extension ChatViewController: MessagesDisplayDelegate {
     // MARK: - Private methods
     
     private func shouldShowAccessoryView(for message: MessageType) -> Bool {
-        guard let chatMessage = message as? ChatMessage else { return false }
+        guard let chatMessage = message as? ChatMessage,
+            !isEditing
+            else { return false }
         
         return chatMessage.message.shouldShowForwardAccessory()
     }
