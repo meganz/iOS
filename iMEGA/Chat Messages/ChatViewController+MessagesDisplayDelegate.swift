@@ -69,9 +69,11 @@ extension ChatViewController: MessagesDisplayDelegate {
         // ensure any subviews are removed if not needed
         accessoryView.subviews.forEach { $0.removeFromSuperview() }
         accessoryView.backgroundColor = .clear
-        guard shouldShowAccessoryView(for: message) else {
+        guard shouldShowAccessoryView(for: message), !isEditing else {
+            accessoryView.isHidden = true
             return
         }
+        accessoryView.isHidden = false
 
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "forwardChat"), for: .normal)

@@ -18,7 +18,6 @@ extension ChatViewController: ChatViewMessagesLayoutDelegate {
     }
     
 
-
     func cellTopLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
         return isDateLabelVisible(for: indexPath) ? 30.0 : 0.0
     }
