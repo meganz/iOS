@@ -1179,7 +1179,7 @@
         self.searchController.active = NO;
     }
     
-    if (self.contactsMode == ContactsModeChatCreateGroup) {
+    if (self.contactsMode == ContactsModeChatCreateGroup && self.navigationController.viewControllers.count != 1) {
         [self.navigationController popViewControllerAnimated:YES];
     } else {
         [self dismissViewControllerAnimated:YES completion:nil];
@@ -1595,7 +1595,8 @@
                     ContactRequestsViewController *contactsRequestsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsRequestsViewControllerID"];
                     [self.navigationController pushViewController:contactsRequestsVC animated:YES];
                 } else {
-                    //TODO: New 'Groups'
+                    ContactsGroupsViewController *contactsGroupsVC = [[UIStoryboard storyboardWithName:@"ContactsGroups" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsGroupsViewControllerID"];
+                    [self.navigationController pushViewController:contactsGroupsVC animated:YES];
                 }
             } else { //Section 1, 'Recently Added' and all the contacts
                 MEGAUser *user = [self userAtIndexPath:indexPath];
