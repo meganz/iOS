@@ -2070,26 +2070,10 @@
 "Mute chat Notifications for"="ปิดเสียงแจ้งเตือนแชทเป็นเวลา";
 /* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
 "Muted forever"="ปิดเสียงตลอดไป";
-/* Chat Notifications DND: Remaining time left to deactivate DND - 1 minute left */
-"1 minute left"="เหลืออีก 1 นาที";
-/* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 minute left */
-"%d minutes left"="เหลืออีก %d นาที";
-/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour left */
-"1 hour left"="เหลืออีก 1 ชั่วโมง";
-/* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 hour left */
-"%d hours left"="เหลืออีก %d ชั่วโมง";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="การแจ้งเตือนแชท";
 /* Chat settings: This text appears with the Do Not Disturb switch */
 "Do Not Disturb"="ห้ามรบกวน";
-/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, 1 minute left */
-"1 hour, 1 minute left"="เหลืออีก 1 ชั่วโมง 1 นาที";
-/* Chat Notifications DND: Remaining time left to deactivate DND - X hours, X minutes left */
-"%d hours, %d minutes left"="เหลืออีก %d ชั่วโมง %d นาที";
-/* Chat Notifications DND: Remaining time left to deactivate DND - X hours, 1 minute left */
-"%d hours, 1 minute left"="เหลืออีก %d ชั่วโมง 1 นาที";
-/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, X minutes left */
-"1 hour, %d minutes left"="เหลืออีก 1 ชั่วโมง %d นาที";
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
 "Reconnecting..."="กำลังเชื่อมต่อใหม่...";
 /* Title shown when the user reconnect in a call. */
