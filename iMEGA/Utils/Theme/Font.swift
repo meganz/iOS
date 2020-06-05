@@ -18,7 +18,12 @@ struct Font: Codable {
 }
 
 extension Font {
-    static let navigationBarTitleFont = Font(size: 17, weight: .semibold)
+
+    /// Size 17, Semibold
+    static let header = Font(size: 17, weight: .semibold)
+
+    /// Size 12.5, Regular
+    static let caption = Font(size: 12.5, weight: .regular)
 }
 
 func uiFont(from font: Font) -> UIFont? {

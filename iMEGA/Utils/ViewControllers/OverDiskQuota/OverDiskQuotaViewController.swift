@@ -6,10 +6,19 @@ class OverDiskQuotaViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        title = ""
+        setupNavigationController(self.navigationController)
+        setupScrollView(contentScrollView)
+    }
+
+    // MARK: - UI Customize
+
+    private func setupNavigationController(_ navigationController: UINavigationController?) {
+        title = "Stoage Full"
         navigationController?.navigationBar.setTranslucent()
-        navigationController?.setTitleStyle(TextStyle(font: .navigationBarTitleFont, color: .white))
+        navigationController?.setTitleStyle(TextStyle(font: .header, color: Color.Text.lightPrimary))
+    }
+
+    private func setupScrollView(_ scrollView: UIScrollView) {
         disableAdjustingContentInsets(ofScrollView: contentScrollView)
     }
 }
