@@ -1,6 +1,6 @@
 import MessageKit
 
-internal struct ConcreteMessageType: MessageType {
+struct ConcreteMessageType: MessageType {
     let sender: SenderType
     let messageId: String
     let sentDate: Date

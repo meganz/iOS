@@ -496,8 +496,11 @@ class ChatViewController: MessagesViewController {
         }
 
         let chatMessage = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView) as! ChatMessage
-
-        if chatMessage.transfer?.transferChatMessageType() == .voiceClip  {
+        if chatMessage.message.content != nil && chatMessage.message.content.count > 0 {
+            let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatTextMessageViewCell.reuseIdentifier, for: indexPath) as! ChatTextMessageViewCell
+            cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
+            return cell
+        } else if chatMessage.transfer?.transferChatMessageType() == .voiceClip  {
              let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatVoiceClipCollectionViewCell.reuseIdentifier, for: indexPath) as! ChatVoiceClipCollectionViewCell
                        cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
                        return cell
@@ -718,6 +721,8 @@ class ChatViewController: MessagesViewController {
                                                forCellWithReuseIdentifier: ChatRichPreviewMediaCollectionViewCell.reuseIdentifier)
         messagesCollectionView.register(ChatVoiceClipCollectionViewCell.self,
                                                  forCellWithReuseIdentifier: ChatVoiceClipCollectionViewCell.reuseIdentifier)
+        messagesCollectionView.register(ChatTextMessageViewCell.self,
+                                                     forCellWithReuseIdentifier: ChatTextMessageViewCell.reuseIdentifier)
         messagesCollectionView.register(ChatLocationCollectionViewCell.self,
                                         forCellWithReuseIdentifier: ChatLocationCollectionViewCell.reuseIdentifier)
         messagesCollectionView.register(ChatManagmentTypeCollectionViewCell.self,

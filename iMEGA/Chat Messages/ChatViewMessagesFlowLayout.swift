@@ -17,7 +17,7 @@ class ChatViewMessagesFlowLayout: MessagesCollectionViewFlowLayout {
     lazy var chatVoiceClipCollectionViewSizeCalculator = ChatVoiceClipCollectionViewSizeCalculator(layout: self)
     lazy var chatlocationCollectionViewSizeCalculator = ChatlocationCollectionViewSizeCalculator(layout: self)
     lazy var chatManagmentTypeCollectionViewSizeCalculator = ChatManagmentTypeCollectionViewSizeCalculator(layout: self)
-    
+    lazy var chatAttributedTextMessageSizeCalculator  = ChatTextMessageSizeCalculator(layout: self)
   
     var editing = false {
         didSet {
@@ -27,7 +27,6 @@ class ChatViewMessagesFlowLayout: MessagesCollectionViewFlowLayout {
     
     override init() {
         super.init()
-        attributedTextMessageSizeCalculator  = ChatTextMessageSizeCalculator(layout: self)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -126,9 +125,11 @@ class ChatViewMessagesFlowLayout: MessagesCollectionViewFlowLayout {
             case .normal:
                 if chatMessage.message.containsMEGALink() {
                     return chatRichPreviewMediaCollectionViewSizeCalculator
+                } else {
+                    return chatAttributedTextMessageSizeCalculator
                 }
-                case .voiceClip:
-                    return chatVoiceClipCollectionViewSizeCalculator
+            case .voiceClip:
+                return chatVoiceClipCollectionViewSizeCalculator
             case .containsMeta:
                 if chatMessage.message.containsMeta.type == .geolocation {
                     return chatlocationCollectionViewSizeCalculator
@@ -155,6 +156,7 @@ class ChatViewMessagesFlowLayout: MessagesCollectionViewFlowLayout {
     override func messageSizeCalculators() -> [MessageSizeCalculator] {
         var calculators = super.messageSizeCalculators()
         calculators.append(contentsOf: [
+            chatAttributedTextMessageSizeCalculator,
             chatViewAttachmentCellCalculator,
             chatViewCallCollectionCellCalculator,
             chatMediaCollectionViewSizeCalculator,

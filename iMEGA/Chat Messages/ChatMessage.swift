@@ -62,11 +62,8 @@ extension ChatMessage: MessageType {
         } else if case .containsMeta = message.type {
             return .custom(message)
         } else if case .normal = message.type {
-            if message.containsMEGALink() {
-                return .custom(message)
-            } else if message.content != nil && message.content.count > 0 {
-                return .attributedText(message.attributedText)
-            }
+            return .custom(message)
+            
         } else if case .voiceClip = message.type {
             return .custom(message)
         } else if message.isManagementMessage {
