@@ -81,6 +81,7 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
         if indexPath.section == 0 {
             if let filenameCell = tableView.dequeueReusableCell(withIdentifier: DocScannerFileNameTableCell.reuseIdentifier, for: indexPath) as? DocScannerFileNameTableCell {
                 let fileType = UserDefaults.standard.string(forKey: keys.docScanExportFileTypeKey)
+                filenameCell.delegate = self
                 filenameCell.configure(filename: fileName, fileType: fileType)
                 cell = filenameCell
             }
@@ -167,6 +168,7 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
                 let storyboard = UIStoryboard(name: "Cloud", bundle: Bundle(for: BrowserViewController.self))
                 if let browserVC = storyboard.instantiateViewController(withIdentifier: "BrowserViewControllerID") as? BrowserViewController {
                     browserVC.browserAction = .shareExtension
+                    browserVC.parentNode = parentNode
                     browserVC.browserViewControllerDelegate = self
                     navigationController?.setToolbarHidden(false, animated: true)
                     navigationController?.pushViewController(browserVC, animated: true)
@@ -187,6 +189,10 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
 
 extension DocScannerSaveSettingTableViewController: DocScannerFileInfoTableCellDelegate {
     func filenameChanged(_ newFilename: String) {
+        guard !newFilename.isEmpty else {
+            fileName = "Scan \(NSDate().mnz_formattedDefaultNameForMedia())"
+            return
+        }
         fileName = newFilename
     }
 }
@@ -278,6 +284,7 @@ extension DocScannerSaveSettingTableViewController: SendToViewControllerDelegate
                                     })
                                 }
                             }
+                            SVProgressHUD.showSuccess(withStatus: AMLocalizedString("Shared successfully", "Success message shown when the user has successfully shared something"))
                         }
                         MEGASdkManager.sharedMEGASdk()?.startUploadForChat(withLocalPath: tempPath, parent: node, appData: appData, isSourceTemporary: true, delegate: startUploadTransferDelegate!)
 
@@ -285,7 +292,7 @@ extension DocScannerSaveSettingTableViewController: SendToViewControllerDelegate
                         MEGALogDebug("Could not write to file \(tempPath) with error \(error.localizedDescription)")
                     }
                 } else if fileType == .jpg {
-                    
+                    var completionCounter = 0
                     self.docs?.enumerated().forEach {
                         if let quality = DocScanQuality(rawValue: UserDefaults.standard.float(forKey: keys.docScanQualityKey)),
                             let data = $0.element.jpegData(compressionQuality: CGFloat(quality.rawValue)) {
@@ -308,6 +315,10 @@ extension DocScannerSaveSettingTableViewController: SendToViewControllerDelegate
                                             })
                                         }
                                     }
+                                    if completionCounter == self.docs!.count - 1 {
+                                        SVProgressHUD.showSuccess(withStatus: AMLocalizedString("Shared successfully", "Success message shown when the user has successfully shared something"))
+                                    }
+                                    completionCounter = completionCounter + 1
                                 }
                                 MEGASdkManager.sharedMEGASdk()?.startUploadForChat(withLocalPath: tempPath, parent: node, appData: appData, isSourceTemporary: true, delegate: startUploadTransferDelegate!)
                             } catch {

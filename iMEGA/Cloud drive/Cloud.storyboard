@@ -667,6 +667,7 @@
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                             <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                             <connections>
+                                                <action selector="textFiledEditingChanged:" destination="mt6-W5-Jsv" eventType="editingChanged" id="GRx-Cz-LIw"/>
                                                 <outlet property="delegate" destination="mt6-W5-Jsv" id="EHk-20-3D9"/>
                                             </connections>
                                         </textField>
