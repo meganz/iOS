@@ -104,7 +104,17 @@ class ChatViewController: MessagesViewController {
         if finishing {
             selectedMessages.removeAll()
             navigationController?.setToolbarHidden(true, animated: true)
+            if let layout = messagesCollectionView.collectionViewLayout as? MessagesCollectionViewFlowLayout {
+                layout.setMessageIncomingAvatarSize(CGSize(width: 30, height: 30))
+                layout.setMessageIncomingAccessoryViewSize(CGSize(width: 32, height: 32))
+                layout.setMessageOutgoingAccessoryViewSize(CGSize(width: 32, height: 32))
+            }
         } else {
+            if let layout = messagesCollectionView.collectionViewLayout as? MessagesCollectionViewFlowLayout {
+                layout.setMessageIncomingAvatarSize(.zero)
+                layout.setMessageIncomingAccessoryViewSize(.zero)
+                layout.setMessageOutgoingAccessoryViewSize(.zero)
+            }
             chatInputBar?.dismissKeyboard()
             navigationController?.setToolbarHidden(false, animated: true)
         }
