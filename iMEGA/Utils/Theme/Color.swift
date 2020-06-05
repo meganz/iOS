@@ -31,11 +31,20 @@ extension Color {
 
     // MARK: - Background
 
-    /// RGB(0, 0, 0, 1), White
+    /// RGB(255, 255, 255, 1), White
     static var backgroundDefaultLight: Color { Color.Background.defaultLight }
 
     /// RGB(255, 204, 0, 0.15), Very light yellow
     static var backgroundWarningYellow: Color { Color.Background.warning }
+
+    /// RGB(0, 168, 0, 134, 1), Green
+    static var backgroundEnabledPrimary: Color { Color.Background.enabledPrimary }
+
+    /// RGB(0, 168, 0, 134, 0.8), Green with 0.8 alpha
+    static var backgroundHighlightedPrimary: Color { Color.Background.highlightedPrimary }
+
+    /// RGB(153, 153, 153, 1), Gray
+    static var backgroundDisabledPrimary: Color { Color.Background.disabledPrimary }
 
     // MARK: - Border
 
@@ -56,11 +65,22 @@ extension Color {
 
     enum Background {
 
-        /// RGB(0, 0, 0, 1), White
-        static let defaultLight = Color(red: 0, green: 0, blue: 0)
+        /// RGB(255, 255, 255, 1), White
+        static let defaultLight = Color(red: 255, green: 255, blue: 255)
 
         /// RGB(255, 204, 0, 0.15), Very light yellow
         static let warning = Color(red: 255, green: 204, blue: 0, alpha: 38)
+
+        // MARK: - Button
+
+        /// RGB(0, 168, 0, 134, 1), Green
+        static let enabledPrimary = Color(red: 0, green: 168, blue: 134, alpha: 255)
+
+        /// RGB(0, 168, 0, 134, 0.8), Green with 0.8 alpha
+        static let highlightedPrimary = Color(red: 0, green: 168, blue: 134, alpha: 204)
+
+        /// RGB(153, 153, 153, 1), Gray
+        static let disabledPrimary = Color(red: 153, green: 153, blue: 153, alpha: 255)
     }
 
     enum Border {

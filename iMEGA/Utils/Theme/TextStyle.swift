@@ -15,6 +15,13 @@ extension TextStyle {
         apply(style: self)(label)
     }
 
+    // MARK: - UIButton Applier
+
+    @discardableResult
+    func applied(on button: UIButton) -> UIButton {
+        apply(style: self)(button)
+    }
+
     // MARK: - AttributedString Applier
 
     @discardableResult
@@ -24,7 +31,7 @@ extension TextStyle {
     typealias TextAttributes = [NSAttributedString.Key: Any]
 }
 
-func apply(style: TextStyle) -> (UILabel) -> UILabel {
+fileprivate func apply(style: TextStyle) -> (UILabel) -> UILabel {
     return { label in
         label.textColor = uiColor(from: style.color)
         label.font = uiFont(from: style.font)
@@ -33,7 +40,15 @@ func apply(style: TextStyle) -> (UILabel) -> UILabel {
     }
 }
 
-func apply(style: TextStyle) -> ([NSAttributedString.Key: Any]) -> [NSAttributedString.Key: Any] {
+fileprivate func apply(style: TextStyle) -> (UIButton) -> UIButton {
+    return { button in
+        button.setTitleColor(style.color.uiColor, for: .normal)
+        button.titleLabel?.font = uiFont(from: style.font)
+        return button
+    }
+}
+
+fileprivate func apply(style: TextStyle) -> ([NSAttributedString.Key: Any]) -> [NSAttributedString.Key: Any] {
     return { attributes in
         var copyAttributes = attributes
         copyAttributes[.font] = uiFont(from: style.font)

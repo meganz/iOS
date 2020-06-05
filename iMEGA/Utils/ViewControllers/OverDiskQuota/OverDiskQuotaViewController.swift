@@ -50,7 +50,16 @@ class OverDiskQuotaViewController: UIViewController {
     }
 
     private func setupUpgradeButton(_ button: UIButton) {
+        let textStyle = TextStyle(font: .headline, color: .textLightPrimary)
+        textStyle.applied(on: button)
 
+        let decorationStyle = DecorationStyle(background: .init(normal: .backgroundEnabledPrimary,
+                                                                highlighted: .backgroundHighlightedPrimary,
+                                                                disabled: .backgroundDisabledPrimary),
+                                              corner: .init(radius: 8))
+        decorationStyle.applied(on: button)
+
+        button.setTitle("XXX", for: .normal)
     }
 
     private func setupDismissButton(_ button: UIButton) {
