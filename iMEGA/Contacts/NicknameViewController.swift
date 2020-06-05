@@ -114,7 +114,7 @@ class NicknameViewController: UIViewController {
 
                 self.updateHandler(withNickname: nickname)
             } else {
-                SVProgressHUD.showError(withStatus: request.requestString + " " + error.name)
+                SVProgressHUD.showError(withStatus: request.requestString + " " + AMLocalizedString(error.name, nil))
             }
 
             self.dismissViewController()

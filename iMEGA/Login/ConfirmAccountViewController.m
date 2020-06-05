@@ -257,7 +257,7 @@
                 break;
                 
             default:
-                [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ (%ld)", error.name, (long)error.type]];
+                [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ (%ld)", AMLocalizedString(error.name, nil), (long)error.type]];
                 break;
         }
         
