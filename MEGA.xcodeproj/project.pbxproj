@@ -284,6 +284,7 @@
 		5BFA34701FAC5857005BFC4E /* MEGAMoveRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFA346D1FAB6282005BFC4E /* MEGAMoveRequestDelegate.m */; };
 		5BFA34711FAC5BFB005BFC4E /* MEGARemoveRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFA34691FAB4168005BFC4E /* MEGARemoveRequestDelegate.m */; };
 		5D03C99B248893E600BE5EEB /* UINavigationBar+Customisation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D03C99A248893E600BE5EEB /* UINavigationBar+Customisation.swift */; };
+		5D28D63A248A00210091BD53 /* StatedDecorationStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D28D639248A00210091BD53 /* StatedDecorationStyle.swift */; };
 		5D6465FF2488AE6C006030A5 /* UIViewController+ScrollViewConentInsets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6465FE2488AE6C006030A5 /* UIViewController+ScrollViewConentInsets.swift */; };
 		5D646602248909F8006030A5 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D646601248909F7006030A5 /* Font.swift */; };
 		5D64660424890A34006030A5 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D64660324890A34006030A5 /* Color.swift */; };
@@ -1664,6 +1665,7 @@
 		5BFA346C1FAB6282005BFC4E /* MEGAMoveRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGAMoveRequestDelegate.h; path = API/Requests/MEGAMoveRequestDelegate.h; sourceTree = "<group>"; };
 		5BFA346D1FAB6282005BFC4E /* MEGAMoveRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGAMoveRequestDelegate.m; path = API/Requests/MEGAMoveRequestDelegate.m; sourceTree = "<group>"; };
 		5D03C99A248893E600BE5EEB /* UINavigationBar+Customisation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationBar+Customisation.swift"; sourceTree = "<group>"; };
+		5D28D639248A00210091BD53 /* StatedDecorationStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatedDecorationStyle.swift; sourceTree = "<group>"; };
 		5D6465FE2488AE6C006030A5 /* UIViewController+ScrollViewConentInsets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+ScrollViewConentInsets.swift"; sourceTree = "<group>"; };
 		5D646601248909F7006030A5 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
 		5D64660324890A34006030A5 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
@@ -4095,6 +4097,7 @@
 				5D64660324890A34006030A5 /* Color.swift */,
 				5D646601248909F7006030A5 /* Font.swift */,
 				5D64660924890CC7006030A5 /* TextStyle.swift */,
+				5D28D639248A00210091BD53 /* StatedDecorationStyle.swift */,
 				5DB1F47B2489E5CC001C1D5D /* ParagraphStyle.swift */,
 				5D64660724890BEA006030A5 /* HexColor.swift */,
 				5D64660524890BBE006030A5 /* ColorProviding.swift */,
@@ -5936,6 +5939,7 @@
 				A86B9F432316D6AB00F35E7A /* FLEXNetworkObserver.m in Sources */,
 				417279371DB663FA001AC818 /* UIImage+JSQMessages.m in Sources */,
 				4172794D1DB663FA001AC818 /* JSQVideoMediaItem.m in Sources */,
+				5D28D63A248A00210091BD53 /* StatedDecorationStyle.swift in Sources */,
 				77C544FF2028542D00A9ACD6 /* MEGAPhotoBrowserAnimator.m in Sources */,
 				A86B9F3A2316D6AB00F35E7A /* FLEXTableView.m in Sources */,
 				A86B9F552316D6AB00F35E7A /* FLEXArgumentInputTextView.m in Sources */,
