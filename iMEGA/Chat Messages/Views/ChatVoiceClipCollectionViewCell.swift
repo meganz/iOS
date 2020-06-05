@@ -30,7 +30,7 @@ class ChatVoiceClipCollectionViewCell: AudioMessageCell {
     override func setupConstraints() {
         playButton.autoPinEdge(toSuperviewEdge: .leading, withInset: 10)
         playButton.autoAlignAxis(toSuperviewAxis: .horizontal)
-        playButton.autoSetDimensions(to: CGSize(width: 20, height: 20))
+        playButton.autoSetDimensions(to: CGSize(width: 15, height: 15))
         
         durationLabel.autoPinEdge(.leading, to: .trailing, of: playButton, withOffset: 10)
         durationLabel.autoPinEdge(.trailing, to: .leading, of: waveView, withOffset: 10)
