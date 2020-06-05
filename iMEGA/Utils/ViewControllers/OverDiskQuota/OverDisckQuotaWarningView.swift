@@ -26,6 +26,7 @@ final class OverDisckQuotaWarningView: UIView, NibOwnerLoadable {
         loadNibContent()
         setupContainerView(containerView)
         setupDetailLabel(detailLabel)
+        setupTitleLabel(titleLabel)
     }
 
     private func setupContainerView(_ containerView: UIView) {
@@ -37,12 +38,12 @@ final class OverDisckQuotaWarningView: UIView, NibOwnerLoadable {
     }
 
     private func setupDetailLabel(_ detailLabel: UILabel) {
-        let detailTextStyle = TextStyle(font: Font.caption, color: Color.Text.darkPrimary)
+        let detailTextStyle = TextStyle(font: .caption2, color: .textDarkPrimary)
         detailTextStyle.applied(on: detailLabel)
     }
 
     private func setupTitleLabel(_ titleLabel: UILabel) {
-        let titleTextStyle = TextStyle(font: Font.caption, color: Color.Text.darkPrimary)
+        let titleTextStyle = TextStyle(font: .caption1, color: .textDarkPrimary)
         titleTextStyle.applied(on: titleLabel)
     }
 }

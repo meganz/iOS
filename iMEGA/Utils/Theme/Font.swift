@@ -22,8 +22,11 @@ extension Font {
     /// Size 17, Semibold
     static let header = Font(size: 17, weight: .semibold)
 
+    /// Size 12.5, Semibold
+    static let caption1 = Font(size: 12.5, weight: .semibold)
+
     /// Size 12.5, Regular
-    static let caption = Font(size: 12.5, weight: .regular)
+    static let caption2 = Font(size: 12.5, weight: .regular)
 }
 
 func uiFont(from font: Font) -> UIFont? {
