@@ -8,7 +8,7 @@ extension UINavigationController {
     }
 
     func setTitleStyle(_ textStyle: TextStyle) {
-        let textAttributes = textStyle.styleTextAttributes([:])
+        let textAttributes = textStyle.applied(on: [:])
         navigationBar.titleTextAttributes = textAttributes
     }
 }
