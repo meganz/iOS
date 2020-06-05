@@ -286,6 +286,7 @@ extension DocScannerSaveSettingTableViewController: SendToViewControllerDelegate
                                     })
                                 }
                             }
+                            SVProgressHUD.showSuccess(withStatus: AMLocalizedString("Shared successfully", "Success message shown when the user has successfully shared something"))
                         }
                         MEGASdkManager.sharedMEGASdk()?.startUploadForChat(withLocalPath: tempPath, parent: node, appData: appData, isSourceTemporary: true, delegate: startUploadTransferDelegate!)
 
@@ -293,7 +294,7 @@ extension DocScannerSaveSettingTableViewController: SendToViewControllerDelegate
                         MEGALogDebug("Could not write to file \(tempPath) with error \(error.localizedDescription)")
                     }
                 } else if fileType == .jpg {
-                    
+                    var completionCounter = 0
                     self.docs?.enumerated().forEach {
                         if let quality = DocScanQuality(rawValue: UserDefaults.standard.float(forKey: keys.docScanQualityKey)),
                             let data = $0.element.jpegData(compressionQuality: CGFloat(quality.rawValue)) {
@@ -316,6 +317,10 @@ extension DocScannerSaveSettingTableViewController: SendToViewControllerDelegate
                                             })
                                         }
                                     }
+                                    if completionCounter == self.docs!.count - 1 {
+                                        SVProgressHUD.showSuccess(withStatus: AMLocalizedString("Shared successfully", "Success message shown when the user has successfully shared something"))
+                                    }
+                                    completionCounter = completionCounter + 1
                                 }
                                 MEGASdkManager.sharedMEGASdk()?.startUploadForChat(withLocalPath: tempPath, parent: node, appData: appData, isSourceTemporary: true, delegate: startUploadTransferDelegate!)
                             } catch {
