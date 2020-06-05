@@ -55,6 +55,7 @@
 #import "SendToViewController.h"
 #import "ShareLocationViewController.h"
 #import "MEGA-Swift.h"
+#import "JSQMessages.h"
 
 const CGFloat kGroupChatCellLabelHeightBuffer = 12.0f;
 const CGFloat k1on1CellLabelHeightBuffer = 5.0f;

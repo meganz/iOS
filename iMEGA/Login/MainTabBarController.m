@@ -11,6 +11,8 @@
 #import "UIApplication+MNZCategory.h"
 #import "MainTabBarController+CameraUpload.h"
 
+#import "MEGA-Swift.h"
+
 @interface MainTabBarController () <UITabBarControllerDelegate, MEGAGlobalDelegate>
 
 @property (nonatomic, strong) UIImageView *phoneBadgeImageView;
