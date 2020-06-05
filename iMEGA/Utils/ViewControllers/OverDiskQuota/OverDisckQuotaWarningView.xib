@@ -9,6 +9,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OverDisckQuotaWarningView" customModule="MEGA" customModuleProvider="target">
             <connections>
+                <outlet property="containerView" destination="VXP-TM-imT" id="5fU-tu-oYE"/>
                 <outlet property="detailLabel" destination="YU1-cg-IH0" id="o5F-po-cVc"/>
                 <outlet property="titleLabel" destination="W08-Hj-Nir" id="VT7-sb-hw5"/>
             </connections>
@@ -19,35 +20,36 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="warning" translatesAutoresizingMaskIntoConstraints="NO" id="oJU-ZV-wDr">
-                    <rect key="frame" x="16" y="4" width="60" height="60"/>
+                    <rect key="frame" x="12" y="12" width="44" height="44"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="60" id="2G8-59-Ynm"/>
-                        <constraint firstAttribute="width" constant="60" id="qDk-FG-ygj"/>
+                        <constraint firstAttribute="height" constant="44" id="2G8-59-Ynm"/>
+                        <constraint firstAttribute="width" constant="44" id="qDk-FG-ygj"/>
                     </constraints>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You have 46 days left to upgrade." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W08-Hj-Nir">
-                    <rect key="frame" x="84" y="16" width="239" height="15"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="You have 46 days left to upgrade." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W08-Hj-Nir">
+                    <rect key="frame" x="64" y="12" width="239" height="21.5"/>
                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="12"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="After that, your data is subject to deletion." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YU1-cg-IH0">
-                    <rect key="frame" x="84" y="37.5" width="239" height="14.5"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="After that, your data is subject to deletion." textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YU1-cg-IH0">
+                    <rect key="frame" x="64" y="41.5" width="239" height="14.5"/>
                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
-            <color key="backgroundColor" red="0.99479240179999995" green="0.97076636549999995" blue="0.8508112431" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" red="0.99607843137254903" green="0.97076636549999995" blue="0.8508112431" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="W08-Hj-Nir" secondAttribute="trailing" constant="16" id="0FY-n7-cN8"/>
-                <constraint firstItem="YU1-cg-IH0" firstAttribute="bottom" secondItem="oJU-ZV-wDr" secondAttribute="bottom" constant="-12" id="4yh-Xm-9qQ"/>
-                <constraint firstItem="oJU-ZV-wDr" firstAttribute="leading" secondItem="VXP-TM-imT" secondAttribute="leading" constant="16" id="FOj-ck-AFL"/>
+                <constraint firstItem="oJU-ZV-wDr" firstAttribute="leading" secondItem="VXP-TM-imT" secondAttribute="leading" constant="12" id="FOj-ck-AFL"/>
+                <constraint firstAttribute="bottom" secondItem="YU1-cg-IH0" secondAttribute="bottom" constant="12" id="MoJ-Ou-fZR"/>
                 <constraint firstItem="oJU-ZV-wDr" firstAttribute="centerY" secondItem="VXP-TM-imT" secondAttribute="centerY" id="UV4-VJ-oJM"/>
+                <constraint firstItem="YU1-cg-IH0" firstAttribute="top" secondItem="W08-Hj-Nir" secondAttribute="bottom" constant="8" id="X3F-qt-e40"/>
                 <constraint firstItem="W08-Hj-Nir" firstAttribute="leading" secondItem="oJU-ZV-wDr" secondAttribute="trailing" constant="8" id="cK4-NS-Oet"/>
                 <constraint firstItem="YU1-cg-IH0" firstAttribute="leading" secondItem="W08-Hj-Nir" secondAttribute="leading" id="l7g-ON-uQh"/>
                 <constraint firstItem="YU1-cg-IH0" firstAttribute="trailing" secondItem="W08-Hj-Nir" secondAttribute="trailing" id="nyq-eP-pB6"/>
-                <constraint firstItem="W08-Hj-Nir" firstAttribute="top" secondItem="oJU-ZV-wDr" secondAttribute="top" constant="12" id="ofE-bt-7Y2"/>
+                <constraint firstItem="W08-Hj-Nir" firstAttribute="top" secondItem="VXP-TM-imT" secondAttribute="top" constant="12" id="ofJ-Zs-iqd"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="59" y="181"/>

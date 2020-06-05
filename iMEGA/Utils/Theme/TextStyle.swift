@@ -8,10 +8,9 @@ struct TextStyle: Codable {
 
 extension TextStyle {
 
-    var styleLabel: (UILabel) -> UILabel {
-        return { label in
-            apply(style: self)(label)
-        }
+    @discardableResult
+    func applied(on label: UILabel) -> UILabel {
+        apply(style: self)(label)
     }
 
     typealias TextAttributes = [NSAttributedString.Key: Any]

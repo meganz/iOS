@@ -292,6 +292,8 @@
 		5D64660A24890CC7006030A5 /* TextStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D64660924890CC7006030A5 /* TextStyle.swift */; };
 		5DAB28F224875269004B5D5A /* OverDiskQuotaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DAB28F024875269004B5D5A /* OverDiskQuotaViewController.swift */; };
 		5DAB28F324875269004B5D5A /* OverDiskQuotaViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5DAB28F124875269004B5D5A /* OverDiskQuotaViewController.xib */; };
+		5DB1F478248945F1001C1D5D /* UIView+Border.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB1F477248945F1001C1D5D /* UIView+Border.swift */; };
+		5DB1F47A2489461E001C1D5D /* UIColor+Generate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB1F4792489461E001C1D5D /* UIColor+Generate.swift */; };
 		5DBAC841248778DA0050996E /* OverDisckQuotaWarningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DBAC840248778DA0050996E /* OverDisckQuotaWarningView.swift */; };
 		5DBAC8442487B8A10050996E /* OverDisckQuotaWarningView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5DBAC8432487B8A10050996E /* OverDisckQuotaWarningView.xib */; };
 		5DBAC8462487BE340050996E /* NibLodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DBAC8452487BE340050996E /* NibLodable.swift */; };
@@ -1669,6 +1671,8 @@
 		5D64660924890CC7006030A5 /* TextStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextStyle.swift; sourceTree = "<group>"; };
 		5DAB28F024875269004B5D5A /* OverDiskQuotaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverDiskQuotaViewController.swift; sourceTree = "<group>"; };
 		5DAB28F124875269004B5D5A /* OverDiskQuotaViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OverDiskQuotaViewController.xib; sourceTree = "<group>"; };
+		5DB1F477248945F1001C1D5D /* UIView+Border.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Border.swift"; sourceTree = "<group>"; };
+		5DB1F4792489461E001C1D5D /* UIColor+Generate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Generate.swift"; sourceTree = "<group>"; };
 		5DBAC840248778DA0050996E /* OverDisckQuotaWarningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverDisckQuotaWarningView.swift; sourceTree = "<group>"; };
 		5DBAC8432487B8A10050996E /* OverDisckQuotaWarningView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OverDisckQuotaWarningView.xib; sourceTree = "<group>"; };
 		5DBAC8452487BE340050996E /* NibLodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NibLodable.swift; sourceTree = "<group>"; };
@@ -4070,6 +4074,8 @@
 				5D03C99A248893E600BE5EEB /* UINavigationBar+Customisation.swift */,
 				2F8F5F1523691A390049603F /* UINavigationViewController+Additions.swift */,
 				5D6465FE2488AE6C006030A5 /* UIViewController+ScrollViewConentInsets.swift */,
+				5DB1F477248945F1001C1D5D /* UIView+Border.swift */,
+				5DB1F4792489461E001C1D5D /* UIColor+Generate.swift */,
 			);
 			path = UIKit;
 			sourceTree = "<group>";
@@ -6128,6 +6134,7 @@
 				777E922D203EE14B00266229 /* QRSettingsTableViewController.m in Sources */,
 				8364742820723DCC00AED3D2 /* MEGAShowPasswordReminderRequestDelegate.m in Sources */,
 				A813A79D22B38D7F00418737 /* AVAudioSession+MNZCategory.m in Sources */,
+				5DB1F47A2489461E001C1D5D /* UIColor+Generate.swift in Sources */,
 				417279551DB663FA001AC818 /* JSQMessagesComposerTextView.m in Sources */,
 				A86B9F4B2316D6AB00F35E7A /* FLEXIvarEditorViewController.m in Sources */,
 				A86B9F6E2316D6AB00F35E7A /* FLEXAddressExplorerCoordinator.m in Sources */,
@@ -6273,6 +6280,7 @@
 				A86B9F872316D6AB00F35E7A /* FLEXResources.m in Sources */,
 				137361901A6664C300B740E8 /* main.m in Sources */,
 				417B5AAE1DEC792400A193D5 /* MOUser+CoreDataProperties.m in Sources */,
+				5DB1F478248945F1001C1D5D /* UIView+Border.swift in Sources */,
 				A86B9F372316D6AB00F35E7A /* FLEXSubtitleTableViewCell.m in Sources */,
 				A824A9192039ECD700D777D2 /* SDAVAssetExportSession.m in Sources */,
 				41E250141D79E9D400499A6C /* SAMKeychainQuery.m in Sources */,
