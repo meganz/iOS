@@ -209,7 +209,7 @@
     switch (request.type) {
         case MEGARequestTypeSetAttrUser: {
             if ([error type]) {
-                [SVProgressHUD showErrorWithStatus:error.name];
+                [SVProgressHUD showErrorWithStatus:AMLocalizedString(error.name, nil)];
                 return;
             }
             

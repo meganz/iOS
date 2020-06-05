@@ -925,7 +925,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
     if (error.type) {
         [self oneUnsupportedMore];
-        MEGALogError(@"Transfer finished with error: %@", error.name);
+        MEGALogError(@"Transfer finished with error: %@", AMLocalizedString(error.name, nil));
         return;
     }
     

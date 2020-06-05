@@ -124,7 +124,7 @@
                 [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                     MEGAGenericRequestDelegate *delegate = [MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest *request, MEGAError *error) {
                         if (error.type) {
-                            [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@", error.name]];
+                            [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@", AMLocalizedString(error.name, nil)]];
                         }
                         [SVProgressHUD showSuccessWithStatus:AMLocalizedString(@"sessionsClosed", @"Message shown when you click on 'Close other session' to block every session that is opened on other devices except the current one")];
                     }];

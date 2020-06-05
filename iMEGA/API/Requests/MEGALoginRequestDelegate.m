@@ -85,7 +85,7 @@
                     self.errorCompletion(error);
                     return;
                 } else {
-                    message = [NSString stringWithFormat:@"%@ %@", request.requestString, error.name];
+                    message = [NSString stringWithFormat:@"%@ %@", request.requestString, AMLocalizedString(error.name, nil)];
                     break;
                 }
             }
@@ -110,7 +110,7 @@
                 return;
                 
             default:
-                message = [NSString stringWithFormat:@"%@ %@", request.requestString, error.name];
+                message = [NSString stringWithFormat:@"%@ %@", request.requestString, AMLocalizedString(error.name, nil)];
                 break;
         }
         

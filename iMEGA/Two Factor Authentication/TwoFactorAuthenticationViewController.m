@@ -300,7 +300,7 @@
                 break;
                 
             default:
-                [SVProgressHUD showErrorWithStatus:error.name];
+                [SVProgressHUD showErrorWithStatus:AMLocalizedString(error.name, nil)];
                 break;
         }
         return;
