@@ -39,6 +39,8 @@
 
 @property (weak, nonatomic) IBOutlet UIView *itemListView;
 
+@property (strong, nonatomic) ContactsTableViewHeader *contactsTableViewHeader;
+
 @property (nonatomic, strong) NSMutableArray<NSMutableArray *> *visibleUsersIndexedMutableArray;
 @property (nonatomic, strong) NSMutableArray<MEGAUser *> *recentlyAddedUsersArray;
 @property (nonatomic, strong) NSMutableArray *visibleUsersArray;
@@ -79,7 +81,7 @@
 
 @property (nonatomic) UIPanGestureRecognizer *panOnTable;
 
-@property (weak, nonatomic) IBOutlet UIView *tableViewHeader;
+@property (weak, nonatomic) IBOutlet UIView *chatNamingGroupTableViewHeader;
 
 @property (weak, nonatomic) IBOutlet UIView *enterGroupNameView;
 @property (weak, nonatomic) IBOutlet UITextField *enterGroupNameTextField;
@@ -106,6 +108,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *inviteContactButton;
 
 @property (strong, nonatomic) MEGAUser *detailUser;
+@property (strong, nonatomic) NSString *currentSearch;
 
 @end
 
@@ -138,7 +141,6 @@
         [self configPreviewingRegistration];
     }
     
-    [self.tableView registerNib:[UINib nibWithNibName:@"SectionTableViewCell" bundle:nil] forCellReuseIdentifier:@"SectionTableViewCellID"];
     [self.tableView registerNib:[UINib nibWithNibName:@"GenericHeaderFooterView" bundle:nil] forHeaderFooterViewReuseIdentifier:@"GenericHeaderFooterViewID"];
     
     [MEGASdkManager.sharedMEGASdk addMEGARequestDelegate:self];
@@ -232,7 +234,7 @@
             break;
             
         case ContactsModeChatNamingGroup: {
-            self.tableViewHeader.backgroundColor = [UIColor mnz_backgroundGroupedElevated:self.traitCollection];
+            self.chatNamingGroupTableViewHeader.backgroundColor = [UIColor mnz_backgroundGroupedElevated:self.traitCollection];
             
             self.enterGroupNameView.backgroundColor = [UIColor mnz_secondaryBackgroundGroupedElevated:self.traitCollection];
             self.enterGroupNameBottomSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
@@ -258,6 +260,9 @@
     
     switch (self.contactsMode) {
         case ContactsModeDefault: {
+            self.contactsTableViewHeader = [NSBundle.mainBundle loadNibNamed:@"ContactsTableViewHeader" owner:self options: nil].firstObject;
+            self.contactsTableViewHeader.navigationController = self.navigationController;
+            
             NSArray *buttonsItems = @[self.addBarButtonItem];
             self.navigationItem.rightBarButtonItems = buttonsItems;
             break;
@@ -342,7 +347,7 @@
             
             if (self.getChatLinkEnabled) {
                 self.optionsStackView.hidden = self.getChatLinkEnabled;
-                self.tableViewHeader.frame = CGRectMake(0, 0, self.tableViewHeader.frame.size.width, 60);
+                self.chatNamingGroupTableViewHeader.frame = CGRectMake(0, 0, self.chatNamingGroupTableViewHeader.frame.size.width, 60);
             } else {          
                 UITapGestureRecognizer *singleFingerTap = [UITapGestureRecognizer.alloc initWithTarget:self action:@selector(checkboxTouchUpInside:)];
                 [self.getChatLinkStackView addGestureRecognizer:singleFingerTap];
@@ -358,6 +363,12 @@
     [self setNavigationBarTitle];
     
     [self setNavigationBarButtonItemsEnabled:MEGAReachabilityManager.isReachable];
+    
+    if (self.currentSearch != nil) {
+        self.searchController.active = YES;
+        self.searchController.searchBar.text = self.currentSearch;
+        self.currentSearch = nil;
+    }
     
     self.visibleUsersArray = [[NSMutableArray alloc] init];
     [self.indexPathsMutableDictionary removeAllObjects];
@@ -452,14 +463,16 @@
     
     [self.tableView reloadData];
     
-    if (self.contactsMode == ContactsModeChatStartConversation) {
+    if (self.contactsMode == ContactsModeDefault) {
+        self.tableView.tableHeaderView = self.contactsTableViewHeader;
+    } else if (self.contactsMode == ContactsModeChatStartConversation) {
         if (self.visibleUsersArray.count == 0) {
             self.tableView.tableFooterView = self.tableViewFooter;
         } else {
             self.tableView.tableFooterView = UIView.new;
         }
     } else if (self.contactsMode == ContactsModeChatNamingGroup) {
-        self.tableView.tableHeaderView = self.tableViewHeader;
+        self.tableView.tableHeaderView = self.chatNamingGroupTableViewHeader;
     }
     
     [self addSearchBarController];
@@ -761,8 +774,6 @@
                 user = [self.searchVisibleUsersArray objectAtIndex:indexPath.row];
             } else {
                 if (indexPath.section == 0) {
-                    user = nil;
-                } else if (indexPath.section == 1) {
                     user = self.recentlyAddedUsersArray[indexPath.row];
                 } else {
                     NSArray *sectionArray = self.visibleUsersIndexedMutableArray[[self currentIndexedSection:indexPath.section]];
@@ -1025,12 +1036,26 @@
 }
 
 - (NSInteger)currentIndexedSection:(NSInteger)section {
-    if (section == 0 || section == 1) {
+    if (section == 0) {
         return section;
     } else {
-        //This is due the two sections that are added on top of your MEGA contacts. 'Requests' and 'Groups' and 'Recently Added'
-        return section - 2;
+        //This is due the section that is added on top of your MEGA contacts, 'Recently Added'
+        return section - 1;
     }
+}
+
+- (void)openChatRoomForIndexPath:(NSIndexPath *)indexPath {
+    MEGAUser *user = [self userAtIndexPath:indexPath];
+    MEGAChatRoom *chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomByUser:user.handle];
+    if (chatRoom) {
+        [self openChatRoom:chatRoom];
+    } else {
+        [MEGASdkManager.sharedMEGAChatSdk mnz_createChatRoomWithUserHandle:user.handle completion:^(MEGAChatRoom * _Nonnull chatRoom) {
+            [self openChatRoom:chatRoom];
+        }];
+    }
+    
+    [MEGAStore.shareInstance updateUserWithHandle:user.handle interactedWith:YES];
 }
 
 - (void)openChatRoom:(MEGAChatRoom *)chatRoom {
@@ -1068,6 +1093,7 @@
         [MEGAStore.shareInstance updateUserWithHandle:user.handle interactedWith:YES];
         if (self.searchController.isActive) {
             self.detailUser = user;
+            self.currentSearch = self.searchController.searchBar.text;
             self.searchController.active = NO;
         } else {
             [self showContactDetailsForUser:user];
@@ -1263,9 +1289,9 @@
     self.keyRotationEnabled = sender.on;
     self.getChatLinkView.hidden = sender.on;
     if (sender.on) {
-        self.tableViewHeader.frame = CGRectMake(0, 0, self.tableViewHeader.frame.size.width, 266 - self.getChatLinkView.frame.size.height - 23);
+        self.chatNamingGroupTableViewHeader.frame = CGRectMake(0, 0, self.chatNamingGroupTableViewHeader.frame.size.width, 266 - self.getChatLinkView.frame.size.height - 23);
     } else {
-        self.tableViewHeader.frame = CGRectMake(0, 0, self.tableViewHeader.frame.size.width, 266);
+        self.chatNamingGroupTableViewHeader.frame = CGRectMake(0, 0, self.chatNamingGroupTableViewHeader.frame.size.width, 266);
     }
     
     [self.tableView reloadData];
@@ -1300,9 +1326,7 @@
             if (self.searchController.isActive && ![self.searchController.searchBar.text isEqual: @""]) {
                 numberOfRows = self.searchVisibleUsersArray.count;
             } else {
-                if (section == 0) { //Requests and Groups
-                    numberOfRows = 2;
-                } else if (section == 1) { //Recently Added
+                if (section == 0) { //Recently Added
                     numberOfRows = self.recentlyAddedUsersArray.count;
                 } else {
                     numberOfRows = self.visibleUsersIndexedMutableArray[[self currentIndexedSection:section]].count;
@@ -1343,7 +1367,7 @@
             if (self.searchController.isActive && ![self.searchController.searchBar.text isEqual: @""]) {
                 numberOfSections = 1;
             } else {
-                numberOfSections = UILocalizedIndexedCollation.currentCollation.sectionIndexTitles.count + 2; //+ Requests && Groups + Recently Added
+                numberOfSections = UILocalizedIndexedCollation.currentCollation.sectionIndexTitles.count + 1; // + Recently Added
             }
             break;
         }
@@ -1386,17 +1410,10 @@
                 return cell;
             }
             
-            if (indexPath.section == 0) {
-                SectionTableViewCell *cell = [self dequeueOrInitCellWithIdentifier:@"SectionTableViewCellID" indexPath:indexPath];
-                [cell configureContactsSectionWithIndexPath:indexPath];
-                
-                return cell;
-            } else {
-                cell = [self dequeueOrInitCellWithIdentifier:@"contactCell" indexPath:indexPath];
-                user = [self getUserAndSetIndexPath:indexPath];
-                [cell configureDefaultCellForUser:user newUser:(indexPath.section == 1)];
-                cell.contactDetailsButton.hidden = NO;
-            }
+            cell = [self dequeueOrInitCellWithIdentifier:@"contactCell" indexPath:indexPath];
+            user = [self getUserAndSetIndexPath:indexPath];
+            [cell configureDefaultCellForUser:user newUser:(indexPath.section == 1)];
+            cell.contactDetailsButton.hidden = NO;
             break;
         }
             
@@ -1467,8 +1484,6 @@
     
     if (self.contactsMode == ContactsModeDefault) {
         if (section == 0) {
-            return nil;
-        } else if (section == 1) {
             headerView.titleLabel.font = [UIFont systemFontOfSize:13.f];
             headerView.titleLabel.text = AMLocalizedString(@"Recently Added", @"Label for any ‘Recently Added’ button, link, text, title, etc. On iOS is used on a section that shows the 'Recently Added' contacts");
             
@@ -1513,6 +1528,12 @@
     CGFloat heightForHeader = 0.0f;
     switch (section) {
         case 0:
+            if (self.contactsMode == ContactsModeDefault) {
+                if (self.recentlyAddedUsersArray.count > 0) {
+                    heightForHeader = 35.0f;
+                }
+            }
+            
             if (self.contactsMode == ContactsModeChatCreateGroup || self.contactsMode == ContactsModeShareFoldersWith) {
                 heightForHeader = 25.0f;
             }
@@ -1526,8 +1547,8 @@
 
         case 1:
             if (self.contactsMode == ContactsModeDefault) {
-                if (self.recentlyAddedUsersArray.count > 0) {
-                    heightForHeader = 35.0f;
+                if (self.visibleUsersIndexedMutableArray[[self currentIndexedSection:section]].count > 0) {
+                    heightForHeader = 28.0f;
                 }
             }
             
@@ -1554,7 +1575,7 @@
 
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
     if (self.contactsMode == ContactsModeDefault) {
-        return UILocalizedIndexedCollation.currentCollation.sectionIndexTitles;
+        return (self.visibleUsersArray.count > 0) ? UILocalizedIndexedCollation.currentCollation.sectionIndexTitles : @[];
     }
     
     return @[];
@@ -1590,27 +1611,7 @@
     
     switch (self.contactsMode) {
         case ContactsModeDefault: {
-            if (indexPath.section == 0) {
-                if (indexPath.row == 0) {
-                    ContactRequestsViewController *contactsRequestsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsRequestsViewControllerID"];
-                    [self.navigationController pushViewController:contactsRequestsVC animated:YES];
-                } else {
-                    ContactsGroupsViewController *contactsGroupsVC = [[UIStoryboard storyboardWithName:@"ContactsGroups" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsGroupsViewControllerID"];
-                    [self.navigationController pushViewController:contactsGroupsVC animated:YES];
-                }
-            } else { //Section 1, 'Recently Added' and all the contacts
-                MEGAUser *user = [self userAtIndexPath:indexPath];
-                MEGAChatRoom *chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomByUser:user.handle];
-                if (chatRoom) {
-                    [self openChatRoom:chatRoom];
-                } else {
-                    [MEGASdkManager.sharedMEGAChatSdk mnz_createChatRoomWithUserHandle:user.handle completion:^(MEGAChatRoom * _Nonnull chatRoom) {
-                        [self openChatRoom:chatRoom];
-                    }];
-                }
-                
-                [MEGAStore.shareInstance updateUserWithHandle:user.handle interactedWith:YES];
-            }
+            [self openChatRoomForIndexPath:indexPath];
             break;
         }
             
@@ -1924,9 +1925,23 @@
             self.tableView.tableHeaderView = nil;
         }
     }
+    
+    if (self.contactsMode == ContactsModeDefault) {
+        self.tableView.tableHeaderView = self.contactsTableViewHeader;
+    }
 }
 
 #pragma mark - UISearchControllerDelegate
+
+- (void)presentSearchController:(UISearchController *)searchController {
+    if (!searchController.searchBar.isFirstResponder) {
+        [searchController.searchBar becomeFirstResponder];
+    }
+    
+    if (self.contactsMode == ContactsModeDefault) {
+        self.tableView.tableHeaderView = nil;
+    }
+}
 
 - (void)didPresentSearchController:(UISearchController *)searchController {
     switch (self.contactsMode) {
@@ -1948,6 +1963,10 @@
     if (self.detailUser != nil) {
         [self showContactDetailsForUser:self.detailUser];
         self.detailUser = nil;
+    }
+    
+    if (self.contactsMode == ContactsModeDefault) {
+        self.tableView.tableHeaderView = self.contactsTableViewHeader;
     }
 }
 
@@ -2086,7 +2105,7 @@
                 for (NSInteger row = 0; row < usersInSectionMutableArray.count; row++) {
                     MEGAUser *user = usersInSectionMutableArray[row];
                     NSString *base64Handle = [MEGASdk base64HandleForUserHandle:user.handle];
-                    [self.indexPathsMutableDictionary setObject:[NSIndexPath indexPathForRow:row inSection:section + 2] forKey:base64Handle];
+                    [self.indexPathsMutableDictionary setObject:[NSIndexPath indexPathForRow:row inSection:section + 1] forKey:base64Handle];
                 }
             }
         }
