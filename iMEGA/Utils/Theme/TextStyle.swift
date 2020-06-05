@@ -8,18 +8,20 @@ struct TextStyle: Codable {
 
 extension TextStyle {
 
+    // MARK: - UILabel Applier
+
     @discardableResult
     func applied(on label: UILabel) -> UILabel {
         apply(style: self)(label)
     }
 
-    typealias TextAttributes = [NSAttributedString.Key: Any]
+    // MARK: - AttributedString Applier
 
-    var styleTextAttributes: (TextAttributes) -> TextAttributes {
-        return { attributes in
-            apply(style: self)(attributes)
-        }
+    @discardableResult
+    func applied(on attributes: TextAttributes) -> TextAttributes {
+        apply(style: self)(attributes)
     }
+    typealias TextAttributes = [NSAttributedString.Key: Any]
 }
 
 func apply(style: TextStyle) -> (UILabel) -> UILabel {

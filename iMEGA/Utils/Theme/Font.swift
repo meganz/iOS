@@ -20,7 +20,13 @@ struct Font: Codable {
 extension Font {
 
     /// Size 17, Semibold
-    static let header = Font(size: 17, weight: .semibold)
+    static let headline = Font(size: 17, weight: .semibold)
+
+    /// Size 17, Regular
+    static let body = Font(size: 17, weight: .regular)
+
+    /// Size 15, Regular
+    static let subhead = Font(size: 15, weight: .regular)
 
     /// Size 12.5, Semibold
     static let caption1 = Font(size: 12.5, weight: .semibold)

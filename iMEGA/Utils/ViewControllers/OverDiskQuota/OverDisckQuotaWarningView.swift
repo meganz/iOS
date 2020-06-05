@@ -33,7 +33,6 @@ final class OverDisckQuotaWarningView: UIView, NibOwnerLoadable {
         containerView.border(withColor: Color.Border.warning.uiColor)
             .border(withWidth: 1)
             .border(withCornerRadius: 8)
-
         containerView.backgroundColor = Color.Background.warning.uiColor
     }
 

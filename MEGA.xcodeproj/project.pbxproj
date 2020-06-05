@@ -294,6 +294,7 @@
 		5DAB28F324875269004B5D5A /* OverDiskQuotaViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5DAB28F124875269004B5D5A /* OverDiskQuotaViewController.xib */; };
 		5DB1F478248945F1001C1D5D /* UIView+Border.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB1F477248945F1001C1D5D /* UIView+Border.swift */; };
 		5DB1F47A2489461E001C1D5D /* UIColor+Generate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB1F4792489461E001C1D5D /* UIColor+Generate.swift */; };
+		5DB1F47C2489E5CC001C1D5D /* ParagraphStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB1F47B2489E5CC001C1D5D /* ParagraphStyle.swift */; };
 		5DBAC841248778DA0050996E /* OverDisckQuotaWarningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DBAC840248778DA0050996E /* OverDisckQuotaWarningView.swift */; };
 		5DBAC8442487B8A10050996E /* OverDisckQuotaWarningView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5DBAC8432487B8A10050996E /* OverDisckQuotaWarningView.xib */; };
 		5DBAC8462487BE340050996E /* NibLodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DBAC8452487BE340050996E /* NibLodable.swift */; };
@@ -1673,6 +1674,7 @@
 		5DAB28F124875269004B5D5A /* OverDiskQuotaViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OverDiskQuotaViewController.xib; sourceTree = "<group>"; };
 		5DB1F477248945F1001C1D5D /* UIView+Border.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Border.swift"; sourceTree = "<group>"; };
 		5DB1F4792489461E001C1D5D /* UIColor+Generate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Generate.swift"; sourceTree = "<group>"; };
+		5DB1F47B2489E5CC001C1D5D /* ParagraphStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParagraphStyle.swift; sourceTree = "<group>"; };
 		5DBAC840248778DA0050996E /* OverDisckQuotaWarningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverDisckQuotaWarningView.swift; sourceTree = "<group>"; };
 		5DBAC8432487B8A10050996E /* OverDisckQuotaWarningView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OverDisckQuotaWarningView.xib; sourceTree = "<group>"; };
 		5DBAC8452487BE340050996E /* NibLodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NibLodable.swift; sourceTree = "<group>"; };
@@ -4093,6 +4095,7 @@
 				5D64660324890A34006030A5 /* Color.swift */,
 				5D646601248909F7006030A5 /* Font.swift */,
 				5D64660924890CC7006030A5 /* TextStyle.swift */,
+				5DB1F47B2489E5CC001C1D5D /* ParagraphStyle.swift */,
 				5D64660724890BEA006030A5 /* HexColor.swift */,
 				5D64660524890BBE006030A5 /* ColorProviding.swift */,
 			);
@@ -5927,6 +5930,7 @@
 				83E076F52179D7BC00058409 /* NodeCollectionViewCell.m in Sources */,
 				41D21E661D01AEC3002E6296 /* CTAssetsGridViewController.m in Sources */,
 				2FCE04A9241B019800EE7842 /* ActionSheetCell.swift in Sources */,
+				5DB1F47C2489E5CC001C1D5D /* ParagraphStyle.swift in Sources */,
 				41AB8EC11A7103B300E40A39 /* BrowserViewController.m in Sources */,
 				5B5E591320EA583900F00A74 /* MEGAQueryRecoveryLinkRequestDelegate.m in Sources */,
 				A86B9F432316D6AB00F35E7A /* FLEXNetworkObserver.m in Sources */,
