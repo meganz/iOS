@@ -344,7 +344,7 @@ class MessageInputBar: UIView {
             
             self.micButton.alpha = 0.0
             self.micButton.isHidden = false
-            
+
             if self.messageTextView.text.count == 0 {
                 UIView.animate(withDuration: 0.4, animations: {
                     self.backgroundViewTrailingButtonConstraint.isActive = false
