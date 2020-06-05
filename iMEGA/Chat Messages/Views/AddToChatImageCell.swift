@@ -16,8 +16,9 @@ class AddToChatImageCell: UICollectionViewCell {
 
     @IBOutlet weak var foregroundImageView: UIImageView!
     @IBOutlet weak var foregoundLabel: UILabel!
+    @IBOutlet weak var bottomLeftLabel: UILabel!
+    @IBOutlet weak var bottomLeftView: UIView!
 
-    
     private var imageRequestID: PHImageRequestID?
     
     var cellType: CellType = .media {
@@ -44,6 +45,23 @@ class AddToChatImageCell: UICollectionViewCell {
                 return
             }
             
+            if asset.mediaType == .video {
+                bottomLeftView.isHidden = false
+                
+                let formatter = DateComponentsFormatter()
+                
+                // If the duration is more than an hour, display hour
+                if asset.duration >= 3600.0 {
+                    formatter.allowedUnits = [.hour, .minute, .second]
+                } else {
+                    formatter.allowedUnits = [.minute, .second]
+                }
+                
+                formatter.unitsStyle = .positional
+                formatter.zeroFormattingBehavior = .pad
+                bottomLeftLabel.text = formatter.string(from: asset.duration)
+            }
+            
             let requestOptions = PHImageRequestOptions()
             requestOptions.isSynchronous = true
             
@@ -63,6 +81,7 @@ class AddToChatImageCell: UICollectionViewCell {
         foregroundView.isHidden = true
         selectionBackgroundView.isHidden = false
         blurView.isHidden = true
+        bottomLeftView.isHidden = true
         
         if let imageRequestID = imageRequestID {
             PHImageManager.default().cancelImageRequest(imageRequestID)
