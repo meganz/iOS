@@ -33,7 +33,6 @@ class MessageInputBar: UIView {
     
     @IBOutlet weak var sendButton: UIButton!
     @IBOutlet weak var micButton: UIButton!
-    @IBOutlet weak var micButtonBackground: UIView!
     @IBOutlet weak var expandCollapseButton: UIButton!
     
     // MARK:- Interface properties
@@ -292,15 +291,12 @@ class MessageInputBar: UIView {
                 self.backgroundViewTrailingTextViewConstraint.isActive = false
                 self.backgroundViewTrailingButtonConstraint.isActive = true
                 self.micButton.alpha = 0.0
-                self.micButtonBackground.alpha = 0.0
                 self.sendButton.alpha = 1.0
                 self.layoutIfNeeded()
 
             }) { _ in
                 self.micButton.isHidden = true
                 self.micButton.alpha = 1.0
-                self.micButtonBackground.isHidden = true
-                self.micButtonBackground.alpha = 1.0
             }
         }
     }
@@ -348,15 +344,12 @@ class MessageInputBar: UIView {
             
             self.micButton.alpha = 0.0
             self.micButton.isHidden = false
-            self.micButtonBackground.alpha = 0.0
-            self.micButtonBackground.isHidden = false
 
             if self.messageTextView.text.count == 0 {
                 UIView.animate(withDuration: 0.4, animations: {
                     self.backgroundViewTrailingButtonConstraint.isActive = false
                     self.backgroundViewTrailingTextViewConstraint.isActive = true
                     self.micButton.alpha = 1.0
-                    self.micButtonBackground.alpha = 1.0
                     self.sendButton.alpha = 0.0
                     self.layoutIfNeeded()
                 }) { _ in

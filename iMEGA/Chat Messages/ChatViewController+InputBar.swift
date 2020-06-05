@@ -681,14 +681,6 @@ extension ChatViewController: AddToChatViewControllerDelegate {
         
         return true
     }
-    
-    func didDisplayVoiceRecordingView() {
-        messagesCollectionView.isScrollEnabled = false
-    }
-    
-    func didHideVoiceRecordingView() {
-        messagesCollectionView.isScrollEnabled = true
-    }
 }
 
 extension ChatViewController: UIPopoverPresentationControllerDelegate {
