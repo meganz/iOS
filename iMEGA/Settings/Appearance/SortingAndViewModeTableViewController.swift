@@ -198,9 +198,6 @@ class SortingAndViewModeTableViewController: UITableViewController {
                 actions.append(ActionSheetAction(title: AMLocalizedString("nameDescending"), detail: sortType == .defaultDesc ? "✓" : "", image: UIImage(named: "descending"), style: .default) {
                     Helper.save(.defaultDesc, for: nil)
                 })
-                actions.append(ActionSheetAction(title: AMLocalizedString("nameDescending"), detail: sortType == .defaultDesc ? "✓" : "", image: UIImage(named: "descending"), style: .default) {
-                    Helper.save(.defaultDesc, for: nil)
-                })
                 actions.append(ActionSheetAction(title: AMLocalizedString("largest"), detail: sortType == .sizeDesc ? "✓" : "", image: UIImage(named: "largest"), style: .default) {
                     Helper.save(.sizeDesc, for: nil)
                 })
