@@ -259,7 +259,9 @@
 - (void)setParentNodeForBrowserAction {
     if (self.cloudDriveButton.selected) {
         if (self.isParentBrowser) {
-            self.parentNode = MEGASdkManager.sharedMEGASdk.rootNode;
+            if (!self.parentNode) {
+                self.parentNode = MEGASdkManager.sharedMEGASdk.rootNode;
+            }
         }
         self.nodes = [MEGASdkManager.sharedMEGASdk childrenForParent:self.parentNode];
     } else if (self.incomingButton.selected) {

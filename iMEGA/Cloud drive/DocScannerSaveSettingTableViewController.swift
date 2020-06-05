@@ -171,6 +171,7 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
                 let storyboard = UIStoryboard(name: "Cloud", bundle: Bundle(for: BrowserViewController.self))
                 if let browserVC = storyboard.instantiateViewController(withIdentifier: "BrowserViewControllerID") as? BrowserViewController {
                     browserVC.browserAction = .shareExtension
+                    browserVC.parentNode = parentNode
                     browserVC.browserViewControllerDelegate = self
                     navigationController?.setToolbarHidden(false, animated: true)
                     navigationController?.pushViewController(browserVC, animated: true)
