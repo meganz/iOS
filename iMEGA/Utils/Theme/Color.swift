@@ -22,6 +22,9 @@ extension Color {
     /// RGB(0, 0, 0, 0.8), Dark gray
     static var textLightPrimary: Color { Color.Text.lightPrimary }
 
+    /// RGB(0, 0, 0, 0.8), Dark gray
+    static var textLightPrimaryGreen: Color { Color.Text.lightPrimaryGreen }
+
     /// RGB(255, 255, 255, 1), White
     static var textDarkPrimary: Color { Color.Text.darkPrimary }
 
@@ -66,6 +69,9 @@ extension Color {
 
         /// RGB(255, 255, 255, 1), White
         static let lightPrimary = Color(red: 255, green: 255, blue: 255)
+
+        /// RGB(255, 255, 255, 1), White
+        static let lightPrimaryGreen = Color(red: 53, green: 211, blue: 196)
 
         /// RGB(0, 168, 0, 134, 1), Green
         static let greenPrimary = Color(red: 0, green: 168, blue: 134, alpha: 255)
