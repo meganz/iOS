@@ -15,10 +15,6 @@ extension Color: ColorProviding {
     }
 }
 
-func uiColor(from colorProvider: ColorProviding) -> UIColor {
-    return colorProvider.uiColor
-}
-
 extension Color {
 
     // MARK: - Text
@@ -28,6 +24,12 @@ extension Color {
 
     /// RGB(255, 255, 255, 1), White
     static var textDarkPrimary: Color { Color.Text.darkPrimary }
+
+    /// RGB(0, 168, 0, 134, 1), Green
+    static var textGreenPrimary: Color { Color.Text.greenPrimary }
+
+    /// RGB(200, 241, 236, 1), Light Green
+    static var textGreenSecondary: Color { Color.Text.greenSecondary }
 
     // MARK: - Background
 
@@ -50,6 +52,9 @@ extension Color {
 
     /// RGB(255, 204, 0, 1), Yellow
     static var borderWarningYellow: Color { Color.Border.warning }
+
+    // MARK: - Shadow
+    static var shadowPrimary: Color { Color.Shadow.primary }
 }
 
 extension Color {
@@ -61,6 +66,12 @@ extension Color {
 
         /// RGB(255, 255, 255, 1), White
         static let lightPrimary = Color(red: 255, green: 255, blue: 255)
+
+        /// RGB(0, 168, 0, 134, 1), Green
+        static let greenPrimary = Color(red: 0, green: 168, blue: 134, alpha: 255)
+
+        /// RGB(200, 241, 236, 1), Light Green
+        static let greenSecondary = Color(red: 200, green: 241, blue: 236, alpha: 255)
     }
 
     enum Background {
@@ -87,5 +98,11 @@ extension Color {
 
         /// RGB(255, 204, 0, 1), Yellow
         static let warning = Color(red: 255, green: 204, blue: 0)
+    }
+
+    enum Shadow {
+
+        /// RGB(232, 232, 232, 1), Light Grey
+        static let primary = Color(red: 232, green: 232, blue: 232)
     }
 }

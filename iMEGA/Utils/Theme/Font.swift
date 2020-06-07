@@ -18,6 +18,10 @@ struct Font: Codable {
 }
 
 extension Font {
+    var uiFont: UIFont? { UIFont(name: name, size: size) }
+}
+
+extension Font {
 
     /// Size 17, Semibold
     static let headline = Font(size: 17, weight: .semibold)
