@@ -5,14 +5,21 @@ struct CornerStyle: Codable {
     let radius: Radiux
 }
 
+// MARK: - Constant
+
+extension CornerStyle {
+
+    static var roundCornerStyle: CornerStyle { CornerStyle(radius: 8) }
+}
+
+// MARK: - UI Applier
+
 extension CornerStyle {
      
     @discardableResult
     func applied(on view: UIView) -> UIView {
         apply(style: self)(view)
     }
-
-    static var roundCornerStyle: CornerStyle { CornerStyle(radius: 8) }
 }
 
 @discardableResult

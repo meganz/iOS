@@ -6,15 +6,22 @@ struct DecorationStyle: Codable {
     var corner: CornerStyle? = nil
 }
 
+// MARK: - Constants
+
+extension DecorationStyle {
+
+    static var roundCornerButtonDecorationStyle: DecorationStyle {
+        DecorationStyle(corner: CornerStyle.roundCornerStyle)
+    }
+}
+
+// MARK: - UI Applier
+
 extension DecorationStyle {
     
     @discardableResult
     func applied(on view: UIView) -> UIView {
         apply(style: self)(view)
-    }
-
-    static var buttonDecorationStyle: DecorationStyle {
-        DecorationStyle(corner: CornerStyle.roundCornerStyle)
     }
 }
 

@@ -8,6 +8,15 @@ struct TextStyle: Codable {
 
 extension TextStyle {
 
+    static var headlineTextStyle: TextStyle { TextStyle(font: .headline, color: .textDarkPrimary) }
+
+    static var paragraphTextStyle: TextStyle { TextStyle(font: .subhead, color: .textDarkPrimary) }
+}
+
+// MARK: - UI Applier
+
+extension TextStyle {
+
     // MARK: - UILabel Applier
 
     @discardableResult
@@ -28,7 +37,6 @@ extension TextStyle {
     func applied(on attributes: TextAttributes) -> TextAttributes {
         apply(style: self)(attributes)
     }
-    typealias TextAttributes = [NSAttributedString.Key: Any]
 }
 
 fileprivate func apply(style: TextStyle) -> (UILabel) -> UILabel {
@@ -48,7 +56,9 @@ fileprivate func apply(style: TextStyle) -> (UIButton) -> UIButton {
     }
 }
 
-fileprivate func apply(style: TextStyle) -> ([NSAttributedString.Key: Any]) -> [NSAttributedString.Key: Any] {
+
+typealias TextAttributes = [NSAttributedString.Key: Any]
+fileprivate func apply(style: TextStyle) -> (TextAttributes) -> TextAttributes {
     return { attributes in
         var copyAttributes = attributes
         copyAttributes[.font] = uiFont(from: style.font)

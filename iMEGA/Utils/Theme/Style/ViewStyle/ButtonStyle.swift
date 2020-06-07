@@ -17,13 +17,13 @@ enum ButtonStyle {
 }
 
 fileprivate let primaryButtonStyler: (UIButton) -> Void = { button in
-    DecorationStyle.buttonDecorationStyle.applied(on:
+    DecorationStyle.roundCornerButtonDecorationStyle.applied(on:
         ButtonStatedStyle.greenBackgroundStyle.applied(on:
             ButtonStatedStyle.whiteTextStyle.applied(on: button)))
 }
 
 fileprivate let secondaryButtonStyler: (UIButton) -> Void = { (button: UIButton) in
-    DecorationStyle.buttonDecorationStyle.applied(on:
+    DecorationStyle.roundCornerButtonDecorationStyle.applied(on:
         ButtonStatedStyle.whiteBackgroundStyle.applied(on:
             ButtonStatedStyle.greenTextStyle.applied(on: button)))
 }

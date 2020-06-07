@@ -18,8 +18,8 @@ extension ParagraphStyle {
     }
 
     @discardableResult
-    func applied(on paragraphStyle: NSMutableParagraphStyle) -> NSMutableParagraphStyle {
-        apply(style: self)(paragraphStyle)
+    func applied(on textAttributes: TextAttributes) -> TextAttributes {
+        apply(style: self)(textAttributes)
     }
 }
 
@@ -67,13 +67,17 @@ fileprivate extension TextAlignment {
     }
 }
 
-fileprivate func apply(style: ParagraphStyle) -> (NSMutableParagraphStyle) -> NSMutableParagraphStyle {
-    return { paragraphStyle in
+fileprivate func apply(style: ParagraphStyle) -> (TextAttributes) -> TextAttributes {
+    return { attributes in
+        let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = style.alignment.nsTextAlignment
         paragraphStyle.lineBreakMode = style.lineBreakMode.nsLineBreakMode
         paragraphStyle.lineSpacing = style.lineSpacing
         paragraphStyle.paragraphSpacing = style.paragraphSpacing
-        return paragraphStyle
+
+        var copyAttributes = attributes
+        copyAttributes[NSAttributedString.Key.paragraphStyle] = paragraphStyle
+        return copyAttributes
     }
 }
 
