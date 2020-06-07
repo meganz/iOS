@@ -34,6 +34,11 @@ extension Color {
     /// RGB(200, 241, 236, 1), Light Green
     static var textGreenSecondary: Color { Color.Text.greenSecondary }
 
+    // MARK: - Text Grey
+
+    /// Grey RGB(155, 155, 155, 1), `9B9B9B`
+    static var textGrayPrimary: Color { Color.Text.greyPrimary }
+
     // MARK: - Background
 
     /// RGB(255, 255, 255, 1), White
@@ -67,8 +72,17 @@ extension Color {
         /// RGB(0, 0, 0, 0.8), Dark gray
         static let darkPrimary = Color(red: 0, green: 0, blue: 0, alpha: 204)
 
+        // MARK: - White
+
         /// RGB(255, 255, 255, 1), White
         static let lightPrimary = Color(red: 255, green: 255, blue: 255)
+
+        // MARK: - Grey
+
+        /// Grey RGB(155, 155, 155, 1), `9B9B9B`
+        static let greyPrimary = Color(red: 155, green: 155, blue: 155)
+
+        // MARK: - Green
 
         /// RGB(255, 255, 255, 1), White
         static let lightPrimaryGreen = Color(red: 53, green: 211, blue: 196)

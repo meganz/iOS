@@ -12,6 +12,10 @@ extension DecorationStyle {
     func applied(on view: UIView) -> UIView {
         apply(style: self)(view)
     }
+
+    static var buttonDecorationStyle: DecorationStyle {
+        DecorationStyle(corner: CornerStyle.roundCornerStyle)
+    }
 }
 
 @discardableResult

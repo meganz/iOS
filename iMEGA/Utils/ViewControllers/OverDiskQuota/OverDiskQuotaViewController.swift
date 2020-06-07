@@ -50,42 +50,12 @@ class OverDiskQuotaViewController: UIViewController {
     }
 
     private func setupUpgradeButton(_ button: UIButton) {
-        let textStyle
-            = ButtonStatedStyle<TextStyle>(stated: [
-                .normal: TextStyle(font: .headline, color: .textLightPrimary),
-                .disabled: TextStyle(font: .headline, color: .backgroundDisabledPrimary),
-                .highlighted: TextStyle(font: .headline, color: .textLightPrimaryGreen)])
-        textStyle.applied(on: button)
-
-        let backgroundStyle = ButtonStatedStyle<BackgroundStyle>(stated: [
-            .normal: BackgroundStyle(backgroundColor: .backgroundEnabledPrimary),
-            .highlighted: BackgroundStyle(backgroundColor: .backgroundEnabledPrimary),
-        ])
-        backgroundStyle.applied(on: button)
-
-
-        let decorationStyle = DecorationStyle(corner: .init(radius: 8))
-        decorationStyle.applied(on: button)
-
+        ButtonStyle.primaryButton.style(button)
         button.setTitle("Upgrade", for: .normal)
+
     }
 
     private func setupDismissButton(_ button: UIButton) {
-        let textStyle
-            = ButtonStatedStyle<TextStyle>(stated: [
-                .normal: TextStyle(font: .headline, color: .textGreenPrimary),
-                .highlighted: TextStyle(font: .headline, color: .textGreenSecondary)])
-        textStyle.applied(on: button)
-
-        let backgroundStyle = ButtonStatedStyle<BackgroundStyle>(stated: [
-            .normal: BackgroundStyle(backgroundColor: .backgroundDefaultLight),
-            .highlighted: BackgroundStyle(backgroundColor: .backgroundDefaultLight),
-        ])
-        backgroundStyle.applied(on: button)
-
-
-        let decorationStyle = DecorationStyle(border: .init(width: 1, color: .shadowPrimary),
-                                              corner: .init(radius: 8))
-        decorationStyle.applied(on: button)
+        ButtonStyle.secondaryButton.style(button)
     }
 }

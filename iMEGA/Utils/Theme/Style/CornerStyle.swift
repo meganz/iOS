@@ -11,6 +11,8 @@ extension CornerStyle {
     func applied(on view: UIView) -> UIView {
         apply(style: self)(view)
     }
+
+    static var roundCornerStyle: CornerStyle { CornerStyle(radius: 8) }
 }
 
 @discardableResult
