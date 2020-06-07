@@ -19,6 +19,8 @@ struct ButtonStatedStyle<T> {
     }
 }
 
+// MARK: - TextStyle
+
 extension ButtonStatedStyle where T == TextStyle {
 
     @discardableResult
@@ -32,6 +34,11 @@ extension ButtonStatedStyle where T == TextStyle {
             stated[.disabled]?.font.uiFont
         return button
     }
+}
+
+// MARK: - Constants
+
+extension ButtonStatedStyle where T == TextStyle {
 
     static var whiteTextStyle: ButtonStatedStyle {
         ButtonStatedStyle<TextStyle>(stated: [
@@ -47,8 +54,9 @@ extension ButtonStatedStyle where T == TextStyle {
             .highlighted: TextStyle(font: .headline, color: .textGrayPrimary)
         ])
     }
-
 }
+
+// MARK: - ButtonStyle
 
 extension ButtonStatedStyle where T == BackgroundStyle {
 
@@ -61,6 +69,11 @@ extension ButtonStatedStyle where T == BackgroundStyle {
         }
         return button
     }
+}
+
+// MARK: - Constants
+
+extension ButtonStatedStyle where T == BackgroundStyle {
 
     static var greenBackgroundStyle: ButtonStatedStyle {
         ButtonStatedStyle<BackgroundStyle>(stated: [
