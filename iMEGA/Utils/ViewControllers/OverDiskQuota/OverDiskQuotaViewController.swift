@@ -45,12 +45,12 @@ class OverDiskQuotaViewController: UIViewController {
     }
 
     private func setupUpgradeButton(_ button: UIButton) {
-        ButtonStyle.primaryButton.style(button)
+        ButtonStyle.active.style(button)
         button.setTitle("Upgrade", for: .normal)
 
     }
 
     private func setupDismissButton(_ button: UIButton) {
-        ButtonStyle.secondaryButton.style(button)
+        ButtonStyle.inactive.style(button)
     }
 }

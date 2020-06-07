@@ -61,6 +61,9 @@ extension Color {
     /// RGB(255, 204, 0, 1), Yellow
     static var borderWarningYellow: Color { Color.Border.warning }
 
+    /// RGB(200, 200, 200, 1), Grey
+    static var borderInactiveGrey: Color { Color.Border.grey }
+
     // MARK: - Shadow
     static var shadowPrimary: Color { Color.Shadow.primary }
 }
@@ -118,6 +121,9 @@ extension Color {
 
         /// RGB(255, 204, 0, 1), Yellow
         static let warning = Color(red: 255, green: 204, blue: 0)
+
+        /// RGB(200, 200, 200, 1), Grey
+        static var grey: Color { Color(red: 200, green: 200, blue: 200) }
     }
 
     enum Shadow {
