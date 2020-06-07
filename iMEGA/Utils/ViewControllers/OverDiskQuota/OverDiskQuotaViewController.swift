@@ -50,19 +50,44 @@ class OverDiskQuotaViewController: UIViewController {
     }
 
     private func setupUpgradeButton(_ button: UIButton) {
-        let textStyle = TextStyle(font: .headline, color: .textLightPrimary)
+        let textStyle
+            = ButtonStatedStyle<TextStyle>(stated: [
+                .normal: TextStyle(font: .headline, color: .textLightPrimary),
+                .disabled: TextStyle(font: .headline, color: .backgroundDisabledPrimary),
+                .highlighted: TextStyle(font: .headline, color: .backgroundDisabledPrimary)])
         textStyle.applied(on: button)
 
-        let decorationStyle = DecorationStyle(background: .init(normal: .backgroundEnabledPrimary,
-                                                                highlighted: .backgroundHighlightedPrimary,
-                                                                disabled: .backgroundDisabledPrimary),
-                                              corner: .init(radius: 8))
+        let backgroundStyle = ButtonStatedStyle<BackgroundStyle>(stated: [
+            .normal: BackgroundStyle(backgroundColor: .backgroundEnabledPrimary),
+            .highlighted: BackgroundStyle(backgroundColor: .backgroundEnabledPrimary),
+        ])
+        backgroundStyle.applied(on: button)
+
+
+        let decorationStyle = DecorationStyle(corner: .init(radius: 8))
         decorationStyle.applied(on: button)
 
-        button.setTitle("XXX", for: .normal)
+        button.setTitle("Upgrade", for: .normal)
     }
 
     private func setupDismissButton(_ button: UIButton) {
+        let textStyle
+            = ButtonStatedStyle<TextStyle>(stated: [
+                .normal: TextStyle(font: .headline, color: .textGreenPrimary),
+                .highlighted: TextStyle(font: .headline, color: .textGreenSecondary)])
+        textStyle.applied(on: button)
 
+        let backgroundStyle = ButtonStatedStyle<BackgroundStyle>(stated: [
+            .normal: BackgroundStyle(backgroundColor: .backgroundDefaultLight),
+            .highlighted: BackgroundStyle(backgroundColor: .backgroundDefaultLight),
+        ])
+        backgroundStyle.applied(on: button)
+
+
+        let decorationStyle = DecorationStyle(shadow: ShadowStyle(shadowOffset: .init(width: 0, height: 3),
+                                                                  shadowColor: .shadowPrimary),
+                                              border: .init(width: 1, color: .shadowPrimary),
+                                              corner: .init(radius: 8))
+        decorationStyle.applied(on: button)
     }
 }
