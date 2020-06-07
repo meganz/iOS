@@ -1,14 +1,12 @@
 import UIKit
 
-struct Styler<View: UIView> {
-    var style: (View) -> View
-}
+typealias ButtonStyler = (UIButton) -> Void
 
 enum ButtonStyle {
     case primaryButton
     case secondaryButton
 
-    var style: (UIButton) -> Void {
+    var style: ButtonStyler {
         switch self {
         case .primaryButton:
             return primaryButtonStyler

@@ -37,14 +37,14 @@ extension ButtonStatedStyle where T == TextStyle {
         ButtonStatedStyle<TextStyle>(stated: [
             .normal: TextStyle(font: .headline, color: .textLightPrimary),
             .disabled: TextStyle(font: .headline, color: .backgroundDisabledPrimary),
-            .highlighted: TextStyle(font: .headline, color: .textGreyPrimary)])
+            .highlighted: TextStyle(font: .headline, color: .textLightPrimaryGreen)])
     }
 
     static var greenTextStyle: ButtonStatedStyle {
         ButtonStatedStyle<TextStyle>(stated: [
             .normal: TextStyle(font: .headline, color: .textGreenPrimary),
             .disabled: TextStyle(font: .headline, color: .backgroundDisabledPrimary),
-            .highlighted: TextStyle(font: .headline, color: .textGreyPrimary)
+            .highlighted: TextStyle(font: .headline, color: .textGrayPrimary)
         ])
     }
 
