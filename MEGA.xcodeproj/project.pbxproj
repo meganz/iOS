@@ -306,8 +306,9 @@
 		5DB1F47C2489E5CC001C1D5D /* ParagraphStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB1F47B2489E5CC001C1D5D /* ParagraphStyle.swift */; };
 		5DBAC841248778DA0050996E /* OverDisckQuotaWarningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DBAC840248778DA0050996E /* OverDisckQuotaWarningView.swift */; };
 		5DBAC8442487B8A10050996E /* OverDisckQuotaWarningView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5DBAC8432487B8A10050996E /* OverDisckQuotaWarningView.xib */; };
-		5DBAC8462487BE340050996E /* NibLodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DBAC8452487BE340050996E /* NibLodable.swift */; };
 		5DE448E6248D078800EE00CB /* AttributedTextStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE448E5248D078800EE00CB /* AttributedTextStyle.swift */; };
+		5DE448E9248D15B100EE00CB /* NibLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE448E8248D15B100EE00CB /* NibLoadable.swift */; };
+		5DE448EB248D15F300EE00CB /* NibOwnerLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE448EA248D15F300EE00CB /* NibOwnerLoadable.swift */; };
 		7714901520F7592100769BD4 /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7714901420F7592000769BD4 /* Contacts.framework */; };
 		771A932723A24DB300CB0ED7 /* UIView+FLEX_Layout.m in Sources */ = {isa = PBXBuildFile; fileRef = 771A932523A24DB300CB0ED7 /* UIView+FLEX_Layout.m */; };
 		771A932823A24DB300CB0ED7 /* UIPasteboard+FLEX.m in Sources */ = {isa = PBXBuildFile; fileRef = 771A932623A24DB300CB0ED7 /* UIPasteboard+FLEX.m */; };
@@ -1696,8 +1697,9 @@
 		5DB1F47B2489E5CC001C1D5D /* ParagraphStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParagraphStyle.swift; sourceTree = "<group>"; };
 		5DBAC840248778DA0050996E /* OverDisckQuotaWarningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverDisckQuotaWarningView.swift; sourceTree = "<group>"; };
 		5DBAC8432487B8A10050996E /* OverDisckQuotaWarningView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OverDisckQuotaWarningView.xib; sourceTree = "<group>"; };
-		5DBAC8452487BE340050996E /* NibLodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NibLodable.swift; sourceTree = "<group>"; };
 		5DE448E5248D078800EE00CB /* AttributedTextStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedTextStyle.swift; sourceTree = "<group>"; };
+		5DE448E8248D15B100EE00CB /* NibLoadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NibLoadable.swift; sourceTree = "<group>"; };
+		5DE448EA248D15F300EE00CB /* NibOwnerLoadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NibOwnerLoadable.swift; sourceTree = "<group>"; };
 		7714901420F7592000769BD4 /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = System/Library/Frameworks/Contacts.framework; sourceTree = SDKROOT; };
 		771A1B5E21C9220C00A8555D /* OnboardingViewType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OnboardingViewType.h; sourceTree = "<group>"; };
 		771A1B5F21C9227A00A8555D /* OnboardingType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OnboardingType.h; sourceTree = "<group>"; };
@@ -3144,6 +3146,7 @@
 		415226861A692ECC00EC7BB6 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				5DE448E7248D159000EE00CB /* UIKit+Tools */,
 				5D646600248909D5006030A5 /* Theme */,
 				B695E57E23275A3800D12B9E /* Functions */,
 				5B06BB7B21D508D1001F3C31 /* Flow Layouts */,
@@ -4155,9 +4158,17 @@
 				5DAB28F124875269004B5D5A /* OverDiskQuotaViewController.xib */,
 				5DBAC840248778DA0050996E /* OverDisckQuotaWarningView.swift */,
 				5DBAC8432487B8A10050996E /* OverDisckQuotaWarningView.xib */,
-				5DBAC8452487BE340050996E /* NibLodable.swift */,
 			);
 			path = OverDiskQuota;
+			sourceTree = "<group>";
+		};
+		5DE448E7248D159000EE00CB /* UIKit+Tools */ = {
+			isa = PBXGroup;
+			children = (
+				5DE448E8248D15B100EE00CB /* NibLoadable.swift */,
+				5DE448EA248D15F300EE00CB /* NibOwnerLoadable.swift */,
+			);
+			path = "UIKit+Tools";
 			sourceTree = "<group>";
 		};
 		7747B2D5208623550011814E /* Network */ = {
@@ -6007,6 +6018,7 @@
 				7759700A219EB85300B31671 /* NotificationsTableViewController.m in Sources */,
 				A86B9F282316D6AB00F35E7A /* FLEXCarouselCell.m in Sources */,
 				B65AC8E621F9B7A30094FF4F /* MOAssetUploadErrorPerLaunch+CoreDataClass.m in Sources */,
+				5DE448EB248D15F300EE00CB /* NibOwnerLoadable.swift in Sources */,
 				A86B9F532316D6AB00F35E7A /* FLEXArgumentInputObjectView.m in Sources */,
 				41D21E691D01AEC3002E6296 /* CTAssetsNavigationController.m in Sources */,
 				A86B9F882316D6AB00F35E7A /* FLEXColor.m in Sources */,
@@ -6133,7 +6145,6 @@
 				8361359021074C5D002FA3CC /* MOUploadTransfer+CoreDataClass.m in Sources */,
 				A86E34B3217F705700EFCAB0 /* MEGAChatGenericRequestDelegate.m in Sources */,
 				4156C80C1AD7E79A00F5E818 /* LTHKeychainUtils.m in Sources */,
-				5DBAC8462487BE340050996E /* NibLodable.swift in Sources */,
 				77F43DD92034637300AE4F42 /* UICollectionView+MNZCategory.m in Sources */,
 				83C570EF22E5BFCF00216896 /* PhoneNumberParser.swift in Sources */,
 				83369CE42179D0A0002B09C3 /* CloudDriveCollectionViewController.m in Sources */,
@@ -6414,6 +6425,7 @@
 				41A66D071AE7900F007D7E20 /* UpgradeTableViewController.m in Sources */,
 				5B20B01120E6300300511C0F /* MEGAGenericRequestDelegate.m in Sources */,
 				837C4F8A235DFFBA00FFE177 /* VerifyEmailViewController.swift in Sources */,
+				5DE448E9248D15B100EE00CB /* NibLoadable.swift in Sources */,
 				4172794E1DB663FA001AC818 /* JSQMessagesCellTextView.m in Sources */,
 				A86B9F5A2316D6AB00F35E7A /* FLEXFieldEditorView.m in Sources */,
 				B61F01C6220D37A400F4A917 /* DiskSpaceDetector.m in Sources */,
