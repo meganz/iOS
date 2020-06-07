@@ -29,6 +29,7 @@
             </constraints>
             <viewLayoutGuide key="safeArea" id="VXr-Tz-HHm"/>
             <connections>
+                <outlet property="centerConstraint" destination="KVS-st-Rno" id="1WL-Vu-sUv"/>
                 <outlet property="leftIconView" destination="g4T-tM-XEl" id="NKa-jf-SX7"/>
             </connections>
             <point key="canvasLocation" x="-64" y="-102"/>
