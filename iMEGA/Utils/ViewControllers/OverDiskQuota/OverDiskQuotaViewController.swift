@@ -54,7 +54,7 @@ class OverDiskQuotaViewController: UIViewController {
             = ButtonStatedStyle<TextStyle>(stated: [
                 .normal: TextStyle(font: .headline, color: .textLightPrimary),
                 .disabled: TextStyle(font: .headline, color: .backgroundDisabledPrimary),
-                .highlighted: TextStyle(font: .headline, color: .backgroundDisabledPrimary)])
+                .highlighted: TextStyle(font: .headline, color: .textLightPrimaryGreen)])
         textStyle.applied(on: button)
 
         let backgroundStyle = ButtonStatedStyle<BackgroundStyle>(stated: [
@@ -84,9 +84,7 @@ class OverDiskQuotaViewController: UIViewController {
         backgroundStyle.applied(on: button)
 
 
-        let decorationStyle = DecorationStyle(shadow: ShadowStyle(shadowOffset: .init(width: 0, height: 3),
-                                                                  shadowColor: .shadowPrimary),
-                                              border: .init(width: 1, color: .shadowPrimary),
+        let decorationStyle = DecorationStyle(border: .init(width: 1, color: .shadowPrimary),
                                               corner: .init(radius: 8))
         decorationStyle.applied(on: button)
     }

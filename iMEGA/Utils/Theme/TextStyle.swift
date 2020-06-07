@@ -33,9 +33,9 @@ extension TextStyle {
 
 fileprivate func apply(style: TextStyle) -> (UILabel) -> UILabel {
     return { label in
-        label.textColor = uiColor(from: style.color)
-        label.font = uiFont(from: style.font)
-        label.backgroundColor = uiColor(from: style.backgroundColor)
+        label.textColor = style.color.uiColor
+        label.font = style.font.uiFont
+        label.backgroundColor = style.backgroundColor.uiColor
         return label
     }
 }
@@ -52,8 +52,8 @@ fileprivate func apply(style: TextStyle) -> ([NSAttributedString.Key: Any]) -> [
     return { attributes in
         var copyAttributes = attributes
         copyAttributes[.font] = uiFont(from: style.font)
-        copyAttributes[.foregroundColor] = uiColor(from: style.color)
-        copyAttributes[.backgroundColor] = uiColor(from: style.backgroundColor)
+        copyAttributes[.foregroundColor] = style.color.uiColor
+        copyAttributes[.backgroundColor] = style.backgroundColor.uiColor
         return copyAttributes
     }
 }
