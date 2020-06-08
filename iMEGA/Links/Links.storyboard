@@ -281,7 +281,7 @@
                         <viewLayoutGuide key="safeArea" id="iNc-eL-ja7"/>
                     </view>
                     <navigationItem key="navigationItem" id="5HE-bc-Hh9">
-                        <barButtonItem key="backBarButtonItem" title=" " style="plain" id="yce-RA-6Iy"/>
+                        <barButtonItem key="backBarButtonItem" title=" " id="yce-RA-6Iy"/>
                     </navigationItem>
                     <connections>
                         <outlet property="closeBarButtonItem" destination="D67-ek-Mq7" id="NiK-Vg-RJp"/>
@@ -477,7 +477,7 @@
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="syg-IT-vUx">
-                        <barButtonItem key="backBarButtonItem" title=" " style="plain" id="OBP-SX-HhZ"/>
+                        <barButtonItem key="backBarButtonItem" title=" " id="OBP-SX-HhZ"/>
                     </navigationItem>
                     <connections>
                         <outlet property="cancelBarButtonItem" destination="4wR-WW-9ce" id="Iku-jO-YKe"/>

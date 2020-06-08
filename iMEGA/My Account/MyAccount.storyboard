@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="goA-hy-Wkg">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="goA-hy-Wkg">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -554,7 +554,7 @@
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Change Name" id="zOl-r6-l9A">
-                        <barButtonItem key="leftBarButtonItem" title="Cancel" style="plain" id="g6E-Tg-0Qx">
+                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="g6E-Tg-0Qx">
                             <connections>
                                 <action selector="cancelTouchUpInside:" destination="xQo-am-8Q7" id="sGB-VD-D6f"/>
                             </connections>

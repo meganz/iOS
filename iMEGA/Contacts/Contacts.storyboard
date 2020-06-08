@@ -918,7 +918,7 @@
                         <viewLayoutGuide key="safeArea" id="qdf-EA-zZz"/>
                     </view>
                     <navigationItem key="navigationItem" id="6lW-gy-m6R">
-                        <barButtonItem key="leftBarButtonItem" title="Cancel" style="plain" id="YgS-JW-D3e">
+                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="YgS-JW-D3e">
                             <connections>
                                 <action selector="cancelTapped:" destination="hUH-mK-gyg" id="jv5-6h-EDf"/>
                             </connections>
@@ -1938,7 +1938,7 @@
             <objects>
                 <viewController storyboardIdentifier="ItemListViewControllerID" id="HSA-9V-kLf" customClass="ItemListViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ire-th-B1l">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="110"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="pga-11-pde">

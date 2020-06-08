@@ -26,7 +26,7 @@
                                 <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                                 <items>
                                     <navigationItem id="u26-RZ-kaH">
-                                        <barButtonItem key="leftBarButtonItem" style="plain" systemItem="stop" id="Bfh-QP-H1o">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="stop" id="Bfh-QP-H1o">
                                             <connections>
                                                 <action selector="didPressCloseButton:" destination="yD8-RT-K0O" id="y4q-pJ-tUt"/>
                                             </connections>

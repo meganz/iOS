@@ -412,7 +412,7 @@
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <navigationItem key="navigationItem" id="dyl-mV-SkG">
-                        <barButtonItem key="backBarButtonItem" title=" " style="plain" id="0b1-fX-6Hc"/>
+                        <barButtonItem key="backBarButtonItem" title=" " id="0b1-fX-6Hc"/>
                     </navigationItem>
                     <connections>
                         <outlet property="carbonCopyBarButtonItem" destination="CT0-ge-Xob" id="Coz-u9-sGC"/>
@@ -499,14 +499,14 @@
         <image name="copy" width="28" height="28"/>
         <image name="download" width="32" height="32"/>
         <image name="incomingSegmentControler" width="24" height="24"/>
-        <image name="leaveShare" width="32" height="32"/>
+        <image name="leaveShare" width="28" height="28"/>
         <image name="linksSegmentControler" width="24" height="24"/>
         <image name="more" width="28" height="28.5"/>
         <image name="moreSelected" width="28" height="28"/>
         <image name="outgoingSegmentControler" width="24" height="24"/>
         <image name="readPermissions" width="24" height="24"/>
         <image name="removeLink" width="28" height="28"/>
-        <image name="removeShare" width="32" height="32"/>
+        <image name="removeShare" width="28" height="28"/>
         <image name="selectAll" width="22" height="22"/>
         <image name="shareGray" width="32" height="32"/>
         <image name="shareWith" width="38" height="32"/>
