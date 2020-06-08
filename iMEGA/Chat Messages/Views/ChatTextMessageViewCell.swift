@@ -7,7 +7,7 @@ class ChatTextMessageViewCell: TextMessageCell {
       }
     
     override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
-        guard let chatMessage = message as? ChatMessage else {
+        guard let chatMessage = message as? ChatMessage, chatMessage.message.content != nil else {
             return
         }
         
@@ -28,7 +28,7 @@ class ChatTextMessageSizeCalculator: TextMessageSizeCalculator {
       }
     
     override func messageContainerSize(for message: MessageType) -> CGSize {
-        guard let chatMessage = message as? ChatMessage else {
+        guard let chatMessage = message as? ChatMessage, chatMessage.message.content != nil else {
             return .zero
         }
         
