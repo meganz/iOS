@@ -23,11 +23,11 @@ class ChatImageQualityTableViewController: UITableViewController {
             cell.detailTextLabel?.text = AMLocalizedString("Send smaller size images through cellular networks and original size images through wifi", "Description of Automatic Image Quality option")
 
         case 1:
-            cell.textLabel?.text = AMLocalizedString("High", "High")
+            cell.textLabel?.text = AMLocalizedString("high", "Property associated with something higher than the usual or average size, number, value, or amount. For example: video quality.")
             cell.detailTextLabel?.text = AMLocalizedString("Send original size, increased quality images", "Description of High Image Quality option")
 
         case 2:
-            cell.textLabel?.text = AMLocalizedString("Optimised", "Optimised")
+            cell.textLabel?.text = AMLocalizedString("Optimised", "Text for some option property indicating the user the action to perform will be optimised. For example: Image Quality reduction option for chats")
             cell.detailTextLabel?.text = AMLocalizedString("Send smaller size images optimised for lower data consumption", "Description of Optimised Image Quality option")
         
         default:
