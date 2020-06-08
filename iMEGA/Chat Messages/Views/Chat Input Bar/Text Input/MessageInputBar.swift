@@ -366,7 +366,7 @@ class MessageInputBar: UIView {
             return
         }
         
-        sendButton.isEnabled = !text.isEmpty
+        sendButton.isEnabled = !(text as NSString).mnz_isEmpty()
         delegate.typing(withText: text)
     }
     
