@@ -2158,3 +2158,5 @@
 "Message..." = "Message...";
 /* Chat: This is the placeholder text for text view when keyboard is hidden */
 "Write message to" = "Write message to";
+/* Action suggestion text to the user in voice recording view */
+"Drag left to cancel, release to send" = "Drag left to cancel, release to send";
