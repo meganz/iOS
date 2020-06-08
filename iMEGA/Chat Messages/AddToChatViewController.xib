@@ -21,6 +21,8 @@
                 <outlet property="mediaCollectionViewTopConstraint" destination="KcC-JS-iDO" id="XFU-eT-lXE"/>
                 <outlet property="menuView" destination="32M-MS-rdd" id="8CU-AU-cHZ"/>
                 <outlet property="menuViewBottomConstraint" destination="KUQ-gf-Whe" id="1PT-oH-ic0"/>
+                <outlet property="menuViewLeadingConstraint" destination="DV7-tm-CbF" id="jc5-l4-5KI"/>
+                <outlet property="menuViewTrailingConstraint" destination="g43-HZ-aZa" id="igp-nS-O6w"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -61,18 +63,18 @@
                             </collectionViewFlowLayout>
                         </collectionView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="32M-MS-rdd" userLabel="Menu View">
-                            <rect key="frame" x="13" y="147" width="388" height="243"/>
+                            <rect key="frame" x="16" y="147" width="382" height="243"/>
                         </view>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                     <constraints>
-                        <constraint firstItem="32M-MS-rdd" firstAttribute="leading" secondItem="hwb-7m-LMj" secondAttribute="leading" constant="13" id="DV7-tm-CbF"/>
+                        <constraint firstItem="32M-MS-rdd" firstAttribute="leading" secondItem="hwb-7m-LMj" secondAttribute="leading" constant="16" id="DV7-tm-CbF"/>
                         <constraint firstItem="Zxb-mH-hnV" firstAttribute="leading" secondItem="hwb-7m-LMj" secondAttribute="leading" constant="6" id="JKd-ZH-8de"/>
                         <constraint firstItem="32M-MS-rdd" firstAttribute="bottom" secondItem="hwb-7m-LMj" secondAttribute="bottom" constant="-5" id="KUQ-gf-Whe"/>
                         <constraint firstItem="Zxb-mH-hnV" firstAttribute="top" secondItem="hwb-7m-LMj" secondAttribute="top" constant="5" id="KcC-JS-iDO"/>
                         <constraint firstItem="32M-MS-rdd" firstAttribute="top" secondItem="Zxb-mH-hnV" secondAttribute="bottom" constant="32" id="TKr-3S-IxU"/>
                         <constraint firstAttribute="trailing" secondItem="Zxb-mH-hnV" secondAttribute="trailing" constant="6" id="a4R-NR-tKw"/>
-                        <constraint firstAttribute="trailing" secondItem="32M-MS-rdd" secondAttribute="trailing" constant="13" id="g43-HZ-aZa"/>
+                        <constraint firstAttribute="trailing" secondItem="32M-MS-rdd" secondAttribute="trailing" constant="16" id="g43-HZ-aZa"/>
                         <constraint firstAttribute="height" constant="395" id="wl7-ZE-7X9"/>
                     </constraints>
                 </view>
