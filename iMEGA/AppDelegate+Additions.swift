@@ -38,7 +38,7 @@ extension AppDelegate {
     }
 
     @objc func showEnableTwoFactorAuthenticationIfNeeded() {
-        if UserDefaults.standard.bool(forKey: "twoFactorAuthenticationAlreadySuggested") || UIApplication.mnz_visibleViewController() is AddPhoneNumberViewController {
+        if UserDefaults.standard.bool(forKey: "twoFactorAuthenticationAlreadySuggested") || UIApplication.mnz_visibleViewController() is AddPhoneNumberViewController || (MEGASdkManager.sharedMEGASdk().isBusinessAccount && MEGASdkManager.sharedMEGASdk().businessStatus != .active) {
             return
         }
 
