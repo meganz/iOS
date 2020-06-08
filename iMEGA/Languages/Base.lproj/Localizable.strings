@@ -2230,3 +2230,5 @@
 "Folder link unavailable"="Folder link unavailable";
 /* Error message shown when opening a file link which doesn’t exist */
 "File link unavailable"="File link unavailable";
+/* Header of block with all shared files in chat. */
+"Shared Files"="Shared Files";
