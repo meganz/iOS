@@ -662,12 +662,12 @@
                         <viewLayoutGuide key="safeArea" id="Vwt-Bg-0NF"/>
                     </view>
                     <navigationItem key="navigationItem" id="h4O-NG-5Rw">
-                        <barButtonItem key="leftBarButtonItem" title="Cancel" style="plain" id="BSW-QW-4SV">
+                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="BSW-QW-4SV">
                             <connections>
                                 <action selector="cancelAction:" destination="GTK-NT-bBf" id="l4W-HK-gOT"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Send" style="plain" id="bDu-LY-wcy">
+                        <barButtonItem key="rightBarButtonItem" title="Send" id="bDu-LY-wcy">
                             <connections>
                                 <action selector="sendAction:" destination="GTK-NT-bBf" id="8sK-oD-D2w"/>
                             </connections>

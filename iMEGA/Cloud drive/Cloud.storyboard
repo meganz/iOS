@@ -1121,7 +1121,7 @@
                         </barButtonItem>
                     </toolbarItems>
                     <navigationItem key="navigationItem" id="RuD-LE-Jxn">
-                        <barButtonItem key="rightBarButtonItem" title="Done" style="plain" id="Bb8-Kf-AnR">
+                        <barButtonItem key="rightBarButtonItem" title="Done" id="Bb8-Kf-AnR">
                             <connections>
                                 <action selector="doneTapped:" destination="Lpo-hP-uLZ" id="Pjf-7W-xAn"/>
                             </connections>

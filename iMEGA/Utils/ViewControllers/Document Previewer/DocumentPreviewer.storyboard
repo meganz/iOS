@@ -98,12 +98,12 @@
                         <viewLayoutGuide key="safeArea" id="g6N-nT-s3x"/>
                     </view>
                     <navigationItem key="navigationItem" id="HWB-rp-yxf">
-                        <barButtonItem key="leftBarButtonItem" style="plain" systemItem="stop" id="uL1-bJ-jlX">
+                        <barButtonItem key="leftBarButtonItem" systemItem="stop" id="uL1-bJ-jlX">
                             <connections>
                                 <action selector="doneTapped:" destination="zUo-yM-mbH" id="hdo-Vw-jfA"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="action" id="vj5-kf-txr">
+                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="vj5-kf-txr">
                             <connections>
                                 <action selector="shareAction:" destination="zUo-yM-mbH" id="dZX-DX-gKG"/>
                             </connections>

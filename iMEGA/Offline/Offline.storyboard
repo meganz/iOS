@@ -30,7 +30,7 @@
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" id="VKp-HB-43t">
-                        <barButtonItem key="backBarButtonItem" title=" " style="plain" id="kjM-8U-Phg"/>
+                        <barButtonItem key="backBarButtonItem" title=" " id="kjM-8U-Phg"/>
                     </navigationItem>
                     <connections>
                         <outlet property="activityBarButtonItem" destination="Gqs-Ra-NdD" id="m5E-PG-hy8"/>

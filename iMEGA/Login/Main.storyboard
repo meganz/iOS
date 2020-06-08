@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="aAh-l2-z5Q">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="aAh-l2-z5Q">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -442,7 +442,7 @@
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Create Account" id="bf9-8f-AVR">
-                        <barButtonItem key="rightBarButtonItem" title="Cancel" style="plain" id="VDK-US-VNZ" userLabel="Cancel Bar Button Item">
+                        <barButtonItem key="rightBarButtonItem" title="Cancel" id="VDK-US-VNZ" userLabel="Cancel Bar Button Item">
                             <connections>
                                 <action selector="cancel:" destination="iCg-Wh-kpi" id="b9f-FJ-i3i"/>
                             </connections>
@@ -741,24 +741,6 @@
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nbL-21-D8z" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1096" y="-1100"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="ONJ-WE-LWY">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="mQI-Lo-xWW" customClass="MEGANavigationController" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="D7A-Up-4C1">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <textAttributes key="titleTextAttributes">
-                            <color key="textColor" red="0.1294117719" green="0.13333334029999999" blue="0.1294117719" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        </textAttributes>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dzt-kG-L0z" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1096" y="-1100"/>
         </scene>
