@@ -193,17 +193,17 @@
                             </connections>
                         </view>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Xd-Sa-NXk">
-                            <rect key="frame" x="101.5" y="100" width="211.5" height="16"/>
+                            <rect key="frame" x="108" y="127.5" width="198" height="14.5"/>
                             <string key="text">Drag left to cancel, release to send
 
 </string>
-                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
                             <color key="textColor" red="0.51764705882352935" green="0.51764705882352935" blue="0.51764705882352935" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mHh-Jk-tvL">
-                            <rect key="frame" x="18.5" y="149" width="38" height="16"/>
-                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
+                            <rect key="frame" x="20" y="150.5" width="35" height="14.5"/>
+                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
@@ -219,11 +219,11 @@
                         <constraint firstItem="vRr-bH-Ylv" firstAttribute="leading" secondItem="7Q4-5E-Job" secondAttribute="leading" constant="73" id="Fqx-VH-flp"/>
                         <constraint firstItem="V6B-TZ-Mn7" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="20" id="GaB-Kt-GHK"/>
                         <constraint firstItem="H0B-HU-26G" firstAttribute="centerY" secondItem="eRE-Xv-z0l" secondAttribute="centerY" id="O3h-OF-KiB"/>
+                        <constraint firstItem="H0B-HU-26G" firstAttribute="top" secondItem="3Xd-Sa-NXk" secondAttribute="bottom" constant="28" id="Qk9-Gi-d3J"/>
                         <constraint firstItem="7Q4-5E-Job" firstAttribute="bottom" secondItem="fXk-hP-wk8" secondAttribute="bottom" constant="-38.5" id="Ve8-2A-nMZ"/>
                         <constraint firstItem="H0B-HU-26G" firstAttribute="top" secondItem="mHh-Jk-tvL" secondAttribute="bottom" constant="5" id="bk1-y7-jYy"/>
                         <constraint firstItem="eRE-Xv-z0l" firstAttribute="leading" secondItem="7Q4-5E-Job" secondAttribute="leading" constant="10" id="cLQ-lT-Ljy"/>
                         <constraint firstItem="V6B-TZ-Mn7" firstAttribute="centerX" secondItem="fXk-hP-wk8" secondAttribute="centerX" id="cUd-dB-YS8"/>
-                        <constraint firstItem="7Q4-5E-Job" firstAttribute="bottom" secondItem="3Xd-Sa-NXk" secondAttribute="bottom" constant="120" id="fwZ-sq-zFN"/>
                         <constraint firstItem="7Q4-5E-Job" firstAttribute="trailing" secondItem="vRr-bH-Ylv" secondAttribute="trailing" constant="116" id="gnH-Ut-Fmc"/>
                         <constraint firstAttribute="height" constant="236" id="kTu-nj-8Va"/>
                         <constraint firstItem="eRE-Xv-z0l" firstAttribute="centerY" secondItem="fXk-hP-wk8" secondAttribute="centerY" id="qpN-Fa-Ai6"/>
