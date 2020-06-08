@@ -82,7 +82,7 @@ class NodeActionViewController: ActionSheetViewController {
             return
         }
         if node.isFile() {
-            subtitleLabel.text = Helper.sizeAndCreationDate(for: node, api: sharedMEGASdk)
+            subtitleLabel.text = Helper.sizeAndModicationDate(for: node, api: sharedMEGASdk)
         } else {
             subtitleLabel.text = Helper.filesAndFolders(inFolderNode: node, api: sharedMEGASdk)
         }
