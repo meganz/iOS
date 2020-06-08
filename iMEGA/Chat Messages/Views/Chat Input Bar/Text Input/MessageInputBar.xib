@@ -32,7 +32,7 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zpz-gS-Gkz" customClass="MessageInputTextBackgroundView" customModule="MEGA" customModuleProvider="target">
-                    <rect key="frame" x="10" y="23" width="331" height="56"/>
+                    <rect key="frame" x="13" y="23" width="328" height="56"/>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.029999999999999999" colorSpace="custom" customColorSpace="displayP3"/>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="APV-vT-gYp">
@@ -88,20 +88,19 @@
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Emu-CZ-PtI">
-                    <rect key="frame" x="10" y="27" width="50" height="50"/>
+                    <rect key="frame" x="18" y="31" width="44" height="44"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="50" id="Jya-of-JXj"/>
-                        <constraint firstAttribute="width" constant="50" id="SVd-fU-6yS"/>
+                        <constraint firstAttribute="height" constant="44" id="Jya-of-JXj"/>
+                        <constraint firstAttribute="width" constant="44" id="SVd-fU-6yS"/>
                     </constraints>
                     <color key="tintColor" red="0.31764705879999999" green="0.31764705879999999" blue="0.31764705879999999" alpha="0.84705882349999995" colorSpace="calibratedRGB"/>
-                    <inset key="imageEdgeInsets" minX="-8" minY="0.0" maxX="0.0" maxY="0.0"/>
-                    <state key="normal" image="add"/>
+                    <state key="normal" image="addAttachment"/>
                     <connections>
                         <action selector="addButtonTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="Lfx-4M-4NB"/>
                     </connections>
                 </button>
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" contentInsetAdjustmentBehavior="never" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="ul9-iZ-5KV" customClass="MessageTextView" customModule="MEGA" customModuleProvider="target">
-                    <rect key="frame" x="60" y="32" width="276" height="38"/>
+                    <rect key="frame" x="62" y="32" width="274" height="38"/>
                     <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -126,13 +125,13 @@
                 <constraint firstItem="ul9-iZ-5KV" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="32" id="UE7-5x-znS"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="ckY-Kz-eqN" secondAttribute="bottom" constant="6.5" id="Vpd-Qt-aKW"/>
                 <constraint firstItem="ckY-Kz-eqN" firstAttribute="centerX" secondItem="APV-vT-gYp" secondAttribute="centerX" id="WrG-aE-4gw"/>
-                <constraint firstItem="zpz-gS-Gkz" firstAttribute="leading" secondItem="Emu-CZ-PtI" secondAttribute="leading" id="cLk-mb-yNb"/>
+                <constraint firstItem="zpz-gS-Gkz" firstAttribute="leading" secondItem="Emu-CZ-PtI" secondAttribute="leading" constant="-5" id="cLk-mb-yNb"/>
                 <constraint firstItem="zpz-gS-Gkz" firstAttribute="top" secondItem="ul9-iZ-5KV" secondAttribute="top" constant="-9" id="fPC-Vq-M1z"/>
                 <constraint firstItem="JcV-Wx-f9z" firstAttribute="bottom" secondItem="iN0-l3-epB" secondAttribute="bottom" constant="50" id="fXP-Pm-6Nn"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="Emu-CZ-PtI" secondAttribute="bottom" constant="8" id="fij-A4-njj"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="Emu-CZ-PtI" secondAttribute="bottom" constant="10" id="fij-A4-njj"/>
                 <constraint firstItem="JcV-Wx-f9z" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="gmO-P0-T9e"/>
                 <constraint firstItem="zpz-gS-Gkz" firstAttribute="bottom" secondItem="ul9-iZ-5KV" secondAttribute="bottom" constant="9" id="iCm-C8-wxV"/>
-                <constraint firstItem="Emu-CZ-PtI" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="10" id="jZ3-JP-Z6O"/>
+                <constraint firstItem="Emu-CZ-PtI" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="18" id="jZ3-JP-Z6O"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="ul9-iZ-5KV" secondAttribute="bottom" constant="15" id="lC6-Rd-2PT"/>
                 <constraint firstItem="gyg-48-psi" firstAttribute="bottom" secondItem="iN0-l3-epB" secondAttribute="bottom" id="od0-pO-f9a"/>
                 <constraint firstItem="zpz-gS-Gkz" firstAttribute="trailing" secondItem="ul9-iZ-5KV" secondAttribute="trailing" constant="5" id="q8V-yt-DgD"/>
@@ -172,7 +171,7 @@
         </view>
     </objects>
     <resources>
-        <image name="add" width="22" height="22"/>
+        <image name="addAttachment" width="30" height="30"/>
         <image name="expand" width="28" height="28.5"/>
         <image name="sendButton" width="30" height="30"/>
         <image name="sendChatDisabled" width="30" height="30"/>
