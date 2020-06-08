@@ -33,6 +33,8 @@ class AddToChatViewController: UIViewController {
     
     @IBOutlet weak var menuView: UIView!
     @IBOutlet weak var menuViewBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var menuViewLeadingConstraint: NSLayoutConstraint!
+    @IBOutlet weak var menuViewTrailingConstraint: NSLayoutConstraint!
 
     var dismissHandler: (() -> Void)?
     private var presentAndDismissAnimationDuration: TimeInterval = 0.4
@@ -75,14 +77,17 @@ class AddToChatViewController: UIViewController {
             contentViewHeightConstraint.constant = view.bounds.height
         } else {
             guard let menuPageViewController = menuPageViewController else {
-                       return
-                   }
-                               
+                return
+            }
+            
+            menuPageViewController.padding = menuViewLeadingConstraint.constant
+                + menuViewTrailingConstraint.constant
+            
             contentViewHeightConstraint.constant = menuPageViewController.totalRequiredHeight
-               + mediaCollectionView.bounds.height
-            + mediaCollectionViewBottomConstraint.constant
-            + mediaCollectionViewTopConstraint.constant
-            + menuViewBottomConstraint.constant
+                + mediaCollectionView.bounds.height
+                + mediaCollectionViewBottomConstraint.constant
+                + mediaCollectionViewTopConstraint.constant
+                + menuViewBottomConstraint.constant
         }
         
         view.layoutIfNeeded()

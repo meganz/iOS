@@ -30,7 +30,7 @@
                                                     <rect key="frame" x="14.5" y="14.5" width="52.5" height="52.5"/>
                                                 </imageView>
                                             </subviews>
-                                            <color key="backgroundColor" red="0.97647058823529409" green="0.97647058823529409" blue="0.97647058823529409" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="backgroundColor" red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstItem="kfE-Ox-B7k" firstAttribute="centerX" secondItem="Egq-cg-GXs" secondAttribute="centerX" id="3Pk-ur-CBL"/>
                                                 <constraint firstItem="kfE-Ox-B7k" firstAttribute="centerY" secondItem="Egq-cg-GXs" secondAttribute="centerY" id="HIS-w9-qVh"/>
@@ -81,7 +81,7 @@
                                                     <rect key="frame" x="14.5" y="14.5" width="52.5" height="52.5"/>
                                                 </imageView>
                                             </subviews>
-                                            <color key="backgroundColor" red="0.97647058823529409" green="0.97647058823529409" blue="0.97647058823529409" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="backgroundColor" red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstItem="TjP-wc-AyL" firstAttribute="centerX" secondItem="aun-1c-vfJ" secondAttribute="centerX" id="8GP-cl-lej"/>
                                                 <constraint firstItem="TjP-wc-AyL" firstAttribute="width" secondItem="aun-1c-vfJ" secondAttribute="width" multiplier="0.645" id="Kgg-7B-SSV"/>
@@ -132,7 +132,7 @@
                                                     <rect key="frame" x="14.5" y="14.5" width="52.5" height="52.5"/>
                                                 </imageView>
                                             </subviews>
-                                            <color key="backgroundColor" red="0.97647058823529409" green="0.97647058823529409" blue="0.97647058823529409" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="backgroundColor" red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="Xia-Qd-Rdf" secondAttribute="height" id="NeV-IH-Tue"/>
                                                 <constraint firstItem="eqW-Ag-Lp4" firstAttribute="centerX" secondItem="Xia-Qd-Rdf" secondAttribute="centerX" id="cqe-ga-qvo"/>
@@ -183,7 +183,7 @@
                                                     <rect key="frame" x="15" y="15" width="53.5" height="53.5"/>
                                                 </imageView>
                                             </subviews>
-                                            <color key="backgroundColor" red="0.97647058823529409" green="0.97647058823529409" blue="0.97647058823529409" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="backgroundColor" red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstItem="Tle-z5-Kkb" firstAttribute="height" secondItem="S7E-0Y-cGM" secondAttribute="height" multiplier="0.645" id="JkV-QC-Ias"/>
                                                 <constraint firstItem="Tle-z5-Kkb" firstAttribute="centerX" secondItem="S7E-0Y-cGM" secondAttribute="centerX" id="lPg-Ob-qQg"/>
@@ -239,7 +239,7 @@
                                                     <rect key="frame" x="14.5" y="14.5" width="52.5" height="52.5"/>
                                                 </imageView>
                                             </subviews>
-                                            <color key="backgroundColor" red="0.97647058823529409" green="0.97647058823529409" blue="0.97647058823529409" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="backgroundColor" red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstItem="ODp-cc-cUe" firstAttribute="width" secondItem="V1F-TF-c3y" secondAttribute="width" multiplier="0.645" id="Jm6-n0-c42"/>
                                                 <constraint firstItem="ODp-cc-cUe" firstAttribute="centerX" secondItem="V1F-TF-c3y" secondAttribute="centerX" id="RWk-Lo-ABZ"/>
@@ -290,7 +290,7 @@
                                                     <rect key="frame" x="14.5" y="14.5" width="52.5" height="52.5"/>
                                                 </imageView>
                                             </subviews>
-                                            <color key="backgroundColor" red="0.97647058823529409" green="0.97647058823529409" blue="0.97647058823529409" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="backgroundColor" red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="n5c-u4-SoS" secondAttribute="height" id="7mt-IU-f7p"/>
                                                 <constraint firstItem="KjB-Gh-K9b" firstAttribute="centerX" secondItem="n5c-u4-SoS" secondAttribute="centerX" id="Pl4-Y8-H6c"/>
@@ -341,7 +341,7 @@
                                                     <rect key="frame" x="14.5" y="14.5" width="52.5" height="52.5"/>
                                                 </imageView>
                                             </subviews>
-                                            <color key="backgroundColor" red="0.97647058823529409" green="0.97647058823529409" blue="0.97647058823529409" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="backgroundColor" red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstItem="Vd4-eF-pnc" firstAttribute="height" secondItem="I7E-pA-gr8" secondAttribute="height" multiplier="0.645" id="FkF-1V-8mL"/>
                                                 <constraint firstAttribute="width" secondItem="I7E-pA-gr8" secondAttribute="height" id="OJz-xe-Abq"/>
@@ -392,7 +392,7 @@
                                                     <rect key="frame" x="14.5" y="14.5" width="52.5" height="52.5"/>
                                                 </imageView>
                                             </subviews>
-                                            <color key="backgroundColor" red="0.97647058823529409" green="0.97647058823529409" blue="0.97647058823529409" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="backgroundColor" red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="kQl-zJ-FDm" secondAttribute="height" id="4bk-UQ-KNf"/>
                                                 <constraint firstItem="sov-ox-y35" firstAttribute="centerX" secondItem="kQl-zJ-FDm" secondAttribute="centerX" id="7LF-SZ-raj"/>
