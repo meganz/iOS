@@ -22,7 +22,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="414" height="236"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H0B-HU-26G" userLabel="AudioWavesBackground">
-                            <rect key="frame" x="10" y="170" width="288.5" height="55"/>
+                            <rect key="frame" x="37.5" y="170" width="338" height="55"/>
                             <color key="backgroundColor" red="0.96862745098039216" green="0.96862745098039216" blue="0.96862745098039216" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="55" id="oeR-Sw-eNh"/>
@@ -210,9 +210,9 @@
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                     <constraints>
-                        <constraint firstItem="fXk-hP-wk8" firstAttribute="leading" secondItem="H0B-HU-26G" secondAttribute="trailing" id="4O9-Wd-pVb"/>
+                        <constraint firstItem="fXk-hP-wk8" firstAttribute="centerX" secondItem="H0B-HU-26G" secondAttribute="trailing" id="4O9-Wd-pVb"/>
                         <constraint firstItem="3Xd-Sa-NXk" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="7bW-4X-Rxf"/>
-                        <constraint firstItem="H0B-HU-26G" firstAttribute="leading" secondItem="eRE-Xv-z0l" secondAttribute="leading" id="7co-x2-nyb"/>
+                        <constraint firstItem="H0B-HU-26G" firstAttribute="leading" secondItem="eRE-Xv-z0l" secondAttribute="centerX" id="7co-x2-nyb"/>
                         <constraint firstItem="7Q4-5E-Job" firstAttribute="trailing" secondItem="fXk-hP-wk8" secondAttribute="trailing" constant="-38.5" id="BG5-dl-YmM"/>
                         <constraint firstItem="vRr-bH-Ylv" firstAttribute="height" secondItem="H0B-HU-26G" secondAttribute="height" id="Bcb-RT-eF5"/>
                         <constraint firstItem="vRr-bH-Ylv" firstAttribute="centerY" secondItem="H0B-HU-26G" secondAttribute="centerY" id="ChM-TJ-PKZ"/>
