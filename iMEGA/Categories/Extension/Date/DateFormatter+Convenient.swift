@@ -6,6 +6,7 @@ extension DateFormatter {
 
     /// Monday Jun 1, 2020
     static let dateMediumWithWeekday = DateFormatterPool.shared.dateFormatter(of: .dateMediumWithWeekday)
+
     /// Jun 1, 2020
     static let dateMedium = DateFormatterPool.shared.dateFormatter(of: .dateMedium)
 

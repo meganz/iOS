@@ -8,7 +8,7 @@ extension Date {
     /// - Parameter calendar: Calendar onn which the starting time of current instance based.
     /// - Returns: A `Timesamp` (`Date`)  of a calendar day that contains current date.
     func startOfDay(on calendar: Calendar) -> MNZTimestap? {
-        calendar.dateInterval(of: .day, for: self)?.start
+        startingTimestamp(with: .day, on: calendar)
     }
 
     /// Will return starting timesamp with given `CalendarComponent` in the given `Calendar.`
