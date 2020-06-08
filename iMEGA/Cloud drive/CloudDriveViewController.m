@@ -1090,15 +1090,6 @@ static const NSTimeInterval kSearchTimeDelay = .5;
             }
         }];
     }]];
-    if (@available(iOS 13.0, *)) {
-        [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"Scan Document", @"Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA") detail:nil image:[UIImage imageNamed:@"scanDocument"] style:UIAlertActionStyleDefault actionHandler:^{
-            [self presentViewController:({
-                VNDocumentCameraViewController *scanVC = [VNDocumentCameraViewController.alloc init];
-                scanVC.delegate = self;
-                scanVC;
-            }) animated:YES completion:nil];
-        }]];
-    }
     [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"uploadFrom", @"Option given on the `Add` section to allow the user upload something from another cloud storage provider.") detail:nil image:[UIImage imageNamed:@"import"] style:UIAlertActionStyleDefault actionHandler:^{
         UIDocumentMenuViewController *documentMenuViewController = [[UIDocumentMenuViewController alloc] initWithDocumentTypes:@[(__bridge NSString *) kUTTypeContent, (__bridge NSString *) kUTTypeData,(__bridge NSString *) kUTTypePackage, (@"com.apple.iwork.pages.pages"), (@"com.apple.iwork.numbers.numbers"), (@"com.apple.iwork.keynote.key")] inMode:UIDocumentPickerModeImport];
         documentMenuViewController.delegate = self;
@@ -1493,6 +1484,16 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"upload", @"") detail:nil image:[UIImage imageNamed:@"upload"] style:UIAlertActionStyleDefault actionHandler:^{
         [weakSelf presentUploadAlertController];
     }]];
+    
+    if (@available(iOS 13.0, *)) {
+        [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"Scan Document", @"Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA") detail:nil image:[UIImage imageNamed:@"scanDocument"] style:UIAlertActionStyleDefault actionHandler:^{
+            [self presentViewController:({
+                VNDocumentCameraViewController *scanVC = [VNDocumentCameraViewController.alloc init];
+                scanVC.delegate = self;
+                scanVC;
+            }) animated:YES completion:nil];
+        }]];
+    }
     [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"newFolder", @"Menu option from the `Add` section that allows you to create a 'New Folder'") detail:nil image:[UIImage imageNamed:@"newFolder"] style:UIAlertActionStyleDefault actionHandler:^{
         UIAlertController *newFolderAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"newFolder", @"Menu option from the `Add` section that allows you to create a 'New Folder'") message:nil preferredStyle:UIAlertControllerStyleAlert];
         
@@ -1971,7 +1972,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
         vc.docs = docs.copy;
         [self presentViewController:({
             MEGANavigationController *nav = [MEGANavigationController.alloc initWithRootViewController:vc];
-            [nav addLeftDismissButtonWithText:AMLocalizedString(@"ok", nil)];
+            [nav addLeftDismissButtonWithText:AMLocalizedString(@"cancel", nil)];
             nav;
         }) animated:YES completion:nil];
     }];
