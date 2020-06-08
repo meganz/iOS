@@ -617,7 +617,6 @@ class ChatViewController: MessagesViewController {
     
     func isMessageSentAtSameMinute(between indexPath1: IndexPath, and indexPath2: IndexPath) -> Bool {
         let previousMessageDate = messages[indexPath1.section].sentDate
-        print("index path \(indexPath1.section) date \(previousMessageDate) - indexpath2 \(indexPath2.section) date \(messages[indexPath2.section].sentDate)")
         return messages[indexPath2.section].sentDate.isSameMinute(date: previousMessageDate)
     }
 
