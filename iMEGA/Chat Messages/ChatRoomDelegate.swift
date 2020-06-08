@@ -95,10 +95,14 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
             if chatMessage.count == 0 {
                 loadingState = false
 
-                chatMessage = historyMessages
-                historyMessages.removeAll()
-                chatViewController?.messagesCollectionView.reloadData()
-                chatViewController?.messagesCollectionView.scrollToBottom(animated: true)
+         
+                DispatchQueue.main.async {
+
+                    self.chatMessage = self.historyMessages
+                    self.historyMessages.removeAll()
+                    self.chatViewController?.messagesCollectionView.reloadData()
+                    self.chatViewController?.messagesCollectionView.scrollToBottom()
+                }
                 return
             }
             
@@ -248,7 +252,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
         }
         chatViewController?.messagesCollectionView.reloadData()
         if lastSectionVisible == true {
-            chatViewController?.messagesCollectionView.scrollToBottom(animated: true)
+            chatViewController?.messagesCollectionView.scrollToBottom()
         }
     }
     
@@ -279,7 +283,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
         return chatViewController?.messagesCollectionView.indexPathsForVisibleItems.contains(lastIndexPath) ?? false
     }
     
-    private func loadMessages(count: Int = 32) {
+    private func loadMessages(count: Int = 10) {
         switch MEGASdkManager.sharedMEGAChatSdk()!.loadMessages(forChat: chatRoom.chatId, count: count){
         case .error:
             MEGALogDebug("loadMessagesForChat: history has to be fetched from server, but we are not logged in yet")
