@@ -229,23 +229,6 @@ extension UIColor {
     
     // MARK: - Text
     
-    @objc class func mnz_labelInverted(_ traitCollection: UITraitCollection) -> UIColor {
-        if #available(iOS 13.0, *) {
-            switch traitCollection.userInterfaceStyle {
-            case .unspecified, .light:
-                return UIColor.white
-                
-            case .dark:
-                return UIColor.black
-                
-            default:
-                return UIColor.white
-            }
-        } else {
-            return UIColor.white
-        }
-    }
-    
     @objc class func mnz_secondaryLabel() -> UIColor {
         if #available(iOS 13.0, *) {
             return UIColor.secondaryLabel

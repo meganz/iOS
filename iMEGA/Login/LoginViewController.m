@@ -265,9 +265,11 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 }
 
 - (void)updateAppearance {
-    self.view.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
+    self.view.backgroundColor = [UIColor mnz_backgroundGroupedElevated:self.traitCollection];
     
+    self.emailInputView.backgroundColor = [UIColor mnz_secondaryBackgroundGroupedElevated:self.traitCollection];
     [self.emailInputView updateAppearance];
+    self.passwordView.backgroundColor = [UIColor mnz_secondaryBackgroundGroupedElevated:self.traitCollection];
     [self.passwordView updateAppearance];
     
     [self.forgotPasswordButton setTitleColor:[UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection] forState:UIControlStateNormal];

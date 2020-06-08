@@ -2336,7 +2336,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         cell.textView.attributedText = message.attributedText;
     } else if (!message.isMediaMessage) {
         cell.textView.font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
-        cell.textView.textColor = [message.senderId isEqualToString:self.senderId] ? UIColor.whiteColor : [UIColor mnz_labelInverted:self.traitCollection];
+        cell.textView.textColor = [message.senderId isEqualToString:self.senderId] ? UIColor.whiteColor : UIColor.mnz_label;
         
         cell.textView.linkTextAttributes = @{ NSForegroundColorAttributeName : cell.textView.textColor,
                                               NSUnderlineStyleAttributeName : @(NSUnderlineStyleSingle | NSUnderlinePatternSolid) };
