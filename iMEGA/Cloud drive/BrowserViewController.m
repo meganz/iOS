@@ -677,7 +677,7 @@
     
     if (self.cloudDriveButton.selected) {
         if (node.isFile) {
-            cell.infoLabel.text = [Helper sizeAndCreationDateForNode:node api:[MEGASdkManager sharedMEGASdk]];
+            cell.infoLabel.text = [Helper sizeAndModicationDateForNode:node api:[MEGASdkManager sharedMEGASdk]];
         } else {
             cell.infoLabel.text = [Helper filesAndFoldersInFolderNode:node api:[MEGASdkManager sharedMEGASdk]];
         }
