@@ -48,9 +48,7 @@ class MessageInputBar: UIView {
             layoutIfNeeded()
         }
     }
-    
-    var keyboardShown: (() -> Void)?
-        
+            
     // MARK:- Private properties
     
     private var keyboardWillShowObserver: NSObjectProtocol!
@@ -330,10 +328,6 @@ class MessageInputBar: UIView {
                 + self.messageTextViewBottomConstraint.constant
                 + self.messageTextViewTopConstraint.constant
             self.keyboardHeight = keyboardFrame.size.height - inputBarHeight
-            
-            if let keyboardShownHandler = self.keyboardShown {
-                keyboardShownHandler()
-            }
             
             if self.backgroundViewTrailingButtonConstraint.isActive,
                 let messageTextViewExpanadedHeight = self.messageTextView.expandedHeight,
