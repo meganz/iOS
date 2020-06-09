@@ -3,11 +3,11 @@ import UIKit
 @IBDesignable
 final class OverDisckQuotaWarningView: UIView, NibOwnerLoadable {
 
-    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet private var titleLabel: UILabel!
     
-    @IBOutlet weak var detailLabel: UILabel!
+    @IBOutlet private var detailLabel: UILabel!
     
-    @IBOutlet var containerView: UIView!
+    @IBOutlet private var containerView: UIView!
 
     override init(frame: CGRect) {
         super.init(frame: frame)

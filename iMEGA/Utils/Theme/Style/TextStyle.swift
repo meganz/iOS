@@ -56,7 +56,6 @@ fileprivate func apply(style: TextStyle) -> (UIButton) -> UIButton {
     }
 }
 
-
 typealias TextAttributes = [NSAttributedString.Key: Any]
 fileprivate func apply(style: TextStyle) -> (TextAttributes) -> TextAttributes {
     return { attributes in

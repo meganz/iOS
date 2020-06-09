@@ -7,14 +7,14 @@ import UIKit
 ///  * this class is used as the XIB's File's Owner
 ///
 /// to be able to instantiate them from the NIB in a type-safe manner
-public protocol NibOwnerLoadable: class {
+protocol NibOwnerLoadable: AnyObject {
     /// The nib file to use to load a new instance of the View designed in a XIB
     static var nib: UINib { get }
 }
 
 // MARK: Default implementation
 
-public extension NibOwnerLoadable {
+extension NibOwnerLoadable {
     /// By default, use the nib which have the same name as the name of the class,
     /// and located in the bundle of that class
     static var nib: UINib {
@@ -24,7 +24,7 @@ public extension NibOwnerLoadable {
 
 // MARK: Support for instantiation from NIB
 
-public extension NibOwnerLoadable where Self: UIView {
+extension NibOwnerLoadable where Self: UIView {
     /**
      Adds content loaded from the nib to the end of the receiver's list of subviews and adds constraints automatically.
     */

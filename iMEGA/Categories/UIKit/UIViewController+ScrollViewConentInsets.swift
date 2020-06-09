@@ -4,7 +4,7 @@ extension UIViewController {
 
     /// Disable given scrollView's adjusting content inset behavior.
     /// - Parameter scrollView: The scrollView whose `contentInset` would not be automatically adjusted by current view controller.
-    func disableAdjustingContentInsets(ofScrollView scrollView: UIScrollView) {
+    func disableAdjustingContentInsets(for scrollView: UIScrollView) {
         if #available(iOS 11, *) {
             // Recommended method introduced from iOS 11
             scrollView.contentInsetAdjustmentBehavior = .never
