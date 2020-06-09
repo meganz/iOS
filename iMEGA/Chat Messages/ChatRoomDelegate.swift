@@ -283,6 +283,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
             }
             return;
         }
+        UIView.setAnimationsEnabled(false)
         messagesCollectionView.performBatchUpdates({
             messagesCollectionView.insertSections([chatMessage.count - 1])
             if chatMessage.count >= 2 {
@@ -290,6 +291,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
             }
         }, completion: { [weak self] _ in
             if lastSectionVisible == true {
+                UIView.setAnimationsEnabled(true)
                 self?.chatViewController?.messagesCollectionView.scrollToBottom(animated: true)
 
             }
