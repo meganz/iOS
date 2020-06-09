@@ -2,12 +2,13 @@ import UIKit
 
 struct ShadowStyle: Codable {
     typealias Offset = CGSize
+    typealias Opacity = Float
+    typealias Radius = CGFloat
     
-    let shadowOffset: Offset
     let shadowColor: Color
-
-    let cornerRadius: Radiux = 8
-    typealias Radiux = CGFloat
+    var shadowOffset: Offset = .zero
+    var shadowOpacity: Opacity = 1.0
+    var shadowRadius: Radius = 10
 }
 
 extension ShadowStyle {
@@ -24,9 +25,9 @@ extension ShadowStyle {
 fileprivate func apply(style: ShadowStyle) -> (UIView) -> UIView {
     return { view in
         view.layer.shadowColor = style.shadowColor.uiColor.cgColor
-        view.layer.shadowOffset = .zero
-        view.layer.shadowOpacity = 1.0
-        view.layer.shadowRadius = 10
+        view.layer.shadowOffset = style.shadowOffset
+        view.layer.shadowOpacity = style.shadowOpacity
+        view.layer.shadowRadius = style.shadowRadius
         view.layer.masksToBounds = false
 
         return view

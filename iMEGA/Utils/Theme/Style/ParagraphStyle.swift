@@ -10,6 +10,13 @@ struct ParagraphStyle: Codable {
     typealias ParagraphSpacing = CGFloat
 }
 
+// MARK: - Constant
+
+extension ParagraphStyle {
+
+    static var centerAlignedWideSpacingParagraphStyle: ParagraphStyle { ParagraphStyle(lineSpacing: 8, alignment: .center) }
+}
+
 extension ParagraphStyle {
 
     @discardableResult

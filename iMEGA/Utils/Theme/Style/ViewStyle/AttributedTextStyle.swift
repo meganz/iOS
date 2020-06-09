@@ -13,7 +13,6 @@ enum AttributedTextStyle {
 }
 
 fileprivate let paragraphTextAttributesStyler: (TextAttributes) -> TextAttributes = { attributes in
-    ParagraphStyle(lineSpacing: 8, alignment: .center)
-        .applied(on: TextStyle.paragraphTextStyle.applied(on: attributes))
-
+    ParagraphStyle.centerAlignedWideSpacingParagraphStyle.applied(on:
+        TextStyle.paragraphTextStyle.applied(on: attributes))
 }
