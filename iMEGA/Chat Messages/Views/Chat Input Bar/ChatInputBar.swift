@@ -158,6 +158,15 @@ class ChatInputBar: UIView {
         messageInputBar.set(text: text)
     }
     
+    func setTypingIndicator(text: NSAttributedString?) {
+        guard messageInputBar.superview != nil else {
+            MEGALogInfo("message input bar was not the shown to the user")
+            return
+        }
+        
+        messageInputBar.setTypingIndicator(text: text)
+    }
+    
     // MARK: - Private methods.
     
     private func addMessageInputBar() {

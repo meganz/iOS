@@ -420,6 +420,14 @@ extension ChatViewController: ChatInputBarDelegate {
         showTapAndHoldMessage()
     }
     
+    func updateTypingIndicatorView(withAttributedString attributedString: NSAttributedString?) {
+        guard let chatInputBar = inputAccessoryView as? ChatInputBar else {
+            return
+        }
+        
+        chatInputBar.setTypingIndicator(text: attributedString)
+    }
+    
     func typing(withText text: String) {
         if text.isEmpty {
             MEGASdkManager.sharedMEGAChatSdk()?.sendStopTypingNotification(forChat: chatRoom.chatId)

@@ -24,6 +24,8 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
         return MEGASdkManager.sharedMEGAChatSdk()!.isFullHistoryLoaded(forChat: chatRoom.chatId)
     }
     
+    var whoIsTyping: [UInt64: Timer] = [:]
+    
     // MARK: - Init
 
     init(chatRoom: MEGAChatRoom, chatViewController: ChatViewController) {
@@ -49,18 +51,26 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
             }
             
             if (chat.userTypingHandle != api.myUserHandle) {
-                chatViewController?.setTypingIndicatorViewHidden(false, animated: true ,whilePerforming: nil) { [weak self] success in
-                    if success, self?.isLastSectionVisible() == true {
-                        self?.chatViewController?.messagesCollectionView.scrollToBottom(animated: true)
-                    }
+                if let timer = whoIsTyping[chat.userTypingHandle] {
+                    timer.invalidate()
                 }
+                
+                let timer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false) { [weak self] _ in
+                    guard let `self` = self else {
+                        return
+                    }
+                    
+                    self.removeTypingIndicator(forHandle: chat.userTypingHandle)
+                }
+                
+                whoIsTyping[chat.userTypingHandle] = timer
+                updateTypingIndicator()
             }
         case .userStopTyping:
-            chatViewController?.setTypingIndicatorViewHidden(true, animated: true ,whilePerforming: nil)  { [weak self] success in
-                if success, self?.isLastSectionVisible() == true {
-                    self?.chatViewController?.messagesCollectionView.scrollToBottom(animated: true)
-                }
+            if chat.userTypingHandle != api.myUserHandle {
+                removeTypingIndicator(forHandle: chat.userTypingHandle)
             }
+            
         case .closed:
             hasChatRoomClosed = true
             if chatRoom.isPreview {
@@ -341,6 +351,79 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
 //        }
 //        chatViewController.messagesCollectionView.reloadEmptyDataSet()
     }
+    
+    private func updateTypingIndicator() {
+        if whoIsTyping.keys.count >= 2 {
+            updateTwoOrMoreUserTyping()
+        } else if whoIsTyping.keys.count == 1 {
+            if let handle = whoIsTyping.keys.first,
+                let username = username(forHandle: handle) {
+                let localizedString = AMLocalizedString("isTyping", "A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime.")
+                let typingIndicatorString = String(format: localizedString, username)
+                let attributes = [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 10, weight: .medium)]
+                let typingIndicatorAttributedString = NSMutableAttributedString(string: typingIndicatorString,
+                                                                                attributes: attributes)
+                typingIndicatorAttributedString.addAttribute(NSAttributedString.Key.font,
+                                                             value: UIFont.boldSystemFont(ofSize: 10),
+                                                             range: NSMakeRange(0, username.utf16.count))
+                chatViewController?.updateTypingIndicatorView(withAttributedString: typingIndicatorAttributedString)
+            } else {
+                MEGALogInfo("Either the handle or the username is not found")
+            }
+        } else {
+            chatViewController?.updateTypingIndicatorView(withAttributedString: nil)
+        }
+    }
+    
+    private func updateTwoOrMoreUserTyping() {
+        guard whoIsTyping.keys.count >= 2 else {
+            fatalError("There should be two or more users typing for this method to be invoked")
+        }
+        
+        let keys = Array(whoIsTyping.keys)
+        let firstUserHandle = keys[0]
+        let secondUserHandle = keys[1]
+        
+        if let firstUsername = username(forHandle: firstUserHandle),
+            let secondUsername = username(forHandle: secondUserHandle) {
+            let combinedUsername = "\(firstUsername) , \(secondUsername)"
+            
+            let localizedString: String?
+            if keys.count > 2 {
+                localizedString = AMLocalizedString("moreThanTwoUsersAreTyping", "text that appear when there are more than 2 people writing at that time in a chat. For example User1, user2 and more are typing... The parameter will be the concatenation of the first two user names. Please do not translate or modify the tags or placeholders.").mnz_removeWebclientFormatters()
+            } else {
+                localizedString = AMLocalizedString("twoUsersAreTyping", "Plural, a hint that appears when two users are typing in a group chat at the same time. The parameter will be the concatenation of both user names. Please do not translate or modify the tags or placeholders.").mnz_removeWebclientFormatters()
+            }
+            
+            if let typingIndicatorString = localizedString?.replacingOccurrences(of: "%1$s", with: combinedUsername) {
+                let attributes = [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 10, weight: .medium)]
+                let typingIndicatorAttributedString = NSMutableAttributedString(string: typingIndicatorString,
+                                                                                attributes: attributes)
+                typingIndicatorAttributedString.addAttribute(NSAttributedString.Key.font,
+                                                             value: UIFont.boldSystemFont(ofSize: 10),
+                                                             range: NSMakeRange(0, typingIndicatorString.utf16.count))
+                chatViewController?.updateTypingIndicatorView(withAttributedString: typingIndicatorAttributedString)
+            }
+        }
+    }
+    
+    private func removeTypingIndicator(forHandle handle: UInt64) {
+        whoIsTyping[handle] = nil
+        updateTypingIndicator()
+    }
+    
+    private func username(forHandle handle: UInt64) -> String? {
+        if let userNickname = chatRoom.userNickname(forUserHandle: handle) {
+            return userNickname
+        } else if let userFirstName = chatRoom.peerFirstname(byHandle: handle) {
+            return userFirstName
+        } else if let userEmail = chatRoom.peerEmail(byHandle: handle) {
+            return userEmail
+        }
+        
+        return nil
+    }
+    
 }
 
 extension ChatRoomDelegate: MEGATransferDelegate {
