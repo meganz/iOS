@@ -169,11 +169,8 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
                     chatViewController?.messagesCollectionView.performBatchUpdates({
                         chatViewController?.messagesCollectionView.reloadSections([index])
                     }, completion: nil)
-                    if message.type == .attachment {
-                        
-                    }
                 } else {
-                    if message.type == .attachment {
+                    if message.type == .attachment || message.type == .voiceClip {
                         let filteredArray = transfers.filter { chatMessage in
                             guard let nodeList = message.nodeList, let node = nodeList.node(at: 0) else { return false }
                             return node.handle == chatMessage.transfer?.nodeHandle
