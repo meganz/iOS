@@ -44,11 +44,12 @@ class ChatInputBar: UIView {
     private var storedMessageInputBarHeight: CGFloat = 0.0
     private var voiceToTextSwitching = false
     private var animationDuration: TimeInterval = 0.4
-    
+    private var keyboardFrameChangeObserver: NSObjectProtocol!
+
     // MARK:- Interface properties
 
     weak var delegate: ChatInputBarDelegate?
-    
+        
     var voiceRecordingViewEnabled: Bool = false {
         didSet {
             messageInputBar.hideRightButtonHolderView = voiceRecordingViewEnabled
@@ -133,6 +134,11 @@ class ChatInputBar: UIView {
         addGestureRecognizer(fingerLiftupGesture)
         
         addMessageInputBar()
+        keyboardFrameChangeObserver = keyboardFrameChangedNotification()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(keyboardFrameChangeObserver!)
     }
     
     required init?(coder: NSCoder) {
@@ -171,14 +177,6 @@ class ChatInputBar: UIView {
     
     private func addMessageInputBar() {
         messageInputBar.delegate = self
-        messageInputBar.keyboardShown = { [weak self] in
-            guard let `self` = self,
-                self.voiceRecordingViewEnabled else {
-                return
-            }
-
-            self.voiceRecordingViewEnabled = false
-        }
         addSubview(messageInputBar)
         messageInputBar.autoPinEdgesToSuperviewEdges()
     }
@@ -259,6 +257,31 @@ class ChatInputBar: UIView {
     private func cancelRecordingAndSwitchToTextInput() {
         audioRecordingInputBar.cancelRecording()
         voiceInputBarToTextInputSwitch()
+    }
+    
+    private func keyboardFrameChangedNotification() -> NSObjectProtocol {
+        return NotificationCenter.default.addObserver(
+            forName: UIResponder.keyboardWillShowNotification,
+            object: nil,
+            queue: .main
+        ) { [weak self] notification in
+            guard let `self` = self,
+                self.voiceRecordingViewEnabled,
+                self.messageInputBar.isTextViewTheFirstResponder()  else {
+                return
+            }
+            
+            let userInfo = notification.userInfo!
+            let keyboardHeight = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue.height
+            let animationDuration: TimeInterval = (userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as! NSNumber).doubleValue
+            
+            if keyboardHeight - self.frame.height > 0.0 {
+                let defaultAnimationDuration = self.animationDuration
+                self.animationDuration = animationDuration
+                self.voiceRecordingViewEnabled = false
+                self.animationDuration = defaultAnimationDuration
+            }
+        }
     }
     
     // MARK:- Gesture callback methods.
