@@ -40,13 +40,19 @@ extension ChatViewController: MessagesDisplayDelegate {
                 return
             }
             
-            containerView.layer.cornerRadius = 13.0
-            containerView.layer.borderColor = self.isFromCurrentSender(message: message) ?  #colorLiteral(red: 0, green: 0.5803921569, blue: 0.462745098, alpha: 1).cgColor :  #colorLiteral(red: 0.8941176471, green: 0.9215686275, blue: 0.9176470588, alpha: 1).cgColor
-            containerView.layer.borderWidth = 1
-            
             guard let chatMessage = self.messageForItem(at: indexPath, in: messagesCollectionView) as? ChatMessage else {
                 return
             }
+            containerView.layer.cornerRadius = 13.0
+            
+            if (chatMessage.message.type == .attachment && chatMessage.message.nodeList?.size?.intValue ?? 0 >= 1) {
+                let node = chatMessage.message.nodeList.node(at: 0)!
+                if (chatMessage.message.nodeList.size.intValue > 1 || !node.name!.mnz_isImagePathExtension && !node.name!.mnz_isVideoPathExtension) {
+                    containerView.layer.borderColor = self.isFromCurrentSender(message: message) ?  #colorLiteral(red: 0, green: 0.5803921569, blue: 0.462745098, alpha: 1).cgColor :  #colorLiteral(red: 0.8941176471, green: 0.9215686275, blue: 0.9176470588, alpha: 1).cgColor
+                    containerView.layer.borderWidth = 1
+                }
+            }
+            
             if chatMessage.message.status == .sending || chatMessage.message.status == .sendingManual {
                 containerView.alpha = 0.7
             } else {
