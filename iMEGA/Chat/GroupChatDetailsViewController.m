@@ -410,7 +410,7 @@
             
         case 1:
             cell.leftImageView.image = [UIImage imageNamed:@"sharedFiles"];
-            cell.nameLabel.text =  AMLocalizedString(@"sharedItems", @"Title of Shared Items section");
+            cell.nameLabel.text =  AMLocalizedString(@"Shared Files", @"Header of block with all shared files in chat.");
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             break;
             
