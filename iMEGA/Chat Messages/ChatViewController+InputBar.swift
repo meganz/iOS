@@ -143,7 +143,6 @@ extension ChatViewController {
             collectionViewInset -= window.safeAreaInsets.bottom
         }
         
-        
         if messagesCollectionView.contentInset.bottom != collectionViewInset {
             var oldInset = messagesCollectionView.contentInset.bottom
             if #available(iOS 11.0, *) {
@@ -488,19 +487,23 @@ extension ChatViewController: AddToChatViewControllerDelegate {
     }
     
     func loadPhotosView() {
-        let imagePickerController = MEGAAssetsPickerController { assets in
+        guard let imagePickerController = MEGAAssetsPickerController(toUploadToChatWithAssetsCompletion: { assets in
             guard let assets = assets else {
                 return
             }
             
             assets.forEach { self.send(asset: $0)}
+        }) else {
+            MEGALogDebug("Photo picker cannot be loaded")
+            return
         }
         
-        present(viewController: imagePickerController!)
+        present(viewController: imagePickerController)
     }
     
     func showCamera() {
-        let pickerController = MEGAImagePickerController(toShareThroughChatWith: .camera) { [weak self] (filePath, sourceType, node) in
+        guard let pickerController = MEGAImagePickerController(toShareThroughChatWith: .camera,
+                                                               filePathCompletion: { [weak self] (filePath, sourceType, node) in
             guard let path = filePath,
                 let parentNode = node,
                 let `self` = self else {
@@ -514,9 +517,12 @@ extension ChatViewController: AddToChatViewControllerDelegate {
             } else {
                 MEGALogDebug("showCamera: Unknown media type found and cannot be uploaded.")
             }
+        }) else {
+            MEGALogDebug("Could not load Image Picker view")
+            return
         }
         
-        present(viewController: pickerController!)
+        present(viewController: pickerController)
     }
     
     func showCloudDrive() {

@@ -18,12 +18,6 @@ protocol AddToChatMenuPageViewControllerDelegate: class {
 class AddToChatMenuPageViewController: UIPageViewController {
     
     weak var menuDelegate: AddToChatMenuPageViewControllerDelegate?
-    var padding: CGFloat?
-    var totalRequiredHeight: CGFloat {
-        let rowSpacing = AddToChatMenuViewController(nibName: nil, bundle: nil).rowSpacing
-        let eachMenuWidth = ceil((view.bounds.width - (padding ?? 0.0)) / CGFloat(menuPerRow))
-        return (eachMenuWidth * CGFloat(numberOfRowsForMenu)) + rowSpacing
-    }
     
     private var menuPages: [AddToChatMenuViewController]!
 
@@ -84,6 +78,13 @@ class AddToChatMenuPageViewController: UIPageViewController {
         menuPages.forEach { menuViewController in
             menuViewController.updateMenus()
         }
+    }
+    
+    func totalRequiredHeight(forWidth width: CGFloat,
+                             horizontalPaddding: CGFloat) -> CGFloat {
+        let eachMenuWidth = ceil((width - horizontalPaddding) / CGFloat(menuPerRow))
+        let rowSpacing = AddToChatMenuViewController(nibName: nil, bundle: nil).rowSpacing
+        return (eachMenuWidth * CGFloat(numberOfRowsForMenu)) + rowSpacing
     }
 }
 

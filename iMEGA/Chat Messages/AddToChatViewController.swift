@@ -80,10 +80,11 @@ class AddToChatViewController: UIViewController {
                 return
             }
             
-            menuPageViewController.padding = menuViewLeadingConstraint.constant
-                + menuViewTrailingConstraint.constant
-            
-            contentViewHeightConstraint.constant = menuPageViewController.totalRequiredHeight
+            let menuPageViewControllerHorizontalPadding = menuViewLeadingConstraint.constant + menuViewTrailingConstraint.constant
+            let menuPageViewControllerHeight = menuPageViewController.totalRequiredHeight(forWidth: view.bounds.width,
+                                                                                          horizontalPaddding: menuPageViewControllerHorizontalPadding)
+
+            contentViewHeightConstraint.constant = menuPageViewControllerHeight
                 + mediaCollectionView.bounds.height
                 + mediaCollectionViewBottomConstraint.constant
                 + mediaCollectionViewTopConstraint.constant
