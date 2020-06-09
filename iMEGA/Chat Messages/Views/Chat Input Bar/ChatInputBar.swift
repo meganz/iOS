@@ -87,24 +87,25 @@ class ChatInputBar: UIView {
                     self.invalidateIntrinsicContentSize()
                 }
             } else {
-                guard let messageInputBarTopConstraint = constraints
-                    .filter({ $0.firstAttribute == .top && $0.firstItem === self.messageInputBar })
-                    .first,
-                    let voiceClipInputBarHeightConstraint = voiceClipInputBar.constraints
-                        .filter({ $0.firstAttribute == .height })
-                        .first else {
+                guard let voiceClipInputBarHeightConstraint = voiceClipInputBar.constraints
+                    .filter({ $0.firstAttribute == .height })
+                    .first else {
                         return
                 }
                 
-                messageInputBarTopConstraint.isActive = false
-                layoutIfNeeded()
+                voiceClipInputBar.startRecordingView.isHidden = true
+                voiceClipInputBar.trashView.isHidden = true
+                voiceClipInputBar.sendView.isHidden = true
                 
                 UIView.animate(withDuration: animationDuration, animations: {
                     voiceClipInputBarHeightConstraint.constant = 0.0
                     self.layoutIfNeeded()
                 }) { _ in
                     self.messageInputBar.autoPinEdge(toSuperviewEdge: .bottom)
-                    self.messageInputBar.autoPinEdge(toSuperviewEdge: .top)
+
+                    self.voiceClipInputBar.startRecordingView.isHidden = false
+                    self.voiceClipInputBar.trashView.isHidden = false
+                    self.voiceClipInputBar.sendView.isHidden = false
 
                     self.voiceClipInputBar.removeFromSuperview()
                     self.voiceClipInputBar = nil
