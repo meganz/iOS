@@ -190,8 +190,8 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
                                 self?.chatMessage.append(receivedMessage)
                                 self?.transfers.remove(at: index)
                             })
+                            return
                         }
-                        return
                     }
 
                     
