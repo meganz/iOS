@@ -11,6 +11,10 @@ extension TextStyle {
     static var headlineTextStyle: TextStyle { TextStyle(font: .headline, color: .textDarkPrimary) }
 
     static var paragraphTextStyle: TextStyle { TextStyle(font: .subhead, color: .textDarkPrimary) }
+
+    static var noteMainTextStyle: TextStyle { TextStyle(font: .caption1, color: .textDarkPrimary) }
+
+    static var noteSubTextStyle: TextStyle { TextStyle(font: .caption2, color: .textDarkPrimary) }
 }
 
 // MARK: - UI Applier

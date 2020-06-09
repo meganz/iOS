@@ -34,8 +34,7 @@ final class OverDiskQuotaViewController: UIViewController {
 
     private func setupTitleLabel(_ titleLabel: UILabel) {
         titleLabel.text = AMLocalizedString("Your Data is at Risk!")
-        let textStyle = TextStyle(font: .headline, color: .textDarkPrimary)
-        textStyle.applied(on: titleLabel)
+        LabelStyle.headline.style(titleLabel)
     }
 
     private func setupWarningDescriptionLabel(_ descriptionLabel: UILabel) {
