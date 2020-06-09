@@ -137,7 +137,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
             return
         }
         if UIApplication.shared.applicationState == .active
-        && UIApplication.mnz_visibleViewController() == self {
+        && UIApplication.mnz_visibleViewController() == chatViewController {
             MEGASdkManager.sharedMEGAChatSdk()?.setMessageSeenForChat(chatRoom.chatId, messageId: message.messageId)
         }
 
