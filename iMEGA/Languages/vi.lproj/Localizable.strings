@@ -2162,7 +2162,7 @@
 "Select Folder"="Select Folder";
 /* Title of the folder selection screen for camera uploads */
 "Choose Folder"="Chọn Thư Mục";
-/* Label used near to the option selected to encode the images uploaded to a chat (Low, Medium, Original) */
+/* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
 "Image quality"="Image quality";
 /* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
 "Automatic"="Tự động";
@@ -2230,3 +2230,5 @@
 "Folder link unavailable"="Liên kết thư mục bất khả dụng";
 /* Error message shown when opening a file link which doesn’t exist */
 "File link unavailable"="Đường liên kết này không còn tồn tại";
+/* Header of block with all shared files in chat. */
+"Shared Files"="Tệp Tin Đã Chia Sẻ";
