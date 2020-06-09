@@ -153,7 +153,6 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
             case .unknown, .sending, .sendingManual:
                 break
             case .serverReceived:
-                reloadTransferData()
                 let filteredArray = chatMessage.filter { chatMessage in
                     return chatMessage.message.temporalId == message.temporalId
                 }
@@ -174,6 +173,28 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
                         
                     }
                 } else {
+                    if message.type == .attachment {
+                        let filteredArray = transfers.filter { chatMessage in
+                            guard let nodeList = message.nodeList, let node = nodeList.node(at: 0) else { return false }
+                            return node.handle == chatMessage.transfer?.nodeHandle
+                        }
+                        
+                        if filteredArray.count > 0 {
+                        let oldMessage = filteredArray.first!
+                            let index = transfers.firstIndex(of: oldMessage)!
+                            let receivedMessage = ChatMessage(message: message, chatRoom: chatRoom)
+                            transfers[index] = receivedMessage
+                            chatViewController?.messagesCollectionView.performBatchUpdates({
+                                chatViewController?.messagesCollectionView.reloadSections([chatMessage.count + index])
+                            }, completion: { [weak self] _ in
+                                self?.chatMessage.append(receivedMessage)
+                                self?.transfers.remove(at: index)
+                            })
+                        }
+                        return
+                    }
+
+                    
                     message.chatId = chatRoom.chatId
                     insertMessage(message)
                 }
@@ -251,19 +272,29 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
     func insertMessage(_ message: MEGAChatMessage) {
         let lastSectionVisible = isLastSectionVisible()
         chatMessage.append(ChatMessage(message: message, chatRoom: chatRoom))
-        
+        guard let messagesCollectionView = chatViewController?.messagesCollectionView else {
+            return
+        }
         if chatMessage.count == 1 {
-            chatViewController?.messagesCollectionView.reloadData()
+            messagesCollectionView.reloadData()
             if chatViewController?.keyboardVisible ?? false {
                 chatViewController?.additionalBottomInset = 0
-                chatViewController?.messagesCollectionView.scrollToLastItem()
+                messagesCollectionView.scrollToLastItem()
             }
             return;
         }
-        chatViewController?.messagesCollectionView.reloadData()
-        if lastSectionVisible == true {
-            chatViewController?.messagesCollectionView.scrollToBottom()
-        }
+        messagesCollectionView.performBatchUpdates({
+            messagesCollectionView.insertSections([chatMessage.count - 1])
+            if chatMessage.count >= 2 {
+                messagesCollectionView.reloadSections([chatMessage.count - 2])
+            }
+        }, completion: { [weak self] _ in
+            if lastSectionVisible == true {
+                self?.chatViewController?.messagesCollectionView.scrollToBottom(animated: true)
+
+            }
+        })
+        
     }
     
     func insertTransfer(_ transer: MEGATransfer) {
