@@ -34,15 +34,14 @@ final class OverDisckQuotaWarningView: UIView, NibOwnerLoadable {
             .border(withWidth: 1)
             .border(withCornerRadius: 8)
         containerView.backgroundColor = Color.Background.warning.uiColor
+
     }
 
     private func setupDetailLabel(_ detailLabel: UILabel) {
-        let detailTextStyle = TextStyle(font: .caption2, color: .textDarkPrimary)
-        detailTextStyle.applied(on: detailLabel)
+        LabelStyle.noteSub.style(detailLabel)
     }
 
     private func setupTitleLabel(_ titleLabel: UILabel) {
-        let titleTextStyle = TextStyle(font: .caption1, color: .textDarkPrimary)
-        titleTextStyle.applied(on: titleLabel)
+        LabelStyle.noteMain.style(titleLabel)
     }
 }
