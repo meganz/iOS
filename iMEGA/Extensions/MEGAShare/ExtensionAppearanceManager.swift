@@ -78,6 +78,8 @@ class ExtensionAppearanceManager: NSObject {
         toolbar.standardAppearance.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
         toolbar.standardAppearance.buttonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.mnz_primaryGray(for: traitCollection)!]
         
+        toolbar.barTintColor = UIColor.mnz_mainBars(for: traitCollection)
+        
         let numberOfBarButtonItems: Int = toolbar.items?.count ?? 0
         for i in 0..<numberOfBarButtonItems {
             let barButtonItem = toolbar.items?[i]
