@@ -35,6 +35,9 @@ class MessageInputBar: UIView {
     @IBOutlet weak var micButton: UIButton!
     @IBOutlet weak var expandCollapseButton: UIButton!
     
+    @IBOutlet weak var typingIndicatorLabel: UILabel!
+
+    
     // MARK:- Interface properties
 
     weak var delegate: MessageInputBarDelegate?
@@ -119,6 +122,14 @@ class MessageInputBar: UIView {
     func set(text: String) {
         messageTextView.set(text: text)
         updateTextUI()
+    }
+    
+    func setTypingIndicator(text: NSAttributedString?) {
+        typingIndicatorLabel.isHidden = (text == nil)
+
+        if let typingIndicatorText = text {
+            typingIndicatorLabel.attributedText = typingIndicatorText
+        }
     }
     
     func isTextViewTheFirstResponder() -> Bool {
