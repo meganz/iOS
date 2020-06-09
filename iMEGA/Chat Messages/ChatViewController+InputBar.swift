@@ -250,52 +250,7 @@ extension ChatViewController {
     }
     
     private func createUploadTransferDelegate() -> MEGAStartUploadTransferDelegate {
-        return MEGAStartUploadTransferDelegate(toUploadToChatWithTotalBytes: { [weak self] (transfer) in
-            guard let `self` = self,
-                let transfer = transfer else {
-                return
-            }
-            
-            let totalBytes = transfer.totalBytes.doubleValue
-            self.totalBytesToUpload += totalBytes
-            self.remainingBytesToUpload += totalBytes
-        }, progress: {  [weak self] (transfer) in
-            guard let `self` = self,
-                let transfer = transfer  else {
-                    return
-            }
-            
-            let transferredBytes = transfer.transferredBytes.doubleValue
-            let totalBytes = transfer.totalBytes.doubleValue
-            let asignableProgresRegardWithTotal = totalBytes / self.totalBytesToUpload
-            let transferProgress = transferredBytes / totalBytes
-            var currentAsignableProgressForThisTransfer = transferProgress * asignableProgresRegardWithTotal
-            if (currentAsignableProgressForThisTransfer < asignableProgresRegardWithTotal) {
-                if (self.totalProgressOfTransfersCompleted != 0) {
-                    currentAsignableProgressForThisTransfer += self.totalProgressOfTransfersCompleted
-                }
-                
-//                if (currentAsignableProgressForThisTransfer > Double(self.navigationBarProgressView.progress)) {
-////                    self.navigationBarProgressView.setProgress(Float(currentAsignableProgressForThisTransfer), animated: true)
-//                }
-            }
-        }, completion: { [weak self] (transfer) in
-            guard let `self` = self else {
-                return
-            }
-            
-            let totalBytes = transfer!.totalBytes.doubleValue
-            let progressCompletedRegardWithTotal = totalBytes / self.totalBytesToUpload
-            self.totalProgressOfTransfersCompleted += progressCompletedRegardWithTotal
-            self.remainingBytesToUpload -= totalBytes
-            
-            if self.remainingBytesToUpload == 0 {
-//                self.navigationBarProgressView.progress = 0
-//                self.navigationBarProgressView.isHidden = true
-                self.totalBytesToUpload = 0.0
-                self.totalProgressOfTransfersCompleted = 0.0;
-            }
-        })
+        return MEGAStartUploadTransferDelegate(toUploadToChatWithTotalBytes: nil, progress: nil, completion: nil)
     }
     
     private func uploadAsset(withFilePath filePath: String, parentNode: MEGANode, localIdentifier: String) {
