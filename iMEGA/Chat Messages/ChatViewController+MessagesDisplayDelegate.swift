@@ -44,7 +44,7 @@ extension ChatViewController: MessagesDisplayDelegate {
             containerView.layer.borderColor = self.isFromCurrentSender(message: message) ?  #colorLiteral(red: 0, green: 0.5803921569, blue: 0.462745098, alpha: 1).cgColor :  #colorLiteral(red: 0.8941176471, green: 0.9215686275, blue: 0.9176470588, alpha: 1).cgColor
             containerView.layer.borderWidth = 1
             
-            guard let chatMessage = message as? ChatMessage else {
+            guard let chatMessage = self.messageForItem(at: indexPath, in: messagesCollectionView) as? ChatMessage else {
                 return
             }
             if chatMessage.message.status == .sending || chatMessage.message.status == .sendingManual {
