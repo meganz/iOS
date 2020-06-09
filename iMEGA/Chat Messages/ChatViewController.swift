@@ -23,10 +23,6 @@ class ChatViewController: MessagesViewController {
     let forwardBarButtonItem = UIBarButtonItem(image: UIImage(named: "forwardToolbar")?.imageFlippedForRightToLeftLayoutDirection(), style: .done, target: self, action: #selector(ChatViewController.forwardSelectedMessages))
     let deleteBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(ChatViewController.deleteSelectedMessages))
     
-    // transfer
-    var totalBytesToUpload = 0.0
-    var remainingBytesToUpload = 0.0
-    var totalProgressOfTransfersCompleted = 0.0
     var sendTypingTimer: Timer?
     var keyboardVisible = false
     
