@@ -30,11 +30,7 @@ final class OverDisckQuotaWarningView: UIView, NibOwnerLoadable {
     }
 
     private func setupContainerView(_ containerView: UIView) {
-        containerView.border(withColor: Color.Border.warning.uiColor)
-            .border(withWidth: 1)
-            .border(withCornerRadius: 8)
-        containerView.backgroundColor = Color.Background.warning.uiColor
-
+        ViewStyle.warning.style(containerView)
     }
 
     private func setupDetailLabel(_ detailLabel: UILabel) {
