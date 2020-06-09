@@ -2162,7 +2162,7 @@
 "Select Folder"="Sélectionner un dossier";
 /* Title of the folder selection screen for camera uploads */
 "Choose Folder"="Choisir un dossier";
-/* Label used near to the option selected to encode the images uploaded to a chat (Low, Medium, Original) */
+/* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
 "Image quality"="Qualité des images";
 /* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
 "Automatic"="Automatique";
@@ -2230,3 +2230,5 @@
 "Folder link unavailable"="Lien de dossier non disponible";
 /* Error message shown when opening a file link which doesn’t exist */
 "File link unavailable"="Lien de fichier non disponible";
+/* Header of block with all shared files in chat. */
+"Shared Files"="Fichiers partagés";
