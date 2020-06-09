@@ -94,6 +94,7 @@ class ChatVoiceClipCollectionViewCell: AudioMessageCell {
                 }
             
             loadingIndicator.isHidden = true
+            loadingIndicator.stopAnimating()
             playButton.isHidden = false
             return
         }

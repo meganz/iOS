@@ -486,14 +486,10 @@ class ChatViewController: MessagesViewController {
         }
 
         let chatMessage = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView) as! ChatMessage
-        if chatMessage.message.content != nil && chatMessage.message.content.count > 0 {
-            let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatTextMessageViewCell.reuseIdentifier, for: indexPath) as! ChatTextMessageViewCell
+        if chatMessage.transfer?.transferChatMessageType() == .voiceClip  {
+            let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatVoiceClipCollectionViewCell.reuseIdentifier, for: indexPath) as! ChatVoiceClipCollectionViewCell
             cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
             return cell
-        } else if chatMessage.transfer?.transferChatMessageType() == .voiceClip  {
-             let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatVoiceClipCollectionViewCell.reuseIdentifier, for: indexPath) as! ChatVoiceClipCollectionViewCell
-                       cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
-                       return cell
         } else if chatMessage.transfer?.transferChatMessageType() == .attachment {
             let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatMediaCollectionViewCell.reuseIdentifier, for: indexPath) as! ChatMediaCollectionViewCell
             cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
@@ -512,8 +508,14 @@ class ChatViewController: MessagesViewController {
             let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatViewAttachmentCell.reuseIdentifier, for: indexPath) as! ChatViewAttachmentCell
             cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
             return cell
-        } else if chatMessage.message.type == .normal && chatMessage.message.containsMEGALink() {
-            let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatRichPreviewMediaCollectionViewCell.reuseIdentifier, for: indexPath) as! ChatRichPreviewMediaCollectionViewCell
+        } else if chatMessage.message.type == .normal {
+            if chatMessage.message.containsMEGALink() {
+                let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatRichPreviewMediaCollectionViewCell.reuseIdentifier, for: indexPath) as! ChatRichPreviewMediaCollectionViewCell
+                cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
+                return cell
+            }
+            
+            let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatTextMessageViewCell.reuseIdentifier, for: indexPath) as! ChatTextMessageViewCell
             cell.configure(with: chatMessage, at: indexPath, and: messagesCollectionView)
             return cell
         } else if chatMessage.message.type == .voiceClip {
