@@ -169,11 +169,8 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
                     chatViewController?.messagesCollectionView.performBatchUpdates({
                         chatViewController?.messagesCollectionView.reloadSections([index])
                     }, completion: nil)
-                    if message.type == .attachment {
-                        
-                    }
                 } else {
-                    if message.type == .attachment {
+                    if message.type == .attachment || message.type == .voiceClip {
                         let filteredArray = transfers.filter { chatMessage in
                             guard let nodeList = message.nodeList, let node = nodeList.node(at: 0) else { return false }
                             return node.handle == chatMessage.transfer?.nodeHandle
@@ -190,8 +187,8 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
                                 self?.chatMessage.append(receivedMessage)
                                 self?.transfers.remove(at: index)
                             })
+                            return
                         }
-                        return
                     }
 
                     
@@ -283,6 +280,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
             }
             return;
         }
+        UIView.setAnimationsEnabled(false)
         messagesCollectionView.performBatchUpdates({
             messagesCollectionView.insertSections([chatMessage.count - 1])
             if chatMessage.count >= 2 {
@@ -290,6 +288,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
             }
         }, completion: { [weak self] _ in
             if lastSectionVisible == true {
+                UIView.setAnimationsEnabled(true)
                 self?.chatViewController?.messagesCollectionView.scrollToBottom(animated: true)
 
             }
