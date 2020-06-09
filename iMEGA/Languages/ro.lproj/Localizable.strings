@@ -2162,7 +2162,7 @@
 "Select Folder"="Selectează folderul";
 /* Title of the folder selection screen for camera uploads */
 "Choose Folder"="Alege un folder";
-/* Label used near to the option selected to encode the images uploaded to a chat (Low, Medium, Original) */
+/* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
 "Image quality"="Calitatea imaginii";
 /* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
 "Automatic"="Automat";
@@ -2187,27 +2187,27 @@
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="Introdu numele grupului";
 /* Title of one of the Settings sections where you can customise the 'Appearance' of the app. */
-"Appearance"="Appearance";
+"Appearance"="Înfățișare";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
-"Sorting And View Mode"="Sorting And View Mode";
+"Sorting And View Mode"="Mod de sortare și vizualizare";
 /* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
-"Default"="Default";
+"Default"="Implicit";
 /* Label for any ‘Day’ button, link, text, title, etc. - (String as short as possible). */
 "Day"="Zi";
 /* Label for any ‘Night’ button, link, text, title, etc. - (String as short as possible). */
-"Night"="Night";
+"Night"="Noapte";
 /* Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible). */
 "Minimal"="Minimal";
 /* Section title inside of Settings - Appearance, where you can change the app's layout. */
-"Layout"="Layout";
+"Layout"="Aspect";
 /* Section title inside of Settings - Appearance, where you can change the app's icon. */
-"App Icon"="App Icon";
+"App Icon"="Pictograma aplicației";
 /* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
 "Configure sorting order and the default view (List or Thumbnail)."="Configure sorting order and the default view (List or Thumbnail).";
 /* Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for All'. */
-"Per Folder"="Per Folder";
+"Per Folder"="Per folder";
 /* Same for all configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for all Folders'. */
-"Same for All"="Same for All";
+"Same for All"="La fel pentru toate";
 /* Section title of the 'Sorting And View Mode' view inside of Settings - Appearence - Sorting And View Mode. */
 "Sorting preference"="Preferințe pentru sortare";
 /* Section title of the 'Sorting And View Mode' view inside of Settings - Appearence - Sorting And View Mode. */
@@ -2230,3 +2230,5 @@
 "Folder link unavailable"="Linkul folderului indisponibil";
 /* Error message shown when opening a file link which doesn’t exist */
 "File link unavailable"="Linkul fișierului indisponibil";
+/* Header of block with all shared files in chat. */
+"Shared Files"="Fișiere partajate";
