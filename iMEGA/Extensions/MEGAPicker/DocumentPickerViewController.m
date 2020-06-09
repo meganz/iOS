@@ -11,6 +11,7 @@
 #import "MEGANavigationController.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGARequestDelegate.h"
+#import "MEGAPicker-Swift.h"
 #import "NSFileManager+MNZCategory.h"
 #import "BrowserViewController.h"
 
@@ -75,6 +76,8 @@
                                                object:nil];
     
     self.lastProgressChange = [NSDate new];
+    
+    [self updateAppearance];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -122,6 +125,24 @@
         [self.presentedViewController dismissViewControllerAnimated:NO completion:nil];
     }
     self.passcodePresented = NO;
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateAppearance];
+        }
+    }
+}
+
+#pragma mark - Private
+
+- (void)updateAppearance {
+    self.view.backgroundColor = [UIColor mnz_secondaryBackgroundElevated:self.traitCollection];
+    
+    [self.openButton mnz_setupPrimary:self.traitCollection];
 }
 
 #pragma mark - Language

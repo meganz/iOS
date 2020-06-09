@@ -92,6 +92,8 @@
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
+    [self updateAppearance];
+    
     [self reloadUI];
 }
 
@@ -130,7 +132,19 @@
     
     if (@available(iOS 13.0, *)) {
         if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-            [self updateSelector];
+            #ifdef MNZ_SHARE_EXTENSION
+            [ExtensionAppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar traitCollection:self.traitCollection];
+            [ExtensionAppearanceManager forceToolbarUpdate:self.navigationController.toolbar traitCollection:self.traitCollection];
+            #elif MNZ_PICKER_EXTENSION
+            
+            #else
+            [AppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar traitCollection:self.traitCollection];
+            [AppearanceManager forceToolbarUpdate:self.navigationController.toolbar traitCollection:self.traitCollection];
+            #endif
+            
+            [self updateAppearance];
+            
+            [self.tableView reloadData];
         }
     }
     
@@ -141,6 +155,8 @@
 
 - (void)updateAppearance {
     self.view.backgroundColor = [UIColor mnz_secondaryBackgroundElevated:self.traitCollection];
+    
+    [self updateSelector];
 }
 
 - (void)setupBrowser {
@@ -601,10 +617,6 @@
     } else if (self.browserAction == BrowserActionShareExtension) {
         [self.browserViewControllerDelegate uploadToParentNode:self.parentNode];
     }
-}
-
-- (IBAction)extendedNavigationBar_backButtonTapped:(UIButton *)sender {
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (IBAction)sendNodes:(UIBarButtonItem *)sender {
