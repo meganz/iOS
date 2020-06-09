@@ -36,7 +36,7 @@ class ChatSharedItemTableViewCell: UITableViewCell {
                 self?.ownerNameLabel.text = request.text
             }))
         }
-        infoLabel.text = Helper.sizeAndDate(for: node, api: MEGASdkManager.sharedMEGASdk())
+        infoLabel.text = Helper.sizeAndModicationDate(for: node, api: MEGASdkManager.sharedMEGASdk())
         if node.hasThumbnail() {
             let thumbnailFilePath = Helper.path(for: node, inSharedSandboxCacheDirectory: "thumbnailsV3")
             if FileManager.default.fileExists(atPath: thumbnailFilePath) {
