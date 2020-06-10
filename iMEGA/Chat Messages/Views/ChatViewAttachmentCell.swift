@@ -78,7 +78,7 @@ class ChatViewAttachmentCell: MessageContentCell {
         detailLabel.sizeToFit()
         
         let width = 75 + max(titleLabel.bounds.width, detailLabel.bounds.width)
-        return CGSize(width: width, height: 80)
+        return CGSize(width: width, height: 60)
     }
 }
 
