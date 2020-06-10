@@ -1143,6 +1143,10 @@ void uncaughtExceptionHandler(NSException *exception) {
 }
 
 - (void)presentBusinessExpiredViewIfNeeded {
+    if ([UIApplication.mnz_visibleViewController isKindOfClass:InitialLaunchViewController.class] || [UIApplication.mnz_visibleViewController isKindOfClass:LaunchViewController.class]) {
+        return;
+    }
+    
     if (MEGASdkManager.sharedMEGASdk.businessStatus == BusinessStatusGracePeriod) {
         if (MEGASdkManager.sharedMEGASdk.isMasterBusinessAccount) {
             CustomModalAlertViewController *customModalAlertVC = CustomModalAlertViewController.alloc.init;
@@ -1322,6 +1326,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 }
 
 - (void)readyToShowRecommendations {
+    [self presentBusinessExpiredViewIfNeeded];
     [self showAddPhoneNumberIfNeeded];
 }
 
