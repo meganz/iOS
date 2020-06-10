@@ -110,6 +110,8 @@
         self.contactNewLabel.text = AMLocalizedString(@"New", @"Label shown inside an unseen notification").uppercaseString;
         self.contactNewLabel.textColor = UIColor.whiteColor;
         self.contactNewLabelView.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
+    } else {
+        self.contactNewView.hidden = YES;
     }
 }
 
