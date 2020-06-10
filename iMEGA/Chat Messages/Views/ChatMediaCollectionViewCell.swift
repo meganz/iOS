@@ -123,7 +123,7 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
     
     func onTransferFinish(_ api: MEGASdk, transfer: MEGATransfer, error: MEGAError) {
         if currentNode?.handle == transfer.nodeHandle {
-            if FileManager.default.fileExists(atPath: transfer.path) {
+            if transfer.path != nil && FileManager.default.fileExists(atPath: transfer.path) {
                 imageView.yy_imageURL = URL(fileURLWithPath: transfer.path)
             }
         }
@@ -157,9 +157,11 @@ open class ChatMediaCollectionViewSizeCalculator: MessageSizeCalculator {
                 let path = NSHomeDirectory().append(pathComponent: chatMessage.transfer!.path)
                 
                 if FileManager.default.fileExists(atPath: path) {
-                    let previewImage = YYImage(contentsOfFile: path)
-                    width = previewImage!.size.width
-                    height = previewImage!.size.height
+                    guard let previewImage = YYImage(contentsOfFile: path) else {
+                        return CGSize(width: width, height: height)
+                    }
+                    width = previewImage.size.width
+                    height = previewImage.size.height
                     
                     let ratio = width / height
                     if ratio > 1 {
