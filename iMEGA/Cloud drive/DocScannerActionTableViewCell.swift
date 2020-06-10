@@ -17,12 +17,14 @@ class DocScannerActionTableViewCell: UITableViewCell {
     }
     
     private func configure() {
+        backgroundColor = .mnz_secondaryBackgroundGrouped(traitCollection)
+        
         switch cellType {
         case .upload:
             actionImageView.image = UIImage(named: "upload")
             actionLabel.text = NSLocalizedString("uploadToMega", comment: "")
         case .sendMessage:
-            actionImageView.tintColor = #colorLiteral(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)
+            actionImageView.tintColor = .mnz_primaryGray(for: self.traitCollection)
             actionImageView.image = UIImage(named: "sendMessage")
             actionLabel.text = NSLocalizedString("sendToContact", comment: "")
         }
