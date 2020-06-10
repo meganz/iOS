@@ -56,7 +56,24 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
         super.viewWillAppear(animated)
         navigationController?.setToolbarHidden(true, animated: true)
     }
-
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        if #available(iOS 13.0, *) {
+            if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+                updateAppearance()
+                
+                tableView.reloadData()
+            }
+        }
+    }
+    
+    // MARK: - Private
+        
+    private func updateAppearance() {
+        tableView.backgroundColor = .mnz_backgroundGrouped(for: traitCollection)
+        tableView.separatorColor = .mnz_separator(for: traitCollection)
+    }
+    
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {

@@ -1982,6 +1982,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
         [self presentViewController:({
             MEGANavigationController *nav = [MEGANavigationController.alloc initWithRootViewController:vc];
             [nav addLeftDismissButtonWithText:AMLocalizedString(@"cancel", nil)];
+            nav.modalPresentationStyle = UIModalPresentationFullScreen;
             nav;
         }) animated:YES completion:nil];
     }];

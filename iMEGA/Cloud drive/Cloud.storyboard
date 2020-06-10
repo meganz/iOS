@@ -644,6 +644,7 @@
                                         <constraint firstAttribute="bottom" secondItem="qV8-d7-rpg" secondAttribute="bottom" constant="10" id="sfc-2c-sQ2"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <color key="backgroundColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <connections>
                                     <outlet property="fileImageView" destination="PgG-n4-XKf" id="hKS-Ro-kKt"/>
@@ -681,6 +682,7 @@
                                         <constraint firstItem="c5d-zJ-L4P" firstAttribute="leading" secondItem="8EL-pl-aRG" secondAttribute="trailing" constant="16" id="qRs-wZ-ZDO"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <color key="backgroundColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
                                 <inset key="separatorInset" minX="58" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <connections>
                                     <outlet property="actionImageView" destination="8EL-pl-aRG" id="0wR-lp-vZa"/>
@@ -705,11 +707,12 @@
                                             <rect key="frame" x="296" y="12" width="44" height="20.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" systemColor="systemGrayColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <color key="backgroundColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                             </tableViewCell>
                         </prototypes>

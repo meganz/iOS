@@ -15,6 +15,9 @@ class DocScannerDetailTableCell: UITableViewCell {
     }
     
     private func configure() {
+        backgroundColor = .mnz_secondaryBackgroundGrouped(traitCollection)
+        detailTextLabel?.textColor = .mnz_secondaryLabel()
+        
         switch cellType {
         case .fileType:
             textLabel?.text = NSLocalizedString("File Type", comment: "file type title, used in changing the export format of scaned doc")
