@@ -62,6 +62,19 @@ class AddToChatCameraCollectionCell: UICollectionViewCell {
         }
         
         previewLayer.frame = liveFeedView.layer.bounds
+        addCornerRadius()
+    }
+    
+    private func addCornerRadius() {
+        layer.cornerRadius = 4.0
+        
+        let maskPath = UIBezierPath(roundedRect: bounds,
+                                    byRoundingCorners: [.topLeft],
+                                    cornerRadii: CGSize(width: 8.0, height: 0.0))
+
+        let maskLayer = CAShapeLayer()
+        maskLayer.path = maskPath.cgPath
+        layer.mask = maskLayer
     }
 
 }

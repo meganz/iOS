@@ -41,11 +41,6 @@
             </constraints>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <size key="customSize" width="189" height="178"/>
-            <userDefinedRuntimeAttributes>
-                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                    <integer key="value" value="8"/>
-                </userDefinedRuntimeAttribute>
-            </userDefinedRuntimeAttributes>
             <connections>
                 <outlet property="cameraIconImageView" destination="Qg2-W7-gMX" id="lqb-sx-ibo"/>
                 <outlet property="liveFeedView" destination="h5J-Rj-Wek" id="4iu-YT-ZzU"/>

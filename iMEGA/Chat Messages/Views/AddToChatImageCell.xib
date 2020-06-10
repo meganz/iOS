@@ -106,7 +106,7 @@
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <userDefinedRuntimeAttributes>
                 <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                    <integer key="value" value="8"/>
+                    <integer key="value" value="4"/>
                 </userDefinedRuntimeAttribute>
             </userDefinedRuntimeAttributes>
             <connections>
