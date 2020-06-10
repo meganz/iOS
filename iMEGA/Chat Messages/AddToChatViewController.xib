@@ -50,20 +50,20 @@
                     <rect key="frame" x="0.0" y="467" width="414" height="395"/>
                     <subviews>
                         <collectionView multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="Zxb-mH-hnV">
-                            <rect key="frame" x="6" y="5" width="402" height="110"/>
+                            <rect key="frame" x="6" y="5" width="402" height="100"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="110" id="1tq-lA-fNN"/>
+                                <constraint firstAttribute="height" constant="100" id="1tq-lA-fNN"/>
                             </constraints>
                             <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="2" minimumInteritemSpacing="0.0" id="Ayc-GC-lSh">
-                                <size key="itemSize" width="110" height="110"/>
+                                <size key="itemSize" width="100" height="100"/>
                                 <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                 <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                 <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                             </collectionViewFlowLayout>
                         </collectionView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="32M-MS-rdd" userLabel="Menu View">
-                            <rect key="frame" x="16" y="147" width="382" height="243"/>
+                            <rect key="frame" x="16" y="129" width="382" height="261"/>
                         </view>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -71,7 +71,7 @@
                         <constraint firstItem="32M-MS-rdd" firstAttribute="leading" secondItem="hwb-7m-LMj" secondAttribute="leading" constant="16" id="DV7-tm-CbF"/>
                         <constraint firstItem="Zxb-mH-hnV" firstAttribute="leading" secondItem="hwb-7m-LMj" secondAttribute="leading" constant="6" id="JKd-ZH-8de"/>
                         <constraint firstItem="Zxb-mH-hnV" firstAttribute="top" secondItem="hwb-7m-LMj" secondAttribute="top" constant="5" id="KcC-JS-iDO"/>
-                        <constraint firstItem="32M-MS-rdd" firstAttribute="top" secondItem="Zxb-mH-hnV" secondAttribute="bottom" constant="32" id="TKr-3S-IxU"/>
+                        <constraint firstItem="32M-MS-rdd" firstAttribute="top" secondItem="Zxb-mH-hnV" secondAttribute="bottom" constant="24" id="TKr-3S-IxU"/>
                         <constraint firstAttribute="bottom" secondItem="32M-MS-rdd" secondAttribute="bottom" constant="5" id="WDx-Fa-1Jp"/>
                         <constraint firstAttribute="trailing" secondItem="Zxb-mH-hnV" secondAttribute="trailing" constant="6" id="a4R-NR-tKw"/>
                         <constraint firstAttribute="trailing" secondItem="32M-MS-rdd" secondAttribute="trailing" constant="16" id="g43-HZ-aZa"/>
