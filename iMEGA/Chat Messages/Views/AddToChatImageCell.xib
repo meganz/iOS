@@ -21,7 +21,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                     </imageView>
                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="asn-Gd-I0f">
-                        <rect key="frame" x="8" y="75.5" width="42" height="16.5"/>
+                        <rect key="frame" x="4" y="79.5" width="42" height="16.5"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="95g-Ik-NBt">
                                 <rect key="frame" x="4" y="1" width="34" height="14.5"/>
@@ -92,9 +92,9 @@
                 </subviews>
             </view>
             <constraints>
-                <constraint firstItem="asn-Gd-I0f" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="0p4-WY-7eV"/>
+                <constraint firstItem="asn-Gd-I0f" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="4" id="0p4-WY-7eV"/>
                 <constraint firstAttribute="bottom" secondItem="B63-Dg-j5n" secondAttribute="bottom" id="M9T-U5-yas"/>
-                <constraint firstAttribute="bottom" secondItem="asn-Gd-I0f" secondAttribute="bottom" constant="8" id="MBN-LZ-SgP"/>
+                <constraint firstAttribute="bottom" secondItem="asn-Gd-I0f" secondAttribute="bottom" constant="4" id="MBN-LZ-SgP"/>
                 <constraint firstAttribute="trailing" secondItem="zxd-pW-fVV" secondAttribute="trailing" id="REL-sM-aoB"/>
                 <constraint firstItem="zxd-pW-fVV" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="Rq3-cF-0XQ"/>
                 <constraint firstItem="B63-Dg-j5n" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="Wne-jT-jXg"/>
