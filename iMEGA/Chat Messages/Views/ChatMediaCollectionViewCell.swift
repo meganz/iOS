@@ -81,7 +81,8 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
         if chatMessage.transfer != nil {
             loadingIndicator.isHidden = false
             loadingIndicator.startAnimating()
-         
+            durationLabel.isHidden = true
+            playIconView.isHidden = true
             let path = NSHomeDirectory().append(pathComponent: chatMessage.transfer!.path)
 
             imageView.yy_imageURL = URL(fileURLWithPath: path)
