@@ -5,7 +5,7 @@ extension ChatViewController: MessagesDisplayDelegate {
                          at indexPath: IndexPath,
                          in messagesCollectionView: MessagesCollectionView) -> UIColor {
         
-        guard let chatMessage = message as? ChatMessage else {
+        guard let chatMessage = messageForItem(at: indexPath, in: messagesCollectionView) as? ChatMessage else {
             return isFromCurrentSender(message: message) ? UIColor(fromHexString: "#009476") : UIColor(fromHexString: "#EEEEEE")
         }
         
@@ -45,13 +45,8 @@ extension ChatViewController: MessagesDisplayDelegate {
             }
             containerView.layer.cornerRadius = 13.0
             
-            if (chatMessage.message.type == .attachment && chatMessage.message.nodeList?.size?.intValue ?? 0 >= 1) {
-                let node = chatMessage.message.nodeList.node(at: 0)!
-                if (chatMessage.message.nodeList.size.intValue > 1 || !node.name!.mnz_isImagePathExtension && !node.name!.mnz_isVideoPathExtension) {
-                    containerView.layer.borderColor = self.isFromCurrentSender(message: message) ?  #colorLiteral(red: 0, green: 0.5803921569, blue: 0.462745098, alpha: 1).cgColor :  #colorLiteral(red: 0.8941176471, green: 0.9215686275, blue: 0.9176470588, alpha: 1).cgColor
-                    containerView.layer.borderWidth = 1
-                }
-            }
+            containerView.layer.borderColor = self.isFromCurrentSender(message: message) ?  #colorLiteral(red: 0, green: 0.5803921569, blue: 0.462745098, alpha: 1).cgColor :  #colorLiteral(red: 0.8941176471, green: 0.9215686275, blue: 0.9176470588, alpha: 1).cgColor
+            containerView.layer.borderWidth = 1
             
             if chatMessage.message.status == .sending || chatMessage.message.status == .sendingManual {
                 containerView.alpha = 0.7
@@ -66,6 +61,14 @@ extension ChatViewController: MessagesDisplayDelegate {
             
             if chatMessage.message.type == .normal && (chatMessage.message.content as NSString).mnz_isPureEmojiString() {
                 containerView.layer.borderColor = #colorLiteral(red: 0.8941176471, green: 0.9215686275, blue: 0.9176470588, alpha: 0).cgColor
+            }
+            
+            if chatMessage.message.type == .attachment && (chatMessage.message.nodeList?.size?.intValue ?? 0 == 1) {
+                let node = chatMessage.message.nodeList.node(at: 0)!
+                if (node.name!.mnz_isImagePathExtension || node.name!.mnz_isVideoPathExtension) {
+                    
+                    containerView.layer.borderColor = #colorLiteral(red: 0.8941176471, green: 0.9215686275, blue: 0.9176470588, alpha: 0).cgColor
+                }
             }
         }
     }
