@@ -93,6 +93,7 @@
 @property (nonatomic, getter=wasAppSuspended) BOOL appSuspended;
 @property (nonatomic, getter=isUpgradeVCPresented) BOOL upgradeVCPresented;
 @property (nonatomic, getter=isAccountExpiredPresented) BOOL accountExpiredPresented;
+@property (nonatomic, getter=isOverDiskQuotaPresented) BOOL overDiskQuotaPresented;
 
 @property (strong, nonatomic) BackgroundRefreshPerformer *backgroundRefreshPerformer;
 @property (nonatomic, strong) MEGAProviderDelegate *megaProviderDelegate;
@@ -1042,6 +1043,20 @@ void uncaughtExceptionHandler(NSException *exception) {
     }
 }
 
+- (void)presentOverDiskQuotaViewControllerIfNeeded {
+    if (self.isOverDiskQuotaPresented || [UIApplication.mnz_visibleViewController isKindOfClass:OverDiskQuotaViewController.class]) {
+        return;
+    }
+
+    OverDiskQuotaViewController *overDiskQuotaViewController = [OverDiskQuotaViewController new];
+    __weak typeof(self) weakSelf = self;
+    [UIApplication.mnz_presentingViewController presentViewController:overDiskQuotaViewController
+                                                             animated:YES
+                                                           completion:^{
+        weakSelf.overDiskQuotaPresented = YES;
+    }];
+}
+
 - (void)presentUpgradeViewControllerTitle:(NSString *)title detail:(NSString *)detail image:(UIImage *)image {
     if (!self.isUpgradeVCPresented && ![UIApplication.mnz_visibleViewController isKindOfClass:UpgradeTableViewController.class] && ![UIApplication.mnz_visibleViewController isKindOfClass:ProductDetailViewController.class]) {
         CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
@@ -1430,6 +1445,8 @@ void uncaughtExceptionHandler(NSException *exception) {
             
             if (event.number == StorageStateChange) {
                 [api getAccountDetails];
+            } else if (event.number == StorageStatePaywall) {
+                [self presentOverDiskQuotaViewControllerIfNeeded];
             } else {
                 static BOOL alreadyPresented = NO;
                 if (!alreadyPresented && (event.number == StorageStateRed || event.number == StorageStateOrange)) {
