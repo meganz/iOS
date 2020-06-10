@@ -30,10 +30,6 @@ class ContactsGroupsViewController: UIViewController {
         tableView.tableFooterView = UIView()  // This remove the separator line between empty cells
         
         updateAppearance()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         
         fetchGroupChatsList()
     }
@@ -73,6 +69,18 @@ class ContactsGroupsViewController: UIViewController {
         tableView.reloadData()
     }
     
+    func addNewChatToList(chatRoom: MEGAChatRoom) {
+        guard let newChatListItem = MEGASdkManager.sharedMEGAChatSdk()?.chatListItem(forChatId: chatRoom.chatId) else {
+            return
+        }
+        groupChats.append(newChatListItem)
+        if isSearching {
+            updateSearchResults(for: searchController)
+        } else {
+            tableView.insertRows(at: [IndexPath(row: groupChats.count - 1, section: 0)], with: .automatic)
+        }
+    }
+    
     func showGroupChatRoom(at indexPath: IndexPath) {
         let chatListItem = searchingGroupChats.count != 0 ? searchingGroupChats[indexPath.row] : groupChats[indexPath.row]
         guard let chatRoom = MEGASdkManager.sharedMEGAChatSdk()?.chatRoom(forChatId: chatListItem.chatId) else {
@@ -89,7 +97,7 @@ class ContactsGroupsViewController: UIViewController {
         }
         
         contactsVC.contactsMode = .chatCreateGroup
-        contactsVC.createGroupChat = { users, groupName, keyRotation, getChatlink in
+        contactsVC.createGroupChat = { [weak self] users, groupName, keyRotation, getChatlink in
             guard let users = users as? [MEGAUser] else {
                 return
             }
@@ -97,26 +105,30 @@ class ContactsGroupsViewController: UIViewController {
             let messagesVC = MessagesViewController()
 
             if keyRotation {
-                MEGASdkManager.sharedMEGAChatSdk()?.mnz_createChatRoom(usersArray: users, title: groupName, completion: { [weak self] chatRoom in
+                MEGASdkManager.sharedMEGAChatSdk()?.mnz_createChatRoom(usersArray: users, title: groupName, completion: { chatRoom in
+                    self?.addNewChatToList(chatRoom: chatRoom)
                     messagesVC.chatRoom = chatRoom
                     self?.navigationController?.pushViewController(messagesVC, animated: true)
                 })
             } else {
                 MEGASdkManager.sharedMEGAChatSdk()?.createPublicChat(withPeers: MEGAChatPeerList.mnz_standardPrivilegePeerList(usersArray: users), title: groupName, delegate: MEGAChatGenericRequestDelegate.init(completion: { request, error in
-                    messagesVC.chatRoom = MEGASdkManager.sharedMEGAChatSdk()?.chatRoom(forChatId: request.chatHandle)
+                    guard let chatRoom = MEGASdkManager.sharedMEGAChatSdk()?.chatRoom(forChatId: request.chatHandle) else {
+                        return
+                    }
+                    self?.addNewChatToList(chatRoom: chatRoom)
+                    messagesVC.chatRoom = chatRoom
                     if getChatlink {
                         MEGASdkManager.sharedMEGAChatSdk()?.createChatLink(messagesVC.chatRoom.chatId, delegate: MEGAChatGenericRequestDelegate.init(completion: { request, error in
                             if error.type == .MEGAChatErrorTypeOk {
                                 messagesVC.isPublicChatWithLinkCreated = true
                                 messagesVC.publicChatLink = URL(string: request.text)
-                                self.navigationController?.pushViewController(messagesVC, animated: true)
+                                self?.navigationController?.pushViewController(messagesVC, animated: true)
                             }
                         }))
                     } else {
-                        self.navigationController?.pushViewController(messagesVC, animated: true)
+                        self?.navigationController?.pushViewController(messagesVC, animated: true)
                     }
                 }))
-                
             }
         }
         present(contactsNavigation, animated: true, completion: nil)
@@ -127,7 +139,7 @@ class ContactsGroupsViewController: UIViewController {
 
 extension ContactsGroupsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return searchingGroupChats.count != 0 ? searchingGroupChats.count : groupChats.count
+        return isSearching ? searchingGroupChats.count : groupChats.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -185,6 +197,15 @@ extension ContactsGroupsViewController: DZNEmptyDataSetSource {
 // MARK: - UISearchResultsUpdating
 
 extension ContactsGroupsViewController: UISearchResultsUpdating {
+    
+    var isSearching: Bool {
+        searchController.isActive && !isSearchBarEmpty
+    }
+    
+    var isSearchBarEmpty: Bool {
+        searchController.searchBar.text?.isEmpty ?? true
+    }
+    
     func updateSearchResults(for searchController: UISearchController) {
         guard let searchString = searchController.searchBar.text else { return }
         if searchController.isActive {

@@ -16,7 +16,8 @@ class ContactsGroupTableViewCell: UITableViewCell {
             return
         }
         backAvatarImage.mnz_setImage(forUserHandle: chatRoom.peerHandle(at: 0))
-        frontAvatarImage.mnz_setImage(forUserHandle: chatRoom.peerHandle(at: 1))
+        let handle = chatRoom.peerCount > 1 ? chatRoom.peerHandle(at: 1) : MEGASdkManager.sharedMEGASdk().myUser?.handle ?? MEGAInvalidHandle
+        frontAvatarImage.mnz_setImage(forUserHandle: handle)
         frontAvatarImage.borderColor = .mnz_backgroundElevated(traitCollection)
     }
 }
