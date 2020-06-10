@@ -1269,6 +1269,17 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     [self hideJumpToBottom];
 }
 
+- (NSString *)usernameForUserHandle:(uint64_t)handle {
+    NSString *username = [self.chatRoom userNicknameForUserHandle:handle];
+    
+    if (!username.length) {
+        username = [self.chatRoom peerFirstnameByHandle:handle];
+        username = username.length ? username : [self.chatRoom peerEmailByHandle:handle];
+    }
+
+    return username;
+}
+
 - (void)setTypingIndicator {
     NSString *typingString = nil;
     NSMutableAttributedString *typingAttributedString = nil;
@@ -1276,8 +1287,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         typingAttributedString = [self twoOrMoreUsersAreTypingString];
     } else if (self.whoIsTypingTimersMutableDictionary.allKeys.count == 1) {
         NSNumber *firstUserHandle = self.whoIsTypingTimersMutableDictionary.allKeys.firstObject;
-        NSString *firstUserName = [self.chatRoom peerFirstnameByHandle:firstUserHandle.unsignedLongLongValue];
-        NSString *whoIsTypingString = firstUserName.length ? firstUserName : [self.chatRoom peerEmailByHandle:firstUserHandle.unsignedLongLongValue];
+        NSString *whoIsTypingString = [self usernameForUserHandle:firstUserHandle.unsignedLongLongValue];
         
         typingString = [NSString stringWithFormat:AMLocalizedString(@"isTyping", @"A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime."), whoIsTypingString];
         
@@ -1292,11 +1302,10 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     NSNumber *firstUserHandle = self.whoIsTypingTimersMutableDictionary.allKeys.firstObject;
     NSNumber *secondUserHandle = [self.whoIsTypingTimersMutableDictionary.allKeys objectAtIndex:1];
     
-    NSString *firstUserFirstName = [self.chatRoom peerFirstnameByHandle:firstUserHandle.unsignedLongLongValue];
-    NSString *whoIsTypingString = firstUserFirstName.length ? firstUserFirstName : [self.chatRoom peerEmailByHandle:firstUserHandle.unsignedLongLongValue];
-    
-    NSString *secondUserFirstName = [self.chatRoom peerFirstnameByHandle:secondUserHandle.unsignedLongLongValue];
-    whoIsTypingString = [whoIsTypingString stringByAppendingString:[NSString stringWithFormat:@", %@", (secondUserFirstName.length ? secondUserFirstName : [self.chatRoom peerEmailByHandle:firstUserHandle.unsignedLongLongValue])]];
+    NSString *whoIsTypingString = [self usernameForUserHandle:firstUserHandle.unsignedLongLongValue];
+    NSString *secondUsername = [self usernameForUserHandle:secondUserHandle.unsignedLongLongValue];
+
+    whoIsTypingString = [whoIsTypingString stringByAppendingString:[NSString stringWithFormat:@", %@", secondUsername]];
     
     NSString *twoOrMoreUsersAreTypingString;
     if (self.whoIsTypingTimersMutableDictionary.allKeys.count == 2) {
@@ -2043,7 +2052,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
                         [sendLocationAlert addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"continue", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                             MEGAGenericRequestDelegate *enableGeolocationDelegate = [[MEGAGenericRequestDelegate alloc] initWithCompletion:^(MEGARequest *request, MEGAError *error) {
                                 if (error.type) {
-                                    UIAlertController *enableGeolocationAlert = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", @"") message:[NSString stringWithFormat:@"Enable geolocation failed. Error: %@", error.name] preferredStyle:UIAlertControllerStyleAlert];
+                                    UIAlertController *enableGeolocationAlert = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", @"") message:[NSString stringWithFormat:@"Enable geolocation failed. Error: %@", AMLocalizedString(error.name, nil)] preferredStyle:UIAlertControllerStyleAlert];
                                     [enableGeolocationAlert addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                                         weakSelf.inputToolbar.hidden = weakSelf.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo;
                                     }]];
@@ -3352,12 +3361,12 @@ static NSMutableSet<NSString *> *tapForInfoSet;
                 case MEGAChatErrorTypeAccess: //If the logged in user doesn't have privileges to invite peers.
                 case MEGAChatErrorTypeNoEnt: //If there isn't any chat with the specified chatid.
                     self.stopInvitingContacts = YES;
-                    [SVProgressHUD showErrorWithStatus:error.name];
+                    [SVProgressHUD showErrorWithStatus:AMLocalizedString(error.name, nil)];
                     break;
                     
                 default:
                     if (error.type) {
-                        [SVProgressHUD showErrorWithStatus:error.name];
+                        [SVProgressHUD showErrorWithStatus:AMLocalizedString(error.name, nil)];
                     }
                     break;
             }
@@ -3366,7 +3375,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             
         case MEGAChatRequestTypeNodeMessage: {
             if (error.type) {
-                [SVProgressHUD showErrorWithStatus:error.name];
+                [SVProgressHUD showErrorWithStatus:AMLocalizedString(error.name, nil)];
                 return;
             }
             break;

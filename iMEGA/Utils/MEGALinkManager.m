@@ -175,7 +175,7 @@ static NSString *nodeToPresentBase64Handle;
                         [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
                     } else {
                         [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-                        [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, error.name]];
+                        [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, AMLocalizedString(error.name, nil)]];
                     }
                     return;
                 }
@@ -668,7 +668,7 @@ static NSString *nodeToPresentBase64Handle;
                 [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
             } else {
                 [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-                [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, error.name]];
+                [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, AMLocalizedString(error.name, nil)]];
             }
             return;
         }
@@ -678,7 +678,7 @@ static NSString *nodeToPresentBase64Handle;
             MEGAChatGenericRequestDelegate *autorejoinPublicChatDelegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
                 if (error.type) {
                     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-                    [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, error.name]];
+                    [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, AMLocalizedString(error.name, nil)]];
                     return;
                 }
                 [MEGALinkManager createChatAndShow:request.chatHandle publicChatLink:chatLinkUrl];
@@ -712,6 +712,7 @@ static NSString *nodeToPresentBase64Handle;
         }
     }
     
+    [MEGASdkManager.sharedMEGAChatSdk connect];
     [[MEGASdkManager sharedMEGAChatSdk] openChatPreview:chatLinkUrl delegate:delegate];
 }
 

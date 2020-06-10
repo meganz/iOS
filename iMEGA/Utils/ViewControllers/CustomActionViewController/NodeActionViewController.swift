@@ -78,10 +78,13 @@ class NodeActionViewController: ActionSheetViewController {
         subtitleLabel.autoAlignAxis(.horizontal, toSameAxisOf: headerView!, withOffset: 8)
         subtitleLabel.textColor = .systemGray
         subtitleLabel.font = .systemFont(ofSize: 12)
+        guard let sharedMEGASdk = displayMode == .folderLink || displayMode == .nodeInsideFolderLink ? MEGASdkManager.sharedMEGASdkFolder() : MEGASdkManager.sharedMEGASdk() else {
+            return
+        }
         if node.isFile() {
-            subtitleLabel.text = Helper.sizeAndDate(for: node, api: MEGASdkManager.sharedMEGASdk())
+            subtitleLabel.text = Helper.sizeAndModicationDate(for: node, api: sharedMEGASdk)
         } else {
-            subtitleLabel.text = Helper.filesAndFolders(inFolderNode: node, api: MEGASdkManager.sharedMEGASdk())
+            subtitleLabel.text = Helper.filesAndFolders(inFolderNode: node, api: sharedMEGASdk)
         }
         
         let separatorLineView = UIView.newAutoLayout()
@@ -94,8 +97,6 @@ class NodeActionViewController: ActionSheetViewController {
     }
     
     private func getActions() {
-        let accessType = MEGASdkManager.sharedMEGASdk().accessLevel(for: node)
-        
         let canBeSavedToPhotos = node.isFile() && (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension && node.mnz_isPlayable())
         var nodeActions = [NodeAction]()
         
@@ -109,12 +110,8 @@ class NodeActionViewController: ActionSheetViewController {
             if canBeSavedToPhotos {
                 nodeActions.append(NodeAction.saveToPhotosAction())
             }
-            if node.isFile() {
-                nodeActions.append(NodeAction.openAction())
-            } else {
-                nodeActions.append(NodeAction.selectAction())
-                nodeActions.append(NodeAction.shareAction())
-            }
+            nodeActions.append(NodeAction.selectAction())
+            nodeActions.append(NodeAction.shareAction())
         } else if displayMode == .fileLink {
             nodeActions.append(NodeAction.importAction())
             nodeActions.append(NodeAction.sendToChatAction())
@@ -130,6 +127,9 @@ class NodeActionViewController: ActionSheetViewController {
             if canBeSavedToPhotos {
                 nodeActions.append(NodeAction.saveToPhotosAction())
             }
+            if node.isFile() {
+                nodeActions.append(NodeAction.openAction())
+            }
         } else if displayMode == .chatSharedFiles {
             nodeActions.append(NodeAction.forwardAction())
             if canBeSavedToPhotos {
@@ -138,7 +138,7 @@ class NodeActionViewController: ActionSheetViewController {
             nodeActions.append(NodeAction.downloadAction())
             nodeActions.append(NodeAction.importAction())
         } else {
-            switch accessType {
+            switch MEGASdkManager.sharedMEGASdk().accessLevel(for: node) {
             case .accessUnknown:
                 nodeActions.append(NodeAction.importAction())
                 if canBeSavedToPhotos {
