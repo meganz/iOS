@@ -326,7 +326,7 @@ extension ChatViewController: ChatInputBarDelegate {
             
             self.editMessage = nil
         } else if let message = MEGASdkManager.sharedMEGAChatSdk()?.sendMessage(toChat: chatRoom.chatId, message: text) {
-            chatRoomDelegate.insertMessage(message)
+            chatRoomDelegate.insertMessage(message, scrollToBottom: true)
         }
     }
     
