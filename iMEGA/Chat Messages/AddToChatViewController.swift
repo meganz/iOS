@@ -66,7 +66,7 @@ class AddToChatViewController: UIViewController {
         setUpMenuPageViewController()
         
         if UIDevice.current.iPadDevice == false {
-            contentView.layer.cornerRadius = 20.0
+            contentView.layer.cornerRadius = 13.0
         }
     }
     
