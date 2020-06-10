@@ -266,7 +266,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
     }
     
     
-    func insertMessage(_ message: MEGAChatMessage) {
+    func insertMessage(_ message: MEGAChatMessage, scrollToBottom: Bool = false) {
         let lastSectionVisible = isLastSectionVisible()
         chatMessage.append(ChatMessage(message: message, chatRoom: chatRoom))
         guard let messagesCollectionView = chatViewController?.messagesCollectionView else {
@@ -287,13 +287,11 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
                 messagesCollectionView.reloadSections([chatMessage.count - 2])
             }
         }, completion: { [weak self] _ in
-            if lastSectionVisible == true {
+            if lastSectionVisible || scrollToBottom {
                 UIView.setAnimationsEnabled(true)
                 self?.chatViewController?.messagesCollectionView.scrollToBottom(animated: true)
-
             }
         })
-        
     }
     
     func insertTransfer(_ transer: MEGATransfer) {
