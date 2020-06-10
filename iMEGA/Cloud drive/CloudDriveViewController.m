@@ -1090,15 +1090,6 @@ static const NSTimeInterval kSearchTimeDelay = .5;
             }
         }];
     }]];
-    if (@available(iOS 13.0, *)) {
-        [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"Scan Document", @"Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA") detail:nil image:[UIImage imageNamed:@"scanDocument"] style:UIAlertActionStyleDefault actionHandler:^{
-            [self presentViewController:({
-                VNDocumentCameraViewController *scanVC = [VNDocumentCameraViewController.alloc init];
-                scanVC.delegate = self;
-                scanVC;
-            }) animated:YES completion:nil];
-        }]];
-    }
     [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"uploadFrom", @"Option given on the `Add` section to allow the user upload something from another cloud storage provider.") detail:nil image:[UIImage imageNamed:@"import"] style:UIAlertActionStyleDefault actionHandler:^{
         UIDocumentMenuViewController *documentMenuViewController = [[UIDocumentMenuViewController alloc] initWithDocumentTypes:@[(__bridge NSString *) kUTTypeContent, (__bridge NSString *) kUTTypeData,(__bridge NSString *) kUTTypePackage, (@"com.apple.iwork.pages.pages"), (@"com.apple.iwork.numbers.numbers"), (@"com.apple.iwork.keynote.key")] inMode:UIDocumentPickerModeImport];
         documentMenuViewController.delegate = self;
@@ -1493,6 +1484,16 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"upload", @"") detail:nil image:[UIImage imageNamed:@"upload"] style:UIAlertActionStyleDefault actionHandler:^{
         [weakSelf presentUploadAlertController];
     }]];
+    
+    if (@available(iOS 13.0, *)) {
+        [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"Scan Document", @"Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA") detail:nil image:[UIImage imageNamed:@"scanDocument"] style:UIAlertActionStyleDefault actionHandler:^{
+            [self presentViewController:({
+                VNDocumentCameraViewController *scanVC = [VNDocumentCameraViewController.alloc init];
+                scanVC.delegate = self;
+                scanVC;
+            }) animated:YES completion:nil];
+        }]];
+    }
     [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"newFolder", @"Menu option from the `Add` section that allows you to create a 'New Folder'") detail:nil image:[UIImage imageNamed:@"newFolder"] style:UIAlertActionStyleDefault actionHandler:^{
         UIAlertController *newFolderAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"newFolder", @"Menu option from the `Add` section that allows you to create a 'New Folder'") message:nil preferredStyle:UIAlertControllerStyleAlert];
         
@@ -1528,7 +1529,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     [actions addObject:[ActionSheetAction.alloc initWithTitle:title detail:nil image:image style:UIAlertActionStyleDefault actionHandler:^{
         [weakSelf changeLayoutMode];
     }]];
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"sortTitle", @"Section title of the 'Sort by'") detail:nil image:[UIImage imageNamed:@"sort"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"sortTitle", @"Section title of the 'Sort by'") detail:[NSString selectedSortTypeForKey:@"SortOrderType"] image:[UIImage imageNamed:@"sort"] style:UIAlertActionStyleDefault actionHandler:^{
         [weakSelf presentSortByActionSheet];
     }]];
     [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"select", @"Button that allows you to select a given folder") detail:nil image:[UIImage imageNamed:@"selected"] style:UIAlertActionStyleDefault actionHandler:^{
@@ -1536,7 +1537,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
         [weakSelf setEditMode:enableEditing];
         
     }]];
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"rubbishBinLabel", @"Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin'") detail:nil image:[UIImage imageNamed:@"rubbishBin"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"rubbishBinLabel", @"Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin'") detail:[Helper sizeForNode:MEGASdkManager.sharedMEGASdk.rubbishNode api:MEGASdkManager.sharedMEGASdk] image:[UIImage imageNamed:@"rubbishBin"] style:UIAlertActionStyleDefault actionHandler:^{
         CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
         cloudDriveVC.parentNode = [[MEGASdkManager sharedMEGASdk] rubbishNode];
         cloudDriveVC.displayMode = DisplayModeRubbishBin;
@@ -1560,7 +1561,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
         }]];
     }
     
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"sortTitle", @"Section title of the 'Sort by'") detail:nil image:[UIImage imageNamed:@"sort"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"sortTitle", @"Section title of the 'Sort by'") detail:[NSString selectedSortTypeForKey:@"SortOrderType"] image:[UIImage imageNamed:@"sort"] style:UIAlertActionStyleDefault actionHandler:^{
         [weakSelf presentSortByActionSheet];
     }]];
     
@@ -1593,7 +1594,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"upload", @"") detail:nil image:[UIImage imageNamed:@"upload"] style:UIAlertActionStyleDefault actionHandler:^{
         [weakSelf presentUploadAlertController];
     }]];
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"rubbishBinLabel", @"Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin'") detail:nil image:[UIImage imageNamed:@"rubbishBin"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"rubbishBinLabel", @"Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin'") detail:[Helper sizeForNode:MEGASdkManager.sharedMEGASdk.rubbishNode api:MEGASdkManager.sharedMEGASdk] image:[UIImage imageNamed:@"rubbishBin"] style:UIAlertActionStyleDefault actionHandler:^{
         CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
         cloudDriveVC.parentNode = [[MEGASdkManager sharedMEGASdk] rubbishNode];
         cloudDriveVC.displayMode = DisplayModeRubbishBin;
@@ -1971,7 +1972,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
         vc.docs = docs.copy;
         [self presentViewController:({
             MEGANavigationController *nav = [MEGANavigationController.alloc initWithRootViewController:vc];
-            [nav addLeftDismissButtonWithText:AMLocalizedString(@"ok", nil)];
+            [nav addLeftDismissButtonWithText:AMLocalizedString(@"cancel", nil)];
             nav;
         }) animated:YES completion:nil];
     }];

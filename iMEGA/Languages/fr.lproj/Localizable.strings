@@ -1360,6 +1360,34 @@
 "Read error"="Erreur de lecture";
 /* Label to show that an error related with an invalid or missing application key occurs during a SDK operation. */
 "Invalid application key"="Clé d’application invalide";
+/* Error shown when terms of service are breached during download. */
+"Terms of Service breached"="Non-respect des Conditions générales d’utilisation";
+/* SDK error returned when an upload would produce recursivity */
+"Upload produces recursivity"="Upload produces recursivity";
+/* Error shown when download a file that has violated ToS/AUP. */
+"Not accessible due to ToS/AUP violation"="N’est pas accessible en raison du non-respect des CGU/PUA.";
+/* Error shown when SSL check has failed */
+"SSL verification failed"="Échec de vérification SSL";
+/* Label shown when current account does not have enough quota to complete the operation */
+"Not enough quota"="Quota insuffisant";
+/* SDK error returned when a MFA is required to perform an operation */
+"Multi-factor authentication required"="Multi-factor authentication required";
+/* SDK error returned for operations only allowed for business master users */
+"Access denied for users"="Access denied for users";
+/* SDK error returned when a business account has expired */
+"Business account has expired"="Business account has expired";
+/* SDK error returned when the credit card has been rejected */
+"Credit card rejected"="Credit card rejected";
+/* SDK error returned when the billing failed */
+"Billing failed"="Billing failed";
+/* SDK error returned when an operation is rejected due to fraud protection */
+"Rejected by fraud protection"="Rejected by fraud protection";
+/* SDK error returned when there are too many requests */
+"Too many requests"="Too many requests";
+/* SDK error returned when there is a balance error */
+"Balance error"="Balance error";
+/* SDK error returned upon a HTTP error */
+"HTTP error"="HTTP error";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Erreur inconnue";
 /* Text shown in an alert when the user is about to change the language of the app */
@@ -2132,7 +2160,7 @@
 "Select Folder"="Sélectionner un dossier";
 /* Title of the folder selection screen for camera uploads */
 "Choose Folder"="Choisir un dossier";
-/* Label used near to the option selected to encode the images uploaded to a chat (Low, Medium, Original) */
+/* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
 "Image quality"="Qualité des images";
 /* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
 "Automatic"="Automatique";
@@ -2167,7 +2195,7 @@
 /* Label for any ‘Night’ button, link, text, title, etc. - (String as short as possible). */
 "Night"="Nuit";
 /* Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible). */
-"Minimal"="Minimal";
+"Minimal"="Minimale";
 /* Section title inside of Settings - Appearance, where you can change the app's layout. */
 "Layout"="Agencement";
 /* Section title inside of Settings - Appearance, where you can change the app's icon. */
@@ -2200,3 +2228,5 @@
 "Folder link unavailable"="Lien de dossier non disponible";
 /* Error message shown when opening a file link which doesn’t exist */
 "File link unavailable"="Lien de fichier non disponible";
+/* Header of block with all shared files in chat. */
+"Shared Files"="Fichiers partagés";

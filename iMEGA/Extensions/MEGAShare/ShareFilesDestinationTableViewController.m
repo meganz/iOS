@@ -108,6 +108,7 @@
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         } else if (indexPath.row == 1) {
             imageView.image = [UIImage imageNamed:@"sendMessage"];
+            imageView.tintColor = UIColor.grayColor;
             label.text = AMLocalizedString(@"sendToContact", nil);
             label.enabled = cell.userInteractionEnabled = self.isChatReady;
             

@@ -224,7 +224,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 - (ContactTableViewCell *)cellForSharedItemsWithIndexPath:(NSIndexPath *)indexPath {
     ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
     cell.avatarImageView.image = [UIImage imageNamed:@"sharedFiles"];
-    cell.nameLabel.text = AMLocalizedString(@"sharedItems", @"Title of Shared Items section");
+    cell.nameLabel.text = AMLocalizedString(@"Shared Files", @"Header of block with all shared files in chat.");
     cell.nameLabel.textColor = UIColor.mnz_black333333;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 
@@ -398,7 +398,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 - (void)showPermissionAlertWithSourceView:(UIView *)sourceView {
     MEGAChatGenericRequestDelegate *delegate = [MEGAChatGenericRequestDelegate.alloc initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
         if (error.type) {
-            [SVProgressHUD showErrorWithStatus:error.name];
+            [SVProgressHUD showErrorWithStatus:AMLocalizedString(error.name, nil)];
         } else {
             self.groupChatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:request.chatHandle];
             [self.tableView reloadData];
@@ -426,7 +426,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 - (void)removeParticipantFromGroup {
     MEGAChatGenericRequestDelegate *delegate = [MEGAChatGenericRequestDelegate.alloc initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
         if (error.type) {
-            [SVProgressHUD showErrorWithStatus:error.name];
+            [SVProgressHUD showErrorWithStatus:AMLocalizedString(error.name, nil)];
         } else {
             [self.navigationController popViewControllerAnimated:YES];
         }
