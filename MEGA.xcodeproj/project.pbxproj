@@ -307,7 +307,6 @@
 		5DBAC841248778DA0050996E /* OverDisckQuotaWarningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DBAC840248778DA0050996E /* OverDisckQuotaWarningView.swift */; };
 		5DBAC8442487B8A10050996E /* OverDisckQuotaWarningView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5DBAC8432487B8A10050996E /* OverDisckQuotaWarningView.xib */; };
 		5DE448E6248D078800EE00CB /* AttributedTextStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE448E5248D078800EE00CB /* AttributedTextStyle.swift */; };
-		5DE448E9248D15B100EE00CB /* NibLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE448E8248D15B100EE00CB /* NibLoadable.swift */; };
 		5DE448EB248D15F300EE00CB /* NibOwnerLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE448EA248D15F300EE00CB /* NibOwnerLoadable.swift */; };
 		5DE448EE248F673700EE00CB /* ViewStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE448ED248F673700EE00CB /* ViewStyle.swift */; };
 		7714901520F7592100769BD4 /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7714901420F7592000769BD4 /* Contacts.framework */; };
@@ -1699,7 +1698,6 @@
 		5DBAC840248778DA0050996E /* OverDisckQuotaWarningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverDisckQuotaWarningView.swift; sourceTree = "<group>"; };
 		5DBAC8432487B8A10050996E /* OverDisckQuotaWarningView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OverDisckQuotaWarningView.xib; sourceTree = "<group>"; };
 		5DE448E5248D078800EE00CB /* AttributedTextStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedTextStyle.swift; sourceTree = "<group>"; };
-		5DE448E8248D15B100EE00CB /* NibLoadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NibLoadable.swift; sourceTree = "<group>"; };
 		5DE448EA248D15F300EE00CB /* NibOwnerLoadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NibOwnerLoadable.swift; sourceTree = "<group>"; };
 		5DE448ED248F673700EE00CB /* ViewStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewStyle.swift; sourceTree = "<group>"; };
 		7714901420F7592000769BD4 /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = System/Library/Frameworks/Contacts.framework; sourceTree = SDKROOT; };
@@ -4168,7 +4166,6 @@
 		5DE448E7248D159000EE00CB /* UIKit+Tools */ = {
 			isa = PBXGroup;
 			children = (
-				5DE448E8248D15B100EE00CB /* NibLoadable.swift */,
 				5DE448EA248D15F300EE00CB /* NibOwnerLoadable.swift */,
 			);
 			path = "UIKit+Tools";
@@ -6428,7 +6425,6 @@
 				41A66D071AE7900F007D7E20 /* UpgradeTableViewController.m in Sources */,
 				5B20B01120E6300300511C0F /* MEGAGenericRequestDelegate.m in Sources */,
 				837C4F8A235DFFBA00FFE177 /* VerifyEmailViewController.swift in Sources */,
-				5DE448E9248D15B100EE00CB /* NibLoadable.swift in Sources */,
 				4172794E1DB663FA001AC818 /* JSQMessagesCellTextView.m in Sources */,
 				A86B9F5A2316D6AB00F35E7A /* FLEXFieldEditorView.m in Sources */,
 				B61F01C6220D37A400F4A917 /* DiskSpaceDetector.m in Sources */,
