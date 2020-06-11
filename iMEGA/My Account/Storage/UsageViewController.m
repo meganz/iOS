@@ -209,13 +209,13 @@
     
     NSString *firstPartString;
     NSString *secondPartString;
-    if (firstNumber.intValue == 0) {
+    if (firstNumber.boolValue == 0) {
         firstPartString = @"-";
     } else {
         firstPartString = [Helper memoryStyleStringFromByteCount:firstNumber.longLongValue];
     }
     
-    if (secondNumber.intValue == 0) {
+    if (secondNumber.boolValue == 0) {
         secondPartString = @"-";
     } else {
         secondPartString = [Helper memoryStyleStringFromByteCount:secondNumber.longLongValue];
