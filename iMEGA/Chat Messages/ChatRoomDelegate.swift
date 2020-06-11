@@ -182,7 +182,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
                                 chatViewController?.messagesCollectionView.reloadSections([chatMessage.count + index])
                             }, completion: { [weak self] _ in
                                 self?.chatMessage.append(receivedMessage)
-                                self?.transfers.remove(at: index)
+                                self?.transfers = self?.transfers.filter { $0 != receivedMessage } ?? []
                             })
                             return
                         }
