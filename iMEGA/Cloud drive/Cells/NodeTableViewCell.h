@@ -1,7 +1,17 @@
 #import "MGSwipeTableCell.h"
+/*
+ NodeTableViewCellFlavor is used to tell how `NodeTableViewCell` being used, e.g. CloudDriveCell, RecentCell, SharedLinkCell.
+ In fact, this is a work around to tell the different scenario the same cell is reused, which should be prohibited, as it's
+ hard to maintain. We should improve this later with table cell model.
+ */
+typedef NS_ENUM(NSInteger, NodeTableViewCellFlavor) {
+    NodeTableViewCellFlavorCloudDrive = 0,
+    NodeTableViewCellFlavorVersions,
+    NodeTableViewCellFlavorRecentAction,
+    NodeTableViewCellFlavorSharedLink
+};
 
 @interface NodeTableViewCell : MGSwipeTableCell
-
 
 @property (weak, nonatomic) IBOutlet UIImageView *middleImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *thumbnailImageView;
@@ -36,6 +46,8 @@
 
 @property (strong, nonatomic) MEGANode *node;
 @property (strong, nonatomic) MEGARecentActionBucket *recentActionBucket;
+
+@property (nonatomic) NodeTableViewCellFlavor cellFlavor;
 
 - (void)configureCellForNode:(MEGANode *)node delegate:(id<MGSwipeTableCellDelegate>)delegate api:(MEGASdk *)api;
 

@@ -4,7 +4,6 @@
 #import <ContactsUI/ContactsUI.h>
 
 #import "UIImage+GKContact.h"
-#import "NSDate+DateTools.h"
 #import "SVProgressHUD.h"
 #import "UIScrollView+EmptyDataSet.h"
 #import "UIBarButtonItem+Badge.h"
@@ -21,6 +20,7 @@
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIAlertAction+MNZCategory.h"
+#import "UIImage+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 #import "UITextField+MNZCategory.h"
 #import "UIViewController+MNZCategory.h"
@@ -31,7 +31,7 @@
 #import "ShareFolderActivity.h"
 #import "ItemListViewController.h"
 
-@interface ContactsViewController () <CNContactPickerDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, ItemListViewControllerDelegate, UISearchControllerDelegate, UIGestureRecognizerDelegate, MEGAChatDelegate, ContactLinkQRViewControllerDelegate>
+@interface ContactsViewController () <CNContactPickerDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, ItemListViewControllerDelegate, UISearchControllerDelegate, UIGestureRecognizerDelegate, MEGAChatDelegate, ContactLinkQRViewControllerDelegate, MEGARequestDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -91,6 +91,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *noContactsDescriptionLabel;
 @property (weak, nonatomic) IBOutlet UIButton *inviteContactButton;
 
+@property (strong, nonatomic) MEGAUser *detailUser;
+
 @end
 
 @implementation ContactsViewController
@@ -124,6 +126,8 @@
     
     [self.tableView registerNib:[UINib nibWithNibName:@"ContactsHeaderFooterView" bundle:nil] forHeaderFooterViewReuseIdentifier:@"ContactsHeaderFooterView"];
     
+    [MEGASdkManager.sharedMEGASdk addMEGARequestDelegate:self];
+
     if (self.contactsMode == ContactsModeChatNamingGroup) {
         self.enterGroupNameTextField.placeholder = AMLocalizedString(@"Enter group name", @"Title of the dialog shown when the user it is creating a chat link and the chat has not title");
     }
@@ -154,6 +158,10 @@
 
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
     [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
+    
+    if (self.isMovingFromParentViewController) {
+        [MEGASdkManager.sharedMEGASdk removeMEGARequestDelegate:self];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -425,55 +433,35 @@
 
 - (void)selectPermissionsFromButton:(UIBarButtonItem *)sourceButton {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        UIAlertController *shareFolderAlertController = [self prepareShareFolderAlertController];
-        
-        if (sourceButton) {
-            shareFolderAlertController.popoverPresentationController.barButtonItem = sourceButton;
-        } else {
-            shareFolderAlertController.popoverPresentationController.sourceRect = self.view.frame;
-            shareFolderAlertController.popoverPresentationController.sourceView = self.view;
-        }
-        
-        [self presentViewController:shareFolderAlertController animated:YES completion:nil];
+        id sender = sourceButton ? sourceButton : self.view;
+        ActionSheetViewController *shareFolderActionSheet = [self prepareShareFolderAlertControllerFromSender:sender];
+        [self presentViewController:shareFolderActionSheet animated:YES completion:nil];
     }
 }
 
-- (void)selectPermissionsFromCellRect:(CGRect)cellRect {
+- (void)selectPermissionsFromCell:(ContactTableViewCell *)cell {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        UIAlertController *shareFolderAlertController = [self prepareShareFolderAlertController];
-        
-        shareFolderAlertController.popoverPresentationController.sourceRect = cellRect;
-        shareFolderAlertController.popoverPresentationController.sourceView = self.tableView;
-        
-        [self presentViewController:shareFolderAlertController animated:YES completion:nil];
+        ActionSheetViewController *shareFolderActionSheet = [self prepareShareFolderAlertControllerFromSender:cell.permissionsImageView];
+        [self presentViewController:shareFolderActionSheet animated:YES completion:nil];
     }
 }
 
-- (UIAlertController *)prepareShareFolderAlertController {
-    UIAlertController *shareFolderAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"permissions", @"Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    [shareFolderAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
-    
-    UIAlertAction *fullAccessAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"fullAccess", @"Permissions given to the user you share your folder with") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [self shareNodesWithLevel:MEGAShareTypeAccessFull];
-    }];
-    [fullAccessAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
-    [shareFolderAlertController addAction:fullAccessAlertAction];
-    
-    UIAlertAction *readAndWritetAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"readAndWrite", @"Permissions given to the user you share your folder with") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [self shareNodesWithLevel:MEGAShareTypeAccessReadWrite];
-    }];
-    [readAndWritetAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
-    [shareFolderAlertController addAction:readAndWritetAlertAction];
-    
-    UIAlertAction *readOnlyAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [self shareNodesWithLevel:MEGAShareTypeAccessRead];
-    }];
-    [readOnlyAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
-    [shareFolderAlertController addAction:readOnlyAlertAction];
-    
-    shareFolderAlertController.modalPresentationStyle = UIModalPresentationPopover;
-    
-    return shareFolderAlertController;
+- (ActionSheetViewController *)prepareShareFolderAlertControllerFromSender:(id)sender {
+    __weak __typeof__(self) weakSelf = self;
+
+    NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"fullAccess", @"Permissions given to the user you share your folder with") detail:nil image:[UIImage imageNamed:@"fullAccessPermissions"] style:UIAlertActionStyleDefault actionHandler:^{
+        [weakSelf shareNodesWithLevel:MEGAShareTypeAccessFull];
+    }]];
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"readAndWrite", @"Permissions given to the user you share your folder with") detail:nil image:[UIImage imageNamed:@"readWritePermissions"] style:UIAlertActionStyleDefault actionHandler:^{
+        [weakSelf shareNodesWithLevel:MEGAShareTypeAccessReadWrite];
+    }]];
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with") detail:nil image:[UIImage imageNamed:@"readPermissions"] style:UIAlertActionStyleDefault actionHandler:^{
+        [weakSelf shareNodesWithLevel:MEGAShareTypeAccessRead];
+    }]];
+    ActionSheetViewController *shareFolderActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:AMLocalizedString(@"permissions", @"Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder") dismissCompletion:nil sender:sender];
+
+    return shareFolderActionSheet;
 }
 
 - (void)shareNodesWithLevel:(MEGAShareType)shareType {
@@ -978,39 +966,18 @@
 }
 
 - (IBAction)deleteAction:(UIBarButtonItem *)sender {
-    if (self.contactsMode == ContactsModeFolderSharedWith) {
-        MEGAShareRequestDelegate *shareRequestDelegate = [[MEGAShareRequestDelegate alloc] initToChangePermissionsWithNumberOfRequests:self.selectedUsersArray.count completion:^{
-            if (self.selectedUsersArray.count == self.visibleUsersArray.count) {
-                [self.navigationController popViewControllerAnimated:YES];
-            } else {
-                [self reloadUI];
-            }
-            self.navigationItem.leftBarButtonItems = @[];
-            [self setTableViewEditing:NO animated:YES];
-        }];
-        
-        for (MEGAUser *user in self.selectedUsersArray) {
-            [[MEGASdkManager sharedMEGASdk] shareNode:self.node withUser:user level:MEGAShareTypeAccessUnknown delegate:shareRequestDelegate];
+    MEGAShareRequestDelegate *shareRequestDelegate = [[MEGAShareRequestDelegate alloc] initToChangePermissionsWithNumberOfRequests:self.selectedUsersArray.count completion:^{
+        if (self.selectedUsersArray.count == self.visibleUsersArray.count) {
+            [self.navigationController popViewControllerAnimated:YES];
+        } else {
+            [self reloadUI];
         }
-    } else {
-        NSString *message = (self.selectedUsersArray.count > 1) ? [NSString stringWithFormat:AMLocalizedString(@"removeMultipleUsersMessage", nil), self.selectedUsersArray.count] :[NSString stringWithFormat:AMLocalizedString(@"removeUserMessage", nil), [self.selectedUsersArray.firstObject email]];
-        UIAlertController *removeUserAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"removeUserTitle", @"Alert title shown when you want to remove one or more contacts") message:message preferredStyle:UIAlertControllerStyleAlert];
-        
-        [removeUserAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
-        
-        [removeUserAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-                MEGARemoveContactRequestDelegate *removeContactRequestDelegate = [[MEGARemoveContactRequestDelegate alloc] initWithNumberOfRequests:self.selectedUsersArray.count completion:^{
-                    [self setTableViewEditing:NO animated:NO];
-                }];
-                for (NSInteger i = 0; i < self.selectedUsersArray.count; i++) {
-                    [[MEGASdkManager sharedMEGASdk] removeContactUser:[self.selectedUsersArray objectAtIndex:i] delegate:removeContactRequestDelegate];
-                }
-                [self dismissViewControllerAnimated:YES completion:nil];
-            }
-        }]];
-        
-        [self presentViewController:removeUserAlertController animated:YES completion:nil];
+        self.navigationItem.leftBarButtonItems = @[];
+        [self setTableViewEditing:NO animated:YES];
+    }];
+    
+    for (MEGAUser *user in self.selectedUsersArray) {
+        [[MEGASdkManager sharedMEGASdk] shareNode:self.node withUser:user level:MEGAShareTypeAccessUnknown delegate:shareRequestDelegate];
     }
 }
 
@@ -1225,7 +1192,7 @@
                         cell.nameLabel.text = user.email;
                     }
                     MEGAShare *share = self.outSharesForNodeMutableArray[indexPath.row - 1];
-                    cell.permissionsImageView.image = [Helper permissionsButtonImageForShareType:share.access];
+                    cell.permissionsImageView.image = [UIImage mnz_permissionsButtonImageForShareType:share.access];
                 }
             } else if (indexPath.section == 1) {
                 cell = [tableView dequeueReusableCellWithIdentifier:@"ContactPermissionsEmailTableViewCellID" forIndexPath:indexPath];
@@ -1247,6 +1214,7 @@
         } 
         
         [cell.avatarImageView mnz_setImageForUserHandle:user.handle name:cell.nameLabel.text];
+        cell.verifiedImageView.hidden = ![MEGASdkManager.sharedMEGASdk areCredentialsVerifiedOfUser:user];
         
         if (self.tableView.isEditing) {
             // Check if selectedNodesArray contains the current node in the tableView
@@ -1355,16 +1323,18 @@
     switch (self.contactsMode) {
         case ContactsModeDefault: {
             MEGAUser *user = [self userAtIndexPath:indexPath];
+            
             if (!user) {
                 [SVProgressHUD showErrorWithStatus:@"Invalid user"];
                 return;
             }
-            ContactDetailsViewController *contactDetailsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactDetailsViewControllerID"];
-            contactDetailsVC.contactDetailsMode = ContactDetailsModeDefault;
-            contactDetailsVC.userEmail = user.email;
-            contactDetailsVC.userName = user.mnz_fullName;
-            contactDetailsVC.userHandle = user.handle;
-            [self.navigationController pushViewController:contactDetailsVC animated:YES];
+            
+            if (self.searchController.isActive) {
+                self.detailUser = user;
+                self.searchController.active = NO;
+            } else {
+                [self showContactDetailsForUser:user];
+            }
             break;
         }
             
@@ -1385,8 +1355,7 @@
                     }
                     
                     self.userTapped = user;
-                    CGRect cellRect = [self.tableView rectForRowAtIndexPath:indexPath];
-                    [self selectPermissionsFromCellRect:cellRect];
+                    [self selectPermissionsFromCell:[self.tableView cellForRowAtIndexPath:indexPath]];
                 }
             } else {
                 if (!tableView.isEditing) {
@@ -1559,11 +1528,15 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         switch (self.contactsMode) {
             case ContactsModeDefault: {
-                MEGARemoveContactRequestDelegate *removeContactRequestDelegate = [[MEGARemoveContactRequestDelegate alloc] initWithNumberOfRequests:1 completion:^{
-                    [self setTableViewEditing:NO animated:NO];
-                }];
                 MEGAUser *user = [self userAtIndexPath:indexPath];
-                [[MEGASdkManager sharedMEGASdk] removeContactUser:user delegate:removeContactRequestDelegate];
+                UIAlertController *removeContactAlertController = [Helper removeUserContactFromSender:[tableView cellForRowAtIndexPath:indexPath] withConfirmAction:^{
+                    MEGARemoveContactRequestDelegate *removeContactRequestDelegate = [MEGARemoveContactRequestDelegate. alloc initWithCompletion:^{
+                        [self setTableViewEditing:NO animated:NO];
+                    }];
+                    [[MEGASdkManager sharedMEGASdk] removeContactUser:user delegate:removeContactRequestDelegate];
+                }];
+                
+                [self presentViewController:removeContactAlertController animated:YES completion:nil];
                 break;
             }
                 
@@ -1730,10 +1703,8 @@
     NSString *text = @"";
     if (MEGAReachabilityManager.isReachable && !self.searchController.isActive) {
         text = AMLocalizedString(@"inviteContact", @"Text shown when the user tries to make a call and the receiver is not a contact");
-    } else {
-        if (!MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
+    } else if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
             text = AMLocalizedString(@"Turn Mobile Data on", @"Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app.");
-        }
     }
     
     return [[NSAttributedString alloc] initWithString:text attributes:[Helper buttonTextAttributesForEmptyState]];
@@ -1795,6 +1766,13 @@
         default:
             searchController.searchBar.showsCancelButton = YES;
             break;
+    }
+}
+
+- (void)didDismissSearchController:(UISearchController *)searchController {
+    if (self.detailUser != nil) {
+        [self showContactDetailsForUser:self.detailUser];
+        self.detailUser = nil;
     }
 }
 
@@ -1898,11 +1876,15 @@
         if (deleteContactsOnIndexPathsArray.count != 0) {
             for (NSIndexPath *indexPath in deleteContactsOnIndexPathsArray) {
                 [self.visibleUsersArray removeObjectAtIndex:indexPath.row];
-                MEGAUser *userToDelete = [deleteContactsIndexPathMutableDictionary objectForKey:indexPath];
-                NSString *userToDeleteBase64Handle = [MEGASdk base64HandleForUserHandle:userToDelete.handle];
-                [self.indexPathsMutableDictionary removeObjectForKey:userToDeleteBase64Handle];
             }
             [self.tableView deleteRowsAtIndexPaths:deleteContactsOnIndexPathsArray withRowAnimation:UITableViewRowAnimationAutomatic];
+            
+            //Rebuild indexPaths to keep consistency with the table
+            [self.indexPathsMutableDictionary removeAllObjects];
+            for (MEGAUser *user in self.visibleUsersArray) {
+                NSString *base64Handle = [MEGASdk base64HandleForUserHandle:user.handle];
+                [self.indexPathsMutableDictionary setObject:[NSIndexPath indexPathForRow:[self.visibleUsersArray indexOfObject:user] inSection:0] forKey:base64Handle];
+            }
         }
     }
 }
@@ -1977,6 +1959,37 @@
 
 - (void)emailForScannedQR:(NSString *)email {
     [self inviteEmailToShareFolder:email];
+}
+
+#pragma mark - MEGARequestDelegate
+
+- (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
+    switch (request.type) {
+        case MEGARequestTypeGetAttrUser: {
+            if (error.type) {
+                return;
+            }
+            
+            if (request.paramType == MEGAUserAttributeFirstname || request.paramType == MEGAUserAttributeLastname) {
+                [self reloadUI];
+            }
+            break;
+        }
+            
+        default:
+            break;
+    }
+}
+
+#pragma mark - Show contact details
+
+- (void)showContactDetailsForUser:(MEGAUser *)user {
+    ContactDetailsViewController *contactDetailsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactDetailsViewControllerID"];
+    contactDetailsVC.contactDetailsMode = ContactDetailsModeDefault;
+    contactDetailsVC.userEmail = user.email;
+    contactDetailsVC.userName = user.mnz_fullName;
+    contactDetailsVC.userHandle = user.handle;
+    [self.navigationController pushViewController:contactDetailsVC animated:YES];
 }
 
 @end

@@ -4,7 +4,6 @@
 #import <UserNotifications/UserNotifications.h>
 
 #import <PureLayout/PureLayout.h>
-#import "NSDate+DateTools.h"
 #import "SVProgressHUD.h"
 #import "UIImage+GKContact.h"
 #import "UIScrollView+EmptyDataSet.h"
@@ -67,7 +66,7 @@ const NSUInteger kMaxMessagesToLoad = 256;
 
 static NSMutableSet<NSString *> *tapForInfoSet;
 
-@interface MessagesViewController () <MEGAPhotoBrowserDelegate, JSQMessagesViewAccessoryButtonDelegate, JSQMessagesComposerTextViewPasteDelegate, DZNEmptyDataSetSource, MEGAChatDelegate, MEGAChatRequestDelegate, MEGARequestDelegate, MEGAChatCallDelegate>
+@interface MessagesViewController () <MEGAPhotoBrowserDelegate, JSQMessagesViewAccessoryButtonDelegate, JSQMessagesComposerTextViewPasteDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAChatDelegate, MEGAChatRequestDelegate, MEGARequestDelegate, MEGAChatCallDelegate>
 
 @property (nonatomic, strong) MEGAOpenMessageHeaderView *openMessageHeaderView;
 @property (nonatomic, strong) MEGALoadingMessagesHeaderView *loadingMessagesHeaderView;
@@ -223,6 +222,13 @@ static NSMutableSet<NSString *> *tapForInfoSet;
                                                     }
     }];
     
+    [NSNotificationCenter.defaultCenter addObserverForName:MEGAOpenChatRoomFromPushNotification
+                                                    object:nil
+                                                     queue:NSOperationQueue.mainQueue
+                                                usingBlock:^(NSNotification * _Nonnull note) {
+                                                    [weakself customNavigationBarLabel];
+    }];
+    
     [[UNUserNotificationCenter currentNotificationCenter] removeDeliveredNotificationsWithIdentifiers:@[[MEGASdk base64HandleForUserHandle:self.chatRoom.chatId]]];
     [[UNUserNotificationCenter currentNotificationCenter] removePendingNotificationRequestsWithIdentifiers:@[[MEGASdk base64HandleForUserHandle:self.chatRoom.chatId]]];
     self.collectionView.prefetchingEnabled = NO;
@@ -268,6 +274,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     
     self.loadingState = YES;
     self.collectionView.emptyDataSetSource = self;
+    self.collectionView.emptyDataSetDelegate = self;
     [self.collectionView reloadData];
 }
 
@@ -576,7 +583,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 
 - (void)loadMessages {
     NSUInteger messagesToLoad = 32;
-    if (self.isFirstLoad && (self.unreadMessages > 32 || self.unreadMessages < 0)) {
+    if (self.isFirstLoad && (self.unreadMessages > messagesToLoad || self.unreadMessages < 0)) {
         messagesToLoad = ABS(self.unreadMessages);
     }
     NSInteger loadMessage = [[MEGASdkManager sharedMEGAChatSdk] loadMessagesForChat:self.chatRoom.chatId count:messagesToLoad];
@@ -614,7 +621,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         self.navigationItem.hidesBackButton = YES;
     } else {
         self.navigationItem.hidesBackButton = NO;
-        self.inputToolbar.hidden = self.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo && !self.shouldShowJoinView;
+        self.inputToolbar.hidden = MEGASdkManager.sharedMEGASdk.businessStatus == BusinessStatusExpired || (self.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo && !self.shouldShowJoinView);
         [self updateJoinView];
         
         if (self.chatRoom.isGroup) {
@@ -629,7 +636,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             }
         }
         
-        NSString *chatRoomTitle = self.chatRoom.title ?: @"";
+        NSString *chatRoomTitle = self.chatRoom.chatTitle ?: @"";
         NSString *chatRoomState;
         if (self.tapForInfoTimer.isValid) {
             chatRoomState = AMLocalizedString(@"Tap here for info", @"Subtitle shown in a chat to inform where to tap to enter in the chat details view");
@@ -763,10 +770,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 }
 
 - (void)openCallViewWithVideo:(BOOL)videoCall active:(BOOL)active {
-    if (UIDevice.currentDevice.orientation != UIInterfaceOrientationPortrait) {
-        NSNumber *value = [NSNumber numberWithInt:UIInterfaceOrientationPortrait];
-        [UIDevice.currentDevice setValue:value forKey:@"orientation"];
-    }
     if (self.chatRoom.isGroup) {
         GroupCallViewController *groupCallVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupCallViewControllerID"];
         groupCallVC.callType = active ? CallTypeActive : [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId] ? CallTypeActive : CallTypeOutgoing;
@@ -1071,7 +1074,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 - (void)setupMenuController:(UIMenuController *)menuController {
     UIMenuItem *editMenuItem = [[UIMenuItem alloc] initWithTitle:AMLocalizedString(@"edit", @"Caption of a button to edit the files that are selected") action:@selector(edit:message:)];
     UIMenuItem *forwardMenuItem = [[UIMenuItem alloc] initWithTitle:AMLocalizedString(@"forward", @"Item of a menu to forward a message chat to another chatroom") action:@selector(forward:message:)];
-    UIMenuItem *importMenuItem = [[UIMenuItem alloc] initWithTitle:AMLocalizedString(@"import", @"Caption of a button to edit the files that are selected") action:@selector(import:message:)];
+    UIMenuItem *importMenuItem = [[UIMenuItem alloc] initWithTitle:AMLocalizedString(@"Import to Cloud Drive", @"Caption of a button to edit the files that are selected") action:@selector(import:message:)];
     UIMenuItem *downloadMenuItem = [[UIMenuItem alloc] initWithTitle:AMLocalizedString(@"saveForOffline", @"Caption of a button to edit the files that are selected") action:@selector(download:message:)];
     UIMenuItem *addContactMenuItem = [[UIMenuItem alloc] initWithTitle:AMLocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email") action:@selector(addContact:message:)];
     UIMenuItem *removeRichLinkMenuItem = [[UIMenuItem alloc] initWithTitle:AMLocalizedString(@"removePreview", @"Once a preview is generated for a message which contains URLs, the user can remove it. Same button is also shown during loading of the preview - and would cancel the loading (text of the button is the same in both cases).") action:@selector(removeRichPreview:message:indexPath:)];
@@ -1266,6 +1269,17 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     [self hideJumpToBottom];
 }
 
+- (NSString *)usernameForUserHandle:(uint64_t)handle {
+    NSString *username = [self.chatRoom userNicknameForUserHandle:handle];
+    
+    if (!username.length) {
+        username = [self.chatRoom peerFirstnameByHandle:handle];
+        username = username.length ? username : [self.chatRoom peerEmailByHandle:handle];
+    }
+
+    return username;
+}
+
 - (void)setTypingIndicator {
     NSString *typingString = nil;
     NSMutableAttributedString *typingAttributedString = nil;
@@ -1273,8 +1287,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         typingAttributedString = [self twoOrMoreUsersAreTypingString];
     } else if (self.whoIsTypingTimersMutableDictionary.allKeys.count == 1) {
         NSNumber *firstUserHandle = self.whoIsTypingTimersMutableDictionary.allKeys.firstObject;
-        NSString *firstUserName = [self.chatRoom peerFirstnameByHandle:firstUserHandle.unsignedLongLongValue];
-        NSString *whoIsTypingString = firstUserName.length ? firstUserName : [self.chatRoom peerEmailByHandle:firstUserHandle.unsignedLongLongValue];
+        NSString *whoIsTypingString = [self usernameForUserHandle:firstUserHandle.unsignedLongLongValue];
         
         typingString = [NSString stringWithFormat:AMLocalizedString(@"isTyping", @"A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime."), whoIsTypingString];
         
@@ -1289,11 +1302,10 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     NSNumber *firstUserHandle = self.whoIsTypingTimersMutableDictionary.allKeys.firstObject;
     NSNumber *secondUserHandle = [self.whoIsTypingTimersMutableDictionary.allKeys objectAtIndex:1];
     
-    NSString *firstUserFirstName = [self.chatRoom peerFirstnameByHandle:firstUserHandle.unsignedLongLongValue];
-    NSString *whoIsTypingString = firstUserFirstName.length ? firstUserFirstName : [self.chatRoom peerEmailByHandle:firstUserHandle.unsignedLongLongValue];
-    
-    NSString *secondUserFirstName = [self.chatRoom peerFirstnameByHandle:secondUserHandle.unsignedLongLongValue];
-    whoIsTypingString = [whoIsTypingString stringByAppendingString:[NSString stringWithFormat:@", %@", (secondUserFirstName.length ? secondUserFirstName : [self.chatRoom peerEmailByHandle:firstUserHandle.unsignedLongLongValue])]];
+    NSString *whoIsTypingString = [self usernameForUserHandle:firstUserHandle.unsignedLongLongValue];
+    NSString *secondUsername = [self usernameForUserHandle:secondUserHandle.unsignedLongLongValue];
+
+    whoIsTypingString = [whoIsTypingString stringByAppendingString:[NSString stringWithFormat:@", %@", secondUsername]];
     
     NSString *twoOrMoreUsersAreTypingString;
     if (self.whoIsTypingTimersMutableDictionary.allKeys.count == 2) {
@@ -1404,56 +1416,46 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     if (!userEmail) {
         return;
     }
-    
-    UIAlertController *userAlertController = [UIAlertController alertControllerWithTitle:userName message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    
-    UIAlertAction *cancelAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-        self.inputToolbar.hidden = self.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo;
-    }];
-    [cancelAlertAction mnz_setTitleTextColor:UIColor.mnz_redMain];
-    [userAlertController addAction:cancelAlertAction];
-    
-    UIAlertAction *infoAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"info", @"A button label. The button allows the user to get more info of the current context.") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+
+    __weak __typeof__(self) weakSelf = self;
+
+    NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
+
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"info", @"A button label. The button allows the user to get more info of the current context.") detail:nil image:nil style:UIAlertActionStyleDefault actionHandler:^{
         ContactDetailsViewController *contactDetailsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactDetailsViewControllerID"];
-        contactDetailsVC.contactDetailsMode = self.chatRoom.isGroup ? ContactDetailsModeFromGroupChat : ContactDetailsModeFromChat;
+        contactDetailsVC.contactDetailsMode = weakSelf.chatRoom.isGroup ? ContactDetailsModeFromGroupChat : ContactDetailsModeFromChat;
         contactDetailsVC.userEmail = userEmail;
         contactDetailsVC.userName = userName;
         contactDetailsVC.userHandle = userHandle;
-        contactDetailsVC.groupChatRoom = self.chatRoom;
-        [self.navigationController pushViewController:contactDetailsVC animated:YES];
-    }];
-    [infoAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
-    [userAlertController addAction:infoAlertAction];
+        contactDetailsVC.groupChatRoom = weakSelf.chatRoom;
+        [weakSelf.navigationController pushViewController:contactDetailsVC animated:YES];
+    }]];
     
-    MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:[self.chatRoom peerEmailByHandle:userHandle]];
+    MEGAUser *user = [MEGASdkManager.sharedMEGASdk contactForEmail:[self.chatRoom peerEmailByHandle:userHandle]];
+    
     if (!user || user.visibility != MEGAUserVisibilityVisible) {
-        UIAlertAction *addContactAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            if ([MEGAReachabilityManager isReachableHUDIfNot]) {
+        [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email") detail:nil image:nil style:UIAlertActionStyleDefault actionHandler:^{
+            if (MEGAReachabilityManager.isReachableHUDIfNot) {
                 MEGAInviteContactRequestDelegate *inviteContactRequestDelegate = [[MEGAInviteContactRequestDelegate alloc] initWithNumberOfRequests:1];
-                [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:[self.chatRoom peerEmailByHandle:userHandle] message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
-                self.inputToolbar.hidden = self.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo;
+                [MEGASdkManager.sharedMEGASdk inviteContactWithEmail:[weakSelf.chatRoom peerEmailByHandle:userHandle] message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
+                weakSelf.inputToolbar.hidden = weakSelf.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo;
             }
-        }];
-        [addContactAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
-        [userAlertController addAction:addContactAlertAction];
+        }]];
     }
     
     if (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator && self.chatRoom.isGroup) {
-        UIAlertAction *removeParticipantAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"removeParticipant", @"A button title which removes a participant from a chat.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            [[MEGASdkManager sharedMEGAChatSdk] removeFromChat:self.chatRoom.chatId userHandle:userHandle delegate:self];
-            self.inputToolbar.hidden = self.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo;
-        }];
-        [userAlertController addAction:removeParticipantAlertAction];
+        [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"removeParticipant", @"A button title which removes a participant from a chat.") detail:nil image:nil style:UIAlertActionStyleDefault actionHandler:^{
+            [MEGASdkManager.sharedMEGAChatSdk removeFromChat:weakSelf.chatRoom.chatId userHandle:userHandle delegate:weakSelf];
+            weakSelf.inputToolbar.hidden = weakSelf.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo;
+        }]];
     }
     
-    if (UIDevice.currentDevice.iPadDevice) {
-        userAlertController.modalPresentationStyle = UIModalPresentationPopover;
-        userAlertController.popoverPresentationController.sourceRect = senderView.frame;
-        userAlertController.popoverPresentationController.sourceView = senderView;
-    }
+    ActionSheetViewController *userActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:userName dismissCompletion:^{
+        weakSelf.inputToolbar.hidden = weakSelf.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo;
+    } sender:senderView];
     
     self.inputToolbar.hidden = UIDevice.currentDevice.iPad ? NO : YES;
-    [self presentViewController:userAlertController animated:YES completion:nil];
+    [self presentViewController:userActionSheet animated:YES completion:nil];
 }
 
 - (void)loadPhotoAppBrowserViewController {
@@ -1520,12 +1522,16 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             if (!self.chatRoom.isGroup && call.status == MEGAChatCallStatusDestroyed) {
                 return;
             }
-            if (call.status == MEGAChatCallStatusInProgress) {
-                [self configureTopBannerButtonForInProgressCall:call];
-            }  else if (call.status == MEGAChatCallStatusUserNoPresent || call.status == MEGAChatCallStatusRequestSent || call.status == MEGAChatCallStatusRingIn) {
-                [self configureTopBannerButtonForActiveCall:call];
+            if ([MEGASdkManager.sharedMEGAChatSdk chatCallsWithState:MEGAChatCallStatusInProgress].size == 1 && call.status != MEGAChatCallStatusInProgress) {
+                [self hideTopBannerButton];
+            } else {
+                if (call.status == MEGAChatCallStatusInProgress) {
+                    [self configureTopBannerButtonForInProgressCall:call];
+                }  else if (call.status == MEGAChatCallStatusUserNoPresent || call.status == MEGAChatCallStatusRequestSent || call.status == MEGAChatCallStatusRingIn) {
+                    [self configureTopBannerButtonForActiveCall:call];
+                }
+                [self showTopBannerButton];
             }
-            [self showTopBannerButton];
         } else {
             [self hideTopBannerButton];
         }
@@ -1774,7 +1780,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             [self.selectedMessages removeObject:message];
         } else {
             NSUInteger index = [self.selectedMessages indexOfObject:message inSortedRange:(NSRange){0, self.selectedMessages.count} options:NSBinarySearchingInsertionIndex usingComparator:^NSComparisonResult(MEGAChatMessage *obj1, MEGAChatMessage *obj2) {
-                return [obj1.date compare:obj2.date];
+                return [@(obj1.messageIndex) compare:@(obj2.messageIndex)];
             }];
             [self.selectedMessages insertObject:message atIndex:index];
         }
@@ -2031,75 +2037,64 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         }
             
         case MEGAChatAccessoryButtonUpload: {
+            __weak __typeof__(self) weakSelf = self;
             self.inputToolbar.hidden = UIDevice.currentDevice.iPad ? NO : YES;
-            NSString *alertControllerTitle = AMLocalizedString(@"send", @"Label for any 'Send' button, link, text, title, etc. - (String as short as possible).");
-            UIAlertController *selectOptionAlertController = [UIAlertController alertControllerWithTitle:alertControllerTitle message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-            [selectOptionAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                self.inputToolbar.hidden = self.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo;
-            }]];
             
-            UIAlertAction *sendFromCloudDriveAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"fromCloudDrive", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
+            
+            [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"fromCloudDrive", @"") detail:nil image:[UIImage imageNamed:@"fromCloudDrive"] style:UIAlertActionStyleDefault actionHandler:^{
                 MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"BrowserNavigationControllerID"];
-                [self presentViewController:navigationController animated:YES completion:nil];
+                [weakSelf presentViewController:navigationController animated:YES completion:nil];
                 
                 BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
                 browserVC.browserAction = BrowserActionSendFromCloudDrive;
                 browserVC.selectedNodes = ^void(NSArray *selectedNodes) {
                     for (MEGANode *node in selectedNodes) {
                         [Helper importNode:node toShareWithCompletion:^(MEGANode *node) {
-                            [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:self.chatRoom.chatId node:node.handle delegate:self];
+                            [MEGASdkManager.sharedMEGAChatSdk attachNodeToChat:weakSelf.chatRoom.chatId node:node.handle delegate:weakSelf];
                         }];
                     }
                 };
-            }];
-            [sendFromCloudDriveAlertAction setValue:UIColor.mnz_black333333 forKey:@"titleTextColor"];
-            [selectOptionAlertController addAction:sendFromCloudDriveAlertAction];
+            }]];
             
-            UIAlertAction *sendContactAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"contact", @"referring to a contact in the contact list of the user") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-                [self presentAddOrAttachParticipantToGroup:nil];
-            }];
-            [sendContactAlertAction setValue:UIColor.mnz_black333333 forKey:@"titleTextColor"];
-            [selectOptionAlertController addAction:sendContactAlertAction];
-            
-            UIAlertAction *sendLocationAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"location", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-                MEGAGenericRequestDelegate *isGeolocationEnabledDelegate = [[MEGAGenericRequestDelegate alloc] initWithCompletion:^(MEGARequest *request, MEGAError *error) {
+            [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"contact", @"referring to a contact in the contact list of the user") detail:nil image:[UIImage imageNamed:@"sendContact"] style:UIAlertActionStyleDefault actionHandler:^{
+                [weakSelf presentAddOrAttachParticipantToGroup:nil];
+            }]];
+
+            [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"location", @"") detail:nil image:[UIImage imageNamed:@"sendLocation"] style:UIAlertActionStyleDefault actionHandler:^{
+                MEGAGenericRequestDelegate *isGeolocationEnabledDelegate = [MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest *request, MEGAError *error) {
                     if (error.type) {
                         UIAlertController *sendLocationAlert = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"Send Location", @"Alert title shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm") message:AMLocalizedString(@"This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform.", @"Message shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm") preferredStyle:UIAlertControllerStyleAlert];
                         [sendLocationAlert addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                            self.inputToolbar.hidden = self.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo;
+                            weakSelf.inputToolbar.hidden = weakSelf.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo;
                         }]];
                         [sendLocationAlert addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"continue", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                             MEGAGenericRequestDelegate *enableGeolocationDelegate = [[MEGAGenericRequestDelegate alloc] initWithCompletion:^(MEGARequest *request, MEGAError *error) {
                                 if (error.type) {
-                                    UIAlertController *enableGeolocationAlert = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", @"") message:[NSString stringWithFormat:@"Enable geolocation failed. Error: %@", error.name] preferredStyle:UIAlertControllerStyleAlert];
+                                    UIAlertController *enableGeolocationAlert = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", @"") message:[NSString stringWithFormat:@"Enable geolocation failed. Error: %@", AMLocalizedString(error.name, nil)] preferredStyle:UIAlertControllerStyleAlert];
                                     [enableGeolocationAlert addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                                        self.inputToolbar.hidden = self.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo;
+                                        weakSelf.inputToolbar.hidden = weakSelf.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo;
                                     }]];
-                                    [self presentViewController:enableGeolocationAlert animated:YES completion:nil];
+                                    [weakSelf presentViewController:enableGeolocationAlert animated:YES completion:nil];
                                 } else {
-                                    [self presentShareLocationViewControllerForEditing:NO];
+                                    [weakSelf presentShareLocationViewControllerForEditing:NO];
                                 }
                             }];
-                            [[MEGASdkManager sharedMEGASdk] enableGeolocationWithDelegate:enableGeolocationDelegate];
+                            [MEGASdkManager.sharedMEGASdk enableGeolocationWithDelegate:enableGeolocationDelegate];
                         }]];
-                        [self presentViewController:sendLocationAlert animated:YES completion:nil];
+                        [weakSelf presentViewController:sendLocationAlert animated:YES completion:nil];
                     } else {
-                        [self presentShareLocationViewControllerForEditing:NO];
+                        [weakSelf presentShareLocationViewControllerForEditing:NO];
                     }
                 }];
                 
-                [[MEGASdkManager sharedMEGASdk] isGeolocationEnabledWithDelegate:isGeolocationEnabledDelegate];
-            }];
-            [sendLocationAlertAction setValue:[UIColor mnz_black333333] forKey:@"titleTextColor"];
-            [selectOptionAlertController addAction:sendLocationAlertAction];
+                [MEGASdkManager.sharedMEGASdk isGeolocationEnabledWithDelegate:isGeolocationEnabledDelegate];
+            }]];
             
-            selectOptionAlertController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-            selectOptionAlertController.popoverPresentationController.sourceView = self.inputToolbar.contentView;
-            selectOptionAlertController.popoverPresentationController.sourceRect = self.inputToolbar.contentView.accessoryUploadButton.frame;
-            
-            [self presentViewController:selectOptionAlertController animated:YES completion:nil];
-            selectOptionAlertController.view.tintColor = UIColor.mnz_redMain;
-
+            ActionSheetViewController *uploadOptionsActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:AMLocalizedString(@"send", @"Label for any 'Send' button, link, text, title, etc. - (String as short as possible).") dismissCompletion:^{
+                weakSelf.inputToolbar.hidden = weakSelf.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo;
+            } sender:nil];
+            [self presentViewController:uploadOptionsActionSheet animated:YES completion:nil];
             break;
         }
             
@@ -2756,7 +2751,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
                     [self.navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
                     [self.inputToolbar mnz_lockRecordingIfNeeded];
                 } else {
-                    [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO];
+                    [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO fileLink:nil];
                 }
             } else {
                 ChatAttachedNodesViewController *chatAttachedNodesVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"ChatAttachedNodesViewControllerID"];
@@ -2833,24 +2828,23 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         if (UIDevice.currentDevice.iPhoneDevice) {
             [self.inputToolbar.contentView.textView resignFirstResponder];
         }
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+        __weak __typeof__(self) weakSelf = self;
         
-        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
-        
-        UIAlertAction *retryAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"retry", @"Button which allows to retry send message in chat conversation.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
+        [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"retry", @"Button which allows to retry send message in chat conversation.") detail:nil image:nil style:UIAlertActionStyleDefault actionHandler:^{
             NSLog(@"retry tapped"); // sent message + discard || delete
-            [[MEGASdkManager sharedMEGAChatSdk] removeUnsentMessageForChat:self.chatRoom.chatId rowId:message.rowId];
+            [MEGASdkManager.sharedMEGAChatSdk removeUnsentMessageForChat:weakSelf.chatRoom.chatId rowId:message.rowId];
             
             switch (message.type) {
                 case MEGAChatMessageTypeNormal: {
-                    MEGAChatMessage *retryMessage = [[MEGASdkManager sharedMEGAChatSdk] sendMessageToChat:self.chatRoom.chatId message:message.text];
-                    [self.messages replaceObjectAtIndex:path.item withObject:retryMessage];
+                    MEGAChatMessage *retryMessage = [MEGASdkManager.sharedMEGAChatSdk sendMessageToChat:weakSelf.chatRoom.chatId message:message.text];
+                    [weakSelf.messages replaceObjectAtIndex:path.item withObject:retryMessage];
                     break;
                 }
                     
                 case MEGAChatMessageTypeAttachment: {
                     MEGANode *node = [message.nodeList nodeAtIndex:0];
-                    [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:self.chatRoom.chatId node:node.handle delegate:self];
+                    [MEGASdkManager.sharedMEGAChatSdk attachNodeToChat:weakSelf.chatRoom.chatId node:node.handle delegate:weakSelf];
                     [self.messages removeObjectAtIndex:path.item];
                     [self.collectionView deleteItemsAtIndexPaths:@[path]];
                     break;
@@ -2858,7 +2852,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
                     
                 case MEGAChatMessageTypeVoiceClip: {
                     MEGANode *node = [message.nodeList nodeAtIndex:0];
-                    [[MEGASdkManager sharedMEGAChatSdk] attachVoiceMessageToChat:self.chatRoom.chatId node:node.handle delegate:self];
+                    [MEGASdkManager.sharedMEGAChatSdk attachVoiceMessageToChat:weakSelf.chatRoom.chatId node:node.handle delegate:weakSelf];
                     [self.messages removeObjectAtIndex:path.item];
                     [self.collectionView deleteItemsAtIndexPaths:@[path]];
                     break;
@@ -2867,13 +2861,13 @@ static NSMutableSet<NSString *> *tapForInfoSet;
                 case MEGAChatMessageTypeContact: {
                     NSMutableArray *users = NSMutableArray.alloc.init;
                     for (NSUInteger i = 0; i < message.usersCount; i++) {
-                        MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:[message userEmailAtIndex:i]];
+                        MEGAUser *user = [MEGASdkManager.sharedMEGASdk contactForEmail:[message userEmailAtIndex:i]];
                         if (user) {
                             [users addObject:user];
                         }
                     }
                     
-                    MEGAChatMessage *retryMessage = [[MEGASdkManager sharedMEGAChatSdk] attachContactsToChat:self.chatRoom.chatId contacts:users];
+                    MEGAChatMessage *retryMessage = [MEGASdkManager.sharedMEGAChatSdk attachContactsToChat:weakSelf.chatRoom.chatId contacts:users];
                     [self.messages replaceObjectAtIndex:path.item withObject:retryMessage];
                     break;
                 }
@@ -2881,33 +2875,20 @@ static NSMutableSet<NSString *> *tapForInfoSet;
                 default:
                     break;
             }
-        }];
-        [retryAlertAction setValue:UIColor.mnz_black333333 forKey:@"titleTextColor"];
-        [alertController addAction:retryAlertAction];
+        }]];
         
-        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"deleteMessage", @"Button which allows to delete message in chat conversation.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            [[MEGASdkManager sharedMEGAChatSdk] removeUnsentMessageForChat:self.chatRoom.chatId rowId:message.rowId];
+        [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"deleteMessage", @"Button which allows to delete message in chat conversation.") detail:nil image:nil style:UIAlertActionStyleDefault actionHandler:^{
+            [MEGASdkManager.sharedMEGAChatSdk removeUnsentMessageForChat:self.chatRoom.chatId rowId:message.rowId];
             [self.messages removeObjectAtIndex:path.item];
             [self.collectionView deleteItemsAtIndexPaths:@[path]];
         }]];
         
-        alertController.modalPresentationStyle = UIModalPresentationPopover;
-        UIPopoverPresentationController *popoverPresentationController = alertController.popoverPresentationController;
-        popoverPresentationController.sourceRect = [view cellForItemAtIndexPath:path].bounds;
-        popoverPresentationController.sourceView = [view cellForItemAtIndexPath:path];
-        popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionAny;
-        
-        [self presentViewController:alertController animated:YES completion:nil];
+        ActionSheetViewController *messageOptionsActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:nil dismissCompletion:nil sender:[view cellForItemAtIndexPath:path]];
+        [self presentViewController:messageOptionsActionSheet animated:YES completion:nil];
     } else if (message.shouldShowForwardAccessory) {
         [self.selectedMessages addObject:message];
         [self forwardSelectedMessages];
     }
-}
-
-#pragma mark - UIScrollViewDelegate
-
-- (BOOL)scrollViewShouldScrollToTop:(UIScrollView *)scrollView {
-    return NO;
 }
 
 #pragma mark - UITextViewDelegate
@@ -2933,14 +2914,16 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     [self setLastMessageAsSeen];
 }
 
+#pragma mark - DZNEmptyDataSetDelegate
+
+- (BOOL)emptyDataSetShouldDisplay:(UIScrollView *)scrollView {
+    return self.loadingState;
+}
+
 #pragma mark - DZNEmptyDataSetSource
 
 - (UIView *)customViewForEmptyDataSet:(UIScrollView *)scrollView {
-    UIImageView *skeletonImageView = nil;
-    
-    if (self.loadingState) {
-        skeletonImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"chatroomLoading"]];
-    }
+    UIImageView *skeletonImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"chatroomLoading"]];
     
     return skeletonImageView;
 }
@@ -3062,7 +3045,11 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             case MEGAChatMessageTypePublicHandleDelete:
             case MEGAChatMessageTypeSetPrivateMode: {
                 if (!message.isDeleted) {
-                    [self.loadingMessages insertObject:message atIndex:0];
+                    if(message.status == MEGAChatMessageStatusSending || message.status == MEGAChatMessageStatusSendingManual) {
+                        [self.loadingMessages addObject:message];
+                    } else {
+                        [self.loadingMessages insertObject:message atIndex:0];
+                    }
                 }
                 break;
             }
@@ -3129,6 +3116,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         } else {
             // TODO: improve load earlier messages
             CGFloat oldContentOffsetFromBottomY = self.collectionView.contentSize.height - self.collectionView.contentOffset.y;
+            [self.collectionView setContentOffset:self.collectionView.contentOffset animated:NO];
             [self.collectionView reloadData];
             [self.collectionView layoutIfNeeded];
             CGPoint newContentOffset = CGPointMake(self.collectionView.contentOffset.x, self.collectionView.contentSize.height - oldContentOffsetFromBottomY);
@@ -3314,6 +3302,11 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             }
             break;
             
+        case MEGAChatRoomChangeTypeOwnPriv:
+            [self customNavigationBarLabel];
+            [self updateNavigationBarButtonsState];
+            break;
+            
         case MEGAChatRoomChangeTypeUserStopTyping: {
             if (chat.userTypingHandle != api.myUserHandle) {
                 [self removeUserHandleFromTypingIndicator:[NSNumber numberWithUnsignedLongLong:chat.userTypingHandle]];
@@ -3391,12 +3384,12 @@ static NSMutableSet<NSString *> *tapForInfoSet;
                 case MEGAChatErrorTypeAccess: //If the logged in user doesn't have privileges to invite peers.
                 case MEGAChatErrorTypeNoEnt: //If there isn't any chat with the specified chatid.
                     self.stopInvitingContacts = YES;
-                    [SVProgressHUD showErrorWithStatus:error.name];
+                    [SVProgressHUD showErrorWithStatus:AMLocalizedString(error.name, nil)];
                     break;
                     
                 default:
                     if (error.type) {
-                        [SVProgressHUD showErrorWithStatus:error.name];
+                        [SVProgressHUD showErrorWithStatus:AMLocalizedString(error.name, nil)];
                     }
                     break;
             }
@@ -3405,7 +3398,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             
         case MEGAChatRequestTypeNodeMessage: {
             if (error.type) {
-                [SVProgressHUD showErrorWithStatus:error.name];
+                [SVProgressHUD showErrorWithStatus:AMLocalizedString(error.name, nil)];
                 return;
             }
             break;

@@ -7,6 +7,8 @@ extern NSString * const MEGAiOSAppUserAgent;
 extern NSString * const MEGAiOSAppKey;
 extern NSString * const MEGAPasswordService;
 extern NSString * const MEGAPasswordName;
+extern NSString * const MEGAFirstRun;
+extern NSString * const MEGAFirstRunValue;
 
 extern NSString * const MEGAGroupIdentifier;
 
@@ -21,6 +23,7 @@ extern NSString * const MEGANodesCurrentNotification;
 extern NSString * const MEGAStorageOverQuotaNotification;
 extern NSString * const MEGAStorageEventDidChangeNotification;
 extern NSString * const MEGAMediaInfoReadyNotification;
+extern NSString * const MEGAOpenChatRoomFromPushNotification;
 
 #pragma mark - global notification keys
 
@@ -67,6 +70,7 @@ extern NSString * const H264Format;
 #pragma mark - MEGA URLS
 
 extern NSString * const MEGADisputeURL;
+extern NSString * const RequireTransferSession;
 
 #pragma mark - Group Shared Directory
 
@@ -75,6 +79,7 @@ extern NSString * const MEGAFileExtensionStorageFolder;
 extern NSString * const MEGAExtensionLogsFolder;
 extern NSString * const MEGAExtensionGroupSupportFolder;
 extern NSString * const MEGAExtensionCacheFolder;
+extern NSString * const MEGANotificationServiceExtensionCacheFolder;
 
 #pragma mark - MEGA Activity Types
 
@@ -99,3 +104,16 @@ extern NSString * const MEGALastPublicTimestampAccessed;
 #pragma mark - MEGA Contact Nickname change Notification
 
 extern NSString * const MEGContactNicknameChangeNotification;
+
+#pragma mark - Notification Service Extension
+
+extern NSString * const MEGAInvalidateNSECache;
+
+#pragma mark - DB name
+
+// Droping the first 44 characters of the user session the last ones are used by sdk and karere to name their dbs
+extern const NSUInteger MEGADropFirstCharactersFromSession;
+
+#pragma mark - File size
+
+extern const long long MEGAMaxFileLinkAutoOpenSize;

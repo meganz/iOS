@@ -6,7 +6,6 @@ class PhotoCarouselCell: UICollectionViewCell {
     
     // MARK:- Static variables.
 
-    static let reuseIdentifier = String(describing: PhotoCarouselCell.self)
     static var nib: UINib {
         return UINib(nibName: PhotoCarouselCell.reuseIdentifier, bundle: nil)
     }
@@ -61,7 +60,7 @@ class PhotoCarouselCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         cancelDownloadRequest()
-        markerViewTopConstraint.constant = 0
+        markerViewTopConstraint.constant = 6
         videoDurationViewBottomConstraint.constant = 0
     }
     
@@ -110,7 +109,7 @@ class PhotoCarouselCell: UICollectionViewCell {
         let imageFrame = AVMakeRect(aspectRatio: imageSize,
                                     insideRect: CGRect(origin: .zero, size: cellUserDisplaySize))
         
-        markerViewTopConstraint.constant = imageFrame.minY
+        markerViewTopConstraint.constant = imageFrame.minY + 6
         videoDurationViewBottomConstraint.constant = imageFrame.minY + videoDurationLabelPadding
         videoDurationViewLeadingConstraint.constant = imageFrame.minX + videoDurationLabelPadding
         layoutIfNeeded()

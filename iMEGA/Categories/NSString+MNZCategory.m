@@ -300,10 +300,14 @@ static NSString* const B = @"[B]";
     NSString *endCallReasonString;
     switch (endCallReason) {
         case MEGAChatMessageEndCallReasonEnded: {
-            endCallReasonString = isGroup ? AMLocalizedString(@"Group call ended.", @"When an active goup call is ended") : AMLocalizedString(@"callEnded", @"When an active call of user A with user B had ended");
-            if (duration) {
-                NSString *durationString = [NSString stringWithFormat:AMLocalizedString(@"duration", @"Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc)"), [NSString mnz_stringFromCallDuration:duration.integerValue]];
-                endCallReasonString = [NSString stringWithFormat:@"%@ %@", endCallReasonString, durationString];
+            if (isGroup) {
+                if (duration) {
+                    endCallReasonString = [[AMLocalizedString(@"[A]Group call ended[/A][C]. Duration: [/C]", @"When an active goup call is ended (with duration)") stringByReplacingOccurrencesOfString:@"[/C]" withString:[NSString mnz_stringFromCallDuration:duration.integerValue]] mnz_removeWebclientFormatters];
+                } else {
+                    endCallReasonString = AMLocalizedString(@"Group call ended", @"When an active goup call is ended");
+                }
+            } else {
+                endCallReasonString = [NSString stringWithFormat:@"%@ %@", AMLocalizedString(@"callEnded", @"When an active call of user A with user B had ended"), [NSString stringWithFormat:AMLocalizedString(@"duration", @"Displayed after a call had ended, where %@ is the duration of the call (1h, 10seconds, etc)"), [NSString mnz_stringFromCallDuration:duration.integerValue]]];
             }
             break;
         }
@@ -340,6 +344,29 @@ static NSString* const B = @"[B]";
     return endCallReasonString;
 }
 
++ (NSString *)selectedSortTypeForKey:(NSString *)key {
+    MEGASortOrderType sortType = [NSUserDefaults.standardUserDefaults integerForKey:key];
+    switch (sortType) {
+        case MEGASortOrderTypeDefaultDesc:
+            return AMLocalizedString(@"nameDescending", @"Sort by option (2/6). This one arranges the files on reverse alphabethical order");
+            
+        case MEGASortOrderTypeSizeDesc:
+            return AMLocalizedString(@"largest", @"Sort by option (3/6). This one order the files by its size, in this case from bigger to smaller size");
+            
+        case MEGASortOrderTypeSizeAsc:
+            return AMLocalizedString(@"smallest", @"Sort by option (4/6). This one order the files by its size, in this case from smaller to bigger size");
+            
+        case MEGASortOrderTypeModificationDesc:
+            return AMLocalizedString(@"newest", @"Sort by option (5/6). This one order the files by its modification date, newer first");
+            
+        case MEGASortOrderTypeModificationAsc:
+            return AMLocalizedString(@"oldest", @"Sort by option (6/6). This one order the files by its modification date, older first");
+            
+        default:
+            return AMLocalizedString(@"nameAscending", @"Sort by option (1/6). This one orders the files alphabethically");
+    }
+}
+
 - (BOOL)mnz_isValidEmail {
     NSString *emailRegex =
     @"(?:[a-z0-9!#$%\\&'*+/=?\\^_`{|}~-]+(?:\\.[a-z0-9!#$%\\&'*+/=?\\^_`{|}"
@@ -373,6 +400,8 @@ static NSString* const B = @"[B]";
     string = [string stringByReplacingOccurrencesOfString:@"[/A]" withString:@""];
     string = [string stringByReplacingOccurrencesOfString:@"[S]" withString:@""];
     string = [string stringByReplacingOccurrencesOfString:@"[/S]" withString:@""];
+    string = [string stringByReplacingOccurrencesOfString:@"[C]" withString:@""];
+    string = [string stringByReplacingOccurrencesOfString:@"[/C]" withString:@""];
     string = [string stringByReplacingOccurrencesOfString:@"<a href=\"terms\">" withString:@""];
     string = [string stringByReplacingOccurrencesOfString:@"<a href='terms'>" withString:@""];
     string = [string stringByReplacingOccurrencesOfString:@"</a>" withString:@""];

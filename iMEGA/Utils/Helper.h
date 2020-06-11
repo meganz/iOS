@@ -2,7 +2,6 @@
 #import <UIKit/UIKit.h>
 
 #import "MEGAChatMessage.h"
-#import "MEGAIndexer.h"
 
 typedef NS_OPTIONS(NSUInteger, NodesAre) {
     NodesAreFiles    = 1 << 0,
@@ -24,21 +23,6 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - Images
 
 + (NSDictionary *)fileTypesDictionary;
-
-+ (UIImage *)genericImage;
-+ (UIImage *)folderImage;
-+ (UIImage *)folderCameraUploadsImage;
-+ (UIImage *)incomingFolderImage;
-+ (UIImage *)outgoingFolderImage;
-+ (UIImage *)defaultPhotoImage;
-
-+ (UIImage *)downloadedArrowImage;
-+ (UIImage *)downloadingTransferImage;
-+ (UIImage *)uploadingTransferImage;
-+ (UIImage *)downloadQueuedTransferImage;
-+ (UIImage *)uploadQueuedTransferImage;
-
-+ (UIImage *)permissionsButtonImageForShareType:(MEGAShareType)shareType;
 
 #pragma mark - Paths
 
@@ -74,21 +58,24 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (void)cannotPlayContentDuringACallAlert;
 
++ (UIAlertController *)removeUserContactFromSender:(UIView *)sender withConfirmAction:(void (^)(void))confirmAction;
+
 #pragma mark - Utils for nodes
 
 + (void)thumbnailForNode:(MEGANode *)node api:(MEGASdk *)api cell:(id)cell;
 + (void)setThumbnailForNode:(MEGANode *)node api:(MEGASdk *)api cell:(id)cell reindexNode:(BOOL)reindex;
 
-+ (NSString *)sizeAndDateForNode:(MEGANode *)node api:(MEGASdk *)api;
++ (NSString *)sizeAndCreationHourAndMininuteForNode:(MEGANode *)node api:(MEGASdk *)api;
++ (NSString *)sizeAndCreationDateForNode:(MEGANode *)node api:(MEGASdk *)api;
++ (NSString *)sizeAndModicationDateForNode:(MEGANode *)node api:(MEGASdk *)api;
++ (NSString *)sizeAndShareLinkCreateDateForSharedLinkNode:(MEGANode *)node api:(MEGASdk *)api;
+
 + (NSString *)sizeForNode:(MEGANode *)node api:(MEGASdk *)api;
-+ (NSString *)dateWithISO8601FormatOfRawTime:(time_t)rawtime;
 + (NSString *)filesAndFoldersInFolderNode:(MEGANode *)node api:(MEGASdk *)api;
 
 + (void)importNode:(MEGANode *)node toShareWithCompletion:(void (^)(MEGANode *node))completion;
 + (UIActivityViewController *)activityViewControllerForChatMessages:(NSArray<MEGAChatMessage *> *)messages sender:(id)sender;
 + (UIActivityViewController *)activityViewControllerForNodes:(NSArray *)nodesArray sender:(id _Nullable)sender;
-
-+ (void)setIndexer:(MEGAIndexer* )megaIndexer;
 
 #pragma mark - Utils for empty states
 
@@ -120,7 +107,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (void)logout;
 + (void)logoutFromConfirmAccount;
-+ (void)logoutAfterPasswordReminder;
 + (void)clearEphemeralSession;
 + (void)clearSession;
 + (void)deletePasscode;
