@@ -33,7 +33,7 @@
                 
             default:
                 title = AMLocalizedString(@"error", nil);
-                message = [NSString stringWithFormat:@"%@ %@", request.requestString, error.name];
+                message = [NSString stringWithFormat:@"%@ %@", request.requestString, AMLocalizedString(error.name, nil)];
                 break;
         }
         

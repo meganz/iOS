@@ -61,9 +61,13 @@
     
     self.numberOfRequests--;
     
-    if (error.type) {
+    if (error.type) {        
         [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-        [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, error.name]];
+        if (error.type == MEGAErrorTypeApiEBusinessPastDue) {
+            [SVProgressHUD dismiss];
+        } else {
+            [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, AMLocalizedString(error.name, nil)]];
+        }
         return;
     }
     

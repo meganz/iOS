@@ -526,6 +526,25 @@
     [self saveContext:context];
 }
 
+- (void)deleteAllMessagesWithContext:(NSManagedObjectContext *)context {
+    NSArray<MOMessage *> *messages = [self fetchMessagesWithContext:context];
+    if (messages.count) {
+        for (MOUploadTransfer *message in messages) {
+            [context deleteObject:message];
+        }
+        
+        [self saveContext:context];
+    }
+}
+
+- (NSArray<MOMessage *> *)fetchMessagesWithContext:(NSManagedObjectContext *)context {
+    NSFetchRequest *request = [MOMessage fetchRequest];
+    
+    NSError *error;
+    
+    return [context executeFetchRequest:request error:&error];
+}
+
 - (MOMessage *)fetchMessageWithChatId:(uint64_t)chatId messageId:(uint64_t)messageId {
     NSFetchRequest *request = [MOMessage fetchRequest];
     
@@ -537,6 +556,14 @@
     
     return array.firstObject;
     
+}
+
+- (BOOL)areTherePendingMessages {
+    NSFetchRequest *request = [MOMessage fetchRequest];
+    
+    NSError *error;
+    
+    return [self.managedObjectContext executeFetchRequest:request error:&error].count > 0;
 }
 
 @end

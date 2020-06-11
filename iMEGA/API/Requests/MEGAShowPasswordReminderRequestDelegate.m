@@ -50,7 +50,7 @@
         }
     } else {
         if (self.isLoggingOut) {
-            [Helper logoutAfterPasswordReminder];
+            [api logout];
         }
     }
 }

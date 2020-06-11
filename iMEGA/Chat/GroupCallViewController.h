@@ -10,7 +10,7 @@
 @property (nonatomic) CallType callType;
 @property (nonatomic) BOOL videoCall;
 @property (nonatomic, strong) MEGAChatRoom *chatRoom;
-@property (nonatomic, strong) MEGAChatCall *call;
+@property (nonatomic) uint64_t callId;
 
 - (void)tapOnVideoCallkitWhenDeviceIsLocked;
 
