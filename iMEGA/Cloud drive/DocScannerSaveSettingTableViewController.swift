@@ -237,7 +237,12 @@ extension DocScannerSaveSettingTableViewController: BrowserViewControllerDelegat
             docs?.enumerated().forEach {
                 if let quality = DocScanQuality(rawValue: UserDefaults.standard.float(forKey: keys.docScanQualityKey)),
                     let data = $0.element.jpegData(compressionQuality: CGFloat(quality.rawValue)) {
-                    let fileName = "\(self.fileName) \($0.offset).jpg"
+                    let fileName: String
+                    if self.docs?.count ?? 1 > 1 {
+                        fileName = "\(self.fileName) \($0.offset).jpg"
+                    } else {
+                        fileName =  "\(self.fileName).jpg"
+                    }
                     let tempPath = (NSTemporaryDirectory() as NSString).appendingPathComponent(fileName)
                     do {
                         try data.write(to: URL(fileURLWithPath: tempPath), options: .atomic)
@@ -300,7 +305,12 @@ extension DocScannerSaveSettingTableViewController: SendToViewControllerDelegate
                     self.docs?.enumerated().forEach {
                         if let quality = DocScanQuality(rawValue: UserDefaults.standard.float(forKey: keys.docScanQualityKey)),
                             let data = $0.element.jpegData(compressionQuality: CGFloat(quality.rawValue)) {
-                            let fileName = "\(self.fileName) \($0.offset).jpg"
+                            let fileName: String
+                            if self.docs?.count ?? 1 > 1 {
+                                fileName = "\(self.fileName) \($0.offset).jpg"
+                            } else {
+                                fileName =  "\(self.fileName).jpg"
+                            }
                             let tempPath = (NSTemporaryDirectory() as NSString).appendingPathComponent(fileName)
                             do {
                                 try data.write(to: URL(fileURLWithPath: tempPath), options: .atomic)
