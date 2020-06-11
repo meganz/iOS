@@ -182,6 +182,8 @@
         case MEGAChatMessageTypeContainsMeta:
             if (self.message.containsMeta.type == MEGAChatContainsMetaTypeGeolocation) {
                 body = [NSString stringWithFormat:@"📍 %@", AMLocalizedString(@"Pinned Location", @"Text shown in location-type messages")];
+            } else {
+                body = self.message.content;
             }
             break;
             
