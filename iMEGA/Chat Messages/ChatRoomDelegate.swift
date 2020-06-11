@@ -104,15 +104,12 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
 
             if chatMessage.count == 0 {
                 loadingState = false
-
-         
-                DispatchQueue.main.async {
-
-                    self.chatMessage = self.historyMessages
-                    self.historyMessages.removeAll()
-                    self.chatViewController?.messagesCollectionView.reloadData()
-                    self.chatViewController?.messagesCollectionView.scrollToBottom()
-                }
+                
+                self.chatMessage = self.historyMessages
+                self.historyMessages.removeAll()
+                self.chatViewController?.messagesCollectionView.reloadData()
+                self.chatViewController?.messagesCollectionView.scrollToLastItem(at: .bottom, animated: false)
+                
                 return
             }
             
