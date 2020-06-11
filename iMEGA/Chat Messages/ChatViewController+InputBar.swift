@@ -175,8 +175,7 @@ extension ChatViewController {
                                  groupName: String?,
                                  keyRotationEnabled: Bool,
                                  getChatLink:Bool) {
-        guard let selectedUsers = selectedObjects as? [MEGAUser],
-            let groupName = groupName else {
+        guard let selectedUsers = selectedObjects as? [MEGAUser] else {
             return
         }
         
