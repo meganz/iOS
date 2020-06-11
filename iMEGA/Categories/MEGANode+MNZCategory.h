@@ -4,8 +4,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface MEGANode (MNZCategory) <UITextFieldDelegate>
 
 - (void)navigateToParentAndPresent;
-- (void)mnz_openNodeInNavigationController:(UINavigationController * _Nullable)navigationController folderLink:(BOOL)isFolderLink;
-- (UIViewController *)mnz_viewControllerForNodeInFolderLink:(BOOL)isFolderLink;
+- (void)mnz_openNodeInNavigationController:(UINavigationController *_Nullable)navigationController folderLink:(BOOL)isFolderLink fileLink:(NSString *_Nullable)fileLink;
+- (UIViewController *)mnz_viewControllerForNodeInFolderLink:(BOOL)isFolderLink fileLink:(NSString *)fileLink;
 
 - (void)mnz_generateThumbnailForVideoAtPath:(NSURL *)path;
 

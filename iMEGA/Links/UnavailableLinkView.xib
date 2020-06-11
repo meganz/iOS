@@ -1,18 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12113" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12078"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="SF-UI-Text-Regular.otf">
-            <string>SFUIText-Regular</string>
-        </array>
-    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -20,57 +13,74 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rvn-KO-Arx">
-                    <rect key="frame" x="87.5" y="248.5" width="200" height="170"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="200" id="7hi-wX-zCa"/>
-                        <constraint firstAttribute="height" constant="170" id="a2b-EF-YS0"/>
-                    </constraints>
-                </imageView>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bur-Bl-fx0">
-                    <rect key="frame" x="164.5" y="458.5" width="46" height="22"/>
-                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="18"/>
-                    <color key="textColor" red="0.46666666870000001" green="0.46666666870000001" blue="0.46666666870000001" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="12" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GIz-Fn-kCu">
-                    <rect key="frame" x="30.5" y="520.5" width="314.5" height="134"/>
-                    <string key="text">This could be due to the following reasons:
-- The file has been removed because of a ToS/AUP violation.
-- Invalid URL – the link you are trying to access does not exist.
-- The file has been deleted by the user.</string>
-                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="16"/>
-                    <color key="textColor" red="0.46666666865348816" green="0.46666666865348816" blue="0.46666666865348816" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="52" translatesAutoresizingMaskIntoConstraints="NO" id="nHx-2K-c5f">
+                    <rect key="frame" x="12" y="176" width="351" height="315.5"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="invalidFolderLink" translatesAutoresizingMaskIntoConstraints="NO" id="rvn-KO-Arx">
+                            <rect key="frame" x="75.5" y="0.0" width="200" height="120"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="200" id="7hi-wX-zCa"/>
+                                <constraint firstAttribute="height" constant="120" id="a2b-EF-YS0"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="File Unavailable" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bur-Bl-fx0">
+                            <rect key="frame" x="113" y="172" width="125.5" height="21.5"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                            <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="ke3-Cf-1Gy">
+                            <rect key="frame" x="0.0" y="245.5" width="351" height="70"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This could be due to the following reasons:" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="12" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GIz-Fn-kCu">
+                                    <rect key="frame" x="0.0" y="0.0" width="252.5" height="14.5"/>
+                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="12"/>
+                                    <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="- The file has been removed because of a ToS/AUP violation." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="12" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yjr-Ix-NuO">
+                                    <rect key="frame" x="0.0" y="18.5" width="342" height="14.5"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.79955786401098905" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="- Invalid URL – the link you are trying to access does not exist." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="12" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Rk-cf-NhA">
+                                    <rect key="frame" x="0.0" y="37" width="351" height="14.5"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.79955786401098905" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="- The file has been deleted by the user." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="12" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D0V-Ae-FsO">
+                                    <rect key="frame" x="0.0" y="55.5" width="222" height="14.5"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.79955786401098905" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                        </stackView>
+                    </subviews>
+                </stackView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="GIz-Fn-kCu" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="tbQ-LB-Do7" secondAttribute="leading" constant="30" id="0Xm-v2-5Iq"/>
-                <constraint firstItem="GIz-Fn-kCu" firstAttribute="top" secondItem="Bur-Bl-fx0" secondAttribute="bottom" constant="40" id="3Dg-w6-ZBD"/>
-                <constraint firstItem="GIz-Fn-kCu" firstAttribute="centerX" secondItem="Bur-Bl-fx0" secondAttribute="centerX" id="6GF-gW-we3"/>
-                <constraint firstItem="Bur-Bl-fx0" firstAttribute="centerX" secondItem="rvn-KO-Arx" secondAttribute="centerX" id="EAg-cM-XtK"/>
-                <constraint firstItem="rvn-KO-Arx" firstAttribute="centerX" secondItem="tbQ-LB-Do7" secondAttribute="centerX" id="Vuf-cO-KcF"/>
-                <constraint firstAttribute="trailing" secondItem="Bur-Bl-fx0" secondAttribute="trailing" constant="16" id="eJR-rx-fae"/>
-                <constraint firstItem="rvn-KO-Arx" firstAttribute="centerY" secondItem="tbQ-LB-Do7" secondAttribute="centerY" id="fkN-Wx-co3"/>
-                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="GIz-Fn-kCu" secondAttribute="trailing" constant="30" id="hDb-3o-cr7"/>
-                <constraint firstItem="Bur-Bl-fx0" firstAttribute="top" secondItem="rvn-KO-Arx" secondAttribute="bottom" constant="40" id="pDu-EN-WU7"/>
-                <constraint firstItem="Bur-Bl-fx0" firstAttribute="leading" secondItem="tbQ-LB-Do7" secondAttribute="leading" constant="16" id="r0S-2v-Qot"/>
+                <constraint firstItem="nHx-2K-c5f" firstAttribute="leading" secondItem="tbQ-LB-Do7" secondAttribute="leading" constant="12" id="Sml-mN-0P3"/>
+                <constraint firstItem="nHx-2K-c5f" firstAttribute="centerY" secondItem="tbQ-LB-Do7" secondAttribute="centerY" id="TW3-b7-dWM"/>
+                <constraint firstAttribute="trailing" secondItem="nHx-2K-c5f" secondAttribute="trailing" constant="12" id="XRa-t0-VeM"/>
+                <constraint firstItem="nHx-2K-c5f" firstAttribute="centerX" secondItem="tbQ-LB-Do7" secondAttribute="centerX" id="czK-c0-s6u"/>
             </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
-            <variation key="default">
-                <mask key="constraints">
-                    <exclude reference="eJR-rx-fae"/>
-                    <exclude reference="r0S-2v-Qot"/>
-                </mask>
-            </variation>
             <connections>
+                <outlet property="descriptionLabel" destination="GIz-Fn-kCu" id="fPH-Om-w1R"/>
+                <outlet property="firstTextLabel" destination="Yjr-Ix-NuO" id="S7n-4l-2zr"/>
                 <outlet property="imageView" destination="rvn-KO-Arx" id="vG6-tf-OQF"/>
-                <outlet property="imageViewCenterYLayoutConstraint" destination="fkN-Wx-co3" id="gTK-LS-Suo"/>
-                <outlet property="textLabel" destination="GIz-Fn-kCu" id="Fs4-vv-qKh"/>
+                <outlet property="secondTextLabel" destination="5Rk-cf-NhA" id="COP-8W-AB8"/>
+                <outlet property="thirdTextLabel" destination="D0V-Ae-FsO" id="SiN-rn-hAS"/>
                 <outlet property="titleLabel" destination="Bur-Bl-fx0" id="dgL-3z-AAU"/>
             </connections>
-            <point key="canvasLocation" x="-56.5" y="206.5"/>
+            <point key="canvasLocation" x="-56.799999999999997" y="206.44677661169416"/>
         </view>
     </objects>
+    <resources>
+        <image name="invalidFolderLink" width="120" height="120"/>
+    </resources>
 </document>

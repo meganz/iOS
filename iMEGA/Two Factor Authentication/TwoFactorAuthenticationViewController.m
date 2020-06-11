@@ -270,7 +270,7 @@
                 break;
                 
             default:
-                [SVProgressHUD showErrorWithStatus:error.name];
+                [SVProgressHUD showErrorWithStatus:AMLocalizedString(error.name, nil)];
                 break;
         }
         return;
@@ -284,7 +284,7 @@
             if (self.twoFAMode == TwoFactorAuthenticationChangePassword) {
                 [self.navigationController popToViewController:self.navigationController.viewControllers[2] animated:YES];
             } else if (self.twoFAMode == TwoFactorAuthenticationChangePasswordFromLogout) {
-                [Helper logoutAfterPasswordReminder];
+                [MEGASdkManager.sharedMEGASdk logout];
             }
             break;
         }

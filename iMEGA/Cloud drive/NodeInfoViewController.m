@@ -6,7 +6,6 @@
 #import "BrowserViewController.h"
 #import "ContactsViewController.h"
 #import "CopyrightWarningViewController.h"
-#import "CustomActionViewController.h"
 #import "DisplayMode.h"
 #import "Helper.h"
 #import "MEGAGetFolderInfoRequestDelegate.h"
@@ -14,6 +13,7 @@
 #import "MEGANode+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
+#import "NSDate+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "NodePropertyTableViewCell.h"
 #import "NodeTappablePropertyTableViewCell.h"
@@ -21,6 +21,8 @@
 #import "UIApplication+MNZCategory.h"
 #import "UIImage+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
+
+#import "MEGA-Swift.h"
 
 @interface MegaNodeProperty : NSObject
 
@@ -42,7 +44,7 @@
 
 @end
 
-@interface NodeInfoViewController () <UITableViewDelegate, UITableViewDataSource, CustomActionViewControllerDelegate, MEGAGlobalDelegate>
+@interface NodeInfoViewController () <UITableViewDelegate, UITableViewDataSource, NodeActionViewControllerDelegate, MEGAGlobalDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIImageView *thumbnailImageView;
@@ -284,23 +286,8 @@
 }
 
 - (IBAction)infoTouchUpInside:(UIButton *)sender {
-    CustomActionViewController *actionController = [[CustomActionViewController alloc] init];
-    actionController.node = self.node;
-    actionController.displayMode = DisplayModeNodeInfo;
-    actionController.actionDelegate = self;
-    actionController.actionSender = sender;
-    actionController.incomingShareChildView = self.incomingShareChildView;
-    
-    if ([[UIDevice currentDevice] iPadDevice]) {
-        actionController.modalPresentationStyle = UIModalPresentationPopover;
-        actionController.popoverPresentationController.delegate = actionController;
-        actionController.popoverPresentationController.sourceView = sender;
-        actionController.popoverPresentationController.sourceRect = CGRectMake(0, 0, sender.frame.size.width/2, sender.frame.size.height/2);
-    } else {
-        actionController.modalPresentationStyle = UIModalPresentationOverFullScreen;
-    }
-    
-    [self presentViewController:actionController animated:YES completion:nil];
+    NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:self.node delegate:self displayMode:DisplayModeNodeInfo isIncoming:self.incomingShareChildView sender:sender];
+    [self presentViewController:nodeActions animated:YES completion:nil];
 }
 
 #pragma mark - Private
@@ -320,7 +307,7 @@
             [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"totalSize", @"Size of the file or folder you are sharing") value:[Helper sizeForNode:self.node api:[MEGASdkManager sharedMEGASdk]]]];
         }
         [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"type", @"Refers to the type of a file or folder.") value:self.node.mnz_fileType]];
-        [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"modified", @"A label for any 'Modified' text or title.") value:[Helper dateWithISO8601FormatOfRawTime:self.node.modificationTime.timeIntervalSince1970]]];
+        [propertiesNode addObject:[MegaNodeProperty.alloc initWithTitle:AMLocalizedString(@"modified", @"A label for any 'Modified' text or title.") value:self.node.modificationTime.mnz_formattedDefaultDateForMedia]];
     } else if (self.node.isFolder) {
         [propertiesNode addObject:[MegaNodeProperty.alloc initWithTitle:AMLocalizedString(@"totalSize", @"Size of the file or folder you are sharing") value:[Helper memoryStyleStringFromByteCount:(self.folderInfo.currentSize + self.folderInfo.versionsSize)]]];
         if (self.folderInfo.versions != 0) {
@@ -331,7 +318,7 @@
         [propertiesNode addObject:[MegaNodeProperty.alloc initWithTitle:AMLocalizedString(@"contains", @"Label for what a selection contains.") value:[NSString mnz_stringByFiles:self.folderInfo.files andFolders:self.folderInfo.folders]]];
     }
     
-    [propertiesNode addObject:[[MegaNodeProperty alloc] initWithTitle:AMLocalizedString(@"Added", @"A label for any ‘Added’ text or title. For example to show the upload date of a file/folder.") value:[Helper dateWithISO8601FormatOfRawTime:self.node.creationTime.timeIntervalSince1970]]];
+    [propertiesNode addObject:[MegaNodeProperty.alloc initWithTitle:AMLocalizedString(@"Added", @"A label for any ‘Added’ text or title. For example to show the upload date of a file/folder.") value:self.node.creationTime.mnz_formattedDefaultDateForMedia]];
     
     return propertiesNode;
 }
@@ -448,9 +435,9 @@
     [self.navigationController pushViewController:nodeVersions animated:YES];
 }
 
-#pragma mark - CustomActionViewControllerDelegate
-
-- (void)performAction:(MegaNodeActionType)action inNode:(MEGANode *)node fromSender:(id)sender {
+#pragma mark - NodeActionDelegate
+    
+- (void)nodeAction:(NodeActionViewController *)nodeAction didSelect:(MegaNodeActionType)action for:(MEGANode *)node from:(id)sender {
     switch (action) {
             
         case MegaNodeActionTypeDownload:

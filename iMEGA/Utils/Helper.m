@@ -6,10 +6,12 @@
 #import "SVProgressHUD.h"
 
 #import "NSFileManager+MNZCategory.h"
+#import "NSDate+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 
+#import "MEGAIndexer.h"
 #import "MEGAActivityItemProvider.h"
 #import "MEGACopyRequestDelegate.h"
 #import "MEGACreateFolderRequestDelegate.h"
@@ -31,8 +33,14 @@
 #import "RemoveSharingActivity.h"
 #import "ShareFolderActivity.h"
 #import "SendToChatActivity.h"
+#ifdef MNZ_SHARE_EXTENSION
+#import "MEGAShare-Swift.h"
+#elif MNZ_PICKER_EXTENSION
+#import "MEGAPicker-Swift.h"
+#else
+#import "MEGA-Swift.h"
+#endif
 
-static MEGAIndexer *indexer;
 
 @implementation Helper
 
@@ -344,17 +352,8 @@ static MEGAIndexer *indexer;
     
     NSNumber *freeSizeNumber = [[[NSFileManager defaultManager] attributesOfFileSystemForPath:NSHomeDirectory() error:nil] objectForKey:NSFileSystemFreeSize];
     if ([freeSizeNumber longLongValue] < [nodeSizeNumber longLongValue]) {
-        UIAlertController *alertController;
-        
-        if ([node type] == MEGANodeTypeFile) {
-            alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"nodeTooBig", @"Title shown inside an alert if you don't have enough space on your device to download something") message:AMLocalizedString(@"fileTooBigMessage", @"The file you are trying to download is bigger than the avaliable memory.") preferredStyle:UIAlertControllerStyleAlert];
-            [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-        } else if ([node type] == MEGANodeTypeFolder) {
-            alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"nodeTooBig", @"Title shown inside an alert if you don't have enough space on your device to download something") message:AMLocalizedString(@"folderTooBigMessage", @"The folder you are trying to download is bigger than the avaliable memory.") preferredStyle:UIAlertControllerStyleAlert];
-            [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
-        }
-        
-        [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
+        StorageFullModalAlertViewController *warningVC = StorageFullModalAlertViewController.alloc.init;
+        [warningVC showWithRequiredStorage:nodeSizeNumber.longLongValue];
         return NO;
     }
     return YES;
@@ -597,6 +596,22 @@ static MEGAIndexer *indexer;
     [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
 }
 
++ (UIAlertController *)removeUserContactFromSender:(UIView *)sender withConfirmAction:(void (^)(void))confirmAction {
+
+    UIAlertController *removeContactAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+
+    [removeContactAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
+
+    [removeContactAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"removeUserTitle", @"Alert title shown when you want to remove one or more contacts") style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+        confirmAction();
+    }]];
+
+    removeContactAlertController.popoverPresentationController.sourceView = sender;
+    removeContactAlertController.popoverPresentationController.sourceRect = sender.bounds;
+    
+    return removeContactAlertController;
+}
+
 #pragma mark - Utils for nodes
 
 + (void)thumbnailForNode:(MEGANode *)node api:(MEGASdk *)api cell:(id)cell {
@@ -628,13 +643,25 @@ static MEGAIndexer *indexer;
     
     if (reindex) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-            [indexer index:node];
+            [MEGAIndexer.sharedIndexer index:node];
         });
     }
 }
 
-+ (NSString *)sizeAndDateForNode:(MEGANode *)node api:(MEGASdk *)api {
-    return [NSString stringWithFormat:@"%@ • %@", [self sizeForNode:node api:api], [self dateWithISO8601FormatOfRawTime:node.creationTime.timeIntervalSince1970]];
++ (NSString *)sizeAndCreationHourAndMininuteForNode:(MEGANode *)node api:(MEGASdk *)api {
+    return [NSString stringWithFormat:@"%@ • %@", [self sizeForNode:node api:api], node.creationTime.mnz_formattedHourAndMinutes];
+}
+
++ (NSString *)sizeAndCreationDateForNode:(MEGANode *)node api:(MEGASdk *)api {
+    return [NSString stringWithFormat:@"%@ • %@", [self sizeForNode:node api:api], node.creationTime.mnz_formattedDefaultDateForMedia];
+}
+
++ (NSString *)sizeAndModicationDateForNode:(MEGANode *)node api:(MEGASdk *)api {
+    return [NSString stringWithFormat:@"%@ • %@", [self sizeForNode:node api:api], node.modificationTime.mnz_formattedDefaultDateForMedia];
+}
+
++ (NSString *)sizeAndShareLinkCreateDateForSharedLinkNode:(MEGANode *)node api:(MEGASdk *)api {
+    return [NSString stringWithFormat:@"%@ • %@", [self sizeForNode:node api:api], node.publicLinkCreationTime.mnz_formattedDefaultDateForMedia];
 }
 
 + (NSString *)sizeForNode:(MEGANode *)node api:(MEGASdk *)api {
@@ -645,14 +672,6 @@ static MEGAIndexer *indexer;
         size = [Helper memoryStyleStringFromByteCount:[api sizeForNode:node].longLongValue];
     }
     return size;
-}
-
-+ (NSString *)dateWithISO8601FormatOfRawTime:(time_t)rawtime {
-    struct tm *timeinfo = localtime(&rawtime);
-    char buffer[80];
-    strftime(buffer, 80, "%Y-%m-%d %H:%M:%S", timeinfo);
-    
-    return [NSString stringWithCString:buffer encoding:NSUTF8StringEncoding];
 }
 
 + (NSString *)filesAndFoldersInFolderNode:(MEGANode *)node api:(MEGASdk *)api {
@@ -941,9 +960,6 @@ static MEGAIndexer *indexer;
     return [filesURLMutableArray copy];
 }
 
-+ (void)setIndexer:(MEGAIndexer* )megaIndexer {
-    indexer = megaIndexer;
-}
 
 #pragma mark - Utils for empty states
 
@@ -1107,39 +1123,6 @@ static MEGAIndexer *indexer;
     [Helper resetUserData];
     
     [Helper deletePasscode];
-}
-
-+ (void)logoutAfterPasswordReminder {
-    NSError *error;
-    NSArray *directoryContent = [NSFileManager.defaultManager contentsOfDirectoryAtPath:NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject error:&error];
-    if (error) {
-        MEGALogError(@"Contents of directory at path failed with error: %@", error);
-    }
-    
-    BOOL isInboxDirectory = NO;
-    for (NSString *directoryElement in directoryContent) {
-        if ([directoryElement isEqualToString:@"Inbox"]) {
-            NSString *inboxPath = [[Helper pathForOffline] stringByAppendingPathComponent:@"Inbox"];
-            [[NSFileManager defaultManager] fileExistsAtPath:inboxPath isDirectory:&isInboxDirectory];
-            break;
-        }
-    }
-    
-    if (directoryContent.count > 0) {
-        if (directoryContent.count == 1 && isInboxDirectory) {
-            [[MEGASdkManager sharedMEGASdk] logout];
-            return;
-        }
-        
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"warning", nil) message:AMLocalizedString(@"allFilesSavedForOfflineWillBeDeletedFromYourDevice", @"Alert message shown when the user perform logout and has files in the Offline directory") preferredStyle:UIAlertControllerStyleAlert];
-        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
-        [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"logoutLabel", @"Title of the button which logs out from your account.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            [[MEGASdkManager sharedMEGASdk] logout];
-        }]];
-        [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
-    } else {
-        [[MEGASdkManager sharedMEGASdk] logout];
-    }
 }
 
 + (void)cancelAllTransfers {

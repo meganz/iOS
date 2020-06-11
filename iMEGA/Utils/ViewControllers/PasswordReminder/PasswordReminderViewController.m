@@ -82,7 +82,7 @@
             
             [Helper showExportMasterKeyInView:self completion:^{
                 if (weakSelf.isLoggingOut) {
-                    [Helper logoutAfterPasswordReminder];
+                    [MEGASdkManager.sharedMEGASdk logout];
                 }
             }];
         }
@@ -103,7 +103,7 @@
 - (void)notifyUserSkippedOrBlockedPasswordReminder {
     MEGAGenericRequestDelegate *delegate = [[MEGAGenericRequestDelegate alloc] initWithCompletion:^(MEGARequest *request, MEGAError *error) {
         if (self.isLoggingOut) {
-            [Helper logoutAfterPasswordReminder];
+            [MEGASdkManager.sharedMEGASdk logout];
         }
     }];
     if (self.dontShowAgainSwitch.isOn) {

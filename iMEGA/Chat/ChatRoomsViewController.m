@@ -9,7 +9,6 @@
 #import "DevicePermissionsHelper.h"
 #import "Helper.h"
 #import "MEGAChatChangeGroupNameRequestDelegate.h"
-#import "MEGAChatCreateChatGroupRequestDelegate.h"
 #import "MEGAChatGenericRequestDelegate.h"
 #import "MEGANavigationController.h"
 #import "MEGAReachabilityManager.h"
@@ -108,7 +107,7 @@
         case ChatRoomsTypeDefault:
             self.chatListItemList = [[MEGASdkManager sharedMEGAChatSdk] chatListItems];
             self.archivedChatListItemList = [[MEGASdkManager sharedMEGAChatSdk] archivedChatListItems];
-            self.addBarButtonItem.enabled = [MEGAReachabilityManager isReachable];
+            self.addBarButtonItem.enabled = [MEGAReachabilityManager isReachable] && MEGASdkManager.sharedMEGASdk.businessStatus != BusinessStatusExpired;
             break;
             
         case ChatRoomsTypeArchived:
@@ -415,6 +414,7 @@
                 if (viewControllers.count != 2) {
                     [self.navigationController popToViewController:currentChatViewController animated:YES];
                 }
+                [NSNotificationCenter.defaultCenter postNotificationName:MEGAOpenChatRoomFromPushNotification object:nil];
                 return;
             } else {
                 [[MEGASdkManager sharedMEGAChatSdk] closeChatRoom:currentChatViewController.chatRoom.chatId
@@ -433,7 +433,7 @@
 }
 
 - (void)internetConnectionChanged {
-    BOOL boolValue = [MEGAReachabilityManager isReachable];
+    BOOL boolValue = [MEGAReachabilityManager isReachable] && MEGASdkManager.sharedMEGASdk.businessStatus != BusinessStatusExpired;
     self.addBarButtonItem.enabled = boolValue;
     
     [self customNavigationBarLabel];
@@ -564,47 +564,37 @@
 }
 
 - (void)presentChangeOnlineStatusAlertController {
-    UIAlertController *changeOnlineStatusAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    [changeOnlineStatusAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+    __weak __typeof__(self) weakSelf = self;
     
-    MEGAChatStatus onlineStatus = [[MEGASdkManager sharedMEGAChatSdk] onlineStatus];
+    NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
+    
+    MEGAChatStatus onlineStatus = MEGASdkManager.sharedMEGAChatSdk.onlineStatus;
     if (MEGAChatStatusOnline != onlineStatus) {
-        UIAlertAction *onlineAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"online", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            [self changeToOnlineStatus:MEGAChatStatusOnline];
-        }];
-        [onlineAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
-        [changeOnlineStatusAlertController addAction:onlineAlertAction];
+        [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"online", @"") detail:nil image:nil style:UIAlertActionStyleDefault actionHandler:^{
+            [weakSelf changeToOnlineStatus:MEGAChatStatusOnline];
+        }]];
     }
     
     if (MEGAChatStatusAway != onlineStatus) {
-        UIAlertAction *awayAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"away", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            [self changeToOnlineStatus:MEGAChatStatusAway];
-        }];
-        [awayAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
-        [changeOnlineStatusAlertController addAction:awayAlertAction];
+        [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"away", @"") detail:nil image:nil style:UIAlertActionStyleDefault actionHandler:^{
+            [weakSelf changeToOnlineStatus:MEGAChatStatusAway];
+        }]];
     }
     
     if (MEGAChatStatusBusy != onlineStatus) {
-        UIAlertAction *busyAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"busy", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            [self changeToOnlineStatus:MEGAChatStatusBusy];
-        }];
-        [busyAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
-        [changeOnlineStatusAlertController addAction:busyAlertAction];
+        [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"busy", @"") detail:nil image:nil style:UIAlertActionStyleDefault actionHandler:^{
+            [weakSelf changeToOnlineStatus:MEGAChatStatusBusy];
+        }]];
     }
     
     if (MEGAChatStatusOffline != onlineStatus) {
-        UIAlertAction *offlineAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"offline", @"Title of the Offline section") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            [self changeToOnlineStatus:MEGAChatStatusOffline];
-        }];
-        [offlineAlertAction mnz_setTitleTextColor:UIColor.mnz_black333333];
-        [changeOnlineStatusAlertController addAction:offlineAlertAction];
+        [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"offline", @"Title of the Offline section") detail:nil image:nil style:UIAlertActionStyleDefault actionHandler:^{
+            [weakSelf changeToOnlineStatus:MEGAChatStatusOffline];
+        }]];
     }
     
-    changeOnlineStatusAlertController.modalPresentationStyle = UIModalPresentationPopover;
-    changeOnlineStatusAlertController.popoverPresentationController.sourceView = self.view.superview;
-    changeOnlineStatusAlertController.popoverPresentationController.sourceRect = self.navigationController.navigationBar.frame;
-    
-    [self presentViewController:changeOnlineStatusAlertController animated:YES completion:nil];
+    ActionSheetViewController *moreActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:nil dismissCompletion:nil sender:self.navigationItem.titleView];
+    [self presentViewController:moreActionSheet animated:YES completion:nil];
 }
 
 - (void)changeToOnlineStatus:(MEGAChatStatus)chatStatus {
@@ -686,15 +676,13 @@
 }
 
 - (void)createChatRoomWithUserAtIndexPath:(NSIndexPath *)indexPath {
-    MEGAChatPeerList *peerList = [[MEGAChatPeerList alloc] init];
     MEGAUser *user = [self.searchUsersWithoutChatArray objectAtIndex:indexPath.row];
-    [peerList addPeerWithHandle:user.handle privilege:MEGAChatRoomPrivilegeStandard];
-    MEGAChatCreateChatGroupRequestDelegate *createChatGroupRequestDelegate = [[MEGAChatCreateChatGroupRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
+    
+    [MEGASdkManager.sharedMEGAChatSdk mnz_createChatRoomWithUserHandle:user.handle completion:^(MEGAChatRoom * _Nonnull chatRoom) {
         ChatViewController *chatViewController = [ChatViewController.alloc init];
         chatViewController.chatRoom = chatRoom;
         [self.navigationController pushViewController:chatViewController animated:YES];
     }];
-    [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:NO peers:peerList delegate:createChatGroupRequestDelegate];
     
     [self.searchUsersWithoutChatArray removeObject:user];
     [self.usersWithoutChatArray removeObject:user];
@@ -865,34 +853,23 @@
                     [self.navigationController pushViewController:chatViewController animated:YES];
                 });
             } else {
-                MEGAChatPeerList *peerList = [[MEGAChatPeerList alloc] init];
-                [peerList addPeerWithHandle:user.handle privilege:2];
-                MEGAChatCreateChatGroupRequestDelegate *createChatGroupRequestDelegate = [[MEGAChatCreateChatGroupRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
+                [MEGASdkManager.sharedMEGAChatSdk mnz_createChatRoomWithUserHandle:user.handle completion:^(MEGAChatRoom * _Nonnull chatRoom) {
                     chatViewController.chatRoom = chatRoom;
                     [self.navigationController pushViewController:chatViewController animated:YES];
                 }];
-                [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:NO peers:peerList delegate:createChatGroupRequestDelegate];
             }
         }
     };
     
     contactsVC.createGroupChat = ^void(NSArray *users, NSString *groupName, BOOL keyRotation, BOOL getChatLink) {
-        MEGAChatPeerList *peerList = [[MEGAChatPeerList alloc] init];
-        
-        for (NSInteger i = 0; i < users.count; i++) {
-            MEGAUser *user = [users objectAtIndex:i];
-            [peerList addPeerWithHandle:user.handle privilege:2];
-        }
-        
         if (keyRotation) {
-            MEGAChatCreateChatGroupRequestDelegate *createChatGroupRequestDelegate = [[MEGAChatCreateChatGroupRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
+            [MEGASdkManager.sharedMEGAChatSdk mnz_createChatRoomWithUsersArray:users title:groupName completion:^(MEGAChatRoom * _Nonnull chatRoom) {
                 chatViewController.chatRoom = chatRoom;
                 [self.navigationController pushViewController:chatViewController animated:YES];
             }];
-            [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:YES peers:peerList title:groupName delegate:createChatGroupRequestDelegate];
         } else {
-            MEGAChatCreateChatGroupRequestDelegate *createChatGroupRequestDelegate = [[MEGAChatCreateChatGroupRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
-                chatViewController.chatRoom = chatRoom;
+            MEGAChatGenericRequestDelegate *createChatGroupRequestDelegate = [MEGAChatGenericRequestDelegate.alloc initWithCompletion:^(MEGAChatRequest *request, MEGAChatError *error) {
+                chatViewController.chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:request.chatHandle];
                 if (getChatLink) {
                     MEGAChatGenericRequestDelegate *delegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest *request, MEGAChatError *error) {
                         if (!error.type) {
@@ -901,12 +878,12 @@
                             [self.navigationController pushViewController:chatViewController animated:YES];
                         }
                     }];
-                    [[MEGASdkManager sharedMEGAChatSdk] createChatLink:chatRoom.chatId delegate:delegate];
+                    [MEGASdkManager.sharedMEGAChatSdk createChatLink:chatViewController.chatRoom.chatId delegate:delegate];
                 } else {
                     [self.navigationController pushViewController:chatViewController animated:YES];
                 }
             }];
-            [[MEGASdkManager sharedMEGAChatSdk] createPublicChatWithPeers:peerList title:groupName delegate:createChatGroupRequestDelegate];
+            [MEGASdkManager.sharedMEGAChatSdk createPublicChatWithPeers:[MEGAChatPeerList mnz_standardPrivilegePeerListWithUsersArray:users] title:groupName delegate:createChatGroupRequestDelegate];
         }
     };
 }
@@ -1313,13 +1290,16 @@
         case MEGAChatCallStatusDestroyed: {
             [self.timer invalidate];
             self.chatRoomOnGoingCall = nil;
-            [self hideTopBannerButton];
             NSIndexPath *indexPath = [self.chatIdIndexPathDictionary objectForKey:@(call.chatId)];
             if ([self.tableView.indexPathsForVisibleRows containsObject:indexPath]) {
                 [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
             }
             break;
         }
+            
+        case MEGAChatCallStatusTerminatingUserParticipation:
+            [self hideTopBannerButton];
+            break;
             
         default:
             break;

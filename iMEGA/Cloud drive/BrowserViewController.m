@@ -156,7 +156,7 @@
         case BrowserActionImportFromFolderLink: {
             [self setupDefaultElements];
             
-            self.toolBarCopyBarButtonItem.title = AMLocalizedString(@"import", @"Button title that triggers the importing link action");
+            self.toolBarCopyBarButtonItem.title = AMLocalizedString(@"Import to Cloud Drive", @"Button title that triggers the importing link action");
             [self.toolBarCopyBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIMediumWithSize:17.0f]}  forState:UIControlStateNormal];
             [self setToolbarItems:@[self.toolBarNewFolderBarButtonItem, flexibleItem, self.toolBarCopyBarButtonItem]];
             break;
@@ -259,7 +259,9 @@
 - (void)setParentNodeForBrowserAction {
     if (self.cloudDriveButton.selected) {
         if (self.isParentBrowser) {
-            self.parentNode = MEGASdkManager.sharedMEGASdk.rootNode;
+            if (!self.parentNode) {
+                self.parentNode = MEGASdkManager.sharedMEGASdk.rootNode;
+            }
         }
         self.nodes = [MEGASdkManager.sharedMEGASdk childrenForParent:self.parentNode];
     } else if (self.incomingButton.selected) {
@@ -436,8 +438,7 @@
 }
 
 - (void)attachNodes {
-    self.selectedNodes(self.selectedNodesMutableDictionary.allValues.copy);
-    [self dismiss];
+    [self dismissAndSelectNodesIfNeeded:YES];
 }
 
 - (void)newFolderAlertTextFieldDidChange:(UITextField *)textField {
@@ -462,11 +463,18 @@
     return self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : [self.nodes nodeAtIndex:indexPath.row];
 }
 
-- (void)dismiss {
+- (void)dismissAndSelectNodesIfNeeded:(BOOL)selectNodes {
     if (self.searchController.isActive) {
         self.searchController.active = NO;
     }
-    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    if (selectNodes) {
+        [self dismissViewControllerAnimated:YES completion:^{
+            self.selectedNodes(self.selectedNodesMutableDictionary.allValues.copy);
+        }];
+    } else {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 
 #pragma mark - IBActions
@@ -476,7 +484,7 @@
         NSMutableArray *selectedNodesMutableArray = self.selectedNodesArray.mutableCopy;
         NSArray *filesAndFolders = selectedNodesMutableArray.mnz_numberOfFilesAndFolders;
         MEGAMoveRequestDelegate *moveRequestDelegate = [MEGAMoveRequestDelegate.alloc initWithFiles:[filesAndFolders.firstObject unsignedIntegerValue] folders:[filesAndFolders[1] unsignedIntegerValue] completion:^{
-            [self dismiss];
+            [self dismissAndSelectNodesIfNeeded:NO];
         }];
         
         for (MEGANode *n in self.selectedNodesArray) {
@@ -538,7 +546,7 @@
         [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:inboxDirectory];
     }
     
-    [self dismiss];
+    [self dismissAndSelectNodesIfNeeded:NO];
 }
 
 - (IBAction)uploadToMega:(UIBarButtonItem *)sender {
@@ -557,7 +565,7 @@
                 [SVProgressHUD showErrorWithStatus:status];
             }
             
-            [self dismiss];
+            [self dismissAndSelectNodesIfNeeded:NO];
         }
     } else if (self.browserAction == BrowserActionShareExtension) {
         [self.browserViewControllerDelegate uploadToParentNode:self.parentNode];
@@ -669,7 +677,7 @@
     
     if (self.cloudDriveButton.selected) {
         if (node.isFile) {
-            cell.infoLabel.text = [Helper sizeAndDateForNode:node api:[MEGASdkManager sharedMEGASdk]];
+            cell.infoLabel.text = [Helper sizeAndModicationDateForNode:node api:[MEGASdkManager sharedMEGASdk]];
         } else {
             cell.infoLabel.text = [Helper filesAndFoldersInFolderNode:node api:[MEGASdkManager sharedMEGASdk]];
         }
@@ -949,7 +957,7 @@
                 [SVProgressHUD dismiss];
             } else {
                 [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-                [SVProgressHUD showErrorWithStatus:error.name];
+                [SVProgressHUD showErrorWithStatus:AMLocalizedString(error.name, nil)];
             }
         }
         return;
@@ -977,7 +985,7 @@
                     [[MEGASdkManager sharedMEGASdkFolder] logout];
                 }
                 
-                [self dismiss];
+                [self dismissAndSelectNodesIfNeeded:NO];
             }
             break;
         }
