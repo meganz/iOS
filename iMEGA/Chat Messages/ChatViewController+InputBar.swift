@@ -187,18 +187,14 @@ extension ChatViewController {
         selectedUsers.forEach { peerlist.addPeer(withHandle: $0.handle, privilege: 2)}
         
         if keyRotationEnabled {
-            let createChatGroupRequestDelegate = MEGAChatCreateChatGroupRequestDelegate { newChatRoom in
-                self.open(chatRoom: newChatRoom)
+            MEGASdkManager.sharedMEGAChatSdk()?.mnz_createChatRoom(usersArray: selectedUsers,
+                                                                   title: groupName) {
+                                                                    newChatRoom in
+                                                                    self.open(chatRoom: newChatRoom)
             }
-            
-            MEGASdkManager.sharedMEGAChatSdk()?.createChatGroup(true,
-                                                                peers: peerlist,
-                                                                title: groupName,
-                                                                delegate: createChatGroupRequestDelegate)
-
-            
         } else {
-            let createChatGroupRequestDelegate = MEGAChatCreateChatGroupRequestDelegate { newChatRoom in
+            let createChatGroupRequestDelegate = MEGAChatGenericRequestDelegate { request, error in
+                let newChatRoom = MEGASdkManager.sharedMEGAChatSdk()?.chatRoom(forChatId: request.chatHandle)
                 if getChatLink {
                     let genericRequestDelegate = MEGAChatGenericRequestDelegate { (request, error) in
                         if error.type == .MEGAChatErrorTypeOk {

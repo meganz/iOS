@@ -87,7 +87,7 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate {
                     photoBrowserVC?.delegate = self
                     present(viewController: photoBrowserVC!)
                 } else {
-                    node?.mnz_open(in: navigationController, folderLink: false)
+                    node?.mnz_open(in: navigationController, folderLink: false, fileLink: nil)
                 }
             } else {
                 let chatAttachedNodesVC = UIStoryboard.init(name: "Chat", bundle: nil).instantiateViewController(withIdentifier: "ChatAttachedNodesViewControllerID") as! ChatAttachedNodesViewController
