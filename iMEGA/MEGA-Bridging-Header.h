@@ -98,7 +98,6 @@
 #import "MEGACreateFolderRequestDelegate.h"
 #import "MEGAProcessAsset.h"
 #import "ShareLocationViewController.h"
-#import "MEGAChatCreateChatGroupRequestDelegate.h"
 #import "ChatAttachedNodesViewController.h"
 #import "ChatAttachedContactsViewController.h"
 #import "MEGALoadingMessagesHeaderView.h"

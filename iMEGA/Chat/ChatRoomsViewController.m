@@ -878,7 +878,7 @@
                             [self.navigationController pushViewController:chatViewController animated:YES];
                         }
                     }];
-                    [MEGASdkManager.sharedMEGAChatSdk createChatLink:messagesVC.chatRoom.chatId delegate:delegate];
+                    [MEGASdkManager.sharedMEGAChatSdk createChatLink:chatViewController.chatRoom.chatId delegate:delegate];
                 } else {
                     [self.navigationController pushViewController:chatViewController animated:YES];
                 }
