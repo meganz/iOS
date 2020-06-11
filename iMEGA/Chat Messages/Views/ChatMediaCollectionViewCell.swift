@@ -158,7 +158,7 @@ open class ChatMediaCollectionViewSizeCalculator: MessageSizeCalculator {
                 let path = NSHomeDirectory().append(pathComponent: chatMessage.transfer!.path)
                 
                 if FileManager.default.fileExists(atPath: path) {
-                    guard let previewImage = YYImage(contentsOfFile: path) else {
+                    guard let previewImage = UIImage(contentsOfFile: path) else {
                         return CGSize(width: width, height: height)
                     }
                     width = previewImage.size.width
@@ -180,7 +180,7 @@ open class ChatMediaCollectionViewSizeCalculator: MessageSizeCalculator {
                 let previewFilePath = Helper.path(for: node, inSharedSandboxCacheDirectory: "previewsV3")
                 
                 if FileManager.default.fileExists(atPath: previewFilePath) {
-                    let previewImage = YYImage(contentsOfFile: previewFilePath)
+                    let previewImage = UIImage(contentsOfFile: previewFilePath)
                     width = previewImage!.size.width
                     height = previewImage!.size.height
                 }
