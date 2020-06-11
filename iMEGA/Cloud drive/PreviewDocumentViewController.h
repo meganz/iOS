@@ -8,5 +8,6 @@
 @property (nonatomic, strong) NSArray<NSString *> *filesPathsArray;
 @property (nonatomic) NSInteger nodeFileIndex;
 @property (nonatomic) BOOL isLink;
+@property (nonatomic) NSString *fileLink;
 
 @end

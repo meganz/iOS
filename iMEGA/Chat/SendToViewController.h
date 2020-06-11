@@ -5,8 +5,10 @@
 #import "MEGAChatMessage.h"
 #import "SendMode.h"
 
+@class SendToViewController;
+
 @protocol SendToViewControllerDelegate <NSObject>
-- (void)sendToChats:(NSArray<MEGAChatListItem *> *)chats andUsers:(NSArray<MEGAUser *> *)users;
+- (void)sendToViewController:(SendToViewController *)viewController toChats:(NSArray<MEGAChatListItem *> *)chats andUsers:(NSArray<MEGAUser *> *)users;
 @end
 
 @interface SendToViewController : UIViewController
