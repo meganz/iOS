@@ -1,4 +1,3 @@
-
 import UIKit
 
 @objc protocol SingleCodeTextFieldDelegate: AnyObject {
@@ -6,12 +5,12 @@ import UIKit
 }
 
 class SingleCodeTextField: UITextField {
-    
+
     @IBOutlet weak var singleCodeDelegate: SingleCodeTextFieldDelegate?
-    
+
     override func deleteBackward() {
         super.deleteBackward()
-        
+
         singleCodeDelegate?.didDeleteBackwardInTextField(self)
     }
 }

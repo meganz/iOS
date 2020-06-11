@@ -175,7 +175,7 @@ static NSString *nodeToPresentBase64Handle;
                         [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
                     } else {
                         [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-                        [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, error.name]];
+                        [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, AMLocalizedString(error.name, nil)]];
                     }
                     return;
                 }
@@ -250,41 +250,7 @@ static NSString *nodeToPresentBase64Handle;
     } else {
         if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
             UIAlertController *theContentIsNotAvailableAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"theContentIsNotAvailableForThisAccount", @"") message:nil preferredStyle:UIAlertControllerStyleAlert];
-            [theContentIsNotAvailableAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
-            
-            [theContentIsNotAvailableAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"logoutLabel", @"Title of the button which logs out from your account.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-                NSError *error;
-                NSArray *directoryContent = [NSFileManager.defaultManager contentsOfDirectoryAtPath:NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject error:&error];
-                if (error) {
-                    MEGALogError(@"Contents of directory at path failed with error: %@", error);
-                }
-                
-                BOOL isInboxDirectory = NO;
-                for (NSString *directoryElement in directoryContent) {
-                    if ([directoryElement isEqualToString:@"Inbox"]) {
-                        NSString *inboxPath = [[Helper pathForOffline] stringByAppendingPathComponent:@"Inbox"];
-                        [[NSFileManager defaultManager] fileExistsAtPath:inboxPath isDirectory:&isInboxDirectory];
-                        break;
-                    }
-                }
-                
-                if (directoryContent.count > 0) {
-                    if (directoryContent.count == 1 && isInboxDirectory) {
-                        [[MEGASdkManager sharedMEGASdk] logout];
-                        return;
-                    }
-                    
-                    UIAlertController *warningAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"warning", nil) message:AMLocalizedString(@"allFilesSavedForOfflineWillBeDeletedFromYourDevice", @"Alert message shown when the user perform logout and has files in the Offline directory") preferredStyle:UIAlertControllerStyleAlert];
-                    [warningAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"") style:UIAlertActionStyleCancel handler:nil]];
-                    [warningAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"logoutLabel", @"Title of the button which logs out from your account.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-                        [[MEGASdkManager sharedMEGASdk] logout];
-                    }]];
-                    
-                    [UIApplication.mnz_presentingViewController presentViewController:warningAlertController animated:YES completion:nil];
-                } else {
-                    [[MEGASdkManager sharedMEGASdk] logout];
-                }
-            }]];
+            [theContentIsNotAvailableAlertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"Button title to accept something") style:UIAlertActionStyleCancel handler:nil]];
             
             [UIApplication.mnz_presentingViewController presentViewController:theContentIsNotAvailableAlertController animated:YES completion:nil];
         }
@@ -335,7 +301,12 @@ static NSString *nodeToPresentBase64Handle;
             [MEGALinkManager resetLinkAndURLType];
             break;
             
-        case URLTypeConfirmationLink:
+        case URLTypeConfirmationLink: {
+            MEGAQuerySignupLinkRequestDelegate *querySignupLinkRequestDelegate = [MEGAQuerySignupLinkRequestDelegate.alloc initWithCompletion:nil urlType:MEGALinkManager.urlType];
+            [MEGASdkManager.sharedMEGASdk querySignupLink:url.mnz_MEGAURL delegate:querySignupLinkRequestDelegate];
+            break;
+        }
+            
         case URLTypeNewSignUpLink: {
             if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
                 [MEGALinkManager resetLinkAndURLType];
@@ -446,26 +417,18 @@ static NSString *nodeToPresentBase64Handle;
 }
 
 + (void)showLinkNotValid {
-    [MEGALinkManager showEmptyStateViewWithImageNamed:@"invalidFileLink" title:AMLocalizedString(@"linkNotValid", @"Message shown when the user clicks on an link that is not valid") text:@""];
-    
-    [MEGALinkManager resetLinkAndURLType];
-}
-
-+ (void)showEmptyStateViewWithImageNamed:(NSString *)imageName title:(NSString *)title text:(NSString *)text {
     UnavailableLinkView *unavailableLinkView = [[[NSBundle mainBundle] loadNibNamed:@"UnavailableLinkView" owner:self options:nil] firstObject];
-    unavailableLinkView.imageView.image = [UIImage imageNamed:imageName];
-    unavailableLinkView.imageView.contentMode = UIViewContentModeScaleAspectFit;
-    unavailableLinkView.titleLabel.text = title;
-    unavailableLinkView.textLabel.text = text;
+    [unavailableLinkView configureInvalidQueryLink];
     unavailableLinkView.frame = [[UIScreen mainScreen] bounds];
     
     UIViewController *viewController = [[UIViewController alloc] init];
     [viewController.view addSubview:unavailableLinkView];
-    viewController.navigationItem.title = title;
+    viewController.navigationItem.title = AMLocalizedString(@"linkNotValid", @"Message shown when the user clicks on an link that is not valid");
     
     MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:viewController];
     [navigationController addRightCancelButton];
     [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:nil];
+    [MEGALinkManager resetLinkAndURLType];
 }
 
 + (void)presentConfirmViewWithURLType:(URLType)urlType link:(NSString *)link email:(NSString *)email {
@@ -705,7 +668,7 @@ static NSString *nodeToPresentBase64Handle;
                 [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
             } else {
                 [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-                [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, error.name]];
+                [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, AMLocalizedString(error.name, nil)]];
             }
             return;
         }
@@ -715,7 +678,7 @@ static NSString *nodeToPresentBase64Handle;
             MEGAChatGenericRequestDelegate *autorejoinPublicChatDelegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
                 if (error.type) {
                     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-                    [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, error.name]];
+                    [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, AMLocalizedString(error.name, nil)]];
                     return;
                 }
                 [MEGALinkManager createChatAndShow:request.chatHandle publicChatLink:chatLinkUrl];
@@ -749,6 +712,7 @@ static NSString *nodeToPresentBase64Handle;
         }
     }
     
+    [MEGASdkManager.sharedMEGAChatSdk connect];
     [[MEGASdkManager sharedMEGAChatSdk] openChatPreview:chatLinkUrl delegate:delegate];
 }
 

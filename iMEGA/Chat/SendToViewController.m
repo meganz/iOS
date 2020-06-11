@@ -9,13 +9,16 @@
 #import "Helper.h"
 #import "MEGAChatAttachNodeRequestDelegate.h"
 #import "MEGAChatAttachVoiceClipRequestDelegate.h"
-#import "MEGAChatCreateChatGroupRequestDelegate.h"
 #import "MEGAChatMessage+MNZCategory.h"
-#import "MEGACopyRequestDelegate.h"
 #import "MEGACreateFolderRequestDelegate.h"
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
+#ifdef MNZ_SHARE_EXTENSION
+#import "MEGAShare-Swift.h"
+#else
+#import "MEGA-Swift.h"
+#endif
 #import "MEGAUser+MNZCategory.h"
 
 #import "ContactTableViewCell.h"
@@ -77,13 +80,12 @@
     switch (self.sendMode) {
         case SendModeCloud:
         case SendModeForward:
+        case SendModeFileAndFolderLink:
             self.cancelBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
-
             break;
             
         case SendModeShareExtension:
             self.navigationItem.leftBarButtonItem = nil;
-
             break;
     }
     
@@ -452,6 +454,9 @@
 }
 
 - (IBAction)sendAction:(UIBarButtonItem *)sender {
+    if (self.searchController.isActive) {
+        self.searchController.active = NO;
+    }
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         switch (self.sendMode) {
             case SendModeCloud: {
@@ -478,20 +483,13 @@
                             }];
                         } else {
                             MEGALogDebug(@"There is not a chat with %@, create the chat and attach", user.email);
-                            MEGAChatPeerList *peerList = [[MEGAChatPeerList alloc] init];
-                            [peerList addPeerWithHandle:user.handle privilege:MEGAChatRoomPrivilegeStandard];
-                            MEGAChatCreateChatGroupRequestDelegate *createChatGroupRequestDelegate = [[MEGAChatCreateChatGroupRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
+                            [MEGASdkManager.sharedMEGAChatSdk mnz_createChatRoomWithUserHandle:user.handle completion:^(MEGAChatRoom * _Nonnull chatRoom) {
                                 [Helper importNode:node toShareWithCompletion:^(MEGANode *node) {
                                     [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatRoom.chatId node:node.handle delegate:chatAttachNodeRequestDelegate];
                                 }];
                             }];
-                            [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:NO peers:peerList delegate:createChatGroupRequestDelegate];
                         }
                     }
-                }
-                
-                if (self.searchController.isActive) {
-                    self.searchController.active = NO;
                 }
                 
                 [self dismissViewControllerAnimated:YES completion:nil];
@@ -500,14 +498,11 @@
             }
                 
             case SendModeShareExtension:
-                [self.sendToViewControllerDelegate sendToChats:self.selectedGroupChatsMutableArray andUsers:self.selectedUsersMutableArray];
-                
+            case SendModeFileAndFolderLink:
+                [self.sendToViewControllerDelegate sendToViewController:self toChats:self.selectedGroupChatsMutableArray andUsers:self.selectedUsersMutableArray];
                 break;
                 
             case SendModeForward: {
-                if (self.searchController.isActive) {
-                    self.searchController.active = NO;
-                }
                 [self dismissViewControllerAnimated:YES completion:^{
                     NSUInteger destinationCount = self.selectedGroupChatsMutableArray.count + self.selectedUsersMutableArray.count;
                     self.pendingForwardOperations = self.messages.count * destinationCount;
@@ -532,9 +527,7 @@
                             }
                         } else {
                             MEGALogDebug(@"There is not a chat with %@, create the chat and attach", user.email);
-                            MEGAChatPeerList *peerList = [[MEGAChatPeerList alloc] init];
-                            [peerList addPeerWithHandle:user.handle privilege:MEGAChatRoomPrivilegeStandard];
-                            MEGAChatCreateChatGroupRequestDelegate *createChatGroupRequestDelegate = [[MEGAChatCreateChatGroupRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
+                            [MEGASdkManager.sharedMEGAChatSdk mnz_createChatRoomWithUserHandle:user.handle completion:^(MEGAChatRoom * _Nonnull chatRoom) {
                                 @synchronized(self.chatIdNumbers) {
                                     [self.chatIdNumbers addObject:@(chatRoom.chatId)];
                                     if (self.chatIdNumbers.count == destinationCount) {
@@ -542,7 +535,6 @@
                                     }
                                 }
                             }];
-                            [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:NO peers:peerList delegate:createChatGroupRequestDelegate];
                         }
                     }
                 }];
