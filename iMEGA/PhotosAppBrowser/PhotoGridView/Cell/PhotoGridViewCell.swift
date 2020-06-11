@@ -6,7 +6,6 @@ class PhotoGridViewCell: UICollectionViewCell {
     
     // MARK:- Static variables.
 
-    static let reuseIdentifier = String(describing: PhotoGridViewCell.self)
     static var nib: UINib {
         return UINib(nibName: PhotoGridViewCell.reuseIdentifier, bundle: nil)
     }

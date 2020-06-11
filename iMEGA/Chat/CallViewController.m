@@ -21,6 +21,8 @@
 
 @interface CallViewController () <UIGestureRecognizerDelegate, MEGAChatRequestDelegate, MEGAChatCallDelegate>
 
+@property (nonatomic, strong) MEGAChatCall *call;
+
 @property (weak, nonatomic) IBOutlet MEGARemoteImageView *remoteVideoImageView;
 @property (weak, nonatomic) IBOutlet MEGALocalImageView *localVideoImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *remoteAvatarImageView;
@@ -28,6 +30,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *enableDisableVideoButton;
 @property (weak, nonatomic) IBOutlet UIButton *muteUnmuteMicrophone;
 @property (weak, nonatomic) IBOutlet UIButton *enableDisableSpeaker;
+@property (weak, nonatomic) IBOutlet UIButton *switchCameraButton;
 
 @property (weak, nonatomic) IBOutlet UIView *callControlsView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
@@ -52,12 +55,18 @@
 
 @property (assign, nonatomic, getter=isReconnecting) BOOL reconnecting;
 
+@property (nonatomic) NSString *backCamera;
+@property (nonatomic) NSString *frontCamera;
+
 @end
 
 @implementation CallViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.frontCamera = [AVCaptureDevice defaultDeviceWithDeviceType:AVCaptureDeviceTypeBuiltInWideAngleCamera mediaType:AVMediaTypeVideo position:AVCaptureDevicePositionFront].localizedName;
+    self.backCamera = [AVCaptureDevice defaultDeviceWithDeviceType:AVCaptureDeviceTypeBuiltInWideAngleCamera mediaType:AVMediaTypeVideo position:AVCaptureDevicePositionBack].localizedName;
     
     _statusBarShouldBeHidden = NO;
     
@@ -68,9 +77,9 @@
     self.localVideoImageView.layer.masksToBounds = YES;
     self.localVideoImageView.layer.cornerRadius = 4;
     self.localVideoImageView.corner = CornerTopRight;
-    self.localVideoImageView.userInteractionEnabled = self.call.hasVideoInitialCall;
     
     if (self.callType == CallTypeIncoming) {
+        self.call = [MEGASdkManager.sharedMEGAChatSdk chatCallForCallId:self.callId];
         [self answerChatCall];
     } else if (self.callType == CallTypeOutgoing) {
         MEGAChatStartCallRequestDelegate *startCallRequestDelegate = [[MEGAChatStartCallRequestDelegate alloc] initWithCompletion:^(MEGAChatError *error) {
@@ -78,6 +87,7 @@
                 [self dismissViewControllerAnimated:YES completion:nil];
             } else {
                 self.call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
+                self.callId = self.call.callId;
 
                 self.statusCallLabel.text = AMLocalizedString(@"calling...", @"Label shown when you call someone (outgoing call), before the call starts.");
                 [self.megaCallManager addCall:self.call];
@@ -88,6 +98,7 @@
         [[MEGASdkManager sharedMEGAChatSdk] startChatCall:self.chatRoom.chatId enableVideo:self.videoCall delegate:startCallRequestDelegate];
     } else {
         self.call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
+        self.callId = self.call.callId;
         
         if (self.call.status == MEGAChatCallStatusInProgress) {
             NSTimeInterval interval = ([NSDate date].timeIntervalSince1970 - [NSDate date].timeIntervalSince1970 + self.call.duration);
@@ -98,6 +109,8 @@
             self.statusCallLabel.text = AMLocalizedString(@"calling...", @"Label shown when you call someone (outgoing call), before the call starts.");
         }
     }
+    
+    self.localVideoImageView.userInteractionEnabled = self.call.hasVideoInitialCall;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSessionRouteChange:) name:AVAudioSessionRouteChangeNotification object:nil];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didWirelessRoutesAvailableChange:) name:MPVolumeViewWirelessRoutesAvailableDidChangeNotification object:nil];
@@ -112,7 +125,8 @@
     if (self.callType == CallTypeActive) {
         self.enableDisableVideoButton.selected = [[NSUserDefaults standardUserDefaults] objectForKey:@"oneOnOneCallLocalVideo"] ? [[NSUserDefaults standardUserDefaults] boolForKey:@"oneOnOneCallLocalVideo"] : self.videoCall;
         self.muteUnmuteMicrophone.selected = [[NSUserDefaults standardUserDefaults] objectForKey:@"oneOnOneCallLocalAudio"] ? [[NSUserDefaults standardUserDefaults] boolForKey:@"oneOnOneCallLocalAudio"] : YES;
-        
+        self.switchCameraButton.selected = [[NSUserDefaults standardUserDefaults] objectForKey:@"oneOnOneCallCameraSwitched"] ? [[NSUserDefaults standardUserDefaults] boolForKey:@"oneOnOneCallCameraSwitched"] : NO;
+
         self.localVideoImageView.hidden = !self.enableDisableVideoButton.selected;
         
         MEGAChatSession *remoteSession = [self.call sessionForPeer:[self.call.sessionsPeerId megaHandleAtIndex:0] clientId:[self.call.sessionsClientId megaHandleAtIndex:0]];
@@ -120,7 +134,7 @@
         self.remoteVideoImageView.hidden = remoteSession.status == MEGAChatSessionStatusInProgress ? !remoteSession.hasVideo : YES;
         
         if (remoteSession.hasVideo) {
-            [[MEGASdkManager sharedMEGAChatSdk] addChatRemoteVideo:self.chatRoom.chatId peerId:[self.call.sessionsPeerId megaHandleAtIndex:0] cliendId:[self.call.sessionsClientId megaHandleAtIndex:0] delegate:self.remoteVideoImageView];
+            [[MEGASdkManager sharedMEGAChatSdk] addChatRemoteVideo:self.chatRoom.chatId peerId:remoteSession.peerId cliendId:remoteSession.clientId delegate:self.remoteVideoImageView];
             self.remoteAvatarImageView.hidden = YES;
         }
         
@@ -132,30 +146,31 @@
         self.localVideoImageView.userInteractionEnabled = remoteSession.hasVideo;
         [self.localVideoImageView remoteVideoEnable:remoteSession.hasVideo];
     } else if (self.videoCall) {
-        self.enableDisableVideoButton.selected = self.videoCall;
-        
-        if (!AVAudioSession.sharedInstance.mnz_isBluetoothAudioConnected) {
+        if (!AVAudioSession.sharedInstance.mnz_isBluetoothAudioRouteAvailable) {
+            MEGALogDebug(@"[Audio] Enable loud speaker is video call and there is no bluetooth connected");
             [self enableLoudspeaker];
         }
         
         self.remoteAvatarImageView.hidden = YES;
-        self.localVideoImageView.hidden = NO;
         
         [[MEGASdkManager sharedMEGAChatSdk] addChatLocalVideo:self.chatRoom.chatId delegate:self.localVideoImageView];
     } else {
-        if (!AVAudioSession.sharedInstance.mnz_isBluetoothAudioConnected) {
+        if (!AVAudioSession.sharedInstance.mnz_isBluetoothAudioRouteAvailable) {
+            MEGALogDebug(@"[Audio] Disable loud speaker is not a video call and there is no bluetooth connected");
             [self disableLoudspeaker];
         }
     }
     
     [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
     
-    self.mpVolumeView = [[MPVolumeView alloc] initWithFrame:self.enableDisableSpeaker.bounds];
+    self.mpVolumeView = [[MPVolumeView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 60.0f, 60.0f)];
     self.mpVolumeView.showsVolumeSlider = NO;
     [self.volumeContainerView addSubview:self.mpVolumeView];
     
     [self updateAudioOutputImage];
     
+    self.switchCameraButton.hidden = !self.enableDisableVideoButton.selected;
+    [self updateSelectedCamera];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -209,34 +224,42 @@
 - (void)tapOnVideoCallkitWhenDeviceIsLocked {
     self.enableDisableVideoButton.selected = NO;
     [self enableDisableVideo:self.enableDisableVideoButton];
+    MEGALogDebug(@"[Audio] Enable loud speaker, tap on video callkit icon when device is locked");
+    [self enableLoudspeaker];
 }
 
 #pragma mark - Private
 
 - (void)answerChatCall {
-    MEGAChatAnswerCallRequestDelegate *answerCallRequestDelegate = [MEGAChatAnswerCallRequestDelegate.alloc initWithCompletion:^(MEGAChatError *error) {
-        if (error.type != MEGAChatErrorTypeOk) {
-            [self dismissViewControllerAnimated:YES completion:nil];
-        }
-    }];
-    [MEGASdkManager.sharedMEGAChatSdk answerChatCall:self.chatRoom.chatId enableVideo:self.videoCall delegate:answerCallRequestDelegate];
+    if ([MEGASdkManager.sharedMEGAChatSdk chatConnectionState:self.chatRoom.chatId] == MEGAChatConnectionOnline) {
+        MEGAChatAnswerCallRequestDelegate *answerCallRequestDelegate = [MEGAChatAnswerCallRequestDelegate.alloc initWithCompletion:^(MEGAChatError *error) {
+            if (error.type != MEGAChatErrorTypeOk) {
+                [self dismissViewControllerAnimated:YES completion:nil];
+            }
+        }];
+        [MEGASdkManager.sharedMEGAChatSdk answerChatCall:self.chatRoom.chatId enableVideo:NO delegate:answerCallRequestDelegate];
+    } else {
+        self.enableDisableVideoButton.enabled = self.minimizeButton.enabled = NO;
+        self.statusCallLabel.text = AMLocalizedString(@"connecting", @"Label in login screen to inform about the chat initialization proccess");
+    }
 }
 
 - (void)didSessionRouteChange:(NSNotification *)notification {
     dispatch_async(dispatch_get_main_queue(), ^{
         NSDictionary *interuptionDict = notification.userInfo;
-        const NSInteger routeChangeReason = [[interuptionDict valueForKey:AVAudioSessionRouteChangeReasonKey] integerValue];
-        MEGALogDebug(@"didSessionRouteChange routeChangeReason: %ld, current route outputs %@", (long)routeChangeReason, [[[AVAudioSession sharedInstance] currentRoute] outputs]);
+        const AVAudioSessionRouteChangeReason routeChangeReason = [[interuptionDict valueForKey:AVAudioSessionRouteChangeReasonKey] integerValue];
+        MEGALogDebug(@"[Audio] Did session route changed, reason: %@, current route outputs %@", [AVAudioSession.sharedInstance stringForAVAudioSessionRouteChangeReason:routeChangeReason], [[[AVAudioSession sharedInstance] currentRoute] outputs]);
         if (routeChangeReason == AVAudioSessionRouteChangeReasonOverride) {
-            if ([AVAudioSession.sharedInstance mnz_isOutputEqualToPortType:AVAudioSessionPortBuiltInSpeaker]) {
-                self.speakerEnabled = YES;
-            }
             if ([AVAudioSession.sharedInstance mnz_isOutputEqualToPortType:AVAudioSessionPortBuiltInReceiver]) {
-                self.speakerEnabled = NO;
+                if (self.isSpeakerEnabled) {
+                    MEGALogDebug(@"[Audio] Enable loud speaker, override to built in receiver, but speaker was enabled");
+                    [self enableLoudspeaker];
+                }
             }
         }
-        if (routeChangeReason == AVAudioSessionRouteChangeReasonRouteConfigurationChange) {
-            if (self.isSpeakerEnabled && self.call.status <= MEGAChatCallStatusInProgress) {
+        if (routeChangeReason == AVAudioSessionRouteChangeReasonCategoryChange) {
+            if (self.isSpeakerEnabled && (self.call.status <= MEGAChatCallStatusInProgress || self.call.status == MEGAChatCallStatusReconnecting)) {
+                MEGALogDebug(@"[Audio] Enable loud speaker, category changed, but speaker was enabled");
                 [self enableLoudspeaker];
             }
         }
@@ -256,6 +279,7 @@
 }
 
 - (void)enableLoudspeaker {
+    self.speakerEnabled = YES;
     [[AVAudioSession sharedInstance] overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:nil];
 }
 
@@ -329,6 +353,8 @@
 - (void)deleteActiveCallFlags {
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"oneOnOneCallLocalVideo"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"oneOnOneCallLocalAudio"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"oneOnOneCallCameraSwitched"];
+    
     if (@available(iOS 12.0, *)) {} else {
         [NSUserDefaults.standardUserDefaults synchronize];
     }
@@ -356,18 +382,30 @@
     [[UIDevice currentDevice] setProximityMonitoringEnabled:[AVAudioSession.sharedInstance mnz_isOutputEqualToPortType:AVAudioSessionPortBuiltInReceiver]];
 }
 
+- (void)updateSelectedCamera {
+    NSString *currentlySelected = [MEGASdkManager.sharedMEGAChatSdk videoDeviceSelected];
+    NSString *shouldBeSelected = self.switchCameraButton.selected ? self.backCamera : self.frontCamera;
+    if (![currentlySelected isEqualToString:shouldBeSelected]) {
+        [MEGASdkManager.sharedMEGAChatSdk setChatVideoInDevices:shouldBeSelected];
+    }
+    
+    self.localVideoImageView.transform = self.switchCameraButton.selected ? CGAffineTransformMakeScale(1, 1) : CGAffineTransformMakeScale(-1, 1);
+}
+
 #pragma mark - IBActions
 
 - (IBAction)hangCall:(UIButton *)sender {
-    [self.megaCallManager endCall:self.call];
+    [self.megaCallManager endCallWithCallId:self.callId chatId:self.chatRoom.chatId];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)muteOrUnmuteCall:(UIButton *)sender {
     if (sender.selected) {
-        [[MEGASdkManager sharedMEGAChatSdk] enableAudioForChat:self.chatRoom.chatId];
+        [self.megaCallManager muteUnmuteCallWithCallId:self.callId chatId:self.chatRoom.chatId muted:NO];
     } else {
-        [[MEGASdkManager sharedMEGAChatSdk] disableAudioForChat:self.chatRoom.chatId];
+        [self.megaCallManager muteUnmuteCallWithCallId:self.callId chatId:self.chatRoom.chatId muted:YES];
     }
+    self.muteUnmuteMicrophone.selected = !sender.selected;
 }
 
 - (IBAction)enableDisableVideo:(UIButton *)sender {
@@ -386,8 +424,10 @@
                         self.remoteAvatarImageView.hidden = YES;
                         self.localVideoImageView.hidden = NO;
                         [[MEGASdkManager sharedMEGAChatSdk] addChatLocalVideo:self.chatRoom.chatId delegate:self.localVideoImageView];
+                        [self updateSelectedCamera];
                     }
                     sender.selected = !sender.selected;
+                    self.switchCameraButton.hidden = !sender.selected;
                 }
             }];
             if (sender.selected) {
@@ -404,6 +444,7 @@
 }
 
 - (IBAction)enableDisableSpeaker:(UIButton *)sender {
+    MEGALogDebug(@"[Audio] %@ button speaker tapped", sender.selected ? @"Disable" : @"Enable");
     if (sender.selected) {
         [self disableLoudspeaker];
     } else {
@@ -415,7 +456,7 @@
 - (IBAction)hideCall:(UIButton *)sender {
     MEGAChatSession *remoteSession = [self.call sessionForPeer:[self.call.sessionsPeerId megaHandleAtIndex:0] clientId:[self.call.sessionsClientId megaHandleAtIndex:0]];
     if (remoteSession.hasVideo) {
-        [[MEGASdkManager sharedMEGAChatSdk] removeChatRemoteVideo:self.chatRoom.chatId peerId:[self.call.sessionsPeerId megaHandleAtIndex:0] cliendId:[self.call.sessionsClientId megaHandleAtIndex:0] delegate:self.remoteVideoImageView];
+        [[MEGASdkManager sharedMEGAChatSdk] removeChatRemoteVideo:self.chatRoom.chatId peerId:remoteSession.peerId cliendId:remoteSession.clientId delegate:self.remoteVideoImageView];
     }
     
     if (!self.localVideoImageView.hidden) {        
@@ -425,6 +466,7 @@
     
     [[NSUserDefaults standardUserDefaults] setBool:!self.localVideoImageView.hidden forKey:@"oneOnOneCallLocalVideo"];
     [[NSUserDefaults standardUserDefaults] setBool:self.muteUnmuteMicrophone.selected forKey:@"oneOnOneCallLocalAudio"];
+    [[NSUserDefaults standardUserDefaults] setBool:self.switchCameraButton.selected forKey:@"oneOnOneCallCameraSwitched"];
     if (@available(iOS 12.0, *)) {} else {
         [NSUserDefaults.standardUserDefaults synchronize];
     }
@@ -433,6 +475,12 @@
     
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+
+- (IBAction)switchCamera:(UIButton *)sender {
+    sender.selected = !sender.selected;
+    [self updateSelectedCamera];
+}
+
 
 #pragma mark - UIGestureRecognizerDelegate
 
@@ -446,27 +494,22 @@
 
 #pragma mark - MEGAChatCallDelegate
 
-- (void)onChatCallUpdate:(MEGAChatSdk *)api call:(MEGAChatCall *)call {
-    MEGALogDebug(@"onChatCallUpdate %@", call);
-    
-    if (self.call.callId == call.callId) {
-        self.call = call;
-    } else if (self.call.chatId == call.chatId) {
-        MEGALogInfo(@"Two calls at same time in same chat.");
-        self.call = call;
-    } else {
+- (void)onChatSessionUpdate:(MEGAChatSdk *)api chatId:(uint64_t)chatId callId:(uint64_t)callId session:(MEGAChatSession *)session {
+    MEGALogDebug(@"onChatSessionUpdate %@", session);
+
+    if (self.callId != callId) {
         return;
     }
     
-    if ([call hasChangedForType:MEGAChatCallChangeTypeSessionStatus]) {
-        MEGAChatSession *remoteSession = [self.call sessionForPeer:self.call.peerSessionStatusChange clientId:self.call.clientSessionStatusChange];
+    if ([session hasChanged:MEGAChatSessionChangeStatus]) {
 
-        switch (remoteSession.status) {
+        switch (session.status) {
             case MEGAChatSessionStatusInProgress: {
                 if (!self.timer.isValid) {
                     [self.player stop];
                     [self initShowHideControls];
                     [self initDurationTimer];
+                    self.enableDisableVideoButton.enabled = self.minimizeButton.enabled = YES;
                 }
                 break;
             }
@@ -479,9 +522,52 @@
                     self.statusCallLabel.text = AMLocalizedString(@"connecting", nil);
                 }
 
+            case MEGAChatSessionStatusDestroyed:
+                if (session.hasVideo) {
+                    [MEGASdkManager.sharedMEGAChatSdk removeChatRemoteVideo:self.chatRoom.chatId peerId:session.peerId cliendId:session.clientId delegate:self.remoteVideoImageView];
+                    self.remoteVideoImageView.hidden = YES;
+                }
+                break;
+                
             default:
                 break;
         }
+    }
+    
+    if ([session hasChanged:MEGAChatSessionChangeRemoteAvFlags]) {
+
+        self.localVideoImageView.userInteractionEnabled = session.hasVideo;
+        if (session.hasVideo) {
+            if (self.remoteVideoImageView.hidden) {
+                [MEGASdkManager.sharedMEGAChatSdk addChatRemoteVideo:self.chatRoom.chatId peerId:session.peerId cliendId:session.clientId delegate:self.remoteVideoImageView];
+                self.remoteVideoImageView.hidden = NO;
+                self.remoteAvatarImageView.hidden = YES;
+            }
+        } else {
+            if (!self.remoteVideoImageView.hidden) {
+                [[MEGASdkManager sharedMEGAChatSdk] removeChatRemoteVideo:self.chatRoom.chatId peerId:session.peerId cliendId:session.clientId delegate:self.remoteVideoImageView];
+                self.remoteVideoImageView.hidden = YES;
+                if (self.localVideoImageView.hidden) {
+                    self.remoteAvatarImageView.hidden = UIDevice.currentDevice.iPadDevice ? NO : self.view.frame.size.width > self.view.frame.size.height;
+                }
+                [self.remoteAvatarImageView mnz_setImageForUserHandle:[self.chatRoom peerHandleAtIndex:0]];
+            }
+        }
+        [self.localVideoImageView remoteVideoEnable:session.hasVideo];
+        self.remoteMicImageView.hidden = session.hasAudio;
+    }
+}
+
+- (void)onChatCallUpdate:(MEGAChatSdk *)api call:(MEGAChatCall *)call {
+    MEGALogDebug(@"onChatCallUpdate %@", call);
+    
+    if (self.callId == call.callId) {
+        self.call = call;
+    } else if (self.call.chatId == call.chatId) {
+        MEGALogInfo(@"Two calls at same time in same chat.");
+        self.call = call;
+    } else {
+        return;
     }
     
     if ([call hasChangedForType:MEGAChatCallChangeTypeLocalAVFlags]) {
@@ -504,41 +590,8 @@
         case MEGAChatCallStatusJoining:
             break;
             
-        case MEGAChatCallStatusInProgress: {
-            MEGAChatSession *remoteSession = [self.call sessionForPeer:self.call.peerSessionStatusChange clientId:self.call.clientSessionStatusChange];
-            
-            if ([call hasChangedForType:MEGAChatCallChangeTypeRemoteAVFlags]) {
-
-                self.localVideoImageView.userInteractionEnabled = remoteSession.hasVideo;
-                if (remoteSession.hasVideo) {
-                    if (self.remoteVideoImageView.hidden) {
-                        [MEGASdkManager.sharedMEGAChatSdk addChatRemoteVideo:self.chatRoom.chatId peerId:[self.call.sessionsPeerId megaHandleAtIndex:0] cliendId:[self.call.sessionsClientId megaHandleAtIndex:0] delegate:self.remoteVideoImageView];
-                        self.remoteVideoImageView.hidden = NO;
-                        self.remoteAvatarImageView.hidden = YES;
-                    }
-                } else {
-                    if (!self.remoteVideoImageView.hidden) {
-                        [[MEGASdkManager sharedMEGAChatSdk] removeChatRemoteVideo:self.chatRoom.chatId peerId:[self.call.sessionsPeerId megaHandleAtIndex:0] cliendId:[self.call.sessionsClientId megaHandleAtIndex:0] delegate:self.remoteVideoImageView];
-                        self.remoteVideoImageView.hidden = YES;
-                        if (self.localVideoImageView.hidden) {
-                            self.remoteAvatarImageView.hidden = UIDevice.currentDevice.iPadDevice ? NO : self.view.frame.size.width > self.view.frame.size.height;
-                        }
-                        [self.remoteAvatarImageView mnz_setImageForUserHandle:[self.chatRoom peerHandleAtIndex:0]];
-                    }
-                }
-                [self.localVideoImageView remoteVideoEnable:remoteSession.hasVideo];
-                self.remoteMicImageView.hidden = remoteSession.hasAudio;
-            }
-            
-            if ([call hasChangedForType:MEGAChatCallChangeTypeSessionStatus]) {
-                if (remoteSession.hasVideo && remoteSession.status == MEGAChatSessionStatusDestroyed) {
-                    [MEGASdkManager.sharedMEGAChatSdk removeChatRemoteVideo:self.chatRoom.chatId peerId:[self.call.sessionsPeerId megaHandleAtIndex:0] cliendId:[self.call.sessionsClientId megaHandleAtIndex:0] delegate:self.remoteVideoImageView];
-                    self.remoteVideoImageView.hidden = YES;                    
-                }
-            }
-            
+        case MEGAChatCallStatusInProgress:
             break;
-        }
             
         case MEGAChatCallStatusTerminatingUserParticipation:
             if (!self.localVideoImageView.hidden) {

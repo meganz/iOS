@@ -74,7 +74,7 @@
     
     self.downloadBarButtonItem.title = AMLocalizedString(@"saveForOffline", @"List option shown on the details of a file or folder");
     [self.downloadBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:UIColor.mnz_redMain} forState:UIControlStateNormal];
-    self.importBarButtonItem.title = AMLocalizedString(@"import", @"Button title that triggers the importing link action");
+    self.importBarButtonItem.title = AMLocalizedString(@"Import to Cloud Drive", @"Button title that triggers the importing link action");
     [self.importBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIMediumWithSize:17.0f], NSForegroundColorAttributeName:UIColor.mnz_redMain} forState:UIControlStateNormal];
     UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
@@ -260,7 +260,7 @@
     NodeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"NodeTableViewCellID" forIndexPath:indexPath];
     
     cell.nameLabel.text = currentNode.name;
-    cell.infoLabel.text = [Helper sizeAndDateForNode:currentNode api:[MEGASdkManager sharedMEGASdk]];
+    cell.infoLabel.text = [Helper sizeAndCreationDateForNode:currentNode api:[MEGASdkManager sharedMEGASdk]];
     
     if (self.tableView.isEditing) {
         NSUInteger selectedNodesCount = self.selectedNodesMutableArray.count;
@@ -304,7 +304,7 @@
             
             [self.navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
         } else {
-            [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO];
+            [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO fileLink:nil];
         }
     }
     

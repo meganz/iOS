@@ -54,7 +54,7 @@
                 }
                     
                 default: {
-                    NSString *message = [NSString stringWithFormat:@"%@ %@", request.requestString, error.name];
+                    NSString *message = [NSString stringWithFormat:@"%@ %@", request.requestString, AMLocalizedString(error.name, nil)];
                     [SVProgressHUD showErrorWithStatus:message];
                     break;
                 }

@@ -4,6 +4,7 @@
 
 #import "Helper.h"
 #import "UIAlertAction+MNZCategory.h"
+#import "UIImage+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "MEGAInviteContactRequestDelegate.h"
@@ -12,13 +13,11 @@
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGARemoveContactRequestDelegate.h"
-#import "MEGAChatCreateChatGroupRequestDelegate.h"
 #import "MEGAChatGenericRequestDelegate.h"
 #import "MEGAArchiveChatRequestDelegate.h"
 
 #import "BrowserViewController.h"
 #import "CloudDriveViewController.h"
-#import "CustomActionViewController.h"
 #import "ContactTableViewCell.h"
 #import "CallViewController.h"
 #import "GroupCallViewController.h"
@@ -33,18 +32,23 @@
 #import "MEGA-Swift.h"
 
 typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
-    ContactDetailsSectionNickname = 0,
-    ContactDetailsSectionVerifyCredentials,
+    ContactDetailsSectionNicknameVerifyCredentials = 0,
     ContactDetailsSectionAddAndRemoveContact,
     ContactDetailsSectionSharedFolders,
     ContactDetailsSectionClearChatHistory,
     ContactDetailsSectionArchiveChat,
     ContactDetailsSectionAddParticipantToContact,
     ContactDetailsSectionRemoveParticipant,
-    ContactDetailsSectionSetPermission
+    ContactDetailsSectionSetPermission,
+    ContactDetailsSectionSharedItems,
 };
 
-@interface ContactDetailsViewController () <CustomActionViewControllerDelegate, MEGAChatDelegate, MEGAChatCallDelegate, MEGAGlobalDelegate>
+typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
+    ContactDetailsRowNickname = 0,
+    ContactDetailsRowVerifyCredentials
+};
+
+@interface ContactDetailsViewController () <NodeActionViewControllerDelegate, MEGAChatDelegate, MEGAChatCallDelegate, MEGAGlobalDelegate, MEGARequestDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *verifiedImageView;
@@ -78,6 +82,10 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
 
 @property (strong, nonatomic) NSString *userNickname;
 @property (strong, nonatomic) NSArray<NSNumber *> *contactDetailsSections;
+@property (strong, nonatomic, readonly) NSArray<NSNumber *> *rowsForNicknameAndVerify;
+
+@property (nonatomic, getter=shouldWaitForChatConnectivity) BOOL waitForChatConnectivity;
+@property (nonatomic, getter=isVideoCall) BOOL videoCall;
 
 @end
 
@@ -109,6 +117,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
         self.userName = self.user.mnz_fullName;
     }
     
+    [self configureShadowInLayer:self.backButton.layer];
     [self configureShadowInLayer:self.nameOrNicknameLabel.layer];
     [self configureShadowInLayer:self.optionalNameLabel.layer];
     [self updateUserDetails];
@@ -138,6 +147,8 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
     if (@available(iOS 11.0, *)) {
         self.avatarImageView.accessibilityIgnoresInvertColors = YES;
     }
+    
+    [MEGASdkManager.sharedMEGASdk addMEGARequestDelegate:self];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -159,6 +170,10 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
     [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
     [[MEGASdkManager sharedMEGAChatSdk] removeChatCallDelegate:self];
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
+    
+    if (self.isMovingFromParentViewController) {
+        [MEGASdkManager.sharedMEGASdk removeMEGARequestDelegate:self];
+    }
     
     // Creates a glitch in the animation when the view controller is presented.
     // So do not remove it if the view controller is presented
@@ -194,6 +209,16 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
 
 #pragma mark - Private - Table view cells
 
+- (ContactTableViewCell *)cellForSharedItemsWithIndexPath:(NSIndexPath *)indexPath {
+    ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
+    cell.avatarImageView.image = [UIImage imageNamed:@"sharedFiles"];
+    cell.nameLabel.text = AMLocalizedString(@"Shared Files", @"Header of block with all shared files in chat.");
+    cell.nameLabel.textColor = UIColor.mnz_black333333;
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+
+    return cell;
+}
+
 - (ContactTableViewCell *)cellForNicknameWithIndexPath:(NSIndexPath *)indexPath {
     ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
     cell.avatarImageView.image = [UIImage imageNamed:@"setNickname"];
@@ -203,6 +228,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
     AMLocalizedString(@"Edit Nickname", @"Contact details screen: Edit the alias(nickname) for a user");
     
     cell.nameLabel.textColor = UIColor.mnz_black333333;
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     return cell;
 }
@@ -235,11 +261,11 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
 - (ContactTableViewCell *)cellForSharedFoldersWithIndexPath:(NSIndexPath *)indexPath  {
     ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsSharedFolderTypeID" forIndexPath:indexPath];
     MEGANode *node = [self.incomingNodeListForUser nodeAtIndex:indexPath.row];
-    cell.avatarImageView.image = [Helper incomingFolderImage];
+    cell.avatarImageView.image = UIImage.mnz_incomingFolderImage;
     cell.nameLabel.text = node.name;
     cell.shareLabel.text = [Helper filesAndFoldersInFolderNode:node api:MEGASdkManager.sharedMEGASdk];
     MEGAShareType shareType = [MEGASdkManager.sharedMEGASdk accessLevelForNode:node];
-    cell.permissionsImageView.image = [Helper permissionsButtonImageForShareType:shareType];
+    cell.permissionsImageView.image = [UIImage mnz_permissionsButtonImageForShareType:shareType];
     
     if (self.contactDetailsMode == ContactDetailsModeFromChat) {
         cell.userInteractionEnabled = cell.avatarImageView.userInteractionEnabled = cell.nameLabel.enabled = MEGAReachabilityManager.isReachable;
@@ -360,51 +386,35 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
 - (void)showPermissionAlertWithSourceView:(UIView *)sourceView {
     MEGAChatGenericRequestDelegate *delegate = [MEGAChatGenericRequestDelegate.alloc initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
         if (error.type) {
-            [SVProgressHUD showErrorWithStatus:error.name];
+            [SVProgressHUD showErrorWithStatus:AMLocalizedString(error.name, nil)];
         } else {
             self.groupChatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:request.chatHandle];
             [self.tableView reloadData];
         }
     }];
+    __weak __typeof__(self) weakSelf = self;
     
-    UIAlertController *permissionsAlertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    UIAlertAction *cancelAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil];
-    [cancelAlertAction mnz_setTitleTextColor:UIColor.mnz_redMain];
-    [permissionsAlertController addAction:cancelAlertAction];
+    MEGAChatRoomPrivilege privilege = [self.groupChatRoom peerPrivilegeByHandle:self.userHandle];
+
+    NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"moderator", @"The Moderator permission level in chat. With moderator permissions a participant can manage the chat.") detail:privilege == MEGAChatRoomPrivilegeModerator ? @"✓" : @"" image:[UIImage imageNamed:@"moderator"] style:UIAlertActionStyleDefault actionHandler:^{
+        [MEGASdkManager.sharedMEGAChatSdk updateChatPermissions:weakSelf.groupChatRoom.chatId userHandle:weakSelf.userHandle privilege:MEGAChatRoomPrivilegeModerator delegate:delegate];
+    }]];
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"standard", @"The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat.") detail:privilege == MEGAChatRoomPrivilegeStandard ? @"✓" : @"" image:[UIImage imageNamed:@"standard"] style:UIAlertActionStyleDefault actionHandler:^{
+        [MEGASdkManager.sharedMEGAChatSdk updateChatPermissions:weakSelf.groupChatRoom.chatId userHandle:weakSelf.userHandle privilege:MEGAChatRoomPrivilegeStandard delegate:delegate];
+    }]];
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with") detail:privilege == MEGAChatRoomPrivilegeRo ? @"✓" : @"" image:[UIImage imageNamed:@"readOnly"] style:UIAlertActionStyleDefault actionHandler:^{
+        [MEGASdkManager.sharedMEGAChatSdk updateChatPermissions:weakSelf.groupChatRoom.chatId userHandle:weakSelf.userHandle privilege:MEGAChatRoomPrivilegeRo delegate:delegate];
+    }]];
     
-    UIAlertAction *moderatorAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"moderator", @"The Moderator permission level in chat. With moderator permissions a participant can manage the chat.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [MEGASdkManager.sharedMEGAChatSdk updateChatPermissions:self.groupChatRoom.chatId userHandle:self.userHandle privilege:MEGAChatRoomPrivilegeModerator delegate:delegate];
-    }];
-    [moderatorAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
-    [permissionsAlertController addAction:moderatorAlertAction];
-    
-    UIAlertAction *standartAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"standard", @"The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [MEGASdkManager.sharedMEGAChatSdk updateChatPermissions:self.groupChatRoom.chatId userHandle:self.userHandle privilege:MEGAChatRoomPrivilegeStandard delegate:delegate];
-    }];
-    [standartAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
-    [permissionsAlertController addAction:standartAlertAction];
-    
-    UIAlertAction *readOnlyAlertAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"readOnly", @"Permissions given to the user you share your folder with") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [MEGASdkManager.sharedMEGAChatSdk updateChatPermissions:self.groupChatRoom.chatId userHandle:self.userHandle privilege:MEGAChatRoomPrivilegeRo delegate:delegate];
-    }];
-    [readOnlyAlertAction mnz_setTitleTextColor:[UIColor mnz_black333333]];
-    [permissionsAlertController addAction:readOnlyAlertAction];
-    
-    if (permissionsAlertController.actions.count > 1) {
-        if (UIDevice.currentDevice.iPadDevice) {
-            permissionsAlertController.modalPresentationStyle = UIModalPresentationPopover;
-            permissionsAlertController.popoverPresentationController.sourceRect = sourceView.frame;
-            permissionsAlertController.popoverPresentationController.sourceView = sourceView;
-        }
-        
-        [self presentViewController:permissionsAlertController animated:YES completion:nil];
-    }
+    ActionSheetViewController *permissionsActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:AMLocalizedString(@"permissions", @"Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder ") dismissCompletion:nil sender:sourceView];
+    [self presentViewController:permissionsActionSheet animated:YES completion:nil];
 }
 
 - (void)removeParticipantFromGroup {
     MEGAChatGenericRequestDelegate *delegate = [MEGAChatGenericRequestDelegate.alloc initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
         if (error.type) {
-            [SVProgressHUD showErrorWithStatus:error.name];
+            [SVProgressHUD showErrorWithStatus:AMLocalizedString(error.name, nil)];
         } else {
             [self.navigationController popViewControllerAnimated:YES];
         }
@@ -419,26 +429,15 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
         [MEGASdkManager.sharedMEGASdk inviteContactWithEmail:self.userEmail message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
     }
 }
-- (void)showRemoveContactAlert {
-    
-    NSString *message = [NSString stringWithFormat:AMLocalizedString(@"removeUserMessage", nil), self.userEmail];
-    
-    UIAlertController *removeContactAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"removeUserTitle", @"Alert title shown when you want to remove one or more contacts") message:message preferredStyle:UIAlertControllerStyleAlert];
-    
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil];
-    
-    UIAlertAction *okAction = [UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-        MEGARemoveContactRequestDelegate *removeContactRequestDelegate = [[MEGARemoveContactRequestDelegate alloc] initWithNumberOfRequests:1 completion:^{
+- (void)showRemoveContactConfirmationFromSender:(UIView *)sender {
+    UIAlertController *removeContactAlertController = [Helper removeUserContactFromSender:sender withConfirmAction:^{
+        MEGARemoveContactRequestDelegate *removeContactRequestDelegate = [MEGARemoveContactRequestDelegate.alloc initWithCompletion:^{
             //TODO: Close chat room because the contact was removed
             
             [self.navigationController popViewControllerAnimated:YES];
         }];
         [[MEGASdkManager sharedMEGASdk] removeContactUser:self.user delegate:removeContactRequestDelegate];
     }];
-    
-    [removeContactAlertController addAction:cancelAction];
-    [removeContactAlertController addAction:okAction];
-    
     [self presentViewController:removeContactAlertController animated:YES completion:nil];
 }
 
@@ -465,13 +464,10 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
         if (self.chatRoom) {
             [self openChatRoomWithChatId:self.chatRoom.chatId];
         } else {
-            MEGAChatPeerList *peerList = [[MEGAChatPeerList alloc] init];
-            [peerList addPeerWithHandle:self.userHandle privilege:MEGAChatRoomPrivilegeStandard];
-            MEGAChatCreateChatGroupRequestDelegate *createChatGroupRequestDelegate = [[MEGAChatCreateChatGroupRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
+            [MEGASdkManager.sharedMEGAChatSdk mnz_createChatRoomWithUserHandle:self.userHandle completion:^(MEGAChatRoom * _Nonnull chatRoom) {
                 self.chatRoom = chatRoom;
                 [self openChatRoomWithChatId:chatRoom.chatId];
             }];
-            [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:NO peers:peerList delegate:createChatGroupRequestDelegate];
         }
     } else {
         NSUInteger viewControllersCount = self.navigationController.viewControllers.count;
@@ -517,24 +513,22 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
     if (self.chatRoom) {
         [self openCallViewWithVideo:video active:NO];
     } else {
-        MEGAChatPeerList *peerList = [[MEGAChatPeerList alloc] init];
-        [peerList addPeerWithHandle:self.userHandle privilege:MEGAChatRoomPrivilegeStandard];
-        MEGAChatCreateChatGroupRequestDelegate *createChatGroupRequestDelegate = [[MEGAChatCreateChatGroupRequestDelegate alloc] initWithCompletion:^(MEGAChatRoom *chatRoom) {
+        [MEGASdkManager.sharedMEGAChatSdk mnz_createChatRoomWithUserHandle:self.userHandle completion:^(MEGAChatRoom * _Nonnull chatRoom) {
             self.chatRoom = chatRoom;
-            [self openCallViewWithVideo:video active:NO];
+            MEGAChatConnection chatConnection = [MEGASdkManager.sharedMEGAChatSdk chatConnectionState:self.chatRoom.chatId];
+            if (chatConnection == MEGAChatConnectionOnline) {
+                [self openCallViewWithVideo:video active:NO];
+            } else {
+                self.waitForChatConnectivity = YES;
+                self.videoCall = video;
+            }
         }];
-        [[MEGASdkManager sharedMEGAChatSdk] createChatGroup:NO peers:peerList delegate:createChatGroupRequestDelegate];
     }
 }
 
 - (void)openCallViewWithVideo:(BOOL)videoCall active:(BOOL)active {
-    if ([[UIDevice currentDevice] orientation] != UIInterfaceOrientationPortrait) {
-        NSNumber *value = [NSNumber numberWithInt:UIInterfaceOrientationPortrait];
-        [[UIDevice currentDevice] setValue:value forKey:@"orientation"];
-    }
-
     CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
-    callVC.chatRoom = self.chatRoom;
+    callVC.chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomByUser:self.userHandle];
     callVC.videoCall = videoCall;
     callVC.callType = active ? CallTypeActive : CallTypeOutgoing;
     callVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
@@ -633,6 +627,10 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
     }
 }
 
+- (void)showSharedItemsNameViewContoller {
+    [self.navigationController pushViewController:[ChatSharedItemsViewController instantiateWith:self.chatRoom] animated:YES];
+}
+
 - (void)showNickNameViewContoller {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Contacts" bundle:nil];
     UINavigationController *navigationController = [storyboard instantiateViewControllerWithIdentifier:@"AddNickNameNavigationControllerID"];
@@ -654,6 +652,9 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
 
 - (void)updateUserDetails {
     BOOL isNicknamePresent = self.userNickname.length > 0;
+    if (self.user) {
+        self.userName = self.user.mnz_fullName;
+    }
     self.nameOrNicknameLabel.text = isNicknamePresent ? self.userNickname : self.userName;
     self.optionalNameLabel.text = isNicknamePresent ? self.userName : nil;
 }
@@ -688,7 +689,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
 }
 
 - (NSArray<NSNumber *> *)sectionsForContactModeDefault {
-    return [self addSharedFoldersSectionIfNeededToSections:@[@(ContactDetailsSectionNickname), @(ContactDetailsSectionVerifyCredentials), @(ContactDetailsSectionAddAndRemoveContact)]];
+    return [self addSharedFoldersSectionIfNeededToSections:@[@(ContactDetailsSectionNicknameVerifyCredentials), @(ContactDetailsSectionAddAndRemoveContact)]];
 }
 
 - (NSArray<NSNumber *> *)sectionsForContactFromChat {
@@ -696,7 +697,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
         return [self addSharedFoldersSectionIfNeededToSections:@[@(ContactDetailsSectionClearChatHistory), @(ContactDetailsSectionArchiveChat)]];
     }
     
-    return [self addSharedFoldersSectionIfNeededToSections:@[@(ContactDetailsSectionNickname), @(ContactDetailsSectionClearChatHistory), @(ContactDetailsSectionArchiveChat)]];
+    return [self addSharedFoldersSectionIfNeededToSections:@[@(ContactDetailsSectionNicknameVerifyCredentials), @(ContactDetailsSectionSharedItems), @(ContactDetailsSectionClearChatHistory), @(ContactDetailsSectionArchiveChat)]];
 }
 
 - (NSArray<NSNumber *> *)sectionsForContactFromGroupChat {
@@ -705,11 +706,11 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
     if (self.shouldAllowToAddContact) { // User not in contact list
         [sections addObject:@(ContactDetailsSectionAddParticipantToContact)];
     } else { // user in contact list
-        [sections addObject:@(ContactDetailsSectionNickname)];
+        [sections addObject:@(ContactDetailsSectionNicknameVerifyCredentials)];
     }
     
     MEGAChatRoomPrivilege peerPrivilege = [self.groupChatRoom peerPrivilegeByHandle:self.userHandle];
-    if (self.groupChatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator || peerPrivilege >= MEGAChatRoomPrivilegeRo) {
+    if (self.groupChatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator && peerPrivilege >= MEGAChatRoomPrivilegeRo) {
         [sections addObjectsFromArray:@[@(ContactDetailsSectionSetPermission), @(ContactDetailsSectionRemoveParticipant)]];
     }
     
@@ -732,6 +733,10 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
     return (user == nil || user.visibility != MEGAUserVisibilityVisible);
 }
 
+- (NSArray<NSNumber *> *)rowsForNicknameAndVerify {
+    return @[@(ContactDetailsRowNickname), @(ContactDetailsRowVerifyCredentials)];
+}
+
 #pragma mark - IBActions
 
 - (IBAction)notificationsSwitchValueChanged:(UISwitch *)sender {
@@ -744,21 +749,8 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
     
     MEGANode *node = [self.incomingNodeListForUser nodeAtIndex:indexPath.row];
     
-    CustomActionViewController *actionController = [[CustomActionViewController alloc] init];
-    actionController.node = node;
-    actionController.displayMode = DisplayModeSharedItem;
-    actionController.actionDelegate = self;
-    actionController.incomingShareChildView = YES;
-    if ([[UIDevice currentDevice] iPadDevice]) {
-        actionController.modalPresentationStyle = UIModalPresentationPopover;
-        actionController.popoverPresentationController.delegate = actionController;
-        actionController.popoverPresentationController.sourceView = sender;
-        actionController.popoverPresentationController.sourceRect = CGRectMake(0, 0, sender.frame.size.width / 2, sender.frame.size.height / 2);
-    } else {
-        actionController.modalPresentationStyle = UIModalPresentationOverFullScreen;
-    }
-    
-    [self presentViewController:actionController animated:YES completion:nil];
+    NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:node delegate:self displayMode:DisplayModeSharedItem isIncoming:YES sender:sender];
+    [self presentViewController:nodeActions animated:YES completion:nil];
 }
 
 - (IBAction)backTouchUpInside:(id)sender {
@@ -799,19 +791,40 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self isSharedFolderSection:section] ? self.incomingNodeListForUser.size.integerValue : 1;
+    NSInteger rowsInSection;
+    if ([self isSharedFolderSection:section]) {
+        rowsInSection = self.incomingNodeListForUser.size.integerValue;
+    } else if (self.shouldAllowToAddContact) {
+        rowsInSection = 1;
+    } else if (section == ContactDetailsSectionNicknameVerifyCredentials) {
+        rowsInSection = self.rowsForNicknameAndVerify.count;
+    } else {
+        rowsInSection = 1;
+    }
+    return rowsInSection;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ContactTableViewCell *cell;
     
     switch (self.contactDetailsSections[indexPath.section].intValue) {
-        case ContactDetailsSectionNickname:
-            cell = [self cellForNicknameWithIndexPath:indexPath];
+        case ContactDetailsSectionSharedItems:
+            cell = [self cellForSharedItemsWithIndexPath:indexPath];
             break;
             
-        case ContactDetailsSectionVerifyCredentials:
-            cell = [self cellForVerifyCredentialsWithIndexPath:indexPath];
+        case ContactDetailsSectionNicknameVerifyCredentials:
+            switch (self.rowsForNicknameAndVerify[indexPath.row].intValue) {
+                case ContactDetailsRowNickname:
+                    cell = [self cellForNicknameWithIndexPath:indexPath];
+                    break;
+                    
+                case ContactDetailsRowVerifyCredentials:
+                    cell = [self cellForVerifyCredentialsWithIndexPath:indexPath];
+                    break;
+                    
+                default:
+                    break;
+            }
             break;
             
         case ContactDetailsSectionAddAndRemoveContact:
@@ -891,17 +904,28 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     switch (self.contactDetailsSections[indexPath.section].intValue) {
-        case ContactDetailsSectionNickname:
-            [self showNickNameViewContoller];
+        case ContactDetailsSectionSharedItems:
+            [self showSharedItemsNameViewContoller];
             break;
             
-        case ContactDetailsSectionVerifyCredentials:
-            [self pushVerifyCredentialsViewController];
+        case ContactDetailsSectionNicknameVerifyCredentials:
+            switch (self.rowsForNicknameAndVerify[indexPath.row].intValue) {
+                case ContactDetailsRowNickname:
+                    [self showNickNameViewContoller];
+                    break;
+                    
+                case ContactDetailsRowVerifyCredentials:
+                    [self pushVerifyCredentialsViewController];
+                    break;
+                    
+                default:
+                    break;
+            }
             break;
             
         case ContactDetailsSectionAddAndRemoveContact:
             if (self.user.visibility == MEGAUserVisibilityVisible) {
-                [self showRemoveContactAlert];
+                [self showRemoveContactConfirmationFromSender:[tableView cellForRowAtIndexPath:indexPath]];
             } else {
                 [self sendInviteContact];
             }
@@ -939,9 +963,9 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
-#pragma mark - CustomActionViewControllerDelegate
+#pragma mark - NodeActionViewControllerDelegate
 
-- (void)performAction:(MegaNodeActionType)action inNode:(MEGANode *)node fromSender:(id)sender {
+- (void)nodeAction:(NodeActionViewController *)nodeAction didSelect:(MegaNodeActionType)action for:(MEGANode *)node from:(id)sender {
     switch (action) {
         case MegaNodeActionTypeDownload:
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudDownload"] status:AMLocalizedString(@"downloadStarted", @"Message shown when a download starts")];
@@ -995,6 +1019,10 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
     if (self.chatRoom.chatId == chatId) {
         [self updateCallButtonsState];
         [self.tableView reloadData];
+        if (self.shouldWaitForChatConnectivity && newState == MEGAChatConnectionOnline) {
+            self.waitForChatConnectivity = NO;
+            [self openCallViewWithVideo:self.isVideoCall active:NO];
+        }
     } else if (self.groupChatRoom.chatId == chatId) {
         [self.tableView reloadData];
     }
@@ -1042,6 +1070,35 @@ typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
     if (shouldProcessOnNodesUpdate) {
         self.incomingNodeListForUser = [[MEGASdkManager sharedMEGASdk] inSharesForUser:self.user];
         [self.tableView reloadData];
+    }
+}
+
+#pragma mark - MEGARequestDelegate
+
+- (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
+    switch (request.type) {
+        case MEGARequestTypeGetAttrUser: {
+            if (error.type) {
+                return;
+            }
+            
+            if (request.paramType == MEGAUserAttributeFirstname || request.paramType == MEGAUserAttributeLastname) {
+                [self updateUserDetails];
+            }
+            break;
+        }
+            
+        case MEGARequestTypeGetUserEmail: {
+            if (error.type) {
+                return;
+            }
+            
+            self.emailLabel.text = request.email;
+            break;
+        }
+            
+        default:
+            break;
     }
 }
 

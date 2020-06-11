@@ -5,7 +5,7 @@
 /* Photo library usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSPhotoLibraryUsageDescription"="MEGA cần truy cập vào kho hình ảnh/video để thực hiện đăng tải, chia sẻ qua chat khi người sử dụng yêu cầu, và để chức năng Camera Uploads hoạt động.";
 /* Contacts Usage Description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
-"NSContactsUsageDescription"="MEGA cần truy cập vào sổ danh bạ của điện thoại để thực hiện việc tra cứu khi người sử dụng yêu cầu và để kết nối bạn tới người khác trên MEGA.";
+"NSContactsUsageDescription"="Cho phép MEGA truy cập vào sổ danh bạ của điện thoại để thực hiện việc tra cứu khi người sử dụng yêu cầu và để kết nối tới bạn bè trên MEGA.";
 /* Write-only access to the user’s photo library description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */
 "NSPhotoLibraryAddUsageDescription"="MEGA cần quyền truy cập vào kho hình ảnh để thực hiện việc thêm video và ảnh vào máy";
 /* Face ID usage description. To protect user privacy Apple requires a purpose string explaining why will be accessed. */

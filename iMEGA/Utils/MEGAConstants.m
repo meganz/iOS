@@ -7,6 +7,8 @@ NSString * const MEGAiOSAppUserAgent = @"MEGAiOS";
 NSString * const MEGAiOSAppKey = @"EVtjzb7R";
 NSString * const MEGAPasswordService = @"MEGA";
 NSString * const MEGAPasswordName = @"sessionV3";
+NSString * const MEGAFirstRun = @"FirstRun";
+NSString * const MEGAFirstRunValue = @"1strun";
 
 NSString * const MEGAGroupIdentifier = @"group.mega.ios";
 
@@ -21,6 +23,7 @@ NSString * const MEGANodesCurrentNotification = @"nz.mega.nodesCurrent";
 NSString * const MEGAStorageOverQuotaNotification = @"nz.mega.storageOverQuota";
 NSString * const MEGAStorageEventDidChangeNotification = @"nz.mega.event.storage";
 NSString * const MEGAMediaInfoReadyNotification = @"nz.mega.mediaInfoReady";
+NSString * const MEGAOpenChatRoomFromPushNotification = @"nz.mega.openChatRoomFromPush";
 
 #pragma mark - global notification keys
 
@@ -67,6 +70,7 @@ NSString * const H264Format = @"H.264";
 #pragma mark - MEGA URLS
 
 NSString * const MEGADisputeURL = @"https://mega.nz/dispute";
+NSString * const RequireTransferSession = @"fm/";
 
 #pragma mark - Group Shared Directory
 
@@ -75,6 +79,7 @@ NSString * const MEGAFileExtensionStorageFolder = @"File Provider Storage";
 NSString * const MEGAExtensionLogsFolder = @"logs";
 NSString * const MEGAExtensionGroupSupportFolder = @"GroupSupport";
 NSString * const MEGAExtensionCacheFolder = @"Library/Cache/";
+NSString * const MEGANotificationServiceExtensionCacheFolder = @"Library/Cache/NSE";
 
 #pragma mark - MEGA Activity Types
 
@@ -99,3 +104,15 @@ NSString * const MEGALastPublicTimestampAccessed = @"kLastPublicTimestampAccesse
 #pragma mark - MEGA Contact Nickname change Notification
 
 NSString * const MEGContactNicknameChangeNotification = @"MEGAContactNicknameChangeNotification";
+
+#pragma mark - Notification Service Extension
+
+NSString * const MEGAInvalidateNSECache = @"MEGAInvalidateNSECache";
+
+#pragma mark - DB name
+
+const NSUInteger MEGADropFirstCharactersFromSession = 44;
+
+#pragma mark - File size
+
+const long long MEGAMaxFileLinkAutoOpenSize = 10000000; //10Megabytes
