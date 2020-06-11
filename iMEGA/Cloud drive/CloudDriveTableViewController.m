@@ -10,6 +10,7 @@
 #import "Helper.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
+#import "MEGA-Swift.h"
 #import "MEGANode+MNZCategory.h"
 
 #import "CloudDriveViewController.h"
@@ -33,7 +34,8 @@
 
     //White background for the view behind the table view
     self.tableView.backgroundView = UIView.alloc.init;
-    self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+    
+    [self updateAppearance];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -61,9 +63,18 @@
     
     if (@available(iOS 13.0, *)) {
         if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-            self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+            [self updateAppearance];
+            
+            [self.tableView reloadData];
         }
     }
+}
+
+#pragma mark - Private
+
+- (void)updateAppearance {
+    self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
+    self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
 }
 
 #pragma mark - Public
@@ -165,6 +176,11 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    if (self.cloudDrive.recentActionBucket) {
+        self.bucketHeaderView.backgroundColor = [UIColor mnz_secondaryBackgroundGrouped:self.traitCollection];
+        self.bucketHeaderParentFolderNameLabel.textColor = self.bucketHeaderHourLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
+    }
+    
     return self.cloudDrive.recentActionBucket ? self.bucketHeaderView : nil;
 }
 
