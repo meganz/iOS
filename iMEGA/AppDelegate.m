@@ -1043,13 +1043,22 @@ void uncaughtExceptionHandler(NSException *exception) {
     }
 }
 
-- (void)presentOverDiskQuotaViewControllerIfNeeded {
+- (void)presentOverDiskQuotaViewControllerIfNeededWithInformation:(id<OverDiskQuotaInfomationType>)overDiskQuotaInformation {
     if (self.isOverDiskQuotaPresented || [UIApplication.mnz_visibleViewController isKindOfClass:OverDiskQuotaViewController.class]) {
         return;
     }
 
     OverDiskQuotaViewController *overDiskQuotaViewController = [OverDiskQuotaViewController new];
+    [overDiskQuotaViewController setupWith:overDiskQuotaInformation];
+
     __weak typeof(self) weakSelf = self;
+    __weak typeof(OverDiskQuotaViewController) *weakOverDiskQuotaViewController = overDiskQuotaViewController;
+    overDiskQuotaViewController.dismissAction = ^{
+        [weakOverDiskQuotaViewController dismissViewControllerAnimated:YES completion:^{
+            weakSelf.overDiskQuotaPresented = NO;
+        }];
+    };
+
     [UIApplication.mnz_presentingViewController presentViewController:overDiskQuotaViewController
                                                              animated:YES
                                                            completion:^{
@@ -1446,7 +1455,11 @@ void uncaughtExceptionHandler(NSException *exception) {
             if (event.number == StorageStateChange) {
                 [api getAccountDetails];
             } else if (event.number == StorageStatePaywall) {
-                [self presentOverDiskQuotaViewControllerIfNeeded];
+                __weak typeof(self) weakSelf = self;
+                [OverDiskQuotaServiceImpl prepareOverDiskQuotaInformationWithSDK:[MEGASdkManager sharedMEGASdk]
+                                                                        callback:^(id<OverDiskQuotaInfomationType> _Nonnull info) {
+                    [weakSelf presentOverDiskQuotaViewControllerIfNeededWithInformation:info];
+                }];
             } else {
                 static BOOL alreadyPresented = NO;
                 if (!alreadyPresented && (event.number == StorageStateRed || event.number == StorageStateOrange)) {

@@ -46,6 +46,7 @@
 #import "MEGAReachabilityManager.h"
 #import "MEGAStore.h"
 #import "MEGAShowPasswordReminderRequestDelegate.h"
+#import "MEGAPurchase.h"
 
 #import "AppDelegate.h"
 #import "BrowserViewController.h"
