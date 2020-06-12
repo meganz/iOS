@@ -86,7 +86,7 @@ class ChatViewController: MessagesViewController {
     }()
     
     private var chatBottomInfoScreenBottomConstraint: NSLayoutConstraint?
-
+    private var chatBottomInfoScreenBottomPadding: CGFloat = 5.0
 
     // MARK: - Overriden methods
 
@@ -822,7 +822,7 @@ class ChatViewController: MessagesViewController {
         view.addSubview(chatBottomInfoScreen)
         chatBottomInfoScreen.translatesAutoresizingMaskIntoConstraints = false
         
-        chatBottomInfoScreenBottomConstraint = chatBottomInfoScreen.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20)
+        chatBottomInfoScreenBottomConstraint = chatBottomInfoScreen.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -chatBottomInfoScreenBottomPadding)
         NSLayoutConstraint.activate([
             chatBottomInfoScreen.heightAnchor.constraint(equalToConstant: chatBottomInfoScreen.bounds.height),
             chatBottomInfoScreenBottomConstraint!,
@@ -850,7 +850,7 @@ class ChatViewController: MessagesViewController {
             contentInset = messagesCollectionView.adjustedContentInset.bottom
         }
         
-        chatBottomInfoScreenBottomConstraint?.constant = -contentInset
+        chatBottomInfoScreenBottomConstraint?.constant = -(contentInset + chatBottomInfoScreenBottomPadding)
         view.layoutIfNeeded()
         
         guard chatBottomInfoScreen.isHidden == true else {
