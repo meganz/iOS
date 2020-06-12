@@ -32,6 +32,9 @@ extension Font {
     /// Size 15, Regular
     static let subhead = Font(size: 15, weight: .regular)
 
+    /// Size 15, Medium
+    static let subhead2 = Font(size: 15, weight: .medium)
+
     /// Size 12.5, Semibold
     static let caption1 = Font(size: 12.5, weight: .semibold)
 
