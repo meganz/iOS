@@ -9,19 +9,40 @@ final class OverDiskQuotaViewController: UIViewController {
 
     @IBOutlet private var upgradeButton: UIButton!
     @IBOutlet private var dismissButton: UIButton!
+    @IBOutlet weak var warningView: OverDisckQuotaWarningView!
 
     @objc var dismissAction: (() -> Void)?
 
     private var warning: OverDiskQuotaWarning?
+
+    private lazy var dateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .long
+        dateFormatter.timeStyle = .none
+        return dateFormatter
+    }()
+
+    private lazy var numberFormatter: NumberFormatter = {
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .decimal
+        return numberFormatter
+    }()
+
+    private lazy var byteCountFormatter: ByteCountFormatter = {
+        let byteCountFormatter = ByteCountFormatter()
+        byteCountFormatter.allowedUnits = .useGB
+        return byteCountFormatter
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationController(navigationController)
         setupScrollView(contentScrollView)
         setupTitleLabel(titleLabel)
-        setupWarningDescriptionLabel(warningParagaphLabel, withAttributedString: attributedWarningText(from: warning))
+        setupMessageLabel(warningParagaphLabel, overDiskInformation: warning)
         setupUpgradeButton(upgradeButton)
         setupDismissButton(dismissButton)
+        warningView.updateTimeLeftForTitle(withText: "33 days")
     }
 
     private func attributedWarningText(from warning: OverDiskQuotaWarning?) -> NSAttributedString? {
@@ -59,7 +80,7 @@ final class OverDiskQuotaViewController: UIViewController {
     // MARK: - UI Customize
 
     private func setupNavigationController(_ navigationController: UINavigationController?) {
-        title = AMLocalizedString("Stoage Full")
+        title = AMLocalizedString("Over Disk Quota Screen Title", "Storage Full")
         navigationController?.navigationBar.setTranslucent()
         navigationController?.setTitleStyle(TextStyle(font: .headline, color: Color.Text.lightPrimary))
     }
@@ -69,23 +90,34 @@ final class OverDiskQuotaViewController: UIViewController {
     }
 
     private func setupTitleLabel(_ titleLabel: UILabel) {
-        titleLabel.text = AMLocalizedString("Your Data is at Risk!")
+        titleLabel.text = AMLocalizedString("Over Disk Quota Title", "Your Data is at Risk!")
         LabelStyle.headline.style(titleLabel)
     }
 
-    private func setupWarningDescriptionLabel(_ descriptionLabel: UILabel,
-                                              withAttributedString attributedString: NSAttributedString?) {
-        descriptionLabel.attributedText = attributedString
+    private func setupMessageLabel(_ descriptionLabel: UILabel, overDiskInformation: OverDiskQuotaWarning?) {
+        guard let infor = overDiskInformation else {
+            descriptionLabel.text = nil
+            return
+        }
+
+        let message = AMLocalizedString("Over Disk Quota Message", "We have contacted you by email to bk@mega.nz on March 1 2020,  March 30 2020, April 30 2020 and May 15 2020, but you still have 45302 files taking up 234.54 GB in your MEGA account, which requires you to upgrade to PRO Lite. ")
+        let formattedMessage = String(format: message,
+                                      infor.email,
+                                      infor.formattedWarningDates(with: dateFormatter),
+                                      infor.numberOfFiles(with: numberFormatter),
+                                      infor.takingUpStorage(with: byteCountFormatter),
+                                      infor.plan)
+        descriptionLabel.text = formattedMessage
     }
 
     private func setupUpgradeButton(_ button: UIButton) {
         ButtonStyle.active.style(button)
-        button.setTitle(AMLocalizedString("Upgrade"), for: .normal)
+        button.setTitle(AMLocalizedString("Over Disk Quota Upgrade Button Text", "Upgrade"), for: .normal)
     }
 
     private func setupDismissButton(_ button: UIButton) {
         ButtonStyle.inactive.style(button)
-        button.setTitle(AMLocalizedString("Dismiss"), for: .normal)
+        button.setTitle(AMLocalizedString("Over Disk Quota Dismiss Button Text", "Dismiss"), for: .normal)
     }
 
 }
@@ -93,6 +125,20 @@ final class OverDiskQuotaViewController: UIViewController {
 // MARK: - Attributed Warning Text
 
 fileprivate extension OverDiskQuotaViewController.OverDiskQuotaWarning {
+
+    func formattedWarningDates(with formatter: DateFormatter) -> String {
+        return warningDates.reduce("") { (result, date) in
+            result + (formatter.string(from: date) + ", ")
+        }
+    }
+
+    func numberOfFiles(with formatter: NumberFormatter) -> String {
+        return formatter.string(from: NSNumber(value: numberOfFilesOnCloud)) ?? "\(numberOfFilesOnCloud)"
+    }
+
+    func takingUpStorage(with formatter: ByteCountFormatter) -> String {
+        return formatter.string(fromByteCount: cloudStorage.int64Value)
+    }
 
     private var emailText: SematicText {
         return .leaf([.paragraph, .emphasized], " \(email)")

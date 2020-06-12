@@ -2246,3 +2246,17 @@
 "Folder link unavailable"="Folder link unavailable";
 /* Error message shown when opening a file link which doesn’t exist */
 "File link unavailable"="File link unavailable";
+/* Over Disk Quota Screen Title*/
+"Over Disk Quota Screen Title"="Storage Full";
+/* Over Disk Quota Title */
+"Over Disk Quota Title"="Your Data is at Risk!";
+/* Over Disk Quota Message */
+"Over Disk Quota Message"="We have contacted you by email to %@ on %@ but you still have %@ files taking up %@ in your MEGA account, which requires you to upgrade to %@. ";
+/* Over Disk Quota Warning Title */
+"Over Disk Quota Warning Title"="You have %@ left to upgrade.";
+/* Over Disk Quota Warning Message */
+"Over Disk Quota Warning Message"="After that, your data is subject to deletion.";
+/* Over Disk Quota Upgrade Button Text*/
+"Over Disk Quota Upgrade Button Text"="Upgrade";
+/* Over Disk Quota Dismiss Button Text*/
+"Over Disk Quota Dismiss Button Text"="Dismiss";

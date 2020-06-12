@@ -19,6 +19,14 @@ final class OverDisckQuotaWarningView: UIView, NibOwnerLoadable {
         setupView()
     }
     
+    // MARK: - Method
+
+    func updateTimeLeftForTitle(withText text: String) {
+        let warningTitleMessage = AMLocalizedString("Over Disk Quota Warning Title", "You have %@ left to upgrade.")
+        let formattedTitleMessage = String(format: warningTitleMessage, text)
+        titleLabel.text = formattedTitleMessage
+    }
+
     // MARK: - Setup View
     
     private func setupView() {
@@ -35,9 +43,11 @@ final class OverDisckQuotaWarningView: UIView, NibOwnerLoadable {
 
     private func setupDetailLabel(_ detailLabel: UILabel) {
         LabelStyle.noteSub.style(detailLabel)
+        detailLabel.text = AMLocalizedString("Over Disk Quota Warning Message", "After that, your data is subject to deletion.")
     }
 
     private func setupTitleLabel(_ titleLabel: UILabel) {
         LabelStyle.noteMain.style(titleLabel)
+        titleLabel.text = nil
     }
 }
