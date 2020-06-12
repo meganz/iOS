@@ -36,13 +36,17 @@ final class OverDiskQuotaViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupNavigationController(navigationController)
-        setupScrollView(contentScrollView)
         setupTitleLabel(titleLabel)
         setupMessageLabel(warningParagaphLabel, overDiskInformation: warning)
         setupUpgradeButton(upgradeButton)
         setupDismissButton(dismissButton)
         warningView.updateTimeLeftForTitle(withText: "33 days")
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupNavigationController(navigationController)
+        setupScrollView(contentScrollView)
     }
 
     private func attributedWarningText(from warning: OverDiskQuotaWarning?) -> NSAttributedString? {
@@ -95,24 +99,22 @@ final class OverDiskQuotaViewController: UIViewController {
     }
 
     private func setupMessageLabel(_ descriptionLabel: UILabel, overDiskInformation: OverDiskQuotaWarning?) {
-        guard let infor = overDiskInformation else {
-            descriptionLabel.text = nil
-            return
-        }
-
-        let message = AMLocalizedString("Over Disk Quota Message", "We have contacted you by email to bk@mega.nz on March 1 2020,  March 30 2020, April 30 2020 and May 15 2020, but you still have 45302 files taking up 234.54 GB in your MEGA account, which requires you to upgrade to PRO Lite. ")
+        guard let infor = overDiskInformation else { descriptionLabel.text = nil; return }
+        let message = AMLocalizedString("Over Disk Quota Message", "We have contacted you by email to bk@mega.nz on March 1 2020,  March 30 2020, April 30 2020 and May 15 2020, but you still have 45302 files taking up 234.54 GB in your MEGA account, which requires you to upgrade to PRO Lite.")
         let formattedMessage = String(format: message,
                                       infor.email,
                                       infor.formattedWarningDates(with: dateFormatter),
                                       infor.numberOfFiles(with: numberFormatter),
                                       infor.takingUpStorage(with: byteCountFormatter),
                                       infor.plan)
-        descriptionLabel.text = formattedMessage
+        let attributes = AttributedTextStyle.paragraph.style(TextAttributes())
+        descriptionLabel.attributedText = NSAttributedString(string: formattedMessage, attributes: attributes)
     }
 
     private func setupUpgradeButton(_ button: UIButton) {
         ButtonStyle.active.style(button)
         button.setTitle(AMLocalizedString("Over Disk Quota Upgrade Button Text", "Upgrade"), for: .normal)
+        button.addTarget(self, action: #selector(didTapUpgradeButton(button:)), for: .touchUpInside)
     }
 
     private func setupDismissButton(_ button: UIButton) {
@@ -120,6 +122,11 @@ final class OverDiskQuotaViewController: UIViewController {
         button.setTitle(AMLocalizedString("Over Disk Quota Dismiss Button Text", "Dismiss"), for: .normal)
     }
 
+    @objc private func didTapUpgradeButton(button: UIButton) {
+        let upgradeViewController = UIStoryboard(name: "MyAccount", bundle: nil).instantiateViewController(withIdentifier: "UpgradeID")
+        navigationController?.navigationBar.isTranslucent = false
+        navigationController?.pushViewController(upgradeViewController, animated: true)
+    }
 }
 
 // MARK: - Attributed Warning Text

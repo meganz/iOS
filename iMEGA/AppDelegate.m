@@ -1059,7 +1059,8 @@ void uncaughtExceptionHandler(NSException *exception) {
         }];
     };
 
-    [UIApplication.mnz_presentingViewController presentViewController:overDiskQuotaViewController
+    MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:overDiskQuotaViewController];
+    [UIApplication.mnz_presentingViewController presentViewController:navigationController
                                                              animated:YES
                                                            completion:^{
         weakSelf.overDiskQuotaPresented = YES;
