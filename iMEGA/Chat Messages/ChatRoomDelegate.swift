@@ -292,7 +292,6 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
     }
     
     func insertTransfer(_ transer: MEGATransfer) {
-        let lastSectionVisible = isLastSectionVisible()
         transfers.append(ChatMessage(transfer: transer, chatRoom: chatRoom))
         guard let chatViewController = self.chatViewController else { return }
         if messages.count == 1 {
@@ -304,9 +303,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
             return;
         }
         chatViewController.messagesCollectionView.reloadData()
-        if lastSectionVisible == true {
-            chatViewController.messagesCollectionView.scrollToBottom(animated: true)
-        }
+        chatViewController.messagesCollectionView.scrollToBottom(animated: true)
      }
     
     // MARK: - Private methods
