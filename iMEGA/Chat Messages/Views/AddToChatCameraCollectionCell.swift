@@ -57,12 +57,12 @@ class AddToChatCameraCollectionCell: UICollectionViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
+        addCornerRadius()
         guard let previewLayer = previewLayer else {
             return
         }
         
         previewLayer.frame = liveFeedView.layer.bounds
-        addCornerRadius()
     }
     
     private func addCornerRadius() {
