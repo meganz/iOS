@@ -1,7 +1,7 @@
 
 import UIKit
 
-class PhotoGridViewFlowLayout: UICollectionViewFlowLayout {
+final class PhotoGridViewFlowLayout: UICollectionViewFlowLayout {
     
     private let cellInsetValue: CGFloat = 1
     

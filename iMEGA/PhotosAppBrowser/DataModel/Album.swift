@@ -2,7 +2,7 @@
 import UIKit
 import Photos
 
-class Album {
+final class Album {
     let title: String
     private let fetchResult: PHFetchResult<PHAsset>
     

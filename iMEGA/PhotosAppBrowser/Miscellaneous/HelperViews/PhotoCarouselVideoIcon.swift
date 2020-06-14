@@ -1,18 +1,18 @@
 
 import UIKit
 
-class PhotoCarouselVideoIcon: UIView {
+final class PhotoCarouselVideoIcon: UIView {
     
     private let halfRatio: CGFloat = 0.5
     private let playIconRightOffsetPaddingRatio: CGFloat = 1.225
     
-    lazy var vibrancyView: UIView = {
+    private lazy var vibrancyView: UIView = {
         let vibrancyView = UIVisualEffectView(effect: UIBlurEffect(style: .extraLight))
         vibrancyView.clipsToBounds = true
         return vibrancyView
     }()
     
-    lazy var playIconLayer: CALayer = {
+    private lazy var playIconLayer: CALayer = {
         let playIconLayer = CAShapeLayer()
         playIconLayer.path = UIBezierPath.playIconPath.cgPath
         playIconLayer.fillColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)

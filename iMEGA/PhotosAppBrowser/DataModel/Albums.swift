@@ -2,7 +2,7 @@
 import Foundation
 import Photos
 
-class Albums {
+final class Albums {
     private var items: [Album] = []
     
     // MARK:- Initializer.

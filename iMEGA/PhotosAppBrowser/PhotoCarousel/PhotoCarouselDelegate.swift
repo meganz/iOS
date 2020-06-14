@@ -1,7 +1,7 @@
 
 import UIKit
 
-class PhotoCarouselDelegate: PhotoGridViewDelegate {
+final class PhotoCarouselDelegate: PhotoGridViewDelegate {
     weak var viewController: PhotoCarouselViewController?
     
     // MARK:- Initializer.

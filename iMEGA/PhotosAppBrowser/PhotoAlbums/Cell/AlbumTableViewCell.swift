@@ -3,7 +3,7 @@
 import UIKit
 import Photos
 
-class AlbumTableViewCell: UITableViewCell {
+final class AlbumTableViewCell: UITableViewCell {
     
     @IBOutlet var albumImageViews: [UIImageView]!
     @IBOutlet weak var albumTitleLabel: UILabel!

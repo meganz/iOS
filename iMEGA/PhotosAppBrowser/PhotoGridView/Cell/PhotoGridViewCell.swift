@@ -2,13 +2,7 @@
 import UIKit
 import Photos
 
-class PhotoGridViewCell: UICollectionViewCell {
-    
-    // MARK:- Static variables.
-
-    static var nib: UINib {
-        return UINib(nibName: PhotoGridViewCell.reuseIdentifier, bundle: nil)
-    }
+final class PhotoGridViewCell: UICollectionViewCell {
     
     // MARK:- Outlets.
     
@@ -51,7 +45,6 @@ class PhotoGridViewCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
         relayoutSubViews()
     }
     
@@ -72,9 +65,9 @@ class PhotoGridViewCell: UICollectionViewCell {
     }
     
     func didEndDisplaying() {
-        if self.assetDownloader != nil {
-            self.assetDownloader?.cancel()
-            self.assetDownloader = nil
+        if assetDownloader != nil {
+            assetDownloader?.cancel()
+            assetDownloader = nil
         }
     }
     
@@ -97,9 +90,9 @@ class PhotoGridViewCell: UICollectionViewCell {
             
             let padding = (imageView.bounds.height - imageHeightInView) / 2.0
             
-            self.markerViewTopConstraint.constant = padding
-            self.bottomViewBottomConstraint.constant = padding
-            self.layoutIfNeeded()
+            markerViewTopConstraint.constant = padding
+            bottomViewBottomConstraint.constant = padding
+            layoutIfNeeded()
         }
     }
 }

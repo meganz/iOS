@@ -70,8 +70,11 @@ extension PhotoGridViewDataSource: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoGridViewCell.reuseIdentifier,
-                                                      for: indexPath) as! PhotoGridViewCell
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoGridViewCell.reuseIdentifier,
+                                                            for: indexPath) as? PhotoGridViewCell else {
+                                                                fatalError("Could not dequeue cell PhotoGridViewCell")
+                                                                
+        }
         
         let asset = album.asset(atIndex: indexPath.item)
         cell.asset = asset
@@ -81,7 +84,7 @@ extension PhotoGridViewDataSource: UICollectionViewDataSource {
             self?.selectionHandler(asset, indexPath, size, point)
         }
         
-        cell.durationString = (asset.mediaType == .video) ? asset.duration.timeDisplayString : nil
+        cell.durationString = (asset.mediaType == .video) ? asset.duration.timeDisplayString() : nil
         return cell
     }
 }
