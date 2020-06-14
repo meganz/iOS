@@ -2,7 +2,7 @@
 import UIKit
 import Photos
 
-class AssetDownloader {
+final class AssetDownloader {
     private let asset: PHAsset
     private let imageView: UIImageView
     private let imageSize: CGSize

@@ -1042,7 +1042,7 @@
 		BFAB114223CEA5C300BCE72D /* PhotoCarouselVideoIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAB111E23CEA5C300BCE72D /* PhotoCarouselVideoIcon.swift */; };
 		BFAB114323CEA5C300BCE72D /* PhotoSelectedMarkerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAB111F23CEA5C300BCE72D /* PhotoSelectedMarkerView.swift */; };
 		BFAB114423CEA5C300BCE72D /* PhotoCollectionBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAB112023CEA5C300BCE72D /* PhotoCollectionBottomView.swift */; };
-		BFAB114523CEA5C300BCE72D /* PhotoCarousalFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAB112323CEA5C300BCE72D /* PhotoCarousalFlowLayout.swift */; };
+		BFAB114523CEA5C300BCE72D /* PhotoCarouselFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAB112323CEA5C300BCE72D /* PhotoCarouselFlowLayout.swift */; };
 		BFAB114623CEA5C300BCE72D /* PhotoCarouselDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAB112423CEA5C300BCE72D /* PhotoCarouselDataSource.swift */; };
 		BFAB114723CEA5C300BCE72D /* PhotoCarouselViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAB112623CEA5C300BCE72D /* PhotoCarouselViewController.swift */; };
 		BFAB114823CEA5C300BCE72D /* PhotoCarouselViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFAB112723CEA5C300BCE72D /* PhotoCarouselViewController.xib */; };
@@ -2410,7 +2410,7 @@
 		BFAB111E23CEA5C300BCE72D /* PhotoCarouselVideoIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCarouselVideoIcon.swift; sourceTree = "<group>"; };
 		BFAB111F23CEA5C300BCE72D /* PhotoSelectedMarkerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoSelectedMarkerView.swift; sourceTree = "<group>"; };
 		BFAB112023CEA5C300BCE72D /* PhotoCollectionBottomView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCollectionBottomView.swift; sourceTree = "<group>"; };
-		BFAB112323CEA5C300BCE72D /* PhotoCarousalFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCarousalFlowLayout.swift; sourceTree = "<group>"; };
+		BFAB112323CEA5C300BCE72D /* PhotoCarouselFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCarouselFlowLayout.swift; sourceTree = "<group>"; };
 		BFAB112423CEA5C300BCE72D /* PhotoCarouselDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCarouselDataSource.swift; sourceTree = "<group>"; };
 		BFAB112623CEA5C300BCE72D /* PhotoCarouselViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCarouselViewController.swift; sourceTree = "<group>"; };
 		BFAB112723CEA5C300BCE72D /* PhotoCarouselViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PhotoCarouselViewController.xib; sourceTree = "<group>"; };
@@ -5192,7 +5192,7 @@
 		BFAB112223CEA5C300BCE72D /* FlowLayout */ = {
 			isa = PBXGroup;
 			children = (
-				BFAB112323CEA5C300BCE72D /* PhotoCarousalFlowLayout.swift */,
+				BFAB112323CEA5C300BCE72D /* PhotoCarouselFlowLayout.swift */,
 			);
 			path = FlowLayout;
 			sourceTree = "<group>";
@@ -6181,7 +6181,7 @@
 				77F1DBE52056B767005D5F0E /* MEGASetAttrUserRequestDelegate.m in Sources */,
 				41EC68461D76DA93003EC803 /* UIBarButtonItem+Badge.m in Sources */,
 				2F8F5F1623691A390049603F /* UINavigationViewController+Additions.swift in Sources */,
-				BFAB114523CEA5C300BCE72D /* PhotoCarousalFlowLayout.swift in Sources */,
+				BFAB114523CEA5C300BCE72D /* PhotoCarouselFlowLayout.swift in Sources */,
 				A86B9F2F2316D6AB00F35E7A /* FLEXDefaultsExplorerViewController.m in Sources */,
 				A89629751FACE78B00F02F7A /* MEGACallManager.m in Sources */,
 				83747B1F20ADD16D00BC1AED /* MEGAQLPreviewController.m in Sources */,

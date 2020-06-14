@@ -1469,7 +1469,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             [weakself uploadChatAssets:assets];
         }
     }];
-    MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:albumTableViewController];
+    MEGANavigationController *navigationController = [MEGANavigationController.alloc initWithRootViewController:albumTableViewController];
     [self presentViewController:navigationController animated:YES completion:nil];
 }
 

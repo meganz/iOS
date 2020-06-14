@@ -2,7 +2,7 @@
 import UIKit
 import Photos
 
-class PhotoGridViewController: UIViewController {
+final class PhotoGridViewController: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
     private var sendBarButton: UIBarButtonItem?
@@ -62,7 +62,6 @@ class PhotoGridViewController: UIViewController {
 
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        
         collectionView.collectionViewLayout.invalidateLayout()
     }
     

@@ -12,7 +12,7 @@ protocol PhotoCarouselViewControllerDelegate: class {
 
 // MARK:- PhotoCarouselViewController.
 
-class PhotoCarouselViewController: UIViewController {
+final class PhotoCarouselViewController: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -119,7 +119,7 @@ class PhotoCarouselViewController: UIViewController {
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        if let flowLayout = collectionView.collectionViewLayout as? PhotoCarousalFlowLayout {
+        if let flowLayout = collectionView.collectionViewLayout as? PhotoCarouselFlowLayout {
             flowLayout.relayout()
         }
     }
@@ -241,7 +241,7 @@ class PhotoCarouselViewController: UIViewController {
     }
     
     private func updateFlowLayoutCurrentPage(withIndex index: Int) {
-        if let flowLayout = collectionView.collectionViewLayout as? PhotoCarousalFlowLayout {
+        if let flowLayout = collectionView.collectionViewLayout as? PhotoCarouselFlowLayout {
             flowLayout.currentPage = index
         }
     }

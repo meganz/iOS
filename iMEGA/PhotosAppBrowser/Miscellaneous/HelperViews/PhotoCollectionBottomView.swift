@@ -1,7 +1,7 @@
 
 import UIKit
 
-class PhotoCollectionBottomView: UIView {
+final class PhotoCollectionBottomView: UIView {
     private let padding: CGFloat = 10
     
     private lazy var label: UILabel = {

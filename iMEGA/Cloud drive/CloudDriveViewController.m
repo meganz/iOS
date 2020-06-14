@@ -869,14 +869,14 @@ static const NSTimeInterval kSearchTimeDelay = .5;
                                                            completionBlock:^(NSArray<PHAsset *> * _Nonnull assets) {
         if (assets.count > 0) {
             for (PHAsset *asset in assets) {
-                [[MEGAStore shareInstance] insertUploadTransferWithLocalIdentifier:asset.localIdentifier
+                [MEGAStore.shareInstance insertUploadTransferWithLocalIdentifier:asset.localIdentifier
                                                                   parentNodeHandle:self.parentNode.handle];
             }
             
             [Helper startPendingUploadTransferIfNeeded];
         }
     }];
-    MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:albumTableViewController];
+    MEGANavigationController *navigationController = [MEGANavigationController.alloc initWithRootViewController:albumTableViewController];
     [self presentViewController:navigationController animated:YES completion:nil];
 }
 

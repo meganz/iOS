@@ -1,7 +1,7 @@
 
 import UIKit
 
-class PhotoSelectedMarkerView: UIView {
+final class PhotoSelectedMarkerView: UIView {
     
     private let outerCircleInsetValue: CGFloat = 4
     private let innerCircleInsetValue: CGFloat = 5

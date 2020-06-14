@@ -1,7 +1,7 @@
 
 import UIKit
 
-class PhotoCarousalFlowLayout: UICollectionViewFlowLayout {
+final class PhotoCarouselFlowLayout: UICollectionViewFlowLayout {
     private var cellEstimatedCenterPoints: [CGPoint] = []
     private var cellEstimatedFrames: [CGRect] = []
     private var cellSpacing: CGFloat = 100
@@ -33,7 +33,11 @@ class PhotoCarousalFlowLayout: UICollectionViewFlowLayout {
     }
         
     private var currentOffset: CGFloat {
-        return (collectionView!.contentOffset.x + collectionView!.contentInset.left)
+        guard let collectionView = collectionView else {
+            return .zero
+        }
+        
+        return (collectionView.contentOffset.x + collectionView.contentInset.left)
     }
     
     private var currentCellIndex: Int {
@@ -122,7 +126,9 @@ class PhotoCarousalFlowLayout: UICollectionViewFlowLayout {
         for itemIndex in 0 ..< cellCount {
             if rect.intersects(cellEstimatedFrames[itemIndex]) {
                 let indexPath = IndexPath(item: itemIndex, section: 0)
-                let attributes = layoutAttributesForItem(at: indexPath)!
+                guard let attributes = layoutAttributesForItem(at: indexPath) else {
+                    fatalError("Should contain attributes for index path \(indexPath)")
+                }
                 allAttributes.append(attributes)
             }
         }
@@ -136,7 +142,7 @@ class PhotoCarousalFlowLayout: UICollectionViewFlowLayout {
     override func invalidationContext(forBoundsChange newBounds: CGRect) -> UICollectionViewLayoutInvalidationContext {
         let context = super.invalidationContext(forBoundsChange: newBounds)
 
-        if newBounds.size != collectionView!.bounds.size {
+        if let collectionView = collectionView, newBounds.size != collectionView.bounds.size {
             shouldLayoutEverything = true
         }
         return context

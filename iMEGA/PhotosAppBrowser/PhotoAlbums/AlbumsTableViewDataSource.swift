@@ -2,7 +2,7 @@
 import UIKit
 import Photos
 
-class AlbumsTableViewDataSource: NSObject, UITableViewDataSource {
+final class AlbumsTableViewDataSource: NSObject, UITableViewDataSource {
     private let albums: Albums
     private let imageManager = PHCachingImageManager.default()
     
@@ -19,10 +19,12 @@ class AlbumsTableViewDataSource: NSObject, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "AlbumTableViewCell", for: indexPath) as! AlbumTableViewCell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: AlbumTableViewCell.reuseIdentifier,
+                                                       for: indexPath) as? AlbumTableViewCell else {
+            fatalError("could not dequeue the AlbumTableViewCell cell")
+        }
         
         cell.album = albums.album(at: indexPath.row)
-        
         return cell
     }
 }

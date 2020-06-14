@@ -2,7 +2,7 @@
 import UIKit
 import Photos
 
-class AlbumsTableViewController: UITableViewController {
+final class AlbumsTableViewController: UITableViewController {
     private var albumsDataSource: AlbumsTableViewDataSource?
     private var albumsDelegate: AlbumsTableViewDelegate?
     private let albums = Albums()
@@ -33,8 +33,8 @@ class AlbumsTableViewController: UITableViewController {
         super.viewDidLoad()
         
         title = AMLocalizedString("Albums", "Used in Photos app browser album listing screen.")
-        tableView.register(UINib(nibName: "AlbumTableViewCell", bundle: nil),
-                           forCellReuseIdentifier: "AlbumTableViewCell")
+        tableView.register(AlbumTableViewCell.nib,
+                           forCellReuseIdentifier: AlbumTableViewCell.reuseIdentifier)
         tableView.rowHeight = 110.0
         
         albumsDataSource = AlbumsTableViewDataSource(albums: albums)

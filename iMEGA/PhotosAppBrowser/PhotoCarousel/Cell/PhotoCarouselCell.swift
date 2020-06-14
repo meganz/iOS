@@ -2,13 +2,7 @@
 import UIKit
 import Photos
 
-class PhotoCarouselCell: UICollectionViewCell {
-    
-    // MARK:- Static variables.
-
-    static var nib: UINib {
-        return UINib(nibName: PhotoCarouselCell.reuseIdentifier, bundle: nil)
-    }
+final class PhotoCarouselCell: UICollectionViewCell {
     
     // MARK:- Outlets.
     
@@ -89,15 +83,15 @@ class PhotoCarouselCell: UICollectionViewCell {
     // MARK:- Private methods.
     
     private func cancelDownloadRequest() {
-        if self.assetDownloader != nil {
-            self.assetDownloader?.cancel()
-            self.assetDownloader = nil
+        if assetDownloader != nil {
+            assetDownloader?.cancel()
+            assetDownloader = nil
         }
     }
     
     private func updateImageViewConstraints() {
-        self.imageViewWidthConstraint.constant = cellUserDisplaySize.width
-        self.imageViewHeightConstraint.constant = cellUserDisplaySize.height
+        imageViewWidthConstraint.constant = cellUserDisplaySize.width
+        imageViewHeightConstraint.constant = cellUserDisplaySize.height
         imageView.layoutIfNeeded()
     }
     
