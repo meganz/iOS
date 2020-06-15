@@ -33,10 +33,6 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus);
 + (UIColor *)mnz_label;
 + (UIColor *)mnz_subtitlesForTraitCollection:(UITraitCollection *)traitCollection;
 
-#pragma mark - Black
-
-+ (UIColor *)mnz_black000000_01;
-
 #pragma mark - Blue
 
 + (UIColor *)mnz_blueForTraitCollection:(UITraitCollection *)traitCollection;
@@ -59,10 +55,6 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus);
 + (UIColor *)mnz_redForTraitCollection:(UITraitCollection *)traitCollection;
 
 + (UIColor *)mnz_redError;
-
-#pragma mark - White
-
-+ (UIColor *)mnz_whiteFFFFFF_02;
 
 #pragma mark - Utils
 

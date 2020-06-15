@@ -74,6 +74,8 @@
     bottomBorderLayer.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection].CGColor;
     [self.customView.layer addSublayer:bottomBorderLayer];
     
+    self.topLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
+    
     self.iconImageView.tintColor = self.topLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
     self.inputTextField.textColor = UIColor.mnz_label;
     

@@ -940,11 +940,11 @@ static const CGFloat GapBetweenPages = 10.0;
     UIColor *color;
     switch (index) {
         case 0:
-            color = [UIColor mnz_whiteFFFFFF_02];
+            color = [UIColor.whiteColor colorWithAlphaComponent:0.2];
             break;
  
         default:
-            color = [UIColor mnz_black000000_01];
+            color = [UIColor.blackColor colorWithAlphaComponent:0.1];
             break;
     }
     return color;
