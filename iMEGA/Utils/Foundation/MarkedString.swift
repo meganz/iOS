@@ -34,9 +34,8 @@ extension MarkedString {
                 return child.attributedString(withStyleRegistration: styleRegistration)
             }
 
-            let styles = styleRegistration.compactMap { (key, value) -> AttributedTextStyle? in
-                if tags.contains(key) { return value }
-                return nil
+            let styles = tags.compactMap {
+                styleRegistration[$0]
             }
             
             let styler = AttributedTextStyle.composedStyler(from: styles)
