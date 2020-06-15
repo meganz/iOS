@@ -2120,6 +2120,8 @@
 "Please enter a valid phone number"="Please supply a valid phone number.";
 /* Error message that will show to user when user reached the sms verification daily limit */
 "You have reached the daily limit"="You have reached the daily limit";
+/* Error message that will be shown when the code introduced do not match with the one you received */
+"The verification code doesn't match."="The verification code doesn't match.";
 /* Error message that will show to user when user entered invalid verification code */
 "Wrong code. Please try again or resend."="Wrong code. Please try again or resend.";
 /* Error message that will show to user when host detected that the mobile number has been registered already */
