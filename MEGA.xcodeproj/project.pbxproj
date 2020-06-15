@@ -285,6 +285,8 @@
 		5BFA34711FAC5BFB005BFC4E /* MEGARemoveRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFA34691FAB4168005BFC4E /* MEGARemoveRequestDelegate.m */; };
 		5D03C99B248893E600BE5EEB /* UINavigationBar+Customisation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D03C99A248893E600BE5EEB /* UINavigationBar+Customisation.swift */; };
 		5D0E31EC248CFC0300EF16F3 /* LabelStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0E31EB248CFC0300EF16F3 /* LabelStyle.swift */; };
+		5D18BDA2249718280045F9B3 /* MarkedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D18BDA1249718280045F9B3 /* MarkedString.swift */; };
+		5D18BDA4249718750045F9B3 /* Scanner+Compatible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D18BDA3249718750045F9B3 /* Scanner+Compatible.swift */; };
 		5D6465FF2488AE6C006030A5 /* UIViewController+ScrollViewConentInsets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6465FE2488AE6C006030A5 /* UIViewController+ScrollViewConentInsets.swift */; };
 		5D646602248909F8006030A5 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D646601248909F7006030A5 /* Font.swift */; };
 		5D64660424890A34006030A5 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D64660324890A34006030A5 /* Color.swift */; };
@@ -1678,6 +1680,8 @@
 		5BFA346D1FAB6282005BFC4E /* MEGAMoveRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGAMoveRequestDelegate.m; path = API/Requests/MEGAMoveRequestDelegate.m; sourceTree = "<group>"; };
 		5D03C99A248893E600BE5EEB /* UINavigationBar+Customisation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationBar+Customisation.swift"; sourceTree = "<group>"; };
 		5D0E31EB248CFC0300EF16F3 /* LabelStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelStyle.swift; sourceTree = "<group>"; };
+		5D18BDA1249718280045F9B3 /* MarkedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkedString.swift; sourceTree = "<group>"; };
+		5D18BDA3249718750045F9B3 /* Scanner+Compatible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Scanner+Compatible.swift"; path = "iMEGA/Utils/Foundation/Scanner+Compatible.swift"; sourceTree = SOURCE_ROOT; };
 		5D6465FE2488AE6C006030A5 /* UIViewController+ScrollViewConentInsets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+ScrollViewConentInsets.swift"; sourceTree = "<group>"; };
 		5D646601248909F7006030A5 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
 		5D64660324890A34006030A5 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
@@ -4115,6 +4119,7 @@
 		5D03C99E2488972A00BE5EEB /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
+				5D18BDA3249718750045F9B3 /* Scanner+Compatible.swift */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -4135,6 +4140,7 @@
 			isa = PBXGroup;
 			children = (
 				5D7D6B9B2491F57C00ADBDEE /* SematicText.swift */,
+				5D18BDA1249718280045F9B3 /* MarkedString.swift */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -6313,6 +6319,7 @@
 				B6A11A0C22828FEF0017CD59 /* SMSVerificationViewController.swift in Sources */,
 				417279561DB663FA001AC818 /* JSQMessagesInputToolbar.m in Sources */,
 				A802B1FD1FAB295A00AC8BB0 /* MEGAChatStartCallRequestDelegate.m in Sources */,
+				5D18BDA2249718280045F9B3 /* MarkedString.swift in Sources */,
 				E8B3FE781DDB379C008A9C82 /* HelpModalViewController.m in Sources */,
 				B69983222294E1EC0021BE31 /* SMSNavigationViewController.swift in Sources */,
 				A83892431EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.m in Sources */,
@@ -6355,6 +6362,7 @@
 				946B2D161F46E235009ED32C /* GetLinkTableViewController.m in Sources */,
 				831844BB22C4D61B00E4C401 /* ContactsPermissionBottomView.swift in Sources */,
 				41AC33A41A926B55005118AF /* PhotoCollectionViewCell.m in Sources */,
+				5D18BDA4249718750045F9B3 /* Scanner+Compatible.swift in Sources */,
 				B686F45921866BB4009C0DAA /* CameraUploadRequestDelegate.m in Sources */,
 				41D21E651D01AEC3002E6296 /* CTAssetsGridViewCell.m in Sources */,
 				5B50DE0720AC1BDD00F2CB09 /* EnablingTwoFactorAuthenticationViewController.m in Sources */,

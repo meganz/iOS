@@ -13,7 +13,7 @@ final class OverDiskQuotaViewController: UIViewController {
 
     @objc var dismissAction: (() -> Void)?
 
-    private var warning: OverDiskQuotaWarning?
+    private var warning: OverDiskQuota?
 
     private lazy var dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
@@ -49,15 +49,10 @@ final class OverDiskQuotaViewController: UIViewController {
         setupScrollView(contentScrollView)
     }
 
-    private func attributedWarningText(from warning: OverDiskQuotaWarning?) -> NSAttributedString? {
-        guard let warning = warning else { return nil }
-        return warning.attibutedWarningText
-    }
-
     // MARK: - Setup MEGA UserData
 
     @objc func setup(with overDiskQuota: OverDiskQuotaInfomationType) {
-        warning = OverDiskQuotaWarning(email: overDiskQuota.email,
+        warning = OverDiskQuota(email: overDiskQuota.email,
                                        deadline: overDiskQuota.deadline,
                                        warningDates: overDiskQuota.warningDates,
                                        numberOfFilesOnCloud: overDiskQuota.numberOfFilesOnCloud,
@@ -65,7 +60,7 @@ final class OverDiskQuotaViewController: UIViewController {
                                        plan: overDiskQuota.availablePlan)
     }
 
-    struct OverDiskQuotaWarning {
+    struct OverDiskQuota {
         typealias Email = String
         typealias Deadline = Date
         typealias WarningDates = [Date]
@@ -98,7 +93,7 @@ final class OverDiskQuotaViewController: UIViewController {
         LabelStyle.headline.style(titleLabel)
     }
 
-    private func setupMessageLabel(_ descriptionLabel: UILabel, overDiskInformation: OverDiskQuotaWarning?) {
+    private func setupMessageLabel(_ descriptionLabel: UILabel, overDiskInformation: OverDiskQuota?) {
         guard let infor = overDiskInformation else { descriptionLabel.text = nil; return }
         let message = AMLocalizedString("Over Disk Quota Message", "We have contacted you by email to bk@mega.nz on March 1 2020,  March 30 2020, April 30 2020 and May 15 2020, but you still have 45302 files taking up 234.54 GB in your MEGA account, which requires you to upgrade to PRO Lite.")
         let formattedMessage = String(format: message,
@@ -107,8 +102,10 @@ final class OverDiskQuotaViewController: UIViewController {
                                       infor.numberOfFiles(with: numberFormatter),
                                       infor.takingUpStorage(with: byteCountFormatter),
                                       infor.plan)
-        let attributes = AttributedTextStyle.paragraph.style(TextAttributes())
-        descriptionLabel.attributedText = NSAttributedString(string: formattedMessage, attributes: attributes)
+
+        descriptionLabel.attributedText = MarkedStringParser.parseAttributedString(from: formattedMessage,
+                                                                                   withStyleRegistration: ["paragraph": .paragraph,
+                                                                                                           "b": .emphasized])
     }
 
     private func setupUpgradeButton(_ button: UIButton) {
@@ -131,7 +128,7 @@ final class OverDiskQuotaViewController: UIViewController {
 
 // MARK: - Attributed Warning Text
 
-fileprivate extension OverDiskQuotaViewController.OverDiskQuotaWarning {
+fileprivate extension OverDiskQuotaViewController.OverDiskQuota {
 
     func formattedWarningDates(with formatter: DateFormatter) -> String {
         return warningDates.reduce("") { (result, date) in
@@ -145,44 +142,5 @@ fileprivate extension OverDiskQuotaViewController.OverDiskQuotaWarning {
 
     func takingUpStorage(with formatter: ByteCountFormatter) -> String {
         return formatter.string(fromByteCount: cloudStorage.int64Value)
-    }
-
-    private var emailText: SematicText {
-        return .leaf([.paragraph, .emphasized], " \(email)")
-    }
-
-    private var warningDatesText: SematicText {
-        return .leaf([.paragraph, .emphasized], " on ") +
-            .leaf([.paragraph, .emphasized], warningDates.reduce("") { (result, date) in
-                result + (date.description + ", ")
-            })
-    }
-
-    private var filesText: SematicText {
-        return .leaf([.paragraph], "\(numberOfFilesOnCloud) files ")
-    }
-
-    private var takingUpSpaceText: SematicText {
-        return .leaf([.paragraph, .emphasized], "taking up \(cloudStorage)")
-    }
-
-    private var suggestPlanText: SematicText {
-        return .leaf([.paragraph, .emphasized], " " + plan)
-    }
-
-    private func text(_ text: String, withStyles styles: [AttributedTextStyle]) -> SematicText {
-        return .leaf(styles, text)
-    }
-
-    var attibutedWarningText: NSAttributedString {
-        let composedText: SematicText = text("We have contacted you by email to", withStyles: [.paragraph])
-            + emailText
-            + warningDatesText
-            + text("but you still have ", withStyles: [.paragraph])
-            + filesText
-            + takingUpSpaceText
-            + text("in your MEGA account, which requires you to upgrade to", withStyles: [.paragraph])
-            + suggestPlanText
-        return composedText.attributedString
     }
 }
