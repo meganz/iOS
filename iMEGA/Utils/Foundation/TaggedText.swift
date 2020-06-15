@@ -1,39 +1,14 @@
 import Foundation
 
-enum MarkedStringParser {
 
-    static func parseAttributedString(from text: String,
-                                      withStyleRegistration styleRegistration: [String: AttributedTextStyle])
-        -> NSAttributedString {
 
-        let scanner = parserScanner(with: text)
-        let taggedTextChain = scanMarkedText(scanner: scanner, tags: [])
-        let attributedString = taggedTextChain.attributedString(withStyleRegistration: styleRegistration)
-        return attributedString
-    }
-}
-
-fileprivate func parserScanner(with text: String) -> Scanner {
-    let scanner = Scanner(string: text)
-    scanner.charactersToBeSkipped = nil
-    scanner.caseSensitive = true
-    return scanner
-}
-
-fileprivate indirect enum MarkedString {
+indirect enum MarkedString {
     case text(tag: [String], text: String, child: MarkedString)
     case end
-}
-
-extension MarkedString {
     
     func attributedString(withStyleRegistration styleRegistration: [String: AttributedTextStyle]) -> NSAttributedString {
         switch self {
         case let .text(tag: tags, text: text, child: child):
-            if text.isEmpty {
-                return child.attributedString(withStyleRegistration: styleRegistration)
-            }
-
             let styles = styleRegistration.compactMap { (key, value) -> AttributedTextStyle? in
                 if tags.contains(key) { return value }
                 return nil
@@ -50,7 +25,16 @@ extension MarkedString {
     }
 }
 
-fileprivate func scanMarkedText(scanner: Scanner, tags: [String]) -> MarkedString {
+func attributedText(from tagText: String, styleRegistration: [String: AttributedTextStyle]) -> NSAttributedString {
+    let scanner = Scanner(string: tagText)
+    scanner.charactersToBeSkipped = nil
+    scanner.caseSensitive = true
+    
+    let taggedTextChain = scanTaggedText(scanner: scanner, tags: [])
+    return taggedTextChain.attributedString(withStyleRegistration: styleRegistration)
+}
+
+func scanTaggedText(scanner: Scanner, tags: [String]) -> MarkedString {
 
     var text = scanner.scanTo("<") ?? ""
     if text.hasPrefix(">") == true {
@@ -67,11 +51,11 @@ fileprivate func scanMarkedText(scanner: Scanner, tags: [String]) -> MarkedStrin
         
     if tag.hasPrefix("/") == true { // end of tag
         return MarkedString.text(tag: tags,
-                                 text: text,
-                                 child: scanMarkedText(scanner: scanner, tags: tags.dropLast()))
+                               text: text,
+                               child: scanTaggedText(scanner: scanner, tags: tags.dropLast()))
     } else {
         return MarkedString.text(tag: tags,
-                                 text: text,
-                                 child: scanMarkedText(scanner: scanner, tags: tags + [tag]))
+                               text: text,
+                               child: scanTaggedText(scanner: scanner, tags: tags + [tag]))
     }
 }
