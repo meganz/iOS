@@ -2252,6 +2252,8 @@
 "Over Disk Quota Title"="Your Data is at Risk!";
 /* Over Disk Quota Message */
 "Over Disk Quota Message"="<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to upgrade to <b>%@</b>.</paragraph>";
+/* Over Disk Quota Warning number of days left */
+"Over Disk Quota Warning Days Left"="%d days";
 /* Over Disk Quota Warning Title */
 "Over Disk Quota Warning Title"="<body>You have <warn>%@</warn> left to upgrade.</body>";
 /* Over Disk Quota Warning Message */
