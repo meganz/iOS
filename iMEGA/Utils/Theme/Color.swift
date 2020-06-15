@@ -34,6 +34,9 @@ extension Color {
     /// RGB(200, 241, 236, 1), Light Green
     static var textGreenSecondary: Color { Color.Text.greenSecondary }
 
+    /// RGB(217, 0, 7, 1), Red
+    static var textWarning: Color { Color.Text.redPrimary }
+
     // MARK: - Text Grey
 
     /// Grey RGB(155, 155, 155, 1), `9B9B9B`
@@ -95,6 +98,11 @@ extension Color {
 
         /// RGB(200, 241, 236, 1), Light Green
         static let greenSecondary = Color(red: 200, green: 241, blue: 236, alpha: 255)
+
+        // MARK: - Red
+
+        /// RGB(217, 0, 7, 1), Red
+        static let redPrimary = Color(red: 217, green: 0, blue: 7, alpha: 255)
     }
 
     enum Background {

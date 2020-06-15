@@ -14,6 +14,8 @@ extension TextStyle {
 
     static var emphasizedTextStyle: TextStyle { TextStyle(font: .subhead2, color: .textDarkPrimary) }
 
+    static var warningTextStyle: TextStyle { TextStyle(font: .subhead2, color: .textWarning) }
+
     static var noteMainTextStyle: TextStyle { TextStyle(font: .caption1, color: .textDarkPrimary) }
 
     static var noteSubTextStyle: TextStyle { TextStyle(font: .caption2, color: .textDarkPrimary) }

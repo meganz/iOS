@@ -2253,7 +2253,7 @@
 /* Over Disk Quota Message */
 "Over Disk Quota Message"="<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to upgrade to <b>%@</b>.</paragraph>";
 /* Over Disk Quota Warning Title */
-"Over Disk Quota Warning Title"="You have %@ left to upgrade.";
+"Over Disk Quota Warning Title"="<body>You have <warn>%@</warn> left to upgrade.</body>";
 /* Over Disk Quota Warning Message */
 "Over Disk Quota Warning Message"="After that, your data is subject to deletion.";
 /* Over Disk Quota Upgrade Button Text*/

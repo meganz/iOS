@@ -5,11 +5,13 @@ typealias TextAttributesStyler = (TextAttributes) -> TextAttributes
 enum AttributedTextStyle {
     case paragraph
     case emphasized
+    case warning
 
     var style: TextAttributesStyler {
         switch self {
         case .paragraph: return paragraphTextAttributesStyler
         case .emphasized: return emphasizedTextAttributesStyler
+        case .warning: return warningTextAttributesStyler
         }
     }
 
@@ -28,6 +30,11 @@ enum AttributedTextStyle {
 fileprivate let paragraphTextAttributesStyler: TextAttributesStyler = { attributes in
     ParagraphStyle.centerAlignedWideSpacingParagraphStyle.applied(on:
         TextStyle.paragraphTextStyle.applied(on: attributes))
+}
+
+fileprivate let warningTextAttributesStyler: TextAttributesStyler = { attributes in
+    TextStyle.warningTextStyle.applied(on:
+        TextStyle.emphasizedTextStyle.applied(on: attributes))
 }
 
 fileprivate let emphasizedTextAttributesStyler: TextAttributesStyler = { attributes in
