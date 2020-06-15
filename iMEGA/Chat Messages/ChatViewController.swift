@@ -564,6 +564,10 @@ class ChatViewController: MessagesViewController {
     @objc func closeChatRoom() {
         chatRoomDelegate.closeChatRoom()
     }
+    
+    func showNewMessagesToJumpToBottomIfRequired() {
+        showJumpToBottom(viewType: .newMessages)
+    }
 
     // MARK: - Internal methods used by the extension of this class
 
@@ -840,10 +844,12 @@ class ChatViewController: MessagesViewController {
         }
     }
     
-    private func showJumpToBottom() {
+    private func showJumpToBottom(viewType: ChatBottomInfoScreen.ViewType = .jumpToLatest) {
         guard let chatBottomInfoScreen = chatBottomInfoScreen else {
             return
         }
+        
+        chatBottomInfoScreen.viewType = viewType
         
         var contentInset = messagesCollectionView.contentInset.bottom
         if #available(iOS 11.0, *) {
