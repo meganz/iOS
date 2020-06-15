@@ -106,7 +106,7 @@ final class PhotoCarouselViewController: UIViewController {
         collectionView.delegate = collectionViewDelegate
         
         addToolbar()
-        addLeftCancelBarButtonItem()
+        addRightCancelBarButtonItem()
         
         updateTitleView(withAssetIndex: selectedPhotoIndexPath.item)
     }

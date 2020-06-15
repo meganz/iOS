@@ -42,7 +42,7 @@ final class PhotoGridViewController: UIViewController {
                                  forCellWithReuseIdentifier: PhotoGridViewCell.reuseIdentifier)
         updateView()
         addToolbar()
-        addLeftCancelBarButtonItem()
+        addRightCancelBarButtonItem()
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
     
