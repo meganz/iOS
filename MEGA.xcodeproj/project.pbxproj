@@ -293,7 +293,6 @@
 		5D64660624890BBE006030A5 /* ColorProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D64660524890BBE006030A5 /* ColorProviding.swift */; };
 		5D64660824890BEA006030A5 /* HexColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D64660724890BEA006030A5 /* HexColor.swift */; };
 		5D64660A24890CC7006030A5 /* TextStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D64660924890CC7006030A5 /* TextStyle.swift */; };
-		5D7D6B9C2491F57C00ADBDEE /* SematicText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7D6B9B2491F57C00ADBDEE /* SematicText.swift */; };
 		5D7D6B9E2491F79E00ADBDEE /* OverDiskQuotaService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7D6B9D2491F79E00ADBDEE /* OverDiskQuotaService.swift */; };
 		5D8DC6A9248CB0390067A4F9 /* BackgroundStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8DC6A8248CB0390067A4F9 /* BackgroundStyle.swift */; };
 		5D8DC6AD248CB0940067A4F9 /* ShadowStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8DC6AC248CB0940067A4F9 /* ShadowStyle.swift */; };
@@ -1688,7 +1687,6 @@
 		5D64660524890BBE006030A5 /* ColorProviding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorProviding.swift; sourceTree = "<group>"; };
 		5D64660724890BEA006030A5 /* HexColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexColor.swift; sourceTree = "<group>"; };
 		5D64660924890CC7006030A5 /* TextStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextStyle.swift; sourceTree = "<group>"; };
-		5D7D6B9B2491F57C00ADBDEE /* SematicText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SematicText.swift; sourceTree = "<group>"; };
 		5D7D6B9D2491F79E00ADBDEE /* OverDiskQuotaService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverDiskQuotaService.swift; sourceTree = "<group>"; };
 		5D8DC6A8248CB0390067A4F9 /* BackgroundStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundStyle.swift; sourceTree = "<group>"; };
 		5D8DC6AC248CB0940067A4F9 /* ShadowStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowStyle.swift; sourceTree = "<group>"; };
@@ -4139,7 +4137,6 @@
 		5D7D6B9A2491F53300ADBDEE /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
-				5D7D6B9B2491F57C00ADBDEE /* SematicText.swift */,
 				5D18BDA1249718280045F9B3 /* MarkedString.swift */,
 			);
 			path = Foundation;
@@ -6162,7 +6159,6 @@
 				41ADA9F21ADE7AC100641BB4 /* HelpTableViewController.m in Sources */,
 				A8B354D421354680002018A9 /* MEGAChatNotificationDelegate.m in Sources */,
 				A8F5D67D1ED5B0990087DA40 /* MEGASendSignupLinkRequestDelegate.m in Sources */,
-				5D7D6B9C2491F57C00ADBDEE /* SematicText.swift in Sources */,
 				8361359021074C5D002FA3CC /* MOUploadTransfer+CoreDataClass.m in Sources */,
 				A86E34B3217F705700EFCAB0 /* MEGAChatGenericRequestDelegate.m in Sources */,
 				4156C80C1AD7E79A00F5E818 /* LTHKeychainUtils.m in Sources */,
