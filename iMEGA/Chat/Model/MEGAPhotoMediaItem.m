@@ -112,7 +112,7 @@
     self.cachedImageView.contentMode = UIViewContentModeScaleAspectFill;
     self.cachedImageView.clipsToBounds = YES;
     self.cachedImageView.layer.cornerRadius = 4.0f;
-    self.cachedImageView.layer.borderColor = UIColor.mnz_black000000_01.CGColor;
+    self.cachedImageView.layer.borderColor = [UIColor.blackColor colorWithAlphaComponent:0.1].CGColor;
     self.cachedImageView.layer.borderWidth = 1.0f;
     
     if (@available(iOS 11.0, *)) {

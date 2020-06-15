@@ -222,12 +222,6 @@
     }
 }
 
-#pragma mark - Black
-
-+ (UIColor *)mnz_black000000_01 {
-    return [UIColor colorWithRed:0.0  green:0.0  blue:0.0 alpha:0.100];
-}
-
 #pragma mark - Blue
 
 + (UIColor *)mnz_blueForTraitCollection:(UITraitCollection *)traitCollection {
@@ -396,12 +390,6 @@
 
 + (UIColor *)mnz_redError {
     return UIColor.systemRedColor;
-}
-
-#pragma mark - White
-
-+ (UIColor *)mnz_whiteFFFFFF_02 {
-    return [UIColor colorWithRed:1.0f green:1.0f blue:1.0f alpha:0.2];
 }
 
 #pragma mark - Utils
