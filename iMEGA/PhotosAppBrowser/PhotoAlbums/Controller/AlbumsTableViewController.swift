@@ -45,7 +45,7 @@ final class AlbumsTableViewController: UITableViewController {
         }
         tableView.delegate = albumsDelegate
         
-        addLeftCancelBarButtonItem()
+        addRightCancelBarButtonItem()
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         
         if albums.numberOfAlbums() == 0 {

@@ -2,7 +2,7 @@
 import UIKit
 
 extension UIViewController {
-    func addLeftCancelBarButtonItem() {
+    func addRightCancelBarButtonItem() {
         let cancelBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismissView))
         navigationItem.rightBarButtonItem = cancelBarButtonItem
     }
