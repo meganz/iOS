@@ -34,9 +34,7 @@ extension MarkedString {
                 return child.attributedString(withStyleRegistration: styleRegistration)
             }
 
-            let styles = tags.compactMap {
-                styleRegistration[$0]
-            }
+            let styles = tags.compactMap { styleRegistration[$0] }
             
             let styler = AttributedTextStyle.composedStyler(from: styles)
             let nodeAttributedString = NSMutableAttributedString(string: text, attributes: styler(TextAttributes()))
@@ -64,7 +62,7 @@ fileprivate func scanMarkedText(scanner: Scanner, tags: [String]) -> MarkedStrin
         tag = String(tag.dropFirst())
     }
         
-    if tag.hasPrefix("/") == true { // end of tag
+    if tag.hasPrefix("/") == true {
         return MarkedString.text(tag: tags,
                                  text: text,
                                  child: scanMarkedText(scanner: scanner, tags: tags.dropLast()))
