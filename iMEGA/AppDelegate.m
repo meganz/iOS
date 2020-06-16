@@ -1043,7 +1043,7 @@ void uncaughtExceptionHandler(NSException *exception) {
     }
 }
 
-- (void)presentOverDiskQuotaViewControllerIfNeededWithInformation:(id<OverDiskQuotaInfomationType>)overDiskQuotaInformation {
+- (void)presentOverDiskQuotaViewControllerIfNeededWithInformation:(id<OverDiskQuotaInfomationType> _Nonnull)overDiskQuotaInformation {
     if (self.isOverDiskQuotaPresented || [UIApplication.mnz_visibleViewController isKindOfClass:OverDiskQuotaViewController.class]) {
         return;
     }

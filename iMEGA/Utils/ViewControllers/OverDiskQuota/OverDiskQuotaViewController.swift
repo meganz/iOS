@@ -1,6 +1,8 @@
 import UIKit
 
 final class OverDiskQuotaViewController: UIViewController {
+
+    // MARK: - Views
     
     @IBOutlet private var contentScrollView: UIScrollView!
     
@@ -11,9 +13,11 @@ final class OverDiskQuotaViewController: UIViewController {
     @IBOutlet private var dismissButton: UIButton!
     @IBOutlet weak var warningView: OverDisckQuotaWarningView!
 
+    // MARK: - In / Out properties
+
     @objc var dismissAction: (() -> Void)?
 
-    private var overDiskQuota: OverDiskQuotaInternal?
+    private var overDiskQuota: OverDiskQuotaInternal!
 
     private lazy var dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
@@ -40,7 +44,7 @@ final class OverDiskQuotaViewController: UIViewController {
         setupMessageLabel(warningParagaphLabel, overDiskInformation: overDiskQuota)
         setupUpgradeButton(upgradeButton)
         setupDismissButton(dismissButton)
-        setupWarningView(warningView, withDeadline: overDiskQuota?.deadline)
+        setupWarningView(warningView, withDeadline: overDiskQuota.deadline)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -88,12 +92,7 @@ final class OverDiskQuotaViewController: UIViewController {
         disableAdjustingContentInsets(for: contentScrollView)
     }
 
-    private func setupWarningView(_ warningView: OverDisckQuotaWarningView, withDeadline deadline: Date?) {
-        guard let deadline = deadline else {
-            warningView.updateTimeLeftForTitle(withText: "0 days")
-            return
-        }
-
+    private func setupWarningView(_ warningView: OverDisckQuotaWarningView, withDeadline deadline: Date) {
         let daysLeft = daysDistance(from: Date(), endDate: deadline)
         let daysLeftLocalized = AMLocalizedString("Over Disk Quota Warning Days Left", "%@ days")
         warningView.updateTimeLeftForTitle(withText: String(format: daysLeftLocalized, daysLeft))
@@ -128,12 +127,19 @@ final class OverDiskQuotaViewController: UIViewController {
     private func setupDismissButton(_ button: UIButton) {
         ButtonStyle.inactive.style(button)
         button.setTitle(AMLocalizedString("Over Disk Quota Dismiss Button Text", "Dismiss"), for: .normal)
+        button.addTarget(self, action: #selector(didTapDismissButton(button:)), for: .touchUpInside)
     }
+
+    // MARK: - Button Actions
 
     @objc private func didTapUpgradeButton(button: UIButton) {
         let upgradeViewController = UIStoryboard(name: "MyAccount", bundle: nil).instantiateViewController(withIdentifier: "UpgradeID")
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.pushViewController(upgradeViewController, animated: true)
+    }
+
+    @objc private func didTapDismissButton(button: UIButton) {
+        dismissAction?()
     }
 
     // MARK: - Days left
