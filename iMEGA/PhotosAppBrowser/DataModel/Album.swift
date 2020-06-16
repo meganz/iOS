@@ -16,15 +16,15 @@ final class Album {
     // MARK:- Interface methods.
     
     func assetCount() -> Int {
-        return fetchResult.count
+       fetchResult.count
     }
     
     func asset(atIndex index: Int) -> PHAsset {
-        return fetchResult.object(at: index)
+       fetchResult.object(at: index)
     }
     
     func index(asset: PHAsset) -> Int {
-        return fetchResult.index(of: asset)
+       fetchResult.index(of: asset)
     }
     
     // Fetches the first "count" asset from album.
@@ -42,7 +42,6 @@ final class Album {
         return assets
     }
 }
-
 
 
 

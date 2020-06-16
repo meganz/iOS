@@ -21,11 +21,11 @@ final class Albums {
     }
 
     func numberOfAlbums() -> Int {
-        return items.count
+       items.count
     }
     
     func album(at index: Int) -> Album {
-        return items[index]
+       items[index]
     }
 }
 
@@ -39,13 +39,13 @@ extension Albums {
     }
     
     private func smartAlbumCollection() -> PHFetchResult<PHAssetCollection> {
-        return PHAssetCollection.fetchAssetCollections(with: .smartAlbum,
+       PHAssetCollection.fetchAssetCollections(with: .smartAlbum,
                                                        subtype: .any,
                                                        options: nil)
     }
     
     private func albumCollection() -> PHFetchResult<PHAssetCollection> {
-        return PHAssetCollection.fetchAssetCollections(with: .album,
+       PHAssetCollection.fetchAssetCollections(with: .album,
                                                        subtype: .any,
                                                        options: nil)
     }
@@ -60,8 +60,8 @@ extension Albums {
     }
     
     private func fetch(fromCollection collection: PHFetchResult<PHAssetCollection>) -> [Album] {
-        return fetchAllValidAlbumNamesAndCount(album: collection).map { title, fetchResult in
-            return Album(title: title, fetchResult: fetchResult)
+       fetchAllValidAlbumNamesAndCount(album: collection).map { title, fetchResult in
+           Album(title: title, fetchResult: fetchResult)
         }
     }
     
@@ -79,4 +79,3 @@ extension Albums {
         return result
     }
 }
-

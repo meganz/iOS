@@ -15,7 +15,7 @@ final class AlbumsTableViewDataSource: NSObject, UITableViewDataSource {
     // MARK:- Table view data source.
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return albums.numberOfAlbums()
+       albums.numberOfAlbums()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -28,4 +28,3 @@ final class AlbumsTableViewDataSource: NSObject, UITableViewDataSource {
         return cell
     }
 }
-

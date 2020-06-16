@@ -65,7 +65,7 @@ class PhotoGridViewDataSource: NSObject {
 
 extension PhotoGridViewDataSource: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return album.assetCount()
+       album.assetCount()
     }
     
     func collectionView(_ collectionView: UICollectionView,
@@ -88,6 +88,5 @@ extension PhotoGridViewDataSource: UICollectionViewDataSource {
         return cell
     }
 }
-
 
 
