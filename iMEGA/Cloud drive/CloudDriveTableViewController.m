@@ -73,7 +73,6 @@
 #pragma mark - Private
 
 - (void)updateAppearance {
-    self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
     self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
 }
 
