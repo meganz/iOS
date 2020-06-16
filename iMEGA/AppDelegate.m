@@ -1457,7 +1457,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                 [api getAccountDetails];
             } else if (event.number == StorageStatePaywall) {
                 __weak typeof(self) weakSelf = self;
-                [OverDiskQuotaServiceImpl prepareOverDiskQuotaInformationWithSDK:[MEGASdkManager sharedMEGASdk]
+                [OverDiskQuotaService prepareOverDiskQuotaInformationWithSDK:[MEGASdkManager sharedMEGASdk]
                                                                         callback:^(id<OverDiskQuotaInfomationType> _Nonnull info) {
                     [weakSelf presentOverDiskQuotaViewControllerIfNeededWithInformation:info];
                 }];
