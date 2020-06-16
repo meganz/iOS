@@ -16,12 +16,15 @@ extension ChatViewController: MessagesDataSource {
     }
     
     func messageTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
+        guard let chatMessage = messages[indexPath.section] as? ChatMessage else {
+            return nil
+        }
+        
         if isTimeLabelVisible(at: indexPath) {
-            var topLabelString: String = message.sentDate.string(withDateFormat: "hh:mm")
+            var topLabelString: String = chatMessage.sentDate.string(withDateFormat: "hh:mm")
             
             if !isFromCurrentSender(message: messages[indexPath.section]) && chatRoom.isGroup {
-                let message = messages[indexPath.section]
-                topLabelString = message.displayName + " " + topLabelString
+                topLabelString = chatMessage.displayName + " " + topLabelString
             }
             
             return NSAttributedString(

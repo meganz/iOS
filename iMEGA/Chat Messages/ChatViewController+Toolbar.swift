@@ -32,7 +32,18 @@ extension ChatViewController {
                 }
                 MEGASdkManager.sharedMEGAChatSdk()?.revokeAttachmentMessage(forChat: chatRoom.chatId, messageId: megaMessage.messageId)
             } else {
-                let index = messages.firstIndex(of: chatMessage)!
+                let foundIndex = messages.firstIndex { message -> Bool in
+                    guard let localChatMessage = message as? ChatMessage else {
+                        return false
+                    }
+                    
+                    return chatMessage == localChatMessage
+                }
+                
+                guard let index = foundIndex else {
+                    return
+                }
+                
                 if megaMessage.status == .sending {
                     chatRoomDelegate.chatMessage.remove(at: index)
                     messagesCollectionView.performBatchUpdates({
@@ -80,7 +91,11 @@ extension ChatViewController {
             if selfForwarded {
                 sentMessages?.forEach({ (message) in
                     let filteredArray = self.messages.filter { chatMessage in
-                        return chatMessage.message.temporalId == message.temporalId
+                        guard let localChatMessage = chatMessage as? ChatMessage else {
+                            return false
+                        }
+                        
+                        return localChatMessage.message.temporalId == message.temporalId
                     }
                     if filteredArray.count > 0 {
                         MEGALogWarning("Forwarded message was already added to the array, probably onMessageUpdate received before now.")

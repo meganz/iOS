@@ -18,6 +18,7 @@ class ChatViewMessagesFlowLayout: MessagesCollectionViewFlowLayout {
     lazy var chatlocationCollectionViewSizeCalculator = ChatlocationCollectionViewSizeCalculator(layout: self)
     lazy var chatManagmentTypeCollectionViewSizeCalculator = ChatManagmentTypeCollectionViewSizeCalculator(layout: self)
     lazy var chatAttributedTextMessageSizeCalculator  = ChatTextMessageSizeCalculator(layout: self)
+    lazy var chatUnreadMessagesLabelCollectionCellSizeCalculator = ChatUnreadMessagesLabelCollectionCellSizeCalculator(layout: self)
   
     var editing = false {
         didSet {
@@ -106,6 +107,10 @@ class ChatViewMessagesFlowLayout: MessagesCollectionViewFlowLayout {
         let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
 
         if case .custom = message.kind {
+            if message is ChatNotificationMessage {
+                return chatUnreadMessagesLabelCollectionCellSizeCalculator
+            }
+            
             guard let chatMessage = message as? ChatMessage else {
                 return super.cellSizeCalculatorForItem(at: indexPath)
             }

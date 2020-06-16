@@ -311,8 +311,16 @@ extension ChatViewController: ChatInputBarDelegate {
             if editMessage.message.content != text,
                 let message = MEGASdkManager.sharedMEGAChatSdk()?.editMessage(forChat: chatRoom.chatId, messageId: messageId, message: text) {
                 message.chatId = chatRoom.chatId
+                                
+                let firstIndex = messages.firstIndex { message -> Bool in
+                    guard let chatMessage = message as? ChatMessage else {
+                        return false
+                    }
+                    
+                    return chatMessage == editMessage
+                }
                 
-                if let index = messages.firstIndex(of: editMessage),
+                if let index = firstIndex,
                     index != NSNotFound {
                     chatRoomDelegate.chatMessage[index] = ChatMessage(message: message, chatRoom: chatRoom)
                     messagesCollectionView.reloadDataAndKeepOffset()
