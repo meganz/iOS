@@ -41,7 +41,7 @@ final class PhotoCarouselFlowLayout: UICollectionViewFlowLayout {
     }
     
     private var currentCellIndex: Int {
-        return min(cellCount - 1, Int(currentOffset / collectionViewWidth))
+       min(cellCount - 1, Int(currentOffset / collectionViewWidth))
     }
     
     private var currentFractionComplete: CGFloat {
@@ -136,7 +136,7 @@ final class PhotoCarouselFlowLayout: UICollectionViewFlowLayout {
     }
     
     override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
-        return true
+       true
     }
     
     override func invalidationContext(forBoundsChange newBounds: CGRect) -> UICollectionViewLayoutInvalidationContext {
