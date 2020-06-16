@@ -1,5 +1,4 @@
 
-
 extension UIView {
     class var instanceFromNib: Self {
         guard let view =  Bundle(for: Self.self)
