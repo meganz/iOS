@@ -291,6 +291,7 @@ fileprivate extension Date {
     private func string(dateFormat: String) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = dateFormat
+        dateFormatter.locale = Locale.autoupdatingCurrent
         return dateFormatter.string(from: self)
     }
 }

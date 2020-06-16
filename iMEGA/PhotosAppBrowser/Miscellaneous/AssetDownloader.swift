@@ -27,21 +27,21 @@ final class AssetDownloader {
         let imageRequestOptions = PHImageRequestOptions()
         imageRequestOptions.isNetworkAccessAllowed = true
         
-        imageRequestId = self.imageManager.requestImage(for: asset,
-                                                        targetSize: size,
-                                                        contentMode: .aspectFill,
-                                                        options: imageRequestOptions) { [weak self] image, _ in
-                                                            guard let image = image else {
-                                                                if let handler = handler {
-                                                                    handler(false)
-                                                                }
-                                                                return
-                                                            }
-                                                            
-                                                            self?.imageView.image = image
-                                                            if let handler = handler {
-                                                                handler(true)
-                                                            }
+        imageRequestId = imageManager.requestImage(for: asset,
+                                                   targetSize: size,
+                                                   contentMode: .aspectFill,
+                                                   options: imageRequestOptions) { [weak self] image, _ in
+                                                    guard let image = image else {
+                                                        if let handler = handler {
+                                                            handler(false)
+                                                        }
+                                                        return
+                                                    }
+                                                    
+                                                    self?.imageView.image = image
+                                                    if let handler = handler {
+                                                        handler(true)
+                                                    }
         }
     }
     
