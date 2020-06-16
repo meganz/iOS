@@ -532,6 +532,8 @@
 		837A88C220B44AA8007B55D1 /* OfflineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 837A88C120B44AA8007B55D1 /* OfflineViewController.m */; };
 		837A88C520B45C11007B55D1 /* SendToViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 837A88C420B45C11007B55D1 /* SendToViewController.m */; };
 		837B9BFB246D38E900D409B4 /* ActionSheetActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837B9BFA246D38E800D409B4 /* ActionSheetActions.swift */; };
+		837B9C07247817F100D409B4 /* NodeActionBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837B9C06247817F000D409B4 /* NodeActionBuilder.swift */; };
+		837B9C0B24781B1600D409B4 /* NodeActionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837B9C0924781B1600D409B4 /* NodeActionsTests.swift */; };
 		837C4F88235DFFA600FFE177 /* VerifyEmail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 837C4F87235DFFA600FFE177 /* VerifyEmail.storyboard */; };
 		837C4F8A235DFFBA00FFE177 /* VerifyEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837C4F89235DFFBA00FFE177 /* VerifyEmailViewController.swift */; };
 		838633A623FED61D00CDB6A5 /* CustomModalAlertViewController+TwoFactorAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838633A523FED61D00CDB6A5 /* CustomModalAlertViewController+TwoFactorAuthentication.swift */; };
@@ -1841,6 +1843,8 @@
 		837A88C320B45C11007B55D1 /* SendToViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SendToViewController.h; path = Chat/SendToViewController.h; sourceTree = "<group>"; };
 		837A88C420B45C11007B55D1 /* SendToViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = SendToViewController.m; path = Chat/SendToViewController.m; sourceTree = "<group>"; };
 		837B9BFA246D38E800D409B4 /* ActionSheetActions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionSheetActions.swift; sourceTree = "<group>"; };
+		837B9C06247817F000D409B4 /* NodeActionBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeActionBuilder.swift; sourceTree = "<group>"; };
+		837B9C0924781B1600D409B4 /* NodeActionsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeActionsTests.swift; sourceTree = "<group>"; };
 		837C4F87235DFFA600FFE177 /* VerifyEmail.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = VerifyEmail.storyboard; sourceTree = "<group>"; };
 		837C4F89235DFFBA00FFE177 /* VerifyEmailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyEmailViewController.swift; sourceTree = "<group>"; };
 		838633A523FED61D00CDB6A5 /* CustomModalAlertViewController+TwoFactorAuthentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomModalAlertViewController+TwoFactorAuthentication.swift"; sourceTree = "<group>"; };
@@ -4148,6 +4152,7 @@
 		832E1020202B097900BDD30F /* CustomActionViewController */ = {
 			isa = PBXGroup;
 			children = (
+				837B9C06247817F000D409B4 /* NodeActionBuilder.swift */,
 				832E1021202B099800BDD30F /* Cells */,
 				837B9BFA246D38E800D409B4 /* ActionSheetActions.swift */,
 				2F83AA0D2419C96000505B8A /* ActionSheetViewController.swift */,
@@ -4216,6 +4221,14 @@
 				8315B91522DF52DD000CA232 /* ContactOnMegaTableViewCell.swift */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		837B9C0824781B1600D409B4 /* NodeActions */ = {
+			isa = PBXGroup;
+			children = (
+				837B9C0924781B1600D409B4 /* NodeActionsTests.swift */,
+			);
+			path = NodeActions;
 			sourceTree = "<group>";
 		};
 		837C4F86235DFF3E00FFE177 /* VerifyEmailViewcontroller */ = {
@@ -5176,6 +5189,7 @@
 		B6CED48C22B8AC70009C4861 /* MEGAUnitTests */ = {
 			isa = PBXGroup;
 			children = (
+				837B9C0824781B1600D409B4 /* NodeActions */,
 				B6CED48F22B8AC70009C4861 /* Info.plist */,
 				5B076EDA22C251BF00D773B9 /* CameraUpload */,
 			);
@@ -6202,6 +6216,7 @@
 				A86B9F372316D6AB00F35E7A /* FLEXSubtitleTableViewCell.m in Sources */,
 				A824A9192039ECD700D777D2 /* SDAVAssetExportSession.m in Sources */,
 				41E250141D79E9D400499A6C /* SAMKeychainQuery.m in Sources */,
+				837B9C07247817F100D409B4 /* NodeActionBuilder.swift in Sources */,
 				2FCC5BC2238740ED00E1E5A0 /* ChatImageUploadQuality.h in Sources */,
 				B6D11AE2219E5E2C00446B86 /* AttributeUploadOperation.m in Sources */,
 				A86B9F642316D6AB00F35E7A /* FLEXKeychainQuery.m in Sources */,
@@ -6680,6 +6695,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B6CED49622B8AFC3009C4861 /* CameraUploadConcurrentCountCalculatorTests.m in Sources */,
+				837B9C0B24781B1600D409B4 /* NodeActionsTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7390,17 +7406,39 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = NO;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					iMEGA/Vendor/SSKeychain,
+					iMEGA/Vendor/PureLayout/PureLayout,
+					iMEGA/Vendor/Import,
+					iMEGA/Vendor/FrameAccessor,
+					iMEGA/Vendor/SDK/bindings/ios/3rdparty/webrtc/sdk/objc/Framework/Headers,
+				);
 				INFOPLIST_FILE = MEGAUnitTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAUnitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "iMEGA/MEGA-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MEGA.app/MEGA";
+				USER_HEADER_SEARCH_PATHS = "iMEGA/Vendor/SDK/bindings/ios/** iMEGA/Vendor/Karere/bindings/Objective-C";
 			};
 			name = Debug;
 		};
@@ -7419,16 +7457,29 @@
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = NO;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = MEGAUnitTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAUnitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "iMEGA/MEGA-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MEGA.app/MEGA";
+				USER_HEADER_SEARCH_PATHS = "iMEGA/Vendor/SDK/bindings/ios/** iMEGA/Vendor/Karere/bindings/Objective-C";
 			};
 			name = Release;
 		};
