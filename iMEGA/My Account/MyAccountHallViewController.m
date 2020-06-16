@@ -337,8 +337,6 @@ typedef NS_ENUM(NSInteger, MyAccount) {
                 if (MEGASdkManager.sharedMEGASdk.mnz_accountDetails) {
                     MEGAAccountDetails *accountDetails = MEGASdkManager.sharedMEGASdk.mnz_accountDetails;
                     cell.detailLabel.text = [NSString stringWithFormat:@"%@ / %@", [Helper memoryStyleStringFromByteCount:accountDetails.storageUsed.longLongValue], [Helper memoryStyleStringFromByteCount:accountDetails.storageMax.longLongValue]];
-                } else {
-                    cell.detailTextLabel.text = @"";
                 }
             }
             break;
