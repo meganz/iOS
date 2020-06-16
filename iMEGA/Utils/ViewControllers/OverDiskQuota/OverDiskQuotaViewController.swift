@@ -113,9 +113,8 @@ final class OverDiskQuotaViewController: UIViewController {
                                       infor.takingUpStorage(with: byteCountFormatter),
                                       infor.plan)
 
-        descriptionLabel.attributedText = MarkedStringParser.parseAttributedString(from: formattedMessage,
-                                                                                   withStyleRegistration: ["paragraph": .paragraph,
-                                                                                                           "b": .emphasized])
+        let styleMarks: StyleMarks = ["paragraph": .paragraph, "b": .emphasized]
+        descriptionLabel.attributedText = formattedMessage.attributedString(with: styleMarks)
     }
 
     private func setupUpgradeButton(_ button: UIButton) {

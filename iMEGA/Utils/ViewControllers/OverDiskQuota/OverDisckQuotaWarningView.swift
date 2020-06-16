@@ -9,6 +9,8 @@ final class OverDisckQuotaWarningView: UIView, NibOwnerLoadable {
     
     @IBOutlet private var containerView: UIView!
 
+    // MARK: - Initializer
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
@@ -24,10 +26,9 @@ final class OverDisckQuotaWarningView: UIView, NibOwnerLoadable {
     func updateTimeLeftForTitle(withText text: String) {
         let warningTitleMessage = AMLocalizedString("Over Disk Quota Warning Title", "You have %@ left to upgrade.")
         let formattedTitleMessage = String(format: warningTitleMessage, text)
-        let attributedString = MarkedStringParser.parseAttributedString(from: formattedTitleMessage,
-                                                                        withStyleRegistration: ["warn": .warning,
-                                                                                                "body": .emphasized])
-        titleLabel.attributedText = attributedString
+        let styleMarks: StyleMarks = ["warn": .warning,
+                                      "body": .emphasized]
+        titleLabel.attributedText = formattedTitleMessage.attributedString(with: styleMarks)
     }
 
     // MARK: - Setup View
