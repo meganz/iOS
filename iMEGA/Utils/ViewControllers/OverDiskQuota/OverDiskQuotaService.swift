@@ -39,51 +39,24 @@ import Foundation
     }
 }
 
-@objc final class OverDiskQuotaServiceImpl: NSObject {
+@objc final class OverDiskQuotaService: NSObject {
 
     // MARK: - Static
 
-    private static var shared: OverDiskQuotaServiceImpl = OverDiskQuotaServiceImpl()
+    private static var shared: OverDiskQuotaService = OverDiskQuotaService()
 
     // MARK: - OverDiskQuotaService
 
-    private static func getUserData(_ api: MEGASdk, retries: Int) {
-        let userDataDelegate = GetUserDataMEGARequestDelegate()
-
-        userDataDelegate.callback = { [shared] delegateReturnedAPI, error in
-            var retainedDelegate: GetUserDataMEGARequestDelegate? = userDataDelegate
-            defer { retainedDelegate = nil }
-
-            guard error == .apiOk else {
-                if retries >= 0 { getUserData(api, retries: retries - 1) }
-                return
-            }
-            shared.updateUserData(withSDK: delegateReturnedAPI)
-        }
-        api.getUserData(with: userDataDelegate)
-    }
-
-    private static func getPricing(_ api: MEGASdk, retries: Int) {
-        let getPricingDelegate = GetPricingMEGARequestDelegate()
-
-        getPricingDelegate.callback = { [shared] delegateReturnedAPI, pricing, error in
-            var retainedDelegate: GetPricingMEGARequestDelegate? = getPricingDelegate
-            defer { retainedDelegate = nil }
-
-            guard error == .apiOk else {
-                if retries >= 0 { getPricing(api, retries: retries - 1) }
-                return
-            }
-            shared.updatePricing(pricing, withSDK: delegateReturnedAPI)
-        }
-        api.getPricingWith(getPricingDelegate)
+    private static func getUserData(_ api: MEGASdk) {
+        api.getUserData(with: MEGAGenericRequestDelegate(completion: { [shared] (request, error) in
+            shared.updateUserData(withSDK: api)
+        }))
     }
 
     @objc static func prepareOverDiskQuotaInformation(withSDK api: MEGASdk,
                                                       callback: @escaping (OverDiskQuotaInfomationType) -> Void) {
         shared.informationReadyCallback = callback
-        getUserData(api, retries: 3)
-        getPricing(api, retries: 3)
+        getUserData(api)
     }
 
     // MARK: - Instance
@@ -92,34 +65,45 @@ import Foundation
 
     private var informationReadyCallback: ((OverDiskQuotaInfomationType) -> Void)?
 
-    private var pricing: MEGAPricing?
-
     // MARK: - Lifecycle
 
     private override init() {}
 
     // MARK: - Instance Method
 
-    fileprivate func updatePricing(_ pricing: MEGAPricing, withSDK api: MEGASdk) {
-        internalStore.availablePlans = (0..<pricing.products).map { productIndex in
-            (pricing.storageGB(atProductIndex: productIndex),
-            pricing.description(atProductIndex: productIndex))
-        }
-
-        if let validStore = validated(internalStore) {
-            informationReadyCallback?(validStore)
-        }
-    }
-
-    fileprivate func updateUserData(withSDK api: MEGASdk) {
+    private func updateUserData(withSDK api: MEGASdk) {
         internalStore.email = api.myEmail
         internalStore.deadline = api.overquotaDeadlineDate()
         internalStore.warningDates = api.overquotaWarningDateList()
         internalStore.numberOfFilesOnCloud = api.totalNodes
         internalStore.cloudStorage = api.mnz_accountDetails?.storageUsed
 
-        if let validStore = validated(internalStore) {
-            informationReadyCallback?(validStore)
+        guard let cloudSpaceTaking = internalStore.cloudStorage else { return }
+
+        findMinimumPriceMEGAPLan(withAtLeastStorage: cloudSpaceTaking.intValue / 1024 / 1024 / 1024, withSDK: api) { [weak self] advice in
+            switch advice {
+            case .noSatisfied: break
+            case .upgradeTo(let plan):
+                guard let self = self else { return }
+                self.internalStore.availablePlans = plan
+                if let validatedOverDiskQuotaInfomation = self.validated(self.internalStore) {
+                    self.informationReadyCallback?(validatedOverDiskQuotaInfomation)
+                    self.informationReadyCallback = nil
+                }
+            }
+        }
+    }
+
+    private func findMinimumPriceMEGAPLan(withAtLeastStorage storage: Int,
+                                          withSDK api: MEGASdk,
+                                          completion: @escaping (MEGAPlanUpgradeAdvice) -> Void) {
+        let query = QueryConstraint { plans in
+            QueryConstraint.minimumPrice.run(
+                QueryConstraint.storagGreaterThan(storage).run(plans))
+        }
+
+        MEGAPlanAdviser.suggestPlan(constraints: query, api: api) { advice in
+            completion(advice)
         }
     }
 
@@ -131,16 +115,12 @@ import Foundation
         guard let cloudStorage = internalStore.cloudStorage else { return nil }
         guard let availablePlans = internalStore.availablePlans else { return nil }
 
-        guard let lowestPlan = (availablePlans.first { (storage, planName) -> Bool in
-            (Double(storage) >= cloudStorage.doubleValue / 1024 / 1024 / 1024)
-        }) else { return nil }
-
         return OverDiskQuotaInformation(email: email,
                                         deadline: deadline,
                                         warningDates: warningDate,
                                         numberOfFilesOnCloud: numberOfFiles,
                                         cloudStorage: cloudStorage,
-                                        availablePlans: lowestPlan.1)
+                                        availablePlans: availablePlans.description)
     }
 
     // MARK: - Internal Store
@@ -150,7 +130,7 @@ import Foundation
     typealias WarningDates = [Date]
     typealias FileCount = UInt
     typealias Storage = NSNumber
-    typealias AvailablePlans = [(Int, String)]
+    typealias AvailablePlan = MEGAPlan
 
     fileprivate struct OverDiskQuotaStore {
         var email: Email?
@@ -158,26 +138,6 @@ import Foundation
         var warningDates: WarningDates?
         var numberOfFilesOnCloud: FileCount?
         var cloudStorage: Storage?
-        var availablePlans: AvailablePlans?
-    }
-
-    // MARK: - SDK MEGARequest Delegate
-
-    fileprivate final class GetUserDataMEGARequestDelegate: NSObject, MEGARequestDelegate {
-
-        var callback: ((MEGASdk, MEGAErrorType) -> Void)?
-
-        func onRequestFinish(_ api: MEGASdk, request: MEGARequest, error: MEGAError) {
-            callback?(api, error.type)
-        }
-    }
-
-    fileprivate final class GetPricingMEGARequestDelegate: NSObject, MEGARequestDelegate {
-
-        var callback: ((MEGASdk, MEGAPricing, MEGAErrorType) -> Void)?
-
-        func onRequestFinish(_ api: MEGASdk, request: MEGARequest, error: MEGAError) {
-            callback?(api, request.pricing, error.type)
-        }
+        var availablePlans: AvailablePlan?
     }
 }
