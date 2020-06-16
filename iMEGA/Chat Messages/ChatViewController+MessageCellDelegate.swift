@@ -47,7 +47,9 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate {
         let indexPath = messagesCollectionView.indexPath(for: cell)!
         guard let messagesDataSource = messagesCollectionView.messagesDataSource else { return }
            
-        let chatMessage = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView) as! ChatMessage
+        guard let chatMessage = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView) as? ChatMessage else {
+            return
+        }
 
         let megaMessage = chatMessage.message
         
@@ -64,13 +66,21 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate {
                 }
                 if node!.name.mnz_isImagePathExtension || node!.name.mnz_isImagePathExtension {
                     let attachments = messages.filter { (message) -> Bool in
-                        return message.message.type == .attachment
+                        guard let localChatMessage = message as? ChatMessage else {
+                            return false
+                        }
+                        
+                        return localChatMessage.message.type == .attachment
                     }
                     
                     var mediaNodesArray = [MEGANode]()
                     
                     attachments.forEach { (message) in
-                        var tempNode = message.message.nodeList.node(at: 0)
+                        guard let localChatMessage = message as? ChatMessage else {
+                            return
+                        }
+                        
+                        var tempNode = localChatMessage.message.nodeList.node(at: 0)
                         if chatRoom.isPreview {
                             tempNode = MEGASdkManager.sharedMEGASdk()?.authorizeChatNode(tempNode!, cauth: chatRoom.authorizationToken)
                         }
@@ -78,7 +88,13 @@ extension ChatViewController: MessageCellDelegate, MEGAPhotoBrowserDelegate {
                             mediaNodesArray.append(tempNode!)
                         }
                     }
-                    let idx = attachments.firstIndex(of: chatMessage)
+                    let idx = attachments.firstIndex { message -> Bool in
+                        guard let localChatMessage = message as? ChatMessage else {
+                            return false
+                        }
+                        
+                        return localChatMessage == chatMessage
+                    }
                     let photoBrowserVC = MEGAPhotoBrowserViewController.photoBrowser(withMediaNodes:  NSMutableArray(array: mediaNodesArray),
                                                                                      api: MEGASdkManager.sharedMEGASdk(),
                                                                                      displayMode: .chatAttachment,

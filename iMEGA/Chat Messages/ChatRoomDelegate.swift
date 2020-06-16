@@ -10,8 +10,8 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
     var transfers: [ChatMessage] = []
     let chatRoom: MEGAChatRoom
     weak var chatViewController: ChatViewController?
-    var chatMessage: [ChatMessage] = []
-    var messages : [ChatMessage] {
+    var chatMessage: [MessageType] = []
+    var messages : [MessageType] {
         get {
           return  chatMessage + transfers
         }
@@ -150,16 +150,25 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
                 break
             case .serverReceived:
                 let filteredArray = chatMessage.filter { chatMessage in
-                    return chatMessage.message.temporalId == message.temporalId
+                    guard let localChatMessage = chatMessage as? ChatMessage else {
+                        return false
+                    }
+                    
+                    return localChatMessage.message.temporalId == message.temporalId
                 }
                 
                 if filteredArray.count > 0 {
-                    let oldMessage = filteredArray.first!
-                    //                    if oldMessage.warningDialog.r > MEGAChatMessageWarningDialogNone {
-//
-//                    }
+                    guard let oldMessage = filteredArray.first as? ChatMessage,
+                        let index = chatMessage.firstIndex(where: { message -> Bool in
+                        guard let localChatMessage = message as? ChatMessage else {
+                            return false
+                        }
+                        
+                        return localChatMessage == oldMessage
+                    }) else {
+                        return
+                    }
                     
-                    let index = chatMessage.firstIndex(of: oldMessage)!
                     let receivedMessage = ChatMessage(message: message, chatRoom: chatRoom)
                     chatMessage[index] = receivedMessage
                     chatViewController?.messagesCollectionView.performBatchUpdates({
@@ -200,12 +209,24 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
         if message.hasChanged(for: .content) {
             if message.isDeleted || message.isEdited {
                 let filteredArray = chatMessage.filter { chatMessage in
-                    return chatMessage.message.messageId == message.messageId
+                    guard let localChatMessage = chatMessage as? ChatMessage else  {
+                        return false
+                    }
+                    
+                    return localChatMessage.message.messageId == message.messageId
                 }
                 if filteredArray.count > 0 {
-                    let oldMessage = filteredArray.first!
+                    guard let oldMessage = filteredArray.first as? ChatMessage,
+                        let index = chatMessage.firstIndex(where: { chatMessage -> Bool in
+                            guard let localChatMessage = chatMessage as? ChatMessage else {
+                                return false
+                            }
+                            
+                            return localChatMessage == oldMessage
+                        })else {
+                            return
+                    }
                     
-                    let index = chatMessage.firstIndex(of: oldMessage)!
                     let receivedMessage = ChatMessage(message: message, chatRoom: chatRoom)
                     
                     if message.isEdited {

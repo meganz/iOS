@@ -2,9 +2,8 @@ import MessageKit
 
 extension ChatViewController: ChatViewMessagesLayoutDelegate {
     func collectionView(_ collectionView: MessagesCollectionView, layout collectionViewLayout: MessagesCollectionViewFlowLayout, editingOffsetForCellAt indexPath: IndexPath) -> CGFloat {
-        let message = messages[indexPath.section]
-
-        guard !message.message.isManagementMessage else {
+        guard let message = messages[indexPath.section] as? ChatMessage,
+            !message.message.isManagementMessage else {
             return 0
         }
         
@@ -12,21 +11,35 @@ extension ChatViewController: ChatViewMessagesLayoutDelegate {
     }
 
     func collectionView(_ collectionView: MessagesCollectionView, layout collectionViewLayout: MessagesCollectionViewFlowLayout, shouldEditItemAt indexPath: IndexPath) -> Bool {
-        let message = messages[indexPath.section]
-        return !message.message.isManagementMessage
-             
+        guard let chatMessage = messages[indexPath.section] as? ChatMessage else {
+            return false
+        }
+
+        return !chatMessage.message.isManagementMessage
     }
     
 
     func cellTopLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+        if message is ChatNotificationMessage {
+            return 0.0
+        }
+        
         return isDateLabelVisible(for: indexPath) ? 30.0 : 0.0
     }
 
     func messageTopLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+        if message is ChatNotificationMessage {
+            return 0.0
+        }
+        
         return isTimeLabelVisible(at: indexPath) ? 28.0 : 0.0
     }
 
     func headerViewSize(for section: Int, in messagesCollectionView: MessagesCollectionView) -> CGSize {
+        if messages[section] is ChatNotificationMessage {
+            return .zero
+        }
+        
         if section == 0 {
             if chatRoomDelegate.isFullChatHistoryLoaded {
                 let chatMessageHeaderView = ChatViewIntroductionHeaderView.instanceFromNib
@@ -48,11 +61,10 @@ extension ChatViewController: ChatViewMessagesLayoutDelegate {
 
 extension ChatViewController: MessagesEditCollectionOverlayViewDelegate {
     func editOverlayView(_ editOverlayView: MessageEditCollectionOverlayView, activated: Bool) {
-        guard let indexPath = editOverlayView.indexPath else {
+        guard let indexPath = editOverlayView.indexPath,
+            let message = messages[indexPath.section] as? ChatMessage else {
             return
         }
-        
-        let message = messages[indexPath.section]
         
         if activated {
             selectedMessages.insert(message)

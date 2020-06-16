@@ -1109,6 +1109,9 @@
 		BF09FF23243BDB770067DD77 /* MessageInputTextBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF09FF22243BDB770067DD77 /* MessageInputTextBackgroundView.swift */; };
 		BF0ACD64240C87A80002101E /* MEGAChatListItem+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0ACD63240C87A80002101E /* MEGAChatListItem+Additions.swift */; };
 		BF0BBEFE230627BE001FD542 /* UIViewController+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0BBEFD230627BE001FD542 /* UIViewController+MNZCategory.m */; };
+		BF1053C924971A5E009094C8 /* ChatNotificationMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1053C824971A5E009094C8 /* ChatNotificationMessage.swift */; };
+		BF1053DE2498663B009094C8 /* ChatUnreadMessagesLabelCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1053DC2498663B009094C8 /* ChatUnreadMessagesLabelCollectionCell.swift */; };
+		BF1053DF2498663B009094C8 /* ChatUnreadMessagesLabelCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF1053DD2498663B009094C8 /* ChatUnreadMessagesLabelCollectionCell.xib */; };
 		BF1574AE2373AB8C0095B283 /* MEGAChatRoom+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1574AD2373AB8C0095B283 /* MEGAChatRoom+Additions.swift */; };
 		BF15891F2435EF85007AF9EC /* ChatViewCallCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF15891D2435EF85007AF9EC /* ChatViewCallCollectionCell.swift */; };
 		BF1589202435EF85007AF9EC /* ChatViewCallCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF15891E2435EF85007AF9EC /* ChatViewCallCollectionCell.xib */; };
@@ -2653,6 +2656,9 @@
 		BF0ACD63240C87A80002101E /* MEGAChatListItem+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAChatListItem+Additions.swift"; sourceTree = "<group>"; };
 		BF0BBEFC230627BE001FD542 /* UIViewController+MNZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+MNZCategory.h"; sourceTree = "<group>"; };
 		BF0BBEFD230627BE001FD542 /* UIViewController+MNZCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+MNZCategory.m"; sourceTree = "<group>"; };
+		BF1053C824971A5E009094C8 /* ChatNotificationMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatNotificationMessage.swift; sourceTree = "<group>"; };
+		BF1053DC2498663B009094C8 /* ChatUnreadMessagesLabelCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatUnreadMessagesLabelCollectionCell.swift; sourceTree = "<group>"; };
+		BF1053DD2498663B009094C8 /* ChatUnreadMessagesLabelCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatUnreadMessagesLabelCollectionCell.xib; sourceTree = "<group>"; };
 		BF1574AD2373AB8C0095B283 /* MEGAChatRoom+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAChatRoom+Additions.swift"; sourceTree = "<group>"; };
 		BF15891D2435EF85007AF9EC /* ChatViewCallCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewCallCollectionCell.swift; sourceTree = "<group>"; };
 		BF15891E2435EF85007AF9EC /* ChatViewCallCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatViewCallCollectionCell.xib; sourceTree = "<group>"; };
@@ -5557,6 +5563,7 @@
 				2F496B11247B524300622DCC /* UIImageView+WMLTemplatedAnimation.h */,
 				2F496B12247B524300622DCC /* UIImageView+WMLTemplatedAnimation.m */,
 				BFB463E82433394500FB90B9 /* ChatMessage.swift */,
+				BF1053C824971A5E009094C8 /* ChatNotificationMessage.swift */,
 				BF33EF6F243DA31D00CD35AC /* ChatViewAttachmentCellViewModel.swift */,
 				BFB463DC2432F2E900FB90B9 /* ChatRoomDelegate.swift */,
 				2F73098E24636F9E00EF36F4 /* ChatRoomCallDelegate.swift */,
@@ -5645,6 +5652,8 @@
 				2FA6D9C22436C314007A8E81 /* ChatViewAttachmentCell.swift */,
 				BF15891D2435EF85007AF9EC /* ChatViewCallCollectionCell.swift */,
 				BF15891E2435EF85007AF9EC /* ChatViewCallCollectionCell.xib */,
+				BF1053DC2498663B009094C8 /* ChatUnreadMessagesLabelCollectionCell.swift */,
+				BF1053DD2498663B009094C8 /* ChatUnreadMessagesLabelCollectionCell.xib */,
 				BFB463F9243456D900FB90B9 /* ChatViewIntroductionHeaderView.swift */,
 				BFB463FA243456D900FB90B9 /* ChatViewIntroductionHeaderView.xib */,
 				BFCF841E246A1310004FA3B1 /* JoinInputBar.swift */,
@@ -6147,6 +6156,7 @@
 				4152268B1A692ECC00EC7BB6 /* Cloud.storyboard in Resources */,
 				B6A11A0E2283987D0017CD59 /* SMSVerification.storyboard in Resources */,
 				BF7EBD4B245293530015255F /* AddToChatMenuViewController.xib in Resources */,
+				BF1053DF2498663B009094C8 /* ChatUnreadMessagesLabelCollectionCell.xib in Resources */,
 				5B6429E42020A9A3000E0DCB /* SF-UI-Display-Bold.otf in Resources */,
 				E8C289F51BF5F8A200F7A034 /* SF-UI-Text-Light.otf in Resources */,
 				2F913910238CC3CA004C611A /* MEGARecordView.xib in Resources */,
@@ -6853,6 +6863,7 @@
 				BF7EBD1C244D354A0015255F /* MeterTable.swift in Sources */,
 				BF1589222435F3E7007AF9EC /* ChatViewMessagesFlowLayout.swift in Sources */,
 				A86B9F292316D6AB00F35E7A /* FLEXObjectExplorerFactory.m in Sources */,
+				BF1053DE2498663B009094C8 /* ChatUnreadMessagesLabelCollectionCell.swift in Sources */,
 				41EAAE471D06B49400622FAF /* NSDateFormatter+CTAssetsPickerController.m in Sources */,
 				B68BAEC3221DEA7600FF6FCD /* AssetIdentifierInfo.m in Sources */,
 				B645165322320C23001680BC /* UploadStats.m in Sources */,
@@ -6987,6 +6998,7 @@
 				5BD4A0221F838606000E24E6 /* ScrollViewFrameAccessor.m in Sources */,
 				2F528CBA2474C0CE006DE5C2 /* BasicAudioController.swift in Sources */,
 				832E102F202CB8AE00BDD30F /* NodeInfoViewController.m in Sources */,
+				BF1053C924971A5E009094C8 /* ChatNotificationMessage.swift in Sources */,
 				417279431DB663FA001AC818 /* JSQMessagesCollectionViewFlowLayout.m in Sources */,
 				A841E63C20CAB460005E1D1B /* MEGAMessageCallManagementView.m in Sources */,
 				B6E19B3A2178424600882F74 /* TransferSessionDelegate.m in Sources */,

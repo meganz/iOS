@@ -43,7 +43,7 @@ class ChatViewController: MessagesViewController {
         return view
     }()
     
-    var messages: [ChatMessage] {
+    var messages: [MessageType] {
         return chatRoomDelegate.messages
     }
 
@@ -460,12 +460,14 @@ class ChatViewController: MessagesViewController {
         
         switch kind {
         case "kCollectionElementKindEditOverlay":
-            guard let overlayView = collectionView.dequeueReusableSupplementaryView(ofKind: "kCollectionElementKindEditOverlay", withReuseIdentifier: MessageEditCollectionOverlayView.reuseIdentifier, for: indexPath) as? MessageEditCollectionOverlayView else {
+            guard let overlayView = collectionView.dequeueReusableSupplementaryView(ofKind: "kCollectionElementKindEditOverlay",
+                                                                                    withReuseIdentifier: MessageEditCollectionOverlayView.reuseIdentifier,
+                                                                                    for: indexPath) as? MessageEditCollectionOverlayView,
+                let message = messages[indexPath.section] as? ChatMessage else {
                 return super.collectionView(collectionView, viewForSupplementaryElementOfKind: kind, at: indexPath)
             }
             overlayView.delegate = self
             overlayView.indexPath = indexPath
-            let message = messages[indexPath.section]
             overlayView.configureDisplaying(isActive: selectedMessages.contains(message))
             return overlayView
         default:
@@ -479,6 +481,16 @@ class ChatViewController: MessagesViewController {
 
         guard let messagesDataSource = messagesCollectionView.messagesDataSource else {
               fatalError("Ouch. nil data source for messages")
+        }
+        
+        if let notificationMessage = message as? ChatNotificationMessage {
+            guard let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatUnreadMessagesLabelCollectionCell.reuseIdentifier,
+                                                                        for: indexPath) as? ChatUnreadMessagesLabelCollectionCell,
+                case .unreadMessage(let count) = notificationMessage.type else {
+                                                                            fatalError("Could not dequeue `ChatUnreadMessagesLabelCollectionCell`")
+            }
+            cell.unreadMessageCount = count
+            return cell
         }
 
         let chatMessage = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView) as! ChatMessage
@@ -718,6 +730,8 @@ class ChatViewController: MessagesViewController {
                                         forCellWithReuseIdentifier: ChatLocationCollectionViewCell.reuseIdentifier)
         messagesCollectionView.register(ChatManagmentTypeCollectionViewCell.self,
                                         forCellWithReuseIdentifier: ChatManagmentTypeCollectionViewCell.reuseIdentifier)
+        messagesCollectionView.register(ChatUnreadMessagesLabelCollectionCell.nib,
+                                        forCellWithReuseIdentifier: ChatUnreadMessagesLabelCollectionCell.reuseIdentifier)
     }
 
     private func update() {
@@ -737,10 +751,15 @@ class ChatViewController: MessagesViewController {
     
     private func setLastMessageAsSeen() {
         if messages.count > 0 {
-            let lastMessage = messages.last
-            if lastMessage?.message.userHandle != MEGASdkManager.sharedMEGAChatSdk()?.myUserHandle
-                && ((MEGASdkManager.sharedMEGAChatSdk()?.lastChatMessageSeen(forChat: chatRoom.chatId))?.messageId != lastMessage!.message.messageId) {
-                MEGASdkManager.sharedMEGAChatSdk()?.setMessageSeenForChat(chatRoom.chatId, messageId: lastMessage!.message.messageId)
+            guard let lastMessage = messages.last as? ChatMessage,
+                let chatSDK = MEGASdkManager.sharedMEGAChatSdk(),
+                let lastSeenMessage = chatSDK.lastChatMessageSeen(forChat: chatRoom.chatId) else {
+                return
+            }
+            
+            if lastMessage.message.userHandle != chatSDK.myUserHandle
+                && lastSeenMessage.messageId != lastMessage.message.messageId {
+                chatSDK.setMessageSeenForChat(chatRoom.chatId, messageId: lastMessage.message.messageId)
             }
         }
     }
