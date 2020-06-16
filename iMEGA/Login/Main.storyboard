@@ -325,12 +325,13 @@
                                                 </constraints>
                                             </stackView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l5v-Oj-XXr" userLabel="Checkbox">
-                                                <rect key="frame" x="20" y="423" width="20" height="20"/>
+                                                <rect key="frame" x="10" y="423" width="40" height="40"/>
                                                 <accessibility key="accessibilityConfiguration" hint="You agree MEGA Term of Services"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="20" id="9pM-99-MgM"/>
-                                                    <constraint firstAttribute="height" constant="20" id="WWy-ji-5uZ"/>
+                                                    <constraint firstAttribute="width" constant="40" id="9pM-99-MgM"/>
+                                                    <constraint firstAttribute="height" constant="40" id="WWy-ji-5uZ"/>
                                                 </constraints>
+                                                <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                 <state key="normal" image="checkBox">
                                                     <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </state>
@@ -340,7 +341,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fqq-un-Bih">
-                                                <rect key="frame" x="58" y="419.66666666666669" width="224" height="27"/>
+                                                <rect key="frame" x="58" y="429.66666666666669" width="224" height="27"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <state key="normal" title="I agree with the MEGA Terms of Service"/>
                                                 <connections>
@@ -348,12 +349,13 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HZu-aK-JZa" userLabel="Checkbox">
-                                                <rect key="frame" x="20" y="463" width="20" height="20"/>
+                                                <rect key="frame" x="10" y="483" width="40" height="40"/>
                                                 <accessibility key="accessibilityConfiguration" hint="You agree MEGA Term of Services"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="20" id="Fh7-E0-uDu"/>
-                                                    <constraint firstAttribute="width" constant="20" id="YQW-On-RVE"/>
+                                                    <constraint firstAttribute="height" constant="40" id="Fh7-E0-uDu"/>
+                                                    <constraint firstAttribute="width" constant="40" id="YQW-On-RVE"/>
                                                 </constraints>
+                                                <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                 <state key="normal" image="checkBox">
                                                     <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </state>
@@ -363,7 +365,7 @@
                                                 </connections>
                                             </button>
                                             <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="I understand that if I lose my password, I may lose my data. Read more about MEGA’s end-to-end encryption." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wh7-Wf-VZs">
-                                                <rect key="frame" x="58" y="466" width="337.33333333333331" height="28.666666666666686"/>
+                                                <rect key="frame" x="58" y="486" width="337.33333333333331" height="28.666666666666629"/>
                                                 <gestureRecognizers/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <nil key="textColor"/>
@@ -388,7 +390,7 @@
                                         <constraints>
                                             <constraint firstItem="Klv-H8-jVM" firstAttribute="top" secondItem="hkb-3j-jnC" secondAttribute="bottom" id="2Ap-Xk-fDt"/>
                                             <constraint firstItem="l5v-Oj-XXr" firstAttribute="centerY" secondItem="fqq-un-Bih" secondAttribute="centerY" id="61x-3w-Nx4"/>
-                                            <constraint firstItem="fqq-un-Bih" firstAttribute="leading" secondItem="l5v-Oj-XXr" secondAttribute="trailing" constant="18" id="FmD-sI-cGU"/>
+                                            <constraint firstItem="fqq-un-Bih" firstAttribute="leading" secondItem="l5v-Oj-XXr" secondAttribute="trailing" constant="8" id="FmD-sI-cGU"/>
                                             <constraint firstItem="hkb-3j-jnC" firstAttribute="trailing" secondItem="Klv-H8-jVM" secondAttribute="trailing" id="GEp-iE-MUo"/>
                                             <constraint firstItem="hkb-3j-jnC" firstAttribute="leading" secondItem="Sm7-b3-lKu" secondAttribute="leading" id="HPt-JP-be9"/>
                                             <constraint firstItem="Klv-H8-jVM" firstAttribute="leading" secondItem="L2c-lr-kWP" secondAttribute="leading" id="Jon-9D-g5s"/>
@@ -410,7 +412,8 @@
                                             <constraint firstItem="qlZ-z1-r9I" firstAttribute="top" secondItem="L2c-lr-kWP" secondAttribute="bottom" constant="20" id="qrD-JX-Pao"/>
                                             <constraint firstItem="HZu-aK-JZa" firstAttribute="top" secondItem="l5v-Oj-XXr" secondAttribute="bottom" constant="20" id="r8R-I7-Kfd"/>
                                             <constraint firstItem="hkb-3j-jnC" firstAttribute="leading" secondItem="Klv-H8-jVM" secondAttribute="leading" id="sxx-C7-MmS"/>
-                                            <constraint firstItem="l5v-Oj-XXr" firstAttribute="leading" secondItem="qlZ-z1-r9I" secondAttribute="leading" constant="20" id="vOu-cv-dOf"/>
+                                            <constraint firstItem="bak-ZA-1ZU" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Wh7-Wf-VZs" secondAttribute="bottom" constant="40" id="uZu-SQ-iud"/>
+                                            <constraint firstItem="l5v-Oj-XXr" firstAttribute="leading" secondItem="qlZ-z1-r9I" secondAttribute="leading" constant="10" id="vOu-cv-dOf"/>
                                         </constraints>
                                         <viewLayoutGuide key="safeArea" id="Sm7-b3-lKu"/>
                                         <variation key="widthClass=regular">
