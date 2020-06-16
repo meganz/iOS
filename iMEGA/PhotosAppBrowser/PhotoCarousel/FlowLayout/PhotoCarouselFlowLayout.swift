@@ -41,7 +41,7 @@ final class PhotoCarouselFlowLayout: UICollectionViewFlowLayout {
     }
     
     private var currentCellIndex: Int {
-        return min(cellCount - 1, Int(currentOffset / collectionViewWidth))
+       min(cellCount - 1, Int(currentOffset / collectionViewWidth))
     }
     
     private var currentFractionComplete: CGFloat {
