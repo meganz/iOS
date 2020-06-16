@@ -68,7 +68,7 @@ final class PhotoGridViewController: UIViewController {
     // MARK:- Orientation method.
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return .portrait
+       .portrait
     }
     
     // MARK:- Private methods.

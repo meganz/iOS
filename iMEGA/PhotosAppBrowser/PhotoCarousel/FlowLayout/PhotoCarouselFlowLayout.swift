@@ -136,7 +136,7 @@ final class PhotoCarouselFlowLayout: UICollectionViewFlowLayout {
     }
     
     override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
-        return true
+       true
     }
     
     override func invalidationContext(forBoundsChange newBounds: CGRect) -> UICollectionViewLayoutInvalidationContext {

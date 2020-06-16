@@ -32,7 +32,7 @@ final class PhotoCarouselDelegate: PhotoGridViewDelegate {
     override func collectionView(_ collectionView: UICollectionView,
                                  layout collectionViewLayout: UICollectionViewLayout,
                                  sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.bounds.width , height: collectionView.bounds.width)
+       CGSize(width: collectionView.bounds.width , height: collectionView.bounds.width)
     }
     
     // MARK:- Non-Overriden UICollectionViewDelegate methods.
