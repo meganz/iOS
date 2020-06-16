@@ -8,7 +8,7 @@ extension UIViewController {
         if #available(iOS 11, *) {
             // Recommended method introduced from iOS 11
             scrollView.contentInsetAdjustmentBehavior = .never
-        } else if #available(iOS 7, *) {
+        } else {
             // Deprecated setting compatible from iOS 7 - iOS 11
             automaticallyAdjustsScrollViewInsets = false
         }
