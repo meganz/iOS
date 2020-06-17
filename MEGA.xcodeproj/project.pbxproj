@@ -314,6 +314,8 @@
 		5DE448E6248D078800EE00CB /* AttributedTextStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE448E5248D078800EE00CB /* AttributedTextStyle.swift */; };
 		5DE448EB248D15F300EE00CB /* NibOwnerLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE448EA248D15F300EE00CB /* NibOwnerLoadable.swift */; };
 		5DE448EE248F673700EE00CB /* ViewStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE448ED248F673700EE00CB /* ViewStyle.swift */; };
+		5DF016812499BD60005A121D /* MEGAPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF016802499BD60005A121D /* MEGAPlan.swift */; };
+		5DF016832499BD7B005A121D /* MEGAPlanService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF016822499BD7B005A121D /* MEGAPlanService.swift */; };
 		7714901520F7592100769BD4 /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7714901420F7592000769BD4 /* Contacts.framework */; };
 		771A932723A24DB300CB0ED7 /* UIView+FLEX_Layout.m in Sources */ = {isa = PBXBuildFile; fileRef = 771A932523A24DB300CB0ED7 /* UIView+FLEX_Layout.m */; };
 		771A932823A24DB300CB0ED7 /* UIPasteboard+FLEX.m in Sources */ = {isa = PBXBuildFile; fileRef = 771A932623A24DB300CB0ED7 /* UIPasteboard+FLEX.m */; };
@@ -1710,6 +1712,8 @@
 		5DE448E5248D078800EE00CB /* AttributedTextStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedTextStyle.swift; sourceTree = "<group>"; };
 		5DE448EA248D15F300EE00CB /* NibOwnerLoadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NibOwnerLoadable.swift; sourceTree = "<group>"; };
 		5DE448ED248F673700EE00CB /* ViewStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewStyle.swift; sourceTree = "<group>"; };
+		5DF016802499BD60005A121D /* MEGAPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAPlan.swift; sourceTree = "<group>"; };
+		5DF016822499BD7B005A121D /* MEGAPlanService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAPlanService.swift; sourceTree = "<group>"; };
 		7714901420F7592000769BD4 /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = System/Library/Frameworks/Contacts.framework; sourceTree = SDKROOT; };
 		771A1B5E21C9220C00A8555D /* OnboardingViewType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OnboardingViewType.h; sourceTree = "<group>"; };
 		771A1B5F21C9227A00A8555D /* OnboardingType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OnboardingType.h; sourceTree = "<group>"; };
@@ -4143,7 +4147,7 @@
 		5D79B52024986A410070FECD /* MEGA */ = {
 			isa = PBXGroup;
 			children = (
-				5D79B52124986A4F0070FECD /* PlanAdviser.swift */,
+				5DF016842499BE0E005A121D /* ProductSubscriptionPlan */,
 			);
 			path = MEGA;
 			sourceTree = "<group>";
@@ -4200,6 +4204,16 @@
 				5DE448EA248D15F300EE00CB /* NibOwnerLoadable.swift */,
 			);
 			path = "UIKit+Tools";
+			sourceTree = "<group>";
+		};
+		5DF016842499BE0E005A121D /* ProductSubscriptionPlan */ = {
+			isa = PBXGroup;
+			children = (
+				5D79B52124986A4F0070FECD /* PlanAdviser.swift */,
+				5DF016822499BD7B005A121D /* MEGAPlanService.swift */,
+				5DF016802499BD60005A121D /* MEGAPlan.swift */,
+			);
+			path = ProductSubscriptionPlan;
 			sourceTree = "<group>";
 		};
 		7747B2D5208623550011814E /* Network */ = {
@@ -6159,6 +6173,7 @@
 				839D5A9721C25A7D00FAE757 /* GridFlowLayout.m in Sources */,
 				5B367576204FFBF60087362D /* SendToChatActivity.m in Sources */,
 				8311208822C0CD69006F6E36 /* EnterEmailViewController.swift in Sources */,
+				5DF016832499BD7B005A121D /* MEGAPlanService.swift in Sources */,
 				5B00B6E8210745BF0076D5BB /* FileManagementTableViewController.m in Sources */,
 				5B78F0B21F3C5362007ED721 /* MyAccountHallViewController.m in Sources */,
 				836AEDE020188F3C00868FC7 /* TestPasswordViewController.m in Sources */,
@@ -6523,6 +6538,7 @@
 				B695E58023275A4E00D12B9E /* MEGAFunctions.swift in Sources */,
 				77597006219DD4D100B31671 /* MEGAUserAlertList+MNZCategory.m in Sources */,
 				BF0ACD64240C87A80002101E /* MEGAChatListItem+Additions.swift in Sources */,
+				5DF016812499BD60005A121D /* MEGAPlan.swift in Sources */,
 				7784A86321B159B800B49CA1 /* MEGAMessageVoiceClipView.m in Sources */,
 				772BA5722243C7D100F062CB /* UITableView+MNZCategory.m in Sources */,
 				A86B9F802316D6AB00F35E7A /* FLEXUtility.m in Sources */,
