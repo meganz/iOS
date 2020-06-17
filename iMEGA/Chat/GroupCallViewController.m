@@ -485,7 +485,7 @@
                 }
             }
         }];
-        [MEGASdkManager.sharedMEGAChatSdk answerChatCall:self.chatRoom.chatId enableVideo:self.videoCall delegate:answerCallRequestDelegate];
+        [MEGASdkManager.sharedMEGAChatSdk answerChatCall:self.chatRoom.chatId enableVideo:NO delegate:answerCallRequestDelegate];
     } else {
         self.enableDisableVideoButton.enabled = self.minimizeButton.enabled = NO;
         self.navigationSubtitleLabel.text = AMLocalizedString(@"connecting", @"Label in login screen to inform about the chat initialization proccess");
@@ -525,7 +525,7 @@
 - (void)initDataSource {
     self.peersInCall = [NSMutableArray new];
     self.localPeer = [MEGAGroupCallPeer new];
-    self.localPeer.video = [[NSUserDefaults standardUserDefaults] objectForKey:@"groupCallLocalVideo"] ? [[NSUserDefaults standardUserDefaults] boolForKey:@"groupCallLocalVideo"] : self.videoCall;
+    self.localPeer.video = [[NSUserDefaults standardUserDefaults] objectForKey:@"groupCallLocalVideo"] ? [[NSUserDefaults standardUserDefaults] boolForKey:@"groupCallLocalVideo"] : NO;
     self.localPeer.audio = [[NSUserDefaults standardUserDefaults] objectForKey:@"groupCallLocalAudio"] ? [[NSUserDefaults standardUserDefaults] boolForKey:@"groupCallLocalAudio"] : YES;
     self.switchCameraButton.selected = [[NSUserDefaults standardUserDefaults] objectForKey:@"groupCallCameraSwitched"] ? [[NSUserDefaults standardUserDefaults] boolForKey:@"groupCallCameraSwitched"] : NO;
     self.localPeer.peerId = 0;

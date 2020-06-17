@@ -7,7 +7,7 @@ extension MEGAChatRoom {
         return userNickname(forUserHandle: userHandle)
     }
 
-    func userNickname(forUserHandle userHandle: UInt64) -> String? {
+    @objc func userNickname(forUserHandle userHandle: UInt64) -> String? {
         let user = MEGAStore.shareInstance().fetchUser(withUserHandle: userHandle)
         return user?.nickname
     }

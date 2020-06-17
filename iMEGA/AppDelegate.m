@@ -40,7 +40,6 @@
 #import "GroupCallViewController.h"
 #import "LaunchViewController.h"
 #import "MainTabBarController.h"
-#import "MEGAAssetsPickerController.h"
 #import "OnboardingViewController.h"
 #import "ProductDetailViewController.h"
 #import "UpgradeTableViewController.h"
@@ -506,16 +505,14 @@
 
                 if (call && call.status == MEGAChatCallStatusInProgress) {
                     self.chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:call.chatId];
-                    MEGALogDebug(@"call id %tu", call.callId);
+                    MEGALogDebug(@"call id %llu", call.callId);
                     MEGALogDebug(@"There is a call in progress for this chat %@", call);
                     UIViewController *presentedVC = UIApplication.mnz_presentingViewController;
                     if ([presentedVC isKindOfClass:GroupCallViewController.class]) {
                         GroupCallViewController *callVC = (GroupCallViewController *)presentedVC;
                         callVC.callType = CallTypeActive;
-                        if (!callVC.videoCall) {
-                            [callVC tapOnVideoCallkitWhenDeviceIsLocked];
-                            self.chatRoom = nil;
-                        }
+                        [callVC tapOnVideoCallkitWhenDeviceIsLocked];
+                        self.chatRoom = nil;
                     }
                     if ([presentedVC isKindOfClass:CallViewController.class]) {
                         CallViewController *callVC = (CallViewController *)UIApplication.mnz_presentingViewController;
@@ -610,11 +607,6 @@
     [UINavigationBar appearanceWhenContainedInInstancesOfClasses:@[QLPreviewController.class]].tintColor = UIColor.mnz_redMain;
     [UILabel appearanceWhenContainedInInstancesOfClasses:@[QLPreviewController.class]].textColor = UIColor.mnz_redMain;
     [UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[QLPreviewController.class]].tintColor = UIColor.mnz_redMain;
-    
-    //MEGAAssetsPickerController
-    [UINavigationBar appearanceWhenContainedInInstancesOfClasses:@[MEGAAssetsPickerController.class]].barStyle = UIBarStyleBlack;
-    [UINavigationBar appearanceWhenContainedInInstancesOfClasses:@[MEGAAssetsPickerController.class]].barTintColor = UIColor.mnz_redMain;
-    [UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[MEGAAssetsPickerController.class]].tintColor = UIColor.whiteColor;
 
     [UISearchBar appearance].translucent = NO;
     [UISearchBar appearance].backgroundColor = UIColor.mnz_grayFCFCFC;
@@ -939,7 +931,9 @@
         if ([filename containsString:@"megaclient"] || [filename containsString:@"karere"]) {
             NSString *destinationPath = [groupSupportPath stringByAppendingPathComponent:filename];
             [NSFileManager.defaultManager mnz_removeItemAtPath:destinationPath];
-            if (![fileManager copyItemAtPath:[applicationSupportDirectoryString stringByAppendingPathComponent:filename] toPath:destinationPath error:&error]) {
+            if ([fileManager copyItemAtPath:[applicationSupportDirectoryString stringByAppendingPathComponent:filename] toPath:destinationPath error:&error]) {
+                MEGALogDebug(@"Copy file %@", filename);
+            } else {
                 MEGALogError(@"Copy item at path failed with error: %@", error);
             }
         }
@@ -1103,18 +1097,21 @@ void uncaughtExceptionHandler(NSException *exception) {
     NSURL *containerURL = [NSFileManager.defaultManager containerURLForSecurityApplicationGroupIdentifier:MEGAGroupIdentifier];
     NSURL *nseCacheURL = [containerURL URLByAppendingPathComponent:MEGANotificationServiceExtensionCacheFolder isDirectory:YES];
     NSString *session = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
-    NSString *filename = [NSString stringWithFormat:@"karere-%@.db", [session substringFromIndex:MAX(session.length - MEGALastCharactersFromSession, 0)]];
-    NSURL *nseCacheFileURL = [nseCacheURL URLByAppendingPathComponent:filename];
-    
-    if ([NSFileManager.defaultManager fileExistsAtPath:nseCacheFileURL.path]) {
-        if (MEGAStore.shareInstance.areTherePendingMessages) {
-            MEGALogDebug(@"Import messages from %@", nseCacheFileURL.path);
-            [MEGASdkManager.sharedMEGAChatSdk importMessagesFromPath:nseCacheFileURL.path];
+    if (session.length > MEGADropFirstCharactersFromSession) {
+        NSString *sessionSubString = [session substringFromIndex:MEGADropFirstCharactersFromSession];
+        NSString *filename = [NSString stringWithFormat:@"karere-%@.db", sessionSubString];
+        NSURL *nseCacheFileURL = [nseCacheURL URLByAppendingPathComponent:filename];
+        
+        if ([NSFileManager.defaultManager fileExistsAtPath:nseCacheFileURL.path]) {
+            if (MEGAStore.shareInstance.areTherePendingMessages) {
+                MEGALogDebug(@"Import messages from %@", nseCacheFileURL.path);
+                [MEGASdkManager.sharedMEGAChatSdk importMessagesFromPath:nseCacheFileURL.path];
+            } else {
+                MEGALogDebug(@"No messages to import from NSE.");
+            }
         } else {
-            MEGALogDebug(@"No messages to import from NSE.");
+            MEGALogWarning(@"NSE cache file %@ doesn't exist", nseCacheFileURL.path);
         }
-    } else {
-        MEGALogWarning(@"NSE cache file %@ doesn't exist", nseCacheFileURL.path);
     }
 }
 

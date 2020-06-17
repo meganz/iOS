@@ -2070,26 +2070,10 @@
 "Mute chat Notifications for"="Wycisz powiadomienia czatu dla";
 /* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
 "Muted forever"="Wyciszony na zawsze";
-/* Chat Notifications DND: Remaining time left to deactivate DND - 1 minute left */
-"1 minute left"="Pozostała 1 minuta";
-/* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 minute left */
-"%d minutes left"="Pozostało %d minut";
-/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour left */
-"1 hour left"="Pozostała godzina";
-/* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 hour left */
-"%d hours left"="Pozostało %d godzin";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="Powiadomienia Chat";
 /* Chat settings: This text appears with the Do Not Disturb switch */
 "Do Not Disturb"="Nie przeszkadzać";
-/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, 1 minute left */
-"1 hour, 1 minute left"="Pozostała 1 godzina i 1 minuta";
-/* Chat Notifications DND: Remaining time left to deactivate DND - X hours, X minutes left */
-"%d hours, %d minutes left"="Pozostało %d godzin, %d minut";
-/* Chat Notifications DND: Remaining time left to deactivate DND - X hours, 1 minute left */
-"%d hours, 1 minute left"="Pozostało %d godziny, 1 minuta";
-/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, X minutes left */
-"1 hour, %d minutes left"="Pozostała 1 godzina, %d minut";
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
 "Reconnecting..."="Ponowne łączenie…";
 /* Title shown when the user reconnect in a call. */
@@ -2178,7 +2162,7 @@
 "Select Folder"="Wybierz katalog";
 /* Title of the folder selection screen for camera uploads */
 "Choose Folder"="Wybierz katalog";
-/* Label used near to the option selected to encode the images uploaded to a chat (Low, Medium, Original) */
+/* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
 "Image quality"="Jakość obrazu";
 /* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
 "Automatic"="Automatyczny";
@@ -2246,3 +2230,5 @@
 "Folder link unavailable"="Link do katalogu jest niedostępny";
 /* Error message shown when opening a file link which doesn’t exist */
 "File link unavailable"="Link pliku jest niedostępny";
+/* Header of block with all shared files in chat. */
+"Shared Files"="Udostępnione pliki";
