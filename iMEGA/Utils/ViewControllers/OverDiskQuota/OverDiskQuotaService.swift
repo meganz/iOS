@@ -110,16 +110,6 @@ import Foundation
 
     // MARK: - Validate internal store
 
-    private func suggestMinimumPlan(ofStorage minimumStorage: NSNumber, availablePlans: [MEGAPlan]) -> [MEGAPlan] {
-        let query = { (storage: Int64) -> QueryConstraint in
-            return QueryConstraint { plans in
-                QueryConstraint.minimumPrice.run(
-                    QueryConstraint.storagGreaterThan(storage).run(plans))
-            }
-        }
-        return query(minimumStorage.int64Value).run(availablePlans)
-    }
-
     fileprivate func validated(_ internalStore: OverDiskQuotaStore) -> OverDiskQuotaInformation? {
         guard let email = internalStore.email else { return nil }
         guard let deadline = internalStore.deadline else { return nil }
@@ -127,7 +117,7 @@ import Foundation
         guard let numberOfFiles = internalStore.numberOfFilesOnCloud else { return nil }
         guard let cloudStorage = internalStore.cloudStorageTaking else { return nil }
         guard let availablePlans = internalStore.availablePlans,
-            let minimumPlan = suggestMinimumPlan(ofStorage: cloudStorage, availablePlans: availablePlans).first
+            let minimumPlan = MEGAPlanAdviser.suggestMinimumPlan(ofStorage: cloudStorage, availablePlans: availablePlans).first
             else { return nil }
 
         return OverDiskQuotaInformation(email: email,
