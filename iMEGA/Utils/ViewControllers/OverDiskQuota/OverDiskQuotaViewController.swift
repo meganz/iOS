@@ -83,7 +83,8 @@ final class OverDiskQuotaViewController: UIViewController {
     // MARK: - UI Customize
 
     private func setupNavigationController(_ navigationController: UINavigationController?) {
-        title = AMLocalizedString("Over Disk Quota Screen Title", "Storage Full")
+        title = AMLocalizedString("Storage Full",
+                                  "Screen title")
         navigationController?.navigationBar.setTranslucent()
         navigationController?.setTitleStyle(TextStyle(font: .headline, color: Color.Text.lightPrimary))
     }
@@ -94,18 +95,21 @@ final class OverDiskQuotaViewController: UIViewController {
 
     private func setupWarningView(_ warningView: OverDisckQuotaWarningView, withDeadline deadline: Date) {
         let daysLeft = daysDistance(from: Date(), endDate: deadline)
-        let daysLeftLocalized = AMLocalizedString("Over Disk Quota Warning Days Left", "%@ days")
+        let daysLeftLocalized = AMLocalizedString("%d days",
+                                                  "Count of days")
         warningView.updateTimeLeftForTitle(withText: String(format: daysLeftLocalized, daysLeft))
     }
 
     private func setupTitleLabel(_ titleLabel: UILabel) {
-        titleLabel.text = AMLocalizedString("Over Disk Quota Title", "Your Data is at Risk!")
+        titleLabel.text = AMLocalizedString("Your Data is at Risk!",
+                                            "Warning title message tells user data in danger.")
         LabelStyle.headline.style(titleLabel)
     }
 
     private func setupMessageLabel(_ descriptionLabel: UILabel, overDiskInformation: OverDiskQuotaInternal?) {
         guard let infor = overDiskInformation else { descriptionLabel.text = nil; return }
-        let message = AMLocalizedString("Over Disk Quota Message", "We have contacted you by email to bk@mega.nz on March 1 2020,  March 30 2020, April 30 2020 and May 15 2020, but you still have 45302 files taking up 234.54 GB in your MEGA account, which requires you to upgrade to PRO Lite.")
+        let message = AMLocalizedString("<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to upgrade to <b>%@</b>.</paragraph>",
+                                        "A paragraph of warning message tells user upgrade to selected [minimum subscription plan] before [deadline] due to [cloud space used] and [warning dates]")
         let formattedMessage = String(format: message,
                                       infor.email,
                                       infor.formattedWarningDates(with: dateFormatter),
@@ -119,13 +123,13 @@ final class OverDiskQuotaViewController: UIViewController {
 
     private func setupUpgradeButton(_ button: UIButton) {
         ButtonStyle.active.style(button)
-        button.setTitle(AMLocalizedString("Over Disk Quota Upgrade Button Text", "Upgrade"), for: .normal)
+        button.setTitle(AMLocalizedString("upgrade", "Upgrade"), for: .normal)
         button.addTarget(self, action: #selector(didTapUpgradeButton(button:)), for: .touchUpInside)
     }
 
     private func setupDismissButton(_ button: UIButton) {
         ButtonStyle.inactive.style(button)
-        button.setTitle(AMLocalizedString("Over Disk Quota Dismiss Button Text", "Dismiss"), for: .normal)
+        button.setTitle(AMLocalizedString("dismiss", "Dismiss"), for: .normal)
         button.addTarget(self, action: #selector(didTapDismissButton(button:)), for: .touchUpInside)
     }
 
