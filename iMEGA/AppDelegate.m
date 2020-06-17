@@ -72,8 +72,6 @@
 
 @property (nonatomic, weak) MainTabBarController *mainTBC;
 
-@property (nonatomic, getter=isSignalActivityRequired) BOOL signalActivityRequired;
-
 @property (nonatomic) NSUInteger megatype; //1 share folder, 2 new message, 3 contact request
 
 @property (strong, nonatomic) MEGAChatRoom *chatRoom;
@@ -141,8 +139,6 @@
     if ([launchOptions objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"]) {
         _megatype = [[[launchOptions objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"] objectForKey:@"megatype"] unsignedIntegerValue];
     }
-    
-    _signalActivityRequired = NO;
     
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionAllowBluetooth | AVAudioSessionCategoryOptionAllowBluetoothA2DP | AVAudioSessionCategoryOptionMixWithOthers error:nil];
     [[AVAudioSession sharedInstance] setMode:AVAudioSessionModeVoiceChat error:nil];
@@ -363,7 +359,7 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     MEGALogDebug(@"[App Lifecycle] Application did become active");
     
-    if (self.isSignalActivityRequired) {
+    if (MEGASdkManager.sharedMEGAChatSdk.isSignalActivityRequired) {
         [[MEGASdkManager sharedMEGAChatSdk] signalPresenceActivity];
     }
     
@@ -1794,12 +1790,6 @@ void uncaughtExceptionHandler(NSException *exception) {
     }
 }
 
-- (void)onChatPresenceConfigUpdate:(MEGAChatSdk *)api presenceConfig:(MEGAChatPresenceConfig *)presenceConfig {
-    if (!presenceConfig.isPending) {
-        self.signalActivityRequired = presenceConfig.isSignalActivityRequired;
-    }
-}
-
 - (void)onChatConnectionStateUpdate:(MEGAChatSdk *)api chatId:(uint64_t)chatId newState:(int)newState {
     MEGALogInfo(@"onChatConnectionStateUpdate: %@, new state: %d", [MEGASdk base64HandleForUserHandle:chatId], newState);
     
@@ -1957,7 +1947,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 #pragma mark - MEGAApplicationDelegate
 
 - (void)application:(MEGAApplication *)application willSendTouchEvent:(UIEvent *)event {
-    if (self.isSignalActivityRequired) {
+    if (MEGASdkManager.sharedMEGAChatSdk.isSignalActivityRequired) {
         [[MEGASdkManager sharedMEGAChatSdk] signalPresenceActivity];
     }
 }
