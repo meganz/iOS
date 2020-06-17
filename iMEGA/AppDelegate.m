@@ -40,7 +40,6 @@
 #import "GroupCallViewController.h"
 #import "LaunchViewController.h"
 #import "MainTabBarController.h"
-#import "MEGAAssetsPickerController.h"
 #import "OnboardingViewController.h"
 #import "ProductDetailViewController.h"
 #import "UpgradeTableViewController.h"
@@ -510,16 +509,14 @@
 
                 if (call && call.status == MEGAChatCallStatusInProgress) {
                     self.chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:call.chatId];
-                    MEGALogDebug(@"call id %tu", call.callId);
+                    MEGALogDebug(@"call id %llu", call.callId);
                     MEGALogDebug(@"There is a call in progress for this chat %@", call);
                     UIViewController *presentedVC = UIApplication.mnz_presentingViewController;
                     if ([presentedVC isKindOfClass:GroupCallViewController.class]) {
                         GroupCallViewController *callVC = (GroupCallViewController *)presentedVC;
                         callVC.callType = CallTypeActive;
-                        if (!callVC.videoCall) {
-                            [callVC tapOnVideoCallkitWhenDeviceIsLocked];
-                            self.chatRoom = nil;
-                        }
+                        [callVC tapOnVideoCallkitWhenDeviceIsLocked];
+                        self.chatRoom = nil;
                     }
                     if ([presentedVC isKindOfClass:CallViewController.class]) {
                         CallViewController *callVC = (CallViewController *)UIApplication.mnz_presentingViewController;

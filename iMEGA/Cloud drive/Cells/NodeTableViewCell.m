@@ -95,7 +95,22 @@
     
     self.infoLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
     if (node.isFile) {
-        self.infoLabel.text = self.recentActionBucket ? [NSString stringWithFormat:@"%@ • %@", [Helper sizeForNode:node api:MEGASdkManager.sharedMEGASdk], node.creationTime.mnz_formattedHourAndMinutes] : [Helper sizeAndDateForNode:node api:api];
+        MEGASdk *megaSDK = self.recentActionBucket ? MEGASdkManager.sharedMEGASdk : api;
+        NSString *nodeDisplayDateTime;
+        switch (self.cellFlavor) {
+            case NodeTableViewCellFlavorVersions:
+            case NodeTableViewCellFlavorRecentAction:
+            case NodeTableViewCellFlavorCloudDrive:
+                nodeDisplayDateTime =
+                    self.recentActionBucket ? [Helper sizeAndCreationHourAndMininuteForNode:node api:megaSDK] :
+                    [Helper sizeAndModicationDateForNode:node api:megaSDK];
+                break;
+            case NodeTableViewCellFlavorSharedLink:
+                nodeDisplayDateTime = [Helper sizeAndShareLinkCreateDateForSharedLinkNode:node api:megaSDK];
+                break;
+        }
+
+        self.infoLabel.text = nodeDisplayDateTime;
         self.versionedImageView.hidden = ![[MEGASdkManager sharedMEGASdk] hasVersionsForNode:node];
     } else if (node.isFolder) {
         self.infoLabel.text = [Helper filesAndFoldersInFolderNode:node api:api];
@@ -113,6 +128,7 @@
 }
 
 - (void)configureForRecentAction:(MEGARecentActionBucket *)recentActionBucket {
+    self.cellFlavor = NodeTableViewCellFlavorRecentAction;
     self.recentActionBucket = recentActionBucket;
     NSArray *nodesArray = recentActionBucket.nodesList.mnz_nodesArrayFromNodeList;
     

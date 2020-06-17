@@ -44,7 +44,7 @@ class ChatSharedItemsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = AMLocalizedString("sharedItems", "Title of Shared Items section")
+        title = AMLocalizedString("Shared Files", "Header of block with all shared files in chat.")
         
         tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: CGFloat.leastNormalMagnitude))
         
@@ -52,6 +52,8 @@ class ChatSharedItemsViewController: UIViewController {
         
         updateAppearance()
         loadMoreFiles()
+        
+        view.addGestureRecognizer(UILongPressGestureRecognizer.init(target: self, action: #selector(longPress(recognizer:))))
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -245,6 +247,23 @@ class ChatSharedItemsViewController: UIViewController {
         
         cancelSelectTapped()
     }
+    
+    @objc private func longPress(recognizer: UILongPressGestureRecognizer) {
+        let touchPoint = recognizer.location(in: tableView)
+        guard let indexPath = tableView.indexPathForRow(at: touchPoint) else {
+            return
+        }
+        
+        if recognizer.state == .began {
+            if tableView.isEditing {
+                cancelSelectTapped()
+            } else {
+                selectTapped()
+                tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
+                tableView(tableView, didSelectRowAt: indexPath)
+            }
+        }
+    }
 }
 
 // MARK: - MEGAChatNodeHistoryDelegate.
@@ -266,12 +285,11 @@ extension ChatSharedItemsViewController: MEGAChatNodeHistoryDelegate {
         
         tableView.mnz_performBatchUpdates({
             self.messagesArray.append(message)
-                self.tableView.insertRows(at: [IndexPath(row: self.messagesArray.count - 1, section: 0)], with: .automatic)
-        }) { _ in
             if self.tableView.isEmptyDataSetVisible {
                 self.tableView.reloadEmptyDataSet()
             }
-        }
+            self.tableView.insertRows(at: [IndexPath(row: self.messagesArray.count - 1, section: 0)], with: .automatic)
+        })
     }
     
     func onAttachmentReceived(_ api: MEGAChatSdk, message: MEGAChatMessage) {
@@ -336,9 +354,7 @@ extension ChatSharedItemsViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "sharedItemCell", for: indexPath) as! ChatSharedItemTableViewCell
         
         let message = self.messagesArray[indexPath.row]
-        let ownerName = MEGAStore.shareInstance().fetchUser(withUserHandle: message.userHandle).displayName
-        
-        cell.configure(for: message.nodeList.node(at: 0), owner: ownerName)
+        cell.configure(for: message.nodeList.node(at: 0), ownerHandle: message.userHandle, authToken: chatRoom.authorizationToken)
         
         return cell
     }

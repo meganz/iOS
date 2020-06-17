@@ -122,6 +122,7 @@
     [self.nodesIndexPathMutableDictionary setObject:indexPath forKey:node.base64Handle];
     
     NodeTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"nodeCell" forIndexPath:indexPath];
+    cell.cellFlavor = NodeTableViewCellFlavorVersions;
     [cell configureCellForNode:node delegate:self api:[MEGASdkManager sharedMEGASdk]];
     
     if (self.tableView.isEditing) {

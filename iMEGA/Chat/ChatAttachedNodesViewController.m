@@ -260,7 +260,7 @@
     NodeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"NodeTableViewCellID" forIndexPath:indexPath];
     
     cell.nameLabel.text = currentNode.name;
-    cell.infoLabel.text = [Helper sizeAndDateForNode:currentNode api:[MEGASdkManager sharedMEGASdk]];
+    cell.infoLabel.text = [Helper sizeAndCreationDateForNode:currentNode api:[MEGASdkManager sharedMEGASdk]];
     
     if (self.tableView.isEditing) {
         NSUInteger selectedNodesCount = self.selectedNodesMutableArray.count;

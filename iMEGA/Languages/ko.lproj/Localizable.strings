@@ -2154,7 +2154,7 @@
 "Select Folder"="폴더 선택";
 /* Title of the folder selection screen for camera uploads */
 "Choose Folder"="폴더 선택";
-/* Label used near to the option selected to encode the images uploaded to a chat (Low, Medium, Original) */
+/* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
 "Image quality"="사진 품질";
 /* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
 "Automatic"="자동";
@@ -2222,3 +2222,5 @@
 "Folder link unavailable"="폴더 링크가 사용불가입니다";
 /* Error message shown when opening a file link which doesn’t exist */
 "File link unavailable"="파일 링크가 사용불가능합니다";
+/* Header of block with all shared files in chat. */
+"Shared Files"="공유된 파일";
