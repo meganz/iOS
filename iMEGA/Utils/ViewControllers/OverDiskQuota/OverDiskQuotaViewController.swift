@@ -61,7 +61,7 @@ final class OverDiskQuotaViewController: UIViewController {
                                                    warningDates: overDiskQuota.warningDates,
                                                    numberOfFilesOnCloud: overDiskQuota.numberOfFilesOnCloud,
                                                    cloudStorage: overDiskQuota.cloudStorage,
-                                                   plan: overDiskQuota.availablePlan)
+                                                   plan: overDiskQuota.suggestedPlanName)
     }
 
     struct OverDiskQuotaInternal {
