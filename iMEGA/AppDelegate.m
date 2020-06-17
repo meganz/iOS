@@ -40,7 +40,6 @@
 #import "GroupCallViewController.h"
 #import "LaunchViewController.h"
 #import "MainTabBarController.h"
-#import "MEGAAssetsPickerController.h"
 #import "OnboardingViewController.h"
 #import "ProductDetailViewController.h"
 #import "UpgradeTableViewController.h"
@@ -607,11 +606,6 @@
     [UINavigationBar appearanceWhenContainedInInstancesOfClasses:@[QLPreviewController.class]].tintColor = UIColor.mnz_redMain;
     [UILabel appearanceWhenContainedInInstancesOfClasses:@[QLPreviewController.class]].textColor = UIColor.mnz_redMain;
     [UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[QLPreviewController.class]].tintColor = UIColor.mnz_redMain;
-    
-    //MEGAAssetsPickerController
-    [UINavigationBar appearanceWhenContainedInInstancesOfClasses:@[MEGAAssetsPickerController.class]].barStyle = UIBarStyleBlack;
-    [UINavigationBar appearanceWhenContainedInInstancesOfClasses:@[MEGAAssetsPickerController.class]].barTintColor = UIColor.mnz_redMain;
-    [UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[MEGAAssetsPickerController.class]].tintColor = UIColor.whiteColor;
 
     [UISearchBar appearance].translucent = NO;
     [UISearchBar appearance].backgroundColor = UIColor.mnz_grayFCFCFC;

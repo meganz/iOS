@@ -40,7 +40,6 @@
 #import "ContactsViewController.h"
 #import "CopyrightWarningViewController.h"
 #import "CustomModalAlertViewController.h"
-#import "MEGAAssetsPickerController.h"
 #import "MEGAImagePickerController.h"
 #import "MEGANavigationController.h"
 #import "MEGAPhotoBrowserViewController.h"
@@ -55,6 +54,8 @@
 #import "UpgradeTableViewController.h"
 #import "UIViewController+MNZCategory.h"
 #import "MEGA-Swift.h"
+
+@import Photos;
 
 static const NSTimeInterval kSearchTimeDelay = .5;
 
@@ -860,6 +861,25 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     [self reloadData];
 }
 
+- (void)loadPhotoAlbumBrowser {
+    AlbumsTableViewController *albumTableViewController = [AlbumsTableViewController.alloc
+                                                           initWithSelectionActionText:AMLocalizedString(@"Upload (%d)",
+                                                                                                         @"Used in Photos app browser view to send the photos from the view to the cloud.")
+                                                           selectionActionDisabledText:AMLocalizedString(@"upload", @"Used in Photos app browser view as a disabled action when there is no assets selected")
+                                                           completionBlock:^(NSArray<PHAsset *> * _Nonnull assets) {
+        if (assets.count > 0) {
+            for (PHAsset *asset in assets) {
+                [MEGAStore.shareInstance insertUploadTransferWithLocalIdentifier:asset.localIdentifier
+                                                                  parentNodeHandle:self.parentNode.handle];
+            }
+            
+            [Helper startPendingUploadTransferIfNeeded];
+        }
+    }];
+    MEGANavigationController *navigationController = [MEGANavigationController.alloc initWithRootViewController:albumTableViewController];
+    [self presentViewController:navigationController animated:YES completion:nil];
+}
+
 - (void)showImagePickerForSourceType:(UIImagePickerControllerSourceType)sourceType {
     if (sourceType == UIImagePickerControllerSourceTypeCamera) {
         MEGAImagePickerController *imagePickerController = [[MEGAImagePickerController alloc] initToUploadWithParentNode:self.parentNode sourceType:sourceType];
@@ -867,8 +887,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     } else {
         [DevicePermissionsHelper photosPermissionWithCompletionHandler:^(BOOL granted) {
             if (granted) {
-                MEGAAssetsPickerController *pickerViewController = [[MEGAAssetsPickerController alloc] initToUploadToCloudDriveWithParentNode:self.parentNode];
-                [self presentViewController:pickerViewController animated:YES completion:nil];
+                [self loadPhotoAlbumBrowser];
             } else {
                 [DevicePermissionsHelper alertPhotosPermission];
             }
