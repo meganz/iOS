@@ -594,6 +594,9 @@ extension ProfileViewController: MEGARequestDelegate {
     
     func onRequestFinish(_ api: MEGASdk, request: MEGARequest, error: MEGAError) {
         guard let myUser = api.myUser else {
+            if request.type == .MEGARequestTypeLogout {
+                api.remove(self)
+            }
             return;
         }
         switch request.type {

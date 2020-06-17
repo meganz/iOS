@@ -199,28 +199,32 @@ static const NSUInteger DOWNSCALE_IMAGES_PX = 2000000;
         options.version = PHImageRequestOptionsVersionOriginal;
     }
     
-    ChatImageUploadQuality imageQuality = [NSUserDefaults.standardUserDefaults integerForKey:@"chatImageQuality"];
-
-    switch (imageQuality) {
-        case ChatImageUploadQualityAuto:
-            if (self.toShareThroughChat && !MEGAReachabilityManager.isReachableViaWiFi) {
-                [self compressedImageAsset:asset options:options];
-            } else {
+    if (self.shareThroughChat) {
+        ChatImageUploadQuality imageQuality = [NSUserDefaults.standardUserDefaults integerForKey:@"chatImageQuality"];
+        
+        switch (imageQuality) {
+            case ChatImageUploadQualityAuto:
+                if (!MEGAReachabilityManager.isReachableViaWiFi) {
+                    [self compressedImageAsset:asset options:options];
+                } else {
+                    [self requestImageForAsset:asset options:options];
+                }
+                break;
+                
+            case ChatImageUploadQualityHigh:
                 [self requestImageForAsset:asset options:options];
-            }
-            break;
-            
-        case ChatImageUploadQualityHigh:
-            [self requestImageForAsset:asset options:options];
-            break;
-            
-        case ChatImageUploadQualityOptimised:
-            [self compressedImageAsset:asset options:options];
-            break;
-            
-        default:
-            [self requestImageForAsset:asset options:options];
-            break;
+                break;
+                
+            case ChatImageUploadQualityOptimised:
+                [self compressedImageAsset:asset options:options];
+                break;
+                
+            default:
+                [self requestImageForAsset:asset options:options];
+                break;
+        }
+    } else {
+        [self requestImageForAsset:asset options:options];
     }
 }
 

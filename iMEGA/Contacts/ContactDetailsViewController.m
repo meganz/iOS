@@ -223,8 +223,8 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 - (ContactTableViewCell *)cellForSharedItemsWithIndexPath:(NSIndexPath *)indexPath {
     ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
     cell.avatarImageView.image = [UIImage imageNamed:@"sharedFiles"];
-    cell.nameLabel.text = AMLocalizedString(@"sharedItems", @"Title of Shared Items section");
-    cell.nameLabel.textColor = UIColor. mnz_label;
+    cell.nameLabel.text = AMLocalizedString(@"Shared Files", @"Header of block with all shared files in chat.");
+    cell.nameLabel.textColor = UIColor.mnz_label;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 
     return cell;

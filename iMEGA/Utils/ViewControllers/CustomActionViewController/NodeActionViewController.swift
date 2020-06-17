@@ -7,9 +7,8 @@ import UIKit
 class NodeActionViewController: ActionSheetViewController {
     
     private var node: MEGANode
-    private var delegate: NodeActionViewControllerDelegate
     private var displayMode: DisplayMode
-    private var isIncomingShareChildView: Bool
+    private var delegate: NodeActionViewControllerDelegate
     private var sender: Any
     
     private let titleLabel = UILabel.newAutoLayout()
@@ -20,14 +19,27 @@ class NodeActionViewController: ActionSheetViewController {
 
     @objc init(node: MEGANode, delegate: NodeActionViewControllerDelegate, displayMode: DisplayMode, isIncoming: Bool = false, sender: Any) {
         self.node = node
-        self.delegate = delegate
         self.displayMode = displayMode
-        self.isIncomingShareChildView = isIncoming
+        self.delegate = delegate
         self.sender = sender
         
         super.init(nibName: nil, bundle: nil)
         
         configurePresentationStyle(from: sender)
+        
+        self.actions = NodeActionBuilder()
+            .setDisplayMode(displayMode)
+            .setAccessLevel(MEGASdkManager.sharedMEGASdk().accessLevel(for: node))
+            .setIsMediaFile(node.isFile() && (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension && node.mnz_isPlayable()))
+            .setIsFile(node.isFile())
+            .setIsRestorable(node.mnz_isRestorable())
+            .setIsPdf(NSString(string: node.name).pathExtension.lowercased() == "pdf")
+            .setisIncomingShareChildView(isIncoming)
+            .setIsExported(node.isExported())
+            .setIsOutshare(node.isOutShare())
+            .setIsChildVersion(MEGASdkManager.sharedMEGASdk().node(forHandle: node.parentHandle)?.isFile())
+            .build()
+
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -38,7 +50,6 @@ class NodeActionViewController: ActionSheetViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        getActions()
         configureNodeHeaderView()
     }
     
@@ -101,7 +112,7 @@ class NodeActionViewController: ActionSheetViewController {
             return
         }
         if node.isFile() {
-            subtitleLabel.text = Helper.sizeAndDate(for: node, api: sharedMEGASdk)
+            subtitleLabel.text = Helper.sizeAndModicationDate(for: node, api: sharedMEGASdk)
         } else {
             subtitleLabel.text = Helper.filesAndFolders(inFolderNode: node, api: sharedMEGASdk)
         }
@@ -111,168 +122,5 @@ class NodeActionViewController: ActionSheetViewController {
         separatorLineView.autoPinEdge(toSuperviewEdge: .trailing)
         separatorLineView.autoPinEdge(toSuperviewEdge: .bottom)
         separatorLineView.autoSetDimension(.height, toSize: 1/UIScreen.main.scale)
-    }
-    
-    private func getActions() {
-        let canBeSavedToPhotos = node.isFile() && (node.name.mnz_isImagePathExtension || node.name.mnz_isVideoPathExtension && node.mnz_isPlayable())
-        var nodeActions = [NodeAction]()
-        
-        if self.node.mnz_isRestorable() {
-            nodeActions.append(NodeAction.restoreAction())
-        }
-        
-        if displayMode == .folderLink {
-            nodeActions.append(NodeAction.importAction())
-            nodeActions.append(NodeAction.sendToChatAction())
-            if canBeSavedToPhotos {
-                nodeActions.append(NodeAction.saveToPhotosAction())
-            }
-            nodeActions.append(NodeAction.selectAction())
-            nodeActions.append(NodeAction.shareAction())
-        } else if displayMode == .fileLink {
-            nodeActions.append(NodeAction.importAction())
-            nodeActions.append(NodeAction.sendToChatAction())
-            if canBeSavedToPhotos {
-                nodeActions.append(NodeAction.saveToPhotosAction())
-            }
-            nodeActions.append(NodeAction.shareAction())
-            if NSString(string: node.name).pathExtension.lowercased() == "pdf" {
-                nodeActions.append(NodeAction.thumbnailPdfAction())
-            }
-        } else if displayMode == .nodeInsideFolderLink {
-            nodeActions.append(NodeAction.importAction())
-            if canBeSavedToPhotos {
-                nodeActions.append(NodeAction.saveToPhotosAction())
-            }
-            if node.isFile() {
-                nodeActions.append(NodeAction.openAction())
-            }
-        } else if displayMode == .chatSharedFiles {
-            nodeActions.append(NodeAction.forwardAction())
-            if canBeSavedToPhotos {
-                nodeActions.append(NodeAction.saveToPhotosAction())
-            }
-            nodeActions.append(NodeAction.downloadAction())
-            nodeActions.append(NodeAction.importAction())
-        } else {
-            switch MEGASdkManager.sharedMEGASdk().accessLevel(for: node) {
-            case .accessUnknown:
-                nodeActions.append(NodeAction.importAction())
-                if canBeSavedToPhotos {
-                    nodeActions.append(NodeAction.saveToPhotosAction())
-                }
-                nodeActions.append(NodeAction.downloadAction())
-                
-            case .accessRead, .accessReadWrite:
-                if displayMode != .nodeInfo && displayMode != .nodeVersions {
-                    nodeActions.append(NodeAction.fileInfoAction(isFile: node.isFile()))
-                }
-                if canBeSavedToPhotos {
-                    nodeActions.append(NodeAction.saveToPhotosAction())
-                }
-                nodeActions.append(NodeAction.downloadAction())
-                if displayMode != .nodeVersions {
-                    nodeActions.append(NodeAction.copyAction())
-                    if isIncomingShareChildView {
-                        nodeActions.append(NodeAction.leaveSharingAction())
-                    }
-                }
-                
-            case .accessFull:
-                if displayMode != .nodeInfo && displayMode != .nodeVersions {
-                    nodeActions.append(NodeAction.fileInfoAction(isFile: node.isFile()))
-                }
-                if canBeSavedToPhotos {
-                    nodeActions.append(NodeAction.saveToPhotosAction())
-                }
-                nodeActions.append(NodeAction.downloadAction())
-                if displayMode == .nodeVersions {
-                    if let parentNode = MEGASdkManager.sharedMEGASdk().node(forHandle: node.parentHandle), parentNode.isFile() {
-                        nodeActions.append(NodeAction.revertVersionAction())
-                    }
-                    nodeActions.append(NodeAction.removeAction())
-                } else {
-                    nodeActions.append(NodeAction.renameAction())
-                    nodeActions.append(NodeAction.copyAction())
-                    if isIncomingShareChildView {
-                        nodeActions.append(NodeAction.leaveSharingAction())
-                    } else {
-                        nodeActions.append(NodeAction.moveToRubbishBinAction())
-                    }
-                }
-                
-            case .accessOwner:
-                if displayMode == .cloudDrive || displayMode == .rubbishBin || displayMode == .nodeInfo || displayMode == .recents {
-                    if displayMode != .nodeInfo {
-                        nodeActions.append(NodeAction.fileInfoAction(isFile: node.isFile()))
-                    }
-                    if displayMode != .rubbishBin {
-                        if canBeSavedToPhotos {
-                            nodeActions.append(NodeAction.saveToPhotosAction())
-                        }
-                        nodeActions.append(NodeAction.downloadAction())
-                        if node.isExported() {
-                            nodeActions.append(NodeAction.manageLinkAction())
-                            nodeActions.append(NodeAction.removeLinkAction())
-                        } else {
-                            nodeActions.append(NodeAction.getLinkAction())
-                        }
-                        if node.isFolder() {
-                            if node.isOutShare() {
-                                nodeActions.append(NodeAction.manageFolderAction())
-                            } else {
-                                nodeActions.append(NodeAction.shareFolderAction())
-                            }
-                        }
-                        nodeActions.append(NodeAction.shareAction())
-                    }
-                    if node.isFile() {
-                        nodeActions.append(NodeAction.sendToChatAction())
-                    }
-                    nodeActions.append(NodeAction.renameAction())
-                    nodeActions.append(NodeAction.moveAction())
-                    nodeActions.append(NodeAction.copyAction())
-                    if isIncomingShareChildView {
-                        nodeActions.append(NodeAction.leaveSharingAction())
-                    }
-                    if displayMode == .cloudDrive || displayMode == .nodeInfo || displayMode == .recents {
-                        nodeActions.append(NodeAction.moveToRubbishBinAction())
-                    } else {
-                        nodeActions.append(NodeAction.removeAction())
-                    }
-                } else if displayMode == .nodeVersions {
-                    if canBeSavedToPhotos {
-                        nodeActions.append(NodeAction.saveToPhotosAction())
-                    }
-                    nodeActions.append(NodeAction.downloadAction())
-                    if let parentNode = MEGASdkManager.sharedMEGASdk().node(forHandle: node.parentHandle), parentNode.isFile() {
-                        nodeActions.append(NodeAction.revertVersionAction())
-                    }
-                    nodeActions.append(NodeAction.removeAction())
-                } else if displayMode == .chatAttachment {
-                    nodeActions.append(NodeAction.fileInfoAction(isFile: node.isFile()))
-                    if canBeSavedToPhotos {
-                        nodeActions.append(NodeAction.saveToPhotosAction())
-                    }
-                    nodeActions.append(NodeAction.downloadAction())
-                    nodeActions.append(NodeAction.shareAction())
-                } else {
-                    nodeActions.append(NodeAction.fileInfoAction(isFile: node.isFile()))
-                    if canBeSavedToPhotos {
-                        nodeActions.append(NodeAction.saveToPhotosAction())
-                    }
-                    nodeActions.append(NodeAction.downloadAction())
-                    nodeActions.append(NodeAction.manageFolderAction())
-                    nodeActions.append(NodeAction.shareAction())
-                    nodeActions.append(NodeAction.renameAction())
-                    nodeActions.append(NodeAction.copyAction())
-                    nodeActions.append(NodeAction.removeSharingAction())
-                }
-                
-            default:
-                break
-            }
-        }
-        actions = nodeActions
     }
 }

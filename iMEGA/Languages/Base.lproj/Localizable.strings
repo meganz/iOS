@@ -2096,6 +2096,8 @@
 "Send (%d)"="Send (%d)";
 /* Used in Photos app browser view to upload the photos from the view to the cloud. */
 "Upload (%d)"="Upload (%d)";
+/* Used in Photos app browser album listing screen. */
+"Albums"="Albums";
 /* Used in Photos app browser carousel view to unselect a selected photo. */
 "Unselect"="Unselect";
 /* Used in Photos app browser. Shown when there are no photos or videos in the Photos app. */
@@ -2222,3 +2224,5 @@
 "Folder link unavailable"="Folder link unavailable";
 /* Error message shown when opening a file link which doesn’t exist */
 "File link unavailable"="File link unavailable";
+/* Header of block with all shared files in chat. */
+"Shared Files"="Shared Files";

@@ -2154,7 +2154,7 @@
 "Select Folder"="Selecionar pasta";
 /* Title of the folder selection screen for camera uploads */
 "Choose Folder"="Escolher pasta";
-/* Label used near to the option selected to encode the images uploaded to a chat (Low, Medium, Original) */
+/* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
 "Image quality"="Qualidade da imagem";
 /* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
 "Automatic"="Automático";
@@ -2222,3 +2222,5 @@
 "Folder link unavailable"="O link da pasta não está disponível";
 /* Error message shown when opening a file link which doesn’t exist */
 "File link unavailable"="Link de arquivo indisponível";
+/* Header of block with all shared files in chat. */
+"Shared Files"="Arquivos compartilhados";

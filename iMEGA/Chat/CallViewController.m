@@ -146,15 +146,12 @@
         self.localVideoImageView.userInteractionEnabled = remoteSession.hasVideo;
         [self.localVideoImageView remoteVideoEnable:remoteSession.hasVideo];
     } else if (self.videoCall) {
-        self.enableDisableVideoButton.selected = self.videoCall;
-        
         if (!AVAudioSession.sharedInstance.mnz_isBluetoothAudioRouteAvailable) {
             MEGALogDebug(@"[Audio] Enable loud speaker is video call and there is no bluetooth connected");
             [self enableLoudspeaker];
         }
         
         self.remoteAvatarImageView.hidden = YES;
-        self.localVideoImageView.hidden = NO;
         
         [[MEGASdkManager sharedMEGAChatSdk] addChatLocalVideo:self.chatRoom.chatId delegate:self.localVideoImageView];
     } else {
@@ -254,7 +251,7 @@
                 [self dismissViewControllerAnimated:YES completion:nil];
             }
         }];
-        [MEGASdkManager.sharedMEGAChatSdk answerChatCall:self.chatRoom.chatId enableVideo:self.videoCall delegate:answerCallRequestDelegate];
+        [MEGASdkManager.sharedMEGAChatSdk answerChatCall:self.chatRoom.chatId enableVideo:NO delegate:answerCallRequestDelegate];
     } else {
         self.enableDisableVideoButton.enabled = self.minimizeButton.enabled = NO;
         self.statusCallLabel.text = AMLocalizedString(@"connecting", @"Label in login screen to inform about the chat initialization proccess");

@@ -485,6 +485,7 @@
 
 - (NodeTableViewCell *)linkSharedCellAtIndexPath:(NSIndexPath *)indexPath forNode:(MEGANode *)node {
     NodeTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"nodeCell" forIndexPath:indexPath];
+    cell.cellFlavor = NodeTableViewCellFlavorSharedLink;
     [cell configureCellForNode:node delegate:self api:MEGASdkManager.sharedMEGASdk];
     //We are on the Shared Items - Links tab, no need to show any icon next to the thumbnail.
     cell.linkImageView.hidden = YES;
