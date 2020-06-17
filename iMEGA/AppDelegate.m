@@ -1201,6 +1201,12 @@ void uncaughtExceptionHandler(NSException *exception) {
     [[MEGASdkManager sharedMEGASdk] logout];
 }
 
+- (void)passcodeWasEnabled {
+    MEGAIndexer.sharedIndexer.enableSpotlight = NO;
+}
+
+#pragma mark - Language
+
 - (void)languageCompatibility {
     
     NSString *currentLanguageID = [[LocalizationSystem sharedLocalSystem] getLanguage];
