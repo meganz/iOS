@@ -13,7 +13,7 @@ import Foundation
     var warningDates: WarningDates { get }
     var numberOfFilesOnCloud: FileCount { get }
     var cloudStorage: Storage { get }
-    var availablePlan: AvailablePlanName { get }
+    var suggestedPlanName: AvailablePlanName { get }
 }
 
 @objc final class OverDiskQuotaInformation: NSObject, OverDiskQuotaInfomationType {
@@ -22,20 +22,20 @@ import Foundation
     let warningDates: WarningDates
     let numberOfFilesOnCloud: FileCount
     let cloudStorage: Storage
-    let availablePlan: AvailablePlanName
+    let suggestedPlanName: AvailablePlanName
 
     init(email: Email,
          deadline: Deadline,
          warningDates: WarningDates,
          numberOfFilesOnCloud: FileCount,
          cloudStorage: Storage,
-         availablePlans: AvailablePlanName) {
+         suggestedPlanName: AvailablePlanName) {
         self.email = email
         self.deadline = deadline
         self.warningDates = warningDates
         self.numberOfFilesOnCloud = numberOfFilesOnCloud
         self.cloudStorage = cloudStorage
-        self.availablePlan = availablePlans
+        self.suggestedPlanName = suggestedPlanName
     }
 }
 
@@ -47,16 +47,27 @@ import Foundation
 
     // MARK: - OverDiskQuotaService
 
-    private static func getUserData(_ api: MEGASdk) {
+    private static func getUserData(with api: MEGASdk) {
         api.getUserData(with: MEGAGenericRequestDelegate(completion: { [shared] (request, error) in
             shared.updateUserData(withSDK: api)
         }))
     }
 
+    private static func getMEGAPlans(with api: MEGASdk) {
+        MEGAPlanService.loadMegaPlans(with: api) { [shared] plans in
+            shared.updateMEGAPlans(plans)
+        }
+    }
+
     @objc static func prepareOverDiskQuotaInformation(withSDK api: MEGASdk,
                                                       callback: @escaping (OverDiskQuotaInfomationType) -> Void) {
         shared.informationReadyCallback = callback
-        getUserData(api)
+        getUserData(with: api)
+        getMEGAPlans(with: api)
+    }
+
+    @objc static func prepareOverDiskQuotaInformation(withUserCloudStorageUsed storageUsed: NSNumber) {
+        shared.updateUserStroage(storageUsed)
     }
 
     // MARK: - Instance
@@ -71,40 +82,42 @@ import Foundation
 
     // MARK: - Instance Method
 
+    // MARK: - Capture ODQ information
+
+    private func updateMEGAPlans(_ plans: [MEGAPlan]) {
+        internalStore.availablePlans = plans
+        noticeListenerIfOverDiskQuotaInformationReady()
+    }
+
+    private func updateUserStroage(_ storage: NSNumber) {
+        internalStore.cloudStorageTaking = storage
+        noticeListenerIfOverDiskQuotaInformationReady()
+    }
+
     private func updateUserData(withSDK api: MEGASdk) {
         internalStore.email = api.myEmail
         internalStore.deadline = api.overquotaDeadlineDate()
         internalStore.warningDates = api.overquotaWarningDateList()
         internalStore.numberOfFilesOnCloud = api.totalNodes
-        internalStore.cloudStorage = api.mnz_accountDetails?.storageUsed
-
-        guard let cloudSpaceTaking = internalStore.cloudStorage else { return }
-
-        findMinimumPriceMEGAPLan(withAtLeastStorage: cloudSpaceTaking.intValue / 1024 / 1024 / 1024, withSDK: api) { [weak self] advice in
-            switch advice {
-            case .noSatisfied: break
-            case .upgradeTo(let plan):
-                guard let self = self else { return }
-                self.internalStore.availablePlans = plan
-                if let validatedOverDiskQuotaInfomation = self.validated(self.internalStore) {
-                    self.informationReadyCallback?(validatedOverDiskQuotaInfomation)
-                    self.informationReadyCallback = nil
-                }
-            }
-        }
+        noticeListenerIfOverDiskQuotaInformationReady()
     }
 
-    private func findMinimumPriceMEGAPLan(withAtLeastStorage storage: Int,
-                                          withSDK api: MEGASdk,
-                                          completion: @escaping (MEGAPlanUpgradeAdvice) -> Void) {
-        let query = QueryConstraint { plans in
-            QueryConstraint.minimumPrice.run(
-                QueryConstraint.storagGreaterThan(storage).run(plans))
-        }
+    private func noticeListenerIfOverDiskQuotaInformationReady() {
+        guard let internalOverDiskQuotaStore = validated(internalStore) else { return }
+        informationReadyCallback?(internalOverDiskQuotaStore)
+        informationReadyCallback = nil
+    }
 
-        MEGAPlanAdviser.suggestPlan(constraints: query, api: api) { advice in
-            completion(advice)
+    // MARK: - Validate internal store
+
+    private func suggestMinimumPlan(ofStorage minimumStorage: NSNumber, availablePlans: [MEGAPlan]) -> [MEGAPlan] {
+        let query = { (storage: Int64) -> QueryConstraint in
+            return QueryConstraint { plans in
+                QueryConstraint.minimumPrice.run(
+                    QueryConstraint.storagGreaterThan(storage).run(plans))
+            }
         }
+        return query(minimumStorage.int64Value).run(availablePlans)
     }
 
     fileprivate func validated(_ internalStore: OverDiskQuotaStore) -> OverDiskQuotaInformation? {
@@ -112,15 +125,17 @@ import Foundation
         guard let deadline = internalStore.deadline else { return nil }
         guard let warningDate = internalStore.warningDates else { return nil }
         guard let numberOfFiles = internalStore.numberOfFilesOnCloud else { return nil }
-        guard let cloudStorage = internalStore.cloudStorage else { return nil }
-        guard let availablePlans = internalStore.availablePlans else { return nil }
+        guard let cloudStorage = internalStore.cloudStorageTaking else { return nil }
+        guard let availablePlans = internalStore.availablePlans,
+            let minimumPlan = suggestMinimumPlan(ofStorage: cloudStorage, availablePlans: availablePlans).first
+            else { return nil }
 
         return OverDiskQuotaInformation(email: email,
                                         deadline: deadline,
                                         warningDates: warningDate,
                                         numberOfFilesOnCloud: numberOfFiles,
                                         cloudStorage: cloudStorage,
-                                        availablePlans: availablePlans.description)
+                                        suggestedPlanName: minimumPlan.readableName)
     }
 
     // MARK: - Internal Store
@@ -130,14 +145,14 @@ import Foundation
     typealias WarningDates = [Date]
     typealias FileCount = UInt
     typealias Storage = NSNumber
-    typealias AvailablePlan = MEGAPlan
+    typealias AvailablePlans = [MEGAPlan]
 
     fileprivate struct OverDiskQuotaStore {
         var email: Email?
         var deadline: Deadline?
         var warningDates: WarningDates?
         var numberOfFilesOnCloud: FileCount?
-        var cloudStorage: Storage?
-        var availablePlans: AvailablePlan?
+        var cloudStorageTaking: Storage?
+        var availablePlans: AvailablePlans?
     }
 }

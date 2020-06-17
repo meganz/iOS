@@ -24,9 +24,9 @@ struct QueryConstraint {
 
     var run: ([MEGAPlan]) -> [MEGAPlan]
 
-    static let storagGreaterThan: (Int) -> QueryConstraint = { minStorage in
+    static let storagGreaterThan: (Int64) -> QueryConstraint = { minStorage in
         return QueryConstraint { plans in
-            plans.filter {  $0.storage > minStorage }
+            plans.filter {  $0.storageSpaceInBytes > minStorage }
         }
     }
 
@@ -35,7 +35,6 @@ struct QueryConstraint {
             guard let bestPrice = result.first?.price.price else {
                 return [plan]
             }
-
             if bestPrice > plan.price.price {
                 return [plan]
             }
@@ -60,6 +59,17 @@ struct MEGAPlan {
     let price: Price
     let proLevel: MEGAAccountType
     let description: Description
+}
+
+extension MEGAPlan {
+
+    var readableName: String {
+        return MEGAAccountDetails.string(for: proLevel)
+    }
+
+    var storageSpaceInBytes: Int64 {
+        return Int64(storage) * 1024 * 1024 * 1024
+    }
 }
 
 final class MEGAPlanService {

@@ -1693,6 +1693,7 @@ void uncaughtExceptionHandler(NSException *exception) {
         case MEGARequestTypeAccountDetails:
             [MEGASdkManager.sharedMEGASdk mnz_setShouldRequestAccountDetails:NO];
             [[MEGASdkManager sharedMEGASdk] mnz_setAccountDetails:[request megaAccountDetails]];
+            [OverDiskQuotaService prepareOverDiskQuotaInformationWithUserCloudStorageUsed:MEGASdkManager.sharedMEGASdk.mnz_accountDetails.storageUsed];
             break;
             
         case MEGARequestTypeGetAttrUser: {
