@@ -107,6 +107,15 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
                 
                 self.chatMessage = self.historyMessages
                 self.historyMessages.removeAll()
+                
+                if chatRoom.unreadCount > 0,
+                    chatMessage.count >= chatRoom.unreadCount,
+                    let lastMessageId = (chatMessage.last as? ChatMessage)?.message.messageId {
+                    chatMessage.insert(ChatNotificationMessage(type: .unreadMessage(chatRoom.unreadCount)),
+                                       at: chatMessage.count - chatRoom.unreadCount )
+                    MEGASdkManager.sharedMEGAChatSdk()!.setMessageSeenForChat(chatRoom.chatId, messageId: lastMessageId)
+                }
+                
                 self.chatViewController?.messagesCollectionView.reloadData()
                 self.chatViewController?.messagesCollectionView.scrollToLastItem(at: .bottom, animated: false)
                 
@@ -285,6 +294,28 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
     
     func insertMessage(_ message: MEGAChatMessage, scrollToBottom: Bool = false) {
         let lastSectionVisible = isLastSectionVisible()
+        
+        var unreadNotificationMessageIndex: Int?
+        if !lastSectionVisible && !scrollToBottom {
+            let index = chatMessage.firstIndex { object -> Bool in
+                guard object is ChatNotificationMessage else {
+                    return false
+                }
+                
+                return true
+            }
+            
+            if let index = index,
+                let notificationMessage = chatMessage[index] as? ChatNotificationMessage,
+                case .unreadMessage(let count) = notificationMessage.type {
+                chatMessage[index] = ChatNotificationMessage(type: .unreadMessage(count + 1))
+                unreadNotificationMessageIndex = index
+            } else {
+                chatMessage.append(ChatNotificationMessage(type: .unreadMessage(1)))
+                unreadNotificationMessageIndex = chatMessage.count - 1
+            }
+        }
+        
         chatMessage.append(ChatMessage(message: message, chatRoom: chatRoom))
         guard let messagesCollectionView = chatViewController?.messagesCollectionView else {
             return
@@ -299,9 +330,25 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
         }
         UIView.setAnimationsEnabled(false)
         messagesCollectionView.performBatchUpdates({
-            messagesCollectionView.insertSections([chatMessage.count - 1])
-            if chatMessage.count >= 2 {
-                messagesCollectionView.reloadSections([chatMessage.count - 2])
+            if let notificationMessageIndex = unreadNotificationMessageIndex {
+                if notificationMessageIndex == chatMessage.count - 2 {
+                    messagesCollectionView.insertSections([chatMessage.count - 2, chatMessage.count - 1])
+                    if chatMessage.count >= 3 {
+                        messagesCollectionView.reloadSections([chatMessage.count - 3])
+                    }
+                } else {
+                    messagesCollectionView.insertSections([chatMessage.count - 1])
+                    if chatMessage.count >= 3 {
+                        messagesCollectionView.reloadSections([chatMessage.count - 3, notificationMessageIndex])
+                    } else {
+                        messagesCollectionView.reloadSections([notificationMessageIndex])
+                    }
+                }
+            } else {
+                messagesCollectionView.insertSections([chatMessage.count - 1])
+                if chatMessage.count >= 2 {
+                    messagesCollectionView.reloadSections([chatMessage.count - 2])
+                }
             }
         }, completion: { [weak self] _ in
             if lastSectionVisible || scrollToBottom {
