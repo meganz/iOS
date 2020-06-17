@@ -1606,7 +1606,14 @@ void uncaughtExceptionHandler(NSException *exception) {
             case MEGAErrorTypeApiEBusinessPastDue:
                 [self presentAccountExpiredAlertIfNeeded];
                 break;
-                
+            case MEGAErrorTypeApiEPaywall: {
+                __weak typeof(self) weakSelf = self;
+                [OverDiskQuotaService prepareOverDiskQuotaInformationWithSDK:[MEGASdkManager sharedMEGASdk]
+                                                                    callback:^(id<OverDiskQuotaInfomationType> _Nonnull info) {
+                    [weakSelf presentOverDiskQuotaViewControllerIfNeededWithInformation:info];
+                }];
+                break;
+            }
             default:
                 break;
         }
