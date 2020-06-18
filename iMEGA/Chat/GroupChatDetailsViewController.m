@@ -23,7 +23,9 @@
 #import "MEGAStore.h"
 #import "MEGA-Swift.h"
 
-@interface GroupChatDetailsViewController () <MEGAChatRequestDelegate, MEGAChatDelegate, MEGAGlobalDelegate>
+#import "MEGA-Swift.h"
+
+@interface GroupChatDetailsViewController () <MEGAChatRequestDelegate, MEGAChatDelegate, MEGAGlobalDelegate, GroupChatDetailsViewTableViewCellDelegate, PushNotificationControlProtocol>
 
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
@@ -37,6 +39,8 @@
 @property (strong, nonatomic) NSMutableArray *participantsMutableArray;
 @property (nonatomic) NSMutableDictionary<NSString *, NSIndexPath *> *indexPathsMutableDictionary;
 
+@property (strong, nonatomic) ChatNotificationControl *chatNotificationControl;
+
 @end
 
 @implementation GroupChatDetailsViewController
@@ -47,6 +51,8 @@
     [super viewDidLoad];
     
     self.navigationItem.title = AMLocalizedString(@"info", @"A button label. The button allows the user to get more info of the current context");
+    
+    self.chatNotificationControl = [ChatNotificationControl.alloc initWithDelegate:self];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -275,6 +281,10 @@
     [self presentViewController:customModalAlertVC animated:YES completion:nil];
 }
 
+- (BOOL)shouldShowChatNotificationEnabledCell {
+    return (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeRo) ? 1 : 0;
+}
+
 #pragma mark - IBActions
 
 - (IBAction)notificationsSwitchValueChanged:(UISwitch *)sender {
@@ -337,9 +347,9 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     if (self.participantsMutableArray.count == 1 && [self.participantsMutableArray[0] isEqual:[NSNumber numberWithUnsignedLongLong:MEGASdkManager.sharedMEGAChatSdk.myUserHandle]]) {
-        return 8;
-    } else {
         return 9;
+    } else {
+        return 10;
     }
 }
 
@@ -347,39 +357,42 @@
     NSInteger numberOfRows = 0;
     switch (section) {
         case 0:
-            numberOfRows = (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) ? 1 : 0;
+            numberOfRows = [self shouldShowChatNotificationEnabledCell] ? 1 : 0;
             break;
             
         case 1:
+            numberOfRows = (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) ? 1 : 0;
+
+        case 2:
             numberOfRows = 1;
             break;
             
-        case 2:
+        case 3:
             numberOfRows = (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeRo && self.chatRoom.isPublicChat && !self.chatRoom.isPreview) ? 1 : 0;
             break;
             
-        case 3:
+        case 4:
             numberOfRows = (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) ? 1 : 0;
             break;
             
-        case 4:
+        case 5:
             numberOfRows = self.chatRoom.isPreview ? 0 : 1;
             break;
             
-        case 5:
+        case 6:
             numberOfRows = (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeRo) ? 1 : 0;
             break;
             
-        case 6: {
+        case 7: {
             numberOfRows = (!self.chatRoom.isPublicChat || self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) ? 1 : 0;
             break;
         }
             
-        case 7:
+        case 8:
             numberOfRows = self.chatRoom.previewersCount ? 1 : 0;
             break;
             
-        case 8:
+        case 9:
             numberOfRows = self.participantsMutableArray.count;
             
             if (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator) {
@@ -397,61 +410,68 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     GroupChatDetailsViewTableViewCell *cell;
     
-    if (indexPath.section != 8 && indexPath.section != 7) {
+    if (indexPath.section != 9 && indexPath.section != 8 && indexPath.section != 0) {
         cell = [self.tableView dequeueReusableCellWithIdentifier:@"GroupChatDetailsLeaveGroupTypeID" forIndexPath:indexPath];
     }
     
     switch (indexPath.section) {
         case 0:
+            cell = [self.tableView dequeueReusableCellWithIdentifier:@"GroupChatDetailsNotificationsTypeID" forIndexPath:indexPath];
+            [self.chatNotificationControl configureWithCell:(id<ChatNotificationControlCellProtocol>)cell
+                                                     chatId:self.chatRoom.chatId];
+            cell.delegate = self;
+            break;
+            
+        case 1:
             cell.leftImageView.image = [UIImage imageNamed:@"renameGroup"];
             cell.leftImageView.tintColor = UIColor.mnz_gray777777;
             cell.nameLabel.text = AMLocalizedString(@"renameGroup", @"The title of a menu button which allows users to rename a group chat.");
             break;
             
-        case 1:
+        case 2:
             cell.leftImageView.image = [UIImage imageNamed:@"sharedFiles"];
             cell.nameLabel.text =  AMLocalizedString(@"Shared Files", @"Header of block with all shared files in chat.");
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             break;
             
-        case 2:
+        case 3:
             cell.leftImageView.image = [UIImage imageNamed:@"Link_grey"];
             cell.nameLabel.text = AMLocalizedString(@"Get Chat Link", @"");
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             break;
             
-        case 3:
+        case 4:
             cell.leftImageView.image = [UIImage imageNamed:@"clearChatHistory"];
             cell.nameLabel.text = AMLocalizedString(@"clearChatHistory", @"A button title to delete the history of a chat.");
             break;
             
-        case 4:
+        case 5:
             cell.leftImageView.image = self.chatRoom.isArchived ? [UIImage imageNamed:@"unArchiveChat"] : [UIImage imageNamed:@"archiveChat_gray"];
             cell.nameLabel.text = self.chatRoom.isArchived ? AMLocalizedString(@"unarchiveChat", @"The title of the dialog to unarchive an archived chat.") : AMLocalizedString(@"archiveChat", @"Title of button to archive chats.");
             cell.nameLabel.textColor = self.chatRoom.isArchived ? UIColor.mnz_redMain : UIColor.mnz_black333333;
             break;
             
-        case 5:
+        case 6:
             cell.leftImageView.image = [UIImage imageNamed:@"leaveGroup"];
             cell.nameLabel.text = self.chatRoom.isPreview ? AMLocalizedString(@"close", nil) : AMLocalizedString(@"leaveGroup", @"Button title that allows the user to leave a group chat.");
-            cell.nameLabel.textColor = UIColor.mnz_redMain;            
+            cell.nameLabel.textColor = UIColor.mnz_redMain;
             break;
-                        
-        case 6:
+
+        case 7:
             cell.nameLabel.text = self.chatRoom.isPublicChat ? AMLocalizedString(@"Enable Encrypted Key Rotation", @"Title show in a cell where the users can enable the 'Encrypted Key Rotation'") : AMLocalizedString(@"Encrypted Key Rotation", @"Label in a cell where you can enable the 'Encrypted Key Rotation'");
             cell.leftImageView.hidden = YES;
             cell.enableLabel.hidden = cell.userInteractionEnabled = self.chatRoom.isPublicChat;
             cell.enableLabel.text = AMLocalizedString(@"Enabled", @"The label of the toggle switch to indicate that file versioning is enabled.");
             break;
             
-        case 7:
+        case 8:
             cell = [self.tableView dequeueReusableCellWithIdentifier:@"GroupChatDetailsObserversTypeID" forIndexPath:indexPath];
             cell.leftImageView.image = [UIImage imageNamed:@"chatObservers"];
             cell.emailLabel.text = AMLocalizedString(@"Observers", @"Users previewing a public chat");
             cell.rightLabel.text = [NSString stringWithFormat:@"%tu", self.chatRoom.previewersCount];
             break;
             
-        case 8: {
+        case 9: {
             if ((indexPath.row == 0) && (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator)) {
                 cell = [self.tableView dequeueReusableCellWithIdentifier:@"GroupChatDetailsParticipantEmailTypeID" forIndexPath:indexPath];
                 cell.leftImageView.image = [UIImage imageNamed:@"inviteToChat"];
@@ -541,14 +561,17 @@
     CGFloat height;
     switch (section) {
         case 0:
-            height = (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) ? 20.0f : 0.1f;
+            height = [self shouldShowChatNotificationEnabledCell] ? 20.0 : 0.1f;
             break;
             
         case 1:
+            height = (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) ? 20.0f : 0.1f;
+            
+        case 2:
             height = 10.0f;
             break;
             
-        case 2:
+        case 3:
             if (self.chatRoom.isPublicChat) {
                 if (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator) {
                     height = 10.0f;
@@ -562,11 +585,11 @@
             }
             break;
             
-        case 3:
+        case 4:
             height = (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) ? 10.0f : 0.1f;
             break;
             
-        case 4:
+        case 5:
             if (self.chatRoom.isPreview) {
                 height = 0.1f;
             } else {
@@ -585,19 +608,19 @@
             
             break;
             
-        case 5:
+        case 6:
             height = self.chatRoom.isPreview ? 20.0f : 10.0f;
             break;
             
-        case 6:
+        case 7:
             height = (!self.chatRoom.isPublicChat || self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) ? 10.0f : 0.1f;
             break;
             
-        case 7:
+        case 8:
             height = self.chatRoom.previewersCount ? 10.0f : 0.1f;
             break;
             
-        case 8:
+        case 9:
             height = 24.0f;
             break;
             
@@ -613,7 +636,7 @@
     CGFloat height;
     switch (section) {
         case 0:
-            height = (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) ? 10.0f : 0.1f;
+            height = UITableViewAutomaticDimension;
             break;
             
         case 1:
@@ -621,22 +644,26 @@
             break;
             
         case 2:
-            height = ((self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeRo) && self.chatRoom.isPublicChat  && !self.chatRoom.isPreview) ? 10.0f : 0.1f;
-            break;
-            
-        case 3:
             height = (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) ? 10.0f : 0.1f;
             break;
             
+        case 3:
+            height = ((self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeRo) && self.chatRoom.isPublicChat  && !self.chatRoom.isPreview) ? 10.0f : 0.1f;
+            break;
+            
         case 4:
-            height = self.chatRoom.isPreview ? 0.1f : 10.0f;
+            height = (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) ? 10.0f : 0.1f;
             break;
             
         case 5:
+            height = self.chatRoom.isPreview ? 0.1f : 10.0f;
+            break;
+            
+        case 6:
             height = 10.0f;
             break;
             
-        case 6: {
+        case 7: {
             if (self.chatRoom.isPublicChat) {
                 height = (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) ? UITableViewAutomaticDimension : 0.1f;
             } else {
@@ -645,17 +672,18 @@
             break;
         }
             
-        case 7:
+        case 8:
             height = self.chatRoom.previewersCount ? 10.0f : 0.1f;
             break;
             
-        case 8:
+        case 9:
             height = 20.0f;
             break;
             
         default:
             height = 0.1f;
             break;
+           
     }
     
     return height;
@@ -664,7 +692,10 @@
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
     if (section == 6 && self.chatRoom.isPublicChat && self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) {
         return [AMLocalizedString(@"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages.", @"Footer text to explain what means 'Encrypted Key Rotation'") stringByAppendingString:@"\n"];
+    } else if (section == 0 && [self shouldShowChatNotificationEnabledCell]) {
+        return [self.chatNotificationControl timeRemainingForDNDDeactivationStringWithChatId:self.chatRoom.chatId];
     }
+    
     return nil;
 }
 
@@ -675,38 +706,42 @@
     CGFloat heightForRow;
     switch (indexPath.section) {
         case 0:
-            heightForRow = (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) ? 44.0f : 0.0f;
-            break;
-            
-        case 1:
             heightForRow = 44.0f;
             break;
             
-        case 2:
-            heightForRow = (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeRo) ? 44.0f : 0.0f;
-            break;
-            
-        case 3:
+        case 1:
             heightForRow = (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) ? 44.0f : 0.0f;
             break;
             
-        case 4:
-            heightForRow = self.chatRoom.isPreview ? 0.0f : 44.0f;
+        case 2:
+            heightForRow = 44.0f;
             break;
             
-        case 5:
+        case 3:
             heightForRow = (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeRo) ? 44.0f : 0.0f;
             break;
             
+        case 4:
+            heightForRow = (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) ? 44.0f : 0.0f;
+            break;
+            
+        case 5:
+            heightForRow = self.chatRoom.isPreview ? 0.0f : 44.0f;
+            break;
+            
         case 6:
-            heightForRow = (!self.chatRoom.isPublicChat || self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) ? 44.0f : 0.0f;
+            heightForRow = (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeRo) ? 44.0f : 0.0f;
             break;
             
         case 7:
-            heightForRow = self.chatRoom.previewersCount ? 60.0f : 0.0f;
+            heightForRow = (!self.chatRoom.isPublicChat || self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) ? 44.0f : 0.0f;
             break;
             
         case 8:
+            heightForRow = self.chatRoom.previewersCount ? 60.0f : 0.0f;
+            break;
+            
+        case 9:
             heightForRow = 60.0f;
             break;
             
@@ -721,15 +756,15 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         switch (indexPath.section) {
-            case 0:
+            case 1:
                 [self renameChatGroup];
                 break;
-                
-            case 1:
+
+            case 2:
                 [self.navigationController pushViewController:[ChatSharedItemsViewController instantiateWith:self.chatRoom] animated:YES];
                 break;
             
-            case 2: {
+            case 3: {
                 if (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) {
                     if (self.chatRoom.hasCustomTitle) {
                         MEGAChatGenericRequestDelegate *delegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
@@ -771,15 +806,15 @@
                 break;
             }
                 
-            case 3:
+            case 4:
                 [self showClearChatHistoryAlert];
                 break;
                 
-            case 4:
+            case 5:
                 [self showArchiveChatAlert];
                 break;
                 
-            case 5:
+            case 6:
                 if (self.chatRoom.isPreview) {
                     [[MEGASdkManager sharedMEGAChatSdk] closeChatPreview:self.chatRoom.chatId];
                     if (self.presentingViewController) {
@@ -792,7 +827,7 @@
                 }
                 break;
                 
-            case 6: {
+            case 7: {
                 CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
                 customModalAlertVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
                 customModalAlertVC.image = [UIImage imageNamed:@"lock"];
@@ -816,7 +851,7 @@
                 break;
             }
                 
-            case 8:
+            case 9:
                 if (!MEGASdkManager.sharedMEGASdk.isLoggedIn) {
                     break;
                 }
@@ -933,6 +968,26 @@
     }
     if (reloadData) {
         [self.tableView reloadData];
+    }
+}
+
+
+#pragma mark - ContactTableViewCellDelegate
+
+- (void)notificationSwitchValueChanged:(UISwitch *)sender {
+    if (sender.isOn) {
+        [self.chatNotificationControl turnOffDNDWithChatId:self.chatRoom.chatId];
+    } else {
+        [self.chatNotificationControl turnOnDNDWithChatId:self.chatRoom.chatId sender:sender];
+    }
+}
+
+#pragma mark - ChatNotificationControlProtocol
+
+- (void)pushNotificationSettingsLoaded {
+    GroupChatDetailsViewTableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+    if (cell.notificationsSwitch != nil) {
+        cell.notificationsSwitch.enabled = YES;
     }
 }
 

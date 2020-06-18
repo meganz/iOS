@@ -8,7 +8,7 @@
 
 #import "LocalizationSystem.h"
 #import "LTHPasscodeViewController.h"
-
+#import "MEGAPushNotificationSettings.h"
 #import "UIScrollView+EmptyDataSet.h"
 #import "SAMKeychain.h"
 #import "SVProgressHUD.h"
@@ -24,7 +24,6 @@
 #import "UIAlertAction+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
 #import "UIColor+MNZCategory.h"
-#import "LocalizationSystem.h"
 #import "UIDevice+MNZCategory.h"
 #import "UIFont+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
