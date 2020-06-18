@@ -1457,10 +1457,12 @@ void uncaughtExceptionHandler(NSException *exception) {
                 [api getAccountDetails];
             } else if (event.number == StorageStatePaywall) {
                 __weak typeof(self) weakSelf = self;
-                [OverDiskQuotaService prepareOverDiskQuotaInformationWithSDK:[MEGASdkManager sharedMEGASdk]
-                                                                        callback:^(id<OverDiskQuotaInfomationType> _Nonnull info) {
+                OverDiskQuotaCommand *presentOverDiskQuotaScreenCommand
+                    = [[OverDiskQuotaCommand alloc] initWithApi:MEGASdkManager.sharedMEGASdk
+                                               completionAction:^(id<OverDiskQuotaInfomationType> _Nonnull info) {
                     [weakSelf presentOverDiskQuotaViewControllerIfNeededWithInformation:info];
                 }];
+                [OverDiskQuotaService.sharedService send:presentOverDiskQuotaScreenCommand];
             } else {
                 static BOOL alreadyPresented = NO;
                 if (!alreadyPresented && (event.number == StorageStateRed || event.number == StorageStateOrange)) {
@@ -1608,10 +1610,12 @@ void uncaughtExceptionHandler(NSException *exception) {
                 break;
             case MEGAErrorTypeApiEPaywall: {
                 __weak typeof(self) weakSelf = self;
-                [OverDiskQuotaService prepareOverDiskQuotaInformationWithSDK:[MEGASdkManager sharedMEGASdk]
-                                                                    callback:^(id<OverDiskQuotaInfomationType> _Nonnull info) {
+                OverDiskQuotaCommand *presentOverDiskQuotaScreenCommand
+                    = [[OverDiskQuotaCommand alloc] initWithApi:MEGASdkManager.sharedMEGASdk
+                                               completionAction:^(id<OverDiskQuotaInfomationType> _Nonnull info) {
                     [weakSelf presentOverDiskQuotaViewControllerIfNeededWithInformation:info];
                 }];
+                [OverDiskQuotaService.sharedService send:presentOverDiskQuotaScreenCommand];
                 break;
             }
             default:
@@ -1700,7 +1704,7 @@ void uncaughtExceptionHandler(NSException *exception) {
         case MEGARequestTypeAccountDetails:
             [MEGASdkManager.sharedMEGASdk mnz_setShouldRequestAccountDetails:NO];
             [[MEGASdkManager sharedMEGASdk] mnz_setAccountDetails:[request megaAccountDetails]];
-            [OverDiskQuotaService prepareOverDiskQuotaInformationWithUserCloudStorageUsed:MEGASdkManager.sharedMEGASdk.mnz_accountDetails.storageUsed];
+            [OverDiskQuotaService.sharedService setUserStorageUsed:MEGASdkManager.sharedMEGASdk.mnz_accountDetails.storageUsed];
             break;
             
         case MEGARequestTypeGetAttrUser: {
