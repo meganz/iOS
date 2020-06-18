@@ -490,18 +490,19 @@ extension ChatViewController: AddToChatViewControllerDelegate {
     }
     
     func loadPhotosView() {
-        guard let imagePickerController = MEGAAssetsPickerController(toUploadToChatWithAssetsCompletion: { assets in
-            guard let assets = assets else {
-                return
-            }
-            
-            assets.forEach { self.send(asset: $0)}
-        }) else {
-            MEGALogDebug("Photo picker cannot be loaded")
-            return
+        let selectionActionText = AMLocalizedString("Send (%d)", "Used in Photos app browser view to send the photos from the view to the chat.")
+        let selectionActionDisabledText = AMLocalizedString("send", "Used in Photos app browser view as a disabled action when there is no assets selected")
+        let albumTableViewController = AlbumsTableViewController(selectionActionText: selectionActionText,
+                                                                 selectionActionDisabledText: selectionActionDisabledText) { [weak self] assets in
+                                                                    guard let `self` = self else {
+                                                                        return
+                                                                    }
+                                                                    
+                                                                    assets.forEach { self.send(asset: $0)}
         }
         
-        present(viewController: imagePickerController)
+        let navigationController = MEGANavigationController(rootViewController: albumTableViewController)
+        present(viewController: navigationController)
     }
     
     func showCamera() {

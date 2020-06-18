@@ -5561,6 +5561,8 @@
 				BF7EBD29244E8D120015255F /* Chat Input Bar */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
 		BFAB110C23CEA5C300BCE72D /* PhotosAppBrowser */ = {
 			isa = PBXGroup;
 			children = (
