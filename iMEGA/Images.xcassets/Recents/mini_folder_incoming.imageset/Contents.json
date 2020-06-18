@@ -1,13 +1,23 @@
 {
   "images" : [
     {
-      "idiom" : "universal",
-      "filename" : "mini_folder_incoming.pdf"
+      "filename" : "mini_folder_incoming.pdf",
+      "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "mini_folder_incomingDark.pdf",
+      "idiom" : "universal"
     }
   ],
   "info" : {
-    "version" : 1,
-    "author" : "xcode"
+    "author" : "xcode",
+    "version" : 1
   },
   "properties" : {
     "preserves-vector-representation" : true

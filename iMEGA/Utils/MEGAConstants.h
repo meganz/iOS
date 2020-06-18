@@ -12,6 +12,11 @@ extern NSString * const MEGAFirstRunValue;
 
 extern NSString * const MEGAGroupIdentifier;
 
+extern NSString * const MEGASortingPreference;
+extern NSString * const MEGASortingPreferenceType;
+
+extern NSString * const MEGAViewModePreference;
+
 extern NSString * const MEGAPasscodeLogoutAfterTenFailedAttemps;
 
 extern uint64_t const MEGAInvalidHandle;

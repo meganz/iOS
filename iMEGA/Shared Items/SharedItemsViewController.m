@@ -6,6 +6,7 @@
 
 #import "Helper.h"
 #import "MEGASdkManager.h"
+#import "MEGA-Swift.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGANavigationController.h"
 #import "MEGANode+MNZCategory.h"
@@ -15,20 +16,18 @@
 #import "MEGAShareRequestDelegate.h"
 #import "NSMutableArray+MNZCategory.h"
 #import "NSString+MNZCategory.h"
-#import "UIAlertAction+MNZCategory.h"
 #import "UIImage+MNZCategory.h"
+#import "UIViewController+MNZCategory.h"
 
 #import "BrowserViewController.h"
 #import "CloudDriveViewController.h"
 #import "ContactsViewController.h"
 #import "CopyrightWarningViewController.h"
+#import "EmptyStateView.h"
 #import "SharedItemsTableViewCell.h"
 #import "MEGAPhotoBrowserViewController.h"
 #import "NodeInfoViewController.h"
-#import "UIViewController+MNZCategory.h"
 #import "NodeTableViewCell.h"
-
-#import "MEGA-Swift.h"
 
 @interface SharedItemsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, MGSwipeTableCellDelegate, NodeInfoViewControllerDelegate, NodeActionViewControllerDelegate> {
     BOOL allNodesSelected;
@@ -93,6 +92,8 @@
     [super viewDidLoad];
     
     self.definesPresentationContext = YES;
+    
+    [self updateAppearance];
     
     //White background for the view behind the table view
     self.tableView.backgroundView = UIView.alloc.init;
@@ -171,10 +172,24 @@
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [AppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];
+            
+            [self updateAppearance];
+        }
+    }
+    
     [self configPreviewingRegistration];
 }
 
 #pragma mark - Private
+
+- (void)updateAppearance {
+    self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+    
+    [self updateSelector];
+}
 
 - (void)reloadUI {
     if (self.incomingButton.selected) {
@@ -294,22 +309,6 @@
     }
 }
 
-- (NSMutableArray *)outSharesForNode:(MEGANode *)node {
-
-    NSMutableArray *outSharesForNodeMutableArray = NSMutableArray.alloc.init;
-    
-    MEGAShareList *outSharesForNodeShareList = [[MEGASdkManager sharedMEGASdk] outSharesForNode:node];
-    NSUInteger outSharesForNodeCount = outSharesForNodeShareList.size.unsignedIntegerValue;
-    for (NSInteger i = 0; i < outSharesForNodeCount; i++) {
-        MEGAShare *share = [outSharesForNodeShareList shareAtIndex:i];
-        if ([share user] != nil) {
-            [outSharesForNodeMutableArray addObject:share];
-        }
-    }
-    
-    return outSharesForNodeMutableArray;
-}
-
 - (void)toolbarItemsForSharedItems {
     
     NSMutableArray *toolbarItemsMutableArray = NSMutableArray.alloc.init;
@@ -339,7 +338,7 @@
     self.selectedSharesMutableArray = NSMutableArray.alloc.init;
     
     for (MEGANode *node in self.selectedNodesMutableArray) {
-        NSMutableArray *outSharesOfNodeMutableArray = [self outSharesForNode:node];
+        NSMutableArray *outSharesOfNodeMutableArray = node.outShares;
         [self.selectedSharesMutableArray addObjectsFromArray:outSharesOfNodeMutableArray];
     }
 }
@@ -462,7 +461,7 @@
     cell.nameLabel.text = node.name;
     
     NSString *userName;
-    NSMutableArray *outSharesMutableArray = [self outSharesForNode:node];
+    NSMutableArray *outSharesMutableArray = node.outShares;
     outSharesCount = outSharesMutableArray.count;
     if (outSharesCount > 1) {
         userName = [NSString stringWithFormat:AMLocalizedString(@"sharedWithXContacts", nil), outSharesCount];
@@ -494,6 +493,22 @@
     [self configureSelectionForCell:cell atIndexPath:indexPath forNode:node];
     
     return cell;
+}
+
+- (void)updateSelector {
+    self.selectorView.backgroundColor = [UIColor mnz_mainBarsForTraitCollection:self.traitCollection];
+    
+    self.incomingButton.tintColor = self.incomingButton.selected ? [UIColor mnz_redForTraitCollection:(self.traitCollection)] : [UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)];
+    self.incomingLabel.textColor = self.incomingButton.selected ? [UIColor mnz_redForTraitCollection:(self.traitCollection)] : [UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)];
+    self.incomingLineView.backgroundColor = self.incomingButton.selected ? [UIColor mnz_redForTraitCollection:self.traitCollection] : nil;
+    
+    self.outgoingButton.tintColor = self.outgoingButton.selected ? [UIColor mnz_redForTraitCollection:(self.traitCollection)] : [UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)];
+    self.outgoingLabel.textColor = self.outgoingButton.selected ? [UIColor mnz_redForTraitCollection:(self.traitCollection)] : [UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)];
+    self.outgoingLineView.backgroundColor = self.outgoingButton.selected ? [UIColor mnz_redForTraitCollection:self.traitCollection] : nil;
+    
+    self.linksButton.tintColor = self.linksButton.selected ? [UIColor mnz_redForTraitCollection:(self.traitCollection)] : [UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)];
+    self.linksLabel.textColor = self.linksButton.selected ? [UIColor mnz_redForTraitCollection:(self.traitCollection)] : [UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)];
+    self.linksLineView.backgroundColor = self.linksButton.selected ? [UIColor mnz_redForTraitCollection:self.traitCollection] : nil;
 }
 
 #pragma mark - Utils
@@ -545,7 +560,7 @@
             ActionSheetViewController *sortByActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:nil dismissCompletion:nil sender:self.navigationItem.rightBarButtonItems.firstObject];
             [weakSelf presentViewController:sortByActionSheet animated:YES completion:nil];
         }]];
-        [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"select", @"Button that allows you to select a given folder") detail:nil image:[UIImage imageNamed:@"selected"] style:UIAlertActionStyleDefault actionHandler:^{
+        [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"select", @"Button that allows you to select a given folder") detail:nil image:[UIImage imageNamed:@"select"] style:UIAlertActionStyleDefault actionHandler:^{
             [weakSelf setEditing:YES animated:YES];
             
             weakSelf.selectedNodesMutableArray = NSMutableArray.alloc.init;
@@ -643,7 +658,7 @@
             NSUInteger count = self.outgoingNodesMutableArray.count;
             for (NSInteger i = 0; i < count; i++) {
                 n = [self.outgoingNodesMutableArray objectAtIndex:i];
-                [self.selectedSharesMutableArray addObjectsFromArray:[self outSharesForNode:n]];
+                [self.selectedSharesMutableArray addObjectsFromArray:n.outShares];
                 [self.selectedNodesMutableArray addObject:n];
             }
         } else if (self.linksButton.selected) {
@@ -804,16 +819,7 @@
     sender.selected = !sender.selected;
     self.outgoingButton.selected = self.linksButton.selected = NO;
 
-    self.incomingButton.tintColor = UIColor.mnz_redMain;
-    self.outgoingButton.tintColor = self.linksButton.tintColor = UIColor.mnz_gray999999;
-    
-    self.incomingLabel.textColor = UIColor.mnz_redMain;
-    self.outgoingLabel.textColor = UIColor.mnz_gray999999;
-    self.linksLabel.textColor = UIColor.mnz_gray999999;
-    
-    self.incomingLineView.backgroundColor = UIColor.mnz_redMain;
-    self.outgoingLineView.backgroundColor = UIColor.mnz_grayCCCCCC;
-    self.linksLineView.backgroundColor = UIColor.mnz_grayCCCCCC;
+    [self updateSelector];
 
     [self disableSearchAndSelection];
     
@@ -829,16 +835,7 @@
     sender.selected = !sender.selected;
     self.incomingButton.selected = self.linksButton.selected = NO;
     
-    self.outgoingButton.tintColor = UIColor.mnz_redMain;
-    self.incomingButton.tintColor = self.linksButton.tintColor = UIColor.mnz_gray999999;
-    
-    self.incomingLabel.textColor = UIColor.mnz_gray999999;
-    self.outgoingLabel.textColor = UIColor.mnz_redMain;
-    self.linksLabel.textColor = UIColor.mnz_gray999999;
-    
-    self.incomingLineView.backgroundColor = UIColor.mnz_grayCCCCCC;
-    self.outgoingLineView.backgroundColor = UIColor.mnz_redMain;
-    self.linksLineView.backgroundColor = UIColor.mnz_grayCCCCCC;
+    [self updateSelector];
     
     [self disableSearchAndSelection];
     
@@ -854,16 +851,7 @@
     sender.selected = !sender.selected;
     self.incomingButton.selected = self.outgoingButton.selected = NO;
     
-    self.linksButton.tintColor = UIColor.mnz_redMain;
-    self.outgoingButton.tintColor = self.incomingButton.tintColor = UIColor.mnz_gray999999;
-    
-    self.incomingLabel.textColor = UIColor.mnz_gray999999;
-    self.outgoingLabel.textColor = UIColor.mnz_gray999999;
-    self.linksLabel.textColor = UIColor.mnz_redMain;
-    
-    self.incomingLineView.backgroundColor = UIColor.mnz_grayCCCCCC;
-    self.outgoingLineView.backgroundColor = UIColor.mnz_grayCCCCCC;
-    self.linksLineView.backgroundColor = UIColor.mnz_redMain;
+    [self updateSelector];
     
     [self disableSearchAndSelection];
     
@@ -1060,7 +1048,7 @@
             [self setEditing:NO animated:YES];
         }];
         shareAction.image = [UIImage imageNamed:@"leaveShareGesture"];
-        shareAction.backgroundColor = [UIColor colorWithRed:0.95 green:0.05 blue:0.08 alpha:1];
+        shareAction.backgroundColor = [UIColor mnz_redForTraitCollection:self.traitCollection];
         return [UISwipeActionsConfiguration configurationWithActions:@[shareAction]];
     } else if (self.outgoingButton.selected) {
         UIContextualAction *shareAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
@@ -1068,7 +1056,7 @@
             [self setEditing:NO animated:YES];
         }];
         shareAction.image = [UIImage imageNamed:@"removeShareGesture"];
-        shareAction.backgroundColor = [UIColor colorWithRed:0.95 green:0.05 blue:0.08 alpha:1];
+        shareAction.backgroundColor = [UIColor mnz_redForTraitCollection:self.traitCollection];
         return [UISwipeActionsConfiguration configurationWithActions:@[shareAction]];
     } else if (self.linksButton.selected) {
         UIContextualAction *removeLinkAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
@@ -1076,7 +1064,7 @@
             [self setEditing:NO animated:YES];
         }];
         removeLinkAction.image = [UIImage imageNamed:@"removeLinkGesture"];
-        removeLinkAction.backgroundColor = [UIColor colorWithRed:0.95 green:0.05 blue:0.08 alpha:1];
+        removeLinkAction.backgroundColor = [UIColor mnz_redForTraitCollection:self.traitCollection];
         return [UISwipeActionsConfiguration configurationWithActions:@[removeLinkAction]];
     } else {
         return [UISwipeActionsConfiguration configurationWithActions:@[]];
@@ -1199,7 +1187,16 @@
 
 #pragma mark - DZNEmptyDataSetSource
 
-- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
+- (nullable UIView *)customViewForEmptyDataSet:(UIScrollView *)scrollView {
+    EmptyStateView *emptyStateView = [EmptyStateView.alloc initWithImage:[self imageForEmptyState] title:[self titleForEmptyState] description:[self descriptionForEmptyState] buttonTitle:[self buttonTitleForEmptyState]];
+    [emptyStateView.button addTarget:self action:@selector(buttonTouchUpInsideEmptyState) forControlEvents:UIControlEventTouchUpInside];
+    
+    return emptyStateView;
+}
+
+#pragma mark - Empty State
+
+- (NSString *)titleForEmptyState {
     NSString *text = @"";
     if ([MEGAReachabilityManager isReachable]) {
         if (self.searchController.isActive) {
@@ -1219,21 +1216,19 @@
         text = AMLocalizedString(@"noInternetConnection",  nil);
     }
     
-    return [[NSAttributedString alloc] initWithString:text attributes:[Helper titleAttributesForEmptyState]];
+    return text;
 }
 
-- (nullable NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView {
+- (NSString *)descriptionForEmptyState {
     NSString *text = @"";
     if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
         text = AMLocalizedString(@"Mobile Data is turned off", @"Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings.");
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleFootnote], NSForegroundColorAttributeName:UIColor.mnz_gray777777};
-    
-    return [NSAttributedString.alloc initWithString:text attributes:attributes];
+    return text;
 }
 
-- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
+- (UIImage *)imageForEmptyState {
     UIImage *image;
     if ([MEGAReachabilityManager isReachable]) {
         if (self.searchController.isActive) {
@@ -1258,37 +1253,16 @@
     return image;
 }
 
-- (NSAttributedString *)buttonTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
+- (NSString *)buttonTitleForEmptyState {
     NSString *text = @"";
     if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
         text = AMLocalizedString(@"Turn Mobile Data on", @"Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app.");
     }
     
-    return [NSAttributedString.alloc initWithString:text attributes:Helper.buttonTextAttributesForEmptyState];
+    return text;
 }
 
-- (UIImage *)buttonBackgroundImageForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
-    UIEdgeInsets capInsets = [Helper capInsetsForEmptyStateButton];
-    UIEdgeInsets rectInsets = [Helper rectInsetsForEmptyStateButton];
-    
-    return [[[UIImage imageNamed:@"emptyStateButton"] resizableImageWithCapInsets:capInsets resizingMode:UIImageResizingModeStretch] imageWithAlignmentRectInsets:rectInsets];
-}
-
-- (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
-    return UIColor.whiteColor;
-}
-
-- (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView {
-    return [Helper spaceHeightForEmptyState];
-}
-
-- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
-    return [Helper verticalOffsetForEmptyStateWithNavigationBarSize:self.navigationController.navigationBar.frame.size searchBarActive:self.searchController.isActive];
-}
-
-#pragma mark - DZNEmptyDataSetDelegate
-
-- (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
+- (void)buttonTouchUpInsideEmptyState {
     if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
         [UIApplication.sharedApplication openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString] options:@{} completionHandler:nil];
     }
@@ -1339,7 +1313,7 @@
     
     if (direction == MGSwipeDirectionRightToLeft) {
         if (self.incomingButton.selected) {
-            MGSwipeButton *shareButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"leaveShareGesture"] backgroundColor:[UIColor colorWithRed:0.95 green:0.05 blue:0.08 alpha:1] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
+            MGSwipeButton *shareButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"leaveShareGesture"] backgroundColor:[UIColor mnz_redForTraitCollection:self.traitCollection] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
                 [node mnz_leaveSharingInViewController:self];
                 return YES;
             }];
@@ -1347,7 +1321,7 @@
             
             return @[shareButton];
         } else if (self.outgoingButton.selected) {
-            MGSwipeButton *shareButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"removeShareGesture"] backgroundColor:[UIColor colorWithRed:0.95 green:0.05 blue:0.08 alpha:1] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
+            MGSwipeButton *shareButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"removeShareGesture"] backgroundColor:[UIColor mnz_redForTraitCollection:self.traitCollection] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
                 [node mnz_removeSharing];
                 return YES;
             }];
@@ -1355,7 +1329,7 @@
             
             return @[shareButton];
         } else if (self.linksButton.selected) {
-            MGSwipeButton *removeLinkButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"removeLinkGesture"] backgroundColor:[UIColor colorWithRed:0.95 green:0.05 blue:0.08 alpha:1] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
+            MGSwipeButton *removeLinkButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"removeLinkGesture"] backgroundColor:[UIColor mnz_redForTraitCollection:self.traitCollection] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
                 [node mnz_removeLink];
                 return YES;
             }];
@@ -1423,7 +1397,7 @@
         }
 
         case MegaNodeActionTypeMoveToRubbishBin:
-            [node mnz_moveToTheRubbishBinInViewController:self];
+            [node mnz_askToMoveToTheRubbishBinInViewController:self];
             break;
             
         case MegaNodeActionTypeSendToChat:

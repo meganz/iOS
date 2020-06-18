@@ -26,6 +26,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.tableView.tableFooterView = [UIView.alloc initWithFrame:CGRectZero];
+    
     self.navigationItem.title = AMLocalizedString(@"referralBonuses", @"achievement type");
     
     self.inviteAchievementsIndexesMutableArray = [[NSMutableArray alloc] init];
@@ -43,18 +45,37 @@
         NSString *email = [stringList stringAtIndex:0];
         [self.inviteAchievementsEmailsMutableArray addObject:email];
     }
+    
+    [self updateAppearance];
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateAppearance];
+            
+            [self.tableView reloadData];
+        }
+    }
 }
 
 #pragma mark - Private
+
+- (void)updateAppearance {
+    self.view.backgroundColor = UIColor.mnz_background;
+    self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+}
 
 - (void)setStorageAndTransferQuotaRewardsForCell:(AchievementsTableViewCell *)cell withAwardId:(NSInteger)awardId {
     long long classStorageReward = [self.achievementsDetails rewardStorageByAwardId:awardId];
     long long classTransferReward = [self.achievementsDetails rewardTransferByAwardId:awardId];
     
-    cell.storageQuotaRewardView.backgroundColor = cell.storageQuotaRewardLabel.backgroundColor = ((classStorageReward == 0) ? [UIColor mnz_grayCCCCCC] : [UIColor mnz_blue2BA6DE]);
+    cell.storageQuotaRewardView.backgroundColor = cell.storageQuotaRewardLabel.backgroundColor = ((classStorageReward == 0) ? [UIColor mnz_tertiaryGrayForTraitCollection:self.traitCollection] : [UIColor mnz_blueForTraitCollection:self.traitCollection]);
     cell.storageQuotaRewardLabel.text = (classStorageReward == 0) ? @"— GB" : [Helper memoryStyleStringFromByteCount:classStorageReward];
     
-    cell.transferQuotaRewardView.backgroundColor = cell.transferQuotaRewardLabel.backgroundColor = ((classTransferReward == 0) ? [UIColor mnz_grayCCCCCC] : [UIColor mnz_green31B500]);
+    cell.transferQuotaRewardView.backgroundColor = cell.transferQuotaRewardLabel.backgroundColor = ((classTransferReward == 0) ? [UIColor mnz_tertiaryGrayForTraitCollection:self.traitCollection] : UIColor.systemGreenColor);
     cell.transferQuotaRewardLabel.text = (classTransferReward == 0) ? @"— GB" : [Helper memoryStyleStringFromByteCount:classTransferReward];
 }
 
@@ -99,7 +120,7 @@
     
     NSDate *awardExpirationdDate = [self.achievementsDetails awardExpirationAtIndex:inviteIndexPath];
     cell.daysLeftTrailingLabel.text = [AMLocalizedString(@"xDaysLeft", @"") stringByReplacingOccurrencesOfString:@"%1" withString:[NSString stringWithFormat:@"%td", awardExpirationdDate.daysUntil]];
-    cell.daysLeftTrailingLabel.textColor = (awardExpirationdDate.daysUntil <= 15) ? UIColor.mnz_redMain : [UIColor mnz_gray666666];
+    cell.daysLeftTrailingLabel.textColor = (awardExpirationdDate.daysUntil <= 15) ? [UIColor mnz_redForTraitCollection:(self.traitCollection)] : [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
     
     return cell;
 }

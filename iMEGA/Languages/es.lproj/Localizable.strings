@@ -909,8 +909,6 @@
 "profile"="Perfil";
 /* Title of the Achievements section */
 "achievementsTitle"="Logros";
-/* Title of the Used storage section */
-"usedStorage"="Almacenamiento usado";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
 "inviteFriendsAndGetRewards"="Invita a tus amigos y obtén bonos";
 /* Indicating text for when "you invite your friends" */
@@ -918,7 +916,7 @@
 /* title of the introduction for the achievements screen */
 "inviteFriendsAndGetForEachReferral"="Obtén %1$s de almacenamiento y %2$s de transferencia por cada invitación";
 /* Text shown to explain how and where you can invite friends */
-"inviteYourFriendsExplanation"="Selecciona contactos de tu agenda o introduce varias direcciones de correo electrónico.";
+"Select from phone contacts or enter multiple email addresses"="Select from phone contacts or enter multiple email addresses";
 /*  */
 "insertYourFriendsEmails"="Introduce el correo electrónico de tu(s) amigo(s):";
 /*  */
@@ -1009,12 +1007,6 @@
 "Renews on"="Renovación";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="Compartido conmigo";
-/* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
-"of %@"="de %@";
-/* Sentence shown under the used space to complete the info with the user account maximum storage. "used of {maximun storage}" */
-"used of %@"="usado de %@";
-/* Sentence shown under the available space to complete the info with the user account maximum storage. "available of {maximun storage}" */
-"available of %@"="disponible de %@";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Ampliar cuenta";
 /*  */
@@ -1023,8 +1015,8 @@
 "cloudDriveIsAlmostFull"="[S]Tu Nube está casi llena.[/S] [A]Amplía tu cuenta[/A] y obtén [S]hasta %@ TB (%@ GB)[/S] de espacio de almacenamiento en la nube.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
 "cloudDriveIsFull"="[S]Tu Nube está llena.[/S] [A]Amplía tu cuenta[/A] y obtén [S]hasta %@ TB (%@ GB)[/S] de espacio de almacenamiento en la nube.";
-/* Storage related with the MEGA PRO account level you can subscribe */
-"productSpace"="Almacenamiento";
+/* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
+"Storage"="Almacenamiento";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
 "limited"="Limitado";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
@@ -1179,8 +1171,8 @@
 "contactCredentials"="Credenciales del contacto";
 /* "Verify user" dialog description */
 "thisIsBestDoneInRealLife"="Esto es mejor hacerlo en persona, cara a cara. Si tienes algún otro canal ya verificado, como OTR o PGP, podrías utilizarlo.";
-/* Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity */
-"yourCredentials"="Tus credenciales";
+/* Title of the label in the my account section. It shows the credentials of the current user so it can be used to be verified by other contacts */
+"My credentials"="Mis credenciales";
 /* Button to reset the password */
 "reset"="Restablecer";
 /* Button title */
@@ -1657,7 +1649,7 @@
 /* Title of the Spotlight Search section */
 "Search"="Buscar";
 /* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
-"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="When enabled, allow search and look up MEGA files/folders in Spotlight Search.";
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="Will allow searching of MEGA files/folders in your device's Spotlight Search";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="Tú tienes las claves";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -2120,6 +2112,8 @@
 "Please enter a valid phone number"="Por favor, indica un número de teléfono válido.";
 /* Error message that will show to user when user reached the sms verification daily limit */
 "You have reached the daily limit"="Has alcanzado el límite diario";
+/* Error message that will be shown when the code introduced do not match with the one you received */
+"The verification code doesn't match."="El código de confirmación no coincide.";
 /* Error message that will show to user when user entered invalid verification code */
 "Wrong code. Please try again or resend."="Código erróneo. Prueba de nuevo o vuelve a enviarlo.";
 /* Error message that will show to user when host detected that the mobile number has been registered already */

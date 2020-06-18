@@ -1,6 +1,8 @@
 
 #import "PasswordView.h"
 
+#import "MEGA-Swift.h"
+
 @implementation PasswordView
 
 - (id)initWithFrame:(CGRect)frame {
@@ -73,8 +75,32 @@
         self.topLabel.textColor = UIColor.mnz_redError;
         self.passwordTextField.textColor = UIColor.mnz_redError;
     } else {
-        self.topLabel.textColor = UIColor.mnz_gray999999;
-        self.passwordTextField.textColor = UIColor.blackColor;
+        self.topLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
+        self.passwordTextField.textColor = UIColor.mnz_label;
+    }
+}
+
+- (void)updateAppearance {
+    CALayer *topBorderLayer = CALayer.new;
+    topBorderLayer.frame = CGRectMake(0, 0, self.frame.size.width, 0.5);
+    topBorderLayer.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection].CGColor;
+    [self.customView.layer addSublayer:topBorderLayer];
+
+    CALayer *bottomBorderLayer = CALayer.new;
+    bottomBorderLayer.frame = CGRectMake(0, self.customView.frame.size.height, self.frame.size.width, 0.5);
+    bottomBorderLayer.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection].CGColor;
+    [self.customView.layer addSublayer:bottomBorderLayer];
+    
+    self.topLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
+    
+    self.leftImageView.tintColor = self.topLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
+    self.passwordTextField.textColor = UIColor.mnz_label;
+    
+    if (self.backgroundColor != nil && !self.isUsingDefaultBackgroundColor) {
+        self.backgroundColor = [UIColor mnz_secondaryBackgroundGroupedElevated:self.traitCollection];
+    } else {
+        self.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
+        self.usingDefaultBackgroundColor = YES;
     }
 }
 

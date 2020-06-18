@@ -909,8 +909,6 @@
 "profile"="โปรไฟล์";
 /* Title of the Achievements section */
 "achievementsTitle"="ความสำเร็จ";
-/* Title of the Used storage section */
-"usedStorage"="พื้นที่เก็บข้อมูลที่ใช้";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
 "inviteFriendsAndGetRewards"="เชิญเพื่อนและรับโบนัส";
 /* Indicating text for when "you invite your friends" */
@@ -918,7 +916,7 @@
 /* title of the introduction for the achievements screen */
 "inviteFriendsAndGetForEachReferral"="รับพื้นที่เก็บข้อมูลขนาด %1$s และการถ่ายโอน %2$s จากการชวนเพื่อนในแต่ละครั้ง";
 /* Text shown to explain how and where you can invite friends */
-"inviteYourFriendsExplanation"="เลือกผู้ติดต่อจากรายชื่อในโทรศัพท์ของคุณหรือกรอกที่อยู่อีเมลพร้อมกัน";
+"Select from phone contacts or enter multiple email addresses"="Select from phone contacts or enter multiple email addresses";
 /*  */
 "insertYourFriendsEmails"="กรอกอีเมลของเพื่อนคุณ:";
 /*  */
@@ -1009,12 +1007,6 @@
 "Renews on"="ต่ออายุเมื่อ";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="แชร์ขาเข้า";
-/* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
-"of %@"="จาก %@";
-/* Sentence shown under the used space to complete the info with the user account maximum storage. "used of {maximun storage}" */
-"used of %@"="ใช้ไปแล้ว %@";
-/* Sentence shown under the available space to complete the info with the user account maximum storage. "available of {maximun storage}" */
-"available of %@"="ใช้ได้อีก %@";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="อัปเกรดบัญชี";
 /*  */
@@ -1023,8 +1015,8 @@
 "cloudDriveIsAlmostFull"="[S]คลาวด์ไดร์ฟของคุณใกล้เต็มแล้ว[/S] [A]อัปเกรด[/A]เป็นบัญชี PRO และรับพื้นที่เก็บข้อมูลบนคลาวด์[S]สูงสุด %@ TB (%@ GB)[/S]";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
 "cloudDriveIsFull"="[S]คลาวด์ไดร์ฟของคุณเต็มแล้ว[/S] [A]อัปเกรด[/A]เป็นบัญชี PRO และรับพื้นที่เก็บข้อมูลบนคลาวด์[S]สูงสุด %@ TB (%@ GB)[/S]";
-/* Storage related with the MEGA PRO account level you can subscribe */
-"productSpace"="ที่เก็บข้อมูล";
+/* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
+"Storage"="ที่เก็บข้อมูล";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
 "limited"="ถูกจำกัด";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
@@ -1179,8 +1171,8 @@
 "contactCredentials"="ข้อมูลรับรองการติดต่อ";
 /* "Verify user" dialog description */
 "thisIsBestDoneInRealLife"="สิ่งนี้ทำได้ดีที่สุดในชีวิตจริงได้โดยการประชุมแบบเห็นหน้า หากคุณมีช่องทางที่ได้รับการตรวจสอบแล้ว เช่น OTR ที่ตรวจสอบแล้วหรือ PGP คุณอาจใช้ช่องดังกล่าวได้";
-/* Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity */
-"yourCredentials"="ข้อมูลรับรองของคุณ";
+/* Title of the label in the my account section. It shows the credentials of the current user so it can be used to be verified by other contacts */
+"My credentials"="ข้อมูลประจำตัวของฉัน";
 /* Button to reset the password */
 "reset"="รีเซ็ต";
 /* Button title */
@@ -1657,7 +1649,7 @@
 /* Title of the Spotlight Search section */
 "Search"="ค้นหา";
 /* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
-"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="When enabled, allow search and look up MEGA files/folders in Spotlight Search.";
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="Will allow searching of MEGA files/folders in your device's Spotlight Search";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="คุณคือผู้ถือกุญแจ";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -2120,6 +2112,8 @@
 "Please enter a valid phone number"="กรุณากรอกหมายเลขโทรศัพท์ให้ถูกต้อง";
 /* Error message that will show to user when user reached the sms verification daily limit */
 "You have reached the daily limit"="คุณถึงขีดจำกัดรายวันแล้ว";
+/* Error message that will be shown when the code introduced do not match with the one you received */
+"The verification code doesn't match."="รหัสยืนยันไม่ตรงกัน";
 /* Error message that will show to user when user entered invalid verification code */
 "Wrong code. Please try again or resend."="รหัสไม่ถูกต้อง กรุณาลองใหม่หรือส่งอีกครั้ง";
 /* Error message that will show to user when host detected that the mobile number has been registered already */

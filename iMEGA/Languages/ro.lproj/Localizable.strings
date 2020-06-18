@@ -909,8 +909,6 @@
 "profile"="Profil";
 /* Title of the Achievements section */
 "achievementsTitle"="Realizări";
-/* Title of the Used storage section */
-"usedStorage"="Stocare folosită";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
 "inviteFriendsAndGetRewards"="Invită prieteni și obține bonusuri";
 /* Indicating text for when "you invite your friends" */
@@ -918,7 +916,7 @@
 /* title of the introduction for the achievements screen */
 "inviteFriendsAndGetForEachReferral"="Obține %1$s stocare și %2$s transferuri pentru fiecare recomandare";
 /* Text shown to explain how and where you can invite friends */
-"inviteYourFriendsExplanation"="Selectează contacte din lista de contacte a telefonului sau introdu mai multe adrese de e-mail.";
+"Select from phone contacts or enter multiple email addresses"="Select from phone contacts or enter multiple email addresses";
 /*  */
 "insertYourFriendsEmails"="Introdu e-mailul(urile) prietenului:";
 /*  */
@@ -1009,12 +1007,6 @@
 "Renews on"="Se reînnoiește pe";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="Partajări primite";
-/* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
-"of %@"="din %@";
-/* Sentence shown under the used space to complete the info with the user account maximum storage. "used of {maximun storage}" */
-"used of %@"="folosit din %@";
-/* Sentence shown under the available space to complete the info with the user account maximum storage. "available of {maximun storage}" */
-"available of %@"="disponibil din %@";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Upgradează contul";
 /*  */
@@ -1023,8 +1015,8 @@
 "cloudDriveIsAlmostFull"="[S]Unitatea ta cloud este aproape plină.[/S] [A]Upgradează acum[/A] la un cont PRO și obține [S]până la %@ TB (%@ GB)[/S] spațiu de stocare în cloud.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
 "cloudDriveIsFull"="[S]Unitatea ta cloud este plină.[/S] [A]Upgradează acum[/A] la un cont PRO și obține [S]până la %@ TB (%@ GB)[/S] spațiu de stocare în cloud.";
-/* Storage related with the MEGA PRO account level you can subscribe */
-"productSpace"="Spațiu de stocare";
+/* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
+"Storage"="Spațiu de stocare";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
 "limited"="Limitat";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
@@ -1179,8 +1171,8 @@
 "contactCredentials"="Credențialele contactului";
 /* "Verify user" dialog description */
 "thisIsBestDoneInRealLife"="Acest lucru este realizat cel mai bine întâlnindu-vă față în față. Dacă ai un alt canal verificat deja precum OTR sau PGP verificat, l-ai putea folosi și pe acela.";
-/* Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity */
-"yourCredentials"="Credențialele tale";
+/* Title of the label in the my account section. It shows the credentials of the current user so it can be used to be verified by other contacts */
+"My credentials"="Credențialele mele";
 /* Button to reset the password */
 "reset"="Resetează";
 /* Button title */
@@ -1657,7 +1649,7 @@
 /* Title of the Spotlight Search section */
 "Search"="Caută";
 /* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
-"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="When enabled, allow search and look up MEGA files/folders in Spotlight Search.";
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="Will allow searching of MEGA files/folders in your device's Spotlight Search";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="Tu deții cheile";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -2120,6 +2112,8 @@
 "Please enter a valid phone number"="Te rugăm să furnizezi un număr de telefon valid.";
 /* Error message that will show to user when user reached the sms verification daily limit */
 "You have reached the daily limit"="Ai atins limita zilnică";
+/* Error message that will be shown when the code introduced do not match with the one you received */
+"The verification code doesn't match."="Codul de verificare nu coincide.";
 /* Error message that will show to user when user entered invalid verification code */
 "Wrong code. Please try again or resend."="Cod greșit. Te rugăm să încerci din nou sau să retrimiți.";
 /* Error message that will show to user when host detected that the mobile number has been registered already */

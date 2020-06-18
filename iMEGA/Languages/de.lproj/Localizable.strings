@@ -909,8 +909,6 @@
 "profile"="Profil";
 /* Title of the Achievements section */
 "achievementsTitle"="Errungenschaften";
-/* Title of the Used storage section */
-"usedStorage"="Belegter Speicherplatz";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
 "inviteFriendsAndGetRewards"="Freunde einladen und Boni einstreichen";
 /* Indicating text for when "you invite your friends" */
@@ -918,7 +916,7 @@
 /* title of the introduction for the achievements screen */
 "inviteFriendsAndGetForEachReferral"="Wir belohnen jede Vermittlung mit %1$s Speicherplatz und %2$s Transfervolumen";
 /* Text shown to explain how and where you can invite friends */
-"inviteYourFriendsExplanation"="Wählen Sie Kontakte aus Ihrer Kontaktliste oder geben Sie eine oder mehrere E-Mail-Adressen ein.";
+"Select from phone contacts or enter multiple email addresses"="Select from phone contacts or enter multiple email addresses";
 /*  */
 "insertYourFriendsEmails"="E-Mail-Adresse(n) Ihrer Freunde:";
 /*  */
@@ -1009,12 +1007,6 @@
 "Renews on"="Erneuert sich am";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="An Sie freigegebene Ordner";
-/* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
-"of %@"="von %@";
-/* Sentence shown under the used space to complete the info with the user account maximum storage. "used of {maximun storage}" */
-"used of %@"="von %@ belegt";
-/* Sentence shown under the available space to complete the info with the user account maximum storage. "available of {maximun storage}" */
-"available of %@"="von %@ verfügbar";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Accountupgrade";
 /*  */
@@ -1023,8 +1015,8 @@
 "cloudDriveIsAlmostFull"="[S]Ihr Cloud-Speicher ist fast voll.[/S] Mit [A]MEGA PRO[/A] erhalten Sie [S]bis zu %@ TB (%@ GB)[/S] Speicherplatz in der Cloud.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
 "cloudDriveIsFull"="[S]Ihr Cloud-Speicher ist voll.[/S] Mit [A]MEGA PRO[/A] erhalten Sie [S]bis zu %@ TB (%@ GB)[/S] Speicherplatz in der Cloud.";
-/* Storage related with the MEGA PRO account level you can subscribe */
-"productSpace"="Speicher";
+/* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
+"Storage"="Speicher";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
 "limited"="Begrenzt";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
@@ -1179,8 +1171,8 @@
 "contactCredentials"="Kontaktidentität";
 /* "Verify user" dialog description */
 "thisIsBestDoneInRealLife"="Der beste Weg ist ein persönliches Treffen. Sollten Sie über einen bereits verifizierten sicheren Kommunikationskanal verfügen, z.B. verifiziertes OTR oder PGP, so können Sie stattdessen diesen verwenden.";
-/* Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity */
-"yourCredentials"="Ihre Identität";
+/* Title of the label in the my account section. It shows the credentials of the current user so it can be used to be verified by other contacts */
+"My credentials"="Mein kryptographischer Fingerabdruck";
 /* Button to reset the password */
 "reset"="Zurücksetzen";
 /* Button title */
@@ -1657,7 +1649,7 @@
 /* Title of the Spotlight Search section */
 "Search"="Suchen";
 /* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
-"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="When enabled, allow search and look up MEGA files/folders in Spotlight Search.";
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="Will allow searching of MEGA files/folders in your device's Spotlight Search";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="Sie sind der alleinige Inhaber Ihrer Schlüsel";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -2120,6 +2112,8 @@
 "Please enter a valid phone number"="Bitte geben Sie eine gültige Telefonnummer an.";
 /* Error message that will show to user when user reached the sms verification daily limit */
 "You have reached the daily limit"="You have reached the daily limit";
+/* Error message that will be shown when the code introduced do not match with the one you received */
+"The verification code doesn't match."="The verification code doesn’t match.";
 /* Error message that will show to user when user entered invalid verification code */
 "Wrong code. Please try again or resend."="Wrong code. Please try again or resend.";
 /* Error message that will show to user when host detected that the mobile number has been registered already */
@@ -2223,7 +2217,7 @@
 /* Warning message to alert user about logout in My Account section if has offline files and transfers in progress. */
 "When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled."="Sobald Sie sich ausloggen, werden Ihre Offline-Dateien gelöscht und alle laufenden Transfers abgebrochen.";
 /* Default title of an empty chat. */
-"Chat created on %s1"="Chat vom %s1";
+"Chat created on %s1"="Chat erstellt: %s1";
 /* Title shown when there are no shared files */
 "No Shared Files"="No Shared Files";
 /* Error message shown when opening a folder link which doesn’t exist */

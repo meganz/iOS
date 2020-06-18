@@ -909,8 +909,6 @@
 "profile"="プロファイル";
 /* Title of the Achievements section */
 "achievementsTitle"="実績";
-/* Title of the Used storage section */
-"usedStorage"="使用済みストレージ";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
 "inviteFriendsAndGetRewards"="友人を招待してボーナスを獲得";
 /* Indicating text for when "you invite your friends" */
@@ -918,7 +916,7 @@
 /* title of the introduction for the achievements screen */
 "inviteFriendsAndGetForEachReferral"="ご紹介ごとに%1$sのストレージと%2$sの転送を取得";
 /* Text shown to explain how and where you can invite friends */
-"inviteYourFriendsExplanation"="あなたの電話の連絡先リストから連絡先を選択するか、複数のメールアドレスを入力します。";
+"Select from phone contacts or enter multiple email addresses"="Select from phone contacts or enter multiple email addresses";
 /*  */
 "insertYourFriendsEmails"="お友達のEメールを入力:";
 /*  */
@@ -1009,12 +1007,6 @@
 "Renews on"="更新日";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="共有フォルダ受信";
-/* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
-"of %@"="全体は%@";
-/* Sentence shown under the used space to complete the info with the user account maximum storage. "used of {maximun storage}" */
-"used of %@"="使用可能枠%@";
-/* Sentence shown under the available space to complete the info with the user account maximum storage. "available of {maximun storage}" */
-"available of %@"="利用可能枠%@";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="アカウントをアップグレードする";
 /*  */
@@ -1023,8 +1015,8 @@
 "cloudDriveIsAlmostFull"="[S]クラウドドライブはほぼいっぱいです。[/S]PROアカウントに[A]今すぐアップグレード[/A]し、[S]最大%@ TB（%@ GB）[/S]のクラウドストレージスペースを取得してください。";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
 "cloudDriveIsFull"="[S]あなたのクラウドドライブはいっぱいです。[/S]PROアカウントに[A]今すぐアップグレード[/A]し、[S]最大%@ TB（%@ GB）[/S]のクラウドストレージスペースを取得してください。";
-/* Storage related with the MEGA PRO account level you can subscribe */
-"productSpace"="ストレージ";
+/* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
+"Storage"="ストレージ";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
 "limited"="制限付き";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
@@ -1179,8 +1171,8 @@
 "contactCredentials"="本人確認";
 /* "Verify user" dialog description */
 "thisIsBestDoneInRealLife"="実際に顔を合わせるのが一番いい方法です。すでに認証済みのOTRやPGRがあれば、それを使うのも良いでしょう。";
-/* Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity */
-"yourCredentials"="本人確認";
+/* Title of the label in the my account section. It shows the credentials of the current user so it can be used to be verified by other contacts */
+"My credentials"="私の資格情報";
 /* Button to reset the password */
 "reset"="リセット";
 /* Button title */
@@ -1657,7 +1649,7 @@
 /* Title of the Spotlight Search section */
 "Search"="検索";
 /* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
-"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="When enabled, allow search and look up MEGA files/folders in Spotlight Search.";
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="Will allow searching of MEGA files/folders in your device's Spotlight Search";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="あなたがキーを持っています";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -2120,6 +2112,8 @@
 "Please enter a valid phone number"="有効な電話番号を入力してください。";
 /* Error message that will show to user when user reached the sms verification daily limit */
 "You have reached the daily limit"="1日の上限に達しました";
+/* Error message that will be shown when the code introduced do not match with the one you received */
+"The verification code doesn't match."="検証コードが一致しません。";
 /* Error message that will show to user when user entered invalid verification code */
 "Wrong code. Please try again or resend."="不正なコードです。もう一度やり直すか、再送信してください。";
 /* Error message that will show to user when host detected that the mobile number has been registered already */

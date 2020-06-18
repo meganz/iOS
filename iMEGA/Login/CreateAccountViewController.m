@@ -7,6 +7,7 @@
 #import "MEGACreateAccountRequestDelegate.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
+#import "MEGA-Swift.h"
 #import "NSURL+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
@@ -33,8 +34,9 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 @property (weak, nonatomic) IBOutlet InputView *lastNameInputView;
 @property (weak, nonatomic) IBOutlet InputView *emailInputView;
 
+@property (weak, nonatomic) IBOutlet UIStackView *passwordStackView;
 @property (weak, nonatomic) IBOutlet PasswordView *passwordView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *passwordStrengthIndicatorViewHeightLayoutConstraint;
+@property (weak, nonatomic) IBOutlet UIView *passwordStrengthIndicatorContainerView;
 @property (weak, nonatomic) IBOutlet PasswordStrengthIndicatorView *passwordStrengthIndicatorView;
 @property (weak, nonatomic) IBOutlet PasswordView *retypePasswordView;
 
@@ -60,7 +62,9 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.passwordStrengthIndicatorViewHeightLayoutConstraint.constant = 0;
+    [self updateAppearance];
+    
+    self.passwordStrengthIndicatorContainerView.hidden = YES;
     
     self.tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
     self.tapGesture.cancelsTouchesInView = NO;
@@ -101,9 +105,6 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
         self.retypePasswordView.passwordTextField.textContentType = UITextContentTypeNewPassword;
     }
     
-    [self setTermsOfServiceAttributedTitle];
-    [self updateTermsForLosingPasswordLabelWithText];
-    
     [self.createAccountButton setTitle:AMLocalizedString(@"createAccount", @"Button title which triggers the action to create a MEGA account") forState:UIControlStateNormal];
     
     [self registerForKeyboardNotifications];
@@ -128,6 +129,19 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     }
     
     return UIInterfaceOrientationMaskAll;
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [AppearanceManager setupAppearance:self.traitCollection];
+            [AppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar traitCollection:self.traitCollection];
+            
+            [self updateAppearance];
+        }
+    }
 }
 
 #pragma mark - Private
@@ -292,42 +306,65 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     }
     agreeWithTheMEGATermsOfService = [agreeWithTheMEGATermsOfService mnz_removeWebclientFormatters];
     
-    NSMutableAttributedString *termsOfServiceMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:agreeWithTheMEGATermsOfService attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:UIColor.mnz_gray666666}];
-    [termsOfServiceMutableAttributedString setAttributes:@{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:12.0f], NSForegroundColorAttributeName:UIColor.mnz_gray666666} range:[agreeWithTheMEGATermsOfService rangeOfString:@"MEGA"]];
+    UIColor *termsOfServiceColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
+    NSMutableAttributedString *termsOfServiceMutableAttributedString = [NSMutableAttributedString.alloc initWithString:agreeWithTheMEGATermsOfService attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
+    [termsOfServiceMutableAttributedString setAttributes:@{NSForegroundColorAttributeName:termsOfServiceColor} range:[agreeWithTheMEGATermsOfService rangeOfString:@"MEGA"]];
     if (termsOfServiceString) {
-        [termsOfServiceMutableAttributedString setAttributes:@{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:12.0f], NSForegroundColorAttributeName:UIColor.mnz_gray666666} range:[agreeWithTheMEGATermsOfService rangeOfString:termsOfServiceString]];
+        [termsOfServiceMutableAttributedString setAttributes:@{NSForegroundColorAttributeName:termsOfServiceColor} range:[agreeWithTheMEGATermsOfService rangeOfString:termsOfServiceString]];
     }
     
     [self.termsOfServiceButton setAttributedTitle:termsOfServiceMutableAttributedString forState:UIControlStateNormal];
 }
 
-- (void)updateTermsForLosingPasswordLabelWithText {
+- (void)setTermsForLosingPasswordAttributedText {
     NSString *agreementForLosingPasswordText = AMLocalizedString(@"agreeWithLosingPasswordYouLoseData", @"");
-    
-    NSString *styledText = [agreementForLosingPasswordText mnz_stringBetweenString:@"[S]" andString:@"[/S]"];
-    NSString *boldText = [agreementForLosingPasswordText mnz_stringBetweenString:@"<a href=\"terms\">" andString:@"</a>"];
-    
-    agreementForLosingPasswordText = [agreementForLosingPasswordText mnz_removeWebclientFormatters];
 
-    NSRange styledTextRange = [agreementForLosingPasswordText rangeOfString:styledText];
-    NSRange boldTextRange = [agreementForLosingPasswordText rangeOfString:boldText];
-    
-    NSDictionary *termsMutableAttributedStringAttributes = @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f],
-                                                             NSForegroundColorAttributeName:UIColor.mnz_gray666666};
-    NSMutableAttributedString *termsMutableAttributedString = [NSMutableAttributedString.alloc
-                                                               initWithString:agreementForLosingPasswordText
-                                                               attributes:termsMutableAttributedStringAttributes];
-    
-    NSDictionary *styledTextAttributes = @{NSForegroundColorAttributeName : UIColor.mnz_redMain};
-    [termsMutableAttributedString setAttributes:styledTextAttributes
-                                          range:styledTextRange];
-    
-    NSDictionary *boldTextAttributes = @{NSFontAttributeName : [UIFont mnz_SFUISemiBoldWithSize:12.0f],
-                                         NSForegroundColorAttributeName : UIColor.mnz_gray666666};
-    [termsMutableAttributedString setAttributes:boldTextAttributes
-                                          range:boldTextRange];
-    
+    NSString *semiboldPrimaryGrayText = [agreementForLosingPasswordText mnz_stringBetweenString:@"[S]" andString:@"[/S]"];
+    NSString *greenText = [agreementForLosingPasswordText mnz_stringBetweenString:@"[/S]" andString:@"</a>"];
+
+    agreementForLosingPasswordText = agreementForLosingPasswordText.mnz_removeWebclientFormatters;
+    greenText = greenText.mnz_removeWebclientFormatters;
+
+    NSRange semiboldPrimaryGrayTextRange = [agreementForLosingPasswordText rangeOfString:semiboldPrimaryGrayText];
+    NSRange greenTextRange = [agreementForLosingPasswordText rangeOfString:greenText];
+
+    UIColor *primaryGrayColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
+    NSMutableAttributedString *termsMutableAttributedString = [NSMutableAttributedString.alloc initWithString:agreementForLosingPasswordText attributes:@{NSForegroundColorAttributeName : primaryGrayColor}];
+
+    NSDictionary *semiboldPrimaryGrayTextAttributes = @{NSFontAttributeName : [UIFont systemFontOfSize:12.f weight:UIFontWeightSemibold], NSForegroundColorAttributeName : primaryGrayColor};
+    [termsMutableAttributedString setAttributes:semiboldPrimaryGrayTextAttributes range:semiboldPrimaryGrayTextRange];
+
+    NSDictionary *greenTextAttributes = @{NSForegroundColorAttributeName : [UIColor mnz_turquoiseForTraitCollection:self.traitCollection]};
+    [termsMutableAttributedString setAttributes:greenTextAttributes range:greenTextRange];
+
+    self.termsForLosingPasswordLabel.textColor = primaryGrayColor;
     self.termsForLosingPasswordLabel.attributedText = termsMutableAttributedString;
+}
+
+- (void)updateAppearance {
+    self.view.backgroundColor = [UIColor mnz_backgroundGroupedElevated:self.traitCollection];
+    
+    self.firstNameInputView.backgroundColor = [UIColor mnz_secondaryBackgroundGroupedElevated:self.traitCollection];
+    [self.firstNameInputView updateAppearance];
+    
+    self.lastNameInputView.backgroundColor = [UIColor mnz_secondaryBackgroundGroupedElevated:self.traitCollection];
+    [self.lastNameInputView updateAppearance];
+    
+    self.emailInputView.backgroundColor = [UIColor mnz_secondaryBackgroundGroupedElevated:self.traitCollection];
+    [self.emailInputView updateAppearance];
+    
+    self.passwordView.backgroundColor = [UIColor mnz_secondaryBackgroundGroupedElevated:self.traitCollection];
+    [self.passwordView updateAppearance];
+    
+    self.passwordStrengthIndicatorContainerView.backgroundColor = [UIColor mnz_secondaryBackgroundGroupedElevated:self.traitCollection];
+    
+    self.retypePasswordView.backgroundColor = [UIColor mnz_secondaryBackgroundGroupedElevated:self.traitCollection];
+    [self.retypePasswordView updateAppearance];
+    
+    [self setTermsOfServiceAttributedTitle];
+    [self setTermsForLosingPasswordAttributedText];
+    
+    [self.createAccountButton mnz_setupPrimary:self.traitCollection];
 }
 
 #pragma mark - IBActions
@@ -367,6 +404,9 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
                 [SVProgressHUD dismiss];
                 if (error.type == MEGAErrorTypeApiOk) {
                     CheckEmailAndFollowTheLinkViewController *checkEmailAndFollowTheLinkVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"CheckEmailAndFollowTheLinkViewControllerID"];
+                    if (@available(iOS 13.0, *)) {
+                        checkEmailAndFollowTheLinkVC.modalPresentationStyle = UIModalPresentationFullScreen;
+                    }
                     [self dismissViewControllerAnimated:YES completion:^{
                         [UIApplication.mnz_presentingViewController presentViewController:checkEmailAndFollowTheLinkVC animated:YES completion:nil];
                     }];
@@ -479,9 +519,9 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     if (textField.tag == PasswordTextFieldTag) {
         if (text.length == 0) {
             self.passwordStrengthIndicatorView.customView.hidden = YES;
-            self.passwordStrengthIndicatorViewHeightLayoutConstraint.constant = 0;
+            self.passwordStrengthIndicatorContainerView.hidden = YES;
         } else {
-            self.passwordStrengthIndicatorViewHeightLayoutConstraint.constant = 112.0f;
+            self.passwordStrengthIndicatorContainerView.hidden = NO;
             self.passwordStrengthIndicatorView.customView.hidden = NO;
             [self.scrollView scrollRectToVisible:self.passwordStrengthIndicatorView.frame animated:YES];
             [self.passwordStrengthIndicatorView updateViewWithPasswordStrength:[[MEGASdkManager sharedMEGASdk] passwordStrength:text]];

@@ -16,7 +16,6 @@
     }
     
     CustomModalAlertViewController *migrationVC = [[CustomModalAlertViewController alloc] init];
-    migrationVC.modalPresentationStyle = UIModalPresentationOverFullScreen;
     migrationVC.image = [UIImage imageNamed:@"cameraUploadsV2Migration"];
     migrationVC.viewTitle = AMLocalizedString(@"New Camera Upload!", nil);
     migrationVC.detail = AMLocalizedString(@"Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats.", nil);

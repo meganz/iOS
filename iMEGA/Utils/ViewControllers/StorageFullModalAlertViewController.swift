@@ -60,7 +60,6 @@ class StorageFullModalAlertViewController: CustomModalAlertViewController {
             return
         }
         
-        modalPresentationStyle = .overFullScreen;
         show()
     }
 }

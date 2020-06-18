@@ -1,5 +1,8 @@
 
 #import "VideoUploadsTableViewController.h"
+
+#import "MEGA-Swift.h"
+
 #import "CameraUploadManager+Settings.h"
 
 typedef NS_ENUM(NSUInteger, VideoUploadsSection) {
@@ -30,19 +33,41 @@ typedef NS_ENUM(NSUInteger, VideoUploadsSectionFormatRow) {
 
 @implementation VideoUploadsTableViewController
 
+#pragma mark - Lifecycle
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     [self.uploadVideosLabel setText:AMLocalizedString(@"uploadVideosLabel", @"Title to switch on/off video uploads")];
     self.videoQualityLabel.text = AMLocalizedString(@"videoQuality", @"Title that refers to the video compression quality when to transcode from HEVC to H.264 codec");
     [self configVideoFormatTexts];
+    
+    [self updateAppearance];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [self configUI];
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateAppearance];
+        }
+    }
+}
+
+#pragma mark - Private
+
 - (void)configVideoFormatTexts {
-    NSDictionary<NSAttributedStringKey, id> *formatAttributes = @{NSFontAttributeName : [UIFont systemFontOfSize:17.0], NSForegroundColorAttributeName : [UIColor mnz_black333333]};
+    NSDictionary<NSAttributedStringKey, id> *formatAttributes = @{NSFontAttributeName : [UIFont systemFontOfSize:17.0], NSForegroundColorAttributeName : UIColor.mnz_label};
     
     NSMutableAttributedString *H264AttributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ ", H264Format] attributes:formatAttributes];
-    [H264AttributedString appendAttributedString:[[NSAttributedString alloc] initWithString:AMLocalizedString(@"(Recommended)", nil) attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:17.0], NSForegroundColorAttributeName : [UIColor mnz_gray999999]}]];
+    [H264AttributedString appendAttributedString:[NSAttributedString.alloc initWithString:AMLocalizedString(@"(Recommended)", nil) attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:17.0], NSForegroundColorAttributeName : [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection]}]];
     self.H264Label.attributedText = H264AttributedString;
     
     self.HEVCLabel.attributedText = [[NSAttributedString alloc] initWithString:HEVCFormat attributes:formatAttributes];
@@ -82,10 +107,13 @@ typedef NS_ENUM(NSUInteger, VideoUploadsSectionFormatRow) {
     self.videoQualityRightDetailLabel.text = videoQualityString;
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
+- (void)updateAppearance {
+    self.videoQualityRightDetailLabel.textColor = UIColor.mnz_secondaryLabel;
     
-    [self configUI];
+    self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+    self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
+    
+    [self.tableView reloadData];
 }
 
 #pragma mark - UI Actions
@@ -100,7 +128,7 @@ typedef NS_ENUM(NSUInteger, VideoUploadsSectionFormatRow) {
     [self configUI];
 }
 
-#pragma mark - Table view data source
+#pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     NSInteger numberOfSections = 0;
@@ -183,6 +211,12 @@ typedef NS_ENUM(NSUInteger, VideoUploadsSectionFormatRow) {
     }
     
     return title;
+}
+
+#pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    cell.backgroundColor = [UIColor mnz_secondaryBackgroundGrouped:self.traitCollection];
 }
 
 @end

@@ -36,7 +36,7 @@ static int _MEGAWebImageSetterKey;
     if ([[NSFileManager defaultManager] fileExistsAtPath:avatarFilePath]) {
         self.image = [UIImage imageWithContentsOfFile:avatarFilePath];
     } else {
-        self.image = [UIImage imageWithColor:[UIColor colorFromHexString:[MEGASdk avatarColorForBase64UserHandle:base64Handle]] andBounds:self.bounds];
+        self.image = [UIImage imageWithColor:[UIColor mnz_fromHexString:[MEGASdk avatarColorForBase64UserHandle:base64Handle]] andBounds:self.bounds];
         MEGAGetThumbnailRequestDelegate *getThumbnailRequestDelegate = [[MEGAGetThumbnailRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
             self.image = [UIImage imageWithContentsOfFile:request.file];
         }];
