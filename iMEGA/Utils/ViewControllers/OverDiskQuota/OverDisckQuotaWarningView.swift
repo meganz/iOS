@@ -1,6 +1,5 @@
 import UIKit
 
-@IBDesignable
 final class OverDisckQuotaWarningView: UIView, NibOwnerLoadable {
 
     @IBOutlet private var titleLabel: UILabel!
