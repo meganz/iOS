@@ -20,7 +20,7 @@ extension MEGAChatRoom {
             return userName
         }
 
-        return self.peerFullname(byHandle: userHandle)
+        return MEGASdkManager.sharedMEGAChatSdk()?.userFullnameFromCache(byUserHandle: userHandle)
     }
 
     @objc func chatTitle() -> String {
@@ -105,19 +105,19 @@ extension MEGAChatRoom {
             }
         }
         
-        if let firstName = peerFirstname(byHandle: userHandle) {
+        if let firstName = MEGASdkManager.sharedMEGAChatSdk()?.userFirstnameFromCache(byUserHandle: userHandle) {
             if !firstName.mnz_isEmpty() {
                 return firstName
             }
         }
         
-        if let lastName = peerLastname(byHandle: userHandle) {
+        if let lastName = MEGASdkManager.sharedMEGAChatSdk()?.userLastnameFromCache(byUserHandle: userHandle) {
             if !lastName.mnz_isEmpty() {
                 return lastName
             }
         }
         
-        if let email = peerEmail(byHandle: userHandle) {
+        if let email = MEGASdkManager.sharedMEGAChatSdk()?.userEmailFromCache(byUserHandle: userHandle) {
             if !email.mnz_isEmpty() {
                 return email
             }

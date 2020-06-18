@@ -34,7 +34,7 @@
 @property (weak, nonatomic) IBOutlet UIView *participantsHeaderView;
 @property (weak, nonatomic) IBOutlet UILabel *participantsHeaderViewLabel;
 
-@property (strong, nonatomic) NSMutableArray *participantsMutableArray;
+@property (strong, nonatomic) NSMutableArray<NSNumber *> *participantsMutableArray;
 @property (nonatomic) NSMutableDictionary<NSString *, NSIndexPath *> *indexPathsMutableDictionary;
 @property (nonatomic) NSMutableSet<NSNumber *> *requestedParticipantsMutableSet;
 
@@ -118,7 +118,7 @@
     NSMutableArray<NSNumber *> *usersHandles = [NSMutableArray.alloc initWithCapacity:participantsToLoad];
     for (NSUInteger i = index; i < topIndex; i++) {
         NSNumber *handle = [self.participantsMutableArray objectAtIndex:i];
-        if (![self.chatRoom peerEmailByHandle:handle.unsignedLongLongValue] && ![self.requestedParticipantsMutableSet containsObject:handle]) {
+        if (![MEGASdkManager.sharedMEGAChatSdk userFullnameFromCacheByUserHandle:handle.unsignedLongLongValue] && ![self.requestedParticipantsMutableSet containsObject:handle]) {
             [usersHandles addObject:handle];
             [self.requestedParticipantsMutableSet addObject:handle];
         }
@@ -307,18 +307,17 @@
 
 - (IBAction)didTapPermissionsButton:(UIButton *)sender {
     NSInteger index = (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator) ? (sender.tag - 1) : sender.tag;
-
+    
+    uint64_t userHandle = [self.participantsMutableArray objectAtIndex:index].unsignedLongLongValue;
+    NSString *peerEmail = [MEGASdkManager.sharedMEGAChatSdk userEmailFromCacheByUserHandle:userHandle];
+    
     if (index != (self.participantsMutableArray.count - 1)) {
-        uint64_t userHandle = [[self.participantsMutableArray objectAtIndex:index] unsignedLongLongValue];
-        MEGAUser *user = [MEGASdkManager.sharedMEGASdk contactForEmail:[self.chatRoom peerEmailByHandle:userHandle]];
-
         NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
-        
-        __weak __typeof__(self) weakSelf = self;
-
         MEGAChatRoomPrivilege privilege = [self.chatRoom peerPrivilegeByHandle:userHandle];
-
+        
         if (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator) {
+            __weak __typeof__(self) weakSelf = self;
+            
             [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"moderator", @"The Moderator permission level in chat. With moderator permissions a participant can manage the chat.") detail:privilege == MEGAChatRoomPrivilegeModerator ? @"✓" : @"" image:[UIImage imageNamed:@"moderator"] style:UIAlertActionStyleDefault actionHandler:^{
                 [MEGASdkManager.sharedMEGAChatSdk updateChatPermissions:weakSelf.chatRoom.chatId userHandle:userHandle privilege:MEGAChatRoomPrivilegeModerator delegate:weakSelf];
             }]];
@@ -329,7 +328,6 @@
                 [MEGASdkManager.sharedMEGAChatSdk updateChatPermissions:weakSelf.chatRoom.chatId userHandle:userHandle privilege:MEGAChatRoomPrivilegeRo delegate:weakSelf];
             }]];
             
-            NSString *peerEmail = [self.chatRoom peerEmailByHandle:userHandle];
             if (peerEmail) {
                 MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:peerEmail];
                 if (!user || user.visibility != MEGAUserVisibilityVisible) {
@@ -346,14 +344,13 @@
                 [MEGASdkManager.sharedMEGAChatSdk removeFromChat:self.chatRoom.chatId userHandle:userHandle delegate:weakSelf];
             }]];
         } else {
-            NSString *peerEmail = [self.chatRoom peerEmailByHandle:userHandle];
             if (peerEmail) {
                 MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:peerEmail];
                 if (!user || user.visibility != MEGAUserVisibilityVisible) {
                     [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email") detail:nil image:[UIImage imageNamed:@"add"] style:UIAlertActionStyleDefault actionHandler:^{
                         if ([MEGAReachabilityManager isReachableHUDIfNot]) {
                             MEGAInviteContactRequestDelegate *inviteContactRequestDelegate = [MEGAInviteContactRequestDelegate.alloc initWithNumberOfRequests:1];
-                            [MEGASdkManager.sharedMEGASdk inviteContactWithEmail:[self.chatRoom peerEmailByHandle:userHandle] message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
+                            [MEGASdkManager.sharedMEGASdk inviteContactWithEmail:peerEmail message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
                         }
                     }]];
                 }
@@ -513,10 +510,10 @@
                 peerEmail = [[MEGASdkManager sharedMEGAChatSdk] myEmail];
                 privilege = self.chatRoom.ownPrivilege;
             } else {
-                peerFullname = [self.chatRoom userDisplayNameForUserHandle:handle] ?: @"";
-                peerEmail = [self.chatRoom peerEmailByHandle:handle];
-                if (!peerEmail) {
-                    peerEmail = @"";
+                peerFullname = [MEGASdkManager.sharedMEGAChatSdk userFullnameFromCacheByUserHandle:handle];
+                peerEmail = [MEGASdkManager.sharedMEGAChatSdk userEmailFromCacheByUserHandle:handle] ?: @"";
+                if (!peerFullname) {
+                    peerFullname = @"";
                     if (![self.requestedParticipantsMutableSet containsObject:[self.participantsMutableArray objectAtIndex:index]]) {
                         [self loadParticipantsFromIndex:index];
                     }
@@ -871,8 +868,7 @@
                 uint64_t userHandle = [self.participantsMutableArray[index] unsignedLongLongValue];
 
                 if (userHandle != MEGASdkManager.sharedMEGASdk.myUser.handle) {
-                    
-                    NSString *userEmail = [self.chatRoom peerEmailByHandle:userHandle];
+                    NSString *userEmail = [MEGASdkManager.sharedMEGAChatSdk userEmailFromCacheByUserHandle:userHandle];
                     if (userEmail) {
                         ContactDetailsViewController *contactDetailsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactDetailsViewControllerID"];
                         contactDetailsVC.contactDetailsMode = ContactDetailsModeFromGroupChat;
