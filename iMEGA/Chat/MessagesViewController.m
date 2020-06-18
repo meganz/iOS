@@ -1252,17 +1252,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     [self hideJumpToBottom];
 }
 
-- (NSString *)usernameForUserHandle:(uint64_t)handle {
-    NSString *username = [self.chatRoom userNicknameForUserHandle:handle];
-    
-    if (!username.length) {
-        username = [self.chatRoom peerFirstnameByHandle:handle];
-        username = username.length ? username : [self.chatRoom peerEmailByHandle:handle];
-    }
-
-    return username;
-}
-
 - (void)setTypingIndicator {
     NSMutableAttributedString *typingAttributedString = nil;
     if (self.whoIsTypingTimersMutableDictionary.allKeys.count >= 2) {
@@ -1391,7 +1380,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         return;
     }
     
-    NSString *userEmail = [self.chatRoom peerEmailByHandle:userHandle];
+    NSString *userEmail = [MEGASdkManager.sharedMEGAChatSdk userEmailFromCacheByUserHandle:userHandle];
     NSString *userName = [self.chatRoom userDisplayNameForUserHandle:userHandle] ?: userEmail;
     
     if (!userEmail) {

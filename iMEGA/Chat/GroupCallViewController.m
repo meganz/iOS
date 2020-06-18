@@ -1092,7 +1092,7 @@
                     self.peerTalkingVideoView.hidden = NO;
                     self.peerTalkingImageView.hidden = YES;
                 } else {
-                    [self.peerTalkingImageView mnz_setImageForUserHandle:session.peerId name:[self.chatRoom peerFullnameByHandle:session.peerId]];
+                    [self.peerTalkingImageView mnz_setImageForUserHandle:session.peerId name:peerUpdated.name];
                     self.peerTalkingVideoView.hidden = YES;
                     self.peerTalkingImageView.hidden = NO;
                 }
