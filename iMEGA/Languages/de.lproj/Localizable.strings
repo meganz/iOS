@@ -1649,7 +1649,7 @@
 /* Title of the Spotlight Search section */
 "Search"="Suchen";
 /* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
-"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="When enabled, allow search and look up MEGA files/folders in Spotlight Search.";
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="Will allow searching of MEGA files/folders in your device's Spotlight Search";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="Sie sind der alleinige Inhaber Ihrer Schlüsel";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -2112,6 +2112,8 @@
 "Please enter a valid phone number"="Bitte geben Sie eine gültige Telefonnummer an.";
 /* Error message that will show to user when user reached the sms verification daily limit */
 "You have reached the daily limit"="You have reached the daily limit";
+/* Error message that will be shown when the code introduced do not match with the one you received */
+"The verification code doesn't match."="The verification code doesn’t match.";
 /* Error message that will show to user when user entered invalid verification code */
 "Wrong code. Please try again or resend."="Wrong code. Please try again or resend.";
 /* Error message that will show to user when host detected that the mobile number has been registered already */
@@ -2215,7 +2217,7 @@
 /* Warning message to alert user about logout in My Account section if has offline files and transfers in progress. */
 "When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled."="Sobald Sie sich ausloggen, werden Ihre Offline-Dateien gelöscht und alle laufenden Transfers abgebrochen.";
 /* Default title of an empty chat. */
-"Chat created on %s1"="Chat vom %s1";
+"Chat created on %s1"="Chat erstellt: %s1";
 /* Title shown when there are no shared files */
 "No Shared Files"="No Shared Files";
 /* Error message shown when opening a folder link which doesn’t exist */

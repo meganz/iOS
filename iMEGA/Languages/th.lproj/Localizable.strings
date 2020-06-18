@@ -1649,7 +1649,7 @@
 /* Title of the Spotlight Search section */
 "Search"="ค้นหา";
 /* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
-"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="When enabled, allow search and look up MEGA files/folders in Spotlight Search.";
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="Will allow searching of MEGA files/folders in your device's Spotlight Search";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="คุณคือผู้ถือกุญแจ";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -2112,6 +2112,8 @@
 "Please enter a valid phone number"="กรุณากรอกหมายเลขโทรศัพท์ให้ถูกต้อง";
 /* Error message that will show to user when user reached the sms verification daily limit */
 "You have reached the daily limit"="คุณถึงขีดจำกัดรายวันแล้ว";
+/* Error message that will be shown when the code introduced do not match with the one you received */
+"The verification code doesn't match."="รหัสยืนยันไม่ตรงกัน";
 /* Error message that will show to user when user entered invalid verification code */
 "Wrong code. Please try again or resend."="รหัสไม่ถูกต้อง กรุณาลองใหม่หรือส่งอีกครั้ง";
 /* Error message that will show to user when host detected that the mobile number has been registered already */
