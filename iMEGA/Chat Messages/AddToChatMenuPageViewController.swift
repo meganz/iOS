@@ -116,7 +116,13 @@ extension AddToChatMenuPageViewController: AddToChatMenuViewControllerDelegate {
     func didTap(menu: AddToChatMenu) {
         switch menu.nameKey {
         case "Photos":
-            menuDelegate?.loadPhotosView()
+            DevicePermissionsHelper.photosPermission { granted in
+                if granted {
+                    self.menuDelegate?.loadPhotosView()
+                } else {
+                    DevicePermissionsHelper.alertPhotosPermission()
+                }
+            }
         case "File":
             menuDelegate?.showCloudDrive()
         case "Voice":
