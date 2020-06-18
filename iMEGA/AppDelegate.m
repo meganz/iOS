@@ -49,7 +49,6 @@
 #import "MEGACreateAccountRequestDelegate.h"
 #import "MEGAGetAttrUserRequestDelegate.h"
 #import "MEGAInviteContactRequestDelegate.h"
-#import "MEGALocalNotificationManager.h"
 #import "MEGALoginRequestDelegate.h"
 #import "MEGAProviderDelegate.h"
 #import "MEGAShowPasswordReminderRequestDelegate.h"
