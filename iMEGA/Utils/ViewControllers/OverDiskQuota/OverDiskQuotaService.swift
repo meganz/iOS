@@ -130,6 +130,7 @@ import Foundation
         if let userDataStore = userDataStore, let storageUsedStore = storageUsedStore, let availablePlansStore = availablePlansStore {
             pendingCommand?.execute(userDataStore: userDataStore, storageStore: storageUsedStore, planStore: availablePlansStore)
             pendingCommand = nil
+            errors = []
             return
         }
 
@@ -159,7 +160,7 @@ import Foundation
 
     private func shouldFetchMEGAPlans(_ plansStore: OverDiskQuotaPlans?, errors: Set<DataObtainingError>) -> Bool {
         if plansStore != nil { return false }
-        return !errors.contains(.invalidUserEmail)
+        return true
     }
 
     private func updatedUserData(withSDK api: MEGASdk) -> OverDiskQuotaUserData? {
