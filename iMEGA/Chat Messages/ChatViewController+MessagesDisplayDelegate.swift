@@ -5,8 +5,9 @@ extension ChatViewController: MessagesDisplayDelegate {
                          at indexPath: IndexPath,
                          in messagesCollectionView: MessagesCollectionView) -> UIColor {
         
+        //FIXME: V5 merging issue
         guard let chatMessage = messageForItem(at: indexPath, in: messagesCollectionView) as? ChatMessage else {
-            return isFromCurrentSender(message: message) ? UIColor(fromHexString: "#009476") : UIColor(fromHexString: "#EEEEEE")
+            return isFromCurrentSender(message: message) ? UIColor.red : UIColor.red
         }
         
         if chatMessage.message.isManagementMessage {
@@ -20,11 +21,12 @@ extension ChatViewController: MessagesDisplayDelegate {
             if (chatMessage.message.content as NSString).mnz_isPureEmojiString() {
                 return .clear
             }
-            
-            return isFromCurrentSender(message: message) ? UIColor(fromHexString: "#009476") : UIColor(fromHexString: "#EEEEEE")
+            //FIXME: V5 merging issue
+            return isFromCurrentSender(message: message) ? UIColor.red : UIColor.red
             
         default:
-            return isFromCurrentSender(message: message) ? UIColor(fromHexString: "#009476") : UIColor(fromHexString: "#EEEEEE")
+            //FIXME: V5 merging issue
+            return isFromCurrentSender(message: message) ? UIColor.red : UIColor.red
             
         }
         

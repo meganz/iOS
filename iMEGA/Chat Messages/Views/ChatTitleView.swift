@@ -70,16 +70,18 @@ class ChatTitleView: UIView {
         
         if let status = chatRoom.onlineStatus {
             statusView.isHidden = (status == .invalid)
-            statusView.backgroundColor = UIColor.mnz_color(forStatusChange: status)
+            //FIXME: V5 merging issue
+//            statusView.backgroundColor = UIColor.mnz_color(forStatusChange: status)
         }
     }
     
     private func updateUIElements() {
-        titleLabel.font = UIFont.mnz_SFUISemiBold(withSize: 15)
+        //FIXME: V5 merging issue
+//        titleLabel.font = UIFont.mnz_SFUISemiBold(withSize: 15)
         titleLabel.textColor = .white
         
-        subtitleLabel.font = UIFont.mnz_SFUIRegular(withSize: 12)
-        subtitleLabel.textColor = .mnz_grayE3E3E3()
+//        subtitleLabel.font = UIFont.mnz_SFUIRegular(withSize: 12)
+//        subtitleLabel.textColor = .mnz_grayE3E3E3()
     }
 }
 

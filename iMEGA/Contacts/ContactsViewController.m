@@ -1059,10 +1059,10 @@
 }
 
 - (void)openChatRoom:(MEGAChatRoom *)chatRoom {
-    MessagesViewController *messagesVC = MessagesViewController.new;
-    messagesVC.chatRoom = chatRoom;
+    ChatViewController *chatViewController = [ChatViewController.alloc init];
+    chatViewController.chatRoom = chatRoom;
     
-    [self.navigationController pushViewController:messagesVC animated:YES];
+    [self.navigationController pushViewController:chatViewController animated:YES];
 }
 
 #pragma mark - IBActions

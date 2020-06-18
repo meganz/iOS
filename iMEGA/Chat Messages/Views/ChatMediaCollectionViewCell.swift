@@ -25,7 +25,8 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
     open var durationLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
-        label.font = UIFont.mnz_SFUIRegular(withSize: 12)
+        //FIXME: V5 merging issue
+//        label.font = UIFont.mnz_SFUIRegular(withSize: 12)
         label.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2).cgColor
         label.layer.shadowOffset = CGSize(width: 0, height: 1)
         label.layer.shadowRadius = 2
