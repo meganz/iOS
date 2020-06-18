@@ -453,7 +453,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     UIAlertController *removeContactAlertController = [Helper removeUserContactFromSender:sender withConfirmAction:^{
         MEGARemoveContactRequestDelegate *removeContactRequestDelegate = [MEGARemoveContactRequestDelegate.alloc initWithCompletion:^{
             //TODO: Close chat room because the contact was removed
-            
+            [MEGAStore.shareInstance updateUserWithHandle:self.user.handle interactedWith:NO];
             [self.navigationController popViewControllerAnimated:YES];
         }];
         [[MEGASdkManager sharedMEGASdk] removeContactUser:self.user delegate:removeContactRequestDelegate];

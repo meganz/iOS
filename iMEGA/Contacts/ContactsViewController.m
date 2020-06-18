@@ -489,17 +489,17 @@
     
     NSInteger daysSinceUserAdded = user.timestamp.daysAgo;
     if (daysSinceUserAdded <= 3) {
-        if (moUser.interactedWith) {
+        if (moUser.interactedWith.boolValue) {
             [self indexedSectionForUser:user];
         } else {
             [self.recentlyAddedUsersArray addObject:user];
         }
     } else {
-        if (moUser.interactedWith) {
-            [self indexedSectionForUser:user];
-        } else {
+        if (!moUser.interactedWith.boolValue) {
             [MEGAStore.shareInstance updateUserWithHandle:user.handle interactedWith:YES];
         }
+        
+        [self indexedSectionForUser:user];
     }
 }
 
@@ -1401,18 +1401,10 @@
     cell.backgroundColor = (self.contactsMode == ContactsModeDefault) ? [UIColor mnz_secondaryBackgroundGrouped:self.traitCollection] : [UIColor mnz_secondaryBackgroundGroupedElevated:self.traitCollection];
     switch (self.contactsMode) {
         case ContactsModeDefault: {
-            if (self.searchController.isActive && ![self.searchController.searchBar.text isEqual: @""]) {
-                cell = [self dequeueOrInitCellWithIdentifier:@"contactCell" indexPath:indexPath];
-                user = [self getUserAndSetIndexPath:indexPath];
-                [cell configureDefaultCellForUser:user newUser:NO];
-                cell.contactDetailsButton.hidden = NO;
-                
-                return cell;
-            }
-            
             cell = [self dequeueOrInitCellWithIdentifier:@"contactCell" indexPath:indexPath];
             user = [self getUserAndSetIndexPath:indexPath];
-            [cell configureDefaultCellForUser:user newUser:(indexPath.section == 1)];
+            BOOL isSearching = (self.searchController.isActive && ![self.searchController.searchBar.text isEqual: @""]);
+            [cell configureDefaultCellForUser:user newUser:isSearching ? NO : (indexPath.section == 0)];
             cell.contactDetailsButton.hidden = NO;
             break;
         }
@@ -1485,7 +1477,7 @@
     if (self.contactsMode == ContactsModeDefault) {
         if (section == 0) {
             headerView.titleLabel.font = [UIFont systemFontOfSize:13.f];
-            headerView.titleLabel.text = AMLocalizedString(@"Recently Added", @"Label for any ‘Recently Added’ button, link, text, title, etc. On iOS is used on a section that shows the 'Recently Added' contacts");
+            headerView.titleLabel.text = AMLocalizedString(@"Recently Added", @"Label for any ‘Recently Added’ button, link, text, title, etc. On iOS is used on a section that shows the 'Recently Added' contacts").uppercaseString;
             
             return headerView;
         } else {
@@ -2022,7 +2014,6 @@
         if (([user handle] == [[[MEGASdkManager sharedMEGASdk] myUser] handle]) && (user.isOwnChange != 0)) {
             continue;
         } else if (user.isOwnChange == 0) { //If the change is external, update the modified contacts
-            [MEGAStore.shareInstance updateUserWithHandle:user.handle interactedWith:NO];
             switch (user.visibility) {
                 case MEGAUserVisibilityHidden: { //If I deleted a contact
                     if (indexPath != nil) {
@@ -2047,7 +2038,6 @@
                 [updateContactsIndexPathMutableArray addObject:indexPath];
             }
         } else if (user.isOwnChange != 0) { //If the change is internal
-            [MEGAStore.shareInstance updateUserWithHandle:user.handle interactedWith:NO];
             if (user.visibility != MEGAUserVisibilityVisible) { //If I deleted a contact
                 if (indexPath != nil) {
                     [deleteContactsIndexPathMutableDictionary setObject:user forKey:indexPath];

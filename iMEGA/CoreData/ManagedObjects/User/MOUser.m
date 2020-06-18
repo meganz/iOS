@@ -5,8 +5,8 @@
 
 // Insert code here to add functionality to your managed object subclass
 - (NSString *)description {    
-    return [NSString stringWithFormat:@"<%@: base64Handle=%@, firstname=%@, lastname=%@, email=%@>",
-            [self class], self.base64userHandle, self.firstname, self.lastname, self.email];
+    return [NSString stringWithFormat:@"<%@: base64Handle=%@, email=%@, firstname=%@, lastname=%@, nickname=%@ interactedWith=%@>",
+            self.class, self.base64userHandle, self.email, self.firstname, self.lastname, self.nickname, self.interactedwith];
 }
 
 - (NSString *)fullName {
@@ -40,6 +40,17 @@
     }
     
     return firstname;
+}
+
+- (NSNumber *)interactedWith {
+    NSNumber * interactedWith = [NSNumber numberWithBool:NO];
+    if (self) {
+        if (self.interactedwith) {
+            interactedWith = self.interactedwith;
+        }
+    }
+    
+    return interactedWith;
 }
 
 - (NSString *)displayName {

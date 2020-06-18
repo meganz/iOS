@@ -1346,6 +1346,10 @@ void uncaughtExceptionHandler(NSException *exception) {
             [[MEGASdkManager sharedMEGASdk] getUserAttributeForUser:user type:MEGAUserAttributeFirstname];
             [[MEGASdkManager sharedMEGASdk] getUserAttributeForUser:user type:MEGAUserAttributeLastname];
         }
+        
+        if (user.visibility == MEGAUserVisibilityHidden) {
+            [MEGAStore.shareInstance updateUserWithHandle:user.handle interactedWith:NO];
+        }
     }
 }
 
