@@ -87,7 +87,7 @@ extension ChatViewController: MessagesDisplayDelegate {
         accessoryView.isHidden = false
 
         let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "forwardChat"), for: .normal)
+        button.setImage(UIImage(named: "forward")?.imageFlippedForRightToLeftLayoutDirection(), for: .normal)
         accessoryView.addSubview(button)
         button.frame = accessoryView.bounds
         button.isUserInteractionEnabled = false // respond to accessoryView tap through `MessageCellDelegate`
