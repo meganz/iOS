@@ -45,9 +45,10 @@ class ChatViewIntroductionHeaderView: MessageReusableView {
         participantsLabel.font = UIFont.systemFont(ofSize: 24, weight: .regular)
         statusLabel.font = UIFont.systemFont(ofSize: 12, weight: .regular)
 
-        chattingWithTextLabel.textColor = UIColor(fromHexString: "#F0373A")
+        //FIXME: V5 merging issue
+        chattingWithTextLabel.textColor = .red
         participantsLabel.textColor = UIColor.black
-        statusLabel.textColor = UIColor(fromHexString: "#848484")
+        statusLabel.textColor = .red
         
         chattingWithTextLabel.text = AMLocalizedString("chattingWith", "Title show above the name of the persons with whom you're chatting")
         descriptionLabel.text = AMLocalizedString("chatIntroductionMessage", "Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server.")
@@ -73,7 +74,8 @@ class ChatViewIntroductionHeaderView: MessageReusableView {
 
         if let status = chatRoom.onlineStatus {
             statusView.isHidden = (status == .invalid)
-            statusView.backgroundColor = UIColor.mnz_color(forStatusChange: status)
+            //FIXME: V5 merging issue
+            statusView.backgroundColor = UIColor.red
             
             statusLabel.isHidden = (status == .invalid)
             statusLabel.text = NSString.chatStatusString(status)
@@ -87,12 +89,13 @@ class ChatViewIntroductionHeaderView: MessageReusableView {
         let title = (string as NSString).mnz_stringBetweenString("[S]", andString: "[/S]")!
         let description = (string as NSString).replacingOccurrences(of: String(format: "[S]%@[/S]", title), with: "")
         
+        //FIXME: V5 merging issue
         let titleAttributes = [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15.0, weight: .regular),
-                                                               NSAttributedString.Key.foregroundColor: UIColor.mnz_redMain()!]
+                                                               NSAttributedString.Key.foregroundColor: UIColor.red]
         let titleAttributedString = NSMutableAttributedString(string: title, attributes: titleAttributes)
         
         let descriptionAttributes = [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15.0, weight: .regular),
-                                                                     NSAttributedString.Key.foregroundColor: UIColor.mnz_gray777777()!]
+                                     NSAttributedString.Key.foregroundColor: UIColor.red]
         let descriptionAttributedString = NSMutableAttributedString(string: description, attributes: descriptionAttributes)
         
         titleAttributedString.append(descriptionAttributedString)

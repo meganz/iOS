@@ -27,10 +27,11 @@ extension ChatViewController: MessagesDataSource {
                 topLabelString = chatMessage.displayName + " " + topLabelString
             }
             
+            //FIXME: V5 merging issue
             return NSAttributedString(
                 string: topLabelString,
                 attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13.0, weight: .medium),
-                             NSAttributedString.Key.foregroundColor: UIColor(fromHexString: "#848484") ?? .black])
+                             NSAttributedString.Key.foregroundColor: UIColor.black])
         }
         return nil
     }
