@@ -6,11 +6,10 @@
 
 #import "Helper.h"
 #import "NSString+MNZCategory.h"
-#import "MEGAIndexer.h"
 
 #import "MEGA-Swift.h"
 
-@interface PasscodeTableViewController () <LTHPasscodeViewControllerDelegate> {
+@interface PasscodeTableViewController () {
     BOOL wasPasscodeAlreadyEnabled;
 }
 
@@ -235,12 +234,6 @@
     }
     
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-}
-
-#pragma mark - delegate
-
-- (void)passcodeWasEnabled {
-    MEGAIndexer.sharedIndexer.enableSpotlight = NO;
 }
 
 @end

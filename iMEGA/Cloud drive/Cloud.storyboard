@@ -722,7 +722,14 @@
                             <outlet property="delegate" destination="3xl-rn-KIB" id="7eX-Qf-FG0"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="5aB-0v-dpU"/>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="5aB-0v-dpU">
+                        <barButtonItem key="leftBarButtonItem" title=" " id="hZl-Le-AYm"/>
+                        <connections>
+                            <outlet property="backBarButtonItem" destination="hZl-Le-AYm" id="x9J-Lb-kGe"/>
+                        </connections>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="S2v-kr-MSt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

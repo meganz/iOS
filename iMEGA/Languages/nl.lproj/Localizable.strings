@@ -1375,7 +1375,7 @@
 /* SDK error returned when an operation is rejected due to fraud protection */
 "Rejected by fraud protection"="Rejected by fraud protection";
 /* SDK error returned when there are too many requests */
-"Too many requests"="Too many requests";
+"Too many requests"="Te veel verzoeken";
 /* SDK error returned when there is a balance error */
 "Balance error"="Balance error";
 /* SDK error returned upon a HTTP error */
@@ -1649,7 +1649,7 @@
 /* Title of the Spotlight Search section */
 "Search"="Zoek";
 /* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
-"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="When enabled, allow search and look up MEGA files/folders in Spotlight Search.";
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="Maakt zoeken naar MEGA-bestanden/mappen mogelijk in Spotlight Search van uw apparaat";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="U heeft de sleutels";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -2112,6 +2112,8 @@
 "Please enter a valid phone number"="Vul alstublieft een geldig telefoonnummer in.";
 /* Error message that will show to user when user reached the sms verification daily limit */
 "You have reached the daily limit"="U heeft de dagelijkse limiet bereikt";
+/* Error message that will be shown when the code introduced do not match with the one you received */
+"The verification code doesn't match."="De verificatie code komt niet overeen.";
 /* Error message that will show to user when user entered invalid verification code */
 "Wrong code. Please try again or resend."="Onjuiste code. Probeer nogmaals of verstuur opnieuw.";
 /* Error message that will show to user when host detected that the mobile number has been registered already */
