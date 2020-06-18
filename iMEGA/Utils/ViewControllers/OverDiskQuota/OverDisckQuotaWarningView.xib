@@ -16,24 +16,24 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="VXP-TM-imT">
-            <rect key="frame" x="0.0" y="0.0" width="414" height="68"/>
+            <rect key="frame" x="0.0" y="0.0" width="414" height="80"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="warning" translatesAutoresizingMaskIntoConstraints="NO" id="oJU-ZV-wDr">
-                    <rect key="frame" x="12" y="12" width="44" height="44"/>
+                    <rect key="frame" x="12" y="18" width="44" height="44"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="2G8-59-Ynm"/>
                         <constraint firstAttribute="width" constant="44" id="qDk-FG-ygj"/>
                     </constraints>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="You have 46 days left to upgrade." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W08-Hj-Nir">
-                    <rect key="frame" x="64" y="12" width="239" height="21.5"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="You have 46 days left to upgrade." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W08-Hj-Nir">
+                    <rect key="frame" x="64" y="12" width="239" height="14.5"/>
                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="12"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="After that, your data is subject to deletion." textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YU1-cg-IH0">
-                    <rect key="frame" x="64" y="41.5" width="239" height="14.5"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="750" text="After that, your data is subject to deletion." textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YU1-cg-IH0">
+                    <rect key="frame" x="64" y="34.5" width="239" height="33.5"/>
                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
@@ -52,7 +52,7 @@
                 <constraint firstItem="W08-Hj-Nir" firstAttribute="top" secondItem="VXP-TM-imT" secondAttribute="top" constant="12" id="ofJ-Zs-iqd"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="59" y="181"/>
+            <point key="canvasLocation" x="57.971014492753625" y="180.80357142857142"/>
         </view>
     </objects>
     <resources>

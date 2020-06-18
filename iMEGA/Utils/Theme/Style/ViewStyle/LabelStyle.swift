@@ -21,9 +21,11 @@ fileprivate let headlineStyler: (UILabel) -> Void = { label in
 }
 
 fileprivate let noteMainStyler: (UILabel) -> Void = { label in
-    TextStyle.noteMainTextStyle.applied(on: label)
+    ParagraphStyle.multilineWordWrappingNaturalAlignedParagraphStyle.applied(on:
+        TextStyle.noteMainTextStyle.applied(on: label))
 }
 
 fileprivate let noteSubStyler: (UILabel) -> Void = { label in
-    TextStyle.noteSubTextStyle.applied(on: label)
+    ParagraphStyle.multilineWordWrappingNaturalAlignedParagraphStyle.applied(on:
+        TextStyle.noteSubTextStyle.applied(on: label))
 }

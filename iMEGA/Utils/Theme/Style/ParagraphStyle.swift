@@ -14,7 +14,11 @@ struct ParagraphStyle: Codable {
 
 extension ParagraphStyle {
 
-    static var centerAlignedWideSpacingParagraphStyle: ParagraphStyle { ParagraphStyle(lineSpacing: 8, alignment: .center) }
+    static var centerAlignedWideSpacingParagraphStyle: ParagraphStyle { .init(lineSpacing: 8, alignment: .center) }
+
+    static var multilineWordWrappingNaturalAlignedParagraphStyle: ParagraphStyle {
+        .init(lineBreakMode: .wordWrapping, alignment: .natural)
+    }
 }
 
 extension ParagraphStyle {
