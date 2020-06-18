@@ -1,7 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "playVoiceClip@3x.png",
+      "filename" : "playButtonLight.pdf",
+      "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "playButtonDark.pdf",
       "idiom" : "universal"
     }
   ],

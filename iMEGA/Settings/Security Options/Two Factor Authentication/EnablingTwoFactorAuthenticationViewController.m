@@ -4,6 +4,7 @@
 #import "SVProgressHUD.h"
 
 #import "MEGASdkManager.h"
+#import "MEGA-Swift.h"
 #import "UIApplication+MNZCategory.h"
 #import "UIImage+MNZCategory.h"
 
@@ -33,35 +34,26 @@
     [super viewDidLoad];
     
     if ([[UIDevice currentDevice] iPhone4X] || [[UIDevice currentDevice] iPhone5X]) {
-        self.firstSectionLabel.font = [UIFont mnz_SFUIRegularWithSize:12.f];
+        self.firstSectionLabel.font = [UIFont systemFontOfSize:12.0f];
         self.seedQrImageTopLayoutConstraint.constant = 16.f;
         self.seedQrImageViewHeightLayoutConstraint.constant = [[UIDevice currentDevice] iPhone4X] ? 100.f : 120.f;
         self.seedQrImageViewWidthLayoutConstraint.constant = [[UIDevice currentDevice] iPhone4X] ? 100.f : 120.f;
-        self.seedTextView.font = [UIFont mnz_SFUIRegularWithSize:14.f];
+        self.seedTextView.font = [UIFont systemFontOfSize:14.0f];
     }
     
     self.navigationItem.title = AMLocalizedString(@"twoFactorAuthentication", @"");
     
-    NSTextAttachment *imageTextAttachment = [[NSTextAttachment alloc] init];
-    imageTextAttachment.image = [UIImage imageNamed:@"littleQuestionMark_Black"];
-    imageTextAttachment.bounds = CGRectMake(0, 0, 12.0f, 12.0f);
-    NSMutableAttributedString *mutableAttributedString = [[NSMutableAttributedString alloc] initWithString:[AMLocalizedString(@"scanOrCopyTheSeed", @"A message on the setup two-factor authentication page on the mobile web client.") stringByAppendingString:@" "]];
-    [mutableAttributedString appendAttributedString:[NSAttributedString attributedStringWithAttachment:imageTextAttachment]];
-    self.firstSectionLabel.attributedText = mutableAttributedString;
     self.firstSectionLabel.userInteractionEnabled = YES;
     self.firstSectionLabel.gestureRecognizers = @[[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(firstSectionLabelTapped:)]];
     
-    NSString *qrString = [NSString stringWithFormat:@"otpauth://totp/MEGA:%@?secret=%@&issuer=MEGA", [[MEGASdkManager sharedMEGASdk] myEmail], self.seed];
-    self.seedQrImageView.image = [UIImage mnz_qrImageFromString:qrString withSize:self.seedQrImageView.frame.size color:UIColor.blackColor];
-    
     self.seedTextView.text = [self seedSplitInGroupsOfFourCharacters];
-    self.seedTextViewView.layer.borderColor = [UIColor mnz_grayE3E3E3].CGColor;
     
     [self.openInButton setTitle:AMLocalizedString(@"openIn", @"Title shown under the action that allows you to open a file in another app") forState:UIControlStateNormal];
     [self.nextButton setTitle:AMLocalizedString(@"next", @"") forState:UIControlStateNormal];
-    self.nextButton.layer.borderColor = [UIColor mnz_gray999999].CGColor;
     
     [self.seedTextView addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressOnTextView:)]];
+    
+    [self updateAppearance];
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
@@ -72,7 +64,41 @@
     return UIInterfaceOrientationMaskAll;
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateAppearance];
+        }
+    }
+}
+
 #pragma mark - Private
+
+- (void)updateAppearance {
+    self.view.backgroundColor = UIColor.mnz_background;
+    
+    [self setupFirstSectionLabelTextAndImage];
+    
+    NSString *qrString = [NSString stringWithFormat:@"otpauth://totp/MEGA:%@?secret=%@&issuer=MEGA", MEGASdkManager.sharedMEGASdk.myEmail, self.seed];
+    self.seedQrImageView.image = [UIImage mnz_qrImageFromString:qrString withSize:self.seedQrImageView.frame.size color:UIColor.mnz_label backgroundColor:UIColor.clearColor];
+    
+    self.seedTextViewView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
+    self.seedTextViewView.layer.borderColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection].CGColor;
+    
+    [self.openInButton mnz_setupPrimary:self.traitCollection];
+    [self.nextButton mnz_setupBasic:self.traitCollection];
+}
+
+- (void)setupFirstSectionLabelTextAndImage {
+    NSTextAttachment *imageTextAttachment = [[NSTextAttachment alloc] init];
+    imageTextAttachment.image = [UIImage imageNamed:@"littleQuestionMark"];
+    imageTextAttachment.bounds = CGRectMake(0, 0, 12.0f, 12.0f);
+    NSMutableAttributedString *mutableAttributedString = [[NSMutableAttributedString alloc] initWithString:[AMLocalizedString(@"scanOrCopyTheSeed", @"A message on the setup two-factor authentication page on the mobile web client.") stringByAppendingString:@" "]];
+    [mutableAttributedString appendAttributedString:[NSAttributedString attributedStringWithAttachment:imageTextAttachment]];
+    self.firstSectionLabel.attributedText = mutableAttributedString;
+}
 
 - (NSString *)seedSplitInGroupsOfFourCharacters {
     NSString *seedSplitInGroupsOfFourCharacters = [NSString new];

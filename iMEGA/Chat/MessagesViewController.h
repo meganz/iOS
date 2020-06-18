@@ -1,5 +1,5 @@
 
-#import "JSQMessages.h"
+#import "JSQMessagesViewController.h"
 
 #import "MEGASdkManager.h"
 #import "ToolbarType.h"

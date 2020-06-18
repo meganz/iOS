@@ -1,7 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "pauseVoiceClip@3x.png",
+      "filename" : "pauseButton.pdf",
+      "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "pauseButtonDark.pdf",
       "idiom" : "universal"
     }
   ],

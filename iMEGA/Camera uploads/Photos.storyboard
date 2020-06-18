@@ -1,17 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Osn-De-bku">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Osn-De-bku">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="SF-UI-Text-Regular.otf">
-            <string>SFUIText-Regular</string>
-        </array>
-    </customFonts>
     <scenes>
         <!--Photos View Controller-->
         <scene sceneID="Jel-ry-aXD">
@@ -33,7 +28,7 @@
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Loading…" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZiR-gp-d1i">
                                                         <rect key="frame" x="0.0" y="6.3333333333333339" width="329" height="20.333333333333329"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <color key="textColor" red="0.29019607843137252" green="0.29019607843137252" blue="0.29019607843137252" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Hs5-aX-s89">
@@ -42,12 +37,11 @@
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" translatesAutoresizingMaskIntoConstraints="NO" id="s3z-Mc-fCp">
                                                                 <rect key="frame" x="0.0" y="0.0" width="0.0" height="18"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                                <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="LTG-PV-qaW">
                                                                 <rect key="frame" x="0.0" y="23" width="0.0" height="4"/>
-                                                                <color key="tintColor" red="0.95294117647058818" green="0.047058823529411764" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="4" id="qvL-GF-eYX"/>
                                                                 </constraints>
@@ -72,7 +66,6 @@
                                                 </subviews>
                                             </stackView>
                                         </subviews>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="bottom" secondItem="S4Z-Ea-Sdu" secondAttribute="bottom" constant="12" id="A14-Sk-FYY"/>
                                             <constraint firstAttribute="height" priority="749" constant="55" id="Np6-0l-Tqh"/>
@@ -83,7 +76,7 @@
                                     </view>
                                     <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" placeholderIntrinsicWidth="375" placeholderIntrinsicHeight="548" alwaysBounceVertical="YES" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Isg-Gr-mnR">
                                         <rect key="frame" x="0.0" y="57" width="414" height="635"/>
-                                        <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="1" id="bcX-sw-OPy" customClass="MEGACollectionViewFlowLayout">
                                             <size key="itemSize" width="120" height="120"/>
                                             <size key="headerReferenceSize" width="320" height="30"/>
@@ -108,8 +101,8 @@
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZM1-Wr-5Hw">
                                                                     <rect key="frame" x="2" y="103" width="52" height="15"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
-                                                                    <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                             </subviews>
@@ -162,13 +155,12 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P5z-Zy-8op">
-                                                    <rect key="frame" x="8" y="0.0" width="36" height="30"/>
-                                                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="14"/>
-                                                    <color key="textColor" red="0.40000000596046448" green="0.40000000596046448" blue="0.40000000596046448" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <rect key="frame" x="8" y="0.0" width="35.333333333333336" height="30"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
-                                            <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="leadingMargin" secondItem="P5z-Zy-8op" secondAttribute="leading" id="XWI-rQ-GMw"/>
                                                 <constraint firstAttribute="bottom" secondItem="P5z-Zy-8op" secondAttribute="bottom" id="e0F-lD-52f"/>
@@ -190,7 +182,6 @@
                                 </subviews>
                             </stackView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="7vL-gO-iAW" firstAttribute="bottom" secondItem="CHq-ed-0ka" secondAttribute="bottom" id="0dh-gO-1xI"/>
                             <constraint firstItem="CHq-ed-0ka" firstAttribute="top" secondItem="7vL-gO-iAW" secondAttribute="top" id="S83-qv-v5A"/>
@@ -199,7 +190,6 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="7vL-gO-iAW"/>
                     </view>
-                    <tabBarItem key="tabBarItem" tag="1" title="" image="cameraUploadsIcon" id="Fsw-2B-D8x"/>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="hxz-Hg-nRC">
                         <barButtonItem key="backBarButtonItem" title=" " id="JzG-HA-4B2"/>
@@ -230,48 +220,41 @@
                 <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" id="qZy-vw-98U">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" red="0.97647058963775635" green="0.97647058963775635" blue="0.97647058963775635" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <viewLayoutGuide key="safeArea" id="eob-wF-L81"/>
                     <items>
-                        <barButtonItem enabled="NO" image="download" width="32" id="mZb-63-wxw" userLabel="Download Bar Button Item">
-                            <color key="tintColor" red="0.40000000596046448" green="0.40000000596046448" blue="0.40000000596046448" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <barButtonItem enabled="NO" title="Item" image="download" width="32" style="plain" id="mZb-63-wxw" userLabel="Download Bar Button Item">
                             <connections>
                                 <action selector="downloadAction:" destination="3GS-cK-Hw6" id="osa-ls-637"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="mbb-fa-sBd"/>
-                        <barButtonItem enabled="NO" image="shareGray" width="32" id="84D-T8-1ui" userLabel="Share Bar Button Item">
-                            <color key="tintColor" red="0.40000000596046448" green="0.40000000596046448" blue="0.40000000596046448" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <barButtonItem enabled="NO" image="shareGray" width="32" style="plain" id="84D-T8-1ui" userLabel="Share Bar Button Item">
                             <connections>
                                 <action selector="shareAction:" destination="3GS-cK-Hw6" id="0z0-Dw-LjO"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="Ujf-9f-8Qy"/>
-                        <barButtonItem enabled="NO" image="move" width="32" id="k2g-A4-j6f" userLabel="Move Bar Button Item">
-                            <color key="tintColor" red="0.40000000596046448" green="0.40000000596046448" blue="0.40000000596046448" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <barButtonItem enabled="NO" image="move" width="32" style="plain" id="k2g-A4-j6f" userLabel="Move Bar Button Item">
                             <connections>
                                 <action selector="moveAction:" destination="3GS-cK-Hw6" id="6zf-ep-O1w"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="3uD-Y8-6Q4"/>
-                        <barButtonItem image="copy" width="32" id="wpV-mF-Nm9" userLabel="Copy Bar Button Item">
-                            <color key="tintColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <barButtonItem image="copy" width="32" style="plain" id="wpV-mF-Nm9" userLabel="Copy Bar Button Item">
                             <connections>
                                 <action selector="copyAction:" destination="3GS-cK-Hw6" id="i7G-43-f47"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="8tv-N6-uNs"/>
-                        <barButtonItem enabled="NO" image="rubbishBin" width="32" id="bVv-a0-Fx7" userLabel="Rubbish Bin Bar Button Item">
-                            <color key="tintColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <barButtonItem enabled="NO" image="rubbishBin" width="32" style="plain" id="bVv-a0-Fx7" userLabel="Rubbish Bin Bar Button Item">
                             <connections>
                                 <action selector="deleteAction:" destination="3GS-cK-Hw6" id="ofI-ck-r51"/>
                             </connections>
                         </barButtonItem>
                     </items>
-                    <color key="tintColor" red="0.40000000596046448" green="0.40000000596046448" blue="0.40000000596046448" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </toolbar>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NUj-Pt-2Vj" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <barButtonItem image="selectAll" id="gRA-OU-vS7" userLabel="Select All Bar Button Item">
+                <barButtonItem image="selectAll" style="plain" id="gRA-OU-vS7" userLabel="Select All Bar Button Item">
                     <connections>
                         <action selector="selectAllAction:" destination="3GS-cK-Hw6" id="XId-i9-9Xl"/>
                     </connections>
@@ -283,7 +266,7 @@
         <scene sceneID="ea3-eI-NjD">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Osn-De-bku" customClass="MEGANavigationController" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" tag="1" title="" image="cameraUploadsIcon" id="9PP-sR-Gh2"/>
+                    <tabBarItem key="tabBarItem" tag="1" title="" image="cameraUploadsIcon" id="0MC-VC-4jE"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="o0V-gx-grO">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>

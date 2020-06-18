@@ -183,7 +183,7 @@
         }
     }
     
-    [self setupAppearance];
+    [AppearanceManager setupAppearance:self.window.traitCollection];
     
     [MEGALinkManager resetLinkAndURLType];
     isFetchNodesDone = NO;
@@ -259,6 +259,9 @@
         if (sessionId && ![[[launchOptions objectForKey:@"UIApplicationLaunchOptionsURLKey"] absoluteString] containsString:@"confirm"]) {
             MEGACreateAccountRequestDelegate *createAccountRequestDelegate = [[MEGACreateAccountRequestDelegate alloc] initWithCompletion:^ (MEGAError *error) {
                 CheckEmailAndFollowTheLinkViewController *checkEmailAndFollowTheLinkVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"CheckEmailAndFollowTheLinkViewControllerID"];
+                if (@available(iOS 13.0, *)) {
+                    checkEmailAndFollowTheLinkVC.modalPresentationStyle = UIModalPresentationFullScreen;
+                }
                 [UIApplication.mnz_presentingViewController presentViewController:checkEmailAndFollowTheLinkVC animated:YES completion:nil];
             }];
             createAccountRequestDelegate.resumeCreateAccount = YES;
@@ -317,6 +320,7 @@
     
     if (self.privacyView == nil) {
         UIViewController *privacyVC = [[UIStoryboard storyboardWithName:@"Launch" bundle:nil] instantiateViewControllerWithIdentifier:@"PrivacyViewControllerID"];
+        privacyVC.view.backgroundColor = UIColor.mnz_background;
         self.privacyView = privacyVC.view;
     }
     [self.window addSubview:self.privacyView];
@@ -961,6 +965,8 @@ void uncaughtExceptionHandler(NSException *exception) {
         groupCallVC.chatRoom = self.chatRoom;
         groupCallVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
         groupCallVC.megaCallManager = self.megaCallManager;
+        groupCallVC.modalPresentationStyle = UIModalPresentationFullScreen;
+        
         [self.mainTBC presentViewController:groupCallVC animated:YES completion:nil];
     } else {
         CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
@@ -968,6 +974,8 @@ void uncaughtExceptionHandler(NSException *exception) {
         callVC.videoCall = self.videoCall;
         callVC.callType = CallTypeOutgoing;
         callVC.megaCallManager = self.megaCallManager;
+        callVC.modalPresentationStyle = UIModalPresentationFullScreen;
+        
         [self.mainTBC presentViewController:callVC animated:YES completion:nil];
     }
     self.chatRoom = nil;
@@ -975,7 +983,6 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 - (void)presentInviteContactCustomAlertViewController {
     CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
-    customModalAlertVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
     
     BOOL isInOutgoingContactRequest = NO;
     MEGAContactRequestList *outgoingContactRequestList = [[MEGASdkManager sharedMEGASdk] outgoingContactRequests];
@@ -1029,8 +1036,9 @@ void uncaughtExceptionHandler(NSException *exception) {
 }
 
 - (void)showChooseAccountType {
-    UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
+    UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"UpgradeAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeTableViewControllerID"];
     MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
+    navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
     upgradeTVC.chooseAccountType = YES;
     
     [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:nil];
@@ -1046,7 +1054,6 @@ void uncaughtExceptionHandler(NSException *exception) {
 - (void)presentUpgradeViewControllerTitle:(NSString *)title detail:(NSString *)detail image:(UIImage *)image {
     if (!self.isUpgradeVCPresented && ![UIApplication.mnz_visibleViewController isKindOfClass:UpgradeTableViewController.class] && ![UIApplication.mnz_visibleViewController isKindOfClass:ProductDetailViewController.class]) {
         CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
-        customModalAlertVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
         customModalAlertVC.image = image;
         customModalAlertVC.viewTitle = title;
         customModalAlertVC.detail = detail;
@@ -1060,7 +1067,7 @@ void uncaughtExceptionHandler(NSException *exception) {
             [weakCustom dismissViewControllerAnimated:YES completion:^{
                 self.upgradeVCPresented = NO;
                 if ([MEGAPurchase sharedInstance].products.count > 0) {
-                    UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
+                    UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"UpgradeAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeTableViewControllerID"];
                     MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
                     
                     [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:nil];
@@ -1080,7 +1087,7 @@ void uncaughtExceptionHandler(NSException *exception) {
         customModalAlertVC.secondCompletion = ^{
             [weakCustom dismissViewControllerAnimated:YES completion:^{
                 self.upgradeVCPresented = NO;
-                AchievementsViewController *achievementsVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"AchievementsViewControllerID"];
+                AchievementsViewController *achievementsVC = [[UIStoryboard storyboardWithName:@"Achievements" bundle:nil] instantiateViewControllerWithIdentifier:@"AchievementsViewControllerID"];
                 achievementsVC.enableCloseBarButton = YES;
                 UINavigationController *navigation = [[UINavigationController alloc] initWithRootViewController:achievementsVC];
                 [UIApplication.mnz_presentingViewController presentViewController:navigation animated:YES completion:nil];
@@ -1142,10 +1149,13 @@ void uncaughtExceptionHandler(NSException *exception) {
 }
 
 - (void)presentBusinessExpiredViewIfNeeded {
+    if ([UIApplication.mnz_visibleViewController isKindOfClass:InitialLaunchViewController.class] || [UIApplication.mnz_visibleViewController isKindOfClass:LaunchViewController.class]) {
+        return;
+    }
+    
     if (MEGASdkManager.sharedMEGASdk.businessStatus == BusinessStatusGracePeriod) {
         if (MEGASdkManager.sharedMEGASdk.isMasterBusinessAccount) {
             CustomModalAlertViewController *customModalAlertVC = CustomModalAlertViewController.alloc.init;
-            customModalAlertVC.modalPresentationStyle = UIModalPresentationOverFullScreen;
             customModalAlertVC.image = [UIImage imageNamed:@"paymentOverdue"];
             customModalAlertVC.viewTitle = AMLocalizedString(@"Something went wrong", @"");
             customModalAlertVC.detail = AMLocalizedString(@"There has been a problem with your last payment. Please access MEGA using a desktop browser for more information.", @"When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information");
@@ -1195,6 +1205,12 @@ void uncaughtExceptionHandler(NSException *exception) {
 - (void)logoutButtonWasPressed {
     [[MEGASdkManager sharedMEGASdk] logout];
 }
+
+- (void)passcodeWasEnabled {
+    MEGAIndexer.sharedIndexer.enableSpotlight = NO;
+}
+
+#pragma mark - Language
 
 - (void)languageCompatibility {
     
@@ -1321,6 +1337,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 }
 
 - (void)readyToShowRecommendations {
+    [self presentBusinessExpiredViewIfNeeded];
     [self showAddPhoneNumberIfNeeded];
 }
 
@@ -1396,6 +1413,10 @@ void uncaughtExceptionHandler(NSException *exception) {
         } else if (user.visibility == MEGAUserVisibilityVisible) {
             [[MEGASdkManager sharedMEGASdk] getUserAttributeForUser:user type:MEGAUserAttributeFirstname];
             [[MEGASdkManager sharedMEGASdk] getUserAttributeForUser:user type:MEGAUserAttributeLastname];
+        }
+        
+        if (user.visibility == MEGAUserVisibilityHidden) {
+            [MEGAStore.shareInstance updateUserWithHandle:user.handle interactedWith:NO];
         }
     }
 }

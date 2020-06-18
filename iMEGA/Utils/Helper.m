@@ -25,14 +25,6 @@
 #import "MEGAStore.h"
 #import "MEGAUser+MNZCategory.h"
 
-#import "GetLinkActivity.h"
-#import "NodeTableViewCell.h"
-#import "OpenInActivity.h"
-#import "PhotoCollectionViewCell.h"
-#import "RemoveLinkActivity.h"
-#import "RemoveSharingActivity.h"
-#import "ShareFolderActivity.h"
-#import "SendToChatActivity.h"
 #ifdef MNZ_SHARE_EXTENSION
 #import "MEGAShare-Swift.h"
 #elif MNZ_PICKER_EXTENSION
@@ -41,6 +33,14 @@
 #import "MEGA-Swift.h"
 #endif
 
+#import "GetLinkActivity.h"
+#import "NodeTableViewCell.h"
+#import "OpenInActivity.h"
+#import "PhotoCollectionViewCell.h"
+#import "RemoveLinkActivity.h"
+#import "RemoveSharingActivity.h"
+#import "ShareFolderActivity.h"
+#import "SendToChatActivity.h"
 
 @implementation Helper
 
@@ -535,6 +535,71 @@
 
 #pragma mark - Utils
 
++ (void)saveSortOrder:(MEGASortOrderType)selectedSortOrderType for:(_Nullable id)object {
+    SortingPreference sortingPreference = [NSUserDefaults.standardUserDefaults integerForKey:MEGASortingPreference];
+
+    if (object && sortingPreference == SortingPreferencePerFolder) {
+        MEGASortOrderType currentSortOrderType = [Helper sortTypeFor:object];
+        
+        if (currentSortOrderType == selectedSortOrderType) {
+            return;
+        }
+        
+        if ([object isKindOfClass:MEGANode.class]) {
+            MEGANode *node = (MEGANode *)object;
+            [MEGAStore.shareInstance insertOrUpdateCloudSortTypeWithHandle:node.handle sortType:selectedSortOrderType];
+        } else if ([object isKindOfClass:NSString.class]) {
+            NSString *offlinePath = (NSString *)object;
+            [MEGAStore.shareInstance insertOrUpdateOfflineSortTypeWithPath:offlinePath sortType:selectedSortOrderType];
+        }
+                
+        [NSNotificationCenter.defaultCenter postNotificationName:MEGASortingPreference object:self userInfo:@{MEGASortingPreference : @(sortingPreference), MEGASortingPreferenceType : @(selectedSortOrderType)}];
+    } else {
+        [NSUserDefaults.standardUserDefaults setInteger:SortingPreferenceSameForAll forKey:MEGASortingPreference];
+        [NSUserDefaults.standardUserDefaults setInteger:selectedSortOrderType forKey:MEGASortingPreferenceType];
+        if (@available(iOS 12.0, *)) {} else {
+            [NSUserDefaults.standardUserDefaults synchronize];
+        }
+        
+        [NSNotificationCenter.defaultCenter postNotificationName:MEGASortingPreference object:self userInfo:@{MEGASortingPreference : @(SortingPreferenceSameForAll), MEGASortingPreferenceType : @(selectedSortOrderType)}];
+    }
+}
+
++ (MEGASortOrderType)sortTypeFor:(_Nullable id)object {
+    MEGASortOrderType sortType;
+    SortingPreference sortingPreference = [NSUserDefaults.standardUserDefaults integerForKey:MEGASortingPreference];
+    if (object) {
+        if (sortingPreference == SortingPreferencePerFolder) {
+            if ([object isKindOfClass:MEGANode.class]) {
+                MEGANode *node = (MEGANode *)object;
+                CloudAppearancePreference *cloudAppearancePreference = [MEGAStore.shareInstance fetchCloudAppearancePreferenceWithHandle:node.handle];
+                sortType = cloudAppearancePreference ? cloudAppearancePreference.sortType.integerValue : MEGASortOrderTypeDefaultAsc;
+            } else if ([object isKindOfClass:NSString.class]) {
+                NSString *offlinePath = (NSString *)object;
+                OfflineAppearancePreference *offlineAppearancePreference = [MEGAStore.shareInstance fetchOfflineAppearancePreferenceWithPath:offlinePath];
+                sortType = offlineAppearancePreference ? offlineAppearancePreference.sortType.integerValue : MEGASortOrderTypeDefaultAsc;
+            } else {
+                sortType = MEGASortOrderTypeDefaultAsc;
+            }
+        } else {
+            MEGASortOrderType currentSortType = [NSUserDefaults.standardUserDefaults integerForKey:MEGASortingPreferenceType];
+            sortType = currentSortType ? currentSortType : Helper.defaultSortType;
+        }
+    } else {
+        MEGASortOrderType currentSortType = [NSUserDefaults.standardUserDefaults integerForKey:MEGASortingPreferenceType];
+        sortType = currentSortType ? currentSortType : Helper.defaultSortType;
+    }
+    
+    return sortType;
+}
+
++ (MEGASortOrderType)defaultSortType {
+    [NSUserDefaults.standardUserDefaults setInteger:MEGASortOrderTypeDefaultAsc forKey:MEGASortingPreferenceType];
+    [NSUserDefaults.standardUserDefaults synchronize];
+    
+    return MEGASortOrderTypeDefaultAsc;
+}
+
 + (NSString *)memoryStyleStringFromByteCount:(long long)byteCount {
     static NSByteCountFormatter *byteCountFormatter = nil;
     static dispatch_once_t onceToken;
@@ -960,94 +1025,19 @@
     return [filesURLMutableArray copy];
 }
 
-
-#pragma mark - Utils for empty states
-
-+ (UIEdgeInsets)capInsetsForEmptyStateButton {
-    UIEdgeInsets capInsets = UIEdgeInsetsMake(10.0, 10.0, 10.0, 10.0);
-    
-    return capInsets;
-}
-
-+ (UIEdgeInsets)rectInsetsForEmptyStateButton {
-    UIEdgeInsets rectInsets = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0);
-    if ([[UIDevice currentDevice] iPhoneDevice]) {
-        UIInterfaceOrientation interfaceOrientation = [[UIApplication sharedApplication] statusBarOrientation];
-        if (UIInterfaceOrientationIsPortrait(interfaceOrientation)) {
-            rectInsets = UIEdgeInsetsMake(0.0, -20.0, 0.0, -20.0);
-        } else if (UIInterfaceOrientationIsLandscape(interfaceOrientation)) {
-            CGFloat emptyStateButtonWidth = ([[UIScreen mainScreen] bounds].size.height);
-            CGFloat leftOrRightInset = ([[UIScreen mainScreen] bounds].size.width - emptyStateButtonWidth) / 2;
-            rectInsets = UIEdgeInsetsMake(0.0, -leftOrRightInset, 0.0, -leftOrRightInset);
-        }
-    } else if ([[UIDevice currentDevice] iPadDevice]) {
-        CGFloat emptyStateButtonWidth = 400.0f;
-        CGFloat leftOrRightInset = ([[UIScreen mainScreen] bounds].size.width - emptyStateButtonWidth) / 2;
-        rectInsets = UIEdgeInsetsMake(0.0, -leftOrRightInset, 0.0, -leftOrRightInset);
-    }
-    
-    return rectInsets;
-}
-
-+ (CGFloat)verticalOffsetForEmptyStateWithNavigationBarSize:(CGSize)navigationBarSize searchBarActive:(BOOL)isSearchBarActive {
-    CGFloat verticalOffset = 0.0f;
-    UIInterfaceOrientation interfaceOrientation = [[UIApplication sharedApplication] statusBarOrientation];
-    if (UIInterfaceOrientationIsPortrait(interfaceOrientation)) {
-        if (isSearchBarActive) {
-            verticalOffset += -navigationBarSize.height;
-        }
-    } else if (UIInterfaceOrientationIsLandscape(interfaceOrientation)) {
-        if ([[UIDevice currentDevice] iPhoneDevice]) {
-            verticalOffset += -navigationBarSize.height/2;
-        }
-    }
-    
-    return verticalOffset;
-}
-
-+ (CGFloat)spaceHeightForEmptyState {
-    CGFloat spaceHeight = 40.0f;
-    if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]) && [[UIDevice currentDevice] iPhoneDevice]) {
-        spaceHeight = 11.0f;
-    }
-    
-    return spaceHeight;
-}
-
-+ (CGFloat)spaceHeightForEmptyStateWithDescription {
-    CGFloat spaceHeight = 20.0f;
-    if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation]) && [[UIDevice currentDevice] iPhoneDevice]) {
-        spaceHeight = 11.0f;
-    }
-    
-    return spaceHeight;
-}
-
-+ (NSDictionary *)titleAttributesForEmptyState {
-    return @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:18.0f], NSForegroundColorAttributeName:UIColor.mnz_black333333};
-}
-
-+ (NSDictionary *)descriptionAttributesForEmptyState {
-    return @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:14.0f], NSForegroundColorAttributeName:UIColor.mnz_gray777777};
-}
-
-+ (NSDictionary *)buttonTextAttributesForEmptyState {
-    return @{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:UIColor.whiteColor};
-}
-
 #pragma mark - Utils for UI
 
 + (UILabel *)customNavigationBarLabelWithTitle:(NSString *)title subtitle:(NSString *)subtitle {
-    return [self customNavigationBarLabelWithTitle:title subtitle:subtitle color:[UIColor whiteColor]];
+    return [self customNavigationBarLabelWithTitle:title subtitle:subtitle color:UIColor.mnz_label];
 }
 
 + (UILabel *)customNavigationBarLabelWithTitle:(NSString *)title subtitle:(NSString *)subtitle color:(UIColor *)color {
-    NSMutableAttributedString *titleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:title attributes:@{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:color}];
+    NSMutableAttributedString *titleMutableAttributedString = [NSMutableAttributedString.alloc initWithString:title attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17.0f weight:UIFontWeightSemibold], NSForegroundColorAttributeName:color}];
     
     UIColor *colorWithAlpha = [color colorWithAlphaComponent:0.8];
     if (![subtitle isEqualToString:@""]) {
         subtitle = [NSString stringWithFormat:@"\n%@", subtitle];
-        NSMutableAttributedString *subtitleMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:subtitle attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:colorWithAlpha}];
+        NSMutableAttributedString *subtitleMutableAttributedString = [NSMutableAttributedString.alloc initWithString:subtitle attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName:colorWithAlpha}];
         
         [titleMutableAttributedString appendAttributedString:subtitleMutableAttributedString];
     }
@@ -1067,10 +1057,6 @@
     searchController.searchBar.delegate = searchBarDelegate;
     searchController.dimsBackgroundDuringPresentation = NO;
     searchController.searchBar.searchBarStyle = UISearchBarStyleMinimal;
-    searchController.searchBar.translucent = NO;
-    searchController.searchBar.backgroundColor = UIColor.whiteColor;
-    searchController.searchBar.barTintColor = UIColor.whiteColor;
-    searchController.searchBar.tintColor = UIColor.mnz_redMain;
     
     return searchController;
 }
@@ -1195,14 +1181,11 @@
     [NSUserDefaults.standardUserDefaults removePersistentDomainForName:NSBundle.mainBundle.bundleIdentifier];
 
     //Set default values on logout
-    [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"SortOrderType"];
-    [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"OfflineSortOrderType"];
-    
     [NSUserDefaults.standardUserDefaults setValue:MEGAFirstRunValue forKey:MEGAFirstRun];
     if (@available(iOS 12.0, *)) {} else {
         [NSUserDefaults.standardUserDefaults synchronize];
     }
-
+    
     NSUserDefaults *sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];
     [sharedUserDefaults removePersistentDomainForName:MEGAGroupIdentifier];
 }

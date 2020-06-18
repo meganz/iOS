@@ -909,8 +909,6 @@
 "profile"="Profilo";
 /* Title of the Achievements section */
 "achievementsTitle"="Obiettivi";
-/* Title of the Used storage section */
-"usedStorage"="Spazio utilizzato";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
 "inviteFriendsAndGetRewards"="Invita degli amici ed ottieni dei bonus";
 /* Indicating text for when "you invite your friends" */
@@ -918,7 +916,7 @@
 /* title of the introduction for the achievements screen */
 "inviteFriendsAndGetForEachReferral"="Ottieni %1$s di spazio di archiviazione e %2$s di banda di trasferimento per ogni utente invitato";
 /* Text shown to explain how and where you can invite friends */
-"inviteYourFriendsExplanation"="Seleziona i contatti dalla lista dei contatti sul tuo telefono oppure inserisci più indirizzi email.";
+"Select from phone contacts or enter multiple email addresses"="Select from phone contacts or enter multiple email addresses";
 /*  */
 "insertYourFriendsEmails"="Inserisci la/e mail del/i tuo/i amico/i:";
 /*  */
@@ -1009,12 +1007,6 @@
 "Renews on"="Rinnovamento";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="Condivisioni in arrivo";
-/* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
-"of %@"="di %@";
-/* Sentence shown under the used space to complete the info with the user account maximum storage. "used of {maximun storage}" */
-"used of %@"="usato di %@";
-/* Sentence shown under the available space to complete the info with the user account maximum storage. "available of {maximun storage}" */
-"available of %@"="disponibili di %@";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Fai l'upgrade dell'account";
 /*  */
@@ -1023,8 +1015,8 @@
 "cloudDriveIsAlmostFull"="[S]Il tuo Cloud Drive è quasi pieno.[/S] [A]Fai l'upgrade adesso[/A] ad un account PRO ed ottieni [S]fino a %@ TB (%@ GB)[/S] di spazio di archiviazione cloud.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
 "cloudDriveIsFull"="[S]Il tuo Cloud Drive è pieno.[/S] [A]Fai l'upgrade adesso[/A] ad un account PRO ed ottieni [S]fino a %@ TB (%@ GB)[/S] di spazio di archiviazione cloud.";
-/* Storage related with the MEGA PRO account level you can subscribe */
-"productSpace"="Archivio";
+/* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
+"Storage"="Archivio";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
 "limited"="Limitata";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
@@ -1179,8 +1171,8 @@
 "contactCredentials"="Credenziali del contatto";
 /* "Verify user" dialog description */
 "thisIsBestDoneInRealLife"="Sarebbe meglio farlo faccia a faccia nella vita reale. Se hai un altro canale di comunicazione verificato come OTR o PGP, puoi utilizzarlo.";
-/* Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity */
-"yourCredentials"="Le tue credenziali";
+/* Title of the label in the my account section. It shows the credentials of the current user so it can be used to be verified by other contacts */
+"My credentials"="Le mie credenziali";
 /* Button to reset the password */
 "reset"="Reset";
 /* Button title */
@@ -1383,7 +1375,7 @@
 /* SDK error returned when an operation is rejected due to fraud protection */
 "Rejected by fraud protection"="Rejected by fraud protection";
 /* SDK error returned when there are too many requests */
-"Too many requests"="Too many requests";
+"Too many requests"="Troppe richieste";
 /* SDK error returned when there is a balance error */
 "Balance error"="Balance error";
 /* SDK error returned upon a HTTP error */
@@ -1657,7 +1649,7 @@
 /* Title of the Spotlight Search section */
 "Search"="Cerca";
 /* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
-"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="When enabled, allow search and look up MEGA files/folders in Spotlight Search.";
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="Permetterà la ricerca di cartelle e file di MEGA nella ricerca da Spotlight sul tuo dispositivo";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="Tu hai le chiavi";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -2120,6 +2112,8 @@
 "Please enter a valid phone number"="Per favore, fornisci un numero di telefono valido.";
 /* Error message that will show to user when user reached the sms verification daily limit */
 "You have reached the daily limit"="Hai raggiunto il limite giornaliero";
+/* Error message that will be shown when the code introduced do not match with the one you received */
+"The verification code doesn't match."="Il codice di verifica non corrisponde.";
 /* Error message that will show to user when user entered invalid verification code */
 "Wrong code. Please try again or resend."="Codice errato. Per favore, ritenta o chiedi che ti venga mandato nuovamente.";
 /* Error message that will show to user when host detected that the mobile number has been registered already */

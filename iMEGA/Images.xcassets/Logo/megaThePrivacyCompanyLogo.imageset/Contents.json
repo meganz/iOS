@@ -3,6 +3,16 @@
     {
       "idiom" : "universal",
       "filename" : "megaThePrivacyCompanyLogo.pdf"
+    },
+    {
+      "idiom" : "universal",
+      "filename" : "megaThePrivacyCompanyLogo-dark.pdf",
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ]
     }
   ],
   "info" : {

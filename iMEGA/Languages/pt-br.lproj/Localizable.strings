@@ -77,7 +77,7 @@
 /* Message shown when the app is waiting for the server to complete a request due to connectivity issue. */
 "unableToReachMega"="Não foi possível acessar o MEGA. Por favor, verifique a sua conexão ou tente novamente mais tarde.";
 /* Message shown when the app is waiting for the server to complete a request due to a rate limit (error -4). */
-"tooManyRequest"="Muitas solicitações. Por favor, aguarde.";
+"tooManyRequest"="Solicitações em excesso. Por favor, aguarde.";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Por favor, faça login na sua conta.";
 /* Error message when a user attempts to change their email without an active login session. */
@@ -909,8 +909,6 @@
 "profile"="Perfil";
 /* Title of the Achievements section */
 "achievementsTitle"="Conquistas";
-/* Title of the Used storage section */
-"usedStorage"="Armazenamento usado";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
 "inviteFriendsAndGetRewards"="Convide amigos e ganhe bônus";
 /* Indicating text for when "you invite your friends" */
@@ -918,7 +916,7 @@
 /* title of the introduction for the achievements screen */
 "inviteFriendsAndGetForEachReferral"="Ganhe %1$s de espaço de armazenamento e %2$s de cota de transferência para cada indicação";
 /* Text shown to explain how and where you can invite friends */
-"inviteYourFriendsExplanation"="Selecione os contatos da agenda do seu telefone ou digite os endereços de email.";
+"Select from phone contacts or enter multiple email addresses"="Select from phone contacts or enter multiple email addresses";
 /*  */
 "insertYourFriendsEmails"="Digite o(s) email(s) do(s) seu(s) amigo(s):";
 /*  */
@@ -1009,12 +1007,6 @@
 "Renews on"="Renova em";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="Compartilhado comigo";
-/* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
-"of %@"="de %@";
-/* Sentence shown under the used space to complete the info with the user account maximum storage. "used of {maximun storage}" */
-"used of %@"="usados de %@";
-/* Sentence shown under the available space to complete the info with the user account maximum storage. "available of {maximun storage}" */
-"available of %@"="disponíveis de %@";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Upgrade";
 /*  */
@@ -1023,8 +1015,8 @@
 "cloudDriveIsAlmostFull"="A sua [S]Nuvem de arquivos está quase cheia.[/S] [A]Faça upgrade[/A] a um plano PRO e obtenha [S]até %@ TB (%@ GB)[/S] de espaço de armazenamento.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
 "cloudDriveIsFull"="[S]A sua Nuvem de arquivos está cheia.[/S] [A]Faça upgrade[/A] a um plano PRO e obtenha [S]até %@ TB (%@ GB)[/S] de espaço de armazenamento.";
-/* Storage related with the MEGA PRO account level you can subscribe */
-"productSpace"="Armazenamento";
+/* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
+"Storage"="Armazenamento";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
 "limited"="Limitado";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
@@ -1179,8 +1171,8 @@
 "contactCredentials"="Credenciais do contato";
 /* "Verify user" dialog description */
 "thisIsBestDoneInRealLife"="O melhor jeito de fazer isso é pessoalmente, na vida real. Se você tiver outro canal confiável como OTR ou PGP, você também pode usá-lo.";
-/* Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity */
-"yourCredentials"="Suas credenciais";
+/* Title of the label in the my account section. It shows the credentials of the current user so it can be used to be verified by other contacts */
+"My credentials"="Minhas credenciais";
 /* Button to reset the password */
 "reset"="Resetar";
 /* Button title */
@@ -1383,7 +1375,7 @@
 /* SDK error returned when an operation is rejected due to fraud protection */
 "Rejected by fraud protection"="Rejected by fraud protection";
 /* SDK error returned when there are too many requests */
-"Too many requests"="Too many requests";
+"Too many requests"="Solicitações em excesso.";
 /* SDK error returned when there is a balance error */
 "Balance error"="Balance error";
 /* SDK error returned upon a HTTP error */
@@ -1657,7 +1649,7 @@
 /* Title of the Spotlight Search section */
 "Search"="Pesquisar";
 /* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
-"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="When enabled, allow search and look up MEGA files/folders in Spotlight Search.";
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="Permite pesquisar por arquivos e pastas do MEGA através da Busca Spotlight do seu dispositivo.";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="Você tem a chave";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -2120,6 +2112,8 @@
 "Please enter a valid phone number"="Por favor, forneça um número de telefone válido.";
 /* Error message that will show to user when user reached the sms verification daily limit */
 "You have reached the daily limit"="Você atingiu o limite diário.";
+/* Error message that will be shown when the code introduced do not match with the one you received */
+"The verification code doesn't match."="O código de verificação é incorreto.";
 /* Error message that will show to user when user entered invalid verification code */
 "Wrong code. Please try again or resend."="Código incorreto, tente novamente.";
 /* Error message that will show to user when host detected that the mobile number has been registered already */

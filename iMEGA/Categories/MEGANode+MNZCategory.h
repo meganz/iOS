@@ -15,7 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)mnz_downloadNodeOverwriting:(BOOL)overwrite api:(MEGASdk *)api;
 - (void)mnz_renameNodeInViewController:(UIViewController *)viewController;
 - (void)mnz_renameNodeInViewController:(UIViewController *)viewController completion:(void(^)(MEGARequest *request))completion;
-- (void)mnz_moveToTheRubbishBinInViewController:(UIViewController *)viewController;
+- (void)mnz_askToMoveToTheRubbishBinInViewController:(UIViewController *)viewController;
+- (void)mnz_moveToTheRubbishBinWithCompletion:(void (^)(void))completion;
 - (void)mnz_removeInViewController:(UIViewController *)viewController;
 - (void)mnz_leaveSharingInViewController:(UIViewController *)viewController;
 - (void)mnz_removeSharing;
@@ -41,6 +42,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)mnz_isPlayable;
 - (NSString *)mnz_temporaryPathForDownloadCreatingDirectories:(BOOL)creatingDirectories;
 - (NSAttributedString *)mnz_attributedTakenDownNameWithHeight:(CGFloat)height;
+
+#pragma mark - Shares
+
+- (NSMutableArray <MEGAShare *> *)outShares;
 
 #pragma mark - Versions
 
