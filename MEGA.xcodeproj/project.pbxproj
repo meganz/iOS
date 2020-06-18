@@ -5863,7 +5863,6 @@
 			buildConfigurationList = 137361B01A6664C400B740E8 /* Build configuration list for PBXNativeTarget "MEGA" */;
 			buildPhases = (
 				5105399F3B149B28D004F036 /* [CP] Check Pods Manifest.lock */,
-				41BF6BE71D82D93100330785 /* Run Script */,
 				137361861A6664C300B740E8 /* Sources */,
 				137361871A6664C300B740E8 /* Frameworks */,
 				137361881A6664C300B740E8 /* Resources */,
@@ -6380,22 +6379,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MEGA/Pods-MEGA-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		41BF6BE71D82D93100330785 /* Run Script */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 12;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Run Script";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "
-";
 			showEnvVarsInLog = 0;
 		};
 		5105399F3B149B28D004F036 /* [CP] Check Pods Manifest.lock */ = {
