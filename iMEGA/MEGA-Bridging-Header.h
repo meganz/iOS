@@ -24,6 +24,7 @@
 #import "UIAlertAction+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
 #import "UIColor+MNZCategory.h"
+#import "LocalizationSystem.h"
 #import "UIDevice+MNZCategory.h"
 #import "UIFont+MNZCategory.h"
 #import "UIView+MNZCategory.h"
@@ -40,7 +41,6 @@
 #import "UITableView+MNZCategory.h"
 #import "NSDate+DateTools.h"
 
-#import "MEGAAssetsPickerController.h"
 #import "SendToViewController.h"
 #import "MEGAChatGenericRequestDelegate.h"
 #import "MEGAContactLinkCreateRequestDelegate.h"
