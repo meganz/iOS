@@ -1223,7 +1223,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     [self.messages removeAllObjects];
     [self.messages addObject:message];
     [self.collectionView reloadData];
-    [self updateUnreadMessagesLabel:0];
     [self.attachmentMessages removeAllObjects];
 }
 
