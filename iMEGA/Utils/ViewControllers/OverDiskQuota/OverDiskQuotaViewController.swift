@@ -77,7 +77,7 @@ final class OverDiskQuotaViewController: UIViewController {
         let warningDates: WarningDates
         let numberOfFilesOnCloud: FileCount
         let cloudStorage: Storage
-        let plan: SuggestedMEGAPlan
+        let plan: SuggestedMEGAPlan?
     }
 
     // MARK: - UI Customize
@@ -110,12 +110,13 @@ final class OverDiskQuotaViewController: UIViewController {
         guard let infor = overDiskInformation else { descriptionLabel.text = nil; return }
         let message = AMLocalizedString("<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to upgrade to <b>%@</b>.</paragraph>",
                                         "A paragraph of warning message tells user upgrade to selected [minimum subscription plan] before [deadline] due to [cloud space used] and [warning dates]")
+
         let formattedMessage = String(format: message,
                                       infor.email,
                                       infor.formattedWarningDates(with: dateFormatter),
                                       infor.numberOfFiles(with: numberFormatter),
                                       infor.takingUpStorage(with: byteCountFormatter),
-                                      infor.plan)
+                                      infor.suggestedPlan)
 
         let styleMarks: StyleMarks = ["paragraph": .paragraph, "b": .emphasized]
         descriptionLabel.attributedText = formattedMessage.attributedString(with: styleMarks)
@@ -169,5 +170,11 @@ fileprivate extension OverDiskQuotaViewController.OverDiskQuotaInternal {
 
     func takingUpStorage(with formatter: ByteCountFormatter) -> String {
         return formatter.string(fromByteCount: cloudStorage.int64Value)
+    }
+
+    var suggestedPlan: SuggestedMEGAPlan {
+        let contactSupportLocalizedText = AMLocalizedString("thereAreNoPlansSuitableForYourCurrentUsage",
+                                                            "Asks the user to request a custom Pro plan from customer support because their storage usage is more than the regular plans.")
+        return plan ?? contactSupportLocalizedText.mnz_removeWebclientFormatters()
     }
 }

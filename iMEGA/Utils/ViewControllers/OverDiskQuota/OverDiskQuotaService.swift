@@ -13,7 +13,7 @@ import Foundation
     var warningDates: WarningDates { get }
     var numberOfFilesOnCloud: FileCount { get }
     var cloudStorage: Storage { get }
-    var suggestedPlanName: AvailablePlanName { get }
+    var suggestedPlanName: AvailablePlanName? { get }
 }
 
 @objc final class OverDiskQuotaInformation: NSObject, OverDiskQuotaInfomationType {
@@ -22,14 +22,14 @@ import Foundation
     let warningDates: WarningDates
     let numberOfFilesOnCloud: FileCount
     let cloudStorage: Storage
-    let suggestedPlanName: AvailablePlanName
+    let suggestedPlanName: AvailablePlanName?
 
     init(email: Email,
          deadline: Deadline,
          warningDates: WarningDates,
          numberOfFilesOnCloud: FileCount,
          cloudStorage: Storage,
-         suggestedPlanName: AvailablePlanName) {
+         suggestedPlanName: AvailablePlanName?) {
         self.email = email
         self.deadline = deadline
         self.warningDates = warningDates
@@ -39,42 +39,65 @@ import Foundation
     }
 }
 
+@objc final class OverDiskQuotaCommand: NSObject {
+
+    private(set) var completionAction: (OverDiskQuotaInfomationType) -> Void
+    private(set) var api: MEGASdk
+
+    @objc init(api: MEGASdk,
+               completionAction: @escaping (OverDiskQuotaInfomationType) -> Void) {
+        self.completionAction = completionAction
+        self.api = api
+    }
+
+    fileprivate func execute(userDataStore: OverDiskQuotaUserData,
+                 storageStore: OverDiskQuotaStorageUsed,
+                 planStore: OverDiskQuotaPlans) {
+        completionAction(
+            extractedInformation(userDataStore: userDataStore, storageStore: storageStore, planStore: planStore))
+    }
+
+    private func extractedInformation(userDataStore: OverDiskQuotaUserData,
+                                      storageStore: OverDiskQuotaStorageUsed,
+                                      planStore: OverDiskQuotaPlans) -> OverDiskQuotaInformation {
+
+        let minimumPlan = MEGAPlanAdviser.suggestMinimumPlan(ofStorage: storageStore.cloudStorageTaking,
+                                                             availablePlans: planStore.availablePlans).first
+
+        return OverDiskQuotaInformation(email: userDataStore.email,
+                                        deadline: userDataStore.deadline,
+                                        warningDates: userDataStore.warningDates,
+                                        numberOfFilesOnCloud: userDataStore.numberOfFilesOnCloud,
+                                        cloudStorage: storageStore.cloudStorageTaking,
+                                        suggestedPlanName: minimumPlan?.readableName)
+    }
+}
+
 @objc final class OverDiskQuotaService: NSObject {
 
     // MARK: - Static
 
-    private static var shared: OverDiskQuotaService = OverDiskQuotaService()
+    @objc(sharedService) static var shared: OverDiskQuotaService = OverDiskQuotaService()
+
+    private static var cloudStorageObtainingAction: (() -> NSNumber)?
 
     // MARK: - OverDiskQuotaService
 
-    private static func getUserData(with api: MEGASdk) {
-        api.getUserData(with: MEGAGenericRequestDelegate(completion: { [shared] (request, error) in
-            shared.updateUserData(withSDK: api)
-        }))
-    }
-
-    private static func getMEGAPlans(with api: MEGASdk) {
-        MEGAPlanService.loadMegaPlans(with: api) { [shared] plans in
-            shared.updateMEGAPlans(plans)
-        }
-    }
-
-    @objc static func prepareOverDiskQuotaInformation(withSDK api: MEGASdk,
-                                                      callback: @escaping (OverDiskQuotaInfomationType) -> Void) {
-        shared.informationReadyCallback = callback
-        getUserData(with: api)
-        getMEGAPlans(with: api)
-    }
-
-    @objc static func prepareOverDiskQuotaInformation(withUserCloudStorageUsed storageUsed: NSNumber) {
-        shared.updateUserStroage(storageUsed)
+    fileprivate enum DataObtainingError {
+        case invalidUserEmail
     }
 
     // MARK: - Instance
 
-    fileprivate lazy var internalStore = OverDiskQuotaStore()
+    private var userDataStore: OverDiskQuotaUserData?
 
-    private var informationReadyCallback: ((OverDiskQuotaInfomationType) -> Void)?
+    private var storageUsedStore: OverDiskQuotaStorageUsed?
+
+    private var availablePlansStore: OverDiskQuotaPlans?
+
+    private var pendingCommand: OverDiskQuotaCommand?
+
+    private var errors: Set<DataObtainingError> = []
 
     // MARK: - Lifecycle
 
@@ -82,67 +105,101 @@ import Foundation
 
     // MARK: - Instance Method
 
+    @objc func invalidate() {
+        userDataStore = nil
+        storageUsedStore = nil
+        availablePlansStore = nil
+        pendingCommand = nil
+    }
+
+    @objc func setUserStorageUsed(_ stroageUsed: NSNumber) {
+        storageUsedStore = updatedStorageStore(with: stroageUsed)
+        if let pendingCommand = pendingCommand {
+            prepareContextForExecutingCommand(with: pendingCommand.api)
+        }
+    }
+
+    @objc func send(_ command: OverDiskQuotaCommand) {
+        pendingCommand = command
+        prepareContextForExecutingCommand(with: command.api)
+    }
+
     // MARK: - Capture ODQ information
 
-    private func updateMEGAPlans(_ plans: [MEGAPlan]) {
-        internalStore.availablePlans = plans
-        noticeListenerIfOverDiskQuotaInformationReady()
+    private func prepareContextForExecutingCommand(with api: MEGASdk) {
+        if let userDataStore = userDataStore, let storageUsedStore = storageUsedStore, let availablePlansStore = availablePlansStore {
+            pendingCommand?.execute(userDataStore: userDataStore, storageStore: storageUsedStore, planStore: availablePlansStore)
+            pendingCommand = nil
+            return
+        }
+
+        if shouldFetchUserData(userDataStore, errors: errors) {
+            api.getUserData(with: MEGAGenericRequestDelegate(completion: { [weak self] (_, _) in
+                guard let self = self else { return }
+                self.userDataStore = self.updatedUserData(withSDK: api)
+                self.prepareContextForExecutingCommand(with: api)
+            }))
+            return
+        }
+
+        if shouldFetchMEGAPlans(availablePlansStore, errors: errors) {
+            MEGAPlanService.loadMegaPlans(with: api) { [weak self] plans in
+                guard let self = self else { return }
+                self.availablePlansStore = self.updatedMEGAPlans(plans)
+                self.prepareContextForExecutingCommand(with: api)
+            }
+            return
+        }
     }
 
-    private func updateUserStroage(_ storage: NSNumber) {
-        internalStore.cloudStorageTaking = storage
-        noticeListenerIfOverDiskQuotaInformationReady()
+    private func shouldFetchUserData(_ userDataStore: OverDiskQuotaUserData?, errors: Set<DataObtainingError>) -> Bool {
+        if userDataStore != nil { return false }
+        return !errors.contains(.invalidUserEmail)
     }
 
-    private func updateUserData(withSDK api: MEGASdk) {
-        internalStore.email = api.myEmail
-        internalStore.deadline = api.overquotaDeadlineDate()
-        internalStore.warningDates = api.overquotaWarningDateList()
-        internalStore.numberOfFilesOnCloud = api.totalNodes
-        noticeListenerIfOverDiskQuotaInformationReady()
+    private func shouldFetchMEGAPlans(_ plansStore: OverDiskQuotaPlans?, errors: Set<DataObtainingError>) -> Bool {
+        if plansStore != nil { return false }
+        return !errors.contains(.invalidUserEmail)
     }
 
-    private func noticeListenerIfOverDiskQuotaInformationReady() {
-        guard let internalOverDiskQuotaStore = validated(internalStore) else { return }
-        informationReadyCallback?(internalOverDiskQuotaStore)
-        informationReadyCallback = nil
+    private func updatedUserData(withSDK api: MEGASdk) -> OverDiskQuotaUserData? {
+        guard let email = api.myEmail else {
+            errors.insert(.invalidUserEmail)
+            return nil
+        }
+        return OverDiskQuotaUserData(email: email,
+                                     deadline: api.overquotaDeadlineDate(),
+                                     warningDates: api.overquotaWarningDateList(),
+                                     numberOfFilesOnCloud: api.totalNodes)
     }
 
-    // MARK: - Validate internal store
-
-    fileprivate func validated(_ internalStore: OverDiskQuotaStore) -> OverDiskQuotaInformation? {
-        guard let email = internalStore.email else { return nil }
-        guard let deadline = internalStore.deadline else { return nil }
-        guard let warningDate = internalStore.warningDates else { return nil }
-        guard let numberOfFiles = internalStore.numberOfFilesOnCloud else { return nil }
-        guard let cloudStorage = internalStore.cloudStorageTaking else { return nil }
-        guard let availablePlans = internalStore.availablePlans,
-            let minimumPlan = MEGAPlanAdviser.suggestMinimumPlan(ofStorage: cloudStorage, availablePlans: availablePlans).first
-            else { return nil }
-
-        return OverDiskQuotaInformation(email: email,
-                                        deadline: deadline,
-                                        warningDates: warningDate,
-                                        numberOfFilesOnCloud: numberOfFiles,
-                                        cloudStorage: cloudStorage,
-                                        suggestedPlanName: minimumPlan.readableName)
+    private func updatedMEGAPlans(_ plans: [MEGAPlan]) -> OverDiskQuotaPlans {
+        return OverDiskQuotaPlans(availablePlans: plans)
     }
 
-    // MARK: - Internal Store
+    private func updatedStorageStore(with storage: NSNumber) -> OverDiskQuotaStorageUsed {
+        return OverDiskQuotaStorageUsed(cloudStorageTaking: storage)
+    }
+}
 
+fileprivate struct OverDiskQuotaUserData {
     typealias Email = String
     typealias Deadline = Date
     typealias WarningDates = [Date]
     typealias FileCount = UInt
-    typealias Storage = NSNumber
-    typealias AvailablePlans = [MEGAPlan]
 
-    fileprivate struct OverDiskQuotaStore {
-        var email: Email?
-        var deadline: Deadline?
-        var warningDates: WarningDates?
-        var numberOfFilesOnCloud: FileCount?
-        var cloudStorageTaking: Storage?
-        var availablePlans: AvailablePlans?
-    }
+    var email: Email
+    var deadline: Deadline
+    var warningDates: WarningDates
+    var numberOfFilesOnCloud: FileCount
+}
+
+fileprivate struct OverDiskQuotaPlans {
+    typealias AvailablePlans = [MEGAPlan]
+    var availablePlans: AvailablePlans
+}
+
+fileprivate struct OverDiskQuotaStorageUsed {
+    typealias StorageUsedInBytes = NSNumber
+    var cloudStorageTaking: StorageUsedInBytes
 }
