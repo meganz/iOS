@@ -10,19 +10,16 @@ class ChatViewAttachmentCell: MessageContentCell {
 
     public lazy var titleLabel: UILabel = {
         let titleLabel = UILabel(frame: CGRect.zero)
-        //FIXME: V5 merging issue
-
-//        titleLabel.font = UIFont.mnz_SFUIMedium(withSize: 14)
-        titleLabel.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        titleLabel.font = .systemFont(ofSize: 14)
+        titleLabel.textColor = UIColor.mnz_label()
         titleLabel.lineBreakMode = .byTruncatingMiddle
         return titleLabel
     }()
 
     public lazy var detailLabel: UILabel = {
         let detailLabel = UILabel(frame: CGRect.zero)
-        //FIXME: V5 merging issue
-//        detailLabel.font = UIFont.mnz_SFUIRegular(withSize: 12)
-        detailLabel.textColor = #colorLiteral(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)
+        detailLabel.font = .systemFont(ofSize: 12)
+        detailLabel.textColor = UIColor.mnz_primaryGray(for: UIScreen.main.traitCollection)
         detailLabel.lineBreakMode = .byTruncatingMiddle
         return detailLabel
     }()
