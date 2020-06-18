@@ -2068,8 +2068,6 @@
 "24 hours"="24시간";
 /* Chat Notifications DND: Title bar message for the dnd activate options */
 "Mute chat Notifications for"="대화 알림 끄기";
-/* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
-"Muted forever"="영구적으로 차단";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="대화 알림";
 /* Chat settings: This text appears with the Do Not Disturb switch */
