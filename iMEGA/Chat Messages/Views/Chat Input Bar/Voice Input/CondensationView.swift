@@ -15,4 +15,10 @@ class CondensationView: EnlargementView {
         
         bottomConstraint.constant = originalBottomValue + singleSideAddedWidth
     }
+    
+    override func updateAppearance() {
+        super.updateAppearance()
+        selectionView.backgroundColor = UIColor.mnz_secondaryButtonBackground(for: traitCollection)
+        nonSelectionView.backgroundColor = UIColor.mnz_redFF453A()
+    }
 }

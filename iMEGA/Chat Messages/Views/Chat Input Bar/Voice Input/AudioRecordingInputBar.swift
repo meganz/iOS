@@ -6,6 +6,7 @@ class AudioRecordingInputBar: UIView {
     @IBOutlet weak var lockView: EnlargementView!
     @IBOutlet weak var voiceView: CondensationView!
     @IBOutlet weak var audioWavesholderView: UIView!
+    @IBOutlet weak var audioWavesBackgroundView: UIView!
     @IBOutlet weak var recordTimeLabel: UILabel!
 
     @IBOutlet weak var suggestionLabel: UILabel!
@@ -31,7 +32,8 @@ class AudioRecordingInputBar: UIView {
         audioWavesView = AudioWavesView.instanceFromNib
         audioWavesholderView.addSubview(audioWavesView)
         audioWavesView.autoPinEdgesToSuperviewEdges()
-        
+        updateAppearance()
+
         do {
             let success = try audioRecorder.start()
             MEGALogDebug("Audio recorder started \(success)")
@@ -46,6 +48,15 @@ class AudioRecordingInputBar: UIView {
             
             self.recordTimeLabel.text = timeString
             self.audioWavesView.updateAudioView(withLevel: level)
+        }
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        if #available(iOS 13.0, *),
+            traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+                updateAppearance()
         }
     }
     
@@ -128,6 +139,11 @@ class AudioRecordingInputBar: UIView {
         }
         
         handler()
+    }
+    
+    private func updateAppearance() {
+        suggestionLabel.textColor = UIColor.mnz_secondaryGray(for: traitCollection)
+        audioWavesBackgroundView.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
     }
 
 }
