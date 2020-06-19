@@ -58,6 +58,7 @@ class SMSCountriesTableViewController: UITableViewController {
         if #available(iOS 13, *) {
             if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
                 AppearanceManager.forceNavigationBarUpdate(navigationController!.navigationBar, traitCollection: traitCollection)
+                AppearanceManager.forceSearchBarUpdate(searchController.searchBar, traitCollection: traitCollection)
                 
                 updateAppearance()
             }
