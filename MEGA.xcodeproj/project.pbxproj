@@ -293,6 +293,7 @@
 		5D64660824890BEA006030A5 /* HexColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D64660724890BEA006030A5 /* HexColor.swift */; };
 		5D64660A24890CC7006030A5 /* TextStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D64660924890CC7006030A5 /* TextStyle.swift */; };
 		5D66435F249C53A300CE9BD1 /* OverDiskQuotaInfomationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D66435E249C53A300CE9BD1 /* OverDiskQuotaInfomationType.swift */; };
+		5D664363249CAFFC00CE9BD1 /* OverDiskQuotaCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D664362249CAFFC00CE9BD1 /* OverDiskQuotaCommand.swift */; };
 		5D79B51D2498471E0070FECD /* Scanner+Compatible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D79B51C2498471E0070FECD /* Scanner+Compatible.swift */; };
 		5D79B51F249849580070FECD /* String+MarkedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D79B51E249849580070FECD /* String+MarkedString.swift */; };
 		5D79B52224986A4F0070FECD /* PlanAdviser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D79B52124986A4F0070FECD /* PlanAdviser.swift */; };
@@ -1692,6 +1693,7 @@
 		5D64660724890BEA006030A5 /* HexColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexColor.swift; sourceTree = "<group>"; };
 		5D64660924890CC7006030A5 /* TextStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextStyle.swift; sourceTree = "<group>"; };
 		5D66435E249C53A300CE9BD1 /* OverDiskQuotaInfomationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverDiskQuotaInfomationType.swift; sourceTree = "<group>"; };
+		5D664362249CAFFC00CE9BD1 /* OverDiskQuotaCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverDiskQuotaCommand.swift; sourceTree = "<group>"; };
 		5D79B51C2498471E0070FECD /* Scanner+Compatible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Scanner+Compatible.swift"; sourceTree = "<group>"; };
 		5D79B51E249849580070FECD /* String+MarkedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+MarkedString.swift"; sourceTree = "<group>"; };
 		5D79B52124986A4F0070FECD /* PlanAdviser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanAdviser.swift; sourceTree = "<group>"; };
@@ -4137,6 +4139,25 @@
 			path = Theme;
 			sourceTree = "<group>";
 		};
+		5D664364249CB0DB00CE9BD1 /* SDKService */ = {
+			isa = PBXGroup;
+			children = (
+				5D664365249CB0EE00CE9BD1 /* OverDiskQuotaService */,
+				5DF016842499BE0E005A121D /* ProductSubscriptionPlanService */,
+			);
+			path = SDKService;
+			sourceTree = "<group>";
+		};
+		5D664365249CB0EE00CE9BD1 /* OverDiskQuotaService */ = {
+			isa = PBXGroup;
+			children = (
+				5D66435E249C53A300CE9BD1 /* OverDiskQuotaInfomationType.swift */,
+				5D664362249CAFFC00CE9BD1 /* OverDiskQuotaCommand.swift */,
+				5D7D6B9D2491F79E00ADBDEE /* OverDiskQuotaService.swift */,
+			);
+			path = OverDiskQuotaService;
+			sourceTree = "<group>";
+		};
 		5D79B519249846E70070FECD /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
@@ -4149,7 +4170,7 @@
 		5D79B52024986A410070FECD /* MEGA */ = {
 			isa = PBXGroup;
 			children = (
-				5DF016842499BE0E005A121D /* ProductSubscriptionPlan */,
+				5D664364249CB0DB00CE9BD1 /* SDKService */,
 			);
 			path = MEGA;
 			sourceTree = "<group>";
@@ -4192,8 +4213,6 @@
 			isa = PBXGroup;
 			children = (
 				5DAB28F024875269004B5D5A /* OverDiskQuotaViewController.swift */,
-				5D7D6B9D2491F79E00ADBDEE /* OverDiskQuotaService.swift */,
-				5D66435E249C53A300CE9BD1 /* OverDiskQuotaInfomationType.swift */,
 				5DAB28F124875269004B5D5A /* OverDiskQuotaViewController.xib */,
 				5DBAC840248778DA0050996E /* OverDisckQuotaWarningView.swift */,
 				5DBAC8432487B8A10050996E /* OverDisckQuotaWarningView.xib */,
@@ -4209,14 +4228,14 @@
 			path = "UIKit+Tools";
 			sourceTree = "<group>";
 		};
-		5DF016842499BE0E005A121D /* ProductSubscriptionPlan */ = {
+		5DF016842499BE0E005A121D /* ProductSubscriptionPlanService */ = {
 			isa = PBXGroup;
 			children = (
 				5D79B52124986A4F0070FECD /* PlanAdviser.swift */,
 				5DF016822499BD7B005A121D /* MEGAPlanService.swift */,
 				5DF016802499BD60005A121D /* MEGAPlan.swift */,
 			);
-			path = ProductSubscriptionPlan;
+			path = ProductSubscriptionPlanService;
 			sourceTree = "<group>";
 		};
 		7747B2D5208623550011814E /* Network */ = {
@@ -6306,6 +6325,7 @@
 				A86B9F7C2316D6AB00F35E7A /* FLEXHierarchyTableViewCell.m in Sources */,
 				B65AC8E221F9B7A30094FF4F /* MOAssetUploadErrorRecord+CoreDataProperties.m in Sources */,
 				A87FF3C122F8111D00EFD95C /* PasscodeTimeDurationTableViewController.swift in Sources */,
+				5D664363249CAFFC00CE9BD1 /* OverDiskQuotaCommand.swift in Sources */,
 				A8C262AD1FA1D85E006172CE /* MEGARemoteImageView.m in Sources */,
 				A86B9F842316D6AB00F35E7A /* FLEXAlert.m in Sources */,
 				83B0B45D242CC1DB00468191 /* ChatSharedItemTableViewCell.swift in Sources */,
