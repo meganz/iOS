@@ -2,28 +2,34 @@ import Foundation
 
 @objc final class OverDiskQuotaCommand: NSObject {
 
-    private(set) var completionAction: (OverDiskQuotaInfomationType) -> Void
-    private(set) var api: MEGASdk
+    private var completionAction: (OverDiskQuotaInfomationType) -> Void
 
-    @objc init(api: MEGASdk, completionAction: @escaping (OverDiskQuotaInfomationType) -> Void) {
+    private var task: OverDiskQuotaQueryTask?
+
+    var storageUsed: NSNumber?
+
+    @objc init(storageUsed: NSNumber?, completionAction: @escaping (OverDiskQuotaInfomationType) -> Void) {
         self.completionAction = completionAction
-        self.api = api
+        self.storageUsed = storageUsed
     }
 
-    fileprivate func execute(with overDiskQuotaInformation: OverDiskQuotaInfomationType) {
-        completionAction(overDiskQuotaInformation)
+    fileprivate func execute(with api: MEGASdk, completion: @escaping (OverDiskQuotaCommand) -> Void) {
+        guard let storageUsed = storageUsed else {
+            assertionFailure("Do not schedule a command to execute while stroage used is still nil.")
+            return
+        }
+
+        self.task = OverDiskQuotaQueryTask()
+        task?.updatedStorageStore(with: storageUsed)
+        task?.start(with: api) { [weak self] overDiskQuotaInformation in
+            guard let self = self else { return }
+            self.completionAction(overDiskQuotaInformation)
+            completion(self)
+        }
     }
 }
 
 fileprivate final class OverDiskQuotaQueryTask {
-
-    let progressID: UUID
-
-    // MARK: - Command for this progress
-
-    private let command: OverDiskQuotaCommand
-
-    private let completionAction: (UUID) -> Void
 
     // MARK: - Errors
 
@@ -43,14 +49,11 @@ fileprivate final class OverDiskQuotaQueryTask {
 
     // MARK: - Lifecycle
 
-    init(command: OverDiskQuotaCommand, completion: @escaping (UUID) -> Void) {
-        self.command = command
-        self.progressID = UUID()
-        self.completionAction = completion
-    }
+    init() { }
 
-    func startProgress() {
-        let api = command.api
+    // MARK: - Methods
+
+    func start(with api: MEGASdk, completion: @escaping (OverDiskQuotaInfomationType) -> Void) {
 
         if let userDataStore = userDataStore,
             let storageUsedStore = storageUsedStore,
@@ -58,8 +61,7 @@ fileprivate final class OverDiskQuotaQueryTask {
             let overDiskQuotaData = extractedInformation(userDataStore: userDataStore,
                                                         storageStore: storageUsedStore,
                                                         planStore: availablePlansStore)
-            command.execute(with: overDiskQuotaData)
-            completionAction(progressID)
+            completion(overDiskQuotaData)
             return
         }
 
@@ -70,7 +72,7 @@ fileprivate final class OverDiskQuotaQueryTask {
                 case .failure(let error): self.errors.insert(error)
                 case .success(let userData):
                     self.userDataStore = userData
-                    self.startProgress()
+                    self.start(with: api, completion: completion)
                 }
             }))
             return
@@ -80,7 +82,7 @@ fileprivate final class OverDiskQuotaQueryTask {
             MEGAPlanService.loadMegaPlans(with: api) { [weak self] plans in
                 guard let self = self else { return }
                 self.availablePlansStore = OverDiskQuotaPlans(availablePlans: plans)
-                self.startProgress()
+                self.start(with: api, completion: completion)
            }
         }
     }
@@ -134,13 +136,17 @@ fileprivate final class OverDiskQuotaQueryTask {
 
     @objc(sharedService) static var shared: OverDiskQuotaService = OverDiskQuotaService()
 
+    @objc static func updateAPI(with api: MEGASdk) {
+        shared.api = api
+    }
+
     // MARK: - OverDiskQuotaService
 
     // MARK: - Instance
 
-    private var inProgressTasks: [OverDiskQuotaQueryTask] = []
+    private var blockedCommands: [OverDiskQuotaCommand] = []
 
-    private var currentUserCloudStroageUsed: NSNumber?
+    private var api: MEGASdk = MEGASdkManager.sharedMEGASdk()
 
     // MARK: - Lifecycle
 
@@ -149,31 +155,33 @@ fileprivate final class OverDiskQuotaQueryTask {
     // MARK: - Instance Method
 
     @objc func invalidate() {
-        inProgressTasks = []
+        blockedCommands = []
     }
 
-    @objc func setUserStorageUsed(_ stroageUsed: NSNumber) {
-        currentUserCloudStroageUsed = stroageUsed
-
-        inProgressTasks.forEach { progress in
-            progress.updatedStorageStore(with: stroageUsed)
-            progress.startProgress()
+    @objc func updateUserStorageUsed(_ stroageUsed: NSNumber) {
+        blockedCommands.forEach { command in
+            if command.storageUsed == nil {
+                command.storageUsed = stroageUsed
+                command.execute(with: api) { [weak self] completedCommand in
+                    self?.remove(completedCommand)
+                }
+            }
         }
     }
 
     @objc func send(_ command: OverDiskQuotaCommand) {
-        let queryProgress = OverDiskQuotaQueryTask(command: command) { [weak self] uuid in
-            self?.inProgressTasks.removeAll { (progress) -> Bool in
-                progress.progressID == uuid
+        blockedCommands.append(command)
+        if command.storageUsed != nil {
+            command.execute(with: api) { [weak self] completedCommand in
+                self?.remove(completedCommand)
             }
         }
+    }
 
-        if let storageUsed = currentUserCloudStroageUsed {
-            queryProgress.updatedStorageStore(with: storageUsed)
+    private func remove(_ completedCommand: OverDiskQuotaCommand) {
+        blockedCommands.removeAll { command -> Bool in
+            command == completedCommand
         }
-
-        inProgressTasks.append(queryProgress)
-        queryProgress.startProgress()
     }
 }
 
