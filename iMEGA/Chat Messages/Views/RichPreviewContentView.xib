@@ -134,7 +134,7 @@
                             </constraints>
                         </stackView>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="bottom" secondItem="goh-cu-3NH" secondAttribute="bottom" id="A8f-DG-7sZ"/>
                         <constraint firstAttribute="height" constant="104" id="Ewn-T3-WYg"/>

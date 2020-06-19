@@ -9,6 +9,26 @@ class RichPreviewContentView: UIView {
     @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var imageViewContainer: UIView!
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        updateAppearance()
+    }
+    
+    private func updateAppearance () {
+        backgroundColor = UIColor.mnz_backgroundGrouped(for: traitCollection)
+        titleLabel.textColor = .mnz_label()
+        descriptionLabel.textColor = .mnz_subtitles(for: traitCollection)
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        guard #available(iOS 13, *) else {
+            return
+        }
+        updateAppearance()
+    }
+    
     var message : MEGAChatMessage? {
         didSet {
             configureView()
