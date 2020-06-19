@@ -302,6 +302,19 @@
 		774FA6612090C0030061DD85 /* MEGAMessageDialogView.m in Sources */ = {isa = PBXBuildFile; fileRef = 774FA6602090C0030061DD85 /* MEGAMessageDialogView.m */; };
 		774FA6642090F5A20061DD85 /* MEGADialogMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 774FA6632090F5A20061DD85 /* MEGADialogMediaItem.m */; };
 		77519C36203707F600FDF92B /* MEGARenameRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 77519C35203707F600FDF92B /* MEGARenameRequestDelegate.m */; };
+		7751B1D5249C9F9200203D05 /* Spotlight_file.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BF21F3470B5003C149C /* Spotlight_file.png */; };
+		7751B1D6249C9F9200203D05 /* Spotlight_folder.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BF31F3470B5003C149C /* Spotlight_folder.png */; };
+		7751B1D7249C9F9200203D05 /* Spotlight_file@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BC41F3465A3003C149C /* Spotlight_file@2x.png */; };
+		7751B1D8249C9F9200203D05 /* Spotlight_file@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BC51F3465A3003C149C /* Spotlight_file@3x.png */; };
+		7751B1D9249C9F9200203D05 /* Spotlight_folder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BC61F3465A3003C149C /* Spotlight_folder@2x.png */; };
+		7751B1DA249C9F9200203D05 /* Spotlight_folder@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BC71F3465A3003C149C /* Spotlight_folder@3x.png */; };
+		7751B1DB249C9FA400203D05 /* Spotlight_file.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BF21F3470B5003C149C /* Spotlight_file.png */; };
+		7751B1DC249C9FA400203D05 /* Spotlight_folder.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BF31F3470B5003C149C /* Spotlight_folder.png */; };
+		7751B1DD249C9FA400203D05 /* Spotlight_file@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BC41F3465A3003C149C /* Spotlight_file@2x.png */; };
+		7751B1DE249C9FA400203D05 /* Spotlight_file@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BC51F3465A3003C149C /* Spotlight_file@3x.png */; };
+		7751B1DF249C9FA400203D05 /* Spotlight_folder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BC61F3465A3003C149C /* Spotlight_folder@2x.png */; };
+		7751B1E0249C9FA400203D05 /* Spotlight_folder@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BC71F3465A3003C149C /* Spotlight_folder@3x.png */; };
+		7751B1E1249CA11400203D05 /* GenericHeaderFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83D7265A23169067007B2E58 /* GenericHeaderFooterView.xib */; };
 		7754ED9920B47A2400FF8B7B /* MEGALoginToFolderLinkRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7754ED9820B47A2400FF8B7B /* MEGALoginToFolderLinkRequestDelegate.m */; };
 		7754ED9C20B47F1000FF8B7B /* MEGAFetchNodesRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7754ED9B20B47F1000FF8B7B /* MEGAFetchNodesRequestDelegate.m */; };
 		775652D7203AD2FC009E7EC8 /* ContactLinkQRViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775652D6203AD2FC009E7EC8 /* ContactLinkQRViewController.m */; };
@@ -5817,6 +5830,8 @@
 			files = (
 				7720C5BF206AB2E900F995D1 /* SF-UI-Text-Light.otf in Resources */,
 				945605411EDD65490094EF0F /* Cloud.storyboard in Resources */,
+				7751B1DF249C9FA400203D05 /* Spotlight_folder@2x.png in Resources */,
+				7751B1DE249C9FA400203D05 /* Spotlight_file@3x.png in Resources */,
 				944B205F1EE5C6CE003C967B /* Launch.storyboard in Resources */,
 				7720C5BE206AB2E900F995D1 /* SF-UI-Text-Medium.otf in Resources */,
 				7720C5BD206AB2E900F995D1 /* SF-UI-Display-Light.otf in Resources */,
@@ -5827,12 +5842,17 @@
 				7720C5C3206AB2E900F995D1 /* SF-UI-Display-Semibold.otf in Resources */,
 				9422550C1EDC04E00074C51A /* MainInterface.storyboard in Resources */,
 				7720C5C2206AB2E900F995D1 /* SF-UI-Text-BoldItalic.otf in Resources */,
+				7751B1DB249C9FA400203D05 /* Spotlight_file.png in Resources */,
+				7751B1DC249C9FA400203D05 /* Spotlight_folder.png in Resources */,
+				7751B1DD249C9FA400203D05 /* Spotlight_file@2x.png in Resources */,
+                7751B1E0249C9FA400203D05 /* Spotlight_folder@3x.png in Resources */,
 				943229351EDD886B007DB542 /* Images.xcassets in Resources */,
 				9456054C1EDD7ADB0094EF0F /* LTHPasscodeViewController.bundle in Resources */,
 				7720C5BA206AB2E900F995D1 /* SF-UI-Text-RegularItalic.otf in Resources */,
 				7720C5BC206AB2E900F995D1 /* SF-UI-Display-Regular.otf in Resources */,
 				9456053C1EDD53240094EF0F /* SVProgressHUD.bundle in Resources */,
 				7720C5C1206AB2E900F995D1 /* SF-UI-Text-Bold.otf in Resources */,
+				
 				943229511EDD9D02007DB542 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -5848,6 +5868,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7751B1D8249C9F9200203D05 /* Spotlight_file@3x.png in Resources */,
+				7751B1D9249C9F9200203D05 /* Spotlight_folder@2x.png in Resources */,
 				7767C39F247BB723001166A8 /* Chat.storyboard in Resources */,
 				7720C5CE206AB2EB00F995D1 /* SF-UI-Text-Light.otf in Resources */,
 				9411354F1F00FD1500D33428 /* Cloud.storyboard in Resources */,
@@ -5859,15 +5881,19 @@
 				7720C5CA206AB2EB00F995D1 /* SF-UI-Display-Medium.otf in Resources */,
 				7720C5C8206AB2EB00F995D1 /* SF-UI-Display-Bold.otf in Resources */,
 				7720C5D2206AB2EB00F995D1 /* SF-UI-Display-Semibold.otf in Resources */,
+				7751B1D7249C9F9200203D05 /* Spotlight_file@2x.png in Resources */,
+				7751B1D6249C9F9200203D05 /* Spotlight_folder.png in Resources */,
 				941135651F011C8400D33428 /* Localizable.strings in Resources */,
 				7720C5D1206AB2EB00F995D1 /* SF-UI-Text-BoldItalic.otf in Resources */,
 				A836581C2102101C005E616F /* Contacts.storyboard in Resources */,
 				94598D751F0CD53A00B57144 /* Share.storyboard in Resources */,
+				7751B1D5249C9F9200203D05 /* Spotlight_file.png in Resources */,
 				943F8B3E1EF288BF00AFD89F /* Images.xcassets in Resources */,
 				7720C5C9206AB2EB00F995D1 /* SF-UI-Text-RegularItalic.otf in Resources */,
 				7720C5CB206AB2EB00F995D1 /* SF-UI-Display-Regular.otf in Resources */,
 				9411355B1F01006E00D33428 /* LTHPasscodeViewController.bundle in Resources */,
 				7720C5D0206AB2EB00F995D1 /* SF-UI-Text-Bold.otf in Resources */,
+				7751B1DA249C9F9200203D05 /* Spotlight_folder@3x.png in Resources */,
 				94892C971EFBF03500AEAC25 /* SVProgressHUD.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
