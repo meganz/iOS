@@ -31,7 +31,8 @@
 #import "MEGA-Swift.h"
 
 typedef NS_ENUM(NSUInteger, ContactDetailsSection) {
-    ContactDetailsSectionNicknameVerifyCredentials = 0,
+    ContactDetailsSectionDonotDisturb = 0,
+    ContactDetailsSectionNicknameVerifyCredentials,
     ContactDetailsSectionAddAndRemoveContact,
     ContactDetailsSectionSharedFolders,
     ContactDetailsSectionClearChatHistory,
@@ -47,7 +48,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     ContactDetailsRowVerifyCredentials
 };
 
-@interface ContactDetailsViewController () <NodeActionViewControllerDelegate, MEGAChatDelegate, MEGAChatCallDelegate, MEGAGlobalDelegate, MEGARequestDelegate>
+@interface ContactDetailsViewController () <NodeActionViewControllerDelegate, MEGAChatDelegate, MEGAChatCallDelegate, MEGAGlobalDelegate, MEGARequestDelegate, PushNotificationControlProtocol, ContactTableViewCellDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *verifiedImageView;
@@ -76,6 +77,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 @property (strong, nonatomic) MEGAUser *user;
 @property (strong, nonatomic) MEGANodeList *incomingNodeListForUser;
 @property (strong, nonatomic) MEGAChatRoom *chatRoom; // The chat room of the contact. Used for send a message or make a call
+@property (strong, nonatomic) ChatNotificationControl *chatNotificationControl;
 
 @property (strong, nonatomic) UIPanGestureRecognizer *panAvatar;
 @property (assign, nonatomic) CGFloat avatarExpandedPosition;
@@ -98,7 +100,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     [super viewDidLoad];
     
     self.navigationItem.title = @"";
-
+    
     self.avatarExpandedPosition = self.view.frame.size.height * 0.5;
     self.avatarCollapsedPosition = self.view.frame.size.height * 0.3;
     self.avatarViewHeightConstraint.constant = self.avatarCollapsedPosition;
@@ -149,6 +151,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
         self.avatarImageView.accessibilityIgnoresInvertColors = YES;
     }
     
+    self.chatNotificationControl = [ChatNotificationControl.alloc initWithDelegate:self];
     [MEGASdkManager.sharedMEGASdk addMEGARequestDelegate:self];
     
     [self.tableView registerNib:[UINib nibWithNibName:@"GenericHeaderFooterView" bundle:nil] forHeaderFooterViewReuseIdentifier:@"GenericHeaderFooterViewID"];
@@ -219,6 +222,15 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 }
 
 #pragma mark - Private - Table view cells
+
+- (ContactTableViewCell *)cellForDNDWithIndexPath:(NSIndexPath *)indexPath {
+    ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsNotificationsTypeID"];
+    cell.nameLabel.font = [UIFont systemFontOfSize:15.0];
+    [self.chatNotificationControl configureWithCell:(id<ChatNotificationControlCellProtocol>)cell
+                                             chatId:self.chatRoom.chatId];
+    cell.delegate = self;
+    return cell;
+}
 
 - (ContactTableViewCell *)cellForSharedItemsWithIndexPath:(NSIndexPath *)indexPath {
     ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
@@ -715,7 +727,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 }
 
 - (NSArray<NSNumber *> *)sectionsForContactModeDefault {
-    return [self addSharedFoldersSectionIfNeededToSections:@[@(ContactDetailsSectionNicknameVerifyCredentials), @(ContactDetailsSectionAddAndRemoveContact)]];
+    return [self addSharedFoldersSectionIfNeededToSections:@[@(ContactDetailsSectionDonotDisturb), @(ContactDetailsSectionNicknameVerifyCredentials), @(ContactDetailsSectionAddAndRemoveContact)]];
 }
 
 - (NSArray<NSNumber *> *)sectionsForContactFromChat {
@@ -723,7 +735,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
         return [self addSharedFoldersSectionIfNeededToSections:@[@(ContactDetailsSectionClearChatHistory), @(ContactDetailsSectionArchiveChat)]];
     }
     
-    return [self addSharedFoldersSectionIfNeededToSections:@[@(ContactDetailsSectionNicknameVerifyCredentials), @(ContactDetailsSectionSharedItems), @(ContactDetailsSectionClearChatHistory), @(ContactDetailsSectionArchiveChat)]];
+    return [self addSharedFoldersSectionIfNeededToSections:@[@(ContactDetailsSectionDonotDisturb), @(ContactDetailsSectionNicknameVerifyCredentials), @(ContactDetailsSectionSharedItems), @(ContactDetailsSectionClearChatHistory), @(ContactDetailsSectionArchiveChat)]];
 }
 
 - (NSArray<NSNumber *> *)sectionsForContactFromGroupChat {
@@ -835,6 +847,10 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     cell.backgroundColor = [UIColor mnz_secondaryBackgroundGrouped:self.traitCollection];
     
     switch (self.contactDetailsSections[indexPath.section].intValue) {
+        case ContactDetailsSectionDonotDisturb:
+            cell = [self cellForDNDWithIndexPath:indexPath];
+            break;
+            
         case ContactDetailsSectionSharedItems:
             cell = [self cellForSharedItemsWithIndexPath:indexPath];
             break;
@@ -908,15 +924,32 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if (section == 0 || [self isSharedFolderSection:section]) {
         return 24;
+    } else if (self.contactDetailsSections[section].intValue == ContactDetailsSectionDonotDisturb) {
+        NSString *timeRemainingString = [self.chatNotificationControl
+                                         timeRemainingForDNDDeactivationStringWithChatId:self.chatRoom.chatId];
+        if (timeRemainingString.length > 0) {
+            return 10.0f;
+        }
     }
     
-        return 0.01f;
+    return 0.01f;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
+    if (self.contactDetailsSections[section].intValue == ContactDetailsSectionDonotDisturb) {
+        return [self.chatNotificationControl timeRemainingForDNDDeactivationStringWithChatId:self.chatRoom.chatId];
     }
     
+    return nil;
+}
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-        return 24.0f;
+    if (self.contactDetailsSections[section].intValue == ContactDetailsSectionDonotDisturb) {
+        return UITableViewAutomaticDimension;
     }
     
+    return 24.0f;
+}
+
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -1095,6 +1128,25 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     if (shouldProcessOnNodesUpdate) {
         self.incomingNodeListForUser = [[MEGASdkManager sharedMEGASdk] inSharesForUser:self.user];
         [self.tableView reloadData];
+    }
+}
+
+#pragma mark - ContactTableViewCellDelegate
+
+- (void)notificationSwitchValueChanged:(UISwitch *)sender {
+    if (sender.isOn) {
+        [self.chatNotificationControl turnOffDNDWithChatId:self.chatRoom.chatId];
+    } else {
+        [self.chatNotificationControl turnOnDNDWithChatId:self.chatRoom.chatId sender:sender];
+    }
+}
+
+#pragma mark - ChatNotificationControlProtocol
+
+- (void)pushNotificationSettingsLoaded {
+    ContactTableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+    if (cell.notificationsSwitch != nil) {
+        cell.notificationsSwitch.enabled = YES;
     }
 }
 
