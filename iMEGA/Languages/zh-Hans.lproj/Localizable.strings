@@ -2060,8 +2060,6 @@
 "24 hours"="24小时";
 /* Chat Notifications DND: Title bar message for the dnd activate options */
 "Mute chat Notifications for"="静音聊天通知";
-/* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
-"Muted forever"="保持静音";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="Chat信息通知";
 /* Chat settings: This text appears with the Do Not Disturb switch */

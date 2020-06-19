@@ -13,9 +13,11 @@
 #import "NSFileManager+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
 #import "UIColor+MNZCategory.h"
+#import "UIDevice+MNZCategory.h"
 
 #import "MEGAChatGenericRequestDelegate.h"
 #import "MEGAConstants.h"
+#import "MEGAGenericRequestDelegate.h"
 #import "MEGANavigationController.h"
 #import "MEGAStore.h"
 

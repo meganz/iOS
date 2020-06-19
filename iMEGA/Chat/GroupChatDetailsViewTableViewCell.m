@@ -2,12 +2,23 @@
 
 #import "MEGA-Swift.h"
 
+@interface GroupChatDetailsViewTableViewCell () <ChatNotificationControlCellProtocol>
+
+@end
+
 @implementation GroupChatDetailsViewTableViewCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];
     
     [self updateAppearance];
+}
+
+- (void)prepareForReuse {
+    [super prepareForReuse];
+    
+    self.delegate = nil;
+    [self.notificationsSwitch setOn:YES];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -44,6 +55,18 @@
     self.enableLabel.textColor = self.rightLabel.textColor = UIColor.mnz_secondaryLabel;
     
     self.emailLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
+}
+
+- (IBAction)notificationSwitchValueChanged:(UISwitch *)sender {
+    if ([self.delegate respondsToSelector:@selector(notificationSwitchValueChanged:)]) {
+        [self.delegate notificationSwitchValueChanged:sender];
+    }
+}
+
+#pragma mark - ChatNotificationControlCellProtocol
+
+- (UIImageView *)iconImageView {
+    return self.leftImageView;
 }
 
 @end

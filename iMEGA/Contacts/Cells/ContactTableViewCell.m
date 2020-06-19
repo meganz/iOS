@@ -1,4 +1,14 @@
 #import "ContactTableViewCell.h"
+#import "MEGAPushNotificationSettings.h"
+
+#ifdef MNZ_SHARE_EXTENSION
+#import "MEGAShare-Swift.h"
+#else
+#import "MEGA-Swift.h"
+#endif
+
+@interface ContactTableViewCell () <ChatNotificationControlCellProtocol>
+@end
 
 #import "UIImageView+MNZCategory.h"
 
@@ -20,6 +30,9 @@
 
 - (void)prepareForReuse {
     [super prepareForReuse];
+    
+    self.delegate = nil;
+    [self.notificationsSwitch setOn:YES];
     
     [self updateAppearance];
 }
@@ -155,6 +168,18 @@
         self.avatarImageView.image = [UIImage imageNamed:@"chatLink"];
     }
     self.shareLabel.hidden = YES;
+}
+
+- (IBAction)notificationSwitchValueChanged:(UISwitch *)sender {
+    if ([self.delegate respondsToSelector:@selector(notificationSwitchValueChanged:)]) {
+        [self.delegate notificationSwitchValueChanged:sender];
+    }
+}
+
+#pragma mark - ChatNotificationControlCellProtocol
+
+- (UIImageView *)iconImageView {
+    return self.avatarImageView;
 }
 
 @end

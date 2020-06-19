@@ -1529,6 +1529,7 @@
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oRb-Mp-dNj" userLabel="Notifications Switch">
                                                     <rect key="frame" x="351" y="6.6666666666666679" width="51" height="31.000000000000004"/>
                                                     <connections>
+                                                        <action selector="notificationSwitchValueChanged:" destination="n0y-k4-J86" eventType="valueChanged" id="cZU-cW-Ee5"/>
                                                         <action selector="notificationsSwitchValueChanged:" destination="0sZ-aU-4Bm" eventType="valueChanged" id="8xZ-fs-A2I"/>
                                                     </connections>
                                                 </switch>
