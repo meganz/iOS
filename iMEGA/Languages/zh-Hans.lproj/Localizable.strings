@@ -1657,7 +1657,7 @@
 /* Title of the Spotlight Search section */
 "Search"="搜索";
 /* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
-"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="When enabled, allow search and look up MEGA files/folders in Spotlight Search.";
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="Will allow searching of MEGA files/folders in your device's Spotlight Search";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="您持有这把密钥";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -2118,6 +2118,8 @@
 "Please enter a valid phone number"="请填写正确的电话号码。";
 /* Error message that will show to user when user reached the sms verification daily limit */
 "You have reached the daily limit"="您已达到每日限额";
+/* Error message that will be shown when the code introduced do not match with the one you received */
+"The verification code doesn't match."="验证码不匹配";
 /* Error message that will show to user when user entered invalid verification code */
 "Wrong code. Please try again or resend."="验证码错误。请再试一次或重新发送。";
 /* Error message that will show to user when host detected that the mobile number has been registered already */

@@ -32,7 +32,7 @@ class ChatSharedItemTableViewCell: UITableViewCell {
         if let ownerName = MEGAStore.shareInstance().fetchUser(withUserHandle: ownerHandle)?.displayName {
             ownerNameLabel.text = ownerName
         } else {
-            MEGASdkManager.sharedMEGAChatSdk()?.userFirstname(byUserHandle: ownerHandle, delegate: MEGAChatGenericRequestDelegate.init(completion: { [weak self] (request, _) in
+            MEGASdkManager.sharedMEGAChatSdk()?.userFirstname(byUserHandle: ownerHandle, authorizationToken: authToken, delegate: MEGAChatGenericRequestDelegate.init(completion: { [weak self] (request, _) in
                 self?.ownerNameLabel.text = request.text
             }))
         }

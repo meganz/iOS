@@ -6,11 +6,10 @@
 
 #import "Helper.h"
 #import "NSString+MNZCategory.h"
-#import "MEGAIndexer.h"
 
 #import "MEGA-Swift.h"
 
-@interface PasscodeTableViewController () <LTHPasscodeViewControllerDelegate> {
+@interface PasscodeTableViewController () {
     BOOL wasPasscodeAlreadyEnabled;
 }
 
@@ -57,7 +56,6 @@
     
     wasPasscodeAlreadyEnabled = [LTHPasscodeViewController doesPasscodeExist];
     [[LTHPasscodeViewController sharedUser] setHidesCancelButton:NO];
-    [LTHPasscodeViewController sharedUser].delegate = self;
     [[LTHPasscodeViewController sharedUser] setNavigationBarTintColor:UIColor.mnz_redMain];
     [[LTHPasscodeViewController sharedUser] setNavigationTintColor:[UIColor whiteColor]];
     [[LTHPasscodeViewController sharedUser] setNavigationTitleColor:[UIColor whiteColor]];
@@ -210,12 +208,6 @@
     }
     
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-}
-
-#pragma mark - delegate
-
-- (void)passcodeWasEnabled {
-    MEGAIndexer.sharedIndexer.enableSpotlight = NO;
 }
 
 @end

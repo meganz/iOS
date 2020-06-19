@@ -826,7 +826,14 @@
                             <outlet property="delegate" destination="3xl-rn-KIB" id="7eX-Qf-FG0"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="5aB-0v-dpU"/>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="5aB-0v-dpU">
+                        <barButtonItem key="leftBarButtonItem" title=" " id="hZl-Le-AYm"/>
+                        <connections>
+                            <outlet property="backBarButtonItem" destination="hZl-Le-AYm" id="x9J-Lb-kGe"/>
+                        </connections>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="S2v-kr-MSt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1081,7 +1088,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Link without key" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LwY-Lf-ywH">
-                                                    <rect key="frame" x="56" y="12" width="123.5" height="20"/>
+                                                    <rect key="frame" x="56" y="12" width="130" height="20"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
