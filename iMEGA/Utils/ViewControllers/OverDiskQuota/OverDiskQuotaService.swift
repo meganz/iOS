@@ -44,15 +44,14 @@ import Foundation
     private(set) var completionAction: (OverDiskQuotaInfomationType) -> Void
     private(set) var api: MEGASdk
 
-    @objc init(api: MEGASdk,
-               completionAction: @escaping (OverDiskQuotaInfomationType) -> Void) {
+    @objc init(api: MEGASdk, completionAction: @escaping (OverDiskQuotaInfomationType) -> Void) {
         self.completionAction = completionAction
         self.api = api
     }
 
     fileprivate func execute(userDataStore: OverDiskQuotaUserData,
-                 storageStore: OverDiskQuotaStorageUsed,
-                 planStore: OverDiskQuotaPlans) {
+                             storageStore: OverDiskQuotaStorageUsed,
+                             planStore: OverDiskQuotaPlans) {
         completionAction(
             extractedInformation(userDataStore: userDataStore, storageStore: storageStore, planStore: planStore))
     }
@@ -83,7 +82,7 @@ import Foundation
 
     // MARK: - OverDiskQuotaService
 
-    fileprivate enum DataObtainingError {
+    fileprivate enum DataObtainingError: Error {
         case invalidUserEmail
     }
 
@@ -110,6 +109,7 @@ import Foundation
         storageUsedStore = nil
         availablePlansStore = nil
         pendingCommand = nil
+        errors = []
     }
 
     @objc func setUserStorageUsed(_ stroageUsed: NSNumber) {
@@ -137,8 +137,12 @@ import Foundation
         if shouldFetchUserData(userDataStore, errors: errors) {
             api.getUserData(with: MEGAGenericRequestDelegate(completion: { [weak self] (_, _) in
                 guard let self = self else { return }
-                self.userDataStore = self.updatedUserData(withSDK: api)
-                self.prepareContextForExecutingCommand(with: api)
+                switch self.updatedUserData(with: api) {
+                case .failure(let error): self.errors.insert(error)
+                case .success(let userData):
+                    self.userDataStore = userData
+                    self.prepareContextForExecutingCommand(with: api)
+                }
             }))
             return
         }
@@ -163,15 +167,15 @@ import Foundation
         return true
     }
 
-    private func updatedUserData(withSDK api: MEGASdk) -> OverDiskQuotaUserData? {
+    private func updatedUserData(with api: MEGASdk) -> Result<OverDiskQuotaUserData, DataObtainingError> {
         guard let email = api.myEmail else {
-            errors.insert(.invalidUserEmail)
-            return nil
+            return .failure(.invalidUserEmail)
         }
-        return OverDiskQuotaUserData(email: email,
-                                     deadline: api.overquotaDeadlineDate(),
-                                     warningDates: api.overquotaWarningDateList(),
-                                     numberOfFilesOnCloud: api.totalNodes)
+
+        return .success(OverDiskQuotaUserData(email: email,
+                                              deadline: api.overquotaDeadlineDate(),
+                                              warningDates: api.overquotaWarningDateList(),
+                                              numberOfFilesOnCloud: api.totalNodes))
     }
 
     private func updatedMEGAPlans(_ plans: [MEGAPlan]) -> OverDiskQuotaPlans {
