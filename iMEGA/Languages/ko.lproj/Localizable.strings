@@ -1657,7 +1657,7 @@
 /* Title of the Spotlight Search section */
 "Search"="검색";
 /* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
-"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="When enabled, allow search and look up MEGA files/folders in Spotlight Search.";
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="Will allow searching of MEGA files/folders in your device's Spotlight Search";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="당신이 열쇠를 갖습니다";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -2118,6 +2118,8 @@
 "Please enter a valid phone number"="유효한 전화번호를 입력하세요.";
 /* Error message that will show to user when user reached the sms verification daily limit */
 "You have reached the daily limit"="일일 한도에 도달하였습니다";
+/* Error message that will be shown when the code introduced do not match with the one you received */
+"The verification code doesn't match."="인증 코드가 일치하지 않습니다.";
 /* Error message that will show to user when user entered invalid verification code */
 "Wrong code. Please try again or resend."="잘못된 코드. 다시 시도하거나 재발송하세요.";
 /* Error message that will show to user when host detected that the mobile number has been registered already */

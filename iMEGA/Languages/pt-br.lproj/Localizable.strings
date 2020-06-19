@@ -77,7 +77,7 @@
 /* Message shown when the app is waiting for the server to complete a request due to connectivity issue. */
 "unableToReachMega"="Não foi possível acessar o MEGA. Por favor, verifique a sua conexão ou tente novamente mais tarde.";
 /* Message shown when the app is waiting for the server to complete a request due to a rate limit (error -4). */
-"tooManyRequest"="Muitas solicitações. Por favor, aguarde.";
+"tooManyRequest"="Solicitações em excesso. Por favor, aguarde.";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Por favor, faça login na sua conta.";
 /* Error message when a user attempts to change their email without an active login session. */
@@ -1383,7 +1383,7 @@
 /* SDK error returned when an operation is rejected due to fraud protection */
 "Rejected by fraud protection"="Rejected by fraud protection";
 /* SDK error returned when there are too many requests */
-"Too many requests"="Too many requests";
+"Too many requests"="Solicitações em excesso.";
 /* SDK error returned when there is a balance error */
 "Balance error"="Balance error";
 /* SDK error returned upon a HTTP error */
@@ -1657,7 +1657,7 @@
 /* Title of the Spotlight Search section */
 "Search"="Pesquisar";
 /* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
-"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="When enabled, allow search and look up MEGA files/folders in Spotlight Search.";
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="Permite pesquisar por arquivos e pastas do MEGA através da Busca Spotlight do seu dispositivo.";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="Você tem a chave";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -2118,6 +2118,8 @@
 "Please enter a valid phone number"="Por favor, forneça um número de telefone válido.";
 /* Error message that will show to user when user reached the sms verification daily limit */
 "You have reached the daily limit"="Você atingiu o limite diário.";
+/* Error message that will be shown when the code introduced do not match with the one you received */
+"The verification code doesn't match."="O código de verificação é incorreto.";
 /* Error message that will show to user when user entered invalid verification code */
 "Wrong code. Please try again or resend."="Código incorreto, tente novamente.";
 /* Error message that will show to user when host detected that the mobile number has been registered already */

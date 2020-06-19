@@ -6987,7 +6987,7 @@
 				CODE_SIGN_ENTITLEMENTS = MEGA.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 8;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				ENABLE_BITCODE = NO;
@@ -7044,7 +7044,7 @@
 				CODE_SIGN_ENTITLEMENTS = MEGA.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -7101,7 +7101,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 8;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -7152,7 +7152,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 8;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -7194,7 +7194,7 @@
 				CODE_SIGN_ENTITLEMENTS = iMEGA/Extensions/MEGAPickerFileProvider/MEGAPickerFileProvider.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 8;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				GCC_PREFIX_HEADER = "iMEGA/Extensions/MEGAPickerFileProvider/MEGAPickerFileProvider-PrefixHeader.pch";
@@ -7232,7 +7232,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 8;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				GCC_PREFIX_HEADER = "iMEGA/Extensions/MEGAPickerFileProvider/MEGAPickerFileProvider-PrefixHeader.pch";
@@ -7270,7 +7270,7 @@
 				CODE_SIGN_ENTITLEMENTS = iMEGA/Extensions/MEGAPicker/MEGAPicker.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 8;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -7323,7 +7323,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 8;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -7372,7 +7372,7 @@
 				CODE_SIGN_ENTITLEMENTS = iMEGA/Extensions/MEGAShare/MEGAShare.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 8;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -7424,7 +7424,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 8;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				FRAMEWORK_SEARCH_PATHS = (
