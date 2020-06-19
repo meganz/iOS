@@ -10,7 +10,7 @@ class ChatViewAttachmentCell: MessageContentCell {
 
     public lazy var titleLabel: UILabel = {
         let titleLabel = UILabel(frame: CGRect.zero)
-        titleLabel.font = .systemFont(ofSize: 14)
+        titleLabel.font = .systemFont(ofSize: 14, weight: .medium)
         titleLabel.textColor = UIColor.mnz_label()
         titleLabel.lineBreakMode = .byTruncatingMiddle
         return titleLabel
@@ -19,7 +19,7 @@ class ChatViewAttachmentCell: MessageContentCell {
     public lazy var detailLabel: UILabel = {
         let detailLabel = UILabel(frame: CGRect.zero)
         detailLabel.font = .systemFont(ofSize: 12)
-        detailLabel.textColor = UIColor.mnz_primaryGray(for: UIScreen.main.traitCollection)
+        detailLabel.textColor = UIColor.mnz_subtitles(for: UIScreen.main.traitCollection)
         detailLabel.lineBreakMode = .byTruncatingMiddle
         return detailLabel
     }()
@@ -71,6 +71,16 @@ class ChatViewAttachmentCell: MessageContentCell {
         }
         
         self.attachmentViewModel = ChatViewAttachmentCellViewModel(chatMessage: chatMessage)
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        guard #available(iOS 13, *) else {
+            return
+        }
+        titleLabel.textColor = UIColor.mnz_label()
+        detailLabel.textColor = UIColor.mnz_subtitles(for: UIScreen.main.traitCollection)
     }
     
     func sizeThatFits() -> CGSize {
