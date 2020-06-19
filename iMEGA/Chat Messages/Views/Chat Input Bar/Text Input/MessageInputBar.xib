@@ -20,7 +20,7 @@
                 </view>
                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JcV-Wx-f9z" userLabel="ExpandedTextCoverView">
                     <rect key="frame" x="0.0" y="29" width="414" height="106"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                             <integer key="value" value="15"/>
@@ -29,7 +29,7 @@
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vXN-Gp-R34" userLabel="CollapsedTextCoverView">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="85"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zpz-gS-Gkz" customClass="MessageInputTextBackgroundView" customModule="MEGA" customModuleProvider="target">
                     <rect key="frame" x="13" y="29" width="328" height="50"/>
@@ -158,6 +158,7 @@
                 </mask>
             </variation>
             <connections>
+                <outlet property="addButton" destination="Emu-CZ-PtI" id="271-GU-ORY"/>
                 <outlet property="backgroundViewTrailingButtonConstraint" destination="OxB-4H-ddg" id="N85-NG-AkL"/>
                 <outlet property="backgroundViewTrailingTextViewConstraint" destination="q8V-yt-DgD" id="IAU-5w-26A"/>
                 <outlet property="collapsedTextViewCoverView" destination="vXN-Gp-R34" id="wUf-Ru-xqw"/>
@@ -182,7 +183,7 @@
     </objects>
     <resources>
         <image name="addAttachment" width="30" height="30"/>
-        <image name="expand" width="28" height="28.5"/>
+        <image name="expand" width="28" height="28"/>
         <image name="sendButton" width="30" height="30"/>
         <image name="sendChatDisabled" width="30" height="30"/>
         <image name="sendVoiceClipDefault" width="30" height="30"/>

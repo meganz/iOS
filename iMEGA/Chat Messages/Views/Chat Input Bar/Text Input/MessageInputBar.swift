@@ -12,7 +12,8 @@ protocol MessageInputBarDelegate: class {
 class MessageInputBar: UIView {
     
     // MARK:- Outlets
-    
+    @IBOutlet weak var addButton: UIButton!
+
     @IBOutlet weak var messageTextView: MessageTextView!
     @IBOutlet weak var messageTextViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var messageTextViewBottomConstraint: NSLayoutConstraint!
@@ -100,10 +101,21 @@ class MessageInputBar: UIView {
             + messageTextViewCoverViewBottomContraint.constant
             + messageTextView.textContainerInset.top
             + messageTextView.textContainerInset.bottom
+        
+        updateAppearance()
     }
     
     override var intrinsicContentSize: CGSize {
         return .zero
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        if #available(iOS 13.0, *),
+            traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+                updateAppearance()
+        }
     }
     
     //MARK: - interface method.
@@ -189,6 +201,12 @@ class MessageInputBar: UIView {
     }
     
     // MARK: - Private methods
+    
+    private func updateAppearance() {
+        micButton.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
+        messageTextViewCoverView.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
+        addButton.tintColor = UIColor.mnz_primaryGray(for: traitCollection)
+    }
     
     private func registerKeyboardNotifications() {
         keyboardHideObserver = keyboardHideNotification()
