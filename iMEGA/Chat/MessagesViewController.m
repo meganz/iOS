@@ -2213,7 +2213,13 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     NSNumber *avatarKey = @(message.userHandle);
     UIImage *avatar = [self.avatarImages objectForKey:avatarKey];
     if (!avatar) {
-        avatar = [UIImage mnz_imageForUserHandle:message.userHandle name:self.chatRoom.title size:CGSizeMake(kAvatarImageDiameter, kAvatarImageDiameter) delegate:nil];
+        MEGAGenericRequestDelegate *delegate = [MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
+            if (!error.type) {
+                UIImage *avatar = [UIImage imageWithContentsOfFile:request.file];
+                [self.avatarImages setObject:avatar forKey:avatarKey];
+            }
+        }];
+        avatar = [UIImage mnz_imageForUserHandle:message.userHandle name:self.chatRoom.title size:CGSizeMake(kAvatarImageDiameter, kAvatarImageDiameter) delegate:delegate];
         if (avatar) {
             [self.avatarImages setObject:avatar forKey:avatarKey];
         } else {
