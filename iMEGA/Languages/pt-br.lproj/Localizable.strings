@@ -77,7 +77,7 @@
 /* Message shown when the app is waiting for the server to complete a request due to connectivity issue. */
 "unableToReachMega"="Não foi possível acessar o MEGA. Por favor, verifique a sua conexão ou tente novamente mais tarde.";
 /* Message shown when the app is waiting for the server to complete a request due to a rate limit (error -4). */
-"tooManyRequest"="Muitas solicitações. Por favor, aguarde.";
+"tooManyRequest"="Solicitações em excesso. Por favor, aguarde.";
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Por favor, faça login na sua conta.";
 /* Error message when a user attempts to change their email without an active login session. */
@@ -1383,7 +1383,7 @@
 /* SDK error returned when an operation is rejected due to fraud protection */
 "Rejected by fraud protection"="Rejected by fraud protection";
 /* SDK error returned when there are too many requests */
-"Too many requests"="Too many requests";
+"Too many requests"="Solicitações em excesso.";
 /* SDK error returned when there is a balance error */
 "Balance error"="Balance error";
 /* SDK error returned upon a HTTP error */
@@ -1657,7 +1657,7 @@
 /* Title of the Spotlight Search section */
 "Search"="Pesquisar";
 /* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
-"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="When enabled, allow search and look up MEGA files/folders in Spotlight Search.";
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="Permite pesquisar por arquivos e pastas do MEGA através da Busca Spotlight do seu dispositivo.";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="Você tem a chave";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -2068,28 +2068,10 @@
 "24 hours"="24 horas";
 /* Chat Notifications DND: Title bar message for the dnd activate options */
 "Mute chat Notifications for"="Silenciar as notificações de chat por";
-/* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
-"Muted forever"="Silenciado para sempre";
-/* Chat Notifications DND: Remaining time left to deactivate DND - 1 minute left */
-"1 minute left"="1 minuto restante";
-/* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 minute left */
-"%d minutes left"="%d minutos restantes";
-/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour left */
-"1 hour left"="1 hora restante";
-/* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 hour left */
-"%d hours left"="%d horas restantes";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="Notificações do chat";
 /* Chat settings: This text appears with the Do Not Disturb switch */
 "Do Not Disturb"="Não perturbe";
-/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, 1 minute left */
-"1 hour, 1 minute left"="1 hora e 1 minuto restantes";
-/* Chat Notifications DND: Remaining time left to deactivate DND - X hours, X minutes left */
-"%d hours, %d minutes left"="%d horas e %d minutos restantes";
-/* Chat Notifications DND: Remaining time left to deactivate DND - X hours, 1 minute left */
-"%d hours, 1 minute left"="%d horas e 1 minuto restantes";
-/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, X minutes left */
-"1 hour, %d minutes left"="1 hora e %d minutos restantes";
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
 "Reconnecting..."="Reconectando…";
 /* Title shown when the user reconnect in a call. */
@@ -2136,6 +2118,8 @@
 "Please enter a valid phone number"="Por favor, forneça um número de telefone válido.";
 /* Error message that will show to user when user reached the sms verification daily limit */
 "You have reached the daily limit"="Você atingiu o limite diário.";
+/* Error message that will be shown when the code introduced do not match with the one you received */
+"The verification code doesn't match."="O código de verificação é incorreto.";
 /* Error message that will show to user when user entered invalid verification code */
 "Wrong code. Please try again or resend."="Código incorreto, tente novamente.";
 /* Error message that will show to user when host detected that the mobile number has been registered already */
@@ -2178,7 +2162,7 @@
 "Select Folder"="Selecionar pasta";
 /* Title of the folder selection screen for camera uploads */
 "Choose Folder"="Escolher pasta";
-/* Label used near to the option selected to encode the images uploaded to a chat (Low, Medium, Original) */
+/* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
 "Image quality"="Qualidade da imagem";
 /* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
 "Automatic"="Automático";
@@ -2246,3 +2230,5 @@
 "Folder link unavailable"="O link da pasta não está disponível";
 /* Error message shown when opening a file link which doesn’t exist */
 "File link unavailable"="Link de arquivo indisponível";
+/* Header of block with all shared files in chat. */
+"Shared Files"="Arquivos compartilhados";

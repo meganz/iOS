@@ -1192,7 +1192,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     [self.messages removeAllObjects];
     [self.messages addObject:message];
     [self.collectionView reloadData];
-    [self updateUnreadMessagesLabel:0];
     [self.attachmentMessages removeAllObjects];
 }
 
@@ -1238,6 +1237,17 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     [self hideJumpToBottom];
 }
 
+- (NSString *)usernameForUserHandle:(uint64_t)handle {
+    NSString *username = [self.chatRoom userNicknameForUserHandle:handle];
+    
+    if (!username.length) {
+        username = [self.chatRoom peerFirstnameByHandle:handle];
+        username = username.length ? username : [self.chatRoom peerEmailByHandle:handle];
+    }
+
+    return username;
+}
+
 - (void)setTypingIndicator {
     NSString *typingString = nil;
     NSMutableAttributedString *typingAttributedString = nil;
@@ -1245,8 +1255,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         typingAttributedString = [self twoOrMoreUsersAreTypingString];
     } else if (self.whoIsTypingTimersMutableDictionary.allKeys.count == 1) {
         NSNumber *firstUserHandle = self.whoIsTypingTimersMutableDictionary.allKeys.firstObject;
-        NSString *firstUserName = [self.chatRoom peerFirstnameByHandle:firstUserHandle.unsignedLongLongValue];
-        NSString *whoIsTypingString = firstUserName.length ? firstUserName : [self.chatRoom peerEmailByHandle:firstUserHandle.unsignedLongLongValue];
+        NSString *whoIsTypingString = [self usernameForUserHandle:firstUserHandle.unsignedLongLongValue];
         
         typingString = [NSString stringWithFormat:AMLocalizedString(@"isTyping", @"A typing indicator in the chat. Please leave the %@ which will be automatically replaced with the user's name at runtime."), whoIsTypingString];
         
@@ -1261,11 +1270,10 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     NSNumber *firstUserHandle = self.whoIsTypingTimersMutableDictionary.allKeys.firstObject;
     NSNumber *secondUserHandle = [self.whoIsTypingTimersMutableDictionary.allKeys objectAtIndex:1];
     
-    NSString *firstUserFirstName = [self.chatRoom peerFirstnameByHandle:firstUserHandle.unsignedLongLongValue];
-    NSString *whoIsTypingString = firstUserFirstName.length ? firstUserFirstName : [self.chatRoom peerEmailByHandle:firstUserHandle.unsignedLongLongValue];
-    
-    NSString *secondUserFirstName = [self.chatRoom peerFirstnameByHandle:secondUserHandle.unsignedLongLongValue];
-    whoIsTypingString = [whoIsTypingString stringByAppendingString:[NSString stringWithFormat:@", %@", (secondUserFirstName.length ? secondUserFirstName : [self.chatRoom peerEmailByHandle:firstUserHandle.unsignedLongLongValue])]];
+    NSString *whoIsTypingString = [self usernameForUserHandle:firstUserHandle.unsignedLongLongValue];
+    NSString *secondUsername = [self usernameForUserHandle:secondUserHandle.unsignedLongLongValue];
+
+    whoIsTypingString = [whoIsTypingString stringByAppendingString:[NSString stringWithFormat:@", %@", secondUsername]];
     
     NSString *twoOrMoreUsersAreTypingString;
     if (self.whoIsTypingTimersMutableDictionary.allKeys.count == 2) {
@@ -1291,6 +1299,9 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 }
 
 - (NSIndexPath *)indexPathForCellWithUnreadMessagesLabel {
+    if (self.messages.count < self.unreadMessages) {
+        return nil;
+    }
     return [NSIndexPath indexPathForItem:(self.messages.count - self.unreadMessages) inSection:0];
 }
 
@@ -1307,7 +1318,9 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         self.unreadMessages = unreads;
         unreadMessagesIndexPath = [self indexPathForCellWithUnreadMessagesLabel];
     }
-    [self.collectionView reloadItemsAtIndexPaths:@[unreadMessagesIndexPath]];
+    if (unreadMessagesIndexPath) {
+        [self.collectionView reloadItemsAtIndexPaths:@[unreadMessagesIndexPath]];
+    }
 }
 
 - (void)updateOffsetForCellAtIndexPath:(NSIndexPath *)indexPath previousHeight:(CGFloat)previousHeight {
@@ -1416,6 +1429,28 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     
     self.inputToolbar.hidden = UIDevice.currentDevice.iPad ? NO : YES;
     [self presentViewController:userActionSheet animated:YES completion:nil];
+}
+
+- (void)loadPhotoAppBrowserViewController {
+    __weak typeof(self) weakself = self;
+    AlbumsTableViewController *albumTableViewController = [AlbumsTableViewController.alloc
+                                                           initWithSelectionActionText:AMLocalizedString(@"Send (%d)",
+                                                                                                         @"Used in Photos app browser view to send the photos from the view to the chat.")
+                                                           selectionActionDisabledText:AMLocalizedString(@"send", @"Used in Photos app browser view as a disabled action when there is no assets selected")
+                                                           completionBlock:^(NSArray<PHAsset *> * _Nonnull assets) {
+        if (assets.count > 0) {
+            [weakself uploadChatAssets:assets];
+        }
+    }];
+    MEGANavigationController *navigationController = [MEGANavigationController.alloc initWithRootViewController:albumTableViewController];
+    [self presentViewController:navigationController animated:YES completion:nil];
+}
+
+- (void)uploadChatAssets:(NSArray<PHAsset *> *)assets {
+    MEGALogDebug(@"[Chat] Did press send button to attach assets %@", assets);
+    [MEGASdkManager.sharedMEGASdk getMyChatFilesFolderWithCompletion:^(MEGANode *myChatFilesNode) {
+        [self uploadAssets:assets toParentNode:myChatFilesNode];
+    }];
 }
 
 #pragma mark - TopBannerButton
@@ -1898,10 +1933,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 }
 
 - (void)messagesInputToolbar:(MEGAInputToolbar *)toolbar didPressSendButton:(UIButton *)sender toAttachAssets:(NSArray<PHAsset *> *)assets {
-    MEGALogDebug(@"[Chat] Did press send button to attach assets %@", assets);
-    [MEGASdkManager.sharedMEGASdk getMyChatFilesFolderWithCompletion:^(MEGANode *myChatFilesNode) {
-        [self uploadAssets:assets toParentNode:myChatFilesNode];
-    }];
+    [self uploadChatAssets:assets];
 }
 
 - (void)messagesInputToolbar:(MEGAInputToolbar *)toolbar didPressNotHeldRecordButton:(UIButton *)sender {
@@ -2038,6 +2070,10 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             [self presentViewController:uploadOptionsActionSheet animated:YES completion:nil];
             break;
         }
+            
+        case MEGAChatAccessoryButtonImage:
+            [self loadPhotoAppBrowserViewController];
+            break;
             
         default:
             break;

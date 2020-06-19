@@ -374,7 +374,7 @@
         api = [MEGASdkManager sharedMEGASdk];
     }
     
-    NSString *offlineNameString = [api escapeFsIncompatible:node.name];
+    NSString *offlineNameString = [api escapeFsIncompatible:node.name destinationPath:[NSHomeDirectory() stringByAppendingString:@"/"]];
     NSString *relativeFilePath = [folderPath stringByAppendingPathComponent:offlineNameString];
     
     if (node.type == MEGANodeTypeFile) {
@@ -648,8 +648,20 @@
     }
 }
 
-+ (NSString *)sizeAndDateForNode:(MEGANode *)node api:(MEGASdk *)api {
++ (NSString *)sizeAndCreationHourAndMininuteForNode:(MEGANode *)node api:(MEGASdk *)api {
+    return [NSString stringWithFormat:@"%@ • %@", [self sizeForNode:node api:api], node.creationTime.mnz_formattedHourAndMinutes];
+}
+
++ (NSString *)sizeAndCreationDateForNode:(MEGANode *)node api:(MEGASdk *)api {
     return [NSString stringWithFormat:@"%@ • %@", [self sizeForNode:node api:api], node.creationTime.mnz_formattedDefaultDateForMedia];
+}
+
++ (NSString *)sizeAndModicationDateForNode:(MEGANode *)node api:(MEGASdk *)api {
+    return [NSString stringWithFormat:@"%@ • %@", [self sizeForNode:node api:api], node.modificationTime.mnz_formattedDefaultDateForMedia];
+}
+
++ (NSString *)sizeAndShareLinkCreateDateForSharedLinkNode:(MEGANode *)node api:(MEGASdk *)api {
+    return [NSString stringWithFormat:@"%@ • %@", [self sizeForNode:node api:api], node.publicLinkCreationTime.mnz_formattedDefaultDateForMedia];
 }
 
 + (NSString *)sizeForNode:(MEGANode *)node api:(MEGASdk *)api {

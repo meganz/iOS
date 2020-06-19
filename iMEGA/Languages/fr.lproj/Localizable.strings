@@ -1657,7 +1657,7 @@
 /* Title of the Spotlight Search section */
 "Search"="Recherche";
 /* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
-"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="When enabled, allow search and look up MEGA files/folders in Spotlight Search.";
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="Will allow searching of MEGA files/folders in your device's Spotlight Search";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="Vous détenez les clés";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -2068,28 +2068,10 @@
 "24 hours"="24 heures";
 /* Chat Notifications DND: Title bar message for the dnd activate options */
 "Mute chat Notifications for"="Mettre les notifications en sourdine pendant";
-/* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
-"Muted forever"="Plus aucune notification";
-/* Chat Notifications DND: Remaining time left to deactivate DND - 1 minute left */
-"1 minute left"="Il reste 1 minute";
-/* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 minute left */
-"%d minutes left"="Il reste %d minutes";
-/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour left */
-"1 hour left"="Il reste 1 heure";
-/* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 hour left */
-"%d hours left"="Il reste %d heures";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="Notifications de dialogue en ligne";
 /* Chat settings: This text appears with the Do Not Disturb switch */
 "Do Not Disturb"="Ne pas déranger";
-/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, 1 minute left */
-"1 hour, 1 minute left"="Il reste 1 heure, 1 minute";
-/* Chat Notifications DND: Remaining time left to deactivate DND - X hours, X minutes left */
-"%d hours, %d minutes left"="Il reste %d heures, %d minutes";
-/* Chat Notifications DND: Remaining time left to deactivate DND - X hours, 1 minute left */
-"%d hours, 1 minute left"="Il reste %d heures, 1 minute";
-/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, X minutes left */
-"1 hour, %d minutes left"="Il reste 1 heure, %d minutes";
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
 "Reconnecting..."="Reconnexion…";
 /* Title shown when the user reconnect in a call. */
@@ -2136,6 +2118,8 @@
 "Please enter a valid phone number"="Veuillez indiquer un numéro de téléphone valide.";
 /* Error message that will show to user when user reached the sms verification daily limit */
 "You have reached the daily limit"="Vous avez atteint la limite quotidienne";
+/* Error message that will be shown when the code introduced do not match with the one you received */
+"The verification code doesn't match."="Le code de vérification ne correspond pas.";
 /* Error message that will show to user when user entered invalid verification code */
 "Wrong code. Please try again or resend."="Le code est erroné. Veuillez essayer et envoyer de nouveau.";
 /* Error message that will show to user when host detected that the mobile number has been registered already */
@@ -2178,7 +2162,7 @@
 "Select Folder"="Sélectionner un dossier";
 /* Title of the folder selection screen for camera uploads */
 "Choose Folder"="Choisir un dossier";
-/* Label used near to the option selected to encode the images uploaded to a chat (Low, Medium, Original) */
+/* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
 "Image quality"="Qualité des images";
 /* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
 "Automatic"="Automatique";
@@ -2246,3 +2230,5 @@
 "Folder link unavailable"="Lien de dossier non disponible";
 /* Error message shown when opening a file link which doesn’t exist */
 "File link unavailable"="Lien de fichier non disponible";
+/* Header of block with all shared files in chat. */
+"Shared Files"="Fichiers partagés";
