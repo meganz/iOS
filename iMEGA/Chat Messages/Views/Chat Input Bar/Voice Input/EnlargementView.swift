@@ -30,6 +30,7 @@ class EnlargementView: UIView {
         originalWidth = widthConstraint.constant
         originalHeight = heightConstraint.constant
         originalPlaceholderValue = placeholderConstraint.constant
+        updateAppearance()
     }
     
     var finalRatio: CGFloat = 0.25
@@ -72,6 +73,14 @@ class EnlargementView: UIView {
         layer.cornerRadius = width / 2.0
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        if #available(iOS 13.0, *),
+            traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+                updateAppearance()
+        }
+    }
     
     private func removeAllTapGestures() {
         if let tapGestures = gestureRecognizers?.filter({ $0 is UITapGestureRecognizer }) {
@@ -92,4 +101,10 @@ class EnlargementView: UIView {
         
         handler()
     }
+    
+    func updateAppearance() {
+        nonSelectionView.backgroundColor = UIColor.mnz_secondaryButtonBackground(for: traitCollection)
+        imageView.tintColor = UIColor.mnz_secondaryButtonImageTint(for: traitCollection)
+    }
+
 }

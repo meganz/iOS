@@ -248,6 +248,7 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="dzS-f6-JUA"/>
             <connections>
+                <outlet property="audioWavesBackgroundView" destination="H0B-HU-26G" id="Scf-t7-ztA"/>
                 <outlet property="audioWavesholderView" destination="vRr-bH-Ylv" id="1ec-O6-o5z"/>
                 <outlet property="audioWavesholderViewTrailingConstraint" destination="gnH-Ut-Fmc" id="ahd-Dn-fW6"/>
                 <outlet property="lockView" destination="V6B-TZ-Mn7" id="p8H-sl-noX"/>
