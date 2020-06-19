@@ -41,7 +41,7 @@
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vVG-YG-CPz" customClass="AvatarView" customModule="MEGA" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="7.6666666666666679" width="40" height="40"/>
-                                                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="40" id="Y7J-9b-6XI"/>
                                                                 <constraint firstAttribute="width" constant="40" id="ark-Zr-NWl"/>
@@ -619,7 +619,7 @@
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4YQ-BN-oTU" customClass="AvatarView" customModule="MEGA" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
-                                                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="40" id="QH7-l1-f1o"/>
                                                                 <constraint firstAttribute="width" constant="40" id="qel-9c-Aec"/>
@@ -2541,7 +2541,7 @@
         <image name="rotateOFF" width="60" height="60"/>
         <image name="rotateON" width="60" height="60"/>
         <image name="selectAll" width="22" height="22"/>
-        <image name="sendLocation" width="40" height="40"/>
+        <image name="sendLocation" width="28" height="28"/>
         <image name="speakerOff" width="60" height="60"/>
         <image name="speakerOn" width="60" height="60"/>
         <image name="startConversation" width="28" height="28"/>
