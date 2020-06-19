@@ -436,22 +436,6 @@
 "renameNodeMessage"="Wprowadź nową nazwę";
 /* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
 "moveToTheRubbishBin"="Przenieś do kosza";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 file' */
-"moveFileToRubbishBinMessage"="Czy na pewno chcesz przenieść 1 plik do kosza?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin '{1+} files' */
-"moveFilesToRubbishBinMessage"="Czy na pewno chcesz przenieść %d plików do kosza?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 folder' */
-"moveFolderToRubbishBinMessage"="Czy na pewno chcesz przenieść 1 katalog do kosza?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} folders" */
-"moveFoldersToRubbishBinMessage"="Czy na pewno chcesz przenieść %d katalogów do kosza?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and 1 folder" */
-"moveFileFolderToRubbishBinMessage"="Czy na pewno chcesz przenieść 1 plik i 1 katalog do kosza?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and {1+} folders" */
-"moveFileFoldersToRubbishBinMessage"="Czy na pewno chcesz przenieść 1 pliki i %d katalogów do kosza?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files and 1 folder" */
-"moveFilesFolderToRubbishBinMessage"="Czy na pewno chcesz przenieść %d plików i 1 katalog do kosza?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "[A] = {1+} files and [B] = {1+} folders" */
-"moveFilesFoldersToRubbishBinMessage"="Czy na pewno chcesz przenieść [A] plików i [B] katalogów do kosza?";
 /* Success message shown when you have moved 1 file to the rubbish bin */
 "fileMovedToRubbishBinMessage"="1 plik przeniesiony do kosza";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
@@ -477,7 +461,7 @@
 /* Success message for sharing multiple folders. */
 "sharedFolders_success"="%d katalogów zostało udostępnionych";
 /* Button title that triggers the importing link action */
-"import"="Importuj";
+"Import to Cloud Drive"="Importuj do Cloud Drive";
 /* Message shown when a file has been imported */
 "fileImported"="Plik został zaimportowany";
 /* Message shown when some files have been imported */
@@ -522,6 +506,12 @@
 "offline"="Niedostępny";
 /* Title of the Contacts section */
 "contactsTitle"="Kontakty";
+/* Label for any ‘Requests’ button, link, text, title, etc. On iOS is used to go to the Contact request section from Contacts */
+"Requests"="Zgłoszenia";
+/* Label for any ‘Groups’ button, link, text, title, etc. On iOS is used to go to the chats 'Groups' section from Contacts */
+"Groups"="Grupy";
+/* Label for any ‘Recently Added’ button, link, text, title, etc. On iOS is used on a section that shows the 'Recently Added' contacts */
+"Recently Added"="Ostatnio dodane";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
 "oneFolderShared"="1 katalog";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
@@ -574,8 +564,6 @@
 "theUsersHaveBeenInvited"="Użytkownik został zaproszony i pojawi się na liście Twoich kontaktów po akceptacji zaproszenia.";
 /* Alert title shown when you want to remove one or more contacts */
 "removeUserTitle"="Usuń kontakt";
-/* Alert confirmation message shown when you want to remove one contact from your contacts list */
-"removeUserMessage"="Czy na pewno chcesz usunąć %@ z Twoich kontaktów?";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
 "removeMultipleUsersMessage"="Czy na pewno chcesz usunąć %d użytkowników z Twoich kontatków?";
 /* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
@@ -600,7 +588,7 @@
 "shareFolder"="Udostępnij katalog";
 /* Button title which, if tapped, will trigger the action of sharing the folders selected */
 "shareFolders"="Udostępnione katalogi";
-/* Button that allows you to select a given folder */
+/* Button that allows you to select something (a folder, a message...) */
 "select"="Wybierz";
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
 "permissions"="Prawa dostępu";
@@ -945,8 +933,8 @@
 "unlockedBonuses"="Odblokowane bonusy:";
 /* A header/title of a section which contains information about used/available storage space on a user's cloud drive. */
 "storageQuota"="Limit powierzchni";
-/* The header/title of a block/section which contains information about the user's used/available transfer allowance for their account. */
-"transferQuota"="Limit transferu";
+/* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
+"Transfer Quota"="Limit transferu";
 /* achievement type */
 "registrationBonus"="Rejestracja Bonusa";
 /* Message shown on the achievements dialog for achieved achievements, %1 is replaced with e.g. 20 GB */
@@ -1261,8 +1249,10 @@
 "enableRichUrlPreviews"="Włącz podgląd linków";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "alwaysAllow"="Pozwalaj zawsze";
-/* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
+/* Text indicating to the user that some action will be postpone. E.g. used for 'rich previews' and management of disk storage. */
 "notNow"="Nie teraz";
+/* Text indicating to the user some action should be addressed. E.g. Navigate to Settings/File Management to clear cache. */
+"Manage"="Zarządzaj";
 /* */
 "never"="Nigdy";
 /* After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings. */
@@ -1370,6 +1360,34 @@
 "Read error"="Błąd odczytu";
 /* Label to show that an error related with an invalid or missing application key occurs during a SDK operation. */
 "Invalid application key"="Błędny klucz aplikacji";
+/* Error shown when terms of service are breached during download. */
+"Terms of Service breached"="Naruszono warunki korzystania z usługi";
+/* SDK error returned when an upload would produce recursivity */
+"Upload produces recursivity"="Upload produces recursivity";
+/* Error shown when download a file that has violated ToS/AUP. */
+"Not accessible due to ToS/AUP violation"="Niedostępny z powodu naruszenia ToS / AUP";
+/* Error shown when SSL check has failed */
+"SSL verification failed"="Niepowodzenie weryfikacji SSL";
+/* Label shown when current account does not have enough quota to complete the operation */
+"Not enough quota"="Za mało miejsca";
+/* SDK error returned when a MFA is required to perform an operation */
+"Multi-factor authentication required"="Multi-factor authentication required";
+/* SDK error returned for operations only allowed for business master users */
+"Access denied for users"="Access denied for users";
+/* SDK error returned when a business account has expired */
+"Business account has expired"="Business account has expired";
+/* SDK error returned when the credit card has been rejected */
+"Credit card rejected"="Credit card rejected";
+/* SDK error returned when the billing failed */
+"Billing failed"="Billing failed";
+/* SDK error returned when an operation is rejected due to fraud protection */
+"Rejected by fraud protection"="Rejected by fraud protection";
+/* SDK error returned when there are too many requests */
+"Too many requests"="Too many requests";
+/* SDK error returned when there is a balance error */
+"Balance error"="Balance error";
+/* SDK error returned upon a HTTP error */
+"HTTP error"="HTTP error";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Nieznany błąd";
 /* Text shown in an alert when the user is about to change the language of the app */
@@ -1420,7 +1438,7 @@
 "videoQuality"="Jakość filmu";
 /* Property associated with something smaller than the usual or average size, number, value, or amount. For example: option to encode a video with low quality. */
 "low"="Niska";
-/* Option to upload videos with the same resolution and same framerate than the original one, but converting them to MP4. */
+/* Property associated with something higher than the usual or average size, number, value, or amount. For example: video quality. */
 "high"="Wysoka";
 /* Property associated with the first one made and not a copy. For example: Get the original video, without encoding.  */
 "original"="Oryginalny";
@@ -1436,8 +1454,8 @@
 "resetQrCode"="Zresetuj QR kod";
 /* Footer that explains what would happen if the user resets his/her QR code */
 "resetQrCodeFooter"="Poprzedni kod QR nie będzie aktywny.";
-/* Title for view that displays the QR code of the user. String as short as possible. */
-"myCode"="Mój kod";
+/* Label for any ‘My QR code’ button, link, text, title, etc. - (String as short as possible). */
+"My QR code"="Mój kod QR";
 /* Segmented control title for view that allows the user to scan QR codes. String as short as possible. */
 "scanCode"="Zeskanuj kod";
 /* Label that encourage the user to line the QR to scan with the camera */
@@ -1636,6 +1654,10 @@
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Zapisz kopię zdjęć i filmów pobranych z aplikacji MEGA w bibliotece multimediów urządzenia.";
 /* Settings section title where you can enable the option to 'Spotlight search' */
 "Spotlight Search"="Wyszukiwanie Spotlight";
+/* Title of the Spotlight Search section */
+"Search"="Szukaj";
+/* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="Will allow searching of MEGA files/folders in your device's Spotlight Search";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="Ty przechowujesz klucze";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -1994,7 +2016,7 @@
 "Business"="Biznes";
 /* */
 "Administrator"="Administrator";
-/* */
+/* Label to indicate the amount of transfer quota in several places. It is a ‘noun‘ and there is an screenshot with an use example - (String as short as possible). */
 "Transfer"="Przesyłanie";
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
 "You cannot remove %1$s as a contact because they are part of your Business account."="Nie możesz usunąć %1$s jako kontaktu, ponieważ są one częścią twojego konta firmowego.";
@@ -2048,26 +2070,10 @@
 "Mute chat Notifications for"="Wycisz powiadomienia czatu dla";
 /* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
 "Muted forever"="Wyciszony na zawsze";
-/* Chat Notifications DND: Remaining time left to deactivate DND - 1 minute left */
-"1 minute left"="Pozostała 1 minuta";
-/* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 minute left */
-"%d minutes left"="Pozostało %d minut";
-/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour left */
-"1 hour left"="Pozostała godzina";
-/* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 hour left */
-"%d hours left"="Pozostało %d godzin";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="Powiadomienia Chat";
 /* Chat settings: This text appears with the Do Not Disturb switch */
 "Do Not Disturb"="Nie przeszkadzać";
-/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, 1 minute left */
-"1 hour, 1 minute left"="Pozostała 1 godzina i 1 minuta";
-/* Chat Notifications DND: Remaining time left to deactivate DND - X hours, X minutes left */
-"%d hours, %d minutes left"="Pozostało %d godzin, %d minut";
-/* Chat Notifications DND: Remaining time left to deactivate DND - X hours, 1 minute left */
-"%d hours, 1 minute left"="Pozostało %d godziny, 1 minuta";
-/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, X minutes left */
-"1 hour, %d minutes left"="Pozostała 1 godzina, %d minut";
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
 "Reconnecting..."="Ponowne łączenie…";
 /* Title shown when the user reconnect in a call. */
@@ -2114,6 +2120,8 @@
 "Please enter a valid phone number"="Podaj poprawny numer telefonu.";
 /* Error message that will show to user when user reached the sms verification daily limit */
 "You have reached the daily limit"="Osiągnąłeś dzienny limit";
+/* Error message that will be shown when the code introduced do not match with the one you received */
+"The verification code doesn't match."="Kod weryfikacyjny nie pasuje.";
 /* Error message that will show to user when user entered invalid verification code */
 "Wrong code. Please try again or resend."="Niepoprawny kod. Spróbuj ponownie lub wyślij ponownie.";
 /* Error message that will show to user when host detected that the mobile number has been registered already */
@@ -2156,13 +2164,13 @@
 "Select Folder"="Wybierz katalog";
 /* Title of the folder selection screen for camera uploads */
 "Choose Folder"="Wybierz katalog";
-/* Label used near to the option selected to encode the images uploaded to a chat (Low, Medium, Original) */
+/* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
 "Image quality"="Jakość obrazu";
-/* Title of Image Quality option */
+/* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
 "Automatic"="Automatyczny";
 /* Description of Automatic Image Quality option */
 "Send smaller size images through cellular networks and original size images through wifi"="Wysyłaj obrazy o mniejszych rozmiarach przez sieci komórkowe i obrazy o oryginalnych rozmiarach przez Wi-Fi";
-/* Title of Image Quality option */
+/* Text for some option property indicating the user the action to perform will be optimised. For example: Image Quality reduction option for chats */
 "Optimised"="Zoptymalizowany";
 /* Description of Optimised Image Quality option */
 "Send smaller size images optimised for lower data consumption"="Wysyłaj obrazy o mniejszych rozmiarach zoptymalizowane pod kątem mniejszego zużycia danych";
@@ -2178,12 +2186,38 @@
 "Your account has been disabled by your administrator. Please contact your business account administrator for further details."="Twoje konto zostało wyłączone przez administratora. Aby uzyskać więcej informacji, skontaktuj się z administratorem konta biznesowego.";
 /* An error message which appears to sub-users of a business account when they try to login and they are deleted. */
 "Your account has been removed by your administrator. Please contact your business account administrator for further details."="Twoje konto zostało usunięte przez administratora. Aby uzyskać więcej informacji, skontaktuj się z administratorem konta biznesowego.";
-/* Description of why the user should give permission to contacts */
-"Easily discover contacts from your address book on MEGA."="Łatwo odkrywaj kontakty z książki adresowej na MEGA.";
-/* Detailed description of why the user should give permission to contacts */
-"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA nie będzie wykorzystywać tych danych w żadnym innym celu i nigdy nie będzie wchodzić w interakcje z Twoimi kontaktami bez Twojej zgody.";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="Wprowadź nazwę grupy";
+/* Title of one of the Settings sections where you can customise the 'Appearance' of the app. */
+"Appearance"="Wygląd";
+/* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
+"Sorting And View Mode"="Tryb sortowania i przeglądania";
+/* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
+"Default"="Domyślne";
+/* Label for any ‘Day’ button, link, text, title, etc. - (String as short as possible). */
+"Day"="Dzień";
+/* Label for any ‘Night’ button, link, text, title, etc. - (String as short as possible). */
+"Night"="Night";
+/* Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible). */
+"Minimal"="Minimal";
+/* Section title inside of Settings - Appearance, where you can change the app's layout. */
+"Layout"="Układ";
+/* Section title inside of Settings - Appearance, where you can change the app's icon. */
+"App Icon"="App Icon";
+/* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
+"Configure sorting order and the default view (List or Thumbnail)."="Skonfiguruj porządek sortowania i domyślny widok (Lista lub Miniatura).";
+/* Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for All'. */
+"Per Folder"="Na katalog";
+/* Same for all configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for all Folders'. */
+"Same for All"="Takie same dla wszystkich";
+/* Section title of the 'Sorting And View Mode' view inside of Settings - Appearence - Sorting And View Mode. */
+"Sorting preference"="Sortowanie";
+/* Section title of the 'Sorting And View Mode' view inside of Settings - Appearence - Sorting And View Mode. */
+"View mode preference"="Ustawienia wyświetlania";
+/* Footer text explaining what means choosing a sorting preference 'Per Folder' or 'Same for All' in Settings - Appearance - Sorting And View Mode. */
+"Configure column sorting order on a per-folder basis, or use the same order for all folders."="Ustaw sortowanie kolumn dla wybranego katalogu lub dla wszystkich swoich katalogów.";
+/* Footer text explaining what means choosing a view mode preference 'Per Folder', 'List view' or 'Thumbnail view' in Settings - Appearance - Sorting And View Mode. */
+"Select view mode (List or Thumbnail) on a per-folder basis, or use the same view mode for all folders."="Wybierz tryb widoku (Lista lub Miniatura) dla poszczególnych folderów lub użyj tego samego trybu widoku dla wszystkich folderów.";
 /* Warning message to alert user about logout in My Account section if has transfers in progress. */
 "When you logout, ongoing transfers will be cancelled."="Po wylogowaniu bieżące transfery zostaną anulowane.";
 /* Warning message to alert user about logout in My Account section if has offline files. */
@@ -2192,3 +2226,11 @@
 "When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled."="Po wylogowaniu pliki z sekcji Offline zostaną usunięte z urządzenia, a bieżące transfery zostaną anulowane.";
 /* Default title of an empty chat. */
 "Chat created on %s1"="Czat utworzony na %s1";
+/* Title shown when there are no shared files */
+"No Shared Files"="Brak udostępnionych plików";
+/* Error message shown when opening a folder link which doesn’t exist */
+"Folder link unavailable"="Link do katalogu jest niedostępny";
+/* Error message shown when opening a file link which doesn’t exist */
+"File link unavailable"="Link pliku jest niedostępny";
+/* Header of block with all shared files in chat. */
+"Shared Files"="Udostępnione pliki";

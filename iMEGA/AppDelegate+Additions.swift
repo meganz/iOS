@@ -1,4 +1,3 @@
-
 import Foundation
 import SafariServices
 
@@ -18,30 +17,38 @@ extension AppDelegate {
             visibleViewController is LoginViewController ||
             visibleViewController is SFSafariViewController { return }
 
+        if MEGASdkManager.sharedMEGASdk().isBusinessAccount && MEGASdkManager.sharedMEGASdk().businessStatus != .active {
+            return
+        }
+        
         if MEGASdkManager.sharedMEGASdk().smsAllowedState() != .optInAndUnblock { return }
-        
+
         if MEGASdkManager.sharedMEGASdk().smsVerifiedPhoneNumber() != nil { return }
-        
+
         if let lastDateAddPhoneNumberShowed = UserDefaults.standard.value(forKey: "lastDateAddPhoneNumberShowed") {
             guard let days = Calendar.current.dateComponents([.day], from: lastDateAddPhoneNumberShowed as! Date, to: Date()).day else { return }
             if days < 7 { return }
         }
-        
+
         UserDefaults.standard.set(Date(), forKey: "lastDateAddPhoneNumberShowed")
-        
+
         let addPhoneNumberController = UIStoryboard(name: "SMSVerification", bundle: nil).instantiateViewController(withIdentifier: "AddPhoneNumberViewControllerID")
         addPhoneNumberController.modalPresentationStyle = .fullScreen
         UIApplication.mnz_presentingViewController().present(addPhoneNumberController, animated: true, completion: nil)
     }
-    
+
     @objc func showEnableTwoFactorAuthenticationIfNeeded() {
         if UserDefaults.standard.bool(forKey: "twoFactorAuthenticationAlreadySuggested") {
             return
         }
-        
-        MEGASdkManager.sharedMEGASdk().multiFactorAuthCheck(withEmail: MEGASdkManager.sharedMEGASdk().myEmail ?? "", delegate: MEGAGenericRequestDelegate.init(completion: { (request, error) in
+
+        MEGASdkManager.sharedMEGASdk().multiFactorAuthCheck(withEmail: MEGASdkManager.sharedMEGASdk().myEmail ?? "", delegate: MEGAGenericRequestDelegate.init(completion: { (request, _) in
             if request.flag {
                 return //Two Factor Authentication Enabled
+            }
+
+            if UIApplication.mnz_visibleViewController() is AddPhoneNumberViewController || UIApplication.mnz_visibleViewController() is CustomModalAlertViewController || UIApplication.mnz_visibleViewController() is BusinessExpiredViewController || (MEGASdkManager.sharedMEGASdk().isBusinessAccount && MEGASdkManager.sharedMEGASdk().businessStatus != .active) {
+                return
             }
             
             let enable2FACustomModalAlert = CustomModalAlertViewController()
@@ -52,13 +59,13 @@ extension AppDelegate {
             UserDefaults.standard.set(true, forKey: "twoFactorAuthenticationAlreadySuggested")
         }))
     }
-    
+
     @objc func fetchContactsNickname() {
         guard let megaStore = MEGAStore.shareInstance(),
             let privateQueueContext = megaStore.childPrivateQueueContext else {
                 return
         }
-        
+
         privateQueueContext.perform {
             self.requestNicknames(context: privateQueueContext, store: megaStore) {
                 OperationQueue.main.addOperation {
@@ -67,22 +74,22 @@ extension AppDelegate {
             }
         }
     }
-    
+
     private func requestNicknames(context: NSManagedObjectContext, store: MEGAStore, completionBlock: @escaping (() -> Void)) {
         let requestDelegate = MEGAGenericRequestDelegate { request, error in
             if error.type != .apiOk {
                 return
             }
-            
+
             if let stringDictionary = request.megaStringDictionary {
                 stringDictionary.forEach { key, value in
                     let userHandle = MEGASdk.handle(forBase64UserHandle: key)
-                    
+
                     if let nickname = value.base64URLDecoded {
                         store.updateUser(withUserHandle: userHandle, nickname: nickname, context: context)
                     }
                 }
-                
+
                 store.save(context)
                 completionBlock()
             }
@@ -90,15 +97,15 @@ extension AppDelegate {
 
         MEGASdkManager.sharedMEGASdk().getUserAttributeType(.alias, delegate: requestDelegate)
     }
-    
+
     @objc func handleAccountBlockedEvent(_ event: MEGAEvent) {
         guard let suspensionType = AccountSuspensionType(rawValue: event.number) else { return }
-        
+
         if suspensionType == .smsVerification && MEGASdkManager.sharedMEGASdk().smsAllowedState() != .notAllowed {
             if UIApplication.mnz_presentingViewController() is SMSNavigationViewController {
                 return
             }
-            
+
             let smsNavigationController = SMSNavigationViewController(rootViewController: SMSVerificationViewController.instantiate(with: .UnblockAccount))
             smsNavigationController.modalPresentationStyle = .fullScreen
             UIApplication.mnz_presentingViewController().present(smsNavigationController, animated: true, completion: nil)
@@ -106,7 +113,7 @@ extension AppDelegate {
             if UIApplication.mnz_visibleViewController() is VerifyEmailViewController || UIApplication.mnz_visibleViewController() is SFSafariViewController {
                 return
             }
-            
+
             let verifyEmailVC = UIStoryboard(name: "VerifyEmail", bundle: nil).instantiateViewController(withIdentifier: "VerifyEmailViewControllerID")
             UIApplication.mnz_presentingViewController().present(verifyEmailVC, animated: true, completion: nil)
         } else {

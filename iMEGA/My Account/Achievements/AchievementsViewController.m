@@ -59,7 +59,7 @@
     
     self.unlockedBonusesLabel.text = AMLocalizedString(@"unlockedBonuses", @"Header of block with achievements bonuses.");
     self.storageQuotaLabel.text = AMLocalizedString(@"storageQuota", @"A header/title of a section which contains information about used/available storage space on a user's cloud drive.");
-    self.transferQuotaLabel.text = AMLocalizedString(@"transferQuota", @"The header/title of a block/section which contains information about the user's used/available transfer allowance for their account.");
+    self.transferQuotaLabel.text = AMLocalizedString(@"Transfer Quota", @"Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'.");
     
     [[MEGASdkManager sharedMEGASdk] getAccountAchievementsWithDelegate:self];
     

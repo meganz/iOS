@@ -901,7 +901,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 #pragma mark - SendToViewControllerDelegate
 
-- (void)sendToChats:(NSArray<MEGAChatListItem *> *)chats andUsers:(NSArray<MEGAUser *> *)users {
+- (void)sendToViewController:(SendToViewController *)viewController toChats:(NSArray<MEGAChatListItem *> *)chats andUsers:(NSArray<MEGAUser *> *)users {
     self.chats = chats;
     self.users = users;
     
@@ -958,7 +958,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 - (void)onTransferFinish:(MEGASdk *)api transfer:(MEGATransfer *)transfer error:(MEGAError *)error {
     if (error.type) {
         [self oneUnsupportedMore];
-        MEGALogError(@"Transfer finished with error: %@", error.name);
+        MEGALogError(@"Transfer finished with error: %@", AMLocalizedString(error.name, nil));
         return;
     }
     

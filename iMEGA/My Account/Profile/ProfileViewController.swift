@@ -553,6 +553,9 @@ extension ProfileViewController: MEGARequestDelegate {
     
     func onRequestFinish(_ api: MEGASdk, request: MEGARequest, error: MEGAError) {
         guard let myUser = api.myUser else {
+            if request.type == .MEGARequestTypeLogout {
+                api.remove(self)
+            }
             return;
         }
         switch request.type {
@@ -574,7 +577,7 @@ extension ProfileViewController: MEGARequestDelegate {
             let paramType = MEGAUserAttribute(rawValue: request.paramType)
             if paramType == .avatar {
                 if error.type != .apiOk {
-                    SVProgressHUD.showError(withStatus: request.requestString+" "+error.name)
+                    SVProgressHUD.showError(withStatus: request.requestString + " " + AMLocalizedString(error.name, nil))
                     return
                 }
             }

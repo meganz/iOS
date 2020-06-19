@@ -56,7 +56,6 @@
     
     wasPasscodeAlreadyEnabled = [LTHPasscodeViewController doesPasscodeExist];
     [[LTHPasscodeViewController sharedUser] setHidesCancelButton:NO];
-    
     [[LTHPasscodeViewController sharedUser] setNavigationBarTintColor:UIColor.mnz_redMain];
     [[LTHPasscodeViewController sharedUser] setNavigationTintColor:[UIColor whiteColor]];
     [[LTHPasscodeViewController sharedUser] setNavigationTitleColor:[UIColor whiteColor]];

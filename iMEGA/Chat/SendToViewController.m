@@ -80,13 +80,12 @@
     switch (self.sendMode) {
         case SendModeCloud:
         case SendModeForward:
+        case SendModeFileAndFolderLink:
             self.cancelBarButtonItem.title = AMLocalizedString(@"cancel", @"Button title to cancel something");
-
             break;
             
         case SendModeShareExtension:
             self.navigationItem.leftBarButtonItem = nil;
-
             break;
     }
     
@@ -455,6 +454,9 @@
 }
 
 - (IBAction)sendAction:(UIBarButtonItem *)sender {
+    if (self.searchController.isActive) {
+        self.searchController.active = NO;
+    }
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         switch (self.sendMode) {
             case SendModeCloud: {
@@ -490,24 +492,17 @@
                     }
                 }
                 
-                if (self.searchController.isActive) {
-                    self.searchController.active = NO;
-                }
-                
                 [self dismissViewControllerAnimated:YES completion:nil];
                 
                 break;
             }
                 
             case SendModeShareExtension:
-                [self.sendToViewControllerDelegate sendToChats:self.selectedGroupChatsMutableArray andUsers:self.selectedUsersMutableArray];
-                
+            case SendModeFileAndFolderLink:
+                [self.sendToViewControllerDelegate sendToViewController:self toChats:self.selectedGroupChatsMutableArray andUsers:self.selectedUsersMutableArray];
                 break;
                 
             case SendModeForward: {
-                if (self.searchController.isActive) {
-                    self.searchController.active = NO;
-                }
                 [self dismissViewControllerAnimated:YES completion:^{
                     NSUInteger destinationCount = self.selectedGroupChatsMutableArray.count + self.selectedUsersMutableArray.count;
                     self.pendingForwardOperations = self.messages.count * destinationCount;
