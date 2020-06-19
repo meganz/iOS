@@ -1,13 +1,23 @@
 import MessageKit
 
 extension ChatViewController: MessagesDisplayDelegate {
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        guard #available(iOS 13, *), traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) else {
+            return
+        }
+        messagesCollectionView.reloadData()
+    }
+    
     func backgroundColor(for message: MessageType,
                          at indexPath: IndexPath,
                          in messagesCollectionView: MessagesCollectionView) -> UIColor {
         
         //FIXME: V5 merging issue
         guard let chatMessage = messageForItem(at: indexPath, in: messagesCollectionView) as? ChatMessage else {
-            return isFromCurrentSender(message: message) ? UIColor.red : UIColor.red
+            return isFromCurrentSender(message: message) ? UIColor.mnz_chatOutgoingBubble(UIScreen.main.traitCollection) : UIColor.mnz_chatIncomingBubble(UIScreen.main.traitCollection)
         }
         
         if chatMessage.message.isManagementMessage {
@@ -16,24 +26,24 @@ extension ChatViewController: MessagesDisplayDelegate {
         
         switch chatMessage.message.type {
         case .contact, .attachment:
-            return .clear
+            return UIColor.mnz_chatIncomingBubble(UIScreen.main.traitCollection)
         case .normal:
             if (chatMessage.message.content as NSString).mnz_isPureEmojiString() {
                 return .clear
             }
             //FIXME: V5 merging issue
-            return isFromCurrentSender(message: message) ? UIColor.red : UIColor.red
+            return isFromCurrentSender(message: message) ? UIColor.mnz_chatOutgoingBubble(UIScreen.main.traitCollection) : UIColor.mnz_chatIncomingBubble(UIScreen.main.traitCollection)
             
         default:
             //FIXME: V5 merging issue
-            return isFromCurrentSender(message: message) ? UIColor.red : UIColor.red
+            return isFromCurrentSender(message: message) ? UIColor.mnz_chatOutgoingBubble(UIScreen.main.traitCollection) : UIColor.mnz_chatIncomingBubble(UIScreen.main.traitCollection)
             
         }
         
     }
 
     func textColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
-        return isFromCurrentSender(message: message) ? .white : .black
+        return isFromCurrentSender(message: message) ? .white : .mnz_label()
     }
 
     func messageStyle(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageStyle {
@@ -47,7 +57,8 @@ extension ChatViewController: MessagesDisplayDelegate {
             }
             containerView.layer.cornerRadius = 13.0
             
-            containerView.layer.borderColor = self.isFromCurrentSender(message: message) ?  #colorLiteral(red: 0, green: 0.5803921569, blue: 0.462745098, alpha: 1).cgColor :  #colorLiteral(red: 0.8941176471, green: 0.9215686275, blue: 0.9176470588, alpha: 1).cgColor
+            let boraderColor = self.isFromCurrentSender(message: message) ? UIColor.mnz_chatOutgoingBubble(UIScreen.main.traitCollection) : UIColor.mnz_chatIncomingBubble(UIScreen.main.traitCollection)
+            containerView.layer.borderColor = boraderColor.cgColor
             containerView.layer.borderWidth = 1
             
             if chatMessage.message.status == .sending || chatMessage.message.status == .sendingManual {
