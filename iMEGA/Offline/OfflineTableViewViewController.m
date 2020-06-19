@@ -159,7 +159,7 @@ static NSString *kPath = @"kPath";
         
         cell.infoLabel.text = [NSString stringWithFormat:@"%@ • %@", [Helper memoryStyleStringFromByteCount:size], modificationDate.mnz_formattedDefaultDateForMedia];
     }
-    cell.nameLabel.text = [[MEGASdkManager sharedMEGASdk] unescapeFsIncompatible:nameString];
+    cell.nameLabel.text = [[MEGASdkManager sharedMEGASdk] unescapeFsIncompatible:nameString destinationPath:[NSHomeDirectory() stringByAppendingString:@"/"]];
     
     if (self.tableView.isEditing) {
         for (NSURL *url in self.offline.selectedItems) {
