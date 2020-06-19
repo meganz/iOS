@@ -40,7 +40,6 @@
 #import "ContactsViewController.h"
 #import "CopyrightWarningViewController.h"
 #import "CustomModalAlertViewController.h"
-#import "MEGAAssetsPickerController.h"
 #import "MEGAImagePickerController.h"
 #import "MEGANavigationController.h"
 #import "MEGAPhotoBrowserViewController.h"
@@ -55,6 +54,8 @@
 #import "UpgradeTableViewController.h"
 #import "UIViewController+MNZCategory.h"
 #import "MEGA-Swift.h"
+
+@import Photos;
 
 static const NSTimeInterval kSearchTimeDelay = .5;
 
@@ -860,6 +861,25 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     [self reloadData];
 }
 
+- (void)loadPhotoAlbumBrowser {
+    AlbumsTableViewController *albumTableViewController = [AlbumsTableViewController.alloc
+                                                           initWithSelectionActionText:AMLocalizedString(@"Upload (%d)",
+                                                                                                         @"Used in Photos app browser view to send the photos from the view to the cloud.")
+                                                           selectionActionDisabledText:AMLocalizedString(@"upload", @"Used in Photos app browser view as a disabled action when there is no assets selected")
+                                                           completionBlock:^(NSArray<PHAsset *> * _Nonnull assets) {
+        if (assets.count > 0) {
+            for (PHAsset *asset in assets) {
+                [MEGAStore.shareInstance insertUploadTransferWithLocalIdentifier:asset.localIdentifier
+                                                                  parentNodeHandle:self.parentNode.handle];
+            }
+            
+            [Helper startPendingUploadTransferIfNeeded];
+        }
+    }];
+    MEGANavigationController *navigationController = [MEGANavigationController.alloc initWithRootViewController:albumTableViewController];
+    [self presentViewController:navigationController animated:YES completion:nil];
+}
+
 - (void)showImagePickerForSourceType:(UIImagePickerControllerSourceType)sourceType {
     if (sourceType == UIImagePickerControllerSourceTypeCamera) {
         MEGAImagePickerController *imagePickerController = [[MEGAImagePickerController alloc] initToUploadWithParentNode:self.parentNode sourceType:sourceType];
@@ -867,8 +887,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     } else {
         [DevicePermissionsHelper photosPermissionWithCompletionHandler:^(BOOL granted) {
             if (granted) {
-                MEGAAssetsPickerController *pickerViewController = [[MEGAAssetsPickerController alloc] initToUploadToCloudDriveWithParentNode:self.parentNode];
-                [self presentViewController:pickerViewController animated:YES completion:nil];
+                [self loadPhotoAlbumBrowser];
             } else {
                 [DevicePermissionsHelper alertPhotosPermission];
             }
@@ -1090,15 +1109,6 @@ static const NSTimeInterval kSearchTimeDelay = .5;
             }
         }];
     }]];
-    if (@available(iOS 13.0, *)) {
-        [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"Scan Document", @"Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA") detail:nil image:[UIImage imageNamed:@"scanDocument"] style:UIAlertActionStyleDefault actionHandler:^{
-            [self presentViewController:({
-                VNDocumentCameraViewController *scanVC = [VNDocumentCameraViewController.alloc init];
-                scanVC.delegate = self;
-                scanVC;
-            }) animated:YES completion:nil];
-        }]];
-    }
     [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"uploadFrom", @"Option given on the `Add` section to allow the user upload something from another cloud storage provider.") detail:nil image:[UIImage imageNamed:@"import"] style:UIAlertActionStyleDefault actionHandler:^{
         UIDocumentMenuViewController *documentMenuViewController = [[UIDocumentMenuViewController alloc] initWithDocumentTypes:@[(__bridge NSString *) kUTTypeContent, (__bridge NSString *) kUTTypeData,(__bridge NSString *) kUTTypePackage, (@"com.apple.iwork.pages.pages"), (@"com.apple.iwork.numbers.numbers"), (@"com.apple.iwork.keynote.key")] inMode:UIDocumentPickerModeImport];
         documentMenuViewController.delegate = self;
@@ -1493,6 +1503,16 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"upload", @"") detail:nil image:[UIImage imageNamed:@"upload"] style:UIAlertActionStyleDefault actionHandler:^{
         [weakSelf presentUploadAlertController];
     }]];
+    
+    if (@available(iOS 13.0, *)) {
+        [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"Scan Document", @"Menu option from the `Add` section that allows the user to scan document and upload it directly to MEGA") detail:nil image:[UIImage imageNamed:@"scanDocument"] style:UIAlertActionStyleDefault actionHandler:^{
+            [self presentViewController:({
+                VNDocumentCameraViewController *scanVC = [VNDocumentCameraViewController.alloc init];
+                scanVC.delegate = self;
+                scanVC;
+            }) animated:YES completion:nil];
+        }]];
+    }
     [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"newFolder", @"Menu option from the `Add` section that allows you to create a 'New Folder'") detail:nil image:[UIImage imageNamed:@"newFolder"] style:UIAlertActionStyleDefault actionHandler:^{
         UIAlertController *newFolderAlertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"newFolder", @"Menu option from the `Add` section that allows you to create a 'New Folder'") message:nil preferredStyle:UIAlertControllerStyleAlert];
         
@@ -1971,7 +1991,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
         vc.docs = docs.copy;
         [self presentViewController:({
             MEGANavigationController *nav = [MEGANavigationController.alloc initWithRootViewController:vc];
-            [nav addLeftDismissButtonWithText:AMLocalizedString(@"ok", nil)];
+            [nav addLeftDismissButtonWithText:AMLocalizedString(@"cancel", nil)];
             nav;
         }) animated:YES completion:nil];
     }];
