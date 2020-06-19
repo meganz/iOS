@@ -11,6 +11,9 @@
 
 #import "MEGAGenericRequestDelegate.h"
 
+#import "MEGA-Swift.h"
+
+
 @interface PasswordReminderViewController ()
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
@@ -111,6 +114,7 @@
     } else {
         [[MEGASdkManager sharedMEGASdk] passwordReminderDialogSkippedWithDelegate:delegate];
     }
+    [OverDiskQuotaService.sharedService invalidate];
 }
 
 - (void)configureUI {
