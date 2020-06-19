@@ -1206,7 +1206,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     [self.messages removeAllObjects];
     [self.messages addObject:message];
     [self.collectionView reloadData];
-    [self updateUnreadMessagesLabel:0];
     [self.attachmentMessages removeAllObjects];
 }
 
@@ -1301,6 +1300,9 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 }
 
 - (NSIndexPath *)indexPathForCellWithUnreadMessagesLabel {
+    if (self.messages.count < self.unreadMessages) {
+        return nil;
+    }
     return [NSIndexPath indexPathForItem:(self.messages.count - self.unreadMessages) inSection:0];
 }
 
@@ -1317,7 +1319,9 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         self.unreadMessages = unreads;
         unreadMessagesIndexPath = [self indexPathForCellWithUnreadMessagesLabel];
     }
-    [self.collectionView reloadItemsAtIndexPaths:@[unreadMessagesIndexPath]];
+    if (unreadMessagesIndexPath) {
+        [self.collectionView reloadItemsAtIndexPaths:@[unreadMessagesIndexPath]];
+    }
 }
 
 - (void)updateOffsetForCellAtIndexPath:(NSIndexPath *)indexPath previousHeight:(CGFloat)previousHeight {

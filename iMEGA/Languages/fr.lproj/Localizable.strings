@@ -2068,8 +2068,6 @@
 "24 hours"="24 heures";
 /* Chat Notifications DND: Title bar message for the dnd activate options */
 "Mute chat Notifications for"="Mettre les notifications en sourdine pendant";
-/* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
-"Muted forever"="Plus aucune notification";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="Notifications de dialogue en ligne";
 /* Chat settings: This text appears with the Do Not Disturb switch */
