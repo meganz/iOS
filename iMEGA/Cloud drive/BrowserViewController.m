@@ -259,7 +259,9 @@
 - (void)setParentNodeForBrowserAction {
     if (self.cloudDriveButton.selected) {
         if (self.isParentBrowser) {
-            self.parentNode = MEGASdkManager.sharedMEGASdk.rootNode;
+            if (!self.parentNode) {
+                self.parentNode = MEGASdkManager.sharedMEGASdk.rootNode;
+            }
         }
         self.nodes = [MEGASdkManager.sharedMEGASdk childrenForParent:self.parentNode];
     } else if (self.incomingButton.selected) {
@@ -675,7 +677,7 @@
     
     if (self.cloudDriveButton.selected) {
         if (node.isFile) {
-            cell.infoLabel.text = [Helper sizeAndDateForNode:node api:[MEGASdkManager sharedMEGASdk]];
+            cell.infoLabel.text = [Helper sizeAndModicationDateForNode:node api:[MEGASdkManager sharedMEGASdk]];
         } else {
             cell.infoLabel.text = [Helper filesAndFoldersInFolderNode:node api:[MEGASdkManager sharedMEGASdk]];
         }

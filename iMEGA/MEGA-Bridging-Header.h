@@ -8,7 +8,7 @@
 
 #import "LocalizationSystem.h"
 #import "LTHPasscodeViewController.h"
-
+#import "MEGAPushNotificationSettings.h"
 #import "UIScrollView+EmptyDataSet.h"
 #import "SAMKeychain.h"
 #import "SVProgressHUD.h"
@@ -32,7 +32,6 @@
 #import "NSFileManager+MNZCategory.h"
 
 
-#import "MEGAAssetsPickerController.h"
 #import "MEGAChatGenericRequestDelegate.h"
 #import "MEGAContactLinkCreateRequestDelegate.h"
 #import "MEGAConstants.h"
