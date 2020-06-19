@@ -79,11 +79,11 @@ fileprivate final class OverDiskQuotaQueryTask {
         }
 
         if shouldFetchMEGAPlans(availablePlansStore, errors: errors) {
-            MEGAPlanService.loadMegaPlans(with: api) { [weak self] plans in
+            MEGAPlanService.shared.send(MEGAPlanCommand { [weak self] plans in
                 guard let self = self else { return }
                 self.availablePlansStore = OverDiskQuotaPlans(availablePlans: plans)
                 self.start(with: api, completion: completion)
-           }
+            })
         }
     }
 
