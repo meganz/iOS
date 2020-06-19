@@ -175,7 +175,7 @@ static NSString *nodeToPresentBase64Handle;
                         [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
                     } else {
                         [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-                        [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, error.name]];
+                        [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, AMLocalizedString(error.name, nil)]];
                     }
                     return;
                 }
@@ -417,26 +417,18 @@ static NSString *nodeToPresentBase64Handle;
 }
 
 + (void)showLinkNotValid {
-    [MEGALinkManager showEmptyStateViewWithImageNamed:@"invalidFileLink" title:AMLocalizedString(@"linkNotValid", @"Message shown when the user clicks on an link that is not valid") text:@""];
-    
-    [MEGALinkManager resetLinkAndURLType];
-}
-
-+ (void)showEmptyStateViewWithImageNamed:(NSString *)imageName title:(NSString *)title text:(NSString *)text {
     UnavailableLinkView *unavailableLinkView = [[[NSBundle mainBundle] loadNibNamed:@"UnavailableLinkView" owner:self options:nil] firstObject];
-    unavailableLinkView.imageView.image = [UIImage imageNamed:imageName];
-    unavailableLinkView.imageView.contentMode = UIViewContentModeScaleAspectFit;
-    unavailableLinkView.titleLabel.text = title;
-    unavailableLinkView.textLabel.text = text;
+    [unavailableLinkView configureInvalidQueryLink];
     unavailableLinkView.frame = [[UIScreen mainScreen] bounds];
     
     UIViewController *viewController = [[UIViewController alloc] init];
     [viewController.view addSubview:unavailableLinkView];
-    viewController.navigationItem.title = title;
+    viewController.navigationItem.title = AMLocalizedString(@"linkNotValid", @"Message shown when the user clicks on an link that is not valid");
     
     MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:viewController];
     [navigationController addRightCancelButton];
     [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:nil];
+    [MEGALinkManager resetLinkAndURLType];
 }
 
 + (void)presentConfirmViewWithURLType:(URLType)urlType link:(NSString *)link email:(NSString *)email {
@@ -676,7 +668,7 @@ static NSString *nodeToPresentBase64Handle;
                 [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
             } else {
                 [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-                [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, error.name]];
+                [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, AMLocalizedString(error.name, nil)]];
             }
             return;
         }
@@ -686,7 +678,7 @@ static NSString *nodeToPresentBase64Handle;
             MEGAChatGenericRequestDelegate *autorejoinPublicChatDelegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
                 if (error.type) {
                     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-                    [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, error.name]];
+                    [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, AMLocalizedString(error.name, nil)]];
                     return;
                 }
                 [MEGALinkManager createChatAndShow:request.chatHandle publicChatLink:chatLinkUrl];
@@ -720,6 +712,7 @@ static NSString *nodeToPresentBase64Handle;
         }
     }
     
+    [MEGASdkManager.sharedMEGAChatSdk connect];
     [[MEGASdkManager sharedMEGAChatSdk] openChatPreview:chatLinkUrl delegate:delegate];
 }
 

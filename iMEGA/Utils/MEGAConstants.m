@@ -70,6 +70,7 @@ NSString * const H264Format = @"H.264";
 #pragma mark - MEGA URLS
 
 NSString * const MEGADisputeURL = @"https://mega.nz/dispute";
+NSString * const RequireTransferSession = @"fm/";
 
 #pragma mark - Group Shared Directory
 
@@ -110,4 +111,8 @@ NSString * const MEGAInvalidateNSECache = @"MEGAInvalidateNSECache";
 
 #pragma mark - DB name
 
-const NSUInteger MEGALastCharactersFromSession = 36;
+const NSUInteger MEGADropFirstCharactersFromSession = 44;
+
+#pragma mark - File size
+
+const long long MEGAMaxFileLinkAutoOpenSize = 10000000; //10Megabytes

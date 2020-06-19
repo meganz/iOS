@@ -156,7 +156,7 @@
         case BrowserActionImportFromFolderLink: {
             [self setupDefaultElements];
             
-            self.toolBarCopyBarButtonItem.title = AMLocalizedString(@"import", @"Button title that triggers the importing link action");
+            self.toolBarCopyBarButtonItem.title = AMLocalizedString(@"Import to Cloud Drive", @"Button title that triggers the importing link action");
             [self.toolBarCopyBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIMediumWithSize:17.0f]}  forState:UIControlStateNormal];
             [self setToolbarItems:@[self.toolBarNewFolderBarButtonItem, flexibleItem, self.toolBarCopyBarButtonItem]];
             break;
@@ -259,7 +259,9 @@
 - (void)setParentNodeForBrowserAction {
     if (self.cloudDriveButton.selected) {
         if (self.isParentBrowser) {
-            self.parentNode = MEGASdkManager.sharedMEGASdk.rootNode;
+            if (!self.parentNode) {
+                self.parentNode = MEGASdkManager.sharedMEGASdk.rootNode;
+            }
         }
         self.nodes = [MEGASdkManager.sharedMEGASdk childrenForParent:self.parentNode];
     } else if (self.incomingButton.selected) {
@@ -955,7 +957,7 @@
                 [SVProgressHUD dismiss];
             } else {
                 [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-                [SVProgressHUD showErrorWithStatus:error.name];
+                [SVProgressHUD showErrorWithStatus:AMLocalizedString(error.name, nil)];
             }
         }
         return;

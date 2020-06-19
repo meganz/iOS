@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14854.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14806.4"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -22,7 +22,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ulA-CI-VZp">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="633"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </scrollView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PCJ-Sw-nnM">
@@ -50,7 +50,7 @@
                                 </items>
                             </navigationBar>
                             <toolbar clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z54-Be-FUS">
-                                <rect key="frame" x="0.0" y="589" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="623" width="375" height="44"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <items>
                                     <barButtonItem title="Item" image="thumbnailsView" id="xTs-Xs-c6Q">
@@ -60,6 +60,13 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="9ow-6i-pKC"/>
+                                    <barButtonItem id="Ytc-aC-zrZ">
+                                        <color key="tintColor" red="0.95294117649999999" green="0.047058823530000002" blue="0.078431372550000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <connections>
+                                            <action selector="didPressCenterToolbarButton:" destination="yD8-RT-K0O" id="GsB-ll-PuH"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="ojh-69-QhP"/>
                                     <barButtonItem title="Item" image="openWith" id="Rck-W5-yGE">
                                         <color key="tintColor" red="0.95294117647058818" green="0.047058823529411764" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
@@ -70,7 +77,7 @@
                                 <color key="tintColor" red="0.85098039219999999" green="0.0" blue="0.027450980390000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </toolbar>
                             <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HQW-yX-2Zj" customClass="PieChartView">
-                                <rect key="frame" x="335" y="549" width="30" height="30"/>
+                                <rect key="frame" x="335" y="583" width="30" height="30"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.19836258561643835" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="30" id="13M-em-UuB"/>
@@ -101,6 +108,7 @@
                     </view>
                     <size key="freeformSize" width="375" height="667"/>
                     <connections>
+                        <outlet property="centerToolbarItem" destination="Ytc-aC-zrZ" id="HwJ-in-pI9"/>
                         <outlet property="customActionsButton" destination="YVt-M3-aSH" id="YEr-Op-Iyv"/>
                         <outlet property="leftToolbarItem" destination="xTs-Xs-c6Q" id="SN4-Os-Oha"/>
                         <outlet property="navigationBar" destination="FGv-7h-IkY" id="T9E-zi-bd6"/>
@@ -175,7 +183,7 @@
                                                     <color key="backgroundColor" white="0.0" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </view>
                                                 <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="video_list" translatesAutoresizingMaskIntoConstraints="NO" id="1KU-gq-FxY">
-                                                    <rect key="frame" x="35" y="35" width="22" height="22"/>
+                                                    <rect key="frame" x="35.666666666666664" y="35.666666666666664" width="22" height="22"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="22" id="B3l-NC-USQ"/>
                                                         <constraint firstAttribute="width" constant="22" id="iwr-Q3-AVM"/>
@@ -226,9 +234,9 @@
         </scene>
     </scenes>
     <resources>
-        <image name="more" width="26" height="6"/>
-        <image name="openWith" width="24" height="24"/>
-        <image name="thumbnailsView" width="24" height="24"/>
+        <image name="more" width="28" height="28"/>
+        <image name="openWith" width="28" height="28"/>
+        <image name="thumbnailsView" width="28" height="28"/>
         <image name="video_list" width="22" height="22"/>
     </resources>
 </document>

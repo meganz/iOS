@@ -75,8 +75,6 @@
 
 @property (nonatomic, getter=isSignalActivityRequired) BOOL signalActivityRequired;
 
-@property (nonatomic) MEGAIndexer *indexer;
-
 @property (nonatomic) NSUInteger megatype; //1 share folder, 2 new message, 3 contact request
 
 @property (strong, nonatomic) MEGAChatRoom *chatRoom;
@@ -96,7 +94,6 @@
 @property (nonatomic, getter=isUpgradeVCPresented) BOOL upgradeVCPresented;
 @property (nonatomic, getter=isAccountExpiredPresented) BOOL accountExpiredPresented;
 
-@property (strong, nonatomic) dispatch_queue_t indexSerialQueue;
 @property (strong, nonatomic) BackgroundRefreshPerformer *backgroundRefreshPerformer;
 @property (nonatomic, strong) MEGAProviderDelegate *megaProviderDelegate;
 
@@ -133,9 +130,7 @@
     MEGALogDebug(@"[App Lifecycle] Application will finish launching with options: %@", launchOptions);
     
     UIDevice.currentDevice.batteryMonitoringEnabled = YES;
-    
-    self.indexSerialQueue = dispatch_queue_create("nz.mega.spotlight.nodesIndexing", DISPATCH_QUEUE_SERIAL);
-    
+        
     [CameraUploadManager.shared setupCameraUploadWhenApplicationLaunches];
     
     return YES;
@@ -272,8 +267,6 @@
         }
     }
     
-    self.indexer = [[MEGAIndexer alloc] init];
-    [Helper setIndexer:self.indexer];
 
     UIApplicationShortcutItem *applicationShortcutItem = launchOptions[UIApplicationLaunchOptionsShortcutItemKey];
     if (applicationShortcutItem != nil) {
@@ -578,7 +571,7 @@
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
     MEGALogWarning(@"[App Lifecycle] Application did receive memory warning");
     
-    [self.indexer stopIndexing];
+    [MEGAIndexer.sharedIndexer stopIndexing];
 }
 
 - (void)application:(UIApplication *)application handleEventsForBackgroundURLSession:(NSString *)identifier completionHandler:(void (^)(void))completionHandler {
@@ -946,7 +939,9 @@
         if ([filename containsString:@"megaclient"] || [filename containsString:@"karere"]) {
             NSString *destinationPath = [groupSupportPath stringByAppendingPathComponent:filename];
             [NSFileManager.defaultManager mnz_removeItemAtPath:destinationPath];
-            if (![fileManager copyItemAtPath:[applicationSupportDirectoryString stringByAppendingPathComponent:filename] toPath:destinationPath error:&error]) {
+            if ([fileManager copyItemAtPath:[applicationSupportDirectoryString stringByAppendingPathComponent:filename] toPath:destinationPath error:&error]) {
+                MEGALogDebug(@"Copy file %@", filename);
+            } else {
                 MEGALogError(@"Copy item at path failed with error: %@", error);
             }
         }
@@ -1110,18 +1105,21 @@ void uncaughtExceptionHandler(NSException *exception) {
     NSURL *containerURL = [NSFileManager.defaultManager containerURLForSecurityApplicationGroupIdentifier:MEGAGroupIdentifier];
     NSURL *nseCacheURL = [containerURL URLByAppendingPathComponent:MEGANotificationServiceExtensionCacheFolder isDirectory:YES];
     NSString *session = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
-    NSString *filename = [NSString stringWithFormat:@"karere-%@.db", [session substringFromIndex:MAX(session.length - MEGALastCharactersFromSession, 0)]];
-    NSURL *nseCacheFileURL = [nseCacheURL URLByAppendingPathComponent:filename];
-    
-    if ([NSFileManager.defaultManager fileExistsAtPath:nseCacheFileURL.path]) {
-        if (MEGAStore.shareInstance.areTherePendingMessages) {
-            MEGALogDebug(@"Import messages from %@", nseCacheFileURL.path);
-            [MEGASdkManager.sharedMEGAChatSdk importMessagesFromPath:nseCacheFileURL.path];
+    if (session.length > MEGADropFirstCharactersFromSession) {
+        NSString *sessionSubString = [session substringFromIndex:MEGADropFirstCharactersFromSession];
+        NSString *filename = [NSString stringWithFormat:@"karere-%@.db", sessionSubString];
+        NSURL *nseCacheFileURL = [nseCacheURL URLByAppendingPathComponent:filename];
+        
+        if ([NSFileManager.defaultManager fileExistsAtPath:nseCacheFileURL.path]) {
+            if (MEGAStore.shareInstance.areTherePendingMessages) {
+                MEGALogDebug(@"Import messages from %@", nseCacheFileURL.path);
+                [MEGASdkManager.sharedMEGAChatSdk importMessagesFromPath:nseCacheFileURL.path];
+            } else {
+                MEGALogDebug(@"No messages to import from NSE.");
+            }
         } else {
-            MEGALogDebug(@"No messages to import from NSE.");
+            MEGALogWarning(@"NSE cache file %@ doesn't exist", nseCacheFileURL.path);
         }
-    } else {
-        MEGALogWarning(@"NSE cache file %@ doesn't exist", nseCacheFileURL.path);
     }
 }
 
@@ -1145,6 +1143,10 @@ void uncaughtExceptionHandler(NSException *exception) {
 }
 
 - (void)presentBusinessExpiredViewIfNeeded {
+    if ([UIApplication.mnz_visibleViewController isKindOfClass:InitialLaunchViewController.class] || [UIApplication.mnz_visibleViewController isKindOfClass:LaunchViewController.class]) {
+        return;
+    }
+    
     if (MEGASdkManager.sharedMEGASdk.businessStatus == BusinessStatusGracePeriod) {
         if (MEGASdkManager.sharedMEGASdk.isMasterBusinessAccount) {
             CustomModalAlertViewController *customModalAlertVC = CustomModalAlertViewController.alloc.init;
@@ -1198,6 +1200,12 @@ void uncaughtExceptionHandler(NSException *exception) {
 - (void)logoutButtonWasPressed {
     [[MEGASdkManager sharedMEGASdk] logout];
 }
+
+- (void)passcodeWasEnabled {
+    MEGAIndexer.sharedIndexer.enableSpotlight = NO;
+}
+
+#pragma mark - Language
 
 - (void)languageCompatibility {
     
@@ -1324,6 +1332,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 }
 
 - (void)readyToShowRecommendations {
+    [self presentBusinessExpiredViewIfNeeded];
     [self showAddPhoneNumberIfNeeded];
 }
 
@@ -1406,14 +1415,6 @@ void uncaughtExceptionHandler(NSException *exception) {
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
     if (!nodeList) {
         [Helper startPendingUploadTransferIfNeeded];
-    } else {
-        dispatch_async(self.indexSerialQueue, ^{
-            NSArray<MEGANode *> *nodesToIndex = [nodeList mnz_nodesArrayFromNodeList];
-            MEGALogDebug(@"Spotlight indexing %tu nodes updated", nodesToIndex.count);
-            for (MEGANode *node in nodesToIndex) {
-                [self.indexer index:node];
-            }
-        });
     }
 }
 
@@ -1652,18 +1653,8 @@ void uncaughtExceptionHandler(NSException *exception) {
                 [self showMainTabBar];
                 [self showEnableTwoFactorAuthenticationIfNeeded];
             }
-            
-            NSUserDefaults *sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];
-            dispatch_async(self.indexSerialQueue, ^{
-                if (![sharedUserDefaults boolForKey:@"treeCompleted"]) {
-                    [self.indexer generateAndSaveTree];
-                }
-                @try {
-                    [self.indexer indexTree];
-                } @catch (NSException *exception) {
-                    MEGALogError(@"Exception during spotlight indexing: %@", exception);
-                }
-            });
+      
+            [MEGAIndexer.sharedIndexer reindexSpotlightIfNeeded];
             
             [[MEGASdkManager sharedMEGASdk] getAccountDetails];
 
@@ -1798,6 +1789,12 @@ void uncaughtExceptionHandler(NSException *exception) {
     
     if (request.type == MEGAChatRequestTypeImportMessages) {
         MEGALogDebug(@"Imported messages %lld", request.number);
+        NSManagedObjectContext *childQueueContext = MEGAStore.shareInstance.childPrivateQueueContext;
+        if (childQueueContext) {
+            [childQueueContext performBlock:^{
+                [MEGAStore.shareInstance deleteAllMessagesWithContext:childQueueContext];
+            }];
+        }
     }
     
     MEGALogInfo(@"onChatRequestFinish request type: %td", request.type);

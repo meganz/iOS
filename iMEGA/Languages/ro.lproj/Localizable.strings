@@ -436,22 +436,6 @@
 "renameNodeMessage"="Introdu numele nou";
 /* Title for the action that allows you to 'Move to the Rubbish Bin' files or folders */
 "moveToTheRubbishBin"="Mută la coșul de gunoi";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 file' */
-"moveFileToRubbishBinMessage"="Sigur vrei să muți 1 fișier în coșul de gunoi?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin '{1+} files' */
-"moveFilesToRubbishBinMessage"="Sigur vrei să muți %d fișiere în coșul de gunoi?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin '1 folder' */
-"moveFolderToRubbishBinMessage"="Sigur vrei să muți 1 folder în coșul de gunoi?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} folders" */
-"moveFoldersToRubbishBinMessage"="Sigur vrei să muți %d foldere în coșul de gunoi?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and 1 folder" */
-"moveFileFolderToRubbishBinMessage"="Sigur vrei să muți 1 fișier și 1 folder în coșul de gunoi?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "1 file and {1+} folders" */
-"moveFileFoldersToRubbishBinMessage"="Sigur vrei să muți 1 fișier și %d foldere în coșul de gunoi?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "{1+} files and 1 folder" */
-"moveFilesFolderToRubbishBinMessage"="Sigur vrei să muți %d fișiere și 1 folder în coșul de gunoi?";
-/* Alert message to confirm if the user wants to move to the Rubbish Bin "[A] = {1+} files and [B] = {1+} folders" */
-"moveFilesFoldersToRubbishBinMessage"="Sigur vrei să muți [A] fișiere și [B] foldere în coșul de gunoi?";
 /* Success message shown when you have moved 1 file to the rubbish bin */
 "fileMovedToRubbishBinMessage"="1 fișier mutat în coșul de gunoi";
 /* Success message shown when you have moved {1+} files to the rubbish bin */
@@ -477,7 +461,7 @@
 /* Success message for sharing multiple folders. */
 "sharedFolders_success"="%d foldere partajate cu succes.";
 /* Button title that triggers the importing link action */
-"import"="Importă";
+"Import to Cloud Drive"="Importă în unitatea cloud";
 /* Message shown when a file has been imported */
 "fileImported"="Fișier importat";
 /* Message shown when some files have been imported */
@@ -522,6 +506,12 @@
 "offline"="Offline";
 /* Title of the Contacts section */
 "contactsTitle"="Contacte";
+/* Label for any ‘Requests’ button, link, text, title, etc. On iOS is used to go to the Contact request section from Contacts */
+"Requests"="Cereri";
+/* Label for any ‘Groups’ button, link, text, title, etc. On iOS is used to go to the chats 'Groups' section from Contacts */
+"Groups"="Grupuri";
+/* Label for any ‘Recently Added’ button, link, text, title, etc. On iOS is used on a section that shows the 'Recently Added' contacts */
+"Recently Added"="Adăugate recent";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
 "oneFolderShared"="1 folder";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
@@ -574,8 +564,6 @@
 "theUsersHaveBeenInvited"="Utilizatorii au fost invitați și vor apărea în lista de contacte de îndată ce au acceptat invitația.";
 /* Alert title shown when you want to remove one or more contacts */
 "removeUserTitle"="Elimină contactul";
-/* Alert confirmation message shown when you want to remove one contact from your contacts list */
-"removeUserMessage"="Sigur vrei să elimini contactul %@ din lista de contacte?";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
 "removeMultipleUsersMessage"="Sigur vrei să elimini %d utilizatori din lista de contacte?";
 /* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
@@ -600,7 +588,7 @@
 "shareFolder"="Partajează folderul";
 /* Button title which, if tapped, will trigger the action of sharing the folders selected */
 "shareFolders"="Foldere partajate";
-/* Button that allows you to select a given folder */
+/* Button that allows you to select something (a folder, a message...) */
 "select"="Selectează";
 /* Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder */
 "permissions"="Permisiuni";
@@ -945,8 +933,8 @@
 "unlockedBonuses"="Bonusuri deblocate:";
 /* A header/title of a section which contains information about used/available storage space on a user's cloud drive. */
 "storageQuota"="Cotă de stocare";
-/* The header/title of a block/section which contains information about the user's used/available transfer allowance for their account. */
-"transferQuota"="Cotă de transferuri";
+/* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
+"Transfer Quota"="Cotă de transferuri";
 /* achievement type */
 "registrationBonus"="Bonus de înregistrare";
 /* Message shown on the achievements dialog for achieved achievements, %1 is replaced with e.g. 20 GB */
@@ -992,11 +980,11 @@
 /* String shown when you are logging out of your account. */
 "loggingOut"="Deconectare";
 /* Button to remove some photo, e.g. avatar photo. Try to keep the text short (as in English) */
-"Remove Photo"="Remove Photo";
+"Remove Photo"="Elimină fotografia";
 /* Button that allows the user the change a photo, e.g. his avatar photo */
-"Change Photo"="Change Photo";
+"Change Photo"="Schimbă fotografia";
 /* Button that allows the user the add a photo, e.g avatar photo */
-"Add Photo"="Add Photo";
+"Add Photo"="Adaugă o fotografie";
 /* Button title that allows the user change his name */
 "changeName"="Schimbă numele";
 /* Success message when changing profile information. */
@@ -1261,8 +1249,10 @@
 "enableRichUrlPreviews"="Activează previzualizările îmbogățite ale URL-urilor";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "alwaysAllow"="Permite întotdeauna";
-/* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
+/* Text indicating to the user that some action will be postpone. E.g. used for 'rich previews' and management of disk storage. */
 "notNow"="Nu acum";
+/* Text indicating to the user some action should be addressed. E.g. Navigate to Settings/File Management to clear cache. */
+"Manage"="Gestionează";
 /* */
 "never"="Niciodată";
 /* After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings. */
@@ -1370,6 +1360,34 @@
 "Read error"="Eroare la citire";
 /* Label to show that an error related with an invalid or missing application key occurs during a SDK operation. */
 "Invalid application key"="Cheia aplicației nevalidă";
+/* Error shown when terms of service are breached during download. */
+"Terms of Service breached"="Au fost încălcați Termenii de utilizare a serviciului";
+/* SDK error returned when an upload would produce recursivity */
+"Upload produces recursivity"="Upload produces recursivity";
+/* Error shown when download a file that has violated ToS/AUP. */
+"Not accessible due to ToS/AUP violation"="Indisponibil din cauza încălcării ToS/AUP";
+/* Error shown when SSL check has failed */
+"SSL verification failed"="Verificarea SSL a eșuat";
+/* Label shown when current account does not have enough quota to complete the operation */
+"Not enough quota"="Cotă insuficientă";
+/* SDK error returned when a MFA is required to perform an operation */
+"Multi-factor authentication required"="Multi-factor authentication required";
+/* SDK error returned for operations only allowed for business master users */
+"Access denied for users"="Access denied for users";
+/* SDK error returned when a business account has expired */
+"Business account has expired"="Business account has expired";
+/* SDK error returned when the credit card has been rejected */
+"Credit card rejected"="Credit card rejected";
+/* SDK error returned when the billing failed */
+"Billing failed"="Billing failed";
+/* SDK error returned when an operation is rejected due to fraud protection */
+"Rejected by fraud protection"="Rejected by fraud protection";
+/* SDK error returned when there are too many requests */
+"Too many requests"="Too many requests";
+/* SDK error returned when there is a balance error */
+"Balance error"="Balance error";
+/* SDK error returned upon a HTTP error */
+"HTTP error"="HTTP error";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Eroare necunoscută";
 /* Text shown in an alert when the user is about to change the language of the app */
@@ -1420,7 +1438,7 @@
 "videoQuality"="Calitate video";
 /* Property associated with something smaller than the usual or average size, number, value, or amount. For example: option to encode a video with low quality. */
 "low"="Scăzut(ă)";
-/* Option to upload videos with the same resolution and same framerate than the original one, but converting them to MP4. */
+/* Property associated with something higher than the usual or average size, number, value, or amount. For example: video quality. */
 "high"="Ridicat(ă)";
 /* Property associated with the first one made and not a copy. For example: Get the original video, without encoding.  */
 "original"="Original";
@@ -1436,8 +1454,8 @@
 "resetQrCode"="Resetează codul QR";
 /* Footer that explains what would happen if the user resets his/her QR code */
 "resetQrCodeFooter"="Codurile QR anterioare nu vor mai fi valide.";
-/* Title for view that displays the QR code of the user. String as short as possible. */
-"myCode"="Codul meu";
+/* Label for any ‘My QR code’ button, link, text, title, etc. - (String as short as possible). */
+"My QR code"="Codul meu QR";
 /* Segmented control title for view that allows the user to scan QR codes. String as short as possible. */
 "scanCode"="Scanează un cod";
 /* Label that encourage the user to line the QR to scan with the camera */
@@ -1636,6 +1654,10 @@
 "Save a copy of the images and videos taken from the MEGA app in your device’s media library."="Salvează o copie a imaginilor și videoclipurilor realizate din aplicația MEGA în biblioteca media a dispozitivului.";
 /* Settings section title where you can enable the option to 'Spotlight search' */
 "Spotlight Search"="Căutare cu Spotlight";
+/* Title of the Spotlight Search section */
+"Search"="Caută";
+/* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="Will allow searching of MEGA files/folders in your device's Spotlight Search";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="Tu deții cheile";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -1994,7 +2016,7 @@
 "Business"="Business";
 /* */
 "Administrator"="Administrator";
-/* */
+/* Label to indicate the amount of transfer quota in several places. It is a ‘noun‘ and there is an screenshot with an use example - (String as short as possible). */
 "Transfer"="Transferuri";
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
 "You cannot remove %1$s as a contact because they are part of your Business account."="Nu poți elimina pe %1$s ca contact, deoarece face parte din contul tău business.";
@@ -2048,26 +2070,10 @@
 "Mute chat Notifications for"="Amuțește notificările de chat timp de";
 /* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
 "Muted forever"="Amuțite pentru totdeauna";
-/* Chat Notifications DND: Remaining time left to deactivate DND - 1 minute left */
-"1 minute left"="1 minut rămas";
-/* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 minute left */
-"%d minutes left"="%d minute rămase";
-/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour left */
-"1 hour left"="1 oră rămasă";
-/* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 hour left */
-"%d hours left"="%d ore rămase";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="Notificări de chat";
 /* Chat settings: This text appears with the Do Not Disturb switch */
 "Do Not Disturb"="Nu deranja";
-/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, 1 minute left */
-"1 hour, 1 minute left"="1 oră, 1 minut rămase";
-/* Chat Notifications DND: Remaining time left to deactivate DND - X hours, X minutes left */
-"%d hours, %d minutes left"="%d ore, %d minute rămase";
-/* Chat Notifications DND: Remaining time left to deactivate DND - X hours, 1 minute left */
-"%d hours, 1 minute left"="%d ore, 1 minut rămase";
-/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, X minutes left */
-"1 hour, %d minutes left"="1 oră, %d minute rămase";
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
 "Reconnecting..."="Se reconectează…";
 /* Title shown when the user reconnect in a call. */
@@ -2114,6 +2120,8 @@
 "Please enter a valid phone number"="Te rugăm să furnizezi un număr de telefon valid.";
 /* Error message that will show to user when user reached the sms verification daily limit */
 "You have reached the daily limit"="Ai atins limita zilnică";
+/* Error message that will be shown when the code introduced do not match with the one you received */
+"The verification code doesn't match."="Codul de verificare nu coincide.";
 /* Error message that will show to user when user entered invalid verification code */
 "Wrong code. Please try again or resend."="Cod greșit. Te rugăm să încerci din nou sau să retrimiți.";
 /* Error message that will show to user when host detected that the mobile number has been registered already */
@@ -2125,7 +2133,7 @@
 /* Place holder for enter mobile number field */
 "Your phone number"="Numărul tău de telefon";
 /* Text related to verified phone number. Used as title or cell description.  */
-"Phone Number"="Phone Number";
+"Phone Number"="Număr de telefon";
 /* Label tell user to enter received txt to below input boxes */
 "Please type the verification code sent to"="Te rugăm să introduci codul de verificare trimis către";
 /* Text message to remind user to resend verification code */
@@ -2156,13 +2164,13 @@
 "Select Folder"="Selectează folderul";
 /* Title of the folder selection screen for camera uploads */
 "Choose Folder"="Alege un folder";
-/* Label used near to the option selected to encode the images uploaded to a chat (Low, Medium, Original) */
+/* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
 "Image quality"="Calitatea imaginii";
-/* Title of Image Quality option */
+/* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
 "Automatic"="Automat";
 /* Description of Automatic Image Quality option */
 "Send smaller size images through cellular networks and original size images through wifi"="Trimite imagini de dimensiuni mai mici prin rețele celulare și imagini de dimensiuni originale prin Wi-Fi";
-/* Title of Image Quality option */
+/* Text for some option property indicating the user the action to perform will be optimised. For example: Image Quality reduction option for chats */
 "Optimised"="Optimizată";
 /* Description of Optimised Image Quality option */
 "Send smaller size images optimised for lower data consumption"="Trimite imagini de dimensiuni mai mici, optimizate pentru un consum de date mai mic";
@@ -2178,12 +2186,38 @@
 "Your account has been disabled by your administrator. Please contact your business account administrator for further details."="Contul tău a fost dezactivat de către administrator. Te rugăm să contactezi administratorul contului tău business pentru detalii suplimentare.";
 /* An error message which appears to sub-users of a business account when they try to login and they are deleted. */
 "Your account has been removed by your administrator. Please contact your business account administrator for further details."="Contul tău a fost eliminat de către administrator. Te rugăm să contactezi administratorul contului tău business pentru detalii suplimentare.";
-/* Description of why the user should give permission to contacts */
-"Easily discover contacts from your address book on MEGA."="Descoperă cu ușurință contactele din agenda de adrese pe MEGA.";
-/* Detailed description of why the user should give permission to contacts */
-"MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA nu va folosi aceste date în alt scop și nu va interacționa niciodată cu contactele tale fără consimțământul tău.";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="Introdu numele grupului";
+/* Title of one of the Settings sections where you can customise the 'Appearance' of the app. */
+"Appearance"="Înfățișare";
+/* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
+"Sorting And View Mode"="Mod de sortare și vizualizare";
+/* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
+"Default"="Implicit";
+/* Label for any ‘Day’ button, link, text, title, etc. - (String as short as possible). */
+"Day"="Zi";
+/* Label for any ‘Night’ button, link, text, title, etc. - (String as short as possible). */
+"Night"="Noapte";
+/* Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible). */
+"Minimal"="Minimal";
+/* Section title inside of Settings - Appearance, where you can change the app's layout. */
+"Layout"="Aspect";
+/* Section title inside of Settings - Appearance, where you can change the app's icon. */
+"App Icon"="Pictograma aplicației";
+/* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
+"Configure sorting order and the default view (List or Thumbnail)."="Configure sorting order and the default view (List or Thumbnail).";
+/* Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for All'. */
+"Per Folder"="Per folder";
+/* Same for all configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for all Folders'. */
+"Same for All"="La fel pentru toate";
+/* Section title of the 'Sorting And View Mode' view inside of Settings - Appearence - Sorting And View Mode. */
+"Sorting preference"="Preferințe pentru sortare";
+/* Section title of the 'Sorting And View Mode' view inside of Settings - Appearence - Sorting And View Mode. */
+"View mode preference"="Preferințe pentru modul de vizualizare";
+/* Footer text explaining what means choosing a sorting preference 'Per Folder' or 'Same for All' in Settings - Appearance - Sorting And View Mode. */
+"Configure column sorting order on a per-folder basis, or use the same order for all folders."="Configurează ordinea de sortare a coloanelor pe o bază per folder sau folosește aceeași ordine pentru toate folderele.";
+/* Footer text explaining what means choosing a view mode preference 'Per Folder', 'List view' or 'Thumbnail view' in Settings - Appearance - Sorting And View Mode. */
+"Select view mode (List or Thumbnail) on a per-folder basis, or use the same view mode for all folders."="Select view mode (List or Thumbnail) on a per-folder basis, or use the same view mode for all folders.";
 /* Warning message to alert user about logout in My Account section if has transfers in progress. */
 "When you logout, ongoing transfers will be cancelled."="Când te deconectezi, transferurile în curs vor fi anulate.";
 /* Warning message to alert user about logout in My Account section if has offline files. */
@@ -2192,3 +2226,11 @@
 "When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled."="Când te deconectezi, fișierele din secțiunea Offline vor fi șterse de pe dispozitiv și transferurile în curs vor fi anulate.";
 /* Default title of an empty chat. */
 "Chat created on %s1"="Chat creat în %s1";
+/* Title shown when there are no shared files */
+"No Shared Files"="No Shared Files";
+/* Error message shown when opening a folder link which doesn’t exist */
+"Folder link unavailable"="Linkul folderului indisponibil";
+/* Error message shown when opening a file link which doesn’t exist */
+"File link unavailable"="Linkul fișierului indisponibil";
+/* Header of block with all shared files in chat. */
+"Shared Files"="Fișiere partajate";
