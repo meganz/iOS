@@ -13,7 +13,7 @@ class GeoLocationView: UIView {
     }
     
     private func updateAppearance () {
-        backgroundColor = .mnz_secondaryBackgroundElevated(traitCollection)
+        backgroundColor = .mnz_backgroundGrouped(for: traitCollection)
         titleLabel.textColor = .mnz_label()
         subtitleLabel.textColor = .mnz_subtitles(for: traitCollection)
     }
