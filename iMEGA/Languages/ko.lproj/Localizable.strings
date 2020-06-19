@@ -1657,7 +1657,7 @@
 /* Title of the Spotlight Search section */
 "Search"="검색";
 /* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
-"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="When enabled, allow search and look up MEGA files/folders in Spotlight Search.";
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="Will allow searching of MEGA files/folders in your device's Spotlight Search";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="당신이 열쇠를 갖습니다";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -2068,28 +2068,10 @@
 "24 hours"="24시간";
 /* Chat Notifications DND: Title bar message for the dnd activate options */
 "Mute chat Notifications for"="대화 알림 끄기";
-/* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
-"Muted forever"="영구적으로 차단";
-/* Chat Notifications DND: Remaining time left to deactivate DND - 1 minute left */
-"1 minute left"="1분 남음";
-/* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 minute left */
-"%d minutes left"="%d분 남음";
-/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour left */
-"1 hour left"="1시간 남음";
-/* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 hour left */
-"%d hours left"="%d시간 남음";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="대화 알림";
 /* Chat settings: This text appears with the Do Not Disturb switch */
 "Do Not Disturb"="방해금지";
-/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, 1 minute left */
-"1 hour, 1 minute left"="1시간, 1분 남음";
-/* Chat Notifications DND: Remaining time left to deactivate DND - X hours, X minutes left */
-"%d hours, %d minutes left"="%d시간, %d분 남음";
-/* Chat Notifications DND: Remaining time left to deactivate DND - X hours, 1 minute left */
-"%d hours, 1 minute left"="%d시간, 1분 남음";
-/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, X minutes left */
-"1 hour, %d minutes left"="1시간, %d분 남음";
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
 "Reconnecting..."="재접속중...";
 /* Title shown when the user reconnect in a call. */
@@ -2136,6 +2118,8 @@
 "Please enter a valid phone number"="유효한 전화번호를 입력하세요.";
 /* Error message that will show to user when user reached the sms verification daily limit */
 "You have reached the daily limit"="일일 한도에 도달하였습니다";
+/* Error message that will be shown when the code introduced do not match with the one you received */
+"The verification code doesn't match."="인증 코드가 일치하지 않습니다.";
 /* Error message that will show to user when user entered invalid verification code */
 "Wrong code. Please try again or resend."="잘못된 코드. 다시 시도하거나 재발송하세요.";
 /* Error message that will show to user when host detected that the mobile number has been registered already */
@@ -2178,7 +2162,7 @@
 "Select Folder"="폴더 선택";
 /* Title of the folder selection screen for camera uploads */
 "Choose Folder"="폴더 선택";
-/* Label used near to the option selected to encode the images uploaded to a chat (Low, Medium, Original) */
+/* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
 "Image quality"="사진 품질";
 /* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
 "Automatic"="자동";
@@ -2246,3 +2230,5 @@
 "Folder link unavailable"="폴더 링크가 사용불가입니다";
 /* Error message shown when opening a file link which doesn’t exist */
 "File link unavailable"="파일 링크가 사용불가능합니다";
+/* Header of block with all shared files in chat. */
+"Shared Files"="공유된 파일";

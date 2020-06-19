@@ -38,7 +38,7 @@ extension AppDelegate {
     }
 
     @objc func showEnableTwoFactorAuthenticationIfNeeded() {
-        if UserDefaults.standard.bool(forKey: "twoFactorAuthenticationAlreadySuggested") || UIApplication.mnz_visibleViewController() is AddPhoneNumberViewController {
+        if UserDefaults.standard.bool(forKey: "twoFactorAuthenticationAlreadySuggested") {
             return
         }
 
@@ -47,6 +47,10 @@ extension AppDelegate {
                 return //Two Factor Authentication Enabled
             }
 
+            if UIApplication.mnz_visibleViewController() is AddPhoneNumberViewController || UIApplication.mnz_visibleViewController() is CustomModalAlertViewController || UIApplication.mnz_visibleViewController() is BusinessExpiredViewController || (MEGASdkManager.sharedMEGASdk().isBusinessAccount && MEGASdkManager.sharedMEGASdk().businessStatus != .active) {
+                return
+            }
+            
             let enable2FACustomModalAlert = CustomModalAlertViewController()
             enable2FACustomModalAlert.configureForTwoFactorAuthentication(requestedByUser: false)
 
