@@ -32,7 +32,7 @@ class ChatViewIntroductionHeaderView: MessageReusableView {
     @IBOutlet weak var authenticityImageView: UIImageView!
     @IBOutlet weak var authenticityTextLabel: UILabel!
     
-    var chatRoom: MEGAChatRoom! {
+    var chatRoom: MEGAChatRoom? {
         didSet {
             updateStatus()
         }
@@ -40,29 +40,16 @@ class ChatViewIntroductionHeaderView: MessageReusableView {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-        chattingWithTextLabel.font = UIFont.systemFont(ofSize: 12, weight: .regular)
-        participantsLabel.font = UIFont.systemFont(ofSize: 24, weight: .regular)
-        statusLabel.font = UIFont.systemFont(ofSize: 12, weight: .regular)
-
-        //FIXME: V5 merging issue
-        chattingWithTextLabel.textColor = .red
-        participantsLabel.textColor = UIColor.black
-        statusLabel.textColor = .red
-        
-        chattingWithTextLabel.text = AMLocalizedString("chattingWith", "Title show above the name of the persons with whom you're chatting")
-        descriptionLabel.text = AMLocalizedString("chatIntroductionMessage", "Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server.")
-        
-        let confidentialityText = AMLocalizedString("confidentialityExplanation", "Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit.");
-        setAttributedText(with: confidentialityText, label: confidentialityTextLabel)
-        
-        let authenticityText = AMLocalizedString("authenticityExplanation", "Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit.")
-        setAttributedText(with: authenticityText, label: authenticityTextLabel)
+        updateAppearance()
     }
     
     private func updateStatus() {
-        participantsLabel.text = chatRoom.participantsNames
+        guard let chatRoom = chatRoom else {
+            return
+        }
         
+        participantsLabel.text = chatRoom.participantsNames
+
         if chatRoom.isGroup {
             avatarImageView.isHidden = true
             avatarImageViewHeightConstraint.constant = 0.0
@@ -74,8 +61,7 @@ class ChatViewIntroductionHeaderView: MessageReusableView {
 
         if let status = chatRoom.onlineStatus {
             statusView.isHidden = (status == .invalid)
-            //FIXME: V5 merging issue
-            statusView.backgroundColor = UIColor.red
+            statusView.backgroundColor = UIColor.mnz_color(for: status)
             
             statusLabel.isHidden = (status == .invalid)
             statusLabel.text = NSString.chatStatusString(status)
@@ -83,6 +69,43 @@ class ChatViewIntroductionHeaderView: MessageReusableView {
             statusView.isHidden = true
             statusLabel.isHidden = true
         }
+        updateAppearance()
+    }
+    
+    private func updateAppearance () {
+        chattingWithTextLabel.font = UIFont.systemFont(ofSize: 12, weight: .regular)
+        participantsLabel.font = UIFont.systemFont(ofSize: 24, weight: .regular)
+        statusLabel.font = UIFont.systemFont(ofSize: 12, weight: .regular)
+        
+        //FIXME: V5 merging issue
+        chattingWithTextLabel.textColor = UIColor.mnz_red(for: traitCollection)
+        descriptionLabel.textColor = UIColor.mnz_primaryGray(for: traitCollection)
+        participantsLabel.textColor = UIColor.mnz_label()
+        statusLabel.textColor = UIColor.mnz_primaryGray(for: traitCollection)
+
+        chattingWithTextLabel.text = AMLocalizedString("chattingWith", "Title show above the name of the persons with whom you're chatting")
+        descriptionLabel.text = AMLocalizedString("chatIntroductionMessage", "Full text: MEGA protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: Confidentiality - Only the author and intended recipients are able to decipher and read the content. Authenticity - There is an assurance that the message received was authored by the stated sender, and its content has not been tampered with during transport or on the server.")
+        
+        let confidentialityText = AMLocalizedString("confidentialityExplanation", "Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit.");
+        setAttributedText(with: confidentialityText, label: confidentialityTextLabel)
+        
+        let authenticityText = AMLocalizedString("authenticityExplanation", "Chat advantages information. Full text: Mega protects your chat with end-to-end (user controlled) encryption providing essential safety assurances: [S]Confidentiality.[/S] Only the author and intended recipients are able to decipher and read the content. [S]Authenticity.[/S] The system ensures that the data received is from the sender displayed, and its content has not been manipulated during transit.")
+        setAttributedText(with: authenticityText, label: authenticityTextLabel)
+        
+        guard let status = chatRoom?.onlineStatus else {
+            return
+        }
+        statusView.backgroundColor = UIColor.mnz_color(for: status)
+
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        guard #available(iOS 13, *) else {
+            return
+        }
+        updateAppearance()
     }
     
     private func setAttributedText(with string: String, label: UILabel) {
@@ -91,11 +114,11 @@ class ChatViewIntroductionHeaderView: MessageReusableView {
         
         //FIXME: V5 merging issue
         let titleAttributes = [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15.0, weight: .regular),
-                                                               NSAttributedString.Key.foregroundColor: UIColor.red]
+                                                               NSAttributedString.Key.foregroundColor: UIColor.mnz_red(for: traitCollection)]
         let titleAttributedString = NSMutableAttributedString(string: title, attributes: titleAttributes)
         
         let descriptionAttributes = [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15.0, weight: .regular),
-                                     NSAttributedString.Key.foregroundColor: UIColor.red]
+                                     NSAttributedString.Key.foregroundColor: UIColor.mnz_primaryGray(for: traitCollection)]
         let descriptionAttributedString = NSMutableAttributedString(string: description, attributes: descriptionAttributes)
         
         titleAttributedString.append(descriptionAttributedString)
@@ -146,6 +169,6 @@ extension ChatViewIntroductionHeaderView: MEGARequestDelegate {
             return
         }
         
-        avatarImageView.image = chatRoom.avatarImage(delegate: nil)
+        avatarImageView.image = chatRoom?.avatarImage(delegate: nil)
     }
 }
