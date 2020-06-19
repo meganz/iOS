@@ -61,7 +61,7 @@ class SortingAndViewModeTableViewController: UITableViewController {
     
     // MARK: - Private
     
-    func updateAppearance() {
+    private func updateAppearance() {
         sortingPreferenceSameForAllDetailLabel.textColor = UIColor.mnz_secondaryLabel()
         
         tableView.separatorColor = UIColor.mnz_separator(for: traitCollection)
@@ -70,7 +70,7 @@ class SortingAndViewModeTableViewController: UITableViewController {
         tableView.reloadData()
     }
     
-    func setupUI() {
+    private func setupUI() {
         sortingPreference = UserDefaults.standard.integer(forKey: MEGASortingPreference)
         switch sortingPreference {
         case SortingPreference.perFolder.rawValue:
@@ -109,7 +109,7 @@ class SortingAndViewModeTableViewController: UITableViewController {
         selectedViewModePreferenceCell.redCheckmarkImageView.isHidden = false
     }
     
-    func setupSortingPreferenceSameForAllDetailLabel(orderType: Int) {
+    private func setupSortingPreferenceSameForAllDetailLabel(orderType: Int) {
         var orderTypeIndex: Int
         switch (orderType) {
         case MEGASortOrderType.defaultAsc.rawValue:
