@@ -9,13 +9,16 @@
 
 #import "NSDate+DateTools.h"
 #import "NSDate+MNZCategory.h"
+#import "UIAlertAction+MNZCategory.h"
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
 #import "UIColor+MNZCategory.h"
+#import "UIDevice+MNZCategory.h"
 
 #import "MEGAChatGenericRequestDelegate.h"
 #import "MEGAConstants.h"
+#import "MEGAGenericRequestDelegate.h"
 #import "MEGANavigationController.h"
 #import "MEGAStore.h"
 

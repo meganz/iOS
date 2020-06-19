@@ -132,51 +132,72 @@
 - (NSString *)bodyString {
     NSString *body;
     
-    if (self.message.type == MEGAChatMessageTypeContact) {
-        if (self.message.usersCount == 1) {
-            body = [NSString stringWithFormat:@"👤 %@", [self.message userNameAtIndex:0]];
-        } else {
-            body = [self.message userNameAtIndex:0];
-            for (NSUInteger i = 1; i < self.message.usersCount; i++) {
-                body = [body stringByAppendingString:[NSString stringWithFormat:@", %@", [self.message userNameAtIndex:i]]];
+    switch (self.message.type) {
+        case MEGAChatMessageTypeContact:
+            if (self.message.usersCount == 1) {
+                body = [NSString stringWithFormat:@"👤 %@", [self.message userNameAtIndex:0]];
+            } else {
+                body = [self.message userNameAtIndex:0];
+                for (NSUInteger i = 1; i < self.message.usersCount; i++) {
+                    body = [body stringByAppendingString:[NSString stringWithFormat:@", %@", [self.message userNameAtIndex:i]]];
+                }
             }
-        }
-    } else if (self.message.type == MEGAChatMessageTypeAttachment) {
-        MEGANodeList *nodeList = self.message.nodeList;
-        if (nodeList) {
-            if (nodeList.size.integerValue == 1) {
-                MEGANode *node = [nodeList nodeAtIndex:0];
-                if (node.hasThumbnail) {
-                    if (node.name.mnz_isVideoPathExtension) {
-                        body = [NSString stringWithFormat:@"📹 %@", node.name];
-                    } else if (node.name.mnz_isImagePathExtension) {
-                        body = [NSString stringWithFormat:@"📷 %@", node.name];
+            break;
+            
+        case MEGAChatMessageTypeAttachment: {
+            MEGANodeList *nodeList = self.message.nodeList;
+            if (nodeList) {
+                if (nodeList.size.integerValue == 1) {
+                    MEGANode *node = [nodeList nodeAtIndex:0];
+                    if (node.hasThumbnail) {
+                        if (node.name.mnz_isVideoPathExtension) {
+                            body = [NSString stringWithFormat:@"📹 %@", node.name];
+                        } else if (node.name.mnz_isImagePathExtension) {
+                            body = [NSString stringWithFormat:@"📷 %@", node.name];
+                        } else {
+                            body = [NSString stringWithFormat:@"📄 %@", node.name];
+                        }
                     } else {
                         body = [NSString stringWithFormat:@"📄 %@", node.name];
                     }
-                } else {
-                    body = [NSString stringWithFormat:@"📄 %@", node.name];
                 }
             }
         }
-    } else if (self.message.type == MEGAChatMessageTypeVoiceClip) {
-        NSString *durationString;
-        if (self.message.nodeList && self.message.nodeList.size.integerValue == 1) {
-            MEGANode *node = [self.message.nodeList nodeAtIndex:0];
-            NSTimeInterval duration = node.duration > 0 ? node.duration : 0;
-            durationString = [NSString mnz_stringFromTimeInterval:duration];
-        } else {
-            durationString = @"00:00";
+            break;
+            
+        case MEGAChatMessageTypeVoiceClip: {
+            NSString *durationString;
+            if (self.message.nodeList && self.message.nodeList.size.integerValue == 1) {
+                MEGANode *node = [self.message.nodeList nodeAtIndex:0];
+                NSTimeInterval duration = node.duration > 0 ? node.duration : 0;
+                durationString = [NSString mnz_stringFromTimeInterval:duration];
+            } else {
+                durationString = @"00:00";
+            }
+            body = [NSString stringWithFormat:@"🎙 %@", durationString];
         }
-        body = [NSString stringWithFormat:@"🎙 %@", durationString];
-    } else if (self.message.containsMeta.type == MEGAChatContainsMetaTypeGeolocation) {
-        body = [NSString stringWithFormat:@"📍 %@", AMLocalizedString(@"Pinned Location", @"Text shown in location-type messages")];
-    } else {
-        if (self.message.isEdited) {
-            body = [NSString stringWithFormat:@"%@ (%@)", self.message.content, AMLocalizedString(@"edited", nil)];
-        } else {
-            body = self.message.content;
-        }
+            break;
+            
+        case MEGAChatMessageTypeContainsMeta:
+            if (self.message.containsMeta.type == MEGAChatContainsMetaTypeGeolocation) {
+                body = [NSString stringWithFormat:@"📍 %@", AMLocalizedString(@"Pinned Location", @"Text shown in location-type messages")];
+            } else {
+                body = self.message.content;
+            }
+            break;
+            
+        case MEGAChatMessageTypeNormal:
+            if (self.message.isEdited) {
+                body = [NSString stringWithFormat:@"%@ %@", self.message.content, AMLocalizedString(@"edited", nil)];
+            } else {
+                body = self.message.content;
+            }
+            break;
+                    
+        default:
+            body = [MEGAChatMessage stringForType:self.message.type];
+            NSAssert(NO, @"%@ messages should not generate a notification", body);            
+            break;
     }
     
     return body;
