@@ -243,6 +243,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
         if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
             [AppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar traitCollection:self.traitCollection];
             [AppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];
+            [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar traitCollection:self.traitCollection];
             
             [self updateSelector];
             

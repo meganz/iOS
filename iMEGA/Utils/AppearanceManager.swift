@@ -9,6 +9,7 @@ class AppearanceManager: NSObject {
         
         UISearchBar.appearance().isTranslucent = false
         UISearchBar.appearance().tintColor = UIColor.mnz_primaryGray(for: traitCollection)
+        UISearchBar.appearance().backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = UIColor.mnz_background()
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).textColor = UIColor.mnz_label()
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).font = UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.regular)
@@ -84,6 +85,12 @@ class AppearanceManager: NSObject {
         navigationBar.standardAppearance.doneButtonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.mnz_primaryGray(for: traitCollection)!]
         
         navigationBar.tintColor = UIColor.mnz_primaryGray(for: traitCollection)
+    }
+    
+    @available(iOS 13.0, *)
+    @objc class func forceSearchBarUpdate(_ searchBar: UISearchBar, traitCollection: UITraitCollection) {
+        searchBar.tintColor = UIColor.mnz_primaryGray(for: traitCollection)
+        searchBar.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
     }
     
     @available(iOS 13.0, *)
