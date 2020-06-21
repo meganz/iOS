@@ -28,7 +28,7 @@ class ChatTitleView: UIView {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        updateUIElements()
+        updateAppearance()
     }
     
     @IBAction func didTap(tapGesture: UITapGestureRecognizer) {
@@ -70,18 +70,26 @@ class ChatTitleView: UIView {
         
         if let status = chatRoom.onlineStatus {
             statusView.isHidden = (status == .invalid)
-            //FIXME: V5 merging issue
-//            statusView.backgroundColor = UIColor.mnz_color(forStatusChange: status)
+            statusView.backgroundColor = UIColor.mnz_color(for: status)
         }
     }
     
-    private func updateUIElements() {
-        //FIXME: V5 merging issue
-//        titleLabel.font = UIFont.mnz_SFUISemiBold(withSize: 15)
-        titleLabel.textColor = .white
+    private func updateAppearance() {
+        titleLabel.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
+        titleLabel.textColor = UIColor.mnz_label()
         
-//        subtitleLabel.font = UIFont.mnz_SFUIRegular(withSize: 12)
-//        subtitleLabel.textColor = .mnz_grayE3E3E3()
+        subtitleLabel.font = UIFont.systemFont(ofSize: 12)
+        subtitleLabel.textColor = UIColor.mnz_subtitles(for: traitCollection)
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(traitCollection)
+        
+        if #available(iOS 13, *) {
+            if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+                self.updateAppearance()
+            }
+        }
     }
 }
 
