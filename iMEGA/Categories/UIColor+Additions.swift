@@ -18,7 +18,7 @@ extension UIColor {
                     return UIColor.mnz_black2C2C2E()
                 }
                 
-            default:
+            @unknown default:
                 return UIColor.white
             }
         } else {
@@ -41,7 +41,7 @@ extension UIColor {
                     return mnz_black1C1C1E()
                 }
                 
-            default:
+            @unknown default:
                 return white
             }
         } else {
@@ -66,7 +66,7 @@ extension UIColor {
                     return mnz_black2C2C2E()
                 }
                 
-            default:
+            @unknown default:
                 return mnz_grayF7F7F7()
             }
         } else {
@@ -87,7 +87,7 @@ extension UIColor {
                     return UIColor.mnz_gray3A3A3C()
                 }
                 
-            default:
+            @unknown default:
                 return UIColor.white
             }
         } else {
@@ -132,7 +132,7 @@ extension UIColor {
                     return mnz_gray3A3A3C()
                 }
                 
-            default:
+            @unknown default:
                 return white
             }
         } else {
@@ -151,7 +151,7 @@ extension UIColor {
             case .dark:
                 return UIColor.white
                 
-            default:
+            @unknown default:
                 return UIColor.mnz_redProIII()
             }
         } else {
@@ -168,7 +168,7 @@ extension UIColor {
             case .dark:
                 return UIColor.white.withAlphaComponent(0.15)
                 
-            default:
+            @unknown default:
                 return UIColor.black.withAlphaComponent(0.6)
             }
         } else {
@@ -194,7 +194,7 @@ extension UIColor {
                     return UIColor.mnz_black2C2C2E()
                 }
                 
-            default:
+            @unknown default:
                 return UIColor.mnz_whiteEEEEEE()
             }
         } else {
@@ -219,7 +219,7 @@ extension UIColor {
                     return UIColor.mnz_green00A382()
                 }
                 
-            default:
+            @unknown default:
                 return UIColor.mnz_green009476()
             }
         } else {

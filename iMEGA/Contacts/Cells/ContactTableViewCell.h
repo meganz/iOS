@@ -1,5 +1,11 @@
 #import <UIKit/UIKit.h>
 
+@protocol ContactTableViewCellDelegate<NSObject>
+@optional
+- (void)notificationSwitchValueChanged:(UISwitch *)sender;
+
+@end
+
 @interface ContactTableViewCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
@@ -22,6 +28,8 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *groupNameTextField;
 @property (weak, nonatomic) IBOutlet UIImageView *verifiedImageView;
+
+@property (weak, nonatomic) id<ContactTableViewCellDelegate> delegate;
 
 - (void)configureDefaultCellForUser:(MEGAUser *)user newUser:(BOOL)newUser;
 - (void)configureCellForContactsModeChatStartConversation:(NSIndexPath *)indexPath;

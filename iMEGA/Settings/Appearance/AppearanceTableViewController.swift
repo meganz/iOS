@@ -73,14 +73,14 @@ class AppearanceTableViewController: UITableViewController {
     
     // MARK: - Private
     
-    func updateAppearance() {
+    private func updateAppearance() {
         tableView.separatorColor = UIColor.mnz_separator(for: traitCollection)
         tableView.backgroundColor = UIColor.mnz_backgroundGrouped(for: traitCollection)
         
         tableView.reloadData()
     }
     
-    func selectIcon(with name: String?) {
+    private func selectIcon(with name: String?) {
         switch name {
         case IconName.day.rawValue:
             markIcon(in: dayIconContainerView)
@@ -100,16 +100,16 @@ class AppearanceTableViewController: UITableViewController {
         }
     }
     
-    func markIcon(in view: UIView) {
+    private func markIcon(in view: UIView) {
         view.layer.borderColor = UIColor.white.cgColor
     }
     
-    func changeLabelWeight(to label: UILabel) {
+    private func changeLabelWeight(to label: UILabel) {
         label.font = UIFont.systemFont(ofSize: 12, weight: .bold)
         label.textColor = UIColor.white
     }
     
-    func resetPreviousIcon(with name: String?) {
+    private func resetPreviousIcon(with name: String?) {
         switch name {
         case IconName.day.rawValue:
             dayIconContainerView.layer.borderColor = UIColor.clear.cgColor
@@ -129,7 +129,7 @@ class AppearanceTableViewController: UITableViewController {
         }
     }
     
-    func changeAppIcon(to iconName: String?) {
+    private func changeAppIcon(to iconName: String?) {
         if #available(iOS 10.3, *) {
             if UIApplication.shared.supportsAlternateIcons {
                 let alternateIconName = UIApplication.shared.alternateIconName
