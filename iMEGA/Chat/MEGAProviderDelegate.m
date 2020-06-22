@@ -541,7 +541,7 @@
     if (self.chatId.unsignedLongLongValue == chatId && newState == MEGAChatConnectionOnline && self.callId) {
         MEGAChatCall *call = [api chatCallForCallId:self.callId.unsignedLongLongValue];
         if (call) {
-            if (call.ringing) {
+            if (call.status == MEGAChatCallStatusRingIn) {
                 if (self.shouldAnswerCallWhenConnect) {
                     MEGALogDebug(@"[CallKit] Answer call when connect %@", call);
                     [api answerChatCall:call.chatId enableVideo:NO];
