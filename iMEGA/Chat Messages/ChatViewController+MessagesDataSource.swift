@@ -27,11 +27,10 @@ extension ChatViewController: MessagesDataSource {
                 topLabelString = chatMessage.displayName + " " + topLabelString
             }
             
-            //FIXME: V5 merging issue
             return NSAttributedString(
                 string: topLabelString,
                 attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13.0, weight: .medium),
-                             NSAttributedString.Key.foregroundColor: UIColor.black])
+                             NSAttributedString.Key.foregroundColor: UIColor.mnz_primaryGray(for: traitCollection)])
         }
         return nil
     }
@@ -41,7 +40,7 @@ extension ChatViewController: MessagesDataSource {
             return NSAttributedString(
                 string: message.sentDate.string(withDateFormat: "E dd MMM") ,
                 attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 15.0, weight: .bold),
-                             NSAttributedString.Key.foregroundColor: UIColor(red: 0, green: 0, blue: 0, alpha: 0.8)])
+                             NSAttributedString.Key.foregroundColor: UIColor.mnz_primaryGray(for: traitCollection)])
 
         }
 
