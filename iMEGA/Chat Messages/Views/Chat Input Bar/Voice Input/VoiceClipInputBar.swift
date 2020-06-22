@@ -33,6 +33,17 @@ class VoiceClipInputBar: UIView {
         audioWavesView = AudioWavesView.instanceFromNib
         audioWavesholderView.addSubview(audioWavesView)
         audioWavesView.autoPinEdgesToSuperviewEdges()
+        
+        updateAppearance()
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        if #available(iOS 13.0, *),
+            traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+                updateAppearance()
+        }
     }
 
     @IBAction func recordButtonTapped(_ sender: UIButton) {
@@ -131,4 +142,8 @@ class VoiceClipInputBar: UIView {
         UINotificationFeedbackGenerator().notificationOccurred(.error)
         return nil
     }
+
+     private func updateAppearance() {
+        backgroundColor = UIColor.mnz_voiceRecordingViewBackground(traitCollection)
+     }
 }
