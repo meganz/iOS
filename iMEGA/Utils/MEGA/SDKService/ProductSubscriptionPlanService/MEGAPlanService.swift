@@ -4,32 +4,55 @@ final class MEGAPlanCommand: NSObject {
 
     fileprivate var completionAction: ([MEGAPlan]) -> Void
 
-    private var loadingTask: MEGAPlanLoadTask?
-
     init(completionAction: @escaping ([MEGAPlan]) -> Void) {
         self.completionAction = completionAction
     }
 
-    func execute(with api: MEGASdk, completion: @escaping (MEGAPlanCommand) -> Void) {
+    fileprivate func execute(with api: MEGASdk,
+                             cachedPlans: [MEGAPlan]?,
+                             completion: @escaping (MEGAPlanCommand, [MEGAPlan]) -> Void) {
+        if let cachedPlans = cachedPlans {
+            completionAction(cachedPlans)
+            completion(self, cachedPlans)
+            return
+        }
+
+        fetchMEGAPlans(with: api, completion: completion)
+    }
+
+    // MARK: - Privates
+
+    fileprivate func fetchMEGAPlans(with api: MEGASdk, completion: @escaping (MEGAPlanCommand, [MEGAPlan]) -> Void) {
         let planLoadingTask = MEGAPlanLoadTask()
         planLoadingTask.start(with: api) { [weak self] plans in
+            var taskRetaining: MEGAPlanLoadTask? = planLoadingTask
+            defer { taskRetaining = nil }
+
             guard let self = self else { return }
             self.completionAction(plans)
-            completion(self)
+            completion(self, plans)
         }
-        loadingTask = planLoadingTask
     }
 }
 
 fileprivate final class MEGAPlanLoadTask {
 
+    // MARK: - Instances
+
+    fileprivate var plans: [MEGAPlan]?
+
+    // MARK: - Methods
+
     fileprivate func start(with api: MEGASdk, completion: @escaping ([MEGAPlan]) -> Void) {
         api.getPricingWith(MEGAGenericRequestDelegate(completion: { [weak self] request, error in
             guard let self = self else { return }
-            let fetchMEGAPlans = self.setupCache(with: request.pricing)
-            completion(fetchMEGAPlans)
+            let fetchedMEGAPlans = self.setupCache(with: request.pricing)
+            self.plans = fetchedMEGAPlans
+            completion(fetchedMEGAPlans)
         }))
     }
+
+    // MARK: - Privates
 
     private func setupCache(with pricing: MEGAPricing) -> [MEGAPlan] {
         return (0..<pricing.products).map { productIndex in
@@ -68,25 +91,20 @@ fileprivate final class MEGAPlanLoadTask {
     // MARK: - Setup MEGA Plan
 
     func send(_ command: MEGAPlanCommand) {
-        guard let cachedMEGAPlans = cachedMEGAPlans else {
-            let originalCommandCompletion = command.completionAction
-            command.completionAction = { [weak self] plans in
-                guard let self = self else {
-                    return
-                }
-                self.cachedMEGAPlans = plans
-                originalCommandCompletion(plans)
-            }
+        commands.append(command)
+        command.execute(with: api, cachedPlans: cachedMEGAPlans, completion: completion(ofCommand:with:))
+    }
 
-            command.execute(with: api) { [weak self] completedCommand in
-                guard let self = self else {
-                    return
-                }
-                self.remove(command)
-            }
-            return
-        }
-        command.completionAction(cachedMEGAPlans)
+    // MARK: - Privates
+
+    private func completion(ofCommand command: MEGAPlanCommand, with plans: [MEGAPlan]) {
+        cachePlans(plans)
+        remove(command)
+    }
+
+    private func cachePlans(_ plans: [MEGAPlan]) {
+        guard cachedMEGAPlans == nil else { return }
+        self.cachedMEGAPlans = plans
     }
 
     private func remove(_ completedCommand: MEGAPlanCommand) {
