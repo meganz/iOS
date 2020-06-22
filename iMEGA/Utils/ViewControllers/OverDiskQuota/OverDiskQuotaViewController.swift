@@ -11,6 +11,7 @@ final class OverDiskQuotaViewController: UIViewController {
 
     @IBOutlet private var upgradeButton: UIButton!
     @IBOutlet private var dismissButton: UIButton!
+
     @IBOutlet weak var warningView: OverDisckQuotaWarningView!
 
     // MARK: - In / Out properties
@@ -65,22 +66,6 @@ final class OverDiskQuotaViewController: UIViewController {
                                               numberOfFilesOnCloud: overDiskQuotaData.numberOfFilesOnCloud,
                                               cloudStorage: overDiskQuotaData.cloudStorage,
                                               plan: overDiskQuotaData.suggestedPlanName)
-    }
-
-    struct OverDiskQuotaInternal {
-        typealias Email = String
-        typealias Deadline = Date
-        typealias WarningDates = [Date]
-        typealias FileCount = UInt
-        typealias Storage = NSNumber
-        typealias SuggestedMEGAPlan = String
-
-        let email: Email
-        let deadline: Deadline
-        let warningDates: WarningDates
-        let numberOfFilesOnCloud: FileCount
-        let cloudStorage: Storage
-        let plan: SuggestedMEGAPlan?
     }
 
     // MARK: - UI Customize
@@ -154,6 +139,24 @@ final class OverDiskQuotaViewController: UIViewController {
     private func daysDistance(from startDate: Date, endDate: Date) -> Int {
         let calendar = Calendar.current
         return calendar.dateComponents([.day], from: startDate, to: endDate).day!
+    }
+
+    // MARK: - Internal Data Structure
+
+    struct OverDiskQuotaInternal {
+        typealias Email = String
+        typealias Deadline = Date
+        typealias WarningDates = [Date]
+        typealias FileCount = UInt
+        typealias Storage = NSNumber
+        typealias SuggestedMEGAPlan = String
+
+        let email: Email
+        let deadline: Deadline
+        let warningDates: WarningDates
+        let numberOfFilesOnCloud: FileCount
+        let cloudStorage: Storage
+        let plan: SuggestedMEGAPlan?
     }
 }
 
