@@ -122,6 +122,12 @@
             <viewLayoutGuide key="safeArea" id="QoH-8m-LZD"/>
             <connections>
                 <outlet property="loadingView" destination="ACc-xF-WZn" id="6Kh-dN-gl9"/>
+                <outletCollection property="loadingBubbles" destination="iX2-AU-Cw8" collectionClass="NSMutableArray" id="SQM-YQ-tmm"/>
+                <outletCollection property="loadingBubbles" destination="UvQ-7y-b9P" collectionClass="NSMutableArray" id="JTn-kn-eWY"/>
+                <outletCollection property="loadingBubbles" destination="yji-av-X0C" collectionClass="NSMutableArray" id="afb-ke-Cqd"/>
+                <outletCollection property="loadingBubbles" destination="ECG-Oq-Qro" collectionClass="NSMutableArray" id="VOH-Mn-p4g"/>
+                <outletCollection property="loadingBubbles" destination="iDS-Mw-s3o" collectionClass="NSMutableArray" id="F31-Lo-o4j"/>
+                <outletCollection property="loadingBubbles" destination="h82-fH-Ol3" collectionClass="NSMutableArray" id="VeS-UA-UNT"/>
             </connections>
             <point key="canvasLocation" x="-473.1884057971015" y="1.6741071428571428"/>
         </collectionReusableView>
