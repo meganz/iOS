@@ -23,6 +23,10 @@
     return [UIColor colorWithRed:0.0  green:0.0  blue:0.0 alpha:0.100];
 }
 
++ (UIColor *)mnz_black000000_08 {
+    return [UIColor colorWithRed:0.0  green:0.0  blue:0.0 alpha:0.8];
+}
+
 #pragma mark - Blue
 
 + (UIColor *)mnz_blue007AFF {

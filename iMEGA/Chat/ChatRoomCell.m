@@ -186,7 +186,7 @@
     } else {
         if (unreadCount != 0) {
             self.chatLastMessage.font = [[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1] fontWithWeight:UIFontWeightMedium];
-            self.chatLastMessage.textColor = UIColor.mnz_black333333;
+            self.chatLastMessage.textColor = UIColor.blackColor;
             
             self.chatLastTime.font = [[UIFont preferredFontForTextStyle:UIFontTextStyleCaption2] fontWithWeight:UIFontWeightMedium];
             self.chatLastTime.textColor = UIColor.mnz_green00BFA5;
@@ -201,7 +201,7 @@
             }
         } else {
             self.chatLastMessage.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
-            self.chatLastMessage.textColor = UIColor.mnz_gray666666;
+            self.chatLastMessage.textColor = UIColor.mnz_black000000_08;
             self.chatLastTime.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption2];
             self.chatLastTime.textColor = UIColor.mnz_gray666666;
             
