@@ -70,7 +70,10 @@ extension AddToChatMediaCollectionSource: UICollectionViewDataSource {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AddToChatImageCell.reuseIdentifier,
                                                               for: indexPath) as! AddToChatImageCell
                 cell.asset = fetchResult.object(at: indexPath.item-1)
-                cell.cellType = (indexPath.item == (collectionView.numberOfItems(inSection: 0) - 1)) ? .more : .media
+                cell.cellType = (
+                    fetchResult.count >= maxNumberOfAssetsFetched
+                        && (indexPath.item == collectionView.numberOfItems(inSection: 0) - 1)
+                        ) ? .more : .media
                 
                 return cell
             } else {
