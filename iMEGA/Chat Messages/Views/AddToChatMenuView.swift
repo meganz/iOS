@@ -24,6 +24,11 @@ class AddToChatMenuView: UIView {
         }
     }
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        updateAppearance()
+    }
+    
     func disable(_ disable: Bool) {
         disabled = disable
         imageView.alpha = disable ? 0.5 : 1.0
@@ -33,6 +38,20 @@ class AddToChatMenuView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         imageBackgroundView.layer.cornerRadius = imageBackgroundView.bounds.width / 2.0
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        if #available(iOS 13.0, *),
+            traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+                updateAppearance()
+        }
+    }
+    
+    private func updateAppearance() {
+        imageBackgroundView.backgroundColor = .mnz_inputbarButtonBackground(traitCollection)
+        label.textColor = .mnz_secondaryGray(for: traitCollection)
     }
 
 }

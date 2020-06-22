@@ -22,6 +22,7 @@ class AddToChatViewController: UIViewController {
     // MARK:- Properties.
     @IBOutlet weak var backgroundView: UIView!
     @IBOutlet weak var contentView: UIView!
+    @IBOutlet weak var patchView: UIView!
     @IBOutlet weak var contentViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var contentViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var contentViewLeadingConstraint: NSLayoutConstraint!
@@ -68,6 +69,8 @@ class AddToChatViewController: UIViewController {
         if UIDevice.current.iPadDevice == false {
             contentView.layer.cornerRadius = 13.0
         }
+        
+        updateAppearance()
     }
     
     override func viewDidLayoutSubviews() {
@@ -92,6 +95,15 @@ class AddToChatViewController: UIViewController {
         }
         
         view.layoutIfNeeded()
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        if #available(iOS 13.0, *),
+            traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+                updateAppearance()
+        }
     }
     
     func setUpMenuPageViewController() {
@@ -120,6 +132,11 @@ class AddToChatViewController: UIViewController {
             self.dismissHandler?()
             completionBlock?()
         }
+    }
+    
+    private func updateAppearance() {
+        contentView.backgroundColor = UIColor.mnz_backgroundElevated(traitCollection)
+        patchView.backgroundColor = UIColor.mnz_backgroundElevated(traitCollection)
     }
     
     // MARK:- Actions.

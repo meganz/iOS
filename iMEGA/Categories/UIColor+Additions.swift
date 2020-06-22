@@ -319,6 +319,86 @@ extension UIColor {
         return proLevelColor
     }
     
+    // MARK: - Input bar
+    class func mnz_inputbarButtonBackground(_ traitCollection: UITraitCollection) -> UIColor? {
+        guard let primaryGray = mnz_primaryGray(for: traitCollection) else {
+            return nil
+        }
+        if #available(iOS 12.0, *) {
+            return (traitCollection.userInterfaceStyle == .dark)
+                ? primaryGray.withAlphaComponent(0.2)
+                : primaryGray.withAlphaComponent(0.04)
+        } else {
+            return nil
+        }
+    }
+    
+    class func mnz_inputbarButtonImageTint(_ traitCollection: UITraitCollection) -> UIColor {
+        if #available(iOS 13.0, *) {
+            switch traitCollection.userInterfaceStyle {
+            case .unspecified, .light:
+                return white
+                
+            case .dark:
+                if traitCollection.accessibilityContrast == .high {
+                    return mnz_grayE5E5E5()
+                } else {
+                    return mnz_grayD1D1D1()
+                }
+                
+            @unknown default:
+                return white
+            }
+        } else {
+            return white
+        }
+    }
+    
+    // MARK: - Toolbar
+    
+    class func mnz_toolbarButtonBackground(_ traitCollection: UITraitCollection) -> UIColor {
+        if #available(iOS 13.0, *) {
+            switch traitCollection.userInterfaceStyle {
+            case .unspecified, .light:
+                return white
+                
+            case .dark:
+                if traitCollection.accessibilityContrast == .high {
+                    return mnz_grayE5E5E5()
+                } else {
+                    return mnz_black1C1C1E()
+                }
+                
+            @unknown default:
+                return white
+            }
+        } else {
+            return white
+        }
+    }
+    
+    
+    class func mnz_toolbarTextColor(_ traitCollection: UITraitCollection) -> UIColor {
+        if #available(iOS 13.0, *) {
+            switch traitCollection.userInterfaceStyle {
+            case .unspecified, .light:
+                if traitCollection.accessibilityContrast == .high {
+                    return mnz_gray3D3D3D();
+                } else {
+                    return mnz_gray515151();
+                }
+                
+            case .dark:
+                return white
+                
+            @unknown default:
+                return mnz_gray515151()
+            }
+        } else {
+            return mnz_gray515151()
+        }
+    }
+
     // MARK: - Tints
     
     // MARK: Black
