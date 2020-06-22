@@ -285,8 +285,8 @@
                 [node mnz_restore];
                 [self setTableViewEditing:NO animated:YES];
             }];
-            restoreAction.image = [UIImage imageNamed:@"restore"];
-            restoreAction.backgroundColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection] ;
+            restoreAction.image = [[UIImage imageNamed:@"restore"] imageWithTintColor:UIColor.whiteColor];
+            restoreAction.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection] ;
             
             return [UISwipeActionsConfiguration configurationWithActions:@[restoreAction]];
         }
@@ -305,7 +305,7 @@
             }];
         }];
         rubbishBinAction.image = [[UIImage imageNamed:@"rubbishBin"] imageWithTintColor:UIColor.whiteColor];
-        rubbishBinAction.backgroundColor = UIColor.systemRedColor;
+        rubbishBinAction.backgroundColor = UIColor.mnz_redError;
         
         return [UISwipeActionsConfiguration configurationWithActions:@[rubbishBinAction, shareAction]];
     }
@@ -378,7 +378,7 @@
             }];
             [shareButton iconTintColor:[UIColor whiteColor]];
             
-            MGSwipeButton *rubbishBinButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"rubbishBin"] backgroundColor:UIColor.systemRedColor padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
+            MGSwipeButton *rubbishBinButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"rubbishBin"] backgroundColor:UIColor.mnz_redError padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
                 [node mnz_moveToTheRubbishBinWithCompletion:^{
                     [self setTableViewEditing:NO animated:YES];
                 }];
