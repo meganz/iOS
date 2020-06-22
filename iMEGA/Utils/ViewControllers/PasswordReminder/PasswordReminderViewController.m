@@ -121,7 +121,7 @@
     
     self.descriptionLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
     
-    self.doNotShowMeAgainView.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
+    self.doNotShowMeAgainView.backgroundColor = [UIColor mnz_secondaryBackgroundElevated:self.traitCollection];
     self.doNotShowMeAgainTopSeparatorView.backgroundColor = self.doNotShowMeAgainBottomSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     
     [self.testPasswordButton mnz_setupBasic:self.traitCollection];
