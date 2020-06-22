@@ -377,7 +377,6 @@ extension UIColor {
         }
     }
     
-    
     class func mnz_toolbarTextColor(_ traitCollection: UITraitCollection) -> UIColor {
         if #available(iOS 13.0, *) {
             switch traitCollection.userInterfaceStyle {
@@ -396,6 +395,29 @@ extension UIColor {
             }
         } else {
             return mnz_gray515151()
+        }
+    }
+    
+    // MARK: - Voice recording view
+    
+    class func mnz_voiceRecordingViewBackground(_ traitCollection: UITraitCollection) -> UIColor {
+        if #available(iOS 13.0, *) {
+            switch traitCollection.userInterfaceStyle {
+            case .unspecified, .light:
+                return mnz_whiteFCFCFC()
+                
+            case .dark:
+                if traitCollection.accessibilityContrast == .high {
+                    return mnz_grayE5E5E5()
+                } else {
+                    return mnz_black1C1C1E()
+                }
+                
+            @unknown default:
+                return mnz_whiteFCFCFC()
+            }
+        } else {
+            return mnz_whiteFCFCFC()
         }
     }
 
@@ -583,6 +605,10 @@ extension UIColor {
     
     @objc class func mnz_whiteF2F2F2() -> UIColor {
         return UIColor.init(red: 242.0/255.0, green: 242.0/255.0, blue: 242.0/255.0, alpha: 1.0)
+    }
+    
+    @objc class func mnz_whiteFCFCFC() -> UIColor {
+        return UIColor.init(red: 252.0/255.0, green: 252.0/255.0, blue: 252.0/255.0, alpha: 1.0)
     }
 }
 
