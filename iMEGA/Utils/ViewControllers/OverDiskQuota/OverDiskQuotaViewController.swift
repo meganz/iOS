@@ -19,10 +19,11 @@ final class OverDiskQuotaViewController: UIViewController {
 
     private var overDiskQuota: OverDiskQuotaInternal!
 
+    // MARK: - Formatters
+
     private lazy var dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .long
-        dateFormatter.timeStyle = .none
+        dateFormatter.dateFormat = "MMMM d yyyy"
         return dateFormatter
     }()
 
@@ -37,6 +38,8 @@ final class OverDiskQuotaViewController: UIViewController {
         byteCountFormatter.allowedUnits = .useGB
         return byteCountFormatter
     }()
+
+    // MARK: - ViewController Lifecycles
 
     override func viewDidLoad() {
         super.viewDidLoad()
