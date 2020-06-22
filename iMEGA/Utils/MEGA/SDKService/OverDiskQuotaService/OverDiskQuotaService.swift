@@ -1,6 +1,5 @@
 import Foundation
 
-
 @objc final class OverDiskQuotaService: NSObject {
 
     // MARK: - Static
@@ -33,9 +32,7 @@ import Foundation
         blockedCommands.forEach { command in
             if command.storageUsed == nil {
                 command.storageUsed = stroageUsed
-                command.execute(with: api) { [weak self] completedCommand in
-                    self?.remove(completedCommand)
-                }
+                command.execute(with: api, completion: completion(ofCommand:))
             }
         }
     }
@@ -43,10 +40,14 @@ import Foundation
     @objc func send(_ command: OverDiskQuotaCommand) {
         blockedCommands.append(command)
         if command.storageUsed != nil {
-            command.execute(with: api) { [weak self] completedCommand in
-                self?.remove(completedCommand)
-            }
+            command.execute(with: api, completion: completion(ofCommand:))
         }
+    }
+
+    // MARK: - Privates
+
+    func completion(ofCommand command: OverDiskQuotaCommand) -> Void {
+        remove(command)
     }
 
     private func remove(_ completedCommand: OverDiskQuotaCommand) {

@@ -104,10 +104,7 @@ fileprivate final class OverDiskQuotaQueryTask {
     }
 
     private func updatedUserData(with api: MEGASdk) -> Result<OverDiskQuotaUserData, DataObtainingError> {
-        guard let email = api.myEmail else {
-            return .failure(.invalidUserEmail)
-        }
-
+        guard let email = api.myEmail else { return .failure(.invalidUserEmail) }
         return .success(OverDiskQuotaUserData(email: email,
                                               deadline: api.overquotaDeadlineDate(),
                                               warningDates: api.overquotaWarningDateList(),
@@ -117,7 +114,6 @@ fileprivate final class OverDiskQuotaQueryTask {
     private func extractedInformation(userDataStore: OverDiskQuotaUserData,
                                       storageStore: OverDiskQuotaStorageUsed,
                                       planStore: OverDiskQuotaPlans) -> OverDiskQuotaInformation {
-
         let minimumPlan = MEGAPlanAdviser.suggestMinimumPlan(ofStorage: storageStore.cloudStorageTaking,
                                                              availablePlans: planStore.availablePlans).first
 
