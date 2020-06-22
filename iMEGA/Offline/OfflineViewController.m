@@ -160,7 +160,8 @@ static NSString *kisDirectory = @"kisDirectory";
     if (@available(iOS 13.0, *)) {
         if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
             [AppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];
-            
+            [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar traitCollection:self.traitCollection];
+
             [self reloadData];
         }
     }
