@@ -23,7 +23,7 @@ class AddToChatCameraCollectionCell: UICollectionViewCell {
     
     func showLiveFeed() throws {
         if DevicePermissionsHelper.shouldAskForVideoPermissions() {
-            cameraIconImageView.image = #imageLiteral(resourceName: "cameraIcon")
+            updateCameraIconImageView()
             throw LiveFeedError.askForPermission
         }
         
@@ -53,7 +53,7 @@ class AddToChatCameraCollectionCell: UICollectionViewCell {
         captureSession.startRunning()
         liveFeedView.isHidden = false
         isCurrentShowingLiveFeed = true
-        cameraIconImageView.image = #imageLiteral(resourceName: "cameraIconWhite")
+        updateCameraIconImageView()
     }
     
     func hideLiveFeedView() {
@@ -91,10 +91,18 @@ class AddToChatCameraCollectionCell: UICollectionViewCell {
         maskLayer.path = maskPath.cgPath
         layer.mask = maskLayer
     }
-
-
+    
+    private func updateCameraIconImageView() {
+        if #available(iOS 12.0, *) {
+            cameraIconImageView.image = (traitCollection.userInterfaceStyle == .dark) ? #imageLiteral(resourceName: "cameraIconWhite") : (DevicePermissionsHelper.isVideoPermissionAuthorized() ? #imageLiteral(resourceName: "cameraIconWhite") : #imageLiteral(resourceName: "cameraIcon"))
+        } else {
+            cameraIconImageView.image = DevicePermissionsHelper.isVideoPermissionAuthorized() ? #imageLiteral(resourceName: "cameraIconWhite") : #imageLiteral(resourceName: "cameraIcon")
+        }
+    }
+    
     private func updateAppearance() {
         backgroundColor = .mnz_inputbarButtonBackground(traitCollection)
         liveFeedView.backgroundColor = .mnz_inputbarButtonBackground(traitCollection)
+        updateCameraIconImageView()
     }
 }

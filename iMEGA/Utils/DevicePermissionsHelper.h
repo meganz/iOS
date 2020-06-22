@@ -23,5 +23,6 @@
 + (BOOL)shouldSetupPermissions;
 + (BOOL)isAudioPermissionAuthorizedOrNotDetermined;
 + (BOOL)isVideoPermissionAuthorizedOrNotDetermined;
++ (BOOL)isVideoPermissionAuthorized;
 
 @end
