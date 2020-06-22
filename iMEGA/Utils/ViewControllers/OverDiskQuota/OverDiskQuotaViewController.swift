@@ -55,13 +55,13 @@ final class OverDiskQuotaViewController: UIViewController {
 
     // MARK: - Setup MEGA UserData
 
-    @objc func setup(with overDiskQuota: OverDiskQuotaInfomationType) {
-        self.overDiskQuota = OverDiskQuotaInternal(email: overDiskQuota.email,
-                                                   deadline: overDiskQuota.deadline,
-                                                   warningDates: overDiskQuota.warningDates,
-                                                   numberOfFilesOnCloud: overDiskQuota.numberOfFilesOnCloud,
-                                                   cloudStorage: overDiskQuota.cloudStorage,
-                                                   plan: overDiskQuota.suggestedPlanName)
+    @objc func setup(with overDiskQuotaData: OverDiskQuotaInfomationType) {
+        overDiskQuota = OverDiskQuotaInternal(email: overDiskQuotaData.email,
+                                              deadline: overDiskQuotaData.deadline,
+                                              warningDates: overDiskQuotaData.warningDates,
+                                              numberOfFilesOnCloud: overDiskQuotaData.numberOfFilesOnCloud,
+                                              cloudStorage: overDiskQuotaData.cloudStorage,
+                                              plan: overDiskQuotaData.suggestedPlanName)
     }
 
     struct OverDiskQuotaInternal {
@@ -108,7 +108,7 @@ final class OverDiskQuotaViewController: UIViewController {
 
     private func setupMessageLabel(_ descriptionLabel: UILabel, overDiskInformation: OverDiskQuotaInternal?) {
         guard let infor = overDiskInformation else { descriptionLabel.text = nil; return }
-        let message = AMLocalizedString("<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to upgrade to <b>%@</b>.</paragraph>",
+        let message = AMLocalizedString("<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to %@.</paragraph>",
                                         "A paragraph of warning message tells user upgrade to selected [minimum subscription plan] before [deadline] due to [cloud space used] and [warning dates]")
 
         let formattedMessage = String(format: message,
@@ -173,8 +173,11 @@ fileprivate extension OverDiskQuotaViewController.OverDiskQuotaInternal {
     }
 
     var suggestedPlan: SuggestedMEGAPlan {
-        let contactSupportLocalizedText = AMLocalizedString("thereAreNoPlansSuitableForYourCurrentUsage",
-                                                            "Asks the user to request a custom Pro plan from customer support because their storage usage is more than the regular plans.")
-        return plan ?? contactSupportLocalizedText.mnz_removeWebclientFormatters()
+        if let plan = plan {
+            return String(format: AMLocalizedString("upgrade to <b>%@</b>", "Asks user to upgrade to plan"), plan)
+        }
+
+        return AMLocalizedString("contact support for a custom plan",
+                                 "Asks the user to request a custom Pro plan from customer support because their storage usage is more than the regular plans.")
     }
 }

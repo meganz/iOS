@@ -2253,7 +2253,11 @@
 /* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and
  subject to deletion deadline and warning dates.
  */
-"<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to upgrade to <b>%@</b>.</paragraph>"="<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to upgrade to <b>%@</b>.</paragraph>";
+"<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to %@.</paragraph>"="<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to %@.</paragraph>";
+/* Over Disk Quota: A suggestion that asks user to upgrade to specified MEGA subscription plan.*/
+"upgrade to <b>%@</b>"="upgrade to <b>%@</b>";
+/* Over Disk Quota: A suggestion that asks user to contact support for a custom plan.*/
+"contact support for a custom plan"="contact support for a custom plan";
 /* Over Disk Quota of number of days*/
 "%d days"="%d days";
 /* Over Disk Quota warning message to tell user to how long left before upgrading */
