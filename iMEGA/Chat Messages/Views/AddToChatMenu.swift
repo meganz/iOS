@@ -11,7 +11,7 @@ struct AddToChatMenu: Codable {
                 let data = try Data(contentsOf: fileURL)
                 return try propertyListDecoder.decode([AddToChatMenu].self, from: data)
             } catch {
-                print(error)
+                MEGALogDebug(error.localizedDescription)
             }
         }
         

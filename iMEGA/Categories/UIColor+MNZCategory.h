@@ -23,8 +23,6 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus);
 #pragma mark - Objects
 
 + (UIColor *)mnz_basicButtonForTraitCollection:(UITraitCollection *)traitCollection;
-+ (UIColor *)mnz_secondaryButtonBackgroundForTraitCollection:(UITraitCollection *)traitCollection;
-+ (UIColor *)mnz_secondaryButtonImageTintForTraitCollection:(UITraitCollection *)traitCollection;
 
 + (UIColor *)mnz_separatorForTraitCollection:(UITraitCollection *)traitCollection;
 

@@ -23,6 +23,7 @@
                 <outlet property="menuViewBottomConstraint" destination="WDx-Fa-1Jp" id="dzI-YF-76A"/>
                 <outlet property="menuViewLeadingConstraint" destination="DV7-tm-CbF" id="jc5-l4-5KI"/>
                 <outlet property="menuViewTrailingConstraint" destination="g43-HZ-aZa" id="igp-nS-O6w"/>
+                <outlet property="patchView" destination="n3y-LT-kDz" id="gw3-ri-2cg"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -51,7 +52,7 @@
                     <subviews>
                         <collectionView multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="Zxb-mH-hnV">
                             <rect key="frame" x="6" y="5" width="402" height="100"/>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="100" id="1tq-lA-fNN"/>
                             </constraints>
@@ -64,6 +65,7 @@
                         </collectionView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="32M-MS-rdd" userLabel="Menu View">
                             <rect key="frame" x="16" y="129" width="382" height="261"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </view>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>

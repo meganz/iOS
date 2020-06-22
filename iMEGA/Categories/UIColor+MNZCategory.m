@@ -145,48 +145,6 @@
     }
 }
 
-+ (UIColor *)mnz_secondaryButtonBackgroundForTraitCollection:(UITraitCollection *)traitCollection {
-    if (@available(iOS 13.0, *)) {
-        switch (traitCollection.userInterfaceStyle) {
-            case UIUserInterfaceStyleUnspecified:
-            case UIUserInterfaceStyleLight: {
-                return UIColor.mnz_gray515151;
-            }
-                
-            case UIUserInterfaceStyleDark: {
-                if (traitCollection.accessibilityContrast == UIAccessibilityContrastHigh) {
-                    return UIColor.mnz_black2C2C2E;
-                } else {
-                    return UIColor.mnz_black1C1C1E;
-                }
-            }
-        }
-    } else {
-        return UIColor.mnz_gray515151;
-    }
-}
-
-+ (UIColor *)mnz_secondaryButtonImageTintForTraitCollection:(UITraitCollection *)traitCollection {
-    if (@available(iOS 13.0, *)) {
-        switch (traitCollection.userInterfaceStyle) {
-            case UIUserInterfaceStyleUnspecified:
-            case UIUserInterfaceStyleLight: {
-                return UIColor.whiteColor;
-            }
-                
-            case UIUserInterfaceStyleDark: {
-                if (traitCollection.accessibilityContrast == UIAccessibilityContrastHigh) {
-                    return UIColor.mnz_grayE5E5E5;
-                } else {
-                    return UIColor.mnz_grayD1D1D1;
-                }
-            }
-        }
-    } else {
-        return UIColor.whiteColor;
-    }
-}
-
 + (UIColor *)mnz_separatorForTraitCollection:(UITraitCollection *)traitCollection {
     if (@available(iOS 13.0, *)) {
         switch (traitCollection.userInterfaceStyle) {

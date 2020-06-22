@@ -15,6 +15,12 @@ class AddToChatCameraCollectionCell: UICollectionViewCell {
         case captureDeviceInputInstantiationFailed
     }
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        updateAppearance()
+    }
+    
     func showLiveFeed() throws {
         if DevicePermissionsHelper.shouldAskForVideoPermissions() {
             cameraIconImageView.image = #imageLiteral(resourceName: "cameraIcon")
@@ -65,6 +71,15 @@ class AddToChatCameraCollectionCell: UICollectionViewCell {
         previewLayer.frame = liveFeedView.layer.bounds
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        if #available(iOS 13.0, *),
+            traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+                updateAppearance()
+        }
+    }
+    
     private func addCornerRadius() {
         layer.cornerRadius = 4.0
         
@@ -77,4 +92,9 @@ class AddToChatCameraCollectionCell: UICollectionViewCell {
         layer.mask = maskLayer
     }
 
+
+    private func updateAppearance() {
+        backgroundColor = .mnz_inputbarButtonBackground(traitCollection)
+        liveFeedView.backgroundColor = .mnz_inputbarButtonBackground(traitCollection)
+    }
 }
