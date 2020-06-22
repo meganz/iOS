@@ -63,12 +63,12 @@ class RichPreviewContentView: UIView {
             }
             
         } else {
-            guard let megaLink = message?.megaLink else {
+            guard let message = message, let megaLink = message.megaLink else {
                 return
             }
             switch (megaLink as NSURL).mnz_type() {
             case .fileLink:
-                let node = message?.node
+                let node = message.node
                 titleLabel.text = node?.name
                 descriptionLabel.text = Helper.memoryStyleString(fromByteCount: Int64(truncating: node?.size ?? 0))
                 linkLabel.text = "mega.nz"
@@ -76,15 +76,15 @@ class RichPreviewContentView: UIView {
                 imageView.mnz_setThumbnail(by: node)
                 
             case .folderLink:
-                titleLabel.text = message?.richTitle
-                descriptionLabel.text = String(format: "%@\n%@", message!.richString, Helper.memoryStyleString(fromByteCount: max(message!.richNumber.int64Value, 0)))
+                titleLabel.text = message.richTitle
+                descriptionLabel.text = String(format: "%@\n%@", message.richString ?? "", Helper.memoryStyleString(fromByteCount: max(message.richNumber?.int64Value ?? 0, 0)))
                 linkLabel.text = "mega.nz"
                 iconImageView.image = UIImage(named: "favicon")
                 imageView.image = UIImage.mnz_folder()
                 
             case .publicChatLink:
-                titleLabel.text = message?.richString
-                descriptionLabel.text = String(format: "%lld %@", message!.richNumber?.int64Value ?? 0, AMLocalizedString("participants", "Label to describe the section where you can see the participants of a group chat"))
+                titleLabel.text = message.richString
+                descriptionLabel.text = String(format: "%lld %@", message.richNumber?.int64Value ?? 0, AMLocalizedString("participants", "Label to describe the section where you can see the participants of a group chat"))
                 linkLabel.text = "mega.nz"
                 iconImageView.image = UIImage(named: "favicon")
                 imageView.image = UIImage(named: "groupChat")
