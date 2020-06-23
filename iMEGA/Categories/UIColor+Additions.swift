@@ -420,6 +420,27 @@ extension UIColor {
             return mnz_whiteFCFCFC()
         }
     }
+    
+    class func mnz_voiceRecordingViewButtonBackground(_ traitCollection: UITraitCollection) -> UIColor {
+        if #available(iOS 13.0, *) {
+            switch traitCollection.userInterfaceStyle {
+            case .unspecified, .light:
+                return mnz_gray515151()
+                
+            case .dark:
+                if traitCollection.accessibilityContrast == .high {
+                    return mnz_grayE5E5E5()
+                } else {
+                    return mnz_black1C1C1E()
+                }
+                
+            @unknown default:
+                return mnz_gray515151()
+            }
+        } else {
+            return mnz_gray515151()
+        }
+    }
 
     // MARK: - Tints
     
