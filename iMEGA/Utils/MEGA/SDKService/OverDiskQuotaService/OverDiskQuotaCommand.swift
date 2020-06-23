@@ -2,13 +2,13 @@ import Foundation
 
 @objc final class OverDiskQuotaCommand: NSObject {
 
-    private var completionAction: (OverDiskQuotaInfomationType) -> Void
+    private var completionAction: (OverDiskQuotaInfomationProtocol) -> Void
 
     private var task: OverDiskQuotaQueryTask?
 
     var storageUsed: NSNumber?
 
-    @objc init(storageUsed: NSNumber?, completionAction: @escaping (OverDiskQuotaInfomationType) -> Void) {
+    @objc init(storageUsed: NSNumber?, completionAction: @escaping (OverDiskQuotaInfomationProtocol) -> Void) {
         self.completionAction = completionAction
         self.storageUsed = storageUsed
     }
@@ -55,7 +55,7 @@ fileprivate final class OverDiskQuotaQueryTask {
 
     // MARK: - Methods
 
-    func start(with api: MEGASdk, completion: @escaping (OverDiskQuotaInfomationType) -> Void) {
+    func start(with api: MEGASdk, completion: @escaping (OverDiskQuotaInfomationProtocol) -> Void) {
 
         if let userDataStore = userDataStore,
             let storageUsedStore = storageUsedStore,

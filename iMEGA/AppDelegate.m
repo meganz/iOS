@@ -1043,7 +1043,7 @@ void uncaughtExceptionHandler(NSException *exception) {
     }
 }
 
-- (void)presentOverDiskQuotaViewControllerIfNeededWithInformation:(id<OverDiskQuotaInfomationType> _Nonnull)overDiskQuotaInformation {
+- (void)presentOverDiskQuotaViewControllerIfNeededWithInformation:(id<OverDiskQuotaInfomationProtocol> _Nonnull)overDiskQuotaInformation {
     if (self.isOverDiskQuotaPresented || [UIApplication.mnz_visibleViewController isKindOfClass:OverDiskQuotaViewController.class]) {
         return;
     }
@@ -1460,7 +1460,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                 NSNumber *cloudStroageUsed = MEGASdkManager.sharedMEGASdk.mnz_accountDetails.storageUsed;
                 OverDiskQuotaCommand *presentOverDiskQuotaScreenCommand =
                     [[OverDiskQuotaCommand alloc] initWithStorageUsed:cloudStroageUsed
-                                                     completionAction:^(id<OverDiskQuotaInfomationType> _Nonnull infor) {
+                                                     completionAction:^(id<OverDiskQuotaInfomationProtocol> _Nonnull infor) {
                         [weakSelf presentOverDiskQuotaViewControllerIfNeededWithInformation:infor];
                     }];
                 [OverDiskQuotaService.sharedService send:presentOverDiskQuotaScreenCommand];
@@ -1614,7 +1614,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                 NSNumber *cloudStroageUsed = MEGASdkManager.sharedMEGASdk.mnz_accountDetails.storageUsed;
                 OverDiskQuotaCommand *presentOverDiskQuotaScreenCommand =
                     [[OverDiskQuotaCommand alloc] initWithStorageUsed: cloudStroageUsed
-                                                     completionAction:^(id<OverDiskQuotaInfomationType> _Nonnull infor) {
+                                                     completionAction:^(id<OverDiskQuotaInfomationProtocol> _Nonnull infor) {
                         [weakSelf presentOverDiskQuotaViewControllerIfNeededWithInformation:infor];
                     }];
                 [OverDiskQuotaService.sharedService send:presentOverDiskQuotaScreenCommand];
