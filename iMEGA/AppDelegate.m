@@ -1460,8 +1460,10 @@ void uncaughtExceptionHandler(NSException *exception) {
                 NSNumber *cloudStroageUsed = MEGASdkManager.sharedMEGASdk.mnz_accountDetails.storageUsed;
                 OverDiskQuotaCommand *presentOverDiskQuotaScreenCommand =
                     [[OverDiskQuotaCommand alloc] initWithStorageUsed:cloudStroageUsed
-                                                     completionAction:^(id<OverDiskQuotaInfomationProtocol> _Nonnull infor) {
-                        [weakSelf presentOverDiskQuotaViewControllerIfNeededWithInformation:infor];
+                                                     completionAction:^(id<OverDiskQuotaInfomationProtocol> _Nullable infor) {
+                        if (infor != nil) {
+                            [weakSelf presentOverDiskQuotaViewControllerIfNeededWithInformation:infor];
+                        }
                     }];
                 [OverDiskQuotaService.sharedService send:presentOverDiskQuotaScreenCommand];
             } else {
@@ -1614,8 +1616,10 @@ void uncaughtExceptionHandler(NSException *exception) {
                 NSNumber *cloudStroageUsed = MEGASdkManager.sharedMEGASdk.mnz_accountDetails.storageUsed;
                 OverDiskQuotaCommand *presentOverDiskQuotaScreenCommand =
                     [[OverDiskQuotaCommand alloc] initWithStorageUsed: cloudStroageUsed
-                                                     completionAction:^(id<OverDiskQuotaInfomationProtocol> _Nonnull infor) {
-                        [weakSelf presentOverDiskQuotaViewControllerIfNeededWithInformation:infor];
+                                                     completionAction:^(id<OverDiskQuotaInfomationProtocol> _Nullable infor) {
+                        if (infor != nil) {
+                            [weakSelf presentOverDiskQuotaViewControllerIfNeededWithInformation:infor];
+                        }
                     }];
                 [OverDiskQuotaService.sharedService send:presentOverDiskQuotaScreenCommand];
                 break;
