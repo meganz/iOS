@@ -222,13 +222,13 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <viewLayoutGuide key="safeArea" id="eob-wF-L81"/>
                     <items>
-                        <barButtonItem enabled="NO" title="Item" image="download" width="32" style="plain" id="mZb-63-wxw" userLabel="Download Bar Button Item">
+                        <barButtonItem enabled="NO" title="Item" image="offline" width="32" style="plain" id="mZb-63-wxw" userLabel="Download Bar Button Item">
                             <connections>
                                 <action selector="downloadAction:" destination="3GS-cK-Hw6" id="osa-ls-637"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="mbb-fa-sBd"/>
-                        <barButtonItem enabled="NO" image="shareGray" width="32" style="plain" id="84D-T8-1ui" userLabel="Share Bar Button Item">
+                        <barButtonItem enabled="NO" image="share" width="32" style="plain" id="84D-T8-1ui" userLabel="Share Bar Button Item">
                             <connections>
                                 <action selector="shareAction:" destination="3GS-cK-Hw6" id="0z0-Dw-LjO"/>
                             </connections>
@@ -285,11 +285,11 @@
     <resources>
         <image name="cameraUploadsIcon" width="31" height="28"/>
         <image name="copy" width="28" height="28"/>
-        <image name="download" width="32" height="32"/>
         <image name="move" width="28" height="28"/>
+        <image name="offline" width="28" height="28"/>
         <image name="rubbishBin" width="28" height="28"/>
         <image name="selectAll" width="22" height="22"/>
-        <image name="shareGray" width="32" height="32"/>
+        <image name="share" width="28" height="28"/>
         <image name="video_list" width="22" height="22"/>
         <image name="white_checkmark" width="12" height="12"/>
     </resources>
