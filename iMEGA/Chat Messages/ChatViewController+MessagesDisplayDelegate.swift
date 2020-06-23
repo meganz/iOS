@@ -6,7 +6,6 @@ extension ChatViewController: MessagesDisplayDelegate {
                          at indexPath: IndexPath,
                          in messagesCollectionView: MessagesCollectionView) -> UIColor {
         
-        //FIXME: V5 merging issue
         guard let chatMessage = messageForItem(at: indexPath, in: messagesCollectionView) as? ChatMessage else {
             return isFromCurrentSender(message: message) ? UIColor.mnz_chatOutgoingBubble(UIScreen.main.traitCollection) : UIColor.mnz_chatIncomingBubble(UIScreen.main.traitCollection)
         }
@@ -22,11 +21,9 @@ extension ChatViewController: MessagesDisplayDelegate {
             if (chatMessage.message.content as NSString).mnz_isPureEmojiString() {
                 return .clear
             }
-            //FIXME: V5 merging issue
             return isFromCurrentSender(message: message) ? UIColor.mnz_chatOutgoingBubble(UIScreen.main.traitCollection) : UIColor.mnz_chatIncomingBubble(UIScreen.main.traitCollection)
             
         default:
-            //FIXME: V5 merging issue
             return isFromCurrentSender(message: message) ? UIColor.mnz_chatOutgoingBubble(UIScreen.main.traitCollection) : UIColor.mnz_chatIncomingBubble(UIScreen.main.traitCollection)
             
         }
