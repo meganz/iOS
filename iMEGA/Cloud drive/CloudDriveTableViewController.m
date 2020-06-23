@@ -296,7 +296,7 @@
             [self presentViewController:activityVC animated:YES completion:nil];
             [self setTableViewEditing:NO animated:YES];
         }];
-        shareAction.image = [[UIImage imageNamed:@"shareGray"] imageWithTintColor:UIColor.whiteColor];
+        shareAction.image = [[UIImage imageNamed:@"share"] imageWithTintColor:UIColor.whiteColor];
         shareAction.backgroundColor = UIColor.systemOrangeColor;
         
         UIContextualAction *rubbishBinAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
@@ -371,7 +371,7 @@
                 return @[restoreButton];
             }
         } else {
-            MGSwipeButton *shareButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"shareGray"] backgroundColor:UIColor.systemOrangeColor padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
+            MGSwipeButton *shareButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"share"] backgroundColor:UIColor.systemOrangeColor padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
                 UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:@[node] sender:[self.tableView cellForRowAtIndexPath:indexPath]];
                 [self presentViewController:activityVC animated:YES completion:nil];
                 return YES;
