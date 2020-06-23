@@ -220,6 +220,19 @@ class ChatViewController: MessagesViewController {
         audioController.stopAnyOngoingPlaying()
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        guard #available(iOS 13, *), traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) else {
+            return
+        }
+        messagesCollectionView.reloadData()
+        
+        if let inputbar = inputAccessoryView as? ChatInputBar {
+            inputbar.set(keyboardAppearance: traitCollection.userInterfaceStyle == .dark ? .dark : .light)
+        }
+    }
+    
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
         return super.collectionView(collectionView, cellForItemAt: indexPath)

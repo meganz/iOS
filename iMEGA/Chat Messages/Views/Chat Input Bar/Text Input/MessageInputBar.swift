@@ -134,6 +134,10 @@ class MessageInputBar: UIView {
         updateTextUI()
     }
     
+    func set(keyboardAppearance: UIKeyboardAppearance) {
+        messageTextView.set(keyboardAppearance: keyboardAppearance)
+    }
+    
     func setTypingIndicator(text: NSAttributedString?) {
         typingIndicatorLabel.isHidden = (text == nil)
 
@@ -206,6 +210,9 @@ class MessageInputBar: UIView {
         micButton.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
         messageTextViewCoverView.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
         addButton.tintColor = UIColor.mnz_primaryGray(for: traitCollection)
+        if #available(iOS 12.0, *) {
+            messageTextView.keyboardAppearance = traitCollection.userInterfaceStyle == .dark ? .dark : .light
+        }
     }
     
     private func registerKeyboardNotifications() {

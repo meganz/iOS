@@ -128,6 +128,11 @@ class MessageTextView: UITextView {
         becomeFirstResponder()
     }
     
+    func set(keyboardAppearance: UIKeyboardAppearance) {
+        self.keyboardAppearance = keyboardAppearance
+        reloadInputViews()
+    }
+    
     func reset() {
         self.text = nil
         updatePlaceholder()
