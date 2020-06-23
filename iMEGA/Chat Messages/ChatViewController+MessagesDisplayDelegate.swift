@@ -2,15 +2,6 @@ import MessageKit
 
 extension ChatViewController: MessagesDisplayDelegate {
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        guard #available(iOS 13, *), traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) else {
-            return
-        }
-        messagesCollectionView.reloadData()
-    }
-    
     func backgroundColor(for message: MessageType,
                          at indexPath: IndexPath,
                          in messagesCollectionView: MessagesCollectionView) -> UIColor {
