@@ -131,7 +131,7 @@ extension ChatViewController: MessagesDisplayDelegate {
     // MARK: - Audio Messages
     
     func audioTintColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
-        return isFromCurrentSender(message: message) ? .white : .black
+        return isFromCurrentSender(message: message) ? .white : .mnz_label()
     }
     
     func configureAudioCell(_ cell: AudioMessageCell, message: MessageType) {
