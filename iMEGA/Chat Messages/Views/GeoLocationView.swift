@@ -13,7 +13,7 @@ class GeoLocationView: UIView {
     }
     
     private func updateAppearance () {
-        backgroundColor = .mnz_backgroundGrouped(for: traitCollection)
+        backgroundColor = .mnz_chatRichLinkContentBubble(traitCollection)
         titleLabel.textColor = .mnz_label()
         subtitleLabel.textColor = .mnz_subtitles(for: traitCollection)
     }

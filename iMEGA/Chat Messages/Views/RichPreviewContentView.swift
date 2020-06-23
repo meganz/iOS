@@ -15,7 +15,7 @@ class RichPreviewContentView: UIView {
     }
     
     private func updateAppearance () {
-        backgroundColor = UIColor.mnz_backgroundGrouped(for: traitCollection)
+        backgroundColor = .mnz_chatRichLinkContentBubble(traitCollection)
         titleLabel.textColor = .mnz_label()
         descriptionLabel.textColor = .mnz_subtitles(for: traitCollection)
     }

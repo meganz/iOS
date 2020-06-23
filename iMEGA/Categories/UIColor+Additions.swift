@@ -176,6 +176,21 @@ extension UIColor {
         }
     }
     
+    @objc class func mnz_chatRichLinkContentBubble(_ traitCollection: UITraitCollection) -> UIColor {
+        if #available(iOS 13.0, *) {
+            switch traitCollection.userInterfaceStyle {
+            case .unspecified, .light:
+                return UIColor.white
+            case .dark:
+                return mnz_black1C1C1E()
+            @unknown default:
+                return UIColor.white
+            }
+        } else {
+            return UIColor.white
+        }
+    }
+    
     // MARK: - Objects
     @objc class func mnz_chatIncomingBubble(_ traitCollection: UITraitCollection) -> UIColor {
         if #available(iOS 13.0, *) {

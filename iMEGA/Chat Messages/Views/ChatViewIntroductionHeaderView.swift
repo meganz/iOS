@@ -77,7 +77,6 @@ class ChatViewIntroductionHeaderView: MessageReusableView {
         participantsLabel.font = UIFont.systemFont(ofSize: 24, weight: .regular)
         statusLabel.font = UIFont.systemFont(ofSize: 12, weight: .regular)
         
-        //FIXME: V5 merging issue
         chattingWithTextLabel.textColor = UIColor.mnz_red(for: traitCollection)
         descriptionLabel.textColor = UIColor.mnz_primaryGray(for: traitCollection)
         participantsLabel.textColor = UIColor.mnz_label()
@@ -112,7 +111,6 @@ class ChatViewIntroductionHeaderView: MessageReusableView {
         let title = (string as NSString).mnz_stringBetweenString("[S]", andString: "[/S]")!
         let description = (string as NSString).replacingOccurrences(of: String(format: "[S]%@[/S]", title), with: "")
         
-        //FIXME: V5 merging issue
         let titleAttributes = [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15.0, weight: .regular),
                                                                NSAttributedString.Key.foregroundColor: UIColor.mnz_red(for: traitCollection)]
         let titleAttributedString = NSMutableAttributedString(string: title, attributes: titleAttributes)
