@@ -1,6 +1,6 @@
 import Foundation
 
-@objc protocol OverDiskQuotaInfomationType {
+@objc protocol OverDiskQuotaInfomationProtocol {
     typealias Email = String
     typealias Deadline = Date
     typealias WarningDates = [Date]
@@ -16,7 +16,7 @@ import Foundation
     var suggestedPlanName: AvailablePlanName? { get }
 }
 
-@objc final class OverDiskQuotaInformation: NSObject, OverDiskQuotaInfomationType {
+@objc final class OverDiskQuotaInformation: NSObject, OverDiskQuotaInfomationProtocol {
     let email: Email
     let deadline: Deadline
     let warningDates: WarningDates

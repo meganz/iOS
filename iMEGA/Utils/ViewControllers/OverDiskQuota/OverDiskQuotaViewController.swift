@@ -59,7 +59,7 @@ final class OverDiskQuotaViewController: UIViewController {
 
     // MARK: - Setup MEGA UserData
 
-    @objc func setup(with overDiskQuotaData: OverDiskQuotaInfomationType) {
+    @objc func setup(with overDiskQuotaData: OverDiskQuotaInfomationProtocol) {
         overDiskQuota = OverDiskQuotaInternal(email: overDiskQuotaData.email,
                                               deadline: overDiskQuotaData.deadline,
                                               warningDates: overDiskQuotaData.warningDates,
