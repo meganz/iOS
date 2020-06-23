@@ -41,7 +41,8 @@ fileprivate let emphasizedTextAttributesStyler: TextAttributesStyler = { attribu
     TextStyle.emphasizedTextStyle.applied(on: attributes)
 }
 
-private func combine(_ lhv: @escaping TextAttributesStyler, _ rhv: @escaping TextAttributesStyler) -> TextAttributesStyler {
+private func combine(_ lhv: @escaping TextAttributesStyler,
+                     _ rhv: @escaping TextAttributesStyler) -> TextAttributesStyler {
     return { attributes -> TextAttributes in
         return rhv(lhv(attributes))
     }

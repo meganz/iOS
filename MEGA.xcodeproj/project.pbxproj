@@ -316,6 +316,7 @@
 		5DE448E6248D078800EE00CB /* AttributedTextStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE448E5248D078800EE00CB /* AttributedTextStyle.swift */; };
 		5DE448EB248D15F300EE00CB /* NibOwnerLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE448EA248D15F300EE00CB /* NibOwnerLoadable.swift */; };
 		5DE448EE248F673700EE00CB /* ViewStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE448ED248F673700EE00CB /* ViewStyle.swift */; };
+		5DEFE99424A1AE0E00DFF256 /* MarkedStringParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DEFE99324A1AE0E00DFF256 /* MarkedStringParser.swift */; };
 		5DF016812499BD60005A121D /* MEGAPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF016802499BD60005A121D /* MEGAPlan.swift */; };
 		5DF016832499BD7B005A121D /* MEGAPlanService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF016822499BD7B005A121D /* MEGAPlanService.swift */; };
 		7714901520F7592100769BD4 /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7714901420F7592000769BD4 /* Contacts.framework */; };
@@ -1716,6 +1717,7 @@
 		5DE448E5248D078800EE00CB /* AttributedTextStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedTextStyle.swift; sourceTree = "<group>"; };
 		5DE448EA248D15F300EE00CB /* NibOwnerLoadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NibOwnerLoadable.swift; sourceTree = "<group>"; };
 		5DE448ED248F673700EE00CB /* ViewStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewStyle.swift; sourceTree = "<group>"; };
+		5DEFE99324A1AE0E00DFF256 /* MarkedStringParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkedStringParser.swift; sourceTree = "<group>"; };
 		5DF016802499BD60005A121D /* MEGAPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAPlan.swift; sourceTree = "<group>"; };
 		5DF016822499BD7B005A121D /* MEGAPlanService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAPlanService.swift; sourceTree = "<group>"; };
 		7714901420F7592000769BD4 /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = System/Library/Frameworks/Contacts.framework; sourceTree = SDKROOT; };
@@ -4179,6 +4181,7 @@
 			isa = PBXGroup;
 			children = (
 				5D18BDA1249718280045F9B3 /* MarkedString.swift */,
+				5DEFE99324A1AE0E00DFF256 /* MarkedStringParser.swift */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -6420,6 +6423,7 @@
 				949086881FD5482E002B12BD /* NSAttributedString+MNZCategory.m in Sources */,
 				A86B9F872316D6AB00F35E7A /* FLEXResources.m in Sources */,
 				137361901A6664C300B740E8 /* main.m in Sources */,
+				5DEFE99424A1AE0E00DFF256 /* MarkedStringParser.swift in Sources */,
 				417B5AAE1DEC792400A193D5 /* MOUser+CoreDataProperties.m in Sources */,
 				5DB1F478248945F1001C1D5D /* UIView+Border.swift in Sources */,
 				A86B9F372316D6AB00F35E7A /* FLEXSubtitleTableViewCell.m in Sources */,
