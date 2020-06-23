@@ -103,7 +103,7 @@ class EnlargementView: UIView {
     }
     
     func updateAppearance() {
-        nonSelectionView.backgroundColor = .mnz_inputbarButtonBackground(traitCollection)
+        nonSelectionView.backgroundColor = .mnz_voiceRecordingViewButtonBackground(traitCollection)
         imageView.tintColor = .mnz_inputbarButtonImageTint(traitCollection)
     }
 
