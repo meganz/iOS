@@ -4047,14 +4047,14 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		5BB8A851243DF3DA009FE957 /* Storage */ = {
+		5BB8A851243DF3DA009FE957 /* Usage */ = {
 			isa = PBXGroup;
 			children = (
 				5BB8A852243DF42D009FE957 /* Usage.storyboard */,
 				E889C9E71B566EC400ECEFDF /* UsageViewController.h */,
 				E889C9E81B566EC400ECEFDF /* UsageViewController.m */,
 			);
-			path = Storage;
+			path = Usage;
 			sourceTree = "<group>";
 		};
 		5BD4A01B1F8385EC000E24E6 /* FrameAccessor */ = {
@@ -5526,7 +5526,7 @@
 		E889C9DE1B55652B00ECEFDF /* My Account */ = {
 			isa = PBXGroup;
 			children = (
-				5BB8A851243DF3DA009FE957 /* Storage */,
+				5BB8A851243DF3DA009FE957 /* Usage */,
 				A8C93C0A22D718030030CE1B /* Profile */,
 				B6A11A0922828E400017CD59 /* SMS */,
 				77597007219EB7FD00B31671 /* Notifications */,
