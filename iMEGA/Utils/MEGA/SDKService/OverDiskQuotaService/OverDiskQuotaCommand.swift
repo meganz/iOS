@@ -2,31 +2,41 @@ import Foundation
 
 @objc final class OverDiskQuotaCommand: NSObject {
 
-    private var completionAction: (OverDiskQuotaInfomationProtocol) -> Void
+    private var completionAction: (OverDiskQuotaInfomationProtocol?) -> Void
 
     private var task: OverDiskQuotaQueryTask?
 
     var storageUsed: NSNumber?
 
-    @objc init(storageUsed: NSNumber?, completionAction: @escaping (OverDiskQuotaInfomationProtocol) -> Void) {
+    @objc init(storageUsed: NSNumber?,
+               completionAction: @escaping (OverDiskQuotaInfomationProtocol?) -> Void) {
         self.completionAction = completionAction
         self.storageUsed = storageUsed
     }
 
-    func execute(with api: MEGASdk, completion: @escaping (OverDiskQuotaCommand?) -> Void) {
+    func execute(with api: MEGASdk,
+                 completion: @escaping (OverDiskQuotaCommand?, OverDiskQuotaService.DataObtainingError?) -> Void)
+    {
         guard let storageUsed = storageUsed else {
             assertionFailure("Do not schedule a command to execute while stroage used is still nil.")
-            completion(self)
+            completion(self, .unexpectedlyCancellation)
             return
         }
 
         let task = OverDiskQuotaQueryTask()
         task.updatedStorageStore(with: storageUsed)
-        task.start(with: api) { [weak self] overDiskQuotaInformation in
+        task.start(with: api) { [weak self] overDiskQuotaInformation, error in
             var retainedTask: OverDiskQuotaQueryTask? = task
             defer { retainedTask = nil }
-            completion(self)
+
+            guard let overDiskQuotaInformation = overDiskQuotaInformation else {
+                self?.completionAction(nil)
+                completion(nil, error)
+                return
+            }
+
             self?.completionAction(overDiskQuotaInformation)
+            completion(self, error)
         }
     }
 }
@@ -35,11 +45,7 @@ fileprivate final class OverDiskQuotaQueryTask {
 
     // MARK: - Errors
 
-    fileprivate enum DataObtainingError: Error {
-        case invalidUserEmail
-    }
-
-    private var errors: Set<DataObtainingError> = []
+    private var errors: Set<OverDiskQuotaService.DataObtainingError> = []
 
     // MARK: - Over Disk Quota Data Store
 
@@ -49,13 +55,12 @@ fileprivate final class OverDiskQuotaQueryTask {
 
     private var availablePlansStore: OverDiskQuotaPlans?
 
-    // MARK: - Lifecycle
-
-    init() { }
-
     // MARK: - Methods
 
-    func start(with api: MEGASdk, completion: @escaping (OverDiskQuotaInfomationProtocol) -> Void) {
+    func start(
+        with api: MEGASdk,
+        completion: @escaping (OverDiskQuotaInfomationProtocol?, OverDiskQuotaService.DataObtainingError?
+    ) -> Void) {
 
         if let userDataStore = userDataStore,
             let storageUsedStore = storageUsedStore,
@@ -63,15 +68,22 @@ fileprivate final class OverDiskQuotaQueryTask {
             let overDiskQuotaData = extractedInformation(userDataStore: userDataStore,
                                                         storageStore: storageUsedStore,
                                                         planStore: availablePlansStore)
-            completion(overDiskQuotaData)
+            completion(overDiskQuotaData, nil)
             return
         }
 
         if shouldFetchUserData(userDataStore, errors: errors) {
             api.getUserData(with: MEGAGenericRequestDelegate(completion: { [weak self] (_, _) in
-                guard let self = self else { return }
+                guard let self = self else {
+                    assertionFailure("OverDiskQuotaQueryTask instance is unexpected released.")
+                    completion(nil, .unexpectedlyCancellation)
+                    return
+                }
                 switch self.updatedUserData(with: api) {
-                case .failure(let error): self.errors.insert(error)
+                case .failure(let error):
+                    self.errors.insert(error)
+                    completion(nil, .invalidUserEmail)
+                    return
                 case .success(let userData):
                     self.userDataStore = userData
                     self.start(with: api, completion: completion)
@@ -82,11 +94,19 @@ fileprivate final class OverDiskQuotaQueryTask {
 
         if shouldFetchMEGAPlans(availablePlansStore, errors: errors) {
             MEGAPlanService.shared.send(MEGAPlanCommand { [weak self] plans in
-                guard let self = self else { return }
+                guard let self = self else {
+                    assertionFailure("OverDiskQuotaQueryTask instance is unexpected released.")
+                    completion(nil, .unexpectedlyCancellation)
+                    return
+                }
                 self.availablePlansStore = OverDiskQuotaPlans(availablePlans: plans)
                 self.start(with: api, completion: completion)
             })
+            return
         }
+
+        assertionFailure("OverDiskQuotaQueryTask run into a state that not fetches enough information and terminated.")
+        completion(nil, .unexpectedlyCancellation)
     }
 
     func updatedStorageStore(with storage: NSNumber) {
@@ -95,17 +115,20 @@ fileprivate final class OverDiskQuotaQueryTask {
 
     // MARK: - Privates
 
-    private func shouldFetchUserData(_ userDataStore: OverDiskQuotaUserData?, errors: Set<DataObtainingError>) -> Bool {
-        if userDataStore != nil { return false }
-        return !errors.contains(.invalidUserEmail)
+    private func shouldFetchUserData(
+        _ userDataStore: OverDiskQuotaUserData?,
+        errors: Set<OverDiskQuotaService.DataObtainingError>) -> Bool {
+        return ((userDataStore == nil) && !errors.contains(.invalidUserEmail))
     }
 
-    private func shouldFetchMEGAPlans(_ plansStore: OverDiskQuotaPlans?, errors: Set<DataObtainingError>) -> Bool {
-        if plansStore != nil { return false }
-        return true
+    private func shouldFetchMEGAPlans(
+        _ plansStore: OverDiskQuotaPlans?,
+        errors: Set<OverDiskQuotaService.DataObtainingError>) -> Bool {
+        return (plansStore == nil)
     }
 
-    private func updatedUserData(with api: MEGASdk) -> Result<OverDiskQuotaUserData, DataObtainingError> {
+    private func updatedUserData(with api: MEGASdk)
+        -> Result<OverDiskQuotaUserData, OverDiskQuotaService.DataObtainingError> {
         guard let email = api.myEmail else { return .failure(.invalidUserEmail) }
         return .success(OverDiskQuotaUserData(email: email,
                                               deadline: api.overquotaDeadlineDate(),

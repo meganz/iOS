@@ -32,7 +32,7 @@ import Foundation
         blockedCommands.forEach { command in
             if command.storageUsed == nil {
                 command.storageUsed = stroageUsed
-                command.execute(with: api, completion: completion(ofCommand:))
+                command.execute(with: api, completion: completion(ofCommand:error:))
             }
         }
     }
@@ -40,13 +40,13 @@ import Foundation
     @objc func send(_ command: OverDiskQuotaCommand) {
         blockedCommands.append(command)
         if command.storageUsed != nil {
-            command.execute(with: api, completion: completion(ofCommand:))
+            command.execute(with: api, completion: completion(ofCommand:error:))
         }
     }
 
     // MARK: - Privates
 
-    func completion(ofCommand command: OverDiskQuotaCommand?) -> Void {
+    func completion(ofCommand command: OverDiskQuotaCommand?, error: DataObtainingError?) -> Void {
         if let command = command {
             remove(command)
         }
@@ -56,5 +56,12 @@ import Foundation
         blockedCommands.removeAll { command -> Bool in
             command == completedCommand
         }
+    }
+
+    // MARK: - Errors
+
+    enum DataObtainingError: Error {
+        case invalidUserEmail
+        case unexpectedlyCancellation
     }
 }
