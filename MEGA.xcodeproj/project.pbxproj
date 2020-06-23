@@ -1043,6 +1043,7 @@
 		BF0ACD64240C87A80002101E /* MEGAChatListItem+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0ACD63240C87A80002101E /* MEGAChatListItem+Additions.swift */; };
 		BF0BBEFE230627BE001FD542 /* UIViewController+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0BBEFD230627BE001FD542 /* UIViewController+MNZCategory.m */; };
 		BF1574AE2373AB8C0095B283 /* MEGAChatRoom+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1574AD2373AB8C0095B283 /* MEGAChatRoom+Additions.swift */; };
+		BF30AB9B24A05B7A00862853 /* MEGAChatMessage+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF30AB9A24A05B7A00862853 /* MEGAChatMessage+Additions.swift */; };
 		BF69E5172374F3720031913D /* AppDelegate+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF69E5162374F3720031913D /* AppDelegate+Additions.swift */; };
 		BF943E8F23553F11001C18E0 /* DNDTurnOnOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF943E8E23553F11001C18E0 /* DNDTurnOnOption.swift */; };
 		BF943E9023553F11001C18E0 /* DNDTurnOnOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF943E8E23553F11001C18E0 /* DNDTurnOnOption.swift */; };
@@ -2427,6 +2428,7 @@
 		BF0BBEFC230627BE001FD542 /* UIViewController+MNZCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+MNZCategory.h"; sourceTree = "<group>"; };
 		BF0BBEFD230627BE001FD542 /* UIViewController+MNZCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+MNZCategory.m"; sourceTree = "<group>"; };
 		BF1574AD2373AB8C0095B283 /* MEGAChatRoom+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAChatRoom+Additions.swift"; sourceTree = "<group>"; };
+		BF30AB9A24A05B7A00862853 /* MEGAChatMessage+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAChatMessage+Additions.swift"; sourceTree = "<group>"; };
 		BF69E5162374F3720031913D /* AppDelegate+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Additions.swift"; sourceTree = "<group>"; };
 		BF943E8E23553F11001C18E0 /* DNDTurnOnOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DNDTurnOnOption.swift; sourceTree = "<group>"; };
 		BF943E9123554021001C18E0 /* TimeInterval+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval+Additions.swift"; sourceTree = "<group>"; };
@@ -3551,6 +3553,7 @@
 				BF943E9423554054001C18E0 /* String+Additions.swift */,
 				BF943E9723554101001C18E0 /* UIAlertController+Additions.swift */,
 				BF1574AD2373AB8C0095B283 /* MEGAChatRoom+Additions.swift */,
+				BF30AB9A24A05B7A00862853 /* MEGAChatMessage+Additions.swift */,
 				BF0ACD63240C87A80002101E /* MEGAChatListItem+Additions.swift */,
 				8330A9F222F41F470059B39C /* Array+Additions.swift */,
 				83FA7B502386197B00887630 /* UserDefaults+Additions.swift */,
@@ -6198,6 +6201,7 @@
 				5BD4A0211F838606000E24E6 /* ViewFrameAccessor.m in Sources */,
 				831D61A6218738D20038F5B8 /* MOFolderLayout+CoreDataProperties.m in Sources */,
 				417279501DB663FA001AC818 /* JSQMessagesCollectionViewCell.m in Sources */,
+				BF30AB9B24A05B7A00862853 /* MEGAChatMessage+Additions.swift in Sources */,
 				A86B9F4D2316D6AB00F35E7A /* FLEXArgumentInputStringView.m in Sources */,
 				2FCA4B7A2385FB260011B7DA /* ChatImageQualityTableViewController.swift in Sources */,
 				A86B9F2D2316D6AB00F35E7A /* FLEXBundleExplorerViewController.m in Sources */,
