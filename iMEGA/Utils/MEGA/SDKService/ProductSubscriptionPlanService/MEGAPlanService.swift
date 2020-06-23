@@ -10,26 +10,24 @@ final class MEGAPlanCommand: NSObject {
 
     fileprivate func execute(with api: MEGASdk,
                              cachedPlans: [MEGAPlan]?,
-                             completion: @escaping (MEGAPlanCommand, [MEGAPlan]) -> Void) {
-        if let cachedPlans = cachedPlans {
-            completionAction(cachedPlans)
-            completion(self, cachedPlans)
+                             completion: @escaping (MEGAPlanCommand?, [MEGAPlan]) -> Void) {
+        guard let cachedPlans = cachedPlans else {
+            fetchMEGAPlans(with: api, completion: completion)
             return
         }
-
-        fetchMEGAPlans(with: api, completion: completion)
+        completionAction(cachedPlans)
+        completion(self, cachedPlans)
     }
 
     // MARK: - Privates
 
-    fileprivate func fetchMEGAPlans(with api: MEGASdk, completion: @escaping (MEGAPlanCommand, [MEGAPlan]) -> Void) {
+    fileprivate func fetchMEGAPlans(with api: MEGASdk, completion: @escaping (MEGAPlanCommand?, [MEGAPlan]) -> Void) {
         let planLoadingTask = MEGAPlanLoadTask()
         planLoadingTask.start(with: api) { [weak self] plans in
             var taskRetaining: MEGAPlanLoadTask? = planLoadingTask
             defer { taskRetaining = nil }
 
-            guard let self = self else { return }
-            self.completionAction(plans)
+            self?.completionAction(plans)
             completion(self, plans)
         }
     }
@@ -97,9 +95,11 @@ fileprivate final class MEGAPlanLoadTask {
 
     // MARK: - Privates
 
-    private func completion(ofCommand command: MEGAPlanCommand, with plans: [MEGAPlan]) {
+    private func completion(ofCommand command: MEGAPlanCommand?, with plans: [MEGAPlan]) {
         cachePlans(plans)
-        remove(command)
+        if let command = command {
+            remove(command)
+        }
     }
 
     private func cachePlans(_ plans: [MEGAPlan]) {

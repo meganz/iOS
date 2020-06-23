@@ -46,8 +46,10 @@ import Foundation
 
     // MARK: - Privates
 
-    func completion(ofCommand command: OverDiskQuotaCommand) -> Void {
-        remove(command)
+    func completion(ofCommand command: OverDiskQuotaCommand?) -> Void {
+        if let command = command {
+            remove(command)
+        }
     }
 
     private func remove(_ completedCommand: OverDiskQuotaCommand) {

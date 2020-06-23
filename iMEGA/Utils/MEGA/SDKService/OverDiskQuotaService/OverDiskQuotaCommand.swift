@@ -13,18 +13,20 @@ import Foundation
         self.storageUsed = storageUsed
     }
 
-    func execute(with api: MEGASdk, completion: @escaping (OverDiskQuotaCommand) -> Void) {
+    func execute(with api: MEGASdk, completion: @escaping (OverDiskQuotaCommand?) -> Void) {
         guard let storageUsed = storageUsed else {
             assertionFailure("Do not schedule a command to execute while stroage used is still nil.")
+            completion(self)
             return
         }
 
-        self.task = OverDiskQuotaQueryTask()
-        task?.updatedStorageStore(with: storageUsed)
-        task?.start(with: api) { [weak self] overDiskQuotaInformation in
-            guard let self = self else { return }
-            self.completionAction(overDiskQuotaInformation)
+        let task = OverDiskQuotaQueryTask()
+        task.updatedStorageStore(with: storageUsed)
+        task.start(with: api) { [weak self] overDiskQuotaInformation in
+            var retainedTask: OverDiskQuotaQueryTask? = task
+            defer { retainedTask = nil }
             completion(self)
+            self?.completionAction(overDiskQuotaInformation)
         }
     }
 }
