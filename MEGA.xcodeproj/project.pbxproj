@@ -3166,6 +3166,7 @@
 		415226861A692ECC00EC7BB6 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				5D72206D24A1D93400910945 /* MarkedString */,
 				5D79B52024986A410070FECD /* MEGA */,
 				5D7D6B9A2491F53300ADBDEE /* Foundation */,
 				5DE448E7248D159000EE00CB /* UIKit+Tools */,
@@ -4160,6 +4161,15 @@
 			path = OverDiskQuotaService;
 			sourceTree = "<group>";
 		};
+		5D72206D24A1D93400910945 /* MarkedString */ = {
+			isa = PBXGroup;
+			children = (
+				5D18BDA1249718280045F9B3 /* MarkedString.swift */,
+				5DEFE99324A1AE0E00DFF256 /* MarkedStringParser.swift */,
+			);
+			path = MarkedString;
+			sourceTree = "<group>";
+		};
 		5D79B519249846E70070FECD /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
@@ -4180,8 +4190,6 @@
 		5D7D6B9A2491F53300ADBDEE /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
-				5D18BDA1249718280045F9B3 /* MarkedString.swift */,
-				5DEFE99324A1AE0E00DFF256 /* MarkedStringParser.swift */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
