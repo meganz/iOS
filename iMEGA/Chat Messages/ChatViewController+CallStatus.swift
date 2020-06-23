@@ -63,9 +63,7 @@ extension ChatViewController {
                 }
                 let time = Date().timeIntervalSince1970 - (call.initialTimeStamp == 0 ? startTime : TimeInterval(call.initialTimeStamp))
 
-                //FIXME: V5 merging issue
-//                let color = UIColor.mnz_green00BFA5()
-                self.setTopBannerButton(title: String(format: AMLocalizedString("Touch to return to call %@", "Message shown in a chat room for a group call in progress displaying the duration of the call"), NSString.mnz_string(fromTimeInterval: time)), color: UIColor.red)
+                self.setTopBannerButton(title: String(format: AMLocalizedString("Touch to return to call %@", "Message shown in a chat room for a group call in progress displaying the duration of the call"), NSString.mnz_string(fromTimeInterval: time)), color:  UIColor.mnz_turquoise(for: self.traitCollection))
             })
             RunLoop.current.add(timer!, forMode: RunLoop.Mode.common)
         }
@@ -73,16 +71,14 @@ extension ChatViewController {
     
     func configureTopBannerButtonForInProgressCall(_ call: MEGAChatCall) {
         if chatCall?.status == .reconnecting {
-            //FIXME: V5 merging issue
-            setTopBannerButton(title: AMLocalizedString("You are back!", "Title shown when the user reconnect in a call."), color: UIColor.green)
+            setTopBannerButton(title: AMLocalizedString("You are back!", "Title shown when the user reconnect in a call."), color: UIColor.mnz_turquoise(for: traitCollection))
         }
         initTimerForCall(call)
     }
     
     func configureTopBannerButtonForActiveCall(_ call: MEGAChatCall) {
         let title = chatRoom.isGroup ? AMLocalizedString("There is an active group call. Tap to join.", "Message shown in a chat room when there is an active group call"): AMLocalizedString("There is an active call. Tap to join.", "Message shown in a chat room when there is an active call")
-        //FIXME: V5 merging issue
-        setTopBannerButton(title: title, color: UIColor.green)
+        setTopBannerButton(title: title, color: UIColor.mnz_turquoise(for: traitCollection))
         showTopBannerButton()
     }
     
@@ -109,8 +105,7 @@ extension ChatViewController : MEGAChatCallDelegate {
             print(call.duration)
 
         case .reconnecting:
-            //FIXME: V5 merging issue
-            setTopBannerButton(title: AMLocalizedString("Reconnecting...", "Title shown when the user lost the connection in a call, and the app will try to reconnect the user again."), color: UIColor.orange)
+            setTopBannerButton(title: AMLocalizedString("Reconnecting...", "Title shown when the user lost the connection in a call, and the app will try to reconnect the user again."), color: UIColor.systemOrange)
         case .destroyed:
             timer?.invalidate()
             updateRightBarButtons()
