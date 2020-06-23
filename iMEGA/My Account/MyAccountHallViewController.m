@@ -332,7 +332,7 @@ typedef NS_ENUM(NSInteger, MyAccount) {
                 cell.transferLabel.textColor = cell.transferUsedLabel.textColor = UIColor.systemGreenColor;
             } else {
                 cell.iconImageView.image = [UIImage imageNamed:@"icon-storage"].imageFlippedForRightToLeftLayoutDirection;
-                cell.sectionLabel.text = AMLocalizedString(@"Storage", @"Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible).");
+                cell.sectionLabel.text = AMLocalizedString(@"Usage", @"Button title that goes to the section Usage where you can see how your MEGA space is used");
                 
                 if (MEGASdkManager.sharedMEGASdk.mnz_accountDetails) {
                     MEGAAccountDetails *accountDetails = MEGASdkManager.sharedMEGASdk.mnz_accountDetails;
