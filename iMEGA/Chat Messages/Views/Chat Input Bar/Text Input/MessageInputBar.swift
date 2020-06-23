@@ -210,6 +210,7 @@ class MessageInputBar: UIView {
         micButton.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
         messageTextViewCoverView.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
         addButton.tintColor = UIColor.mnz_primaryGray(for: traitCollection)
+        expandedTextViewCoverView.backgroundColor = UIColor.mnz_backgroundElevated(traitCollection)
         if #available(iOS 12.0, *) {
             messageTextView.keyboardAppearance = traitCollection.userInterfaceStyle == .dark ? .dark : .light
         }
@@ -222,9 +223,17 @@ class MessageInputBar: UIView {
     }
     
     private func removeKeyboardNotifications() {
-        NotificationCenter.default.removeObserver(keyboardWillShowObserver!)
-        NotificationCenter.default.removeObserver(keyboardShowObserver!)
-        NotificationCenter.default.removeObserver(keyboardHideObserver!)
+        remove(observer: keyboardWillShowObserver)
+        remove(observer: keyboardShowObserver)
+        remove(observer: keyboardHideObserver)
+    }
+    
+    private func remove(observer: NSObjectProtocol?) {
+        guard let observer = observer else {
+            return
+        }
+        
+        NotificationCenter.default.removeObserver(observer)
     }
     
     private func expand() {
