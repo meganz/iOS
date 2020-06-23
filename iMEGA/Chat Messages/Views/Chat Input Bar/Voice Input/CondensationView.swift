@@ -18,7 +18,7 @@ class CondensationView: EnlargementView {
     
     override func updateAppearance() {
         super.updateAppearance()
-        selectionView.backgroundColor = .mnz_inputbarButtonBackground(traitCollection)
+        selectionView.backgroundColor = .mnz_voiceRecordingViewButtonBackground(traitCollection)
         nonSelectionView.backgroundColor = .mnz_redFF453A()
     }
 }

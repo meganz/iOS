@@ -82,10 +82,10 @@ class VoiceClipInputBar: UIView {
     }
 
     private func recordingCompletedAnimation() {
-        self.recordTimeLabel.isHidden = true
-        self.audioWavesView.reset()
-        self.startRecordingView.alpha = 0.0
-        self.startRecordingView.isHidden = false
+        recordTimeLabel.isHidden = true
+        audioWavesView.reset()
+        startRecordingView.alpha = 0.0
+        startRecordingView.isHidden = false
 
         UIView.animate(withDuration: 0.4, animations: {
             self.sendViewTrailingConstraint.isActive = false
@@ -101,7 +101,7 @@ class VoiceClipInputBar: UIView {
     }
     
     private func startRecordingAudio() {
-        self.recordTimeLabel.isHidden = false
+        recordTimeLabel.isHidden = false
         
         do {
             let success = try audioRecorder.start()
