@@ -52,18 +52,19 @@ class MessageInputBar: UIView {
             
     // MARK:- Private properties
     
-    private var keyboardWillShowObserver: NSObjectProtocol!
-    private var keyboardShowObserver: NSObjectProtocol!
-    private var keyboardHideObserver: NSObjectProtocol!
+    private var keyboardWillShowObserver: NSObjectProtocol?
+    private var keyboardShowObserver: NSObjectProtocol?
+    private var keyboardHideObserver: NSObjectProtocol?
     
     private var expanded: Bool = false
     private var expandedHeight: CGFloat? {
-        guard let keyboardHeight = keyboardHeight else {
+        guard let keyboardHeight = keyboardHeight,
+            let messageTextViewTopConstraintValueWhenExpanded = messageTextViewTopConstraintValueWhenExpanded else {
             return nil
         }
            
         return UIScreen.main.bounds.height -
-            (messageTextViewTopConstraintValueWhenExpanded!
+            (messageTextViewTopConstraintValueWhenExpanded
                 + messageTextViewBottomConstraintDefaultValue
                 + (messageTextView.isFirstResponder ? keyboardHeight : 0.0))
     }
@@ -96,7 +97,11 @@ class MessageInputBar: UIView {
         
         registerKeyboardNotifications()
         
-        messageTextViewCoverView.maxCornerRadius = messageTextView.font!.lineHeight
+        guard let messageTextViewFont = messageTextView.font else {
+            fatalError("text view font does not exsists")
+        }
+        
+        messageTextViewCoverView.maxCornerRadius = messageTextViewFont.lineHeight
             + messageTextViewCoverViewTopConstraint.constant
             + messageTextViewCoverViewBottomContraint.constant
             + messageTextView.textContainerInset.top
@@ -287,7 +292,7 @@ class MessageInputBar: UIView {
         semiTransparentView.isHidden = false
 
         let topConstraintValue: CGFloat = UIScreen.main.bounds.height
-            - ((messageTextView.isFirstResponder ? keyboardHeight! : 0.0)
+            - ((messageTextView.isFirstResponder ? (keyboardHeight ?? 0.0) : 0.0)
                 + messageTextViewBottomConstraint.constant
                 + messageTextView.intrinsicContentSize.height)
 
@@ -295,12 +300,12 @@ class MessageInputBar: UIView {
         layoutIfNeeded()
         
         let bottomAnimatableConstraint = topConstraintValue
-            - messageTextViewTopConstraintValueWhenExpanded!
+            - (messageTextViewTopConstraintValueWhenExpanded ?? 0.0)
 
         UIView.animate(withDuration: 0.4, animations: {
             self.semiTransparentView.alpha = 1.0
             self.messageTextViewBottomConstraint.constant += bottomAnimatableConstraint
-            self.messageTextViewTopConstraint.constant = self.messageTextViewTopConstraintValueWhenExpanded!
+            self.messageTextViewTopConstraint.constant = self.messageTextViewTopConstraintValueWhenExpanded ?? 0.0
             self.layoutIfNeeded()
         }, completion: completionHandler)
     }

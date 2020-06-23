@@ -139,7 +139,11 @@ class ChatInputBar: UIView {
     }
     
     deinit {
-        NotificationCenter.default.removeObserver(keyboardFrameChangeObserver!)
+        guard let keyboardFrameChangeObserver = keyboardFrameChangeObserver else {
+            return
+        }
+        
+        NotificationCenter.default.removeObserver(keyboardFrameChangeObserver)
     }
     
     required init?(coder: NSCoder) {
@@ -276,13 +280,13 @@ class ChatInputBar: UIView {
         ) { [weak self] notification in
             guard let `self` = self,
                 self.voiceRecordingViewEnabled,
-                self.messageInputBar.isTextViewTheFirstResponder()  else {
+                self.messageInputBar.isTextViewTheFirstResponder(),
+                let userInfo = notification.userInfo,
+                let keyboardHeight = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.height,
+                let animationDuration: TimeInterval = (userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue
+                else {
                 return
             }
-            
-            let userInfo = notification.userInfo!
-            let keyboardHeight = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue.height
-            let animationDuration: TimeInterval = (userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as! NSNumber).doubleValue
             
             if keyboardHeight - self.frame.height > 0.0 {
                 let defaultAnimationDuration = self.animationDuration

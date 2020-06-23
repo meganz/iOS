@@ -8,7 +8,7 @@ class AudioRecorder: NSObject {
     }
     
     private var recorder: AVAudioRecorder?
-    private var displayLink: CADisplayLink?
+    private var displayLink: CADisplayLink!
     private var recordStartDate: Date!
     private var meterTable = MeterTable()
 
@@ -60,8 +60,8 @@ class AudioRecorder: NSObject {
         if recorder.record() {
             recordStartDate = Date()
             displayLink = CADisplayLink(target: self, selector: #selector(update))
-            displayLink!.preferredFramesPerSecond = 60
-            displayLink!.add(to: .current, forMode: .common)
+            displayLink.preferredFramesPerSecond = 60
+            displayLink.add(to: .current, forMode: .common)
             return true
         }
         
