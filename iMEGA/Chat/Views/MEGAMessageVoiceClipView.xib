@@ -14,17 +14,17 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="8fH-Lh-wK7">
-                    <rect key="frame" x="16" y="12" width="20" height="20"/>
+                    <rect key="frame" x="8" y="12" width="20" height="20"/>
                 </activityIndicatorView>
                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gs0-Mz-2J6">
-                    <rect key="frame" x="10" y="6" width="32" height="32"/>
+                    <rect key="frame" x="10" y="11" width="16" height="22"/>
                     <state key="normal" image="playVoiceClip"/>
                     <connections>
                         <action selector="didTapPlayPauseButton:" destination="iN0-l3-epB" eventType="touchUpInside" id="zM2-N0-MMr"/>
                     </connections>
                 </button>
                 <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="aPz-gk-3eX">
-                    <rect key="frame" x="48" y="7" width="161" height="31"/>
+                    <rect key="frame" x="32" y="7" width="177" height="31"/>
                     <color key="maximumTrackTintColor" white="0.0" alpha="0.20000000000000001" colorSpace="calibratedWhite"/>
                     <connections>
                         <action selector="sliderValueChanged:" destination="iN0-l3-epB" eventType="valueChanged" id="JXc-Ue-cgz"/>
@@ -60,6 +60,6 @@
         </view>
     </objects>
     <resources>
-        <image name="playVoiceClip" width="32" height="32"/>
+        <image name="playVoiceClip" width="16" height="16"/>
     </resources>
 </document>
