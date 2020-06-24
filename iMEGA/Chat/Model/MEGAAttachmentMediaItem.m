@@ -12,6 +12,8 @@
 #import "MEGASdkManager.h"
 #import "MEGA-Swift.h"
 #import "UIImageView+MNZCategory.h"
+#import "MEGAStore.h"
+#import "MEGA-Swift.h"
 
 @interface MEGAAttachmentMediaItem ()
 
@@ -100,8 +102,9 @@
             contactView.detailLabel.text = size;
         } else { // MEGAChatMessageTypeContact
             if (self.message.usersCount == 1) {
-                [contactView.avatarImage mnz_setImageForUserHandle:[self.message userHandleAtIndex:0] name:[self.message userNameAtIndex:0]];
-                contactView.titleLabel.text = [self.message userNameAtIndex:0];
+                NSString *userName = [self.message contactNameAtIndex:0];
+                [contactView.avatarImage mnz_setImageForUserHandle:[self.message userHandleAtIndex:0] name:userName];
+                contactView.titleLabel.text = userName;
                 contactView.detailLabel.text = [self.message userEmailAtIndex:0];
             } else {
                 NSNumber *users = [NSNumber numberWithUnsignedInteger:self.message.usersCount];
