@@ -67,8 +67,8 @@ class ExtensionAppearanceManager: NSObject {
     @objc class func forceNavigationBarUpdate(_ navigationBar: UINavigationBar, traitCollection: UITraitCollection) {
         navigationBar.standardAppearance.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
         navigationBar.scrollEdgeAppearance?.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
-        navigationBar.standardAppearance.buttonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.mnz_primaryGray(for: traitCollection)!]
-        navigationBar.standardAppearance.doneButtonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.mnz_primaryGray(for: traitCollection)!]
+        navigationBar.standardAppearance.buttonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.mnz_primaryGray(for: traitCollection)]
+        navigationBar.standardAppearance.doneButtonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.mnz_primaryGray(for: traitCollection)]
         
         navigationBar.tintColor = UIColor.mnz_primaryGray(for: traitCollection)
     }
@@ -82,7 +82,7 @@ class ExtensionAppearanceManager: NSObject {
     @available(iOS 13.0, *)
     @objc class func forceToolbarUpdate(_ toolbar: UIToolbar, traitCollection: UITraitCollection) {
         toolbar.standardAppearance.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
-        toolbar.standardAppearance.buttonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.mnz_primaryGray(for: traitCollection)!]
+        toolbar.standardAppearance.buttonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.mnz_primaryGray(for: traitCollection)]
         
         toolbar.barTintColor = UIColor.mnz_mainBars(for: traitCollection)
         

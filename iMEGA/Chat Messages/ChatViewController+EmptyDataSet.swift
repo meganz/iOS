@@ -18,21 +18,19 @@ extension ChatViewController: DZNEmptyDataSetSource {
         
         let chatMessageHeaderView =  ChatViewIntroductionHeaderView.instanceFromNib
         chatMessageHeaderView.chatRoom = chatRoom
-        
+        placeholderView.addSubview(chatMessageHeaderView)
+
         let estimatedSize = chatMessageHeaderView.sizeThatFits(
             CGSize(width: messagesCollectionView.bounds.width,
                    height: .greatestFiniteMagnitude)
         )
         
-        chatMessageHeaderView.bounds = CGRect(origin: .zero, size: estimatedSize)
         chatMessageHeaderView.translatesAutoresizingMaskIntoConstraints = false
-        placeholderView.addSubview(chatMessageHeaderView)
-        
         NSLayoutConstraint.activate([
             chatMessageHeaderView.topAnchor.constraint(equalTo: placeholderView.topAnchor),
             chatMessageHeaderView.leadingAnchor.constraint(equalTo: placeholderView.leadingAnchor),
             chatMessageHeaderView.trailingAnchor.constraint(equalTo: placeholderView.trailingAnchor),
-            chatMessageHeaderView.heightAnchor.constraint(equalToConstant: chatMessageHeaderView.bounds.height)
+            chatMessageHeaderView.heightAnchor.constraint(equalToConstant: estimatedSize.height)
         ])
         
         return placeholderView
