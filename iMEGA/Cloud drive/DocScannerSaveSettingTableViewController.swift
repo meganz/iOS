@@ -152,6 +152,12 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
                 alert.addAction(JPGAlertAction)
                 
                 alert.addAction(UIAlertAction(title: AMLocalizedString("cancel"), style: .cancel, handler: nil))
+                
+                if UIDevice.current.iPad {
+                    alert.popoverPresentationController?.sourceView = view
+                    alert.popoverPresentationController?.sourceRect = tableView.convert(tableView.cellForRow(at: indexPath)!.frame, to: view)
+                }
+                
                 present(alert, animated: true, completion: nil)
             case 1:
                 let alert = UIAlertController(title: nil, message:
@@ -178,6 +184,12 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
                 alert.addAction(lowAlertAction)
                 
                 alert.addAction(UIAlertAction(title: AMLocalizedString("cancel"), style: .cancel, handler: nil))
+                
+                if UIDevice.current.iPad {
+                    alert.popoverPresentationController?.sourceView = view
+                    alert.popoverPresentationController?.sourceRect = tableView.convert(tableView.cellForRow(at: indexPath)!.frame, to: view)
+                }
+                
                 present(alert, animated: true, completion: nil)
             default: break
             }
