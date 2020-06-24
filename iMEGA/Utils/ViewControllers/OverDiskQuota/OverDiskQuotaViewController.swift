@@ -37,6 +37,7 @@ final class OverDiskQuotaViewController: UIViewController {
     private lazy var byteCountFormatter: ByteCountFormatter = {
         let byteCountFormatter = ByteCountFormatter()
         byteCountFormatter.allowedUnits = .useGB
+        byteCountFormatter.countStyle = .binary
         return byteCountFormatter
     }()
 
@@ -71,8 +72,7 @@ final class OverDiskQuotaViewController: UIViewController {
     // MARK: - UI Customize
 
     private func setupNavigationController(_ navigationController: UINavigationController?) {
-        title = AMLocalizedString("Storage Full",
-                                  "Screen title")
+        title = AMLocalizedString("Storage Full", "Screen title")
         navigationController?.navigationBar.setTranslucent()
         navigationController?.setTitleStyle(TextStyle(font: .headline, color: Color.Text.lightPrimary))
     }
@@ -83,14 +83,12 @@ final class OverDiskQuotaViewController: UIViewController {
 
     private func setupWarningView(_ warningView: OverDisckQuotaWarningView, withDeadline deadline: Date) {
         let daysLeft = daysDistance(from: Date(), endDate: deadline)
-        let daysLeftLocalized = AMLocalizedString("%d days",
-                                                  "Count of days")
+        let daysLeftLocalized = AMLocalizedString("%d days", "Count of days")
         warningView.updateTimeLeftForTitle(withText: String(format: daysLeftLocalized, daysLeft))
     }
 
     private func setupTitleLabel(_ titleLabel: UILabel) {
-        titleLabel.text = AMLocalizedString("Your Data is at Risk!",
-                                            "Warning title message tells user data in danger.")
+        titleLabel.text = AMLocalizedString("Your Data is at Risk!", "Warning title message tells user data in danger.")
         LabelStyle.headline.style(titleLabel)
     }
 
