@@ -39,6 +39,8 @@ class ContactsGroupsViewController: UIViewController {
         
         if #available(iOS 13, *) {
             if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+                AppearanceManager.forceSearchBarUpdate(searchController.searchBar, traitCollection: traitCollection)
+                
                 updateAppearance()
             }
         }
