@@ -74,3 +74,4 @@
 #import "LoginViewController.h"
 #import "SelectableTableViewCell.h"
 #import <PureLayout/PureLayout.h>
+#import "MEGAChatMessage.h"
