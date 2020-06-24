@@ -65,8 +65,6 @@
                                  @"ro",
                                  @"ru",
                                  @"th",
-                                 @"tl",
-                                 @"uk",
                                  @"vi",
                                  @"zh-Hans",
                                  @"zh-Hant",
