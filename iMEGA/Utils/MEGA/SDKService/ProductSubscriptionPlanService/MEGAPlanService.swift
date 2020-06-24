@@ -52,6 +52,12 @@ fileprivate final class MEGAPlanLoadTask {
                 completion(nil, .unexpectedlyCancellation)
                 return
             }
+
+            guard case .apiOk = error.type else {
+                completion(nil, .unableToFetchMEGAPlan)
+                return
+            }
+
             let fetchedMEGAPlans = self.setupCache(with: request.pricing)
             completion(fetchedMEGAPlans, nil)
         }))
@@ -121,6 +127,7 @@ fileprivate final class MEGAPlanLoadTask {
     }
 
     enum DataObtainingError: Error {
+        case unableToFetchMEGAPlan
         case unexpectedlyCancellation
     }
 }

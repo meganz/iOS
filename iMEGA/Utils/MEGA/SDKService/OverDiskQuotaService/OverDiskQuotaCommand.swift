@@ -73,12 +73,18 @@ fileprivate final class OverDiskQuotaQueryTask {
         }
 
         if shouldFetchUserData(userDataStore, errors: errors) {
-            api.getUserData(with: MEGAGenericRequestDelegate(completion: { [weak self] (_, _) in
+            api.getUserData(with: MEGAGenericRequestDelegate(completion: { [weak self] (_, error) in
                 guard let self = self else {
                     assertionFailure("OverDiskQuotaQueryTask instance is unexpected released.")
                     completion(nil, .unexpectedlyCancellation)
                     return
                 }
+
+                guard error.type == .apiOk else {
+                    completion(nil, .unableToFetchUserData)
+                    return
+                }
+
                 switch self.updatedUserData(with: api) {
                 case .failure(let error):
                     self.errors.insert(error)
