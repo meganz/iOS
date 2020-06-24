@@ -82,7 +82,7 @@ fileprivate final class OverDiskQuotaQueryTask {
                 switch self.updatedUserData(with: api) {
                 case .failure(let error):
                     self.errors.insert(error)
-                    completion(nil, .invalidUserEmail)
+                    completion(nil, error)
                     return
                 case .success(let userData):
                     self.userDataStore = userData
@@ -93,12 +93,17 @@ fileprivate final class OverDiskQuotaQueryTask {
         }
 
         if shouldFetchMEGAPlans(availablePlansStore, errors: errors) {
-            MEGAPlanService.shared.send(MEGAPlanCommand { [weak self] plans in
+            MEGAPlanService.shared.send(MEGAPlanCommand { [weak self] plans, error  in
                 guard let self = self else {
                     assertionFailure("OverDiskQuotaQueryTask instance is unexpected released.")
                     completion(nil, .unexpectedlyCancellation)
                     return
                 }
+                guard let plans = plans else {
+                    completion(nil, .unableToFetchMEGAPlans)
+                    return
+                }
+
                 self.availablePlansStore = OverDiskQuotaPlans(availablePlans: plans)
                 self.start(with: api, completion: completion)
             })
