@@ -32,7 +32,7 @@ import Foundation
         blockedCommands.forEach { command in
             if command.storageUsed == nil {
                 command.storageUsed = stroageUsed
-                command.execute(with: api, completion: completion(ofCommand:error:))
+                command.execute(with: api, completion: completion(ofCommand:result:))
             }
         }
     }
@@ -40,13 +40,15 @@ import Foundation
     @objc func send(_ command: OverDiskQuotaCommand) {
         blockedCommands.append(command)
         if command.storageUsed != nil {
-            command.execute(with: api, completion: completion(ofCommand:error:))
+            command.execute(with: api, completion: completion(ofCommand:result:))
         }
     }
 
     // MARK: - Privates
 
-    func completion(ofCommand command: OverDiskQuotaCommand?, error: DataObtainingError?) -> Void {
+    func completion(
+        ofCommand command: OverDiskQuotaCommand?,
+        result: OverDiskQuotaCommand.OverDiskQuotaFetchResult) -> Void {
         if let command = command {
             remove(command)
         }
@@ -61,9 +63,15 @@ import Foundation
     // MARK: - Errors
 
     enum DataObtainingError: Error {
+        /// User's email is `nil` after fetching user's data
         case invalidUserEmail
+        /// SDK error of fetching data
         case unableToFetchMEGAPlans
         case unableToFetchUserData
+
+        /// Programming error for unexpeded releasing fetching task object.
         case unexpectedlyCancellation
+        /// Programming error that for scheduling `OverDiskQuotaCommand` without setting `strorageUsed` property in command.
+        case illegaillyScheduling
     }
 }
