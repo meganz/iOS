@@ -36,16 +36,19 @@ class ChatViewMessagesFlowLayout: MessagesCollectionViewFlowLayout {
     
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         
-        guard let attributesArray = super.layoutAttributesForElements(in: rect), editing else {
+        guard let attributesArray = super.layoutAttributesForElements(in: rect), editing, let chatLayoutDelegate = messagesCollectionView.messagesLayoutDelegate as? ChatViewMessagesLayoutDelegate else {
             return super.layoutAttributesForElements(in: rect)
         }
         
+        
         var editingAttributesinRect: [UICollectionViewLayoutAttributes] = [UICollectionViewLayoutAttributes]()
-
+        
         for attributes in attributesArray where attributes.representedElementCategory == .cell {
+            if chatLayoutDelegate.collectionView(messagesCollectionView, layout: self, shouldEditItemAt: attributes.indexPath) {
+                configureMessageCellLayoutAttributes(attributes)
+                editingAttributesinRect.append(createEditingOverlayAttributesForCellAttributes(attributes))
+            }
             
-            configureMessageCellLayoutAttributes(attributes)
-            editingAttributesinRect.append(createEditingOverlayAttributesForCellAttributes(attributes))
         }
         
         if(editingAttributesinRect.count > 0) {
@@ -57,7 +60,7 @@ class ChatViewMessagesFlowLayout: MessagesCollectionViewFlowLayout {
     }
     
     func configureMessageCellLayoutAttributes(_ layoutAttributes : UICollectionViewLayoutAttributes) {
-        guard let chatLayoutDelegate = messagesCollectionView.messagesLayoutDelegate as? ChatViewMessagesLayoutDelegate  else {
+        guard let chatLayoutDelegate = messagesCollectionView.messagesLayoutDelegate as? ChatViewMessagesLayoutDelegate, chatLayoutDelegate.collectionView(messagesCollectionView, layout: self, shouldEditItemAt: layoutAttributes.indexPath) else {
             return
         }
 
