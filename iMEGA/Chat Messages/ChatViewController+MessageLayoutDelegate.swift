@@ -2,8 +2,7 @@ import MessageKit
 
 extension ChatViewController: ChatViewMessagesLayoutDelegate {
     func collectionView(_ collectionView: MessagesCollectionView, layout collectionViewLayout: MessagesCollectionViewFlowLayout, editingOffsetForCellAt indexPath: IndexPath) -> CGFloat {
-        guard let message = messages[indexPath.section] as? ChatMessage,
-            !message.message.isManagementMessage else {
+        guard let message = messages[indexPath.section] as? ChatMessage else {
             return 0
         }
         
@@ -11,7 +10,7 @@ extension ChatViewController: ChatViewMessagesLayoutDelegate {
     }
 
     func collectionView(_ collectionView: MessagesCollectionView, layout collectionViewLayout: MessagesCollectionViewFlowLayout, shouldEditItemAt indexPath: IndexPath) -> Bool {
-        guard let chatMessage = messages[indexPath.section] as? ChatMessage else {
+        guard let chatMessage = messages[indexPath.section] as? ChatMessage, chatMessage.transfer == nil else {
             return false
         }
 
