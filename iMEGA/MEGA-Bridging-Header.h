@@ -71,3 +71,4 @@
 #import "UpgradeTableViewController.h"
 #import "LoginViewcontroller.h"
 #import <PureLayout/PureLayout.h>
+#import "MEGAChatMessage.h"
