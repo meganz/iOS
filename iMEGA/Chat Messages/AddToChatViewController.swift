@@ -44,6 +44,8 @@ class AddToChatViewController: UIViewController {
 
     weak var addToChatDelegate: AddToChatViewControllerDelegate?
     
+    private let iPadPopoverWidth: CGFloat = 440.0
+    
     // MARK:- View lifecycle methods.
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -71,30 +73,32 @@ class AddToChatViewController: UIViewController {
         }
         
         updateAppearance()
+        preferredContentSize = requiredSize(forWidth: iPadPopoverWidth)
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        if UIDevice.current.iPadDevice {
-            contentViewHeightConstraint.constant = view.bounds.height
-        } else {
-            guard let menuPageViewController = menuPageViewController else {
-                return
-            }
-            
-            let menuPageViewControllerHorizontalPadding = menuViewLeadingConstraint.constant + menuViewTrailingConstraint.constant
-            let menuPageViewControllerHeight = menuPageViewController.totalRequiredHeight(forWidth: view.bounds.width,
-                                                                                          horizontalPaddding: menuPageViewControllerHorizontalPadding)
-
-            contentViewHeightConstraint.constant = menuPageViewControllerHeight
-                + mediaCollectionView.bounds.height
-                + mediaCollectionViewBottomConstraint.constant
-                + mediaCollectionViewTopConstraint.constant
-                + menuViewBottomConstraint.constant
+        contentViewHeightConstraint.constant = requiredSize(forWidth: view.bounds.width).height
+        view.layoutIfNeeded()
+    }
+    
+    func requiredSize(forWidth width: CGFloat) -> CGSize {
+        guard let menuPageViewController = menuPageViewController else {
+            return .zero
         }
         
-        view.layoutIfNeeded()
+        let menuPageViewControllerHorizontalPadding = menuViewLeadingConstraint.constant + menuViewTrailingConstraint.constant
+        let menuPageViewControllerHeight = menuPageViewController.totalRequiredHeight(forWidth: width,
+                                                                                      horizontalPaddding: menuPageViewControllerHorizontalPadding)
+
+        let height = menuPageViewControllerHeight
+            + mediaCollectionView.bounds.height
+            + mediaCollectionViewBottomConstraint.constant
+            + mediaCollectionViewTopConstraint.constant
+            + menuViewBottomConstraint.constant
+
+        return CGSize(width: width, height: height)
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
