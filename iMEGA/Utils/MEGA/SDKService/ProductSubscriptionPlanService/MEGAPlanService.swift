@@ -2,51 +2,58 @@ import Foundation
 
 final class MEGAPlanCommand: NSObject {
 
-    fileprivate var completionAction: ([MEGAPlan]) -> Void
+    fileprivate var completionAction: ([MEGAPlan]?, MEGAPlanService.DataObtainingError?) -> Void
 
-    init(completionAction: @escaping ([MEGAPlan]) -> Void) {
+    init(completionAction: @escaping ([MEGAPlan]?, MEGAPlanService.DataObtainingError?) -> Void) {
         self.completionAction = completionAction
     }
 
-    fileprivate func execute(with api: MEGASdk,
-                             cachedPlans: [MEGAPlan]?,
-                             completion: @escaping (MEGAPlanCommand?, [MEGAPlan]) -> Void) {
+    fileprivate func execute(
+        with api: MEGASdk,
+        cachedPlans: [MEGAPlan]?,
+        completion: @escaping (MEGAPlanCommand?, [MEGAPlan]?, MEGAPlanService.DataObtainingError?) -> Void)
+    {
         guard let cachedPlans = cachedPlans else {
-            fetchMEGAPlans(with: api, completion: completion)
+            fetchMEGAPlans(with: api, completionAction: completionAction, completion: completion)
             return
         }
-        completionAction(cachedPlans)
-        completion(self, cachedPlans)
+        completionAction(cachedPlans, nil)
+        completion(self, cachedPlans, nil)
     }
 
     // MARK: - Privates
 
-    fileprivate func fetchMEGAPlans(with api: MEGASdk, completion: @escaping (MEGAPlanCommand?, [MEGAPlan]) -> Void) {
+    fileprivate func fetchMEGAPlans(
+        with api: MEGASdk,
+        completionAction: @escaping ([MEGAPlan]?, MEGAPlanService.DataObtainingError?) -> Void,
+        completion: @escaping (MEGAPlanCommand?, [MEGAPlan]?, MEGAPlanService.DataObtainingError?) -> Void)
+    {
         let planLoadingTask = MEGAPlanLoadTask()
-        planLoadingTask.start(with: api) { [weak self] plans in
+        planLoadingTask.start(with: api) { plans, error in
             var taskRetaining: MEGAPlanLoadTask? = planLoadingTask
             defer { taskRetaining = nil }
 
-            self?.completionAction(plans)
-            completion(self, plans)
+            completionAction(plans, error)
+            completion(self, plans, error)
         }
     }
 }
 
 fileprivate final class MEGAPlanLoadTask {
 
-    // MARK: - Instances
-
-    fileprivate var plans: [MEGAPlan]?
-
     // MARK: - Methods
 
-    fileprivate func start(with api: MEGASdk, completion: @escaping ([MEGAPlan]) -> Void) {
+    fileprivate func start(
+        with api: MEGASdk,
+        completion: @escaping ([MEGAPlan]?, MEGAPlanService.DataObtainingError?) -> Void) {
         api.getPricingWith(MEGAGenericRequestDelegate(completion: { [weak self] request, error in
-            guard let self = self else { return }
+            guard let self = self else {
+                assertionFailure("MEGAPlanLoadTask instance is unexpected released.")
+                completion(nil, .unexpectedlyCancellation)
+                return
+            }
             let fetchedMEGAPlans = self.setupCache(with: request.pricing)
-            self.plans = fetchedMEGAPlans
-            completion(fetchedMEGAPlans)
+            completion(fetchedMEGAPlans, nil)
         }))
     }
 
@@ -90,20 +97,20 @@ fileprivate final class MEGAPlanLoadTask {
 
     func send(_ command: MEGAPlanCommand) {
         commands.append(command)
-        command.execute(with: api, cachedPlans: cachedMEGAPlans, completion: completion(ofCommand:with:))
+        command.execute(with: api, cachedPlans: cachedMEGAPlans, completion: completion(ofCommand:with:error:))
     }
 
     // MARK: - Privates
 
-    private func completion(ofCommand command: MEGAPlanCommand?, with plans: [MEGAPlan]) {
+    private func completion(ofCommand command: MEGAPlanCommand?, with plans: [MEGAPlan]?, error: DataObtainingError?) {
         cachePlans(plans)
         if let command = command {
             remove(command)
         }
     }
 
-    private func cachePlans(_ plans: [MEGAPlan]) {
-        guard cachedMEGAPlans == nil else { return }
+    private func cachePlans(_ plans: [MEGAPlan]?) {
+        guard cachedMEGAPlans == nil, let plans = plans else { return }
         self.cachedMEGAPlans = plans
     }
 
@@ -111,5 +118,9 @@ fileprivate final class MEGAPlanLoadTask {
         commands.removeAll { command -> Bool in
             command == completedCommand
         }
+    }
+
+    enum DataObtainingError: Error {
+        case unexpectedlyCancellation
     }
 }

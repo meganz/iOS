@@ -62,6 +62,7 @@ import Foundation
 
     enum DataObtainingError: Error {
         case invalidUserEmail
+        case unableToFetchMEGAPlans
         case unexpectedlyCancellation
     }
 }
