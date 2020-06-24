@@ -7,17 +7,35 @@ extension ChatViewController: DZNEmptyDataSetSource {
         if chatRoomDelegate.loadingState {
             return UIImageView(image: #imageLiteral(resourceName: "chatroomLoading"))
         }
-        let chatMessageHeaderView =  ChatViewIntroductionHeaderView.instanceFromNib
-        chatMessageHeaderView.chatRoom = chatRoom
-        return chatMessageHeaderView
+        
+        return wrappedIntroductionView()
     }
     
-    func verticalOffset(forEmptyDataSet scrollView: UIScrollView) -> CGFloat {
+    private func wrappedIntroductionView() -> UIView {
+        // DZNEmptyDataSet fills the whole view but we need the introduction view to aligned to the top without filling the whole screen.
+        let placeholderView = UIView()
+        placeholderView.backgroundColor = .clear
+        
         let chatMessageHeaderView =  ChatViewIntroductionHeaderView.instanceFromNib
         chatMessageHeaderView.chatRoom = chatRoom
-        let emptyDataSetView = scrollView.subviews.filter { NSStringFromClass(type(of: $0)) == "DZNEmptyDataSetView" }.first
-        let size = chatMessageHeaderView.sizeThatFits(emptyDataSetView!.bounds.size)
-        return -(emptyDataSetView!.center.y - size.height / 2)
+        
+        let estimatedSize = chatMessageHeaderView.sizeThatFits(
+            CGSize(width: messagesCollectionView.bounds.width,
+                   height: .greatestFiniteMagnitude)
+        )
+        
+        chatMessageHeaderView.bounds = CGRect(origin: .zero, size: estimatedSize)
+        chatMessageHeaderView.translatesAutoresizingMaskIntoConstraints = false
+        placeholderView.addSubview(chatMessageHeaderView)
+        
+        NSLayoutConstraint.activate([
+            chatMessageHeaderView.topAnchor.constraint(equalTo: placeholderView.topAnchor),
+            chatMessageHeaderView.leadingAnchor.constraint(equalTo: placeholderView.leadingAnchor),
+            chatMessageHeaderView.trailingAnchor.constraint(equalTo: placeholderView.trailingAnchor),
+            chatMessageHeaderView.heightAnchor.constraint(equalToConstant: chatMessageHeaderView.bounds.height)
+        ])
+        
+        return placeholderView
     }
 }
 
