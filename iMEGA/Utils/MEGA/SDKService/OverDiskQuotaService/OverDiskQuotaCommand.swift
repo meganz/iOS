@@ -143,19 +143,19 @@ fileprivate final class OverDiskQuotaQueryTask {
         _ api: MEGASdk,
         _ completion: @escaping (Result<OverDiskQuotaInfomationProtocol, OverDiskQuotaService.DataObtainingError>) -> Void
     ) {
-        MEGAPlanService.shared.send(MEGAPlanCommand { [weak self] plans, error  in
+        MEGAPlanService.shared.send(MEGAPlanCommand { [weak self] result  in
             guard let self = self else {
                 assertionFailure("OverDiskQuotaQueryTask instance is unexpected released.")
                 completion(.failure(.unexpectedlyCancellation))
                 return
             }
-            guard let plans = plans else {
-                completion(.failure(.unableToFetchMEGAPlans))
-                return
-            }
 
-            self.availablePlansStore = OverDiskQuotaPlans(availablePlans: plans)
-            self.start(with: api, completion: completion)
+            switch result {
+            case .failure: completion(.failure(.unableToFetchMEGAPlans))
+            case .success(let plans):
+                self.availablePlansStore = OverDiskQuotaPlans(availablePlans: plans)
+                self.start(with: api, completion: completion)
+            }
         })
     }
 
