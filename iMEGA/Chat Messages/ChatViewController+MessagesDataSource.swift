@@ -24,7 +24,8 @@ extension ChatViewController: MessagesDataSource {
             var topLabelString: String = chatMessage.sentDate.string(withDateFormat: "hh:mm")
             
             if !isFromCurrentSender(message: messages[indexPath.section]) && chatRoom.isGroup {
-                topLabelString = chatMessage.displayName + " " + topLabelString
+                let displayName = !chatMessage.message.isManagementMessage ? "\(chatMessage.displayName) " : ""
+                topLabelString = displayName + topLabelString
             }
             
             return NSAttributedString(
