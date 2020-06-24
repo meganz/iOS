@@ -113,24 +113,25 @@ final class OverDiskQuotaViewController: UIViewController {
     private func setupUpgradeButton(_ button: UIButton) {
         ButtonStyle.active.style(button)
         button.setTitle(AMLocalizedString("upgrade", "Upgrade"), for: .normal)
-        button.addTarget(self, action: #selector(didTapUpgradeButton(button:)), for: .touchUpInside)
+        button.addTarget(self, action: .didTapUpgradeButton, for: .touchUpInside)
     }
 
     private func setupDismissButton(_ button: UIButton) {
         ButtonStyle.inactive.style(button)
         button.setTitle(AMLocalizedString("dismiss", "Dismiss"), for: .normal)
-        button.addTarget(self, action: #selector(didTapDismissButton(button:)), for: .touchUpInside)
+        button.addTarget(self, action: .didTapDismissButton, for: .touchUpInside)
     }
 
     // MARK: - Button Actions
 
-    @objc private func didTapUpgradeButton(button: UIButton) {
-        let upgradeViewController = UIStoryboard(name: "MyAccount", bundle: nil).instantiateViewController(withIdentifier: "UpgradeID")
+    @objc fileprivate func didTapUpgradeButton(button: UIButton) {
+        let upgradeViewController = UIStoryboard(name: "MyAccount", bundle: nil)
+            .instantiateViewController(withIdentifier: "UpgradeID")
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.pushViewController(upgradeViewController, animated: true)
     }
 
-    @objc private func didTapDismissButton(button: UIButton) {
+    @objc fileprivate func didTapDismissButton(button: UIButton) {
         dismissAction?()
     }
 
@@ -143,7 +144,7 @@ final class OverDiskQuotaViewController: UIViewController {
 
     // MARK: - Internal Data Structure
 
-    struct OverDiskQuotaInternal {
+    fileprivate struct OverDiskQuotaInternal {
         typealias Email = String
         typealias Deadline = Date
         typealias WarningDates = [Date]
@@ -186,4 +187,11 @@ fileprivate extension OverDiskQuotaViewController.OverDiskQuotaInternal {
         return AMLocalizedString("contact support for a custom plan",
                                  "Asks the user to request a custom Pro plan from customer support because their storage usage is more than the regular plans.")
     }
+}
+
+// MARK: - Binding Button Action's
+
+private extension Selector {
+    static let didTapUpgradeButton = #selector(OverDiskQuotaViewController.didTapUpgradeButton(button:))
+    static let didTapDismissButton = #selector(OverDiskQuotaViewController.didTapDismissButton(button:))
 }
