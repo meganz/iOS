@@ -111,9 +111,9 @@ extension ChatViewController {
 
         if UIDevice.current.iPadDevice {
             let navController = MEGANavigationController(rootViewController: addToChatViewController)
+            navController.navigationBar.isTranslucent = false
             navController.addLeftDismissButton(withText: AMLocalizedString("cancel"))
             navController.modalPresentationStyle = .popover;
-            navController.preferredContentSize = CGSize(width: 440, height: 360)
 
             if let popover = navController.popoverPresentationController {
                 popover.delegate = self
@@ -659,7 +659,7 @@ extension ChatViewController: AddToChatViewControllerDelegate {
 extension ChatViewController: UIPopoverPresentationControllerDelegate {
     
     func adaptivePresentationStyle(for controller: UIPresentationController,
-                                   traitCollection: UITraitCollection) -> UIModalPresentationStyle{
+                                   traitCollection: UITraitCollection) -> UIModalPresentationStyle {
         return .none
     }
 }
