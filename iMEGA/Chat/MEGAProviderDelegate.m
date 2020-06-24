@@ -143,6 +143,16 @@
             break;
     }
     
+    if (callEndedReason == 0) {
+        for (NSUInteger i = 0; i < call.participants.size; i++) {
+            uint64_t handle = [call.participants megaHandleAtIndex:i];
+            if (MEGASdkManager.sharedMEGAChatSdk.myUserHandle == handle) {
+                callEndedReason = CXCallEndedReasonAnsweredElsewhere;
+                break;
+            }
+        }
+    }
+    
     MEGALogDebug(@"[CallKit] Report end call reason %ld", (long)callEndedReason);
     if (callEndedReason) {
         [self.provider reportCallWithUUID:call.uuid endedAtDate:nil reason:callEndedReason];
@@ -531,22 +541,26 @@
     if (self.chatId.unsignedLongLongValue == chatId && newState == MEGAChatConnectionOnline && self.callId) {
         MEGAChatCall *call = [api chatCallForCallId:self.callId.unsignedLongLongValue];
         if (call) {
-            if (self.shouldAnswerCallWhenConnect) {
-                MEGALogDebug(@"[CallKit] Answer call when connect %@", call);
-                [api answerChatCall:call.chatId enableVideo:NO];
-                self.answerCallWhenConnect = NO;
-            }
-            
-            if (self.shouldEndCallWhenConnect) {
-                MEGALogDebug(@"[CallKit] Hang call when connect %@", call);
-                [api hangChatCall:call.chatId];
-                self.endCallWhenConnect = NO;
-            }
-            
-            if (self.shouldMuteAudioWhenConnect) {
-                MEGALogDebug(@"[CallKit] Mute audio when connect %@", call);
-                [api disableAudioForChat:call.chatId];
-                self.muteAudioWhenConnect = NO;
+            if (call.status == MEGAChatCallStatusRingIn) {
+                if (self.shouldAnswerCallWhenConnect) {
+                    MEGALogDebug(@"[CallKit] Answer call when connect %@", call);
+                    [api answerChatCall:call.chatId enableVideo:NO];
+                    self.answerCallWhenConnect = NO;
+                }
+                
+                if (self.shouldEndCallWhenConnect) {
+                    MEGALogDebug(@"[CallKit] Hang call when connect %@", call);
+                    [api hangChatCall:call.chatId];
+                    self.endCallWhenConnect = NO;
+                }
+                
+                if (self.shouldMuteAudioWhenConnect) {
+                    MEGALogDebug(@"[CallKit] Mute audio when connect %@", call);
+                    [api disableAudioForChat:call.chatId];
+                    self.muteAudioWhenConnect = NO;
+                }
+            } else {
+                [self reportEndCall:call];
             }
         } else {
             MEGALogWarning(@"[CallKit] The call %@ doesn't exist, end it", [MEGASdk base64HandleForUserHandle:self.callId.unsignedLongLongValue]);
