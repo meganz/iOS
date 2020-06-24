@@ -23,6 +23,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.tableView.tableFooterView = [UIView.alloc initWithFrame:CGRectZero];
+    
     NSString *language = [[LocalizationSystem sharedLocalSystem] getLanguage];
     self.languageIndex = [[Helper languagesSupportedIDs] indexOfObject:language];
     
