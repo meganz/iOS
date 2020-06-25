@@ -4,6 +4,7 @@ PODS:
   - InputBarAccessoryView/Core (4.3.2)
   - MessageKit (3.1.0):
     - InputBarAccessoryView (~> 4.3.0)
+  - PanModal (1.2.7)
   - YYCache (1.0.4)
   - YYImage (1.0.4):
     - YYImage/Core (= 1.0.4)
@@ -14,12 +15,14 @@ PODS:
 
 DEPENDENCIES:
   - MessageKit
+  - PanModal
   - YYWebImage
 
 SPEC REPOS:
   trunk:
     - InputBarAccessoryView
     - MessageKit
+    - PanModal
     - YYCache
     - YYImage
     - YYWebImage
@@ -27,10 +30,11 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   InputBarAccessoryView: 7985d418040a05fe894bd4b8328dd43ab35517c3
   MessageKit: 3beb578737a5aa2bba25cc27c7b6d6faa09af5a7
+  PanModal: 3e16ead1a907fb06f4df3f13492fd00149fa4974
   YYCache: 8105b6638f5e849296c71f331ff83891a4942952
   YYImage: 1e1b62a9997399593e4b9c4ecfbbabbf1d3f3b54
   YYWebImage: 5f7f36aee2ae293f016d418c7d6ba05c4863e928
 
-PODFILE CHECKSUM: 78b879d54d028e62b58c828d1d0891cdc705b4db
+PODFILE CHECKSUM: cfcd526e6a510c2ca9348f2a4fe207e0262276b5
 
 COCOAPODS: 1.8.4
