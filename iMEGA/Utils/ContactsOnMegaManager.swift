@@ -99,55 +99,16 @@ struct ContactOnMega: Codable {
             UserDefaults.standard.removeObject(forKey: "ContactsOnMega")
 
             DispatchQueue.global(qos: .background).async {
-                self.getDeviceContacts()
+                let deviceContacts = DeviceContactsManager().getDeviceContacts(for: [CNContactPhoneNumbersKey, CNContactEmailAddressesKey]).map( { [$0.value:$0.name] } )
+                if deviceContacts.count == 0 {
+                    self.contactsFetched()
+                } else {
+                    self.deviceContactsChunked = Array(deviceContacts.prefix(500)).mnz_chunked(into: 100)
+                    self.getContactsOnMega()
+                }
             }
         } else {
             MEGALogDebug("Device Contact Permission not granted")
-        }
-    }
-
-    private func getDeviceContacts() {
-        var deviceContacts = [[String: String]]()
-        let contactsStore = CNContactStore()
-
-        let keysToFetch = [CNContactFamilyNameKey, CNContactGivenNameKey, CNContactPhoneNumbersKey, CNContactEmailAddressesKey] as [CNKeyDescriptor]
-
-        let predicate = CNContact.predicateForContactsInContainer(withIdentifier: contactsStore.defaultContainerIdentifier())
-        do {
-            let phoneNumberKit = PhoneNumberKit()
-
-            let contacts = try contactsStore.unifiedContacts(matching: predicate, keysToFetch: keysToFetch)
-            contacts.forEach { (contact) in
-                let name = (contact.givenName + " " + contact.familyName)
-
-                for label in contact.phoneNumbers {
-                    do {
-                        let phoneNumber = try phoneNumberKit.parse(label.value.stringValue)
-                        let formatedNumber = phoneNumberKit.format(phoneNumber, toType: .e164)
-
-                        deviceContacts.append([formatedNumber:name])
-                    }
-                    catch {
-                        MEGALogError("Device contact number parser error " + label.value.stringValue)
-                    }
-                }
-
-                contact.emailAddresses.forEach { (email) in
-                    if email.value.mnz_isValidEmail() {
-                        deviceContacts.append([String(email.value):name])
-                    }
-                }
-            }
-
-            if deviceContacts.count == 0 {
-                contactsFetched()
-            } else {
-                deviceContactsChunked = Array(deviceContacts.prefix(500)).mnz_chunked(into: 100)
-                getContactsOnMega()
-            }
-        } catch {
-            state = .error
-            MEGALogError("Error fetching user contacts: " + error.localizedDescription)
         }
     }
 
