@@ -65,7 +65,7 @@ final class OverDiskQuotaViewController: UIViewController {
                                               deadline: overDiskQuotaData.deadline,
                                               warningDates: overDiskQuotaData.warningDates,
                                               numberOfFilesOnCloud: overDiskQuotaData.numberOfFilesOnCloud,
-                                              cloudStorage: overDiskQuotaData.cloudStorage,
+                                              cloudStorage: .bytes(of: overDiskQuotaData.cloudStorage),
                                               plan: overDiskQuotaData.suggestedPlanName)
     }
 
@@ -147,7 +147,7 @@ final class OverDiskQuotaViewController: UIViewController {
         typealias Deadline = Date
         typealias WarningDates = [Date]
         typealias FileCount = UInt
-        typealias Storage = NSNumber
+        typealias Storage = Measurement<UnitDataStorage>
         typealias SuggestedMEGAPlan = String
 
         let email: Email
@@ -174,7 +174,8 @@ fileprivate extension OverDiskQuotaViewController.OverDiskQuotaInternal {
     }
 
     func takingUpStorage(with formatter: ByteCountFormatter) -> String {
-        return formatter.string(fromByteCount: cloudStorage.int64Value)
+        let cloudSpaceUsedInBytes = cloudStorage.converted(to: .bytes).valueInt64
+        return formatter.string(fromByteCount: cloudSpaceUsedInBytes)
     }
 
     var suggestedPlan: SuggestedMEGAPlan {

@@ -91,7 +91,7 @@ fileprivate final class OverDiskQuotaQueryTask {
     }
 
     func updatedStorageStore(with storage: NSNumber) {
-        self.storageUsedStore = OverDiskQuotaStorageUsed(cloudStorageTaking: storage)
+        self.storageUsedStore = OverDiskQuotaStorageUsed(cloudStorageTaking: .bytes(of: storage.int64Value))
     }
 
     // MARK: - Privates
@@ -180,7 +180,7 @@ fileprivate final class OverDiskQuotaQueryTask {
                                         deadline: userDataStore.deadline,
                                         warningDates: userDataStore.warningDates,
                                         numberOfFilesOnCloud: userDataStore.numberOfFilesOnCloud,
-                                        cloudStorage: storageStore.cloudStorageTaking,
+                                        cloudStorage: storageStore.cloudStorageTaking.valueInt64,
                                         suggestedPlanName: minimumPlan?.readableName)
     }
 }
@@ -203,6 +203,6 @@ fileprivate struct OverDiskQuotaPlans {
 }
 
 fileprivate struct OverDiskQuotaStorageUsed {
-    typealias StorageUsedInBytes = NSNumber
+    typealias StorageUsedInBytes = Measurement<UnitDataStorage>
     var cloudStorageTaking: StorageUsedInBytes
 }

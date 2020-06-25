@@ -1,7 +1,7 @@
 import Foundation
 
 struct MEGAPlan {
-    typealias DataMeasurementInGB = Int
+    typealias DataMeasurementInGB = Measurement<UnitDataStorage>
     typealias DateDurationInMonth = Int
     typealias PriceInCents = Int
     typealias Currency = String
@@ -24,7 +24,7 @@ extension MEGAPlan {
         return MEGAAccountDetails.string(for: proLevel)
     }
 
-    var storageSpaceInBytes: Int64 {
-        return Int64(storage) * 1024 * 1024 * 1024
+    var storageSpaceInBytes: Measurement<UnitDataStorage> {
+        return storage.converted(to: .bytes)
     }
 }

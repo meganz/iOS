@@ -78,8 +78,8 @@ fileprivate final class MEGAPlanLoadTask {
     private func setupCache(with pricing: MEGAPricing) -> [MEGAPlan] {
         return (0..<pricing.products).map { productIndex in
             return MEGAPlan(id: productIndex,
-                            storage: pricing.storageGB(atProductIndex: productIndex),
-                            transfer: pricing.transferGB(atProductIndex: productIndex),
+                            storage: .gigabytes(of: pricing.storageGB(atProductIndex: productIndex)),
+                            transfer: .gigabytes(of: pricing.transferGB(atProductIndex: productIndex)),
                             subscriptionLife: pricing.months(atProductIndex: productIndex),
                             price: MEGAPlan.Price(price: pricing.amount(atProductIndex: productIndex),
                                                   currency: pricing.currency(atProductIndex: productIndex)),
