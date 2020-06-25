@@ -2260,6 +2260,8 @@
 "contact support for a custom plan"="contact support for a custom plan";
 /* Over Disk Quota of number of days*/
 "%d days"="%d days";
+/* Over Disk Quota of must act immediately to save your data*/
+"<body><warn>You must act immediately to save your data.</warn><body>"="<body><warn>You must act immediately to save your data.</warn><body>";
 /* Over Disk Quota warning message to tell user to how long left before upgrading */
 "<body>You have <warn>%@</warn> left to upgrade.</body>"="<body>You have <warn>%@</warn> left to upgrade.</body>";
 /* Over Disk Quota warnig message to tell user your data is subject to deletion. */

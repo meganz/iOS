@@ -22,13 +22,8 @@ final class OverDisckQuotaWarningView: UIView, NibOwnerLoadable {
     
     // MARK: - Method
 
-    func updateTimeLeftForTitle(withText text: String) {
-        let warningTitleMessage = AMLocalizedString("<body>You have <warn>%@</warn> left to upgrade.</body>",
-                                                    "Warning message to tell user time left to upgrade subscription.")
-        let formattedTitleMessage = String(format: warningTitleMessage, text)
-        let styleMarks: StyleMarks = ["warn": .warning,
-                                      "body": .emphasized]
-        titleLabel.attributedText = formattedTitleMessage.attributedString(with: styleMarks)
+    func updateTitle(with text: NSAttributedString) {
+        titleLabel.attributedText = text
     }
 
     // MARK: - Setup View
