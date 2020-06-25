@@ -84,8 +84,17 @@ final class OverDiskQuotaViewController: UIViewController {
 
     private func setupWarningView(_ warningView: OverDisckQuotaWarningView, withDeadline deadline: Date) {
         let daysLeft = daysDistance(from: Date(), endDate: deadline)
-        let daysLeftLocalized = AMLocalizedString("%d days", "Count of days")
-        warningView.updateTimeLeftForTitle(withText: String(format: daysLeftLocalized, daysLeft))
+        let daysLeftLocalized = String(format: AMLocalizedString("%d days", "Count of days"), daysLeft)
+        let warningTitleMessage = AMLocalizedString("<body>You have <warn>%@</warn> left to upgrade.</body>",
+                                                    "Warning message to tell user time left to upgrade subscription.")
+        var formattedTitleMessage = String(format: warningTitleMessage, daysLeftLocalized)
+
+        if daysLeft < 1 {
+            formattedTitleMessage = AMLocalizedString("<body><warn>You must act immediately to save your data.</warn><body>",
+                                                      "<body><warn>You must act immediately to save your data.</warn><body>")
+        }
+        let styleMarks: StyleMarks = ["warn": .warning, "body": .emphasized]
+        warningView.updateTitle(with: formattedTitleMessage.attributedString(with: styleMarks))
     }
 
     private func setupTitleLabel(_ titleLabel: UILabel) {
