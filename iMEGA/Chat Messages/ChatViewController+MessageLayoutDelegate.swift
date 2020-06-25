@@ -56,6 +56,12 @@ extension ChatViewController: ChatViewMessagesLayoutDelegate {
         
         return .zero
     }
+    
+    func footerViewSize(for section: Int, in messagesCollectionView: MessagesCollectionView) -> CGSize {
+        return CGSize(width: messagesCollectionView.bounds.width,
+                      height: 200)
+        
+    }
 }
 
 extension ChatViewController: MessagesEditCollectionOverlayViewDelegate {
