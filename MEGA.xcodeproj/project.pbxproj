@@ -313,6 +313,7 @@
 		5DB1F47C2489E5CC001C1D5D /* ParagraphStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB1F47B2489E5CC001C1D5D /* ParagraphStyle.swift */; };
 		5DBAC841248778DA0050996E /* OverDisckQuotaWarningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DBAC840248778DA0050996E /* OverDisckQuotaWarningView.swift */; };
 		5DBAC8442487B8A10050996E /* OverDisckQuotaWarningView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5DBAC8432487B8A10050996E /* OverDisckQuotaWarningView.xib */; };
+		5DC7232424A424BB00E31FB6 /* UnitDataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC7232324A424BB00E31FB6 /* UnitDataStorage.swift */; };
 		5DE448E6248D078800EE00CB /* AttributedTextStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE448E5248D078800EE00CB /* AttributedTextStyle.swift */; };
 		5DE448EB248D15F300EE00CB /* NibOwnerLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE448EA248D15F300EE00CB /* NibOwnerLoadable.swift */; };
 		5DE448EE248F673700EE00CB /* ViewStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE448ED248F673700EE00CB /* ViewStyle.swift */; };
@@ -1714,6 +1715,7 @@
 		5DB1F47B2489E5CC001C1D5D /* ParagraphStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParagraphStyle.swift; sourceTree = "<group>"; };
 		5DBAC840248778DA0050996E /* OverDisckQuotaWarningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverDisckQuotaWarningView.swift; sourceTree = "<group>"; };
 		5DBAC8432487B8A10050996E /* OverDisckQuotaWarningView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OverDisckQuotaWarningView.xib; sourceTree = "<group>"; };
+		5DC7232324A424BB00E31FB6 /* UnitDataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitDataStorage.swift; sourceTree = "<group>"; };
 		5DE448E5248D078800EE00CB /* AttributedTextStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedTextStyle.swift; sourceTree = "<group>"; };
 		5DE448EA248D15F300EE00CB /* NibOwnerLoadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NibOwnerLoadable.swift; sourceTree = "<group>"; };
 		5DE448ED248F673700EE00CB /* ViewStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewStyle.swift; sourceTree = "<group>"; };
@@ -4190,6 +4192,7 @@
 		5D7D6B9A2491F53300ADBDEE /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
+				5DC7232324A424BB00E31FB6 /* UnitDataStorage.swift */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -6058,6 +6061,7 @@
 				A85665BC21A468D400B010F8 /* MEGAMessageGeoLocationView.m in Sources */,
 				A86B9F722316D6AB00F35E7A /* FLEXTableListViewController.m in Sources */,
 				415226921A692ECC00EC7BB6 /* ContactTableViewCell.m in Sources */,
+				5DC7232424A424BB00E31FB6 /* UnitDataStorage.swift in Sources */,
 				417279351DB663FA001AC818 /* NSString+JSQMessages.m in Sources */,
 				417279391DB663FA001AC818 /* JSQMessagesViewController.m in Sources */,
 				A86B9F7E2316D6AB00F35E7A /* FLEXHierarchyTableViewController.m in Sources */,

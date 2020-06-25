@@ -1,9 +1,9 @@
 import Foundation
 
 final class MEGAPlanAdviser {
-    static func suggestMinimumPlan(ofStorage minimumStorage: NSNumber,
+    static func suggestMinimumPlan(ofStorage minimumStorage: Measurement<UnitDataStorage>,
                                    availablePlans: [MEGAPlan]) -> [MEGAPlan] {
-        let query: QueryConstraint = .minimumPriceForStorageInBytesGreaterThan(minimumStorage.int64Value)
+        let query: QueryConstraint = .minimumPriceForStorageInBytesGreaterThan(minimumStorage)
         return query.run(availablePlans)
     }
 }
@@ -14,9 +14,9 @@ fileprivate struct QueryConstraint {
 
 fileprivate extension QueryConstraint {
     
-    /// Query constraint generator that takes a `Int64` type of `minimumStorage` and generates a `QueryConstraint` which only returns
+    /// Query constraint generator that takes a `Double` type of `minimumStorage` and generates a `QueryConstraint` which only returns
     /// `MEGAPlan`s whose storage space greater than minimum storage provided in the parameter.
-    private static let storagGreaterThan: (Int64) -> QueryConstraint = { minStorage in
+    private static let storagGreaterThan: (Measurement<UnitDataStorage>) -> QueryConstraint = { minStorage in
         return QueryConstraint { plans in
             plans.filter {  $0.storageSpaceInBytes > minStorage }
         }
@@ -36,7 +36,8 @@ fileprivate extension QueryConstraint {
     }
     
     /// A composite query constraint who composite `storagGreaterThan` and `mimumPrice` together.
-    static let minimumPriceForStorageInBytesGreaterThan: (Int64) -> QueryConstraint = { (storage: Int64) -> QueryConstraint in
+    static let minimumPriceForStorageInBytesGreaterThan: (Measurement<UnitDataStorage>) -> QueryConstraint = {
+        (storage) -> QueryConstraint in
         return QueryConstraint { plans in
             QueryConstraint.minimumPrice.run(
                 QueryConstraint.storagGreaterThan(storage).run(plans))
