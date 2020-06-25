@@ -62,6 +62,8 @@
 		2FA6DAA7243ED07F007A8E81 /* MEGAGetPreviewRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8EC55B31F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.m */; };
 		2FB0420E242C4FAE007B9C88 /* NodeActionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB0420D242C4FAE007B9C88 /* NodeActionViewController.swift */; };
 		2FBC74C8245BE74900BE513F /* ChatViewController+EmptyDataSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBC74C7245BE74900BE513F /* ChatViewController+EmptyDataSet.swift */; };
+		2FC5A62D24A449AF00AE6185 /* MessageReactionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC5A62B24A449AF00AE6185 /* MessageReactionReusableView.swift */; };
+		2FC5A62E24A449AF00AE6185 /* MessageReactionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2FC5A62C24A449AF00AE6185 /* MessageReactionReusableView.xib */; };
 		2FCA4B7A2385FB260011B7DA /* ChatImageQualityTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCA4B792385FB260011B7DA /* ChatImageQualityTableViewController.swift */; };
 		2FCC5BC2238740ED00E1E5A0 /* ChatImageUploadQuality.h in Sources */ = {isa = PBXBuildFile; fileRef = 2FCC5BC1238740ED00E1E5A0 /* ChatImageUploadQuality.h */; };
 		2FCE04A9241B019800EE7842 /* ActionSheetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCE04A7241B019800EE7842 /* ActionSheetCell.swift */; };
@@ -1144,6 +1146,7 @@
 		BF33EF8C2447E6DD00CD35AC /* EnlargementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF33EF8B2447E6DC00CD35AC /* EnlargementView.swift */; };
 		BF33EF902447E70200CD35AC /* CondensationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF33EF8F2447E70200CD35AC /* CondensationView.swift */; };
 		BF5C36762491C90A004DDA2F /* (null) in Sources */ = {isa = PBXBuildFile; };
+		BF5C36762491C90A004DDA2F /* BuildFile in Sources */ = {isa = PBXBuildFile; };
 		BF5C36792491C917004DDA2F /* MEGAUser+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB463F624342F7F00FB90B9 /* MEGAUser+Additions.swift */; };
 		BF69E5172374F3720031913D /* AppDelegate+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF69E5162374F3720031913D /* AppDelegate+Additions.swift */; };
 		BF6DF366245797CC00D612D0 /* AddToChatViewAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6DF365245797CC00D612D0 /* AddToChatViewAnimator.swift */; };
@@ -1416,6 +1419,8 @@
 		2FA6DA61243E919D007A8E81 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		2FB0420D242C4FAE007B9C88 /* NodeActionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeActionViewController.swift; sourceTree = "<group>"; };
 		2FBC74C7245BE74900BE513F /* ChatViewController+EmptyDataSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatViewController+EmptyDataSet.swift"; sourceTree = "<group>"; };
+		2FC5A62B24A449AF00AE6185 /* MessageReactionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageReactionReusableView.swift; sourceTree = "<group>"; };
+		2FC5A62C24A449AF00AE6185 /* MessageReactionReusableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageReactionReusableView.xib; sourceTree = "<group>"; };
 		2FCA4B792385FB260011B7DA /* ChatImageQualityTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatImageQualityTableViewController.swift; sourceTree = "<group>"; };
 		2FCC5BC1238740ED00E1E5A0 /* ChatImageUploadQuality.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChatImageUploadQuality.h; sourceTree = "<group>"; };
 		2FCE04A7241B019800EE7842 /* ActionSheetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSheetCell.swift; sourceTree = "<group>"; };
@@ -5946,6 +5951,8 @@
 				2F8772FB2468FA8C00E8854F /* MessageEditCollectionOverlayView.xib */,
 				2F528CAB24739053006DE5C2 /* LoadingMessageReusableView.swift */,
 				2F528CAC24739053006DE5C2 /* LoadingMessageReusableView.xib */,
+				2FC5A62B24A449AF00AE6185 /* MessageReactionReusableView.swift */,
+				2FC5A62C24A449AF00AE6185 /* MessageReactionReusableView.xib */,
 				BFA75395248855070001E231 /* ChatBottomInfoScreen.swift */,
 				BFA75399248855240001E231 /* ChatBottomInfoScreen.xib */,
 				2F85306E24885F9100064E83 /* PreviewersView.swift */,
@@ -6484,6 +6491,7 @@
 				A85665BD21A468D400B010F8 /* MEGAMessageGeoLocationView.xib in Resources */,
 				E8D5BF661BF35A4B00955550 /* SharedItems.storyboard in Resources */,
 				2F8772FD2468FA8C00E8854F /* MessageEditCollectionOverlayView.xib in Resources */,
+				2FC5A62E24A449AF00AE6185 /* MessageReactionReusableView.xib in Resources */,
 				BFA7539A248855240001E231 /* ChatBottomInfoScreen.xib in Resources */,
 				413199761BD7BD5D002CD6EA /* DateTools.bundle in Resources */,
 				415226981A692ECC00EC7BB6 /* Settings.storyboard in Resources */,
@@ -7362,6 +7370,7 @@
 				B6048913223CDA8400BA91F9 /* AssetFetchResult.m in Sources */,
 				2F147784244D1C950069B264 /* ChatLocationCollectionViewCell.swift in Sources */,
 				831D61A5218738D20038F5B8 /* MOFolderLayout+CoreDataClass.m in Sources */,
+				2FC5A62D24A449AF00AE6185 /* MessageReactionReusableView.swift in Sources */,
 				5B80B1BB245B2B9700110335 /* MEGASdk+Additions.swift in Sources */,
 				A86B9F652316D6AB00F35E7A /* FLEXKeychainTableViewController.m in Sources */,
 				B658D3CC218FBC24004C0D64 /* CameraUploadManager.m in Sources */,
@@ -7676,6 +7685,7 @@
 				A85740C92032F6E80033034C /* MOChatDraft+CoreDataProperties.m in Sources */,
 				5BFA346F1FAC5850005BFC4E /* MEGAMoveRequestDelegate.m in Sources */,
 				BF5C36762491C90A004DDA2F /* (null) in Sources */,
+				BF5C36762491C90A004DDA2F /* BuildFile in Sources */,
 				941135541F01001A00D33428 /* MEGAActivityItemProvider.m in Sources */,
 				941135661F01541100D33428 /* NSFileManager+MNZCategory.m in Sources */,
 				941135521F00FFE400D33428 /* MEGAReachabilityManager.m in Sources */,
