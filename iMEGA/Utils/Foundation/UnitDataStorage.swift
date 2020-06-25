@@ -48,7 +48,7 @@ extension Measurement where UnitType == UnitDataStorage {
 
 extension Measurement where UnitType == UnitDataStorage {
 
-    var valueInt64: Int64 {
-        return Int64(value)
+    var valueNumber: NSNumber {
+        return NSNumber(value: value)
     }
 }

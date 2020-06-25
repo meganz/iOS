@@ -180,7 +180,7 @@ fileprivate final class OverDiskQuotaQueryTask {
                                         deadline: userDataStore.deadline,
                                         warningDates: userDataStore.warningDates,
                                         numberOfFilesOnCloud: userDataStore.numberOfFilesOnCloud,
-                                        cloudStorage: storageStore.cloudStorageTaking.valueInt64,
+                                        cloudStorage: storageStore.cloudStorageTaking.valueNumber,
                                         suggestedPlanName: minimumPlan?.readableName)
     }
 }
