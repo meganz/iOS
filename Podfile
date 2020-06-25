@@ -7,6 +7,7 @@ target 'MEGA' do
   use_frameworks!
   pod 'MessageKit'
   pod 'YYWebImage'
+  pod 'PanModal'
   # Pods for MEGA
 
   target 'MEGAUnitTests' do
