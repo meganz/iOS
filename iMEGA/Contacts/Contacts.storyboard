@@ -1939,7 +1939,7 @@
             <objects>
                 <viewController storyboardIdentifier="ItemListViewControllerID" id="HSA-9V-kLf" customClass="ItemListViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ire-th-B1l">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="110"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="pga-11-pde">
@@ -2031,8 +2031,8 @@
         <image name="backArrow" width="13" height="21"/>
         <image name="callVideoRound" width="37" height="37"/>
         <image name="callVideoRound, disabled" width="37" height="37"/>
-        <image name="checkBox" width="20" height="20"/>
-        <image name="checkBoxSelected" width="20" height="20"/>
+        <image name="checkBox" width="24" height="24"/>
+        <image name="checkBoxSelected" width="72" height="72"/>
         <image name="contactVerified" width="14" height="14"/>
         <image name="contact_request_accept" width="28" height="28"/>
         <image name="contact_request_deny" width="28" height="28"/>
