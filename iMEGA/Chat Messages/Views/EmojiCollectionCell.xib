@@ -17,7 +17,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="60" height="44"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h5v-5y-PYD">
+                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h5v-5y-PYD">
                         <rect key="frame" x="0.0" y="43" width="60" height="1"/>
                         <color key="backgroundColor" red="0.0" green="0.6588235294117647" blue="0.52549019607843139" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>

@@ -5,9 +5,15 @@ class EmojiCollectionCell: UICollectionViewCell {
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var selectedMarkerView: UIView!
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+    override var isSelected: Bool {
+        didSet {
+            selectedMarkerView.isHidden = !isSelected
+        }
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        selectedMarkerView.isHidden = true
     }
 
 }
