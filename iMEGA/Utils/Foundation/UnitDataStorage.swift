@@ -7,7 +7,7 @@ import Foundation
     static let kilobytes = UnitDataStorage(symbol: "KB", converter: UnitConverterLinear(coefficient: 8 * 1024))
     static let megabytes = UnitDataStorage(symbol: "MB", converter: UnitConverterLinear(coefficient: 8 * 1024 * 1024))
     static let gigabytes = UnitDataStorage(symbol: "GB", converter: UnitConverterLinear(coefficient: 8 * 1024 * 1024 * 1024))
-    static let terabytes = UnitDataStorage(symbol: "PB", converter: UnitConverterLinear(coefficient: 8 * 1024 * 1024 * 1024 * 1024))
+    static let terabytes = UnitDataStorage(symbol: "TB", converter: UnitConverterLinear(coefficient: 8 * 1024 * 1024 * 1024 * 1024))
     static let petabytes = UnitDataStorage(symbol: "PB", converter: UnitConverterLinear(coefficient: 8 * 1024 * 1024 * 1024 * 1024 * 1024))
 
     override class func baseUnit() -> Self {
