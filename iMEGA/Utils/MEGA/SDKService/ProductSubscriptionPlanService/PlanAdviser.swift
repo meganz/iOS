@@ -1,15 +1,44 @@
 import Foundation
 
-final class MEGAPlanAdviser {
-    static func suggestMinimumPlan(ofStorage minimumStorage: Measurement<UnitDataStorage>,
-                                   availablePlans: [MEGAPlan]) -> [MEGAPlan] {
-        let query: QueryConstraint = .minimumPriceForStorageInBytesGreaterThan(minimumStorage)
-        return query.run(availablePlans)
+enum MEGAPlanUpgradeAdviser {
+    static func suggestMinimumPlan(for currentPlan: MEGAPlan? = nil,
+                                   ofStorage minimumStorage: Measurement<UnitDataStorage>,
+                                   from availablePlans: [MEGAPlan]) -> MEGAPlanUpgradeAdvice {
+        let filter: QueryConstraint = .minimumPriceForStorageInBytesGreaterThan(minimumStorage)
+        let plansMeetCriteria = filter(availablePlans)
+
+        guard let foundPlan = plansMeetCriteria.first else {
+            return .noSuitablePlan
+        }
+
+        if foundPlan == currentPlan {
+            return .noNeedUpgrade
+        }
+
+        return .upgrade(to: foundPlan)
     }
 }
 
+enum MEGAPlanUpgradeAdvice {
+    case upgrade(to: MEGAPlan)
+    case noSuitablePlan
+    case noNeedUpgrade
+
+    var plan: MEGAPlan? {
+        switch self {
+        case .noNeedUpgrade, .noSuitablePlan: return nil
+        case .upgrade(to: let newPlan): return newPlan
+        }
+    }
+}
+
+
 fileprivate struct QueryConstraint {
     var run: ([MEGAPlan]) -> [MEGAPlan]
+
+    func callAsFunction(_ plans: [MEGAPlan]) -> [MEGAPlan] {
+        return run(plans)
+    }
 }
 
 fileprivate extension QueryConstraint {
@@ -25,10 +54,10 @@ fileprivate extension QueryConstraint {
     /// Query constraint that find the lowest price `MEGAPlan` in provided plans.
     private static let minimumPrice: QueryConstraint = QueryConstraint { plans in
         return plans.reduce([]) { (result: [MEGAPlan], plan: MEGAPlan) in
-            guard let bestPrice = result.first?.price.price else {
+            guard let bestPrice = result.first?.price else {
                 return [plan]
             }
-            if bestPrice > plan.price.price {
+            if bestPrice > plan.price {
                 return [plan]
             }
             return result
@@ -39,8 +68,8 @@ fileprivate extension QueryConstraint {
     static let minimumPriceForStorageInBytesGreaterThan: (Measurement<UnitDataStorage>) -> QueryConstraint = {
         (storage) -> QueryConstraint in
         return QueryConstraint { plans in
-            QueryConstraint.minimumPrice.run(
-                QueryConstraint.storagGreaterThan(storage).run(plans))
+            QueryConstraint.minimumPrice(
+                QueryConstraint.storagGreaterThan(storage)(plans))
         }
     }
 }

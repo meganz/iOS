@@ -81,8 +81,8 @@ fileprivate final class MEGAPlanLoadTask {
                             storage: .gigabytes(of: pricing.storageGB(atProductIndex: productIndex)),
                             transfer: .gigabytes(of: pricing.transferGB(atProductIndex: productIndex)),
                             subscriptionLife: pricing.months(atProductIndex: productIndex),
-                            price: MEGAPlan.Price(price: pricing.amount(atProductIndex: productIndex),
-                                                  currency: pricing.currency(atProductIndex: productIndex)),
+                            price: pricing.amount(atProductIndex: productIndex),
+                            currency: pricing.currency(atProductIndex: productIndex),
                             proLevel: pricing.proLevel(atProductIndex: productIndex),
                             description: pricing.description(atProductIndex: productIndex))
         }

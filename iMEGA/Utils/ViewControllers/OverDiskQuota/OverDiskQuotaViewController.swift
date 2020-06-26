@@ -38,7 +38,7 @@ final class OverDiskQuotaViewController: UIViewController {
         // MARK: - Exposed Methods
 
         var titleMessage: String {
-            return AMLocalizedString("Your Data is at Risk!", "Warning title message tells user data in danger.")
+            AMLocalizedString("Your Data is at Risk!", "Warning title message tells user data in danger.")
         }
 
         var overDiskQuotaMessage: NSAttributedString {
