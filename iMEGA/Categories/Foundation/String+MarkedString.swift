@@ -16,6 +16,6 @@ extension String {
     /// styles as values.
     /// - Returns: A `AttributedString` that has relavent text and styles composed together.
     func attributedString(with styleMarks: StyleMarks) -> NSAttributedString {
-        return MarkedStringParser.parseAttributedString(from: self, withStyleMarks: styleMarks)
+        MarkedStringParser.parseAttributedString(from: self, withStyleMarks: styleMarks)
     }
 }
