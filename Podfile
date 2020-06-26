@@ -8,6 +8,9 @@ target 'MEGA' do
   pod 'MessageKit'
   pod 'YYWebImage'
   pod 'PanModal'
+  pod 'EmojiPicker', '1.1'
+  pod 'ISEmojiView'
+
   # Pods for MEGA
 
   target 'MEGAUnitTests' do

@@ -1,5 +1,6 @@
 import UIKit
 import MessageKit
+import EmojiPicker
 
 class ChatViewController: MessagesViewController {
 
@@ -395,7 +396,11 @@ class ChatViewController: MessagesViewController {
         }
         
         if action == NSSelectorFromString("forward:") {
-            forwardMessage(chatMessage)
+//            forwardMessage(chatMessage)
+            let emojiPickerVC = EmojiPicker.viewController
+//            emojiPickerVC.sourceView = collectionView.cellForItem(at: indexPath)
+            present(emojiPickerVC, animated: true, completion: nil)
+            
             return
         }
         
@@ -727,6 +732,7 @@ class ChatViewController: MessagesViewController {
 
         let removeRichLinkMenuItem = UIMenuItem(title:AMLocalizedString("removePreview","Once a preview is generated for a message which contains URLs, the user can remove it. Same button is also shown during loading of the preview - and would cancel the loading (text of the button is the same in both cases)."), action: #selector(MessageCollectionViewCell.removeRichPreview(_:)))
 
+        
         UIMenuController.shared.menuItems = [forwardMenuItem, importMenuItem, editMenuItem, downloadMenuItem, addContactMenuItem, removeRichLinkMenuItem]
     }
 

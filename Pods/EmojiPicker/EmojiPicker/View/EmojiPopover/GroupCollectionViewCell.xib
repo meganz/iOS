@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="GroupCollectionViewCell" customModule="EmojiPicker" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T7R-w7-u2W">
+                        <rect key="frame" x="11" y="11" width="28" height="28"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="T7R-w7-u2W" secondAttribute="height" multiplier="1:1" id="CQP-t0-Nef"/>
+                        </constraints>
+                        <inset key="contentEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
+                        <connections>
+                            <action selector="groupButtonTapped:" destination="gTV-IL-0wX" eventType="touchUpInside" id="BNC-4f-AQ7"/>
+                        </connections>
+                    </button>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstItem="T7R-w7-u2W" firstAttribute="centerX" secondItem="ZTg-uK-7eu" secondAttribute="centerX" id="SvJ-r9-Tnr"/>
+                <constraint firstItem="T7R-w7-u2W" firstAttribute="centerY" secondItem="ZTg-uK-7eu" secondAttribute="centerY" id="b6S-8I-gH8"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <connections>
+                <outlet property="groupButton" destination="T7R-w7-u2W" id="zMt-57-e8g"/>
+            </connections>
+            <point key="canvasLocation" x="52.799999999999997" y="48.575712143928037"/>
+        </collectionViewCell>
+    </objects>
+</document>
