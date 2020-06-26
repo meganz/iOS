@@ -2,6 +2,93 @@ import UIKit
 
 final class OverDiskQuotaViewController: UIViewController {
 
+    final class OverDiskQuotaAdviceGenerator {
+
+        // MARK: - Formatters
+
+        private lazy var dateFormatter: DateFormatter = {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "MMMM d yyyy"
+            return dateFormatter
+        }()
+
+        private lazy var numberFormatter: NumberFormatter = {
+            let numberFormatter = NumberFormatter()
+            numberFormatter.numberStyle = .decimal
+            return numberFormatter
+        }()
+
+        private lazy var byteCountFormatter: ByteCountFormatter = {
+            let byteCountFormatter = ByteCountFormatter()
+            byteCountFormatter.allowedUnits = .useGB
+            byteCountFormatter.countStyle = .binary
+            return byteCountFormatter
+        }()
+
+        // MARK: - Properties
+
+        private let overDiskQuotaData: OverDiskQuotaInternal
+
+        // MARK: - Lifecycles
+
+        fileprivate init(_ overDiskQuotaData: OverDiskQuotaInternal) {
+            self.overDiskQuotaData = overDiskQuotaData
+        }
+
+        // MARK: - Exposed Methods
+
+        var titleMessage: String {
+            return AMLocalizedString("Your Data is at Risk!", "Warning title message tells user data in danger.")
+        }
+
+        var overDiskQuotaMessage: NSAttributedString {
+            let message = AMLocalizedString("<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to %@.</paragraph>",
+                                                  "A paragraph of warning message tells user upgrade to selected [minimum subscription plan] before [deadline] due to [cloud space used] and [warning dates]")
+
+            let formattedMessage = String(format: message,
+                                        overDiskQuotaData.email,
+                                        overDiskQuotaData.formattedWarningDates(with: dateFormatter),
+                                        overDiskQuotaData.numberOfFiles(with: numberFormatter),
+                                        overDiskQuotaData.takingUpStorage(with: byteCountFormatter),
+                                        suggestedPlan)
+
+            let styleMarks: StyleMarks = ["paragraph": .paragraph, "b": .emphasized]
+            return formattedMessage.attributedString(with: styleMarks)
+        }
+
+        var warningActionTitle: NSAttributedString {
+            let daysLeft = daysDistance(from: Date(), endDate: overDiskQuotaData.deadline)
+            let daysLeftLocalized = String(format: AMLocalizedString("%d days", "Count of days"), daysLeft)
+            let warningTitleMessage = AMLocalizedString("<body>You have <warn>%@</warn> left to upgrade.</body>",
+                                                        "Warning message to tell user time left to upgrade subscription.")
+            var formattedTitleMessage = String(format: warningTitleMessage, daysLeftLocalized)
+
+            if daysLeft < 1 {
+                formattedTitleMessage = AMLocalizedString("<body><warn>You must act immediately to save your data.</warn><body>",
+                                                          "<body><warn>You must act immediately to save your data.</warn><body>")
+            }
+            let styleMarks: StyleMarks = ["warn": .warning, "body": .emphasized]
+            return formattedTitleMessage.attributedString(with: styleMarks)
+        }
+
+        // MARK: - Privates
+
+        private func daysDistance(from startDate: Date, endDate: Date) -> Int {
+            let calendar = Calendar.current
+            return calendar.dateComponents([.day], from: startDate, to: endDate).day!
+        }
+
+        private var suggestedPlan: String {
+            if let plan = overDiskQuotaData.plan {
+                return String(format: AMLocalizedString("upgrade to <b>%@</b>", "Asks user to upgrade to plan"), plan)
+            }
+
+            return AMLocalizedString("contact support for a custom plan",
+                                     "Asks the user to request a custom Pro plan from customer support because their storage usage is more than the regular plans.")
+        }
+    }
+
+
     // MARK: - Views
     
     @IBOutlet private var contentScrollView: UIScrollView!
@@ -20,36 +107,17 @@ final class OverDiskQuotaViewController: UIViewController {
 
     private var overDiskQuota: OverDiskQuotaInternal!
 
-    // MARK: - Formatters
-
-    private lazy var dateFormatter: DateFormatter = {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMMM d yyyy"
-        return dateFormatter
-    }()
-
-    private lazy var numberFormatter: NumberFormatter = {
-        let numberFormatter = NumberFormatter()
-        numberFormatter.numberStyle = .decimal
-        return numberFormatter
-    }()
-
-    private lazy var byteCountFormatter: ByteCountFormatter = {
-        let byteCountFormatter = ByteCountFormatter()
-        byteCountFormatter.allowedUnits = .useGB
-        byteCountFormatter.countStyle = .binary
-        return byteCountFormatter
-    }()
+    private var overDiskQuotaAdvicer: OverDiskQuotaAdviceGenerator!
 
     // MARK: - ViewController Lifecycles
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTitleLabel(titleLabel)
-        setupMessageLabel(warningParagaphLabel, overDiskInformation: overDiskQuota)
+        setupMessageLabel(warningParagaphLabel, withMessage: overDiskQuotaAdvicer.overDiskQuotaMessage)
+        setupWarningView(warningView, with: overDiskQuotaAdvicer.warningActionTitle)
         setupUpgradeButton(upgradeButton)
         setupDismissButton(dismissButton)
-        setupWarningView(warningView, withDeadline: overDiskQuota.deadline)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -68,6 +136,7 @@ final class OverDiskQuotaViewController: UIViewController {
                                               cloudStorage: Measurement(value: overDiskQuotaData.cloudStorage.doubleValue,
                                                                         unit: .bytes),
                                               plan: overDiskQuotaData.suggestedPlanName)
+        overDiskQuotaAdvicer = OverDiskQuotaAdviceGenerator(overDiskQuota)
     }
 
     // MARK: - UI Customize
@@ -82,19 +151,8 @@ final class OverDiskQuotaViewController: UIViewController {
         disableAdjustingContentInsets(for: contentScrollView)
     }
 
-    private func setupWarningView(_ warningView: OverDisckQuotaWarningView, withDeadline deadline: Date) {
-        let daysLeft = daysDistance(from: Date(), endDate: deadline)
-        let daysLeftLocalized = String(format: AMLocalizedString("%d days", "Count of days"), daysLeft)
-        let warningTitleMessage = AMLocalizedString("<body>You have <warn>%@</warn> left to upgrade.</body>",
-                                                    "Warning message to tell user time left to upgrade subscription.")
-        var formattedTitleMessage = String(format: warningTitleMessage, daysLeftLocalized)
-
-        if daysLeft < 1 {
-            formattedTitleMessage = AMLocalizedString("<body><warn>You must act immediately to save your data.</warn><body>",
-                                                      "<body><warn>You must act immediately to save your data.</warn><body>")
-        }
-        let styleMarks: StyleMarks = ["warn": .warning, "body": .emphasized]
-        warningView.updateTitle(with: formattedTitleMessage.attributedString(with: styleMarks))
+    private func setupWarningView(_ warningView: OverDisckQuotaWarningView, with text: NSAttributedString) {
+        warningView.updateTitle(with: text)
     }
 
     private func setupTitleLabel(_ titleLabel: UILabel) {
@@ -102,20 +160,8 @@ final class OverDiskQuotaViewController: UIViewController {
         LabelStyle.headline.style(titleLabel)
     }
 
-    private func setupMessageLabel(_ descriptionLabel: UILabel, overDiskInformation: OverDiskQuotaInternal?) {
-        guard let infor = overDiskInformation else { descriptionLabel.text = nil; return }
-        let message = AMLocalizedString("<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to %@.</paragraph>",
-                                        "A paragraph of warning message tells user upgrade to selected [minimum subscription plan] before [deadline] due to [cloud space used] and [warning dates]")
-
-        let formattedMessage = String(format: message,
-                                      infor.email,
-                                      infor.formattedWarningDates(with: dateFormatter),
-                                      infor.numberOfFiles(with: numberFormatter),
-                                      infor.takingUpStorage(with: byteCountFormatter),
-                                      infor.suggestedPlan)
-
-        let styleMarks: StyleMarks = ["paragraph": .paragraph, "b": .emphasized]
-        descriptionLabel.attributedText = formattedMessage.attributedString(with: styleMarks)
+    private func setupMessageLabel(_ descriptionLabel: UILabel, withMessage message: NSAttributedString) {
+        descriptionLabel.attributedText = message
     }
 
     private func setupUpgradeButton(_ button: UIButton) {
@@ -141,13 +187,6 @@ final class OverDiskQuotaViewController: UIViewController {
 
     @objc fileprivate func didTapDismissButton(button: UIButton) {
         dismissAction?()
-    }
-
-    // MARK: - Days left
-
-    private func daysDistance(from startDate: Date, endDate: Date) -> Int {
-        let calendar = Calendar.current
-        return calendar.dateComponents([.day], from: startDate, to: endDate).day!
     }
 
     // MARK: - Internal Data Structure
@@ -186,15 +225,6 @@ fileprivate extension OverDiskQuotaViewController.OverDiskQuotaInternal {
     func takingUpStorage(with formatter: ByteCountFormatter) -> String {
         let cloudSpaceUsedInBytes = cloudStorage.converted(to: .bytes).valueNumber
         return formatter.string(fromByteCount: cloudSpaceUsedInBytes.int64Value)
-    }
-
-    var suggestedPlan: SuggestedMEGAPlan {
-        if let plan = plan {
-            return String(format: AMLocalizedString("upgrade to <b>%@</b>", "Asks user to upgrade to plan"), plan)
-        }
-
-        return AMLocalizedString("contact support for a custom plan",
-                                 "Asks the user to request a custom Pro plan from customer support because their storage usage is more than the regular plans.")
     }
 }
 
