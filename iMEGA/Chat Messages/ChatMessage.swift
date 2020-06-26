@@ -9,7 +9,6 @@ struct ChatMessage {
     let message: MEGAChatMessage
     let chatRoom: MEGAChatRoom
     var transfer: MEGATransfer?
-    
     init(message: MEGAChatMessage, chatRoom: MEGAChatRoom) {
         self.message = message
         self.chatRoom = chatRoom
@@ -21,14 +20,7 @@ struct ChatMessage {
         self.chatRoom = chatRoom
     }
     
-    var avatarImage: UIImage? {
-        guard let peerEmail = chatRoom.peerEmail(byHandle: message.userHandle),
-            let user = MEGASdkManager.sharedMEGASdk()?.contact(forEmail: peerEmail) else {
-                return nil
-        }
-
-        return user.avatarImage(withDelegate: nil)
-    }
+ 
 }
 
 extension ChatMessage: MessageType {
