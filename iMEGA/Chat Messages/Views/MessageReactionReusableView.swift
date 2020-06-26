@@ -32,6 +32,20 @@ class MessageReactionReusableView: MessageReusableView, UICollectionViewDelegate
         
         reactionCollectionView.register(ReactionCollectionViewCell.nib, forCellWithReuseIdentifier: ReactionCollectionViewCell.reuseIdentifier)
         // Initialization code
+        
+        guard let flowLayout = reactionCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
+            return
+        }
+        
+        flowLayout.estimatedItemSize = CGSize(width: 1, height: 1)
     }
     
 }
+
+
+//
+//extension MessageReactionReusableView: UICollectionViewDelegateFlowLayout {
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+//        return CGSize(width: 100, height: 30)
+//    }
+//}
