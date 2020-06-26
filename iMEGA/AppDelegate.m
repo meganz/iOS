@@ -261,7 +261,8 @@
         }
     }
     
-
+    [Helper setIndexer:MEGAIndexer.sharedIndexer];
+    
     UIApplicationShortcutItem *applicationShortcutItem = launchOptions[UIApplicationLaunchOptionsShortcutItemKey];
     if (applicationShortcutItem != nil) {
         if (isFetchNodesDone) {
