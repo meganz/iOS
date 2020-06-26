@@ -1,7 +1,7 @@
 
 import UIKit
 
-final class PhotoSelectedMarkerView: UIView {
+final class PhotoSelectedMarkerView: UIView, SingleTapHandlerProtocol {
     
     private let outerCircleInsetValue: CGFloat = 4
     private let innerCircleInsetValue: CGFloat = 5
@@ -59,6 +59,18 @@ final class PhotoSelectedMarkerView: UIView {
         }
     }
     
+    // MARK:- SingleTapHandlerProtocol
+    
+    var singleTapHandler: (() -> Void)? {
+        didSet {
+            if singleTapHandler != nil {
+                addSingleTapGesture()
+            } else {
+                removeSingleTapGesture()
+            }
+        }
+    }
+    
     // MARK:- Initializers.
     
     override init(frame: CGRect) {
@@ -93,6 +105,5 @@ final class PhotoSelectedMarkerView: UIView {
     private func createPath(circleLayer: CAShapeLayer, insetValue: CGFloat) {
         circleLayer.path = UIBezierPath(ovalIn: bounds.insetBy(dx: insetValue,
                                                                dy: insetValue)).cgPath
-
     }
 }
