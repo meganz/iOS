@@ -1,14 +1,57 @@
 
 import PanModal
 
+
+protocol ReactedEmojisUsersListViewControllerDataSource: class {
+    var emojiList: [String] { get }
+    func userhandleList(forEmoji: String) -> [UInt64]
+}
+
 class ReactedEmojisUsersListViewController: UIViewController  {
 
     var isShortFormEnabled = true
     let headerView = EmojiCarousalView.instanceFromNib
+    lazy var reactedUsersTableViewController = ReactedUsersTableViewController(nibName: nil, bundle: nil)
+    var reactedUsersListPages: [ReactedUsersListPageViewController]?
 
+    weak var dataSource: ReactedEmojisUsersListViewControllerDataSource?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        if let dataSource = dataSource {
+            addHeaderView(emojiList: dataSource.emojiList)
+            addReactedUsersTableViewController()
+        } else {
+            fatalError("empty emoji list is not handled yet.")
+        }
+    }
+    
+    private func addHeaderView(emojiList: [String]) {
+        headerView.emojiList = emojiList
+        view.addSubview(headerView)
+        headerView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            headerView.topAnchor.constraint(equalTo: view.topAnchor),
+            headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            headerView.heightAnchor.constraint(equalToConstant: headerView.bounds.height)
+        ])
+    }
+    
+    private func addReactedUsersTableViewController() {
+        addChild(reactedUsersTableViewController)
+        view.addSubview(reactedUsersTableViewController.view)
+        
+        reactedUsersTableViewController.view.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            reactedUsersTableViewController.view.topAnchor.constraint(equalTo: headerView.bottomAnchor),
+            reactedUsersTableViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            reactedUsersTableViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            reactedUsersTableViewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+        reactedUsersTableViewController.didMove(toParent: self)
     }
 }
 
@@ -17,7 +60,7 @@ class ReactedEmojisUsersListViewController: UIViewController  {
 extension ReactedEmojisUsersListViewController: PanModalPresentable {
 
     var panScrollable: UIScrollView? {
-        return nil
+        return reactedUsersTableViewController.tableView
     }
     
     var showDragIndicator: Bool {
