@@ -173,15 +173,14 @@ fileprivate final class OverDiskQuotaQueryTask {
     private func extractedInformation(userDataStore: OverDiskQuotaUserData,
                                       storageStore: OverDiskQuotaStorageUsed,
                                       planStore: OverDiskQuotaPlans) -> OverDiskQuotaInformation {
-        let minimumPlan = MEGAPlanAdviser.suggestMinimumPlan(ofStorage: storageStore.cloudStorageTaking,
-                                                             availablePlans: planStore.availablePlans).first
-
+        let planUpgradeAdvice = MEGAPlanUpgradeAdviser.suggestMinimumPlan(ofStorage: storageStore.cloudStorageTaking,
+                                                                          from: planStore.availablePlans)
         return OverDiskQuotaInformation(email: userDataStore.email,
                                         deadline: userDataStore.deadline,
                                         warningDates: userDataStore.warningDates,
                                         numberOfFilesOnCloud: userDataStore.numberOfFilesOnCloud,
                                         cloudStorage: storageStore.cloudStorageTaking.valueNumber,
-                                        suggestedPlanName: minimumPlan?.readableName)
+                                        suggestedPlanName: planUpgradeAdvice.plan?.readableName)
     }
 }
 

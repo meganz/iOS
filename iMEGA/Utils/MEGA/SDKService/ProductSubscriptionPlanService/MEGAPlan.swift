@@ -1,11 +1,11 @@
 import Foundation
 
-struct MEGAPlan {
+struct MEGAPlan: Equatable {
     typealias DataMeasurementInGB = Measurement<UnitDataStorage>
     typealias DateDurationInMonth = Int
     typealias PriceInCents = Int
     typealias Currency = String
-    typealias Price = (price: PriceInCents, currency: Currency)
+    typealias Price = PriceInCents
     typealias Description = String
     typealias MEGASDKProductIndex = Int
 
@@ -14,6 +14,7 @@ struct MEGAPlan {
     let transfer: DataMeasurementInGB
     let subscriptionLife: DateDurationInMonth
     let price: Price
+    let currency: Currency
     let proLevel: MEGAAccountType
     let description: Description
 }
