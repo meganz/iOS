@@ -916,6 +916,7 @@
             self.searchController.hidesNavigationBarDuringPresentation = NO;
             if (@available(iOS 11.0, *)) {
                 self.navigationItem.searchController = self.searchController;
+                self.navigationItem.hidesSearchBarWhenScrolling = NO;
             } else {
                 self.searchFixedViewHeightConstraint.constant = self.searchController.searchBar.frame.size.height;
                 [self.searchFixedView addSubview:self.searchController.searchBar];
