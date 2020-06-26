@@ -40,6 +40,10 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
     
     // MARK: - MEGAChatRoomDelegate methods
 
+    func onReactionUpdate(_ api: MEGAChatSdk!, messageId: UInt64, reaction: String!, count: Int) {
+        print(reaction)
+    }
+    
     func onChatRoomUpdate(_ api: MEGAChatSdk!, chat: MEGAChatRoom!) {
         MEGALogInfo("ChatRoomDelegate: onChatRoomUpdate \(chatRoom)")
         chatViewController?.chatRoom = chat
