@@ -213,13 +213,13 @@ final class OverDiskQuotaViewController: UIViewController {
 fileprivate extension OverDiskQuotaViewController.OverDiskQuotaInternal {
 
     func formattedWarningDates(with formatter: DateFormatter) -> String {
-        return warningDates.reduce("") { (result, date) in
+        warningDates.reduce("") { (result, date) in
             result + (formatter.string(from: date) + ", ")
         }
     }
 
     func numberOfFiles(with formatter: NumberFormatter) -> String {
-        return formatter.string(from: NSNumber(value: numberOfFilesOnCloud)) ?? "\(numberOfFilesOnCloud)"
+        formatter.string(from: NSNumber(value: numberOfFilesOnCloud)) ?? "\(numberOfFilesOnCloud)"
     }
 
     func takingUpStorage(with formatter: ByteCountFormatter) -> String {

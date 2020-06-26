@@ -11,7 +11,7 @@ import Foundation
     static let petabytes = UnitDataStorage(symbol: "PB", converter: UnitConverterLinear(coefficient: 8 * 1024 * 1024 * 1024 * 1024 * 1024))
 
     override class func baseUnit() -> Self {
-        Self.init(symbol: "bit")
+        Self(symbol: "bit")
     }
 }
 
@@ -22,33 +22,33 @@ extension Measurement where UnitType == UnitDataStorage {
     }
 
     static func bytes<T>(of value: T) -> Self where T: FixedWidthInteger {
-        return Measurement(value: Double(value), unit: .bytes)
+        Measurement(value: Double(value), unit: .bytes)
     }
 
     static func kilobytes<T>(of value: T) -> Self where T: FixedWidthInteger {
-        return Measurement(value: Double(value), unit: .kilobytes)
+        Measurement(value: Double(value), unit: .kilobytes)
     }
 
     static func megabytes<T>(of value: T) -> Self where T: FixedWidthInteger {
-        return Measurement(value: Double(value), unit: .megabytes)
+        Measurement(value: Double(value), unit: .megabytes)
     }
 
     static func gigabytes<T>(of value: T) -> Self where T: FixedWidthInteger {
-        return Measurement(value: Double(value), unit: .gigabytes)
+        Measurement(value: Double(value), unit: .gigabytes)
     }
 
     static func terabytes<T>(of value: T) -> Self where T: FixedWidthInteger {
-        return Measurement(value: Double(value), unit: .terabytes)
+        Measurement(value: Double(value), unit: .terabytes)
     }
 
     static func petabytes<T>(of value: T) -> Self where T: FixedWidthInteger {
-        return Measurement(value: Double(value), unit: .petabytes)
+        Measurement(value: Double(value), unit: .petabytes)
     }
 }
 
 extension Measurement where UnitType == UnitDataStorage {
 
     var valueNumber: NSNumber {
-        return NSNumber(value: value)
+        NSNumber(value: value)
     }
 }

@@ -21,10 +21,10 @@ struct MEGAPlan {
 extension MEGAPlan {
 
     var readableName: String {
-        return MEGAAccountDetails.string(for: proLevel)
+        MEGAAccountDetails.string(for: proLevel)
     }
 
     var storageSpaceInBytes: Measurement<UnitDataStorage> {
-        return storage.converted(to: .bytes)
+        storage.converted(to: .bytes)
     }
 }
