@@ -187,8 +187,12 @@
         
         NSUInteger usersAttachedCount = self.message.usersCount;
         for (NSInteger i = 0; i < usersAttachedCount; i++) {
-            NSString *email = [self.message userEmailAtIndex:i];
-            [self.selectedUsersMutableArray addObject:email];
+            uint64_t userHandle = [self.message userHandleAtIndex:i];
+            NSString *userBase64Handle = [MEGASdk base64HandleForUserHandle:userHandle];
+            if (![self.alreadyContactsMutableDictionary objectForKey:userBase64Handle]) {
+                NSString *email = [self.message userEmailAtIndex:i];
+                [self.selectedUsersMutableArray addObject:email];
+            }
         }
     } else {
         [self.selectedUsersMutableArray removeAllObjects];
