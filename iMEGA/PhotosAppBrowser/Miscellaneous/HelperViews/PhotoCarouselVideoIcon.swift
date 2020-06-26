@@ -1,7 +1,7 @@
 
 import UIKit
 
-final class PhotoCarouselVideoIcon: UIView, SingleTapHandlerProtocol {
+final class PhotoCarouselVideoIcon: SingleTapView {
     
     private let halfRatio: CGFloat = 0.5
     private let playIconRightOffsetPaddingRatio: CGFloat = 1.225
@@ -19,18 +19,6 @@ final class PhotoCarouselVideoIcon: UIView, SingleTapHandlerProtocol {
         playIconLayer.zPosition = 1
         return playIconLayer
     }()
-    
-    // MARK:- SingleTapHandlerProtocol
-    
-    var singleTapHandler: (() -> Void)? {
-        didSet {
-            if singleTapHandler != nil {
-                addSingleTapGesture()
-            } else {
-                removeSingleTapGesture()
-            }
-        }
-    }
     
     // MARK:- Initializers.
 

@@ -1,7 +1,7 @@
 
 import UIKit
 
-final class PhotoSelectedMarkerView: UIView, SingleTapHandlerProtocol {
+final class PhotoSelectedMarkerView: SingleTapView {
     
     private let outerCircleInsetValue: CGFloat = 4
     private let innerCircleInsetValue: CGFloat = 5
@@ -56,18 +56,6 @@ final class PhotoSelectedMarkerView: UIView, SingleTapHandlerProtocol {
         didSet {
             innerCircle.isHidden = !selected
             label.isHidden = !selected
-        }
-    }
-    
-    // MARK:- SingleTapHandlerProtocol
-    
-    var singleTapHandler: (() -> Void)? {
-        didSet {
-            if singleTapHandler != nil {
-                addSingleTapGesture()
-            } else {
-                removeSingleTapGesture()
-            }
         }
     }
     
