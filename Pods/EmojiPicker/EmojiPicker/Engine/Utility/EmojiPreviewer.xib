@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="EmojiPreviewer" customModule="EmojiPicker" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="330" height="161"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="90S-tF-RvS" userLabel="Single Emoji Wrapper View">
+                    <rect key="frame" x="0.0" y="0.0" width="113" height="161"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lightEmojiTag" translatesAutoresizingMaskIntoConstraints="NO" id="eq2-eh-scs">
+                            <rect key="frame" x="0.0" y="0.0" width="113" height="161"/>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pcD-Lc-wwe">
+                            <rect key="frame" x="0.0" y="17" width="113" height="0.0"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="27"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="pcD-Lc-wwe" firstAttribute="top" secondItem="90S-tF-RvS" secondAttribute="top" constant="17" id="7ef-dt-I8X"/>
+                        <constraint firstAttribute="trailing" secondItem="pcD-Lc-wwe" secondAttribute="trailing" id="CFa-nk-xpk"/>
+                        <constraint firstAttribute="bottom" secondItem="eq2-eh-scs" secondAttribute="bottom" id="H4n-mk-qF9"/>
+                        <constraint firstItem="eq2-eh-scs" firstAttribute="top" secondItem="90S-tF-RvS" secondAttribute="top" id="HV0-6C-9M7"/>
+                        <constraint firstAttribute="trailing" secondItem="eq2-eh-scs" secondAttribute="trailing" id="qcv-RQ-oOM"/>
+                        <constraint firstItem="pcD-Lc-wwe" firstAttribute="leading" secondItem="90S-tF-RvS" secondAttribute="leading" id="vjy-SI-7eX"/>
+                        <constraint firstItem="eq2-eh-scs" firstAttribute="leading" secondItem="90S-tF-RvS" secondAttribute="leading" id="zcj-Br-QUS"/>
+                    </constraints>
+                </view>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UZr-gF-gnX" userLabel="Multiple Emojis Wrapper View">
+                    <rect key="frame" x="0.0" y="0.0" width="299" height="161"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="leftLightEmojiTag" translatesAutoresizingMaskIntoConstraints="NO" id="gzk-C3-C0J" userLabel="Left Image View">
+                            <rect key="frame" x="0.0" y="0.0" width="24.5" height="161"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="gzk-C3-C0J" secondAttribute="height" multiplier="27:179" id="LoB-eg-7YK"/>
+                            </constraints>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="rightLightEmojiTag" translatesAutoresizingMaskIntoConstraints="NO" id="MPe-vD-Oqv" userLabel="Right Image View">
+                            <rect key="frame" x="275" y="0.0" width="24" height="161"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="MPe-vD-Oqv" secondAttribute="height" multiplier="27:179" id="0sj-RH-FXK"/>
+                            </constraints>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="centerLightEmojiTag" translatesAutoresizingMaskIntoConstraints="NO" id="fql-Qc-sEz" userLabel="Center Left Image View">
+                            <rect key="frame" x="24.5" y="0.0" width="25" height="161"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="25" id="GGk-TK-u8S"/>
+                            </constraints>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="centerLightEmojiTag" translatesAutoresizingMaskIntoConstraints="NO" id="ncy-UU-tbG" userLabel="Center Right Image View">
+                            <rect key="frame" x="132" y="0.0" width="143" height="161"/>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="anchorLightEmojiTag" translatesAutoresizingMaskIntoConstraints="NO" id="prc-BP-fb7" userLabel="Anchor Image View">
+                            <rect key="frame" x="49.5" y="0.0" width="82.5" height="161"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="prc-BP-fb7" secondAttribute="height" multiplier="92:179" id="EmW-eR-YX3"/>
+                            </constraints>
+                        </imageView>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LX6-7h-JVn" userLabel="Buttons Wrapper View">
+                            <rect key="frame" x="24.5" y="8" width="250.5" height="70.5"/>
+                            <subviews>
+                                <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kO5-sD-k4Q" userLabel="Default Emoji Button">
+                                    <rect key="frame" x="0.0" y="18" width="37" height="35"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="29"/>
+                                    <inset key="contentEdgeInsets" minX="2" minY="0.0" maxX="2" maxY="0.0"/>
+                                    <state key="normal" title="👶"/>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                            <integer key="value" value="4"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                    <connections>
+                                        <action selector="multipleEmojisButtonTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="JEP-9Q-enZ"/>
+                                        <action selector="multipleEmojisButtonTouchDown:" destination="iN0-l3-epB" eventType="touchDown" id="mEb-6L-Zro"/>
+                                    </connections>
+                                </button>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GVm-50-OGL" userLabel="Separate View">
+                                    <rect key="frame" x="45" y="25.5" width="0.5" height="22"/>
+                                    <color key="backgroundColor" white="0.66666666666666663" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="0.5" id="MB5-Xm-xjA"/>
+                                        <constraint firstAttribute="height" constant="22" id="fN5-7G-vBr"/>
+                                    </constraints>
+                                </view>
+                                <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9mb-Pn-BF8" userLabel="White Emoji Button">
+                                    <rect key="frame" x="53.5" y="18" width="37" height="35"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="29"/>
+                                    <inset key="contentEdgeInsets" minX="2" minY="0.0" maxX="2" maxY="0.0"/>
+                                    <state key="normal" title="👶🏻"/>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                            <integer key="value" value="4"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                    <connections>
+                                        <action selector="multipleEmojisButtonTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="vpX-dH-m7K"/>
+                                        <action selector="multipleEmojisButtonTouchDown:" destination="iN0-l3-epB" eventType="touchDown" id="eW4-sH-44s"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xoG-uI-GHK" userLabel="Yellow Emoji Button">
+                                    <rect key="frame" x="93.5" y="18" width="37" height="35"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="29"/>
+                                    <inset key="contentEdgeInsets" minX="2" minY="0.0" maxX="2" maxY="0.0"/>
+                                    <state key="normal" title="👶🏼"/>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                            <integer key="value" value="4"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                    <connections>
+                                        <action selector="multipleEmojisButtonTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="aYa-u7-dns"/>
+                                        <action selector="multipleEmojisButtonTouchDown:" destination="iN0-l3-epB" eventType="touchDown" id="RAX-cv-JzT"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7vi-MI-b54" userLabel="Light Emoji Button">
+                                    <rect key="frame" x="133.5" y="18" width="37" height="35"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="29"/>
+                                    <inset key="contentEdgeInsets" minX="2" minY="0.0" maxX="2" maxY="0.0"/>
+                                    <state key="normal" title="👶🏽"/>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                            <integer key="value" value="4"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                    <connections>
+                                        <action selector="multipleEmojisButtonTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="QbZ-cL-DSi"/>
+                                        <action selector="multipleEmojisButtonTouchDown:" destination="iN0-l3-epB" eventType="touchDown" id="Ezy-Wm-8Lz"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xHm-86-9vO" userLabel="Dark Emoji Button">
+                                    <rect key="frame" x="173.5" y="18" width="37" height="35"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="29"/>
+                                    <inset key="contentEdgeInsets" minX="2" minY="0.0" maxX="2" maxY="0.0"/>
+                                    <state key="normal" title="👶🏾"/>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                            <integer key="value" value="4"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                    <connections>
+                                        <action selector="multipleEmojisButtonTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="SzC-r0-OIa"/>
+                                        <action selector="multipleEmojisButtonTouchDown:" destination="iN0-l3-epB" eventType="touchDown" id="i82-rK-4IO"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dfO-dx-zZ3" userLabel="Black Emoji Button">
+                                    <rect key="frame" x="213.5" y="18" width="37" height="35"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="29"/>
+                                    <inset key="contentEdgeInsets" minX="2" minY="0.0" maxX="2" maxY="0.0"/>
+                                    <state key="normal" title="👶🏿"/>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                            <integer key="value" value="4"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                    <connections>
+                                        <action selector="multipleEmojisButtonTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="olU-Qj-8MA"/>
+                                        <action selector="multipleEmojisButtonTouchDown:" destination="iN0-l3-epB" eventType="touchDown" id="wwW-dA-cW5"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstItem="xoG-uI-GHK" firstAttribute="bottom" secondItem="9mb-Pn-BF8" secondAttribute="bottom" id="1Rt-jr-dgc"/>
+                                <constraint firstItem="7vi-MI-b54" firstAttribute="width" secondItem="kO5-sD-k4Q" secondAttribute="width" id="2RZ-ir-9aB"/>
+                                <constraint firstItem="GVm-50-OGL" firstAttribute="centerY" secondItem="kO5-sD-k4Q" secondAttribute="centerY" constant="1" id="8AS-XV-BNH"/>
+                                <constraint firstItem="9mb-Pn-BF8" firstAttribute="bottom" secondItem="kO5-sD-k4Q" secondAttribute="bottom" id="8bq-UA-bOW"/>
+                                <constraint firstItem="xHm-86-9vO" firstAttribute="leading" secondItem="7vi-MI-b54" secondAttribute="trailing" constant="3" id="GLZ-js-ahk"/>
+                                <constraint firstItem="xoG-uI-GHK" firstAttribute="leading" secondItem="9mb-Pn-BF8" secondAttribute="trailing" constant="3" id="PN4-7v-06p"/>
+                                <constraint firstItem="dfO-dx-zZ3" firstAttribute="bottom" secondItem="kO5-sD-k4Q" secondAttribute="bottom" id="QCr-fZ-1dL"/>
+                                <constraint firstItem="xoG-uI-GHK" firstAttribute="top" secondItem="9mb-Pn-BF8" secondAttribute="top" id="RTa-Rc-cAW"/>
+                                <constraint firstItem="kO5-sD-k4Q" firstAttribute="top" relation="greaterThanOrEqual" secondItem="LX6-7h-JVn" secondAttribute="top" constant="4" id="UQP-Sy-Vim"/>
+                                <constraint firstItem="dfO-dx-zZ3" firstAttribute="width" secondItem="kO5-sD-k4Q" secondAttribute="width" id="X5v-B7-PaE"/>
+                                <constraint firstItem="dfO-dx-zZ3" firstAttribute="top" secondItem="kO5-sD-k4Q" secondAttribute="top" id="Zkk-4x-GcP"/>
+                                <constraint firstAttribute="trailing" secondItem="dfO-dx-zZ3" secondAttribute="trailing" id="bA2-1L-DEz"/>
+                                <constraint firstItem="7vi-MI-b54" firstAttribute="top" secondItem="kO5-sD-k4Q" secondAttribute="top" id="c9n-mm-cVW"/>
+                                <constraint firstItem="xHm-86-9vO" firstAttribute="bottom" secondItem="kO5-sD-k4Q" secondAttribute="bottom" id="cqa-lD-pMM"/>
+                                <constraint firstItem="7vi-MI-b54" firstAttribute="leading" secondItem="xoG-uI-GHK" secondAttribute="trailing" constant="3" id="e9B-LX-B3k"/>
+                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="kO5-sD-k4Q" secondAttribute="bottom" constant="4" id="fRg-I1-RgA"/>
+                                <constraint firstItem="7vi-MI-b54" firstAttribute="bottom" secondItem="kO5-sD-k4Q" secondAttribute="bottom" id="gTy-Rv-m27"/>
+                                <constraint firstItem="kO5-sD-k4Q" firstAttribute="leading" secondItem="LX6-7h-JVn" secondAttribute="leading" id="geF-JY-WlY"/>
+                                <constraint firstItem="9mb-Pn-BF8" firstAttribute="top" secondItem="kO5-sD-k4Q" secondAttribute="top" id="kH8-Pa-2pd"/>
+                                <constraint firstItem="GVm-50-OGL" firstAttribute="leading" secondItem="kO5-sD-k4Q" secondAttribute="trailing" constant="8" id="oz9-C6-Vl3"/>
+                                <constraint firstItem="xHm-86-9vO" firstAttribute="top" secondItem="kO5-sD-k4Q" secondAttribute="top" id="q4L-MZ-3ms"/>
+                                <constraint firstItem="dfO-dx-zZ3" firstAttribute="leading" secondItem="xHm-86-9vO" secondAttribute="trailing" constant="3" id="rz6-lV-NyV"/>
+                                <constraint firstItem="xHm-86-9vO" firstAttribute="width" secondItem="kO5-sD-k4Q" secondAttribute="width" id="s4T-iI-KaQ"/>
+                                <constraint firstItem="xoG-uI-GHK" firstAttribute="width" secondItem="kO5-sD-k4Q" secondAttribute="width" id="v0K-2P-vfb"/>
+                                <constraint firstItem="kO5-sD-k4Q" firstAttribute="centerY" secondItem="LX6-7h-JVn" secondAttribute="centerY" id="vOe-hU-Z5h"/>
+                                <constraint firstItem="9mb-Pn-BF8" firstAttribute="width" secondItem="kO5-sD-k4Q" secondAttribute="width" id="wyz-lw-6CK"/>
+                                <constraint firstItem="9mb-Pn-BF8" firstAttribute="leading" secondItem="GVm-50-OGL" secondAttribute="trailing" constant="8" id="x9w-GG-W2w"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="ncy-UU-tbG" firstAttribute="bottom" secondItem="prc-BP-fb7" secondAttribute="bottom" id="3XJ-Rh-g3X"/>
+                        <constraint firstItem="prc-BP-fb7" firstAttribute="top" secondItem="UZr-gF-gnX" secondAttribute="top" id="57g-Rq-59L"/>
+                        <constraint firstAttribute="trailing" secondItem="MPe-vD-Oqv" secondAttribute="trailing" id="6bS-zM-FMn"/>
+                        <constraint firstItem="LX6-7h-JVn" firstAttribute="leading" secondItem="fql-Qc-sEz" secondAttribute="leading" id="9qb-Cp-haa"/>
+                        <constraint firstItem="fql-Qc-sEz" firstAttribute="leading" secondItem="gzk-C3-C0J" secondAttribute="trailing" id="Dav-W3-hXh"/>
+                        <constraint firstItem="gzk-C3-C0J" firstAttribute="leading" secondItem="UZr-gF-gnX" secondAttribute="leading" id="LVF-eQ-XnR"/>
+                        <constraint firstItem="prc-BP-fb7" firstAttribute="bottom" secondItem="fql-Qc-sEz" secondAttribute="bottom" id="O0E-fF-4qS"/>
+                        <constraint firstItem="LX6-7h-JVn" firstAttribute="trailing" secondItem="ncy-UU-tbG" secondAttribute="trailing" id="Ouo-9f-Y9I"/>
+                        <constraint firstItem="gzk-C3-C0J" firstAttribute="bottom" secondItem="prc-BP-fb7" secondAttribute="bottom" id="U0J-7K-KUf"/>
+                        <constraint firstItem="fql-Qc-sEz" firstAttribute="top" secondItem="prc-BP-fb7" secondAttribute="top" id="UvH-NY-22f"/>
+                        <constraint firstItem="MPe-vD-Oqv" firstAttribute="leading" secondItem="ncy-UU-tbG" secondAttribute="trailing" id="WCS-tU-7k0"/>
+                        <constraint firstAttribute="bottom" secondItem="prc-BP-fb7" secondAttribute="bottom" id="XeC-JE-G7S"/>
+                        <constraint firstItem="LX6-7h-JVn" firstAttribute="top" secondItem="UZr-gF-gnX" secondAttribute="top" constant="8" id="Zfe-pL-h1J"/>
+                        <constraint firstItem="ncy-UU-tbG" firstAttribute="leading" secondItem="prc-BP-fb7" secondAttribute="trailing" id="eu2-Ms-wxw"/>
+                        <constraint firstItem="MPe-vD-Oqv" firstAttribute="top" secondItem="prc-BP-fb7" secondAttribute="top" id="ex6-KS-gfT"/>
+                        <constraint firstItem="prc-BP-fb7" firstAttribute="leading" secondItem="fql-Qc-sEz" secondAttribute="trailing" id="hzs-Ox-oO7"/>
+                        <constraint firstItem="LX6-7h-JVn" firstAttribute="bottom" secondItem="prc-BP-fb7" secondAttribute="centerY" constant="-2" id="mLq-6H-QW0"/>
+                        <constraint firstItem="gzk-C3-C0J" firstAttribute="top" secondItem="prc-BP-fb7" secondAttribute="top" id="rcm-rq-dOz"/>
+                        <constraint firstItem="ncy-UU-tbG" firstAttribute="top" secondItem="prc-BP-fb7" secondAttribute="top" id="wiG-o6-dUT"/>
+                        <constraint firstItem="MPe-vD-Oqv" firstAttribute="bottom" secondItem="prc-BP-fb7" secondAttribute="bottom" id="xSs-Hn-Nbr"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="90S-tF-RvS" secondAttribute="bottom" id="14b-YG-oGY"/>
+                <constraint firstAttribute="trailing" secondItem="90S-tF-RvS" secondAttribute="trailing" id="EDt-ZS-PbO"/>
+                <constraint firstAttribute="trailing" secondItem="UZr-gF-gnX" secondAttribute="trailing" id="Mef-bL-JDX"/>
+                <constraint firstItem="90S-tF-RvS" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="TGZ-HH-tAa"/>
+                <constraint firstItem="UZr-gF-gnX" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="p9A-sc-RAy"/>
+                <constraint firstItem="90S-tF-RvS" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="ptI-hx-25u"/>
+                <constraint firstItem="UZr-gF-gnX" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="ssj-fk-XMy"/>
+                <constraint firstAttribute="bottom" secondItem="UZr-gF-gnX" secondAttribute="bottom" id="u49-3U-s4Q"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="EDt-ZS-PbO"/>
+                    <exclude reference="Mef-bL-JDX"/>
+                </mask>
+            </variation>
+            <connections>
+                <outlet property="multipleEmojisAnchorImageView" destination="prc-BP-fb7" id="ObR-UI-1kM"/>
+                <outlet property="multipleEmojisBlackButton" destination="dfO-dx-zZ3" id="uSF-tb-3ym"/>
+                <outlet property="multipleEmojisCenterLeftImageView" destination="fql-Qc-sEz" id="Clt-TV-avh"/>
+                <outlet property="multipleEmojisCenterLeftImageViewWidthConstraint" destination="GGk-TK-u8S" id="0Pd-ju-53z"/>
+                <outlet property="multipleEmojisCenterRightImageView" destination="ncy-UU-tbG" id="irh-Jj-oSu"/>
+                <outlet property="multipleEmojisDarkButton" destination="xHm-86-9vO" id="fry-I0-XUC"/>
+                <outlet property="multipleEmojisDefaultButton" destination="kO5-sD-k4Q" id="nqO-sr-gKX"/>
+                <outlet property="multipleEmojisLeftImageView" destination="gzk-C3-C0J" id="UY2-My-CFL"/>
+                <outlet property="multipleEmojisLightButton" destination="7vi-MI-b54" id="GHA-Ni-5qs"/>
+                <outlet property="multipleEmojisRightImageView" destination="MPe-vD-Oqv" id="WKl-7I-a11"/>
+                <outlet property="multipleEmojisWhiteButton" destination="9mb-Pn-BF8" id="Tdu-Qh-XmE"/>
+                <outlet property="multipleEmojisWrapperView" destination="UZr-gF-gnX" id="oAz-Zi-UWM"/>
+                <outlet property="multipleEmojisYellowButton" destination="xoG-uI-GHK" id="hgd-pd-Qb2"/>
+                <outlet property="singleEmojiImageView" destination="eq2-eh-scs" id="BSK-L2-aR5"/>
+                <outlet property="singleEmojiLabel" destination="pcD-Lc-wwe" id="7oi-N3-xg7"/>
+                <outlet property="singleEmojiWrapperView" destination="90S-tF-RvS" id="y2k-5t-I9S"/>
+            </connections>
+            <point key="canvasLocation" x="355.19999999999999" y="434.03298350824593"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="anchorLightEmojiTag" width="92" height="179"/>
+        <image name="centerLightEmojiTag" width="14" height="179"/>
+        <image name="leftLightEmojiTag" width="27" height="179"/>
+        <image name="lightEmojiTag" width="113" height="181"/>
+        <image name="rightLightEmojiTag" width="27" height="179"/>
+    </resources>
+</document>

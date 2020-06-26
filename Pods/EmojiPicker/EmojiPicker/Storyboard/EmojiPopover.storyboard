@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="tWp-Tp-FGh">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Emoji Popover View Controller-->
+        <scene sceneID="Zvr-o9-2qb">
+            <objects>
+                <viewController id="tWp-Tp-FGh" customClass="EmojiPopoverViewController" customModule="EmojiPicker" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="I7C-Dy-5Ac">
+                        <rect key="frame" x="0.0" y="0.0" width="500" height="500"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="4DF-Jz-C31">
+                                <rect key="frame" x="0.0" y="0.0" width="500" height="460"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="D12-b4-5xW">
+                                    <size key="itemSize" width="40" height="40"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="8" minY="0.0" maxX="8" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                            </collectionView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jIX-0j-cRo" userLabel="Bottom Wrapper View">
+                                <rect key="frame" x="0.0" y="460" width="500" height="40"/>
+                                <subviews>
+                                    <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0SO-Bf-oX4">
+                                        <rect key="frame" x="0.0" y="0.0" width="500" height="40"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="c0L-Zw-YEU">
+                                            <rect key="frame" x="0.0" y="0.0" width="500" height="40"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <subviews>
+                                                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="zgu-VZ-OgQ" userLabel="Group Collection View">
+                                                    <rect key="frame" x="0.0" y="0.0" width="500" height="40"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="zbw-vN-CJ2">
+                                                        <size key="itemSize" width="50" height="50"/>
+                                                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                                        <inset key="sectionInset" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
+                                                    </collectionViewFlowLayout>
+                                                    <cells/>
+                                                </collectionView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="zgu-VZ-OgQ" secondAttribute="bottom" id="EX0-1r-gPc"/>
+                                                <constraint firstItem="zgu-VZ-OgQ" firstAttribute="top" secondItem="c0L-Zw-YEU" secondAttribute="top" id="I0a-zd-LGQ"/>
+                                                <constraint firstAttribute="trailing" secondItem="zgu-VZ-OgQ" secondAttribute="trailing" id="lk1-nc-2zs"/>
+                                                <constraint firstItem="zgu-VZ-OgQ" firstAttribute="leading" secondItem="c0L-Zw-YEU" secondAttribute="leading" id="xH6-IC-4Co"/>
+                                            </constraints>
+                                        </view>
+                                        <blurEffect style="light"/>
+                                    </visualEffectView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eto-Lp-6xH" userLabel="Top Line View">
+                                        <rect key="frame" x="0.0" y="0.0" width="500" height="0.5"/>
+                                        <color key="backgroundColor" red="0.61568627450000002" green="0.61568627450000002" blue="0.61568627450000002" alpha="0.5" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="0.29999999999999999" id="JT5-j8-CUR"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="9S9-eT-Ve5"/>
+                                    <constraint firstItem="eto-Lp-6xH" firstAttribute="top" secondItem="jIX-0j-cRo" secondAttribute="top" id="MK3-3d-Xb3"/>
+                                    <constraint firstAttribute="trailing" secondItem="eto-Lp-6xH" secondAttribute="trailing" id="ZDy-wF-pDT"/>
+                                    <constraint firstAttribute="bottom" secondItem="0SO-Bf-oX4" secondAttribute="bottom" id="aov-5z-aTy"/>
+                                    <constraint firstItem="eto-Lp-6xH" firstAttribute="leading" secondItem="jIX-0j-cRo" secondAttribute="leading" id="jgJ-ZR-vqY"/>
+                                    <constraint firstAttribute="trailing" secondItem="0SO-Bf-oX4" secondAttribute="trailing" id="pEQ-n3-Rwr"/>
+                                    <constraint firstItem="0SO-Bf-oX4" firstAttribute="top" secondItem="jIX-0j-cRo" secondAttribute="top" id="sT3-Pv-ope"/>
+                                    <constraint firstItem="0SO-Bf-oX4" firstAttribute="leading" secondItem="jIX-0j-cRo" secondAttribute="leading" id="tbK-9d-PLv"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="jIX-0j-cRo" firstAttribute="trailing" secondItem="6Kr-Sr-VkN" secondAttribute="trailing" id="Ga0-Rk-Pl8"/>
+                            <constraint firstAttribute="trailing" secondItem="4DF-Jz-C31" secondAttribute="trailing" id="K6n-72-Hb9"/>
+                            <constraint firstItem="jIX-0j-cRo" firstAttribute="leading" secondItem="6Kr-Sr-VkN" secondAttribute="leading" id="L3P-v5-hI4"/>
+                            <constraint firstItem="jIX-0j-cRo" firstAttribute="bottom" secondItem="6Kr-Sr-VkN" secondAttribute="bottom" id="Oj3-fW-aCh"/>
+                            <constraint firstItem="4DF-Jz-C31" firstAttribute="top" secondItem="I7C-Dy-5Ac" secondAttribute="top" id="V35-5e-Hq3"/>
+                            <constraint firstItem="jIX-0j-cRo" firstAttribute="top" secondItem="4DF-Jz-C31" secondAttribute="bottom" id="jk9-fI-crj"/>
+                            <constraint firstItem="4DF-Jz-C31" firstAttribute="leading" secondItem="I7C-Dy-5Ac" secondAttribute="leading" id="mnX-2F-qXc"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Kr-Sr-VkN"/>
+                    </view>
+                    <value key="contentSizeForViewInPopover" type="size" width="200" height="200"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="500" height="500"/>
+                    <connections>
+                        <outlet property="bottomVisualEffectView" destination="0SO-Bf-oX4" id="IyY-JJ-jXI"/>
+                        <outlet property="emojisCollectionView" destination="4DF-Jz-C31" id="dJD-2F-Kn8"/>
+                        <outlet property="groupTopLineView" destination="eto-Lp-6xH" id="iEa-Tb-PHo"/>
+                        <outlet property="groupsCollectionView" destination="zgu-VZ-OgQ" id="RtN-pD-er2"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="f6h-vI-Np1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="997" y="-76"/>
+        </scene>
+    </scenes>
+</document>
