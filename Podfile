@@ -10,7 +10,7 @@ target 'MEGA' do
   pod 'PanModal'
   pod 'EmojiPicker', '1.1'
   pod 'ISEmojiView'
-
+  pod 'AlignedCollectionViewFlowLayout', :git => 'https://github.com/mischa-hildebrand/AlignedCollectionViewFlowLayout.git'
   # Pods for MEGA
 
   target 'MEGAUnitTests' do
