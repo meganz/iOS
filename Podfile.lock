@@ -1,4 +1,5 @@
 PODS:
+  - AlignedCollectionViewFlowLayout (1.1.2)
   - EmojiPicker (1.1)
   - InputBarAccessoryView (4.3.2):
     - InputBarAccessoryView/Core (= 4.3.2)
@@ -16,6 +17,7 @@ PODS:
     - YYImage
 
 DEPENDENCIES:
+  - AlignedCollectionViewFlowLayout (from `https://github.com/mischa-hildebrand/AlignedCollectionViewFlowLayout.git`)
   - EmojiPicker (= 1.1)
   - ISEmojiView
   - MessageKit
@@ -33,7 +35,17 @@ SPEC REPOS:
     - YYImage
     - YYWebImage
 
+EXTERNAL SOURCES:
+  AlignedCollectionViewFlowLayout:
+    :git: https://github.com/mischa-hildebrand/AlignedCollectionViewFlowLayout.git
+
+CHECKOUT OPTIONS:
+  AlignedCollectionViewFlowLayout:
+    :commit: 49330ef67177dba5c9e1a3efdd0df93d83f12ee7
+    :git: https://github.com/mischa-hildebrand/AlignedCollectionViewFlowLayout.git
+
 SPEC CHECKSUMS:
+  AlignedCollectionViewFlowLayout: bfbffc18e70d4f965b0e4044dea8502a38ff86b3
   EmojiPicker: 7d9cb698a2983501c0fa800e759dd7744638a0b9
   InputBarAccessoryView: 7985d418040a05fe894bd4b8328dd43ab35517c3
   ISEmojiView: f7cd94a6c93307f429ec5da001293d0b02247f03
@@ -43,6 +55,6 @@ SPEC CHECKSUMS:
   YYImage: 1e1b62a9997399593e4b9c4ecfbbabbf1d3f3b54
   YYWebImage: 5f7f36aee2ae293f016d418c7d6ba05c4863e928
 
-PODFILE CHECKSUM: b836cfb5558a466d60156a6b48773bb5c4a59898
+PODFILE CHECKSUM: d66e6068cd1a4abd05b8436651e0f0ad9467c47c
 
 COCOAPODS: 1.8.4

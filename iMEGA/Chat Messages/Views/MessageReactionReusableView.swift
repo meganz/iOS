@@ -1,4 +1,5 @@
 import MessageKit
+import AlignedCollectionViewFlowLayout
 
 class MessageReactionReusableView: MessageReusableView, UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -19,7 +20,6 @@ class MessageReactionReusableView: MessageReusableView, UICollectionViewDelegate
     var chatMessage: ChatMessage? {
         didSet {
             let megaMessage = chatMessage?.message
-            MEGASdkManager.sharedMEGAChatSdk()?.addReaction(forChat: chatMessage?.chatRoom.chatId ?? 0, messageId: megaMessage?.messageId ?? 0, reaction: "😃")
             MEGASdkManager.sharedMEGAChatSdk()?.getMessageReactions(forChat: chatMessage?.chatRoom.chatId ?? 0, messageId: megaMessage?.messageId ?? 0)
         }
     }
@@ -33,10 +33,10 @@ class MessageReactionReusableView: MessageReusableView, UICollectionViewDelegate
         reactionCollectionView.register(ReactionCollectionViewCell.nib, forCellWithReuseIdentifier: ReactionCollectionViewCell.reuseIdentifier)
         // Initialization code
         
-        guard let flowLayout = reactionCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
+        guard let flowLayout = reactionCollectionView.collectionViewLayout as? AlignedCollectionViewFlowLayout else {
             return
         }
-        
+        flowLayout.horizontalAlignment = .trailing
         flowLayout.estimatedItemSize = CGSize(width: 1, height: 1)
     }
     
