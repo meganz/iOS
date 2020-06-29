@@ -29,12 +29,18 @@
                             <attributedString key="attributedTitle">
                                 <fragment content="😁">
                                     <attributes>
-                                        <font key="NSFont" metaFont="system" size="18"/>
+                                        <font key="NSFont" size="18" name=".AppleColorEmojiUI"/>
+                                        <font key="NSOriginalFont" metaFont="system" size="18"/>
                                     </attributes>
                                 </fragment>
-                                <fragment content=" 123">
+                                <fragment content=" ">
                                     <attributes>
                                         <font key="NSFont" metaFont="system"/>
+                                    </attributes>
+                                </fragment>
+                                <fragment content="123">
+                                    <attributes>
+                                        <font key="NSFont" size="13" name="SFMono-Regular"/>
                                     </attributes>
                                 </fragment>
                             </attributedString>
