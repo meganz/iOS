@@ -13,17 +13,13 @@ enum DateTemplateFormat {
 }
 
 enum DateStyleFormat {
-    /// Jun 1, 2020
-    case dateMedium
-    /// Jun 1, 2020 or "Tomorrow", "Today", "Yesterday"
-    case dateMediumRelative
+    /// Jun 1, 2020 or "Tomorrow", "Today", "Yesterday" when relative is `true`
+    case dateMedium(relative: Bool)
 
     fileprivate var style: DateFormatStyle {
         switch self {
-        case .dateMedium:
-            return DateFormatStyle(dateStyle: .medium, timeStyle: .none, relativeDateFormatting: false)
-        case .dateMediumRelative:
-            return DateFormatStyle(dateStyle: .medium, timeStyle: .none, relativeDateFormatting: true)
+        case .dateMedium(let relative):
+            return DateFormatStyle(dateStyle: .medium, timeStyle: .none, relativeDateFormatting: relative)
         }
     }
 }
