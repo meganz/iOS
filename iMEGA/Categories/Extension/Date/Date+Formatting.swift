@@ -1,6 +1,6 @@
 import Foundation
 
-enum DateTemplateFormatting {
+enum DateTemplateFormat {
     /// Monday Jun 1, 2020
     case dateMediumWithWeekday
 
@@ -12,7 +12,7 @@ enum DateTemplateFormatting {
     }
 }
 
-enum DateStyleFormatting {
+enum DateStyleFormat {
     /// Jun 1, 2020
     case dateMedium
     /// Jun 1, 2020 or "Tomorrow", "Today", "Yesterday"
@@ -39,7 +39,11 @@ final class DateFormatterPool {
 
     private lazy var styleFormatterCache: [DateFormatStyle: DateFormatter] = [:]
 
-    static var shared: Self { return self.init() }
+    // MARK: - Static
+
+    static var shared = DateFormatterPool()
+
+    // MARK: - Lifecycles
 
     private init() {}
 
@@ -50,11 +54,13 @@ final class DateFormatterPool {
     /// NOTE: As `DateFormatter` is an reference object, do *NOT* modify any property while using.
     /// - Parameter formattingStyle: A struct that holds date formatting template.
     /// - Returns: A date formatter.
-    func dateFormatter(of formattingStyle: DateTemplateFormatting) -> DateFormatter {
+    func dateFormatter(of formattingStyle: DateTemplateFormat) -> DateFormatter {
         if let cachedStyle = stringTemplateFormatterCache[formattingStyle.style] {
             return cachedStyle
         }
-        return formattingStyle.style.dateFormatter
+        let styleFormatter = formattingStyle.style.buildDateFormatter()
+        stringTemplateFormatterCache[formattingStyle.style] = styleFormatter
+        return styleFormatter
     }
 
     /// Returns a date formatter with given string formatting style. It search for cache by given `style`, and return immediatly. If not found,
@@ -62,11 +68,13 @@ final class DateFormatterPool {
     /// NOTE: As `DateFormatter` is an reference object, do *NOT* modify any property while using.
     /// - Parameter formattingStyle: A struct that holds date formatting styles.
     /// - Returns: A date formatter.
-    func dateFormatter(of formattingStyle: DateStyleFormatting) -> DateFormatter {
+    func dateFormatter(of formattingStyle: DateStyleFormat) -> DateFormatter {
         if let cachedStyle = styleFormatterCache[formattingStyle.style] {
             return cachedStyle
         }
-        return formattingStyle.style.dateFormatter
+        let styleFormatter = formattingStyle.style.buildDateFormatter()
+        styleFormatterCache[formattingStyle.style] = styleFormatter
+        return styleFormatter
     }
 }
 
@@ -74,7 +82,7 @@ final class DateFormatterPool {
 
 /// A protocol tells who implements this should be able to provide `DateFormatter`
 private protocol DateFormatterProvidable {
-    var dateFormatter: DateFormatter { get }
+    func buildDateFormatter() -> DateFormatter
 }
 
 /// A template string style configuration
@@ -86,7 +94,7 @@ fileprivate struct StringTemplateStyle: Hashable {
 }
 
 extension StringTemplateStyle: DateFormatterProvidable {
-    var dateFormatter: DateFormatter {
+    func buildDateFormatter() -> DateFormatter {
         let formatter = DateFormatter()
         formatter.dateFormat = dateFormat
         formatter.calendar = calendar
@@ -108,7 +116,8 @@ fileprivate struct DateFormatStyle: Hashable {
 }
 
 extension DateFormatStyle: DateFormatterProvidable {
-    var dateFormatter: DateFormatter {
+
+    func buildDateFormatter() -> DateFormatter {
         let formatter = DateFormatter()
         formatter.calendar = calendar
         formatter.dateStyle = dateStyle
