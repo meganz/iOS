@@ -3,31 +3,77 @@ import PanModal
 
 
 protocol ReactedEmojisUsersListViewControllerDataSource: class {
-    var emojiList: [String] { get }
-    func userhandleList(forEmoji: String) -> [UInt64]
+    func userhandleList(forEmoji: String, chatId: UInt64, messageId: UInt64) -> [UInt64]
 }
 
 class ReactedEmojisUsersListViewController: UIViewController  {
-
+    
+    weak var dataSource: ReactedEmojisUsersListViewControllerDataSource?
+    var selectedEmoji: String {
+        didSet {
+            guard isViewLoaded else {
+                return
+            }
+            
+            headerView.selectedEmoji = selectedEmoji
+        }
+    }
+    
+    let chatId: UInt64
+    let messageId: UInt64
+    let emojiList: [String]
+    
+    init(dataSource: ReactedEmojisUsersListViewControllerDataSource,
+         emojiList: [String],
+         selectedEmoji: String,
+         chatId: UInt64,
+         messageId: UInt64) {
+        self.dataSource = dataSource
+        self.emojiList = emojiList
+        self.selectedEmoji = selectedEmoji
+        self.chatId = chatId
+        self.messageId = messageId
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     var isShortFormEnabled = true
     let headerView = EmojiCarousalView.instanceFromNib
-    lazy var reactedUsersTableViewController = ReactedUsersTableViewController(nibName: nil, bundle: nil)
-    var reactedUsersListPages: [ReactedUsersListPageViewController]?
+    lazy var reactedUsersListPageViewController = ReactedUsersListPageViewController(transitionStyle: .scroll,
+                                                                                     navigationOrientation: .horizontal,
+                                                                                     options: nil)
 
-    weak var dataSource: ReactedEmojisUsersListViewControllerDataSource?
+   
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         if let dataSource = dataSource {
-            addHeaderView(emojiList: dataSource.emojiList)
-            addReactedUsersTableViewController()
+            addHeaderView(emojiList: emojiList)
+            headerView.selectedEmoji = selectedEmoji
+            let userHandleList = dataSource.userhandleList(forEmoji: selectedEmoji, chatId: chatId, messageId: messageId)
+            headerView.updateDescription(attributedString: NSAttributedString(string: "\(userHandleList.count) reacted to :placeholder:"))
+            
+            guard let firstEmoji = emojiList.first else {
+                fatalError("Emoji list cannot be empty")
+            }
+
+            reactedUsersListPageViewController.set(numberOfPages: emojiList.count,
+                                                   initialUserHandleList: dataSource.userhandleList(forEmoji: firstEmoji,
+                                                                                                    chatId: chatId,
+                                                                                                    messageId: messageId))
+            add(viewController: reactedUsersListPageViewController)
+
         } else {
             fatalError("empty emoji list is not handled yet.")
         }
     }
     
     private func addHeaderView(emojiList: [String]) {
+        headerView.delegate = self
         headerView.emojiList = emojiList
         view.addSubview(headerView)
         headerView.translatesAutoresizingMaskIntoConstraints = false
@@ -40,18 +86,28 @@ class ReactedEmojisUsersListViewController: UIViewController  {
         ])
     }
     
-    private func addReactedUsersTableViewController() {
-        addChild(reactedUsersTableViewController)
-        view.addSubview(reactedUsersTableViewController.view)
+    private func add(viewController: UIViewController) {
+        addChild(viewController)
+        view.addSubview(viewController.view)
         
-        reactedUsersTableViewController.view.translatesAutoresizingMaskIntoConstraints = false
+        viewController.view.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            reactedUsersTableViewController.view.topAnchor.constraint(equalTo: headerView.bottomAnchor),
-            reactedUsersTableViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            reactedUsersTableViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            reactedUsersTableViewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            viewController.view.topAnchor.constraint(equalTo: headerView.bottomAnchor),
+            viewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            viewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            viewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
-        reactedUsersTableViewController.didMove(toParent: self)
+        
+        viewController.didMove(toParent: self)
+    }
+}
+
+extension ReactedEmojisUsersListViewController: EmojiCarousalViewDelegate {
+    func didSelect(emoji: String, atIndex index: Int) {
+        if let userHandleList = dataSource?.userhandleList(forEmoji: emoji, chatId: chatId, messageId: messageId) {
+            reactedUsersListPageViewController.didSelectPage(withIndex: index, userHandleList: userHandleList)
+            headerView.updateDescription(attributedString: NSAttributedString(string: "\(userHandleList.count) reacted to :placeholder:"))
+        }
     }
 }
 
@@ -60,7 +116,7 @@ class ReactedEmojisUsersListViewController: UIViewController  {
 extension ReactedEmojisUsersListViewController: PanModalPresentable {
 
     var panScrollable: UIScrollView? {
-        return reactedUsersTableViewController.tableView
+        return reactedUsersListPageViewController.tableViewController?.tableView
     }
     
     var showDragIndicator: Bool {

@@ -3,28 +3,36 @@
 import UIKit
 
 class ReactedUsersTableViewController: UITableViewController {
-    private let contactCellReuseIdentifier = "contactCellReuseIdentifier"
+    var userHandleList: [UInt64]? {
+        didSet {
+            tableView.reloadData()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.register(UITableViewCell.self,
-                           forCellReuseIdentifier: contactCellReuseIdentifier)
+        tableView.register(ReactedContactTableCell.nib,
+                           forCellReuseIdentifier: ReactedContactTableCell.reuseIdentifier)
         tableView.rowHeight = 60.0
     }
 
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // TODO: Replace this with the actual model.
-        return 50
+        return userHandleList?.count ?? 0
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: contactCellReuseIdentifier,
-                                                 for: indexPath)
-        // TODO: Replace this with the actual model.
-        cell.textLabel?.text = "User"
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: ReactedContactTableCell.reuseIdentifier,
+                                                       for: indexPath) as? ReactedContactTableCell else {
+                                                        fatalError("Could not dequeue cell ReactedContactTableCell")
+        }
+        
+        if let handleList = userHandleList {
+            cell.userHandle = handleList[indexPath.row]
+        }
+        
         return cell
     }
     
