@@ -151,6 +151,11 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
                 JPGAlertAction.mnz_setTitleTextColor(UIColor.mnz_black333333())
                 alert.addAction(JPGAlertAction)
                 
+                if let popover = alert.popoverPresentationController {
+                    popover.sourceView = tableView
+                    popover.sourceRect = tableView.rectForRow(at: indexPath)
+                }
+                
                 alert.addAction(UIAlertAction(title: AMLocalizedString("cancel"), style: .cancel, handler: nil))
                 present(alert, animated: true, completion: nil)
             case 1:
@@ -176,6 +181,11 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
                 })
                 lowAlertAction.mnz_setTitleTextColor(UIColor.mnz_black333333())
                 alert.addAction(lowAlertAction)
+                
+                if let popover = alert.popoverPresentationController {
+                    popover.sourceView = tableView
+                    popover.sourceRect = tableView.rectForRow(at: indexPath)
+                }
                 
                 alert.addAction(UIAlertAction(title: AMLocalizedString("cancel"), style: .cancel, handler: nil))
                 present(alert, animated: true, completion: nil)
