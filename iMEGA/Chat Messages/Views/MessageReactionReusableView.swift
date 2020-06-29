@@ -8,19 +8,28 @@ class MessageReactionReusableView: MessageReusableView, UICollectionViewDelegate
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView
-             .dequeueReusableCell(withReuseIdentifier: ReactionCollectionViewCell.reuseIdentifier, for: indexPath)
-//           cell.backgroundColor = .black
-           // Configure the cell
-           return cell
+            .dequeueReusableCell(withReuseIdentifier: ReactionCollectionViewCell.reuseIdentifier, for: indexPath)
+        
+        if indexPath.section == 1 {
+            
+        }
+        
+        
+        return cell
     }
-   
-    @IBOutlet weak var reactionCollectionView: UICollectionView!
     
+    @IBOutlet weak var reactionCollectionView: UICollectionView!
+    var emojis = [String]()
     
     var chatMessage: ChatMessage? {
         didSet {
+            emojis.removeAll()
             let megaMessage = chatMessage?.message
-            MEGASdkManager.sharedMEGAChatSdk()?.getMessageReactions(forChat: chatMessage?.chatRoom.chatId ?? 0, messageId: megaMessage?.messageId ?? 0)
+            let list = MEGASdkManager.sharedMEGAChatSdk()?.getMessageReactions(forChat: chatMessage?.chatRoom.chatId ?? 0, messageId: megaMessage?.messageId ?? 0)
+            for index in 0..<list!.size {
+                emojis.append((list?.string(at: index))!)
+            }
+            print(emojis)
         }
     }
 
