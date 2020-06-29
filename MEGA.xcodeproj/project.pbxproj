@@ -287,6 +287,7 @@
 		5D9BDECD2483D99400C3A85B /* Date+Manipulation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D9BDECC2483D99400C3A85B /* Date+Manipulation.swift */; };
 		5D9BDECF2483E58D00C3A85B /* Date+Comparion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D9BDECE2483E58D00C3A85B /* Date+Comparion.swift */; };
 		5D9BDEE824848CE500C3A85B /* Date+Formatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D9BDEE724848CE500C3A85B /* Date+Formatting.swift */; };
+		5DF1B97E24A9B7FD000939F4 /* DateFormatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF1B97D24A9B7FD000939F4 /* DateFormatting.swift */; };
 		7714901520F7592100769BD4 /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7714901420F7592000769BD4 /* Contacts.framework */; };
 		771A932723A24DB300CB0ED7 /* UIView+FLEX_Layout.m in Sources */ = {isa = PBXBuildFile; fileRef = 771A932523A24DB300CB0ED7 /* UIView+FLEX_Layout.m */; };
 		771A932823A24DB300CB0ED7 /* UIPasteboard+FLEX.m in Sources */ = {isa = PBXBuildFile; fileRef = 771A932623A24DB300CB0ED7 /* UIPasteboard+FLEX.m */; };
@@ -1658,6 +1659,7 @@
 		5D9BDECC2483D99400C3A85B /* Date+Manipulation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Manipulation.swift"; sourceTree = "<group>"; };
 		5D9BDECE2483E58D00C3A85B /* Date+Comparion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Comparion.swift"; sourceTree = "<group>"; };
 		5D9BDEE724848CE500C3A85B /* Date+Formatting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Formatting.swift"; sourceTree = "<group>"; };
+		5DF1B97D24A9B7FD000939F4 /* DateFormatting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatting.swift; sourceTree = "<group>"; };
 		7714901420F7592000769BD4 /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = System/Library/Frameworks/Contacts.framework; sourceTree = SDKROOT; };
 		771A1B5E21C9220C00A8555D /* OnboardingViewType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OnboardingViewType.h; sourceTree = "<group>"; };
 		771A1B5F21C9227A00A8555D /* OnboardingType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OnboardingType.h; sourceTree = "<group>"; };
@@ -4062,6 +4064,7 @@
 				5D9BDECC2483D99400C3A85B /* Date+Manipulation.swift */,
 				5D9BDECE2483E58D00C3A85B /* Date+Comparion.swift */,
 				5D9BDEE724848CE500C3A85B /* Date+Formatting.swift */,
+				5DF1B97D24A9B7FD000939F4 /* DateFormatting.swift */,
 			);
 			path = Date;
 			sourceTree = "<group>";
@@ -6425,6 +6428,7 @@
 				83C570EB22E5BFCF00216896 /* MetadataManager.swift in Sources */,
 				A89E77441EA6041C00ADC0D2 /* MEGAAttachmentMediaItem.m in Sources */,
 				5B19713D1F2F1D1C00DE1BB2 /* RemoveSharingActivity.m in Sources */,
+				5DF1B97E24A9B7FD000939F4 /* DateFormatting.swift in Sources */,
 				77B3227F20A436D60037FA89 /* NSURL+MNZCategory.m in Sources */,
 				417279401DB663FA001AC818 /* JSQMessagesVideoThumbnailFactory.m in Sources */,
 				4152269A1A692ECC00EC7BB6 /* Helper.m in Sources */,

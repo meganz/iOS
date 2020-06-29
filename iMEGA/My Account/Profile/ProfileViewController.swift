@@ -304,7 +304,7 @@ enum SessionSectionRow: Int {
         present(addPhoneNumberController, animated: true, completion: nil)
     }
     
-    func expiryDateFormatterOfProfessionalAccountExpiryDate(_ expiryDate: Date) -> DateFormatter {
+    func expiryDateFormatterOfProfessionalAccountExpiryDate(_ expiryDate: Date) -> DateFormatting {
         let calendar = Calendar.current
         let startingOfToday = Date().startOfDay(on: calendar)
         guard let daysOfDistance = startingOfToday?.dayDistance(toFutureDate: expiryDate,

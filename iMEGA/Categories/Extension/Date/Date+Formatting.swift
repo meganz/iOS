@@ -50,7 +50,7 @@ final class DateFormatterPool {
     /// NOTE: As `DateFormatter` is an reference object, do *NOT* modify any property while using.
     /// - Parameter formattingStyle: A struct that holds date formatting template.
     /// - Returns: A date formatter.
-    func dateFormatter(of formattingStyle: DateTemplateFormat) -> DateFormatter {
+    func dateFormatter(of formattingStyle: DateTemplateFormat) -> DateFormatting {
         if let cachedStyle = stringTemplateFormatterCache[formattingStyle.style] {
             return cachedStyle
         }
@@ -64,7 +64,7 @@ final class DateFormatterPool {
     /// NOTE: As `DateFormatter` is an reference object, do *NOT* modify any property while using.
     /// - Parameter formattingStyle: A struct that holds date formatting styles.
     /// - Returns: A date formatter.
-    func dateFormatter(of formattingStyle: DateStyleFormat) -> DateFormatter {
+    func dateFormatter(of formattingStyle: DateStyleFormat) -> DateFormatting {
         if let cachedStyle = styleFormatterCache[formattingStyle.style] {
             return cachedStyle
         }
