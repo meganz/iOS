@@ -2,7 +2,7 @@
 import UIKit
 
 protocol EmojiCarousalViewDelegate: class {
-    func didSelect(emoji: String)
+    func didSelect(emoji: String, atIndex index: Int)
 }
 
 class EmojiCarousalView: UIView {
@@ -11,6 +11,19 @@ class EmojiCarousalView: UIView {
     @IBOutlet weak var descriptionLabel: UILabel!
     
     weak var delegate: EmojiCarousalViewDelegate?
+    var selectedEmoji: String? {
+        didSet {
+            guard let emojiList = emojiList,
+                let selectedEmoji = selectedEmoji,
+                let index = emojiList.firstIndex(of: selectedEmoji) else {
+                return
+            }
+            
+            collectionView.selectItem(at: IndexPath(item: index, section: 0),
+                                      animated: true,
+                                      scrollPosition: .centeredVertically)
+        }
+    }
     
     var emojiList: [String]? {
         didSet {
@@ -18,8 +31,6 @@ class EmojiCarousalView: UIView {
         }
     }
     
-    var selectedIndex = 0
-
     override func awakeFromNib() {
         super.awakeFromNib()
         collectionView.register(EmojiCollectionCell.nib,
@@ -34,6 +45,10 @@ class EmojiCarousalView: UIView {
             traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
                 updateAppearance()
         }
+    }
+    
+    func updateDescription(attributedString: NSAttributedString) {
+        descriptionLabel.attributedText = attributedString
     }
     
     private func updateAppearance() {
@@ -65,6 +80,6 @@ extension EmojiCarousalView: UICollectionViewDelegate {
             return
         }
         
-        delegate?.didSelect(emoji: emoji)
+        delegate?.didSelect(emoji: emoji, atIndex: indexPath.item)
     }
 }
