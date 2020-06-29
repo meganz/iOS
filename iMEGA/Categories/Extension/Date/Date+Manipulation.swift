@@ -1,13 +1,13 @@
 import Foundation
 
-typealias MNZTimestap = Date
+typealias Timestap = Date
 
 extension Date {
 
     /// Will return the starting time of current date on given calendar.
-    /// - Parameter calendar: Calendar onn which the starting time of current instance based.
-    /// - Returns: A `Timesamp` (`Date`)  of a calendar day that contains current date.
-    func startOfDay(on calendar: Calendar) -> MNZTimestap? {
+    /// - Parameter calendar: Calendar on which the starting time of current instance based.
+    /// - Returns: A `Timestamp` (`Date`)  of a calendar day that contains current date.
+    func startOfDay(on calendar: Calendar) -> Timestap? {
         startingTimestamp(with: .day, on: calendar)
     }
 
@@ -21,7 +21,7 @@ extension Date {
     ///   - calendar: The calendar on which the starting timesamp of date based.
     /// - Returns: A `Timesamp` (`Date`)  of a given calendar component that contains current date.
     func startingTimestamp(with calendarComponent: Calendar.Component,
-                           on calendar: Calendar) -> MNZTimestap? {
+                           on calendar: Calendar) -> Timestap? {
         calendar.dateInterval(of: calendarComponent, for: self)?.start
     }
 }
