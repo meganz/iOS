@@ -1,15 +1,9 @@
-//
-//  ReactionCollectionViewCell.swift
-//  MEGA
-//
-//  Created by Haoran Li on 26/06/20.
-//  Copyright © 2020 MEGA. All rights reserved.
-//
-
 import UIKit
 
 class ReactionCollectionViewCell: UICollectionViewCell {
 
+    @IBOutlet weak var reactionButton: UIButton!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         contentView.translatesAutoresizingMaskIntoConstraints = false

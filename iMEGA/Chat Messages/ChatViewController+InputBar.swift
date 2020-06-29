@@ -11,23 +11,18 @@ extension ChatViewController {
             return nil
         }
         
-//        if let chatRoom = chatRoom,
-//            chatRoom.isPublicChat,
-//            chatRoom.isPreview,
-//            !chatRoomDelegate.hasChatRoomClosed {
-//            return joinInputBar
-//        } else if chatRoom.ownPrivilege.rawValue <= MEGAChatRoomPrivilege.ro.rawValue {
-//            return nil
-//        } else if chatInputBar == nil {
-//            chatInputBar = ChatInputBar()
-//            chatInputBar?.delegate = self
-//        }
-//
-        let keyboardSettings = KeyboardSettings(bottomType: .categories)
-        let emojiView = EmojiView(keyboardSettings: keyboardSettings)
-        emojiView.translatesAutoresizingMaskIntoConstraints = false
-        emojiView.frame = CGRect(x: 0, y: 0, width: 300, height: 200)
-        return emojiView
+        if let chatRoom = chatRoom,
+            chatRoom.isPublicChat,
+            chatRoom.isPreview,
+            !chatRoomDelegate.hasChatRoomClosed {
+            return joinInputBar
+        } else if chatRoom.ownPrivilege.rawValue <= MEGAChatRoomPrivilege.ro.rawValue {
+            return nil
+        } else if chatInputBar == nil {
+            chatInputBar = ChatInputBar()
+            chatInputBar?.delegate = self
+        }
+        return chatInputBar
     }
     
     override var canBecomeFirstResponder: Bool {
