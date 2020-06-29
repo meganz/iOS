@@ -1239,7 +1239,6 @@
 		BFC933E324A453B400BC2A75 /* EmojiCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFC933E124A453B400BC2A75 /* EmojiCollectionCell.xib */; };
 		BFC933E524A45CD600BC2A75 /* ReactedUsersListPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC933E424A45CD600BC2A75 /* ReactedUsersListPageViewController.swift */; };
 		BFC933E824A45D0000BC2A75 /* ReactedUsersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC933E624A45D0000BC2A75 /* ReactedUsersTableViewController.swift */; };
-		BFC933E924A45D0000BC2A75 /* ReactedUsersTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFC933E724A45D0000BC2A75 /* ReactedUsersTableViewController.xib */; };
 		BFCEA856246E074B00FA2451 /* ChatViewController+ChatDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCEA855246E074B00FA2451 /* ChatViewController+ChatDelegate.swift */; };
 		BFCF841F246A1310004FA3B1 /* JoinInputBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCF841E246A1310004FA3B1 /* JoinInputBar.swift */; };
 		BFCF8423246A1326004FA3B1 /* JoinInputBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFCF8422246A1326004FA3B1 /* JoinInputBar.xib */; };
@@ -2785,7 +2784,6 @@
 		BFC933E124A453B400BC2A75 /* EmojiCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmojiCollectionCell.xib; sourceTree = "<group>"; };
 		BFC933E424A45CD600BC2A75 /* ReactedUsersListPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactedUsersListPageViewController.swift; sourceTree = "<group>"; };
 		BFC933E624A45D0000BC2A75 /* ReactedUsersTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactedUsersTableViewController.swift; sourceTree = "<group>"; };
-		BFC933E724A45D0000BC2A75 /* ReactedUsersTableViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReactedUsersTableViewController.xib; sourceTree = "<group>"; };
 		BFCEA855246E074B00FA2451 /* ChatViewController+ChatDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatViewController+ChatDelegate.swift"; sourceTree = "<group>"; };
 		BFCF841E246A1310004FA3B1 /* JoinInputBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinInputBar.swift; sourceTree = "<group>"; };
 		BFCF8422246A1326004FA3B1 /* JoinInputBar.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = JoinInputBar.xib; sourceTree = "<group>"; };
@@ -5699,7 +5697,6 @@
 				BF7EBD48245293530015255F /* AddToChatMenuViewController.swift */,
 				BF7EBD49245293530015255F /* AddToChatMenuViewController.xib */,
 				BFC933E624A45D0000BC2A75 /* ReactedUsersTableViewController.swift */,
-				BFC933E724A45D0000BC2A75 /* ReactedUsersTableViewController.xib */,
 				BFC933E424A45CD600BC2A75 /* ReactedUsersListPageViewController.swift */,
 				BFC933D824A44C6300BC2A75 /* ReactedEmojisUsersListViewController.swift */,
 			);
@@ -6439,7 +6436,6 @@
 				41A72F1F1C22EA1600516603 /* LTHPasscodeViewController.bundle in Resources */,
 				E8CD198A1A9270CB00CB8B2A /* UnavailableLinkView.xib in Resources */,
 				5B72739F240D4310005816AB /* defaultIcon@2x.png in Resources */,
-				BFC933E924A45D0000BC2A75 /* ReactedUsersTableViewController.xib in Resources */,
 				7759700C219EBCE700B31671 /* Notifications.storyboard in Resources */,
 				5BA53FE92462B26000D168B9 /* InviteContact.storyboard in Resources */,
 				5B5FBDDF20BD8CB2000EE35B /* TwoFactorAuthentication.storyboard in Resources */,

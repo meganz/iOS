@@ -15,7 +15,7 @@ class ReactedUsersListPageViewController: UIPageViewController {
     }
     
     func set(numberOfPages: Int, initialUserHandleList: [UInt64]) {
-        pages = (0..<numberOfPages).map { _ in ReactedUsersTableViewController(nibName: nil, bundle: nil) }
+        pages = (0..<numberOfPages).map { _ in ReactedUsersTableViewController() }
         dataSource = self
         delegate = self
         
