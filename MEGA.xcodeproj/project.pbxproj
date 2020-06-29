@@ -1184,6 +1184,8 @@
 		BF943E9F235541E1001C18E0 /* GlobalDNDNotificationControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF943E9D235541E1001C18E0 /* GlobalDNDNotificationControl.swift */; };
 		BF943EA52355449B001C18E0 /* ChatNotificationControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF943EA42355449A001C18E0 /* ChatNotificationControl.swift */; };
 		BF943EA62355449B001C18E0 /* ChatNotificationControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF943EA42355449A001C18E0 /* ChatNotificationControl.swift */; };
+		BF99A3D424A994CB0035A183 /* ReactedContactTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF99A3D224A994CB0035A183 /* ReactedContactTableCell.swift */; };
+		BF99A3D524A994CB0035A183 /* ReactedContactTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF99A3D324A994CB0035A183 /* ReactedContactTableCell.xib */; };
 		BF9D491C2459047800D7B7DC /* AddToChatAllowAccessCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9D491A2459047800D7B7DC /* AddToChatAllowAccessCollectionCell.swift */; };
 		BF9D491D2459047800D7B7DC /* AddToChatAllowAccessCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF9D491B2459047800D7B7DC /* AddToChatAllowAccessCollectionCell.xib */; };
 		BFA55257245F849F009FE3A6 /* AddToChatMenuPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA55256245F849F009FE3A6 /* AddToChatMenuPageViewController.swift */; };
@@ -1233,7 +1235,6 @@
 		BFC1795024491073004F35AB /* AudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC1794F24491073004F35AB /* AudioRecorder.swift */; };
 		BFC7940C2418511300BFDCC4 /* MEGAFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B695E57F23275A4E00D12B9E /* MEGAFunctions.swift */; };
 		BFC933DA24A44C6300BC2A75 /* ReactedEmojisUsersListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC933D824A44C6300BC2A75 /* ReactedEmojisUsersListViewController.swift */; };
-		BFC933DB24A44C6300BC2A75 /* ReactedEmojisUsersListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFC933D924A44C6300BC2A75 /* ReactedEmojisUsersListViewController.xib */; };
 		BFC933DD24A44E0300BC2A75 /* EmojiCarousalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC933DC24A44E0300BC2A75 /* EmojiCarousalView.swift */; };
 		BFC933DF24A44E2300BC2A75 /* EmojiCarousalView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFC933DE24A44E2300BC2A75 /* EmojiCarousalView.xib */; };
 		BFC933E224A453B400BC2A75 /* EmojiCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC933E024A453B400BC2A75 /* EmojiCollectionCell.swift */; };
@@ -2732,6 +2733,8 @@
 		BF943E9A23554181001C18E0 /* PushNotificationControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationControl.swift; sourceTree = "<group>"; };
 		BF943E9D235541E1001C18E0 /* GlobalDNDNotificationControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalDNDNotificationControl.swift; sourceTree = "<group>"; };
 		BF943EA42355449A001C18E0 /* ChatNotificationControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatNotificationControl.swift; path = Chat/ChatNotificationControl.swift; sourceTree = "<group>"; };
+		BF99A3D224A994CB0035A183 /* ReactedContactTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactedContactTableCell.swift; sourceTree = "<group>"; };
+		BF99A3D324A994CB0035A183 /* ReactedContactTableCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReactedContactTableCell.xib; sourceTree = "<group>"; };
 		BF9D491A2459047800D7B7DC /* AddToChatAllowAccessCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToChatAllowAccessCollectionCell.swift; sourceTree = "<group>"; };
 		BF9D491B2459047800D7B7DC /* AddToChatAllowAccessCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddToChatAllowAccessCollectionCell.xib; sourceTree = "<group>"; };
 		BFA55256245F849F009FE3A6 /* AddToChatMenuPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToChatMenuPageViewController.swift; sourceTree = "<group>"; };
@@ -2780,7 +2783,6 @@
 		BFB464152435825A00FB90B9 /* ChatViewController+MessagesDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatViewController+MessagesDataSource.swift"; sourceTree = "<group>"; };
 		BFC1794F24491073004F35AB /* AudioRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorder.swift; sourceTree = "<group>"; };
 		BFC933D824A44C6300BC2A75 /* ReactedEmojisUsersListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactedEmojisUsersListViewController.swift; sourceTree = "<group>"; };
-		BFC933D924A44C6300BC2A75 /* ReactedEmojisUsersListViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReactedEmojisUsersListViewController.xib; sourceTree = "<group>"; };
 		BFC933DC24A44E0300BC2A75 /* EmojiCarousalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiCarousalView.swift; sourceTree = "<group>"; };
 		BFC933DE24A44E2300BC2A75 /* EmojiCarousalView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmojiCarousalView.xib; sourceTree = "<group>"; };
 		BFC933E024A453B400BC2A75 /* EmojiCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiCollectionCell.swift; sourceTree = "<group>"; };
@@ -5704,7 +5706,6 @@
 				BFC933E724A45D0000BC2A75 /* ReactedUsersTableViewController.xib */,
 				BFC933E424A45CD600BC2A75 /* ReactedUsersListPageViewController.swift */,
 				BFC933D824A44C6300BC2A75 /* ReactedEmojisUsersListViewController.swift */,
-				BFC933D924A44C6300BC2A75 /* ReactedEmojisUsersListViewController.xib */,
 			);
 			path = "Chat Messages";
 			sourceTree = "<group>";
@@ -5972,6 +5973,8 @@
 				BFC933E124A453B400BC2A75 /* EmojiCollectionCell.xib */,
 				BFC933DC24A44E0300BC2A75 /* EmojiCarousalView.swift */,
 				BFC933DE24A44E2300BC2A75 /* EmojiCarousalView.xib */,
+				BF99A3D224A994CB0035A183 /* ReactedContactTableCell.swift */,
+				BF99A3D324A994CB0035A183 /* ReactedContactTableCell.xib */,
 				BF7EBD29244E8D120015255F /* Chat Input Bar */,
 			);
 			path = Views;
@@ -6408,6 +6411,7 @@
 				BF1589262436A296007AF9EC /* MessageInputBar.xib in Resources */,
 				774FA65E2090BF9F0061DD85 /* MEGAMessageDialogView.xib in Resources */,
 				BFB463FC243456D900FB90B9 /* ChatViewIntroductionHeaderView.xib in Resources */,
+				BF99A3D524A994CB0035A183 /* ReactedContactTableCell.xib in Resources */,
 				5BE7BEE623745FC700BBD23F /* EmptyStateView.xib in Resources */,
 				8326F384229FC032009BA19A /* MEGALoadingMessagesHeaderView.xib in Resources */,
 				5B727393240D32F9005816AB /* altIconMinimal@2x.png in Resources */,
@@ -6417,7 +6421,6 @@
 				415226901A692ECC00EC7BB6 /* Contacts.storyboard in Resources */,
 				5B9F2010243332D200F22FBA /* ContactLinkQR.storyboard in Resources */,
 				BFAB113B23CEA5C300BCE72D /* PhotoGridViewController.xib in Resources */,
-				BFC933DB24A44C6300BC2A75 /* ReactedEmojisUsersListViewController.xib in Resources */,
 				415226961A692ECC00EC7BB6 /* Offline.storyboard in Resources */,
 				2FE5A2D524A992F70043D297 /* ReactionAddButtonCell.xib in Resources */,
 				A8F2629C1FA8F82F000B2768 /* hang_out.mp3 in Resources */,
@@ -7071,6 +7074,7 @@
 				E8CD19871A9266D600CB8B2A /* UnavailableLinkView.m in Sources */,
 				5B1AB4AF20E5407300FEDAF9 /* MEGAQuerySignupLinkRequestDelegate.m in Sources */,
 				83113495223900CB00647AB4 /* GradientView.m in Sources */,
+				BF99A3D424A994CB0035A183 /* ReactedContactTableCell.swift in Sources */,
 				E8D4B8911A69429200A3B2E2 /* ConfirmAccountViewController.m in Sources */,
 				835223AD20568BB200A47438 /* MEGAGetFolderInfoRequestDelegate.m in Sources */,
 				5B5737D61EFBE6410027ECCD /* MEGANode+MNZCategory.m in Sources */,
