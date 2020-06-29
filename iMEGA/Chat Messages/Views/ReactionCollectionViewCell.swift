@@ -14,7 +14,6 @@ class ReactionCollectionViewCell: UICollectionViewCell {
         setNeedsLayout()
         layoutIfNeeded()
         
-       
         let size = self.contentView.systemLayoutSizeFitting(layoutAttributes.size)
         var cellFrame = layoutAttributes.frame
         cellFrame.size = size
