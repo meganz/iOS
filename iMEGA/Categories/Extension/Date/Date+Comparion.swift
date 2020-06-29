@@ -13,8 +13,10 @@ extension Date {
     ///   - calendar: A calendar object on which the calendar days to be based on.
     /// - Returns:
     func dayDistance(toFutureDate futureDate: Date, on calendar: Calendar) -> NumberOfDays? {
-        assert(futureDate >= self)
-        guard futureDate >= self else { return nil }
+        guard futureDate >= self else {
+            assertionFailure("\(futureDate) should be later than now - \(Date()) ")
+            return nil
+        }
         return calendar.dateComponents([.day], from: self, to: futureDate).day
     }
 
@@ -27,7 +29,10 @@ extension Date {
     ///   - calendar: A calendar object on which the calendar days to be based on.
     /// - Returns:
     func dayDistance(toPastDate pastDate: Date, on calendar: Calendar) -> NumberOfDays? {
-        guard pastDate <= self else { return nil }
+        guard pastDate <= self else {
+            assertionFailure("\(pastDate) should be earlier than now - \(Date()) ")
+            return nil
+        }
         return calendar.dateComponents([.day], from: self, to: pastDate).day.map(abs)
     }
 }
