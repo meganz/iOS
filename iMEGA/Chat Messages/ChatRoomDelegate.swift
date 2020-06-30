@@ -42,6 +42,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
 
     func onReactionUpdate(_ api: MEGAChatSdk!, messageId: UInt64, reaction: String!, count: Int) {
         print(reaction)
+        chatViewController?.messagesCollectionView.reloadData()
     }
     
     func onChatRoomUpdate(_ api: MEGAChatSdk!, chat: MEGAChatRoom!) {

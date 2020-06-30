@@ -3,6 +3,8 @@ import UIKit
 class ReactionCollectionViewCell: UICollectionViewCell {
 
     @IBOutlet weak var reactionButton: UIButton!
+    var count: Int?
+    var emoji: String?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -10,6 +12,13 @@ class ReactionCollectionViewCell: UICollectionViewCell {
         // Initialization code
     }
 
+    func configureCell(_ emoji: String,_ count: Int) {
+        self.emoji = emoji
+        self.count = count
+        
+        reactionButton.setTitle("\(emoji) \(count)", for: .normal)
+    }
+    
     override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
         setNeedsLayout()
         layoutIfNeeded()
