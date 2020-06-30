@@ -21,8 +21,8 @@
 @property (nonatomic) uint64_t totalNodes;
 
 @property (nonatomic) CSSearchableIndex *searchableIndex;
-@property (nonatomic) NSURL *thumbnailGeneric;
-@property (nonatomic) NSURL *thumbnailFolder;
+@property (nonatomic) UIImage *genericFileThumbnail;
+@property (nonatomic) UIImage *genericFolderThumbnail;
 
 @property (nonatomic) NSUserDefaults *sharedUserDefaults;
 
@@ -49,16 +49,8 @@
         _indexSerialQueue = dispatch_queue_create("nz.mega.spotlight.nodesIndexing", DISPATCH_QUEUE_SERIAL);
         _shouldStop = NO;
         _searchableIndex = [CSSearchableIndex defaultSearchableIndex];
-        if ([[UIScreen mainScreen] scale] == 1) {
-            _thumbnailGeneric = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"Spotlight_file" ofType:@"png"]];
-            _thumbnailFolder = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"Spotlight_folder" ofType:@"png"]];
-        } else if ([[UIScreen mainScreen] scale] == 2) {
-            _thumbnailGeneric = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"Spotlight_file@2x" ofType:@"png"]];
-            _thumbnailFolder = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"Spotlight_folder@2x" ofType:@"png"]];
-        } else if ([[UIScreen mainScreen] scale] == 3) {
-            _thumbnailGeneric = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"Spotlight_file@3x" ofType:@"png"]];
-            _thumbnailFolder = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"Spotlight_folder@3x" ofType:@"png"]];
-        }
+        _genericFileThumbnail = [UIImage imageNamed:@"Spotlight_file"];
+        _genericFolderThumbnail = [UIImage imageNamed:@"Spotlight_folder"];
         _sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];
         _pListPath = [[[[NSFileManager defaultManager] URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:nil] URLByAppendingPathComponent:@"spotlightTree.plist"] path];
         if ([_sharedUserDefaults boolForKey:@"treeCompleted"]) {
@@ -246,10 +238,10 @@
             [[MEGASdkManager sharedMEGASdk] getThumbnailNode:node destinationFilePath:thumbnailFilePath];
             attributeSet.thumbnailURL = [NSURL fileURLWithPath:thumbnailFilePath];
         } else {
-            if (node.isFile) {
-                attributeSet.thumbnailURL = self.thumbnailGeneric;
-            } else {
-                attributeSet.thumbnailURL = self.thumbnailFolder;
+            if (node.isFile && self.genericFileThumbnail) {
+                attributeSet.thumbnailData = UIImagePNGRepresentation(self.genericFileThumbnail);
+            } else if (self.genericFolderThumbnail) {
+                attributeSet.thumbnailData = UIImagePNGRepresentation(self.genericFolderThumbnail);
             }
         }
     }

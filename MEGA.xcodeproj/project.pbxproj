@@ -11,8 +11,7 @@
 		137361931A6664C300B740E8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 137361921A6664C300B740E8 /* AppDelegate.m */; };
 		1373619E1A6664C300B740E8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1373619D1A6664C300B740E8 /* Images.xcassets */; };
 		2F0CB57123DFD209009F09A2 /* DocScannerSaveSettingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0CB56F23DFD209009F09A2 /* DocScannerSaveSettingTableViewController.swift */; };
-		2F20C5E9240F434A00A1544C /* MEGAIndexer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9419B6BF1F20D1D700FEBE31 /* MEGAIndexer.m */; };
-		2F20C5EA240F434B00A1544C /* MEGAIndexer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9419B6BF1F20D1D700FEBE31 /* MEGAIndexer.m */; };
+		2F25A2D9240C8407005EF524 /* MEGAFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B695E57F23275A4E00D12B9E /* MEGAFunctions.swift */; };
 		2F25A2DA240C840A005EF524 /* MEGAFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B695E57F23275A4E00D12B9E /* MEGAFunctions.swift */; };
 		2F25A2DC240C92C0005EF524 /* StorageFullModalAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5EC89E24075BA30017F334 /* StorageFullModalAlertViewController.swift */; };
 		2F25A2DD240C92C1005EF524 /* StorageFullModalAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5EC89E24075BA30017F334 /* StorageFullModalAlertViewController.swift */; };
@@ -328,18 +327,6 @@
 		774FA6612090C0030061DD85 /* MEGAMessageDialogView.m in Sources */ = {isa = PBXBuildFile; fileRef = 774FA6602090C0030061DD85 /* MEGAMessageDialogView.m */; };
 		774FA6642090F5A20061DD85 /* MEGADialogMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 774FA6632090F5A20061DD85 /* MEGADialogMediaItem.m */; };
 		77519C36203707F600FDF92B /* MEGARenameRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 77519C35203707F600FDF92B /* MEGARenameRequestDelegate.m */; };
-		7751B1D5249C9F9200203D05 /* Spotlight_file.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BF21F3470B5003C149C /* Spotlight_file.png */; };
-		7751B1D6249C9F9200203D05 /* Spotlight_folder.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BF31F3470B5003C149C /* Spotlight_folder.png */; };
-		7751B1D7249C9F9200203D05 /* Spotlight_file@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BC41F3465A3003C149C /* Spotlight_file@2x.png */; };
-		7751B1D8249C9F9200203D05 /* Spotlight_file@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BC51F3465A3003C149C /* Spotlight_file@3x.png */; };
-		7751B1D9249C9F9200203D05 /* Spotlight_folder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BC61F3465A3003C149C /* Spotlight_folder@2x.png */; };
-		7751B1DA249C9F9200203D05 /* Spotlight_folder@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BC71F3465A3003C149C /* Spotlight_folder@3x.png */; };
-		7751B1DB249C9FA400203D05 /* Spotlight_file.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BF21F3470B5003C149C /* Spotlight_file.png */; };
-		7751B1DC249C9FA400203D05 /* Spotlight_folder.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BF31F3470B5003C149C /* Spotlight_folder.png */; };
-		7751B1DD249C9FA400203D05 /* Spotlight_file@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BC41F3465A3003C149C /* Spotlight_file@2x.png */; };
-		7751B1DE249C9FA400203D05 /* Spotlight_file@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BC51F3465A3003C149C /* Spotlight_file@3x.png */; };
-		7751B1DF249C9FA400203D05 /* Spotlight_folder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BC61F3465A3003C149C /* Spotlight_folder@2x.png */; };
-		7751B1E0249C9FA400203D05 /* Spotlight_folder@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BC71F3465A3003C149C /* Spotlight_folder@3x.png */; };
 		7754ED9920B47A2400FF8B7B /* MEGALoginToFolderLinkRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7754ED9820B47A2400FF8B7B /* MEGALoginToFolderLinkRequestDelegate.m */; };
 		7754ED9C20B47F1000FF8B7B /* MEGAFetchNodesRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7754ED9B20B47F1000FF8B7B /* MEGAFetchNodesRequestDelegate.m */; };
 		775652D7203AD2FC009E7EC8 /* ContactLinkQRViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775652D6203AD2FC009E7EC8 /* ContactLinkQRViewController.m */; };
@@ -791,12 +778,6 @@
 		A82A38D6200D332400883533 /* libmediainfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A82A38D4200D32EC00883533 /* libmediainfo.a */; };
 		A82A38D7200D333100883533 /* libmediainfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A82A38D4200D32EC00883533 /* libmediainfo.a */; };
 		A82A38D8200D343E00883533 /* libmediainfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A82A38D4200D32EC00883533 /* libmediainfo.a */; };
-		A82E5BC81F3465A3003C149C /* Spotlight_file@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BC41F3465A3003C149C /* Spotlight_file@2x.png */; };
-		A82E5BC91F3465A3003C149C /* Spotlight_file@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BC51F3465A3003C149C /* Spotlight_file@3x.png */; };
-		A82E5BCA1F3465A3003C149C /* Spotlight_folder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BC61F3465A3003C149C /* Spotlight_folder@2x.png */; };
-		A82E5BCB1F3465A3003C149C /* Spotlight_folder@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BC71F3465A3003C149C /* Spotlight_folder@3x.png */; };
-		A82E5BF41F3470B5003C149C /* Spotlight_file.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BF21F3470B5003C149C /* Spotlight_file.png */; };
-		A82E5BF51F3470B5003C149C /* Spotlight_folder.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BF31F3470B5003C149C /* Spotlight_folder.png */; };
 		A82F8A3921C3E34F0045AF1D /* UIApplication+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = A815FCE91FE2AD080075AC29 /* UIApplication+MNZCategory.m */; };
 		A836581B21020FB9005E616F /* ItemListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 835223B32059588300A47438 /* ItemListViewController.m */; };
 		A836581C2102101C005E616F /* Contacts.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 415226731A692ECC00EC7BB6 /* Contacts.storyboard */; };
@@ -2012,12 +1993,6 @@
 		A8278D7E200E72A00040B076 /* incoming_voice_video_call_iOS9.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = incoming_voice_video_call_iOS9.mp3; sourceTree = "<group>"; };
 		A82A38CF200D32BC00883533 /* libzen.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libzen.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libzen.a; sourceTree = "<group>"; };
 		A82A38D4200D32EC00883533 /* libmediainfo.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libmediainfo.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libmediainfo.a; sourceTree = "<group>"; };
-		A82E5BC41F3465A3003C149C /* Spotlight_file@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Spotlight_file@2x.png"; path = "Spotlight/Spotlight_file@2x.png"; sourceTree = "<group>"; };
-		A82E5BC51F3465A3003C149C /* Spotlight_file@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Spotlight_file@3x.png"; path = "Spotlight/Spotlight_file@3x.png"; sourceTree = "<group>"; };
-		A82E5BC61F3465A3003C149C /* Spotlight_folder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Spotlight_folder@2x.png"; path = "Spotlight/Spotlight_folder@2x.png"; sourceTree = "<group>"; };
-		A82E5BC71F3465A3003C149C /* Spotlight_folder@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Spotlight_folder@3x.png"; path = "Spotlight/Spotlight_folder@3x.png"; sourceTree = "<group>"; };
-		A82E5BF21F3470B5003C149C /* Spotlight_file.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Spotlight_file.png; path = Spotlight/Spotlight_file.png; sourceTree = "<group>"; };
-		A82E5BF31F3470B5003C149C /* Spotlight_folder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Spotlight_folder.png; path = Spotlight/Spotlight_folder.png; sourceTree = "<group>"; };
 		A83892411EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MEGAChatMessage+MNZCategory.h"; sourceTree = "<group>"; };
 		A83892421EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MEGAChatMessage+MNZCategory.m"; sourceTree = "<group>"; };
 		A841E63A20CAB460005E1D1B /* MEGAMessageCallManagementView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAMessageCallManagementView.h; sourceTree = "<group>"; };
@@ -4387,12 +4362,6 @@
 		9419B6BD1F20D18300FEBE31 /* Spotlight */ = {
 			isa = PBXGroup;
 			children = (
-				A82E5BF21F3470B5003C149C /* Spotlight_file.png */,
-				A82E5BF31F3470B5003C149C /* Spotlight_folder.png */,
-				A82E5BC41F3465A3003C149C /* Spotlight_file@2x.png */,
-				A82E5BC51F3465A3003C149C /* Spotlight_file@3x.png */,
-				A82E5BC61F3465A3003C149C /* Spotlight_folder@2x.png */,
-				A82E5BC71F3465A3003C149C /* Spotlight_folder@3x.png */,
 				9419B6BE1F20D1D700FEBE31 /* MEGAIndexer.h */,
 				9419B6BF1F20D1D700FEBE31 /* MEGAIndexer.m */,
 			);
@@ -5868,8 +5837,6 @@
 				83D7265B23169067007B2E58 /* GenericHeaderFooterView.xib in Resources */,
 				5B1F74D52126E30C00F09A16 /* AwaitingEmailConfirmationView.xib in Resources */,
 				2F3083BC2428169F0058DF91 /* Chat.storyboard in Resources */,
-				A82E5BF51F3470B5003C149C /* Spotlight_folder.png in Resources */,
-				A82E5BCA1F3465A3003C149C /* Spotlight_folder@2x.png in Resources */,
 				774FA65E2090BF9F0061DD85 /* MEGAMessageDialogView.xib in Resources */,
 				5BE7BEE623745FC700BBD23F /* EmptyStateView.xib in Resources */,
 				8326F384229FC032009BA19A /* MEGALoadingMessagesHeaderView.xib in Resources */,
@@ -5885,7 +5852,6 @@
 				A8F2629A1FA8F7C3000B2768 /* incoming_voice_video_call.mp3 in Resources */,
 				BFAB115223CEA5C300BCE72D /* AlbumTableViewCell.xib in Resources */,
 				E8D36F791AD677C6006D4D40 /* Transfers.storyboard in Resources */,
-				A82E5BF41F3470B5003C149C /* Spotlight_file.png in Resources */,
 				777615B12175D88C00A7796D /* InputView.xib in Resources */,
 				5B727399240D3465005816AB /* altIconMinimal@3x.png in Resources */,
 				5B86D7C5248957E100B7888D /* ContactsTableViewHeader.xib in Resources */,
@@ -5932,9 +5898,7 @@
 				5BB8A853243DF42D009FE957 /* Usage.storyboard in Resources */,
 				83D64E2D20178A0400E24155 /* PasswordReminder.storyboard in Resources */,
 				83C570E722E5BFCF00216896 /* README.md in Resources */,
-				A82E5BC81F3465A3003C149C /* Spotlight_file@2x.png in Resources */,
 				5B8D209B246A98F8009BD3E9 /* ChangeCredentials.storyboard in Resources */,
-				A82E5BCB1F3465A3003C149C /* Spotlight_folder@3x.png in Resources */,
 				E8C289FF1BF65BAB00F7A034 /* Launch.storyboard in Resources */,
 				5B59B4CF236726D100A57229 /* DocumentPreviewer.storyboard in Resources */,
 				83C570E522E5BFCF00216896 /* PhoneNumberMetadata.xml in Resources */,
@@ -5944,7 +5908,6 @@
 				A8C93C1422D71C470030CE1B /* Profile.storyboard in Resources */,
 				E889C9E61B5565C900ECEFDF /* MyAccount.storyboard in Resources */,
 				A8DE32CC22FC14CC006BAC7A /* BusinessExpiredViewController.xib in Resources */,
-				A82E5BC91F3465A3003C149C /* Spotlight_file@3x.png in Resources */,
 				A819B3421EAFA844004592F9 /* CustomModalAlertViewController.xib in Resources */,
 				A85665BD21A468D400B010F8 /* MEGAMessageGeoLocationView.xib in Resources */,
 				E8D5BF661BF35A4B00955550 /* SharedItems.storyboard in Resources */,
@@ -5981,17 +5944,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				945605411EDD65490094EF0F /* Cloud.storyboard in Resources */,
-				7751B1DF249C9FA400203D05 /* Spotlight_folder@2x.png in Resources */,
-				7751B1DE249C9FA400203D05 /* Spotlight_file@3x.png in Resources */,
 				944B205F1EE5C6CE003C967B /* Launch.storyboard in Resources */,
 				7751B1DB249C9FA400203D05 /* Spotlight_file.png in Resources */,
 				9422550C1EDC04E00074C51A /* MainInterface.storyboard in Resources */,
-				7751B1DC249C9FA400203D05 /* Spotlight_folder.png in Resources */,
-				7751B1DD249C9FA400203D05 /* Spotlight_file@2x.png in Resources */,
-				7751B1DB249C9FA400203D05 /* Spotlight_file.png in Resources */,
-				7751B1DC249C9FA400203D05 /* Spotlight_folder.png in Resources */,
-				7751B1DD249C9FA400203D05 /* Spotlight_file@2x.png in Resources */,
-				7751B1E0249C9FA400203D05 /* Spotlight_folder@3x.png in Resources */,
 				943229351EDD886B007DB542 /* Images.xcassets in Resources */,
 				9456054C1EDD7ADB0094EF0F /* LTHPasscodeViewController.bundle in Resources */,
 				9456053C1EDD53240094EF0F /* SVProgressHUD.bundle in Resources */,
@@ -6011,23 +5966,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7751B1D8249C9F9200203D05 /* Spotlight_file@3x.png in Resources */,
-				7751B1D9249C9F9200203D05 /* Spotlight_folder@2x.png in Resources */,
 				7767C39F247BB723001166A8 /* Chat.storyboard in Resources */,
 				9411354F1F00FD1500D33428 /* Cloud.storyboard in Resources */,
 				943F8B3D1EF2888000AFD89F /* Launch.storyboard in Resources */,
 				7751B1D7249C9F9200203D05 /* Spotlight_file@2x.png in Resources */,
 				5B95DD94237C35610068DF97 /* EmptyStateView.xib in Resources */,
-				7751B1D7249C9F9200203D05 /* Spotlight_file@2x.png in Resources */,
-				7751B1D6249C9F9200203D05 /* Spotlight_folder.png in Resources */,
 				941135651F011C8400D33428 /* Localizable.strings in Resources */,
 				A836581C2102101C005E616F /* Contacts.storyboard in Resources */,
 				94598D751F0CD53A00B57144 /* Share.storyboard in Resources */,
 				5BCD27F024A62AAC00A6E25E /* GenericHeaderFooterView.xib in Resources */,
-				7751B1D5249C9F9200203D05 /* Spotlight_file.png in Resources */,
 				943F8B3E1EF288BF00AFD89F /* Images.xcassets in Resources */,
 				9411355B1F01006E00D33428 /* LTHPasscodeViewController.bundle in Resources */,
-				7751B1DA249C9F9200203D05 /* Spotlight_folder@3x.png in Resources */,
 				94892C971EFBF03500AEAC25 /* SVProgressHUD.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -6712,7 +6661,6 @@
 				83FF5030247E86F600EAC08B /* CustomModalAlertViewController.m in Sources */,
 				83B841682051913C00E5AC69 /* MEGAGetThumbnailRequestDelegate.m in Sources */,
 				5BE689BB2419189600462134 /* AppearancePreference+CoreDataClass.swift in Sources */,
-				2F20C5E9240F434A00A1544C /* MEGAIndexer.m in Sources */,
 				2F25A2DC240C92C0005EF524 /* StorageFullModalAlertViewController.swift in Sources */,
 				5BFA34701FAC5857005BFC4E /* MEGAMoveRequestDelegate.m in Sources */,
 				9432294B1EDD9CE5007DB542 /* MEGAUser+MNZCategory.m in Sources */,
@@ -6876,7 +6824,6 @@
 				77F95CEF20E3B14D00F42D9C /* ShareFilesDestinationTableViewController.m in Sources */,
 				94892C931EFBEA4100AEAC25 /* MEGALogger.m in Sources */,
 				94892CA01EFBF16A00AEAC25 /* UIColor+MNZCategory.m in Sources */,
-				2F20C5EA240F434B00A1544C /* MEGAIndexer.m in Sources */,
 				94C9D7561FBDC87B008BA1B5 /* MEGANodeList+MNZCategory.m in Sources */,
 				7794AEA9231674750039C1D2 /* MEGASdk+MNZCategory.m in Sources */,
 				83B906BF249A29EF0088F15C /* UIActivityIndicatorView+Additions.swift in Sources */,
