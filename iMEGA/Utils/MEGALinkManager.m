@@ -712,6 +712,7 @@ static NSString *nodeToPresentBase64Handle;
         }
     }
     
+    [MEGASdkManager.sharedMEGAChatSdk connect];
     [[MEGASdkManager sharedMEGAChatSdk] openChatPreview:chatLinkUrl delegate:delegate];
 }
 

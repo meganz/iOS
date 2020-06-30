@@ -509,9 +509,9 @@
 /* Label for any ‘Requests’ button, link, text, title, etc. On iOS is used to go to the Contact request section from Contacts */
 "Requests"="Request";
 /* Label for any ‘Groups’ button, link, text, title, etc. On iOS is used to go to the chats 'Groups' section from Contacts */
-"Groups"="Groups";
+"Groups"="Grup";
 /* Label for any ‘Recently Added’ button, link, text, title, etc. On iOS is used on a section that shows the 'Recently Added' contacts */
-"Recently Added"="Recently Added";
+"Recently Added"="Baru-baru ini ditambahkan";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
 "oneFolderShared"="1 folder";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
@@ -1657,7 +1657,7 @@
 /* Title of the Spotlight Search section */
 "Search"="Cari";
 /* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
-"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="When enabled, allow search and look up MEGA files/folders in Spotlight Search.";
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="Will allow searching of MEGA files/folders in your device's Spotlight Search";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="Anda memegang kunci";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -2069,27 +2069,15 @@
 /* Chat Notifications DND: Title bar message for the dnd activate options */
 "Mute chat Notifications for"="Matikan pemberitahuan obrolan untuk";
 /* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
-"Muted forever"="Diam selamanya";
-/* Chat Notifications DND: Remaining time left to deactivate DND - 1 minute left */
-"1 minute left"="1 menit tersisa";
-/* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 minute left */
-"%d minutes left"="%d menit tersisa";
-/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour left */
-"1 hour left"="1 jam tersisa";
-/* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 hour left */
-"%d hours left"="%d jam tersisa";
+"Notifications will be silenced until Do Not Disturb is turned off"="Notifications will be silenced until Do Not Disturb is turned off";
+/* Chat Notifications DND: Remaining time left if until tomorrow */
+"Notifications will be silenced until tomorrow at %@"="Notifications will be silenced until tomorrow at %@";
+/* Chat Notifications DND: Remaining time left if until today */
+"Notifications will be silenced until %@"="Notifications will be silenced until %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="Notifikasi Chat";
 /* Chat settings: This text appears with the Do Not Disturb switch */
 "Do Not Disturb"="Jangan ganggu";
-/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, 1 minute left */
-"1 hour, 1 minute left"="1 jam, 1 menit tersisa";
-/* Chat Notifications DND: Remaining time left to deactivate DND - X hours, X minutes left */
-"%d hours, %d minutes left"="%d jam, %d menit tersisa";
-/* Chat Notifications DND: Remaining time left to deactivate DND - X hours, 1 minute left */
-"%d hours, 1 minute left"="%d jam, 1 menit tersisa";
-/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, X minutes left */
-"1 hour, %d minutes left"="1 jam, %d menit tersisa";
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
 "Reconnecting..."="Menghubungkan kembali ...";
 /* Title shown when the user reconnect in a call. */
@@ -2120,6 +2108,8 @@
 "Send (%d)"="Kirim (%d)";
 /* Used in Photos app browser view to upload the photos from the view to the cloud. */
 "Upload (%d)"="Unggah (%d)";
+/* Used in Photos app browser album listing screen. */
+"Albums"="Albums";
 /* Used in Photos app browser carousel view to unselect a selected photo. */
 "Unselect"="Batalkan pilihan";
 /* Used in Photos app browser. Shown when there are no photos or videos in the Photos app. */
@@ -2136,6 +2126,8 @@
 "Please enter a valid phone number"="Harap berikan nomor telfon yang valid.";
 /* Error message that will show to user when user reached the sms verification daily limit */
 "You have reached the daily limit"="Anda telah mencapai batas harian";
+/* Error message that will be shown when the code introduced do not match with the one you received */
+"The verification code doesn't match."="Kode verifikasi tidak cocok.";
 /* Error message that will show to user when user entered invalid verification code */
 "Wrong code. Please try again or resend."="Salah kode. Silakan coba lagi atau kirim ulang.";
 /* Error message that will show to user when host detected that the mobile number has been registered already */
@@ -2178,7 +2170,7 @@
 "Select Folder"="Pilih Folder";
 /* Title of the folder selection screen for camera uploads */
 "Choose Folder"="Pilih Folder";
-/* Label used near to the option selected to encode the images uploaded to a chat (Low, Medium, Original) */
+/* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
 "Image quality"="Kualitas gambar";
 /* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
 "Automatic"="Otomatis";
@@ -2203,27 +2195,27 @@
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="Masukan nama grup";
 /* Title of one of the Settings sections where you can customise the 'Appearance' of the app. */
-"Appearance"="Appearance";
+"Appearance"="Penampilan";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
-"Sorting And View Mode"="Sorting And View Mode";
+"Sorting And View Mode"="Mode Penyortiran Dan Tampilan";
 /* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
 "Default"="Default";
 /* Label for any ‘Day’ button, link, text, title, etc. - (String as short as possible). */
 "Day"="Hari";
 /* Label for any ‘Night’ button, link, text, title, etc. - (String as short as possible). */
-"Night"="Night";
+"Night"="Malam";
 /* Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible). */
 "Minimal"="Minimal";
 /* Section title inside of Settings - Appearance, where you can change the app's layout. */
-"Layout"="Layout";
+"Layout"="Tata letak";
 /* Section title inside of Settings - Appearance, where you can change the app's icon. */
-"App Icon"="App Icon";
+"App Icon"="Ikon Aplikasi";
 /* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
-"Configure sorting order and the default view (List or Thumbnail)."="Configure sorting order and the default view (List or Thumbnail).";
+"Configure sorting order and the default view (List or Thumbnail)."="Konfigurasikan urutan pengurutan dan tampilan default (Daftar atau Gambar Kecil).";
 /* Per folder configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for All'. */
 "Per Folder"="Per Folder";
 /* Same for all configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for all Folders'. */
-"Same for All"="Same for All";
+"Same for All"="Sama untuk Semua";
 /* Section title of the 'Sorting And View Mode' view inside of Settings - Appearence - Sorting And View Mode. */
 "Sorting preference"="Preferensi sorting";
 /* Section title of the 'Sorting And View Mode' view inside of Settings - Appearence - Sorting And View Mode. */
@@ -2231,7 +2223,7 @@
 /* Footer text explaining what means choosing a sorting preference 'Per Folder' or 'Same for All' in Settings - Appearance - Sorting And View Mode. */
 "Configure column sorting order on a per-folder basis, or use the same order for all folders."="Konfigurasi urutan sorting column berbeda untuk setiap folder, atau gunakan urutan yang sama untuk semua folder.";
 /* Footer text explaining what means choosing a view mode preference 'Per Folder', 'List view' or 'Thumbnail view' in Settings - Appearance - Sorting And View Mode. */
-"Select view mode (List or Thumbnail) on a per-folder basis, or use the same view mode for all folders."="Select view mode (List or Thumbnail) on a per-folder basis, or use the same view mode for all folders.";
+"Select view mode (List or Thumbnail) on a per-folder basis, or use the same view mode for all folders."="Pilih mode tampilan (Daftar atau Gambar Kecil) berdasarkan per-folder, atau gunakan mode tampilan yang sama untuk semua folder.";
 /* Warning message to alert user about logout in My Account section if has transfers in progress. */
 "When you logout, ongoing transfers will be cancelled."="Saat Anda keluar, transfer yang sedang berlangsung akan dibatalkan.";
 /* Warning message to alert user about logout in My Account section if has offline files. */
@@ -2241,8 +2233,10 @@
 /* Default title of an empty chat. */
 "Chat created on %s1"="Chat dibuat pada %s1";
 /* Title shown when there are no shared files */
-"No Shared Files"="No Shared Files";
+"No Shared Files"="Tidak Ada File Bersama";
 /* Error message shown when opening a folder link which doesn’t exist */
 "Folder link unavailable"="Link / Tautan tidak tersedia";
 /* Error message shown when opening a file link which doesn’t exist */
 "File link unavailable"="Link file tidak tersedia";
+/* Header of block with all shared files in chat. */
+"Shared Files"="Shared Files";

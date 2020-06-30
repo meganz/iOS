@@ -1657,7 +1657,7 @@
 /* Title of the Spotlight Search section */
 "Search"="Tìm kiếm";
 /* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
-"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="When enabled, allow search and look up MEGA files/folders in Spotlight Search.";
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="Will allow searching of MEGA files/folders in your device's Spotlight Search";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="Chính bạn là người giữ chìa khóa";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -2069,27 +2069,15 @@
 /* Chat Notifications DND: Title bar message for the dnd activate options */
 "Mute chat Notifications for"="Mute chat notifications for";
 /* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
-"Muted forever"="Muted forever";
-/* Chat Notifications DND: Remaining time left to deactivate DND - 1 minute left */
-"1 minute left"="1 minute left";
-/* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 minute left */
-"%d minutes left"="%d minutes left";
-/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour left */
-"1 hour left"="1 hour left";
-/* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 hour left */
-"%d hours left"="%d hours left";
+"Notifications will be silenced until Do Not Disturb is turned off"="Notifications will be silenced until Do Not Disturb is turned off";
+/* Chat Notifications DND: Remaining time left if until tomorrow */
+"Notifications will be silenced until tomorrow at %@"="Notifications will be silenced until tomorrow at %@";
+/* Chat Notifications DND: Remaining time left if until today */
+"Notifications will be silenced until %@"="Notifications will be silenced until %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="Âm báo chát";
 /* Chat settings: This text appears with the Do Not Disturb switch */
 "Do Not Disturb"="Do Not Disturb";
-/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, 1 minute left */
-"1 hour, 1 minute left"="1 hour, 1 minute left";
-/* Chat Notifications DND: Remaining time left to deactivate DND - X hours, X minutes left */
-"%d hours, %d minutes left"="%d hours, %d minutes left";
-/* Chat Notifications DND: Remaining time left to deactivate DND - X hours, 1 minute left */
-"%d hours, 1 minute left"="%d hours, 1 minute left";
-/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, X minutes left */
-"1 hour, %d minutes left"="1 hour, %d minutes left";
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
 "Reconnecting..."="Reconnecting…";
 /* Title shown when the user reconnect in a call. */
@@ -2120,6 +2108,8 @@
 "Send (%d)"="Send (%d)";
 /* Used in Photos app browser view to upload the photos from the view to the cloud. */
 "Upload (%d)"="Upload (%d)";
+/* Used in Photos app browser album listing screen. */
+"Albums"="Albums";
 /* Used in Photos app browser carousel view to unselect a selected photo. */
 "Unselect"="Unselect";
 /* Used in Photos app browser. Shown when there are no photos or videos in the Photos app. */
@@ -2136,6 +2126,8 @@
 "Please enter a valid phone number"="Xin nhập một số điện thoại hợp lệ.";
 /* Error message that will show to user when user reached the sms verification daily limit */
 "You have reached the daily limit"="You have reached the daily limit";
+/* Error message that will be shown when the code introduced do not match with the one you received */
+"The verification code doesn't match."="The verification code doesn’t match.";
 /* Error message that will show to user when user entered invalid verification code */
 "Wrong code. Please try again or resend."="Wrong code. Please try again or resend.";
 /* Error message that will show to user when host detected that the mobile number has been registered already */
@@ -2178,7 +2170,7 @@
 "Select Folder"="Select Folder";
 /* Title of the folder selection screen for camera uploads */
 "Choose Folder"="Chọn Thư Mục";
-/* Label used near to the option selected to encode the images uploaded to a chat (Low, Medium, Original) */
+/* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
 "Image quality"="Image quality";
 /* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
 "Automatic"="Tự động";
@@ -2246,3 +2238,5 @@
 "Folder link unavailable"="Liên kết thư mục bất khả dụng";
 /* Error message shown when opening a file link which doesn’t exist */
 "File link unavailable"="Đường liên kết này không còn tồn tại";
+/* Header of block with all shared files in chat. */
+"Shared Files"="Tệp Tin Đã Chia Sẻ";
