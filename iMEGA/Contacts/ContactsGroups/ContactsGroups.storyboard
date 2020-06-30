@@ -102,7 +102,6 @@
                                                             </userDefinedRuntimeAttributes>
                                                         </imageView>
                                                     </subviews>
-                                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="40" id="COh-3o-HfH"/>
                                                         <constraint firstItem="zGU-ZX-CFx" firstAttribute="top" secondItem="Ah1-KH-R5R" secondAttribute="top" id="H7u-EX-bOJ"/>

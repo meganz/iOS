@@ -76,6 +76,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     self.firstNameInputView.inputTextField.returnKeyType = UIReturnKeyNext;
     self.firstNameInputView.inputTextField.delegate = self;
     self.firstNameInputView.inputTextField.tag = FirstNameTextFieldTag;
+    self.firstNameInputView.bottomSeparatorView.hidden = YES;
     
     self.lastNameInputView.inputTextField.returnKeyType = UIReturnKeyNext;
     self.lastNameInputView.inputTextField.delegate = self;
@@ -97,6 +98,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     self.passwordView.passwordTextField.returnKeyType = UIReturnKeyNext;
     self.passwordView.passwordTextField.delegate = self;
     self.passwordView.passwordTextField.tag = PasswordTextFieldTag;
+    self.passwordView.bottomSeparatorView.hidden = YES;
     
     self.retypePasswordView.passwordTextField.delegate = self;
     self.retypePasswordView.passwordTextField.tag = RetypeTextFieldTag;
