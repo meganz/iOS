@@ -1,14 +1,31 @@
 #import "RecentsTableViewHeaderFooterView.h"
 
+#import "MEGA-Swift.h"
+
 @implementation RecentsTableViewHeaderFooterView 
 
 - (void)awakeFromNib {
     [super awakeFromNib];
 
-    self.backgroundColor = UIColor.whiteColor;
+    [self setup];
     
-    self.bottomSeparatorView.layer.borderColor = UIColor.mnz_grayCCCCCC.CGColor;
     self.bottomSeparatorView.layer.borderWidth = 0.5;
+}
+
+- (void)prepareForReuse {
+    [super prepareForReuse];
+
+    [self setup];
+}
+
+#pragma mark - Private
+
+- (void)setup {
+    self.contentView.backgroundColor = [UIColor mnz_secondaryBackgroundGrouped:self.traitCollection];
+    
+    self.dateLabel.textColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
+    
+    self.bottomSeparatorView.layer.borderColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection].CGColor;
 }
 
 @end

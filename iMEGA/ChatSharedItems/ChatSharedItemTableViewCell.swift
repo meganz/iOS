@@ -36,7 +36,9 @@ class ChatSharedItemTableViewCell: UITableViewCell {
                 self?.ownerNameLabel.text = request.text
             }))
         }
+        ownerNameLabel.textColor = .mnz_subtitles(for: traitCollection)
         infoLabel.text = Helper.sizeAndModicationDate(for: node, api: MEGASdkManager.sharedMEGASdk())
+        infoLabel.textColor = .mnz_subtitles(for: traitCollection)
         if node.hasThumbnail() {
             let thumbnailFilePath = Helper.path(for: node, inSharedSandboxCacheDirectory: "thumbnailsV3")
             if FileManager.default.fileExists(atPath: thumbnailFilePath) {

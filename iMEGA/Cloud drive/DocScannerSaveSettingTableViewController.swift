@@ -56,7 +56,24 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
         super.viewWillAppear(animated)
         navigationController?.setToolbarHidden(true, animated: true)
     }
-
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        if #available(iOS 13.0, *) {
+            if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+                updateAppearance()
+                
+                tableView.reloadData()
+            }
+        }
+    }
+    
+    // MARK: - Private
+        
+    private func updateAppearance() {
+        tableView.backgroundColor = .mnz_backgroundGrouped(for: traitCollection)
+        tableView.separatorColor = .mnz_separator(for: traitCollection)
+    }
+    
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -79,23 +96,20 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell = UITableViewCell()
         if indexPath.section == 0 {
-            if let filenameCell = tableView.dequeueReusableCell(withIdentifier: DocScannerFileNameTableCell.reuseIdentifier,
-                                                                for: indexPath) as? DocScannerFileNameTableCell {
+            if let filenameCell = tableView.dequeueReusableCell(withIdentifier: DocScannerFileNameTableCell.reuseIdentifier, for: indexPath) as? DocScannerFileNameTableCell {
                 let fileType = UserDefaults.standard.string(forKey: keys.docScanExportFileTypeKey)
                 filenameCell.delegate = self
                 filenameCell.configure(filename: fileName, fileType: fileType)
                 cell = filenameCell
             }
         } else if indexPath.section == 1 {
-            if let detailCell = tableView.dequeueReusableCell(withIdentifier: DocScannerDetailTableCell.reuseIdentifier,
-                                                              for: indexPath) as? DocScannerDetailTableCell,
+            if let detailCell = tableView.dequeueReusableCell(withIdentifier: DocScannerDetailTableCell.reuseIdentifier, for: indexPath) as? DocScannerDetailTableCell,
                 let cellType = DocScannerDetailTableCell.CellType(rawValue: indexPath.row) {
                 detailCell.cellType = cellType
                 cell = detailCell
             }
         } else {
-            if let actionCell = tableView.dequeueReusableCell(withIdentifier: DocScannerActionTableViewCell.reuseIdentifier,
-                                                              for: indexPath) as?  DocScannerActionTableViewCell,
+            if let actionCell = tableView.dequeueReusableCell(withIdentifier: DocScannerActionTableViewCell.reuseIdentifier, for: indexPath) as?  DocScannerActionTableViewCell,
                 let cellType = DocScannerActionTableViewCell.CellType(rawValue: indexPath.row) {
                 actionCell.cellType = cellType
                 cell = actionCell
@@ -141,14 +155,12 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
                     UserDefaults.standard.set(DocScanExportFileType.pdf.rawValue, forKey: keys.docScanExportFileTypeKey)
                     tableView.reloadData()
                 })
-                PDFAlertAction.mnz_setTitleTextColor(UIColor.mnz_black333333())
                 alert.addAction(PDFAlertAction)
                 
                 let JPGAlertAction = UIAlertAction(title: "JPG", style: .default, handler: { _ in
                     UserDefaults.standard.set(DocScanExportFileType.jpg.rawValue, forKey: keys.docScanExportFileTypeKey)
                     tableView.reloadData()
                 })
-                JPGAlertAction.mnz_setTitleTextColor(UIColor.mnz_black333333())
                 alert.addAction(JPGAlertAction)
                 
                 alert.addAction(UIAlertAction(title: AMLocalizedString("cancel"), style: .cancel, handler: nil))
@@ -166,21 +178,18 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
                     UserDefaults.standard.set(DocScanQuality.best.rawValue, forKey: keys.docScanQualityKey)
                     tableView.reloadRows(at: [indexPath], with: .none)
                 })
-                bestAlertAction.mnz_setTitleTextColor(UIColor.mnz_black333333())
                 alert.addAction(bestAlertAction)
                 
                 let mediumAlertAction = UIAlertAction(title: DocScanQuality.medium.description, style: .default, handler: { _ in
                     UserDefaults.standard.set(DocScanQuality.medium.rawValue, forKey: keys.docScanQualityKey)
                     tableView.reloadRows(at: [indexPath], with: .none)
                 })
-                mediumAlertAction.mnz_setTitleTextColor(UIColor.mnz_black333333())
                 alert.addAction(mediumAlertAction)
                 
                 let lowAlertAction = UIAlertAction(title:  DocScanQuality.low.description, style: .default, handler: { _ in
                     UserDefaults.standard.set(DocScanQuality.low.rawValue, forKey: keys.docScanQualityKey)
                     tableView.reloadRows(at: [indexPath], with: .none)
                 })
-                lowAlertAction.mnz_setTitleTextColor(UIColor.mnz_black333333())
                 alert.addAction(lowAlertAction)
                 
                 alert.addAction(UIAlertAction(title: AMLocalizedString("cancel"), style: .cancel, handler: nil))

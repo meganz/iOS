@@ -10,6 +10,7 @@
 #import "UIDevice+MNZCategory.h"
 #import "Helper.h"
 #import "MEGASdkManager.h"
+#import "MEGA-Swift.h"
 #import "UIImageView+MNZCategory.h"
 #import "MEGAStore.h"
 #import "MEGA-Swift.h"
@@ -69,13 +70,13 @@
         
         // Colors:
         if (self.message.userHandle == [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
-            contactView.backgroundColor = [UIColor mnz_green00BFA5];
+            contactView.backgroundColor = [UIColor mnz_chatOutgoingBubble:UIScreen.mainScreen.traitCollection];
             contactView.titleLabel.textColor = [UIColor whiteColor];
             contactView.detailLabel.textColor = [UIColor whiteColor];
         } else {
-            contactView.backgroundColor = [UIColor mnz_grayE2EAEA];
-            contactView.titleLabel.textColor = [UIColor mnz_black333333];
-            contactView.detailLabel.textColor = [UIColor mnz_gray666666];
+            contactView.backgroundColor = [UIColor mnz_chatIncomingBubble:UIScreen.mainScreen.traitCollection];
+            contactView.titleLabel.textColor = UIColor.mnz_label;
+            contactView.detailLabel.textColor = [UIColor mnz_primaryGrayForTraitCollection:UIScreen.mainScreen.traitCollection];
         }
         
         if (self.message.type == MEGAChatMessageTypeAttachment) {
@@ -94,7 +95,7 @@
                     totalSize += [[[self.message.nodeList nodeAtIndex:i] size] unsignedIntegerValue];
                 }
                 size = [Helper memoryStyleStringFromByteCount:totalSize];
-                UIImage *avatar = [UIImage imageForName:[NSString stringWithFormat:@"%tu", totalNodes] size:contactView.avatarImage.frame.size backgroundColor:[UIColor mnz_gray999999] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:(contactView.avatarImage.frame.size.width/2.0f)]];
+                UIImage *avatar = [UIImage imageForName:[NSString stringWithFormat:@"%tu", totalNodes] size:contactView.avatarImage.frame.size backgroundColor:[UIColor mnz_secondaryGrayForTraitCollection:UIScreen.mainScreen.traitCollection] textColor:UIColor.whiteColor font:[UIFont systemFontOfSize:(contactView.avatarImage.frame.size.width/2.0f)]];
                 contactView.avatarImage.image = avatar;
             }
             contactView.titleLabel.text = filename;
@@ -109,7 +110,7 @@
                 NSNumber *users = [NSNumber numberWithUnsignedInteger:self.message.usersCount];
                 NSString *usersString = AMLocalizedString(@"XContactsSelected", nil);
                 usersString = [usersString stringByReplacingOccurrencesOfString:@"[X]" withString:users.stringValue];
-                UIImage *avatar = [UIImage imageForName:[NSString stringWithFormat:@"%lu", (unsigned long)self.message.usersCount] size:contactView.avatarImage.frame.size backgroundColor:[UIColor mnz_gray999999] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:(contactView.avatarImage.frame.size.width/2.0f)]];                
+                UIImage *avatar = [UIImage imageForName:[NSString stringWithFormat:@"%lu", (unsigned long)self.message.usersCount] size:contactView.avatarImage.frame.size backgroundColor:[UIColor mnz_secondaryGrayForTraitCollection:UIScreen.mainScreen.traitCollection] textColor:UIColor.whiteColor font:[UIFont systemFontOfSize:(contactView.avatarImage.frame.size.width/2.0f)]];                
                 contactView.avatarImage.image = avatar;
                 contactView.titleLabel.text = usersString;
                 NSString *emails = [self.message userEmailAtIndex:0];
@@ -166,12 +167,12 @@
     
     CGRect attachmentTitleRect = [title boundingRectWithSize:CGSizeMake(maxAttachmentBubbleWidth, CGFLOAT_MAX)
                                                  options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
-                                              attributes:@{NSFontAttributeName : [UIFont mnz_SFUIMediumWithSize:15.0f]}
+                                              attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:15.f weight:UIFontWeightMedium]}
                                                  context:nil];
     
     CGRect attachmentSubtitleRect = [subtitle boundingRectWithSize:CGSizeMake(maxAttachmentBubbleWidth, CGFLOAT_MAX)
                                                 options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
-                                             attributes:@{NSFontAttributeName : [UIFont mnz_SFUIRegularWithSize:13.0f]}
+                                             attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:13.0f]}
                                                 context:nil];
     
     CGFloat minimumLabelsWidth = (attachmentTitleRect.size.width > attachmentSubtitleRect.size.width) ? attachmentTitleRect.size.width : attachmentSubtitleRect.size.width;

@@ -51,6 +51,8 @@ final class AlbumsTableViewController: UITableViewController {
         if albums.numberOfAlbums() == 0 {
             showNoPhotosOrVideos()
         }
+        
+        navigationController?.navigationBar.isTranslucent = false
     }
     
     // MARK:- Orientation method.
