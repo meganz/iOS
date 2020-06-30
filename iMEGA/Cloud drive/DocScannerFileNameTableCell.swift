@@ -25,15 +25,15 @@ class DocScannerFileNameTableCell: UITableViewCell {
 
 extension DocScannerFileNameTableCell: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        guard let text = textField.text,
-            !text.isEmpty else {
-                filenameTextField?.text = filename
-                return true
-        }
-        
-        filename = text
-        delegate?.filenameChanged(text)
         textField.resignFirstResponder()
         return true
+    }
+    
+    @IBAction func textFiledEditingChanged(_ textField: UITextField) {
+        guard let text = textField.text else {
+            return
+        }
+        filename = text
+        delegate?.filenameChanged(text)
     }
 }

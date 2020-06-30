@@ -43,7 +43,7 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = NSLocalizedString("Save Settings", comment: "Setting title for Doc scan view")
+        title = AMLocalizedString("Save Settings", "Setting title for Doc scan view")
         let fileType = UserDefaults.standard.string(forKey: keys.docScanExportFileTypeKey)
         let quality = UserDefaults.standard.string(forKey: keys.docScanQualityKey)
         if fileType == nil || quality == nil  {
@@ -82,6 +82,7 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
             if let filenameCell = tableView.dequeueReusableCell(withIdentifier: DocScannerFileNameTableCell.reuseIdentifier,
                                                                 for: indexPath) as? DocScannerFileNameTableCell {
                 let fileType = UserDefaults.standard.string(forKey: keys.docScanExportFileTypeKey)
+                filenameCell.delegate = self
                 filenameCell.configure(filename: fileName, fileType: fileType)
                 cell = filenameCell
             }
@@ -106,7 +107,7 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         switch section {
         case 0:
-            return NSLocalizedString("tapFileToRename", comment: "")
+            return AMLocalizedString("tapFileToRename")
         default:
             return nil
         }
@@ -122,9 +123,9 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
         case 1:
-            return NSLocalizedString("settingsTitle", comment: "")
+            return AMLocalizedString("settingsTitle")
         case 2:
-            return NSLocalizedString("selectDestination", comment: "")
+            return AMLocalizedString("selectDestination")
         default:
             return nil
         }
@@ -135,32 +136,60 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
         if indexPath.section == 1 {
             switch indexPath.row {
             case 0:
-                let alert = UIAlertController(title: nil, message: "File Type", preferredStyle: .actionSheet)
-                alert.addAction(UIAlertAction(title: "PDF", style: .destructive, handler: { _ in
+                let alert = UIAlertController(title: nil, message: AMLocalizedString("File Type", "file type title, used in changing the export format of scaned doc"), preferredStyle: .actionSheet)
+                let PDFAlertAction = UIAlertAction(title: "PDF", style: .default, handler: { _ in
                     UserDefaults.standard.set(DocScanExportFileType.pdf.rawValue, forKey: keys.docScanExportFileTypeKey)
                     tableView.reloadData()
-                }))
-                alert.addAction(UIAlertAction(title: "JPG", style: .destructive, handler: { _ in
+                })
+                PDFAlertAction.mnz_setTitleTextColor(UIColor.mnz_black333333())
+                alert.addAction(PDFAlertAction)
+                
+                let JPGAlertAction = UIAlertAction(title: "JPG", style: .default, handler: { _ in
                     UserDefaults.standard.set(DocScanExportFileType.jpg.rawValue, forKey: keys.docScanExportFileTypeKey)
                     tableView.reloadData()
-                }))
-                alert.addAction(UIAlertAction(title: AMLocalizedString("Cancel"), style: .cancel, handler: nil))
+                })
+                JPGAlertAction.mnz_setTitleTextColor(UIColor.mnz_black333333())
+                alert.addAction(JPGAlertAction)
+                
+                alert.addAction(UIAlertAction(title: AMLocalizedString("cancel"), style: .cancel, handler: nil))
+                
+                if UIDevice.current.iPad {
+                    alert.popoverPresentationController?.sourceView = view
+                    alert.popoverPresentationController?.sourceRect = tableView.convert(tableView.cellForRow(at: indexPath)!.frame, to: view)
+                }
+                
                 present(alert, animated: true, completion: nil)
             case 1:
-                let alert = UIAlertController(title: nil, message: NSLocalizedString("selectDestination", comment: ""), preferredStyle: .actionSheet)
-                alert.addAction(UIAlertAction(title: DocScanQuality.best.description, style: .destructive, handler: { _ in
+                let alert = UIAlertController(title: nil, message:
+                    AMLocalizedString("Quality", "Quality title, used in changing the export quality of scaned doc"), preferredStyle: .actionSheet)
+                let bestAlertAction = UIAlertAction(title: DocScanQuality.best.description, style: .default, handler: { _ in
                     UserDefaults.standard.set(DocScanQuality.best.rawValue, forKey: keys.docScanQualityKey)
                     tableView.reloadRows(at: [indexPath], with: .none)
-                }))
-                alert.addAction(UIAlertAction(title: DocScanQuality.medium.description, style: .destructive, handler: { _ in
+                })
+                bestAlertAction.mnz_setTitleTextColor(UIColor.mnz_black333333())
+                alert.addAction(bestAlertAction)
+                
+                let mediumAlertAction = UIAlertAction(title: DocScanQuality.medium.description, style: .default, handler: { _ in
                     UserDefaults.standard.set(DocScanQuality.medium.rawValue, forKey: keys.docScanQualityKey)
                     tableView.reloadRows(at: [indexPath], with: .none)
-                }))
-                alert.addAction(UIAlertAction(title:  DocScanQuality.low.description, style: .destructive, handler: { _ in
+                })
+                mediumAlertAction.mnz_setTitleTextColor(UIColor.mnz_black333333())
+                alert.addAction(mediumAlertAction)
+                
+                let lowAlertAction = UIAlertAction(title:  DocScanQuality.low.description, style: .default, handler: { _ in
                     UserDefaults.standard.set(DocScanQuality.low.rawValue, forKey: keys.docScanQualityKey)
                     tableView.reloadRows(at: [indexPath], with: .none)
-                }))
-                alert.addAction(UIAlertAction(title: AMLocalizedString("Cancel"), style: .cancel, handler: nil))
+                })
+                lowAlertAction.mnz_setTitleTextColor(UIColor.mnz_black333333())
+                alert.addAction(lowAlertAction)
+                
+                alert.addAction(UIAlertAction(title: AMLocalizedString("cancel"), style: .cancel, handler: nil))
+                
+                if UIDevice.current.iPad {
+                    alert.popoverPresentationController?.sourceView = view
+                    alert.popoverPresentationController?.sourceRect = tableView.convert(tableView.cellForRow(at: indexPath)!.frame, to: view)
+                }
+                
                 present(alert, animated: true, completion: nil)
             default: break
             }
@@ -170,6 +199,8 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
                 let storyboard = UIStoryboard(name: "Cloud", bundle: Bundle(for: BrowserViewController.self))
                 if let browserVC = storyboard.instantiateViewController(withIdentifier: "BrowserViewControllerID") as? BrowserViewController {
                     browserVC.browserAction = .shareExtension
+                    browserVC.parentNode = parentNode
+                    browserVC.isChildBrowser = true
                     browserVC.browserViewControllerDelegate = self
                     navigationController?.setToolbarHidden(false, animated: true)
                     navigationController?.pushViewController(browserVC, animated: true)
@@ -190,6 +221,10 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
 
 extension DocScannerSaveSettingTableViewController: DocScannerFileInfoTableCellDelegate {
     func filenameChanged(_ newFilename: String) {
+        guard !newFilename.isEmpty else {
+            fileName = "Scan \(NSDate().mnz_formattedDefaultNameForMedia())"
+            return
+        }
         fileName = newFilename
     }
 }
@@ -230,7 +265,12 @@ extension DocScannerSaveSettingTableViewController: BrowserViewControllerDelegat
             docs?.enumerated().forEach {
                 if let quality = DocScanQuality(rawValue: UserDefaults.standard.float(forKey: keys.docScanQualityKey)),
                     let data = $0.element.jpegData(compressionQuality: CGFloat(quality.rawValue)) {
-                    let fileName = "\(self.fileName) \($0.offset).jpg"
+                    let fileName: String
+                    if self.docs?.count ?? 1 > 1 {
+                        fileName = "\(self.fileName) \($0.offset).jpg"
+                    } else {
+                        fileName =  "\(self.fileName).jpg"
+                    }
                     let tempPath = (NSTemporaryDirectory() as NSString).appendingPathComponent(fileName)
                     do {
                         try data.write(to: URL(fileURLWithPath: tempPath), options: .atomic)
@@ -281,6 +321,7 @@ extension DocScannerSaveSettingTableViewController: SendToViewControllerDelegate
                                     })
                                 }
                             }
+                            SVProgressHUD.showSuccess(withStatus: AMLocalizedString("Shared successfully", "Success message shown when the user has successfully shared something"))
                         }
                         MEGASdkManager.sharedMEGASdk()?.startUploadForChat(withLocalPath: tempPath, parent: node, appData: appData, isSourceTemporary: true, delegate: startUploadTransferDelegate!)
 
@@ -288,11 +329,16 @@ extension DocScannerSaveSettingTableViewController: SendToViewControllerDelegate
                         MEGALogDebug("Could not write to file \(tempPath) with error \(error.localizedDescription)")
                     }
                 } else if fileType == .jpg {
-                    
+                    var completionCounter = 0
                     self.docs?.enumerated().forEach {
                         if let quality = DocScanQuality(rawValue: UserDefaults.standard.float(forKey: keys.docScanQualityKey)),
                             let data = $0.element.jpegData(compressionQuality: CGFloat(quality.rawValue)) {
-                            let fileName = "\(self.fileName) \($0.offset).jpg"
+                            let fileName: String
+                            if self.docs?.count ?? 1 > 1 {
+                                fileName = "\(self.fileName) \($0.offset).jpg"
+                            } else {
+                                fileName =  "\(self.fileName).jpg"
+                            }
                             let tempPath = (NSTemporaryDirectory() as NSString).appendingPathComponent(fileName)
                             do {
                                 try data.write(to: URL(fileURLWithPath: tempPath), options: .atomic)
@@ -311,6 +357,10 @@ extension DocScannerSaveSettingTableViewController: SendToViewControllerDelegate
                                             })
                                         }
                                     }
+                                    if completionCounter == self.docs!.count - 1 {
+                                        SVProgressHUD.showSuccess(withStatus: AMLocalizedString("Shared successfully", "Success message shown when the user has successfully shared something"))
+                                    }
+                                    completionCounter = completionCounter + 1
                                 }
                                 MEGASdkManager.sharedMEGASdk()?.startUploadForChat(withLocalPath: tempPath, parent: node, appData: appData, isSourceTemporary: true, delegate: startUploadTransferDelegate!)
                             } catch {
