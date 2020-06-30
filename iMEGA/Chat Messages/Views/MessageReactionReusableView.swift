@@ -2,21 +2,6 @@ import MessageKit
 import AlignedCollectionViewFlowLayout
 
 class MessageReactionReusableView: MessageReusableView, UICollectionViewDelegate, UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 2
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView
-            .dequeueReusableCell(withReuseIdentifier: ReactionCollectionViewCell.reuseIdentifier, for: indexPath)
-        
-        if indexPath.section == 1 {
-            
-        }
-        
-        
-        return cell
-    }
     
     @IBOutlet weak var reactionCollectionView: UICollectionView!
     var emojis = [String]()
@@ -29,7 +14,7 @@ class MessageReactionReusableView: MessageReusableView, UICollectionViewDelegate
             for index in 0..<list!.size {
                 emojis.append((list?.string(at: index))!)
             }
-            print(emojis)
+            reactionCollectionView.reloadData()
         }
     }
 
@@ -49,6 +34,26 @@ class MessageReactionReusableView: MessageReusableView, UICollectionViewDelegate
         flowLayout.estimatedItemSize = CGSize(width: 1, height: 1)
     }
     
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return emojis.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView
+            .dequeueReusableCell(withReuseIdentifier: ReactionCollectionViewCell.reuseIdentifier, for: indexPath)
+        
+        let emoji = emojis.reversed()[indexPath.row]
+        
+        let megaMessage = chatMessage?.message
+        
+        let count = MEGASdkManager.sharedMEGAChatSdk()?.getMessageReactionCount(forChat: chatMessage?.chatRoom.chatId ?? 0, messageId: megaMessage?.messageId ?? 0, reaction: emoji) ?? 0
+
+        if let reactionCell = cell as? ReactionCollectionViewCell {
+            reactionCell.configureCell(emoji, count)
+        }
+        
+        return cell
+    }
 }
 
 
