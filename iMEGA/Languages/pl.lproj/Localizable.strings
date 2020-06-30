@@ -909,8 +909,6 @@
 "profile"="Profil";
 /* Title of the Achievements section */
 "achievementsTitle"="Osiągnięcia";
-/* Title of the Used storage section */
-"usedStorage"="Wykorzystana powierzchnia";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
 "inviteFriendsAndGetRewards"="Zaproś znajomych i odbierz bonusy";
 /* Indicating text for when "you invite your friends" */
@@ -918,7 +916,7 @@
 /* title of the introduction for the achievements screen */
 "inviteFriendsAndGetForEachReferral"="Odbierz %1$s dodatkowej powierzchni i %2$s dodatkowego transferu za każde polecenie";
 /* Text shown to explain how and where you can invite friends */
-"inviteYourFriendsExplanation"="Wybierz kontakty z listy w telefonie lub wpisz adresy email.";
+"Select from phone contacts or enter multiple email addresses"="Select from phone contacts or enter multiple email addresses";
 /*  */
 "insertYourFriendsEmails"="Wpisz adresy email Twoich znajomych:";
 /*  */
@@ -1009,12 +1007,6 @@
 "Renews on"="Odnowienie";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="Udostępnienia";
-/* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
-"of %@"="z %@";
-/* Sentence shown under the used space to complete the info with the user account maximum storage. "used of {maximun storage}" */
-"used of %@"="użyte z %@";
-/* Sentence shown under the available space to complete the info with the user account maximum storage. "available of {maximun storage}" */
-"available of %@"="dostępne z %@";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Zmień konto";
 /*  */
@@ -1023,8 +1015,8 @@
 "cloudDriveIsAlmostFull"="[S]Twój dysk w chmurze jest prawie pełny.[/S] [A] Uaktualnij teraz[/A] do konta PRO i uzyskaj [S]do %@ TB (%@ GB)[/S] miejsca w chmurze.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
 "cloudDriveIsFull"="[S]Twój dysk w chmurze jest pełny.[/S] [A] Uaktualnij teraz[/A] do konta PRO i uzyskaj [S]do %@ TB (%@ GB)[/S] miejsca w chmurze.";
-/* Storage related with the MEGA PRO account level you can subscribe */
-"productSpace"="Pojemności";
+/* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
+"Storage"="Pojemności";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
 "limited"="Ograniczony";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
@@ -1179,8 +1171,8 @@
 "contactCredentials"="Uprawnienia kontaktu";
 /* "Verify user" dialog description */
 "thisIsBestDoneInRealLife"="Najlepiej to zrobić w prawdziwym życiu spotykając się twarzą w twarz. Jeśli masz inny już sprawdzony kanał takich jak weryfikować OTR lub PGP, możesz także użyć.";
-/* Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity */
-"yourCredentials"="Twoje uprawnienia";
+/* Title of the label in the my account section. It shows the credentials of the current user so it can be used to be verified by other contacts */
+"My credentials"="Moje uprawnienia";
 /* Button to reset the password */
 "reset"="Zresetuj";
 /* Button title */

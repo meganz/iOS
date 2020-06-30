@@ -7,11 +7,11 @@
 
 #import "NSString+MNZCategory.h"
 #import "UICollectionView+MNZCategory.h"
-#import "UIColor+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 
 @interface MEGAPhotoBrowserPickerViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
 
+@property (weak, nonatomic) IBOutlet UIView *statusBarBackground;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
 @property (weak, nonatomic) IBOutlet UINavigationItem *navigationItem;
@@ -22,16 +22,6 @@
 @end
 
 @implementation MEGAPhotoBrowserPickerViewController
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    
-    self.navigationBar.barTintColor = [UIColor whiteColor];
-    
-    if (@available(iOS 11.0, *)) {} else {
-        self.navigationBar.tintColor = UIColor.mnz_redMain;
-    }
-}
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
@@ -53,11 +43,15 @@
         numberOfFiles = @"";
     }
     
-    UILabel *titleLabel = [Helper customNavigationBarLabelWithTitle:folderName subtitle:numberOfFiles color:[UIColor mnz_black333333]];
+    UILabel *titleLabel = [Helper customNavigationBarLabelWithTitle:folderName subtitle:numberOfFiles color:UIColor.mnz_label];
     titleLabel.adjustsFontSizeToFitWidth = YES;
     titleLabel.minimumScaleFactor = 0.8f;
     self.navigationItem.titleView = titleLabel;
     [self.navigationItem.titleView sizeToFit];
+    
+    self.statusBarBackground.backgroundColor = self.navigationBar.backgroundColor = [UIColor mnz_mainBarsForTraitCollection:self.traitCollection];
+    self.navigationBar.tintColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
+    self.view.backgroundColor = UIColor.mnz_background;
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {

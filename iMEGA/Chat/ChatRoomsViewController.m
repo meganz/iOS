@@ -15,7 +15,6 @@
 #import "MEGASdkManager.h"
 #import "NSString+MNZCategory.h"
 #import "MEGA-Swift.h"
-#import "UIAlertAction+MNZCategory.h"
 #import "UITableView+MNZCategory.h"
 #import "UIViewController+MNZCategory.h"
 
@@ -24,6 +23,7 @@
 #import "ChatSettingsTableViewController.h"
 #import "ContactDetailsViewController.h"
 #import "ContactsViewController.h"
+#import "EmptyStateView.h"
 #import "GroupCallViewController.h"
 #import "GroupChatDetailsViewController.h"
 #import "MessagesViewController.h"
@@ -205,6 +205,13 @@
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateAppearance];
+            [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar traitCollection:self.traitCollection];
+        }
+    }
+    
     [self configPreviewingRegistration];
 }
 
@@ -227,141 +234,22 @@
 
 #pragma mark - DZNEmptyDataSetSource
 
-- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
-    NSString *text = @"";
-    if (self.searchController.isActive) {
-        if (self.searchController.searchBar.text.length > 0) {
-            text = AMLocalizedString(@"noResults", @"Title shown when you make a search and there is 'No Results'");
-        }
-    } else {
-        switch (self.chatRoomsType) {
-            case ChatRoomsTypeDefault:
-                text = AMLocalizedString(@"noConversations", @"Empty Conversations section");
-                break;
-                
-            case ChatRoomsTypeArchived:
-                text = AMLocalizedString(@"noArchivedChats", @"Title of empty state view for archived chats.");
-                break;
-        }
-    }
-    
-    return [[NSAttributedString alloc] initWithString:text attributes:[Helper titleAttributesForEmptyState]];
-}
-
-- (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView {
-    NSString *text = @"";
-
-    if (self.searchController.isActive) {
-        text = @"";
-    } else {
-        switch (self.chatRoomsType) {
-            case ChatRoomsTypeDefault:
-                text = AMLocalizedString(@"Start chatting securely with your contacts using end-to-end encryption", @"Empty Conversations description");
-                break;
-                
-            case ChatRoomsTypeArchived:
-                break;
-        }
-    }
-    
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleFootnote], NSForegroundColorAttributeName:UIColor.mnz_gray777777};
-    
-    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
-}
-
-- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
-    if ([MEGAReachabilityManager isReachable]) {
-        if (self.searchController.isActive) {
-            if (self.searchController.searchBar.text.length > 0) {
-                return [UIImage imageNamed:@"searchEmptyState"];
-            } else {
-                return nil;
-            }
-        } else {
-            if (UIInterfaceOrientationIsLandscape(UIApplication.sharedApplication.statusBarOrientation) && UIDevice.currentDevice.iPhoneDevice) {
-                return nil;
-            } else {
-                switch (self.chatRoomsType) {
-                    case ChatRoomsTypeDefault:
-                        return [UIImage imageNamed:@"chatEmptyState"];
-                        
-                    case ChatRoomsTypeArchived:
-                        return [UIImage imageNamed:@"chatsArchivedEmptyState"];
-                }
-            }
-        }
-    } else {
-        return [UIImage imageNamed:@"noInternetEmptyState"];
-    }
-}
-
-- (NSAttributedString *)buttonTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
-    NSString *text = @"";
-    if ([MEGAReachabilityManager isReachable]) {
-        if (!self.searchController.isActive) {
-            switch (self.chatRoomsType) {
-                case ChatRoomsTypeDefault:
-                    text = AMLocalizedString(@"New Chat Link", @"Text button for init a group chat with link.");
-                    break;
-                case ChatRoomsTypeArchived:
-                    return nil;
+- (nullable UIView *)customViewForEmptyDataSet:(UIScrollView *)scrollView {
+    if (MEGAReachabilityManager.isReachable) {
+        if ([NSUserDefaults.standardUserDefaults boolForKey:@"IsChatEnabled"]) {
+            if (MEGASdkManager.sharedMEGAChatSdk.initState == MEGAChatInitWaitingNewSession || MEGASdkManager.sharedMEGAChatSdk.initState == MEGAChatInitNoCache) {
+                return [UIImageView.alloc initWithImage:[UIImage imageNamed:@"chatListLoading"]];
             }
         }
     }
     
-    return [[NSAttributedString alloc] initWithString:text attributes:[Helper buttonTextAttributesForEmptyState]];
-}
-
-- (UIImage *)buttonBackgroundImageForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
-    UIEdgeInsets capInsets = [Helper capInsetsForEmptyStateButton];
-    UIEdgeInsets rectInsets = [Helper rectInsetsForEmptyStateButton];
+    EmptyStateView *emptyStateView = [EmptyStateView.alloc initWithImage:[self imageForEmptyState] title:[self titleForEmptyState] description:[self descriptionForEmptyState] buttonTitle:[self buttonTitleForEmptyState]];
+    [emptyStateView.button addTarget:self action:@selector(buttonTouchUpInsideEmptyState) forControlEvents:UIControlEventTouchUpInside];
     
-    return [[[UIImage imageNamed:@"emptyStateButton"] resizableImageWithCapInsets:capInsets resizingMode:UIImageResizingModeStretch] imageWithAlignmentRectInsets:rectInsets];
-}
-
-- (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
-    return UIColor.whiteColor;
-}
-
-- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
-    CGFloat offset = [Helper verticalOffsetForEmptyStateWithNavigationBarSize:self.navigationController.navigationBar.frame.size searchBarActive:self.searchController.isActive];
-    
-    if (UIInterfaceOrientationIsLandscape(UIApplication.sharedApplication.statusBarOrientation)) {
-        offset += self.archivedChatEmptyState.hidden ? 0 : self.archivedChatEmptyState.frame.size.height/2;
-        offset += self.contactsOnMegaEmptyStateView.hidden ? 0 : self.contactsOnMegaEmptyStateView.frame.size.height/2;
-    }
-    
-    return offset;
-}
-
-- (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView {
-    return [Helper spaceHeightForEmptyState];
-}
-
-- (UIView *)customViewForEmptyDataSet:(UIScrollView *)scrollView {
-    UIImageView *skeletonImageView = nil;
-    
-    if ([MEGAReachabilityManager isReachable]) {
-        if ([[MEGASdkManager sharedMEGAChatSdk] initState] == MEGAChatInitWaitingNewSession || [[MEGASdkManager sharedMEGAChatSdk] initState] == MEGAChatInitNoCache) {
-            skeletonImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"chatListLoading"]];
-        }
-    }
-    
-    return skeletonImageView;
+    return emptyStateView;
 }
 
 #pragma mark - DZNEmptyDataSetDelegate
-
-- (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
-    MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsNavigationControllerID"];
-    [navigationController addLeftDismissButtonWithText:AMLocalizedString(@"cancel", nil)];
-    ContactsViewController *contactsVC = navigationController.viewControllers.firstObject;
-    contactsVC.contactsMode = ContactsModeChatNamingGroup;
-    contactsVC.getChatLinkEnabled = YES;
-    [self blockCompletionsForCreateChatInContacts:contactsVC];
-
-    [self presentViewController:navigationController animated:YES completion:nil];
-}
 
 - (void)emptyDataSetWillAppear:(UIScrollView *)scrollView {
     if (!self.searchController.active) {
@@ -400,7 +288,109 @@
     }
 }
 
+#pragma mark - Empty State
+
+- (NSString *)titleForEmptyState {
+    NSString *text = @"";
+    if (self.searchController.isActive) {
+        if (self.searchController.searchBar.text.length > 0) {
+            text = AMLocalizedString(@"noResults", @"Title shown when you make a search and there is 'No Results'");
+        }
+    } else {
+        switch (self.chatRoomsType) {
+            case ChatRoomsTypeDefault:
+                text = AMLocalizedString(@"noConversations", @"Empty Conversations section");
+                break;
+                
+            case ChatRoomsTypeArchived:
+                text = AMLocalizedString(@"noArchivedChats", @"Title of empty state view for archived chats.");
+                break;
+        }
+    }
+    
+    return text;
+}
+
+- (NSString *)descriptionForEmptyState {
+    NSString *text = @"";
+
+    if (self.searchController.isActive) {
+        text = @"";
+    } else {
+        switch (self.chatRoomsType) {
+            case ChatRoomsTypeDefault:
+                text = AMLocalizedString(@"Start chatting securely with your contacts using end-to-end encryption", @"Empty Conversations description");
+                break;
+                
+            case ChatRoomsTypeArchived:
+                break;
+        }
+    }
+    
+    return text;
+}
+
+- (UIImage *)imageForEmptyState {
+    if ([MEGAReachabilityManager isReachable]) {
+        if (self.searchController.isActive) {
+            if (self.searchController.searchBar.text.length > 0) {
+                return [UIImage imageNamed:@"searchEmptyState"];
+            } else {
+                return nil;
+            }
+        } else {
+            if (UIInterfaceOrientationIsLandscape(UIApplication.sharedApplication.statusBarOrientation) && UIDevice.currentDevice.iPhoneDevice) {
+                return nil;
+            } else {
+                switch (self.chatRoomsType) {
+                    case ChatRoomsTypeDefault:
+                        return [UIImage imageNamed:@"chatEmptyState"];
+                        
+                    case ChatRoomsTypeArchived:
+                        return [UIImage imageNamed:@"chatsArchivedEmptyState"];
+                }
+            }
+        }
+    } else {
+        return [UIImage imageNamed:@"noInternetEmptyState"];
+    }
+}
+
+- (NSString *)buttonTitleForEmptyState {
+    NSString *text = @"";
+    if ([MEGAReachabilityManager isReachable]) {
+        if (!self.searchController.isActive) {
+            switch (self.chatRoomsType) {
+                case ChatRoomsTypeDefault:
+                    text = AMLocalizedString(@"New Chat Link", @"Text button for init a group chat with link.");
+                    break;
+                case ChatRoomsTypeArchived:
+                    return nil;
+            }
+        }
+    }
+    
+    return text;
+}
+
+- (void)buttonTouchUpInsideEmptyState {
+    MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsNavigationControllerID"];
+    [navigationController addLeftDismissButtonWithText:AMLocalizedString(@"cancel", nil)];
+    ContactsViewController *contactsVC = navigationController.viewControllers.firstObject;
+    contactsVC.contactsMode = ContactsModeChatNamingGroup;
+    contactsVC.getChatLinkEnabled = YES;
+    [self blockCompletionsForCreateChatInContacts:contactsVC];
+    
+    [self presentViewController:navigationController animated:YES completion:nil];
+}
+
 #pragma mark - Private
+
+- (void)updateAppearance {
+    self.archivedChatEmptyStateCount.textColor = UIColor.mnz_secondaryLabel;
+    
+    self.topBannerButton.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
+}
 
 - (void)openChatRoomWithID:(uint64_t)chatID {
     NSArray *viewControllers = self.navigationController.viewControllers;
@@ -782,13 +772,13 @@
 - (void)updateDuration {
     if (!self.isReconnecting) {
         NSTimeInterval interval = ([NSDate date].timeIntervalSince1970 - self.baseDate.timeIntervalSince1970 + self.initDuration);
-        [self setTopBannerButtonTitle:[NSString stringWithFormat:AMLocalizedString(@"Touch to return to call %@", @"Message shown in a chat room for a group call in progress displaying the duration of the call"), [NSString mnz_stringFromTimeInterval:interval]] color:UIColor.mnz_green00BFA5];
+        [self setTopBannerButtonTitle:[NSString stringWithFormat:AMLocalizedString(@"Touch to return to call %@", @"Message shown in a chat room for a group call in progress displaying the duration of the call"), [NSString mnz_stringFromTimeInterval:interval]] color:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection]];
     }
 }
 
 - (void)configureTopBannerButtonForInProgressCall:(MEGAChatCall *)call {
     if (self.isReconnecting) {
-        [self setTopBannerButtonTitle:AMLocalizedString(@"You are back!", @"Title shown when the user reconnect in a call.") color:UIColor.mnz_green00BFA5];
+        [self setTopBannerButtonTitle:AMLocalizedString(@"You are back!", @"Title shown when the user reconnect in a call.") color:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection]];
     }
     [self initTimerForCall:call];
 }
@@ -806,6 +796,8 @@
                 groupCallVC.chatRoom = self.chatRoomOnGoingCall;
                 groupCallVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
                 groupCallVC.megaCallManager = ((AppDelegate *)UIApplication.sharedApplication.delegate).megaCallManager;
+                groupCallVC.modalPresentationStyle = UIModalPresentationFullScreen;
+                
                 [self presentViewController:groupCallVC animated:YES completion:nil];
             } else {
                 CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
@@ -814,6 +806,8 @@
                 callVC.callType = CallTypeActive;
                 callVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
                 callVC.megaCallManager = ((AppDelegate *)UIApplication.sharedApplication.delegate).megaCallManager;
+                callVC.modalPresentationStyle = UIModalPresentationFullScreen;
+                
                 [self presentViewController:callVC animated:YES completion:nil];
             }
         } else {
@@ -886,10 +880,10 @@
 
 - (IBAction)openContactsOnMega:(id)sender {
     if ([CNContactStore authorizationStatusForEntityType:CNEntityTypeContacts] == CNAuthorizationStatusAuthorized && self.contactsOnMegaCount == 0) {
-        InviteContactViewController *inviteContacts = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"InviteContactViewControllerID"];
+        InviteContactViewController *inviteContacts = [[UIStoryboard storyboardWithName:@"InviteContact" bundle:nil] instantiateViewControllerWithIdentifier:@"InviteContactViewControllerID"];
         [self.navigationController pushViewController:inviteContacts animated:YES];
     } else {
-        ContactsOnMegaViewController *contactsOnMega = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsOnMegaViewControllerID"];
+        ContactsOnMegaViewController *contactsOnMega = [[UIStoryboard storyboardWithName:@"InviteContact" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsOnMegaViewControllerID"];
         [self.navigationController pushViewController:contactsOnMega animated:YES];
     }
 }
@@ -1021,12 +1015,12 @@
             UITableViewRowAction *infoAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:AMLocalizedString(@"info", @"A button label. The button allows the user to get more info of the current context.") handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
                 [self presentGroupOrContactDetailsForChatListItem:chatListItem];
             }];
-            infoAction.backgroundColor = UIColor.mnz_grayCCCCCC;
+            infoAction.backgroundColor = [UIColor mnz_tertiaryGrayForTraitCollection:self.traitCollection];
             
             UITableViewRowAction *archiveAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:AMLocalizedString(@"archiveChat", @"Title of button to archive chats.") handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
                 [[MEGASdkManager sharedMEGAChatSdk] archiveChat:chatListItem.chatId archive:YES];
             }];
-            archiveAction.backgroundColor = UIColor.mnz_green00BFA5;
+            archiveAction.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
 
             return @[archiveAction, infoAction];
         }
@@ -1035,7 +1029,7 @@
             UITableViewRowAction *unarchiveAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:AMLocalizedString(@"unarchiveChat", @"The title of the dialog to unarchive an archived chat.") handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
                 [[MEGASdkManager sharedMEGAChatSdk] archiveChat:chatListItem.chatId archive:NO];
             }];
-            unarchiveAction.backgroundColor = UIColor.mnz_green00BFA5;
+            unarchiveAction.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
             
             return @[unarchiveAction];
         }
@@ -1239,7 +1233,7 @@
         NSIndexPath *indexPath = [self.chatIdIndexPathDictionary objectForKey:@(chatId)];
         if ([self.tableView.indexPathsForVisibleRows containsObject:indexPath]) {
             ChatRoomCell *cell = (ChatRoomCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-            cell.onlineStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:userHandle]];
+            cell.onlineStatusView.backgroundColor = [UIColor mnz_colorForChatStatus:[MEGASdkManager.sharedMEGAChatSdk userOnlineStatus:userHandle]];
         }
     }
 }
@@ -1280,7 +1274,7 @@
             
         case MEGAChatCallStatusReconnecting:
             self.reconnecting = YES;
-            [self setTopBannerButtonTitle:AMLocalizedString(@"Reconnecting...", @"Title shown when the user lost the connection in a call, and the app will try to reconnect the user again.") color:UIColor.mnz_orangeFFA500];
+            [self setTopBannerButtonTitle:AMLocalizedString(@"Reconnecting...", @"Title shown when the user lost the connection in a call, and the app will try to reconnect the user again.") color:UIColor.systemOrangeColor];
             break;
             
         case MEGAChatCallStatusDestroyed: {

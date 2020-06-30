@@ -45,7 +45,7 @@ final class PhotoCarouselViewController: UIViewController {
         label.backgroundColor = .clear
         label.numberOfLines = 2
         label.textAlignment = .center
-        label.textColor = .white
+        label.textColor = .mnz_label()
         return label
     }()
     

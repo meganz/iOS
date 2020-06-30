@@ -53,6 +53,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Utils
 
++ (void)saveSortOrder:(MEGASortOrderType)selectedSortOrderType for:(_Nullable id)object;
++ (MEGASortOrderType)sortTypeFor:(_Nullable id)object;
++ (MEGASortOrderType)defaultSortType;
+
 + (NSString *)memoryStyleStringFromByteCount:(long long)byteCount;
 
 + (void)changeApiURL;
@@ -79,19 +83,6 @@ NS_ASSUME_NONNULL_BEGIN
 + (UIActivityViewController *)activityViewControllerForNodes:(NSArray *)nodesArray sender:(id _Nullable)sender;
 
 + (void)setIndexer:(MEGAIndexer* )megaIndexer;
-
-#pragma mark - Utils for empty states
-
-+ (UIEdgeInsets)capInsetsForEmptyStateButton;
-+ (UIEdgeInsets)rectInsetsForEmptyStateButton;
-
-+ (CGFloat)verticalOffsetForEmptyStateWithNavigationBarSize:(CGSize)navigationBarSize searchBarActive:(BOOL)isSearchBarActive;
-+ (CGFloat)spaceHeightForEmptyState;
-+ (CGFloat)spaceHeightForEmptyStateWithDescription;
-
-+ (NSDictionary *)titleAttributesForEmptyState;
-+ (NSDictionary *)descriptionAttributesForEmptyState;
-+ (NSDictionary *)buttonTextAttributesForEmptyState;
 
 #pragma mark - Utils for UI
 

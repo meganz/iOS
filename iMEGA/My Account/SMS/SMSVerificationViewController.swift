@@ -13,10 +13,19 @@ class SMSVerificationViewController: UIViewController {
     @IBOutlet private weak var nextButton: UIButton!
     @IBOutlet private weak var cancelButton: UIButton!
     @IBOutlet private weak var titleLabel: UILabel!
+    
+    @IBOutlet private weak var phoneNumberTopSeparatorView: UIView!
+    @IBOutlet private weak var phoneNumberContainerView: UIView!
     @IBOutlet private weak var phoneNumberLabel: UILabel!
     @IBOutlet private weak var phoneNumberTextField: UITextField!
+    @IBOutlet private weak var phoneNumberBottomSeparatorView: UIView!
+    
+    @IBOutlet private weak var countryTopSeparatorView: UIView!
+    @IBOutlet private weak var countryContainerView: UIView!
     @IBOutlet private weak var countryNameLabel: UILabel!
     @IBOutlet private weak var countryCodeLabel: UILabel!
+    @IBOutlet private weak var countryBottomSeparatorView: UIView!
+    
     @IBOutlet private weak var errorImageView: UIImageView!
     @IBOutlet private weak var errorMessageLabel: UILabel!
     @IBOutlet private weak var errorView: UIView!
@@ -42,8 +51,6 @@ class SMSVerificationViewController: UIViewController {
 
         disableAutomaticAdjustmentContentInsetsBehavior()
 
-        errorImageView.tintColor = UIColor.mnz_redError()
-        errorMessageLabel.textColor = UIColor.mnz_redError()
         errorView.isHidden = true
 
         countryNameLabel.text = " "
@@ -51,6 +58,8 @@ class SMSVerificationViewController: UIViewController {
         loadCountryCallingCodes()
 
         configViewContents()
+        
+        updateAppearance()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -77,6 +86,42 @@ class SMSVerificationViewController: UIViewController {
         } else {
             return .all
         }
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        if #available(iOS 13, *) {
+            if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+                AppearanceManager.forceNavigationBarUpdate(navigationController!.navigationBar, traitCollection: traitCollection)
+                
+                updateAppearance()
+            }
+        }
+    }
+    
+    // MARK: - Private
+    
+    private func updateAppearance() {
+        view.backgroundColor = .mnz_backgroundGrouped(for: traitCollection)
+        
+        titleLabel.textColor = .white
+        cancelButton.setTitleColor(.white, for: .normal)
+        
+        countryTopSeparatorView.backgroundColor = .mnz_separator(for: traitCollection)
+        countryContainerView.backgroundColor = .mnz_secondaryBackgroundGrouped(traitCollection)
+        countryLabel.textColor = .mnz_secondaryGray(for: traitCollection)
+        countryBottomSeparatorView.backgroundColor = .mnz_separator(for: traitCollection)
+        
+        phoneNumberTopSeparatorView.backgroundColor = .mnz_separator(for: traitCollection)
+        phoneNumberContainerView.backgroundColor = .mnz_secondaryBackgroundGrouped(traitCollection)
+        phoneNumberLabel.textColor = .mnz_secondaryGray(for: traitCollection)
+        phoneNumberBottomSeparatorView.backgroundColor = .mnz_separator(for: traitCollection)
+        
+        errorImageView.tintColor = UIColor.mnz_redError()
+        errorMessageLabel.textColor = UIColor.mnz_redError()
+        
+        nextButton.mnz_setupPrimary(traitCollection)
     }
 
     // MARK: - Network calls
@@ -154,8 +199,8 @@ class SMSVerificationViewController: UIViewController {
 
     @IBAction private func didEditingChangedInPhoneNumberField() {
         nextButton.isEnabled = !(phoneNumberTextField.text?.isEmpty ?? true)
-        phoneNumberLabel.textColor = UIColor.mnz_gray999999()
-        phoneNumberTextField.textColor = UIColor.black
+        phoneNumberLabel.textColor = UIColor.mnz_secondaryGray(for: self.traitCollection)
+        phoneNumberTextField.textColor = UIColor.mnz_label()
         errorView.isHidden = true
     }
 

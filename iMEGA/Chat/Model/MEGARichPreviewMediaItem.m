@@ -10,6 +10,7 @@
 #import "MEGAMessageRichPreviewView.h"
 #import "MEGAChatMessage+MNZCategory.h"
 #import "MEGASdkManager.h"
+#import "MEGA-Swift.h"
 #import "NSString+MNZCategory.h"
 #import "NSURL+MNZCategory.h"
 #import "UIFont+MNZCategory.h"
@@ -92,11 +93,11 @@
     
     // Colors:
     if (self.message.userHandle == [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
-        dialogView.backgroundColor = [UIColor mnz_green00BFA5];
+        dialogView.backgroundColor = [UIColor mnz_chatOutgoingBubble:UIScreen.mainScreen.traitCollection];
         dialogView.contentTextView.textColor = [UIColor whiteColor];
     } else {
-        dialogView.backgroundColor = [UIColor mnz_grayE2EAEA];
-        dialogView.contentTextView.textColor = [UIColor blackColor];
+        dialogView.backgroundColor = [UIColor mnz_chatIncomingBubble:UIScreen.mainScreen.traitCollection];
+        dialogView.contentTextView.textColor = UIColor.mnz_label;
     }
     dialogView.contentTextView.linkTextAttributes = @{ NSForegroundColorAttributeName : dialogView.contentTextView.textColor,
                                                        NSUnderlineStyleAttributeName : @(NSUnderlineStyleSingle | NSUnderlinePatternSolid) };
@@ -173,7 +174,7 @@
 - (CGSize)mediaViewDisplaySize {
     CGFloat bubbleWidth = [[UIDevice currentDevice] mnz_maxSideForChatBubbleWithMedia:NO];
     CGFloat maxTextViewWidth = bubbleWidth - 20.0f;
-    UIFont *messageFont = [UIFont mnz_SFUIRegularWithSize:15.0f];
+    UIFont *messageFont = [UIFont systemFontOfSize:15.0f];
     NSString *text = self.message.type == MEGAChatMessageTypeContainsMeta ? self.message.containsMeta.richPreview.text : self.message.content;
     CGRect messageRect = [text boundingRectWithSize:CGSizeMake(maxTextViewWidth, CGFLOAT_MAX)
                                             options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
