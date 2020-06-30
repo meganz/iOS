@@ -23,6 +23,7 @@
 		2F18DEF5245BD07F00E7EE27 /* ChatViewController+MessageCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F18DEF4245BD07E00E7EE27 /* ChatViewController+MessageCellDelegate.swift */; };
 		2F20C5E9240F434A00A1544C /* MEGAIndexer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9419B6BF1F20D1D700FEBE31 /* MEGAIndexer.m */; };
 		2F20C5EA240F434B00A1544C /* MEGAIndexer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9419B6BF1F20D1D700FEBE31 /* MEGAIndexer.m */; };
+		2F25A2D9240C8407005EF524 /* MEGAFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B695E57F23275A4E00D12B9E /* MEGAFunctions.swift */; };
 		2F25A2DA240C840A005EF524 /* MEGAFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B695E57F23275A4E00D12B9E /* MEGAFunctions.swift */; };
 		2F25A2DC240C92C0005EF524 /* StorageFullModalAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5EC89E24075BA30017F334 /* StorageFullModalAlertViewController.swift */; };
 		2F25A2DD240C92C1005EF524 /* StorageFullModalAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5EC89E24075BA30017F334 /* StorageFullModalAlertViewController.swift */; };
@@ -291,6 +292,7 @@
 		5BC3D061242A45BA0048123A /* UIColor+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC3D05F242A36240048123A /* UIColor+Additions.swift */; };
 		5BC3D062242A45BA0048123A /* UIColor+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC3D05F242A36240048123A /* UIColor+Additions.swift */; };
 		5BC4912F20AC457F00F7F952 /* SetupTwoFactorAuthenticationTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC4912E20AC457F00F7F952 /* SetupTwoFactorAuthenticationTableViewController.m */; };
+		5BCD27F024A62AAC00A6E25E /* GenericHeaderFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83D7265A23169067007B2E58 /* GenericHeaderFooterView.xib */; };
 		5BD12734248A700800CA95A8 /* ContactsTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD12733248A700800CA95A8 /* ContactsTableViewHeader.swift */; };
 		5BD4A0211F838606000E24E6 /* ViewFrameAccessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD4A01F1F838606000E24E6 /* ViewFrameAccessor.m */; };
 		5BD4A0221F838606000E24E6 /* ScrollViewFrameAccessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD4A0201F838606000E24E6 /* ScrollViewFrameAccessor.m */; };
@@ -364,19 +366,6 @@
 		774FA6612090C0030061DD85 /* MEGAMessageDialogView.m in Sources */ = {isa = PBXBuildFile; fileRef = 774FA6602090C0030061DD85 /* MEGAMessageDialogView.m */; };
 		774FA6642090F5A20061DD85 /* MEGADialogMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 774FA6632090F5A20061DD85 /* MEGADialogMediaItem.m */; };
 		77519C36203707F600FDF92B /* MEGARenameRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 77519C35203707F600FDF92B /* MEGARenameRequestDelegate.m */; };
-		7751B1D5249C9F9200203D05 /* Spotlight_file.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BF21F3470B5003C149C /* Spotlight_file.png */; };
-		7751B1D6249C9F9200203D05 /* Spotlight_folder.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BF31F3470B5003C149C /* Spotlight_folder.png */; };
-		7751B1D7249C9F9200203D05 /* Spotlight_file@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BC41F3465A3003C149C /* Spotlight_file@2x.png */; };
-		7751B1D8249C9F9200203D05 /* Spotlight_file@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BC51F3465A3003C149C /* Spotlight_file@3x.png */; };
-		7751B1D9249C9F9200203D05 /* Spotlight_folder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BC61F3465A3003C149C /* Spotlight_folder@2x.png */; };
-		7751B1DA249C9F9200203D05 /* Spotlight_folder@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BC71F3465A3003C149C /* Spotlight_folder@3x.png */; };
-		7751B1DB249C9FA400203D05 /* Spotlight_file.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BF21F3470B5003C149C /* Spotlight_file.png */; };
-		7751B1DC249C9FA400203D05 /* Spotlight_folder.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BF31F3470B5003C149C /* Spotlight_folder.png */; };
-		7751B1DD249C9FA400203D05 /* Spotlight_file@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BC41F3465A3003C149C /* Spotlight_file@2x.png */; };
-		7751B1DE249C9FA400203D05 /* Spotlight_file@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BC51F3465A3003C149C /* Spotlight_file@3x.png */; };
-		7751B1DF249C9FA400203D05 /* Spotlight_folder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BC61F3465A3003C149C /* Spotlight_folder@2x.png */; };
-		7751B1E0249C9FA400203D05 /* Spotlight_folder@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BC71F3465A3003C149C /* Spotlight_folder@3x.png */; };
-		7751B1E1249CA11400203D05 /* GenericHeaderFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83D7265A23169067007B2E58 /* GenericHeaderFooterView.xib */; };
 		7754ED9920B47A2400FF8B7B /* MEGALoginToFolderLinkRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7754ED9820B47A2400FF8B7B /* MEGALoginToFolderLinkRequestDelegate.m */; };
 		7754ED9C20B47F1000FF8B7B /* MEGAFetchNodesRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7754ED9B20B47F1000FF8B7B /* MEGAFetchNodesRequestDelegate.m */; };
 		775652D7203AD2FC009E7EC8 /* ContactLinkQRViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 775652D6203AD2FC009E7EC8 /* ContactLinkQRViewController.m */; };
@@ -830,12 +819,6 @@
 		A82A38D6200D332400883533 /* libmediainfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A82A38D4200D32EC00883533 /* libmediainfo.a */; };
 		A82A38D7200D333100883533 /* libmediainfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A82A38D4200D32EC00883533 /* libmediainfo.a */; };
 		A82A38D8200D343E00883533 /* libmediainfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A82A38D4200D32EC00883533 /* libmediainfo.a */; };
-		A82E5BC81F3465A3003C149C /* Spotlight_file@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BC41F3465A3003C149C /* Spotlight_file@2x.png */; };
-		A82E5BC91F3465A3003C149C /* Spotlight_file@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BC51F3465A3003C149C /* Spotlight_file@3x.png */; };
-		A82E5BCA1F3465A3003C149C /* Spotlight_folder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BC61F3465A3003C149C /* Spotlight_folder@2x.png */; };
-		A82E5BCB1F3465A3003C149C /* Spotlight_folder@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BC71F3465A3003C149C /* Spotlight_folder@3x.png */; };
-		A82E5BF41F3470B5003C149C /* Spotlight_file.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BF21F3470B5003C149C /* Spotlight_file.png */; };
-		A82E5BF51F3470B5003C149C /* Spotlight_folder.png in Resources */ = {isa = PBXBuildFile; fileRef = A82E5BF31F3470B5003C149C /* Spotlight_folder.png */; };
 		A82F8A3921C3E34F0045AF1D /* UIApplication+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = A815FCE91FE2AD080075AC29 /* UIApplication+MNZCategory.m */; };
 		A836581B21020FB9005E616F /* ItemListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 835223B32059588300A47438 /* ItemListViewController.m */; };
 		A836581C2102101C005E616F /* Contacts.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 415226731A692ECC00EC7BB6 /* Contacts.storyboard */; };
@@ -1145,6 +1128,7 @@
 		BF33EF902447E70200CD35AC /* CondensationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF33EF8F2447E70200CD35AC /* CondensationView.swift */; };
 		BF5C36762491C90A004DDA2F /* String+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B619C6BA230E49920095791B /* String+Additions.swift */; };
 		BF5C36792491C917004DDA2F /* MEGAUser+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB463F624342F7F00FB90B9 /* MEGAUser+Additions.swift */; };
+		BF30AB9B24A05B7A00862853 /* MEGAChatMessage+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF30AB9A24A05B7A00862853 /* MEGAChatMessage+Additions.swift */; };
 		BF69E5172374F3720031913D /* AppDelegate+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF69E5162374F3720031913D /* AppDelegate+Additions.swift */; };
 		BF6DF366245797CC00D612D0 /* AddToChatViewAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6DF365245797CC00D612D0 /* AddToChatViewAnimator.swift */; };
 		BF6DF36B2457A06300D612D0 /* AddToChatImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6DF3692457A06300D612D0 /* AddToChatImageCell.swift */; };
@@ -2114,7 +2098,6 @@
 		945605431EDD66350094EF0F /* MEGAPicker-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "MEGAPicker-Bridging-Header.h"; path = "iMEGA/Extensions/MEGAPicker/Supporting Files/MEGAPicker-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
 		9458AEE11FB9D3B800BABD58 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		9458AEE21FB9D40500BABD58 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		9458AEE51FB9D5C700BABD58 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = tl.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		94598D741F0CD53A00B57144 /* Share.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Share.storyboard; path = iMEGA/Extensions/MEGAShare/Share.storyboard; sourceTree = SOURCE_ROOT; };
 		945E1F0A1FE10CE8000C5E21 /* MEGAInputToolbar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAInputToolbar.h; sourceTree = "<group>"; };
 		945E1F0B1FE10CE8000C5E21 /* MEGAInputToolbar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAInputToolbar.m; sourceTree = "<group>"; };
@@ -2182,12 +2165,6 @@
 		A8278D7E200E72A00040B076 /* incoming_voice_video_call_iOS9.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = incoming_voice_video_call_iOS9.mp3; sourceTree = "<group>"; };
 		A82A38CF200D32BC00883533 /* libzen.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libzen.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libzen.a; sourceTree = "<group>"; };
 		A82A38D4200D32EC00883533 /* libmediainfo.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libmediainfo.a; path = iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib/libmediainfo.a; sourceTree = "<group>"; };
-		A82E5BC41F3465A3003C149C /* Spotlight_file@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Spotlight_file@2x.png"; path = "Spotlight/Spotlight_file@2x.png"; sourceTree = "<group>"; };
-		A82E5BC51F3465A3003C149C /* Spotlight_file@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Spotlight_file@3x.png"; path = "Spotlight/Spotlight_file@3x.png"; sourceTree = "<group>"; };
-		A82E5BC61F3465A3003C149C /* Spotlight_folder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Spotlight_folder@2x.png"; path = "Spotlight/Spotlight_folder@2x.png"; sourceTree = "<group>"; };
-		A82E5BC71F3465A3003C149C /* Spotlight_folder@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Spotlight_folder@3x.png"; path = "Spotlight/Spotlight_folder@3x.png"; sourceTree = "<group>"; };
-		A82E5BF21F3470B5003C149C /* Spotlight_file.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Spotlight_file.png; path = Spotlight/Spotlight_file.png; sourceTree = "<group>"; };
-		A82E5BF31F3470B5003C149C /* Spotlight_folder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Spotlight_folder.png; path = Spotlight/Spotlight_folder.png; sourceTree = "<group>"; };
 		A83892411EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MEGAChatMessage+MNZCategory.h"; sourceTree = "<group>"; };
 		A83892421EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MEGAChatMessage+MNZCategory.m"; sourceTree = "<group>"; };
 		A841E63A20CAB460005E1D1B /* MEGAMessageCallManagementView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAMessageCallManagementView.h; sourceTree = "<group>"; };
@@ -2685,6 +2662,7 @@
 		BF33EF8324457A0700CD35AC /* ChatInputBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatInputBar.swift; sourceTree = "<group>"; };
 		BF33EF8B2447E6DC00CD35AC /* EnlargementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnlargementView.swift; sourceTree = "<group>"; };
 		BF33EF8F2447E70200CD35AC /* CondensationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CondensationView.swift; sourceTree = "<group>"; };
+		BF30AB9A24A05B7A00862853 /* MEGAChatMessage+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAChatMessage+Additions.swift"; sourceTree = "<group>"; };
 		BF69E5162374F3720031913D /* AppDelegate+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Additions.swift"; sourceTree = "<group>"; };
 		BF6DF365245797CC00D612D0 /* AddToChatViewAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToChatViewAnimator.swift; sourceTree = "<group>"; };
 		BF6DF3692457A06300D612D0 /* AddToChatImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToChatImageCell.swift; sourceTree = "<group>"; };
@@ -2801,8 +2779,6 @@
 		E87C98341CC4CC1000E2B9E6 /* AdvancedTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdvancedTableViewController.h; sourceTree = "<group>"; };
 		E87C98351CC4CC1000E2B9E6 /* AdvancedTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdvancedTableViewController.m; sourceTree = "<group>"; };
 		E8860CCF1C7724A00026ABBC /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
-		E8860CD71C7727400026ABBC /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Localizable.strings; sourceTree = "<group>"; };
-		E8860CD81C7738280026ABBC /* tl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tl; path = tl.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E889C9E51B5565C900ECEFDF /* MyAccount.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MyAccount.storyboard; sourceTree = "<group>"; };
 		E889C9E71B566EC400ECEFDF /* UsageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UsageViewController.h; sourceTree = "<group>"; };
 		E889C9E81B566EC400ECEFDF /* UsageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = UsageViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -2829,7 +2805,6 @@
 		E8BB73761D773A450067D89C /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ro; path = ro.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E8BB73771D773A4C0067D89C /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E8BB737C1D773A750067D89C /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		E8BB737F1D773AA20067D89C /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E8BB73801D773AA80067D89C /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		E8BB73811D773AC30067D89C /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E8BD127D1DB76E03003DC53F /* MasterKeyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MasterKeyViewController.h; sourceTree = "<group>"; };
@@ -3885,6 +3860,7 @@
 				BF943E9123554021001C18E0 /* TimeInterval+Additions.swift */,
 				BF943E9423554054001C18E0 /* String+Additions.swift */,
 				BF1574AD2373AB8C0095B283 /* MEGAChatRoom+Additions.swift */,
+				BF30AB9A24A05B7A00862853 /* MEGAChatMessage+Additions.swift */,
 				BF0ACD63240C87A80002101E /* MEGAChatListItem+Additions.swift */,
 				BFB463F624342F7F00FB90B9 /* MEGAUser+Additions.swift */,
 				B619C6BA230E49920095791B /* String+Additions.swift */,
@@ -4348,14 +4324,14 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		5BB8A851243DF3DA009FE957 /* Storage */ = {
+		5BB8A851243DF3DA009FE957 /* Usage */ = {
 			isa = PBXGroup;
 			children = (
 				5BB8A852243DF42D009FE957 /* Usage.storyboard */,
 				E889C9E71B566EC400ECEFDF /* UsageViewController.h */,
 				E889C9E81B566EC400ECEFDF /* UsageViewController.m */,
 			);
-			path = Storage;
+			path = Usage;
 			sourceTree = "<group>";
 		};
 		5BD4A01B1F8385EC000E24E6 /* FrameAccessor */ = {
@@ -4708,12 +4684,6 @@
 		9419B6BD1F20D18300FEBE31 /* Spotlight */ = {
 			isa = PBXGroup;
 			children = (
-				A82E5BF21F3470B5003C149C /* Spotlight_file.png */,
-				A82E5BF31F3470B5003C149C /* Spotlight_folder.png */,
-				A82E5BC41F3465A3003C149C /* Spotlight_file@2x.png */,
-				A82E5BC51F3465A3003C149C /* Spotlight_file@3x.png */,
-				A82E5BC61F3465A3003C149C /* Spotlight_folder@2x.png */,
-				A82E5BC71F3465A3003C149C /* Spotlight_folder@3x.png */,
 				9419B6BE1F20D1D700FEBE31 /* MEGAIndexer.h */,
 				9419B6BF1F20D1D700FEBE31 /* MEGAIndexer.m */,
 			);
@@ -5977,7 +5947,7 @@
 		E889C9DE1B55652B00ECEFDF /* My Account */ = {
 			isa = PBXGroup;
 			children = (
-				5BB8A851243DF3DA009FE957 /* Storage */,
+				5BB8A851243DF3DA009FE957 /* Usage */,
 				A8C93C0A22D718030030CE1B /* Profile */,
 				B6A11A0922828E400017CD59 /* SMS */,
 				77597007219EB7FD00B31671 /* Notifications */,
@@ -6287,7 +6257,6 @@
 				fa,
 				fi,
 				he,
-				hu,
 				id,
 				it,
 				ko,
@@ -6301,8 +6270,6 @@
 				sv,
 				th,
 				tl,
-				tr,
-				uk,
 				"pt-br",
 				vi,
 				fil,
@@ -6440,9 +6407,7 @@
 				83D64E2D20178A0400E24155 /* PasswordReminder.storyboard in Resources */,
 				BF7EBD47245277EB0015255F /* AddToChatMenuItemsView.xib in Resources */,
 				83C570E722E5BFCF00216896 /* README.md in Resources */,
-				A82E5BC81F3465A3003C149C /* Spotlight_file@2x.png in Resources */,
 				5B8D209B246A98F8009BD3E9 /* ChangeCredentials.storyboard in Resources */,
-				A82E5BCB1F3465A3003C149C /* Spotlight_folder@3x.png in Resources */,
 				E8C289FF1BF65BAB00F7A034 /* Launch.storyboard in Resources */,
 				5B59B4CF236726D100A57229 /* DocumentPreviewer.storyboard in Resources */,
 				83C570E522E5BFCF00216896 /* PhoneNumberMetadata.xml in Resources */,
@@ -6455,7 +6420,6 @@
 				A8C93C1422D71C470030CE1B /* Profile.storyboard in Resources */,
 				E889C9E61B5565C900ECEFDF /* MyAccount.storyboard in Resources */,
 				A8DE32CC22FC14CC006BAC7A /* BusinessExpiredViewController.xib in Resources */,
-				A82E5BC91F3465A3003C149C /* Spotlight_file@3x.png in Resources */,
 				A819B3421EAFA844004592F9 /* CustomModalAlertViewController.xib in Resources */,
 				2F85307324885FAB00064E83 /* PreviewersView.xib in Resources */,
 				A85665BD21A468D400B010F8 /* MEGAMessageGeoLocationView.xib in Resources */,
@@ -6500,17 +6464,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				945605411EDD65490094EF0F /* Cloud.storyboard in Resources */,
-				7751B1DF249C9FA400203D05 /* Spotlight_folder@2x.png in Resources */,
-				7751B1DE249C9FA400203D05 /* Spotlight_file@3x.png in Resources */,
 				944B205F1EE5C6CE003C967B /* Launch.storyboard in Resources */,
 				7751B1DB249C9FA400203D05 /* Spotlight_file.png in Resources */,
 				9422550C1EDC04E00074C51A /* MainInterface.storyboard in Resources */,
-				7751B1DC249C9FA400203D05 /* Spotlight_folder.png in Resources */,
-				7751B1DD249C9FA400203D05 /* Spotlight_file@2x.png in Resources */,
-				7751B1DB249C9FA400203D05 /* Spotlight_file.png in Resources */,
-				7751B1DC249C9FA400203D05 /* Spotlight_folder.png in Resources */,
-				7751B1DD249C9FA400203D05 /* Spotlight_file@2x.png in Resources */,
-				7751B1E0249C9FA400203D05 /* Spotlight_folder@3x.png in Resources */,
 				943229351EDD886B007DB542 /* Images.xcassets in Resources */,
 				9456054C1EDD7ADB0094EF0F /* LTHPasscodeViewController.bundle in Resources */,
 				9456053C1EDD53240094EF0F /* SVProgressHUD.bundle in Resources */,
@@ -6530,23 +6486,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7751B1D8249C9F9200203D05 /* Spotlight_file@3x.png in Resources */,
-				7751B1D9249C9F9200203D05 /* Spotlight_folder@2x.png in Resources */,
 				7767C39F247BB723001166A8 /* Chat.storyboard in Resources */,
 				9411354F1F00FD1500D33428 /* Cloud.storyboard in Resources */,
 				943F8B3D1EF2888000AFD89F /* Launch.storyboard in Resources */,
 				7751B1D7249C9F9200203D05 /* Spotlight_file@2x.png in Resources */,
 				5B95DD94237C35610068DF97 /* EmptyStateView.xib in Resources */,
-				7751B1D7249C9F9200203D05 /* Spotlight_file@2x.png in Resources */,
-				7751B1D6249C9F9200203D05 /* Spotlight_folder.png in Resources */,
 				941135651F011C8400D33428 /* Localizable.strings in Resources */,
 				A836581C2102101C005E616F /* Contacts.storyboard in Resources */,
 				94598D751F0CD53A00B57144 /* Share.storyboard in Resources */,
-				7751B1D5249C9F9200203D05 /* Spotlight_file.png in Resources */,
+				5BCD27F024A62AAC00A6E25E /* GenericHeaderFooterView.xib in Resources */,
 				943F8B3E1EF288BF00AFD89F /* Images.xcassets in Resources */,
 				9411355B1F01006E00D33428 /* LTHPasscodeViewController.bundle in Resources */,
-				7751B1E1249CA11400203D05 /* GenericHeaderFooterView.xib in Resources */,
-				7751B1DA249C9F9200203D05 /* Spotlight_folder@3x.png in Resources */,
 				94892C971EFBF03500AEAC25 /* SVProgressHUD.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -7056,6 +7006,7 @@
 				BF7EBD34244FA92B0015255F /* AddToChatCameraCollectionCell.swift in Sources */,
 				417279501DB663FA001AC818 /* JSQMessagesCollectionViewCell.m in Sources */,
 				BFB463E92433394500FB90B9 /* ChatMessage.swift in Sources */,
+				BF30AB9B24A05B7A00862853 /* MEGAChatMessage+Additions.swift in Sources */,
 				A86B9F4D2316D6AB00F35E7A /* FLEXArgumentInputStringView.m in Sources */,
 				2FCA4B7A2385FB260011B7DA /* ChatImageQualityTableViewController.swift in Sources */,
 				A86B9F2D2316D6AB00F35E7A /* FLEXBundleExplorerViewController.m in Sources */,
@@ -7469,7 +7420,6 @@
 				83FF5030247E86F600EAC08B /* CustomModalAlertViewController.m in Sources */,
 				83B841682051913C00E5AC69 /* MEGAGetThumbnailRequestDelegate.m in Sources */,
 				5BE689BB2419189600462134 /* AppearancePreference+CoreDataClass.swift in Sources */,
-				2F20C5E9240F434A00A1544C /* MEGAIndexer.m in Sources */,
 				2F25A2DC240C92C0005EF524 /* StorageFullModalAlertViewController.swift in Sources */,
 				5BFA34701FAC5857005BFC4E /* MEGAMoveRequestDelegate.m in Sources */,
 				9432294B1EDD9CE5007DB542 /* MEGAUser+MNZCategory.m in Sources */,
@@ -7636,7 +7586,6 @@
 				77F95CEF20E3B14D00F42D9C /* ShareFilesDestinationTableViewController.m in Sources */,
 				94892C931EFBEA4100AEAC25 /* MEGALogger.m in Sources */,
 				94892CA01EFBF16A00AEAC25 /* UIColor+MNZCategory.m in Sources */,
-				2F20C5EA240F434B00A1544C /* MEGAIndexer.m in Sources */,
 				94C9D7561FBDC87B008BA1B5 /* MEGANodeList+MNZCategory.m in Sources */,
 				7794AEA9231674750039C1D2 /* MEGASdk+MNZCategory.m in Sources */,
 				83B906BF249A29EF0088F15C /* UIActivityIndicatorView+Additions.swift in Sources */,
@@ -7763,8 +7712,6 @@
 				E84F87091BB9A27600436A0D /* vi */,
 				E8B64EFB1BC6E48C005C726E /* zh-Hans */,
 				E8860CCF1C7724A00026ABBC /* ar */,
-				E8860CD71C7727400026ABBC /* uk */,
-				E8860CD81C7738280026ABBC /* tl */,
 				E894271F1CCF8411008D470D /* th */,
 			);
 			name = Localizable.strings;
@@ -7797,12 +7744,10 @@
 				E8BB73761D773A450067D89C /* ro */,
 				E8BB73771D773A4C0067D89C /* ru */,
 				E8BB737C1D773A750067D89C /* th */,
-				E8BB737F1D773AA20067D89C /* uk */,
 				E8BB73801D773AA80067D89C /* pt-BR */,
 				E8BB73811D773AC30067D89C /* vi */,
 				9458AEE11FB9D3B800BABD58 /* en */,
 				9458AEE21FB9D40500BABD58 /* ja */,
-				9458AEE51FB9D5C700BABD58 /* fil */,
 			);
 			name = InfoPlist.strings;
 			path = ../Languages;
@@ -7932,7 +7877,7 @@
 				CODE_SIGN_ENTITLEMENTS = MEGA.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				ENABLE_BITCODE = NO;
@@ -7993,7 +7938,7 @@
 				CODE_SIGN_ENTITLEMENTS = MEGA.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -8055,7 +8000,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -8078,7 +8023,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = 5.0;
+				MARKETING_VERSION = 4.13;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				OTHER_LDFLAGS = (
@@ -8113,7 +8058,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -8135,7 +8080,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = 5.0;
+				MARKETING_VERSION = 4.13;
 				MTL_FAST_MATH = YES;
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -8163,7 +8108,7 @@
 				CODE_SIGN_ENTITLEMENTS = iMEGA/Extensions/MEGAPickerFileProvider/MEGAPickerFileProvider.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				GCC_PREFIX_HEADER = "iMEGA/Extensions/MEGAPickerFileProvider/MEGAPickerFileProvider-PrefixHeader.pch";
@@ -8182,7 +8127,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 5.0;
+				MARKETING_VERSION = 4.13;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPickerFileProvider;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -8202,7 +8147,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				GCC_PREFIX_HEADER = "iMEGA/Extensions/MEGAPickerFileProvider/MEGAPickerFileProvider-PrefixHeader.pch";
@@ -8221,7 +8166,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 5.0;
+				MARKETING_VERSION = 4.13;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPickerFileProvider;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -8241,7 +8186,7 @@
 				CODE_SIGN_ENTITLEMENTS = iMEGA/Extensions/MEGAPicker/MEGAPicker.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -8271,7 +8216,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 5.0;
+				MARKETING_VERSION = 4.13;
 				OTHER_CFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -8296,7 +8241,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -8325,7 +8270,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 5.0;
+				MARKETING_VERSION = 4.13;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -8348,7 +8293,7 @@
 				CODE_SIGN_ENTITLEMENTS = iMEGA/Extensions/MEGAShare/MEGAShare.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -8378,7 +8323,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 5.0;
+				MARKETING_VERSION = 4.13;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAShare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -8403,7 +8348,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -8432,7 +8377,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 5.0;
+				MARKETING_VERSION = 4.13;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAShare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

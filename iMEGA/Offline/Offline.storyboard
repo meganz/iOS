@@ -59,7 +59,7 @@
                     <viewLayoutGuide key="safeArea" id="Ccc-J8-e5q"/>
                     <items/>
                 </toolbar>
-                <barButtonItem enabled="NO" image="shareGray" width="32" style="plain" id="Gqs-Ra-NdD" userLabel="Activity Bar Button Item">
+                <barButtonItem enabled="NO" image="share" width="32" style="plain" id="Gqs-Ra-NdD" userLabel="Activity Bar Button Item">
                     <connections>
                         <action selector="activityTapped:" destination="cPA-hf-QcT" id="unK-9U-A8u"/>
                     </connections>
@@ -375,7 +375,7 @@
         <image name="moreSelected" width="28" height="28"/>
         <image name="remove" width="28" height="28"/>
         <image name="selectAll" width="22" height="22"/>
-        <image name="shareGray" width="32" height="32"/>
+        <image name="share" width="28" height="28"/>
         <image name="video_list" width="22" height="22"/>
     </resources>
 </document>
