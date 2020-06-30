@@ -163,12 +163,12 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
                 })
                 alert.addAction(JPGAlertAction)
                 
-                alert.addAction(UIAlertAction(title: AMLocalizedString("cancel"), style: .cancel, handler: nil))
-                
-                if UIDevice.current.iPad {
-                    alert.popoverPresentationController?.sourceView = view
-                    alert.popoverPresentationController?.sourceRect = tableView.convert(tableView.cellForRow(at: indexPath)!.frame, to: view)
+                if let popover = alert.popoverPresentationController {
+                    popover.sourceView = tableView
+                    popover.sourceRect = tableView.rectForRow(at: indexPath)
                 }
+                
+                alert.addAction(UIAlertAction(title: AMLocalizedString("cancel"), style: .cancel, handler: nil))
                 
                 present(alert, animated: true, completion: nil)
             case 1:
@@ -192,12 +192,12 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
                 })
                 alert.addAction(lowAlertAction)
                 
-                alert.addAction(UIAlertAction(title: AMLocalizedString("cancel"), style: .cancel, handler: nil))
-                
-                if UIDevice.current.iPad {
-                    alert.popoverPresentationController?.sourceView = view
-                    alert.popoverPresentationController?.sourceRect = tableView.convert(tableView.cellForRow(at: indexPath)!.frame, to: view)
+                if let popover = alert.popoverPresentationController {
+                    popover.sourceView = tableView
+                    popover.sourceRect = tableView.rectForRow(at: indexPath)
                 }
+                
+                alert.addAction(UIAlertAction(title: AMLocalizedString("cancel"), style: .cancel, handler: nil))
                 
                 present(alert, animated: true, completion: nil)
             default: break
