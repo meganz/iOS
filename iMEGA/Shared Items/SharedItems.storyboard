@@ -471,7 +471,7 @@
                         <action selector="leaveShareAction:" destination="2AR-na-hSZ" id="ZTA-Cz-x2Y"/>
                     </connections>
                 </barButtonItem>
-                <barButtonItem enabled="NO" image="shareGray" width="32" style="plain" id="BO7-Au-PHR" userLabel="Share Bar Button Item">
+                <barButtonItem enabled="NO" image="share" width="32" style="plain" id="BO7-Au-PHR" userLabel="Share Bar Button Item">
                     <connections>
                         <action selector="shareAction:" destination="2AR-na-hSZ" id="KXZ-td-sf7"/>
                     </connections>
@@ -508,7 +508,7 @@
         <image name="removeLink" width="28" height="28"/>
         <image name="removeShare" width="28" height="28"/>
         <image name="selectAll" width="22" height="22"/>
-        <image name="shareGray" width="32" height="32"/>
+        <image name="share" width="28" height="28"/>
         <image name="shareWith" width="38" height="32"/>
         <image name="sharedItemsIcon" width="31" height="28"/>
         <image name="versioned" width="12" height="12"/>

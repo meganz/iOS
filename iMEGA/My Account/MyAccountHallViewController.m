@@ -50,7 +50,6 @@ typedef NS_ENUM(NSInteger, MyAccount) {
 @property (weak, nonatomic) IBOutlet UIImageView *addPhoneNumberImageView;
 @property (weak, nonatomic) IBOutlet UILabel *addPhoneNumberTitle;
 @property (weak, nonatomic) IBOutlet UILabel *addPhoneNumberDescription;
-@property (weak, nonatomic) IBOutlet UIView *addPhoneNumberBottomSeparatorView;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -150,7 +149,6 @@ typedef NS_ENUM(NSInteger, MyAccount) {
     self.profileBottomSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     
     self.addPhoneNumberView.backgroundColor = [UIColor mnz_secondaryBackgroundGrouped:self.traitCollection];
-    self.addPhoneNumberBottomSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     
     if (MEGASdkManager.sharedMEGASdk.isBusinessAccount) {
         self.businessLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
@@ -177,8 +175,10 @@ typedef NS_ENUM(NSInteger, MyAccount) {
 
 - (void)configAddPhoneNumberView {
     if (MEGASdkManager.sharedMEGASdk.smsVerifiedPhoneNumber != nil || MEGASdkManager.sharedMEGASdk.smsAllowedState != SMSStateOptInAndUnblock) {
+        self.profileBottomSeparatorView.hidden = YES;
         self.addPhoneNumberView.hidden = YES;
     } else {
+        self.profileBottomSeparatorView.hidden = NO;
         if (self.addPhoneNumberView.isHidden) {
             [UIView animateWithDuration:.75 animations:^{
                 self.addPhoneNumberView.hidden = NO;
@@ -332,7 +332,7 @@ typedef NS_ENUM(NSInteger, MyAccount) {
                 cell.transferLabel.textColor = cell.transferUsedLabel.textColor = UIColor.systemGreenColor;
             } else {
                 cell.iconImageView.image = [UIImage imageNamed:@"icon-storage"].imageFlippedForRightToLeftLayoutDirection;
-                cell.sectionLabel.text = AMLocalizedString(@"Storage", @"Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible).");
+                cell.sectionLabel.text = AMLocalizedString(@"Usage", @"Button title that goes to the section Usage where you can see how your MEGA space is used");
                 
                 if (MEGASdkManager.sharedMEGASdk.mnz_accountDetails) {
                     MEGAAccountDetails *accountDetails = MEGASdkManager.sharedMEGASdk.mnz_accountDetails;

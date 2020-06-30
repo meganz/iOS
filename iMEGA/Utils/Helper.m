@@ -11,7 +11,6 @@
 #import "UIApplication+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 
-#import "MEGAIndexer.h"
 #import "MEGAActivityItemProvider.h"
 #import "MEGACopyRequestDelegate.h"
 #import "MEGACreateFolderRequestDelegate.h"
@@ -42,6 +41,8 @@
 #import "ShareFolderActivity.h"
 #import "SendToChatActivity.h"
 
+static MEGAIndexer *indexer;
+
 @implementation Helper
 
 #pragma mark - Languages
@@ -65,8 +66,6 @@
                                  @"ro",
                                  @"ru",
                                  @"th",
-                                 @"tl",
-                                 @"uk",
                                  @"vi",
                                  @"zh-Hans",
                                  @"zh-Hant",
@@ -374,7 +373,7 @@
         api = [MEGASdkManager sharedMEGASdk];
     }
     
-    NSString *offlineNameString = [api escapeFsIncompatible:node.name];
+    NSString *offlineNameString = [api escapeFsIncompatible:node.name destinationPath:[NSHomeDirectory() stringByAppendingString:@"/"]];
     NSString *relativeFilePath = [folderPath stringByAppendingPathComponent:offlineNameString];
     
     if (node.type == MEGANodeTypeFile) {
@@ -708,7 +707,7 @@
     
     if (reindex) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-            [MEGAIndexer.sharedIndexer index:node];
+            [indexer index:node];
         });
     }
 }
@@ -1023,6 +1022,10 @@
     }
     
     return [filesURLMutableArray copy];
+}
+
++ (void)setIndexer:(MEGAIndexer* )megaIndexer {
+    indexer = megaIndexer;
 }
 
 #pragma mark - Utils for UI

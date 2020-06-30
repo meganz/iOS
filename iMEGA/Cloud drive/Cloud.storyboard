@@ -1253,7 +1253,7 @@
                         <action selector="moreRecentsAction:" destination="MwH-YC-3hO" id="qso-tq-xbV"/>
                     </connections>
                 </barButtonItem>
-                <barButtonItem enabled="NO" image="shareGray" width="32" style="plain" id="ZLw-VN-spf" userLabel="Share Bar Button Item">
+                <barButtonItem enabled="NO" image="share" width="32" style="plain" id="ZLw-VN-spf" userLabel="Share Bar Button Item">
                     <connections>
                         <action selector="shareAction:" destination="MwH-YC-3hO" id="FF8-kZ-90c"/>
                     </connections>
@@ -2316,7 +2316,7 @@ You are strictly prohibited from using the MEGA cloud service to infringe copyri
         <image name="restore" width="28" height="28"/>
         <image name="rubbishBin" width="28" height="28"/>
         <image name="selectAll" width="22" height="22"/>
-        <image name="shareGray" width="32" height="32"/>
+        <image name="share" width="28" height="28"/>
         <image name="versioned" width="12" height="12"/>
         <image name="video_list" width="22" height="22"/>
     </resources>

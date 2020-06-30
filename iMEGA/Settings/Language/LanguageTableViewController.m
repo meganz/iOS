@@ -23,6 +23,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.tableView.tableFooterView = [UIView.alloc initWithFrame:CGRectZero];
+    
     NSString *language = [[LocalizationSystem sharedLocalSystem] getLanguage];
     self.languageIndex = [[Helper languagesSupportedIDs] indexOfObject:language];
     
@@ -41,8 +43,6 @@
                                  @"ro":@"Română",
                                  @"ru":@"Pусский язык",
                                  @"th":@"ไทย",
-                                 @"tl":@"Tagalog",
-                                 @"uk":@"українська мова",
                                  @"vi":@"Tiếng Việt",
                                  @"zh-Hans":@"简体中文",
                                  @"zh-Hant":@"中文繁體"};
