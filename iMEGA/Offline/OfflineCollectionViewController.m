@@ -117,7 +117,7 @@ static NSString *kPath = @"kPath";
         }
     
     }
-    cell.nameLabel.text = [[MEGASdkManager sharedMEGASdk] unescapeFsIncompatible:nameString];
+    cell.nameLabel.text = [[MEGASdkManager sharedMEGASdk] unescapeFsIncompatible:nameString destinationPath:[NSHomeDirectory() stringByAppendingString:@"/"]];
     
     if (self.collectionView.allowsMultipleSelection) {
         cell.selectImageView.hidden = NO;

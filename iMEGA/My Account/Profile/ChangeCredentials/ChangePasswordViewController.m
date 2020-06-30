@@ -177,11 +177,13 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
     switch (self.changeType) {
         case ChangeTypePassword:
         case ChangeTypePasswordFromLogout:
+            self.theNewPasswordView.backgroundColor = self.confirmPasswordView.backgroundColor = [UIColor mnz_secondaryBackgroundGroupedElevated:self.traitCollection];
             [self.theNewPasswordView updateAppearance];
             [self.confirmPasswordView updateAppearance];
             break;
             
         case ChangeTypeEmail:
+            self.currentEmailInputView.backgroundColor = self.theNewEmailInputView.backgroundColor = self.confirmEmailInputView.backgroundColor = [UIColor mnz_secondaryBackgroundGroupedElevated:self.traitCollection];
             [self.currentEmailInputView updateAppearance];
             [self.theNewEmailInputView updateAppearance];
             [self.confirmEmailInputView updateAppearance];
@@ -189,6 +191,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
             
         case ChangeTypeResetPassword:
         case ChangeTypeParkAccount:
+            self.currentEmailInputView.backgroundColor = self.theNewPasswordView.backgroundColor = self.confirmPasswordView.backgroundColor = [UIColor mnz_secondaryBackgroundGroupedElevated:self.traitCollection];
             [self.currentEmailInputView updateAppearance];
             [self.theNewPasswordView updateAppearance];
             [self.confirmPasswordView updateAppearance];

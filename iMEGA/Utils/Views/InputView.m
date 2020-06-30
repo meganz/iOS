@@ -64,15 +64,7 @@
 }
 
 - (void)updateAppearance {
-    CALayer *topBorderLayer = CALayer.new;
-    topBorderLayer.frame = CGRectMake(0, 0, self.frame.size.width, 0.5);
-    topBorderLayer.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection].CGColor;
-    [self.customView.layer addSublayer:topBorderLayer];
-
-    CALayer *bottomBorderLayer = CALayer.new;
-    bottomBorderLayer.frame = CGRectMake(0, self.customView.frame.size.height, self.frame.size.width, 0.5);
-    bottomBorderLayer.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection].CGColor;
-    [self.customView.layer addSublayer:bottomBorderLayer];
+    self.topSeparatorView.backgroundColor = self.bottomSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     
     self.topLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
     

@@ -8,7 +8,7 @@ class GenericHeaderFooterView: UITableViewHeaderFooterView {
     @IBOutlet weak var bottomSeparatorView: UIView!
     @IBOutlet weak var backgroundColorView: UIView!
     
-    var usingDefaultBackgroundColor: Bool = false
+    private var usingDefaultBackgroundColor: Bool = false
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -35,7 +35,7 @@ class GenericHeaderFooterView: UITableViewHeaderFooterView {
     //MARK: - Private
     
     private func updateAppearance() {
-        if (self.contentView.backgroundColor != nil && !usingDefaultBackgroundColor) {
+        if self.contentView.backgroundColor != nil && !usingDefaultBackgroundColor {
             self.contentView.backgroundColor = .mnz_backgroundGroupedElevated(traitCollection)
         } else {
             self.contentView.backgroundColor = .mnz_backgroundGrouped(for: traitCollection)

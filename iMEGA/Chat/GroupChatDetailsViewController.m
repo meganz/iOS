@@ -393,6 +393,7 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
             
         case GroupChatDetailsSectionRenameGroup:
             numberOfRows = (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) ? 1 : 0;
+            break;
 
         case GroupChatDetailsSectionSharedFiles:
             numberOfRows = 1;
@@ -603,6 +604,7 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
             
         case GroupChatDetailsSectionRenameGroup:
             height = (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) ? 10.0f : 0.1f;
+            break;
             
         case GroupChatDetailsSectionSharedFiles:
             height = 10.0f;

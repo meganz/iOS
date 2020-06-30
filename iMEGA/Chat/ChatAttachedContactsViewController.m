@@ -186,8 +186,12 @@
         
         NSUInteger usersAttachedCount = self.message.usersCount;
         for (NSInteger i = 0; i < usersAttachedCount; i++) {
-            NSString *email = [self.message userEmailAtIndex:i];
-            [self.selectedUsersMutableArray addObject:email];
+            uint64_t userHandle = [self.message userHandleAtIndex:i];
+            NSString *userBase64Handle = [MEGASdk base64HandleForUserHandle:userHandle];
+            if (![self.alreadyContactsMutableDictionary objectForKey:userBase64Handle]) {
+                NSString *email = [self.message userEmailAtIndex:i];
+                [self.selectedUsersMutableArray addObject:email];
+            }
         }
     } else {
         [self.selectedUsersMutableArray removeAllObjects];
@@ -225,10 +229,11 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ContactTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"contactCell" forIndexPath:indexPath];
     
+    NSString *username = [self.message contactNameAtIndex:indexPath.row];
     NSString *currentEmail = [self.message userEmailAtIndex:indexPath.row];
     
-    [cell.avatarImageView mnz_setImageForUserHandle:[self.message userHandleAtIndex:indexPath.row] name:[self.message userNameAtIndex:indexPath.row]];
-    cell.nameLabel.text = [self.message userNameAtIndex:indexPath.row];
+    [cell.avatarImageView mnz_setImageForUserHandle:[self.message userHandleAtIndex:indexPath.row] name:username];
+    cell.nameLabel.text = username;
     
     uint64_t userHandle = [self.message userHandleAtIndex:indexPath.row];
     NSString *userBase64Handle = [MEGASdk base64HandleForUserHandle:userHandle];
