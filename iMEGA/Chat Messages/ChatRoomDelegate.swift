@@ -42,7 +42,23 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
 
     func onReactionUpdate(_ api: MEGAChatSdk!, messageId: UInt64, reaction: String!, count: Int) {
         print(reaction)
-        chatViewController?.messagesCollectionView.reloadData()
+     
+        let index = messages.firstIndex { (message) -> Bool in
+            guard let message = message as? ChatMessage else {
+                return false
+            }
+            
+            return messageId == message.message.messageId
+        }
+        
+        UIView.setAnimationsEnabled(false)
+        chatViewController?.messagesCollectionView.performBatchUpdates({
+            chatViewController?.messagesCollectionView.reloadSections([index ?? 0])
+        },  completion: { [weak self] _ in
+            UIView.setAnimationsEnabled(true)
+        })
+        
+//        chatViewController?.messagesCollectionView.reloadData()
     }
     
     func onChatRoomUpdate(_ api: MEGAChatSdk!, chat: MEGAChatRoom!) {

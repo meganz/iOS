@@ -56,10 +56,11 @@ class MessageReactionReusableView: MessageReusableView, UICollectionViewDelegate
     }
 }
 
-
 //
-//extension MessageReactionReusableView: UICollectionViewDelegateFlowLayout {
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        return CGSize(width: 100, height: 30)
+//
+//extension MessageReactionReusableView: MEGAChatRoomDelegate {
+//
+//    func onReactionUpdate(_ api: MEGAChatSdk!, messageId: UInt64, reaction: String!, count: Int) {
+//        print(reaction)
 //    }
 //}
