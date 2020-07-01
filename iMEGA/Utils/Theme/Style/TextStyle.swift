@@ -6,21 +6,6 @@ struct TextStyle: Codable {
     var backgroundColor: Color? = nil
 }
 
-extension TextStyle {
-
-    static var headlineTextStyle: TextStyle { TextStyle(font: .headline, color: .textDarkPrimary) }
-
-    static var paragraphTextStyle: TextStyle { TextStyle(font: .subhead, color: .textDarkPrimary) }
-
-    static var emphasizedTextStyle: TextStyle { TextStyle(font: .subhead2, color: .textDarkPrimary) }
-
-    static var warningTextStyle: TextStyle { TextStyle(font: .subhead2, color: .textWarning) }
-
-    static var noteMainTextStyle: TextStyle { TextStyle(font: .caption1, color: .textDarkPrimary) }
-
-    static var noteSubTextStyle: TextStyle { TextStyle(font: .caption2, color: .textDarkPrimary) }
-}
-
 // MARK: - UI Applier
 
 extension TextStyle {
@@ -59,7 +44,7 @@ fileprivate func apply(style: TextStyle) -> (UILabel) -> UILabel {
 fileprivate func apply(style: TextStyle) -> (UIButton) -> UIButton {
     return { button in
         button.setTitleColor(style.color.uiColor, for: .normal)
-        button.titleLabel?.font = uiFont(from: style.font)
+        button.titleLabel?.font = style.font.uiFont
         return button
     }
 }
@@ -68,7 +53,7 @@ typealias TextAttributes = [NSAttributedString.Key: Any]
 fileprivate func apply(style: TextStyle) -> (TextAttributes) -> TextAttributes {
     return { attributes in
         var copyAttributes = attributes
-        copyAttributes[.font] = uiFont(from: style.font)
+        copyAttributes[.font] = style.font.uiFont
         copyAttributes[.foregroundColor] = style.color.uiColor
         copyAttributes[.backgroundColor] = style.backgroundColor?.uiColor
         return copyAttributes

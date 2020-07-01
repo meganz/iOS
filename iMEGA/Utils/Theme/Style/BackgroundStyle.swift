@@ -4,14 +4,6 @@ struct BackgroundStyle: Codable {
     let backgroundColor: Color
 }
 
-// MARK: - Constant
-
-extension BackgroundStyle {
-
-    static var warningBackgroundStyle: BackgroundStyle { BackgroundStyle(backgroundColor: .backgroundWarningYellow) }
-}
-
-
 extension BackgroundStyle {
 
     @discardableResult

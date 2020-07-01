@@ -41,7 +41,7 @@ final class OverDiskQuotaViewController: UIViewController {
             AMLocalizedString("Your Data is at Risk!", "Warning title message tells user data in danger.")
         }
 
-        var overDiskQuotaMessage: NSAttributedString {
+        func overDiskQuotaMessage(with traitCollection: UITraitCollection) -> NSAttributedString {
             let message = AMLocalizedString("<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to %@.</paragraph>",
                                                   "A paragraph of warning message tells user upgrade to selected [minimum subscription plan] before [deadline] due to [cloud space used] and [warning dates]")
 
@@ -53,10 +53,12 @@ final class OverDiskQuotaViewController: UIViewController {
                                         suggestedPlan)
 
             let styleMarks: StyleMarks = ["paragraph": .paragraph, "b": .emphasized]
-            return formattedMessage.attributedString(with: styleMarks)
+            return formattedMessage.attributedString(
+                with: styleMarks,
+                attributedTextStyleFactory: createAttributedTextStyleFactory(from: traitCollection.theme))
         }
 
-        var warningActionTitle: NSAttributedString {
+        func warningActionTitle(with traitCollection: UITraitCollection) -> NSAttributedString {
             let daysLeft = daysDistance(from: Date(), endDate: overDiskQuotaData.deadline)
             let daysLeftLocalized = String(format: AMLocalizedString("%d days", "Count of days"), daysLeft)
             let warningTitleMessage = AMLocalizedString("<body>You have <warn>%@</warn> left to upgrade.</body>",
@@ -68,7 +70,9 @@ final class OverDiskQuotaViewController: UIViewController {
                                                           "<body><warn>You must act immediately to save your data.</warn><body>")
             }
             let styleMarks: StyleMarks = ["warn": .warning, "body": .emphasized]
-            return formattedTitleMessage.attributedString(with: styleMarks)
+            return formattedTitleMessage.attributedString(
+                with: styleMarks,
+                attributedTextStyleFactory: createAttributedTextStyleFactory(from: traitCollection.theme))
         }
 
         // MARK: - Privates
@@ -87,7 +91,6 @@ final class OverDiskQuotaViewController: UIViewController {
                                      "Asks the user to request a custom Pro plan from customer support because their storage usage is more than the regular plans.")
         }
     }
-
 
     // MARK: - Views
     
@@ -113,9 +116,15 @@ final class OverDiskQuotaViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupTraitCollectionAwareView(with: traitCollection)
+    }
+
+    private func setupTraitCollectionAwareView(with traitCollection: UITraitCollection) {
         setupTitleLabel(titleLabel)
-        setupMessageLabel(warningParagaphLabel, withMessage: overDiskQuotaAdvicer.overDiskQuotaMessage)
-        setupWarningView(warningView, with: overDiskQuotaAdvicer.warningActionTitle)
+        setupMessageLabel(warningParagaphLabel,
+                          withMessage: overDiskQuotaAdvicer.overDiskQuotaMessage(with: traitCollection))
+        setupWarningView(warningView,
+                         with: overDiskQuotaAdvicer.warningActionTitle(with: traitCollection))
         setupUpgradeButton(upgradeButton)
         setupDismissButton(dismissButton)
     }
@@ -124,6 +133,14 @@ final class OverDiskQuotaViewController: UIViewController {
         super.viewWillAppear(animated)
         setupNavigationController(navigationController)
         setupScrollView(contentScrollView)
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        if #available(iOS 13, *) {
+            setupTraitCollectionAwareView(with: traitCollection)
+        }
     }
 
     // MARK: - Setup MEGA UserData
@@ -157,7 +174,8 @@ final class OverDiskQuotaViewController: UIViewController {
 
     private func setupTitleLabel(_ titleLabel: UILabel) {
         titleLabel.text = AMLocalizedString("Your Data is at Risk!", "Warning title message tells user data in danger.")
-        LabelStyle.headline.style(titleLabel)
+        let style = createLabelStyleFactory(from: traitCollection.theme).createStyler(of: .headline)
+        style(titleLabel)
     }
 
     private func setupMessageLabel(_ descriptionLabel: UILabel, withMessage message: NSAttributedString) {
@@ -165,13 +183,15 @@ final class OverDiskQuotaViewController: UIViewController {
     }
 
     private func setupUpgradeButton(_ button: UIButton) {
-        ButtonStyle.active.style(button)
+        let style = createThemeButtonStyleFactory(from: traitCollection.theme).buttonStyle(of: .primary)
+        style(button)
         button.setTitle(AMLocalizedString("upgrade", "Upgrade"), for: .normal)
         button.addTarget(self, action: .didTapUpgradeButton, for: .touchUpInside)
     }
 
     private func setupDismissButton(_ button: UIButton) {
-        ButtonStyle.inactive.style(button)
+        let style = createThemeButtonStyleFactory(from: traitCollection.theme).buttonStyle(of: .secondary)
+        style(button)
         button.setTitle(AMLocalizedString("dismiss", "Dismiss"), for: .normal)
         button.addTarget(self, action: .didTapDismissButton, for: .touchUpInside)
     }
@@ -179,8 +199,8 @@ final class OverDiskQuotaViewController: UIViewController {
     // MARK: - Button Actions
 
     @objc fileprivate func didTapUpgradeButton(button: UIButton) {
-        let upgradeViewController = UIStoryboard(name: "MyAccount", bundle: nil)
-            .instantiateViewController(withIdentifier: "UpgradeID")
+        let upgradeViewController = UIStoryboard(name: "UpgradeAccount", bundle: nil)
+            .instantiateViewController(withIdentifier: "UpgradeTableViewControllerID")
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.pushViewController(upgradeViewController, animated: true)
     }

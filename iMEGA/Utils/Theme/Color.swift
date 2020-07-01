@@ -17,62 +17,6 @@ extension Color: ColorProviding {
 
 extension Color {
 
-    // MARK: - Text
-
-    /// RGB(0, 0, 0, 0.8), Dark gray
-    static var textLightPrimary: Color { Color.Text.lightPrimary }
-
-    /// RGB(0, 0, 0, 0.8), Dark gray
-    static var textLightPrimaryGreen: Color { Color.Text.lightPrimaryGreen }
-
-    /// RGB(255, 255, 255, 1), White
-    static var textDarkPrimary: Color { Color.Text.darkPrimary }
-
-    /// RGB(0, 168, 0, 134, 1), Green
-    static var textGreenPrimary: Color { Color.Text.greenPrimary }
-
-    /// RGB(200, 241, 236, 1), Light Green
-    static var textGreenSecondary: Color { Color.Text.greenSecondary }
-
-    /// RGB(217, 0, 7, 1), Red
-    static var textWarning: Color { Color.Text.redPrimary }
-
-    // MARK: - Text Grey
-
-    /// Grey RGB(155, 155, 155, 1), `9B9B9B`
-    static var textGrayPrimary: Color { Color.Text.greyPrimary }
-
-    // MARK: - Background
-
-    /// RGB(255, 255, 255, 1), White
-    static var backgroundDefaultLight: Color { Color.Background.defaultLight }
-
-    /// RGB(255, 204, 0, 0.15), Very light yellow
-    static var backgroundWarningYellow: Color { Color.Background.warning }
-
-    /// RGB(0, 168, 0, 134, 1), Green
-    static var backgroundEnabledPrimary: Color { Color.Background.enabledPrimary }
-
-    /// RGB(0, 168, 0, 134, 0.8), Green with 0.8 alpha
-    static var backgroundHighlightedPrimary: Color { Color.Background.highlightedPrimary }
-
-    /// RGB(153, 153, 153, 1), Gray
-    static var backgroundDisabledPrimary: Color { Color.Background.disabledPrimary }
-
-    // MARK: - Border
-
-    /// RGB(255, 204, 0, 1), Yellow
-    static var borderWarningYellow: Color { Color.Border.warning }
-
-    /// RGB(200, 200, 200, 1), Grey
-    static var borderInactiveGrey: Color { Color.Border.grey }
-
-    // MARK: - Shadow
-    static var shadowPrimary: Color { Color.Shadow.primary }
-}
-
-extension Color {
-
     enum Text {
 
         /// RGB(0, 0, 0, 0.8), Dark gray

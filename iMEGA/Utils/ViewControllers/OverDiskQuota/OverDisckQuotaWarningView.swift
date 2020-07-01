@@ -20,6 +20,15 @@ final class OverDisckQuotaWarningView: UIView, NibOwnerLoadable {
         setupView()
     }
     
+    // MARK: - Dark Mode
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        if #available(iOS 13, *) {
+            setupTraitCollectionAwareView(with: traitCollection)
+        }
+    }
+
     // MARK: - Method
 
     func updateTitle(with text: NSAttributedString) {
@@ -31,23 +40,30 @@ final class OverDisckQuotaWarningView: UIView, NibOwnerLoadable {
     private func setupView() {
         translatesAutoresizingMaskIntoConstraints = false
         loadNibContent()
+        setupTitleLabel(titleLabel)
+        setupTraitCollectionAwareView(with: traitCollection)
+    }
+
+    private func setupTraitCollectionAwareView(with trait: UITraitCollection) {
         setupContainerView(containerView)
         setupDetailLabel(detailLabel)
-        setupTitleLabel(titleLabel)
     }
 
     private func setupContainerView(_ containerView: UIView) {
-        ViewStyle.warning.style(containerView)
+        let customeViewStyle = createCustomViewStyleFactory(from: createColorFactory(from: traitCollection.theme))
+            .viewStyle(of: .warning)
+        customeViewStyle(containerView)
     }
 
     private func setupDetailLabel(_ detailLabel: UILabel) {
-        LabelStyle.noteSub.style(detailLabel)
+        let style = createLabelStyleFactory(from: traitCollection.theme).createStyler(of: .noteSub)
+        style(detailLabel)
         detailLabel.text = AMLocalizedString("After that, your data is subject to deletion.",
                                              "Warning message to tell user your data is about to be deleted.")
     }
 
     private func setupTitleLabel(_ titleLabel: UILabel) {
-        LabelStyle.noteMain.style(titleLabel)
-        titleLabel.text = nil
+        let style = createLabelStyleFactory(from: traitCollection.theme).createStyler(of: .noteMain)
+        style(titleLabel)
     }
 }
