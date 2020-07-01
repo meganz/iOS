@@ -20,6 +20,10 @@
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zkk-lr-rmO">
                         <rect key="frame" x="0.0" y="0.0" width="44" height="30"/>
                         <color key="backgroundColor" red="0.97647058823529409" green="0.97647058823529409" blue="0.97647058823529409" alpha="0.84705882352941175" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="44" id="GfC-W1-MbE"/>
+                            <constraint firstAttribute="height" constant="30" id="vsU-e2-pKn"/>
+                        </constraints>
                         <color key="tintColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                         <inset key="contentEdgeInsets" minX="8" minY="0.0" maxX="8" maxY="0.0"/>
                         <state key="normal" image="addReactionSmall"/>
