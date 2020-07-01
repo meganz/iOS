@@ -11,6 +11,7 @@ class EmojiCarousalView: UIView {
     @IBOutlet weak var descriptionLabel: UILabel!
     
     weak var delegate: EmojiCarousalViewDelegate?
+    
     var selectedEmoji: String? {
         didSet {
             guard let emojiList = emojiList,
@@ -18,6 +19,7 @@ class EmojiCarousalView: UIView {
                 let index = emojiList.firstIndex(of: selectedEmoji) else {
                 return
             }
+            
             
             collectionView.selectItem(at: IndexPath(item: index, section: 0),
                                       animated: true,
