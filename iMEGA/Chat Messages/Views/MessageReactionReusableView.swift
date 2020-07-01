@@ -1,6 +1,11 @@
 import MessageKit
 import AlignedCollectionViewFlowLayout
 
+protocol MessageReactionReusableViewDelegate: class {
+    func emojiTapped(_ emoji: String, chatMessage: ChatMessage)
+    func emojiLongPressed(_ emoji: String, chatMessage: ChatMessage)
+}
+
 class MessageReactionReusableView: MessageReusableView, UICollectionViewDelegate, UICollectionViewDataSource {
     
     @IBOutlet weak var reactionCollectionView: UICollectionView!
@@ -17,6 +22,8 @@ class MessageReactionReusableView: MessageReusableView, UICollectionViewDelegate
             reactionCollectionView.reloadData()
         }
     }
+    
+    weak var delegate: MessageReactionReusableViewDelegate?
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -50,9 +57,28 @@ class MessageReactionReusableView: MessageReusableView, UICollectionViewDelegate
 
         if let reactionCell = cell as? ReactionCollectionViewCell {
             reactionCell.configureCell(emoji, count)
+            reactionCell.delegate = self
         }
         
         return cell
+    }
+}
+
+extension MessageReactionReusableView: ReactionCollectionViewCellDelegate {
+    func emojiTapped(_ emoji: String) {
+        guard let delegate = delegate, let chatMessage = chatMessage else {
+            return
+        }
+        
+        delegate.emojiTapped(emoji, chatMessage: chatMessage)
+    }
+    
+    func emojiLongPressed(_ emoji: String) {
+        guard let delegate = delegate, let chatMessage = chatMessage else {
+            return
+        }
+
+        delegate.emojiLongPressed(emoji, chatMessage: chatMessage)
     }
 }
 
