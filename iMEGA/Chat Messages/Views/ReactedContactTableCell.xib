@@ -38,13 +38,23 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </imageView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UvD-W1-O4l">
+                        <rect key="frame" x="60" y="59" width="260" height="1"/>
+                        <color key="backgroundColor" red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.2889822345890411" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="YFd-81-RBl"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="UvD-W1-O4l" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="60" id="FLd-gs-6GQ"/>
                     <constraint firstItem="ZCw-ww-nHj" firstAttribute="centerY" secondItem="5eI-Jp-QUA" secondAttribute="centerY" id="M9N-jP-1uM"/>
                     <constraint firstItem="5eI-Jp-QUA" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="Vsz-ti-va0"/>
                     <constraint firstAttribute="bottom" secondItem="5eI-Jp-QUA" secondAttribute="bottom" constant="10" id="XLh-G9-srb"/>
                     <constraint firstItem="ZCw-ww-nHj" firstAttribute="leading" secondItem="5eI-Jp-QUA" secondAttribute="trailing" constant="15" id="eSN-CJ-h26"/>
+                    <constraint firstAttribute="bottom" secondItem="UvD-W1-O4l" secondAttribute="bottom" id="iyG-SX-UVZ"/>
                     <constraint firstItem="5eI-Jp-QUA" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="ld7-3f-zWj"/>
+                    <constraint firstAttribute="trailing" secondItem="UvD-W1-O4l" secondAttribute="trailing" id="r2c-7h-pOi"/>
                 </constraints>
             </tableViewCellContentView>
             <constraints>
@@ -53,9 +63,10 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="avatarImageView" destination="5eI-Jp-QUA" id="tD0-Vr-8SO"/>
+                <outlet property="seperatorView" destination="H2p-sc-9uM" id="Tib-JX-pGV"/>
                 <outlet property="usernameLabel" destination="ZCw-ww-nHj" id="exS-28-rXr"/>
             </connections>
-            <point key="canvasLocation" x="137.68115942028987" y="136.27232142857142"/>
+            <point key="canvasLocation" x="137.68115942028987" y="135.9375"/>
         </tableViewCell>
     </objects>
 </document>
