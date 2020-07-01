@@ -895,7 +895,7 @@
             </objects>
             <point key="canvasLocation" x="3621.739130434783" y="-250.27173913043481"/>
         </scene>
-        <!--Group Call-->
+        <!--Group Call View Controller-->
         <scene sceneID="vQN-TC-N3z">
             <objects>
                 <viewController storyboardIdentifier="GroupCallViewControllerID" id="Vz1-hi-tko" customClass="GroupCallViewController" sceneMemberID="viewController">
@@ -1284,13 +1284,6 @@
                             </mask>
                         </variation>
                     </view>
-                    <navigationItem key="navigationItem" title="Group Call" id="gyn-gs-m5U">
-                        <barButtonItem key="leftBarButtonItem" title="Item" image="down-arrow" id="8LQ-aa-p6w">
-                            <connections>
-                                <action selector="hideCall:" destination="Vz1-hi-tko" id="h5v-gD-YwY"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
                     <connections>
                         <outlet property="callControlsView" destination="otq-cr-6oa" id="OiA-lh-451"/>
                         <outlet property="collectionActivity" destination="fAr-Ud-Er3" id="oAC-eW-cho"/>

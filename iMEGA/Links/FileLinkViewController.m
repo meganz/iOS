@@ -234,6 +234,7 @@
             }];
             delegate.savePublicHandle = YES;
             
+            [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
             [SVProgressHUD show];
             [[MEGASdkManager sharedMEGASdk] publicNodeForMegaFileLink:linkString delegate:delegate];
         }

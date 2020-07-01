@@ -914,6 +914,7 @@
             self.searchController.hidesNavigationBarDuringPresentation = NO;
             if (@available(iOS 11.0, *)) {
                 self.navigationItem.searchController = self.searchController;
+                self.navigationItem.hidesSearchBarWhenScrolling = NO;
             } else {
                 self.searchFixedViewHeightConstraint.constant = self.searchController.searchBar.frame.size.height;
                 [self.searchFixedView addSubview:self.searchController.searchBar];
@@ -2030,44 +2031,31 @@
             [self.tableView reloadRowsAtIndexPaths:updateContactsIndexPathMutableArray withRowAnimation:UITableViewRowAnimationAutomatic];
         }
         
-        //Option 1: Delete the elements manually from the indexPathsMutableDictionary and reload the sections affected by this deletions
-//        NSArray *deletedContactsArray = deleteContactsIndexPathMutableDictionary.allValues;
-//        if (deletedContactsArray.count) {
-//            for (MEGAUser *user in deletedContactsArray) {
-//                NSString *base64Handle = [MEGASdk base64HandleForUserHandle:user.handle];
-//                [self.indexPathsMutableDictionary removeObjectForKey:base64Handle];
-//            }
-//        }
-        
-//        NSMutableIndexSet *sectionsToReloadMutableIndexSet = NSMutableIndexSet.new;
         NSArray *deleteContactsOnIndexPathsArray = [deleteContactsIndexPathMutableDictionary allKeys];
         if (deleteContactsOnIndexPathsArray.count != 0) {
             for (NSIndexPath *indexPath in deleteContactsOnIndexPathsArray) {
                 [self.visibleUsersArray removeObjectAtIndex:indexPath.row];
-                
-//                [sectionsToReloadMutableIndexSet addIndex:indexPath.section];
                 
                 NSMutableArray *usersInSectionMutableArray = self.visibleUsersIndexedMutableArray[[self currentIndexedSection:indexPath.section]];
                 [usersInSectionMutableArray removeObjectAtIndex:indexPath.row];
             }
             [self.tableView deleteRowsAtIndexPaths:deleteContactsOnIndexPathsArray withRowAnimation:UITableViewRowAnimationAutomatic];
             
-//            [self.tableView reloadSections:sectionsToReloadMutableIndexSet withRowAnimation:UITableViewRowAnimationAutomatic];
-            
             //Rebuild indexPaths to keep consistency with the table
             [self.indexPathsMutableDictionary removeAllObjects];
-            for (MEGAUser *user in self.visibleUsersArray) {
-                NSString *base64Handle = [MEGASdk base64HandleForUserHandle:user.handle];
-                [self.indexPathsMutableDictionary setObject:[NSIndexPath indexPathForRow:[self.visibleUsersArray indexOfObject:user] inSection:0] forKey:base64Handle];
-            }
-            
-            //Option 2: Rebuild properly the dictionary of indexPaths
-            for (NSInteger section = 0; section < self.visibleUsersIndexedMutableArray.count; section++) {
-                NSMutableArray *usersInSectionMutableArray = self.visibleUsersIndexedMutableArray[section];
-                for (NSInteger row = 0; row < usersInSectionMutableArray.count; row++) {
-                    MEGAUser *user = usersInSectionMutableArray[row];
+            if (self.contactsMode == ContactsModeDefault) {
+                for (NSInteger section = 0; section < self.visibleUsersIndexedMutableArray.count; section++) {
+                    NSMutableArray *usersInSectionMutableArray = self.visibleUsersIndexedMutableArray[section];
+                    for (NSInteger row = 0; row < usersInSectionMutableArray.count; row++) {
+                        MEGAUser *user = usersInSectionMutableArray[row];
+                        NSString *base64Handle = [MEGASdk base64HandleForUserHandle:user.handle];
+                        [self.indexPathsMutableDictionary setObject:[NSIndexPath indexPathForRow:row inSection:section + 1] forKey:base64Handle];
+                    }
+                }
+            } else {
+                for (MEGAUser *user in self.visibleUsersArray) {
                     NSString *base64Handle = [MEGASdk base64HandleForUserHandle:user.handle];
-                    [self.indexPathsMutableDictionary setObject:[NSIndexPath indexPathForRow:row inSection:section + 1] forKey:base64Handle];
+                    [self.indexPathsMutableDictionary setObject:[NSIndexPath indexPathForRow:[self.visibleUsersArray indexOfObject:user] inSection:0] forKey:base64Handle];
                 }
             }
         }
