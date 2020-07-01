@@ -1,7 +1,7 @@
 
 import UIKit
 
-final class PhotoCarouselVideoIcon: UIView {
+final class PhotoCarouselVideoIcon: SingleTapView {
     
     private let halfRatio: CGFloat = 0.5
     private let playIconRightOffsetPaddingRatio: CGFloat = 1.225
