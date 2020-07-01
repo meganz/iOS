@@ -22,8 +22,8 @@ class DeviceContactTableViewCell: UITableViewCell {
 
     func configure(for contact: DeviceContact) {
         titleLabel.text = contact.name
-        subtitleLabel.text = contact.value
-        if let label = contact.valueLabel {
+        subtitleLabel.text = contact.contactDetail
+        if let label = contact.contactDetailDescription {
             descriptionLabel.text = CNLabeledValue<NSString>.localizedString(forLabel: label)
         }
         if let imageData = contact.avatarData {

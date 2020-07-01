@@ -186,7 +186,7 @@ class EnterEmailViewController: UIViewController {
             presentedViewController?.dismiss(animated: false, completion: nil)
         }
 
-        let contactsPickerNavigation = MEGANavigationController.init(rootViewController: ContactsPickerViewController.instantiate(for: [CNContactEmailAddressesKey], delegate: self))
+        let contactsPickerNavigation = MEGANavigationController.init(rootViewController: ContactsPickerViewController.instantiate(withContactKeys: [CNContactEmailAddressesKey], delegate: self))
         present(contactsPickerNavigation, animated: true, completion: nil)
     }
 }
@@ -260,7 +260,7 @@ extension EnterEmailViewController: VENTokenFieldDelegate {
 // MARK: - ContactsPickerViewControllerDelegate
 
 extension EnterEmailViewController: ContactsPickerViewControllerDelegate {
-    func contactsPicker(_ contactsPicker: ContactsPickerViewController, didSelect values: [String]) {
+    func contactsPicker(_ contactsPicker: ContactsPickerViewController, didSelectContacts values: [String]) {
         values.forEach { (email) in
             if !tokens.contains(email) {
                 tokens.append(email)

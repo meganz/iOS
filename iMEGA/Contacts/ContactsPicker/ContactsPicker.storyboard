@@ -126,8 +126,6 @@
                                 <connections>
                                     <outlet property="dataSource" destination="U9x-qB-E44" id="ly1-AV-Ws2"/>
                                     <outlet property="delegate" destination="U9x-qB-E44" id="GSA-g8-Gjo"/>
-                                    <outlet property="emptyDataSetDelegate" destination="U9x-qB-E44" id="VXs-mU-Z4e"/>
-                                    <outlet property="emptyDataSetSource" destination="U9x-qB-E44" id="6wZ-uh-fvV"/>
                                 </connections>
                             </tableView>
                         </subviews>
