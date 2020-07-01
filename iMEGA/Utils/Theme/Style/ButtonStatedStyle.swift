@@ -36,27 +36,6 @@ extension ButtonStatedStyle where T == TextStyle {
     }
 }
 
-// MARK: - Constants
-
-extension ButtonStatedStyle where T == TextStyle {
-
-    static var whiteTextStyle: ButtonStatedStyle {
-        ButtonStatedStyle<TextStyle>(stated: [
-            .normal: TextStyle(font: .headline, color: .textLightPrimary),
-            .disabled: TextStyle(font: .headline, color: .backgroundDisabledPrimary),
-            .highlighted: TextStyle(font: .headline, color: .textLightPrimaryGreen)
-        ])
-    }
-
-    static var greenTextStyle: ButtonStatedStyle {
-        ButtonStatedStyle<TextStyle>(stated: [
-            .normal: TextStyle(font: .headline, color: .textGreenPrimary),
-            .disabled: TextStyle(font: .headline, color: .backgroundDisabledPrimary),
-            .highlighted: TextStyle(font: .headline, color: .textGrayPrimary)
-        ])
-    }
-}
-
 // MARK: - ButtonStyle
 
 extension ButtonStatedStyle where T == BackgroundStyle {
@@ -69,26 +48,5 @@ extension ButtonStatedStyle where T == BackgroundStyle {
             }
         }
         return button
-    }
-}
-
-// MARK: - Constants
-
-extension ButtonStatedStyle where T == BackgroundStyle {
-
-    static var greenBackgroundStyle: ButtonStatedStyle {
-        ButtonStatedStyle<BackgroundStyle>(stated: [
-            .normal: BackgroundStyle(backgroundColor: .backgroundEnabledPrimary),
-            .disabled: BackgroundStyle(backgroundColor: .backgroundDisabledPrimary),
-            .highlighted: BackgroundStyle(backgroundColor: .backgroundEnabledPrimary),
-        ])
-    }
-
-    static var whiteBackgroundStyle: ButtonStatedStyle {
-        ButtonStatedStyle<BackgroundStyle>(stated: [
-            .normal: BackgroundStyle(backgroundColor: .backgroundDefaultLight),
-            .disabled: BackgroundStyle(backgroundColor: .backgroundDefaultLight),
-            .highlighted: BackgroundStyle(backgroundColor: .backgroundDefaultLight),
-        ])
     }
 }

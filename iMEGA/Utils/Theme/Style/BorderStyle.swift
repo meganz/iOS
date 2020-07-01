@@ -8,13 +8,6 @@ struct BorderStyle: Codable {
 }
 
 extension BorderStyle {
-
-    static var inactiveBorderStyle: BorderStyle { BorderStyle(width: 1, color: Color.borderInactiveGrey) }
-
-    static var warningBorderStyle: BorderStyle { BorderStyle(width: 1, color: Color.borderWarningYellow) }
-}
-
-extension BorderStyle {
     
     // MARK: - UIView
      

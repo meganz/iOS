@@ -3,11 +3,13 @@ import Foundation
 enum MarkedStringParser {
 
     static func parseAttributedString(from text: String,
-                                      withStyleMarks styleMarks: [String: AttributedTextStyle])
+                                      withStyleMarks styleMarks: [String: AttributedTextStyle],
+                                      attributedTextStyleFactory: AttributedTextStyleFactory)
         -> NSAttributedString {
         let scanner = textParsingScanner(with: text)
         let markedStringChain = scanMarkedText(scanner: scanner, tags: [])
-        return markedStringChain.attributedString(withStyleMarks: styleMarks)
+        return markedStringChain.attributedString(withStyleMarks: styleMarks,
+                                                  attributedTextStyleFactory: attributedTextStyleFactory)
     }
 
     // MARK: - Privates

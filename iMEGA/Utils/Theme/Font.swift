@@ -5,20 +5,10 @@ struct Font: Codable {
 
     let size: CGFloat
     let weight: FontWeight
-    var name: FontName {
-        switch (weight, size) {
-        case (.italic, _):
-            return "SFUIText-Italic"
-        case (_, 20...):
-            return "SFUIDisplay-\(weight)"
-        default:
-            return "SFUIText-\(weight)"
-        }
-    }
 }
 
 extension Font {
-    var uiFont: UIFont? { UIFont(name: name, size: size) }
+    var uiFont: UIFont? { UIFont.systemFont(ofSize: size, weight: weight.systemWeight) }
 }
 
 extension Font {
@@ -42,14 +32,28 @@ extension Font {
     static let caption2 = Font(size: 12.5, weight: .regular)
 }
 
-func uiFont(from font: Font) -> UIFont? {
-    return UIFont(name: font.name, size: font.size)
-}
-
 enum FontWeight: String, Codable {
-    case italic = "Italic"
-    case light = "Light"
-    case medium = "Medium"
-    case regular = "Regular"
-    case semibold = "Semibold"
+    case black
+    case bold
+    case heavy
+    case light
+    case medium
+    case regular
+    case semibold
+    case thin
+    case ultraLight
+
+    var systemWeight: UIFont.Weight {
+        switch self {
+        case .black: return .black
+        case .bold: return .bold
+        case .heavy: return .heavy
+        case .light: return .light
+        case .medium: return .medium
+        case .regular: return .regular
+        case .semibold: return .semibold
+        case .thin: return .thin
+        case .ultraLight: return .ultraLight
+        }
+    }
 }
