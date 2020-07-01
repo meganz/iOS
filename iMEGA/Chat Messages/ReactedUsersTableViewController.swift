@@ -12,6 +12,7 @@ class ReactedUsersTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tableView.separatorStyle = .none
         tableView.register(ReactedContactTableCell.nib,
                            forCellReuseIdentifier: ReactedContactTableCell.reuseIdentifier)
         tableView.rowHeight = 60.0
