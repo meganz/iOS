@@ -207,10 +207,12 @@ class ChatViewController: MessagesViewController {
         }
         
         setLastMessageAsSeen()
+        loadDraft()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        saveDraft()
         MEGASdkManager.sharedMEGAChatSdk()?.remove(self as MEGAChatDelegate)
 
         if isMovingFromParent || presentingViewController != nil && navigationController?.viewControllers.count == 1 {
@@ -818,6 +820,11 @@ class ChatViewController: MessagesViewController {
                                                selector: #selector(handleKeyboardHidden(_:)),
                                                name: UIResponder.keyboardWillHideNotification,
                                                object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(willResignActive(_:)),
+                                               name: UIApplication.willResignActiveNotification,
+                                               object: nil)
     }
     
     private func removeObservers() {
@@ -830,6 +837,9 @@ class ChatViewController: MessagesViewController {
         NotificationCenter.default.removeObserver(self,
                                                   name: UIResponder.keyboardWillHideNotification,
                                                   object: nil)
+        NotificationCenter.default.removeObserver(self,
+                                               name: UIApplication.willResignActiveNotification,
+                                               object: nil)
     }
         
     @objc private func handleKeyboardShown(_ notification: Notification) {
@@ -860,6 +870,10 @@ class ChatViewController: MessagesViewController {
         
         additionalBottomInset = 0
         keyboardVisible = false
+    }
+    
+    @objc private func willResignActive(_ notification: Notification) {
+        saveDraft()
     }
     
     private func addChatBottomInfoScreenToView() {
