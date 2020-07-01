@@ -138,8 +138,8 @@ final class PhotoCarouselViewController: UIViewController {
         updateTitleView(withAssetIndex: index)
     }
     
-    func didSelectIndex(index: Int) {
-        let asset = album.asset(atIndex: index)
+    func didSelect(indexPath: IndexPath) {
+        let asset = album.asset(atIndex: indexPath.item)
         if asset.mediaType == .video {
             SVProgressHUD.setDefaultMaskType(.clear)
             SVProgressHUD.show()
@@ -172,6 +172,14 @@ final class PhotoCarouselViewController: UIViewController {
         }
     }
     
+    func selectAsset(atIndexPath indexPath: IndexPath) {
+        let asset = album.asset(atIndex: indexPath.row)
+        collectionViewDataSource?.didSelect(asset: asset, atIndexPath: indexPath)
+        selectedAssets = collectionViewDataSource?.selectedAssets ?? []
+        updateSelectDeselectButtonTitle(withSelectedAsset: asset)
+        delegate?.selected(assets: selectedAssets)
+    }
+    
     // MARK:- Private methods.
     
     private func loaded(playerViewController: AVPlayerViewController) {
@@ -195,11 +203,7 @@ final class PhotoCarouselViewController: UIViewController {
     @objc private func selectBarButtonTapped() {
         if let visibleCell = collectionView.visibleCells.first,
             let indexPath = collectionView.indexPath(for: visibleCell) {
-            let asset = album.asset(atIndex: indexPath.row)
-            collectionViewDataSource?.didSelect(asset: asset, atIndexPath: indexPath)
-            selectedAssets = collectionViewDataSource?.selectedAssets ?? []
-            updateSelectDeselectButtonTitle(withSelectedAsset: asset)
-            delegate?.selected(assets: selectedAssets)
+            selectAsset(atIndexPath: indexPath)
         }
     }
     
