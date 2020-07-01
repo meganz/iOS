@@ -1,10 +1,21 @@
 
 import UIKit
 
+protocol ReactedUsersListPageViewControllerDelegate: class {
+    func userHandleList(atIndex index: Int) -> [UInt64]
+    func pageChanged(toIndex index: Int)
+}
+
 class ReactedUsersListPageViewController: UIPageViewController {
     var pages: [ReactedUsersTableViewController] = []
     var numberOfPages: Int = 0
-    var currentIndex = 0
+    var currentIndex = 0 {
+        didSet {
+            usersListDelegate?.pageChanged(toIndex: currentIndex)
+        }
+    }
+    
+    weak var usersListDelegate: ReactedUsersListPageViewControllerDelegate?
     
     var tableViewController: UITableViewController? {
         guard pages.count <= currentIndex else {
@@ -14,16 +25,14 @@ class ReactedUsersListPageViewController: UIPageViewController {
         return pages[currentIndex]
     }
     
-    func set(numberOfPages: Int, initialUserHandleList: [UInt64]) {
+    func set(numberOfPages: Int, selectedPage: Int, initialUserHandleList: [UInt64]) {
         pages = (0..<numberOfPages).map { _ in ReactedUsersTableViewController() }
         dataSource = self
         delegate = self
         
-        guard let reactedUsersTableViewController = pages.first else {
-            fatalError("number of pages in ReactedUsersListPageViewController is 0")
-        }
-
+        let reactedUsersTableViewController = pages[selectedPage]
         reactedUsersTableViewController.userHandleList = initialUserHandleList
+        
         setViewControllers([reactedUsersTableViewController],
                            direction: .forward,
                            animated: false,
@@ -53,9 +62,10 @@ extension ReactedUsersListPageViewController: UIPageViewControllerDataSource, UI
         guard let currentVC = viewController as? ReactedUsersTableViewController else {
             return nil
         }
-        
+                
         if let foundIndex = pages.firstIndex(of: currentVC),
             foundIndex > 0 {
+            pages[foundIndex - 1].userHandleList = usersListDelegate?.userHandleList(atIndex: foundIndex - 1)
             return pages[foundIndex - 1]
         }
         
@@ -70,6 +80,7 @@ extension ReactedUsersListPageViewController: UIPageViewControllerDataSource, UI
         
         if let foundIndex = pages.firstIndex(of: currentVC),
             foundIndex < (pages.count - 1) {
+            pages[foundIndex + 1].userHandleList = usersListDelegate?.userHandleList(atIndex: foundIndex + 1)
             return pages[foundIndex + 1]
         }
         
