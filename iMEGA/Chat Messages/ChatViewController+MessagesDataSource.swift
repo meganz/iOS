@@ -69,6 +69,7 @@ extension ChatViewController: MessagesDataSource {
         
         if let chatMessage = messages[indexPath.section] as? ChatMessage  {
             chatMessageReactionView.chatMessage = chatMessage
+            chatMessageReactionView.indexPath = indexPath
         }
         
         chatMessageReactionView.delegate = self

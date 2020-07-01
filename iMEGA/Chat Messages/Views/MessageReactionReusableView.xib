@@ -17,15 +17,15 @@
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="hzu-uH-VTb">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="247"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                    <collectionViewLayout key="collectionViewLayout" id="9Eb-DU-uOQ" customClass="AlignedCollectionViewFlowLayout" customModule="AlignedCollectionViewFlowLayout"/>
+                    <collectionViewLayout key="collectionViewLayout" id="JeK-9f-ssN" customClass="AlignedCollectionViewFlowLayout" customModule="AlignedCollectionViewFlowLayout"/>
                 </collectionView>
             </subviews>
             <color key="backgroundColor" red="0.0" green="0.6588235294" blue="0.52549019610000003" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstItem="hzu-uH-VTb" firstAttribute="centerY" secondItem="U6b-Vx-4bR" secondAttribute="centerY" id="eIf-TL-0wA"/>
-                <constraint firstItem="hzu-uH-VTb" firstAttribute="bottom" secondItem="VXr-Tz-HHm" secondAttribute="bottom" id="ktO-lZ-4EC"/>
-                <constraint firstItem="hzu-uH-VTb" firstAttribute="centerX" secondItem="U6b-Vx-4bR" secondAttribute="centerX" id="uil-nL-kSa"/>
-                <constraint firstItem="hzu-uH-VTb" firstAttribute="leading" secondItem="VXr-Tz-HHm" secondAttribute="leading" id="z17-h1-Fre"/>
+                <constraint firstItem="hzu-uH-VTb" firstAttribute="leading" secondItem="VXr-Tz-HHm" secondAttribute="leading" id="0Yc-Jb-pUW"/>
+                <constraint firstItem="hzu-uH-VTb" firstAttribute="centerX" secondItem="U6b-Vx-4bR" secondAttribute="centerX" id="YEv-mv-Zdn"/>
+                <constraint firstItem="hzu-uH-VTb" firstAttribute="bottom" secondItem="VXr-Tz-HHm" secondAttribute="bottom" id="YdF-Yw-0j9"/>
+                <constraint firstItem="hzu-uH-VTb" firstAttribute="centerY" secondItem="U6b-Vx-4bR" secondAttribute="centerY" id="xrI-Yd-a9u"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="VXr-Tz-HHm"/>
             <connections>
