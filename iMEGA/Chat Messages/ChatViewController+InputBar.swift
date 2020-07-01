@@ -83,7 +83,7 @@ extension ChatViewController {
             return
         }
         
-        MEGAStore.shareInstance()?.insertOrUpdateChatDraft(withChatId: chatRoom.chatId, text: chatInputBar.text)
+        MEGAStore.shareInstance()?.insertOrUpdateChatDraft(withChatId: chatRoom.chatId, text: (editMessage != nil) ? "" : chatInputBar.text)
     }
     
     // MARK: - Private methods.
