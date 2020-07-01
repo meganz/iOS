@@ -2,7 +2,7 @@
 import UIKit
 
 @objc protocol ContactsPickerViewControllerDelegate {
-    func contactsPicker(_ contactsPicker: ContactsPickerViewController, didSelect values: [String]) ->  ()
+    func contactsPicker(_ contactsPicker: ContactsPickerViewController, didSelectContacts values: [String])
 }
 
 class ContactsPickerViewController: UIViewController {
@@ -17,7 +17,8 @@ class ContactsPickerViewController: UIViewController {
     private var contactsSections = [String: [DeviceContact]]()
     private var contactsSectionTitles = [String]()
     private lazy var searchingContacts = [DeviceContact]()
-    
+    private lazy var selectedContacts = Set<DeviceContact>()
+
     private var delegate: ContactsPickerViewControllerDelegate?
 
     private lazy var selectAllBarButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "selectAll"), style: .plain, target: self, action: #selector(selectAllTapped)
@@ -26,11 +27,10 @@ class ContactsPickerViewController: UIViewController {
     private lazy var sendBarButton: UIBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: #selector(sendTapped)
     )
     
-    @objc class func instantiate(for keys: [String], delegate: ContactsPickerViewControllerDelegate) -> ContactsPickerViewController {
+    @objc class func instantiate(withContactKeys keys: [String], delegate: ContactsPickerViewControllerDelegate) -> ContactsPickerViewController {
         guard let contactsPickerVC = UIStoryboard(name: "ContactsPicker", bundle: nil).instantiateViewController(withIdentifier: "ContactsPickerViewControllerID") as? ContactsPickerViewController else {
             fatalError("Could not instantiate ContactsPickerViewController")
         }
-        SVProgressHUD.show()
 
         contactsPickerVC.keys = keys
         contactsPickerVC.delegate = delegate
@@ -42,36 +42,15 @@ class ContactsPickerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        contacts = DeviceContactsManager().getDeviceContacts(for: keys)
+        SVProgressHUD.show(withStatus: AMLocalizedString("loading", "state previous to import a file"))
+        configureView()
 
-        title = AMLocalizedString("contactsTitle", "Title of the Contacts section")
-        
-        guard let megaNavigation = navigationController as? MEGANavigationController else {
-            fatalError("Could not access MEGANavigationController")
+        DeviceContactsManager().getDeviceContacts(forRequestedKeys: keys) { [weak self] (contacts) in
+            DispatchQueue.main.async {
+                self?.prepareDataSource(forContacts: contacts)
+                SVProgressHUD.dismiss()
+            }
         }
-        megaNavigation.addLeftDismissButton(withText: AMLocalizedString("cancel"))
-        
-        navigationItem.rightBarButtonItem = selectAllBarButton
-        
-        contactsSections = Dictionary(grouping: contacts, by: {String($0.name.uppercased().prefix(1))})
-        contactsSectionTitles = contactsSections.keys.sorted()
-
-        searchController = Helper.customSearchController(withSearchResultsUpdaterDelegate: self, searchBarDelegate: self)
-        if #available(iOS 11.0, *) {
-            navigationItem.searchController = searchController
-        } else {
-            tableView.tableHeaderView = searchController.searchBar
-            searchController.searchBar.barTintColor = .white
-            tableView.contentOffset = CGPoint(x: 0, y: searchController.searchBar.frame.height)
-        }
-        
-        tableView.tableFooterView = UIView()  // This remove the separator line between empty cells
-        updateAppearance()
-        
-        let flexibleSpaceBarButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        toolbarItems = [flexibleSpaceBarButton, sendBarButton]
-        
-        SVProgressHUD.dismiss()
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -88,6 +67,39 @@ class ContactsPickerViewController: UIViewController {
     
     // MARK: - Private
     
+    private func configureView() {
+        title = AMLocalizedString("contactsTitle", "Title of the Contacts section")
+        guard let megaNavigation = navigationController as? MEGANavigationController else {
+            fatalError("Could not access MEGANavigationController")
+        }
+        megaNavigation.addLeftDismissButton(withText: AMLocalizedString("cancel"))
+        
+        navigationItem.rightBarButtonItem = selectAllBarButton
+
+        searchController = Helper.customSearchController(withSearchResultsUpdaterDelegate: self, searchBarDelegate: self)
+        if #available(iOS 11.0, *) {
+            navigationItem.searchController = searchController
+        } else {
+            tableView.tableHeaderView = searchController.searchBar
+            searchController.searchBar.barTintColor = .white
+            tableView.contentOffset = CGPoint(x: 0, y: searchController.searchBar.frame.height)
+        }
+        
+        tableView.tableFooterView = UIView()  // This remove the separator line between empty cells
+        updateAppearance()
+        
+        let flexibleSpaceBarButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        toolbarItems = [flexibleSpaceBarButton, sendBarButton]
+    }
+    
+    private func prepareDataSource(forContacts fetchedContacts: [DeviceContact]) {
+        contacts = fetchedContacts
+        contactsSections = Dictionary(grouping: contacts, by: {String($0.name.uppercased().prefix(1))})
+        contactsSectionTitles = contactsSections.keys.sorted()
+        tableView.emptyDataSetSource = self
+        tableView.reloadData()
+    }
+    
     private func updateAppearance() {
         view.backgroundColor = UIColor.mnz_backgroundGrouped(for: traitCollection)
         tableView.separatorColor = UIColor.mnz_separator(for: traitCollection)
@@ -95,15 +107,14 @@ class ContactsPickerViewController: UIViewController {
     }
     
     @objc private func sendTapped() {
-        
         dismiss(animated: true) {
-            self.delegate?.contactsPicker(self, didSelect: self.contacts.filter( { $0.isSelected } ).map( { $0.value } ))
+            self.delegate?.contactsPicker(self, didSelectContacts: self.selectedContacts.map( { $0.contactDetail } ))
         }
     }
     
     @objc private func selectAllTapped() {
         if contacts.count == tableView.indexPathsForSelectedRows?.count {
-            contacts.forEach({ $0.isSelected = false })
+            selectedContacts.removeAll()
             for section in 0..<tableView.numberOfSections {
                 let numberOfRows = tableView.numberOfRows(inSection: section)
                 for row in 0..<numberOfRows {
@@ -112,7 +123,7 @@ class ContactsPickerViewController: UIViewController {
             }
             navigationController?.setToolbarHidden(true, animated: true)
         } else {
-            contacts.forEach({ $0.isSelected = true })
+            selectedContacts = Set(contacts)
             for section in 0..<tableView.numberOfSections {
                 let numberOfRows = tableView.numberOfRows(inSection: section)
                 for row in 0..<numberOfRows {
@@ -147,7 +158,7 @@ extension ContactsPickerViewController: UITableViewDataSource {
         }
         cell.configure(for: contact)
         
-        if contact.isSelected {
+        if selectedContacts.contains(contact) {
             tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
         } else {
             tableView.deselectRow(at: indexPath, animated: true)
@@ -177,8 +188,8 @@ extension ContactsPickerViewController: UITableViewDelegate {
             fatalError("Could not get device contact at index path")
         }
         
-        contact.isSelected = true
-        if contacts.filter({ $0.isSelected }).count == 1 {
+        selectedContacts.insert(contact)
+        if selectedContacts.count == 1 {
             navigationController?.setToolbarHidden(false, animated: true)
         }
         updateToolbar()
@@ -188,16 +199,16 @@ extension ContactsPickerViewController: UITableViewDelegate {
         guard let contact = isSearching ? searchingContacts[indexPath.row] : contactsSections[contactsSectionTitles[indexPath.section]]?[indexPath.row] else {
             fatalError("Could not get device contact at index path")
         }
-                
-        contact.isSelected = false
-        if contacts.filter({ $0.isSelected }).count == 0 {
+               
+        selectedContacts.remove(contact)
+        if selectedContacts.count == 0 {
             navigationController?.setToolbarHidden(true, animated: true)
         }
         updateToolbar()
     }
     
     func updateToolbar() {
-        sendBarButton.title = String(format: "%@ (%d)", AMLocalizedString("send", "Label for any 'Send' button, link, text, title, etc. - (String as short as possible)."), contacts.filter({ $0.isSelected }).count)
+        sendBarButton.title = String(format: "%@ (%d)", AMLocalizedString("send", "Label for any 'Send' button, link, text, title, etc. - (String as short as possible)."), selectedContacts.count)
     }
 }
 
@@ -209,26 +220,18 @@ extension ContactsPickerViewController: DZNEmptyDataSetSource {
     }
     
     func imageForEmptyDataSet() -> UIImage? {
-        if (MEGAReachabilityManager.isReachable()) {
-            if (self.searchController.isActive && self.searchController.searchBar.text!.count > 0) {
-                return UIImage(named: "searchEmptyState")
-            } else {
-                return UIImage(named: "contactsEmptyState")
-            }
+        if (self.searchController.isActive && self.searchController.searchBar.text!.count > 0) {
+            return UIImage(named: "searchEmptyState")
         } else {
-            return UIImage(named: "noInternetEmptyState")
+            return UIImage(named: "contactsEmptyState")
         }
     }
     
     func titleForEmptyDataSet() -> String? {
-        if (MEGAReachabilityManager.isReachable()) {
-            if (self.searchController.isActive && self.searchController.searchBar.text!.count > 0) {
-                return AMLocalizedString("noResults", "Title shown when you make a search and there is 'No Results'")
-            } else {
-                return AMLocalizedString("contactsEmptyState_title", "Title shown when the Contacts section is empty, when you have not added any contact.")
-            }
+        if (self.searchController.isActive && self.searchController.searchBar.text!.count > 0) {
+            return AMLocalizedString("noResults", "Title shown when you make a search and there is 'No Results'")
         } else {
-            return AMLocalizedString("noInternetConnection", "No Internet Connection")
+            return AMLocalizedString("contactsEmptyState_title", "Title shown when the Contacts section is empty, when you have not added any contact.")
         }
     }
 }

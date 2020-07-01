@@ -90,7 +90,7 @@ class InviteContactViewController: UIViewController {
             return
         }
         
-        let contactsPickerNavigation = MEGANavigationController.init(rootViewController: ContactsPickerViewController.instantiate(for: [CNContactPhoneNumbersKey], delegate: self))
+        let contactsPickerNavigation = MEGANavigationController.init(rootViewController: ContactsPickerViewController.instantiate(withContactKeys: [CNContactPhoneNumbersKey], delegate: self))
         present(contactsPickerNavigation, animated: true, completion:nil)
     }
 
@@ -134,7 +134,7 @@ extension InviteContactViewController: MFMessageComposeViewControllerDelegate {
 // MARK: - ContactsPickerViewControllerDelegate
 
 extension InviteContactViewController: ContactsPickerViewControllerDelegate {
-    func contactsPicker(_ contactsPicker: ContactsPickerViewController, didSelect values: [String]) {
+    func contactsPicker(_ contactsPicker: ContactsPickerViewController, didSelectContacts values: [String]) {
         let composeVC = MFMessageComposeViewController()
         composeVC.messageComposeDelegate = self
         composeVC.recipients = values

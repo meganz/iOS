@@ -980,7 +980,7 @@
 }
 
 - (void)showEmailContactPicker {
-    MEGANavigationController *contactsPickerNavigation = [MEGANavigationController.alloc initWithRootViewController:[ContactsPickerViewController instantiateFor:@[CNContactEmailAddressesKey] delegate:self]];
+    MEGANavigationController *contactsPickerNavigation = [MEGANavigationController.alloc initWithRootViewController:[ContactsPickerViewController instantiateWithContactKeys:@[CNContactEmailAddressesKey] delegate:self]];
     [self presentViewController:contactsPickerNavigation animated:YES completion:nil];
 }
 
@@ -1782,7 +1782,7 @@
 
 #pragma mark - ContactsPickerViewControllerDelegate
 
-- (void)contactsPicker:(ContactsPickerViewController *)contactsPicker didSelect:(NSArray<NSString *> *)values {
+- (void)contactsPicker:(ContactsPickerViewController *)contactsPicker didSelectContacts:(NSArray<NSString *> *)values {
     if (self.childViewControllers.count == 0) {
         [self insertItemListSubviewWithCompletion:^{
             for (NSString *email in values) {

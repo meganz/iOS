@@ -98,8 +98,8 @@ struct ContactOnMega: Codable {
             contactsOnMega.removeAll()
             UserDefaults.standard.removeObject(forKey: "ContactsOnMega")
 
-            DispatchQueue.global(qos: .background).async {
-                let deviceContacts = DeviceContactsManager().getDeviceContacts(for: [CNContactPhoneNumbersKey, CNContactEmailAddressesKey]).map( { [$0.value:$0.name] } )
+            DeviceContactsManager().getDeviceContacts(forRequestedKeys: [CNContactPhoneNumbersKey, CNContactEmailAddressesKey]) { (contacts) in
+                let deviceContacts = contacts.map( { [$0.contactDetail:$0.name] } )
                 if deviceContacts.count == 0 {
                     self.contactsFetched()
                 } else {
