@@ -146,6 +146,11 @@
         self.localVideoImageView.userInteractionEnabled = remoteSession.hasVideo;
         [self.localVideoImageView remoteVideoEnable:remoteSession.hasVideo];
     } else if (self.videoCall) {
+        if (self.callType == CallTypeOutgoing) {
+            self.enableDisableVideoButton.selected = YES;
+            self.localVideoImageView.hidden = NO;
+        }
+        
         if (!AVAudioSession.sharedInstance.mnz_isBluetoothAudioRouteAvailable) {
             MEGALogDebug(@"[Audio] Enable loud speaker is video call and there is no bluetooth connected");
             [self enableLoudspeaker];

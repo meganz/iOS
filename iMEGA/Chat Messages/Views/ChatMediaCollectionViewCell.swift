@@ -141,7 +141,7 @@ open class ChatMediaCollectionViewSizeCalculator: MessageSizeCalculator {
     override open func messageContainerSize(for message: MessageType) -> CGSize {
         switch message.kind {
         case .custom:
-            let maxWidth = messageContainerMaxWidth(for: message)
+            let maxWidth = min(UIDevice.current.mnz_maxSideForChatBubble(withMedia: true), messageContainerMaxWidth(for: message))
             let maxHeight = UIDevice.current.mnz_maxSideForChatBubble(withMedia: true)
             guard let chatMessage = message as? ChatMessage else {
                 return .zero

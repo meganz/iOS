@@ -43,6 +43,18 @@ final class PhotoCarouselCell: UICollectionViewCell {
         }
     }
     
+    var didSelectMarkerHandler: (() -> Void)? {
+        didSet {
+            markerView.singleTapHandler = didSelectMarkerHandler
+        }
+    }
+    
+    var didSelectVideoIconHandler: (() -> Void)? {
+        didSet {
+            playIconView.singleTapHandler = didSelectVideoIconHandler
+        }
+    }
+    
     // MARK:- overriden methods.
     
     override func layoutSubviews() {
