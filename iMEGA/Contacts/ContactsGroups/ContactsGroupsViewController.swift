@@ -171,27 +171,19 @@ extension ContactsGroupsViewController: DZNEmptyDataSetSource {
         return EmptyStateView.init(image: imageForEmptyDataSet(), title: titleForEmptyDataSet(), description: nil, buttonTitle: nil)
     }
     
-    func imageForEmptyDataSet() -> UIImage? {
-        if (MEGAReachabilityManager.isReachable()) {
-            if (self.searchController.isActive && self.searchController.searchBar.text!.count > 0) {
-                return UIImage(named: "searchEmptyState")
-            } else {
-                return UIImage(named: "chatEmptyState")
-            }
+    private func imageForEmptyDataSet() -> UIImage? {
+        if (self.searchController.isActive && self.searchController.searchBar.text!.count > 0) {
+            return UIImage(named: "searchEmptyState")
         } else {
-            return UIImage(named: "noInternetEmptyState")
+            return UIImage(named: "chatEmptyState")
         }
     }
     
-    func titleForEmptyDataSet() -> String? {
-        if (MEGAReachabilityManager.isReachable()) {
-            if (self.searchController.isActive && self.searchController.searchBar.text!.count > 0) {
-                return AMLocalizedString("noResults", "Title shown when you make a search and there is 'No Results'")
-            } else {
-                return AMLocalizedString("noConversations", "Empty Conversations section")
-            }
+    private func titleForEmptyDataSet() -> String? {
+        if (self.searchController.isActive && self.searchController.searchBar.text!.count > 0) {
+            return AMLocalizedString("noResults", "Title shown when you make a search and there is 'No Results'")
         } else {
-            return AMLocalizedString("noInternetConnection", "No Internet Connection")
+            return AMLocalizedString("noConversations", "Empty Conversations section")
         }
     }
 }

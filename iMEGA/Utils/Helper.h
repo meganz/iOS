@@ -2,6 +2,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MEGAChatMessage.h"
+#import "MEGAIndexer.h"
 
 typedef NS_OPTIONS(NSUInteger, NodesAre) {
     NodesAreFiles    = 1 << 0,
@@ -80,6 +81,8 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)importNode:(MEGANode *)node toShareWithCompletion:(void (^)(MEGANode *node))completion;
 + (UIActivityViewController *)activityViewControllerForChatMessages:(NSArray<MEGAChatMessage *> *)messages sender:(id)sender;
 + (UIActivityViewController *)activityViewControllerForNodes:(NSArray *)nodesArray sender:(id _Nullable)sender;
+
++ (void)setIndexer:(MEGAIndexer* )megaIndexer;
 
 #pragma mark - Utils for UI
 
