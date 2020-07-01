@@ -63,12 +63,52 @@ extension ChatViewController: MessagesDataSource {
     
     func messageFooterView(for indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageReusableView {
    
-        let chatMessageReactionView = messagesCollectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: MessageReactionReusableView.reuseIdentifier, for: indexPath) as! MessageReactionReusableView
+        guard let chatMessageReactionView = messagesCollectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: MessageReactionReusableView.reuseIdentifier, for: indexPath) as? MessageReactionReusableView else {
+            fatalError("Failed to dequeue MessageReactionReusableView")
+        }
+        
         if let chatMessage = messages[indexPath.section] as? ChatMessage  {
-         
             chatMessageReactionView.chatMessage = chatMessage
         }
-        return chatMessageReactionView
         
+        chatMessageReactionView.delegate = self
+        return chatMessageReactionView
+    }
+}
+
+extension ChatViewController: MessageReactionReusableViewDelegate {
+    func emojiTapped(_ emoji: String, chatMessage: ChatMessage) {
+        print("emoji tapped \(emoji), for chat message \(chatMessage.messageId)")
+    }
+    
+    func emojiLongPressed(_ emoji: String, chatMessage: ChatMessage) {
+        guard let emojisStringList = MEGASdkManager
+            .sharedMEGAChatSdk()?
+            .getMessageReactions(forChat: chatRoom.chatId,
+                                 messageId: chatMessage.message.messageId) else {
+                                    MEGALogDebug("Could not fetch the emoji list for a message")
+                                    return
+        }
+        
+        let emojis = (0..<emojisStringList.size).compactMap { emojisStringList.string(at: $0) }
+        let vc = ReactedEmojisUsersListViewController(dataSource: self,
+                                                      emojiList: emojis,
+                                                      selectedEmoji: emoji,
+                                                      chatId: chatRoom.chatId,
+                                                      messageId: chatMessage.message.messageId)
+        presentPanModal(vc)
+    }
+}
+
+extension ChatViewController: ReactedEmojisUsersListViewControllerDataSource {
+    func userhandleList(forEmoji emoji: String, chatId: UInt64, messageId: UInt64) -> [UInt64] {
+        guard let userHandleList =  MEGASdkManager
+            .sharedMEGAChatSdk()?
+            .getReactionUsers(forChat: chatId, messageId: messageId, reaction: emoji) else {
+                MEGALogDebug("user handle list for emoji \(emoji) is empty")
+            return []
+        }
+        
+        return (0..<userHandleList.size).compactMap { userHandleList.megaHandle(at: $0) }
     }
 }
