@@ -119,6 +119,10 @@ class ChatInputBar: UIView {
             }
         }
     }
+    
+    var text: String? {
+        return messageInputBar.text
+    }
 
     // MARK:- overriden properties and methods
 
@@ -161,12 +165,12 @@ class ChatInputBar: UIView {
     
     //MARK: - Interface methods.
     
-    func set(text: String) {
+    func set(text: String, showKeyboard: Bool = true) {
         guard messageInputBar.superview != nil else {
             fatalError("message input bar was not the shown to the user")
         }
         
-        messageInputBar.set(text: text)
+        messageInputBar.set(text: text, showKeyboard: showKeyboard)
     }
     
     func set(keyboardAppearance: UIKeyboardAppearance) {
@@ -412,6 +416,10 @@ extension ChatInputBar: MessageInputBarDelegate {
 
     func typing(withText text: String) {
         delegate?.typing(withText: text)
+    }
+    
+    func textDidEndEditing() {
+        delegate?.textDidEndEditing()
     }
 }
 

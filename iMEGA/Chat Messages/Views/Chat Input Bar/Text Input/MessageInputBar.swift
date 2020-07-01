@@ -7,6 +7,7 @@ protocol MessageInputBarDelegate: class {
     func tappedSendButton(withText text: String)
     func tappedVoiceButton()
     func typing(withText text: String)
+    func textDidEndEditing()
 }
 
 class MessageInputBar: UIView {
@@ -48,6 +49,10 @@ class MessageInputBar: UIView {
             rightButtonHolderViewWidthConstraint.constant = hideRightButtonHolderView ? 0.0 : rightButtonHolderViewHeightConstraint.constant
             layoutIfNeeded()
         }
+    }
+    
+    var text: String? {
+        return messageTextView.text
     }
             
     // MARK:- Private properties
@@ -134,8 +139,8 @@ class MessageInputBar: UIView {
         messageTextView.resignFirstResponder()
     }
     
-    func set(text: String) {
-        messageTextView.set(text: text)
+    func set(text: String, showKeyboard: Bool) {
+        messageTextView.set(text: text, showKeyboard: showKeyboard)
         updateTextUI()
     }
     
@@ -427,6 +432,10 @@ class MessageInputBar: UIView {
 extension MessageInputBar: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
         updateTextUI()
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        delegate?.textDidEndEditing()
     }
 }
 
