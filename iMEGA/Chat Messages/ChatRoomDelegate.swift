@@ -54,7 +54,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
         UIView.setAnimationsEnabled(false)
         chatViewController?.messagesCollectionView.performBatchUpdates({
             chatViewController?.messagesCollectionView.reloadSections([index ?? 0])
-        },  completion: { [weak self] _ in
+        },  completion: { _ in
             UIView.setAnimationsEnabled(true)
         })
         
