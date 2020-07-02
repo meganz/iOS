@@ -16,13 +16,14 @@ class ReactedEmojisUsersListViewController: UIViewController  {
             }
             
             headerView.selectedEmoji = selectedEmoji
+            updateEmojiHeaderViewDescription()
         }
     }
     
-    let chatId: UInt64
-    let messageId: UInt64
-    let emojiList: [String]
-    let emojis = EmojiList.readFromFile()
+    private let chatId: UInt64
+    private let messageId: UInt64
+    private let emojiList: [String]
+    private let localSavedEmojis = EmojiListReader.readFromFile()
 
     init(dataSource: ReactedEmojisUsersListViewControllerDataSource,
          emojiList: [String],
@@ -79,9 +80,12 @@ class ReactedEmojisUsersListViewController: UIViewController  {
     }
     
     private func updateEmojiHeaderViewDescription() {
-        if let selectedEmojiName = emojis?.filter({ $0.representation == selectedEmoji }).first?.name,
+        if let selectedEmojiName = localSavedEmojis?.filter({ $0.representation == selectedEmoji }).first?.displayString,
             let userHandleList = dataSource?.userhandleList(forEmoji: selectedEmoji, chatId: chatId, messageId: messageId) {
-            headerView.updateDescription(attributedString: NSAttributedString(string: "\(userHandleList.count) reacted to :\(selectedEmojiName):"))
+            let description = String(format: AMLocalizedString("%d reacted to %@", "Chat reactions: number of users reacted to a emoji"),
+                                     userHandleList.count,
+                                     selectedEmojiName)
+            headerView.updateDescription(text: description)
         }
     }
     
@@ -119,7 +123,7 @@ extension ReactedEmojisUsersListViewController: EmojiCarousalViewDelegate {
     func didSelect(emoji: String, atIndex index: Int) {
         if let userHandleList = dataSource?.userhandleList(forEmoji: emoji, chatId: chatId, messageId: messageId) {
             reactedUsersListPageViewController.didSelectPage(withIndex: index, userHandleList: userHandleList)
-            updateEmojiHeaderViewDescription()
+            selectedEmoji = emoji
         }
     }
 }
@@ -136,6 +140,7 @@ extension ReactedEmojisUsersListViewController: ReactedUsersListPageViewControll
     
     func pageChanged(toIndex index: Int) {
         headerView.selectedEmoji = emojiList[index]
+        updateEmojiHeaderViewDescription()
     }
 }
 

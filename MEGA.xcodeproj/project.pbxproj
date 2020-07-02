@@ -1168,7 +1168,7 @@
 		BF99A3D424A994CB0035A183 /* ReactedContactTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF99A3D224A994CB0035A183 /* ReactedContactTableCell.swift */; };
 		BF99A3D524A994CB0035A183 /* ReactedContactTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF99A3D324A994CB0035A183 /* ReactedContactTableCell.xib */; };
 		BF99A3F324AC43F70035A183 /* emojis_v3.json in Resources */ = {isa = PBXBuildFile; fileRef = BF99A3F024AC43F70035A183 /* emojis_v3.json */; };
-		BF99A3F524AC445C0035A183 /* EmojiList.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF99A3F424AC445C0035A183 /* EmojiList.swift */; };
+		BF99A3F524AC445C0035A183 /* Emoji.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF99A3F424AC445C0035A183 /* Emoji.swift */; };
 		BF9D491C2459047800D7B7DC /* AddToChatAllowAccessCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF9D491A2459047800D7B7DC /* AddToChatAllowAccessCollectionCell.swift */; };
 		BF9D491D2459047800D7B7DC /* AddToChatAllowAccessCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF9D491B2459047800D7B7DC /* AddToChatAllowAccessCollectionCell.xib */; };
 		BFA55257245F849F009FE3A6 /* AddToChatMenuPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFA55256245F849F009FE3A6 /* AddToChatMenuPageViewController.swift */; };
@@ -2714,7 +2714,7 @@
 		BF99A3D224A994CB0035A183 /* ReactedContactTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactedContactTableCell.swift; sourceTree = "<group>"; };
 		BF99A3D324A994CB0035A183 /* ReactedContactTableCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReactedContactTableCell.xib; sourceTree = "<group>"; };
 		BF99A3F024AC43F70035A183 /* emojis_v3.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = emojis_v3.json; sourceTree = "<group>"; };
-		BF99A3F424AC445C0035A183 /* EmojiList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiList.swift; sourceTree = "<group>"; };
+		BF99A3F424AC445C0035A183 /* Emoji.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Emoji.swift; sourceTree = "<group>"; };
 		BF9D491A2459047800D7B7DC /* AddToChatAllowAccessCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToChatAllowAccessCollectionCell.swift; sourceTree = "<group>"; };
 		BF9D491B2459047800D7B7DC /* AddToChatAllowAccessCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddToChatAllowAccessCollectionCell.xib; sourceTree = "<group>"; };
 		BFA55256245F849F009FE3A6 /* AddToChatMenuPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToChatMenuPageViewController.swift; sourceTree = "<group>"; };
@@ -5950,7 +5950,7 @@
 				BF99A3D224A994CB0035A183 /* ReactedContactTableCell.swift */,
 				BF99A3D324A994CB0035A183 /* ReactedContactTableCell.xib */,
 				BF99A3F024AC43F70035A183 /* emojis_v3.json */,
-				BF99A3F424AC445C0035A183 /* EmojiList.swift */,
+				BF99A3F424AC445C0035A183 /* Emoji.swift */,
 				BF7EBD29244E8D120015255F /* Chat Input Bar */,
 			);
 			path = Views;
@@ -7307,7 +7307,7 @@
 				415226951A692ECC00EC7BB6 /* MainTabBarController.m in Sources */,
 				41DC6F721D54E7080081832C /* NSFileManager+MNZCategory.m in Sources */,
 				838633A623FED61D00CDB6A5 /* CustomModalAlertViewController+TwoFactorAuthentication.swift in Sources */,
-				BF99A3F524AC445C0035A183 /* EmojiList.swift in Sources */,
+				BF99A3F524AC445C0035A183 /* Emoji.swift in Sources */,
 				BF7EBD28244E8B5A0015255F /* CGPoint+Additions.swift in Sources */,
 				A86B9F5E2316D6AB00F35E7A /* FLEXGlobalsTableViewController.m in Sources */,
 				8394CFB8211B1AFD00A1634A /* GroupCallCollectionViewCell.m in Sources */,
