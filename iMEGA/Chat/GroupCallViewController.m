@@ -473,11 +473,7 @@
     if ([MEGASdkManager.sharedMEGAChatSdk chatConnectionState:self.chatRoom.chatId] == MEGAChatConnectionOnline) {
         MEGAChatAnswerCallRequestDelegate *answerCallRequestDelegate = [MEGAChatAnswerCallRequestDelegate.alloc initWithCompletion:^(MEGAChatError *error) {
             if (error.type != MEGAChatErrorTypeOk) {
-                [self dismissViewControllerAnimated:YES completion:^{
-                    if (error.type == MEGAChatErrorTooMany) {
-                        [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"Error. No more participants are allowed in this group call.", @"Message show when a call cannot be established because there are too many participants in the group call")];
-                    }
-                }];
+                [self dismissViewControllerAnimated:YES completion:nil];
             } else {
                 if (self.videoCall && !AVAudioSession.sharedInstance.mnz_isBluetoothAudioRouteAvailable) {
                     MEGALogDebug(@"[Audio] Enable loud speaker is video call and there is no bluetooth connected");
@@ -826,11 +822,7 @@
     
     MEGAChatStartCallRequestDelegate *startCallRequestDelegate = [[MEGAChatStartCallRequestDelegate alloc] initWithCompletion:^(MEGAChatError *error) {
         if (error.type) {
-            [weakSelf dismissViewControllerAnimated:YES completion:^{
-                if (error.type == MEGAChatErrorTooMany) {
-                    [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"Error. No more participants are allowed in this group call.", @"Message show when a call cannot be established because there are too many participants in the group call")];
-                }
-            }];
+            [weakSelf dismissViewControllerAnimated:YES completion:nil];
         } else {
             [self initDataSource];
             weakSelf.call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:weakSelf.chatRoom.chatId];
