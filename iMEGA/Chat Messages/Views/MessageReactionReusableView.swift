@@ -3,7 +3,7 @@ import MessageKit
 
 protocol MessageReactionReusableViewDelegate: class {
     func emojiTapped(_ emoji: String, chatMessage: ChatMessage)
-    func emojiLongPressed(_ emoji: String, chatMessage: ChatMessage)
+    func emojiLongPressed(_ emoji: String, chatMessage: ChatMessage, sender: UIView)
 }
 
 class MessageReactionReusableView: MessageReusableView, UICollectionViewDelegate, UICollectionViewDataSource {
@@ -118,11 +118,11 @@ extension MessageReactionReusableView: ReactionCollectionViewCellDelegate {
         delegate.emojiTapped(emoji, chatMessage: chatMessage)
     }
 
-    func emojiLongPressed(_ emoji: String) {
+    func emojiLongPressed(_ emoji: String, sender: UIView) {
         guard let delegate = delegate, let chatMessage = chatMessage else {
             return
         }
 
-        delegate.emojiLongPressed(emoji, chatMessage: chatMessage)
+        delegate.emojiLongPressed(emoji, chatMessage: chatMessage, sender: sender)
     }
 }
