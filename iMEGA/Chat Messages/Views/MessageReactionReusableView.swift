@@ -10,7 +10,8 @@ class MessageReactionReusableView: MessageReusableView, UICollectionViewDelegate
     @IBOutlet var reactionCollectionView: UICollectionView!
     var emojis = [String]()
     var indexPath: IndexPath?
-
+    var reactionContainerView = UIView()
+    
     var chatMessage: ChatMessage? {
         didSet {
             emojis.removeAll()
@@ -56,6 +57,8 @@ class MessageReactionReusableView: MessageReusableView, UICollectionViewDelegate
         }
         flowLayout.estimatedItemSize = CGSize(width: 1, height: 1)
         flowLayout.minimumInteritemSpacing = 4
+        
+        addSubview(reactionContainerView)
     }
 
     func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
