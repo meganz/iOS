@@ -1,5 +1,8 @@
 
 #import "SearchOperation.h"
+
+#import "Helper.h"
+
 #import "MEGASdkManager.h"
 #import "MEGANodeList+MNZCategory.h"
 
@@ -41,8 +44,7 @@
 #else
     MEGALogInfo(@"[Search] starts");
 #endif
-    
-    MEGASortOrderType sortOrderType = [[NSUserDefaults standardUserDefaults] integerForKey:@"SortOrderType"];
+    MEGASortOrderType sortOrderType = [Helper sortTypeFor:self.parentNode];
     MEGANodeList *nodeListFound = [MEGASdkManager.sharedMEGASdk nodeListSearchForNode:self.parentNode searchString:self.text cancelToken:self.cancelToken recursive:YES order:sortOrderType];
     
 #ifdef DEBUG

@@ -5,67 +5,65 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus);
 
 @interface UIColor (MNZCategory)
 
-#pragma mark - Black
+#pragma mark - Background
 
-+ (UIColor *)mnz_black262626;
-+ (UIColor *)mnz_black333333;
-+ (UIColor *)mnz_black151412_09;
-+ (UIColor *)mnz_black000000_01;
-+ (UIColor *)mnz_black000000_08;
++ (UIColor *)mnz_mainBarsForTraitCollection:(UITraitCollection *)traitCollection;
+
++ (UIColor *)mnz_background;
++ (UIColor *)mnz_secondaryBackgroundForTraitCollection:(UITraitCollection *)traitCollection;
+
+#pragma mark Background grouped
+
++ (UIColor *)mnz_backgroundGroupedForTraitCollection:(UITraitCollection *)traitCollection;
+
+#pragma mark Background miscellany
+
++ (UIColor *)mnz_notificationSeenBackgroundForTraitCollection:(UITraitCollection *)traitCollection;
+
+#pragma mark - Objects
+
++ (UIColor *)mnz_basicButtonForTraitCollection:(UITraitCollection *)traitCollection;
+
++ (UIColor *)mnz_separatorForTraitCollection:(UITraitCollection *)traitCollection;
+
++ (UIColor *)mnz_handlebarForTraitCollection:(UITraitCollection *)traitCollection;
+
+#pragma mark - Text
+
++ (UIColor *)mnz_label;
++ (UIColor *)mnz_subtitlesForTraitCollection:(UITraitCollection *)traitCollection;
 
 #pragma mark - Blue
 
-+ (UIColor *)mnz_blue007AFF;
-+ (UIColor *)mnz_blue2BA6DE;
++ (UIColor *)mnz_blueForTraitCollection:(UITraitCollection *)traitCollection;
 
 #pragma mark - Gray
 
-+ (UIColor *)mnz_gray666666;
-+ (UIColor *)mnz_gray777777;
-+ (UIColor *)mnz_gray8E8E93;
-+ (UIColor *)mnz_gray8F8F8F;
-+ (UIColor *)mnz_gray999999;
-+ (UIColor *)mnz_grayC2C2C2;
-+ (UIColor *)mnz_grayCCCCCC;
-+ (UIColor *)mnz_grayE2EAEA;
-+ (UIColor *)mnz_grayD8D8D8;
-+ (UIColor *)mnz_grayDBDBDB;
-+ (UIColor *)mnz_grayE3E3E3;
-+ (UIColor *)mnz_grayEEEEEE;
++ (UIColor *)mnz_primaryGrayForTraitCollection:(UITraitCollection *)traitCollection;
++ (UIColor *)mnz_secondaryGrayForTraitCollection:(UITraitCollection *)traitCollection;
++ (UIColor *)mnz_tertiaryGrayForTraitCollection:(UITraitCollection *)traitCollection;
+
 + (UIColor *)mnz_grayFAFAFA;
-+ (UIColor *)mnz_grayFCFCFC;
 + (UIColor *)mnz_grayF7F7F7;
-+ (UIColor *)mnz_grayF9F9F9;
+
+#pragma mark Gradients
+
++ (UIColor *)mnz_grayC2C2C2;
++ (UIColor *)mnz_grayDBDBDB;
 
 #pragma mark - Green
 
-+ (UIColor *)mnz_green00897B;
-+ (UIColor *)mnz_green00A886;
-+ (UIColor *)mnz_green00BFA5;
-+ (UIColor *)mnz_green13E03C;
-+ (UIColor *)mnz_green31B500;
-+ (UIColor *)mnz_green899B9C;
-
-#pragma mark - Orange
-
-+ (UIColor *)mnz_orangeFFA500;
-+ (UIColor *)mnz_orangeFFD300;
++ (UIColor *)mnz_turquoiseForTraitCollection:(UITraitCollection *)traitCollection;
 
 #pragma mark - Red
 
-+ (UIColor *)mnz_redMain;
++ (UIColor *)mnz_redForTraitCollection:(UITraitCollection *)traitCollection;
+
 + (UIColor *)mnz_redError;
-+ (UIColor *)mnz_redProI;
-+ (UIColor *)mnz_redProII;
-+ (UIColor *)mnz_redProIII;
-
-#pragma mark - White
-
-+ (UIColor *)mnz_whiteFFFFFF_02;
 
 #pragma mark - Utils
 
-+ (UIColor *)colorFromHexString:(NSString *)hexString;
-+ (UIColor *)mnz_colorForStatusChange:(MEGAChatStatus)onlineStatus;
++ (UIColor *)mnz_fromHexString:(NSString *)hexString;
++ (UIColor *)mnz_colorForChatStatus:(MEGAChatStatus)onlineStatus;
 
 @end

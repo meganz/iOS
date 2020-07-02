@@ -35,8 +35,8 @@ class VerificationCodeViewController: UIViewController {
         super.viewDidLoad()
 
         configViewContents()
-        configCodeFieldsAppearance()
         configResendView()
+        updateAppearance()
 
         verificationCodeFields = codeFieldsContainerView.subviews.compactMap { $0 as? UITextField }
         verificationCodeFields.first?.becomeFirstResponder()
@@ -57,15 +57,49 @@ class VerificationCodeViewController: UIViewController {
             return .all
         }
     }
-
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        if #available(iOS 13, *) {
+            if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+                AppearanceManager.forceNavigationBarUpdate(navigationController!.navigationBar, traitCollection: traitCollection)
+                
+                updateAppearance()
+            }
+        }
+    }
+    
+    // MARK: - Private
+    
+    private func updateAppearance() {
+        view.backgroundColor = .mnz_backgroundElevated(traitCollection)
+        
+        updateCodeFieldsAppearance()
+        
+        errorImageView.tintColor = UIColor.mnz_redError()
+        errorMessageLabel.textColor = UIColor.mnz_redError()
+        
+        didnotReceiveCodeLabel.textColor = UIColor.mnz_primaryGray(for: traitCollection)
+        resendButton.tintColor = UIColor.mnz_turquoise(for: self.traitCollection)
+        
+        confirmButton.mnz_setupPrimary(traitCollection)
+    }
+    
+    private func updateCodeFieldsAppearance() {
+        verificationCodeFields.forEach {
+            $0.backgroundColor = .mnz_secondaryBackgroundElevated(traitCollection)
+            $0.layer.cornerRadius = 4
+            $0.layer.borderWidth = 0.5
+            $0.layer.borderColor = errorView.isHidden ? UIColor.mnz_separator(for: traitCollection).cgColor : UIColor.mnz_redError().cgColor
+        }
+    }
+    
     // MARK: - Config views
 
     private func configViewContents() {
-        resendButton.tintColor = UIColor.mnz_green00BFA5()
-        didnotReceiveCodeLabel.textColor = UIColor.gray
-        errorImageView.tintColor = UIColor.mnz_redError()
-        errorMessageLabel.textColor = UIColor.mnz_redError()
         verificationCodeSentToLabel.text = AMLocalizedString("Please type the verification code sent to")
+        errorView.isHidden = true
         didnotReceiveCodeLabel.text = AMLocalizedString("You didn't receive a code?")
         resendButton.setTitle(AMLocalizedString("resend"), for: .normal)
         confirmButton.setTitle(AMLocalizedString("confirm"), for: .normal)
@@ -96,16 +130,7 @@ class VerificationCodeViewController: UIViewController {
                 })
             }
             errorView.isHidden = false
-            verificationCodeFields.forEach {
-                $0.layer.cornerRadius = 8
-                $0.layer.borderWidth = 2
-                $0.layer.borderColor = UIColor(red: 1, green: 0.2, blue: 0.23, alpha: 0.4).cgColor
-                $0.layer.shadowOffset = CGSize(width: 0, height: 1)
-                $0.layer.shadowColor = UIColor.mnz_black000000_01()?.cgColor
-                $0.layer.shadowOpacity = 1
-                $0.layer.shadowRadius = 0
-            }
-
+            
             var errorMessage: String?
             switch error.type {
             case .apiEAccess: // you have reached the verification limits.
@@ -120,16 +145,9 @@ class VerificationCodeViewController: UIViewController {
             errorMessageLabel.textColor = UIColor.mnz_redError()
         } else {
             errorView.isHidden = true
-            verificationCodeFields.forEach {
-                $0.layer.cornerRadius = 8
-                $0.layer.borderWidth = 1
-                $0.layer.borderColor = UIColor.mnz_black000000_01()?.cgColor
-                $0.layer.shadowOffset = CGSize(width: 0, height: 1)
-                $0.layer.shadowColor = UIColor.mnz_black000000_01()?.cgColor
-                $0.layer.shadowOpacity = 1
-                $0.layer.shadowRadius = 0
-            }
         }
+        
+        updateCodeFieldsAppearance()
     }
 
     // MARK: - UI Actions

@@ -29,14 +29,12 @@
 #import "MEGAStartUploadTransferDelegate.h"
 #import "MEGASdk+MNZCategory.h"
 #import "MEGAStore.h"
-#import "MEGAToolbarContentView.h"
 #import "MEGATransfer+MNZCategory.h"
 #import "MEGAVoiceClipMediaItem.h"
 #import "NSAttributedString+MNZCategory.h"
 #import "NSDate+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIImage+MNZCategory.h"
-#import "UIAlertAction+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
 #import "UIView+MNZCategory.h"
 
@@ -57,6 +55,7 @@
 #import "SendToViewController.h"
 #import "ShareLocationViewController.h"
 #import "MEGA-Swift.h"
+#import "JSQMessages.h"
 
 const CGFloat kGroupChatCellLabelHeightBuffer = 12.0f;
 const CGFloat k1on1CellLabelHeightBuffer = 5.0f;
@@ -170,7 +169,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     
     [self setupCollectionView];
     [self setupMenuController:[UIMenuController sharedMenuController]];
-    [self customToolbarContentView];
     
     self.showLoadEarlierMessagesHeader = YES;
     self.areAllMessagesSeen = NO;
@@ -183,7 +181,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     self.avatarImages = NSMutableDictionary.new;
     
     if (self.chatRoom.isGroup) {
-        self.peerAvatar = [UIImage imageForName:self.chatRoom.title.uppercaseString size:CGSizeMake(80.0f, 80.0f) backgroundColor:UIColor.mnz_grayC2C2C2 backgroundGradientColor:UIColor.mnz_grayDBDBDB textColor:UIColor.whiteColor font:[UIFont mnz_SFUIRegularWithSize:40.0f]];
+        self.peerAvatar = [UIImage imageForName:self.chatRoom.title.uppercaseString size:CGSizeMake(80.0f, 80.0f) backgroundColor:[UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection] textColor:UIColor.whiteColor font:[UIFont systemFontOfSize:40.0f]];
     } else {
         uint64_t userHandle = [self.chatRoom peerHandleAtIndex:0];
         self.peerAvatar = [UIImage mnz_imageForUserHandle:userHandle name:self.chatRoom.title size:CGSizeMake(80.0f, 80.0f) delegate:nil];
@@ -275,7 +273,8 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     self.loadingState = YES;
     self.collectionView.emptyDataSetSource = self;
     self.collectionView.emptyDataSetDelegate = self;
-    [self.collectionView reloadData];
+    
+    [self updateAppearance];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -357,7 +356,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     
     if (self.isPublicChatWithLinkCreated) {
         CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
-        customModalAlertVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
         customModalAlertVC.image = [UIImage imageNamed:@"chatLinkCreation"];
         customModalAlertVC.viewTitle = self.chatRoom.title;
         customModalAlertVC.detail = AMLocalizedString(@"People can join your group by using this link.", @"Text explaining users how the chat links work.");
@@ -511,7 +509,29 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     } completion:nil];
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateAppearance];
+        }
+    }
+}
+
 #pragma mark - Private
+
+- (void)updateAppearance {
+    self.view.backgroundColor = self.collectionView.backgroundColor = UIColor.mnz_background;
+    
+    JSQMessagesBubbleImageFactory *bubbleFactory = [[JSQMessagesBubbleImageFactory alloc] initWithBubbleImage:[UIImage imageNamed:@"bubble_tailless"] capInsets:UIEdgeInsetsZero layoutDirection:UIApplication.sharedApplication.userInterfaceLayoutDirection];
+    self.outgoingBubbleImageData = [bubbleFactory outgoingMessagesBubbleImageWithColor:[UIColor mnz_chatOutgoingBubble:self.traitCollection]];
+    self.incomingBubbleImageData = [bubbleFactory incomingMessagesBubbleImageWithColor:[UIColor mnz_chatIncomingBubble:self.traitCollection]];
+    
+    [self customToolbarContentView];
+    
+    [self.collectionView reloadData];
+}
 
 - (void)configureNavigationBar {    
     [self createRightBarButtonItems];
@@ -524,8 +544,8 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 
 - (void)initNavigationTitleViews {
     self.navigationTitleLabel = [[UILabel alloc] init];
-    self.navigationTitleLabel.font = [UIFont mnz_SFUISemiBoldWithSize:15];
-    self.navigationTitleLabel.textColor = UIColor.whiteColor;
+    self.navigationTitleLabel.font = [UIFont systemFontOfSize:15.0f weight:UIFontWeightSemibold];
+    self.navigationTitleLabel.textColor = UIColor.mnz_label;
     
     self.navigationStatusView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
     [[self.navigationStatusView.widthAnchor constraintEqualToConstant:10] setActive:YES];
@@ -535,8 +555,8 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     self.navigationStatusView.layer.borderWidth = 1;
     
     self.navigationSubtitleLabel = [[UILabel alloc] init];
-    self.navigationSubtitleLabel.font = [UIFont mnz_SFUIRegularWithSize:12];
-    self.navigationSubtitleLabel.textColor = UIColor.mnz_grayE3E3E3;
+    self.navigationSubtitleLabel.font = [UIFont systemFontOfSize:12.0f];
+    self.navigationSubtitleLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
 }
 
 - (void)instantiateNavigationTitle {
@@ -631,7 +651,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             if (userStatus == MEGAChatStatusInvalid) {
                 self.navigationStatusView.hidden = YES;
             } else {
-                self.navigationStatusView.backgroundColor = [UIColor mnz_colorForStatusChange:userStatus];
+                self.navigationStatusView.backgroundColor = [UIColor mnz_colorForChatStatus:userStatus];
                 self.navigationStatusView.hidden = NO;
             }
         }
@@ -777,6 +797,8 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         groupCallVC.chatRoom = self.chatRoom;
         groupCallVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
         groupCallVC.megaCallManager = ((AppDelegate *)UIApplication.sharedApplication.delegate).megaCallManager;
+        groupCallVC.modalPresentationStyle = UIModalPresentationFullScreen;
+        
         [self presentViewController:groupCallVC animated:YES completion:nil];
     } else {
         CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
@@ -785,6 +807,8 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         callVC.callType = active ? CallTypeActive : CallTypeOutgoing;
         callVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
         callVC.megaCallManager = ((AppDelegate *)UIApplication.sharedApplication.delegate).megaCallManager;
+        callVC.modalPresentationStyle = UIModalPresentationFullScreen;
+        
         [self presentViewController:callVC animated:YES completion:nil];
     }
 }
@@ -848,7 +872,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     [self.collectionView registerNib:MEGALoadingMessagesHeaderView.nib forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:MEGALoadingMessagesHeaderView.headerReuseIdentifier];
     
     self.collectionView.accessoryDelegate = self;
-    self.collectionView.backgroundColor = UIColor.whiteColor;
     
     //Register custom menu actions for cells.
     [JSQMessagesCollectionViewCell registerMenuAction:@selector(edit:message:)];
@@ -858,10 +881,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     [JSQMessagesCollectionViewCell registerMenuAction:@selector(addContact:message:)];
     [JSQMessagesCollectionViewCell registerMenuAction:@selector(removeRichPreview:message:indexPath:)];
     [JSQMessagesCollectionViewCell registerMenuAction:@selector(delete:)];
-    
-    JSQMessagesBubbleImageFactory *bubbleFactory = [[JSQMessagesBubbleImageFactory alloc] initWithBubbleImage:[UIImage imageNamed:@"bubble_tailless"] capInsets:UIEdgeInsetsZero layoutDirection:UIApplication.sharedApplication.userInterfaceLayoutDirection];
-    self.outgoingBubbleImageData = [bubbleFactory outgoingMessagesBubbleImageWithColor:UIColor.mnz_green00BFA5];
-    self.incomingBubbleImageData = [bubbleFactory incomingMessagesBubbleImageWithColor:UIColor.mnz_grayE2EAEA];
 }
 
 - (void)customiseCollectionViewLayout {
@@ -880,10 +899,11 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 
 - (void)customToolbarContentView {
     self.inputToolbar.contentView.textView.jsq_pasteDelegate = self;
-    self.inputToolbar.contentView.textView.placeHolderTextColor = UIColor.mnz_grayCCCCCC;
-    self.inputToolbar.contentView.textView.font = [UIFont mnz_SFUIRegularWithSize:15.0f];
-    self.inputToolbar.contentView.textView.textColor = UIColor.mnz_black333333;
-    self.inputToolbar.contentView.textView.tintColor = UIColor.mnz_green00BFA5;
+    self.inputToolbar.contentView.textView.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
+    self.inputToolbar.contentView.textView.placeHolderTextColor = [UIColor mnz_tertiaryGrayForTraitCollection:self.traitCollection];
+    self.inputToolbar.contentView.textView.font = [UIFont systemFontOfSize:15.0f];
+    self.inputToolbar.contentView.textView.textColor = UIColor.mnz_label;
+    self.inputToolbar.contentView.textView.tintColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
     [self updateToolbarPlaceHolder];
     self.inputToolbar.contentView.textView.delegate = self;
     self.inputToolbar.contentView.textView.text = [[MEGAStore shareInstance] fetchChatDraftWithChatId:self.chatRoom.chatId].text;
@@ -1014,8 +1034,8 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     NSString *confidentialityString = [confidentialityExplanationString mnz_stringBetweenString:@"[S]" andString:@"[/S]"];
     confidentialityExplanationString = [confidentialityExplanationString stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"[S]%@[/S]", confidentialityString] withString:@""];
     
-    NSMutableAttributedString *confidentialityAttributedString = [[NSMutableAttributedString alloc] initWithString:confidentialityString attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:15.0f], NSForegroundColorAttributeName:UIColor.mnz_redMain}];
-    NSMutableAttributedString *confidentialityExplanationAttributedString = [[NSMutableAttributedString alloc] initWithString:confidentialityExplanationString attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:15.0f], NSForegroundColorAttributeName:UIColor.mnz_gray777777}];
+    NSMutableAttributedString *confidentialityAttributedString = [NSMutableAttributedString.alloc initWithString:confidentialityString attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15.0f], NSForegroundColorAttributeName:[UIColor mnz_redForTraitCollection:self.traitCollection]}];
+    NSMutableAttributedString *confidentialityExplanationAttributedString = [NSMutableAttributedString.alloc initWithString:confidentialityExplanationString attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15.0f], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
     [confidentialityAttributedString appendAttributedString:confidentialityExplanationAttributedString];
     self.openMessageHeaderView.confidentialityLabel.attributedText = confidentialityAttributedString;
     
@@ -1023,8 +1043,8 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     NSString *authenticityString = [authenticityExplanationString mnz_stringBetweenString:@"[S]" andString:@"[/S]"];
     authenticityExplanationString = [authenticityExplanationString stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"[S]%@[/S]", authenticityString] withString:@""];
 
-    NSMutableAttributedString *authenticityAttributedString = [[NSMutableAttributedString alloc] initWithString:authenticityString attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:15.0f], NSForegroundColorAttributeName:UIColor.mnz_redMain}];
-    NSMutableAttributedString *authenticityExplanationAttributedString = [[NSMutableAttributedString alloc] initWithString:authenticityExplanationString attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:15.0f], NSForegroundColorAttributeName:UIColor.mnz_gray777777}];
+    NSMutableAttributedString *authenticityAttributedString = [NSMutableAttributedString.alloc initWithString:authenticityString attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15.0f], NSForegroundColorAttributeName:[UIColor mnz_redForTraitCollection:self.traitCollection]}];
+    NSMutableAttributedString *authenticityExplanationAttributedString = [NSMutableAttributedString.alloc initWithString:authenticityExplanationString attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15.0f], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
     [authenticityAttributedString appendAttributedString:authenticityExplanationAttributedString];
     self.openMessageHeaderView.authenticityLabel.attributedText = authenticityAttributedString;
 }
@@ -1166,14 +1186,14 @@ static NSMutableSet<NSString *> *tapForInfoSet;
         self.navigationBarProgressView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin;
         self.navigationBarProgressView.frame = CGRectMake(self.navigationController.navigationBar.bounds.origin.x, self.navigationController.navigationBar.bounds.size.height, self.navigationController.navigationBar.bounds.size.width, 2.0f);
         self.navigationBarProgressView.transform = CGAffineTransformScale(self.navigationBarProgressView.transform, 1, 2);
-        self.navigationBarProgressView.progressTintColor = UIColor.mnz_green00BFA5;
+        self.navigationBarProgressView.progressTintColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
         self.navigationBarProgressView.trackTintColor = UIColor.clearColor;
         
         dispatch_async(dispatch_get_main_queue(), ^{
             self.navigationBarProgressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleBar];
             self.navigationBarProgressView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin;
             self.navigationBarProgressView.frame = CGRectMake(self.navigationController.navigationBar.bounds.origin.x, self.navigationController.navigationBar.bounds.size.height, self.navigationController.navigationBar.bounds.size.width, 2.0f);
-            self.navigationBarProgressView.progressTintColor = UIColor.mnz_green00BFA5;
+            self.navigationBarProgressView.progressTintColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
             self.navigationBarProgressView.trackTintColor = UIColor.clearColor;
             
             [self.navigationController.navigationBar addSubview:self.navigationBarProgressView];
@@ -1433,11 +1453,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 
 - (void)loadPhotoAppBrowserViewController {
     __weak typeof(self) weakself = self;
-    AlbumsTableViewController *albumTableViewController = [AlbumsTableViewController.alloc
-                                                           initWithSelectionActionText:AMLocalizedString(@"Send (%d)",
-                                                                                                         @"Used in Photos app browser view to send the photos from the view to the chat.")
-                                                           selectionActionDisabledText:AMLocalizedString(@"send", @"Used in Photos app browser view as a disabled action when there is no assets selected")
-                                                           completionBlock:^(NSArray<PHAsset *> * _Nonnull assets) {
+    AlbumsTableViewController *albumTableViewController = [AlbumsTableViewController.alloc initWithSelectionActionText:AMLocalizedString(@"Send (%d)", @"Used in Photos app browser view to send the photos from the view to the chat.") selectionActionDisabledText:AMLocalizedString(@"send", @"Used in Photos app browser view as a disabled action when there is no assets selected") completionBlock:^(NSArray<PHAsset *> * _Nonnull assets) {
         if (assets.count > 0) {
             [weakself uploadChatAssets:assets];
         }
@@ -1457,7 +1473,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 
 - (void)createTopBannerButton {
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, -44, self.view.frame.size.width, 44)];
-    button.backgroundColor = UIColor.mnz_green00BFA5;
+    button.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
     
     [button setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
     button.titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
@@ -1530,13 +1546,13 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 - (void)updateDuration {
     if (!self.isReconnecting) {
         NSTimeInterval interval = ([NSDate date].timeIntervalSince1970 - self.baseDate.timeIntervalSince1970 + self.initDuration);
-        [self setTopBannerButtonTitle:[NSString stringWithFormat:AMLocalizedString(@"Touch to return to call %@", @"Message shown in a chat room for a group call in progress displaying the duration of the call"), [NSString mnz_stringFromTimeInterval:interval]] color:UIColor.mnz_green00BFA5];
+        [self setTopBannerButtonTitle:[NSString stringWithFormat:AMLocalizedString(@"Touch to return to call %@", @"Message shown in a chat room for a group call in progress displaying the duration of the call"), [NSString mnz_stringFromTimeInterval:interval]] color:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection]];
     }
 }
 
 - (void)configureTopBannerButtonForInProgressCall:(MEGAChatCall *)call {
     if (self.isReconnecting) {
-        [self setTopBannerButtonTitle:AMLocalizedString(@"You are back!", @"Title shown when the user reconnect in a call.") color:UIColor.mnz_green00BFA5];
+        [self setTopBannerButtonTitle:AMLocalizedString(@"You are back!", @"Title shown when the user reconnect in a call.") color:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection]];
     }
     [self initTimerForCall:call];
 }
@@ -1544,7 +1560,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 - (void)configureTopBannerButtonForActiveCall:(MEGAChatCall *)call {
     [self.timer invalidate];
     NSString *title = self.chatRoom.isGroup ? AMLocalizedString(@"There is an active group call. Tap to join.", @"Message shown in a chat room when there is an active group call"): AMLocalizedString(@"There is an active call. Tap to join.", @"Message shown in a chat room when there is an active call");
-    [self setTopBannerButtonTitle:title color:UIColor.mnz_green00BFA5];
+    [self setTopBannerButtonTitle:title color:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection]];
     [self showTopBannerButton];
 }
 
@@ -2243,7 +2259,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     
     if (showDayMonthYear) {
         NSString *dateString = message.date.mnz_formattedDateMediumStyle;
-        NSAttributedString *dateAttributedString = [[NSAttributedString alloc] initWithString:dateString attributes:@{NSFontAttributeName:[UIFont mnz_SFUIMediumWithSize:12.0f], NSForegroundColorAttributeName:UIColor.mnz_black333333}];
+        NSAttributedString *dateAttributedString = [NSAttributedString.alloc initWithString:dateString attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.f weight:UIFontWeightMedium], NSForegroundColorAttributeName:UIColor.mnz_label}];
         return dateAttributedString;
     }
     
@@ -2257,7 +2273,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     BOOL showMessageBubbleTopLabel = [self showHourForMessage:message withIndexPath:indexPath];
     if (showMessageBubbleTopLabel) {
         NSString *hour = message.date.mnz_formattedHourAndMinutes;
-        NSAttributedString *hourAttributed = [[NSAttributedString alloc] initWithString:hour attributes:@{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1], NSForegroundColorAttributeName:UIColor.grayColor}];
+        NSAttributedString *hourAttributed = [NSAttributedString.alloc initWithString:hour attributes:@{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
         NSMutableAttributedString *topCellAttributed = [[NSMutableAttributedString alloc] init];
         
         if (self.chatRoom.isGroup && !message.isManagementMessage) {
@@ -2265,7 +2281,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             if (!fullname.length) {
                 fullname = @"";
             }
-            NSAttributedString *fullnameAttributed = [[NSAttributedString alloc] initWithString:[fullname stringByAppendingString:@"   "] attributes:@{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1], NSForegroundColorAttributeName:UIColor.grayColor}];
+            NSAttributedString *fullnameAttributed = [NSAttributedString.alloc initWithString:[fullname stringByAppendingString:@"   "] attributes:@{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
             [topCellAttributed appendAttributedString:fullnameAttributed];
             [topCellAttributed appendAttributedString:hourAttributed];
         } else {
@@ -2303,16 +2319,16 @@ static NSMutableSet<NSString *> *tapForInfoSet;
     
     if (message.isDeleted) {
         cell.textView.font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline].italic;
-        cell.textView.textColor = UIColor.mnz_blue2BA6DE;
+        cell.textView.textColor = [UIColor mnz_blueForTraitCollection:self.traitCollection];
     } else if (message.isManagementMessage) {
         cell.textView.font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
-        cell.textView.linkTextAttributes = @{NSForegroundColorAttributeName: UIColor.mnz_black333333,
-                                             NSUnderlineColorAttributeName: UIColor.mnz_black333333,
+        cell.textView.linkTextAttributes = @{NSForegroundColorAttributeName: UIColor.mnz_label,
+                                             NSUnderlineColorAttributeName: UIColor.mnz_label,
                                              NSUnderlineStyleAttributeName: @(NSUnderlineStyleNone)};
         cell.textView.attributedText = message.attributedText;
     } else if (!message.isMediaMessage) {
         cell.textView.font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
-        cell.textView.textColor = [message.senderId isEqualToString:self.senderId] ? UIColor.whiteColor : UIColor.mnz_black333333;
+        cell.textView.textColor = [message.senderId isEqualToString:self.senderId] ? UIColor.whiteColor : UIColor.mnz_label;
         
         cell.textView.linkTextAttributes = @{ NSForegroundColorAttributeName : cell.textView.textColor,
                                               NSUnderlineStyleAttributeName : @(NSUnderlineStyleSingle | NSUnderlinePatternSolid) };
@@ -3398,7 +3414,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             
         case MEGAChatCallStatusReconnecting:
             self.reconnecting = YES;
-            [self setTopBannerButtonTitle:AMLocalizedString(@"Reconnecting...", @"Title shown when the user lost the connection in a call, and the app will try to reconnect the user again.") color:UIColor.mnz_orangeFFA500];
+            [self setTopBannerButtonTitle:AMLocalizedString(@"Reconnecting...", @"Title shown when the user lost the connection in a call, and the app will try to reconnect the user again.") color:UIColor.systemOrangeColor];
             break;
             
         case MEGAChatCallStatusDestroyed:

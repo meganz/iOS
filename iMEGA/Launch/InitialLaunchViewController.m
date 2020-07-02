@@ -2,6 +2,7 @@
 #import "InitialLaunchViewController.h"
 
 #import "OnboardingViewController.h"
+#import "MEGA-Swift.h"
 
 @interface InitialLaunchViewController () <MEGARequestDelegate>
 
@@ -16,8 +17,12 @@
 
 @implementation InitialLaunchViewController
 
+#pragma mark - Lifecycle
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self updateAppearance];
     
     self.titleLabel.text = AMLocalizedString(@"Setup MEGA", @"Button which triggers the initial setup");
     self.descriptionLabel.text = AMLocalizedString(@"To fully take advantage of your MEGA account we need to ask you some permissions.", @"Detailed explanation of why the user should give some permissions to MEGA");
@@ -47,6 +52,16 @@
     return UIInterfaceOrientationMaskAll;
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateAppearance];
+        }
+    }
+}
+
 #pragma mark - Private
 
 - (void)moveLogo {
@@ -65,6 +80,15 @@
     CGRect descriptionFrame = self.descriptionLabel.frame;
     descriptionFrame.origin.y -= verticalIncrement;
     self.descriptionLabel.frame = descriptionFrame;
+}
+
+- (void)updateAppearance {
+    self.view.backgroundColor = UIColor.mnz_background;
+    
+    self.descriptionLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
+    
+    [self.setupButton mnz_setupPrimary:self.traitCollection];
+    [self.skipButton mnz_setupBasic:self.traitCollection];
 }
 
 #pragma mark - Public
@@ -90,6 +114,9 @@
         [self.delegate setupFinished];
         [self.delegate readyToShowRecommendations];
     };
+    if (@available(iOS 13.0, *)) {
+        setupVC.modalPresentationStyle = UIModalPresentationFullScreen;
+    }
     
     [self presentViewController:setupVC animated:NO completion:^{
         self.titleLabel.hidden = self.descriptionLabel.hidden = YES;

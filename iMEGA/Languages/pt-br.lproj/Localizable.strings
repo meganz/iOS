@@ -909,8 +909,6 @@
 "profile"="Perfil";
 /* Title of the Achievements section */
 "achievementsTitle"="Conquistas";
-/* Title of the Used storage section */
-"usedStorage"="Armazenamento usado";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
 "inviteFriendsAndGetRewards"="Convide amigos e ganhe bônus";
 /* Indicating text for when "you invite your friends" */
@@ -918,7 +916,7 @@
 /* title of the introduction for the achievements screen */
 "inviteFriendsAndGetForEachReferral"="Ganhe %1$s de espaço de armazenamento e %2$s de cota de transferência para cada indicação";
 /* Text shown to explain how and where you can invite friends */
-"inviteYourFriendsExplanation"="Selecione os contatos da agenda do seu telefone ou digite os endereços de email.";
+"Select from phone contacts or enter multiple email addresses"="Select from phone contacts or enter multiple email addresses";
 /*  */
 "insertYourFriendsEmails"="Digite o(s) email(s) do(s) seu(s) amigo(s):";
 /*  */
@@ -1009,12 +1007,6 @@
 "Renews on"="Renova em";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="Compartilhado comigo";
-/* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
-"of %@"="de %@";
-/* Sentence shown under the used space to complete the info with the user account maximum storage. "used of {maximun storage}" */
-"used of %@"="usados de %@";
-/* Sentence shown under the available space to complete the info with the user account maximum storage. "available of {maximun storage}" */
-"available of %@"="disponíveis de %@";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Upgrade";
 /*  */
@@ -1023,8 +1015,8 @@
 "cloudDriveIsAlmostFull"="A sua [S]Nuvem de arquivos está quase cheia.[/S] [A]Faça upgrade[/A] a um plano PRO e obtenha [S]até %@ TB (%@ GB)[/S] de espaço de armazenamento.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
 "cloudDriveIsFull"="[S]A sua Nuvem de arquivos está cheia.[/S] [A]Faça upgrade[/A] a um plano PRO e obtenha [S]até %@ TB (%@ GB)[/S] de espaço de armazenamento.";
-/* Storage related with the MEGA PRO account level you can subscribe */
-"productSpace"="Armazenamento";
+/* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
+"Storage"="Armazenamento";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
 "limited"="Limitado";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
@@ -1179,8 +1171,8 @@
 "contactCredentials"="Credenciais do contato";
 /* "Verify user" dialog description */
 "thisIsBestDoneInRealLife"="O melhor jeito de fazer isso é pessoalmente, na vida real. Se você tiver outro canal confiável como OTR ou PGP, você também pode usá-lo.";
-/* Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity */
-"yourCredentials"="Suas credenciais";
+/* Title of the label in the my account section. It shows the credentials of the current user so it can be used to be verified by other contacts */
+"My credentials"="Minhas credenciais";
 /* Button to reset the password */
 "reset"="Resetar";
 /* Button title */
@@ -1210,7 +1202,7 @@
 /* The Moderator permission level in chat. With moderator permissions a participant can manage the chat. */
 "moderator"="Moderador";
 /* The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat. */
-"standard"="Padrão";
+"standard"="Predeterminado";
 /* A button title which removes a participant from a chat. */
 "removeParticipant"="Remover participante";
 /* Title show above the name of the persons with whom you're chatting */
@@ -1593,7 +1585,7 @@
 /* Alert message shown when users try to stream an unsupported audio/video file */
 "message_fileNotSupported"="Você pode salvar o arquivo para uso offline e abri-lo em um aplicativo compatível.";
 /* Item of a menu to forward a message chat to another chatroom */
-"forward"="Reenviar";
+"forward"="Encaminhar";
 /* Success message shown after forwarding messages to other chats */
 "messagesSent"="Mensagens enviadas";
 /* Title of archived chats button */
@@ -1883,7 +1875,7 @@
 /* Title of the alert that allows change between different maps: Standard, Satellite or Hybrid. */
 "Map settings"="Configurações de mapa";
 /* Type of data displayed in a map view. A street map that shows the position of all roads and some road names. */
-"Standard"="Padrão";
+"Standard"="Predeterminado";
 /* Type of data displayed in a map view. Satellite imagery of the area. */
 "Satellite"="Satélite";
 /* Type of data displayed in a map view. A satellite image of the area with road and road name information layered on top. */
@@ -2068,6 +2060,12 @@
 "24 hours"="24 horas";
 /* Chat Notifications DND: Title bar message for the dnd activate options */
 "Mute chat Notifications for"="Silenciar as notificações de chat por";
+/* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
+"Notifications will be silenced until Do Not Disturb is turned off"="Notifications will be silenced until Do Not Disturb is turned off";
+/* Chat Notifications DND: Remaining time left if until tomorrow */
+"Notifications will be silenced until tomorrow at %@"="Notifications will be silenced until tomorrow at %@";
+/* Chat Notifications DND: Remaining time left if until today */
+"Notifications will be silenced until %@"="Notifications will be silenced until %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="Notificações do chat";
 /* Chat settings: This text appears with the Do Not Disturb switch */
@@ -2102,6 +2100,8 @@
 "Send (%d)"="Enviar (%d)";
 /* Used in Photos app browser view to upload the photos from the view to the cloud. */
 "Upload (%d)"="Fazer upload (%d)";
+/* Used in Photos app browser album listing screen. */
+"Albums"="Albums";
 /* Used in Photos app browser carousel view to unselect a selected photo. */
 "Unselect"="Remover a seleção";
 /* Used in Photos app browser. Shown when there are no photos or videos in the Photos app. */

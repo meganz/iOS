@@ -8,6 +8,7 @@
 #import "MEGAPasswordLinkRequestDelegate.h"
 #import "MEGASdk+MNZCategory.h"
 #import "MEGASDKManager.h"
+#import "MEGA-Swift.h"
 #import "NSDate+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "PasswordStrengthIndicatorView.h"
@@ -85,7 +86,7 @@
             self.passwordView.passwordTextField.enabled = self.confirmPasswordView.passwordTextField.enabled = NO;
             [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:4]].userInteractionEnabled = NO;
             self.encryptWithPasswordLabel.text = AMLocalizedString(@"encrypted", @"The button text on the Export Link dialog to indicate that the link has been encrypted successfully.");
-            self.encryptWithPasswordLabel.textColor = [UIColor mnz_green31B500];
+            self.encryptWithPasswordLabel.textColor = UIColor.systemGreenColor;
             [SVProgressHUD dismiss];
         }
     } multipleLinks:self.nodesToExport.count > 1];
@@ -136,7 +137,23 @@
     self.toolbarCopyLinkBarButtonItem.title = AMLocalizedString(@"copyLink", @"Title for a button to copy the link to the clipboard");
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateAppearance];
+            
+            [self.tableView reloadData];
+        }
+    }
+}
+
 #pragma mark - Private
+
+- (void)updateAppearance {
+    self.view.backgroundColor = [UIColor mnz_backgroundGroupedElevated:self.traitCollection];
+}
 
 - (void)setNavigationBarTitle {
     BOOL areExportedNodes = YES;
@@ -315,7 +332,7 @@
     
     if (sender.isOn) {
         self.encryptWithPasswordLabel.text = AMLocalizedString(@"encrypt", @"The text of a button. This button will encrypt a link with a password.");
-        self.encryptWithPasswordLabel.textColor = [UIColor mnz_blue007AFF];
+        self.encryptWithPasswordLabel.textColor = [UIColor mnz_blueForTraitCollection:self.traitCollection];
         
         self.encryptedLinks = [NSMutableArray new];
         self.selectedArray = self.encryptedLinks;
@@ -379,7 +396,12 @@
     }
 }
 
-#pragma mark - TableViewDelegate
+#pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    cell.backgroundColor = [UIColor mnz_secondaryBackgroundGroupedElevated:self.traitCollection];
+    cell.tintColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
