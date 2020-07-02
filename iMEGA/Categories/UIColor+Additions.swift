@@ -454,6 +454,23 @@ extension UIColor {
             return mnz_gray515151()
         }
     }
+    
+    class func emojiDescriptionTextColor(_ traitCollection: UITraitCollection) -> UIColor {
+        if #available(iOS 13.0, *) {
+            switch traitCollection.userInterfaceStyle {
+            case .unspecified, .light:
+                return mnz_gray3C3C43().withAlphaComponent(0.3)
+
+            case .dark:
+                return white.withAlphaComponent(0.3)
+                
+            @unknown default:
+                return mnz_gray3C3C43().withAlphaComponent(0.3)
+            }
+        } else {
+            return mnz_gray3C3C43().withAlphaComponent(0.3)
+        }
+    }
 
     // MARK: - Tints
     

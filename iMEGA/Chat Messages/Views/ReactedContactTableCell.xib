@@ -18,7 +18,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Send Message" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZCw-ww-nHj" userLabel="Send Message Label">
-                        <rect key="frame" x="71" y="20" width="103" height="20"/>
+                        <rect key="frame" x="64" y="20" width="103" height="20"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="20" id="Kfl-ph-bQ2"/>
                         </constraints>
@@ -51,7 +51,7 @@
                     <constraint firstItem="ZCw-ww-nHj" firstAttribute="centerY" secondItem="5eI-Jp-QUA" secondAttribute="centerY" id="M9N-jP-1uM"/>
                     <constraint firstItem="5eI-Jp-QUA" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="Vsz-ti-va0"/>
                     <constraint firstAttribute="bottom" secondItem="5eI-Jp-QUA" secondAttribute="bottom" constant="10" id="XLh-G9-srb"/>
-                    <constraint firstItem="ZCw-ww-nHj" firstAttribute="leading" secondItem="5eI-Jp-QUA" secondAttribute="trailing" constant="15" id="eSN-CJ-h26"/>
+                    <constraint firstItem="ZCw-ww-nHj" firstAttribute="leading" secondItem="5eI-Jp-QUA" secondAttribute="trailing" constant="8" id="eSN-CJ-h26"/>
                     <constraint firstAttribute="bottom" secondItem="UvD-W1-O4l" secondAttribute="bottom" id="iyG-SX-UVZ"/>
                     <constraint firstItem="5eI-Jp-QUA" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="ld7-3f-zWj"/>
                     <constraint firstAttribute="trailing" secondItem="UvD-W1-O4l" secondAttribute="trailing" id="r2c-7h-pOi"/>
