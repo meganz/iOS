@@ -399,7 +399,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
     // MARK: - Private methods
 
     private func isLastSectionVisible() -> Bool {
-        guard !messages.isEmpty else { return false }
+        guard !messages.isEmpty else { return true }
         
         let lastIndexPath = IndexPath(item: 0, section: messages.count - 1)
         return chatViewController?.messagesCollectionView.indexPathsForVisibleItems.contains(lastIndexPath) ?? false

@@ -122,10 +122,13 @@ class MessageTextView: UITextView {
         invalidateIntrinsicContentSize()
     }
     
-    func set(text: String) {
+    func set(text: String, showKeyboard: Bool) {
         self.text = text
         updatePlaceholder()
-        becomeFirstResponder()
+        
+        if showKeyboard {
+            becomeFirstResponder()
+        }
     }
     
     func set(keyboardAppearance: UIKeyboardAppearance) {

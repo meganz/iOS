@@ -69,9 +69,24 @@ extension ChatViewController {
         viewControllers.remove(at: viewControllers.count - 2)
         navController.viewControllers = viewControllers
     }
+
+    func loadDraft() {
+        if let chatInputBar = inputAccessoryView as? ChatInputBar,
+            let text = MEGAStore.shareInstance()?.fetchChatDraft(withChatId: chatRoom.chatId)?.text,
+            !text.isEmpty {
+            chatInputBar.set(text: text, showKeyboard: false)
+        }
+    }
+    
+    func saveDraft() {
+        guard let chatInputBar = inputAccessoryView as? ChatInputBar else {
+            return
+        }
+        
+        MEGAStore.shareInstance()?.insertOrUpdateChatDraft(withChatId: chatRoom.chatId, text: (editMessage != nil) ? "" : chatInputBar.text)
+    }
     
     // MARK: - Private methods.
-    
     private func join(button: UIButton) {
         if MEGASdkManager.sharedMEGAChatSdk()!.initState() == .anonymous {
             MEGALinkManager.secondaryLinkURL = publicChatLink
@@ -404,6 +419,10 @@ extension ChatViewController: ChatInputBarDelegate {
             }
             MEGASdkManager.sharedMEGAChatSdk()?.sendTypingNotification(forChat: chatRoom.chatId)
         }
+    }
+    
+    func textDidEndEditing() {
+        saveDraft()
     }
     
     func showTapAndHoldMessage() {
