@@ -39,6 +39,7 @@ class EmojiCarousalView: UIView {
         collectionView.register(EmojiCollectionCell.nib,
                                 forCellWithReuseIdentifier: EmojiCollectionCell.reuseIdentifier)
         updateAppearance()
+        handlebarView.isHidden = UIDevice.current.iPadDevice
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

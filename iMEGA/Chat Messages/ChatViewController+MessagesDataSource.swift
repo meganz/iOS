@@ -82,7 +82,7 @@ extension ChatViewController: MessageReactionReusableViewDelegate {
         print("emoji tapped \(emoji), for chat message \(chatMessage.messageId)")
     }
     
-    func emojiLongPressed(_ emoji: String, chatMessage: ChatMessage) {
+    func emojiLongPressed(_ emoji: String, chatMessage: ChatMessage, sender: UIView) {
         guard let emojisStringList = MEGASdkManager
             .sharedMEGAChatSdk()?
             .getMessageReactions(forChat: chatRoom.chatId,
@@ -97,7 +97,24 @@ extension ChatViewController: MessageReactionReusableViewDelegate {
                                                       selectedEmoji: emoji,
                                                       chatId: chatRoom.chatId,
                                                       messageId: chatMessage.message.messageId)
-        presentPanModal(vc)
+        
+        if UIDevice.current.iPadDevice {
+            let navController = MEGANavigationController(rootViewController: vc)
+            navController.navigationBar.isTranslucent = false
+            navController.addLeftDismissButton(withText: AMLocalizedString("cancel"))
+            navController.modalPresentationStyle = .popover;
+
+            if let popover = navController.popoverPresentationController {
+                popover.delegate = self
+
+                popover.sourceView = sender
+                popover.sourceRect = sender.bounds
+
+                present(navController, animated: true, completion: nil)
+            }
+        } else {
+            presentPanModal(vc)
+        }
     }
 }
 

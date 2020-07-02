@@ -2,7 +2,7 @@ import UIKit
 
 protocol ReactionCollectionViewCellDelegate: class {
     func emojiTapped(_ emoji: String)
-    func emojiLongPressed(_ emoji: String)
+    func emojiLongPressed(_ emoji: String, sender: UIView)
 }
 
 class ReactionCollectionViewCell: UICollectionViewCell {
@@ -25,7 +25,7 @@ class ReactionCollectionViewCell: UICollectionViewCell {
             return
         }
         
-        delegate.emojiLongPressed(emoji)
+        delegate.emojiLongPressed(emoji, sender: self)
     }
 
     func configureCell(_ emoji: String,_ count: Int) {

@@ -55,6 +55,8 @@ class ReactedEmojisUsersListViewController: UIViewController  {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        preferredContentSize = CGSize(width: 400, height: 600)
+
         if #available(iOS 13.0, *) {
             view.backgroundColor = .systemBackground
         } else {
