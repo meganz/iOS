@@ -12,6 +12,7 @@
 #import "CustomModalAlertViewController.h"
 #import "MEGASdkManager.h"
 #import "MEGASdk+MNZCategory.h"
+#import "MEGA-Swift.h"
 #import "UpgradeTableViewController.h"
 
 @interface RubbishBinTableViewController () <MEGARequestDelegate>
@@ -31,6 +32,14 @@
 
 @implementation RubbishBinTableViewController
 
+#pragma mark - Lifecycle
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    [self updateAppearance];
+}
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
@@ -39,7 +48,7 @@
     self.clearRubbishBinLabel.text = AMLocalizedString(@"emptyRubbishBin", @"Section title where you can 'Empty Rubbish Bin' of your MEGA account");
     NSNumber *rubbishBinSizeNumber = [[MEGASdkManager sharedMEGASdk] sizeForNode:[[MEGASdkManager sharedMEGASdk] rubbishNode]];
     NSString *stringFromByteCount = [Helper memoryStyleStringFromByteCount:rubbishBinSizeNumber.unsignedLongLongValue];
-    self.clearRubbishBinDetailLabel.text = [self formatStringFromByteCountFormatter:stringFromByteCount];
+    self.clearRubbishBinDetailLabel.text = [NSString mnz_formatStringFromByteCountFormatter:stringFromByteCount];
     
     self.rubbishBinCleaningSchedulerLabel.text = [AMLocalizedString(@"Rubbish-Bin Cleaning Scheduler:", @"Title for the Rubbish-Bin Cleaning Scheduler feature") stringByReplacingOccurrencesOfString:@":" withString:@""];
     [self.rubbishBinCleaningSchedulerSwitch setOn:[[MEGASdkManager sharedMEGASdk] serverSideRubbishBinAutopurgeEnabled]];
@@ -51,12 +60,14 @@
 
 #pragma mark - Private
 
-- (NSString *)formatStringFromByteCountFormatter:(NSString *)stringFromByteCount {
-    NSArray *componentsSeparatedByStringArray = [stringFromByteCount componentsSeparatedByString:@" "];
-    NSString *countString = [NSString mnz_stringWithoutUnitOfComponents:componentsSeparatedByStringArray];
-    NSString *unitString = [NSString mnz_stringWithoutCountOfComponents:componentsSeparatedByStringArray];
+- (void)updateAppearance {
+    self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+    self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
     
-    return [NSString stringWithFormat:@"%@ %@", countString, unitString];
+    self.clearRubbishBinLabel.textColor = [UIColor mnz_redForTraitCollection:self.traitCollection];
+    self.clearRubbishBinDetailLabel.textColor = self.removeFilesOlderThanDetailLabel.textColor = UIColor.mnz_secondaryLabel;
+    
+    [self.tableView reloadData];
 }
 
 - (void)scheduleRubbishBinClearingTextFieldDidChange:(UITextField *)textField {
@@ -77,7 +88,6 @@
             }
         } else {
             CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
-            customModalAlertVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
             customModalAlertVC.image = [UIImage imageNamed:@"retention_illustration"];
             customModalAlertVC.viewTitle = [AMLocalizedString(@"Rubbish-Bin Cleaning Scheduler:", @"Title for the Rubbish-Bin Cleaning Scheduler feature") stringByReplacingOccurrencesOfString:@":" withString:@""];
             customModalAlertVC.detail = AMLocalizedString(@"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan.", @"Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user");
@@ -86,7 +96,7 @@
             __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;
             customModalAlertVC.firstCompletion = ^{
                 [weakCustom dismissViewControllerAnimated:YES completion:^{
-                    UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
+                    UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"UpgradeAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeTableViewControllerID"];
                     MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
                     
                     [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
@@ -129,6 +139,10 @@
 }
 
 #pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    cell.backgroundColor = [UIColor mnz_secondaryBackgroundGrouped:self.traitCollection];
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     switch (indexPath.section) {

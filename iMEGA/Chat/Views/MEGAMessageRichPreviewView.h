@@ -6,6 +6,8 @@
 @interface MEGAMessageRichPreviewView : UIView
 
 @property (weak, nonatomic) IBOutlet JSQMessagesCellTextView *contentTextView;
+
+@property (weak, nonatomic) IBOutlet UIView *richPreviewView;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
 @property (weak, nonatomic) IBOutlet UILabel *linkLabel;

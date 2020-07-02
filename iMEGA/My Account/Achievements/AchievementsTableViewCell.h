@@ -10,8 +10,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
 
-@property (weak, nonatomic) IBOutlet UIImageView *disclosureIndicatorImageView;
-
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
 @property (weak, nonatomic) IBOutlet UILabel *daysLeftTrailingLabel;
 

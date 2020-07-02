@@ -909,8 +909,6 @@
 "profile"="Profil";
 /* Title of the Achievements section */
 "achievementsTitle"="Errungenschaften";
-/* Title of the Used storage section */
-"usedStorage"="Belegter Speicherplatz";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
 "inviteFriendsAndGetRewards"="Freunde einladen und Boni einstreichen";
 /* Indicating text for when "you invite your friends" */
@@ -918,7 +916,7 @@
 /* title of the introduction for the achievements screen */
 "inviteFriendsAndGetForEachReferral"="Wir belohnen jede Vermittlung mit %1$s Speicherplatz und %2$s Transfervolumen";
 /* Text shown to explain how and where you can invite friends */
-"inviteYourFriendsExplanation"="Wählen Sie Kontakte aus Ihrer Kontaktliste oder geben Sie eine oder mehrere E-Mail-Adressen ein.";
+"Select from phone contacts or enter multiple email addresses"="Select from phone contacts or enter multiple email addresses";
 /*  */
 "insertYourFriendsEmails"="E-Mail-Adresse(n) Ihrer Freunde:";
 /*  */
@@ -1009,12 +1007,6 @@
 "Renews on"="Erneuert sich am";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="An Sie freigegebene Ordner";
-/* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
-"of %@"="von %@";
-/* Sentence shown under the used space to complete the info with the user account maximum storage. "used of {maximun storage}" */
-"used of %@"="von %@ belegt";
-/* Sentence shown under the available space to complete the info with the user account maximum storage. "available of {maximun storage}" */
-"available of %@"="von %@ verfügbar";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Accountupgrade";
 /*  */
@@ -1023,8 +1015,8 @@
 "cloudDriveIsAlmostFull"="[S]Ihr Cloud-Speicher ist fast voll.[/S] Mit [A]MEGA PRO[/A] erhalten Sie [S]bis zu %@ TB (%@ GB)[/S] Speicherplatz in der Cloud.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
 "cloudDriveIsFull"="[S]Ihr Cloud-Speicher ist voll.[/S] Mit [A]MEGA PRO[/A] erhalten Sie [S]bis zu %@ TB (%@ GB)[/S] Speicherplatz in der Cloud.";
-/* Storage related with the MEGA PRO account level you can subscribe */
-"productSpace"="Speicher";
+/* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
+"Storage"="Speicher";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
 "limited"="Begrenzt";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
@@ -1179,8 +1171,8 @@
 "contactCredentials"="Kontaktidentität";
 /* "Verify user" dialog description */
 "thisIsBestDoneInRealLife"="Der beste Weg ist ein persönliches Treffen. Sollten Sie über einen bereits verifizierten sicheren Kommunikationskanal verfügen, z.B. verifiziertes OTR oder PGP, so können Sie stattdessen diesen verwenden.";
-/* Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity */
-"yourCredentials"="Ihre Identität";
+/* Title of the label in the my account section. It shows the credentials of the current user so it can be used to be verified by other contacts */
+"My credentials"="Mein kryptographischer Fingerabdruck";
 /* Button to reset the password */
 "reset"="Zurücksetzen";
 /* Button title */
@@ -2068,6 +2060,12 @@
 "24 hours"="24 Stunden";
 /* Chat Notifications DND: Title bar message for the dnd activate options */
 "Mute chat Notifications for"="Stummschalten für";
+/* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
+"Notifications will be silenced until Do Not Disturb is turned off"="Notifications will be silenced until Do Not Disturb is turned off";
+/* Chat Notifications DND: Remaining time left if until tomorrow */
+"Notifications will be silenced until tomorrow at %@"="Notifications will be silenced until tomorrow at %@";
+/* Chat Notifications DND: Remaining time left if until today */
+"Notifications will be silenced until %@"="Notifications will be silenced until %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="Chatbenachrichtigungen";
 /* Chat settings: This text appears with the Do Not Disturb switch */
@@ -2102,6 +2100,8 @@
 "Send (%d)"="Send (%d)";
 /* Used in Photos app browser view to upload the photos from the view to the cloud. */
 "Upload (%d)"="Upload (%d)";
+/* Used in Photos app browser album listing screen. */
+"Albums"="Albums";
 /* Used in Photos app browser carousel view to unselect a selected photo. */
 "Unselect"="Unselect";
 /* Used in Photos app browser. Shown when there are no photos or videos in the Photos app. */

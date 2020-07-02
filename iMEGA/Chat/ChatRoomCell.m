@@ -32,6 +32,8 @@
     self.chatLastTime.adjustsFontForContentSizeCategory = YES;
     self.unreadCount.adjustsFontForContentSizeCategory = YES;
     self.twoDaysAgo = [NSCalendar.currentCalendar dateByAddingUnit:NSCalendarUnitDay value:-2 toDate:NSDate.date options:0];
+    
+    [self updateAppearance];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -52,12 +54,38 @@
     }
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateAppearance];
+        }
+    }
+}
+
+#pragma mark - Private
+
+- (void)updateAppearance {
+    self.chatLastMessage.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
+    
+    self.chatLastTime.textColor = self.unreadView.hidden ? [UIColor mnz_subtitlesForTraitCollection:self.traitCollection] : [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
+    
+    BOOL chatRoomsTypeArchived = [self.unreadCount.text isEqualToString:AMLocalizedString(@"archived", @"Title of flag of archived chats.").uppercaseString];
+    self.unreadView.backgroundColor = chatRoomsTypeArchived ? [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection] : [UIColor mnz_redForTraitCollection:self.traitCollection];
+    self.unreadCount.textColor = UIColor.whiteColor;
+    
+    self.onCallDuration.textColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
+}
+
 #pragma mark - Public
 
 - (void)configureCellForArchivedChat {
+    self.chatLastMessage.textColor = UIColor.mnz_secondaryLabel;
+    
     self.unreadView.hidden = NO;
-    self.unreadView.backgroundColor = UIColor.mnz_gray777777;
-    self.unreadView.layer.cornerRadius = 4;
+    self.unreadView.backgroundColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
+    self.unreadCount.font = [UIFont systemFontOfSize:12.0 weight:UIFontWeightMedium];
     self.unreadCount.text = AMLocalizedString(@"archived", @"Title of flag of archived chats.").uppercaseString;
     self.unreadCountLabelHorizontalMarginConstraint.constant = 7;
     self.activeCallImageView.hidden = YES;
@@ -75,8 +103,10 @@
     [self configureAvatar:chatListItem];
     if (chatListItem.isGroup) {
         self.onlineStatusView.hidden = YES;
+        self.avatarView.avatarImageView.image = [UIImage imageForName:chatListItem.title.uppercaseString size:self.avatarView.avatarImageView.frame.size backgroundColor:[UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection] textColor:UIColor.whiteColor font:[UIFont systemFontOfSize:(self.avatarView.avatarImageView.frame.size.width/2.0f)]];
     } else {
-        UIColor *statusColor = [UIColor mnz_colorForStatusChange:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:chatListItem.peerHandle]];
+        [self.avatarView.avatarImageView mnz_setImageForUserHandle:chatListItem.peerHandle name:chatListItem.title];
+        UIColor *statusColor = [UIColor mnz_colorForChatStatus:[MEGASdkManager.sharedMEGAChatSdk userOnlineStatus:chatListItem.peerHandle]];
         if (statusColor) {
             self.onlineStatusView.backgroundColor = statusColor;
             self.onlineStatusView.hidden = NO;
@@ -111,7 +141,7 @@
             }
         }
         self.chatLastMessage.font = [[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1] fontWithWeight:UIFontWeightMedium];
-        self.chatLastMessage.textColor = UIColor.mnz_green00BFA5;
+        self.chatLastMessage.textColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
         self.chatLastTime.hidden = YES;
     } else {
         self.activeCallImageView.hidden = YES;
@@ -129,7 +159,7 @@
     
     [self.avatarView.avatarImageView mnz_setImageForUserHandle:user.handle name:[user mnz_fullName]];
     [self.avatarView configureWithMode:AvatarViewModeSingle];
-    UIColor *statusColor = [UIColor mnz_colorForStatusChange:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:user.handle]];
+    UIColor *statusColor = [UIColor mnz_colorForChatStatus:[MEGASdkManager.sharedMEGAChatSdk userOnlineStatus:user.handle]];
     if (statusColor) {
         self.onlineStatusView.backgroundColor = statusColor;
         self.onlineStatusView.hidden = NO;
@@ -148,7 +178,7 @@
     if (chatListItem.isGroup) {
         MEGAChatRoom *chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:chatListItem.chatId];
         if (chatRoom.peerCount == 0) {
-            self.avatarView.avatarImageView.image = [UIImage imageForName:chatListItem.title.uppercaseString size:self.avatarView.avatarImageView.frame.size backgroundColor:UIColor.mnz_grayC2C2C2 backgroundGradientColor:UIColor.mnz_grayDBDBDB textColor:UIColor.whiteColor font:[UIFont mnz_SFUIRegularWithSize:(self.avatarView.avatarImageView.frame.size.width/2.0f)]];
+            self.avatarView.avatarImageView.image = [UIImage imageForName:chatListItem.title.uppercaseString size:self.avatarView.avatarImageView.frame.size backgroundColor:[UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection] backgroundGradientColor:UIColor.mnz_grayDBDBDB textColor:UIColor.whiteColor font:[UIFont systemFontOfSize:(self.avatarView.avatarImageView.frame.size.width/2.0f)]];
             [self.avatarView configureWithMode:AvatarViewModeSingle];
         } else {
             uint64_t firstPeerHandle = [chatRoom peerHandleAtIndex:0];
@@ -178,18 +208,17 @@
 
 - (void)updateUnreadCountChange:(NSInteger)unreadCount {
     self.chatTitle.font = [[UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline] fontWithWeight:UIFontWeightMedium];
-    self.chatTitle.textColor = UIColor.mnz_black333333;
     
     if ([[MEGASdkManager sharedMEGAChatSdk] hasCallInChatRoom:self.chatListItem.chatId] && MEGAReachabilityManager.isReachable) {
         self.chatLastMessage.font = [[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1] fontWithWeight:UIFontWeightMedium];
-        self.chatLastMessage.textColor = UIColor.mnz_green00BFA5;
+        self.chatLastMessage.textColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
     } else {
         if (unreadCount != 0) {
             self.chatLastMessage.font = [[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1] fontWithWeight:UIFontWeightMedium];
-            self.chatLastMessage.textColor = UIColor.blackColor;
+            self.chatLastMessage.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
             
             self.chatLastTime.font = [[UIFont preferredFontForTextStyle:UIFontTextStyleCaption2] fontWithWeight:UIFontWeightMedium];
-            self.chatLastTime.textColor = UIColor.mnz_green00BFA5;
+            self.chatLastTime.textColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
             
             self.unreadView.hidden = NO;
             self.unreadView.clipsToBounds = YES;
@@ -201,9 +230,9 @@
             }
         } else {
             self.chatLastMessage.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
-            self.chatLastMessage.textColor = UIColor.mnz_black000000_08;
+            self.chatLastMessage.textColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
             self.chatLastTime.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption2];
-            self.chatLastTime.textColor = UIColor.mnz_gray666666;
+            self.chatLastTime.textColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
             
             self.unreadView.hidden = YES;
             self.unreadCount.text = nil;
@@ -455,7 +484,7 @@
                 }
             }
             
-            NSString *lastMessage = [NSAttributedString mnz_attributedStringFromMessage:item.lastMessage font:[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1] color:UIColor.blackColor].string;
+            NSString *lastMessage = [NSAttributedString mnz_attributedStringFromMessage:item.lastMessage font:[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1] color:UIColor.mnz_label].string;
             self.chatLastMessage.text = senderString ? [NSString stringWithFormat:@"%@: %@",senderString, lastMessage] : lastMessage;
             break;
         }

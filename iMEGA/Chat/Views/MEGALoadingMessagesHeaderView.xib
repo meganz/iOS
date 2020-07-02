@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -21,7 +19,6 @@
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="beo-EQ-PGP">
                             <rect key="frame" x="8" y="90" width="20" height="20"/>
-                            <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.94901960784313721" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="20" id="8qc-yg-AUy"/>
                                 <constraint firstAttribute="width" constant="20" id="h0h-jb-Ebc"/>
@@ -34,7 +31,6 @@
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FTD-66-aTN">
                             <rect key="frame" x="36" y="22" width="395" height="60"/>
-                            <color key="backgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="60" id="IYd-AN-wTO"/>
                             </constraints>
@@ -46,7 +42,6 @@
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iMf-zE-Oou">
                             <rect key="frame" x="36" y="90" width="349" height="20"/>
-                            <color key="backgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="20" id="h1M-vw-aj5"/>
                             </constraints>
@@ -56,9 +51,20 @@
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
                         </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5pA-yH-L1q">
+                            <rect key="frame" x="405" y="119" width="80" height="10"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="80" id="4T9-kI-TKv"/>
+                                <constraint firstAttribute="height" constant="10" id="JXw-Bo-q1a"/>
+                            </constraints>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                    <integer key="value" value="4"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QZE-qE-kqv">
                             <rect key="frame" x="135" y="137" width="350" height="20"/>
-                            <color key="backgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="20" id="2aa-dQ-xms"/>
                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="g4v-mf-13m"/>
@@ -71,20 +77,6 @@
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="svV-jq-uZO">
                             <rect key="frame" x="80" y="165" width="405" height="27"/>
-                            <color key="backgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
-                            <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                    <integer key="value" value="4"/>
-                                </userDefinedRuntimeAttribute>
-                            </userDefinedRuntimeAttributes>
-                        </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5pA-yH-L1q">
-                            <rect key="frame" x="405" y="119" width="80" height="10"/>
-                            <color key="backgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="80" id="4T9-kI-TKv"/>
-                                <constraint firstAttribute="height" constant="10" id="JXw-Bo-q1a"/>
-                            </constraints>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                     <integer key="value" value="4"/>
@@ -92,7 +84,6 @@
                             </userDefinedRuntimeAttributes>
                         </view>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="beo-EQ-PGP" firstAttribute="top" secondItem="dRS-ht-IOh" secondAttribute="top" constant="90" id="8WH-kt-gZT"/>
                         <constraint firstAttribute="trailing" secondItem="FTD-66-aTN" secondAttribute="trailing" constant="74" id="9PW-WE-co6"/>
@@ -124,6 +115,12 @@
             <viewLayoutGuide key="safeArea" id="9Gg-ye-v9C"/>
             <connections>
                 <outlet property="loadingView" destination="dRS-ht-IOh" id="Rh8-8n-Z95"/>
+                <outlet property="placeholderFiveView" destination="QZE-qE-kqv" id="zyI-UA-15m"/>
+                <outlet property="placeholderFourView" destination="5pA-yH-L1q" id="men-qP-fMY"/>
+                <outlet property="placeholderSixView" destination="svV-jq-uZO" id="2HY-Ox-RoF"/>
+                <outlet property="placeholderThreeView" destination="iMf-zE-Oou" id="aGx-vd-Fac"/>
+                <outlet property="placeholderTwoView" destination="FTD-66-aTN" id="g8H-QC-Xfe"/>
+                <outlet property="placeholderView" destination="beo-EQ-PGP" id="Adf-K9-U6u"/>
             </connections>
             <point key="canvasLocation" x="-473.1884057971015" y="1.6741071428571428"/>
         </collectionReusableView>

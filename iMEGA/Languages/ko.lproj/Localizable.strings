@@ -909,8 +909,6 @@
 "profile"="프로필";
 /* Title of the Achievements section */
 "achievementsTitle"="도전 과제";
-/* Title of the Used storage section */
-"usedStorage"="이용한 저장 공간";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
 "inviteFriendsAndGetRewards"="친구들을 초대하고 보너스를 받으세요";
 /* Indicating text for when "you invite your friends" */
@@ -918,7 +916,7 @@
 /* title of the introduction for the achievements screen */
 "inviteFriendsAndGetForEachReferral"="초대할 때마다 %1$s의 저장 공간과 %2$s의 전송 할당량을 받습니다";
 /* Text shown to explain how and where you can invite friends */
-"inviteYourFriendsExplanation"="휴대전화의 연락처 목록에서 선택하거나 여러 이메일 주소를 입력하세요.";
+"Select from phone contacts or enter multiple email addresses"="Select from phone contacts or enter multiple email addresses";
 /*  */
 "insertYourFriendsEmails"="친구의 이메일 주소를 입력하세요:";
 /*  */
@@ -1009,12 +1007,6 @@
 "Renews on"="재결제일";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="들어오는 공유";
-/* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
-"of %@"="%@ 중";
-/* Sentence shown under the used space to complete the info with the user account maximum storage. "used of {maximun storage}" */
-"used of %@"="사용됨. 전체 공간: %@";
-/* Sentence shown under the available space to complete the info with the user account maximum storage. "available of {maximun storage}" */
-"available of %@"="사용가능함. 전체 공간: %@";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="계정 업그레이드";
 /*  */
@@ -1023,8 +1015,8 @@
 "cloudDriveIsAlmostFull"="[S]클라우드 드라이브가 거의 찼습니다.[/S] PRO 계정으로 [A]지금 업그레이드[/A]하고 [S]최대 %@ TB (%@ GB)[/S]의 클라우드 저장 공간을 받으세요.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
 "cloudDriveIsFull"="[S]클라우드 드라이브가 가득 찼습니다.[/S] PRO 계정으로 [A]지금 업그레이드[/A]하고 [S]최대 %@ TB (%@ GB)[/S]의 클라우드 저장 공간을 얻으세요.";
-/* Storage related with the MEGA PRO account level you can subscribe */
-"productSpace"="저장소";
+/* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
+"Storage"="저장소";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
 "limited"="제한됨";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
@@ -1126,7 +1118,7 @@
 /* Title that refers to the status of the chat (Either Online or Offline) */
 "status"="상태";
 /* Title used in settings that enables the generation of link previews in the chat */
-"richUrlPreviews"="Rich URL 미리보기";
+"richUrlPreviews"="고급 URL 미리보기";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "richPreviewsFooter"="MEGAchat 경험을 향상하세요. URL 컨텐츠가 종단간 암호화 없이 수신됩니다.";
 /* Section title of a button where you can enable mobile data for voice and video calls. */
@@ -1179,8 +1171,8 @@
 "contactCredentials"="연락처 개인정보";
 /* "Verify user" dialog description */
 "thisIsBestDoneInRealLife"="현실에서 가장 확실한 방법은 직접 만나는 것입니다. 만약 증명된 OTR이나 PGP 같은 이미 증명된 다른 방법이 있다면, 그것을 사용해도 좋습니다.";
-/* Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity */
-"yourCredentials"="당신의 개인정보";
+/* Title of the label in the my account section. It shows the credentials of the current user so it can be used to be verified by other contacts */
+"My credentials"="내 개인 정보";
 /* Button to reset the password */
 "reset"="재설정";
 /* Button title */
@@ -1246,7 +1238,7 @@
 /* */
 "done"="완료";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"enableRichUrlPreviews"="Rich URL 미리보기 활성화";
+"enableRichUrlPreviews"="고급 URL 미리보기 활성화";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "alwaysAllow"="항상 허용";
 /* Text indicating to the user that some action will be postpone. E.g. used for 'rich previews' and management of disk storage. */
@@ -1256,7 +1248,7 @@
 /* */
 "never"="절대 안함";
 /* After several times (right now set to 3) that the user may had decided to click \"Not now\" (for when being asked if he/she wants a URL preview to be generated for a link, posted in a chat room), we change the \"Not now\" button to \"Never\". If the user clicks it, we ask for one final time - to ensure he wants to not be asked for this anymore and tell him that he can do that in Settings. */
-"richPreviewsConfirmation"="풍부한 URL 미리보기를 영구히 해제하려고 합니다. 당신은 풍부한 URL 미리보기를 설정에서 다시 활성화할 수 있습니다. 진행하시겠습니까?";
+"richPreviewsConfirmation"="고급 URL 미리보기를 영구히 해제하려고 합니다. 당신은 고급 URL 미리보기를 설정에서 다시 활성화할 수 있습니다. 진행하시겠습니까?";
 /* Once a preview is generated for a message which contains URLs, the user can remove it. Same button is also shown during loading of the preview - and would cancel the loading (text of the button is the same in both cases). */
 "removePreview"="미리보기 제거";
 /* */
@@ -1383,7 +1375,7 @@
 /* SDK error returned when an operation is rejected due to fraud protection */
 "Rejected by fraud protection"="Rejected by fraud protection";
 /* SDK error returned when there are too many requests */
-"Too many requests"="Too many requests";
+"Too many requests"="요청이 너무 많습니다";
 /* SDK error returned when there is a balance error */
 "Balance error"="Balance error";
 /* SDK error returned upon a HTTP error */
@@ -1657,7 +1649,7 @@
 /* Title of the Spotlight Search section */
 "Search"="검색";
 /* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
-"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="Will allow searching of MEGA files/folders in your device's Spotlight Search";
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="기기의 Spotlight 검색에서 MEGA 파일/폴더 검색을 허용";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="당신이 열쇠를 갖습니다";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -2068,6 +2060,12 @@
 "24 hours"="24시간";
 /* Chat Notifications DND: Title bar message for the dnd activate options */
 "Mute chat Notifications for"="대화 알림 끄기";
+/* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
+"Notifications will be silenced until Do Not Disturb is turned off"="Notifications will be silenced until Do Not Disturb is turned off";
+/* Chat Notifications DND: Remaining time left if until tomorrow */
+"Notifications will be silenced until tomorrow at %@"="Notifications will be silenced until tomorrow at %@";
+/* Chat Notifications DND: Remaining time left if until today */
+"Notifications will be silenced until %@"="Notifications will be silenced until %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="대화 알림";
 /* Chat settings: This text appears with the Do Not Disturb switch */
@@ -2102,6 +2100,8 @@
 "Send (%d)"="전송 (%d)";
 /* Used in Photos app browser view to upload the photos from the view to the cloud. */
 "Upload (%d)"="업로드 (%d)";
+/* Used in Photos app browser album listing screen. */
+"Albums"="Albums";
 /* Used in Photos app browser carousel view to unselect a selected photo. */
 "Unselect"="선택 해제";
 /* Used in Photos app browser. Shown when there are no photos or videos in the Photos app. */

@@ -18,6 +18,8 @@ class DocScannerFileNameTableCell: UITableViewCell {
     }
     
     func configure(filename: String, fileType: String?) {
+        backgroundColor = .mnz_secondaryBackgroundGrouped(traitCollection)
+        
         self.filename = filename
         fileImageView.mnz_setImage(forExtension: fileType)
     }

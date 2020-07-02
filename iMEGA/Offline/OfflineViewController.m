@@ -7,6 +7,7 @@
 #import "NSFileManager+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
 
+#import "EmptyStateView.h"
 #import "MEGANavigationController.h"
 #import "MEGASdkManager.h"
 #import "PreviewDocumentViewController.h"
@@ -19,7 +20,6 @@
 #import "MEGAQLPreviewController.h"
 #import "OfflineTableViewViewController.h"
 #import "OfflineCollectionViewController.h"
-#import "LayoutView.h"
 #import "NodeCollectionViewCell.h"
 #import "OfflineTableViewCell.h"
 #import "UIViewController+MNZCategory.h"
@@ -31,8 +31,7 @@ static NSString *kModificationDate = @"kModificationDate";
 static NSString *kFileSize = @"kFileSize";
 static NSString *kisDirectory = @"kisDirectory";
 
-@interface OfflineViewController () <UIViewControllerTransitioningDelegate, UIDocumentInteractionControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGATransferDelegate, UISearchControllerDelegate> {
-}
+@interface OfflineViewController () <UIViewControllerTransitioningDelegate, UIDocumentInteractionControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGATransferDelegate, UISearchControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *containerView;
 
@@ -54,7 +53,7 @@ static NSString *kisDirectory = @"kisDirectory";
 
 @property (nonatomic, strong) OfflineTableViewViewController *offlineTableView;
 @property (nonatomic, strong) OfflineCollectionViewController *offlineCollectionView;
-@property (nonatomic, assign) LayoutMode layoutView;
+@property (nonatomic, assign) ViewModePreference viewModePreference;
 
 @end
 
@@ -65,7 +64,7 @@ static NSString *kisDirectory = @"kisDirectory";
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    [self determineLayoutView];
+    [self determineViewMode];
     
     if (self.folderPathFromOffline == nil) {
         [self.navigationItem setTitle:AMLocalizedString(@"offline", @"Offline")];
@@ -90,7 +89,10 @@ static NSString *kisDirectory = @"kisDirectory";
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-
+    
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(reloadUI) name:MEGASortingPreference object:nil];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(determineViewMode) name:MEGAViewModePreference object:nil];
+    
     [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
     [[MEGASdkManager sharedMEGASdkFolder] addMEGATransferDelegate:self];
     [[MEGAReachabilityManager sharedManager] retryPendingConnections];
@@ -155,6 +157,15 @@ static NSString *kisDirectory = @"kisDirectory";
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [AppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];
+            [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar traitCollection:self.traitCollection];
+
+            [self reloadData];
+        }
+    }
+    
     [self configPreviewingRegistration];
 }
 
@@ -177,18 +188,32 @@ static NSString *kisDirectory = @"kisDirectory";
 #pragma mark - Layout
 
 
-- (void)determineLayoutView {
+- (void)determineViewMode {
+    ViewModePreference viewModePreference = [NSUserDefaults.standardUserDefaults integerForKey:MEGAViewModePreference];
+    switch (viewModePreference) {
+        case ViewModePreferencePerFolder:
+            //Check Core Data or determine according to the number of nodes with or without thumbnail
+            break;
+            
+        case ViewModePreferenceList:
+            [self initTable];
+            return;
+            
+        case ViewModePreferenceThumbnail:
+            [self initCollection];
+            return;
+    }
     
     NSString *relativePath = [[self currentOfflinePath] stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@/Documents/", NSHomeDirectory()]  withString:@""];
-    MOOfflineFolderLayout *folderLayout = [[MEGAStore shareInstance] fetchOfflineFolderLayoutWithPath:relativePath];
+    OfflineAppearancePreference *offlineAppearancePreference = [MEGAStore.shareInstance fetchOfflineAppearancePreferenceWithPath:relativePath];
     
-    if (folderLayout) {
-        switch (folderLayout.value.integerValue) {
-            case 0:
+    if (offlineAppearancePreference) {
+        switch (offlineAppearancePreference.viewMode.integerValue) {
+            case ViewModePreferenceList:
                 [self initTable];
                 break;
                 
-            case 1:
+            case ViewModePreferenceThumbnail:
                 [self initCollection];
                 break;
                 
@@ -242,7 +267,7 @@ static NSString *kisDirectory = @"kisDirectory";
     self.offlineCollectionView = nil;
     
     self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
-    self.layoutView = LayoutModeList;
+    self.viewModePreference = ViewModePreferenceList;
     
     self.offlineTableView = [self.storyboard instantiateViewControllerWithIdentifier:@"OfflineTableID"];
     [self addChildViewController:self.offlineTableView];
@@ -256,6 +281,7 @@ static NSString *kisDirectory = @"kisDirectory";
     self.offlineTableView.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.offlineTableView.tableView.emptyDataSetDelegate = self;
     self.offlineTableView.tableView.emptyDataSetSource = self;
+    self.offlineTableView.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
 }
 
 - (void)initCollection {
@@ -265,7 +291,7 @@ static NSString *kisDirectory = @"kisDirectory";
     self.offlineTableView = nil;
     
     self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
-    self.layoutView = LayoutModeThumbnail;
+    self.viewModePreference = ViewModePreferenceThumbnail;
     
     self.offlineCollectionView = [self.storyboard instantiateViewControllerWithIdentifier:@"OfflineCollectionID"];
     self.offlineCollectionView.offline = self;
@@ -278,15 +304,16 @@ static NSString *kisDirectory = @"kisDirectory";
     self.offlineCollectionView.collectionView.emptyDataSetSource = self;
 }
 
-- (void)changeLayoutMode {
-    if (self.layoutView == LayoutModeList) {
-        [self initCollection];
-    } else  {
-        [self initTable];
+- (void)changeViewModePreference {
+    self.viewModePreference = (self.viewModePreference == ViewModePreferenceList) ? ViewModePreferenceThumbnail : ViewModePreferenceList;
+    if ([NSUserDefaults.standardUserDefaults integerForKey:MEGAViewModePreference] == ViewModePreferencePerFolder) {
+        NSString *relativePath = [self.currentOfflinePath stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@/Documents/", NSHomeDirectory()] withString:@""];
+        [MEGAStore.shareInstance insertOrUpdateOfflineViewModeWithPath:relativePath viewMode:self.viewModePreference];
+    } else {
+        [NSUserDefaults.standardUserDefaults setInteger:self.viewModePreference forKey:MEGAViewModePreference];
     }
     
-    NSString *relativePath = [[self currentOfflinePath] stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@/Documents/", NSHomeDirectory()]  withString:@""];
-    [[MEGAStore shareInstance] insertOfflineFolderLayoutWithPOath:relativePath layout:self.layoutView];
+    [NSNotificationCenter.defaultCenter postNotificationName:MEGAViewModePreference object:self userInfo:@{MEGAViewModePreference : @(self.viewModePreference)}];
 }
 
 #pragma mark - Private
@@ -336,12 +363,7 @@ static NSString *kisDirectory = @"kisDirectory";
         }
     }
     
-    //Sort configuration by default is "default ascending"
-    if (![[NSUserDefaults standardUserDefaults] integerForKey:@"OfflineSortOrderType"]) {
-        [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"OfflineSortOrderType"];
-    }
-    
-    MEGASortOrderType sortOrderType = [[NSUserDefaults standardUserDefaults] integerForKey:@"OfflineSortOrderType"];
+    MEGASortOrderType sortOrderType = [Helper sortTypeFor:self.currentOfflinePath];
     [self sortBySortType:sortOrderType];
     
     offsetIndex = 0;
@@ -557,7 +579,7 @@ static NSString *kisDirectory = @"kisDirectory";
 }
 
 - (void)reloadData {
-    if (self.layoutView == LayoutModeList) {
+    if (self.viewModePreference == ViewModePreferenceList) {
         [self.offlineTableView.tableView reloadData];
     } else {
         [self.offlineCollectionView.collectionView reloadData];
@@ -565,7 +587,7 @@ static NSString *kisDirectory = @"kisDirectory";
 }
 
 - (void)setEditMode:(BOOL)editMode {
-    if (self.layoutView == LayoutModeList) {
+    if (self.viewModePreference == ViewModePreferenceList) {
         [self.offlineTableView setTableViewEditing:editMode animated:YES];
     } else {
         [self.offlineCollectionView setCollectionViewEditing:editMode animated:YES];
@@ -573,7 +595,7 @@ static NSString *kisDirectory = @"kisDirectory";
 }
 
 - (void)selectIndexPath:(NSIndexPath *)indexPath {
-    if (self.layoutView == LayoutModeList) {
+    if (self.viewModePreference == ViewModePreferenceList) {
         [self.offlineTableView tableViewSelectIndexPath:indexPath];
         [self.offlineTableView.tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
     } else {
@@ -584,7 +606,7 @@ static NSString *kisDirectory = @"kisDirectory";
 
 - (NSInteger)numberOfRows {
     NSInteger numberOfRows = 0;
-    if (self.layoutView == LayoutModeList) {
+    if (self.viewModePreference == ViewModePreferenceList) {
         numberOfRows = [self.offlineTableView.tableView numberOfRowsInSection:0];
     } else {
         numberOfRows = [self.offlineCollectionView.collectionView numberOfItemsInSection:0];
@@ -667,31 +689,31 @@ static NSString *kisDirectory = @"kisDirectory";
 }
 
 - (IBAction)sortByTapped:(UIBarButtonItem *)sender {
-    MEGASortOrderType sortType = [NSUserDefaults.standardUserDefaults integerForKey:@"OfflineSortOrderType"];
+    MEGASortOrderType sortType = [Helper sortTypeFor:self.currentOfflinePath];
 
     NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
     [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"nameAscending", nil) detail:sortType == MEGASortOrderTypeDefaultAsc ? @"✓" : @"" image:[UIImage imageNamed:@"ascending"] style:UIAlertActionStyleDefault actionHandler:^{
-        [NSUserDefaults.standardUserDefaults setInteger:MEGASortOrderTypeDefaultAsc forKey:@"OfflineSortOrderType"];
+        [Helper saveSortOrder:MEGASortOrderTypeDefaultAsc for:self.currentOfflinePath];
         [self reloadUI];
     }]];
     [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"nameDescending", nil) detail:sortType == MEGASortOrderTypeDefaultDesc ? @"✓" : @"" image:[UIImage imageNamed:@"descending"] style:UIAlertActionStyleDefault actionHandler:^{
-        [NSUserDefaults.standardUserDefaults setInteger:MEGASortOrderTypeDefaultDesc forKey:@"OfflineSortOrderType"];
+        [Helper saveSortOrder:MEGASortOrderTypeDefaultDesc for:self.currentOfflinePath];
         [self reloadUI];
     }]];
     [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"largest", nil) detail:sortType == MEGASortOrderTypeSizeDesc ? @"✓" : @"" image:[UIImage imageNamed:@"largest"] style:UIAlertActionStyleDefault actionHandler:^{
-        [NSUserDefaults.standardUserDefaults setInteger:MEGASortOrderTypeSizeDesc forKey:@"OfflineSortOrderType"];
+        [Helper saveSortOrder:MEGASortOrderTypeSizeDesc for:self.currentOfflinePath];
         [self reloadUI];
     }]];
     [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"smallest", nil) detail:sortType == MEGASortOrderTypeSizeAsc ? @"✓" : @"" image:[UIImage imageNamed:@"smallest"] style:UIAlertActionStyleDefault actionHandler:^{
-        [NSUserDefaults.standardUserDefaults setInteger:MEGASortOrderTypeSizeAsc forKey:@"OfflineSortOrderType"];
+        [Helper saveSortOrder:MEGASortOrderTypeSizeAsc for:self.currentOfflinePath];
         [self reloadUI];
     }]];
     [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"newest", nil) detail:sortType == MEGASortOrderTypeModificationDesc ? @"✓" : @"" image:[UIImage imageNamed:@"newest"] style:UIAlertActionStyleDefault actionHandler:^{
-        [NSUserDefaults.standardUserDefaults setInteger:MEGASortOrderTypeModificationDesc forKey:@"OfflineSortOrderType"];
+        [Helper saveSortOrder:MEGASortOrderTypeModificationDesc for:self.currentOfflinePath];
         [self reloadUI];
     }]];
     [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"oldest", nil) detail:sortType == MEGASortOrderTypeModificationAsc ? @"✓" : @"" image:[UIImage imageNamed:@"oldest"] style:UIAlertActionStyleDefault actionHandler:^{
-        [NSUserDefaults.standardUserDefaults setInteger:MEGASortOrderTypeModificationAsc forKey:@"OfflineSortOrderType"];
+        [Helper saveSortOrder:MEGASortOrderTypeModificationAsc for:self.currentOfflinePath];
         [self reloadUI];
     }]];
     
@@ -704,19 +726,19 @@ static NSString *kisDirectory = @"kisDirectory";
 
     NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
     if ([self numberOfRows]) {
-        NSString *title = self.layoutView == LayoutModeList ? AMLocalizedString(@"Thumbnail view", @"Text shown for switching from list view to thumbnail view.") : AMLocalizedString(@"List view", @"Text shown for switching from thumbnail view to list view.");
-        UIImage *image = self.layoutView == LayoutModeList ? [UIImage imageNamed:@"thumbnailsThin"] : [UIImage imageNamed:@"gridThin"];
+        NSString *title = (self.viewModePreference == ViewModePreferenceList) ? AMLocalizedString(@"Thumbnail view", @"Text shown for switching from list view to thumbnail view.") : AMLocalizedString(@"List view", @"Text shown for switching from thumbnail view to list view.");
+        UIImage *image = (self.viewModePreference == ViewModePreferenceList) ? [UIImage imageNamed:@"thumbnailsThin"] : [UIImage imageNamed:@"gridThin"];
         [actions addObject:[ActionSheetAction.alloc initWithTitle:title detail:nil image:image style:UIAlertActionStyleDefault actionHandler:^{
-            [weakSelf changeLayoutMode];
+            [weakSelf changeViewModePreference];
         }]];
     }
     
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"sortTitle", @"Section title of the 'Sort by'") detail:[NSString selectedSortTypeForKey:@"OfflineSortOrderType"] image:[UIImage imageNamed:@"sort"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"sortTitle", @"Section title of the 'Sort by'") detail:[NSString localizedSortOrderType:[Helper sortTypeFor:self.currentOfflinePath]] image:[UIImage imageNamed:@"sort"] style:UIAlertActionStyleDefault actionHandler:^{
         [weakSelf sortByTapped:self.sortByBarButtonItem];
     }]];
     
     if (self.offlineSortedItems.count) {
-        [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"select", @"Button that allows you to select a given folder") detail:nil image:[UIImage imageNamed:@"selected"] style:UIAlertActionStyleDefault actionHandler:^{
+        [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"select", @"Button that allows you to select a given folder") detail:nil image:[UIImage imageNamed:@"select"] style:UIAlertActionStyleDefault actionHandler:^{
             [weakSelf editTapped:self.editButtonItem];
         }]];
     }
@@ -778,17 +800,25 @@ static NSString *kisDirectory = @"kisDirectory";
         }
         
     } else if ([self.previewDocumentPath.pathExtension isEqualToString:@"pdf"]){
-        MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];
+        MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"DocumentPreviewer" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];
         PreviewDocumentViewController *previewController = navigationController.viewControllers.firstObject;
         previewController.filesPathsArray = self.offlineFiles;
         previewController.nodeFileIndex = [[[self itemAtIndexPath:indexPath] objectForKey:kIndex] integerValue];
+        if (@available(iOS 13.0, *)) {
+            navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
+        }
+        
         [self presentViewController:navigationController animated:YES completion:nil];
-        switch (self.layoutView) {
-            case LayoutModeList:
+        
+        switch (self.viewModePreference) {
+            case ViewModePreferencePerFolder:
+                break;
+                
+            case ViewModePreferenceList:
                 [self.offlineTableView.tableView deselectRowAtIndexPath:indexPath animated:YES];
                 break;
                 
-            case LayoutModeThumbnail:
+            case ViewModePreferenceThumbnail:
                 [self.offlineCollectionView.collectionView deselectItemAtIndexPath:indexPath animated:YES];
                 break;
         }
@@ -877,6 +907,9 @@ static NSString *kisDirectory = @"kisDirectory";
         return NO;
     } else {
         if (isDirectory) {
+            NSString *relativePath = [itemPath stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@/Documents/", NSHomeDirectory()] withString:@""];
+            [MEGAStore.shareInstance deleteOfflineAppearancePreferenceWithPath:relativePath];
+            
             for (NSString *localPathAux in offlinePathsOnFolderArray) {
                 offlineNode = [[MEGAStore shareInstance] fetchOfflineNodeWithPath:localPathAux];
                 if (offlineNode) {
@@ -1001,13 +1034,13 @@ static NSString *kisDirectory = @"kisDirectory";
 }
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
-    if (self.layoutView == LayoutModeThumbnail) {
+    if (self.viewModePreference == ViewModePreferenceThumbnail) {
         self.offlineCollectionView.collectionView.clipsToBounds = YES;
     }
 }
 
 - (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar {
-    if (self.layoutView == LayoutModeThumbnail) {
+    if (self.viewModePreference == ViewModePreferenceThumbnail) {
         self.offlineCollectionView.collectionView.clipsToBounds = NO;
     }
 }
@@ -1043,7 +1076,7 @@ static NSString *kisDirectory = @"kisDirectory";
     CGPoint touchPoint = [longPressGestureRecognizer locationInView:view];
     NSIndexPath *indexPath;
     
-    if (self.layoutView == LayoutModeList) {
+    if (self.viewModePreference == ViewModePreferenceList) {
         indexPath = [self.offlineTableView.tableView indexPathForRowAtPoint:touchPoint];
         if (!indexPath || ![self.offlineTableView.tableView numberOfRowsInSection:indexPath.section]) {
             return;
@@ -1088,7 +1121,7 @@ static NSString *kisDirectory = @"kisDirectory";
     
     NSIndexPath *indexPath;
     NSString *itemName;
-    if (self.layoutView == LayoutModeList) {
+    if (self.viewModePreference == ViewModePreferenceList) {
         CGPoint rowPoint = [self.offlineTableView.tableView convertPoint:location fromView:self.view];
         indexPath = [self.offlineTableView.tableView indexPathForRowAtPoint:rowPoint];
         if (!indexPath || ![self.offlineTableView.tableView numberOfRowsInSection:indexPath.section]) {
@@ -1106,7 +1139,7 @@ static NSString *kisDirectory = @"kisDirectory";
         itemName = cell.nameLabel.text;
     }
     
-    previewingContext.sourceRect = (self.layoutView == LayoutModeList) ? [self.offlineTableView.tableView convertRect:[self.offlineTableView.tableView cellForRowAtIndexPath:indexPath].frame toView:self.view] : [self.offlineCollectionView.collectionView convertRect:[self.offlineCollectionView.collectionView cellForItemAtIndexPath:indexPath].frame toView:self.view];
+    previewingContext.sourceRect = (self.viewModePreference == ViewModePreferenceList) ? [self.offlineTableView.tableView convertRect:[self.offlineTableView.tableView cellForRowAtIndexPath:indexPath].frame toView:self.view] : [self.offlineCollectionView.collectionView convertRect:[self.offlineCollectionView.collectionView cellForItemAtIndexPath:indexPath].frame toView:self.view];
     
     self.previewDocumentPath = [[self currentOfflinePath] stringByAppendingPathComponent:itemName];
     
@@ -1130,10 +1163,13 @@ static NSString *kisDirectory = @"kisDirectory";
             return [self qlPreviewControllerForIndexPath:indexPath];
         }
     } else if ([self.previewDocumentPath.pathExtension isEqualToString:@"pdf"]){
-        MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];
+        MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"DocumentPreviewer" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];
         PreviewDocumentViewController *previewController = navigationController.viewControllers.firstObject;
         previewController.filesPathsArray = self.offlineFiles;
         previewController.nodeFileIndex = [[[self itemAtIndexPath:indexPath] objectForKey:kIndex] integerValue];
+        if (@available(iOS 13.0, *)) {
+            navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
+        }
         
         [self.offlineTableView.tableView deselectRowAtIndexPath:indexPath animated:YES];
         
@@ -1168,7 +1204,15 @@ static NSString *kisDirectory = @"kisDirectory";
 
 #pragma mark - DZNEmptyDataSetSource
 
-- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
+- (nullable UIView *)customViewForEmptyDataSet:(UIScrollView *)scrollView {
+    EmptyStateView *emptyStateView = [EmptyStateView.alloc initWithImage:[self imageForEmptyState] title:[self titleForEmptyState] description:nil buttonTitle:nil];
+    
+    return emptyStateView;
+}
+
+#pragma mark - Empty State
+
+- (NSString *)titleForEmptyState {
     NSString *text = @"";
     if (self.searchController.isActive) {
         if (self.searchController.searchBar.text.length > 0) {
@@ -1182,10 +1226,10 @@ static NSString *kisDirectory = @"kisDirectory";
         }
     }
     
-    return [[NSAttributedString alloc] initWithString:text attributes:[Helper titleAttributesForEmptyState]];
+    return text;
 }
 
-- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
+- (UIImage *)imageForEmptyState {
     UIImage *image;
     if (self.searchController.isActive) {
         if (self.searchController.searchBar.text.length > 0) {
@@ -1202,18 +1246,6 @@ static NSString *kisDirectory = @"kisDirectory";
     }
     
     return image;
-}
-
-- (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
-    return [UIColor whiteColor];
-}
-
-- (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView {
-    return [Helper spaceHeightForEmptyState];
-}
-
-- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
-    return [Helper verticalOffsetForEmptyStateWithNavigationBarSize:self.navigationController.navigationBar.frame.size searchBarActive:self.searchController.isActive];
 }
 
 #pragma mark - MEGATransferDelegate

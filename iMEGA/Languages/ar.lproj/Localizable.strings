@@ -909,8 +909,6 @@
 "profile"="الملف الشخصي";
 /* Title of the Achievements section */
 "achievementsTitle"="الإنجازات";
-/* Title of the Used storage section */
-"usedStorage"="المساحة المستخدمة";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
 "inviteFriendsAndGetRewards"="ادع أصدقائك واحصل على ترقيات";
 /* Indicating text for when "you invite your friends" */
@@ -918,7 +916,7 @@
 /* title of the introduction for the achievements screen */
 "inviteFriendsAndGetForEachReferral"="احصل %1$s من المساحة و %2$s من عمليات النقل لكل دعوة";
 /* Text shown to explain how and where you can invite friends */
-"inviteYourFriendsExplanation"="حدد جهات الاتصال من قائمة جهات اتصال هاتفك أو أدخل عناوين بريد إلكتروني متعددة.";
+"Select from phone contacts or enter multiple email addresses"="Select from phone contacts or enter multiple email addresses";
 /*  */
 "insertYourFriendsEmails"="أدخل بريد صديقك الإليكتروني:";
 /*  */
@@ -1009,12 +1007,6 @@
 "Renews on"="التجديد في";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="مشاركات واردة";
-/* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
-"of %@"="من %@";
-/* Sentence shown under the used space to complete the info with the user account maximum storage. "used of {maximun storage}" */
-"used of %@"="مستخدم من %@";
-/* Sentence shown under the available space to complete the info with the user account maximum storage. "available of {maximun storage}" */
-"available of %@"="المساحة المتوفرة %@";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="ترقية الحساب";
 /*  */
@@ -1023,8 +1015,8 @@
 "cloudDriveIsAlmostFull"="[S]السواقة السحابية ممتلئة تقريباً.[/S] [A]قم بترقية حسابك الآن[/A] الى حساب برو PRO و احصل [S]تصل حتى %@ تيرابايت (%@ غيغابايت)[/S] من مساحة تخزين سحابية.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
 "cloudDriveIsFull"="[S]سواقتك السحابية ممتلئة.[/S] [A]قم بترقية حسابك الآن[/A] إلى حساب برو PRO و احصل على [S]يصل إلى %@ تيرابايت (%@ غيغابايت)[/S] من مساحة تخزين سحابية.";
-/* Storage related with the MEGA PRO account level you can subscribe */
-"productSpace"="التخزين";
+/* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
+"Storage"="التخزين";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
 "limited"="محدود";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
@@ -1179,8 +1171,8 @@
 "contactCredentials"="بيانات جهة الاتصال";
 /* "Verify user" dialog description */
 "thisIsBestDoneInRealLife"="من الأفضل القيام بذلك في واقع الحياة من خلال اللقاء وجها لوجه. إذا كان لديك قناة أخرى موثوقة بالفعل، مثل OTR اوPGP، يمكنك أيضا استخدام ذلك.";
-/* Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity */
-"yourCredentials"="بياناتك";
+/* Title of the label in the my account section. It shows the credentials of the current user so it can be used to be verified by other contacts */
+"My credentials"="بياناتي";
 /* Button to reset the password */
 "reset"="إعادة تعيين";
 /* Button title */
@@ -1383,7 +1375,7 @@
 /* SDK error returned when an operation is rejected due to fraud protection */
 "Rejected by fraud protection"="Rejected by fraud protection";
 /* SDK error returned when there are too many requests */
-"Too many requests"="Too many requests";
+"Too many requests"="طلبات كثيرة جداً";
 /* SDK error returned when there is a balance error */
 "Balance error"="Balance error";
 /* SDK error returned upon a HTTP error */
@@ -1657,7 +1649,7 @@
 /* Title of the Spotlight Search section */
 "Search"="البحث";
 /* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
-"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="Will allow searching of MEGA files/folders in your device's Spotlight Search";
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="سيسمح بالبحث عن ملفات/مجلدات ميغا MEGA في بحث Spotlight الخاص بجهازك";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="انت تحتفظ بالمفتاح";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -2068,6 +2060,12 @@
 "24 hours"="24 ساعة";
 /* Chat Notifications DND: Title bar message for the dnd activate options */
 "Mute chat Notifications for"="كتم صوت الإشعارات لـ";
+/* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
+"Notifications will be silenced until Do Not Disturb is turned off"="Notifications will be silenced until Do Not Disturb is turned off";
+/* Chat Notifications DND: Remaining time left if until tomorrow */
+"Notifications will be silenced until tomorrow at %@"="Notifications will be silenced until tomorrow at %@";
+/* Chat Notifications DND: Remaining time left if until today */
+"Notifications will be silenced until %@"="Notifications will be silenced until %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="تنبيهات المحادثة";
 /* Chat settings: This text appears with the Do Not Disturb switch */
@@ -2102,6 +2100,8 @@
 "Send (%d)"="إرسال (%d)";
 /* Used in Photos app browser view to upload the photos from the view to the cloud. */
 "Upload (%d)"="تحميل (%d)";
+/* Used in Photos app browser album listing screen. */
+"Albums"="Albums";
 /* Used in Photos app browser carousel view to unselect a selected photo. */
 "Unselect"="إلغاء التحديد";
 /* Used in Photos app browser. Shown when there are no photos or videos in the Photos app. */

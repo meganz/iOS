@@ -146,12 +146,15 @@
         self.localVideoImageView.userInteractionEnabled = remoteSession.hasVideo;
         [self.localVideoImageView remoteVideoEnable:remoteSession.hasVideo];
     } else if (self.videoCall) {
+        self.enableDisableVideoButton.selected = YES;
+        
         if (!AVAudioSession.sharedInstance.mnz_isBluetoothAudioRouteAvailable) {
             MEGALogDebug(@"[Audio] Enable loud speaker is video call and there is no bluetooth connected");
             [self enableLoudspeaker];
         }
         
         self.remoteAvatarImageView.hidden = YES;
+        self.localVideoImageView.hidden = NO;
         
         [[MEGASdkManager sharedMEGAChatSdk] addChatLocalVideo:self.chatRoom.chatId delegate:self.localVideoImageView];
     } else {
@@ -205,6 +208,16 @@
     }
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateAppearance];
+        }
+    }
+}
+
 #pragma mark - Status bar
 
 - (BOOL)prefersStatusBarHidden {
@@ -229,6 +242,10 @@
 }
 
 #pragma mark - Private
+
+- (void)updateAppearance {
+    self.nameLabel.textColor = self.statusCallLabel.textColor = UIColor.whiteColor;
+}
 
 - (void)answerChatCall {
     if ([MEGASdkManager.sharedMEGAChatSdk chatConnectionState:self.chatRoom.chatId] == MEGAChatConnectionOnline) {

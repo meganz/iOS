@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -7,41 +7,31 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="SF-UI-Text-Regular.otf">
-            <string>SFUIText-Regular</string>
-        </array>
-    </customFonts>
     <scenes>
         <!--Photo Browser View Controller-->
         <scene sceneID="Ac4-T8-3JK">
             <objects>
                 <viewController storyboardIdentifier="MEGAPhotoBrowserViewControllerID" modalPresentationStyle="overFullScreen" id="yD8-RT-K0O" customClass="MEGAPhotoBrowserViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="BIU-zX-lhe">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ulA-CI-VZp">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                             </scrollView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PCJ-Sw-nnM">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FGv-7h-IkY">
                                 <rect key="frame" x="0.0" y="44" width="375" height="44"/>
-                                <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <items>
                                     <navigationItem id="u26-RZ-kaH">
-                                        <barButtonItem key="leftBarButtonItem" style="plain" systemItem="stop" id="Bfh-QP-H1o">
-                                            <color key="tintColor" red="0.95294117647058818" green="0.047058823529411764" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <barButtonItem key="leftBarButtonItem" systemItem="stop" id="Bfh-QP-H1o">
                                             <connections>
                                                 <action selector="didPressCloseButton:" destination="yD8-RT-K0O" id="y4q-pJ-tUt"/>
                                             </connections>
                                         </barButtonItem>
                                         <barButtonItem key="rightBarButtonItem" image="more" id="YVt-M3-aSH">
-                                            <color key="tintColor" red="0.95294117647058818" green="0.047058823529411764" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <connections>
                                                 <action selector="didPressActionsButton:" destination="yD8-RT-K0O" id="cLN-7K-Wry"/>
                                             </connections>
@@ -50,11 +40,9 @@
                                 </items>
                             </navigationBar>
                             <toolbar clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z54-Be-FUS">
-                                <rect key="frame" x="0.0" y="623" width="375" height="44"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <rect key="frame" x="0.0" y="729" width="375" height="49"/>
                                 <items>
-                                    <barButtonItem title="Item" image="thumbnailsView" id="xTs-Xs-c6Q">
-                                        <color key="tintColor" red="0.95294117647058818" green="0.047058823529411764" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <barButtonItem title="Item" image="thumbnailsView" style="plain" id="xTs-Xs-c6Q">
                                         <connections>
                                             <action selector="didPressLeftToolbarButton:" destination="yD8-RT-K0O" id="ZOX-jv-VVR"/>
                                         </connections>
@@ -67,25 +55,21 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="ojh-69-QhP"/>
-                                    <barButtonItem title="Item" image="openWith" id="Rck-W5-yGE">
-                                        <color key="tintColor" red="0.95294117647058818" green="0.047058823529411764" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <barButtonItem title="Item" image="openWith" style="plain" id="Rck-W5-yGE">
                                         <connections>
                                             <action selector="didPressRightToolbarButton:" destination="yD8-RT-K0O" id="08B-ip-amX"/>
                                         </connections>
                                     </barButtonItem>
                                 </items>
-                                <color key="tintColor" red="0.85098039219999999" green="0.0" blue="0.027450980390000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </toolbar>
                             <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HQW-yX-2Zj" customClass="PieChartView">
-                                <rect key="frame" x="335" y="583" width="30" height="30"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.19836258561643835" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <rect key="frame" x="335" y="689" width="30" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="30" id="13M-em-UuB"/>
                                     <constraint firstAttribute="height" constant="30" id="EK4-6Z-vPM"/>
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Z54-Be-FUS" firstAttribute="trailing" secondItem="mor-0x-30S" secondAttribute="trailing" id="4Er-s0-s8R"/>
                             <constraint firstItem="mor-0x-30S" firstAttribute="bottom" secondItem="Z54-Be-FUS" secondAttribute="bottom" id="4GG-tp-7bl"/>
@@ -106,7 +90,6 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="mor-0x-30S"/>
                     </view>
-                    <size key="freeformSize" width="375" height="667"/>
                     <connections>
                         <outlet property="centerToolbarItem" destination="Ytc-aC-zrZ" id="HwJ-in-pI9"/>
                         <outlet property="customActionsButton" destination="YVt-M3-aSH" id="YEr-Op-Iyv"/>
@@ -135,11 +118,9 @@
                         <subviews>
                             <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dht-79-RjI">
                                 <rect key="frame" x="0.0" y="44" width="375" height="44"/>
-                                <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <items>
                                     <navigationItem id="iZJ-x1-GIX">
                                         <barButtonItem key="leftBarButtonItem" systemItem="stop" id="vUv-17-6IT">
-                                            <color key="tintColor" red="0.95294117647058818" green="0.047058823529411764" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <connections>
                                                 <action selector="didPressClose:" destination="p3Y-sw-UEZ" id="Zz4-LR-U1a"/>
                                             </connections>
@@ -148,8 +129,8 @@
                                 </items>
                             </navigationBar>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="70h-sa-EZW">
-                                <rect key="frame" x="0.0" y="88" width="375" height="690"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <rect key="frame" x="0.0" y="88" width="375" height="724"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="1SO-Az-bk2">
                                     <size key="itemSize" width="50" height="50"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -175,8 +156,8 @@
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T0U-Ph-qtC">
                                                             <rect key="frame" x="2" y="76" width="40" height="15"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                            <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
-                                                            <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                            <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
@@ -209,15 +190,21 @@
                                     <outlet property="delegate" destination="p3Y-sw-UEZ" id="sr3-90-EPS"/>
                                 </connections>
                             </collectionView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="G6f-xa-epe">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                            </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="70h-sa-EZW" firstAttribute="top" secondItem="dht-79-RjI" secondAttribute="bottom" id="7ls-Ck-kwW"/>
                             <constraint firstItem="dht-79-RjI" firstAttribute="trailing" secondItem="HRi-IQ-AyN" secondAttribute="trailing" id="8Sc-Oo-OZE"/>
-                            <constraint firstItem="70h-sa-EZW" firstAttribute="bottom" secondItem="HRi-IQ-AyN" secondAttribute="bottom" id="UFg-AP-Fum"/>
+                            <constraint firstAttribute="trailing" secondItem="G6f-xa-epe" secondAttribute="trailing" id="Gcc-Qr-YaB"/>
+                            <constraint firstItem="70h-sa-EZW" firstAttribute="bottom" secondItem="9j1-4H-Rhj" secondAttribute="bottom" id="UFg-AP-Fum"/>
                             <constraint firstItem="70h-sa-EZW" firstAttribute="trailing" secondItem="HRi-IQ-AyN" secondAttribute="trailing" id="WPt-yQ-TBC"/>
+                            <constraint firstItem="dht-79-RjI" firstAttribute="top" secondItem="G6f-xa-epe" secondAttribute="bottom" id="Ye2-Sb-JrD"/>
+                            <constraint firstItem="G6f-xa-epe" firstAttribute="leading" secondItem="9j1-4H-Rhj" secondAttribute="leading" id="Ywb-qb-98K"/>
                             <constraint firstItem="dht-79-RjI" firstAttribute="leading" secondItem="HRi-IQ-AyN" secondAttribute="leading" id="bFB-hW-4GW"/>
                             <constraint firstItem="dht-79-RjI" firstAttribute="top" secondItem="HRi-IQ-AyN" secondAttribute="top" id="bMF-Kw-LE7"/>
+                            <constraint firstAttribute="top" secondItem="G6f-xa-epe" secondAttribute="top" id="e5b-e8-bCH"/>
                             <constraint firstItem="70h-sa-EZW" firstAttribute="leading" secondItem="HRi-IQ-AyN" secondAttribute="leading" id="gJw-FY-mh2"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="HRi-IQ-AyN"/>
@@ -226,6 +213,7 @@
                         <outlet property="collectionView" destination="70h-sa-EZW" id="ZF1-jf-5no"/>
                         <outlet property="navigationBar" destination="dht-79-RjI" id="yTX-uo-sTl"/>
                         <outlet property="navigationItem" destination="iZJ-x1-GIX" id="h4W-IZ-kid"/>
+                        <outlet property="statusBarBackground" destination="G6f-xa-epe" id="VDi-A9-Qjv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ruh-y3-u8z" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -234,7 +222,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="more" width="28" height="28"/>
+        <image name="more" width="28" height="28.666666030883789"/>
         <image name="openWith" width="28" height="28"/>
         <image name="thumbnailsView" width="28" height="28"/>
         <image name="video_list" width="22" height="22"/>
