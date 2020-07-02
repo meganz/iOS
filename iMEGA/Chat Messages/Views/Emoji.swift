@@ -1,4 +1,19 @@
 
+struct Emoji: Codable {
+    let category: Int
+    let representation: String
+    let name: String
+    var displayString: String {
+        return ":\(name.replacingOccurrences(of: "_", with: " ")):"
+    }
+    
+    private enum CodingKeys : String, CodingKey {
+        case category = "c"
+        case representation = "u"
+        case name = "n"
+    }
+}
+
 struct EmojiListReader {
     static func readFromFile() -> [Emoji]? {
         guard let path = Bundle.main.path(forResource: "emojis_v3", ofType: "json") else {
@@ -16,14 +31,3 @@ struct EmojiListReader {
     }
 }
 
-struct Emoji: Codable {
-    let category: Int
-    let representation: String
-    let name: String
-    
-    private enum CodingKeys : String, CodingKey {
-        case category = "c"
-        case representation = "u"
-        case name = "n"
-    }
-}

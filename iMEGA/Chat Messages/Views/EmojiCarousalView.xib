@@ -91,6 +91,7 @@
             <connections>
                 <outlet property="collectionView" destination="DLa-JL-b2e" id="yqr-4m-XCe"/>
                 <outlet property="descriptionLabel" destination="Q87-Mb-nam" id="A8K-Rj-9tZ"/>
+                <outlet property="descriptionLabelBackgroundView" destination="CpA-uK-cdK" id="x8i-oN-zef"/>
                 <outlet property="handlebarView" destination="kcc-vs-KhG" id="tSE-R6-POp"/>
             </connections>
             <point key="canvasLocation" x="-301.44927536231887" y="110.49107142857143"/>

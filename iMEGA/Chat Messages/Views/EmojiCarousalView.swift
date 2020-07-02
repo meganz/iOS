@@ -9,6 +9,7 @@ class EmojiCarousalView: UIView {
     @IBOutlet weak var handlebarView: UIView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var descriptionLabelBackgroundView: UIView!
     
     weak var delegate: EmojiCarousalViewDelegate?
     
@@ -49,12 +50,14 @@ class EmojiCarousalView: UIView {
         }
     }
     
-    func updateDescription(attributedString: NSAttributedString) {
-        descriptionLabel.attributedText = attributedString
+    func updateDescription(text: String) {
+        descriptionLabel.text = text
     }
     
     private func updateAppearance() {
-        descriptionLabel.textColor = UIColor.mnz_separator(for: traitCollection)
+        descriptionLabel.textColor = UIColor.emojiDescriptionTextColor(traitCollection)
+        descriptionLabelBackgroundView.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
+        handlebarView.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
     }
 }
 
