@@ -504,7 +504,12 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
         case GroupChatDetailsSectionEncryptedKeyRotation:
             cell.nameLabel.text = self.chatRoom.isPublicChat ? AMLocalizedString(@"Enable Encrypted Key Rotation", @"Title show in a cell where the users can enable the 'Encrypted Key Rotation'") : AMLocalizedString(@"Encrypted Key Rotation", @"Label in a cell where you can enable the 'Encrypted Key Rotation'");
             cell.leftImageView.hidden = YES;
-            cell.enableLabel.hidden = cell.userInteractionEnabled = self.chatRoom.isPublicChat;
+            if (self.chatRoom.isPublicChat) {
+                cell.enableLabel.hidden = YES;
+                cell.nameLabel.enabled = cell.userInteractionEnabled = self.chatRoom.peerCount <= 100;
+            } else {
+                cell.enableLabel.hidden = cell.userInteractionEnabled = NO;
+            }
             cell.enableLabel.text = AMLocalizedString(@"Enabled", @"The label of the toggle switch to indicate that file versioning is enabled.");
             break;
             
@@ -742,7 +747,11 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
     if (section == GroupChatDetailsSectionEncryptedKeyRotation && self.chatRoom.isPublicChat && self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) {
-        return [AMLocalizedString(@"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages.", @"Footer text to explain what means 'Encrypted Key Rotation'") stringByAppendingString:@"\n"];
+        if (self.chatRoom.peerCount <= 100) {
+            return [AMLocalizedString(@"Key rotation is slightly more secure, but does not allow you to create a chat link and new participants will not see past messages.", @"Footer text to explain what means 'Encrypted Key Rotation'") stringByAppendingString:@"\n"];
+        } else {
+            return AMLocalizedString(@"Key rotation is disabled for conversations with more than 100 participants.", @"Footer to explain why key rotation is disabled for public chats with many participants");
+        }
     } else if (section == GroupChatDetailsSectionChatNotifications && [self shouldShowChatNotificationEnabledCell]) {
         return [self.chatNotificationControl timeRemainingForDNDDeactivationStringWithChatId:self.chatRoom.chatId];
     }
