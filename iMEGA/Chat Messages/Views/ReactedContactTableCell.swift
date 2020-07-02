@@ -1,6 +1,6 @@
 
 
-class ReactedContactTableCell: UITableViewCell {
+class MessageOptionItemTableCell: UITableViewCell {
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var seperatorView: UIView!
