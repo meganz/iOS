@@ -48,8 +48,13 @@ class ChatRichPreviewMediaCollectionViewCell: TextMessageCell, MEGARequestDelega
         switch megaLink.mnz_type() {
         case .fileLink:
             if megaMessage.richNumber == nil {
-
+                
                 MEGASdkManager.sharedMEGASdk()?.publicNode(forMegaFileLink: megaLink.mnz_MEGAURL(), delegate: MEGAGetPublicNodeRequestDelegate(completion: { (request, error) in
+                    let visibleIndexPaths = messagesCollectionView.indexPathsForVisibleItems
+                    guard visibleIndexPaths.contains(indexPath) else {
+                        return
+                    }
+                    
                     messagesCollectionView.reloadItems(at: [indexPath])
                 }))
                 
@@ -60,6 +65,11 @@ class ChatRichPreviewMediaCollectionViewCell: TextMessageCell, MEGARequestDelega
             if megaMessage.richNumber == nil {
                 
                 MEGASdkManager.sharedMEGASdk()?.getPublicLinkInformation(withFolderLink: megaLink.mnz_MEGAURL(), delegate: MEGAGenericRequestDelegate(completion: { (request, error) in
+                    let visibleIndexPaths = messagesCollectionView.indexPathsForVisibleItems
+                    guard visibleIndexPaths.contains(indexPath) else {
+                        return
+                    }
+                    
                     messagesCollectionView.reloadItems(at: [indexPath])
                     
                 }))
@@ -68,15 +78,20 @@ class ChatRichPreviewMediaCollectionViewCell: TextMessageCell, MEGARequestDelega
             richPreviewContentView.isHidden = false
         case .publicChatLink:
             if megaMessage.richNumber == nil {
-
-            MEGASdkManager.sharedMEGAChatSdk()?.checkChatLink(megaMessage.megaLink, delegate: MEGAChatGenericRequestDelegate(completion: { (request, error) in
-                messagesCollectionView.reloadItems(at: [indexPath])
                 
-            }))
+                MEGASdkManager.sharedMEGAChatSdk()?.checkChatLink(megaMessage.megaLink, delegate: MEGAChatGenericRequestDelegate(completion: { (request, error) in
+                    let visibleIndexPaths = messagesCollectionView.indexPathsForVisibleItems
+                    guard visibleIndexPaths.contains(indexPath) else {
+                        return
+                    }
+                    
+                    messagesCollectionView.reloadItems(at: [indexPath])
+                    
+                }))
                 return
             }
             richPreviewContentView.isHidden = false
-
+            
         default:
             break
         }
