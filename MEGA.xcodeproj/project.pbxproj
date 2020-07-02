@@ -1224,6 +1224,8 @@
 		BFC933E324A453B400BC2A75 /* EmojiCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFC933E124A453B400BC2A75 /* EmojiCollectionCell.xib */; };
 		BFC933E524A45CD600BC2A75 /* ReactedUsersListPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC933E424A45CD600BC2A75 /* ReactedUsersListPageViewController.swift */; };
 		BFC933E824A45D0000BC2A75 /* ReactedUsersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC933E624A45D0000BC2A75 /* ReactedUsersTableViewController.swift */; };
+		BFC933EF24A56F3B00BC2A75 /* SingleTapHandlerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC933EE24A56F3B00BC2A75 /* SingleTapHandlerProtocol.swift */; };
+		BFC933F124A5864C00BC2A75 /* SingleTapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC933F024A5864C00BC2A75 /* SingleTapView.swift */; };
 		BFCEA856246E074B00FA2451 /* ChatViewController+ChatDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCEA855246E074B00FA2451 /* ChatViewController+ChatDelegate.swift */; };
 		BFCF841F246A1310004FA3B1 /* JoinInputBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCF841E246A1310004FA3B1 /* JoinInputBar.swift */; };
 		BFCF8423246A1326004FA3B1 /* JoinInputBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFCF8422246A1326004FA3B1 /* JoinInputBar.xib */; };
@@ -2767,6 +2769,8 @@
 		BFC933E124A453B400BC2A75 /* EmojiCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmojiCollectionCell.xib; sourceTree = "<group>"; };
 		BFC933E424A45CD600BC2A75 /* ReactedUsersListPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactedUsersListPageViewController.swift; sourceTree = "<group>"; };
 		BFC933E624A45D0000BC2A75 /* ReactedUsersTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactedUsersTableViewController.swift; sourceTree = "<group>"; };
+		BFC933EE24A56F3B00BC2A75 /* SingleTapHandlerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleTapHandlerProtocol.swift; sourceTree = "<group>"; };
+		BFC933F024A5864C00BC2A75 /* SingleTapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleTapView.swift; sourceTree = "<group>"; };
 		BFCEA855246E074B00FA2451 /* ChatViewController+ChatDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatViewController+ChatDelegate.swift"; sourceTree = "<group>"; };
 		BFCF841E246A1310004FA3B1 /* JoinInputBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinInputBar.swift; sourceTree = "<group>"; };
 		BFCF8422246A1326004FA3B1 /* JoinInputBar.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = JoinInputBar.xib; sourceTree = "<group>"; };
@@ -5785,6 +5789,8 @@
 			isa = PBXGroup;
 			children = (
 				BFAB111923CEA5C300BCE72D /* AssetDownloader.swift */,
+				BFC933EE24A56F3B00BC2A75 /* SingleTapHandlerProtocol.swift */,
+				BFC933F024A5864C00BC2A75 /* SingleTapView.swift */,
 				BFAB111A23CEA5C300BCE72D /* Extensions */,
 				BFAB111D23CEA5C300BCE72D /* HelperViews */,
 			);
@@ -6882,6 +6888,7 @@
 				4131997A1BD7BD5D002CD6EA /* DTTimePeriodChain.m in Sources */,
 				837B9BFB246D38E900D409B4 /* ActionSheetActions.swift in Sources */,
 				A86B9F602316D6AB00F35E7A /* FLEXWebViewController.m in Sources */,
+				BFC933F124A5864C00BC2A75 /* SingleTapView.swift in Sources */,
 				BFAB114B23CEA5C300BCE72D /* PhotoCarouselDelegate.swift in Sources */,
 				B6B959412193A9140064334D /* ThumbnailUploadOperation.m in Sources */,
 				83D726592316903D007B2E58 /* GenericHeaderFooterView.swift in Sources */,
@@ -7363,6 +7370,7 @@
 				A86B9F582316D6AB00F35E7A /* FLEXArgumentInputViewFactory.m in Sources */,
 				BF15891F2435EF85007AF9EC /* ChatViewCallCollectionCell.swift in Sources */,
 				417840A01AC328A600713F3C /* ChangePasswordViewController.m in Sources */,
+				BFC933EF24A56F3B00BC2A75 /* SingleTapHandlerProtocol.swift in Sources */,
 				B6CCC36921E800E400B68E2C /* VideoUploadsQualityTableViewController.m in Sources */,
 				771A932823A24DB300CB0ED7 /* UIPasteboard+FLEX.m in Sources */,
 				E85044C61A6D84620064B675 /* FileLinkViewController.m in Sources */,
@@ -7968,7 +7976,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 5.0;
+				MARKETING_VERSION = 5.1;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"$(inherited)",
@@ -8028,7 +8036,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 5.0;
+				MARKETING_VERSION = 5.1;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"$(inherited)",
@@ -8083,7 +8091,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = 4.13;
+				MARKETING_VERSION = 5.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				OTHER_LDFLAGS = (
@@ -8140,7 +8148,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = 4.13;
+				MARKETING_VERSION = 5.1;
 				MTL_FAST_MATH = YES;
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -8187,7 +8195,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 4.13;
+				MARKETING_VERSION = 5.1;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPickerFileProvider;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -8226,7 +8234,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 4.13;
+				MARKETING_VERSION = 5.1;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPickerFileProvider;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -8276,7 +8284,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 4.13;
+				MARKETING_VERSION = 5.1;
 				OTHER_CFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -8330,7 +8338,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 4.13;
+				MARKETING_VERSION = 5.1;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPicker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -8383,7 +8391,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 4.13;
+				MARKETING_VERSION = 5.1;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAShare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -8437,7 +8445,7 @@
 					"$(PROJECT_DIR)/iMEGA/Vendor/SDK/bindings/ios/3rdparty/lib",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 4.13;
+				MARKETING_VERSION = 5.1;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAShare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
