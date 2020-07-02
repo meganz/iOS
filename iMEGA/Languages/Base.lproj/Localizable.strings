@@ -1780,6 +1780,8 @@
 "Error. No more participants are allowed in this group call."="You are not allowed to join this call as it has reached the maximum number of participants.";
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
 "Error. No more video are allowed in this group call."="You are not allowed to enable video as this call has reached the maximum number of participants using video.";
+/* Error shown when trying to start a call in a group with more peers than allowed */
+"Unable to start a call because the participants limit was exceeded."="Unable to start a call because the participants limit was exceeded.";
 /* Text shown for switching from thumbnail view to list view. */
 "List view"="List view";
 /* Text shown for switching from list view to thumbnail view. */
