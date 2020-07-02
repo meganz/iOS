@@ -42,15 +42,8 @@ class ContactsPickerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        SVProgressHUD.show(withStatus: AMLocalizedString("loading", "state previous to import a file"))
         configureView()
-
-        DeviceContactsManager().getDeviceContacts(forRequestedKeys: keys) { [weak self] (contacts) in
-            DispatchQueue.main.async {
-                self?.prepareDataSource(forContacts: contacts)
-                SVProgressHUD.dismiss()
-            }
-        }
+        fetchDeviceContacts()
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -90,6 +83,16 @@ class ContactsPickerViewController: UIViewController {
         
         let flexibleSpaceBarButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         toolbarItems = [flexibleSpaceBarButton, sendBarButton]
+    }
+    
+    private func fetchDeviceContacts() {
+        SVProgressHUD.show(withStatus: AMLocalizedString("loading", "state previous to import a file"))
+        DeviceContactsManager().getDeviceContacts(forRequestedKeys: keys) { [weak self] (contacts) in
+            DispatchQueue.main.async {
+                self?.prepareDataSource(forContacts: contacts)
+                SVProgressHUD.dismiss()
+            }
+        }
     }
     
     private func prepareDataSource(forContacts fetchedContacts: [DeviceContact]) {
@@ -135,6 +138,10 @@ class ContactsPickerViewController: UIViewController {
             }
         }
         updateToolbar()
+    }
+    
+    @objc func emptyStateButtonTouchUpInside() {
+        UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!, options: [:], completionHandler: nil)
     }
 }
 
@@ -216,7 +223,9 @@ extension ContactsPickerViewController: UITableViewDelegate {
 
 extension ContactsPickerViewController: DZNEmptyDataSetSource {
     func customView(forEmptyDataSet scrollView: UIScrollView) -> UIView? {
-        return EmptyStateView.init(image: imageForEmptyDataSet(), title: titleForEmptyDataSet(), description: nil, buttonTitle: nil)
+        let emptyStateView = EmptyStateView.init(image: imageForEmptyDataSet(), title: titleForEmptyDataSet(), description: nil, buttonTitle: buttonTitleForEmptyDataSet())
+        emptyStateView.button?.addTarget(self, action: #selector(emptyStateButtonTouchUpInside), for: .touchUpInside)
+        return emptyStateView
     }
     
     func imageForEmptyDataSet() -> UIImage? {
@@ -228,10 +237,22 @@ extension ContactsPickerViewController: DZNEmptyDataSetSource {
     }
     
     func titleForEmptyDataSet() -> String? {
-        if (self.searchController.isActive && self.searchController.searchBar.text!.count > 0) {
-            return AMLocalizedString("noResults", "Title shown when you make a search and there is 'No Results'")
+        if CNContactStore.authorizationStatus(for: CNEntityType.contacts) == .authorized {
+            if (self.searchController.isActive && self.searchController.searchBar.text!.count > 0) {
+                return AMLocalizedString("noResults", "Title shown when you make a search and there is 'No Results'")
+            } else {
+                return AMLocalizedString("contactsEmptyState_title", "Title shown when the Contacts section is empty, when you have not added any contact.")
+            }
         } else {
-            return AMLocalizedString("contactsEmptyState_title", "Title shown when the Contacts section is empty, when you have not added any contact.")
+            return AMLocalizedString("Enable Access to Your Address Book", "Title label that explains that the user is going to be asked for the contacts permission")
+        }
+    }
+    
+    func buttonTitleForEmptyDataSet() -> String? {
+        if CNContactStore.authorizationStatus(for: CNEntityType.contacts) != .authorized {
+            return AMLocalizedString("Open Settings", "Text indicating the user to open the device settings for MEGA")
+        } else {
+            return nil
         }
     }
 }
