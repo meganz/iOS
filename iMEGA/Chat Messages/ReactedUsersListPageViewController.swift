@@ -7,7 +7,7 @@ protocol ReactedUsersListPageViewControllerDelegate: class {
 }
 
 class ReactedUsersListPageViewController: UIPageViewController {
-    var pages: [MessageOptionItemsTableViewController] = []
+    var pages: [ChatMessageOptionsTableViewController] = []
     var numberOfPages: Int = 0
     var currentIndex = 0 {
         didSet {
@@ -26,12 +26,12 @@ class ReactedUsersListPageViewController: UIPageViewController {
     }
     
     func set(numberOfPages: Int, selectedPage: Int, initialUserHandleList: [UInt64]) {
-        pages = (0..<numberOfPages).map { _ in MessageOptionItemsTableViewController() }
+        pages = (0..<numberOfPages).map { _ in ChatMessageOptionsTableViewController() }
         dataSource = self
         delegate = self
         
         let reactedUsersTableViewController = pages[selectedPage]
-        reactedUsersTableViewController.messageOptionItemsDataSource = self
+        reactedUsersTableViewController.chatMessageOptionDataSource = self
         setViewControllers([reactedUsersTableViewController],
                            direction: .forward,
                            animated: false,
@@ -45,7 +45,7 @@ class ReactedUsersListPageViewController: UIPageViewController {
         }
         
         let reactedUsersTableViewController = pages[index]
-        reactedUsersTableViewController.messageOptionItemsDataSource = self
+        reactedUsersTableViewController.chatMessageOptionDataSource = self
         
         setViewControllers([reactedUsersTableViewController],
                            direction: index > currentIndex ? .forward : .reverse,
@@ -58,13 +58,13 @@ extension ReactedUsersListPageViewController: UIPageViewControllerDataSource, UI
     
     func pageViewController(_ pageViewController: UIPageViewController,
                             viewControllerBefore viewController: UIViewController) -> UIViewController? {
-        guard let currentVC = viewController as? MessageOptionItemsTableViewController else {
+        guard let currentVC = viewController as? ChatMessageOptionsTableViewController else {
             return nil
         }
                 
         if let foundIndex = pages.firstIndex(of: currentVC),
             foundIndex > 0 {
-            pages[foundIndex - 1].messageOptionItemsDataSource = self
+            pages[foundIndex - 1].chatMessageOptionDataSource = self
             return pages[foundIndex - 1]
         }
         
@@ -73,13 +73,13 @@ extension ReactedUsersListPageViewController: UIPageViewControllerDataSource, UI
     
     func pageViewController(_ pageViewController: UIPageViewController,
                             viewControllerAfter viewController: UIViewController) -> UIViewController? {
-        guard let currentVC = viewController as? MessageOptionItemsTableViewController else {
+        guard let currentVC = viewController as? ChatMessageOptionsTableViewController else {
             return nil
         }
         
         if let foundIndex = pages.firstIndex(of: currentVC),
             foundIndex < (pages.count - 1) {
-            pages[foundIndex + 1].messageOptionItemsDataSource = self
+            pages[foundIndex + 1].chatMessageOptionDataSource = self
             return pages[foundIndex + 1]
         }
         
@@ -90,7 +90,7 @@ extension ReactedUsersListPageViewController: UIPageViewControllerDataSource, UI
                             didFinishAnimating finished: Bool, previousViewControllers: [UIViewController],
                             transitionCompleted completed: Bool) {
         guard completed,
-            let currentVC = viewControllers?.first as? MessageOptionItemsTableViewController,
+            let currentVC = viewControllers?.first as? ChatMessageOptionsTableViewController,
             let foundIndex = pages.firstIndex(of: currentVC) else {
             return
         }
@@ -99,8 +99,16 @@ extension ReactedUsersListPageViewController: UIPageViewControllerDataSource, UI
     }
 }
 
-extension ReactedUsersListPageViewController: MessageOptionItemsTableViewControllerDataSource {
-    func numberOfItems(forViewController viewController: MessageOptionItemsTableViewController) -> Int {
+extension ReactedUsersListPageViewController: ChatMessageOptionsTableViewControllerDataSource {
+    func headerViewHeight() -> CGFloat {
+        return 0.0
+    }
+    
+    func headerView() -> UIView? {
+        return nil
+    }
+    
+    func numberOfItems(forViewController viewController: ChatMessageOptionsTableViewController) -> Int {
         guard let controllerIndex = pages.firstIndex(of: viewController),
             let userHandleList = usersListDelegate?.userHandleList(atIndex: controllerIndex) else {
             return 0
@@ -109,7 +117,7 @@ extension ReactedUsersListPageViewController: MessageOptionItemsTableViewControl
         return userHandleList.count
     }
     
-    func setImageView(_ imageView: UIImageView, forIndex index: Int, viewController: MessageOptionItemsTableViewController) {
+    func setImageView(_ imageView: UIImageView, forIndex index: Int, viewController: ChatMessageOptionsTableViewController) {
         guard let controllerIndex = pages.firstIndex(of: viewController),
             let userHandleList = usersListDelegate?.userHandleList(atIndex: controllerIndex) else {
             return
@@ -118,7 +126,7 @@ extension ReactedUsersListPageViewController: MessageOptionItemsTableViewControl
         imageView.mnz_setImageAvatarOrColor(forUserHandle: userHandleList[index])
     }
     
-    func setLabel(_ label: UILabel, forIndex index: Int, viewController: MessageOptionItemsTableViewController) {
+    func setLabel(_ label: UILabel, forIndex index: Int, viewController: ChatMessageOptionsTableViewController) {
         guard let controllerIndex = pages.firstIndex(of: viewController),
             let userHandleList = usersListDelegate?.userHandleList(atIndex: controllerIndex) else {
             return
