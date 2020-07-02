@@ -785,6 +785,10 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 
 - (void)openCallViewWithVideo:(BOOL)videoCall active:(BOOL)active {
     if (self.chatRoom.isGroup) {
+        if (self.chatRoom.peerCount > 20) {
+            [SVProgressHUD showErrorWithStatus:AMLocalizedString(@"Unable to start a call because the participants limit was exceeded.", @"Error shown when trying to start a call in a group with more peers than allowed")];
+            return;
+        }
         GroupCallViewController *groupCallVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupCallViewControllerID"];
         groupCallVC.callType = active ? CallTypeActive : [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId] ? CallTypeActive : CallTypeOutgoing;
         groupCallVC.videoCall = videoCall;
