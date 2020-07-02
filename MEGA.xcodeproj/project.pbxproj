@@ -1224,7 +1224,7 @@
 		BFC933E224A453B400BC2A75 /* EmojiCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC933E024A453B400BC2A75 /* EmojiCollectionCell.swift */; };
 		BFC933E324A453B400BC2A75 /* EmojiCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFC933E124A453B400BC2A75 /* EmojiCollectionCell.xib */; };
 		BFC933E524A45CD600BC2A75 /* ReactedUsersListPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC933E424A45CD600BC2A75 /* ReactedUsersListPageViewController.swift */; };
-		BFC933E824A45D0000BC2A75 /* MessageOptionItemsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC933E624A45D0000BC2A75 /* MessageOptionItemsTableViewController.swift */; };
+		BFC933E824A45D0000BC2A75 /* ChatMessageOptionsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC933E624A45D0000BC2A75 /* ChatMessageOptionsTableViewController.swift */; };
 		BFC933EF24A56F3B00BC2A75 /* SingleTapHandlerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC933EE24A56F3B00BC2A75 /* SingleTapHandlerProtocol.swift */; };
 		BFC933F124A5864C00BC2A75 /* SingleTapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC933F024A5864C00BC2A75 /* SingleTapView.swift */; };
 		BFCEA856246E074B00FA2451 /* ChatViewController+ChatDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCEA855246E074B00FA2451 /* ChatViewController+ChatDelegate.swift */; };
@@ -2770,7 +2770,7 @@
 		BFC933E024A453B400BC2A75 /* EmojiCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiCollectionCell.swift; sourceTree = "<group>"; };
 		BFC933E124A453B400BC2A75 /* EmojiCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmojiCollectionCell.xib; sourceTree = "<group>"; };
 		BFC933E424A45CD600BC2A75 /* ReactedUsersListPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactedUsersListPageViewController.swift; sourceTree = "<group>"; };
-		BFC933E624A45D0000BC2A75 /* MessageOptionItemsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageOptionItemsTableViewController.swift; sourceTree = "<group>"; };
+		BFC933E624A45D0000BC2A75 /* ChatMessageOptionsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageOptionsTableViewController.swift; sourceTree = "<group>"; };
 		BFC933EE24A56F3B00BC2A75 /* SingleTapHandlerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleTapHandlerProtocol.swift; sourceTree = "<group>"; };
 		BFC933F024A5864C00BC2A75 /* SingleTapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleTapView.swift; sourceTree = "<group>"; };
 		BFCEA855246E074B00FA2451 /* ChatViewController+ChatDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatViewController+ChatDelegate.swift"; sourceTree = "<group>"; };
@@ -5677,7 +5677,7 @@
 				BFA55256245F849F009FE3A6 /* AddToChatMenuPageViewController.swift */,
 				BF7EBD48245293530015255F /* AddToChatMenuViewController.swift */,
 				BF7EBD49245293530015255F /* AddToChatMenuViewController.xib */,
-				BFC933E624A45D0000BC2A75 /* MessageOptionItemsTableViewController.swift */,
+				BFC933E624A45D0000BC2A75 /* ChatMessageOptionsTableViewController.swift */,
 				BFC933E424A45CD600BC2A75 /* ReactedUsersListPageViewController.swift */,
 				BFC933D824A44C6300BC2A75 /* ReactedEmojisUsersListViewController.swift */,
 			);
@@ -6971,7 +6971,7 @@
 				830EF9A420062F3800FAA947 /* DevicePermissionsHelper.m in Sources */,
 				831FBEA220EF697200AC1B91 /* MEGAArchiveChatRequestDelegate.m in Sources */,
 				BFE6DBFC242DBA4A00E2E5B4 /* ChatViewController.swift in Sources */,
-				BFC933E824A45D0000BC2A75 /* MessageOptionItemsTableViewController.swift in Sources */,
+				BFC933E824A45D0000BC2A75 /* ChatMessageOptionsTableViewController.swift in Sources */,
 				77F1DBDC2056A9DF005D5F0E /* MEGAContactLinkCreateRequestDelegate.m in Sources */,
 				A815FCEA1FE2AD080075AC29 /* UIApplication+MNZCategory.m in Sources */,
 				A802B1FA1FAB293700AC8BB0 /* MEGAChatBaseRequestDelegate.m in Sources */,
