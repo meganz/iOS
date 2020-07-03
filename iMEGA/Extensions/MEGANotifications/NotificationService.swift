@@ -69,7 +69,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         bestAttemptContent?.body = notificationManager.bodyString()
         bestAttemptContent?.sound = UNNotificationSound.default
         if chatRoom.isGroup {
-            bestAttemptContent?.title = chatRoom.title
+            bestAttemptContent?.title = chatRoom.title ?? ""
             bestAttemptContent?.subtitle = notificationManager.displayName()
         } else {
             bestAttemptContent?.title = notificationManager.displayName()
@@ -79,7 +79,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         bestAttemptContent?.threadIdentifier = chatIdBase64
         if #available(iOS 12.0, *) {
             if chatRoom.isGroup {
-                bestAttemptContent?.summaryArgument = chatRoom.title
+                bestAttemptContent?.summaryArgument = chatRoom.title ?? ""
             } else {
                 bestAttemptContent?.summaryArgument = notificationManager.displayName()
             }
