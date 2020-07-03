@@ -21,8 +21,28 @@ class MessageOptionItemTableCell: UITableViewCell {
         }
     }
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        updateAppearance()
+    }
+    
     override func prepareForReuse() {
         super.prepareForReuse()
         index = -1
     }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        if #available(iOS 13.0, *),
+            traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            updateAppearance()
+        }
+    }
+    
+    private func updateAppearance() {
+        seperatorView.backgroundColor = UIColor.mnz_separator(for: traitCollection)
+    }
+    
+    
 }
