@@ -1,14 +1,12 @@
 
 import PanModal
 
-
-protocol ReactedEmojisUsersListViewControllerDataSource: class {
-    func userhandleList(forEmoji emoji: String, chatId: UInt64, messageId: UInt64) -> [UInt64]
+protocol ReactedEmojisUsersListViewControllerDelegate: class {
+    func didSelectUserhandle(_ userhandle: UInt64)
 }
 
 class ReactedEmojisUsersListViewController: UIViewController  {
     
-    weak var dataSource: ReactedEmojisUsersListViewControllerDataSource?
     var selectedEmoji: String {
         didSet {
             guard isViewLoaded else {
@@ -24,13 +22,14 @@ class ReactedEmojisUsersListViewController: UIViewController  {
     private let messageId: UInt64
     private let emojiList: [String]
     private let localSavedEmojis = EmojiListReader.readFromFile()
+    private weak var delegate: ReactedEmojisUsersListViewControllerDelegate?
 
-    init(dataSource: ReactedEmojisUsersListViewControllerDataSource,
+    init(delegate: ReactedEmojisUsersListViewControllerDelegate,
          emojiList: [String],
          selectedEmoji: String,
          chatId: UInt64,
          messageId: UInt64) {
-        self.dataSource = dataSource
+        self.delegate = delegate
         self.emojiList = emojiList
         self.selectedEmoji = selectedEmoji
         self.chatId = chatId
@@ -42,7 +41,6 @@ class ReactedEmojisUsersListViewController: UIViewController  {
         fatalError("init(coder:) has not been implemented")
     }
     
-    var isShortFormEnabled = true
     let headerView = EmojiCarousalView.instanceFromNib
     lazy var reactedUsersListPageViewController: ReactedUsersListPageViewController = {
         let viewController = ReactedUsersListPageViewController(transitionStyle: .scroll,
@@ -63,29 +61,25 @@ class ReactedEmojisUsersListViewController: UIViewController  {
             view.backgroundColor = .white
         }
         
-        if let dataSource = dataSource {
-            addHeaderView(emojiList: emojiList)
-            headerView.selectedEmoji = selectedEmoji
-            let userHandleList = dataSource.userhandleList(forEmoji: selectedEmoji, chatId: chatId, messageId: messageId)
-            updateEmojiHeaderViewDescription()
-            guard let foundIndex = emojiList.firstIndex(of: selectedEmoji) else {
-                fatalError("Selected emoji is not present in the emoji list")
-            }
-            reactedUsersListPageViewController.set(numberOfPages: emojiList.count,
-                                                   selectedPage: foundIndex,
-                                                   initialUserHandleList: userHandleList)
-            add(viewController: reactedUsersListPageViewController)
-
-        } else {
-            fatalError("empty emoji list is not handled yet.")
+        addHeaderView(emojiList: emojiList)
+        headerView.selectedEmoji = selectedEmoji
+        let userHandleList = userhandleList(forEmoji: selectedEmoji, chatId: chatId, messageId: messageId)
+        updateEmojiHeaderViewDescription()
+        guard let foundIndex = emojiList.firstIndex(of: selectedEmoji) else {
+            fatalError("Selected emoji is not present in the emoji list")
         }
+        reactedUsersListPageViewController.set(numberOfPages: emojiList.count,
+                                               selectedPage: foundIndex,
+                                               initialUserHandleList: userHandleList)
+        add(viewController: reactedUsersListPageViewController)
+
     }
     
     private func updateEmojiHeaderViewDescription() {
-        if let selectedEmojiName = localSavedEmojis?.filter({ $0.representation == selectedEmoji }).first?.displayString,
-            let userHandleList = dataSource?.userhandleList(forEmoji: selectedEmoji, chatId: chatId, messageId: messageId) {
+        if let selectedEmojiName = localSavedEmojis?.filter({ $0.representation == selectedEmoji }).first?.displayString {
+            let handleList = userhandleList(forEmoji: selectedEmoji, chatId: chatId, messageId: messageId)
             let description = String(format: AMLocalizedString("%d reacted to %@", "Chat reactions: number of users reacted to a emoji"),
-                                     userHandleList.count,
+                                     handleList.count,
                                      selectedEmojiName)
             headerView.updateDescription(text: description)
         }
@@ -119,30 +113,45 @@ class ReactedEmojisUsersListViewController: UIViewController  {
         
         viewController.didMove(toParent: self)
     }
+    
+    private func userhandleList(forEmoji emoji: String, chatId: UInt64, messageId: UInt64) -> [UInt64] {
+        guard let userHandleList =  MEGASdkManager
+            .sharedMEGAChatSdk()?
+            .getReactionUsers(forChat: chatId, messageId: messageId, reaction: emoji) else {
+                MEGALogDebug("user handle list for emoji \(emoji) is empty")
+            return []
+        }
+        
+        return (0..<userHandleList.size).compactMap { userHandleList.megaHandle(at: $0) }
+    }
 }
 
 extension ReactedEmojisUsersListViewController: EmojiCarousalViewDelegate {
     func didSelect(emoji: String, atIndex index: Int) {
-        if let userHandleList = dataSource?.userhandleList(forEmoji: emoji, chatId: chatId, messageId: messageId) {
-            reactedUsersListPageViewController.didSelectPage(withIndex: index, userHandleList: userHandleList)
-            selectedEmoji = emoji
-        }
+        let userHandleList = userhandleList(forEmoji: emoji, chatId: chatId, messageId: messageId)
+        reactedUsersListPageViewController.didSelectPage(withIndex: index, userHandleList: userHandleList)
+        selectedEmoji = emoji
     }
 }
 
 extension ReactedEmojisUsersListViewController: ReactedUsersListPageViewControllerDelegate {
     func userHandleList(atIndex index: Int) -> [UInt64] {
-        guard let dataSource = dataSource else {
-            MEGALogDebug("ReactedEmojisUsersListViewController data source is null")
-            return []
-        }
-        
-        return dataSource.userhandleList(forEmoji: emojiList[index], chatId: chatId, messageId: messageId)
+        return userhandleList(forEmoji: emojiList[index], chatId: chatId, messageId: messageId)
     }
     
     func pageChanged(toIndex index: Int) {
-        headerView.selectedEmoji = emojiList[index]
-        updateEmojiHeaderViewDescription()
+        selectedEmoji = emojiList[index]
+    }
+    
+    func didSelectUserhandle(_ userhandle: UInt64) {
+        guard let myHandle = MEGASdkManager.sharedMEGASdk()?.myUser?.handle,
+            myHandle != userhandle else {
+                MEGALogDebug("My user handle tapped on chat reactions screen")
+                return
+        }
+        
+        dismiss(animated: true, completion: nil)
+        delegate?.didSelectUserhandle(userhandle)
     }
 }
 
@@ -159,28 +168,10 @@ extension ReactedEmojisUsersListViewController: PanModalPresentable {
     }
 
     var shortFormHeight: PanModalHeight {
-        return isShortFormEnabled ? .contentHeight(300.0) : longFormHeight
-    }
-
-    var scrollIndicatorInsets: UIEdgeInsets {
-        let bottomOffset = presentingViewController?.bottomLayoutGuide.length ?? 0
-        return UIEdgeInsets(top: headerView.frame.size.height, left: 0, bottom: bottomOffset, right: 0)
+        return .contentHeight(300.0)
     }
 
     var anchorModalToLongForm: Bool {
         return false
-    }
-
-    func shouldPrioritize(panModalGestureRecognizer: UIPanGestureRecognizer) -> Bool {
-        let location = panModalGestureRecognizer.location(in: view)
-        return headerView.frame.contains(location)
-    }
-
-    func willTransition(to state: PanModalPresentationController.PresentationState) {
-        guard isShortFormEnabled, case .longForm = state
-            else { return }
-
-        isShortFormEnabled = false
-        panModalSetNeedsLayoutUpdate()
     }
 }

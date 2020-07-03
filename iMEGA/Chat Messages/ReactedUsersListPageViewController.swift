@@ -4,6 +4,7 @@ import UIKit
 protocol ReactedUsersListPageViewControllerDelegate: class {
     func userHandleList(atIndex index: Int) -> [UInt64]
     func pageChanged(toIndex index: Int)
+    func didSelectUserhandle(_ userhandle: UInt64)
 }
 
 class ReactedUsersListPageViewController: UIPageViewController {
@@ -26,7 +27,7 @@ class ReactedUsersListPageViewController: UIPageViewController {
     }
     
     func set(numberOfPages: Int, selectedPage: Int, initialUserHandleList: [UInt64]) {
-        pages = (0..<numberOfPages).map { _ in ChatMessageOptionsTableViewController() }
+        pages = (0..<numberOfPages).map { _ in ChatMessageOptionsTableViewController(chatMessageOptionDataSource: self) }
         dataSource = self
         delegate = self
         
@@ -64,7 +65,6 @@ extension ReactedUsersListPageViewController: UIPageViewControllerDataSource, UI
                 
         if let foundIndex = pages.firstIndex(of: currentVC),
             foundIndex > 0 {
-            pages[foundIndex - 1].chatMessageOptionDataSource = self
             return pages[foundIndex - 1]
         }
         
@@ -79,7 +79,6 @@ extension ReactedUsersListPageViewController: UIPageViewControllerDataSource, UI
         
         if let foundIndex = pages.firstIndex(of: currentVC),
             foundIndex < (pages.count - 1) {
-            pages[foundIndex + 1].chatMessageOptionDataSource = self
             return pages[foundIndex + 1]
         }
         
@@ -134,5 +133,14 @@ extension ReactedUsersListPageViewController: ChatMessageOptionsTableViewControl
         
         let user = MEGAStore.shareInstance()?.fetchUser(withUserHandle: userHandleList[index])
         label.text = user?.displayName
+    }
+    
+    func didSelect(cellAtIndex index: Int, viewController: ChatMessageOptionsTableViewController) {
+        guard let controllerIndex = pages.firstIndex(of: viewController),
+            let userHandleList = usersListDelegate?.userHandleList(atIndex: controllerIndex) else {
+            return
+        }
+
+        usersListDelegate?.didSelectUserhandle(userHandleList[index])
     }
 }

@@ -91,7 +91,7 @@ extension ChatViewController: MessageReactionReusableViewDelegate {
         }
         
         let emojis = (0..<emojisStringList.size).compactMap { emojisStringList.string(at: $0) }
-        let vc = ReactedEmojisUsersListViewController(dataSource: self,
+        let vc = ReactedEmojisUsersListViewController(delegate: self,
                                                       emojiList: emojis,
                                                       selectedEmoji: emoji,
                                                       chatId: chatRoom.chatId,
@@ -117,15 +117,9 @@ extension ChatViewController: MessageReactionReusableViewDelegate {
     }
 }
 
-extension ChatViewController: ReactedEmojisUsersListViewControllerDataSource {
-    func userhandleList(forEmoji emoji: String, chatId: UInt64, messageId: UInt64) -> [UInt64] {
-        guard let userHandleList =  MEGASdkManager
-            .sharedMEGAChatSdk()?
-            .getReactionUsers(forChat: chatId, messageId: messageId, reaction: emoji) else {
-                MEGALogDebug("user handle list for emoji \(emoji) is empty")
-            return []
-        }
-        
-        return (0..<userHandleList.size).compactMap { userHandleList.megaHandle(at: $0) }
+extension ChatViewController: ReactedEmojisUsersListViewControllerDelegate {
+    
+    func didSelectUserhandle(_ userhandle: UInt64) {
+        pushContactDetailsViewController(withPeerHandle: userhandle)
     }
 }
