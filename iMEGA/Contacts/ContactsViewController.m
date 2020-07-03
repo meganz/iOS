@@ -110,6 +110,8 @@
 @property (strong, nonatomic) MEGAUser *detailUser;
 @property (strong, nonatomic) NSString *currentSearch;
 
+@property (nonatomic) EnterGroupNameTextFieldDelegate *enterGroupNameTextFieldDelegate;
+
 @end
 
 @implementation ContactsViewController
@@ -147,6 +149,8 @@
 
     if (self.contactsMode == ContactsModeChatNamingGroup) {
         self.enterGroupNameTextField.placeholder = AMLocalizedString(@"Enter group name", @"Title of the dialog shown when the user it is creating a chat link and the chat has not title");
+        self.enterGroupNameTextFieldDelegate = EnterGroupNameTextFieldDelegate.new;
+        self.enterGroupNameTextField.delegate = self.enterGroupNameTextFieldDelegate;
     }
     
     [self updateAppearance];
