@@ -62,7 +62,6 @@ extension ChatViewController: MessagesDataSource {
     }
     
     func messageFooterView(for indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageReusableView {
-   
         guard let chatMessageReactionView = messagesCollectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: MessageReactionReusableView.reuseIdentifier, for: indexPath) as? MessageReactionReusableView else {
             fatalError("Failed to dequeue MessageReactionReusableView")
         }

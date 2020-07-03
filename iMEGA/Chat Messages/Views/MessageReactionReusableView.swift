@@ -10,7 +10,15 @@ class MessageReactionReusableView: MessageReusableView, UICollectionViewDelegate
     @IBOutlet var reactionCollectionView: UICollectionView!
     var emojis = [String]()
     var indexPath: IndexPath?
-    var reactionContainerView = UIView()
+    //    var reactionContainerView = ReactionContainerView()
+    private lazy var reactionContainerView: ReactionContainerView = {
+        let reactionContainerView = ReactionContainerView()
+        addSubview(reactionContainerView)
+
+        return reactionContainerView
+    }()
+    
+    
     
     var chatMessage: ChatMessage? {
         didSet {
@@ -36,7 +44,8 @@ class MessageReactionReusableView: MessageReusableView, UICollectionViewDelegate
             flowLayout.invalidateLayout()
 
             configureDisplaying()
-            reactionCollectionView.reloadData()
+//            reactionCollectionView.reloadData()
+            reactionContainerView.chatMessage = chatMessage
         }
     }
 
@@ -58,7 +67,11 @@ class MessageReactionReusableView: MessageReusableView, UICollectionViewDelegate
         flowLayout.estimatedItemSize = CGSize(width: 1, height: 1)
         flowLayout.minimumInteritemSpacing = 4
         
-        addSubview(reactionContainerView)
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        reactionContainerView.pin.vertically().horizontally(pin.safeArea)
     }
 
     func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {

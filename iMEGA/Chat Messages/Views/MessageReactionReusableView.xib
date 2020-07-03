@@ -14,7 +14,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="247"/>
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
-                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="hzu-uH-VTb">
+                <collectionView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="hzu-uH-VTb">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="247"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                     <collectionViewLayout key="collectionViewLayout" id="JeK-9f-ssN" customClass="AlignedCollectionViewFlowLayout" customModule="AlignedCollectionViewFlowLayout"/>
