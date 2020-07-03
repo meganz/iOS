@@ -242,6 +242,58 @@ extension UIColor {
         }
     }
     
+    // MARK: - Chat Reactions
+    
+    class func mnz_emojiLabelSelectedState(_ traitCollection: UITraitCollection) -> UIColor {
+        if #available(iOS 13.0, *) {
+            switch traitCollection.userInterfaceStyle {
+            case .unspecified, .light:
+                if traitCollection.accessibilityContrast == .high {
+                    return UIColor.mnz_green007B62()
+                } else {
+                    return UIColor.mnz_green00A886()
+                }
+                
+            case .dark:
+                if traitCollection.accessibilityContrast == .high {
+                    return UIColor.mnz_green00C29A()
+                } else {
+                    return UIColor.mnz_green00A382()
+                }
+                
+            @unknown default:
+                return UIColor.mnz_green00A886()
+            }
+        } else {
+            return UIColor.mnz_green00A886()
+        }
+    }
+    
+    class func mnz_emoji(_ traitCollection: UITraitCollection) -> UIColor {
+        if #available(iOS 13.0, *) {
+            switch traitCollection.userInterfaceStyle {
+            case .unspecified, .light:
+                if traitCollection.accessibilityContrast == .high {
+                    return UIColor.mnz_whiteF2F2F2()
+                } else {
+                    return UIColor.mnz_whiteF7F7F7()
+                }
+                
+            case .dark:
+                if traitCollection.accessibilityContrast == .high {
+                    return UIColor.mnz_gray3F3F42()
+                } else {
+                    return UIColor.mnz_black2C2C2E()
+                }
+                
+            @unknown default:
+                return UIColor.mnz_whiteF7F7F7()
+            }
+        } else {
+            return UIColor.mnz_whiteF7F7F7()
+        }
+    }
+    
     // MARK: - Text
     
     @objc class func mnz_secondaryLabel() -> UIColor {
@@ -459,16 +511,16 @@ extension UIColor {
         if #available(iOS 13.0, *) {
             switch traitCollection.userInterfaceStyle {
             case .unspecified, .light:
-                return mnz_gray3C3C43().withAlphaComponent(0.3)
+                return mnz_gray3C3C43().withAlphaComponent(0.6)
 
             case .dark:
-                return white.withAlphaComponent(0.3)
+                return white.withAlphaComponent(0.6)
                 
             @unknown default:
-                return mnz_gray3C3C43().withAlphaComponent(0.3)
+                return mnz_gray3C3C43().withAlphaComponent(0.6)
             }
         } else {
-            return mnz_gray3C3C43().withAlphaComponent(0.3)
+            return mnz_gray3C3C43().withAlphaComponent(0.6)
         }
     }
 
@@ -660,6 +712,10 @@ extension UIColor {
     
     @objc class func mnz_whiteFCFCFC() -> UIColor {
         return UIColor.init(red: 252.0/255.0, green: 252.0/255.0, blue: 252.0/255.0, alpha: 1.0)
+    }
+    
+    @objc class func mnz_whiteF7F7F7() -> UIColor {
+        return UIColor.init(red: 247.0/255.0, green:  247.0/255.0, blue:  247.0/255.0, alpha: 1.0)
     }
 }
 
