@@ -77,7 +77,7 @@ static const CGFloat GapBetweenPages = 10.0;
         }
     }
     
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MEGAPhotoBrowserViewController" bundle:nil];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"PhotoBrowser" bundle:[NSBundle bundleForClass:[self class]]];
     MEGAPhotoBrowserViewController *photoBrowserVC = [storyboard instantiateViewControllerWithIdentifier:@"MEGAPhotoBrowserViewControllerID"];
     photoBrowserVC.api = api;
     photoBrowserVC.mediaNodes = mediaNodesArray;
@@ -684,7 +684,7 @@ static const CGFloat GapBetweenPages = 10.0;
             break;
             
         default: {
-            MEGAPhotoBrowserPickerViewController *pickerVC = [[UIStoryboard storyboardWithName:@"MEGAPhotoBrowserViewController" bundle:nil] instantiateViewControllerWithIdentifier:@"MEGAPhotoBrowserPickerViewControllerID"];
+            MEGAPhotoBrowserPickerViewController *pickerVC = [[UIStoryboard storyboardWithName:@"PhotoBrowser" bundle:[NSBundle bundleForClass:[self class]]] instantiateViewControllerWithIdentifier:@"MEGAPhotoBrowserPickerViewControllerID"];
             pickerVC.mediaNodes = self.mediaNodes;
             pickerVC.delegate = self;
             pickerVC.api = self.api;
