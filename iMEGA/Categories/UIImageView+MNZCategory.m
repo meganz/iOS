@@ -10,7 +10,7 @@
 @implementation UIImageView (MNZCategory)
 
 - (void)mnz_setImageForUserHandle:(uint64_t)userHandle {
-    [self mnz_setImageForUserHandle:userHandle name:@"?"];
+    [self mnz_setImageForUserHandle:userHandle name:@"Unknown"];
 }
 
 - (void)mnz_setImageForUserHandle:(uint64_t)userHandle name:(NSString *)name {
