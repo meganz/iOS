@@ -306,7 +306,7 @@
             
             NSString *fullNameReceiveAction = [chatRoom userDisplayNameForUserHandle:item.lastMessageHandle];
             if (!fullNameReceiveAction) {
-                fullNameReceiveAction = @"?";
+                fullNameReceiveAction = @"Unknown";
                 MEGALogWarning(@"[Chat Links Scalability] Display name not ready");
             }
             
@@ -342,7 +342,7 @@
             
             NSString *fullNameReceiveAction = [chatRoom userDisplayNameForUserHandle:item.lastMessageHandle];
             if (!fullNameReceiveAction) {
-                fullNameReceiveAction = @"?";
+                fullNameReceiveAction = @"Unknown";
                 MEGALogWarning(@"[Chat Links Scalability] Display name not ready");
             }
             
@@ -470,7 +470,7 @@
         }
     }
 
-    return actionAuthor ?: @"?";
+    return actionAuthor ?: @"Unknown";
 }
 
 @end
