@@ -13,7 +13,7 @@ class ReactedEmojisUsersListViewController: UIViewController  {
                 return
             }
             
-            headerView.selectedEmoji = selectedEmoji
+            headerView.selectEmojiAtIndex(emojiList.firstIndex(of: selectedEmoji) ?? 0)
             updateEmojiHeaderViewDescription()
         }
     }
@@ -62,7 +62,7 @@ class ReactedEmojisUsersListViewController: UIViewController  {
         }
         
         addHeaderView(emojiList: emojiList)
-        headerView.selectedEmoji = selectedEmoji
+        headerView.selectEmojiAtIndex(emojiList.firstIndex(of: selectedEmoji) ?? 0)
         let userHandleList = userhandleList(forEmoji: selectedEmoji, chatId: chatId, messageId: messageId)
         updateEmojiHeaderViewDescription()
         guard let foundIndex = emojiList.firstIndex(of: selectedEmoji) else {
@@ -77,17 +77,13 @@ class ReactedEmojisUsersListViewController: UIViewController  {
     
     private func updateEmojiHeaderViewDescription() {
         if let selectedEmojiName = localSavedEmojis?.filter({ $0.representation == selectedEmoji }).first?.displayString {
-            let handleList = userhandleList(forEmoji: selectedEmoji, chatId: chatId, messageId: messageId)
-            let description = String(format: AMLocalizedString("%d reacted to %@", "Chat reactions: number of users reacted to a emoji"),
-                                     handleList.count,
-                                     selectedEmojiName)
-            headerView.updateDescription(text: description)
+            headerView.updateDescription(text: selectedEmojiName)
         }
     }
     
     private func addHeaderView(emojiList: [String]) {
         headerView.delegate = self
-        headerView.emojiList = emojiList
+        headerView.selectEmojiAtIndex(emojiList.firstIndex(of: selectedEmoji) ?? 0)
         view.addSubview(headerView)
         headerView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -127,6 +123,19 @@ class ReactedEmojisUsersListViewController: UIViewController  {
 }
 
 extension ReactedEmojisUsersListViewController: EmojiCarousalViewDelegate {
+    func numberOfEmojis() -> Int {
+        return emojiList.count
+    }
+    
+    func emojiAtIndex(_ index: Int) -> String {
+        return emojiList[index]
+    }
+    
+    func numberOfUsersReacted(toEmoji emoji: String) -> Int {
+        let handleList = userhandleList(forEmoji: emoji, chatId: chatId, messageId: messageId)
+        return handleList.count
+    }
+        
     func didSelect(emoji: String, atIndex index: Int) {
         let userHandleList = userhandleList(forEmoji: emoji, chatId: chatId, messageId: messageId)
         reactedUsersListPageViewController.didSelectPage(withIndex: index, userHandleList: userHandleList)

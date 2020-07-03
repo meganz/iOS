@@ -1221,8 +1221,8 @@
 		BFC933DA24A44C6300BC2A75 /* ReactedEmojisUsersListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC933D824A44C6300BC2A75 /* ReactedEmojisUsersListViewController.swift */; };
 		BFC933DD24A44E0300BC2A75 /* EmojiCarousalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC933DC24A44E0300BC2A75 /* EmojiCarousalView.swift */; };
 		BFC933DF24A44E2300BC2A75 /* EmojiCarousalView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFC933DE24A44E2300BC2A75 /* EmojiCarousalView.xib */; };
-		BFC933E224A453B400BC2A75 /* EmojiCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC933E024A453B400BC2A75 /* EmojiCollectionCell.swift */; };
-		BFC933E324A453B400BC2A75 /* EmojiCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFC933E124A453B400BC2A75 /* EmojiCollectionCell.xib */; };
+		BFC933E224A453B400BC2A75 /* EmojiReactionCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC933E024A453B400BC2A75 /* EmojiReactionCollectionCell.swift */; };
+		BFC933E324A453B400BC2A75 /* EmojiReactionCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFC933E124A453B400BC2A75 /* EmojiReactionCollectionCell.xib */; };
 		BFC933E524A45CD600BC2A75 /* ReactedUsersListPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC933E424A45CD600BC2A75 /* ReactedUsersListPageViewController.swift */; };
 		BFC933E824A45D0000BC2A75 /* ChatMessageOptionsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC933E624A45D0000BC2A75 /* ChatMessageOptionsTableViewController.swift */; };
 		BFC933EF24A56F3B00BC2A75 /* SingleTapHandlerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC933EE24A56F3B00BC2A75 /* SingleTapHandlerProtocol.swift */; };
@@ -2767,8 +2767,8 @@
 		BFC933D824A44C6300BC2A75 /* ReactedEmojisUsersListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactedEmojisUsersListViewController.swift; sourceTree = "<group>"; };
 		BFC933DC24A44E0300BC2A75 /* EmojiCarousalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiCarousalView.swift; sourceTree = "<group>"; };
 		BFC933DE24A44E2300BC2A75 /* EmojiCarousalView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmojiCarousalView.xib; sourceTree = "<group>"; };
-		BFC933E024A453B400BC2A75 /* EmojiCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiCollectionCell.swift; sourceTree = "<group>"; };
-		BFC933E124A453B400BC2A75 /* EmojiCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmojiCollectionCell.xib; sourceTree = "<group>"; };
+		BFC933E024A453B400BC2A75 /* EmojiReactionCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiReactionCollectionCell.swift; sourceTree = "<group>"; };
+		BFC933E124A453B400BC2A75 /* EmojiReactionCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmojiReactionCollectionCell.xib; sourceTree = "<group>"; };
 		BFC933E424A45CD600BC2A75 /* ReactedUsersListPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactedUsersListPageViewController.swift; sourceTree = "<group>"; };
 		BFC933E624A45D0000BC2A75 /* ChatMessageOptionsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageOptionsTableViewController.swift; sourceTree = "<group>"; };
 		BFC933EE24A56F3B00BC2A75 /* SingleTapHandlerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleTapHandlerProtocol.swift; sourceTree = "<group>"; };
@@ -5946,8 +5946,8 @@
 				BFA75399248855240001E231 /* ChatBottomInfoScreen.xib */,
 				2F85306E24885F9100064E83 /* PreviewersView.swift */,
 				2F85307224885FAB00064E83 /* PreviewersView.xib */,
-				BFC933E024A453B400BC2A75 /* EmojiCollectionCell.swift */,
-				BFC933E124A453B400BC2A75 /* EmojiCollectionCell.xib */,
+				BFC933E024A453B400BC2A75 /* EmojiReactionCollectionCell.swift */,
+				BFC933E124A453B400BC2A75 /* EmojiReactionCollectionCell.xib */,
 				BFC933DC24A44E0300BC2A75 /* EmojiCarousalView.swift */,
 				BFC933DE24A44E2300BC2A75 /* EmojiCarousalView.xib */,
 				BF99A3D224A994CB0035A183 /* MessageOptionItemTableCell.swift */,
@@ -6494,7 +6494,7 @@
 				2F147788244D2DF30069B264 /* GeoLocationView.xib in Resources */,
 				BF6DF36C2457A06300D612D0 /* AddToChatImageCell.xib in Resources */,
 				5BE484BF215BB3CD003B291D /* ChatSettings.storyboard in Resources */,
-				BFC933E324A453B400BC2A75 /* EmojiCollectionCell.xib in Resources */,
+				BFC933E324A453B400BC2A75 /* EmojiReactionCollectionCell.xib in Resources */,
 				BF017D982448077C00FB4DFD /* AudioWaveView.xib in Resources */,
 				417279591DB663FA001AC818 /* JSQMessagesLoadEarlierHeaderView.xib in Resources */,
 				BFAB113E23CEA5C300BCE72D /* PhotoGridViewCell.xib in Resources */,
@@ -7309,7 +7309,7 @@
 				BF943E9B23554181001C18E0 /* PushNotificationControl.swift in Sources */,
 				4172795F1DB663FA001AC818 /* JSQMessagesTypingView.m in Sources */,
 				41E250131D79E9D400499A6C /* SAMKeychain.m in Sources */,
-				BFC933E224A453B400BC2A75 /* EmojiCollectionCell.swift in Sources */,
+				BFC933E224A453B400BC2A75 /* EmojiReactionCollectionCell.swift in Sources */,
 				B65AC8E421F9B7A30094FF4F /* MOAssetUploadErrorPerLogin+CoreDataProperties.m in Sources */,
 				83B0B45F242CC21800468191 /* ChatSharedItemsViewController.swift in Sources */,
 				415226951A692ECC00EC7BB6 /* MainTabBarController.m in Sources */,

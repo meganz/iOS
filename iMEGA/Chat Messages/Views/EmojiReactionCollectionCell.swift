@@ -1,10 +1,10 @@
 
 import UIKit
 
-class EmojiCollectionCell: UICollectionViewCell {
-    @IBOutlet weak var label: UILabel!
+class EmojiReactionCollectionCell: UICollectionViewCell {
+    @IBOutlet weak var emojiLabel: UILabel!
+    @IBOutlet weak var numberOfUsersReactedLabel: UILabel!
     @IBOutlet weak var selectedMarkerView: UIView!
-    @IBOutlet weak var emojiBackgroundView: UIView!
     
     var displaySelectedState = true
 
@@ -15,6 +15,7 @@ class EmojiCollectionCell: UICollectionViewCell {
             }
             
             selectedMarkerView.isHidden = !isSelected
+            updateAppearance()
         }
     }
     
@@ -26,7 +27,6 @@ class EmojiCollectionCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         selectedMarkerView.isHidden = true
-        emojiBackgroundView.isHidden = true
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -37,22 +37,10 @@ class EmojiCollectionCell: UICollectionViewCell {
                 updateAppearance()
         }
     }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
         
-        guard !emojiBackgroundView.isHidden else {
-            return
-        }
-        
-        emojiBackgroundView.layer.cornerRadius = emojiBackgroundView.bounds.width / 2.0
-    }
-    
     private func updateAppearance() {
-        if #available(iOS 13.0, *) {
-            emojiBackgroundView.backgroundColor = UIColor.darkText.withAlphaComponent(0.5)
-        } else {
-            emojiBackgroundView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
-        }
+        let color = isSelected ?  UIColor.mnz_emojiLabelSelectedState(traitCollection) : UIColor.darkText
+        numberOfUsersReactedLabel.textColor = color
+        selectedMarkerView.backgroundColor = color
     }
 }

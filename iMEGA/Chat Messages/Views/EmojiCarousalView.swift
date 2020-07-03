@@ -2,6 +2,9 @@
 import UIKit
 
 protocol EmojiCarousalViewDelegate: class {
+    func numberOfEmojis() -> Int
+    func emojiAtIndex(_ index: Int) -> String
+    func numberOfUsersReacted(toEmoji emoji: String) -> Int
     func didSelect(emoji: String, atIndex index: Int)
 }
 
@@ -13,31 +16,10 @@ class EmojiCarousalView: UIView {
     
     weak var delegate: EmojiCarousalViewDelegate?
     
-    var selectedEmoji: String? {
-        didSet {
-            guard let emojiList = emojiList,
-                let selectedEmoji = selectedEmoji,
-                let index = emojiList.firstIndex(of: selectedEmoji) else {
-                return
-            }
-            
-            
-            collectionView.selectItem(at: IndexPath(item: index, section: 0),
-                                      animated: true,
-                                      scrollPosition: .centeredVertically)
-        }
-    }
-    
-    var emojiList: [String]? {
-        didSet {
-            collectionView.reloadData()
-        }
-    }
-    
     override func awakeFromNib() {
         super.awakeFromNib()
-        collectionView.register(EmojiCollectionCell.nib,
-                                forCellWithReuseIdentifier: EmojiCollectionCell.reuseIdentifier)
+        collectionView.register(EmojiReactionCollectionCell.nib,
+                                forCellWithReuseIdentifier: EmojiReactionCollectionCell.reuseIdentifier)
         updateAppearance()
         handlebarView.isHidden = UIDevice.current.iPadDevice
     }
@@ -55,25 +37,34 @@ class EmojiCarousalView: UIView {
         descriptionLabel.text = text
     }
     
+    func selectEmojiAtIndex(_ index: Int) {
+        collectionView.selectItem(at: IndexPath(item: index, section: 0),
+                                  animated: true,
+                                  scrollPosition: .centeredVertically)
+    }
+    
     private func updateAppearance() {
         descriptionLabel.textColor = UIColor.emojiDescriptionTextColor(traitCollection)
         descriptionLabelBackgroundView.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
         handlebarView.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
+        backgroundColor = UIColor.mnz_backgroundElevated(traitCollection)
     }
 }
 
 extension EmojiCarousalView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return emojiList?.count ?? 0
+        return delegate?.numberOfEmojis() ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: EmojiCollectionCell.reuseIdentifier, for: indexPath) as? EmojiCollectionCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: EmojiReactionCollectionCell.reuseIdentifier, for: indexPath) as? EmojiReactionCollectionCell else {
             fatalError("could not dequeue `EmojiCollectionCell`")
         }
-        
-        if let emoji = emojiList?[indexPath.item] {
-            cell.label.text = emoji
+                
+        if let emoji = delegate?.emojiAtIndex(indexPath.row),
+            let number = delegate?.numberOfUsersReacted(toEmoji: emoji) {
+            cell.emojiLabel.text = emoji
+            cell.numberOfUsersReactedLabel.text = "\(number)"
         }
         
         return cell
@@ -82,7 +73,7 @@ extension EmojiCarousalView: UICollectionViewDataSource {
 
 extension EmojiCarousalView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let emoji = emojiList?[indexPath.item] else {
+        guard let emoji = (collectionView.cellForItem(at: indexPath) as? EmojiReactionCollectionCell)?.emojiLabel.text else {
             return
         }
         
