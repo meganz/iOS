@@ -62,6 +62,7 @@
 		2FA6DAA7243ED07F007A8E81 /* MEGAGetPreviewRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8EC55B31F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.m */; };
 		2FB0420E242C4FAE007B9C88 /* NodeActionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB0420D242C4FAE007B9C88 /* NodeActionViewController.swift */; };
 		2FBC74C8245BE74900BE513F /* ChatViewController+EmptyDataSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBC74C7245BE74900BE513F /* ChatViewController+EmptyDataSet.swift */; };
+		2FC4A9D524ADA40900149F06 /* ReactionContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC4A9D424ADA40900149F06 /* ReactionContainerView.swift */; };
 		2FC5A62D24A449AF00AE6185 /* MessageReactionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC5A62B24A449AF00AE6185 /* MessageReactionReusableView.swift */; };
 		2FC5A62E24A449AF00AE6185 /* MessageReactionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2FC5A62C24A449AF00AE6185 /* MessageReactionReusableView.xib */; };
 		2FCA4B7A2385FB260011B7DA /* ChatImageQualityTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCA4B792385FB260011B7DA /* ChatImageQualityTableViewController.swift */; };
@@ -1409,6 +1410,7 @@
 		2FA6DA61243E919D007A8E81 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		2FB0420D242C4FAE007B9C88 /* NodeActionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeActionViewController.swift; sourceTree = "<group>"; };
 		2FBC74C7245BE74900BE513F /* ChatViewController+EmptyDataSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatViewController+EmptyDataSet.swift"; sourceTree = "<group>"; };
+		2FC4A9D424ADA40900149F06 /* ReactionContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionContainerView.swift; sourceTree = "<group>"; };
 		2FC5A62B24A449AF00AE6185 /* MessageReactionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageReactionReusableView.swift; sourceTree = "<group>"; };
 		2FC5A62C24A449AF00AE6185 /* MessageReactionReusableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageReactionReusableView.xib; sourceTree = "<group>"; };
 		2FCA4B792385FB260011B7DA /* ChatImageQualityTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatImageQualityTableViewController.swift; sourceTree = "<group>"; };
@@ -5933,6 +5935,7 @@
 				2F8772FB2468FA8C00E8854F /* MessageEditCollectionOverlayView.xib */,
 				2F528CAB24739053006DE5C2 /* LoadingMessageReusableView.swift */,
 				2F528CAC24739053006DE5C2 /* LoadingMessageReusableView.xib */,
+				2FC4A9D424ADA40900149F06 /* ReactionContainerView.swift */,
 				2FC5A62B24A449AF00AE6185 /* MessageReactionReusableView.swift */,
 				2FC5A62C24A449AF00AE6185 /* MessageReactionReusableView.xib */,
 				2FE5A2D224A992F70043D297 /* ReactionAddButtonCell.swift */,
@@ -6567,10 +6570,12 @@
 				"${PODS_ROOT}/Target Support Files/Pods-MEGA/Pods-MEGA-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/AlignedCollectionViewFlowLayout/AlignedCollectionViewFlowLayout.framework",
 				"${BUILT_PRODUCTS_DIR}/EmojiPicker/EmojiPicker.framework",
+				"${BUILT_PRODUCTS_DIR}/FlexLayout/FlexLayout.framework",
 				"${BUILT_PRODUCTS_DIR}/ISEmojiView/ISEmojiView.framework",
 				"${BUILT_PRODUCTS_DIR}/InputBarAccessoryView/InputBarAccessoryView.framework",
 				"${BUILT_PRODUCTS_DIR}/MessageKit/MessageKit.framework",
 				"${BUILT_PRODUCTS_DIR}/PanModal/PanModal.framework",
+				"${BUILT_PRODUCTS_DIR}/PinLayout/PinLayout.framework",
 				"${BUILT_PRODUCTS_DIR}/YYCache/YYCache.framework",
 				"${BUILT_PRODUCTS_DIR}/YYImage/YYImage.framework",
 				"${BUILT_PRODUCTS_DIR}/YYWebImage/YYWebImage.framework",
@@ -6579,10 +6584,12 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlignedCollectionViewFlowLayout.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EmojiPicker.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FlexLayout.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ISEmojiView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/InputBarAccessoryView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MessageKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PanModal.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PinLayout.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YYCache.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YYImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YYWebImage.framework",
@@ -7088,6 +7095,7 @@
 				A810CF3020C157BC00A6C6C5 /* FLAnimatedImageView.m in Sources */,
 				E8F791801BC5754A00C58676 /* OpenInActivity.m in Sources */,
 				774FA6642090F5A20061DD85 /* MEGADialogMediaItem.m in Sources */,
+				2FC4A9D524ADA40900149F06 /* ReactionContainerView.swift in Sources */,
 				BFAB115023CEA5C300BCE72D /* AlbumsTableViewDelegate.swift in Sources */,
 				417279571DB663FA001AC818 /* JSQMessagesLabel.m in Sources */,
 				B61B815822D6D9D900B97F51 /* CameraUploadAdvancedOptionsViewController.m in Sources */,
