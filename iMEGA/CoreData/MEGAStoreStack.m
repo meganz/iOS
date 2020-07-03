@@ -3,10 +3,7 @@
 
 @interface MEGAStoreStack ()
 
-@property (strong, nonatomic) NSPersistentStoreCoordinator *storeCoordinator;
 @property (strong, nonatomic) NSPersistentContainer *persistentContainer;
-
-@property (strong, nonatomic) NSString *modelName;
 @property (strong, nonatomic) NSURL *storeURL;
 
 @end
@@ -16,21 +13,13 @@
 - (instancetype)initWithModelName:(NSString *)name storeURL:(NSURL *)URL {
     self = [super init];
     if (self) {
-        _modelName = name;
         _storeURL = URL;
+        _persistentContainer = [self createPersistentContainerByModelName:name storeURL:URL];
     }
     return self;
 }
 
 #pragma mark - persistent container
-
-- (NSPersistentContainer *)persistentContainer {
-    if (_persistentContainer == nil) {
-        _persistentContainer = [self newPersistentContainer];
-    }
-    
-    return _persistentContainer;
-}
 
 /**
  we use this method to create a new persistent container.
@@ -39,10 +28,10 @@
  
  @return a new NSPersistentContainer object
  */
-- (NSPersistentContainer *)newPersistentContainer {
-    NSPersistentContainer *container = [NSPersistentContainer persistentContainerWithName:self.modelName];
-    if (self.storeURL) {
-        NSPersistentStoreDescription *storeDescription = [NSPersistentStoreDescription persistentStoreDescriptionWithURL:self.storeURL];
+- (NSPersistentContainer *)createPersistentContainerByModelName:(NSString *)modelName storeURL:(nullable NSURL *)storeURL {
+    NSPersistentContainer *container = [NSPersistentContainer persistentContainerWithName:modelName];
+    if (storeURL) {
+        NSPersistentStoreDescription *storeDescription = [NSPersistentStoreDescription persistentStoreDescriptionWithURL:storeURL];
         container.persistentStoreDescriptions = @[storeDescription];
     }
     
