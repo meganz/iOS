@@ -1402,7 +1402,8 @@ static NSMutableSet<NSString *> *tapForInfoSet;
 - (void)setLastMessageAsSeen {
     if (self.messages.count > 0) {
         MEGAChatMessage *lastMessage = self.messages.lastObject;
-        if (lastMessage.userHandle != [MEGASdkManager sharedMEGAChatSdk].myUserHandle && [[MEGASdkManager sharedMEGAChatSdk] lastChatMessageSeenForChat:self.chatRoom.chatId].messageId != lastMessage.messageId) {
+        if (lastMessage.userHandle != [MEGASdkManager sharedMEGAChatSdk].myUserHandle &&
+            [[MEGASdkManager sharedMEGAChatSdk] lastChatMessageSeenForChat:self.chatRoom.chatId].messageId != lastMessage.messageId) {
             [[MEGASdkManager sharedMEGAChatSdk] setMessageSeenForChat:self.chatRoom.chatId messageId:lastMessage.messageId];
         }
     }
