@@ -2238,5 +2238,3 @@
 "File link unavailable"="File link unavailable";
 /* Header of block with all shared files in chat. */
 "Shared Files"="Shared Files";
-/* Chat reactions: number of users reacted to a emoji */
-"%d reacted to %@" = "%d reacted to %@";
