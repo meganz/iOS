@@ -8,6 +8,7 @@ protocol ChatMessageOptionsTableViewControllerDataSource: class {
     func numberOfItems(forViewController viewController: ChatMessageOptionsTableViewController) -> Int
     func setImageView(_ imageView: UIImageView, forIndex index: Int, viewController: ChatMessageOptionsTableViewController)
     func setLabel(_ label: UILabel, forIndex index: Int, viewController: ChatMessageOptionsTableViewController)
+    func didSelect(cellAtIndex index: Int, viewController: ChatMessageOptionsTableViewController)
 }
 
 class ChatMessageOptionsTableViewController: UITableViewController {
@@ -16,6 +17,15 @@ class ChatMessageOptionsTableViewController: UITableViewController {
         didSet {
             tableView.reloadData()
         }
+    }
+    
+    init(chatMessageOptionDataSource: ChatMessageOptionsTableViewControllerDataSource) {
+        self.chatMessageOptionDataSource = chatMessageOptionDataSource
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func viewDidLoad() {
@@ -45,6 +55,8 @@ class ChatMessageOptionsTableViewController: UITableViewController {
         return cell
     }
     
+    // MARK: - Table view delegate
+    
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = chatMessageOptionDataSource?.headerView()
         return headerView
@@ -54,6 +66,10 @@ class ChatMessageOptionsTableViewController: UITableViewController {
         return chatMessageOptionDataSource?.headerViewHeight() ?? 0.0
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        chatMessageOptionDataSource?.didSelect(cellAtIndex: indexPath.row, viewController: self)
+    }
 }
 
 extension ChatMessageOptionsTableViewController: MessageOptionItemTableCellDelegate {
