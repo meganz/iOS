@@ -2,6 +2,7 @@
 #import "ShareFilesDestinationTableViewController.h"
 
 #import "BrowserViewController.h"
+#import "MEGAShare-Swift.h"
 #import "NSString+MNZCategory.h"
 #import "SendToViewController.h"
 #import "ShareAttachment.h"
@@ -64,7 +65,25 @@
     [self.tableView reloadData];
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [ExtensionAppearanceManager setupAppearance:self.traitCollection];
+            [ExtensionAppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar traitCollection:self.traitCollection];
+            
+            [self updateAppearance];
+        }
+    }
+}
+
 #pragma mark - Private
+
+- (void)updateAppearance {
+    self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+    self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedElevated:self.traitCollection];
+}
 
 - (void)hideKeyboard {
     [self.view endEditing:YES];
@@ -90,6 +109,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell;
+    cell.backgroundColor = [UIColor mnz_secondaryBackgroundGroupedElevated:self.traitCollection];
     
     if (indexPath.section == 0) {
         cell = [self.tableView dequeueReusableCellWithIdentifier:@"destinationCell" forIndexPath:indexPath];
@@ -100,6 +120,8 @@
         UIImageView *imageView = cell.contentView.subviews.firstObject;
         UILabel *label = cell.contentView.subviews.lastObject;
 
+        
+        cell.tintColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
         if (indexPath.row == 0) {
             imageView.image = [UIImage imageNamed:@"upload"];
             label.text = AMLocalizedString(@"uploadToMega", nil);
@@ -113,10 +135,13 @@
             label.enabled = cell.userInteractionEnabled = self.isChatReady;
             
             if (self.isChatReady) {
+                cell.tintColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
                 cell.accessoryView = nil;
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             } else {
-                UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+                cell.tintColor = [[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection] colorWithAlphaComponent:0.5];
+                
+                UIActivityIndicatorView *activityIndicator = UIActivityIndicatorView.mnz_init;
                 [activityIndicator startAnimating];
                 cell.accessoryView = activityIndicator;
             }

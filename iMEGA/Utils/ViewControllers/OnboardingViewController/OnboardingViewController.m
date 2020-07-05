@@ -3,7 +3,7 @@
 
 #import "DevicePermissionsHelper.h"
 #import "OnboardingView.h"
-#import "UIColor+MNZCategory.h"
+#import "MEGA-Swift.h"
 
 @interface OnboardingViewController () <UIScrollViewDelegate>
 
@@ -27,19 +27,20 @@
     return onboardingViewController;
 }
 
+#pragma mark - Lifecycle
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self updateAppearance];
+    
     switch (self.type) {
         case OnboardingTypeDefault:
-            self.pageControl.currentPageIndicatorTintColor = UIColor.mnz_redMain;
             [self.pageControl addTarget:self action:@selector(pageControlValueChanged) forControlEvents:UIControlEventValueChanged];
             
             [self.primaryButton setTitle:AMLocalizedString(@"createAccount", @"Button title which triggers the action to create a MEGA account") forState:UIControlStateNormal];
-            self.primaryButton.backgroundColor = UIColor.mnz_redMain;
             
             [self.secondaryButton setTitle:AMLocalizedString(@"login", @"Button title which triggers the action to login in your MEGA account") forState:UIControlStateNormal];
-            [self.secondaryButton setTitleColor:UIColor.mnz_redMain forState:UIControlStateNormal];
             
             if (self.scrollView.subviews.firstObject.subviews.count == 4) {
                 OnboardingView *onboardingViewEncryption = self.scrollView.subviews.firstObject.subviews.firstObject;
@@ -59,10 +60,8 @@
             self.pageControl.hidden = YES;
             
             [self.primaryButton setTitle:AMLocalizedString(@"Allow Access", @"Button which triggers a request for a specific permission, that have been explained to the user beforehand") forState:UIControlStateNormal];
-            self.primaryButton.backgroundColor = UIColor.mnz_green00BFA5;
             
             [self.secondaryButton setTitle:AMLocalizedString(@"notNow", nil) forState:UIControlStateNormal];
-            [self.secondaryButton setTitleColor:UIColor.mnz_green899B9C forState:UIControlStateNormal];
             
             int nextIndex = 0;
             if (DevicePermissionsHelper.shouldAskForPhotosPermissions) {
@@ -108,6 +107,18 @@
     return YES;
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [AppearanceManager setupAppearance:self.traitCollection];
+            
+            [self updateAppearance];
+        }
+    }
+}
+
 #pragma mark - Rotation
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
@@ -150,6 +161,17 @@
     }
 }
 
+- (void)updateAppearance {
+    self.view.backgroundColor = self.scrollView.backgroundColor = UIColor.mnz_background;
+    
+    self.pageControl.currentPageIndicatorTintColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
+    self.pageControl.pageIndicatorTintColor = [UIColor mnz_tertiaryGrayForTraitCollection:self.traitCollection];
+    self.pageControl.backgroundColor = UIColor.mnz_background;
+    
+    [self.primaryButton mnz_setupPrimary:self.traitCollection];
+    [self.secondaryButton mnz_setupBasic:self.traitCollection];
+}
+
 #pragma mark - Targets
 
 - (void)pageControlValueChanged {
@@ -162,6 +184,9 @@
     switch (self.type) {
         case OnboardingTypeDefault: {
             UINavigationController *createAccountNC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"CreateAccountNavigationControllerID"];
+            if (@available(iOS 13.0, *)) {
+                createAccountNC.modalPresentationStyle = UIModalPresentationFullScreen;
+            }
             [self presentViewController:createAccountNC animated:YES completion:nil];
             break;
         }
@@ -219,6 +244,9 @@
     switch (self.type) {
         case OnboardingTypeDefault: {
             UINavigationController *loginNC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginNavigationControllerID"];
+            if (@available(iOS 13.0, *)) {
+                loginNC.modalPresentationStyle = UIModalPresentationFullScreen;
+            }
             [self presentViewController:loginNC animated:YES completion:nil];
             break;
         }

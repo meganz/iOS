@@ -11,6 +11,7 @@
 #import "MEGANavigationController.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGARequestDelegate.h"
+#import "MEGAPicker-Swift.h"
 #import "NSFileManager+MNZCategory.h"
 #import "BrowserViewController.h"
 
@@ -75,6 +76,8 @@
                                                object:nil];
     
     self.lastProgressChange = [NSDate new];
+    
+    [self updateAppearance];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -89,6 +92,7 @@
         if ([MEGAReachabilityManager isReachable]) {
             UIViewController *privacyVC = [[UIStoryboard storyboardWithName:@"Launch" bundle:[NSBundle bundleForClass:[LaunchViewController class]]] instantiateViewControllerWithIdentifier:@"PrivacyViewControllerID"];
             privacyVC.view.frame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height);
+            privacyVC.view.backgroundColor = UIColor.mnz_background;
             self.privacyView = privacyVC.view;
             [self.view addSubview:self.privacyView];
         } else {
@@ -121,6 +125,24 @@
         [self.presentedViewController dismissViewControllerAnimated:NO completion:nil];
     }
     self.passcodePresented = NO;
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateAppearance];
+        }
+    }
+}
+
+#pragma mark - Private
+
+- (void)updateAppearance {
+    self.view.backgroundColor = [UIColor mnz_secondaryBackgroundElevated:self.traitCollection];
+    
+    [self.openButton mnz_setupPrimary:self.traitCollection];
 }
 
 #pragma mark - Language
@@ -204,11 +226,11 @@
 }
 
 - (void)configureProgressHUD {
-    [SVProgressHUD setFont:[UIFont mnz_SFUIRegularWithSize:12.0f]];
+    [SVProgressHUD setFont:[UIFont systemFontOfSize:12.0f]];
     [SVProgressHUD setRingThickness:2.0];
     [SVProgressHUD setRingNoTextRadius:18.0];
     [SVProgressHUD setBackgroundColor:[UIColor mnz_grayF7F7F7]];
-    [SVProgressHUD setForegroundColor:[UIColor mnz_gray666666]];
+    [SVProgressHUD setForegroundColor:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]];
     [SVProgressHUD setDefaultStyle:SVProgressHUDStyleCustom];
     [SVProgressHUD setHapticsEnabled:YES];
     

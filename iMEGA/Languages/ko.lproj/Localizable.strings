@@ -909,8 +909,6 @@
 "profile"="프로필";
 /* Title of the Achievements section */
 "achievementsTitle"="도전 과제";
-/* Title of the Used storage section */
-"usedStorage"="이용한 저장 공간";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
 "inviteFriendsAndGetRewards"="친구들을 초대하고 보너스를 받으세요";
 /* Indicating text for when "you invite your friends" */
@@ -918,7 +916,7 @@
 /* title of the introduction for the achievements screen */
 "inviteFriendsAndGetForEachReferral"="초대할 때마다 %1$s의 저장 공간과 %2$s의 전송 할당량을 받습니다";
 /* Text shown to explain how and where you can invite friends */
-"inviteYourFriendsExplanation"="휴대전화의 연락처 목록에서 선택하거나 여러 이메일 주소를 입력하세요.";
+"Select from phone contacts or enter multiple email addresses"="Select from phone contacts or enter multiple email addresses";
 /*  */
 "insertYourFriendsEmails"="친구의 이메일 주소를 입력하세요:";
 /*  */
@@ -1009,12 +1007,6 @@
 "Renews on"="재결제일";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="들어오는 공유";
-/* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
-"of %@"="%@ 중";
-/* Sentence shown under the used space to complete the info with the user account maximum storage. "used of {maximun storage}" */
-"used of %@"="사용됨. 전체 공간: %@";
-/* Sentence shown under the available space to complete the info with the user account maximum storage. "available of {maximun storage}" */
-"available of %@"="사용가능함. 전체 공간: %@";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="계정 업그레이드";
 /*  */
@@ -1023,8 +1015,8 @@
 "cloudDriveIsAlmostFull"="[S]클라우드 드라이브가 거의 찼습니다.[/S] PRO 계정으로 [A]지금 업그레이드[/A]하고 [S]최대 %@ TB (%@ GB)[/S]의 클라우드 저장 공간을 받으세요.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
 "cloudDriveIsFull"="[S]클라우드 드라이브가 가득 찼습니다.[/S] PRO 계정으로 [A]지금 업그레이드[/A]하고 [S]최대 %@ TB (%@ GB)[/S]의 클라우드 저장 공간을 얻으세요.";
-/* Storage related with the MEGA PRO account level you can subscribe */
-"productSpace"="저장소";
+/* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
+"Storage"="저장소";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
 "limited"="제한됨";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
@@ -1179,8 +1171,8 @@
 "contactCredentials"="연락처 개인정보";
 /* "Verify user" dialog description */
 "thisIsBestDoneInRealLife"="현실에서 가장 확실한 방법은 직접 만나는 것입니다. 만약 증명된 OTR이나 PGP 같은 이미 증명된 다른 방법이 있다면, 그것을 사용해도 좋습니다.";
-/* Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity */
-"yourCredentials"="당신의 개인정보";
+/* Title of the label in the my account section. It shows the credentials of the current user so it can be used to be verified by other contacts */
+"My credentials"="내 개인 정보";
 /* Button to reset the password */
 "reset"="재설정";
 /* Button title */

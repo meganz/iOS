@@ -909,8 +909,6 @@
 "profile"="Профиль";
 /* Title of the Achievements section */
 "achievementsTitle"="Достижения";
-/* Title of the Used storage section */
-"usedStorage"="Использовано";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
 "inviteFriendsAndGetRewards"="Приглашайте друзей и получайте бонусы";
 /* Indicating text for when "you invite your friends" */
@@ -918,7 +916,7 @@
 /* title of the introduction for the achievements screen */
 "inviteFriendsAndGetForEachReferral"="Получите %1$s места на диске и %2$s трафика за каждого, кто примет приглашение";
 /* Text shown to explain how and where you can invite friends */
-"inviteYourFriendsExplanation"="Выберите контакты из телефонного списка контактов или введите адреса электронной почты.";
+"Select from phone contacts or enter multiple email addresses"="Select from phone contacts or enter multiple email addresses";
 /*  */
 "insertYourFriendsEmails"="Введите e-mail друга:";
 /*  */
@@ -1009,12 +1007,6 @@
 "Renews on"="Обновляется";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="Входящие общие папки";
-/* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
-"of %@"="из %@";
-/* Sentence shown under the used space to complete the info with the user account maximum storage. "used of {maximun storage}" */
-"used of %@"="использовано из %@";
-/* Sentence shown under the available space to complete the info with the user account maximum storage. "available of {maximun storage}" */
-"available of %@"="доступно из %@";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Улучшить аккаунт";
 /*  */
@@ -1023,8 +1015,8 @@
 "cloudDriveIsAlmostFull"="[S]Ваш облачный диск почти заполнен.[/S] [A]Улучшите аккаунт сейчас[/A] до PRO и получите [S]до %@ ТБ (%@ ГБ)[/S] места в облаке.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
 "cloudDriveIsFull"="[S]Ваш облачный диск заполнен.[/S] [A]Улучшите его сейчас[/A] до PRO и получите [S]до %@ ТБ (%@ ГБ)[/S] свободного места в облаке.";
-/* Storage related with the MEGA PRO account level you can subscribe */
-"productSpace"="свободного места";
+/* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
+"Storage"="свободного места";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
 "limited"="Ограничено";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
@@ -1179,8 +1171,8 @@
 "contactCredentials"="Учетные Данные Контакта";
 /* "Verify user" dialog description */
 "thisIsBestDoneInRealLife"="Лучше всего это сделать в реальной жизни, встречаясь лицом к лицу. Если у вас есть другой проверенный канал, например, проверенный OTR или PGP, вы также можете его использовать.";
-/* Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity */
-"yourCredentials"="Ваши Учетные Данные";
+/* Title of the label in the my account section. It shows the credentials of the current user so it can be used to be verified by other contacts */
+"My credentials"="Мои учётные данные";
 /* Button to reset the password */
 "reset"="Сбросить";
 /* Button title */

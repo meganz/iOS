@@ -10,6 +10,7 @@
 #import "Helper.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
+#import "MEGA-Swift.h"
 #import "MEGANode+MNZCategory.h"
 
 #import "CloudDriveViewController.h"
@@ -33,6 +34,8 @@
 
     //White background for the view behind the table view
     self.tableView.backgroundView = UIView.alloc.init;
+    
+    [self updateAppearance];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -53,6 +56,24 @@
         self.bucketHeaderUploadOrVersionImageView.image = self.cloudDrive.recentActionBucket.isUpdate ? [UIImage imageNamed:@"versioned"] : [UIImage imageNamed:@"recentUpload"];
         self.bucketHeaderHourLabel.text = dateString.uppercaseString;
     }
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateAppearance];
+            
+            [self.tableView reloadData];
+        }
+    }
+}
+
+#pragma mark - Private
+
+- (void)updateAppearance {
+    self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
 }
 
 #pragma mark - Public
@@ -155,6 +176,11 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    if (self.cloudDrive.recentActionBucket) {
+        self.bucketHeaderView.backgroundColor = [UIColor mnz_secondaryBackgroundGrouped:self.traitCollection];
+        self.bucketHeaderParentFolderNameLabel.textColor = self.bucketHeaderHourLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
+    }
+    
     return self.cloudDrive.recentActionBucket ? self.bucketHeaderView : nil;
 }
 
@@ -241,7 +267,7 @@
         [self setTableViewEditing:NO animated:YES];
     }];
     downloadAction.image = [UIImage imageNamed:@"infoDownload"];
-    downloadAction.backgroundColor = [UIColor colorWithRed:0 green:0.75 blue:0.65 alpha:1];
+    downloadAction.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
     
     return [UISwipeActionsConfiguration configurationWithActions:@[downloadAction]];
 }
@@ -259,8 +285,8 @@
                 [node mnz_restore];
                 [self setTableViewEditing:NO animated:YES];
             }];
-            restoreAction.image = [UIImage imageNamed:@"restore"];
-            restoreAction.backgroundColor = [UIColor colorWithRed:0 green:0.75 blue:0.65 alpha:1];
+            restoreAction.image = [[UIImage imageNamed:@"restore"] imageWithTintColor:UIColor.whiteColor];
+            restoreAction.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection] ;
             
             return [UISwipeActionsConfiguration configurationWithActions:@[restoreAction]];
         }
@@ -270,10 +296,18 @@
             [self presentViewController:activityVC animated:YES completion:nil];
             [self setTableViewEditing:NO animated:YES];
         }];
-        shareAction.image = [UIImage imageNamed:@"shareGray"];
-        shareAction.backgroundColor = [UIColor colorWithRed:1.0 green:0.64 blue:0 alpha:1];
+        shareAction.image = [[UIImage imageNamed:@"share"] imageWithTintColor:UIColor.whiteColor];
+        shareAction.backgroundColor = UIColor.systemOrangeColor;
         
-        return [UISwipeActionsConfiguration configurationWithActions:@[shareAction]];
+        UIContextualAction *rubbishBinAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+            [node mnz_moveToTheRubbishBinWithCompletion:^{
+                [self setTableViewEditing:NO animated:YES];
+            }];
+        }];
+        rubbishBinAction.image = [[UIImage imageNamed:@"rubbishBin"] imageWithTintColor:UIColor.whiteColor];
+        rubbishBinAction.backgroundColor = UIColor.mnz_redError;
+        
+        return [UISwipeActionsConfiguration configurationWithActions:@[rubbishBinAction, shareAction]];
     }
     
     return [UISwipeActionsConfiguration configurationWithActions:@[]];
@@ -312,7 +346,7 @@
         if ([[MEGASdkManager sharedMEGASdk] isNodeInRubbish:node]) {
             return nil;
         } else {
-            MGSwipeButton *downloadButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"infoDownload"] backgroundColor:[UIColor colorWithRed:0.0 green:0.75 blue:0.65 alpha:1.0] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
+            MGSwipeButton *downloadButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"infoDownload"] backgroundColor:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
                 [node mnz_downloadNodeOverwriting:NO];
                 return YES;
             }];
@@ -328,7 +362,7 @@
         if ([[MEGASdkManager sharedMEGASdk] isNodeInRubbish:node]) {
             MEGANode *restoreNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:node.restoreHandle];
             if (restoreNode && ![[MEGASdkManager sharedMEGASdk] isNodeInRubbish:restoreNode]) {
-                MGSwipeButton *restoreButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"restore"] backgroundColor:[UIColor colorWithRed:0.0 green:0.75 blue:0.65 alpha:1.0] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
+                MGSwipeButton *restoreButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"restore"] backgroundColor:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
                     [node mnz_restore];
                     return YES;
                 }];
@@ -337,14 +371,23 @@
                 return @[restoreButton];
             }
         } else {
-            MGSwipeButton *shareButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"shareGray"] backgroundColor:[UIColor colorWithRed:1.0 green:0.64 blue:0 alpha:1.0] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
+            MGSwipeButton *shareButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"share"] backgroundColor:UIColor.systemOrangeColor padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
                 UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:@[node] sender:[self.tableView cellForRowAtIndexPath:indexPath]];
                 [self presentViewController:activityVC animated:YES completion:nil];
                 return YES;
             }];
             [shareButton iconTintColor:[UIColor whiteColor]];
             
-            return @[shareButton];
+            MGSwipeButton *rubbishBinButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"rubbishBin"] backgroundColor:UIColor.mnz_redError padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
+                [node mnz_moveToTheRubbishBinWithCompletion:^{
+                    [self setTableViewEditing:NO animated:YES];
+                }];
+                
+                return YES;
+            }];
+            [rubbishBinButton iconTintColor:UIColor.whiteColor];
+            
+            return @[rubbishBinButton, shareButton];
         }
     }
     

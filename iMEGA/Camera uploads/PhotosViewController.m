@@ -1,11 +1,14 @@
 #import "PhotosViewController.h"
+
 #import "UIScrollView+EmptyDataSet.h"
+#import "EmptyStateView.h"
 #import "Helper.h"
 #import "MEGAMoveRequestDelegate.h"
 #import "MEGANavigationController.h"
 #import "MEGANode+MNZCategory.h"
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
+#import "MEGA-Swift.h"
 #import "NSDate+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "MEGAPhotoBrowserViewController.h"
@@ -21,7 +24,6 @@
 #import "CustomModalAlertViewController.h"
 #import "UploadStats.h"
 #import "UIViewController+MNZCategory.h"
-#import "MEGA-Swift.h"
 
 @import StoreKit;
 @import Photos;
@@ -78,9 +80,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     self.photosCollectionView.emptyDataSetSource = self;
     self.photosCollectionView.emptyDataSetDelegate = self;
     
-    self.enableCameraUploadsButton.tintColor = [UIColor mnz_green00BFA5];
     [self.enableCameraUploadsButton setTitle:AMLocalizedString(@"enable", nil) forState:UIControlStateNormal];
-    self.photosUploadedProgressView.progressTintColor = [UIColor mnz_green00BFA5];
     
     self.selectedItemsDictionary = [[NSMutableDictionary alloc] init];
     
@@ -96,6 +96,8 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     if (@available(iOS 13.0, *)) {
         [self configPreviewingRegistration];
     }
+    
+    [self updateAppearance];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -170,6 +172,14 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [AppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];
+            
+            [self updateAppearance];
+        }
+    }
     
     [self configPreviewingRegistration];
 }
@@ -320,6 +330,12 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 }
 
 #pragma mark - Private
+
+- (void)updateAppearance {
+    self.stateView.backgroundColor = [UIColor mnz_mainBarsForTraitCollection:self.traitCollection];
+    
+    self.enableCameraUploadsButton.tintColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
+}
 
 - (void)reloadUI {
     MEGALogDebug(@"[Camera Upload] reload photos collection view");
@@ -603,7 +619,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     
     cell.nodeHandle = [node handle];
     
-    cell.thumbnailSelectionOverlayView.layer.borderColor = [UIColor.mnz_green00BFA5 CGColor];
+    cell.thumbnailSelectionOverlayView.layer.borderColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection].CGColor;
     cell.thumbnailSelectionOverlayView.hidden = [self.selectedItemsDictionary objectForKey:[NSNumber numberWithLongLong:node.handle]] == nil;
     
     cell.thumbnailVideoOverlayView.hidden = !node.name.mnz_isVideoPathExtension;
@@ -730,7 +746,6 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 
 - (void)showCameraUploadBoardingScreen {
     CustomModalAlertViewController *boardingAlertVC = [[CustomModalAlertViewController alloc] init];
-    boardingAlertVC.modalPresentationStyle = UIModalPresentationOverFullScreen;
     boardingAlertVC.image = [UIImage imageNamed:@"cameraUploadsBoarding"];
     boardingAlertVC.viewTitle = AMLocalizedString(@"enableCameraUploadsButton", @"Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA");
     boardingAlertVC.detail = AMLocalizedString(@"Automatically backup your photos and videos to the Cloud Drive.", nil);
@@ -837,7 +852,16 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
 
 #pragma mark - DZNEmptyDataSetSource
 
-- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
+- (nullable UIView *)customViewForEmptyDataSet:(UIScrollView *)scrollView {
+    EmptyStateView *emptyStateView = [EmptyStateView.alloc initWithImage:[self imageForEmptyState] title:[self titleForEmptyState] description:[self descriptionForEmptyState] buttonTitle:[self buttonTitleForEmptyState]];
+    [emptyStateView.button addTarget:self action:@selector(buttonTouchUpInsideEmptyState) forControlEvents:UIControlEventTouchUpInside];
+    
+    return emptyStateView;
+}
+
+#pragma mark - Empty State
+
+- (NSString *)titleForEmptyState {
     NSString *text;
     if ([MEGAReachabilityManager isReachable]) {
         if (CameraUploadManager.isCameraUploadEnabled) {
@@ -853,10 +877,10 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
         text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");
     }
     
-    return [[NSAttributedString alloc] initWithString:text attributes:[Helper titleAttributesForEmptyState]];
+    return text;
 }
 
-- (nullable NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView {
+- (NSString *)descriptionForEmptyState {
     NSString *text = @"";
     if (MEGAReachabilityManager.isReachable && !CameraUploadManager.isCameraUploadEnabled) {
         text = AMLocalizedString(@"Automatically backup your photos and videos to the Cloud Drive.", nil);
@@ -864,10 +888,10 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
         text = AMLocalizedString(@"Mobile Data is turned off", @"Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings.");
     }
     
-    return [[NSAttributedString alloc] initWithString:text attributes:[Helper descriptionAttributesForEmptyState]];
+    return text;
 }
 
-- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
+- (UIImage *)imageForEmptyState {
     UIImage *image = nil;
     if ([MEGAReachabilityManager isReachable]) {
         if (CameraUploadManager.isCameraUploadEnabled) {
@@ -884,7 +908,7 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
     return image;
 }
 
-- (NSAttributedString *)buttonTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
+- (NSString *)buttonTitleForEmptyState {
     NSString *text = @"";
     if ([MEGAReachabilityManager isReachable]) {
         if (!CameraUploadManager.isCameraUploadEnabled) {
@@ -896,35 +920,10 @@ static const NSTimeInterval HeaderStateViewReloadTimeDelay = .25;
         }
     }
     
-    return [[NSAttributedString alloc] initWithString:text attributes:[Helper buttonTextAttributesForEmptyState]];
+    return text;
 }
 
-- (UIImage *)buttonBackgroundImageForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
-    UIEdgeInsets capInsets = [Helper capInsetsForEmptyStateButton];
-    UIEdgeInsets rectInsets = [Helper rectInsetsForEmptyStateButton];
-    
-    return [[[UIImage imageNamed:@"emptyStateButton"] resizableImageWithCapInsets:capInsets resizingMode:UIImageResizingModeStretch] imageWithAlignmentRectInsets:rectInsets];
-}
-
-- (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
-    if (CameraUploadManager.isCameraUploadEnabled) {
-        return nil;
-    }
-    
-    return [UIColor whiteColor];
-}
-
-- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
-    return [Helper verticalOffsetForEmptyStateWithNavigationBarSize:self.navigationController.navigationBar.frame.size searchBarActive:NO];
-}
-
-- (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView {
-    return [Helper spaceHeightForEmptyStateWithDescription];
-}
-
-#pragma mark - DZNEmptyDataSetDelegate
-
-- (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
+- (void)buttonTouchUpInsideEmptyState {
     if (MEGAReachabilityManager.isReachable) {
         [self pushCameraUploadSettings];
     } else {
