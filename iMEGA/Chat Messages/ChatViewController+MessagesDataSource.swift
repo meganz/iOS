@@ -77,7 +77,7 @@ extension ChatViewController: MessagesDataSource {
 }
 
 extension ChatViewController: MessageReactionReusableViewDelegate {
-    func emojiTapped(_ emoji: String, chatMessage: ChatMessage) {
+    func emojiTapped(_ emoji: String, chatMessage: ChatMessage, sender: UIView) {
         print("emoji tapped \(emoji), for chat message \(chatMessage.messageId)")
     }
     
