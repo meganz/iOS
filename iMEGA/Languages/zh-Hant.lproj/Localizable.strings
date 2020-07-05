@@ -909,8 +909,6 @@
 "profile"="檔案";
 /* Title of the Achievements section */
 "achievementsTitle"="成果";
-/* Title of the Used storage section */
-"usedStorage"="已使用空間";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
 "inviteFriendsAndGetRewards"="邀請朋友並獲得獎勵";
 /* Indicating text for when "you invite your friends" */
@@ -918,7 +916,7 @@
 /* title of the introduction for the achievements screen */
 "inviteFriendsAndGetForEachReferral"="每筆推薦成功，皆可獲得%1$s的儲存空間和%2$s的傳輸配額";
 /* Text shown to explain how and where you can invite friends */
-"inviteYourFriendsExplanation"="請從手機通訊錄中選擇聯絡人，或輸入多個電子郵件地址。";
+"Select from phone contacts or enter multiple email addresses"="Select from phone contacts or enter multiple email addresses";
 /*  */
 "insertYourFriendsEmails"="請填入您好友的電子郵件：";
 /*  */
@@ -1009,12 +1007,6 @@
 "Renews on"="更新";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="傳入的分享";
-/* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
-"of %@"="%@ 中的";
-/* Sentence shown under the used space to complete the info with the user account maximum storage. "used of {maximun storage}" */
-"used of %@"="%@ 中已用";
-/* Sentence shown under the available space to complete the info with the user account maximum storage. "available of {maximun storage}" */
-"available of %@"="共 %@ 可用";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="升級帳號";
 /*  */
@@ -1023,8 +1015,8 @@
 "cloudDriveIsAlmostFull"="[S]您的雲端硬碟快要滿了。[/S] [A]立即升級[/A]為PRO帳戶，並獲得[S]%@ TB (%@ GB)[/S]的雲端儲存空間。";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
 "cloudDriveIsFull"="[S]您的雲端硬碟已滿。[/S][A]立即升級[/A]為PRO帳戶，並獲得[S]%@ TB (%@ GB)[/S]的雲端儲存空間。";
-/* Storage related with the MEGA PRO account level you can subscribe */
-"productSpace"="儲存空間";
+/* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
+"Storage"="儲存空間";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
 "limited"="有限制的";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
@@ -1179,8 +1171,8 @@
 "contactCredentials"="聯絡人憑證";
 /* "Verify user" dialog description */
 "thisIsBestDoneInRealLife"="這最好由實際面對面來完成。如您有其他已驗證管道，如已驗證的OTR或PGP，也可以使採用。";
-/* Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity */
-"yourCredentials"="您的憑證";
+/* Title of the label in the my account section. It shows the credentials of the current user so it can be used to be verified by other contacts */
+"My credentials"="我的憑證";
 /* Button to reset the password */
 "reset"="重設";
 /* Button title */

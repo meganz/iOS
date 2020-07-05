@@ -1,6 +1,8 @@
 
 #import "PasswordView.h"
 
+#import "MEGA-Swift.h"
+
 @implementation PasswordView
 
 - (id)initWithFrame:(CGRect)frame {
@@ -73,8 +75,24 @@
         self.topLabel.textColor = UIColor.mnz_redError;
         self.passwordTextField.textColor = UIColor.mnz_redError;
     } else {
-        self.topLabel.textColor = UIColor.mnz_gray999999;
-        self.passwordTextField.textColor = UIColor.blackColor;
+        self.topLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
+        self.passwordTextField.textColor = UIColor.mnz_label;
+    }
+}
+
+- (void)updateAppearance {
+    self.topSeparatorView.backgroundColor = self.bottomSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+    
+    self.topLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
+    
+    self.leftImageView.tintColor = self.topLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
+    self.passwordTextField.textColor = UIColor.mnz_label;
+    
+    if (self.backgroundColor != nil && !self.isUsingDefaultBackgroundColor) {
+        self.backgroundColor = [UIColor mnz_secondaryBackgroundGroupedElevated:self.traitCollection];
+    } else {
+        self.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
+        self.usingDefaultBackgroundColor = YES;
     }
 }
 

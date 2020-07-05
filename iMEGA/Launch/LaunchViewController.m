@@ -3,8 +3,6 @@
 
 #import "MEGASdkManager.h"
 
-#import "UIColor+MNZCategory.h"
-
 @interface LaunchViewController () <MEGARequestDelegate>
 
 @property (nonatomic) NSTimer *timerAPI_EAGAIN;
@@ -18,13 +16,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self updateAppearance];
+    
     self.circularShapeLayer = [CAShapeLayer layer];
     self.circularShapeLayer.bounds = self.logoImageView.bounds;
     CGFloat radiusLogoImageView = self.logoImageView.bounds.size.width/2.0f;
     self.circularShapeLayer.position = CGPointMake(radiusLogoImageView, radiusLogoImageView);
     UIBezierPath *path = [UIBezierPath bezierPathWithArcCenter:CGPointMake(radiusLogoImageView, radiusLogoImageView) radius:(radiusLogoImageView + 4.0f) startAngle:-M_PI_2 endAngle:3*M_PI_2 clockwise:YES];
     self.circularShapeLayer.path = [path CGPath];
-    self.circularShapeLayer.strokeColor = UIColor.mnz_redMain.CGColor;
+    self.circularShapeLayer.strokeColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)].CGColor;
     self.circularShapeLayer.fillColor = UIColor.clearColor.CGColor;
     self.circularShapeLayer.lineWidth = 2.0f;
     self.circularShapeLayer.strokeStart = 0.0f;
@@ -58,7 +58,21 @@
     return YES;
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {            
+            [self updateAppearance];
+        }
+    }
+}
+
 #pragma mark - Private
+
+- (void)updateAppearance {
+    self.view.backgroundColor = UIColor.mnz_background;
+}
 
 - (void)startTimerAPI_EAGAIN {
     //Check if the SDK is waiting to complete a request and get the reason

@@ -1,21 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="SF-UI-Text-Medium.otf">
-            <string>SFUIText-Medium</string>
-        </array>
-        <array key="SF-UI-Text-Regular.otf">
-            <string>SFUIText-Regular</string>
-        </array>
-    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -25,7 +15,7 @@
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="URL" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Lj-e3-Q6c">
                     <rect key="frame" x="10" y="10" width="263" height="18"/>
-                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WJ4-Um-tsU">
@@ -40,74 +30,62 @@
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enable rich URL previews" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f56-7K-RgY">
                             <rect key="frame" x="104" y="10" width="163" height="36"/>
-                            <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="15"/>
-                            <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                            <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You are disabling rich URL previews permanently. You can re-enable rich URL previews in your settings. Do you want to proceed?" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tMl-50-u3C">
                             <rect key="frame" x="104" y="49" width="163" height="72"/>
-                            <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
-                            <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                            <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <button contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="86P-Mc-Tr9">
                             <rect key="frame" x="20" y="138" width="247" height="44"/>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="44" id="pV0-wc-fUn"/>
                             </constraints>
-                            <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
-                            <state key="normal" title="Always Allow">
-                                <color key="titleColor" red="0.0" green="0.74901960784313726" blue="0.6470588235294118" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </state>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <state key="normal" title="Always Allow"/>
                             <connections>
                                 <action selector="didTapButton:" destination="iN0-l3-epB" eventType="touchUpInside" id="bTa-wT-Vt6"/>
                             </connections>
                         </button>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z5x-HM-Whv">
-                            <rect key="frame" x="20" y="182" width="247" height="0.0"/>
-                            <color key="backgroundColor" red="0.84705882352941175" green="0.84705882352941175" blue="0.84705882352941175" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <rect key="frame" x="20" y="181.5" width="247" height="0.5"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="0.5" id="ag1-75-ThF"/>
                             </constraints>
                         </view>
                         <button tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nc4-kW-7Bl">
                             <rect key="frame" x="20" y="182" width="247" height="44"/>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="44" id="SJv-kE-kIQ"/>
                             </constraints>
-                            <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
-                            <state key="normal" title="Not Now">
-                                <color key="titleColor" red="0.0" green="0.74901960784313726" blue="0.6470588235294118" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </state>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <state key="normal" title="Not Now"/>
                             <connections>
                                 <action selector="didTapButton:" destination="iN0-l3-epB" eventType="touchUpInside" id="p9B-6Y-acg"/>
                             </connections>
                         </button>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pNe-Mq-jqC">
-                            <rect key="frame" x="20" y="226" width="247" height="0.0"/>
-                            <color key="backgroundColor" red="0.84705882349999995" green="0.84705882349999995" blue="0.84705882349999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <rect key="frame" x="20" y="225.5" width="247" height="0.5"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="0.5" id="Oa5-0y-5I0"/>
                             </constraints>
                         </view>
                         <button tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2ha-5c-sT3">
                             <rect key="frame" x="20" y="226" width="247" height="44"/>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="44" id="qry-JO-zpR"/>
                             </constraints>
-                            <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
-                            <state key="normal" title="Never">
-                                <color key="titleColor" red="0.95294117647058818" green="0.047058823529411764" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </state>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <state key="normal" title="Never"/>
                             <connections>
                                 <action selector="didTapButton:" destination="iN0-l3-epB" eventType="touchUpInside" id="h0v-cZ-DGz"/>
                             </connections>
                         </button>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="Hlg-o0-T4G" firstAttribute="leading" secondItem="WJ4-Um-tsU" secondAttribute="leading" constant="10" id="1He-dz-GEY"/>
                         <constraint firstItem="Nc4-kW-7Bl" firstAttribute="top" secondItem="86P-Mc-Tr9" secondAttribute="bottom" id="3qZ-Wj-tOv"/>
@@ -136,13 +114,12 @@
                         <constraint firstItem="86P-Mc-Tr9" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Hlg-o0-T4G" secondAttribute="bottom" constant="14" id="zCH-qb-x1U"/>
                     </constraints>
                     <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                             <integer key="value" value="4"/>
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                 </view>
             </subviews>
-            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="WJ4-Um-tsU" firstAttribute="top" secondItem="1Lj-e3-Q6c" secondAttribute="bottom" constant="10" id="E1K-r1-UGT"/>
                 <constraint firstItem="WJ4-Um-tsU" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="3" id="F1e-um-Ets"/>
@@ -155,11 +132,13 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="alwaysAllowButton" destination="86P-Mc-Tr9" id="gmM-cA-8hv"/>
+                <outlet property="contentView" destination="WJ4-Um-tsU" id="Qmb-Pc-XRW"/>
                 <outlet property="descriptionLabel" destination="tMl-50-u3C" id="lkn-cS-gVE"/>
+                <outlet property="firstLineView" destination="z5x-HM-Whv" id="QS4-FU-t5C"/>
                 <outlet property="headingLabel" destination="1Lj-e3-Q6c" id="5sf-c6-i91"/>
-                <outlet property="lineView" destination="pNe-Mq-jqC" id="1Xd-xK-jiU"/>
                 <outlet property="neverButton" destination="2ha-5c-sT3" id="Zlo-EW-c1s"/>
                 <outlet property="notNowButton" destination="Nc4-kW-7Bl" id="fI9-rm-fyu"/>
+                <outlet property="secondLineView" destination="pNe-Mq-jqC" id="1Xd-xK-jiU"/>
                 <outlet property="titleLabel" destination="f56-7K-RgY" id="3QQ-nq-PIr"/>
             </connections>
             <point key="canvasLocation" x="25.5" y="52"/>

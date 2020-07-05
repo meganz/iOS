@@ -6,6 +6,7 @@
 #import "MEGAGetAttrUserRequestDelegate.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
+#import "MEGA-Swift.h"
 #import "NSString+MNZCategory.h"
 
 #import "ChatStatusTableViewController.h"
@@ -65,6 +66,8 @@
     
     self.doNotDisturbSwitch.enabled = NO;
     self.globalDNDNotificationControl = [GlobalDNDNotificationControl.alloc initWithDelegate:self];
+    
+    [self updateAppearance];
 }
 
 - (void)pushNotificationSettingsLoaded {
@@ -97,6 +100,16 @@
     [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateAppearance];
+        }
+    }
+}
+
 #pragma mark - IBActions
 
 - (IBAction)richPreviewsValueChanged:(UISwitch *)sender {
@@ -112,6 +125,15 @@
 }
 
 #pragma mark - Private
+
+- (void)updateAppearance {
+    self.statusRightDetailLabel.textColor = self.imageQualityRightDetailLabel.textColor = self.videoQualityRightDetailLabel.textColor = UIColor.mnz_secondaryLabel;
+    
+    self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+    self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
+    
+    [self.tableView reloadData];
+}
 
 - (void)internetConnectionChanged {
     [self setUIElementsEnabled:MEGAReachabilityManager.isReachable];
@@ -252,6 +274,7 @@
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    cell.backgroundColor = [UIColor mnz_secondaryBackgroundGrouped:self.traitCollection];
 
     if (indexPath.section == 1 && indexPath.row == 0) {
         [self.globalDNDNotificationControl configureWithDndSwitch:self.doNotDisturbSwitch];

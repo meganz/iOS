@@ -6,6 +6,7 @@
 #import "Helper.h"
 #import "MEGALoginRequestDelegate.h"
 #import "MEGASdkManager.h"
+#import "MEGA-Swift.h"
 #import "NSString+MNZCategory.h"
 #import "NSURL+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
@@ -15,6 +16,13 @@
 @interface TwoFactorAuthenticationViewController () <UITextViewDelegate, MEGARequestDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
+
+@property (weak, nonatomic) IBOutlet UIView *firstDigitContainerView;
+@property (weak, nonatomic) IBOutlet UIView *secondDigitContainerView;
+@property (weak, nonatomic) IBOutlet UIView *thirdDigitContainerView;
+@property (weak, nonatomic) IBOutlet UIView *fourthDigitContainerView;
+@property (weak, nonatomic) IBOutlet UIView *fifthDigitContainerView;
+@property (weak, nonatomic) IBOutlet UIView *sixthDigitContainerView;
 
 @property (weak, nonatomic) IBOutlet UIImageView *invalidCodeImageView;
 @property (weak, nonatomic) IBOutlet UILabel *invalidCodeLabel;
@@ -47,9 +55,31 @@
     
     UITextView *firstTextView = [self.view viewWithTag:1];
     [firstTextView becomeFirstResponder];
+    
+    [self updateAppearance];
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateAppearance];
+        }
+    }
 }
 
 #pragma mark - Private
+
+- (void)updateAppearance {
+    self.view.backgroundColor = UIColor.mnz_background;
+    
+    self.firstDigitContainerView.backgroundColor = self.secondDigitContainerView.backgroundColor = self.thirdDigitContainerView.backgroundColor = self.fourthDigitContainerView.backgroundColor = self.fifthDigitContainerView.backgroundColor = self.sixthDigitContainerView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
+    
+    self.firstDigitContainerView.layer.borderColor = self.secondDigitContainerView.layer.borderColor = self.thirdDigitContainerView.layer.borderColor = self.fourthDigitContainerView.layer.borderColor = self.fifthDigitContainerView.layer.borderColor = self.sixthDigitContainerView.layer.borderColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection].CGColor;
+    
+    self.invalidCodeLabel.textColor = UIColor.mnz_redError;
+}
 
 - (void)previousTextViewShouldBecomeFirstResponder:(UITextView *)textView {
     NSInteger currentTextViewTag = textView.tag;
@@ -118,7 +148,7 @@
 }
 
 - (void)showInvalidCode {
-    [self tintCodeWithColor:UIColor.mnz_redMain];
+    [self tintCodeWithColor:UIColor.mnz_redError];
     self.invalidCodeImageView.hidden = self.invalidCodeLabel.hidden = NO;
 }
 
@@ -197,7 +227,7 @@
         textView.selectedTextRange = [textView textRangeFromPosition:end toPosition:end];
     });
     
-    [self tintCodeWithColor:UIColor.mnz_black333333];
+    [self tintCodeWithColor:UIColor.mnz_label];
     self.invalidCodeImageView.hidden = self.invalidCodeLabel.hidden = YES;
 }
 

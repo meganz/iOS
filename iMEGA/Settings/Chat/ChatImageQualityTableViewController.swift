@@ -3,18 +3,47 @@ import UIKit
 
 class ChatImageQualityTableViewController: UITableViewController {
 
+    // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = AMLocalizedString("Image quality", "Label used near to the option selected to encode the images uploaded to a chat (Low, Medium, Original)")
+        
+        updateAppearance()
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        if #available(iOS 13, *) {
+            if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+                updateAppearance()
+                
+                tableView.reloadData()
+            }
+        }
+    }
+    
+    // MARK: - Private
+    
+    private func updateAppearance() {
+        tableView.separatorColor = UIColor.mnz_separator(for: traitCollection)
+        tableView.backgroundColor = UIColor.mnz_backgroundGrouped(for: traitCollection)
+        
+        tableView.reloadData()
     }
 
     // MARK: - UITableViewDataSource
 
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.backgroundColor = UIColor.mnz_secondaryBackgroundGrouped(traitCollection)
+    }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = super.tableView(tableView, cellForRowAt: indexPath)
         let currentSeletedQuality = UserDefaults.standard.integer(forKey: "chatImageQuality")
 
-        cell.accessoryView = UIImageView.init(image: #imageLiteral(resourceName: "red_checkmark"))
+        cell.accessoryView = UIImageView.init(image: #imageLiteral(resourceName: "turquoise_checkmark"))
         cell.accessoryView?.isHidden = currentSeletedQuality != indexPath.row
 
         switch indexPath.row {

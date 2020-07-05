@@ -34,20 +34,15 @@ enum DNDTurnOnOption: TimeInterval {
                                                 style: .cancel,
                                                 handler: delegate.cancelAction))
         
-        alertController.addDefaultAction(title: thirtyMinutes.localizedTitle,
-                                         handler: delegate.action(for: thirtyMinutes, identifier: identifier))
+        alertController.addAction(UIAlertAction(title: thirtyMinutes.localizedTitle, style: .default, handler: delegate.action(for: thirtyMinutes, identifier: identifier)))
         
-        alertController.addDefaultAction(title: oneHour.localizedTitle,
-                                         handler: delegate.action(for: oneHour, identifier: identifier))
+        alertController.addAction(UIAlertAction(title: oneHour.localizedTitle, style: .default, handler: delegate.action(for: oneHour, identifier: identifier)))
         
-        alertController.addDefaultAction(title: sixHours.localizedTitle,
-                                         handler: delegate.action(for: sixHours, identifier: identifier))
+        alertController.addAction(UIAlertAction(title: sixHours.localizedTitle, style: .default, handler: delegate.action(for: sixHours, identifier: identifier)))
         
-        alertController.addDefaultAction(title: twentyFourHours.localizedTitle,
-                                         handler: delegate.action(for: twentyFourHours, identifier: identifier))
+        alertController.addAction(UIAlertAction(title: twentyFourHours.localizedTitle, style: .default, handler: delegate.action(for: twentyFourHours, identifier: identifier)))
         
-        alertController.addDefaultAction(title: forever.localizedTitle,
-                                         handler: delegate.action(for: forever, identifier: identifier))
+        alertController.addAction(UIAlertAction(title: forever.localizedTitle, style: .default, handler: delegate.action(for: forever, identifier: identifier)))
         
         return alertController
     }
