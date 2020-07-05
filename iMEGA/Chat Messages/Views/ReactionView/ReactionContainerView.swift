@@ -1,10 +1,17 @@
-
 import UIKit
 import FlexLayout
 import PinLayout
 
+protocol ReactionEmojiViewDelegate: class {
+    func emojiTapped(_ emoji: String, sender: UIView)
+    func emojiLongPressed(_ emoji: String, sender: UIView)
+}
+
 class ReactionContainerView: UIView {
     fileprivate let rootFlexContainer = UIView()
+    
+    weak var delegate: ReactionEmojiViewDelegate?
+
     var chatMessage: ChatMessage? {
         didSet {
             emojis.removeAll()
@@ -16,18 +23,25 @@ class ReactionContainerView: UIView {
             }
             rootFlexContainer.flex.direction(.rowReverse).wrap(.wrap).padding(12).justifyContent(.start).alignItems(.start).define { (flex) in
                 emojis.forEach { (emoji) in
-                    let emojiButton = UILabel()
                     let megaMessage = chatMessage?.message
                     
                     let count = MEGASdkManager.sharedMEGAChatSdk()?.getMessageReactionCount(forChat: chatMessage?.chatRoom.chatId ?? 0, messageId: megaMessage?.messageId ?? 0, reaction: emoji) ?? 0
-                    
-                    emojiButton.text = "\(emoji) \(count)"
+                    let emojiButton = ReactionEmojiButton(count: count, emoji: emoji)
+                    if let delegate = delegate {
+                        emojiButton.buttonPressed = delegate.emojiTapped
+                        emojiButton.buttonLongPress = delegate.emojiLongPressed
+                    }
                     emojiButton.layer.borderWidth = 1
                     emojiButton.layer.borderColor = UIColor.green.cgColor
                     emojiButton.sizeToFit()
-                    emojiButton.flex.marginHorizontal(4)
+                    
+                    
+                    emojiButton.flex.margin(4).height(30)
                     flex.addItem(emojiButton)
                 }
+                
+                let imageView = UIImageView(image: UIImage(named: "addReactionSmall"))
+                flex.addItem(imageView).width(44).margin(4).height(30)
             }
             
             if UInt64(chatMessage?.sender.senderId ?? "") == MEGASdkManager.sharedMEGAChatSdk()?.myUserHandle {
@@ -38,17 +52,13 @@ class ReactionContainerView: UIView {
             setNeedsLayout()
         }
     }
+    
     private var emojis = [String]()
 
     init() {
         super.init(frame: .zero)
-        backgroundColor = .white
-        
-     
-        
         addSubview(rootFlexContainer)
     }
-    
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -59,8 +69,10 @@ class ReactionContainerView: UIView {
         return rootFlexContainer.frame.size
     }
     
+ 
+    
     private func layout() {
-        rootFlexContainer.pin.width(200)
+        rootFlexContainer.pin.width(300)
         rootFlexContainer.pin.top().margin(pin.safeArea)
         rootFlexContainer.flex.layout(mode: .adjustHeight)
         rootFlexContainer.pin.right()

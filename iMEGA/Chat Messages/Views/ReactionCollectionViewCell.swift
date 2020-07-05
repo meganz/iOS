@@ -5,7 +5,7 @@ protocol ReactionCollectionViewCellDelegate: class {
     func emojiLongPressed(_ emoji: String, sender: UIView)
 }
 
-class ReactionCollectionViewCell: UICollectionViewCell {
+class ReactionCollectionViewCell: UILabel {
 
     @IBOutlet weak var reactionButton: UIButton!
     var count: Int?
@@ -14,7 +14,6 @@ class ReactionCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        contentView.translatesAutoresizingMaskIntoConstraints = false
         
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(longPress(_:)))
         addGestureRecognizer(longPressGesture)
@@ -35,16 +34,7 @@ class ReactionCollectionViewCell: UICollectionViewCell {
         reactionButton.setTitle("\(emoji) \(count)", for: .normal)
     }
     
-    override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
-        setNeedsLayout()
-        layoutIfNeeded()
-        
-        let size = self.contentView.systemLayoutSizeFitting(layoutAttributes.size)
-        var cellFrame = layoutAttributes.frame
-        cellFrame.size = size
-        layoutAttributes.frame = cellFrame
-        return layoutAttributes
-    }
+
     
     @IBAction func buttonTapped(_ sender: UIButton) {
         guard let delegate = delegate, let emoji = emoji else {

@@ -63,17 +63,15 @@ extension ChatViewController: ChatViewMessagesLayoutDelegate {
         guard let message = messages[section] as? ChatMessage else {
             return .zero
         }
-//
         let list = MEGASdkManager.sharedMEGAChatSdk()?.getMessageReactions(forChat: message.chatRoom.chatId , messageId: message.message.messageId)
 
         if message.message.isManagementMessage || list?.size == 0 {
             return .zero
         }
-//        return CGSize(width: 276,
-//        height:200)
-        let cellTemplate =  ReactionContainerView()
-        cellTemplate.chatMessage = message
-        return cellTemplate.sizeThatFits(CGSize(width: messagesCollectionView.bounds.width, height: .greatestFiniteMagnitude))
+
+        let reactionViewTemplate = ReactionContainerView()
+        reactionViewTemplate.chatMessage = message
+        return reactionViewTemplate.sizeThatFits(CGSize(width: messagesCollectionView.bounds.width, height: .greatestFiniteMagnitude))
         
     }
 }
