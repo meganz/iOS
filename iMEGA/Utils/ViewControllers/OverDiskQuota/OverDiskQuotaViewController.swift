@@ -119,6 +119,24 @@ final class OverDiskQuotaViewController: UIViewController {
         setupTraitCollectionAwareView(with: traitCollection)
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupNavigationController(navigationController)
+        setupScrollView(contentScrollView)
+    }
+
+    // MARK: - Support Trait
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        if #available(iOS 13, *) {
+            if previousTraitCollection != traitCollection {
+                setupTraitCollectionAwareView(with: traitCollection)
+            }
+        }
+    }
+
     private func setupTraitCollectionAwareView(with traitCollection: UITraitCollection) {
         setupTitleLabel(titleLabel)
         setupMessageLabel(warningParagaphLabel,
@@ -127,20 +145,6 @@ final class OverDiskQuotaViewController: UIViewController {
                          with: overDiskQuotaAdvicer.warningActionTitle(with: traitCollection))
         setupUpgradeButton(upgradeButton)
         setupDismissButton(dismissButton)
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        setupNavigationController(navigationController)
-        setupScrollView(contentScrollView)
-    }
-
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-
-        if #available(iOS 13, *) {
-            setupTraitCollectionAwareView(with: traitCollection)
-        }
     }
 
     // MARK: - Setup MEGA UserData
