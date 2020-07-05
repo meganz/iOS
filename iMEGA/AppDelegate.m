@@ -1007,7 +1007,8 @@ void uncaughtExceptionHandler(NSException *exception) {
         }];
     };
 
-    MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:overDiskQuotaViewController];
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:overDiskQuotaViewController];
+    navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
     [UIApplication.mnz_presentingViewController presentViewController:navigationController
                                                              animated:YES
                                                            completion:^{
