@@ -787,8 +787,14 @@ class ChatViewController: MessagesViewController {
     
     private func setLastMessageAsSeen() {
         if messages.count > 0 {
-            guard let lastMessage = messages.last as? ChatMessage,
-                let chatSDK = MEGASdkManager.sharedMEGAChatSdk(),
+            let chatMessages = messages.filter { (message) -> Bool in
+                guard let message = message as? ChatMessage, message.transfer == nil else {
+                    return false
+                }
+                return true
+            }
+            
+            guard let lastMessage = chatMessages.first as? ChatMessage, let chatSDK = MEGASdkManager.sharedMEGAChatSdk(),
                 let lastSeenMessage = chatSDK.lastChatMessageSeen(forChat: chatRoom.chatId) else {
                 return
             }
