@@ -1,7 +1,10 @@
 import Foundation
 
-func createParagraphStyleFactory()  -> ParagraphStyleFactory {
-    ParagraphStyleFactoryImpl()
+extension InterfaceStyle {
+
+    var paragraphStyleFactory: ParagraphStyleFactory {
+        ParagraphStyleFactoryImpl()
+    }
 }
 
 enum MEGAParagraphStyle {

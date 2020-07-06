@@ -1,7 +1,10 @@
 import Foundation
 
-func createCornerStyleFactory() -> CornerStyleFactory {
-    CornerStyleFactoryImpl()
+extension InterfaceStyle {
+
+    var cornerStyleFactory: CornerStyleFactory {
+        CornerStyleFactoryImpl()
+    }
 }
 
 enum MEGACornerStyle {
