@@ -22,6 +22,8 @@ struct ContactOnMega: Codable {
 
     var completionWhenReady : (() -> Void)?
 
+    private var deviceContactsOperation: DeviceContactsOperation?
+
     @objc static let shared = ContactsOnMegaManager()
 
     private override init() {}
@@ -98,8 +100,16 @@ struct ContactOnMega: Codable {
             contactsOnMega.removeAll()
             UserDefaults.standard.removeObject(forKey: "ContactsOnMega")
 
-            DeviceContactsManager().getDeviceContacts(forRequestedKeys: [CNContactPhoneNumbersKey, CNContactEmailAddressesKey]) { (contacts) in
-                let deviceContacts = contacts.map( { [$0.contactDetail:$0.name] } )
+            NotificationCenter.default.addObserver(self, selector: #selector(didReceiveLogoutNotificaton), name: .MEGALogout, object: nil)
+
+            let deviceContactsOperation = DeviceContactsOperation([CNContactPhoneNumbersKey, CNContactEmailAddressesKey])
+            
+            deviceContactsOperation.completionBlock = {
+                if deviceContactsOperation.isCancelled {
+                    return
+                }
+                
+                let deviceContacts = deviceContactsOperation.fetchedContacts.map( { [$0.contactDetail:$0.name] } )
                 if deviceContacts.count == 0 {
                     self.contactsFetched()
                 } else {
@@ -107,6 +117,10 @@ struct ContactOnMega: Codable {
                     self.getContactsOnMega()
                 }
             }
+    
+            DeviceContactsManager.shared.addGetDeviceContactsOperation(deviceContactsOperation)
+            
+            self.deviceContactsOperation = deviceContactsOperation
         } else {
             MEGALogDebug("Device Contact Permission not granted")
         }
@@ -165,6 +179,7 @@ struct ContactOnMega: Codable {
     }
 
     private func contactsFetched() {
+        NotificationCenter.default.removeObserver(self, name: .MEGALogout, object: nil)
         UserDefaults.standard.set(Date(), forKey: "lastDateContactsOnMegaRequested")
         self.state = .ready
         guard let completion = completionWhenReady else { return }
@@ -177,5 +192,13 @@ struct ContactOnMega: Codable {
     private func persistContactsOnMega() {
         UserDefaults.standard.setStructArray(contactsOnMega, forKey: "ContactsOnMega")
         contactsFetched()
+    }
+    
+    @objc func didReceiveLogoutNotificaton() {
+        if let operation = deviceContactsOperation, operation.isExecuting {
+            NotificationCenter.default.removeObserver(self, name: .MEGALogout, object: nil)
+            DeviceContactsManager.shared.cancelDeviceContactsOperation(operation)
+            state = .error
+        }
     }
 }

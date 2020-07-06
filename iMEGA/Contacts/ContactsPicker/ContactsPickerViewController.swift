@@ -14,6 +14,8 @@ class ContactsPickerViewController: UIViewController {
     private var keys = [String]()
 
     private var contacts = [DeviceContact]()
+    private var deviceContactsOperation: DeviceContactsOperation?
+
     private var contactsSections = [String: [DeviceContact]]()
     private var contactsSectionTitles = [String]()
     private lazy var searchingContacts = [DeviceContact]()
@@ -58,6 +60,14 @@ class ContactsPickerViewController: UIViewController {
         }
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if let operation = deviceContactsOperation, operation.isExecuting {
+            SVProgressHUD.dismiss()
+            DeviceContactsManager.shared.cancelDeviceContactsOperation(operation)
+        }
+    }
+    
     // MARK: - Private
     
     private func configureView() {
@@ -87,12 +97,22 @@ class ContactsPickerViewController: UIViewController {
     
     private func fetchDeviceContacts() {
         SVProgressHUD.show(withStatus: AMLocalizedString("loading", "state previous to import a file"))
-        DeviceContactsManager().getDeviceContacts(forRequestedKeys: keys) { [weak self] (contacts) in
+        
+        let deviceContactsOperation = DeviceContactsOperation(keys)
+        deviceContactsOperation.completionBlock = { [weak self] in
+            if deviceContactsOperation.isCancelled {
+                return
+            }
+            
             DispatchQueue.main.async {
-                self?.prepareDataSource(forContacts: contacts)
+                self?.prepareDataSource(forContacts: deviceContactsOperation.fetchedContacts)
                 SVProgressHUD.dismiss()
             }
         }
+        
+        DeviceContactsManager.shared.addGetDeviceContactsOperation(deviceContactsOperation)
+        
+        self.deviceContactsOperation = deviceContactsOperation
     }
     
     private func prepareDataSource(forContacts fetchedContacts: [DeviceContact]) {
