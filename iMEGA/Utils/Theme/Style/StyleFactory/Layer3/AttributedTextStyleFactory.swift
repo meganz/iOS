@@ -1,9 +1,12 @@
 import Foundation
 
-func createAttributedTextStyleFactory(from colorTheme: InterfaceStyle) -> AttributedTextStyleFactory {
-    let colorFactory = createColorFactory(from: colorTheme)
-    let textFactory = createTextStyleFactory(from: colorFactory)
-    return AttributedTextStyleFactoryImpl(textStyleFactory: textFactory)
+extension InterfaceStyle {
+
+    var attributedTextStyleFactory: AttributedTextStyleFactory {
+        let colorFactory = createColorFactory(from: self)
+        let textFactory = createTextStyleFactory(from: colorFactory)
+        return AttributedTextStyleFactoryImpl(textStyleFactory: textFactory)
+    }
 }
 
 protocol AttributedTextStyleFactory {

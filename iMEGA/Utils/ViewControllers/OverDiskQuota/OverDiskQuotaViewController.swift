@@ -143,8 +143,8 @@ final class OverDiskQuotaViewController: UIViewController {
                           withMessage: overDiskQuotaAdvicer.overDiskQuotaMessage(with: traitCollection))
         setupWarningView(warningView,
                          with: overDiskQuotaAdvicer.warningActionTitle(with: traitCollection))
-        setupUpgradeButton(upgradeButton)
-        setupDismissButton(dismissButton)
+        setupUpgradeButton(upgradeButton, with: traitCollection)
+        setupDismissButton(dismissButton, with: traitCollection)
     }
 
     // MARK: - Setup MEGA UserData
@@ -186,15 +186,15 @@ final class OverDiskQuotaViewController: UIViewController {
         descriptionLabel.attributedText = message
     }
 
-    private func setupUpgradeButton(_ button: UIButton) {
-        let style = createThemeButtonStyleFactory(from: traitCollection.theme).styler(of: .primary)
+    private func setupUpgradeButton(_ button: UIButton, with trait: UITraitCollection) {
+        let style = trait.styler(of: .primary)
         style(button)
         button.setTitle(AMLocalizedString("upgrade", "Upgrade"), for: .normal)
         button.addTarget(self, action: .didTapUpgradeButton, for: .touchUpInside)
     }
 
-    private func setupDismissButton(_ button: UIButton) {
-        let style = createThemeButtonStyleFactory(from: traitCollection.theme).styler(of: .secondary)
+    private func setupDismissButton(_ button: UIButton, with trait: UITraitCollection) {
+        let style = trait.styler(of: .secondary)
         style(button)
         button.setTitle(AMLocalizedString("dismiss", "Dismiss"), for: .normal)
         button.addTarget(self, action: .didTapDismissButton, for: .touchUpInside)

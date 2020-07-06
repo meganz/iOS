@@ -1,13 +1,16 @@
 import Foundation
 
-func createCustomViewStyleFactory(from interfaceStyle: InterfaceStyle) -> CustomViewStyleFactory {
-    let colorFactory = createColorFactory(from: interfaceStyle)
-    let borderFactory = createBorderStyleFactory(from: colorFactory)
-    let backgroundFactory = createBackgroundStyleFactory(from: colorFactory)
-    let cornerFactory = createCornerStyleFactory()
-    return CustomViewStyleFactoryImpl(borderStyleFactory: borderFactory,
-                                      backgroundStyleFactory: backgroundFactory,
-                                      cornerStyleFactory: cornerFactory)
+extension InterfaceStyle {
+
+    var customViewStyleFactory: CustomViewStyleFactory {
+        let colorFactory = createColorFactory(from: self)
+        let borderFactory = createBorderStyleFactory(from: colorFactory)
+        let backgroundFactory = createBackgroundStyleFactory(from: colorFactory)
+        let cornerFactory = createCornerStyleFactory()
+        return CustomViewStyleFactoryImpl(borderStyleFactory: borderFactory,
+                                          backgroundStyleFactory: backgroundFactory,
+                                          cornerStyleFactory: cornerFactory)
+    }
 }
 
 typealias ViewStyler = (UIView) -> Void
