@@ -1,9 +1,11 @@
 import Foundation
 
-func createThemeButtonStyleFactory(from colorTheme: InterfaceStyle) -> ThemeButtonStyleFactory {
-    let colorFactory = createColorFactory(from: colorTheme)
-    let cornerStyleFactory = createCornerStyleFactory()
-    return ThemeButtonStyleFactoryImpl(colorFactory: colorFactory, cornerStyleFactory: cornerStyleFactory)
+extension InterfaceStyle {
+    var themeButtonStyle: ThemeButtonStyleFactory {
+        let colorFactory = createColorFactory(from: self)
+        let cornerStyleFactory = createCornerStyleFactory()
+        return ThemeButtonStyleFactoryImpl(colorFactory: colorFactory, cornerStyleFactory: cornerStyleFactory)
+    }
 }
 
 typealias ButtonStyler = (UIButton) -> Void

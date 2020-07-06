@@ -50,8 +50,7 @@ final class OverDisckQuotaWarningView: UIView, NibOwnerLoadable {
     }
 
     private func setupContainerView(_ containerView: UIView, with trait: UITraitCollection) {
-        let customeViewStyle = createCustomViewStyleFactory(from: trait.theme)
-            .styler(of: .warning)
+        let customeViewStyle = trait.styler(of: MEGACustomViewStyle.warning)
         customeViewStyle(containerView)
     }
 

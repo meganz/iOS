@@ -17,24 +17,23 @@ extension UITraitCollection {
         }
         return .light
     }
+}
+
+extension UITraitCollection {
 
     func styler(of style: MEGALabelStyle) -> LabelStyler {
-        labelStyler(theme, style)
+        theme.labelStyleFactory.styler(of: style)
     }
-}
 
-private let labelStyler: (InterfaceStyle, MEGALabelStyle) -> LabelStyler = { theme, style in
-    createLabelStyleFactory(from: theme).styler(of: style)
-}
+    func styler(of style: MEGAThemeButtonStyle) -> ButtonStyler {
+        theme.themeButtonStyle.styler(of: style)
+    }
 
-private let buttonStyler: (InterfaceStyle, MEGAThemeButtonStyle) -> ButtonStyler = { theme, style in
-    createThemeButtonStyleFactory(from: theme).styler(of: style)
-}
+    func styler(of style: MEGACustomViewStyle) -> ViewStyler {
+        theme.customViewStyleFactory.styler(of: style)
+    }
 
-private let customStyler: (InterfaceStyle, MEGACustomViewStyle) -> ViewStyler = { theme, style in
-    createCustomViewStyleFactory(from: theme).styler(of: style)
-}
-
-private let attributeTextStyler: (InterfaceStyle, AttributedTextStyle) -> TextAttributesStyler = { theme, style in
-    createAttributedTextStyleFactory(from: theme).styler(of: style)
+    func styler(of style: AttributedTextStyle) -> TextAttributesStyler {
+        theme.attributedTextStyleFactory.styler(of: style)
+    }
 }
