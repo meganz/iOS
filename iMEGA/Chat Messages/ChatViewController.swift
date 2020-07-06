@@ -794,7 +794,7 @@ class ChatViewController: MessagesViewController {
                 return true
             }
             
-            guard let lastMessage = chatMessages.first as? ChatMessage, let chatSDK = MEGASdkManager.sharedMEGAChatSdk(),
+            guard let lastMessage = chatMessages.last as? ChatMessage, let chatSDK = MEGASdkManager.sharedMEGAChatSdk(),
                 let lastSeenMessage = chatSDK.lastChatMessageSeen(forChat: chatRoom.chatId) else {
                 return
             }
