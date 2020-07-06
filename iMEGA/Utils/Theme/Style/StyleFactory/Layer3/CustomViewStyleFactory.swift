@@ -3,13 +3,9 @@ import Foundation
 extension InterfaceStyle {
 
     var customViewStyleFactory: CustomViewStyleFactory {
-        let colorFactory = createColorFactory(from: self)
-        let borderFactory = createBorderStyleFactory(from: colorFactory)
-        let backgroundFactory = createBackgroundStyleFactory(from: colorFactory)
-        let cornerFactory = createCornerStyleFactory()
-        return CustomViewStyleFactoryImpl(borderStyleFactory: borderFactory,
-                                          backgroundStyleFactory: backgroundFactory,
-                                          cornerStyleFactory: cornerFactory)
+        return CustomViewStyleFactoryImpl(borderStyleFactory: borderStyleFactory,
+                                          backgroundStyleFactory: backgroundStyleFactory,
+                                          cornerStyleFactory: cornerStyleFactory)
     }
 }
 

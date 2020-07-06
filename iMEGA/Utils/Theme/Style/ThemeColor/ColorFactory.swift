@@ -1,9 +1,12 @@
 import Foundation
 
-func createColorFactory(from theme: InterfaceStyle) -> ColorFactory {
-    switch theme {
-    case .light: return LightColorThemeFactory()
-    case .dark: return DarkColorThemeFactory()
+extension InterfaceStyle {
+
+    var colorFactory: ColorFactory {
+        switch self {
+        case .light: return LightColorThemeFactory()
+        case .dark: return DarkColorThemeFactory()
+        }
     }
 }
 

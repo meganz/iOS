@@ -1,7 +1,10 @@
 import Foundation
 
-func createBorderStyleFactory(from colorFactory: ColorFactory) -> BorderStyleFactory {
-    BorderStyleFactoryImpl(colorFactory: colorFactory)
+extension InterfaceStyle {
+
+    var borderStyleFactory: BorderStyleFactory {
+        BorderStyleFactoryImpl(colorFactory: colorFactory)
+    }
 }
 
 enum MEGABorderStyle {

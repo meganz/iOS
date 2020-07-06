@@ -1,7 +1,10 @@
 import Foundation
 
-func createTextStyleFactory(from colorFactory: ColorFactory) -> TextStyleFactory {
-    TextStyleFactoryImpl(colorFactory: colorFactory)
+extension InterfaceStyle {
+
+    var textStyleFactory: TextStyleFactory {
+        TextStyleFactoryImpl(colorFactory: colorFactory)
+    }
 }
 
 enum MEGATextStyle: Hashable {

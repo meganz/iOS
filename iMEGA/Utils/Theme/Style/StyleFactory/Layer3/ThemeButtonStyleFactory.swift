@@ -1,9 +1,8 @@
 import Foundation
 
 extension InterfaceStyle {
+
     var themeButtonStyle: ThemeButtonStyleFactory {
-        let colorFactory = createColorFactory(from: self)
-        let cornerStyleFactory = createCornerStyleFactory()
         return ThemeButtonStyleFactoryImpl(colorFactory: colorFactory, cornerStyleFactory: cornerStyleFactory)
     }
 }

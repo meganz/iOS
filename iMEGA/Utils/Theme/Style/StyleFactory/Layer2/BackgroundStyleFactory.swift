@@ -1,7 +1,10 @@
 import Foundation
 
-func createBackgroundStyleFactory(from colorFactory: ColorFactory) -> BackgroundStyleFactory {
-    BackgroundStyleFactoryImpl(colorFactory: colorFactory)
+extension InterfaceStyle {
+
+    var backgroundStyleFactory: BackgroundStyleFactory {
+        BackgroundStyleFactoryImpl(colorFactory: colorFactory)
+    }
 }
 
 enum MEGABackgroundStyle {

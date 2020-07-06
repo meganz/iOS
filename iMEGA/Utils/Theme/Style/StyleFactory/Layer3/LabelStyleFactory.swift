@@ -3,17 +3,7 @@ import Foundation
 extension InterfaceStyle {
 
     var labelStyleFactory: LabelStyleFactory {
-        let colorFactory = createColorFactory(from: self)
-        let textFactory = createTextStyleFactory(from: colorFactory)
-        let paragraphStyleFactory = createParagraphStyleFactory()
-        return LabelStyleFactoryImpl(textStyleFactory: textFactory, paragraphStyleFactory: paragraphStyleFactory)
-    }
-
-    static func createLabelStyleFactory(from colorTheme: InterfaceStyle) -> LabelStyleFactory {
-        let colorFactory = createColorFactory(from: colorTheme)
-        let textFactory = createTextStyleFactory(from: colorFactory)
-        let paragraphStyleFactory = createParagraphStyleFactory()
-        return LabelStyleFactoryImpl(textStyleFactory: textFactory, paragraphStyleFactory: paragraphStyleFactory)
+        return LabelStyleFactoryImpl(textStyleFactory: textStyleFactory, paragraphStyleFactory: paragraphStyleFactory)
     }
 }
 

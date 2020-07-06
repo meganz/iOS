@@ -3,11 +3,8 @@ import Foundation
 extension InterfaceStyle {
 
     var attributedTextStyleFactory: AttributedTextStyleFactory {
-        let colorFactory = createColorFactory(from: self)
-        let textFactory = createTextStyleFactory(from: colorFactory)
-        let paragraphFactory = createParagraphStyleFactory()
-        return AttributedTextStyleFactoryImpl(textStyleFactory: textFactory,
-                                              paragraphStyleFactory: paragraphFactory)
+        return AttributedTextStyleFactoryImpl(textStyleFactory: textStyleFactory,
+                                              paragraphStyleFactory: paragraphStyleFactory)
     }
 }
 
