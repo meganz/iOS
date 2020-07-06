@@ -653,7 +653,7 @@
 
     switch ([node type]) {
         case MEGANodeTypeFolder: {
-            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Links" bundle:nil];
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Links" bundle:[NSBundle bundleForClass:self.class]];
             FolderLinkViewController *folderLinkVC = [storyboard instantiateViewControllerWithIdentifier:@"FolderLinkViewControllerID"];
             [folderLinkVC setParentNode:node];
             [folderLinkVC setIsFolderRootNode:NO];
