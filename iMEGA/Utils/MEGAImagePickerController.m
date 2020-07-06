@@ -14,6 +14,8 @@
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 
+#import "MEGA-Swift.h"
+
 @interface MEGAImagePickerController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @property (nonatomic, getter=toUploadSomething) BOOL uploadSomething;
@@ -81,20 +83,20 @@
     }
     
     self.modalPresentationStyle = UIModalPresentationCurrentContext;
-    if (self.toUploadSomething) {
-        self.mediaTypes = [[NSArray alloc] initWithObjects:(NSString *)kUTTypeMovie, (NSString *)kUTTypeImage, nil];
-    } else if (self.toChangeAvatar) {
-        self.mediaTypes = [[NSArray alloc] initWithObjects:(NSString *)kUTTypeImage, nil];
-    } else if (self.toShareThroughChat) {
-        if (self.sourceType == UIImagePickerControllerSourceTypeCamera) {
-            self.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:self.sourceType];
-        }
-    }
+    self.mediaTypes = [self mediaTypes];
     self.videoQuality = UIImagePickerControllerQualityTypeHigh;
     self.delegate = self;
 }
 
 #pragma mark - Private
+
+- (NSArray<NSString *> *)mediaTypes {
+    if (self.toChangeAvatar || MEGASdkManager.sharedMEGAChatSdk.mnz_existsActiveCall ) {
+        return [NSArray.alloc initWithObjects:(NSString *)kUTTypeImage, nil];
+    } else {
+        return [UIImagePickerController availableMediaTypesForSourceType:self.sourceType];
+    }
+}
 
 - (NSString *)createAvatarWithImagePath:(NSString *)imagePath {
     NSString *base64Handle = [MEGASdk base64HandleForUserHandle:[[[MEGASdkManager sharedMEGASdk] myUser] handle]];
