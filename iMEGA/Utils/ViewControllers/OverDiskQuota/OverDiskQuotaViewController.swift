@@ -55,7 +55,7 @@ final class OverDiskQuotaViewController: UIViewController {
             let styleMarks: StyleMarks = ["paragraph": .paragraph, "b": .emphasized]
             return formattedMessage.attributedString(
                 with: styleMarks,
-                attributedTextStyleFactory: createAttributedTextStyleFactory(from: traitCollection.theme))
+                attributedTextStyleFactory: traitCollection.theme.attributedTextStyleFactory)
         }
 
         func warningActionTitle(with traitCollection: UITraitCollection) -> NSAttributedString {
@@ -72,7 +72,7 @@ final class OverDiskQuotaViewController: UIViewController {
             let styleMarks: StyleMarks = ["warn": .warning, "body": .emphasized]
             return formattedTitleMessage.attributedString(
                 with: styleMarks,
-                attributedTextStyleFactory: createAttributedTextStyleFactory(from: traitCollection.theme))
+                attributedTextStyleFactory: traitCollection.theme.attributedTextStyleFactory)
         }
 
         // MARK: - Privates

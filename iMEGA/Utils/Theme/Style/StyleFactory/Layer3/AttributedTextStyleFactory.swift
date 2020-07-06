@@ -5,26 +5,30 @@ extension InterfaceStyle {
     var attributedTextStyleFactory: AttributedTextStyleFactory {
         let colorFactory = createColorFactory(from: self)
         let textFactory = createTextStyleFactory(from: colorFactory)
-        return AttributedTextStyleFactoryImpl(textStyleFactory: textFactory)
+        let paragraphFactory = createParagraphStyleFactory()
+        return AttributedTextStyleFactoryImpl(textStyleFactory: textFactory,
+                                              paragraphStyleFactory: paragraphFactory)
     }
 }
 
 protocol AttributedTextStyleFactory {
 
-    func styler(of textStyle: AttributedTextStyle) -> TextAttributesStyler
+    func styler(of textStyle: AttributedTextStyle) -> AttributedTextStyler
 }
 
 private struct AttributedTextStyleFactoryImpl: AttributedTextStyleFactory {
 
     let textStyleFactory: TextStyleFactory
 
-    func styler(of textStyle: AttributedTextStyle) -> TextAttributesStyler {
-        let textStyleFactory = self.textStyleFactory
+    let paragraphStyleFactory: ParagraphStyleFactory
 
+    func styler(of textStyle: AttributedTextStyle) -> AttributedTextStyler {
+        let textStyleFactory = self.textStyleFactory
+        let paragraphStyleFactory = self.paragraphStyleFactory
         switch textStyle {
         case .paragraph:
             return { attributes in
-                ParagraphStyle.centerAlignedWideSpacingParagraphStyle
+                paragraphStyleFactory.paragraphStyle(of: .centerAlignedWideSpacing)
                     .applied(on: textStyleFactory.textStyle(of: .paragraph)
                         .applied(on: attributes))
             }
