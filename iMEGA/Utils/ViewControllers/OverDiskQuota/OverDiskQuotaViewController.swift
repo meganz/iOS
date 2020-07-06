@@ -165,7 +165,7 @@ final class OverDiskQuotaViewController: UIViewController {
     private func setupNavigationController(_ navigationController: UINavigationController?) {
         title = AMLocalizedString("Storage Full", "Screen title")
         navigationController?.navigationBar.setTranslucent()
-        navigationController?.setTitleStyle(TextStyle(font: .headline, color: Color.Text.lightPrimary))
+        navigationController?.setTitleStyle(TextStyle(font: .headline, color: Color.Text.darkPrimary))
     }
 
     private func setupScrollView(_ scrollView: UIScrollView) {
@@ -205,7 +205,6 @@ final class OverDiskQuotaViewController: UIViewController {
     @objc fileprivate func didTapUpgradeButton(button: UIButton) {
         let upgradeViewController = UIStoryboard(name: "UpgradeAccount", bundle: nil)
             .instantiateViewController(withIdentifier: "UpgradeTableViewControllerID")
-        navigationController?.navigationBar.isTranslucent = false
         navigationController?.pushViewController(upgradeViewController, animated: true)
     }
 
