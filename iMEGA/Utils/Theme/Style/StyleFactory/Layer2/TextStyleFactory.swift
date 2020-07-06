@@ -1,6 +1,6 @@
 import Foundation
 
-func textStyleFactory(from colorFactory: ColorFactory) -> TextStyleFactory {
+func createTextStyleFactory(from colorFactory: ColorFactory) -> TextStyleFactory {
     TextStyleFactoryImpl(colorFactory: colorFactory)
 }
 
