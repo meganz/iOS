@@ -33,7 +33,7 @@ extension UITraitCollection {
         theme.customViewStyleFactory.styler(of: style)
     }
 
-    func styler(of style: AttributedTextStyle) -> TextAttributesStyler {
+    func styler(of style: AttributedTextStyle) -> AttributedTextStyler {
         theme.attributedTextStyleFactory.styler(of: style)
     }
 }
