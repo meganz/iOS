@@ -2,16 +2,20 @@ import Foundation
 
 func createLabelStyleFactory(from colorTheme: InterfaceStyle) -> LabelStyleFactory {
     let colorFactory = createColorFactory(from: colorTheme)
-    let textFactory = textStyleFactory(from: colorFactory)
-    return LabelStyleFactoryImpl(textStyleFactory: textFactory)
+    let textFactory = createTextStyleFactory(from: colorFactory)
+    let paragraphStyleFactory = createParagraphStyleFactory()
+    return LabelStyleFactoryImpl(textStyleFactory: textFactory, paragraphStyleFactory: paragraphStyleFactory)
 }
 
 typealias LabelStyler = (UILabel) -> Void
 
 enum LabelStyle {
     case headline
-    case noteMain
-    case noteSub
+
+    // MARK: - Paragraph
+
+    case note1
+    case note2
 }
 
 protocol LabelStyleFactory {
@@ -22,12 +26,13 @@ protocol LabelStyleFactory {
 private struct LabelStyleFactoryImpl: LabelStyleFactory {
 
     let textStyleFactory: TextStyleFactory
+    let paragraphStyleFactory: ParagraphStyleFactory
 
     func createStyler(of style: LabelStyle) -> LabelStyler {
         switch style {
         case .headline: return headlineStyler()
-        case .noteMain: return mainNoteStyler()
-        case .noteSub: return subNoteStyler()
+        case .note1: return mainNoteStyler()
+        case .note2: return subNoteStyler()
         }
     }
 
@@ -40,8 +45,9 @@ private struct LabelStyleFactoryImpl: LabelStyleFactory {
 
     private func mainNoteStyler() -> LabelStyler {
         let mainNoteTextStyler = textStyleFactory.textStyle(of: .caption1)
+        let paragraphStyleFactory = self.paragraphStyleFactory
         return { label in
-            ParagraphStyle.multilineWordWrappingNaturalAlignedParagraphStyle
+            paragraphStyleFactory.paragraphStyle(of: .naturalAlignedWordWrapping)
                 .applied(on: mainNoteTextStyler
                     .applied(on: label))
         }
@@ -49,8 +55,9 @@ private struct LabelStyleFactoryImpl: LabelStyleFactory {
 
     private func subNoteStyler() -> LabelStyler {
         let subNoteTextStyler = textStyleFactory.textStyle(of: .caption2)
+        let paragraphStyleFactory = self.paragraphStyleFactory
         return { label in
-            ParagraphStyle.multilineWordWrappingNaturalAlignedParagraphStyle
+            paragraphStyleFactory.paragraphStyle(of: .naturalAlignedWordWrapping)
                 .applied(on: subNoteTextStyler
                     .applied(on: label))
         }

@@ -2,7 +2,7 @@ import Foundation
 
 func createAttributedTextStyleFactory(from colorTheme: InterfaceStyle) -> AttributedTextStyleFactory {
     let colorFactory = createColorFactory(from: colorTheme)
-    let textFactory = textStyleFactory(from: colorFactory)
+    let textFactory = createTextStyleFactory(from: colorFactory)
     return AttributedTextStyleFactoryImpl(textStyleFactory: textFactory)
 }
 
