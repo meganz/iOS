@@ -2,7 +2,8 @@ import Foundation
 
 func createThemeButtonStyleFactory(from colorTheme: InterfaceStyle) -> ThemeButtonStyleFactory {
     let colorFactory = createColorFactory(from: colorTheme)
-    return ThemeButtonStyleFactoryImpl(colorFactory: colorFactory)
+    let cornerStyleFactory = createCornerStyleFactory()
+    return ThemeButtonStyleFactoryImpl(colorFactory: colorFactory, cornerStyleFactory: cornerStyleFactory)
 }
 
 typealias ButtonStyler = (UIButton) -> Void
@@ -14,31 +15,28 @@ enum MEGAThemeButtonStyle {
 
 protocol ThemeButtonStyleFactory {
 
-    func buttonStyle(of buttonStyle: MEGAThemeButtonStyle) -> ButtonStyler
-
-    func borderStyle(of borderStyle: MEGAThemeButtonStyle) -> BorderStyle
-
-    func buttonTextStyle(of buttonStyle: MEGAThemeButtonStyle) -> ButtonStatedStyle<TextStyle>
-
-    func buttonBackgroundStyle(of buttonStyle: MEGAThemeButtonStyle) -> ButtonStatedStyle<BackgroundStyle>
+    func styler(of buttonStyle: MEGAThemeButtonStyle) -> ButtonStyler
 }
 
 private struct ThemeButtonStyleFactoryImpl: ThemeButtonStyleFactory {
 
     let colorFactory: ColorFactory
 
-    func buttonStyle(of buttonStyle: MEGAThemeButtonStyle) -> ButtonStyler {
+    let cornerStyleFactory: CornerStyleFactory
+
+    func styler(of buttonStyle: MEGAThemeButtonStyle) -> ButtonStyler {
+        let cornerStyleFactory = self.cornerStyleFactory
         switch buttonStyle {
         case .primary:
             return { button in
-                CornerStyle.roundCornerStyle
+                cornerStyleFactory.cornerStyle(of: .round)
                     .applied(on: self.buttonBackgroundStyle(of: buttonStyle)
                         .applied(on: self.buttonTextStyle(of: buttonStyle)
                             .applied(on: button)))
             }
         case .secondary:
             return { button in
-                CornerStyle.roundCornerStyle
+                cornerStyleFactory.cornerStyle(of: .round)
                     .applied(on: self.borderStyle(of: buttonStyle)
                         .applied(on: self.buttonBackgroundStyle(of: buttonStyle)
                             .applied(on: self.buttonTextStyle(of: buttonStyle)
