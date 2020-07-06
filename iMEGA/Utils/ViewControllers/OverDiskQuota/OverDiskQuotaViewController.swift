@@ -138,7 +138,7 @@ final class OverDiskQuotaViewController: UIViewController {
     }
 
     private func setupTraitCollectionAwareView(with traitCollection: UITraitCollection) {
-        setupTitleLabel(titleLabel)
+        setupTitleLabel(titleLabel, with: traitCollection)
         setupMessageLabel(warningParagaphLabel,
                           withMessage: overDiskQuotaAdvicer.overDiskQuotaMessage(with: traitCollection))
         setupWarningView(warningView,
@@ -176,9 +176,9 @@ final class OverDiskQuotaViewController: UIViewController {
         warningView.updateTitle(with: text)
     }
 
-    private func setupTitleLabel(_ titleLabel: UILabel) {
+    private func setupTitleLabel(_ titleLabel: UILabel, with trait: UITraitCollection) {
         titleLabel.text = AMLocalizedString("Your Data is at Risk!", "Warning title message tells user data in danger.")
-        let style = createLabelStyleFactory(from: traitCollection.theme).createStyler(of: .headline)
+        let style = traitCollection.styler(of: .headline)
         style(titleLabel)
     }
 
@@ -187,14 +187,14 @@ final class OverDiskQuotaViewController: UIViewController {
     }
 
     private func setupUpgradeButton(_ button: UIButton) {
-        let style = createThemeButtonStyleFactory(from: traitCollection.theme).buttonStyle(of: .primary)
+        let style = createThemeButtonStyleFactory(from: traitCollection.theme).styler(of: .primary)
         style(button)
         button.setTitle(AMLocalizedString("upgrade", "Upgrade"), for: .normal)
         button.addTarget(self, action: .didTapUpgradeButton, for: .touchUpInside)
     }
 
     private func setupDismissButton(_ button: UIButton) {
-        let style = createThemeButtonStyleFactory(from: traitCollection.theme).buttonStyle(of: .secondary)
+        let style = createThemeButtonStyleFactory(from: traitCollection.theme).styler(of: .secondary)
         style(button)
         button.setTitle(AMLocalizedString("dismiss", "Dismiss"), for: .normal)
         button.addTarget(self, action: .didTapDismissButton, for: .touchUpInside)

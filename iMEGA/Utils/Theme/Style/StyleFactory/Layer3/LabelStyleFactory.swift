@@ -9,7 +9,7 @@ func createLabelStyleFactory(from colorTheme: InterfaceStyle) -> LabelStyleFacto
 
 typealias LabelStyler = (UILabel) -> Void
 
-enum LabelStyle {
+enum MEGALabelStyle {
     case headline
 
     // MARK: - Paragraph
@@ -20,7 +20,7 @@ enum LabelStyle {
 
 protocol LabelStyleFactory {
 
-    func createStyler(of style: LabelStyle) -> LabelStyler
+    func styler(of style: MEGALabelStyle) -> LabelStyler
 }
 
 private struct LabelStyleFactoryImpl: LabelStyleFactory {
@@ -28,7 +28,7 @@ private struct LabelStyleFactoryImpl: LabelStyleFactory {
     let textStyleFactory: TextStyleFactory
     let paragraphStyleFactory: ParagraphStyleFactory
 
-    func createStyler(of style: LabelStyle) -> LabelStyler {
+    func styler(of style: MEGALabelStyle) -> LabelStyler {
         switch style {
         case .headline: return headlineStyler()
         case .note1: return mainNoteStyler()

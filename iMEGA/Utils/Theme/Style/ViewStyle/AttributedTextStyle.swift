@@ -11,7 +11,7 @@ enum AttributedTextStyle {
                                of attributedTextStyleFactory: AttributedTextStyleFactory
     ) -> TextAttributesStyler {
         return composedStyler(from: styles.map {
-            attributedTextStyleFactory.atrributedTextStyle(of: $0)
+            attributedTextStyleFactory.styler(of: $0)
         })
     }
 

@@ -11,7 +11,6 @@
 		137361931A6664C300B740E8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 137361921A6664C300B740E8 /* AppDelegate.m */; };
 		1373619E1A6664C300B740E8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1373619D1A6664C300B740E8 /* Images.xcassets */; };
 		2F0CB57123DFD209009F09A2 /* DocScannerSaveSettingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0CB56F23DFD209009F09A2 /* DocScannerSaveSettingTableViewController.swift */; };
-		2F25A2D9240C8407005EF524 /* MEGAFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B695E57F23275A4E00D12B9E /* MEGAFunctions.swift */; };
 		2F25A2DA240C840A005EF524 /* MEGAFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B695E57F23275A4E00D12B9E /* MEGAFunctions.swift */; };
 		2F25A2DC240C92C0005EF524 /* StorageFullModalAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5EC89E24075BA30017F334 /* StorageFullModalAlertViewController.swift */; };
 		2F25A2DD240C92C1005EF524 /* StorageFullModalAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5EC89E24075BA30017F334 /* StorageFullModalAlertViewController.swift */; };
@@ -301,45 +300,25 @@
 		5D01995724AD64C1006ED2A0 /* InterfaceStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D01995624AD64C1006ED2A0 /* InterfaceStyle.swift */; };
 		5D03C99B248893E600BE5EEB /* UINavigationBar+Customisation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D03C99A248893E600BE5EEB /* UINavigationBar+Customisation.swift */; };
 		5D18BDA2249718280045F9B3 /* MarkedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D18BDA1249718280045F9B3 /* MarkedString.swift */; };
+		5D1B23E724AEFBB100ACE1C5 /* MEGAShadowStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B23E624AEFBB100ACE1C5 /* MEGAShadowStyle.swift */; };
+		5D1B23EE24AF2FF900ACE1C5 /* ThemeButtonColorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B23ED24AF2FF900ACE1C5 /* ThemeButtonColorFactory.swift */; };
+		5D1B23F124AF304000ACE1C5 /* PrimaryThemeButtonTextColorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B23F024AF304000ACE1C5 /* PrimaryThemeButtonTextColorFactory.swift */; };
+		5D1B23F324AF335000ACE1C5 /* SecondaryThemeButtonTextColorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B23F224AF335000ACE1C5 /* SecondaryThemeButtonTextColorFactory.swift */; };
+		5D1B23F524AF34EE00ACE1C5 /* ColorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B23F424AF34EE00ACE1C5 /* ColorFactory.swift */; };
+		5D1B23F724AF352600ACE1C5 /* LightColorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B23F624AF352600ACE1C5 /* LightColorFactory.swift */; };
+		5D1B23F924AF353E00ACE1C5 /* DarkColorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B23F824AF353E00ACE1C5 /* DarkColorFactory.swift */; };
+		5D1B23FC24AF5C8100ACE1C5 /* TextStyleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B23FB24AF5C8100ACE1C5 /* TextStyleFactory.swift */; };
+		5D1B23FF24AF5E3900ACE1C5 /* BorderStyyleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B23FE24AF5E3900ACE1C5 /* BorderStyyleFactory.swift */; };
+		5D1B240124AF5F4400ACE1C5 /* ParagraphStyleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B240024AF5F4400ACE1C5 /* ParagraphStyleFactory.swift */; };
+		5D1B240524AF60AD00ACE1C5 /* BackgroundStyleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B240424AF60AD00ACE1C5 /* BackgroundStyleFactory.swift */; };
+		5D1B240724AF619100ACE1C5 /* CornerStyleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B240624AF619100ACE1C5 /* CornerStyleFactory.swift */; };
+		5D1B240924AF61F000ACE1C5 /* AttributedTextStyleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B240824AF61F000ACE1C5 /* AttributedTextStyleFactory.swift */; };
+		5D1B240B24AF625200ACE1C5 /* MEGAColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B240A24AF625200ACE1C5 /* MEGAColor.swift */; };
+		5D1B240D24AF669D00ACE1C5 /* LabelStyleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B240C24AF669D00ACE1C5 /* LabelStyleFactory.swift */; };
+		5D1B241024AF676C00ACE1C5 /* ThemeButtonStyleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B240F24AF676C00ACE1C5 /* ThemeButtonStyleFactory.swift */; };
+		5D1B241224AF680400ACE1C5 /* CustomViewStyleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B241124AF680400ACE1C5 /* CustomViewStyleFactory.swift */; };
 		5D4D672624AABDDF0034A4CD /* UIView+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4D672524AABDDF0034A4CD /* UIView+Additions.swift */; };
 		5D4D672824AABE050034A4CD /* UINavigationViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4D672724AABE050034A4CD /* UINavigationViewController+Additions.swift */; };
-		5D1B23E724AEFBB100ACE1C5 /* MEGAShadowStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B23E624AEFBB100ACE1C5 /* MEGAShadowStyle.swift */; };
-		5D1B23EE24AF2FF900ACE1C5 /* ThemeButtonColorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B23ED24AF2FF900ACE1C5 /* ThemeButtonColorFactory.swift */; };
-		5D1B23F124AF304000ACE1C5 /* PrimaryThemeButtonTextColorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B23F024AF304000ACE1C5 /* PrimaryThemeButtonTextColorFactory.swift */; };
-		5D1B23F324AF335000ACE1C5 /* SecondaryThemeButtonTextColorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B23F224AF335000ACE1C5 /* SecondaryThemeButtonTextColorFactory.swift */; };
-		5D1B23F524AF34EE00ACE1C5 /* ColorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B23F424AF34EE00ACE1C5 /* ColorFactory.swift */; };
-		5D1B23F724AF352600ACE1C5 /* LightColorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B23F624AF352600ACE1C5 /* LightColorFactory.swift */; };
-		5D1B23F924AF353E00ACE1C5 /* DarkColorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B23F824AF353E00ACE1C5 /* DarkColorFactory.swift */; };
-		5D1B23FC24AF5C8100ACE1C5 /* TextStyleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B23FB24AF5C8100ACE1C5 /* TextStyleFactory.swift */; };
-		5D1B23FF24AF5E3900ACE1C5 /* BorderStyyleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B23FE24AF5E3900ACE1C5 /* BorderStyyleFactory.swift */; };
-		5D1B240124AF5F4400ACE1C5 /* ParagraphStyleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B240024AF5F4400ACE1C5 /* ParagraphStyleFactory.swift */; };
-		5D1B240524AF60AD00ACE1C5 /* BackgroundStyleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B240424AF60AD00ACE1C5 /* BackgroundStyleFactory.swift */; };
-		5D1B240724AF619100ACE1C5 /* CornerStyleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B240624AF619100ACE1C5 /* CornerStyleFactory.swift */; };
-		5D1B240924AF61F000ACE1C5 /* AttributedTextStyleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B240824AF61F000ACE1C5 /* AttributedTextStyleFactory.swift */; };
-		5D1B240B24AF625200ACE1C5 /* MEGAColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B240A24AF625200ACE1C5 /* MEGAColor.swift */; };
-		5D1B240D24AF669D00ACE1C5 /* LabelStyleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B240C24AF669D00ACE1C5 /* LabelStyleFactory.swift */; };
-		5D1B241024AF676C00ACE1C5 /* ThemeButtonStyleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B240F24AF676C00ACE1C5 /* ThemeButtonStyleFactory.swift */; };
-		5D1B241224AF680400ACE1C5 /* CustomViewStyleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B241124AF680400ACE1C5 /* CustomViewStyleFactory.swift */; };
-		5D1B23E724AEFBB100ACE1C5 /* MEGAShadowStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B23E624AEFBB100ACE1C5 /* MEGAShadowStyle.swift */; };
-		5D1B23EE24AF2FF900ACE1C5 /* ThemeButtonColorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B23ED24AF2FF900ACE1C5 /* ThemeButtonColorFactory.swift */; };
-		5D1B23F124AF304000ACE1C5 /* PrimaryThemeButtonTextColorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B23F024AF304000ACE1C5 /* PrimaryThemeButtonTextColorFactory.swift */; };
-		5D1B23F324AF335000ACE1C5 /* SecondaryThemeButtonTextColorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B23F224AF335000ACE1C5 /* SecondaryThemeButtonTextColorFactory.swift */; };
-		5D1B23F524AF34EE00ACE1C5 /* ColorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B23F424AF34EE00ACE1C5 /* ColorFactory.swift */; };
-		5D1B23F724AF352600ACE1C5 /* LightColorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B23F624AF352600ACE1C5 /* LightColorFactory.swift */; };
-		5D1B23F924AF353E00ACE1C5 /* DarkColorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B23F824AF353E00ACE1C5 /* DarkColorFactory.swift */; };
-		5D1B23FC24AF5C8100ACE1C5 /* TextStyleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B23FB24AF5C8100ACE1C5 /* TextStyleFactory.swift */; };
-		5D1B23FF24AF5E3900ACE1C5 /* BorderStyyleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B23FE24AF5E3900ACE1C5 /* BorderStyyleFactory.swift */; };
-		5D1B240124AF5F4400ACE1C5 /* ParagraphStyleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B240024AF5F4400ACE1C5 /* ParagraphStyleFactory.swift */; };
-		5D1B240524AF60AD00ACE1C5 /* BackgroundStyleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B240424AF60AD00ACE1C5 /* BackgroundStyleFactory.swift */; };
-		5D1B240724AF619100ACE1C5 /* CornerStyleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B240624AF619100ACE1C5 /* CornerStyleFactory.swift */; };
-		5D1B240924AF61F000ACE1C5 /* AttributedTextStyleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B240824AF61F000ACE1C5 /* AttributedTextStyleFactory.swift */; };
-		5D1B240B24AF625200ACE1C5 /* MEGAColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B240A24AF625200ACE1C5 /* MEGAColor.swift */; };
-		5D1B240D24AF669D00ACE1C5 /* LabelStyleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B240C24AF669D00ACE1C5 /* LabelStyleFactory.swift */; };
-		5D1B241024AF676C00ACE1C5 /* ThemeButtonStyleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B240F24AF676C00ACE1C5 /* ThemeButtonStyleFactory.swift */; };
-		5D1B241224AF680400ACE1C5 /* CustomViewStyleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B241124AF680400ACE1C5 /* CustomViewStyleFactory.swift */; };
-		5D4D672B24AC02C60034A4CD /* UINavigationViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4D672924AC02C60034A4CD /* UINavigationViewController+Additions.swift */; };
-		5D4D672C24AC02C60034A4CD /* UIView+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4D672A24AC02C60034A4CD /* UIView+Additions.swift */; };
-		5D4D672D24AC0AC60034A4CD /* MarkedStringParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DEFE99324A1AE0E00DFF256 /* MarkedStringParser.swift */; };
 		5D6465FF2488AE6C006030A5 /* UIViewController+ScrollViewConentInsets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6465FE2488AE6C006030A5 /* UIViewController+ScrollViewConentInsets.swift */; };
 		5D646602248909F8006030A5 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D646601248909F7006030A5 /* Font.swift */; };
 		5D64660424890A34006030A5 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D64660324890A34006030A5 /* Color.swift */; };
@@ -369,7 +348,6 @@
 		5DC7232424A424BB00E31FB6 /* UnitDataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC7232324A424BB00E31FB6 /* UnitDataStorage.swift */; };
 		5DE448E6248D078800EE00CB /* AttributedTextStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE448E5248D078800EE00CB /* AttributedTextStyle.swift */; };
 		5DE448EB248D15F300EE00CB /* NibOwnerLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE448EA248D15F300EE00CB /* NibOwnerLoadable.swift */; };
-		5DE448EE248F673700EE00CB /* ViewStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE448ED248F673700EE00CB /* ViewStyle.swift */; };
 		5DEFE99424A1AE0E00DFF256 /* MarkedStringParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DEFE99324A1AE0E00DFF256 /* MarkedStringParser.swift */; };
 		5DF016812499BD60005A121D /* MEGAPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF016802499BD60005A121D /* MEGAPlan.swift */; };
 		5DF016832499BD7B005A121D /* MEGAPlanService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF016822499BD7B005A121D /* MEGAPlanService.swift */; };
@@ -1717,44 +1695,25 @@
 		5D01995624AD64C1006ED2A0 /* InterfaceStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterfaceStyle.swift; sourceTree = "<group>"; };
 		5D03C99A248893E600BE5EEB /* UINavigationBar+Customisation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationBar+Customisation.swift"; sourceTree = "<group>"; };
 		5D18BDA1249718280045F9B3 /* MarkedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkedString.swift; sourceTree = "<group>"; };
+		5D1B23E624AEFBB100ACE1C5 /* MEGAShadowStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAShadowStyle.swift; sourceTree = "<group>"; };
+		5D1B23ED24AF2FF900ACE1C5 /* ThemeButtonColorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeButtonColorFactory.swift; sourceTree = "<group>"; };
+		5D1B23F024AF304000ACE1C5 /* PrimaryThemeButtonTextColorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryThemeButtonTextColorFactory.swift; sourceTree = "<group>"; };
+		5D1B23F224AF335000ACE1C5 /* SecondaryThemeButtonTextColorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondaryThemeButtonTextColorFactory.swift; sourceTree = "<group>"; };
+		5D1B23F424AF34EE00ACE1C5 /* ColorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorFactory.swift; sourceTree = "<group>"; };
+		5D1B23F624AF352600ACE1C5 /* LightColorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightColorFactory.swift; sourceTree = "<group>"; };
+		5D1B23F824AF353E00ACE1C5 /* DarkColorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarkColorFactory.swift; sourceTree = "<group>"; };
+		5D1B23FB24AF5C8100ACE1C5 /* TextStyleFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextStyleFactory.swift; sourceTree = "<group>"; };
+		5D1B23FE24AF5E3900ACE1C5 /* BorderStyyleFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderStyyleFactory.swift; sourceTree = "<group>"; };
+		5D1B240024AF5F4400ACE1C5 /* ParagraphStyleFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParagraphStyleFactory.swift; sourceTree = "<group>"; };
+		5D1B240424AF60AD00ACE1C5 /* BackgroundStyleFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundStyleFactory.swift; sourceTree = "<group>"; };
+		5D1B240624AF619100ACE1C5 /* CornerStyleFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CornerStyleFactory.swift; sourceTree = "<group>"; };
+		5D1B240824AF61F000ACE1C5 /* AttributedTextStyleFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedTextStyleFactory.swift; sourceTree = "<group>"; };
+		5D1B240A24AF625200ACE1C5 /* MEGAColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAColor.swift; sourceTree = "<group>"; };
+		5D1B240C24AF669D00ACE1C5 /* LabelStyleFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelStyleFactory.swift; sourceTree = "<group>"; };
+		5D1B240F24AF676C00ACE1C5 /* ThemeButtonStyleFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeButtonStyleFactory.swift; sourceTree = "<group>"; };
+		5D1B241124AF680400ACE1C5 /* CustomViewStyleFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViewStyleFactory.swift; sourceTree = "<group>"; };
 		5D4D672524AABDDF0034A4CD /* UIView+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Additions.swift"; sourceTree = "<group>"; };
 		5D4D672724AABE050034A4CD /* UINavigationViewController+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationViewController+Additions.swift"; sourceTree = "<group>"; };
-		5D1B23E624AEFBB100ACE1C5 /* MEGAShadowStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAShadowStyle.swift; sourceTree = "<group>"; };
-		5D1B23ED24AF2FF900ACE1C5 /* ThemeButtonColorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeButtonColorFactory.swift; sourceTree = "<group>"; };
-		5D1B23F024AF304000ACE1C5 /* PrimaryThemeButtonTextColorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryThemeButtonTextColorFactory.swift; sourceTree = "<group>"; };
-		5D1B23F224AF335000ACE1C5 /* SecondaryThemeButtonTextColorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondaryThemeButtonTextColorFactory.swift; sourceTree = "<group>"; };
-		5D1B23F424AF34EE00ACE1C5 /* ColorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorFactory.swift; sourceTree = "<group>"; };
-		5D1B23F624AF352600ACE1C5 /* LightColorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightColorFactory.swift; sourceTree = "<group>"; };
-		5D1B23F824AF353E00ACE1C5 /* DarkColorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarkColorFactory.swift; sourceTree = "<group>"; };
-		5D1B23FB24AF5C8100ACE1C5 /* TextStyleFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextStyleFactory.swift; sourceTree = "<group>"; };
-		5D1B23FE24AF5E3900ACE1C5 /* BorderStyyleFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderStyyleFactory.swift; sourceTree = "<group>"; };
-		5D1B240024AF5F4400ACE1C5 /* ParagraphStyleFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParagraphStyleFactory.swift; sourceTree = "<group>"; };
-		5D1B240424AF60AD00ACE1C5 /* BackgroundStyleFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundStyleFactory.swift; sourceTree = "<group>"; };
-		5D1B240624AF619100ACE1C5 /* CornerStyleFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CornerStyleFactory.swift; sourceTree = "<group>"; };
-		5D1B240824AF61F000ACE1C5 /* AttributedTextStyleFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedTextStyleFactory.swift; sourceTree = "<group>"; };
-		5D1B240A24AF625200ACE1C5 /* MEGAColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAColor.swift; sourceTree = "<group>"; };
-		5D1B240C24AF669D00ACE1C5 /* LabelStyleFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelStyleFactory.swift; sourceTree = "<group>"; };
-		5D1B240F24AF676C00ACE1C5 /* ThemeButtonStyleFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeButtonStyleFactory.swift; sourceTree = "<group>"; };
-		5D1B241124AF680400ACE1C5 /* CustomViewStyleFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViewStyleFactory.swift; sourceTree = "<group>"; };
-		5D1B23E624AEFBB100ACE1C5 /* MEGAShadowStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAShadowStyle.swift; sourceTree = "<group>"; };
-		5D1B23ED24AF2FF900ACE1C5 /* ThemeButtonColorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeButtonColorFactory.swift; sourceTree = "<group>"; };
-		5D1B23F024AF304000ACE1C5 /* PrimaryThemeButtonTextColorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryThemeButtonTextColorFactory.swift; sourceTree = "<group>"; };
-		5D1B23F224AF335000ACE1C5 /* SecondaryThemeButtonTextColorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondaryThemeButtonTextColorFactory.swift; sourceTree = "<group>"; };
-		5D1B23F424AF34EE00ACE1C5 /* ColorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorFactory.swift; sourceTree = "<group>"; };
-		5D1B23F624AF352600ACE1C5 /* LightColorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightColorFactory.swift; sourceTree = "<group>"; };
-		5D1B23F824AF353E00ACE1C5 /* DarkColorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarkColorFactory.swift; sourceTree = "<group>"; };
-		5D1B23FB24AF5C8100ACE1C5 /* TextStyleFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextStyleFactory.swift; sourceTree = "<group>"; };
-		5D1B23FE24AF5E3900ACE1C5 /* BorderStyyleFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderStyyleFactory.swift; sourceTree = "<group>"; };
-		5D1B240024AF5F4400ACE1C5 /* ParagraphStyleFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParagraphStyleFactory.swift; sourceTree = "<group>"; };
-		5D1B240424AF60AD00ACE1C5 /* BackgroundStyleFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundStyleFactory.swift; sourceTree = "<group>"; };
-		5D1B240624AF619100ACE1C5 /* CornerStyleFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CornerStyleFactory.swift; sourceTree = "<group>"; };
-		5D1B240824AF61F000ACE1C5 /* AttributedTextStyleFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedTextStyleFactory.swift; sourceTree = "<group>"; };
-		5D1B240A24AF625200ACE1C5 /* MEGAColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAColor.swift; sourceTree = "<group>"; };
-		5D1B240C24AF669D00ACE1C5 /* LabelStyleFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelStyleFactory.swift; sourceTree = "<group>"; };
-		5D1B240F24AF676C00ACE1C5 /* ThemeButtonStyleFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeButtonStyleFactory.swift; sourceTree = "<group>"; };
-		5D1B241124AF680400ACE1C5 /* CustomViewStyleFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViewStyleFactory.swift; sourceTree = "<group>"; };
-		5D4D672924AC02C60034A4CD /* UINavigationViewController+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationViewController+Additions.swift"; sourceTree = "<group>"; };
-		5D4D672A24AC02C60034A4CD /* UIView+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Additions.swift"; sourceTree = "<group>"; };
 		5D6465FE2488AE6C006030A5 /* UIViewController+ScrollViewConentInsets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+ScrollViewConentInsets.swift"; sourceTree = "<group>"; };
 		5D646601248909F7006030A5 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
 		5D64660324890A34006030A5 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
@@ -4220,6 +4179,16 @@
 			path = "Two Factor Authentication";
 			sourceTree = "<group>";
 		};
+		5BF4EEDC2432039C00D39415 /* CustomModalAlert */ = {
+			isa = PBXGroup;
+			children = (
+				5BF4EEDD243203C300D39415 /* CustomModalAlertViewController.h */,
+				A819B33E1EAFA7E2004592F9 /* CustomModalAlertViewController.m */,
+				A819B3411EAFA844004592F9 /* CustomModalAlertViewController.xib */,
+			);
+			path = CustomModalAlert;
+			sourceTree = "<group>";
+		};
 		5D03C99D2488972400BE5EEB /* UIKit */ = {
 			isa = PBXGroup;
 			children = (
@@ -4293,6 +4262,20 @@
 			path = Layer3;
 			sourceTree = "<group>";
 		};
+		5D33E40524B2DD7B003DC1E2 /* BasicStyle */ = {
+			isa = PBXGroup;
+			children = (
+				5D64660924890CC7006030A5 /* TextStyle.swift */,
+				5D8DC6B0248CB0C40067A4F9 /* CornerStyle.swift */,
+				5D8DC6AE248CB0AE0067A4F9 /* BorderStyle.swift */,
+				5D8DC6AC248CB0940067A4F9 /* ShadowStyle.swift */,
+				5D8DC6A8248CB0390067A4F9 /* BackgroundStyle.swift */,
+				5DB1F47B2489E5CC001C1D5D /* ParagraphStyle.swift */,
+				5D8DC6B7248CB30D0067A4F9 /* ButtonStatedStyle.swift */,
+			);
+			path = BasicStyle;
+			sourceTree = "<group>";
+		};
 		5D646600248909D5006030A5 /* Theme */ = {
 			isa = PBXGroup;
 			children = (
@@ -4361,17 +4344,11 @@
 		5D8DC6B6248CB2E00067A4F9 /* Style */ = {
 			isa = PBXGroup;
 			children = (
+				5D33E40524B2DD7B003DC1E2 /* BasicStyle */,
 				5DA253F524AF794E004DA739 /* ThemeColor */,
 				5D1B23EC24AF2FD200ACE1C5 /* StyleFactory */,
 				5D1B23DB24AEF73200ACE1C5 /* StyleKeys */,
 				5D8DC6B9248CB4230067A4F9 /* ViewStyle */,
-				5D64660924890CC7006030A5 /* TextStyle.swift */,
-				5D8DC6B0248CB0C40067A4F9 /* CornerStyle.swift */,
-				5D8DC6AE248CB0AE0067A4F9 /* BorderStyle.swift */,
-				5D8DC6AC248CB0940067A4F9 /* ShadowStyle.swift */,
-				5D8DC6A8248CB0390067A4F9 /* BackgroundStyle.swift */,
-				5DB1F47B2489E5CC001C1D5D /* ParagraphStyle.swift */,
-				5D8DC6B7248CB30D0067A4F9 /* ButtonStatedStyle.swift */,
 			);
 			path = Style;
 			sourceTree = "<group>";
@@ -4424,16 +4401,6 @@
 				5DF016802499BD60005A121D /* MEGAPlan.swift */,
 			);
 			path = ProductSubscriptionPlanService;
-			sourceTree = "<group>";
-		};
-		5BF4EEDC2432039C00D39415 /* CustomModalAlert */ = {
-			isa = PBXGroup;
-			children = (
-				5BF4EEDD243203C300D39415 /* CustomModalAlertViewController.h */,
-				A819B33E1EAFA7E2004592F9 /* CustomModalAlertViewController.m */,
-				A819B3411EAFA844004592F9 /* CustomModalAlertViewController.xib */,
-			);
-			path = CustomModalAlert;
 			sourceTree = "<group>";
 		};
 		7747B2D5208623550011814E /* Network */ = {
@@ -6712,7 +6679,6 @@
 				417279561DB663FA001AC818 /* JSQMessagesInputToolbar.m in Sources */,
 				A802B1FD1FAB295A00AC8BB0 /* MEGAChatStartCallRequestDelegate.m in Sources */,
 				5D18BDA2249718280045F9B3 /* MarkedString.swift in Sources */,
-				E8B3FE781DDB379C008A9C82 /* HelpModalViewController.m in Sources */,
 				B69983222294E1EC0021BE31 /* SMSNavigationViewController.swift in Sources */,
 				A83892431EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.m in Sources */,
 				415C6B921CE39D6100B13070 /* SVProgressAnimatedView.m in Sources */,
@@ -6728,8 +6694,6 @@
 				B6BD012221B7123B00E97086 /* UploadRecordsCollator.m in Sources */,
 				4182B4EF1BF4ADD400E6FFB8 /* ContactRequestsTableViewCell.m in Sources */,
 				5D79B52224986A4F0070FECD /* PlanAdviser.swift in Sources */,
-				5B8C86912448ACA900D23D43 /* (null) in Sources */,
-				5B8C86912448ACA900D23D43 /* (null) in Sources */,
 				BF0BBEFE230627BE001FD542 /* UIViewController+MNZCategory.m in Sources */,
 				B68C42CB216DAA85003C5A50 /* CameraUploadOperation.m in Sources */,
 				41840EEA1E811CD600D8308D /* MEGAApplication.m in Sources */,
@@ -6749,8 +6713,6 @@
 				774FA6612090C0030061DD85 /* MEGAMessageDialogView.m in Sources */,
 				5B2E91921F1F98F4003C6920 /* MEGACopyRequestDelegate.m in Sources */,
 				77F1DBE52056B767005D5F0E /* MEGASetAttrUserRequestDelegate.m in Sources */,
-				41EC68461D76DA93003EC803 /* UIBarButtonItem+Badge.m in Sources */,
-				2F8F5F1623691A390049603F /* UINavigationViewController+Additions.swift in Sources */,
 				BFAB114523CEA5C300BCE72D /* PhotoCarouselFlowLayout.swift in Sources */,
 				A86B9F2F2316D6AB00F35E7A /* FLEXDefaultsExplorerViewController.m in Sources */,
 				A89629751FACE78B00F02F7A /* MEGACallManager.m in Sources */,
@@ -6767,7 +6729,6 @@
 				A86B9F872316D6AB00F35E7A /* FLEXResources.m in Sources */,
 				137361901A6664C300B740E8 /* main.m in Sources */,
 				5DEFE99424A1AE0E00DFF256 /* MarkedStringParser.swift in Sources */,
-				417B5AAE1DEC792400A193D5 /* MOUser+CoreDataProperties.m in Sources */,
 				5DB1F478248945F1001C1D5D /* UIView+Border.swift in Sources */,
 				A86B9F372316D6AB00F35E7A /* FLEXSubtitleTableViewCell.m in Sources */,
 				A824A9192039ECD700D777D2 /* SDAVAssetExportSession.m in Sources */,

@@ -24,7 +24,7 @@ final class OverDisckQuotaWarningView: UIView, NibOwnerLoadable {
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        if #available(iOS 13, *) {
+        if #available(iOS 13, *), previousTraitCollection != traitCollection {
             setupTraitCollectionAwareView(with: traitCollection)
         }
     }
@@ -40,30 +40,30 @@ final class OverDisckQuotaWarningView: UIView, NibOwnerLoadable {
     private func setupView() {
         translatesAutoresizingMaskIntoConstraints = false
         loadNibContent()
-        setupTitleLabel(titleLabel)
+        setupTitleLabel(titleLabel, with: traitCollection)
         setupTraitCollectionAwareView(with: traitCollection)
     }
 
     private func setupTraitCollectionAwareView(with trait: UITraitCollection) {
-        setupContainerView(containerView)
-        setupDetailLabel(detailLabel)
+        setupContainerView(containerView, with: traitCollection)
+        setupDetailLabel(detailLabel, with: traitCollection)
     }
 
-    private func setupContainerView(_ containerView: UIView) {
-        let customeViewStyle = createCustomViewStyleFactory(from: createColorFactory(from: traitCollection.theme))
-            .viewStyle(of: .warning)
+    private func setupContainerView(_ containerView: UIView, with trait: UITraitCollection) {
+        let customeViewStyle = createCustomViewStyleFactory(from: trait.theme)
+            .styler(of: .warning)
         customeViewStyle(containerView)
     }
 
-    private func setupDetailLabel(_ detailLabel: UILabel) {
-        let style = createLabelStyleFactory(from: traitCollection.theme).createStyler(of: .note2)
+    private func setupDetailLabel(_ detailLabel: UILabel, with trait: UITraitCollection) {
+        let style = trait.styler(of: .note2)
         style(detailLabel)
         detailLabel.text = AMLocalizedString("After that, your data is subject to deletion.",
                                              "Warning message to tell user your data is about to be deleted.")
     }
 
-    private func setupTitleLabel(_ titleLabel: UILabel) {
-        let style = createLabelStyleFactory(from: traitCollection.theme).createStyler(of: .note1)
+    private func setupTitleLabel(_ titleLabel: UILabel, with trait: UITraitCollection) {
+        let style = trait.styler(of: .note1)
         style(titleLabel)
     }
 }

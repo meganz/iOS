@@ -8,14 +8,14 @@ func createAttributedTextStyleFactory(from colorTheme: InterfaceStyle) -> Attrib
 
 protocol AttributedTextStyleFactory {
 
-    func atrributedTextStyle(of textStyle: AttributedTextStyle) -> TextAttributesStyler
+    func styler(of textStyle: AttributedTextStyle) -> TextAttributesStyler
 }
 
 private struct AttributedTextStyleFactoryImpl: AttributedTextStyleFactory {
 
     let textStyleFactory: TextStyleFactory
 
-    func atrributedTextStyle(of textStyle: AttributedTextStyle) -> TextAttributesStyler {
+    func styler(of textStyle: AttributedTextStyle) -> TextAttributesStyler {
         let textStyleFactory = self.textStyleFactory
 
         switch textStyle {
