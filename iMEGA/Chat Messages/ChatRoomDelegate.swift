@@ -312,27 +312,29 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
     func insertMessage(_ message: MEGAChatMessage, scrollToBottom: Bool = false) {
         let lastSectionVisible = isLastSectionVisible()
         let unreads = MEGASdkManager.sharedMEGAChatSdk()?.myUserHandle == message.userHandle ? 0 : chatRoom.unreadCount
-        
-        
         var unreadNotificationMessageIndex: Int?
-        let index = chatMessage.firstIndex { object -> Bool in
-            guard object is ChatNotificationMessage else {
-                return false
+
+        if unreads > 0 {
+            let index = chatMessage.firstIndex { object -> Bool in
+                guard object is ChatNotificationMessage else {
+                    return false
+                }
+                
+                return true
             }
             
-            return true
-        }
-        
-        if let index = index,
-            let notificationMessage = chatMessage[index] as? ChatNotificationMessage,
-            case .unreadMessage(let count) = notificationMessage.type {
-            chatMessage[index] = ChatNotificationMessage(type: .unreadMessage(count + 1))
-            unreadNotificationMessageIndex = index
-        } else {
-            if MEGASdkManager.sharedMEGAChatSdk()?.myUserHandle != message.userHandle {
-                chatMessage.append(ChatNotificationMessage(type: .unreadMessage(unreads)))
-                unreadNotificationMessageIndex = chatMessage.count - 1
+            if let index = index,
+                let notificationMessage = chatMessage[index] as? ChatNotificationMessage,
+                case .unreadMessage(let count) = notificationMessage.type {
+                chatMessage[index] = ChatNotificationMessage(type: .unreadMessage(count + 1))
+                unreadNotificationMessageIndex = index
+            } else {
+                if MEGASdkManager.sharedMEGAChatSdk()?.myUserHandle != message.userHandle {
+                    chatMessage.append(ChatNotificationMessage(type: .unreadMessage(unreads)))
+                    unreadNotificationMessageIndex = chatMessage.count - 1
+                }
             }
+            
         }
         
         chatMessage.append(ChatMessage(message: message, chatRoom: chatRoom))
