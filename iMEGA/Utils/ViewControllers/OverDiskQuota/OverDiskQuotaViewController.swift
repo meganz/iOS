@@ -95,6 +95,7 @@ final class OverDiskQuotaViewController: UIViewController {
     // MARK: - Views
     
     @IBOutlet private var contentScrollView: UIScrollView!
+    @IBOutlet weak var contentView: UIView!
     
     @IBOutlet private var titleLabel: UILabel!
     @IBOutlet private var warningParagaphLabel: UILabel!
@@ -122,7 +123,6 @@ final class OverDiskQuotaViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupNavigationController(navigationController)
-        setupScrollView(contentScrollView)
     }
 
     // MARK: - Support Trait
@@ -138,6 +138,8 @@ final class OverDiskQuotaViewController: UIViewController {
     }
 
     private func setupTraitCollectionAwareView(with traitCollection: UITraitCollection) {
+        setupScrollView(contentScrollView, with: traitCollection)
+        setupContentView(contentView, with: traitCollection)
         setupTitleLabel(titleLabel, with: traitCollection)
         setupMessageLabel(warningParagaphLabel,
                           withMessage: overDiskQuotaAdvicer.overDiskQuotaMessage(with: traitCollection))
@@ -168,8 +170,15 @@ final class OverDiskQuotaViewController: UIViewController {
         navigationController?.setTitleStyle(TextStyle(font: .headline, color: Color.Text.darkPrimary))
     }
 
-    private func setupScrollView(_ scrollView: UIScrollView) {
+    private func setupScrollView(_ scrollView: UIScrollView, with trait: UITraitCollection) {
         disableAdjustingContentInsets(for: contentScrollView)
+        let backgroundStyler = trait.backgroundStyler(of: .primary)
+        backgroundStyler(scrollView)
+    }
+
+    private func setupContentView(_ contentView: UIView, with trait: UITraitCollection) {
+        let backgroundStyler = trait.backgroundStyler(of: .primary)
+        backgroundStyler(contentView)
     }
 
     private func setupWarningView(_ warningView: OverDisckQuotaWarningView, with text: NSAttributedString) {

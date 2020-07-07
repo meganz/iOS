@@ -11,6 +11,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OverDiskQuotaViewController" customModule="MEGA" customModuleProvider="target">
             <connections>
                 <outlet property="contentScrollView" destination="qBf-ZQ-uPc" id="O9p-ip-V4q"/>
+                <outlet property="contentView" destination="JaV-Gi-51f" id="97h-8G-5ec"/>
                 <outlet property="dismissButton" destination="MCk-xj-VIQ" id="p1g-lk-lQG"/>
                 <outlet property="titleLabel" destination="f9I-oL-lnn" id="rdj-dj-RiI"/>
                 <outlet property="upgradeButton" destination="agc-Ke-lvT" id="KpY-P8-arK"/>
@@ -25,7 +26,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qBf-ZQ-uPc">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="862"/>
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JaV-Gi-51f" userLabel="ContentView">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="729"/>
@@ -110,7 +111,7 @@
             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
             <constraints>
                 <constraint firstItem="qBf-ZQ-uPc" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="G86-Xh-rPs"/>
-                <constraint firstItem="qBf-ZQ-uPc" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="MXf-Be-5n2"/>
+                <constraint firstItem="qBf-ZQ-uPc" firstAttribute="bottom" secondItem="i5M-Pr-FkT" secondAttribute="bottom" id="MXf-Be-5n2"/>
                 <constraint firstItem="qBf-ZQ-uPc" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="PQx-mZ-K6w"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="qBf-ZQ-uPc" secondAttribute="trailing" id="UxN-kk-LsP"/>
             </constraints>
