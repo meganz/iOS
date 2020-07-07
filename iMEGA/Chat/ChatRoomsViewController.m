@@ -77,17 +77,10 @@
     self.tableView.emptyDataSetSource = self;
     self.tableView.emptyDataSetDelegate = self;
     
-    self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
-    self.searchController.delegate = self;
-    self.tableView.tableHeaderView = self.searchController.searchBar;
-    self.definesPresentationContext = YES;
-    
     [self customNavigationBarLabel];
     
     self.chatIdIndexPathDictionary = [[NSMutableDictionary alloc] init];
     self.chatListItemArray = [[NSMutableArray alloc] init];
-    
-    [self.tableView setContentOffset:CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame))];
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
@@ -120,12 +113,7 @@
         [self reorderList];
         
         [self updateChatIdIndexPathDictionary];
-        
-        if (!self.tableView.tableHeaderView) {
-            self.tableView.tableHeaderView = self.searchController.searchBar;
-        }
-    } else {
-        self.tableView.tableHeaderView = nil;
+        [self configureSearchController];
     }
     
     [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
@@ -481,6 +469,7 @@
     [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
     if (addingFirstChat && [self isUserContactsSectionVisible]) {
         [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:1]] withRowAnimation:UITableViewRowAnimationFade];
+        [self configureSearchController];
     }
     [self.tableView endUpdates];
 }
@@ -727,6 +716,22 @@
     cell.chatTitle.text = AMLocalizedString(@"archivedChats", @"Title of archived chats button");
     cell.chatLastMessage.text = [NSString stringWithFormat:@"%tu", self.archivedChatListItemList.size];
     return cell;
+}
+
+- (void)configureSearchController {
+    self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
+    self.searchController.delegate = self;
+    self.searchController.hidesNavigationBarDuringPresentation = NO;
+    
+    if (@available(iOS 11.0, *)) {
+        self.navigationItem.searchController = self.searchController;
+        self.navigationItem.hidesSearchBarWhenScrolling = YES;
+    } else {
+        self.tableView.tableHeaderView = self.searchController.searchBar;
+        [self.tableView setContentOffset:CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame))];
+        self.definesPresentationContext = YES;
+        self.searchController.hidesNavigationBarDuringPresentation = YES;
+    }
 }
 
 #pragma mark - TopBannerButton
@@ -1103,20 +1108,6 @@
     [self.tableView reloadData];
 }
 
-#pragma mark - UISearchControllerDelegate
-
-- (void)didPresentSearchController:(UISearchController *)searchController {
-    if (self.isArchivedChatsRowVisible) {
-        self.isArchivedChatsRowVisible = NO;
-        [self.tableView mnz_performBatchUpdates:^{
-            [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
-        } completion:nil];
-    }
-    if (UIDevice.currentDevice.iPhoneDevice && UIDeviceOrientationIsLandscape(UIDevice.currentDevice.orientation)) {
-        [Helper resetSearchControllerFrame:searchController];
-    }
-}
-
 #pragma mark - UIViewControllerPreviewingDelegate
 
 - (UIViewController *)previewingContext:(id<UIViewControllerPreviewing>)previewingContext viewControllerForLocation:(CGPoint)location {
@@ -1202,6 +1193,13 @@
                     }
                     if (self.archivedChatListItemList.size == 0) {
                         self.archivedChatEmptyState.hidden = YES;
+                    }
+                    if (self.chatListItemArray.count == 0) {
+                        if (@available(iOS 11.0, *)) {
+                            self.navigationItem.searchController = nil;
+                        } else {
+                            self.tableView.tableHeaderView = nil;
+                        }
                     }
                     break;
                     
