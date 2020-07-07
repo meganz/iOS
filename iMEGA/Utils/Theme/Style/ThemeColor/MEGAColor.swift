@@ -33,4 +33,8 @@ enum MEGAColor {
         case primary
         case warning
     }
+
+    enum Independent: Hashable {
+        case bright
+    }
 }

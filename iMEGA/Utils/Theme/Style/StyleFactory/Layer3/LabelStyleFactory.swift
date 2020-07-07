@@ -11,10 +11,6 @@ typealias LabelStyler = (UILabel) -> Void
 
 enum MEGALabelStyle {
 
-    // MARK: - Title
-    case titleInvertedColor
-
-    // MARK: -
     case headline
 
     // MARK: - Paragraph
@@ -35,17 +31,9 @@ private struct LabelStyleFactoryImpl: LabelStyleFactory {
 
     func styler(of style: MEGALabelStyle) -> LabelStyler {
         switch style {
-        case .titleInvertedColor: return titleInvertedColorStyler()
         case .headline: return headlineStyler()
         case .note1: return mainNoteStyler()
         case .note2: return subNoteStyler()
-        }
-    }
-
-    private func titleInvertedColorStyler() -> LabelStyler {
-        let titleStyler = textStyleFactory.textStyle(of: .titleInvertedColor)
-        return { label in
-            titleStyler.applied(on: label)
         }
     }
 
