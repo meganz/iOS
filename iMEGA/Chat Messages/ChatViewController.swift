@@ -221,7 +221,7 @@ class ChatViewController: MessagesViewController {
         }
         audioController.stopAnyOngoingPlaying()
     }
-    
+
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         
@@ -436,7 +436,10 @@ class ChatViewController: MessagesViewController {
 
         switch message.kind {
         case .custom:
-            let megaMessage = (message as! ChatMessage).message
+            guard let chatMessage = message as? ChatMessage else {
+                return false
+            }
+            let megaMessage = chatMessage.message
             if megaMessage.isManagementMessage {
                 return false
             }
@@ -831,6 +834,16 @@ class ChatViewController: MessagesViewController {
                                                selector: #selector(willResignActive(_:)),
                                                name: UIApplication.willResignActiveNotification,
                                                object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(willEnterForeground(_:)),
+                                               name: UIApplication.willEnterForegroundNotification,
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(didBecomeActive(_:)),
+                                               name: UIApplication.didBecomeActiveNotification,
+                                               object: nil)
     }
     
     private func removeObservers() {
@@ -878,6 +891,16 @@ class ChatViewController: MessagesViewController {
         keyboardVisible = false
     }
     
+    @objc func willEnterForeground(_ notification: Notification) {
+        
+    }
+    
+    @objc func didBecomeActive(_ notification: Notification) {
+        if UIApplication.mnz_visibleViewController() == self {
+            setLastMessageAsSeen()
+        }
+    }
+    
     @objc private func willResignActive(_ notification: Notification) {
         saveDraft()
     }
@@ -905,6 +928,10 @@ class ChatViewController: MessagesViewController {
             chatBottomInfoScreenBottomConstraint!,
             chatBottomInfoScreen.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0)
         ])
+    }
+    
+    private func scrollToFirstUnread() {
+        
     }
     
     private func showOrHideJumpToBottom() {
