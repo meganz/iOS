@@ -10,10 +10,6 @@ enum AttributedTextStyle {
     case emphasized
     case warning
     
-    // MARK: - OverDiskQuota navigation title
-    case titleInverted
-    
-
     static func composedStyler(from styles: [AttributedTextStyle],
                                of attributedTextStyleFactory: AttributedTextStyleFactory
     ) -> AttributedTextStyler {

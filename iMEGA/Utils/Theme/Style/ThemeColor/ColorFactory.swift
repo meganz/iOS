@@ -25,4 +25,17 @@ protocol ColorFactory {
     func themeButtonTextFactory(_ style: MEGAColor.ThemeButton) -> ButtonColorFactory
 
     func themeButtonBackgroundFactory(_ style: MEGAColor.ThemeButton) -> ButtonColorFactory
+
+    // MARK: - Independent
+
+    func independent(_ style: MEGAColor.Independent) -> Color
+}
+
+extension ColorFactory {
+
+    func independent(_ style: MEGAColor.Independent) -> Color {
+        switch style {
+        case .bright: return Color(red: 255, green: 255, blue: 255)
+        }
+    }
 }

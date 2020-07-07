@@ -39,13 +39,6 @@ private struct AttributedTextStyleFactoryImpl: AttributedTextStyleFactory {
             return { attributes in
                 textStyleFactory.textStyle(of: .emphasized).applied(on: attributes)
             }
-            
-        // MARK: - Title
-            
-        case .titleInverted:
-            return { attributes in
-                textStyleFactory.textStyle(of: .titleInverted).applied(on: attributes)
-            }
         }
     }
 }
