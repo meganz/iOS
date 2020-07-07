@@ -75,3 +75,4 @@
 #import "SelectableTableViewCell.h"
 #import <PureLayout/PureLayout.h>
 #import "MEGAChatMessage.h"
+#import "MEGATransfer+MNZCategory.h"
