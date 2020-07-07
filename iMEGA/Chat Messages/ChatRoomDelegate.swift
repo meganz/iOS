@@ -43,7 +43,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
     func onChatRoomUpdate(_ api: MEGAChatSdk!, chat: MEGAChatRoom!) {
         MEGALogInfo("ChatRoomDelegate: onChatRoomUpdate \(chatRoom)")
         chatViewController?.chatRoom = chat
-        
+        chatRoom = chat
         switch chat.changes {
         case .userTyping:
             guard !(chatViewController?.isEditing ?? false)  else {
@@ -301,11 +301,14 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
             
             return true
         }
-        var unreadNotificationMessageIndex: Int
         if let index = index {
+            if unreads == 0 {
+                chatMessage.remove(at: index)
+                chatViewController?.messagesCollectionView.deleteSections([index])
+                return
+            }
             chatMessage[index] = ChatNotificationMessage(type: .unreadMessage(unreads))
-            unreadNotificationMessageIndex = index
-            chatViewController?.messagesCollectionView.reloadSections([unreadNotificationMessageIndex])
+            chatViewController?.messagesCollectionView.reloadSections([index])
         }
     }
     
@@ -314,27 +317,24 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
         let unreads = MEGASdkManager.sharedMEGAChatSdk()?.myUserHandle == message.userHandle ? 0 : chatRoom.unreadCount
         var unreadNotificationMessageIndex: Int?
 
-        if unreads > 0 {
-            let index = chatMessage.firstIndex { object -> Bool in
-                guard object is ChatNotificationMessage else {
-                    return false
-                }
-                
-                return true
+        let index = chatMessage.firstIndex { object -> Bool in
+            guard object is ChatNotificationMessage else {
+                return false
             }
-            
-            if let index = index,
-                let notificationMessage = chatMessage[index] as? ChatNotificationMessage,
-                case .unreadMessage(let count) = notificationMessage.type {
-                chatMessage[index] = ChatNotificationMessage(type: .unreadMessage(count + 1))
-                unreadNotificationMessageIndex = index
-            } else {
-                if MEGASdkManager.sharedMEGAChatSdk()?.myUserHandle != message.userHandle {
-                    chatMessage.append(ChatNotificationMessage(type: .unreadMessage(unreads)))
-                    unreadNotificationMessageIndex = chatMessage.count - 1
-                }
+            return true
+        }
+        
+        if let index = index,
+            let notificationMessage = chatMessage[index] as? ChatNotificationMessage,
+            case .unreadMessage(let count) = notificationMessage.type {
+            chatMessage[index] = ChatNotificationMessage(type: .unreadMessage(count + 1))
+            unreadNotificationMessageIndex = index
+        } else if UIApplication.shared.applicationState != .active
+            || UIApplication.mnz_visibleViewController() != chatViewController {
+            if MEGASdkManager.sharedMEGAChatSdk()?.myUserHandle != message.userHandle {
+                chatMessage.append(ChatNotificationMessage(type: .unreadMessage(unreads)))
+                unreadNotificationMessageIndex = chatMessage.count - 1
             }
-            
         }
         
         chatMessage.append(ChatMessage(message: message, chatRoom: chatRoom))
@@ -360,7 +360,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
                 } else {
                     messagesCollectionView.insertSections([chatMessage.count - 1])
                     if chatMessage.count >= 3 {
-                        messagesCollectionView.reloadSections([chatMessage.count - 3, notificationMessageIndex])
+                        messagesCollectionView.reloadSections([chatMessage.count - 3, chatMessage.count - 2, notificationMessageIndex])
                     } else {
                         messagesCollectionView.reloadSections([notificationMessageIndex])
                     }
