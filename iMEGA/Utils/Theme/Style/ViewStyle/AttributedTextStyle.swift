@@ -7,7 +7,7 @@ enum AttributedTextStyle {
     // MARK: - OverDiskQuota Warning Paragraph
     
     case paragraph
-    case emphasized
+    case emphasized(MEGATextStyle)
     case warning
     
     static func composedStyler(from styles: [AttributedTextStyle],

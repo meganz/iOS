@@ -52,7 +52,7 @@ final class OverDiskQuotaViewController: UIViewController {
                                         overDiskQuotaData.takingUpStorage(with: byteCountFormatter),
                                         suggestedPlan)
 
-            let styleMarks: StyleMarks = ["paragraph": .paragraph, "b": .emphasized]
+            let styleMarks: StyleMarks = ["paragraph": .paragraph, "b": .emphasized(.subheadline)]
             return formattedMessage.attributedString(
                 with: styleMarks,
                 attributedTextStyleFactory: traitCollection.theme.attributedTextStyleFactory)
@@ -69,7 +69,7 @@ final class OverDiskQuotaViewController: UIViewController {
                 formattedTitleMessage = AMLocalizedString("<body><warn>You must act immediately to save your data.</warn><body>",
                                                           "<body><warn>You must act immediately to save your data.</warn><body>")
             }
-            let styleMarks: StyleMarks = ["warn": .warning, "body": .emphasized]
+            let styleMarks: StyleMarks = ["warn": .warning, "body": .emphasized(.caption1)]
             return formattedTitleMessage.attributedString(
                 with: styleMarks,
                 attributedTextStyleFactory: traitCollection.theme.attributedTextStyleFactory)
