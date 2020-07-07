@@ -26,18 +26,18 @@ private struct AttributedTextStyleFactoryImpl: AttributedTextStyleFactory {
         case .paragraph:
             return { attributes in
                 paragraphStyleFactory.paragraphStyle(of: .centerAlignedWideSpacing)
-                    .applied(on: textStyleFactory.textStyle(of: .paragraph)
+                    .applied(on: textStyleFactory.textStyle(of: .subheadline)
                         .applied(on: attributes))
             }
         case .warning:
             return  { attributes in
                textStyleFactory.textStyle(of: .warning)
-                   .applied(on: textStyleFactory.textStyle(of: .emphasized)
-                       .applied(on: attributes))
+                   .applied(on: attributes)
            }
-        case .emphasized:
+        case .emphasized(let textStyle):
             return { attributes in
-                textStyleFactory.textStyle(of: .emphasized).applied(on: attributes)
+                textStyleFactory.textStyle(of: textStyle)
+                    .applied(on: attributes)
             }
         }
     }
