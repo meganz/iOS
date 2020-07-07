@@ -12,7 +12,7 @@ struct DarkColorThemeFactory: ColorFactory {
 
     func backgroundColor(_ style: MEGAColor.Background) -> Color {
         switch style {
-        case .primary: return Color(red: 255, green: 255, blue: 255)
+        case .primary: return Color(red: 28, green: 28, blue: 30)
         case .warning: return Color(red: 255, green: 204, blue: 0, alpha: 38)
         case .enabled: return Color(red: 0, green: 168, blue: 134, alpha: 255)
         case .disabled: return Color(red: 153, green: 153, blue: 153, alpha: 255)
