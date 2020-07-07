@@ -14,7 +14,9 @@ enum MEGAColor {
     enum Text: Hashable {
         case primary
         case secondary
-
+        
+        case invertedPrimary
+        
         case warning
     }
 

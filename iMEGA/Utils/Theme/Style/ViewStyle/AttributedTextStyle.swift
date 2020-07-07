@@ -3,9 +3,16 @@ import UIKit
 typealias AttributedTextStyler = (TextAttributes) -> TextAttributes
 
 enum AttributedTextStyle {
+    
+    // MARK: - OverDiskQuota Warning Paragraph
+    
     case paragraph
     case emphasized
     case warning
+    
+    // MARK: - OverDiskQuota navigation title
+    case titleInverted
+    
 
     static func composedStyler(from styles: [AttributedTextStyle],
                                of attributedTextStyleFactory: AttributedTextStyleFactory

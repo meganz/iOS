@@ -95,8 +95,9 @@ final class OverDiskQuotaViewController: UIViewController {
     // MARK: - Views
     
     @IBOutlet private var contentScrollView: UIScrollView!
-    @IBOutlet weak var contentView: UIView!
+    @IBOutlet private var contentView: UIView!
     
+    @IBOutlet weak var storageFullLabel: UILabel!
     @IBOutlet private var titleLabel: UILabel!
     @IBOutlet private var warningParagaphLabel: UILabel!
 
@@ -122,7 +123,7 @@ final class OverDiskQuotaViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setupNavigationController(navigationController)
+        setupNavigationController(navigationController, with: traitCollection)
     }
 
     // MARK: - Support Trait
@@ -140,6 +141,7 @@ final class OverDiskQuotaViewController: UIViewController {
     private func setupTraitCollectionAwareView(with traitCollection: UITraitCollection) {
         setupScrollView(contentScrollView, with: traitCollection)
         setupContentView(contentView, with: traitCollection)
+        setupStorageFullLabel(storageFullLabel, with: traitCollection)
         setupTitleLabel(titleLabel, with: traitCollection)
         setupMessageLabel(warningParagaphLabel,
                           withMessage: overDiskQuotaAdvicer.overDiskQuotaMessage(with: traitCollection))
@@ -164,10 +166,9 @@ final class OverDiskQuotaViewController: UIViewController {
 
     // MARK: - UI Customize
 
-    private func setupNavigationController(_ navigationController: UINavigationController?) {
-        title = AMLocalizedString("Storage Full", "Screen title")
+    private func setupNavigationController(_ navigationController: UINavigationController?,
+                                           with trait: UITraitCollection) {
         navigationController?.navigationBar.setTranslucent()
-        navigationController?.setTitleStyle(TextStyle(font: .headline, color: Color.Text.darkPrimary))
     }
 
     private func setupScrollView(_ scrollView: UIScrollView, with trait: UITraitCollection) {
@@ -175,7 +176,7 @@ final class OverDiskQuotaViewController: UIViewController {
         let backgroundStyler = trait.backgroundStyler(of: .primary)
         backgroundStyler(scrollView)
     }
-
+    
     private func setupContentView(_ contentView: UIView, with trait: UITraitCollection) {
         let backgroundStyler = trait.backgroundStyler(of: .primary)
         backgroundStyler(contentView)
@@ -183,6 +184,11 @@ final class OverDiskQuotaViewController: UIViewController {
 
     private func setupWarningView(_ warningView: OverDisckQuotaWarningView, with text: NSAttributedString) {
         warningView.updateTitle(with: text)
+    }
+
+    private func setupStorageFullLabel(_ label: UILabel, with trait: UITraitCollection) {
+        storageFullLabel.text = AMLocalizedString("Storage Full", "Screen title")
+        trait.styler(of: .titleInvertedColor)(storageFullLabel)
     }
 
     private func setupTitleLabel(_ titleLabel: UILabel, with trait: UITraitCollection) {
@@ -212,9 +218,14 @@ final class OverDiskQuotaViewController: UIViewController {
     // MARK: - Button Actions
 
     @objc fileprivate func didTapUpgradeButton(button: UIButton) {
+        guard let navigationController = navigationController else { return }
         let upgradeViewController = UIStoryboard(name: "UpgradeAccount", bundle: nil)
             .instantiateViewController(withIdentifier: "UpgradeTableViewControllerID")
-        navigationController?.pushViewController(upgradeViewController, animated: true)
+        if #available(iOS 13.0, *) {
+            AppearanceManager.forceNavigationBarUpdate(navigationController.navigationBar,
+                                                       traitCollection: traitCollection)
+        }
+        navigationController.pushViewController(upgradeViewController, animated: true)
     }
 
     @objc fileprivate func didTapDismissButton(button: UIButton) {

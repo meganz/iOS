@@ -6,15 +6,13 @@ extension UINavigationBar {
     /// Setting a `UINavigationBar` translucent, need to also setting `backgroundImage` and `shadowImage` with an empty `UIImage`
     func setTranslucent() {
         if #available(iOS 13, *) {
-            let app = UINavigationBarAppearance()
-            app.configureWithTransparentBackground()
-            app.backgroundColor = nil
+            let appearance = UINavigationBarAppearance()
+            appearance.configureWithTransparentBackground()
 
-            standardAppearance = app
-            compactAppearance = app
-            scrollEdgeAppearance = app
+            standardAppearance = appearance
+            compactAppearance = appearance
+            scrollEdgeAppearance = appearance
 
-            tintColor = nil
             isTranslucent = true
         } else {
             tintColor = nil

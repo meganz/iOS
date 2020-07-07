@@ -13,7 +13,8 @@
                 <outlet property="contentScrollView" destination="qBf-ZQ-uPc" id="O9p-ip-V4q"/>
                 <outlet property="contentView" destination="JaV-Gi-51f" id="97h-8G-5ec"/>
                 <outlet property="dismissButton" destination="MCk-xj-VIQ" id="p1g-lk-lQG"/>
-                <outlet property="titleLabel" destination="f9I-oL-lnn" id="rdj-dj-RiI"/>
+                <outlet property="storageFullLabel" destination="3fq-Va-4au" id="LCl-fZ-Te9"/>
+                <outlet property="titleLabel" destination="f9I-oL-lnn" id="PWo-td-hte"/>
                 <outlet property="upgradeButton" destination="agc-Ke-lvT" id="KpY-P8-arK"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="warningParagaphLabel" destination="nx5-ul-1O7" id="0IS-gM-3RU"/>
@@ -34,6 +35,12 @@
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="StorageFull" translatesAutoresizingMaskIntoConstraints="NO" id="Xrq-u4-x9U">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="291"/>
                                 </imageView>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Storage Full" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3fq-Va-4au">
+                                    <rect key="frame" x="161.5" y="59.5" width="91.5" height="20.5"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Data is at Risk!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f9I-oL-lnn">
                                     <rect key="frame" x="131" y="319" width="152" height="20.5"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -89,6 +96,7 @@
                                 <constraint firstItem="lH1-xb-ob2" firstAttribute="top" secondItem="nx5-ul-1O7" secondAttribute="bottom" constant="35.666666666666742" id="Sdo-cW-HK0"/>
                                 <constraint firstItem="agc-Ke-lvT" firstAttribute="top" secondItem="lH1-xb-ob2" secondAttribute="bottom" constant="49.999999999999886" id="ZOR-sC-OIn"/>
                                 <constraint firstAttribute="trailing" secondItem="nx5-ul-1O7" secondAttribute="trailing" constant="16" id="ej6-hD-sp6"/>
+                                <constraint firstItem="3fq-Va-4au" firstAttribute="bottom" secondItem="Xrq-u4-x9U" secondAttribute="top" constant="80" id="euZ-Vi-8MW"/>
                                 <constraint firstItem="lH1-xb-ob2" firstAttribute="leading" secondItem="nx5-ul-1O7" secondAttribute="leading" id="flE-xu-xwq"/>
                                 <constraint firstItem="nx5-ul-1O7" firstAttribute="top" secondItem="f9I-oL-lnn" secondAttribute="bottom" constant="16" id="hCv-QL-eHx"/>
                                 <constraint firstItem="agc-Ke-lvT" firstAttribute="leading" secondItem="JaV-Gi-51f" secondAttribute="leading" constant="44" id="i72-H3-erI"/>
@@ -96,6 +104,7 @@
                                 <constraint firstItem="Xrq-u4-x9U" firstAttribute="top" secondItem="JaV-Gi-51f" secondAttribute="top" id="qbM-ch-tCU"/>
                                 <constraint firstItem="nx5-ul-1O7" firstAttribute="leading" secondItem="JaV-Gi-51f" secondAttribute="leading" constant="16" id="sHV-5n-dir"/>
                                 <constraint firstItem="Xrq-u4-x9U" firstAttribute="width" secondItem="JaV-Gi-51f" secondAttribute="width" id="sfB-5Z-kIi"/>
+                                <constraint firstItem="3fq-Va-4au" firstAttribute="centerX" secondItem="Xrq-u4-x9U" secondAttribute="centerX" id="ss7-jr-yyc"/>
                             </constraints>
                         </view>
                     </subviews>
