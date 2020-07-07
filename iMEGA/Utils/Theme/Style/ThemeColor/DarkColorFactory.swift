@@ -5,6 +5,7 @@ struct DarkColorThemeFactory: ColorFactory {
     func textColor(_ style: MEGAColor.Text) -> Color {
         switch style {
         case .primary: return Color(red: 255, green: 255, blue: 255)
+        case .invertedPrimary: return Color(red: 0, green: 0, blue: 0)
         case .secondary: return Color(red: 155, green: 155, blue: 155)
         case .warning: return Color(red: 217, green: 0, blue: 7, alpha: 255)
         }

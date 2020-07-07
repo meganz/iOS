@@ -8,6 +8,8 @@ extension InterfaceStyle {
 }
 
 enum MEGATextStyle: Hashable {
+
+    case titleInvertedColor
     case headline
     case caption1
     case caption2
@@ -17,6 +19,9 @@ enum MEGATextStyle: Hashable {
     case paragraph
     case emphasized
     case warning
+    
+    // MARK: - Title
+    case titleInverted
 }
 
 protocol TextStyleFactory {
@@ -30,13 +35,20 @@ private struct TextStyleFactoryImpl: TextStyleFactory {
 
     func textStyle(of textStyle: MEGATextStyle) -> TextStyle {
         switch textStyle {
+        case .titleInvertedColor: return titleInvertedColorStyle()
         case .headline: return headlineStyle()
         case .caption1: return caption1Style()
         case .caption2: return caption2Style()
         case .paragraph: return paragraphStyle()
         case .emphasized: return emphasizedStyle()
         case .warning: return warningStyle()
+        case .titleInverted: return titleInverted()
         }
+    }
+
+    private func titleInvertedColorStyle() -> TextStyle {
+        TextStyle(font: .title3,
+                  color: colorFactory.textColor(.invertedPrimary))
     }
 
     private func headlineStyle() -> TextStyle {
@@ -67,5 +79,9 @@ private struct TextStyleFactoryImpl: TextStyleFactory {
     private func warningStyle() -> TextStyle {
         TextStyle(font: .subhead2,
                   color: colorFactory.textColor(.warning))
+    }
+    
+    private func titleInverted() -> TextStyle {
+        TextStyle(font: .headline, color: colorFactory.textColor(.invertedPrimary))
     }
 }
