@@ -607,6 +607,18 @@
                                                     <action selector="didTapNotNowButton" destination="V8p-lh-ad7" eventType="touchUpInside" id="0ow-Fy-xfx"/>
                                                 </connections>
                                             </button>
+                                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M7L-sh-poO">
+                                                <rect key="frame" x="22.5" y="112" width="255" height="50"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="50" id="Lon-to-rOs"/>
+                                                    <constraint firstAttribute="width" constant="255" id="f7U-Fu-UUq"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                                <state key="normal" title="Don't show again"/>
+                                                <connections>
+                                                    <action selector="didTapDontShowAgainButton" destination="V8p-lh-ad7" eventType="touchUpInside" id="92B-sY-YJu"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                     </stackView>
                                 </subviews>
@@ -624,6 +636,7 @@
                         <outlet property="addPhoneNumberButton" destination="cQA-jD-WtR" id="6Wr-de-8Ax"/>
                         <outlet property="addPhoneNumberTitle" destination="aCv-KP-OSs" id="CEZ-NI-5Gl"/>
                         <outlet property="descriptionLabel" destination="3kq-uo-FOg" id="9gV-5T-xva"/>
+                        <outlet property="dontShowAgainButton" destination="M7L-sh-poO" id="oq3-v8-noP"/>
                         <outlet property="notNowButton" destination="LNc-u2-8ln" id="cRx-6F-qI9"/>
                     </connections>
                 </viewController>
