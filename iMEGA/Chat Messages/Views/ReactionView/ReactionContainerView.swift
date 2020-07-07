@@ -11,7 +11,19 @@ class ReactionContainerView: UIView {
     fileprivate let rootFlexContainer = UIView()
     
     weak var delegate: ReactionEmojiViewDelegate?
+    open var addMoreView: UIButton = {
+        let addMoreView = UIButton()
+        addMoreView.setImage(UIImage(named: "addReactionSmall"), for: .normal)
+        addMoreView.imageView?.contentMode = .scaleAspectFit
+        addMoreView.layer.borderColor = UIColor(red: 3/255, green: 3/255, blue: 3/255, alpha: 0.1).cgColor
+        addMoreView.layer.borderWidth = 1
+        addMoreView.layer.cornerRadius = 12
+        addMoreView.backgroundColor = UIColor(hexString: "f9f9f9")
+        addMoreView.addTarget(self, action: #selector(addMorePress(_:)), for: .touchUpInside)
 
+        return addMoreView
+    }()
+    
     var chatMessage: ChatMessage? {
         didSet {
             emojis.removeAll()
@@ -21,7 +33,7 @@ class ReactionContainerView: UIView {
             for index in 0 ..< list!.size {
                 emojis.append((list?.string(at: index))!)
             }
-            rootFlexContainer.flex.direction(.rowReverse).wrap(.wrap).padding(12).justifyContent(.start).alignItems(.start).define { (flex) in
+            rootFlexContainer.flex.direction(.rowReverse).wrap(.wrap).paddingHorizontal(12).justifyContent(.start).alignItems(.start).define { (flex) in
                 emojis.forEach { (emoji) in
                     let megaMessage = chatMessage?.message
                     
@@ -40,13 +52,7 @@ class ReactionContainerView: UIView {
                     flex.addItem(emojiButton)
                 }
                 
-                let imageView = UIImageView(image: UIImage(named: "addReactionSmall"))
-                imageView.contentMode = .scaleAspectFit
-                imageView.layer.borderColor = UIColor(red: 3/255, green: 3/255, blue: 3/255, alpha: 0.1).cgColor
-                imageView.layer.borderWidth = 1
-                imageView.layer.cornerRadius = 12
-                imageView.backgroundColor = UIColor(hexString: "f9f9f9")
-                flex.addItem(imageView).width(44).margin(4).height(30)
+                flex.addItem(addMoreView).width(44).margin(4).height(30)
             }
             
             if UInt64(chatMessage?.sender.senderId ?? "") == MEGASdkManager.sharedMEGAChatSdk()?.myUserHandle {
@@ -74,11 +80,13 @@ class ReactionContainerView: UIView {
         return rootFlexContainer.frame.size
     }
     
- 
+    @objc func addMorePress(_ sender: UIButton) {
+        print("123")
+    }
     
     private func layout() {
         rootFlexContainer.pin.width(300)
-        rootFlexContainer.pin.top().margin(pin.safeArea)
+        rootFlexContainer.pin.top()
         rootFlexContainer.flex.layout(mode: .adjustHeight)
         rootFlexContainer.pin.right()
         if UInt64(chatMessage?.sender.senderId ?? "") == MEGASdkManager.sharedMEGAChatSdk()?.myUserHandle {
