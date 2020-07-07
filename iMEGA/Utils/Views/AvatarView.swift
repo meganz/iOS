@@ -33,7 +33,7 @@ class AvatarView: UIView {
         
         firstPeerAvatarImageView.layer.masksToBounds = true
         firstPeerAvatarImageView.layer.borderWidth = 1
-        firstPeerAvatarImageView.layer.borderColor = UIColor.white.cgColor
+        firstPeerAvatarImageView.layer.borderColor = UIColor.mnz_background()?.cgColor
         firstPeerAvatarImageView.layer.cornerRadius = firstPeerAvatarImageView.bounds.width / 2
         
         if #available(iOS 11.0, *) {
@@ -54,5 +54,19 @@ class AvatarView: UIView {
             firstPeerAvatarImageView.isHidden   = false
             secondPeerAvatarImageView.isHidden  = false
         }
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        if #available(iOS 13, *) {
+            if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+                updateAppearance()
+            }
+        }
+    }
+    
+    func updateAppearance() {
+        firstPeerAvatarImageView.layer.borderColor = UIColor.mnz_background()?.cgColor
     }
 }
