@@ -5,7 +5,7 @@ extension LightColorThemeFactory {
     struct LightPrimaryThemeButtonTextColorFactory: ButtonColorFactory {
 
         func normalColor() -> Color {
-            Color(red: 255, green: 255, blue: 255, alpha: 204)
+            Color(red: 255, green: 255, blue: 255, alpha: 255)
         }
 
         func disabledColor() -> Color {
@@ -53,7 +53,7 @@ extension DarkColorThemeFactory {
     struct DarkPrimaryThemeButtonBackgroundColorFactory: ButtonColorFactory {
 
         func normalColor() -> Color {
-            Color(red: 0, green: 168, blue: 134, alpha: 255)
+            Color(red: 0, green: 194, blue: 154, alpha: 255)
         }
 
         func disabledColor() -> Color {
