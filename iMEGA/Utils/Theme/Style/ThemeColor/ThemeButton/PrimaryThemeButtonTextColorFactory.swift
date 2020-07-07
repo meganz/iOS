@@ -2,6 +2,8 @@ import Foundation
 
 extension LightColorThemeFactory {
 
+    // MARK: - Light Text Color
+
     struct LightPrimaryThemeButtonTextColorFactory: ButtonColorFactory {
 
         func normalColor() -> Color {
@@ -16,6 +18,8 @@ extension LightColorThemeFactory {
             Color(red: 53, green: 211, blue: 196)
         }
     }
+
+    // MARK: - Light Background Color
 
     struct LightPrimaryThemeButtonBackgroundColorFactory: ButtonColorFactory {
 
@@ -35,6 +39,8 @@ extension LightColorThemeFactory {
 
 extension DarkColorThemeFactory {
 
+    // MARK: - Dark Text Color
+
     struct DarkPrimaryThemeButtonTextColorFactory: ButtonColorFactory {
 
         func normalColor() -> Color {
@@ -49,6 +55,8 @@ extension DarkColorThemeFactory {
             Color(red: 53, green: 211, blue: 196)
         }
     }
+
+    // MARK: - Dark Background Color
 
     struct DarkPrimaryThemeButtonBackgroundColorFactory: ButtonColorFactory {
 
