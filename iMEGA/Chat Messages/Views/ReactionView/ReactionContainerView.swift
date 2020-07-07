@@ -41,6 +41,11 @@ class ReactionContainerView: UIView {
                 }
                 
                 let imageView = UIImageView(image: UIImage(named: "addReactionSmall"))
+                imageView.contentMode = .scaleAspectFit
+                imageView.layer.borderColor = UIColor(red: 3/255, green: 3/255, blue: 3/255, alpha: 0.1).cgColor
+                imageView.layer.borderWidth = 1
+                imageView.layer.cornerRadius = 12
+                imageView.backgroundColor = UIColor(hexString: "f9f9f9")
                 flex.addItem(imageView).width(44).margin(4).height(30)
             }
             
