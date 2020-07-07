@@ -12,12 +12,12 @@ final class OverDisckQuotaWarningView: UIView, NibOwnerLoadable {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupView()
+        setupView(with: traitCollection)
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        setupView()
+        setupView(with: traitCollection)
     }
     
     // MARK: - Dark Mode
@@ -37,14 +37,14 @@ final class OverDisckQuotaWarningView: UIView, NibOwnerLoadable {
 
     // MARK: - Setup View
     
-    private func setupView() {
+    private func setupView(with trait: UITraitCollection) {
         translatesAutoresizingMaskIntoConstraints = false
         loadNibContent()
-        setupTitleLabel(titleLabel, with: traitCollection)
-        setupTraitCollectionAwareView(with: traitCollection)
+        setupTraitCollectionAwareView(with: trait)
     }
 
     private func setupTraitCollectionAwareView(with trait: UITraitCollection) {
+        trait.backgroundStyler(of: .primary)(self)
         setupContainerView(containerView, with: traitCollection)
         setupDetailLabel(detailLabel, with: traitCollection)
     }
