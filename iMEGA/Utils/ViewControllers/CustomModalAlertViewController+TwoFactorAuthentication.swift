@@ -2,7 +2,6 @@ import Foundation
 
 extension CustomModalAlertViewController {
     @objc func configureForTwoFactorAuthentication(requestedByUser: Bool) {
-        modalPresentationStyle = .overCurrentContext
         image = UIImage(named: "2FASetup")
         viewTitle = AMLocalizedString("whyYouDoNeedTwoFactorAuthentication", "Title shown when you start the process to enable Two-Factor Authentication")
         detail = AMLocalizedString("whyYouDoNeedTwoFactorAuthenticationDescription", "Description text of the dialog displayed to start setup the Two-Factor Authentication")
@@ -18,7 +17,7 @@ extension CustomModalAlertViewController {
                 SVProgressHUD.show()
                 MEGASdkManager.sharedMEGASdk()?.multiFactorAuthGetCode(with: MEGAGenericRequestDelegate.init(completion: { (request, error) in
                     if error.type != .apiOk {
-                        SVProgressHUD.showError(withStatus: error.name)
+                        SVProgressHUD.showError(withStatus: AMLocalizedString(error.name, nil))
                         return
                     }
 

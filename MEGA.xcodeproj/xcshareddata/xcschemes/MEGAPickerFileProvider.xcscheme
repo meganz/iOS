@@ -57,12 +57,8 @@
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES"
       launchAutomaticallySubstyle = "2">
-      <RemoteRunnable
-         runnableDebuggingMode = "1"
-         BundleIdentifier = "mega.ios"
-         RemotePath = "/Users/haoranli/Library/Developer/CoreSimulator/Devices/BFDEB0FD-4341-466F-96B1-C2EB79C47BBB/data/Containers/Bundle/Application/2D5B7506-D3ED-4E64-BAD0-06F3DE466DB7/MEGA.app">
-      </RemoteRunnable>
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "137361891A6664C300B740E8"
@@ -70,7 +66,7 @@
             BlueprintName = "MEGA"
             ReferencedContainer = "container:MEGA.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"

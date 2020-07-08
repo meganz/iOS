@@ -3,15 +3,7 @@
 
 @interface UIFont (MNZCategory)
 
-+ (UIFont *)mnz_SFUIRegularItalicWithSize:(CGFloat)size;
-+ (UIFont *)mnz_SFUIMediumWithSize:(CGFloat)size;
-+ (UIFont *)mnz_SFUILightWithSize:(CGFloat)size;
-+ (UIFont *)mnz_SFUIRegularWithSize:(CGFloat)size;
-+ (UIFont *)mnz_SFUISemiBoldWithSize:(CGFloat)size;
-
 + (UIFont *)mnz_defaultFontForPureEmojiStringWithEmojis:(NSUInteger)emojiCount;
-
-
 
 /**
  Returns a system font object that is the same size as the receiver but which has the specified weight instead.

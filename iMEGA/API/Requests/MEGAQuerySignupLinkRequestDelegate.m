@@ -65,6 +65,9 @@
                         UINavigationController *loginNC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginNavigationControllerID"];
                         LoginViewController *loginVC = loginNC.viewControllers.firstObject;
                         loginVC.emailString = request.email;
+                        if (@available(iOS 13.0, *)) {
+                            loginVC.modalPresentationStyle = UIModalPresentationFullScreen;
+                        }
                         
                         [UIApplication.mnz_presentingViewController presentViewController:loginNC animated:YES completion:nil];
                     }
@@ -91,6 +94,9 @@
             UINavigationController *createNC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"CreateAccountNavigationControllerID"];
             CreateAccountViewController *createAccountVC = createNC.viewControllers.firstObject;
             createAccountVC.emailString = MEGALinkManager.emailOfNewSignUpLink;
+            if (@available(iOS 13.0, *)) {
+                createAccountVC.modalPresentationStyle = UIModalPresentationFullScreen;
+            }
             
             [UIApplication.mnz_presentingViewController presentViewController:createNC animated:YES completion:nil];
             
@@ -138,7 +144,7 @@
                 
             default: {
                 [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-                [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, error.name]];
+                [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, AMLocalizedString(error.name, nil)]];
                 break;
             }
         }

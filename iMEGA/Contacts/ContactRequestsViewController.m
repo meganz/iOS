@@ -7,10 +7,16 @@
 #import "DateTools.h"
 
 #import "ContactRequestsTableViewCell.h"
+#import "EmptyStateView.h"
 #import "Helper.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
 #import "NSString+MNZCategory.h"
+
+typedef NS_ENUM(NSInteger, Segment) {
+    SegmentReceived = 0,
+    SegmentSent
+};
 
 @interface ContactRequestsViewController () <DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGARequestDelegate, MEGAGlobalDelegate>
 
@@ -21,6 +27,9 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property (nonatomic) NSUInteger remainingOperations;
+
+@property (nonatomic, getter=isAcceptingOrDecliningLastRequest) BOOL acceptingOrDecliningLastRequest;
+@property (nonatomic, getter=isDeletingLastRequest) BOOL deletingLastRequest;
 
 @end
 
@@ -44,8 +53,8 @@
     
     [self.navigationItem setTitle:AMLocalizedString(@"contactRequests", @"Contact requests")];
     
-    [self.contactRequestsSegmentedControl setTitle:AMLocalizedString(@"received", @"Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved.") forSegmentAtIndex:0];
-    [self.contactRequestsSegmentedControl setTitle:AMLocalizedString(@"sent", nil) forSegmentAtIndex:1];
+    [self.contactRequestsSegmentedControl setTitle:AMLocalizedString(@"received", @"Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved.") forSegmentAtIndex:SegmentReceived];
+    [self.contactRequestsSegmentedControl setTitle:AMLocalizedString(@"sent", @"Title of one of the filters in 'Contacts requests' section. If 'Sent' is selected, it will only show the requests which have been sent out.") forSegmentAtIndex:SegmentSent];
     
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     [[MEGAReachabilityManager sharedManager] retryPendingConnections];
@@ -75,7 +84,23 @@
     } completion:nil];
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateAppearance];
+            
+            [self.tableView reloadData];
+        }
+    }
+}
+
 #pragma mark - Private
+
+- (void)updateAppearance {
+    self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+}
 
 - (void)internetConnectionChanged {
     [self.tableView reloadData];
@@ -83,11 +108,11 @@
 
 - (void)reloadUI {
     switch (self.contactRequestsSegmentedControl.selectedSegmentIndex) {
-        case 0:
+        case SegmentReceived:
             [self reloadIncomingContactsRequestsView];
             break;
             
-        case 1:
+        case SegmentSent:
             [self reloadOutgoingContactsRequestsView];
             break;
             
@@ -106,6 +131,23 @@
         MEGAContactRequest *contactRequest = [outgoingContactRequestList contactRequestAtIndex:i];
         [self.outgoingContactRequestArray addObject:contactRequest];
     }
+    
+    //If user cancel all sent requests and HAS incoming requests > Switch to Received
+    //If user cancel all sent requests and HAS NOT incoming requests > Go back to Contacts
+    if (outgoingContactRequestList.size.unsignedIntValue == 0 && self.isDeletingLastRequest) {
+        MEGAContactRequestList *incomingContactRequestList = MEGASdkManager.sharedMEGASdk.incomingContactRequests;
+        if (incomingContactRequestList.size.unsignedIntValue == 0) {
+            if (self.presentingViewController) {
+                [self dismissViewControllerAnimated:YES completion:nil];
+            } else {
+                [self.navigationController popViewControllerAnimated:YES];
+            }
+        } else {
+            self.contactRequestsSegmentedControl.selectedSegmentIndex = SegmentReceived;
+        }
+        
+        self.deletingLastRequest = NO;
+    }
 }
 
 - (void)reloadIncomingContactsRequestsView {
@@ -115,6 +157,18 @@
     for (NSInteger i = 0; i < [[incomingContactRequestList size] integerValue]; i++) {
         MEGAContactRequest *contactRequest = [incomingContactRequestList contactRequestAtIndex:i];
         [self.incomingContactRequestArray addObject:contactRequest];
+    }
+    
+    //If user accepts all received requests > Go back to Contacts
+    //If user accepts all received requests and HAS sent requests > Go back to Contacts
+    if (incomingContactRequestList.size.unsignedIntValue == 0 && self.isAcceptingOrDecliningLastRequest) {
+        if (self.presentingViewController) {
+            [self dismissViewControllerAnimated:YES completion:nil];
+        } else {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+        
+        self.acceptingOrDecliningLastRequest = NO;
     }
 }
 
@@ -128,21 +182,29 @@
     if (sender.tag < self.incomingContactRequestArray.count) {
         MEGAContactRequest *contactSelected = [self.incomingContactRequestArray objectAtIndex:sender.tag];
         [MEGASdkManager.sharedMEGASdk replyContactRequest:contactSelected action:MEGAReplyActionAccept delegate:self];
+        
+        if (self.incomingContactRequestArray.count == 1) {
+            self.acceptingOrDecliningLastRequest = YES;
+        }
     }
 }
 
 - (void)declineOrDeleteTouchUpInside:(UIButton *)sender {
-    if (self.contactRequestsSegmentedControl.selectedSegmentIndex == 0 && sender.tag < self.incomingContactRequestArray.count) {
+    if (self.contactRequestsSegmentedControl.selectedSegmentIndex == SegmentReceived && sender.tag < self.incomingContactRequestArray.count) {
         MEGAContactRequest *contactSelected = [self.incomingContactRequestArray objectAtIndex:sender.tag];
         [[MEGASdkManager sharedMEGASdk] replyContactRequest:contactSelected action:MEGAReplyActionDeny delegate:self];
+        
+        if (self.incomingContactRequestArray.count == 1) {
+            self.acceptingOrDecliningLastRequest = YES;
+        }
     } else if (sender.tag < self.outgoingContactRequestArray.count) {
         MEGAContactRequest *contactSelected = [self.outgoingContactRequestArray objectAtIndex:sender.tag];
         [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:[contactSelected targetEmail] message:@"" action:MEGAInviteActionDelete delegate:self];
+        
+        if (self.outgoingContactRequestArray.count == 1) {
+            self.deletingLastRequest = YES;
+        }
     }
-}
-
-- (IBAction)doneTouchUpInside:(UIBarButtonItem *)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
     
 #pragma mark - UITableViewDataSource
@@ -151,11 +213,11 @@
     NSInteger numberOfRows = 0;
     if ([MEGAReachabilityManager isReachable]) {
         switch (self.contactRequestsSegmentedControl.selectedSegmentIndex) {
-            case 0:
+            case SegmentReceived:
                 numberOfRows = [self.incomingContactRequestArray count];
                 break;
                 
-            case 1:
+            case SegmentSent:
                 numberOfRows = [self.outgoingContactRequestArray count];
                 break;
                 
@@ -176,26 +238,26 @@
     
     NSString *pendingString = [[@" (" stringByAppendingString:AMLocalizedString(@"pending", nil)] stringByAppendingString:@")"];
     switch (self.contactRequestsSegmentedControl.selectedSegmentIndex) {
-        case 0: { //INCOMING CONTACTS REQUESTS
+        case SegmentReceived: {
             [cell.acceptButton setHidden:NO];
             cell.acceptButton.tag = indexPath.row;
             [cell.acceptButton addTarget:self action:@selector(acceptTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
             
             MEGAContactRequest *contactRequest = [self.incomingContactRequestArray objectAtIndex:indexPath.row];
             NSString *avatarColorString = [MEGASdk avatarColorForBase64UserHandle:[MEGASdk base64HandleForUserHandle:contactRequest.handle]];
-            cell.avatarImageView.image = [UIImage imageForName:contactRequest.sourceEmail.mnz_initialForAvatar size:cell.avatarImageView.frame.size backgroundColor:[UIColor colorFromHexString:avatarColorString] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:(cell.avatarImageView.frame.size.width/2.0f)]];
+            cell.avatarImageView.image = [UIImage imageForName:contactRequest.sourceEmail.mnz_initialForAvatar size:cell.avatarImageView.frame.size backgroundColor:[UIColor mnz_fromHexString:avatarColorString] textColor:UIColor.whiteColor font:[UIFont systemFontOfSize:(cell.avatarImageView.frame.size.width/2.0f)]];
             cell.nameLabel.text = [contactRequest sourceEmail];
             cell.timeAgoLabel.text = [[[contactRequest modificationTime] timeAgoSinceNow] stringByAppendingString:pendingString];
             
             break;
         }
             
-        case 1: { //OUTGOING CONTACTS REQUESTS
+        case SegmentSent: {
             [cell.acceptButton setHidden:YES];
             
             MEGAContactRequest *contactRequest = [self.outgoingContactRequestArray objectAtIndex:indexPath.row];
             NSString *avatarColorString = [MEGASdk avatarColorForBase64UserHandle:[MEGASdk base64HandleForUserHandle:contactRequest.handle]];
-            cell.avatarImageView.image = [UIImage imageForName:contactRequest.targetEmail.mnz_initialForAvatar size:cell.avatarImageView.frame.size backgroundColor:[UIColor colorFromHexString:avatarColorString] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:(cell.avatarImageView.frame.size.width/2.0f)]];
+            cell.avatarImageView.image = [UIImage imageForName:contactRequest.targetEmail.mnz_initialForAvatar size:cell.avatarImageView.frame.size backgroundColor:[UIColor mnz_fromHexString:avatarColorString] textColor:UIColor.whiteColor font:[UIFont systemFontOfSize:(cell.avatarImageView.frame.size.width/2.0f)]];
             cell.nameLabel.text = [contactRequest targetEmail];
             cell.timeAgoLabel.text = [[[contactRequest modificationTime] timeAgoSinceNow] stringByAppendingString:pendingString];
             break;
@@ -203,10 +265,6 @@
             
         default:
             break;
-    }
-    
-    if (@available(iOS 11.0, *)) {
-        cell.avatarImageView.accessibilityIgnoresInvertColors = YES;
     }
     
     return cell;
@@ -225,7 +283,14 @@
 
 #pragma mark - DZNEmptyDataSetSource
 
-- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
+- (nullable UIView *)customViewForEmptyDataSet:(UIScrollView *)scrollView {
+    EmptyStateView *emptyStateView = [EmptyStateView.alloc initWithImage:[self imageForEmptyState] title:[self titleForEmptyState] description:[self descriptionForEmptyState] buttonTitle:[self buttonTitleForEmptyState]];
+    [emptyStateView.button addTarget:self action:@selector(buttonTouchUpInsideEmptyState) forControlEvents:UIControlEventTouchUpInside];
+    
+    return emptyStateView;
+}
+
+- (NSString *)titleForEmptyState {
     NSString *text;
     if ([MEGAReachabilityManager isReachable]) {
         text = AMLocalizedString(@"noRequestPending", nil);
@@ -233,21 +298,19 @@
         text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");
     }
     
-    return [[NSAttributedString alloc] initWithString:text attributes:[Helper titleAttributesForEmptyState]];
+    return text;
 }
 
-- (nullable NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView {
+- (NSString *)descriptionForEmptyState {
     NSString *text = @"";
     if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
         text = AMLocalizedString(@"Mobile Data is turned off", @"Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings.");
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleFootnote], NSForegroundColorAttributeName:UIColor.mnz_gray777777};
-    
-    return [NSAttributedString.alloc initWithString:text attributes:attributes];
+    return text;
 }
 
-- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
+- (UIImage *)imageForEmptyState {
     if ([MEGAReachabilityManager isReachable]) {
         return [UIImage imageNamed:@"contactsEmptyState"];
     } else {
@@ -255,33 +318,16 @@
     }
 }
 
-- (NSAttributedString *)buttonTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
+- (NSString *)buttonTitleForEmptyState {
     NSString *text = @"";
     if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
         text = AMLocalizedString(@"Turn Mobile Data on", @"Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app.");
     }
     
-    return [NSAttributedString.alloc initWithString:text attributes:Helper.buttonTextAttributesForEmptyState];
+    return text;
 }
 
-- (UIImage *)buttonBackgroundImageForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
-    UIEdgeInsets capInsets = [Helper capInsetsForEmptyStateButton];
-    UIEdgeInsets rectInsets = [Helper rectInsetsForEmptyStateButton];
-    
-    return [[[UIImage imageNamed:@"emptyStateButton"] resizableImageWithCapInsets:capInsets resizingMode:UIImageResizingModeStretch] imageWithAlignmentRectInsets:rectInsets];
-}
-
-- (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
-    return [UIColor whiteColor];
-}
-
-- (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView {
-    return [Helper spaceHeightForEmptyState];
-}
-
-#pragma mark - DZNEmptyDataSetDelegate
-
-- (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
+- (void)buttonTouchUpInsideEmptyState {
     if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
         [UIApplication.sharedApplication openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString] options:@{} completionHandler:nil];
     }
@@ -292,7 +338,7 @@
 - (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     if ([error type]) {
         if ([request type] == MEGARequestTypeInviteContact) {
-            [SVProgressHUD showErrorWithStatus:error.name];
+            [SVProgressHUD showErrorWithStatus:AMLocalizedString(error.name, nil)];
         }
         return;
     }

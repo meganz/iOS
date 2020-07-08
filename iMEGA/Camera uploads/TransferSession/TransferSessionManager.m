@@ -143,11 +143,23 @@ static NSString * const VideoCellularDisallowedUploadSessionId = @"nz.mega.video
 #pragma mark - sessions and tasks restoration
 
 - (void)restorePhotoSessionsWithCompletion:(nullable RestoreSessionCompletionHandler)completion {
-    [self restoreSessionsWithIdentifiers:@[PhotoCellularAllowedUploadSessionId, PhotoCellularDisallowedUploadSessionId] completion:completion];
+    [self restoreSessionsWithIdentifiers:@[PhotoCellularAllowedUploadSessionId,
+                                           PhotoCellularDisallowedUploadSessionId]
+                              completion:completion];
 }
 
 - (void)restoreVideoSessionsWithCompletion:(nullable RestoreSessionCompletionHandler)completion {
-    [self restoreSessionsWithIdentifiers:@[VideoCellularAllowedUploadSessionId, VideoCellularDisallowedUploadSessionId] completion:completion];
+    [self restoreSessionsWithIdentifiers:@[VideoCellularAllowedUploadSessionId,
+                                           VideoCellularDisallowedUploadSessionId]
+                              completion:completion];
+}
+
+- (void)restoreAllSessionsWithCompletion:(RestoreSessionCompletionHandler)completion {
+    [self restoreSessionsWithIdentifiers:@[PhotoCellularAllowedUploadSessionId,
+                                           PhotoCellularDisallowedUploadSessionId,
+                                           VideoCellularAllowedUploadSessionId,
+                                           VideoCellularDisallowedUploadSessionId]
+                              completion:completion];
 }
 
 - (void)restoreSessionsWithIdentifiers:(NSArray<NSString *> *)identifiers completion:(nullable RestoreSessionCompletionHandler)completion {

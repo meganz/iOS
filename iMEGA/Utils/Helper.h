@@ -2,6 +2,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MEGAChatMessage.h"
+#import "MEGAIndexer.h"
 
 typedef NS_OPTIONS(NSUInteger, NodesAre) {
     NodesAreFiles    = 1 << 0,
@@ -52,6 +53,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Utils
 
++ (void)saveSortOrder:(MEGASortOrderType)selectedSortOrderType for:(_Nullable id)object;
++ (MEGASortOrderType)sortTypeFor:(_Nullable id)object;
++ (MEGASortOrderType)defaultSortType;
+
 + (NSString *)memoryStyleStringFromByteCount:(long long)byteCount;
 
 + (void)changeApiURL;
@@ -65,7 +70,11 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)thumbnailForNode:(MEGANode *)node api:(MEGASdk *)api cell:(id)cell;
 + (void)setThumbnailForNode:(MEGANode *)node api:(MEGASdk *)api cell:(id)cell reindexNode:(BOOL)reindex;
 
-+ (NSString *)sizeAndDateForNode:(MEGANode *)node api:(MEGASdk *)api;
++ (NSString *)sizeAndCreationHourAndMininuteForNode:(MEGANode *)node api:(MEGASdk *)api;
++ (NSString *)sizeAndCreationDateForNode:(MEGANode *)node api:(MEGASdk *)api;
++ (NSString *)sizeAndModicationDateForNode:(MEGANode *)node api:(MEGASdk *)api;
++ (NSString *)sizeAndShareLinkCreateDateForSharedLinkNode:(MEGANode *)node api:(MEGASdk *)api;
+
 + (NSString *)sizeForNode:(MEGANode *)node api:(MEGASdk *)api;
 + (NSString *)filesAndFoldersInFolderNode:(MEGANode *)node api:(MEGASdk *)api;
 
@@ -73,18 +82,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (UIActivityViewController *)activityViewControllerForChatMessages:(NSArray<MEGAChatMessage *> *)messages sender:(id)sender;
 + (UIActivityViewController *)activityViewControllerForNodes:(NSArray *)nodesArray sender:(id _Nullable)sender;
 
-#pragma mark - Utils for empty states
-
-+ (UIEdgeInsets)capInsetsForEmptyStateButton;
-+ (UIEdgeInsets)rectInsetsForEmptyStateButton;
-
-+ (CGFloat)verticalOffsetForEmptyStateWithNavigationBarSize:(CGSize)navigationBarSize searchBarActive:(BOOL)isSearchBarActive;
-+ (CGFloat)spaceHeightForEmptyState;
-+ (CGFloat)spaceHeightForEmptyStateWithDescription;
-
-+ (NSDictionary *)titleAttributesForEmptyState;
-+ (NSDictionary *)descriptionAttributesForEmptyState;
-+ (NSDictionary *)buttonTextAttributesForEmptyState;
++ (void)setIndexer:(MEGAIndexer* )megaIndexer;
 
 #pragma mark - Utils for UI
 

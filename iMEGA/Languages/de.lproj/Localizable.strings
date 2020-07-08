@@ -909,8 +909,6 @@
 "profile"="Profil";
 /* Title of the Achievements section */
 "achievementsTitle"="Errungenschaften";
-/* Title of the Used storage section */
-"usedStorage"="Belegter Speicherplatz";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
 "inviteFriendsAndGetRewards"="Freunde einladen und Boni einstreichen";
 /* Indicating text for when "you invite your friends" */
@@ -918,7 +916,7 @@
 /* title of the introduction for the achievements screen */
 "inviteFriendsAndGetForEachReferral"="Wir belohnen jede Vermittlung mit %1$s Speicherplatz und %2$s Transfervolumen";
 /* Text shown to explain how and where you can invite friends */
-"inviteYourFriendsExplanation"="Wählen Sie Kontakte aus Ihrer Kontaktliste oder geben Sie eine oder mehrere E-Mail-Adressen ein.";
+"Select from phone contacts or enter multiple email addresses"="Select from phone contacts or enter multiple email addresses";
 /*  */
 "insertYourFriendsEmails"="E-Mail-Adresse(n) Ihrer Freunde:";
 /*  */
@@ -1009,12 +1007,6 @@
 "Renews on"="Erneuert sich am";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="An Sie freigegebene Ordner";
-/* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
-"of %@"="von %@";
-/* Sentence shown under the used space to complete the info with the user account maximum storage. "used of {maximun storage}" */
-"used of %@"="von %@ belegt";
-/* Sentence shown under the available space to complete the info with the user account maximum storage. "available of {maximun storage}" */
-"available of %@"="von %@ verfügbar";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Accountupgrade";
 /*  */
@@ -1023,8 +1015,8 @@
 "cloudDriveIsAlmostFull"="[S]Ihr Cloud-Speicher ist fast voll.[/S] Mit [A]MEGA PRO[/A] erhalten Sie [S]bis zu %@ TB (%@ GB)[/S] Speicherplatz in der Cloud.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
 "cloudDriveIsFull"="[S]Ihr Cloud-Speicher ist voll.[/S] Mit [A]MEGA PRO[/A] erhalten Sie [S]bis zu %@ TB (%@ GB)[/S] Speicherplatz in der Cloud.";
-/* Storage related with the MEGA PRO account level you can subscribe */
-"productSpace"="Speicher";
+/* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
+"Storage"="Speicher";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
 "limited"="Begrenzt";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
@@ -1179,8 +1171,8 @@
 "contactCredentials"="Kontaktidentität";
 /* "Verify user" dialog description */
 "thisIsBestDoneInRealLife"="Der beste Weg ist ein persönliches Treffen. Sollten Sie über einen bereits verifizierten sicheren Kommunikationskanal verfügen, z.B. verifiziertes OTR oder PGP, so können Sie stattdessen diesen verwenden.";
-/* Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity */
-"yourCredentials"="Ihre Identität";
+/* Title of the label in the my account section. It shows the credentials of the current user so it can be used to be verified by other contacts */
+"My credentials"="Mein kryptographischer Fingerabdruck";
 /* Button to reset the password */
 "reset"="Zurücksetzen";
 /* Button title */
@@ -1360,6 +1352,34 @@
 "Read error"="Lesefehler";
 /* Label to show that an error related with an invalid or missing application key occurs during a SDK operation. */
 "Invalid application key"="Dieses Programm ist gesperrt";
+/* Error shown when terms of service are breached during download. */
+"Terms of Service breached"="Terms of Service breached";
+/* SDK error returned when an upload would produce recursivity */
+"Upload produces recursivity"="Upload produces recursivity";
+/* Error shown when download a file that has violated ToS/AUP. */
+"Not accessible due to ToS/AUP violation"="Not accessible due to ToS/AUP violation";
+/* Error shown when SSL check has failed */
+"SSL verification failed"="SSL-Prüfung fehlgeschlagen";
+/* Label shown when current account does not have enough quota to complete the operation */
+"Not enough quota"="Sie haben Ihr Limit überschritten";
+/* SDK error returned when a MFA is required to perform an operation */
+"Multi-factor authentication required"="Multi-factor authentication required";
+/* SDK error returned for operations only allowed for business master users */
+"Access denied for users"="Access denied for users";
+/* SDK error returned when a business account has expired */
+"Business account has expired"="Business account has expired";
+/* SDK error returned when the credit card has been rejected */
+"Credit card rejected"="Credit card rejected";
+/* SDK error returned when the billing failed */
+"Billing failed"="Billing failed";
+/* SDK error returned when an operation is rejected due to fraud protection */
+"Rejected by fraud protection"="Rejected by fraud protection";
+/* SDK error returned when there are too many requests */
+"Too many requests"="Too many requests";
+/* SDK error returned when there is a balance error */
+"Balance error"="Balance error";
+/* SDK error returned upon a HTTP error */
+"HTTP error"="HTTP error";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Unbekannter Fehler";
 /* Text shown in an alert when the user is about to change the language of the app */
@@ -1629,7 +1649,7 @@
 /* Title of the Spotlight Search section */
 "Search"="Suchen";
 /* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
-"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="When enabled, allow search and look up MEGA files/folders in Spotlight Search.";
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="Will allow searching of MEGA files/folders in your device's Spotlight Search";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="Sie sind der alleinige Inhaber Ihrer Schlüsel";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -1685,7 +1705,7 @@
 /* Text of a button which deletes all historical versions of files in the users entire account. */
 "Delete previous versions"="Delete previous versions";
 /* A warning note about deleting all file versions in the settings section. */
-"All current files will remain. Only historic versions of your files will be deleted."="Alle alten Dateiversionen werden gelöscht. Dateiversionen in Ordnerfreigaben eines Kontakts müssen vom Eigentümer entfernt werden werden.";
+"All current files will remain. Only historic versions of your files will be deleted."="Alle alten Dateiversionen werden gelöscht. Dateiversionen in Ordnerfreigaben eines Kontakts müssen vom Eigentümer entfernt werden.";
 /* Text of the dialog to delete all the file versions of the account */
 "You are about to delete the version histories of all files. Any file version shared to you from a contact will need to be deleted by them.[Br][Br]Please note that the current files will not be deleted."="Sie löschen die Versionshistorie aller Dateien. Dateiversionen in Ordnerfreigaben eines Kontakts müssen durch diesen gelöscht werden.\n\nDie aktuelle Version jeder Datei bleibt erhalte.";
 /* Title for the Rubbish-Bin Cleaning Scheduler feature */
@@ -2041,27 +2061,15 @@
 /* Chat Notifications DND: Title bar message for the dnd activate options */
 "Mute chat Notifications for"="Stummschalten für";
 /* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
-"Muted forever"="Permanent stummgeschaltet";
-/* Chat Notifications DND: Remaining time left to deactivate DND - 1 minute left */
-"1 minute left"="Noch 1 Minute";
-/* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 minute left */
-"%d minutes left"="Noch %d Minuten";
-/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour left */
-"1 hour left"="Noch 1 Stunde";
-/* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 hour left */
-"%d hours left"="Noch %d Stunden";
+"Notifications will be silenced until Do Not Disturb is turned off"="Notifications will be silenced until Do Not Disturb is turned off";
+/* Chat Notifications DND: Remaining time left if until tomorrow */
+"Notifications will be silenced until tomorrow at %@"="Notifications will be silenced until tomorrow at %@";
+/* Chat Notifications DND: Remaining time left if until today */
+"Notifications will be silenced until %@"="Notifications will be silenced until %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="Chatbenachrichtigungen";
 /* Chat settings: This text appears with the Do Not Disturb switch */
 "Do Not Disturb"="Bitte nicht stören";
-/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, 1 minute left */
-"1 hour, 1 minute left"="Noch eine Stunde und eine Minute";
-/* Chat Notifications DND: Remaining time left to deactivate DND - X hours, X minutes left */
-"%d hours, %d minutes left"="Noch %d Stunden und %d Minuten";
-/* Chat Notifications DND: Remaining time left to deactivate DND - X hours, 1 minute left */
-"%d hours, 1 minute left"="Noch %d Stunden und 1 Minute";
-/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, X minutes left */
-"1 hour, %d minutes left"="Noch 1 Stunde und %d Minuten";
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
 "Reconnecting..."="Verbindung wird wiederhergestellt...";
 /* Title shown when the user reconnect in a call. */
@@ -2092,6 +2100,8 @@
 "Send (%d)"="Send (%d)";
 /* Used in Photos app browser view to upload the photos from the view to the cloud. */
 "Upload (%d)"="Upload (%d)";
+/* Used in Photos app browser album listing screen. */
+"Albums"="Albums";
 /* Used in Photos app browser carousel view to unselect a selected photo. */
 "Unselect"="Unselect";
 /* Used in Photos app browser. Shown when there are no photos or videos in the Photos app. */
@@ -2108,6 +2118,8 @@
 "Please enter a valid phone number"="Bitte geben Sie eine gültige Telefonnummer an.";
 /* Error message that will show to user when user reached the sms verification daily limit */
 "You have reached the daily limit"="You have reached the daily limit";
+/* Error message that will be shown when the code introduced do not match with the one you received */
+"The verification code doesn't match."="The verification code doesn’t match.";
 /* Error message that will show to user when user entered invalid verification code */
 "Wrong code. Please try again or resend."="Wrong code. Please try again or resend.";
 /* Error message that will show to user when host detected that the mobile number has been registered already */
@@ -2150,7 +2162,7 @@
 "Select Folder"="Ordner auswählen";
 /* Title of the folder selection screen for camera uploads */
 "Choose Folder"="Ordner auswählen";
-/* Label used near to the option selected to encode the images uploaded to a chat (Low, Medium, Original) */
+/* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
 "Image quality"="Bildkompression";
 /* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
 "Automatic"="Automatisch";
@@ -2211,10 +2223,12 @@
 /* Warning message to alert user about logout in My Account section if has offline files and transfers in progress. */
 "When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled."="Sobald Sie sich ausloggen, werden Ihre Offline-Dateien gelöscht und alle laufenden Transfers abgebrochen.";
 /* Default title of an empty chat. */
-"Chat created on %s1"="Chat vom %s1";
+"Chat created on %s1"="Chat erstellt: %s1";
 /* Title shown when there are no shared files */
 "No Shared Files"="No Shared Files";
 /* Error message shown when opening a folder link which doesn’t exist */
 "Folder link unavailable"="Ordnerlink nicht verfügbar";
 /* Error message shown when opening a file link which doesn’t exist */
 "File link unavailable"="Datei-Link nicht verfügbar";
+/* Header of block with all shared files in chat. */
+"Shared Files"="Freigegebene Dateien";

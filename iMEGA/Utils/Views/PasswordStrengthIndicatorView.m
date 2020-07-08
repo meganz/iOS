@@ -33,6 +33,7 @@
     self.customView = [[[NSBundle mainBundle] loadNibNamed:@"PasswordStrengthIndicatorView" owner:self options:nil] firstObject];
     [self addSubview:self.customView];
     self.customView.frame = self.bounds;
+    self.strengthLabel.textColor = UIColor.mnz_label;
     [self.strengthLabel sizeToFit];
 }
 
@@ -43,7 +44,7 @@
         case PasswordStrengthVeryWeak:
             self.imageView.image = [UIImage imageNamed:@"indicatorVeryWeak"];
             self.strengthLabel.text = AMLocalizedString(@"veryWeak", @"Label displayed during checking the strength of the password introduced. Represents Very Weak security");
-            self.strengthLabel.textColor = UIColor.mnz_redMain;
+            self.strengthLabel.textColor = UIColor.mnz_redError;
             self.strengthDescriptionLabel.text = AMLocalizedString(@"passwordVeryWeakOrWeak", @"");
             break;
             
@@ -57,7 +58,7 @@
         case PasswordStrengthMedium:
             self.imageView.image = [UIImage imageNamed:@"indicatorMedium"];
             self.strengthLabel.text = AMLocalizedString(@"medium", @"Label displayed during checking the strength of the password introduced. Represents Medium security");
-            self.strengthLabel.textColor = [UIColor mnz_green31B500];
+            self.strengthLabel.textColor = UIColor.systemGreenColor;
             self.strengthDescriptionLabel.text = AMLocalizedString(@"passwordMedium", @"");
             break;
             
@@ -71,7 +72,7 @@
         case PasswordStrengthStrong:
             self.imageView.image = [UIImage imageNamed:@"indicatorStrong"];
             self.strengthLabel.text = AMLocalizedString(@"strong", @"Label displayed during checking the strength of the password introduced. Represents Strong security");
-            self.strengthLabel.textColor = [UIColor mnz_blue2BA6DE];
+            self.strengthLabel.textColor = [UIColor mnz_blueForTraitCollection:self.traitCollection];
             self.strengthDescriptionLabel.text = AMLocalizedString(@"passwordStrong", @"");
             break;
     }

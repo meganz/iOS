@@ -7,14 +7,13 @@
 #import "MEGANode+MNZCategory.h"
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
+#import "MEGA-Swift.h"
 #import "UIImageView+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "Helper.h"
 #import "NodeTableViewCell.h"
 
 #import "MEGAPhotoBrowserViewController.h"
-
-#import "MEGA-Swift.h"
 
 @interface NodeVersionsViewController () <UITableViewDelegate, UITableViewDataSource, MGSwipeTableCellDelegate, NodeActionViewControllerDelegate, MEGADelegate> {
     BOOL allNodesSelected;
@@ -73,7 +72,19 @@
     }
 }
 
-#pragma mark - Layout
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateAppearance];
+            
+            [self.tableView reloadData];
+        }
+    }
+}
+
+#pragma mark - Private
 
 - (void)reloadUI {
     if (self.node.mnz_numberOfVersions == 0) {
@@ -87,7 +98,11 @@
     }
 }
 
-#pragma mark - TableViewDataSource
+- (void)updateAppearance {
+    self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
+}
+
+#pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 2;
@@ -107,6 +122,7 @@
     [self.nodesIndexPathMutableDictionary setObject:indexPath forKey:node.base64Handle];
     
     NodeTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"nodeCell" forIndexPath:indexPath];
+    cell.cellFlavor = NodeTableViewCellFlavorVersions;
     [cell configureCellForNode:node delegate:self api:[MEGASdkManager sharedMEGASdk]];
     
     if (self.tableView.isEditing) {
@@ -131,7 +147,11 @@
     return YES;
 }
 
-#pragma mark - TableViewDelegate
+#pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    cell.backgroundColor = [UIColor mnz_secondaryBackgroundGroupedElevated:self.traitCollection];
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     MEGANode *node = [self nodeForIndexPath:indexPath];
@@ -193,7 +213,9 @@
     UITableViewCell *sectionHeader = [self.tableView dequeueReusableCellWithIdentifier:@"nodeInfoHeader"];
     
     UILabel *titleSection = (UILabel*)[sectionHeader viewWithTag:1];
+    titleSection.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];;
     UILabel *versionsSize = (UILabel*)[sectionHeader viewWithTag:2];
+    versionsSize.textColor = UIColor.mnz_label;
     
     if (section == 0) {
         titleSection.text = AMLocalizedString(@"currentVersion", @"Title of section to display information of the current version of a file").uppercaseString;
@@ -203,12 +225,18 @@
         versionsSize.text = [Helper memoryStyleStringFromByteCount:self.node.mnz_versionsSize];
     }
     
+    UIView *separatorView = [sectionHeader viewWithTag:3];
+    separatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+    
     return sectionHeader;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
     UITableViewCell *sectionFooter = [self.tableView dequeueReusableCellWithIdentifier:@"nodeInfoFooter"];
-
+    
+    UIView *separatorView = [sectionFooter viewWithTag:1];
+    separatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+    
     return sectionFooter;
 }
 
@@ -223,7 +251,7 @@
         [self setEditing:NO animated:YES];
     }];
     downloadAction.image = [UIImage imageNamed:@"infoDownload"];
-    downloadAction.backgroundColor = [UIColor colorWithRed:0 green:0.75 blue:0.65 alpha:1];
+    downloadAction.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
     
     return [UISwipeActionsConfiguration configurationWithActions:@[downloadAction]];
 }
@@ -240,7 +268,7 @@
         [self removeAction:nil];
     }];
     removeAction.image = [UIImage imageNamed:@"delete"];
-    removeAction.backgroundColor = UIColor.mnz_redMain;
+    removeAction.backgroundColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
     [rightActions addObject:removeAction];
     
     if (indexPath.section != 0) {
@@ -248,7 +276,7 @@
             [self revertAction:nil];
         }];
         revertAction.image = [UIImage imageNamed:@"history"];
-        revertAction.backgroundColor = UIColor.darkGrayColor;
+        revertAction.backgroundColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
         [rightActions addObject:revertAction];
     }
 
@@ -465,7 +493,7 @@
     
     if (direction == MGSwipeDirectionLeftToRight && [[Helper downloadingNodes] objectForKey:node.base64Handle] == nil) {
         
-        MGSwipeButton *downloadButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"infoDownload"] backgroundColor:[UIColor colorWithRed:0.0 green:0.75 blue:0.65 alpha:1.0] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
+        MGSwipeButton *downloadButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"infoDownload"] backgroundColor:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
             [node mnz_downloadNodeOverwriting:YES];
             return YES;
         }];
@@ -477,7 +505,7 @@
         NSMutableArray *rightButtons = [NSMutableArray new];
         self.selectedNodesArray = [NSMutableArray arrayWithObject:node];
 
-        MGSwipeButton *deleteButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"delete"] backgroundColor:UIColor.mnz_redMain padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
+        MGSwipeButton *deleteButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"delete"] backgroundColor:[UIColor mnz_redForTraitCollection:(self.traitCollection)] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
             [self removeAction:nil];
             return YES;
         }];
@@ -485,7 +513,7 @@
         [rightButtons addObject:deleteButton];
         
         if (indexPath.section != 0) {
-            MGSwipeButton *revertButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"history"] backgroundColor:UIColor.darkGrayColor padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
+            MGSwipeButton *revertButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"history"] backgroundColor:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
                 [self revertAction:nil];
                 return YES;
             }];

@@ -8,6 +8,7 @@
 #import "MEGALoginRequestDelegate.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
+#import "MEGA-Swift.h"
 #import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
 
@@ -37,6 +38,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self updateAppearance];
     
     if (UIDevice.currentDevice.iPhone4X) {
         self.logoTopLayoutConstraint.constant = 12.f;
@@ -90,6 +93,19 @@
     }
     
     return UIInterfaceOrientationMaskAll;
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [AppearanceManager setupAppearance:self.traitCollection];
+            [AppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar traitCollection:self.traitCollection];
+            
+            [self updateAppearance];
+        }
+    }
 }
 
 #pragma mark - IBActions
@@ -167,6 +183,19 @@
     self.cancelButton.enabled = !boolValue;
 }
 
+- (void)updateAppearance {
+    self.view.backgroundColor = [UIColor mnz_backgroundGroupedElevated:self.traitCollection];
+    
+    self.emailInputView.backgroundColor = [UIColor mnz_secondaryBackgroundGroupedElevated:self.traitCollection];
+    [self.emailInputView updateAppearance];
+    
+    self.passwordView.backgroundColor = [UIColor mnz_secondaryBackgroundGroupedElevated:self.traitCollection];
+    [self.passwordView updateAppearance];
+    
+    [self.confirmAccountButton mnz_setupPrimary:self.traitCollection];
+    [self.cancelButton mnz_setupCancel:self.traitCollection];
+}
+
 #pragma mark - UIResponder
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -231,7 +260,7 @@
                 break;
                 
             default:
-                [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ (%ld)", error.name, (long)error.type]];
+                [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ (%ld)", AMLocalizedString(error.name, nil), (long)error.type]];
                 break;
         }
         
