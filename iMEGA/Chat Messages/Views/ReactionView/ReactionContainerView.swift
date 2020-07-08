@@ -22,7 +22,7 @@ class ReactionContainerView: UIView {
 
         return addMoreView
     }()
-    
+
     var chatMessage: ChatMessage? {
         didSet {
             emojis.removeAll()
@@ -35,15 +35,17 @@ class ReactionContainerView: UIView {
             rootFlexContainer.flex.direction(.rowReverse).wrap(.wrap).paddingHorizontal(10).justifyContent(.start).alignItems(.start).define { (flex) in
                 emojis.forEach { (emoji) in
                     let megaMessage = chatMessage?.message
-                    
-                    let count = MEGASdkManager.sharedMEGAChatSdk()?.getMessageReactionCount(forChat: chatMessage?.chatRoom.chatId ?? 0, messageId: megaMessage?.messageId ?? 0, reaction: emoji) ?? 0
-                    let emojiButton = ReactionEmojiButton(count: count, emoji: emoji)
+                    guard let userhandles = MEGASdkManager.sharedMEGAChatSdk()?.getReactionUsers(forChat: chatMessage?.chatRoom.chatId ?? 0, messageId: megaMessage?.messageId ?? 0, reaction: emoji) else {
+                        return
+                    }
+         
+                    let emojiButton = ReactionEmojiButton(count: Int(userhandles.size), emoji: emoji, emojiSelected: emojiSelected(userhandles))
                     if let delegate = delegate {
                         emojiButton.buttonPressed = delegate.emojiTapped
                         emojiButton.buttonLongPress = delegate.emojiLongPressed
                     }
                     
-                    emojiButton.flex.margin(2).height(30)
+                    emojiButton.flex.margin(2).height(30).minWidth(52)
                     flex.addItem(emojiButton)
                 }
                 
@@ -71,6 +73,16 @@ class ReactionContainerView: UIView {
         super.init(coder: aDecoder)
     }
 
+    func emojiSelected(_ userhandles: MEGAHandleList) -> Bool {
+        for index in 0..<userhandles.size {
+            if userhandles.megaHandle(at: index) == MEGASdkManager.sharedMEGAChatSdk()?.myUserHandle {
+                return true
+            }
+        }
+        
+        return false
+    }
+    
     override func sizeThatFits(_ size: CGSize) -> CGSize {
         layout()
         return rootFlexContainer.frame.size
