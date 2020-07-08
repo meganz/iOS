@@ -3,7 +3,6 @@ import FlexLayout
 import PinLayout
 
 protocol ReactionEmojiViewDelegate: class {
-    func emojiTapped(_ emoji: String, sender: UIView)
     func emojiLongPressed(_ emoji: String, sender: UIView)
 }
 
@@ -38,10 +37,16 @@ class ReactionContainerView: UIView {
                     guard let userhandles = MEGASdkManager.sharedMEGAChatSdk()?.getReactionUsers(forChat: chatMessage?.chatRoom.chatId ?? 0, messageId: megaMessage?.messageId ?? 0, reaction: emoji) else {
                         return
                     }
-         
-                    let emojiButton = ReactionEmojiButton(count: Int(userhandles.size), emoji: emoji, emojiSelected: emojiSelected(userhandles))
+                    let isEmojiSelected = emojiSelected(userhandles)
+                    let emojiButton = ReactionEmojiButton(count: Int(userhandles.size), emoji: emoji, emojiSelected: isEmojiSelected)
                     if let delegate = delegate {
-                        emojiButton.buttonPressed = delegate.emojiTapped
+                        emojiButton.buttonPressed = { [weak self] emoji, emojiButton in
+                          if isEmojiSelected {
+                            MEGASdkManager.sharedMEGAChatSdk()?.deleteReaction(forChat: self?.chatMessage?.chatRoom.chatId ?? 0, messageId: megaMessage?.messageId ?? 0, reaction: emoji)
+                              } else {
+                            MEGASdkManager.sharedMEGAChatSdk()?.addReaction(forChat: self?.chatMessage?.chatRoom.chatId ?? 0, messageId: megaMessage?.messageId ?? 0, reaction: emoji)
+                              }
+                        }
                         emojiButton.buttonLongPress = delegate.emojiLongPressed
                     }
                     

@@ -2,7 +2,6 @@ import AlignedCollectionViewFlowLayout
 import MessageKit
 
 protocol MessageReactionReusableViewDelegate: class {
-    func emojiTapped(_ emoji: String, chatMessage: ChatMessage, sender: UIView)
     func emojiLongPressed(_ emoji: String, chatMessage: ChatMessage, sender: UIView)
 }
 
@@ -44,13 +43,6 @@ class MessageReactionReusableView: MessageReusableView {
 }
 
 extension MessageReactionReusableView: ReactionEmojiViewDelegate {
-    func emojiTapped(_ emoji: String, sender: UIView) {
-        guard let delegate = delegate, let chatMessage = chatMessage else {
-            return
-        }
-        
-        delegate.emojiTapped(emoji, chatMessage: chatMessage, sender: sender)
-    }
     
     func emojiLongPressed(_ emoji: String, sender: UIView) {
         guard let delegate = delegate, let chatMessage = chatMessage else {
