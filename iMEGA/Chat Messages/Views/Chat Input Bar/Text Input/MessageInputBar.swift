@@ -22,9 +22,6 @@ class MessageInputBar: UIView {
     @IBOutlet weak var collapsedTextViewCoverView: UIView!
     @IBOutlet weak var expandedTextViewCoverView: UIView!
     @IBOutlet weak var semiTransparentView: UIView!
-    @IBOutlet weak var rightButtonHolderView: UIView!
-    @IBOutlet weak var rightButtonHolderViewWidthConstraint: NSLayoutConstraint!
-    @IBOutlet weak var rightButtonHolderViewHeightConstraint: NSLayoutConstraint!
 
     @IBOutlet weak var messageTextViewCoverView: MessageInputTextBackgroundView!
     @IBOutlet weak var messageTextViewCoverViewBottomContraint: NSLayoutConstraint!
@@ -43,13 +40,6 @@ class MessageInputBar: UIView {
     // MARK:- Interface properties
 
     weak var delegate: MessageInputBarDelegate?
-    
-    var hideRightButtonHolderView: Bool = false {
-        didSet {
-            rightButtonHolderViewWidthConstraint.constant = hideRightButtonHolderView ? 0.0 : rightButtonHolderViewHeightConstraint.constant
-            layoutIfNeeded()
-        }
-    }
     
     var text: String? {
         return messageTextView.text
