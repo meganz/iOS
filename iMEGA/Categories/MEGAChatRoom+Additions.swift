@@ -72,7 +72,7 @@ extension MEGAChatRoom {
         if isGroup && !hasCustomTitle && peerCount == 0  {
             return AMLocalizedString("Chat created on %s1", "Default title of an empty chat.").replacingOccurrences(of: "%s1", with: NSDate(timeIntervalSince1970: TimeInterval(creationTimeStamp)).mnz_formattedDefaultDateForMedia())
         } else {
-            return title
+            return title ?? ""
         }
     }
 }

@@ -7,8 +7,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)collateNonUploadingRecords;
 
-- (void)collateUploadingPhotoRecordsByUploadTasks:(NSArray<NSURLSessionTask *> *)tasks;
-- (void)collateUploadingVideoRecordsByUploadTasks:(NSArray<NSURLSessionTask *> *)tasks;
+- (void)collatePhotoUploadingRecordsByUploadTasks:(NSArray<NSURLSessionTask *> *)tasks;
+- (void)collateVideoUploadingRecordsByUploadTasks:(NSArray<NSURLSessionTask *> *)tasks;
+- (void)collateAllUploadingRecordsByUploadTasks:(NSArray<NSURLSessionTask *> *)tasks;
 
 @end
 
