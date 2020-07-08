@@ -909,8 +909,6 @@
 "profile"="โปรไฟล์";
 /* Title of the Achievements section */
 "achievementsTitle"="ความสำเร็จ";
-/* Title of the Used storage section */
-"usedStorage"="พื้นที่เก็บข้อมูลที่ใช้";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
 "inviteFriendsAndGetRewards"="เชิญเพื่อนและรับโบนัส";
 /* Indicating text for when "you invite your friends" */
@@ -918,7 +916,7 @@
 /* title of the introduction for the achievements screen */
 "inviteFriendsAndGetForEachReferral"="รับพื้นที่เก็บข้อมูลขนาด %1$s และการถ่ายโอน %2$s จากการชวนเพื่อนในแต่ละครั้ง";
 /* Text shown to explain how and where you can invite friends */
-"inviteYourFriendsExplanation"="เลือกผู้ติดต่อจากรายชื่อในโทรศัพท์ของคุณหรือกรอกที่อยู่อีเมลพร้อมกัน";
+"Select from phone contacts or enter multiple email addresses"="Select from phone contacts or enter multiple email addresses";
 /*  */
 "insertYourFriendsEmails"="กรอกอีเมลของเพื่อนคุณ:";
 /*  */
@@ -1009,12 +1007,6 @@
 "Renews on"="ต่ออายุเมื่อ";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="แชร์ขาเข้า";
-/* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
-"of %@"="จาก %@";
-/* Sentence shown under the used space to complete the info with the user account maximum storage. "used of {maximun storage}" */
-"used of %@"="ใช้ไปแล้ว %@";
-/* Sentence shown under the available space to complete the info with the user account maximum storage. "available of {maximun storage}" */
-"available of %@"="ใช้ได้อีก %@";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="อัปเกรดบัญชี";
 /*  */
@@ -1023,8 +1015,8 @@
 "cloudDriveIsAlmostFull"="[S]คลาวด์ไดร์ฟของคุณใกล้เต็มแล้ว[/S] [A]อัปเกรด[/A]เป็นบัญชี PRO และรับพื้นที่เก็บข้อมูลบนคลาวด์[S]สูงสุด %@ TB (%@ GB)[/S]";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
 "cloudDriveIsFull"="[S]คลาวด์ไดร์ฟของคุณเต็มแล้ว[/S] [A]อัปเกรด[/A]เป็นบัญชี PRO และรับพื้นที่เก็บข้อมูลบนคลาวด์[S]สูงสุด %@ TB (%@ GB)[/S]";
-/* Storage related with the MEGA PRO account level you can subscribe */
-"productSpace"="ที่เก็บข้อมูล";
+/* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
+"Storage"="ที่เก็บข้อมูล";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
 "limited"="ถูกจำกัด";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
@@ -1179,8 +1171,8 @@
 "contactCredentials"="ข้อมูลรับรองการติดต่อ";
 /* "Verify user" dialog description */
 "thisIsBestDoneInRealLife"="สิ่งนี้ทำได้ดีที่สุดในชีวิตจริงได้โดยการประชุมแบบเห็นหน้า หากคุณมีช่องทางที่ได้รับการตรวจสอบแล้ว เช่น OTR ที่ตรวจสอบแล้วหรือ PGP คุณอาจใช้ช่องดังกล่าวได้";
-/* Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity */
-"yourCredentials"="ข้อมูลรับรองของคุณ";
+/* Title of the label in the my account section. It shows the credentials of the current user so it can be used to be verified by other contacts */
+"My credentials"="ข้อมูลประจำตัวของฉัน";
 /* Button to reset the password */
 "reset"="รีเซ็ต";
 /* Button title */
@@ -1360,6 +1352,34 @@
 "Read error"="อ่านผิดพลาด";
 /* Label to show that an error related with an invalid or missing application key occurs during a SDK operation. */
 "Invalid application key"="คีย์แอปพลิเคชันไม่ถูกต้อง";
+/* Error shown when terms of service are breached during download. */
+"Terms of Service breached"="ละเมิดข้อกำหนดในการให้บริการ";
+/* SDK error returned when an upload would produce recursivity */
+"Upload produces recursivity"="Upload produces recursivity";
+/* Error shown when download a file that has violated ToS/AUP. */
+"Not accessible due to ToS/AUP violation"="ไม่สามารถเข้าถึงได้เนื่องจากการละเมิด ToS/AUP";
+/* Error shown when SSL check has failed */
+"SSL verification failed"="ยืนยัน SSL ไม่สำเร็จ";
+/* Label shown when current account does not have enough quota to complete the operation */
+"Not enough quota"="โควต้าไม่เพียงพอ";
+/* SDK error returned when a MFA is required to perform an operation */
+"Multi-factor authentication required"="Multi-factor authentication required";
+/* SDK error returned for operations only allowed for business master users */
+"Access denied for users"="Access denied for users";
+/* SDK error returned when a business account has expired */
+"Business account has expired"="Business account has expired";
+/* SDK error returned when the credit card has been rejected */
+"Credit card rejected"="Credit card rejected";
+/* SDK error returned when the billing failed */
+"Billing failed"="Billing failed";
+/* SDK error returned when an operation is rejected due to fraud protection */
+"Rejected by fraud protection"="Rejected by fraud protection";
+/* SDK error returned when there are too many requests */
+"Too many requests"="Too many requests";
+/* SDK error returned when there is a balance error */
+"Balance error"="Balance error";
+/* SDK error returned upon a HTTP error */
+"HTTP error"="HTTP error";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="ข้อผิดพลาดที่ไม่รู้จัก";
 /* Text shown in an alert when the user is about to change the language of the app */
@@ -1629,7 +1649,7 @@
 /* Title of the Spotlight Search section */
 "Search"="ค้นหา";
 /* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
-"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="When enabled, allow search and look up MEGA files/folders in Spotlight Search.";
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="Will allow searching of MEGA files/folders in your device's Spotlight Search";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="คุณคือผู้ถือกุญแจ";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -2041,27 +2061,15 @@
 /* Chat Notifications DND: Title bar message for the dnd activate options */
 "Mute chat Notifications for"="ปิดเสียงแจ้งเตือนแชทเป็นเวลา";
 /* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
-"Muted forever"="ปิดเสียงตลอดไป";
-/* Chat Notifications DND: Remaining time left to deactivate DND - 1 minute left */
-"1 minute left"="เหลืออีก 1 นาที";
-/* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 minute left */
-"%d minutes left"="เหลืออีก %d นาที";
-/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour left */
-"1 hour left"="เหลืออีก 1 ชั่วโมง";
-/* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 hour left */
-"%d hours left"="เหลืออีก %d ชั่วโมง";
+"Notifications will be silenced until Do Not Disturb is turned off"="Notifications will be silenced until Do Not Disturb is turned off";
+/* Chat Notifications DND: Remaining time left if until tomorrow */
+"Notifications will be silenced until tomorrow at %@"="Notifications will be silenced until tomorrow at %@";
+/* Chat Notifications DND: Remaining time left if until today */
+"Notifications will be silenced until %@"="Notifications will be silenced until %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="การแจ้งเตือนแชท";
 /* Chat settings: This text appears with the Do Not Disturb switch */
 "Do Not Disturb"="ห้ามรบกวน";
-/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, 1 minute left */
-"1 hour, 1 minute left"="เหลืออีก 1 ชั่วโมง 1 นาที";
-/* Chat Notifications DND: Remaining time left to deactivate DND - X hours, X minutes left */
-"%d hours, %d minutes left"="เหลืออีก %d ชั่วโมง %d นาที";
-/* Chat Notifications DND: Remaining time left to deactivate DND - X hours, 1 minute left */
-"%d hours, 1 minute left"="เหลืออีก %d ชั่วโมง 1 นาที";
-/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, X minutes left */
-"1 hour, %d minutes left"="เหลืออีก 1 ชั่วโมง %d นาที";
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
 "Reconnecting..."="กำลังเชื่อมต่อใหม่...";
 /* Title shown when the user reconnect in a call. */
@@ -2092,6 +2100,8 @@
 "Send (%d)"="ส่ง (%d)";
 /* Used in Photos app browser view to upload the photos from the view to the cloud. */
 "Upload (%d)"="อัปโหลด (%d)";
+/* Used in Photos app browser album listing screen. */
+"Albums"="Albums";
 /* Used in Photos app browser carousel view to unselect a selected photo. */
 "Unselect"="ไม่เลือก";
 /* Used in Photos app browser. Shown when there are no photos or videos in the Photos app. */
@@ -2108,6 +2118,8 @@
 "Please enter a valid phone number"="กรุณากรอกหมายเลขโทรศัพท์ให้ถูกต้อง";
 /* Error message that will show to user when user reached the sms verification daily limit */
 "You have reached the daily limit"="คุณถึงขีดจำกัดรายวันแล้ว";
+/* Error message that will be shown when the code introduced do not match with the one you received */
+"The verification code doesn't match."="รหัสยืนยันไม่ตรงกัน";
 /* Error message that will show to user when user entered invalid verification code */
 "Wrong code. Please try again or resend."="รหัสไม่ถูกต้อง กรุณาลองใหม่หรือส่งอีกครั้ง";
 /* Error message that will show to user when host detected that the mobile number has been registered already */
@@ -2150,7 +2162,7 @@
 "Select Folder"="เลือกโฟลเดอร์";
 /* Title of the folder selection screen for camera uploads */
 "Choose Folder"="เลือกโฟลเดอร์";
-/* Label used near to the option selected to encode the images uploaded to a chat (Low, Medium, Original) */
+/* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
 "Image quality"="คุณภาพของรูป";
 /* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
 "Automatic"="อัตโนมัติ";
@@ -2218,3 +2230,5 @@
 "Folder link unavailable"="ลิงก์โฟลเดอร์ยังไม่พร้อมใช้งาน";
 /* Error message shown when opening a file link which doesn’t exist */
 "File link unavailable"="ลิงก์ไฟล์ไม่พร้อมใช้งาน";
+/* Header of block with all shared files in chat. */
+"Shared Files"="ไฟล์ที่ใช้ร่วมกัน";

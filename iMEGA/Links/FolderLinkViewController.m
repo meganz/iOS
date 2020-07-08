@@ -21,6 +21,7 @@
 #import "UITextField+MNZCategory.h"
 
 #import "BrowserViewController.h"
+#import "EmptyStateView.h"
 #import "NodeTableViewCell.h"
 #import "MainTabBarController.h"
 #import "OnboardingViewController.h"
@@ -108,7 +109,6 @@
 
     self.navigationController.topViewController.toolbarItems = self.toolbar.items;
     [self.navigationController setToolbarHidden:NO animated:YES];
-    self.navigationController.toolbar.barTintColor = UIColor.whiteColor;
     
     self.closeBarButtonItem.title = AMLocalizedString(@"close", @"A button label.");
 
@@ -125,6 +125,8 @@
     [self.view addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)]];
     
     self.moreBarButtonItem.accessibilityLabel = AMLocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
+    
+    [self updateAppearance];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -174,7 +176,23 @@
     } completion:nil];
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateAppearance];
+            
+            [self.tableView reloadData];
+        }
+    }
+}
+
 #pragma mark - Private
+
+- (void)updateAppearance {
+    self.view.backgroundColor = [UIColor mnz_backgroundGroupedElevated:self.traitCollection];
+}
 
 - (void)reloadUI {
     if (!self.parentNode) {
@@ -237,7 +255,6 @@
 }
 
 - (void)disableUIItems {
-    
     [self.tableView setSeparatorColor:[UIColor clearColor]];
     [self.tableView setBounces:NO];
     [self.tableView setScrollEnabled:NO];
@@ -564,6 +581,7 @@
     MEGANode *node = self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : [self.nodeList nodeAtIndex:indexPath.row];
     
     NodeTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"nodeCell" forIndexPath:indexPath];
+    cell.backgroundColor = [UIColor mnz_secondaryBackgroundGroupedElevated:self.traitCollection];
     if (cell == nil) {
         cell = [[NodeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"nodeCell"];
     }
@@ -575,7 +593,7 @@
             [cell.thumbnailImageView mnz_imageForNode:node];
         }
         
-        cell.infoLabel.text = [Helper sizeAndDateForNode:node api:[MEGASdkManager sharedMEGASdkFolder]];
+        cell.infoLabel.text = [Helper sizeAndModicationDateForNode:node api:[MEGASdkManager sharedMEGASdkFolder]];
     } else if (node.isFolder) {
         [cell.thumbnailImageView mnz_imageForNode:node];
         
@@ -601,7 +619,7 @@
         cell.selectedBackgroundView = nil;
     }
     
-    cell.separatorView.layer.borderColor = UIColor.mnz_grayCCCCCC.CGColor;
+    cell.separatorView.layer.borderColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection].CGColor;
     cell.separatorView.layer.borderWidth = 0.5;
     
     if (@available(iOS 11.0, *)) {
@@ -635,7 +653,7 @@
 
     switch ([node type]) {
         case MEGANodeTypeFolder: {
-            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Links" bundle:nil];
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Links" bundle:[NSBundle bundleForClass:self.class]];
             FolderLinkViewController *folderLinkVC = [storyboard instantiateViewControllerWithIdentifier:@"FolderLinkViewControllerID"];
             [folderLinkVC setParentNode:node];
             [folderLinkVC setIsFolderRootNode:NO];
@@ -745,7 +763,16 @@
 
 #pragma mark - DZNEmptyDataSetSource
 
-- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
+- (nullable UIView *)customViewForEmptyDataSet:(UIScrollView *)scrollView {
+    EmptyStateView *emptyStateView = [EmptyStateView.alloc initWithImage:[self imageForEmptyState] title:[self titleForEmptyState] description:[self descriptionForEmptyState] buttonTitle:[self buttonTitleForEmptyState]];
+    [emptyStateView.button addTarget:self action:@selector(buttonTouchUpInsideEmptyState) forControlEvents:UIControlEventTouchUpInside];
+    
+    return emptyStateView;
+}
+
+#pragma mark - Empty State
+
+- (NSString *)titleForEmptyState {
     NSString *text;
     if ([MEGAReachabilityManager isReachable]) {
         if (!self.isFetchNodesDone && self.isFolderRootNode) {
@@ -765,22 +792,19 @@
         text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");
     }
     
-    return [[NSAttributedString alloc] initWithString:text attributes:[Helper titleAttributesForEmptyState]];
+    return text;
 }
 
-- (nullable NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView {
+- (NSString *)descriptionForEmptyState {
     NSString *text = @"";
     if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
         text = AMLocalizedString(@"Mobile Data is turned off", @"Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings.");
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleFootnote], NSForegroundColorAttributeName:UIColor.mnz_gray777777};
-    
-    return [NSAttributedString.alloc initWithString:text attributes:attributes];
+    return text;
 }
 
-- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
-    
+- (UIImage *)imageForEmptyState {
     if ([MEGAReachabilityManager isReachable]) {
         if (!self.isFetchNodesDone && self.isFolderRootNode) {
             if (self.isFolderLinkNotValid) {
@@ -799,43 +823,16 @@
     }
 }
 
-- (NSAttributedString *)buttonTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
+- (NSString *)buttonTitleForEmptyState {
     NSString *text = @"";
     if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
         text = AMLocalizedString(@"Turn Mobile Data on", @"Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app.");
     }
     
-    return [NSAttributedString.alloc initWithString:text attributes:Helper.buttonTextAttributesForEmptyState];
+    return text;
 }
 
-- (UIImage *)buttonBackgroundImageForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
-    UIEdgeInsets capInsets = [Helper capInsetsForEmptyStateButton];
-    UIEdgeInsets rectInsets = [Helper rectInsetsForEmptyStateButton];
-    
-    return [[[UIImage imageNamed:@"emptyStateButton"] resizableImageWithCapInsets:capInsets resizingMode:UIImageResizingModeStretch] imageWithAlignmentRectInsets:rectInsets];
-}
-
-- (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
-    if ([MEGAReachabilityManager isReachable]) {
-        if (!self.isFetchNodesDone && self.isFolderRootNode && !self.isFolderLinkNotValid) {
-            return nil;
-        }
-    }
-    
-    return [UIColor whiteColor];
-}
-
-- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
-    return [Helper verticalOffsetForEmptyStateWithNavigationBarSize:self.navigationController.navigationBar.frame.size searchBarActive:self.searchController.isActive];
-}
-
-- (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView {
-    return [Helper spaceHeightForEmptyState];
-}
-
-#pragma mark - DZNEmptyDataSetDelegate
-
-- (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
+- (void)buttonTouchUpInsideEmptyState {
     if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
         [UIApplication.sharedApplication openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString] options:@{} completionHandler:nil];
     }

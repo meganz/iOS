@@ -22,6 +22,8 @@ class AddPhoneNumberViewController: UIViewController {
                 self?.descriptionLabel.text = String(format: AMLocalizedString("Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."), Helper.memoryStyleString(fromByteCount: byteCount))
             })
         }
+        
+        updateAppearance()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -39,7 +41,29 @@ class AddPhoneNumberViewController: UIViewController {
             return .all
         }
     }
-
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        if #available(iOS 13, *) {
+            if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+                if navigationController != nil {
+                    AppearanceManager.forceNavigationBarUpdate(navigationController!.navigationBar, traitCollection: traitCollection)
+                }
+                updateAppearance()
+            }
+        }
+    }
+    
+    // MARK: - Private
+    
+    private func updateAppearance() {
+        view.backgroundColor = .mnz_backgroundElevated(traitCollection)
+        
+        addPhoneNumberButton.mnz_setupPrimary(traitCollection)
+        notNowButton.mnz_setupCancel(traitCollection)
+    }
+    
     // MARK: - UI Actions
 
     @IBAction func didTapAddPhoneNumberButton() {

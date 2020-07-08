@@ -86,14 +86,31 @@
         
     if (node.isTakenDown) {
         self.nameLabel.attributedText = [node mnz_attributedTakenDownNameWithHeight:self.nameLabel.font.capHeight];
-        self.nameLabel.textColor = UIColor.mnz_redMain;
+        self.nameLabel.textColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
     } else {
         self.nameLabel.text = node.name;
-        self.nameLabel.textColor = UIColor.mnz_black333333;
+        self.nameLabel.textColor = UIColor.mnz_label;
+        self.subtitleLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
     }
     
+    self.infoLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
     if (node.isFile) {
-        self.infoLabel.text = self.recentActionBucket ? [NSString stringWithFormat:@"%@ • %@", [Helper sizeForNode:node api:MEGASdkManager.sharedMEGASdk], node.creationTime.mnz_formattedHourAndMinutes] : [Helper sizeAndDateForNode:node api:api];
+        MEGASdk *megaSDK = self.recentActionBucket ? MEGASdkManager.sharedMEGASdk : api;
+        NSString *nodeDisplayDateTime;
+        switch (self.cellFlavor) {
+            case NodeTableViewCellFlavorVersions:
+            case NodeTableViewCellFlavorRecentAction:
+            case NodeTableViewCellFlavorCloudDrive:
+                nodeDisplayDateTime =
+                    self.recentActionBucket ? [Helper sizeAndCreationHourAndMininuteForNode:node api:megaSDK] :
+                    [Helper sizeAndModicationDateForNode:node api:megaSDK];
+                break;
+            case NodeTableViewCellFlavorSharedLink:
+                nodeDisplayDateTime = [Helper sizeAndShareLinkCreateDateForSharedLinkNode:node api:megaSDK];
+                break;
+        }
+
+        self.infoLabel.text = nodeDisplayDateTime;
         self.versionedImageView.hidden = ![[MEGASdkManager sharedMEGASdk] hasVersionsForNode:node];
     } else if (node.isFolder) {
         self.infoLabel.text = [Helper filesAndFoldersInFolderNode:node api:api];
@@ -106,9 +123,12 @@
     } else {
         self.delegate = delegate;
     }
+    
+    self.separatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
 }
 
 - (void)configureForRecentAction:(MEGARecentActionBucket *)recentActionBucket {
+    self.cellFlavor = NodeTableViewCellFlavorRecentAction;
     self.recentActionBucket = recentActionBucket;
     NSArray *nodesArray = recentActionBucket.nodesList.mnz_nodesArrayFromNodeList;
     
@@ -164,6 +184,8 @@
     self.uploadOrVersionImageView.image = recentActionBucket.isUpdate ? [UIImage imageNamed:@"versioned"] : [UIImage imageNamed:@"recentUpload"];
     
     self.timeLabel.text = recentActionBucket.timestamp.mnz_formattedHourAndMinutes;
+    
+    self.subtitleLabel.textColor = self.infoLabel.textColor = self.timeLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
 }
 
 #pragma mark - IBActions

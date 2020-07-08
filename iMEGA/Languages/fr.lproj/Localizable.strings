@@ -229,7 +229,7 @@
 /* Success message shown when you remove a contact request */
 "requestDeleted"="La demande a été supprimée";
 /* Title shown when there's no pending contact requests */
-"noRequestPending"="Il n’y a aucune requête en attente";
+"noRequestPending"="Il n’y a aucune demande en attente";
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="Transferts en pause";
 /* Title shown when the there is not any transfer and they are not paused */
@@ -909,8 +909,6 @@
 "profile"="Profil";
 /* Title of the Achievements section */
 "achievementsTitle"="Objectifs";
-/* Title of the Used storage section */
-"usedStorage"="Espace de stockage utilisé";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
 "inviteFriendsAndGetRewards"="Invitez des amis et obtenez des primes";
 /* Indicating text for when "you invite your friends" */
@@ -918,7 +916,7 @@
 /* title of the introduction for the achievements screen */
 "inviteFriendsAndGetForEachReferral"="Obtenez %1$s d’espace de stockage et %2$s de transferts pour chaque parrainage";
 /* Text shown to explain how and where you can invite friends */
-"inviteYourFriendsExplanation"="Choisissez des contacts de la liste de contacts de votre téléphone ou saisissez plusieurs adresses courriel.";
+"Select from phone contacts or enter multiple email addresses"="Select from phone contacts or enter multiple email addresses";
 /*  */
 "insertYourFriendsEmails"="Saisissez les adresses courriel de votre ami :";
 /*  */
@@ -1009,12 +1007,6 @@
 "Renews on"="Se renouvelle le";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="Partages entrants";
-/* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
-"of %@"="sur %@";
-/* Sentence shown under the used space to complete the info with the user account maximum storage. "used of {maximun storage}" */
-"used of %@"="utilisés sur %@";
-/* Sentence shown under the available space to complete the info with the user account maximum storage. "available of {maximun storage}" */
-"available of %@"="disponibles sur %@";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Surclasser le compte";
 /*  */
@@ -1023,8 +1015,8 @@
 "cloudDriveIsAlmostFull"="[S]Votre disque nuagique est presque plein.[/S] [A]Surclassez votre compte maintenant[/A] vers un compte PRO et obtenez [S]jusqu’à %@ To (%@ Go)[/S] d’espace de stockage nuagique.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
 "cloudDriveIsFull"="[S]Votre disque nuagique est plein.[/S] [A]Surclassez votre compte maintenant[/A] vers un compte PRO et obtenez [S]jusqu’à %@ To (%@ Go)[/S] d’espace de stockage nuagique.";
-/* Storage related with the MEGA PRO account level you can subscribe */
-"productSpace"="Espace de stockage";
+/* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
+"Storage"="Espace de stockage";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
 "limited"="Limité";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
@@ -1162,7 +1154,7 @@
 /* Title to perform the action of sending a message to a contact. */
 "sendMessage"="Envoyer un message";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
-"verifyCredentials"=" Confirmer les coordonnées";
+"verifyCredentials"=" Confirmer le numéro d’identification";
 /* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
 "verify"="Confirmer";
 /* Button title */
@@ -1176,11 +1168,11 @@
 /* Title of the incoming shared folders of a user. */
 "sharedFolders"="Dossiers partagés";
 /* Label title above the fingerprint credentials of a user's contact. A credential in this case is a stored piece of information representing the identity of the contact */
-"contactCredentials"="Coordonnées du contact";
+"contactCredentials"="Numéro d’identification du contact";
 /* "Verify user" dialog description */
 "thisIsBestDoneInRealLife"="La meilleure façon de le faire est de se rencontrer physiquement. Si vous avez un autre moyen de communication vérifiée, tel qu'OTR ou PGP, vous pouvez aussi l'utiliser.";
-/* Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity */
-"yourCredentials"="Vos coordonnées";
+/* Title of the label in the my account section. It shows the credentials of the current user so it can be used to be verified by other contacts */
+"My credentials"="Mon numéro d’identification";
 /* Button to reset the password */
 "reset"="Réinitialiser";
 /* Button title */
@@ -1360,6 +1352,34 @@
 "Read error"="Erreur de lecture";
 /* Label to show that an error related with an invalid or missing application key occurs during a SDK operation. */
 "Invalid application key"="Clé d’application invalide";
+/* Error shown when terms of service are breached during download. */
+"Terms of Service breached"="Non-respect des Conditions générales d’utilisation";
+/* SDK error returned when an upload would produce recursivity */
+"Upload produces recursivity"="Upload produces recursivity";
+/* Error shown when download a file that has violated ToS/AUP. */
+"Not accessible due to ToS/AUP violation"="N’est pas accessible en raison du non-respect des CGU/PUA.";
+/* Error shown when SSL check has failed */
+"SSL verification failed"="Échec de vérification SSL";
+/* Label shown when current account does not have enough quota to complete the operation */
+"Not enough quota"="Quota insuffisant";
+/* SDK error returned when a MFA is required to perform an operation */
+"Multi-factor authentication required"="Multi-factor authentication required";
+/* SDK error returned for operations only allowed for business master users */
+"Access denied for users"="Access denied for users";
+/* SDK error returned when a business account has expired */
+"Business account has expired"="Business account has expired";
+/* SDK error returned when the credit card has been rejected */
+"Credit card rejected"="Credit card rejected";
+/* SDK error returned when the billing failed */
+"Billing failed"="Billing failed";
+/* SDK error returned when an operation is rejected due to fraud protection */
+"Rejected by fraud protection"="Rejected by fraud protection";
+/* SDK error returned when there are too many requests */
+"Too many requests"="Il y a trop de requêtes";
+/* SDK error returned when there is a balance error */
+"Balance error"="Balance error";
+/* SDK error returned upon a HTTP error */
+"HTTP error"="HTTP error";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Erreur inconnue";
 /* Text shown in an alert when the user is about to change the language of the app */
@@ -1527,7 +1547,7 @@
 /* Title to preview document */
 "previewContent"="Aperçu du contenu";
 /* Title of the notification for a missed call */
-"missedCall"="Appel manqué";
+"missedCall"="Un appel a été manqué";
 /* When an outgoing call of user A with user B had been rejected by user B */
 "callWasRejected"="L’appel a été refusé";
 /* When an active call of user A with user B had cancelled */
@@ -1629,7 +1649,7 @@
 /* Title of the Spotlight Search section */
 "Search"="Recherche";
 /* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
-"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="When enabled, allow search and look up MEGA files/folders in Spotlight Search.";
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="Permettra de chercher des fichiers ou des dossiers MEGA dans la recherche Spotlight de votre appareil.";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="Vous détenez les clés";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -2041,27 +2061,15 @@
 /* Chat Notifications DND: Title bar message for the dnd activate options */
 "Mute chat Notifications for"="Mettre les notifications en sourdine pendant";
 /* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
-"Muted forever"="Plus aucune notification";
-/* Chat Notifications DND: Remaining time left to deactivate DND - 1 minute left */
-"1 minute left"="Il reste 1 minute";
-/* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 minute left */
-"%d minutes left"="Il reste %d minutes";
-/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour left */
-"1 hour left"="Il reste 1 heure";
-/* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 hour left */
-"%d hours left"="Il reste %d heures";
+"Notifications will be silenced until Do Not Disturb is turned off"="Notifications will be silenced until Do Not Disturb is turned off";
+/* Chat Notifications DND: Remaining time left if until tomorrow */
+"Notifications will be silenced until tomorrow at %@"="Notifications will be silenced until tomorrow at %@";
+/* Chat Notifications DND: Remaining time left if until today */
+"Notifications will be silenced until %@"="Notifications will be silenced until %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="Notifications de dialogue en ligne";
 /* Chat settings: This text appears with the Do Not Disturb switch */
 "Do Not Disturb"="Ne pas déranger";
-/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, 1 minute left */
-"1 hour, 1 minute left"="Il reste 1 heure, 1 minute";
-/* Chat Notifications DND: Remaining time left to deactivate DND - X hours, X minutes left */
-"%d hours, %d minutes left"="Il reste %d heures, %d minutes";
-/* Chat Notifications DND: Remaining time left to deactivate DND - X hours, 1 minute left */
-"%d hours, 1 minute left"="Il reste %d heures, 1 minute";
-/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, X minutes left */
-"1 hour, %d minutes left"="Il reste 1 heure, %d minutes";
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
 "Reconnecting..."="Reconnexion…";
 /* Title shown when the user reconnect in a call. */
@@ -2092,6 +2100,8 @@
 "Send (%d)"="Envoyer (%d)";
 /* Used in Photos app browser view to upload the photos from the view to the cloud. */
 "Upload (%d)"="Téléverser (%d)";
+/* Used in Photos app browser album listing screen. */
+"Albums"="Albums";
 /* Used in Photos app browser carousel view to unselect a selected photo. */
 "Unselect"="Dessélectionner";
 /* Used in Photos app browser. Shown when there are no photos or videos in the Photos app. */
@@ -2108,6 +2118,8 @@
 "Please enter a valid phone number"="Veuillez indiquer un numéro de téléphone valide.";
 /* Error message that will show to user when user reached the sms verification daily limit */
 "You have reached the daily limit"="Vous avez atteint la limite quotidienne";
+/* Error message that will be shown when the code introduced do not match with the one you received */
+"The verification code doesn't match."="Le code de vérification ne correspond pas.";
 /* Error message that will show to user when user entered invalid verification code */
 "Wrong code. Please try again or resend."="Le code est erroné. Veuillez essayer et envoyer de nouveau.";
 /* Error message that will show to user when host detected that the mobile number has been registered already */
@@ -2150,7 +2162,7 @@
 "Select Folder"="Sélectionner un dossier";
 /* Title of the folder selection screen for camera uploads */
 "Choose Folder"="Choisir un dossier";
-/* Label used near to the option selected to encode the images uploaded to a chat (Low, Medium, Original) */
+/* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
 "Image quality"="Qualité des images";
 /* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
 "Automatic"="Automatique";
@@ -2185,9 +2197,9 @@
 /* Label for any ‘Night’ button, link, text, title, etc. - (String as short as possible). */
 "Night"="Nuit";
 /* Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible). */
-"Minimal"="Minimal";
+"Minimal"="Minimale";
 /* Section title inside of Settings - Appearance, where you can change the app's layout. */
-"Layout"="Agencement";
+"Layout"="Disposition";
 /* Section title inside of Settings - Appearance, where you can change the app's icon. */
 "App Icon"="Icône de l’appli";
 /* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
@@ -2201,7 +2213,7 @@
 /* Section title of the 'Sorting And View Mode' view inside of Settings - Appearence - Sorting And View Mode. */
 "View mode preference"="Préférence du mode d’affichage";
 /* Footer text explaining what means choosing a sorting preference 'Per Folder' or 'Same for All' in Settings - Appearance - Sorting And View Mode. */
-"Configure column sorting order on a per-folder basis, or use the same order for all folders."="Configurer l’ordre de tri des colonnes par dossier ou utiliser le même ordre pour tous les dossiers.";
+"Configure column sorting order on a per-folder basis, or use the same order for all folders."="Configurez l’ordre de tri des colonnes par dossier ou utiliser le même ordre pour tous les dossiers.";
 /* Footer text explaining what means choosing a view mode preference 'Per Folder', 'List view' or 'Thumbnail view' in Settings - Appearance - Sorting And View Mode. */
 "Select view mode (List or Thumbnail) on a per-folder basis, or use the same view mode for all folders."="Sélectionnez le mode d’affichage (en liste ou en imagettes) pour chaque dossier ou utilisez le même mode d’affichage pour tous les dossiers.";
 /* Warning message to alert user about logout in My Account section if has transfers in progress. */
@@ -2218,3 +2230,5 @@
 "Folder link unavailable"="Lien de dossier non disponible";
 /* Error message shown when opening a file link which doesn’t exist */
 "File link unavailable"="Lien de fichier non disponible";
+/* Header of block with all shared files in chat. */
+"Shared Files"="Fichiers partagés";

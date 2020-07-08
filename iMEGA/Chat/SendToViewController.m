@@ -6,6 +6,7 @@
 
 #import "UIImageView+MNZCategory.h"
 
+#import "EmptyStateView.h"
 #import "Helper.h"
 #import "MEGAChatAttachNodeRequestDelegate.h"
 #import "MEGAChatAttachVoiceClipRequestDelegate.h"
@@ -34,10 +35,6 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *itemListViewHeightConstraint;
 @property (weak, nonatomic) IBOutlet UIView *itemListView;
 @property (weak, nonatomic) IBOutlet UIView *searchView;
-@property (weak, nonatomic) IBOutlet UIView *recentsHeaderView;
-@property (weak, nonatomic) IBOutlet UILabel *recentsHeaderViewLabel;
-@property (weak, nonatomic) IBOutlet UIView *chatsHeaderView;
-@property (weak, nonatomic) IBOutlet UILabel *chatsHeaderViewLabel;
 
 @property (nonatomic, strong) UISearchController *searchController;
 
@@ -90,12 +87,9 @@
     }
     
     self.sendBarButtonItem.title = AMLocalizedString(@"send", @"Label for any 'Send' button, link, text, title, etc. - (String as short as possible).");
-    [self.sendBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.f]} forState:UIControlStateNormal];
+    [self.sendBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17.0f weight:UIFontWeightSemibold]} forState:UIControlStateNormal];
     
     self.navigationItem.title = AMLocalizedString(@"selectDestination", @"Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them.");
-    
-    self.recentsHeaderViewLabel.text = AMLocalizedString(@"Recents", @"Title for the recents section").uppercaseString;
-    self.chatsHeaderViewLabel.text = AMLocalizedString(@"My chats", @"Column header of my contacts/chats at copy dialog").uppercaseString;
     
     self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
     self.searchController.definesPresentationContext = YES;
@@ -112,6 +106,10 @@
     
     self.panOnTable = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(shouldDismissSearchController)];
     self.panOnTable.delegate = self;
+    
+    [self.tableView registerNib:[UINib nibWithNibName:@"GenericHeaderFooterView" bundle:nil] forHeaderFooterViewReuseIdentifier:@"GenericHeaderFooterViewID"];
+    
+    [self updateAppearance];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -128,7 +126,33 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+#ifdef MNZ_SHARE_EXTENSION
+            [ExtensionAppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar traitCollection:self.traitCollection];
+            [ExtensionAppearanceManager forceSearchBarUpdate:self.searchController.searchBar traitCollection:self.traitCollection];
+#elif MNZ_PICKER_EXTENSION
+            
+#else
+            [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar traitCollection:self.traitCollection];
+#endif
+            
+            [self updateAppearance];
+            
+            [self.tableView reloadData];
+        }
+    }
+}
+
 #pragma mark - Private
+
+- (void)updateAppearance {
+    self.view.backgroundColor = self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedElevated:self.traitCollection];
+    self.searchView.backgroundColor = [UIColor mnz_mainBarsForTraitCollection:self.traitCollection];
+}
 
 - (void)setGroupChatsAndRecents {
     self.chatListItemList = [[MEGASdkManager sharedMEGAChatSdk] activeChatListItems];
@@ -454,6 +478,9 @@
 }
 
 - (IBAction)sendAction:(UIBarButtonItem *)sender {
+    if (self.searchController.isActive) {
+        self.searchController.active = NO;
+    }
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         switch (self.sendMode) {
             case SendModeCloud: {
@@ -489,10 +516,6 @@
                     }
                 }
                 
-                if (self.searchController.isActive) {
-                    self.searchController.active = NO;
-                }
-                
                 [self dismissViewControllerAnimated:YES completion:nil];
                 
                 break;
@@ -504,9 +527,6 @@
                 break;
                 
             case SendModeForward: {
-                if (self.searchController.isActive) {
-                    self.searchController.active = NO;
-                }
                 [self dismissViewControllerAnimated:YES completion:^{
                     NSUInteger destinationCount = self.selectedGroupChatsMutableArray.count + self.selectedUsersMutableArray.count;
                     self.pendingForwardOperations = self.messages.count * destinationCount;
@@ -595,10 +615,11 @@
     if ([itemAtIndex isKindOfClass:MEGAChatListItem.class]) {
         MEGAChatListItem *chatListItem = itemAtIndex;
         ChatRoomCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"chatRoomCell" forIndexPath:indexPath];
+        cell.backgroundColor = [UIColor mnz_secondaryBackgroundGroupedElevated:self.traitCollection];
         
         cell.onlineStatusView.hidden = YES;
-
-        UIImage *avatar = [UIImage imageForName:chatListItem.title.uppercaseString size:cell.avatarImageView.frame.size backgroundColor:[UIColor mnz_gray999999] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:(cell.avatarImageView.frame.size.width/2.0f)]];
+        
+        UIImage *avatar = [UIImage imageForName:chatListItem.title.uppercaseString size:cell.avatarImageView.frame.size backgroundColor:[UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection] textColor:UIColor.whiteColor font:[UIFont systemFontOfSize:(cell.avatarImageView.frame.size.width/2.0f)]];
         cell.avatarImageView.image = avatar;
         
         cell.chatTitle.text = chatListItem.title;
@@ -628,8 +649,9 @@
     if ([itemAtIndex isKindOfClass:MEGAUser.class]) {
         MEGAUser *user = itemAtIndex;
         ContactTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"contactCell" forIndexPath:indexPath];
+        cell.backgroundColor = [UIColor mnz_secondaryBackgroundGroupedElevated:self.traitCollection];
         
-        UIColor *color = [UIColor mnz_colorForStatusChange:[[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:user.handle]];
+        UIColor *color = [UIColor mnz_colorForChatStatus:[MEGASdkManager.sharedMEGAChatSdk userOnlineStatus:user.handle]];
         if (color) {
             cell.onlineStatusView.backgroundColor = color;
             cell.onlineStatusView.hidden = NO;
@@ -697,13 +719,21 @@
     if (!self.searchController.isActive && section == 0 && self.recentsMutableArray.count == 0) {
         return nil;
     }
-
+    
+    GenericHeaderFooterView *headerView = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:@"GenericHeaderFooterViewID"];
+    headerView.topSeparatorView.hidden = YES;
+    headerView.titleLabel.font = [UIFont systemFontOfSize:14.0f weight:UIFontWeightMedium];
     switch (section) {
-        case 0:
-            return self.searchController.isActive ? self.chatsHeaderView : self.recentsHeaderView;
+        case 0: {
+            headerView.titleLabel.text = self.searchController.isActive ? AMLocalizedString(@"My chats", @"Column header of my contacts/chats at copy dialog").uppercaseString : AMLocalizedString(@"Recents", @"Title for the recents section").uppercaseString;
             
-        case 1:
-            return self.chatsHeaderView;
+            return headerView;
+        }
+            
+        case 1: {
+            headerView.titleLabel.text = AMLocalizedString(@"My chats", @"Column header of my contacts/chats at copy dialog").uppercaseString;
+            return headerView;
+        }
             
         default:
             return nil;
@@ -778,7 +808,15 @@
 
 #pragma mark - DZNEmptyDataSetSource
 
-- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
+- (nullable UIView *)customViewForEmptyDataSet:(UIScrollView *)scrollView {
+    EmptyStateView *emptyStateView = [EmptyStateView.alloc initWithImage:[self imageForEmptyState] title:[self titleForEmptyState] description:nil buttonTitle:nil];
+    
+    return emptyStateView;
+}
+
+#pragma mark - Empty State
+
+- (NSString *)titleForEmptyState {
     NSString *text = @"";
     if (self.searchController.isActive) {
         if (self.searchController.searchBar.text.length) {
@@ -788,10 +826,10 @@
         text = AMLocalizedString(@"contactsEmptyState_title", @"Title shown when the Contacts section is empty, when you have not added any contact.");
     }
     
-    return [[NSAttributedString alloc] initWithString:text attributes:[Helper titleAttributesForEmptyState]];
+    return text;
 }
 
-- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
+- (UIImage *)imageForEmptyState {
     UIImage *image = nil;
     if (self.searchController.isActive) {
         if (self.searchController.searchBar.text.length) {
@@ -802,18 +840,6 @@
     }
     
     return image;
-}
-
-- (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
-    return [UIColor whiteColor];
-}
-
-- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
-    return [Helper verticalOffsetForEmptyStateWithNavigationBarSize:self.navigationController.navigationBar.frame.size searchBarActive:self.searchController.isActive];
-}
-
-- (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView {
-    return [Helper spaceHeightForEmptyState];
 }
 
 #pragma mark - ItemListViewControllerDelegate

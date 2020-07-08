@@ -909,8 +909,6 @@
 "profile"="Perfil";
 /* Title of the Achievements section */
 "achievementsTitle"="Logros";
-/* Title of the Used storage section */
-"usedStorage"="Almacenamiento usado";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
 "inviteFriendsAndGetRewards"="Invita a tus amigos y obtén bonos";
 /* Indicating text for when "you invite your friends" */
@@ -918,7 +916,7 @@
 /* title of the introduction for the achievements screen */
 "inviteFriendsAndGetForEachReferral"="Obtén %1$s de almacenamiento y %2$s de transferencia por cada invitación";
 /* Text shown to explain how and where you can invite friends */
-"inviteYourFriendsExplanation"="Selecciona contactos de tu agenda o introduce varias direcciones de correo electrónico.";
+"Select from phone contacts or enter multiple email addresses"="Select from phone contacts or enter multiple email addresses";
 /*  */
 "insertYourFriendsEmails"="Introduce el correo electrónico de tu(s) amigo(s):";
 /*  */
@@ -1009,12 +1007,6 @@
 "Renews on"="Renovación";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="Compartido conmigo";
-/* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
-"of %@"="de %@";
-/* Sentence shown under the used space to complete the info with the user account maximum storage. "used of {maximun storage}" */
-"used of %@"="usado de %@";
-/* Sentence shown under the available space to complete the info with the user account maximum storage. "available of {maximun storage}" */
-"available of %@"="disponible de %@";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Ampliar cuenta";
 /*  */
@@ -1023,8 +1015,8 @@
 "cloudDriveIsAlmostFull"="[S]Tu Nube está casi llena.[/S] [A]Amplía tu cuenta[/A] y obtén [S]hasta %@ TB (%@ GB)[/S] de espacio de almacenamiento en la nube.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
 "cloudDriveIsFull"="[S]Tu Nube está llena.[/S] [A]Amplía tu cuenta[/A] y obtén [S]hasta %@ TB (%@ GB)[/S] de espacio de almacenamiento en la nube.";
-/* Storage related with the MEGA PRO account level you can subscribe */
-"productSpace"="Almacenamiento";
+/* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
+"Storage"="Almacenamiento";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
 "limited"="Limitado";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
@@ -1179,8 +1171,8 @@
 "contactCredentials"="Credenciales del contacto";
 /* "Verify user" dialog description */
 "thisIsBestDoneInRealLife"="Esto es mejor hacerlo en persona, cara a cara. Si tienes algún otro canal ya verificado, como OTR o PGP, podrías utilizarlo.";
-/* Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity */
-"yourCredentials"="Tus credenciales";
+/* Title of the label in the my account section. It shows the credentials of the current user so it can be used to be verified by other contacts */
+"My credentials"="Mis credenciales";
 /* Button to reset the password */
 "reset"="Restablecer";
 /* Button title */
@@ -1246,7 +1238,7 @@
 /* */
 "done"="Hecho";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
-"enableRichUrlPreviews"="Activar la vista previa del enlace";
+"enableRichUrlPreviews"="Activar la vista previa de los enlaces";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
 "alwaysAllow"="Permitir siempre";
 /* Text indicating to the user that some action will be postpone. E.g. used for 'rich previews' and management of disk storage. */
@@ -1360,6 +1352,34 @@
 "Read error"="Error de lectura";
 /* Label to show that an error related with an invalid or missing application key occurs during a SDK operation. */
 "Invalid application key"="Clave de aplicación no válida";
+/* Error shown when terms of service are breached during download. */
+"Terms of Service breached"="Términos de uso incumplidos";
+/* SDK error returned when an upload would produce recursivity */
+"Upload produces recursivity"="Upload produces recursivity";
+/* Error shown when download a file that has violated ToS/AUP. */
+"Not accessible due to ToS/AUP violation"="No accesible por infringir los Términos de servicio";
+/* Error shown when SSL check has failed */
+"SSL verification failed"="Verificación SSL fallida";
+/* Label shown when current account does not have enough quota to complete the operation */
+"Not enough quota"="Cuota insuficiente";
+/* SDK error returned when a MFA is required to perform an operation */
+"Multi-factor authentication required"="Multi-factor authentication required";
+/* SDK error returned for operations only allowed for business master users */
+"Access denied for users"="Access denied for users";
+/* SDK error returned when a business account has expired */
+"Business account has expired"="Business account has expired";
+/* SDK error returned when the credit card has been rejected */
+"Credit card rejected"="Credit card rejected";
+/* SDK error returned when the billing failed */
+"Billing failed"="Billing failed";
+/* SDK error returned when an operation is rejected due to fraud protection */
+"Rejected by fraud protection"="Rejected by fraud protection";
+/* SDK error returned when there are too many requests */
+"Too many requests"="Demasiadas solicitudes";
+/* SDK error returned when there is a balance error */
+"Balance error"="Balance error";
+/* SDK error returned upon a HTTP error */
+"HTTP error"="HTTP error";
 /* Label to show that an error related with an unknown error occurs during a SDK operation. */
 "Unknown error"="Error desconocido";
 /* Text shown in an alert when the user is about to change the language of the app */
@@ -1629,7 +1649,7 @@
 /* Title of the Spotlight Search section */
 "Search"="Buscar";
 /* Footer text shown under the Spotlight search setting to explain the option 'Spotlight search' */
-"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="When enabled, allow search and look up MEGA files/folders in Spotlight Search.";
+"When enabled, allow search and look up MEGA files/folders in Spotlight Search."="Permite buscar archivos/carpetas de MEGA con Spotlight";
 /* Title shown in a page of the on boarding screens explaining that the user keeps the encryption keys */
 "You hold the keys"="Tú tienes las claves";
 /* Description shown in a page of the onboarding screens explaining the encryption paradigm */
@@ -2041,27 +2061,15 @@
 /* Chat Notifications DND: Title bar message for the dnd activate options */
 "Mute chat Notifications for"="Silenciar las notificaciones del chat durante:";
 /* Chat Notifications DND: DND once activated using forever option, this message will appear below the DND on/off switch */
-"Muted forever"="Silenciar para siempre";
-/* Chat Notifications DND: Remaining time left to deactivate DND - 1 minute left */
-"1 minute left"="1 minuto restante";
-/* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 minute left */
-"%d minutes left"="%d minutos restantes";
-/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour left */
-"1 hour left"="1 hora restante";
-/* Chat Notifications DND: Remaining time left to deactivate DND - more than 1 hour left */
-"%d hours left"="%d horas restantes";
+"Notifications will be silenced until Do Not Disturb is turned off"="Notifications will be silenced until Do Not Disturb is turned off";
+/* Chat Notifications DND: Remaining time left if until tomorrow */
+"Notifications will be silenced until tomorrow at %@"="Notifications will be silenced until tomorrow at %@";
+/* Chat Notifications DND: Remaining time left if until today */
+"Notifications will be silenced until %@"="Notifications will be silenced until %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
 "Chat Notifications"="Notificaciones del Chat";
 /* Chat settings: This text appears with the Do Not Disturb switch */
 "Do Not Disturb"="No molestar";
-/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, 1 minute left */
-"1 hour, 1 minute left"="1 hora, 1 minuto restantes";
-/* Chat Notifications DND: Remaining time left to deactivate DND - X hours, X minutes left */
-"%d hours, %d minutes left"="%d horas, %d minutos restantes";
-/* Chat Notifications DND: Remaining time left to deactivate DND - X hours, 1 minute left */
-"%d hours, 1 minute left"="%d horas, 1 minuto restantes";
-/* Chat Notifications DND: Remaining time left to deactivate DND - 1 hour, X minutes left */
-"1 hour, %d minutes left"="1 hora, %d minutos restantes";
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
 "Reconnecting..."="Reconectando...";
 /* Title shown when the user reconnect in a call. */
@@ -2092,6 +2100,8 @@
 "Send (%d)"="Enviar (%d)";
 /* Used in Photos app browser view to upload the photos from the view to the cloud. */
 "Upload (%d)"="Subir (%d)";
+/* Used in Photos app browser album listing screen. */
+"Albums"="Albums";
 /* Used in Photos app browser carousel view to unselect a selected photo. */
 "Unselect"="Deseleccionar";
 /* Used in Photos app browser. Shown when there are no photos or videos in the Photos app. */
@@ -2108,6 +2118,8 @@
 "Please enter a valid phone number"="Por favor, indica un número de teléfono válido.";
 /* Error message that will show to user when user reached the sms verification daily limit */
 "You have reached the daily limit"="Has alcanzado el límite diario";
+/* Error message that will be shown when the code introduced do not match with the one you received */
+"The verification code doesn't match."="El código de confirmación no coincide.";
 /* Error message that will show to user when user entered invalid verification code */
 "Wrong code. Please try again or resend."="Código erróneo. Prueba de nuevo o vuelve a enviarlo.";
 /* Error message that will show to user when host detected that the mobile number has been registered already */
@@ -2150,7 +2162,7 @@
 "Select Folder"="Seleccionar carpeta";
 /* Title of the folder selection screen for camera uploads */
 "Choose Folder"="Seleccionar carpeta";
-/* Label used near to the option selected to encode the images uploaded to a chat (Low, Medium, Original) */
+/* Label used near to the option selected to encode the images uploaded to a chat (Automatic, High, Optimised) */
 "Image quality"="Calidad de imagen";
 /* Text for some option property indicating the user the action will be determine by MEGA. For example: Image Quality option for chats based on wifi connectivity */
 "Automatic"="Automática";
@@ -2213,8 +2225,10 @@
 /* Default title of an empty chat. */
 "Chat created on %s1"="Chat creado el %s1";
 /* Title shown when there are no shared files */
-"No Shared Files"="No Shared Files";
+"No Shared Files"="No hay archivos compartidos";
 /* Error message shown when opening a folder link which doesn’t exist */
 "Folder link unavailable"="Enlace de la carpeta no disponible";
 /* Error message shown when opening a file link which doesn’t exist */
 "File link unavailable"="Enlace del archivo no disponible";
+/* Header of block with all shared files in chat. */
+"Shared Files"="Archivos compartidos";

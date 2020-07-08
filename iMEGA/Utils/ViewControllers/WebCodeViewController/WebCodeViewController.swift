@@ -68,7 +68,7 @@ import WebKit
             ])
         }
 
-        let image = UIImage.init(named: "shareGray")
+        let image = UIImage.init(named: "share")
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(shareButtonTapped(sender:)))
         title = fileUrl.lastPathComponent
     }

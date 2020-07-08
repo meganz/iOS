@@ -3,11 +3,11 @@
 #import "SVProgressHUD.h"
 #import "UIScrollView+EmptyDataSet.h"
 
+#import "EmptyStateView.h"
 #import "Helper.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
-
-#import "SelectableTableViewCell.h"
+#import "MEGA-Swift.h"
 
 static const NSInteger MaxAutoawayTimeout = 1457; // 87420 seconds
 
@@ -69,6 +69,8 @@ static const NSInteger MaxAutoawayTimeout = 1457; // 87420 seconds
     [showLastSeenAttributedString appendAttributedString:lastSeenString];
     
     self.lastActiveLabel.attributedText = showLastSeenAttributedString;
+    
+    [self updateAppearance];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -92,7 +94,27 @@ static const NSInteger MaxAutoawayTimeout = 1457; // 87420 seconds
     [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateAppearance];
+        }
+    }
+}
+
 #pragma mark - Private
+
+- (void)updateAppearance {
+    self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+    self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
+    
+    self.autoAwayTimeTextField.textColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
+    [self.autoAwayTimeSaveButton setTitleColor:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection] forState:UIControlStateNormal];
+    
+    [self.tableView reloadData];
+}
 
 - (void)internetConnectionChanged {
     [self.tableView reloadData];
@@ -267,6 +289,10 @@ static const NSInteger MaxAutoawayTimeout = 1457; // 87420 seconds
 
 #pragma mark - UITableViewDelegate
 
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    cell.backgroundColor = [UIColor mnz_secondaryBackgroundGrouped:self.traitCollection];
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     
@@ -322,27 +348,34 @@ static const NSInteger MaxAutoawayTimeout = 1457; // 87420 seconds
 
 #pragma mark - DZNEmptyDataSetSource
 
-- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
+- (nullable UIView *)customViewForEmptyDataSet:(UIScrollView *)scrollView {
+    EmptyStateView *emptyStateView = [EmptyStateView.alloc initWithImage:[self imageForEmptyState] title:[self titleForEmptyState] description:[self descriptionForEmptyState] buttonTitle:[self buttonTitleForEmptyState]];
+    [emptyStateView.button addTarget:self action:@selector(buttonTouchUpInsideEmptyState) forControlEvents:UIControlEventTouchUpInside];
+    
+    return emptyStateView;
+}
+
+#pragma mark - Empty State
+
+- (NSString *)titleForEmptyState {
     NSString *text = @"";
     if (![MEGAReachabilityManager isReachable]) {
         text = AMLocalizedString(@"noInternetConnection",  @"Text shown on the app when you don't have connection to the internet or when you have lost it");
     }
     
-    return [[NSAttributedString alloc] initWithString:text attributes:[Helper titleAttributesForEmptyState]];
+    return text;
 }
 
-- (nullable NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView {
+- (NSString *)descriptionForEmptyState {
     NSString *text = @"";
     if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
         text = AMLocalizedString(@"Mobile Data is turned off", @"Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings.");
     }
     
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleFootnote], NSForegroundColorAttributeName:UIColor.mnz_gray777777};
-    
-    return [NSAttributedString.alloc initWithString:text attributes:attributes];
+    return text;
 }
 
-- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
+- (UIImage *)imageForEmptyState {
     if (![MEGAReachabilityManager isReachable]) {
         return [UIImage imageNamed:@"noInternetEmptyState"];
     }
@@ -350,33 +383,16 @@ static const NSInteger MaxAutoawayTimeout = 1457; // 87420 seconds
     return nil;
 }
 
-- (NSAttributedString *)buttonTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
+- (NSString *)buttonTitleForEmptyState {
     NSString *text = @"";
     if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
         text = AMLocalizedString(@"Turn Mobile Data on", @"Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app.");
     }
     
-    return [NSAttributedString.alloc initWithString:text attributes:Helper.buttonTextAttributesForEmptyState];
+    return text;
 }
 
-- (UIImage *)buttonBackgroundImageForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
-    UIEdgeInsets capInsets = [Helper capInsetsForEmptyStateButton];
-    UIEdgeInsets rectInsets = [Helper rectInsetsForEmptyStateButton];
-    
-    return [[[UIImage imageNamed:@"emptyStateButton"] resizableImageWithCapInsets:capInsets resizingMode:UIImageResizingModeStretch] imageWithAlignmentRectInsets:rectInsets];
-}
-
-- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
-    return [Helper verticalOffsetForEmptyStateWithNavigationBarSize:self.navigationController.navigationBar.frame.size searchBarActive:NO];
-}
-
-- (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView {
-    return [Helper spaceHeightForEmptyState];
-}
-
-#pragma mark - DZNEmptyDataSetDelegate
-
-- (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
+- (void)buttonTouchUpInsideEmptyState {
     if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
         [UIApplication.sharedApplication openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString] options:@{} completionHandler:nil];
     }

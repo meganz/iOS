@@ -10,6 +10,7 @@
 #import "UIImageView+MNZCategory.h"
 #import "MEGAChatMessage+MNZCategory.h"
 #import "MEGAGetPreviewRequestDelegate.h"
+#import "MEGA-Swift.h"
 
 @interface MEGAPhotoMediaItem ()
 
@@ -80,7 +81,7 @@
             NSString *textContent = [NSString mnz_stringFromTimeInterval:self.node.duration];
             NSRange textRange = NSMakeRange(0, textContent.length);
             NSMutableAttributedString *textString = [[NSMutableAttributedString alloc] initWithString:textContent];
-            UIFont *font = [UIFont mnz_SFUIRegularWithSize:12];
+            UIFont *font = [UIFont systemFontOfSize:12.0f];
             [textString addAttribute:NSFontAttributeName value:font range:textRange];
             NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
             paragraphStyle.lineSpacing = 1.21;
@@ -111,7 +112,7 @@
     self.cachedImageView.contentMode = UIViewContentModeScaleAspectFill;
     self.cachedImageView.clipsToBounds = YES;
     self.cachedImageView.layer.cornerRadius = 4.0f;
-    self.cachedImageView.layer.borderColor = UIColor.mnz_black000000_01.CGColor;
+    self.cachedImageView.layer.borderColor = [UIColor.blackColor colorWithAlphaComponent:0.1].CGColor;
     self.cachedImageView.layer.borderWidth = 1.0f;
     
     if (@available(iOS 11.0, *)) {
@@ -164,7 +165,7 @@
 }
 
 - (UIView *)mediaPlaceholderView {
-    UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    UIActivityIndicatorView *indicator = UIActivityIndicatorView.mnz_init;
     [indicator startAnimating];
     return indicator;
 }

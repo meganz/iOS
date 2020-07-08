@@ -175,7 +175,7 @@ static NSString *nodeToPresentBase64Handle;
                         [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
                     } else {
                         [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-                        [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, error.name]];
+                        [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, AMLocalizedString(error.name, nil)]];
                     }
                     return;
                 }
@@ -595,10 +595,9 @@ static NSString *nodeToPresentBase64Handle;
 
 + (void)presentInviteModalForEmail:(NSString *)email fullName:(NSString *)fullName contactLinkHandle:(uint64_t)contactLinkHandle image:(NSString *)imageOnBase64URLEncoding {
     CustomModalAlertViewController *inviteOrDismissModal = [[CustomModalAlertViewController alloc] init];
-    inviteOrDismissModal.modalPresentationStyle = UIModalPresentationOverCurrentContext;
     
     if (imageOnBase64URLEncoding.mnz_isEmpty) {
-        inviteOrDismissModal.image = [UIImage imageForName:fullName.mnz_initialForAvatar size:CGSizeMake(128.0f, 128.0f) backgroundColor:[UIColor colorFromHexString:[MEGASdk avatarColorForBase64UserHandle:[MEGASdk base64HandleForUserHandle:contactLinkHandle]]] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:64.0f]];
+        inviteOrDismissModal.image = [UIImage imageForName:fullName.mnz_initialForAvatar size:CGSizeMake(128.0f, 128.0f) backgroundColor:[UIColor mnz_fromHexString:[MEGASdk avatarColorForBase64UserHandle:[MEGASdk base64HandleForUserHandle:contactLinkHandle]]] textColor:UIColor.whiteColor font:[UIFont systemFontOfSize:64.0f]];
     } else {
         inviteOrDismissModal.roundImage = YES;
         NSData *imageData = [[NSData alloc] initWithBase64EncodedString:[NSString mnz_base64FromBase64URLEncoding:imageOnBase64URLEncoding] options:NSDataBase64DecodingIgnoreUnknownCharacters];
@@ -668,7 +667,7 @@ static NSString *nodeToPresentBase64Handle;
                 [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];
             } else {
                 [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-                [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, error.name]];
+                [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, AMLocalizedString(error.name, nil)]];
             }
             return;
         }
@@ -678,7 +677,7 @@ static NSString *nodeToPresentBase64Handle;
             MEGAChatGenericRequestDelegate *autorejoinPublicChatDelegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
                 if (error.type) {
                     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-                    [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, error.name]];
+                    [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, AMLocalizedString(error.name, nil)]];
                     return;
                 }
                 [MEGALinkManager createChatAndShow:request.chatHandle publicChatLink:chatLinkUrl];
@@ -712,6 +711,7 @@ static NSString *nodeToPresentBase64Handle;
         }
     }
     
+    [MEGASdkManager.sharedMEGAChatSdk connect];
     [[MEGASdkManager sharedMEGAChatSdk] openChatPreview:chatLinkUrl delegate:delegate];
 }
 

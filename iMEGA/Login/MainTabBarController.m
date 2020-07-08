@@ -1,9 +1,7 @@
 
 #import "MainTabBarController.h"
 
-#import "CallViewController.h"
 #import "ChatRoomsViewController.h"
-#import "GroupCallViewController.h"
 #import "Helper.h"
 #import "MEGANavigationController.h"
 #import "MyAccountHallViewController.h"
@@ -12,6 +10,8 @@
 #import "MessagesViewController.h"
 #import "UIApplication+MNZCategory.h"
 #import "MainTabBarController+CameraUpload.h"
+
+#import "MEGA-Swift.h"
 
 @interface MainTabBarController () <UITabBarControllerDelegate, MEGAGlobalDelegate>
 
@@ -37,44 +37,32 @@
         UITabBarItem *tabBarItem = [[defaultViewControllersMutableArray objectAtIndex:i] tabBarItem];
         tabBarItem.title = nil;
         tabBarItem.badgeColor = UIColor.clearColor;
-        [tabBarItem setBadgeTextAttributes:@{ NSForegroundColorAttributeName: UIColor.mnz_redMain } forState:UIControlStateNormal];
+        [tabBarItem setBadgeTextAttributes:@{NSForegroundColorAttributeName:[UIColor mnz_redForTraitCollection:(self.traitCollection)]} forState:UIControlStateNormal];
         [self reloadInsetsForTabBarItem:tabBarItem];
         switch (tabBarItem.tag) {
             case CLOUD:
-                tabBarItem.image = [[UIImage imageNamed:@"cloudDriveIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-                tabBarItem.selectedImage = [UIImage imageNamed:@"cloudDriveSelectedIcon"];
                 tabBarItem.accessibilityLabel = AMLocalizedString(@"cloudDrive", @"Title of the Cloud Drive section");
                 break;
                 
             case PHOTOS:
-                tabBarItem.image = [[UIImage imageNamed:@"cameraUploadsIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-                tabBarItem.selectedImage = [UIImage imageNamed:@"cameraUploadsSelectedIcon"];
                 tabBarItem.accessibilityLabel = AMLocalizedString(@"cameraUploadsLabel", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options");
                 break;
                 
             case CHAT:
-                tabBarItem.image = [[UIImage imageNamed:@"chatIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-                tabBarItem.selectedImage = [UIImage imageNamed:@"chatSelectedIcon"];
                 tabBarItem.accessibilityLabel = AMLocalizedString(@"chat", @"Chat section header");
                 break;
                 
             case SHARES:
-                tabBarItem.image = [[UIImage imageNamed:@"sharedItemsIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-                tabBarItem.selectedImage = [UIImage imageNamed:@"sharedItemsSelectedIcon"];
                 tabBarItem.accessibilityLabel = AMLocalizedString(@"sharedItems", @"Title of Shared Items section");
                 break;
                 
             case MYACCOUNT:
-                tabBarItem.image = [[UIImage imageNamed:@"myAccountIcon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-                tabBarItem.selectedImage = [UIImage imageNamed:@"myAccountSelectedIcon"];
                 tabBarItem.accessibilityLabel = AMLocalizedString(@"myAccount", @"Title of My Account section. There you can see your account details");
                 break;
         }
     }
     
     self.viewControllers = defaultViewControllersMutableArray;
-    
-    self.view.tintColor = UIColor.mnz_redMain;
     
     [self setDelegate:self];
     
@@ -137,12 +125,19 @@
     }
 }
 
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
-}
-
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [AppearanceManager setupAppearance:self.traitCollection];
+            
+           //Force appearance changes on the tab bar
+            self.tabBar.barTintColor = [UIColor mnz_mainBarsForTraitCollection:self.traitCollection];
+            self.tabBar.tintColor = [UIColor mnz_redForTraitCollection:self.traitCollection];
+            self.tabBar.unselectedItemTintColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
+        }
+    }
     
     [self configurePhoneImageBadge];
     for (UITabBarItem *tabBarItem in self.tabBar.items) {

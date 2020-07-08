@@ -40,7 +40,6 @@
 #import "GroupCallViewController.h"
 #import "LaunchViewController.h"
 #import "MainTabBarController.h"
-#import "MEGAAssetsPickerController.h"
 #import "OnboardingViewController.h"
 #import "ProductDetailViewController.h"
 #import "UpgradeTableViewController.h"
@@ -50,7 +49,6 @@
 #import "MEGACreateAccountRequestDelegate.h"
 #import "MEGAGetAttrUserRequestDelegate.h"
 #import "MEGAInviteContactRequestDelegate.h"
-#import "MEGALocalNotificationManager.h"
 #import "MEGALoginRequestDelegate.h"
 #import "MEGAProviderDelegate.h"
 #import "MEGAShowPasswordReminderRequestDelegate.h"
@@ -72,8 +70,6 @@
 @property (nonatomic, strong) UIAlertController *API_ESIDAlertController;
 
 @property (nonatomic, weak) MainTabBarController *mainTBC;
-
-@property (nonatomic, getter=isSignalActivityRequired) BOOL signalActivityRequired;
 
 @property (nonatomic) NSUInteger megatype; //1 share folder, 2 new message, 3 contact request
 
@@ -130,9 +126,7 @@
     MEGALogDebug(@"[App Lifecycle] Application will finish launching with options: %@", launchOptions);
     
     UIDevice.currentDevice.batteryMonitoringEnabled = YES;
-        
-    [CameraUploadManager.shared setupCameraUploadWhenApplicationLaunches];
-    
+
     return YES;
 }
 
@@ -143,13 +137,13 @@
         _megatype = [[[launchOptions objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"] objectForKey:@"megatype"] unsignedIntegerValue];
     }
     
-    _signalActivityRequired = NO;
-    
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionAllowBluetooth | AVAudioSessionCategoryOptionAllowBluetoothA2DP | AVAudioSessionCategoryOptionMixWithOthers error:nil];
     [[AVAudioSession sharedInstance] setMode:AVAudioSessionModeVoiceChat error:nil];
     [[AVAudioSession sharedInstance] setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil];
     
     [MEGAReachabilityManager sharedManager];
+    
+    [CameraUploadManager.shared setupCameraUploadWhenApplicationLaunches];
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"pointToStaging"]) {
         [[MEGASdkManager sharedMEGASdk] changeApiUrl:@"https://staging.api.mega.co.nz/" disablepkp:NO];
@@ -184,7 +178,7 @@
         }
     }
     
-    [self setupAppearance];
+    [AppearanceManager setupAppearance:self.window.traitCollection];
     
     [MEGALinkManager resetLinkAndURLType];
     isFetchNodesDone = NO;
@@ -260,6 +254,9 @@
         if (sessionId && ![[[launchOptions objectForKey:@"UIApplicationLaunchOptionsURLKey"] absoluteString] containsString:@"confirm"]) {
             MEGACreateAccountRequestDelegate *createAccountRequestDelegate = [[MEGACreateAccountRequestDelegate alloc] initWithCompletion:^ (MEGAError *error) {
                 CheckEmailAndFollowTheLinkViewController *checkEmailAndFollowTheLinkVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"CheckEmailAndFollowTheLinkViewControllerID"];
+                if (@available(iOS 13.0, *)) {
+                    checkEmailAndFollowTheLinkVC.modalPresentationStyle = UIModalPresentationFullScreen;
+                }
                 [UIApplication.mnz_presentingViewController presentViewController:checkEmailAndFollowTheLinkVC animated:YES completion:nil];
             }];
             createAccountRequestDelegate.resumeCreateAccount = YES;
@@ -267,7 +264,8 @@
         }
     }
     
-
+    [Helper setIndexer:MEGAIndexer.sharedIndexer];
+    
     UIApplicationShortcutItem *applicationShortcutItem = launchOptions[UIApplicationLaunchOptionsShortcutItemKey];
     if (applicationShortcutItem != nil) {
         if (isFetchNodesDone) {
@@ -318,6 +316,7 @@
     
     if (self.privacyView == nil) {
         UIViewController *privacyVC = [[UIStoryboard storyboardWithName:@"Launch" bundle:nil] instantiateViewControllerWithIdentifier:@"PrivacyViewControllerID"];
+        privacyVC.view.backgroundColor = UIColor.mnz_background;
         self.privacyView = privacyVC.view;
     }
     [self.window addSubview:self.privacyView];
@@ -364,7 +363,7 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     MEGALogDebug(@"[App Lifecycle] Application did become active");
     
-    if (self.isSignalActivityRequired) {
+    if (MEGASdkManager.sharedMEGAChatSdk.isSignalActivityRequired) {
         [[MEGASdkManager sharedMEGAChatSdk] signalPresenceActivity];
     }
     
@@ -506,16 +505,14 @@
 
                 if (call && call.status == MEGAChatCallStatusInProgress) {
                     self.chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:call.chatId];
-                    MEGALogDebug(@"call id %tu", call.callId);
+                    MEGALogDebug(@"call id %llu", call.callId);
                     MEGALogDebug(@"There is a call in progress for this chat %@", call);
                     UIViewController *presentedVC = UIApplication.mnz_presentingViewController;
                     if ([presentedVC isKindOfClass:GroupCallViewController.class]) {
                         GroupCallViewController *callVC = (GroupCallViewController *)presentedVC;
                         callVC.callType = CallTypeActive;
-                        if (!callVC.videoCall) {
-                            [callVC tapOnVideoCallkitWhenDeviceIsLocked];
-                            self.chatRoom = nil;
-                        }
+                        [callVC tapOnVideoCallkitWhenDeviceIsLocked];
+                        self.chatRoom = nil;
                     }
                     if ([presentedVC isKindOfClass:CallViewController.class]) {
                         CallViewController *callVC = (CallViewController *)UIApplication.mnz_presentingViewController;
@@ -596,61 +593,6 @@
 }
 
 #pragma mark - Private
-
-- (void)setupAppearance {
-    [UINavigationBar appearanceWhenContainedInInstancesOfClasses:@[MEGANavigationController.class]].titleTextAttributes = @{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:UIColor.whiteColor};
-    [UINavigationBar appearanceWhenContainedInInstancesOfClasses:@[MEGANavigationController.class]].barStyle = UIBarStyleBlack;
-    [UINavigationBar appearanceWhenContainedInInstancesOfClasses:@[MEGANavigationController.class]].barTintColor = UIColor.mnz_redMain;
-    [UINavigationBar appearanceWhenContainedInInstancesOfClasses:@[MEGANavigationController.class]].tintColor = UIColor.whiteColor;
-    [UINavigationBar appearance].translucent = NO;
-
-    //QLPreviewDocument
-    [UINavigationBar appearanceWhenContainedInInstancesOfClasses:@[QLPreviewController.class]].titleTextAttributes = @{NSFontAttributeName:[UIFont mnz_SFUISemiBoldWithSize:17.0f], NSForegroundColorAttributeName:UIColor.blackColor};
-    [UINavigationBar appearanceWhenContainedInInstancesOfClasses:@[QLPreviewController.class]].barTintColor = UIColor.whiteColor;
-    [UINavigationBar appearanceWhenContainedInInstancesOfClasses:@[QLPreviewController.class]].tintColor = UIColor.mnz_redMain;
-    [UILabel appearanceWhenContainedInInstancesOfClasses:@[QLPreviewController.class]].textColor = UIColor.mnz_redMain;
-    [UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[QLPreviewController.class]].tintColor = UIColor.mnz_redMain;
-    
-    //MEGAAssetsPickerController
-    [UINavigationBar appearanceWhenContainedInInstancesOfClasses:@[MEGAAssetsPickerController.class]].barStyle = UIBarStyleBlack;
-    [UINavigationBar appearanceWhenContainedInInstancesOfClasses:@[MEGAAssetsPickerController.class]].barTintColor = UIColor.mnz_redMain;
-    [UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[MEGAAssetsPickerController.class]].tintColor = UIColor.whiteColor;
-
-    [UISearchBar appearance].translucent = NO;
-    [UISearchBar appearance].backgroundColor = UIColor.mnz_grayFCFCFC;
-    [UITextField appearanceWhenContainedInInstancesOfClasses:@[[UISearchBar class]]].backgroundColor = UIColor.mnz_grayEEEEEE;
-    [UITextField appearanceWhenContainedInInstancesOfClasses:@[[UISearchBar class]]].textColor = UIColor.mnz_black333333;
-    [UITextField appearanceWhenContainedInInstancesOfClasses:@[[UISearchBar class]]].font = [UIFont mnz_SFUIRegularWithSize:17.0f];
-    
-    [[UISegmentedControl appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:13.0f]} forState:UIControlStateNormal];
-    
-    UISwitch.appearance.onTintColor = UIColor.mnz_green00BFA5;
-    
-    [[UIBarButtonItem appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f]} forState:UIControlStateNormal];
-    [UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[[UIToolbar class]]].tintColor = UIColor.mnz_redMain;
-
-    [UINavigationBar appearance].backIndicatorImage = [UIImage imageNamed:@"backArrow"];
-    [UINavigationBar appearance].backIndicatorTransitionMaskImage = [UIImage imageNamed:@"backArrow"];
-    
-    [UITextField appearance].tintColor = UIColor.mnz_green00BFA5;
-    
-    [UITextView appearance].tintColor = UIColor.mnz_green00BFA5;
-    
-    [UIView appearanceWhenContainedInInstancesOfClasses:@[[UIAlertController class]]].tintColor = UIColor.mnz_redMain;
-    
-    [UIProgressView appearance].tintColor = UIColor.mnz_redMain;
-    
-    [SVProgressHUD setFont:[UIFont mnz_SFUIRegularWithSize:12.0f]];
-    [SVProgressHUD setRingThickness:2.0];
-    [SVProgressHUD setRingNoTextRadius:18.0];
-    [SVProgressHUD setBackgroundColor:UIColor.mnz_grayF7F7F7];
-    [SVProgressHUD setForegroundColor:UIColor.mnz_gray666666];
-    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleCustom];
-    [SVProgressHUD setHapticsEnabled:YES];
-    
-    [SVProgressHUD setSuccessImage:[UIImage imageNamed:@"hudSuccess"]];
-    [SVProgressHUD setErrorImage:[UIImage imageNamed:@"hudError"]];
-}
 
 - (void)beginBackgroundTaskWithName:(NSString *)name {
     MEGALogDebug(@"Begin background task with name: %@", name);
@@ -939,7 +881,9 @@
         if ([filename containsString:@"megaclient"] || [filename containsString:@"karere"]) {
             NSString *destinationPath = [groupSupportPath stringByAppendingPathComponent:filename];
             [NSFileManager.defaultManager mnz_removeItemAtPath:destinationPath];
-            if (![fileManager copyItemAtPath:[applicationSupportDirectoryString stringByAppendingPathComponent:filename] toPath:destinationPath error:&error]) {
+            if ([fileManager copyItemAtPath:[applicationSupportDirectoryString stringByAppendingPathComponent:filename] toPath:destinationPath error:&error]) {
+                MEGALogDebug(@"Copy file %@", filename);
+            } else {
                 MEGALogError(@"Copy item at path failed with error: %@", error);
             }
         }
@@ -960,6 +904,8 @@ void uncaughtExceptionHandler(NSException *exception) {
         groupCallVC.chatRoom = self.chatRoom;
         groupCallVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
         groupCallVC.megaCallManager = self.megaCallManager;
+        groupCallVC.modalPresentationStyle = UIModalPresentationFullScreen;
+        
         [self.mainTBC presentViewController:groupCallVC animated:YES completion:nil];
     } else {
         CallViewController *callVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewControllerID"];
@@ -967,6 +913,8 @@ void uncaughtExceptionHandler(NSException *exception) {
         callVC.videoCall = self.videoCall;
         callVC.callType = CallTypeOutgoing;
         callVC.megaCallManager = self.megaCallManager;
+        callVC.modalPresentationStyle = UIModalPresentationFullScreen;
+        
         [self.mainTBC presentViewController:callVC animated:YES completion:nil];
     }
     self.chatRoom = nil;
@@ -974,7 +922,6 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 - (void)presentInviteContactCustomAlertViewController {
     CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
-    customModalAlertVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
     
     BOOL isInOutgoingContactRequest = NO;
     MEGAContactRequestList *outgoingContactRequestList = [[MEGASdkManager sharedMEGASdk] outgoingContactRequests];
@@ -1028,8 +975,9 @@ void uncaughtExceptionHandler(NSException *exception) {
 }
 
 - (void)showChooseAccountType {
-    UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
+    UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"UpgradeAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeTableViewControllerID"];
     MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
+    navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
     upgradeTVC.chooseAccountType = YES;
     
     [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:nil];
@@ -1045,7 +993,6 @@ void uncaughtExceptionHandler(NSException *exception) {
 - (void)presentUpgradeViewControllerTitle:(NSString *)title detail:(NSString *)detail image:(UIImage *)image {
     if (!self.isUpgradeVCPresented && ![UIApplication.mnz_visibleViewController isKindOfClass:UpgradeTableViewController.class] && ![UIApplication.mnz_visibleViewController isKindOfClass:ProductDetailViewController.class]) {
         CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
-        customModalAlertVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
         customModalAlertVC.image = image;
         customModalAlertVC.viewTitle = title;
         customModalAlertVC.detail = detail;
@@ -1059,7 +1006,7 @@ void uncaughtExceptionHandler(NSException *exception) {
             [weakCustom dismissViewControllerAnimated:YES completion:^{
                 self.upgradeVCPresented = NO;
                 if ([MEGAPurchase sharedInstance].products.count > 0) {
-                    UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
+                    UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"UpgradeAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeTableViewControllerID"];
                     MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
                     
                     [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:nil];
@@ -1079,7 +1026,7 @@ void uncaughtExceptionHandler(NSException *exception) {
         customModalAlertVC.secondCompletion = ^{
             [weakCustom dismissViewControllerAnimated:YES completion:^{
                 self.upgradeVCPresented = NO;
-                AchievementsViewController *achievementsVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"AchievementsViewControllerID"];
+                AchievementsViewController *achievementsVC = [[UIStoryboard storyboardWithName:@"Achievements" bundle:nil] instantiateViewControllerWithIdentifier:@"AchievementsViewControllerID"];
                 achievementsVC.enableCloseBarButton = YES;
                 UINavigationController *navigation = [[UINavigationController alloc] initWithRootViewController:achievementsVC];
                 [UIApplication.mnz_presentingViewController presentViewController:navigation animated:YES completion:nil];
@@ -1103,18 +1050,21 @@ void uncaughtExceptionHandler(NSException *exception) {
     NSURL *containerURL = [NSFileManager.defaultManager containerURLForSecurityApplicationGroupIdentifier:MEGAGroupIdentifier];
     NSURL *nseCacheURL = [containerURL URLByAppendingPathComponent:MEGANotificationServiceExtensionCacheFolder isDirectory:YES];
     NSString *session = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
-    NSString *filename = [NSString stringWithFormat:@"karere-%@.db", [session substringFromIndex:MAX(session.length - MEGALastCharactersFromSession, 0)]];
-    NSURL *nseCacheFileURL = [nseCacheURL URLByAppendingPathComponent:filename];
-    
-    if ([NSFileManager.defaultManager fileExistsAtPath:nseCacheFileURL.path]) {
-        if (MEGAStore.shareInstance.areTherePendingMessages) {
-            MEGALogDebug(@"Import messages from %@", nseCacheFileURL.path);
-            [MEGASdkManager.sharedMEGAChatSdk importMessagesFromPath:nseCacheFileURL.path];
+    if (session.length > MEGADropFirstCharactersFromSession) {
+        NSString *sessionSubString = [session substringFromIndex:MEGADropFirstCharactersFromSession];
+        NSString *filename = [NSString stringWithFormat:@"karere-%@.db", sessionSubString];
+        NSURL *nseCacheFileURL = [nseCacheURL URLByAppendingPathComponent:filename];
+        
+        if ([NSFileManager.defaultManager fileExistsAtPath:nseCacheFileURL.path]) {
+            if (MEGAStore.shareInstance.areTherePendingMessages) {
+                MEGALogDebug(@"Import messages from %@", nseCacheFileURL.path);
+                [MEGASdkManager.sharedMEGAChatSdk importMessagesFromPath:nseCacheFileURL.path];
+            } else {
+                MEGALogDebug(@"No messages to import from NSE.");
+            }
         } else {
-            MEGALogDebug(@"No messages to import from NSE.");
+            MEGALogWarning(@"NSE cache file %@ doesn't exist", nseCacheFileURL.path);
         }
-    } else {
-        MEGALogWarning(@"NSE cache file %@ doesn't exist", nseCacheFileURL.path);
     }
 }
 
@@ -1138,10 +1088,13 @@ void uncaughtExceptionHandler(NSException *exception) {
 }
 
 - (void)presentBusinessExpiredViewIfNeeded {
+    if ([UIApplication.mnz_visibleViewController isKindOfClass:InitialLaunchViewController.class] || [UIApplication.mnz_visibleViewController isKindOfClass:LaunchViewController.class]) {
+        return;
+    }
+    
     if (MEGASdkManager.sharedMEGASdk.businessStatus == BusinessStatusGracePeriod) {
         if (MEGASdkManager.sharedMEGASdk.isMasterBusinessAccount) {
             CustomModalAlertViewController *customModalAlertVC = CustomModalAlertViewController.alloc.init;
-            customModalAlertVC.modalPresentationStyle = UIModalPresentationOverFullScreen;
             customModalAlertVC.image = [UIImage imageNamed:@"paymentOverdue"];
             customModalAlertVC.viewTitle = AMLocalizedString(@"Something went wrong", @"");
             customModalAlertVC.detail = AMLocalizedString(@"There has been a problem with your last payment. Please access MEGA using a desktop browser for more information.", @"When logging in during the grace period, the administrator of the Business account will be notified that their payment is overdue, indicating that they need to access MEGA using a desktop browser for more information");
@@ -1191,6 +1144,12 @@ void uncaughtExceptionHandler(NSException *exception) {
 - (void)logoutButtonWasPressed {
     [[MEGASdkManager sharedMEGASdk] logout];
 }
+
+- (void)passcodeWasEnabled {
+    MEGAIndexer.sharedIndexer.enableSpotlight = NO;
+}
+
+#pragma mark - Language
 
 - (void)languageCompatibility {
     
@@ -1317,6 +1276,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 }
 
 - (void)readyToShowRecommendations {
+    [self presentBusinessExpiredViewIfNeeded];
     [self showAddPhoneNumberIfNeeded];
 }
 
@@ -1392,6 +1352,10 @@ void uncaughtExceptionHandler(NSException *exception) {
         } else if (user.visibility == MEGAUserVisibilityVisible) {
             [[MEGASdkManager sharedMEGASdk] getUserAttributeForUser:user type:MEGAUserAttributeFirstname];
             [[MEGASdkManager sharedMEGASdk] getUserAttributeForUser:user type:MEGAUserAttributeLastname];
+        }
+        
+        if (user.visibility == MEGAUserVisibilityHidden) {
+            [MEGAStore.shareInstance updateUserWithHandle:user.handle interactedWith:NO];
         }
     }
 }
@@ -1797,12 +1761,6 @@ void uncaughtExceptionHandler(NSException *exception) {
     }
 }
 
-- (void)onChatPresenceConfigUpdate:(MEGAChatSdk *)api presenceConfig:(MEGAChatPresenceConfig *)presenceConfig {
-    if (!presenceConfig.isPending) {
-        self.signalActivityRequired = presenceConfig.isSignalActivityRequired;
-    }
-}
-
 - (void)onChatConnectionStateUpdate:(MEGAChatSdk *)api chatId:(uint64_t)chatId newState:(int)newState {
     MEGALogInfo(@"onChatConnectionStateUpdate: %@, new state: %d", [MEGASdk base64HandleForUserHandle:chatId], newState);
     
@@ -1960,7 +1918,7 @@ void uncaughtExceptionHandler(NSException *exception) {
 #pragma mark - MEGAApplicationDelegate
 
 - (void)application:(MEGAApplication *)application willSendTouchEvent:(UIEvent *)event {
-    if (self.isSignalActivityRequired) {
+    if (MEGASdkManager.sharedMEGAChatSdk.isSignalActivityRequired) {
         [[MEGASdkManager sharedMEGAChatSdk] signalPresenceActivity];
     }
 }
