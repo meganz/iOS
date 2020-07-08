@@ -174,10 +174,9 @@ open class ChatMediaCollectionViewSizeCalculator: MessageSizeCalculator {
                 let node = megaMessage.nodeList.node(at: 0)!
                 let previewFilePath = Helper.path(for: node, inSharedSandboxCacheDirectory: "previewsV3")
 
-                if FileManager.default.fileExists(atPath: previewFilePath) {
-                    let previewImage = UIImage(contentsOfFile: previewFilePath)
-                    width = previewImage!.size.width
-                    height = previewImage!.size.height
+                if FileManager.default.fileExists(atPath: previewFilePath), let previewImage = UIImage(contentsOfFile: previewFilePath) {
+                    width = previewImage.size.width
+                    height = previewImage.size.height
                 }
                 if node.hasPreview(),
                     node.height > 0,
