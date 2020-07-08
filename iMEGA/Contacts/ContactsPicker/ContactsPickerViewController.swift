@@ -68,7 +68,24 @@ class ContactsPickerViewController: UIViewController {
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
     // MARK: - Private
+    
+    private func addSearchController() {
+        searchController = Helper.customSearchController(withSearchResultsUpdaterDelegate: self, searchBarDelegate: self)
+        searchController.hidesNavigationBarDuringPresentation = false
+        if #available(iOS 11.0, *) {
+            navigationItem.searchController = searchController
+            navigationItem.hidesSearchBarWhenScrolling = false
+        } else {
+            tableView.tableHeaderView = searchController.searchBar
+            searchController.searchBar.barTintColor = .white
+            tableView.contentOffset = CGPoint(x: 0, y: searchController.searchBar.frame.height)
+        }
+    }
     
     private func configureView() {
         title = AMLocalizedString("contactsTitle", "Title of the Contacts section")
@@ -78,16 +95,10 @@ class ContactsPickerViewController: UIViewController {
         megaNavigation.addLeftDismissButton(withText: AMLocalizedString("cancel"))
         
         navigationItem.rightBarButtonItem = selectAllBarButton
-
-        searchController = Helper.customSearchController(withSearchResultsUpdaterDelegate: self, searchBarDelegate: self)
-        if #available(iOS 11.0, *) {
-            navigationItem.searchController = searchController
-        } else {
-            tableView.tableHeaderView = searchController.searchBar
-            searchController.searchBar.barTintColor = .white
-            tableView.contentOffset = CGPoint(x: 0, y: searchController.searchBar.frame.height)
-        }
+        selectAllBarButton.isEnabled = false
         
+        addSearchController()
+
         tableView.tableFooterView = UIView()  // This remove the separator line between empty cells
         updateAppearance()
         
@@ -107,6 +118,7 @@ class ContactsPickerViewController: UIViewController {
             DispatchQueue.main.async {
                 self?.prepareDataSource(forContacts: deviceContactsOperation.fetchedContacts)
                 SVProgressHUD.dismiss()
+                self?.selectAllBarButton.isEnabled = true
             }
         }
         
@@ -307,5 +319,9 @@ extension ContactsPickerViewController: UISearchResultsUpdating {
 extension ContactsPickerViewController: UISearchBarDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchingContacts.removeAll()
+    }
+    
+    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+        contacts.count > 0
     }
 }
