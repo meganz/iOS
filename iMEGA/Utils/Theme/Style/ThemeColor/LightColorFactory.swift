@@ -6,8 +6,7 @@ struct LightColorThemeFactory: ColorFactory {
         switch style {
         case .primary: return Color(red: 0, green: 0, blue: 0)
         case .secondary: return Color(red: 153, green: 153, blue: 153)
-        case .invertedPrimary: return Color(red: 255, green: 255, blue: 255)
-        case .warning: return Color(red: 217, green: 0, blue: 7)
+        case .warning: return Color(red: 255, green: 59, blue: 48)
         }
     }
 

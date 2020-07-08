@@ -15,8 +15,6 @@ enum MEGAColor {
         case primary
         case secondary
         
-        case invertedPrimary
-        
         case warning
     }
 
