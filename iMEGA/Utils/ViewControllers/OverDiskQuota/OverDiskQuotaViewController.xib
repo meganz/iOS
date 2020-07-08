@@ -30,7 +30,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JaV-Gi-51f" userLabel="ContentView">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="729"/>
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="754.5"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="StorageFull" translatesAutoresizingMaskIntoConstraints="NO" id="Xrq-u4-x9U">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="291"/>
@@ -55,7 +55,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="agc-Ke-lvT">
-                                    <rect key="frame" x="44" y="578" width="326" height="50"/>
+                                    <rect key="frame" x="44" y="603.5" width="326" height="50"/>
                                     <color key="backgroundColor" red="0.11588243400000001" green="0.65814155340000002" blue="0.52589106559999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="50" id="7qA-Tn-Uio"/>
@@ -63,7 +63,7 @@
                                     <state key="normal" title="Upgrade"/>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MCk-xj-VIQ">
-                                    <rect key="frame" x="44" y="644" width="326" height="50"/>
+                                    <rect key="frame" x="44" y="669.5" width="326" height="50"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="50" id="O1f-t8-q5E"/>
@@ -73,7 +73,7 @@
                                     </state>
                                 </button>
                                 <stackView opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="382" placeholderIntrinsicHeight="70" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="lH1-xb-ob2">
-                                    <rect key="frame" x="16" y="458" width="382" height="70"/>
+                                    <rect key="frame" x="16" y="458.5" width="382" height="70"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mks-ns-rRK" customClass="OverDisckQuotaWarningView" customModule="MEGA" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="382" height="70"/>
@@ -93,8 +93,8 @@
                                 <constraint firstItem="f9I-oL-lnn" firstAttribute="centerX" secondItem="JaV-Gi-51f" secondAttribute="centerX" id="Kmu-ne-4p3"/>
                                 <constraint firstItem="f9I-oL-lnn" firstAttribute="top" secondItem="Xrq-u4-x9U" secondAttribute="bottom" constant="28" id="RAY-d1-cEt"/>
                                 <constraint firstItem="MCk-xj-VIQ" firstAttribute="top" secondItem="agc-Ke-lvT" secondAttribute="bottom" constant="16" id="RVx-FE-Yty"/>
-                                <constraint firstItem="lH1-xb-ob2" firstAttribute="top" secondItem="nx5-ul-1O7" secondAttribute="bottom" constant="35.666666666666742" id="Sdo-cW-HK0"/>
-                                <constraint firstItem="agc-Ke-lvT" firstAttribute="top" secondItem="lH1-xb-ob2" secondAttribute="bottom" constant="49.999999999999886" id="ZOR-sC-OIn"/>
+                                <constraint firstItem="lH1-xb-ob2" firstAttribute="top" secondItem="nx5-ul-1O7" secondAttribute="bottom" constant="36" id="Sdo-cW-HK0"/>
+                                <constraint firstItem="agc-Ke-lvT" firstAttribute="top" secondItem="lH1-xb-ob2" secondAttribute="bottom" constant="75" id="ZOR-sC-OIn"/>
                                 <constraint firstAttribute="trailing" secondItem="nx5-ul-1O7" secondAttribute="trailing" constant="16" id="ej6-hD-sp6"/>
                                 <constraint firstItem="3fq-Va-4au" firstAttribute="bottom" secondItem="Xrq-u4-x9U" secondAttribute="top" constant="80" id="euZ-Vi-8MW"/>
                                 <constraint firstItem="lH1-xb-ob2" firstAttribute="leading" secondItem="nx5-ul-1O7" secondAttribute="leading" id="flE-xu-xwq"/>
