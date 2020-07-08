@@ -100,6 +100,8 @@
     }
     
     [self updateVerifyOrResetButton];
+    
+    [self updateAppearance];
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
