@@ -2,40 +2,34 @@
 
 extension MEGAStore {
     
-    @objc func insertChatUploadTransfer(withFilepath filepath: String, chatRoomId: String, context: NSManagedObjectContext) {
-        if let transfer = fetchChatUploadTransfer(filepath: filepath, chatRoomId: chatRoomId, context: context) {
-            MEGALogError("ChatUploadTransfer object already exsists \(transfer.filepath)")
-            return
-        } else {
-            let mostRecentTransferObject = fetchMostRecentChatUploadTransfer(context: context)
-            let transferObject = ChatUploadTransfer.createInstance(withContext: context)
-            transferObject.index = (mostRecentTransferObject?.index ?? 0) + 1
-            transferObject.filepath = filepath
-            transferObject.chatRoomId = chatRoomId
-            MEGAStore.shareInstance()?.save(context)
+    @objc func insertChatUploadTransfer(withFilepath filepath: String,
+                                        chatRoomId: String,
+                                        transferTag: String?,
+                                        allowDuplicateFilePath: Bool,
+                                        context: NSManagedObjectContext) {
+        if !allowDuplicateFilePath {
+            if let transfer = fetchChatUploadTransfer(filepath: filepath, chatRoomId: chatRoomId, transferTag: transferTag, context: context) {
+                MEGALogError("ChatUploadTransfer object already exsists \(transfer.filepath)")
+                return
+            }
         }
+        
+        let mostRecentTransferObject = fetchMostRecentChatUploadTransfer(context: context)
+        let transferObject = ChatUploadTransfer.createInstance(withContext: context)
+        transferObject.index = (mostRecentTransferObject?.index ?? 0) + 1
+        transferObject.filepath = filepath
+        transferObject.chatRoomId = chatRoomId
+        transferObject.transferTag = transferTag
+        MEGAStore.shareInstance()?.save(context)
     }
     
-    func updateChatUploadTransfer(filepath: String, chatRoomId: String, nodeHandle: String, context: NSManagedObjectContext) {
-        if let transfer = fetchChatUploadTransfer(filepath: filepath, chatRoomId: chatRoomId, context: context) {
+    func updateChatUploadTransfer(filepath: String, chatRoomId: String, nodeHandle: String, transferTag: String, context: NSManagedObjectContext) {
+        if let transfer = fetchChatUploadTransfer(filepath: filepath, chatRoomId: chatRoomId, transferTag: transferTag, context: context) {
             transfer.nodeHandle = nodeHandle
             MEGAStore.shareInstance()?.save(context)
         } else {
             MEGALogError("ChatUploadTransfer object does not exsists")
             return
-        }
-    }
-    
-    @objc func fetchAllChatUploadTransfers(forChatRoomId chatRoomId: String, context: NSManagedObjectContext) -> [ChatUploadTransfer]? {
-        let fetchRequest: NSFetchRequest<ChatUploadTransfer> = ChatUploadTransfer.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "chatRoomId == %llu", chatRoomId)
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "index", ascending: true)]
-
-        do {
-            return try context.fetch(fetchRequest)
-        } catch let error as NSError {
-            MEGALogError("Could not fetch [ChatUploadTransfer] \(error.localizedDescription)")
-            return nil
         }
     }
     
@@ -55,7 +49,8 @@ extension MEGAStore {
     func fetchAllChatUploadTransfer(withChatRoomId chatRoomId: String, context: NSManagedObjectContext) -> [ChatUploadTransfer]? {
         let fetchRequest: NSFetchRequest<ChatUploadTransfer> = ChatUploadTransfer.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "chatRoomId == %@", chatRoomId)
-        
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "index", ascending: true)]
+
         do {
             return try context.fetch(fetchRequest)
         } catch let error as NSError {
@@ -73,9 +68,14 @@ extension MEGAStore {
         }
     }
     
-    func fetchChatUploadTransfer(filepath: String, chatRoomId: String, context: NSManagedObjectContext) -> ChatUploadTransfer? {
+    func fetchChatUploadTransfer(filepath: String, chatRoomId: String, transferTag: String?, context: NSManagedObjectContext) -> ChatUploadTransfer? {
         let fetchRequest: NSFetchRequest<ChatUploadTransfer> = ChatUploadTransfer.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "filepath == %@ AND chatRoomId == %@", filepath, chatRoomId)
+        
+        if let transferTag = transferTag {
+            fetchRequest.predicate = NSPredicate(format: "filepath == %@ AND chatRoomId == %@ AND transferTag == %@", filepath, chatRoomId, transferTag)
+        } else {
+            fetchRequest.predicate = NSPredicate(format: "filepath == %@ AND chatRoomId == %@", filepath, chatRoomId)
+        }
         
         do {
             return try context.fetch(fetchRequest).first
@@ -85,10 +85,4 @@ extension MEGAStore {
         }
     }
     
-    @objc func deleteChatUploadTransfer(forFilepath filepath: String, chatRoomId: String, context: NSManagedObjectContext) {
-        if let chatUploadTransfer = fetchChatUploadTransfer(filepath: filepath, chatRoomId: chatRoomId, context: context) {
-            MEGALogDebug("Deleted ChatUploadTransfer \(chatUploadTransfer)")
-            
-        }
-    }
 }
