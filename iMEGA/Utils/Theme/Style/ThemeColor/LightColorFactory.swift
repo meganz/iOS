@@ -23,7 +23,7 @@ struct LightColorThemeFactory: ColorFactory {
 
     func borderColor(_ style: MEGAColor.Border) -> Color {
         switch style {
-        case .primary: return Color(red: 200, green: 200, blue: 200)
+        case .primary: return Color(red: 0, green: 0, blue: 0, alpha: 38)
         case .warning: return Color(red: 255, green: 204, blue: 0)
         }
     }

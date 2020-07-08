@@ -15,7 +15,7 @@ extension LightColorThemeFactory {
         }
 
         func highlightedColor() -> Color {
-            Color(red: 155, green: 155, blue: 155)
+            Color(red: 0, green: 168, blue: 134, alpha: 77)
         }
     }
 
@@ -52,7 +52,7 @@ extension DarkColorThemeFactory {
         }
 
         func highlightedColor() -> Color {
-            Color(red: 155, green: 155, blue: 155)
+            Color(red: 0, green: 194, blue: 154, alpha: 77)
         }
     }
 
@@ -69,7 +69,7 @@ extension DarkColorThemeFactory {
         }
 
         func highlightedColor() -> Color {
-            Color(red: 255, green: 255, blue: 255)
+            Color(red: 54, green: 54, blue: 56)
         }
     }
 }
