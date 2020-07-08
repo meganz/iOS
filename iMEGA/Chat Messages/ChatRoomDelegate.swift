@@ -7,13 +7,12 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
     
     // MARK: - Properties
 
-    var transfers: [ChatMessage] = []
     var chatRoom: MEGAChatRoom
     weak var chatViewController: ChatViewController?
     var chatMessage: [MessageType] = []
     var messages : [MessageType] {
         get {
-          return  chatMessage + transfers
+          return  chatMessage
         }
     }
     var isChatRoomOpen: Bool = false
@@ -187,22 +186,23 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
                     }, completion: nil)
                 } else {
                     if message.type == .attachment || message.type == .voiceClip {
-                        let filteredArray = transfers.filter { chatMessage in
-                            guard let nodeList = message.nodeList, let node = nodeList.node(at: 0) else { return false }
+                        let filteredArray = chatMessage.filter { chatMessage in
+                            guard let chatMessage = chatMessage as? ChatMessage, let nodeList = message.nodeList, let node = nodeList.node(at: 0) else { return false }
                             return node.handle == chatMessage.transfer?.nodeHandle
                         }
                         
-                        if filteredArray.count > 0 {
-                        let oldMessage = filteredArray.first!
-                            let index = transfers.firstIndex(of: oldMessage)!
+                        if filteredArray.count > 0, let oldMessage = filteredArray.first as? ChatMessage {
                             let receivedMessage = ChatMessage(message: message, chatRoom: chatRoom)
-                            transfers[index] = receivedMessage
-                            chatViewController?.messagesCollectionView.performBatchUpdates({
-                                chatViewController?.messagesCollectionView.reloadSections([chatMessage.count + index])
-                            }, completion: { [weak self] _ in
-                                self?.chatMessage.append(receivedMessage)
-                                self?.transfers = self?.transfers.filter { $0 != receivedMessage } ?? []
+                            chatMessage = chatMessage.map({ (message) -> MessageType in
+                                guard let message = message as? ChatMessage, message != oldMessage else {
+                                    return receivedMessage
+                                }
+                                return message
+                                
                             })
+//                            { $0 as? ChatMessage != oldMessage }
+//                            chatMessage.append(receivedMessage)
+                            chatViewController?.messagesCollectionView.reloadDataAndKeepOffset()
                             return
                         }
                     }
@@ -382,7 +382,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
     }
     
     func insertTransfer(_ transer: MEGATransfer) {
-        transfers.append(ChatMessage(transfer: transer, chatRoom: chatRoom))
+        chatMessage.append(ChatMessage(transfer: transer, chatRoom: chatRoom))
         guard let chatViewController = self.chatViewController else { return }
         if messages.count == 1 {
             chatViewController.messagesCollectionView.reloadData()
@@ -454,7 +454,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
             return false
         }
         
-        self.transfers = transfers.map({ (transfer) -> ChatMessage in
+        self.chatMessage = transfers.map({ (transfer) -> ChatMessage in
             return ChatMessage(transfer: transfer, chatRoom: chatRoom)
         })
     }
@@ -550,8 +550,9 @@ extension ChatRoomDelegate: MEGATransferDelegate {
             return
         }
         if appData.contains("\(chatRoom.chatId)") {
-            transfers = transfers.map({ (chatMessage) -> ChatMessage in
-                if chatMessage.transfer?.tag == transfer.tag {
+            chatMessage = chatMessage.map({ (chatMessage) -> MessageType in
+                
+                if  let chatMessage = chatMessage as? ChatMessage, chatMessage.transfer?.tag == transfer.tag {
                     return ChatMessage(transfer: transfer, chatRoom: chatRoom)
                 }
                 
@@ -568,8 +569,9 @@ extension ChatRoomDelegate: MEGATransferDelegate {
             return
         }
         if appData.contains("\(chatRoom.chatId)") {
-            transfers = transfers.map({ (chatMessage) -> ChatMessage in
-                if chatMessage.transfer?.tag == transfer.tag {
+            chatMessage = chatMessage.map({ (chatMessage) -> MessageType in
+                
+                if  let chatMessage = chatMessage as? ChatMessage, chatMessage.transfer?.tag == transfer.tag {
                     return ChatMessage(transfer: transfer, chatRoom: chatRoom)
                 }
                 
