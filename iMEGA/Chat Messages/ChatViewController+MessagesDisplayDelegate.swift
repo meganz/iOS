@@ -10,7 +10,7 @@ extension ChatViewController: MessagesDisplayDelegate {
             return isFromCurrentSender(message: message) ? UIColor.mnz_chatOutgoingBubble(UIScreen.main.traitCollection) : UIColor.mnz_chatIncomingBubble(UIScreen.main.traitCollection)
         }
         
-        if chatMessage.message.isManagementMessage {
+        if chatMessage.message.isManagementMessage || chatMessage.transfer?.transferChatMessageType() == .attachment {
             return .clear
         }
         
@@ -64,13 +64,20 @@ extension ChatViewController: MessagesDisplayDelegate {
                 containerView.layer.borderColor = #colorLiteral(red: 0.8941176471, green: 0.9215686275, blue: 0.9176470588, alpha: 0).cgColor
             }
             
+            if chatMessage.transfer?.transferChatMessageType() == .attachment {
+                containerView.layer.borderColor = #colorLiteral(red: 0.8941176471, green: 0.9215686275, blue: 0.9176470588, alpha: 0).cgColor
+            }
+            
             if chatMessage.message.type == .attachment && (chatMessage.message.nodeList?.size?.intValue ?? 0 == 1) {
-                let node = chatMessage.message.nodeList.node(at: 0)!
-                if (node.name!.mnz_isImagePathExtension || node.name!.mnz_isVideoPathExtension) {
+                
+                if let node = chatMessage.message.nodeList.node(at: 0), (node.name!.mnz_isImagePathExtension || node.name!.mnz_isVideoPathExtension) {
                     
                     containerView.layer.borderColor = #colorLiteral(red: 0.8941176471, green: 0.9215686275, blue: 0.9176470588, alpha: 0).cgColor
                 }
+                
             }
+            
+            
         }
     }
 
