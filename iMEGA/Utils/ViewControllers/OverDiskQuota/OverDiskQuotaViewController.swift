@@ -52,7 +52,7 @@ final class OverDiskQuotaViewController: UIViewController {
                                         overDiskQuotaData.takingUpStorage(with: byteCountFormatter),
                                         suggestedPlan)
 
-            let styleMarks: StyleMarks = ["paragraph": .paragraph, "b": .emphasized(.subheadline)]
+            let styleMarks: StyleMarks = ["paragraph": .paragraph, "b": .emphasized(.subheadline2)]
             return formattedMessage.attributedString(
                 with: styleMarks,
                 attributedTextStyleFactory: traitCollection.theme.attributedTextStyleFactory)
@@ -204,15 +204,13 @@ final class OverDiskQuotaViewController: UIViewController {
     }
 
     private func setupUpgradeButton(_ button: UIButton, with trait: UITraitCollection) {
-        let style = trait.styler(of: .primary)
-        style(button)
+        button.mnz_setupPrimary(trait)
         button.setTitle(AMLocalizedString("upgrade", "Upgrade"), for: .normal)
         button.addTarget(self, action: .didTapUpgradeButton, for: .touchUpInside)
     }
 
     private func setupDismissButton(_ button: UIButton, with trait: UITraitCollection) {
-        let style = trait.styler(of: .secondary)
-        style(button)
+        button.mnz_setupBasic(trait)
         button.setTitle(AMLocalizedString("dismiss", "Dismiss"), for: .normal)
         button.addTarget(self, action: .didTapDismissButton, for: .touchUpInside)
     }
