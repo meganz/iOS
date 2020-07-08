@@ -89,41 +89,53 @@
     return MEGAChatMessageTypeUnknown;
 }
 
-- (void)mnz_parseAppData {
+- (NSArray *)appDataComponents {
     if (!self.appData) {
-        return;
+        return nil;
     }
     
-    NSArray *appDataComponentsArray = [self.appData componentsSeparatedByString:@">"];
-    if (appDataComponentsArray.count) {
-        for (NSString *appDataComponent in appDataComponentsArray) {
-            NSArray *appDataComponentComponentsArray = [appDataComponent componentsSeparatedByString:@"="];
-            NSString *appDataType = appDataComponentComponentsArray.firstObject;
-            
-            if ([appDataType isEqualToString:@"SaveInPhotosApp"]) {
-                [self mnz_saveInPhotosApp];
-            }
-            
-            if ([appDataType isEqualToString:@"attachToChatID"]) {
-                NSString *tempAppDataComponent = [appDataComponent stringByReplacingOccurrencesOfString:@"!" withString:@""];
-                [self mnz_attachtToChatID:tempAppDataComponent asVoiceClip:NO];
-            }
-            
-            if ([appDataType isEqualToString:@"attachVoiceClipToChatID"]) {
-                NSString *tempAppDataComponent = [appDataComponent stringByReplacingOccurrencesOfString:@"!" withString:@""];
-                MEGANode *node = [MEGASdkManager.sharedMEGASdk nodeForHandle:self.nodeHandle];
-                if (node) {
-                    NSString *nodeFilePath = [node mnz_temporaryPathForDownloadCreatingDirectories:YES];
-                    [NSFileManager.defaultManager mnz_moveItemAtPath:self.path toPath:nodeFilePath];
-                }
-                [self mnz_attachtToChatID:tempAppDataComponent asVoiceClip:YES];
-            }
-            
-            if ([appDataType isEqualToString:@"setCoordinates"]) {
-                [self mnz_setCoordinates:appDataComponent];
-            }
+    return [self.appData componentsSeparatedByString:@">"];
+}
+
+- (void)enumerateAppDataTypeWithBlock:(void (^)(NSString *, NSString *))block {
+    NSArray *appDataComponentsArray = self.appDataComponents;
+      if (self.appDataComponents.count) {
+          for (NSString *appDataComponent in appDataComponentsArray) {
+              NSArray *appDataComponentComponentsArray = [appDataComponent componentsSeparatedByString:@"="];
+              NSString *appDataType = appDataComponentComponentsArray.firstObject;
+              block(appDataType, appDataComponent);
+          }
+      }
+}
+
+- (void)mnz_parseSavePhotosAndSetCoordinatesAppData {
+    [self enumerateAppDataTypeWithBlock:^(NSString * appDataType, NSString *appDataComponent) {
+        
+        if ([appDataType isEqualToString:@"SaveInPhotosApp"]) {
+            [self mnz_saveInPhotosApp];
         }
-    }
+        
+        if ([appDataType isEqualToString:@"setCoordinates"]) {
+            [self mnz_setCoordinates:appDataComponent];
+        }
+    }];
+}
+
+- (void)mnz_parseChatAttachmentAppData {
+    [self enumerateAppDataTypeWithBlock:^(NSString * appDataType, NSString *appDataComponent) {
+        
+        if ([appDataType isEqualToString:@"attachToChatID"]) {
+            NSString *tempAppDataComponent = [appDataComponent stringByReplacingOccurrencesOfString:@"!" withString:@""];
+            [self mnz_attachtToChatID:tempAppDataComponent asVoiceClip:NO];
+        }
+        
+        if ([appDataType isEqualToString:@"attachVoiceClipToChatID"]) {
+            NSString *tempAppDataComponent = [appDataComponent stringByReplacingOccurrencesOfString:@"!" withString:@""];
+            [self mnz_moveFileToDestinationIfVoiceClipData];
+            [self mnz_attachtToChatID:tempAppDataComponent asVoiceClip:YES];
+        }
+        
+    }];
 }
 
 - (void)mnz_saveInPhotosApp {
@@ -148,6 +160,30 @@
     }
 }
 
+- (NSString *)mnz_extractChatIDFromAppData {
+    __block NSString *chatID;
+    
+    [self enumerateAppDataTypeWithBlock:^(NSString * appDataType, NSString *appDataComponent) {
+         
+         if ([appDataType isEqualToString:@"attachToChatID"] || [appDataType isEqualToString:@"attachVoiceClipToChatID"]) {
+             NSString *tempAppDataComponent = [appDataComponent stringByReplacingOccurrencesOfString:@"!" withString:@""];
+             chatID = [tempAppDataComponent componentsSeparatedByString:@"="].lastObject;
+         }
+     }];
+    
+    return chatID;
+}
+
+- (void)mnz_moveFileToDestinationIfVoiceClipData {
+    if ([self.appData containsString:@"attachVoiceClipToChatID"]) {
+        MEGANode *node = [MEGASdkManager.sharedMEGASdk nodeForHandle:self.nodeHandle];
+        if (node) {
+            NSString *nodeFilePath = [node mnz_temporaryPathForDownloadCreatingDirectories:YES];
+            [NSFileManager.defaultManager mnz_moveItemAtPath:self.path toPath:nodeFilePath];
+        }
+    }
+}
+
 - (void)mnz_setNodeCoordinates {
     if (self.fileName.mnz_isImagePathExtension || self.fileName.mnz_isVideoPathExtension) {
         MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.nodeHandle];
@@ -161,7 +197,8 @@
                 [self mnz_setCoordinates:coordinates];
             }
         } else {
-            [self mnz_parseAppData];
+            [self mnz_parseSavePhotosAndSetCoordinatesAppData];
+            [self mnz_parseChatAttachmentAppData];
         }
     }
 }
