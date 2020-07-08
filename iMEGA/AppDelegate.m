@@ -126,9 +126,7 @@
     MEGALogDebug(@"[App Lifecycle] Application will finish launching with options: %@", launchOptions);
     
     UIDevice.currentDevice.batteryMonitoringEnabled = YES;
-        
-    [CameraUploadManager.shared setupCameraUploadWhenApplicationLaunches];
-    
+
     return YES;
 }
 
@@ -144,6 +142,8 @@
     [[AVAudioSession sharedInstance] setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil];
     
     [MEGAReachabilityManager sharedManager];
+    
+    [CameraUploadManager.shared setupCameraUploadWhenApplicationLaunches];
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"pointToStaging"]) {
         [[MEGASdkManager sharedMEGASdk] changeApiUrl:@"https://staging.api.mega.co.nz/" disablepkp:NO];
