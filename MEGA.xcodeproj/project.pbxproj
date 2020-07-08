@@ -298,6 +298,11 @@
 		5BFA346F1FAC5850005BFC4E /* MEGAMoveRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFA346D1FAB6282005BFC4E /* MEGAMoveRequestDelegate.m */; };
 		5BFA34701FAC5857005BFC4E /* MEGAMoveRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFA346D1FAB6282005BFC4E /* MEGAMoveRequestDelegate.m */; };
 		5BFA34711FAC5BFB005BFC4E /* MEGARemoveRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFA34691FAB4168005BFC4E /* MEGARemoveRequestDelegate.m */; };
+		5DD8C8EA24B5AF400033F479 /* DateFormatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD8C8E524B5AF400033F479 /* DateFormatting.swift */; };
+		5DD8C8EB24B5AF400033F479 /* Date+Comparion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD8C8E624B5AF400033F479 /* Date+Comparion.swift */; };
+		5DD8C8EC24B5AF400033F479 /* Date+Formatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD8C8E724B5AF400033F479 /* Date+Formatting.swift */; };
+		5DD8C8ED24B5AF400033F479 /* Date+Manipulation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD8C8E824B5AF400033F479 /* Date+Manipulation.swift */; };
+		5DD8C8EE24B5AF580033F479 /* DateFormatter+Convenient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD8C8E424B5AF400033F479 /* DateFormatter+Convenient.swift */; };
 		7714901520F7592100769BD4 /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7714901420F7592000769BD4 /* Contacts.framework */; };
 		771A932723A24DB300CB0ED7 /* UIView+FLEX_Layout.m in Sources */ = {isa = PBXBuildFile; fileRef = 771A932523A24DB300CB0ED7 /* UIView+FLEX_Layout.m */; };
 		771A932823A24DB300CB0ED7 /* UIPasteboard+FLEX.m in Sources */ = {isa = PBXBuildFile; fileRef = 771A932623A24DB300CB0ED7 /* UIPasteboard+FLEX.m */; };
@@ -1642,6 +1647,11 @@
 		5BFA346A1FAB4169005BFC4E /* MEGARemoveRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGARemoveRequestDelegate.h; path = API/Requests/MEGARemoveRequestDelegate.h; sourceTree = "<group>"; };
 		5BFA346C1FAB6282005BFC4E /* MEGAMoveRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGAMoveRequestDelegate.h; path = API/Requests/MEGAMoveRequestDelegate.h; sourceTree = "<group>"; };
 		5BFA346D1FAB6282005BFC4E /* MEGAMoveRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGAMoveRequestDelegate.m; path = API/Requests/MEGAMoveRequestDelegate.m; sourceTree = "<group>"; };
+		5DD8C8E424B5AF400033F479 /* DateFormatter+Convenient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Convenient.swift"; sourceTree = "<group>"; };
+		5DD8C8E524B5AF400033F479 /* DateFormatting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateFormatting.swift; sourceTree = "<group>"; };
+		5DD8C8E624B5AF400033F479 /* Date+Comparion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Comparion.swift"; sourceTree = "<group>"; };
+		5DD8C8E724B5AF400033F479 /* Date+Formatting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Formatting.swift"; sourceTree = "<group>"; };
+		5DD8C8E824B5AF400033F479 /* Date+Manipulation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Manipulation.swift"; sourceTree = "<group>"; };
 		7714901420F7592000769BD4 /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = System/Library/Frameworks/Contacts.framework; sourceTree = SDKROOT; };
 		771A1B5E21C9220C00A8555D /* OnboardingViewType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OnboardingViewType.h; sourceTree = "<group>"; };
 		771A1B5F21C9227A00A8555D /* OnboardingType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OnboardingType.h; sourceTree = "<group>"; };
@@ -3512,6 +3522,7 @@
 		41BADDA61A8E064E008408B3 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				5DD8C8E224B5AF400033F479 /* Extension */,
 				83B906BA249A29CA0088F15C /* UIActivityIndicatorView+Additions.swift */,
 				83B906B9249A29CA0088F15C /* UIButton+Additions.swift */,
 				834AFD1C2492567A005DF37C /* MEGAChatPeerList+Additions.swift */,
@@ -4081,6 +4092,26 @@
 				A819B3411EAFA844004592F9 /* CustomModalAlertViewController.xib */,
 			);
 			path = CustomModalAlert;
+			sourceTree = "<group>";
+		};
+		5DD8C8E224B5AF400033F479 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				5DD8C8E324B5AF400033F479 /* Date */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		5DD8C8E324B5AF400033F479 /* Date */ = {
+			isa = PBXGroup;
+			children = (
+				5DD8C8E424B5AF400033F479 /* DateFormatter+Convenient.swift */,
+				5DD8C8E524B5AF400033F479 /* DateFormatting.swift */,
+				5DD8C8E624B5AF400033F479 /* Date+Comparion.swift */,
+				5DD8C8E724B5AF400033F479 /* Date+Formatting.swift */,
+				5DD8C8E824B5AF400033F479 /* Date+Manipulation.swift */,
+			);
+			path = Date;
 			sourceTree = "<group>";
 		};
 		7747B2D5208623550011814E /* Network */ = {
@@ -6117,6 +6148,7 @@
 				B6D11AD7219BAE6D00446B86 /* MOAssetUploadFileNameRecord+CoreDataClass.m in Sources */,
 				A86B9F262316D6AB00F35E7A /* FLEXScopeCarousel.m in Sources */,
 				A86B9F272316D6AB00F35E7A /* FLEXTableViewSection.m in Sources */,
+				5DD8C8EE24B5AF580033F479 /* DateFormatter+Convenient.swift in Sources */,
 				A86B9F3C2316D6AB00F35E7A /* FLEXNetworkSettingsTableViewController.m in Sources */,
 				A86B9F462316D6AB00F35E7A /* FLEXManager.m in Sources */,
 				BFAB113923CEA5C300BCE72D /* PhotoGridViewFlowLayout.swift in Sources */,
@@ -6208,6 +6240,7 @@
 				771A932723A24DB300CB0ED7 /* UIView+FLEX_Layout.m in Sources */,
 				830B548A2178845300BE1E1F /* CloudDriveTableViewController.m in Sources */,
 				4131997C1BD7BD5D002CD6EA /* DTTimePeriodGroup.m in Sources */,
+				5DD8C8EC24B5AF400033F479 /* Date+Formatting.swift in Sources */,
 				BFAB115523CEAF6F00BCE72D /* TimeInterval+PhotoAlbumBrowserAdditions.swift in Sources */,
 				830EF9A420062F3800FAA947 /* DevicePermissionsHelper.m in Sources */,
 				831FBEA220EF697200AC1B91 /* MEGAArchiveChatRequestDelegate.m in Sources */,
@@ -6298,6 +6331,7 @@
 				5BD4A0211F838606000E24E6 /* ViewFrameAccessor.m in Sources */,
 				831D61A6218738D20038F5B8 /* MOFolderLayout+CoreDataProperties.m in Sources */,
 				417279501DB663FA001AC818 /* JSQMessagesCollectionViewCell.m in Sources */,
+				5DD8C8EA24B5AF400033F479 /* DateFormatting.swift in Sources */,
 				BF30AB9B24A05B7A00862853 /* MEGAChatMessage+Additions.swift in Sources */,
 				A86B9F4D2316D6AB00F35E7A /* FLEXArgumentInputStringView.m in Sources */,
 				2FCA4B7A2385FB260011B7DA /* ChatImageQualityTableViewController.swift in Sources */,
@@ -6406,6 +6440,7 @@
 				83FB143A219C372800418BE6 /* MOOfflineFolderLayout+CoreDataProperties.m in Sources */,
 				417279491DB663FA001AC818 /* JSQMessage.m in Sources */,
 				417279421DB663FA001AC818 /* JSQMessagesBubblesSizeCalculator.m in Sources */,
+				5DD8C8ED24B5AF400033F479 /* Date+Manipulation.swift in Sources */,
 				A86B9F4F2316D6AB00F35E7A /* FLEXArgumentInputView.m in Sources */,
 				A8E10D8021A5677900ACD42F /* ShareLocationViewController.m in Sources */,
 				4172794F1DB663FA001AC818 /* JSQMessagesCollectionView.m in Sources */,
@@ -6535,6 +6570,7 @@
 				415E690A1DABCDF90043B75F /* ChatRoomsViewController.m in Sources */,
 				A8C93C0E22D718440030CE1B /* RecoveryKeyTableViewCell.swift in Sources */,
 				B6031EE52202A6BF00F7EAA1 /* NodesFetchListenerOperation.m in Sources */,
+				5DD8C8EB24B5AF400033F479 /* Date+Comparion.swift in Sources */,
 				4152268F1A692ECC00EC7BB6 /* NodeTableViewCell.m in Sources */,
 				A86B9F4E2316D6AB00F35E7A /* FLEXArgumentInputColorView.m in Sources */,
 				E8D5BF691BF35DC400955550 /* SharedItemsViewController.m in Sources */,
