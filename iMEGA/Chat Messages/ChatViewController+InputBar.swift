@@ -271,12 +271,13 @@ extension ChatViewController {
                                             
         appData = ((appData ?? "") as NSString).mnz_appDataToAttach(toChatID: self.chatRoom.chatId, asVoiceClip: false)
         appData = ((appData ?? "") as NSString).mnz_appData(toLocalIdentifier: localIdentifier)
-
-        MEGASdkManager.sharedMEGASdk()!.startUpload(withLocalPath: filePath,
-                                                    parent: parentNode,
-                                                    appData: appData,
-                                                    isSourceTemporary: true,
-                                                    delegate: self.createUploadTransferDelegate())
+        
+        ChatUploader.sharedInstance.upload(filepath: filePath,
+                                           appData: appData ?? "",
+                                           chatRoomId: chatRoom.chatId,
+                                           parentNode: parentNode,
+                                           isSourceTemporary: true,
+                                           delegate: self.createUploadTransferDelegate())
     }
     
     private func uploadVideo(withFilePath path: String, parentNode: MEGANode) {
@@ -308,6 +309,59 @@ extension ChatViewController {
         }
         
         processAsset?.prepare()
+    }
+    
+    private func startUpload(assets: [PHAsset]) {
+        MEGASdkManager.sharedMEGASdk()!.getMyChatFilesFolder {[weak self] resultNode in
+            guard let `self` = self else {
+                return
+            }
+            
+            let processAsset = MEGAProcessAsset(toShareThroughChatWith: assets,
+                                                parentNode: resultNode,
+                                                filePaths: { [weak self] filePaths in
+                
+                guard let `self` = self,
+                    let filePaths = filePaths else {
+                    return
+                }
+                                                    
+                filePaths.enumerated().forEach { (index, filePath) in
+                    self.uploadAsset(withFilePath: filePath, parentNode: resultNode, localIdentifier: assets[index].localIdentifier)
+                }
+                
+            }, nodes:nil) { errors in
+                guard let errors = errors else {
+                    return
+                }
+                
+                var message: String?
+                
+                if let error = errors.first,
+                    errors.count == 1 {
+                    message = error.localizedDescription
+                } else {
+                    message = AMLocalizedString("shareExtensionUnsupportedAssets")
+                }
+                
+                let alertController = UIAlertController(title: AMLocalizedString("error"),
+                                                        message: message,
+                                                        preferredStyle: .alert)
+                alertController.addAction(UIAlertAction(title: AMLocalizedString("ok"),
+                                                        style: .cancel,
+                                                        handler: nil))
+                
+                DispatchQueue.main.async {
+                    self.present(alertController, animated: true)
+                }
+            }
+            
+            DispatchQueue.global(qos: .background).async {
+                processAsset?.isOriginalName = true
+                processAsset?.prepare()
+            }
+        }
+
     }
 }
 
@@ -358,11 +412,12 @@ extension ChatViewController: ChatInputBarDelegate {
             let appData = ("" as NSString).mnz_appDataToAttach(toChatID: self.chatRoom.chatId, asVoiceClip: true)
             
             if let voiceMessagesNode = MEGASdkManager.sharedMEGASdk()!.node(forPath: MEGAVoiceMessagesFolderName, node: result) {
-                MEGASdkManager.sharedMEGASdk()!.startUpload(withLocalPath: path,
-                                                            parent: voiceMessagesNode,
-                                                            appData: appData,
-                                                            isSourceTemporary: true,
-                                                            delegate: self.createUploadTransferDelegate())
+                ChatUploader.sharedInstance.upload(filepath: path,
+                                                   appData: appData,
+                                                   chatRoomId: self.chatRoom.chatId,
+                                                   parentNode: voiceMessagesNode,
+                                                   isSourceTemporary: true,
+                                                   delegate: self.createUploadTransferDelegate())
             } else {
                 let requestDelegate: MEGARequestDelegate = MEGACreateFolderRequestDelegate { request in
                     guard let request = request else {
@@ -370,13 +425,12 @@ extension ChatViewController: ChatInputBarDelegate {
                     }
                     
                     if let voiceMessagesNode = MEGASdkManager.sharedMEGASdk()!.node(forHandle: request.nodeHandle) {
-                        
-                        MEGASdkManager.sharedMEGASdk()!.startUpload(withLocalPath: path,
-                                                                    parent: voiceMessagesNode,
-                                                                    appData: appData,
-                                                                    isSourceTemporary: true,
-                                                                    delegate: self.createUploadTransferDelegate())
-                        
+                        ChatUploader.sharedInstance.upload(filepath: path,
+                                                           appData: appData,
+                                                           chatRoomId: self.chatRoom.chatId,
+                                                           parentNode: voiceMessagesNode,
+                                                           isSourceTemporary: true,
+                                                           delegate: self.createUploadTransferDelegate())
                     } else {
                         MEGALogDebug("Voice folder not created")
                     }
@@ -462,51 +516,7 @@ extension ChatViewController: UIViewControllerTransitioningDelegate {
 
 extension ChatViewController: AddToChatViewControllerDelegate {
     func send(asset: PHAsset) {
-        MEGASdkManager.sharedMEGASdk()!.getMyChatFilesFolder {[weak self] resultNode in
-            guard let `self` = self else {
-                return
-            }
-            
-            let processAsset = MEGAProcessAsset(toShareThroughChatWith: [asset],
-                                                parentNode: resultNode,
-                                                filePaths: { [weak self] filePaths in
-                
-                guard let filePath = filePaths?.first,
-                    let `self` = self else {
-                    return
-                }
-                self.uploadAsset(withFilePath: filePath, parentNode: resultNode, localIdentifier: asset.localIdentifier)
-            }, nodes:nil) { errors in
-                guard let errors = errors else {
-                    return
-                }
-                
-                var message: String?
-                
-                if let error = errors.first,
-                    errors.count == 1 {
-                    message = error.localizedDescription
-                } else {
-                    message = AMLocalizedString("shareExtensionUnsupportedAssets")
-                }
-                
-                let alertController = UIAlertController(title: AMLocalizedString("error"),
-                                                        message: message,
-                                                        preferredStyle: .alert)
-                alertController.addAction(UIAlertAction(title: AMLocalizedString("ok"),
-                                                        style: .cancel,
-                                                        handler: nil))
-                
-                DispatchQueue.main.async {
-                    self.present(alertController, animated: true)
-                }
-            }
-            
-            DispatchQueue.global(qos: .background).async {
-                processAsset?.isOriginalName = true
-                processAsset?.prepare()
-            }
-        }
+        startUpload(assets: [asset])
     }
     
     func loadPhotosView() {
@@ -518,7 +528,7 @@ extension ChatViewController: AddToChatViewControllerDelegate {
                                                                         return
                                                                     }
                                                                     
-                                                                    assets.forEach { self.send(asset: $0)}
+                                                                    self.startUpload(assets: assets)
         }
         
         let navigationController = MEGANavigationController(rootViewController: albumTableViewController)
