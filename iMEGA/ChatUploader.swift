@@ -121,6 +121,9 @@ extension ChatUploader: MEGATransferDelegate {
         }
         
         if (error.type == .apiEExist) {
+            MEGAStore.shareInstance()?.deleteChatUploadTransfer(withChatRoomId: chatRoomIdString,
+                                                                transferTag: String(transfer.tag),
+                                                                context: context)
             MEGALogInfo("[ChatUploader]Transfer has started with exactly the same data (local path and target parent). File: %@", transfer.fileName);
             return;
         }

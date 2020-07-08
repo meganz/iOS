@@ -85,4 +85,20 @@ extension MEGAStore {
         }
     }
     
+    func deleteChatUploadTransfer(withChatRoomId chatRoomId: String, transferTag: String, context: NSManagedObjectContext) {
+        let fetchRequest: NSFetchRequest<ChatUploadTransfer> = ChatUploadTransfer.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "chatRoomId == %@ AND transferTag == %@", chatRoomId, transferTag)
+        do {
+            if let object = try context.fetch(fetchRequest).first {
+                context.delete(object)
+                MEGAStore.shareInstance()?.save(context)
+            } else {
+                MEGALogError("Could not find ChatUploadTransfer object to delete")
+            }
+        } catch let error as NSError {
+            MEGALogError("Could not delete ChatUploadTransfer object : \(error.localizedDescription)")
+        }
+    }
+
+    
 }
