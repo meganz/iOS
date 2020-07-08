@@ -19,7 +19,6 @@ class ReactionContainerView: UIView {
         addMoreView.layer.borderWidth = 1
         addMoreView.layer.cornerRadius = 12
         addMoreView.backgroundColor = UIColor(hexString: "f9f9f9")
-        addMoreView.addTarget(self, action: #selector(addMorePress(_:)), for: .touchUpInside)
 
         return addMoreView
     }()
@@ -33,7 +32,7 @@ class ReactionContainerView: UIView {
             for index in 0 ..< list!.size {
                 emojis.append((list?.string(at: index))!)
             }
-            rootFlexContainer.flex.direction(.rowReverse).wrap(.wrap).paddingHorizontal(12).justifyContent(.start).alignItems(.start).define { (flex) in
+            rootFlexContainer.flex.direction(.rowReverse).wrap(.wrap).paddingHorizontal(10).justifyContent(.start).alignItems(.start).define { (flex) in
                 emojis.forEach { (emoji) in
                     let megaMessage = chatMessage?.message
                     
@@ -43,16 +42,12 @@ class ReactionContainerView: UIView {
                         emojiButton.buttonPressed = delegate.emojiTapped
                         emojiButton.buttonLongPress = delegate.emojiLongPressed
                     }
-                    emojiButton.layer.borderWidth = 1
-                    emojiButton.layer.borderColor = UIColor.green.cgColor
-                    emojiButton.sizeToFit()
                     
-                    
-                    emojiButton.flex.margin(4).height(30)
+                    emojiButton.flex.margin(2).height(30)
                     flex.addItem(emojiButton)
                 }
                 
-                flex.addItem(addMoreView).width(44).margin(4).height(30)
+                flex.addItem(addMoreView).width(44).margin(2).height(30)
             }
             
             if UInt64(chatMessage?.sender.senderId ?? "") == MEGASdkManager.sharedMEGAChatSdk()?.myUserHandle {
@@ -68,6 +63,7 @@ class ReactionContainerView: UIView {
 
     init() {
         super.init(frame: .zero)
+        addMoreView.addTarget(self, action: #selector(addMorePress(_:)), for: .touchUpInside)
         addSubview(rootFlexContainer)
     }
     
@@ -88,11 +84,10 @@ class ReactionContainerView: UIView {
         rootFlexContainer.pin.width(300)
         rootFlexContainer.pin.top()
         rootFlexContainer.flex.layout(mode: .adjustHeight)
-        rootFlexContainer.pin.right()
         if UInt64(chatMessage?.sender.senderId ?? "") == MEGASdkManager.sharedMEGAChatSdk()?.myUserHandle {
             rootFlexContainer.pin.right()
         } else {
-            rootFlexContainer.pin.left()
+            rootFlexContainer.pin.left(30)
         }
     }
     
