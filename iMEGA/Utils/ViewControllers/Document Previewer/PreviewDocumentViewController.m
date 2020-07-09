@@ -274,6 +274,10 @@
 }
 
 - (IBAction)actionsTapped:(UIBarButtonItem *)sender {
+    if ([MEGASdkManager.sharedMEGASdk accessLevelForNode:self.node] != MEGAShareTypeAccessUnknown) {
+        self.node = [MEGASdkManager.sharedMEGASdk nodeForHandle:self.node.handle];
+    }
+    
     NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:self.node delegate:self displayMode:self.isLink ? DisplayModeFileLink : DisplayModeCloudDrive isIncoming:NO sender:sender];
     [self presentViewController:nodeActions animated:YES completion:nil];
 }
