@@ -77,6 +77,8 @@ class MessageInputBar: UIView {
         return statusBarHeight + 67.0
     }
     
+    private let animationDuration: TimeInterval = 0.4
+    
     // MARK: - Overriden methods.
     
     override func awakeFromNib() {
@@ -258,7 +260,7 @@ class MessageInputBar: UIView {
         messageTextViewBottomConstraint.constant += delta
         layoutIfNeeded()
         
-        UIView.animate(withDuration: 0.4, animations: {
+        UIView.animate(withDuration: animationDuration, animations: {
             self.messageTextViewBottomConstraint.constant = self.messageTextViewBottomConstraintDefaultValue
             self.messageTextViewTopConstraint.constant += delta
             self.messageTextViewCoverView.alpha = 1.0
@@ -297,7 +299,7 @@ class MessageInputBar: UIView {
         let bottomAnimatableConstraint = topConstraintValue
             - (messageTextViewTopConstraintValueWhenExpanded ?? 0.0)
 
-        UIView.animate(withDuration: 0.4, animations: {
+        UIView.animate(withDuration: animationDuration, animations: {
             self.semiTransparentView.alpha = 1.0
             self.messageTextViewBottomConstraint.constant += bottomAnimatableConstraint
             self.messageTextViewTopConstraint.constant = self.messageTextViewTopConstraintValueWhenExpanded ?? 0.0
@@ -329,17 +331,23 @@ class MessageInputBar: UIView {
                         
             self.sendButton.alpha = 0.0
             self.sendButton.isHidden = false
+            MEGALogDebug("[MessageInputBar] Keyboard will show notification triggered")
 
-            UIView.animate(withDuration: 0.4, animations: {
+            UIView.animate(withDuration: self.animationDuration, animations: {
                 self.backgroundViewTrailingTextViewConstraint.isActive = false
                 self.backgroundViewTrailingButtonConstraint.isActive = true
                 self.micButton.alpha = 0.0
                 self.sendButton.alpha = 1.0
                 self.layoutIfNeeded()
+                MEGALogDebug("[MessageInputBar] Keyboard will show notification animation started")
 
             }) { _ in
                 self.micButton.isHidden = true
                 self.micButton.alpha = 1.0
+                
+                self.sendButton.isHidden = false
+                self.sendButton.alpha = 1.0
+                MEGALogDebug("[MessageInputBar] Keyboard will show notification animation completed")
             }
         }
     }
@@ -358,6 +366,8 @@ class MessageInputBar: UIView {
                 return
             }
             
+            MEGALogDebug("[MessageInputBar] Keyboard did show notification triggered")
+
             let inputBarHeight: CGFloat = self.messageTextView.intrinsicContentSize.height
                 + self.messageTextViewBottomConstraint.constant
                 + self.messageTextViewTopConstraint.constant
@@ -383,17 +393,24 @@ class MessageInputBar: UIView {
             
             self.micButton.alpha = 0.0
             self.micButton.isHidden = false
+            
+            MEGALogDebug("[MessageInputBar] Keyboard will hide notification triggered")
 
             if self.messageTextView.text.count == 0 {
-                UIView.animate(withDuration: 0.4, animations: {
+                UIView.animate(withDuration: self.animationDuration, animations: {
                     self.backgroundViewTrailingButtonConstraint.isActive = false
                     self.backgroundViewTrailingTextViewConstraint.isActive = true
                     self.micButton.alpha = 1.0
                     self.sendButton.alpha = 0.0
                     self.layoutIfNeeded()
+                    MEGALogDebug("[MessageInputBar] Keyboard will hide notification animation started")
                 }) { _ in
                     self.sendButton.isHidden = true
                     self.sendButton.alpha = 1.0
+                    
+                    self.micButton.isHidden = false
+                    self.micButton.alpha = 1.0
+                    MEGALogDebug("[MessageInputBar] Keyboard will hide notification animation ended")
                 }
             }
         }
