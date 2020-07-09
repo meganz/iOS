@@ -797,13 +797,13 @@ class ChatViewController: MessagesViewController {
                 return true
             }
             
-            guard let lastMessage = chatMessages.last as? ChatMessage, let chatSDK = MEGASdkManager.sharedMEGAChatSdk(),
-                let lastSeenMessage = chatSDK.lastChatMessageSeen(forChat: chatRoom.chatId) else {
+            guard let lastMessage = chatMessages.last as? ChatMessage, let chatSDK = MEGASdkManager.sharedMEGAChatSdk() else {
                 return
             }
             
+            let lastSeenMessage = chatSDK.lastChatMessageSeen(forChat: chatRoom.chatId)
             if lastMessage.message.userHandle != chatSDK.myUserHandle
-                && lastSeenMessage.messageId != lastMessage.message.messageId {
+                && (lastSeenMessage?.messageId != lastMessage.message.messageId) {
                 chatSDK.setMessageSeenForChat(chatRoom.chatId, messageId: lastMessage.message.messageId)
             }
         }
