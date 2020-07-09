@@ -5,6 +5,7 @@
 
 #import "CameraUploadManager+Settings.h"
 #import "MEGAReachabilityManager.h"
+#import "MEGA-Swift.h"
 #import "NSURL+MNZCategory.h"
 
 @interface SettingsTableViewController () <UITableViewDataSource, UITableViewDelegate>
@@ -20,6 +21,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *securityOptionsLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *fileManagementLabel;
+@property (weak, nonatomic) IBOutlet UILabel *appearanceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *advancedLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *aboutLabel;
@@ -46,21 +48,33 @@
     } else {
         self.selectedLanguage = nil;
     }
+    
+    [self updateAppearance];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [self updateUI];
+    [self setupUI];
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
     return UIInterfaceOrientationMaskAll;
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateAppearance];
+        }
+    }
+}
+
 #pragma mark - Private
 
-- (void)updateUI {
+- (void)setupUI {
     self.navigationItem.title = AMLocalizedString(@"settingsTitle", @"Title of the Settings section");
     
     self.cameraUploadsLabel.text = AMLocalizedString(@"cameraUploadsLabel", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options");
@@ -72,6 +86,7 @@
     self.securityOptionsLabel.text = AMLocalizedString(@"securityOptions", @"Title of the Settings section where you can configure security details of your MEGA account");
     
     self.fileManagementLabel.text = AMLocalizedString(@"File Management", @"A section header which contains the file management settings. These settings allow users to remove duplicate files etc.");
+    self.appearanceLabel.text = AMLocalizedString(@"Appearance", @"Title of one of the Settings sections where you can customise the 'Appearance' of the app.");
     self.advancedLabel.text = AMLocalizedString(@"advanced", @"Title of one of the Settings sections where you can configure 'Advanced' options");
     
     self.aboutLabel.text = AMLocalizedString(@"about", @"Title of one of the Settings sections where you can see things 'About' the app");
@@ -84,13 +99,26 @@
     self.dataProtectionRegulationLabel.text = AMLocalizedString(@"dataProtectionRegulationLabel", @"Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation'");
 }
 
+- (void)updateAppearance {
+    self.cameraUploadsDetailLabel.textColor = self.passcodeDetailLabel.textColor = UIColor.mnz_secondaryLabel;
+    
+    self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+    self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
+    
+    [self.tableView reloadData];
+}
+
 #pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    cell.backgroundColor = [UIColor mnz_secondaryBackgroundGrouped:self.traitCollection];
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     switch (indexPath.section) {
         case 0: //Camera Uploads, Chat
         case 1: //Pascode, Security Options
-        case 2: //File management - Advanced
+        case 2: //File management - Appearance - Advanced
         case 3: //About, Language
         case 4: //Help
             break;

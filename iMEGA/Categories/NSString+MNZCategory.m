@@ -10,6 +10,7 @@
 
 #import "NSDate+DateTools.h"
 
+#import "Helper.h"
 #import "NSDate+MNZCategory.h"
 #import "MEGASdkManager.h"
 #import "MEGAUser+MNZCategory.h"
@@ -178,6 +179,19 @@ static NSString* const B = @"[B]";
     return unitString;
 }
 
++ (NSString *)mnz_formatStringFromByteCountFormatter:(NSString *)stringFromByteCount {
+    NSArray *componentsSeparatedByStringArray = [stringFromByteCount componentsSeparatedByString:@" "];
+    NSString *countString = [NSString mnz_stringWithoutUnitOfComponents:componentsSeparatedByStringArray];
+    
+    if (componentsSeparatedByStringArray.count > 1) {
+        NSString *unitString = [NSString mnz_stringWithoutCountOfComponents:componentsSeparatedByStringArray];
+        
+        countString = [NSString stringWithFormat:@"%@ %@", countString, unitString];
+    }
+    
+    return countString;
+}
+
 - (NSString *_Nullable)mnz_stringBetweenString:(NSString*)start andString:(NSString*)end {
     NSScanner* scanner = [NSScanner scannerWithString:self];
     [scanner setCharactersToBeSkipped:nil];
@@ -344,9 +358,8 @@ static NSString* const B = @"[B]";
     return endCallReasonString;
 }
 
-+ (NSString *)selectedSortTypeForKey:(NSString *)key {
-    MEGASortOrderType sortType = [NSUserDefaults.standardUserDefaults integerForKey:key];
-    switch (sortType) {
++ (NSString *)localizedSortOrderType:(MEGASortOrderType)sortOrderType {
+    switch (sortOrderType) {
         case MEGASortOrderTypeDefaultDesc:
             return AMLocalizedString(@"nameDescending", @"Sort by option (2/6). This one arranges the files on reverse alphabethical order");
             

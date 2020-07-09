@@ -135,7 +135,8 @@
         } else {
             if (@available(iOS 11.0, *)) {
                 if ([previewDocumentPath.pathExtension isEqualToString:@"pdf"]) {
-                    MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];
+                    MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"DocumentPreviewer" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];
+                    navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
                     PreviewDocumentViewController *previewController = navigationController.viewControllers.firstObject;
                     previewController.api = api;
                     previewController.filesPathsArray = @[previewDocumentPath];
@@ -167,12 +168,16 @@
         }
     } else {
         if ([Helper isFreeSpaceEnoughToDownloadNode:self isFolderLink:isFolderLink]) {
-            MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];
+            MEGANavigationController *navigationController = [[UIStoryboard storyboardWithName:@"DocumentPreviewer" bundle:nil] instantiateViewControllerWithIdentifier:@"previewDocumentNavigationID"];
             PreviewDocumentViewController *previewController = navigationController.viewControllers.firstObject;
             previewController.node = self;
             previewController.api = api;
             previewController.isLink = isFolderLink;
             previewController.fileLink = fileLink;
+            if (@available(iOS 13.0, *)) {
+                navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
+            }
+            
             return navigationController;
         }
         return nil;
@@ -297,7 +302,7 @@
     }
 }
 
-- (void)mnz_moveToTheRubbishBinInViewController:(UIViewController *)viewController {
+- (void)mnz_askToMoveToTheRubbishBinInViewController:(UIViewController *)viewController {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         void (^completion)(void) = nil;
         if (![viewController isKindOfClass:MEGAPhotoBrowserViewController.class]) {
@@ -305,7 +310,13 @@
                 [viewController dismissViewControllerAnimated:YES completion:nil];
             };
         }
-        MEGAMoveRequestDelegate *moveRequestDelegate = [[MEGAMoveRequestDelegate alloc] initToMoveToTheRubbishBinWithFiles:(self.isFile ? 1 : 0) folders:(self.isFolder ? 1 : 0) completion:completion];
+        [self mnz_moveToTheRubbishBinWithCompletion:completion];
+    }
+}
+
+- (void)mnz_moveToTheRubbishBinWithCompletion:(void (^)(void))completion {
+    if (MEGAReachabilityManager.isReachableHUDIfNot) {
+        MEGAMoveRequestDelegate *moveRequestDelegate = [MEGAMoveRequestDelegate.alloc initToMoveToTheRubbishBinWithFiles:(self.isFile ? 1 : 0) folders:(self.isFolder ? 1 : 0) completion:completion];
         [MEGASdkManager.sharedMEGASdk moveNode:self newParent:MEGASdkManager.sharedMEGASdk.rubbishNode delegate:moveRequestDelegate];
     }
 }
@@ -324,6 +335,10 @@
                 void (^completion)(void) = nil;
                 if (![viewController isKindOfClass:MEGAPhotoBrowserViewController.class]) {
                     completion = ^{
+                        if (self.isFolder) {
+                            [MEGAStore.shareInstance deleteCloudAppearancePreferenceWithHandle:self.handle];
+                        }
+                        
                         [viewController dismissViewControllerAnimated:YES completion:nil];
                     };
                 }
@@ -819,6 +834,23 @@
     return nameAttributedString;
 }
 
+#pragma mark - Shares
+
+- (NSMutableArray <MEGAShare *> *)outShares {
+    NSMutableArray *outSharesForNodeMutableArray = NSMutableArray.new;
+    
+    MEGAShareList *outSharesForNodeShareList = [MEGASdkManager.sharedMEGASdk outSharesForNode:self];
+    NSUInteger outSharesForNodeCount = outSharesForNodeShareList.size.unsignedIntegerValue;
+    for (NSInteger i = 0; i < outSharesForNodeCount; i++) {
+        MEGAShare *share = [outSharesForNodeShareList shareAtIndex:i];
+        if (share.user != nil) {
+            [outSharesForNodeMutableArray addObject:share];
+        }
+    }
+    
+    return outSharesForNodeMutableArray;
+}
+
 #pragma mark - Versions
 
 - (NSInteger)mnz_numberOfVersions {
@@ -917,7 +949,7 @@
             } else {
                 enableRightButton = YES;
             }
-            textField.textColor = containsInvalidChars ? UIColor.mnz_redMain : UIColor.darkTextColor;
+            textField.textColor = containsInvalidChars ? UIColor.mnz_redError : UIColor.mnz_label;
         }
         
         rightButtonAction.enabled = enableRightButton;

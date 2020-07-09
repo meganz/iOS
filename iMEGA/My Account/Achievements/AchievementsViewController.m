@@ -5,6 +5,7 @@
 
 #import "Helper.h"
 #import "MEGASdkManager.h"
+#import "MEGA-Swift.h"
 #import "NSString+MNZCategory.h"
 
 #import "AchievementsDetailsViewController.h"
@@ -19,11 +20,15 @@
 @property (weak, nonatomic) IBOutlet UILabel *inviteYourFriendsSubtitleLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *disclosureIndicatorImageView;
 
+@property (weak, nonatomic) IBOutlet UIView *unlockedBonusesView;
+@property (weak, nonatomic) IBOutlet UIView *unlockedBonusesTopSeparatorView;
 @property (weak, nonatomic) IBOutlet UILabel *unlockedBonusesLabel;
 @property (weak, nonatomic) IBOutlet UILabel *unlockedStorageQuotaLabel;
 @property (weak, nonatomic) IBOutlet UILabel *storageQuotaLabel;
+@property (weak, nonatomic) IBOutlet UIView *unlockedBonusesCentralSeparatorView;
 @property (weak, nonatomic) IBOutlet UILabel *unlockedTransferQuotaLabel;
 @property (weak, nonatomic) IBOutlet UILabel *transferQuotaLabel;
+@property (weak, nonatomic) IBOutlet UIView *unlockedBonusesBottomSeparatorView;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -43,6 +48,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.tableView.tableFooterView = [UIView.alloc initWithFrame:CGRectZero];
     
     self.numberFormatter = NSNumberFormatter.alloc.init;
     self.numberFormatter.numberStyle = NSNumberFormatterDecimalStyle;
@@ -70,9 +76,39 @@
                                                                           action:@selector(dismissViewController)];
         self.navigationItem.rightBarButtonItem = rightButtonItem;
     }
+    
+    [self updateAppearance];
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateAppearance];
+            
+            [self.tableView reloadData];
+        }
+    }
 }
 
 #pragma mark - Private
+
+- (void)updateAppearance {
+    self.view.backgroundColor = UIColor.mnz_background;
+    self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+    
+    self.inviteYourFriendsView.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
+    self.inviteYourFriendsTitleLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
+    
+    self.unlockedBonusesView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
+    
+    self.unlockedBonusesCentralSeparatorView.backgroundColor = self.unlockedBonusesTopSeparatorView.backgroundColor = self.unlockedBonusesBottomSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+    self.unlockedStorageQuotaLabel.textColor = [UIColor mnz_blueForTraitCollection:self.traitCollection];
+    self.unlockedTransferQuotaLabel.textColor = UIColor.systemGreenColor;
+    
+    self.storageQuotaLabel.textColor = self.transferQuotaLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
+}
 
 - (NSMutableAttributedString *)textForUnlockedBonuses:(long long)quota {
     NSString *stringFromByteCount;
@@ -99,13 +135,9 @@
     secondPartRange = [secondPartString rangeOfString:secondPartString];
     NSMutableAttributedString *secondPartMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:secondPartString];
     
-    [firstPartMutableAttributedString addAttribute:NSFontAttributeName
-                                             value:[UIFont mnz_SFUIRegularWithSize:32.0f]
-                                             range:firstPartRange];
+    [firstPartMutableAttributedString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:32.0f] range:firstPartRange];
     
-    [secondPartMutableAttributedString addAttribute:NSFontAttributeName
-                                              value:[UIFont mnz_SFUIRegularWithSize:17.0f]
-                                              range:secondPartRange];
+    [secondPartMutableAttributedString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:17.0f] range:secondPartRange];
     
     [firstPartMutableAttributedString appendAttributedString:secondPartMutableAttributedString];
     
@@ -124,15 +156,15 @@
         classTransferReward = [self.achievementsDetails rewardTransferByAwardId:awardId];
     }
     
-    cell.storageQuotaRewardView.backgroundColor = cell.storageQuotaRewardLabel.backgroundColor = ((classStorageReward == 0) ? [UIColor mnz_grayCCCCCC] : [UIColor mnz_blue2BA6DE]);
+    cell.storageQuotaRewardView.backgroundColor = cell.storageQuotaRewardLabel.backgroundColor = ((classStorageReward == 0) ? [UIColor mnz_tertiaryGrayForTraitCollection:self.traitCollection] : [UIColor mnz_blueForTraitCollection:self.traitCollection]);
     cell.storageQuotaRewardLabel.text = (classStorageReward == 0) ? @"— GB" : [Helper memoryStyleStringFromByteCount:classStorageReward];
     
-    cell.transferQuotaRewardView.backgroundColor = cell.transferQuotaRewardLabel.backgroundColor = ((classTransferReward == 0) ? [UIColor mnz_grayCCCCCC] : [UIColor mnz_green31B500]);
+    cell.transferQuotaRewardView.backgroundColor = cell.transferQuotaRewardLabel.backgroundColor = ((classTransferReward == 0) ? [UIColor mnz_tertiaryGrayForTraitCollection:self.traitCollection] : UIColor.systemGreenColor);
     cell.transferQuotaRewardLabel.text = (classTransferReward == 0) ? @"— GB" : [Helper memoryStyleStringFromByteCount:classTransferReward];
 }
 
 - (void)pushAchievementsDetailsWithIndexPath:(NSIndexPath *)indexPath {
-    AchievementsDetailsViewController *achievementsDetailsVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"AchievementsDetailsViewControllerID"];
+    AchievementsDetailsViewController *achievementsDetailsVC = [[UIStoryboard storyboardWithName:@"Achievements" bundle:nil] instantiateViewControllerWithIdentifier:@"AchievementsDetailsViewControllerID"];
     achievementsDetailsVC.achievementsDetails = self.achievementsDetails;
     NSUInteger numberOfStaticCells = self.haveReferralBonuses ? 1 : 0;
     NSNumber *index = [self.achievementsIndexesMutableArray objectAtIndex:(indexPath.row - numberOfStaticCells)];
@@ -142,7 +174,7 @@
 }
 
 - (void)inviteYourFriendsTapped {
-    InviteFriendsViewController *inviteFriendsViewController = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"InviteFriendsViewControllerID"];
+    InviteFriendsViewController *inviteFriendsViewController = [[UIStoryboard storyboardWithName:@"Achievements" bundle:nil] instantiateViewControllerWithIdentifier:@"InviteFriendsViewControllerID"];
     inviteFriendsViewController.inviteYourFriendsSubtitleString = self.inviteYourFriendsSubtitleLabel.text;
     
     [self.navigationController pushViewController:inviteFriendsViewController animated:YES];
@@ -171,13 +203,14 @@
     AchievementsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
     
     if (indexPath.row == 0 && self.haveReferralBonuses) {
-        cell.titleLabel.text = AMLocalizedString(@"referralBonuses", @"achievement type");
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         
-        cell.disclosureIndicatorImageView.hidden = NO;
-        cell.disclosureIndicatorImageView.image = cell.disclosureIndicatorImageView.image.imageFlippedForRightToLeftLayoutDirection;
+        cell.titleLabel.text = AMLocalizedString(@"referralBonuses", @"achievement type");
         
         [self setStorageAndTransferQuotaRewardsForCell:cell forIndex:-1];
     } else {
+        cell.accessoryType = UITableViewCellAccessoryNone;
+        
         NSUInteger numberOfStaticCells = self.haveReferralBonuses ? 1 : 0;
         NSNumber *index = [self.achievementsIndexesMutableArray objectAtIndex:(indexPath.row - numberOfStaticCells)];
         MEGAAchievement achievementClass = [self.achievementsDetails awardClassAtIndex:index.unsignedIntegerValue];
@@ -211,7 +244,7 @@
         
         NSDate *awardExpirationdDate = [self.achievementsDetails awardExpirationAtIndex:index.unsignedIntegerValue];
         cell.subtitleLabel.text = (awardExpirationdDate.daysUntil == 0) ? AMLocalizedString(@"expired", @"Label to show that an error related with expiration occurs during a SDK operation.") : [AMLocalizedString(@"xDaysLeft", @"") stringByReplacingOccurrencesOfString:@"%1" withString:[NSString stringWithFormat:@"%zd", awardExpirationdDate.daysUntil]];
-        cell.subtitleLabel.textColor = (awardExpirationdDate.daysUntil <= 15) ? UIColor.mnz_redMain : [UIColor mnz_gray666666];
+        cell.subtitleLabel.textColor = (awardExpirationdDate.daysUntil <= 15) ? [UIColor mnz_redForTraitCollection:(self.traitCollection)] : [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
     }
     
     return cell;
@@ -223,7 +256,7 @@
     switch (indexPath.row) {
         case 0: {
             if (self.haveReferralBonuses) {
-                ReferralBonusesTableViewController *referralBonusesTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"ReferralBonusesTableViewControllerID"];
+                ReferralBonusesTableViewController *referralBonusesTVC = [[UIStoryboard storyboardWithName:@"Achievements" bundle:nil] instantiateViewControllerWithIdentifier:@"ReferralBonusesTableViewControllerID"];
                 referralBonusesTVC.achievementsDetails = self.achievementsDetails;
                 [self.navigationController pushViewController:referralBonusesTVC animated:YES];
             } else {

@@ -2,7 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "splashScreenMEGALogo.pdf"
+      "filename" : "mega_splash_light.pdf"
+    },
+    {
+      "idiom" : "universal",
+      "filename" : "mega_splash_dark.pdf",
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ]
     }
   ],
   "info" : {

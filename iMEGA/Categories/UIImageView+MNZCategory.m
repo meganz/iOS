@@ -6,6 +6,7 @@
 #import "UIImage+MNZCategory.h"
 #import "UIImage+GKContact.h"
 #import "MEGAGetThumbnailRequestDelegate.h"
+#import "MEGASdk+MNZCategory.h"
 
 @implementation UIImageView (MNZCategory)
 
@@ -31,7 +32,7 @@
     if ([[NSFileManager defaultManager] fileExistsAtPath:avatarFilePath]) {
         self.image = [UIImage imageWithContentsOfFile:avatarFilePath];
     } else {
-        self.image = [UIImage imageWithColor:[UIColor colorFromHexString:[MEGASdk avatarColorForBase64UserHandle:base64Handle]] andBounds:self.bounds];
+        self.image = [UIImage imageWithColor:[UIColor mnz_fromHexString:[MEGASdk avatarColorForBase64UserHandle:base64Handle]] andBounds:self.bounds];
         MEGAGetThumbnailRequestDelegate *getThumbnailRequestDelegate = [[MEGAGetThumbnailRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
             self.image = [UIImage imageWithContentsOfFile:request.file];
         }];
@@ -79,14 +80,16 @@
         case MEGANodeTypeFolder: {
             if ([node.name isEqualToString:MEGACameraUploadsNodeName]) {
                 self.image = UIImage.mnz_folderCameraUploadsImage;
+            } else if ([node.name isEqualToString:AMLocalizedString(@"My chat files", @"Destination folder name of chat files")]) {
+                [MEGASdkManager.sharedMEGASdk getMyChatFilesFolderWithCompletion:^(MEGANode *myChatFilesNode) {
+                    if (node.handle == myChatFilesNode.handle) {
+                        self.image = UIImage.mnz_folderMyChatFilesImage;
+                    } else {
+                        [self mnz_commonFolderImageForNode:node];
+                    }
+                }];
             } else {
-                if (node.isInShare) {
-                    self.image = UIImage.mnz_incomingFolderImage;
-                } else if (node.isOutShare) {
-                    self.image = UIImage.mnz_outgoingFolderImage;
-                } else {
-                    self.image = UIImage.mnz_folderImage;
-                }
+                [self mnz_commonFolderImageForNode:node];
             }
             break;
         }
@@ -97,6 +100,16 @@
             
         default:
             self.image = UIImage.mnz_genericImage;
+    }
+}
+
+- (void)mnz_commonFolderImageForNode:(MEGANode *)node {
+    if (node.isInShare) {
+        self.image = UIImage.mnz_incomingFolderImage;
+    } else if (node.isOutShare) {
+        self.image = UIImage.mnz_outgoingFolderImage;
+    } else {
+        self.image = UIImage.mnz_folderImage;
     }
 }
 

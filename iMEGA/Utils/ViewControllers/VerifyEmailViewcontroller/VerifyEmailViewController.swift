@@ -32,8 +32,8 @@ class VerifyEmailViewController: UIViewController {
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-
-        updateUI()
+        
+        updateAppearance()
     }
 
     override func viewDidLayoutSubviews() {
@@ -46,19 +46,17 @@ class VerifyEmailViewController: UIViewController {
     func configureUI() {
         localizeLabels()
         boldenText()
-        updateUI()
+        updateAppearance()
     }
+    
+    func updateAppearance() {
+        hintButton.mnz_setupPrimary(traitCollection)
+        resendButton.mnz_setupBasic(traitCollection)
 
-    func updateUI() {
-        hintButton.backgroundColor = UIColor.white
-        resendButton.backgroundColor = UIColor.white
-
-        topSeparatorView.backgroundColor = UIColor.lightGray
-        bottomSeparatorView.backgroundColor = UIColor.lightGray
-
-        hintLabel.textColor = UIColor.gray
-        topDescriptionLabel.textColor = UIColor.black
-        bottomDescriptionLabel.textColor = UIColor.black
+        topSeparatorView.backgroundColor = UIColor.mnz_separator(for: traitCollection)
+        bottomSeparatorView.backgroundColor = UIColor.mnz_separator(for: traitCollection)
+        
+        hintLabel.textColor = UIColor .mnz_subtitles(for: traitCollection)
     }
 
     func addGradientBackground () {
@@ -90,7 +88,6 @@ class VerifyEmailViewController: UIViewController {
 
     func showWhyIAmBlocked() {
         let customModal = CustomModalAlertViewController.init()
-        customModal.modalPresentationStyle = .overCurrentContext
 
         customModal.image = UIImage(named: "lockedAccounts")
         customModal.viewTitle = AMLocalizedString("Locked Accounts", "Title of a helping view about locked accounts")

@@ -6,10 +6,10 @@
 
 #import "LocalizationSystem.h"
 #import "SVProgressHUD.h"
+#import <PureLayout/PureLayout.h>
 
 #import "NSDate+DateTools.h"
 #import "NSDate+MNZCategory.h"
-#import "UIAlertAction+MNZCategory.h"
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"

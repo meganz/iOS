@@ -173,10 +173,7 @@ static NSString *kPath = @"kPath";
         cell.selectedBackgroundView = view;
     }
     
-    if (@available(iOS 11.0, *)) {
-        cell.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
-        cell.thumbnailPlayImageView.accessibilityIgnoresInvertColors = YES;
-    } else {
+    if (@available(iOS 11.0, *)) {} else {
         cell.delegate = self;
     }
     
@@ -238,8 +235,8 @@ static NSString *kPath = @"kPath";
             [self.offline setEditMode:NO];
         }];
     }];
-    deleteAction.image = [UIImage imageNamed:@"delete"];
-    deleteAction.backgroundColor = [UIColor colorWithRed:0.94 green:0.22 blue:0.23 alpha:1];
+    deleteAction.image = [[UIImage imageNamed:@"delete"] imageWithTintColor:UIColor.whiteColor];
+    deleteAction.backgroundColor = UIColor.mnz_redError;
     return [UISwipeActionsConfiguration configurationWithActions:@[deleteAction]];
 }
 
@@ -269,7 +266,7 @@ static NSString *kPath = @"kPath";
     
     if (direction == MGSwipeDirectionRightToLeft) {
         
-        MGSwipeButton *deleteButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"delete"] backgroundColor:[UIColor colorWithRed:0.93 green:0.22 blue:0.23 alpha:1.0] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
+        MGSwipeButton *deleteButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"delete"] backgroundColor:[UIColor mnz_redForTraitCollection:self.traitCollection] padding:25 callback:^BOOL(MGSwipeTableCell *sender) {
             OfflineTableViewCell *offlineCell = (OfflineTableViewCell *)cell;
             NSString *itemPath = [self.offline.currentOfflinePath stringByAppendingPathComponent:offlineCell.itemNameString];
             [self.offline showRemoveAlertWithConfirmAction:^{

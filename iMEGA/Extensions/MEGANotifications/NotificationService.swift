@@ -73,9 +73,9 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         bestAttemptContent?.sound = UNNotificationSound.default
         let displayName = chatRoom.userDisplayName(forUserHandle: message.userHandle)
         if chatRoom.isGroup {
-            bestAttemptContent?.title = chatRoom.title
+            bestAttemptContent?.title = chatRoom.title ?? ""
             if #available(iOS 12.0, *) {
-                bestAttemptContent?.summaryArgument = chatRoom.title
+                bestAttemptContent?.summaryArgument = chatRoom.title ?? ""
             }
         }
         setupDisplayName(displayName: displayName, for: chatRoom)

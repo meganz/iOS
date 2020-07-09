@@ -13,8 +13,26 @@ class ContactOnMegaTableViewCell: UITableViewCell {
 
     weak var cellDelegate: ContactOnMegaTableViewCellDelegate?
 
-    func configure(for contact: ContactOnMega, delegate: ContactOnMegaTableViewCellDelegate) {
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        updateAppearance()
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        updateAppearance()
+    }
+    
+    private func updateAppearance() {
+        backgroundColor = .mnz_secondaryBackgroundGrouped(traitCollection)
+        
+        emailLabel.textColor = UIColor.mnz_subtitles(for: traitCollection)
+        addButton.setTitleColor(UIColor.mnz_turquoise(for: traitCollection), for: .normal)
+    }
 
+    func configure(for contact: ContactOnMega, delegate: ContactOnMegaTableViewCellDelegate) {
         nameLabel.text = contact.name
         emailLabel.text = contact.email
         avatarImageView.mnz_setImage(forUserHandle: contact.handle, name: contact.name)

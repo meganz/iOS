@@ -909,8 +909,6 @@
 "profile"="Profil";
 /* Title of the Achievements section */
 "achievementsTitle"="Pencapaian";
-/* Title of the Used storage section */
-"usedStorage"="Penyimpanan bekas";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
 "inviteFriendsAndGetRewards"="Undang teman dan dapatkan bonus";
 /* Indicating text for when "you invite your friends" */
@@ -918,7 +916,7 @@
 /* title of the introduction for the achievements screen */
 "inviteFriendsAndGetForEachReferral"="Dapatkan %1$s penyimpanan dan %2$s transfer untuk setiap referral";
 /* Text shown to explain how and where you can invite friends */
-"inviteYourFriendsExplanation"="Pilih kontak dari daftar kontak ponsel Anda atau masukkan beberapa alamat email.";
+"Select from phone contacts or enter multiple email addresses"="Select from phone contacts or enter multiple email addresses";
 /*  */
 "insertYourFriendsEmails"="Masukkan email teman anda:";
 /*  */
@@ -1009,12 +1007,6 @@
 "Renews on"="Pembaruan pada tanggal";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="Berbagi Masuk";
-/* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
-"of %@"="dari %@";
-/* Sentence shown under the used space to complete the info with the user account maximum storage. "used of {maximun storage}" */
-"used of %@"="terpakai dari %@";
-/* Sentence shown under the available space to complete the info with the user account maximum storage. "available of {maximun storage}" */
-"available of %@"="tersedia dari %@";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Upgrade akun";
 /*  */
@@ -1023,8 +1015,8 @@
 "cloudDriveIsAlmostFull"="[S]Drive Cloud Anda hampir penuh.[/S] [A]Tingkatkan sekarang[/A] ke akun PRO dan dapatkan [S]hingga %@ TB (%@ GB)[/S] ruang penyimpanan cloud.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
 "cloudDriveIsFull"="[S]Cloud Drive Anda penuh.[/S] [A]Tingkatkan sekarang[/A] ke akun PRO dan dapatkan [S]hingga %@ TB (%@ GB) [/S] ruang penyimpanan cloud.";
-/* Storage related with the MEGA PRO account level you can subscribe */
-"productSpace"="Gudang";
+/* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
+"Storage"="Gudang";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
 "limited"="Terbatas";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
@@ -1179,8 +1171,8 @@
 "contactCredentials"="Kredential Kontak";
 /* "Verify user" dialog description */
 "thisIsBestDoneInRealLife"="Ini dapat dilakukan pada kehidupan nyata melalui bertemu langsung. Jika ana memiliki channel lain yang sudah ter-verifikasi seperti OTR atau PGP, anda mungkin mau menggunakan itu.";
-/* Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity */
-"yourCredentials"="Kredensial Anda";
+/* Title of the label in the my account section. It shows the credentials of the current user so it can be used to be verified by other contacts */
+"My credentials"="Kredential saya";
 /* Button to reset the password */
 "reset"="Ubah";
 /* Button title */

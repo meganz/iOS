@@ -2,6 +2,7 @@
 #import "PasswordReminderViewController.h"
 
 #import "MEGASdkManager.h"
+#import "MEGA-Swift.h"
 #import "MEGAReachabilityManager.h"
 #import "Helper.h"
 
@@ -19,7 +20,12 @@
 @property (weak, nonatomic) IBOutlet UIButton *testPasswordButton;
 @property (weak, nonatomic) IBOutlet UIButton *backupKeyButton;
 @property (weak, nonatomic) IBOutlet UIButton *dismissButton;
+
+@property (weak, nonatomic) IBOutlet UIView *doNotShowMeAgainView;
+@property (weak, nonatomic) IBOutlet UIView *doNotShowMeAgainTopSeparatorView;
 @property (weak, nonatomic) IBOutlet UISwitch *dontShowAgainSwitch;
+@property (weak, nonatomic) IBOutlet UIView *doNotShowMeAgainBottomSeparatorView;
+
 @property (weak, nonatomic) IBOutlet UIView *alphaView;
 @property (weak, nonatomic) IBOutlet UIImageView *keyImageView;
 
@@ -33,6 +39,8 @@
     [super viewDidLoad];
 
     [self configureUI];
+    
+    [self updateAppearance];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -47,6 +55,16 @@
     [super viewWillAppear:animated];
     if (self.logout) {
         self.navigationItem.title = AMLocalizedString(@"Password Reminder", @"Title for feature Password Reminder");
+    }
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateAppearance];
+        }
     }
 }
 
@@ -78,7 +96,6 @@
             [Helper showMasterKeyCopiedAlert];
         } else {
             __weak PasswordReminderViewController *weakSelf = self;
-            self.view.backgroundColor = UIColor.clearColor;
             
             [Helper showExportMasterKeyInView:self completion:^{
                 if (weakSelf.isLoggingOut) {
@@ -92,13 +109,26 @@
 }
 
 - (IBAction)tapDismiss:(id)sender {
-    self.view.backgroundColor = UIColor.clearColor;
     [self dismissViewControllerAnimated:YES completion:^{
         [self notifyUserSkippedOrBlockedPasswordReminder];
     }];
 }
 
 #pragma mark - Private
+
+- (void)updateAppearance {
+    self.view.backgroundColor = UIColor.mnz_background;
+    
+    self.descriptionLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
+    
+    self.doNotShowMeAgainView.backgroundColor = [UIColor mnz_secondaryBackgroundElevated:self.traitCollection];
+    self.doNotShowMeAgainTopSeparatorView.backgroundColor = self.doNotShowMeAgainBottomSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+    
+    [self.testPasswordButton mnz_setupBasic:self.traitCollection];
+    [self.backupKeyButton mnz_setupPrimary:self.traitCollection];
+    
+    [self.dismissButton mnz_setupCancel:self.traitCollection];
+}
 
 - (void)notifyUserSkippedOrBlockedPasswordReminder {
     MEGAGenericRequestDelegate *delegate = [[MEGAGenericRequestDelegate alloc] initWithCompletion:^(MEGARequest *request, MEGAError *error) {
@@ -124,8 +154,6 @@
     self.titleLabel.text = AMLocalizedString(@"remindPasswordTitle", @"Title for Remind Password View, inviting user to test password");
     self.switchInfoLabel.text = AMLocalizedString(@"dontShowAgain", @"Text for don't show again Remind Password View option");
     [self.testPasswordButton setTitle:AMLocalizedString(@"testPassword", @"Label for test password button") forState:UIControlStateNormal];
-    self.testPasswordButton.layer.borderWidth = 1.0;
-    self.testPasswordButton.layer.borderColor = [UIColor colorFromHexString:@"899B9C"].CGColor;
     
     if (self.isLoggingOut) {
         self.descriptionLabel.text = AMLocalizedString(@"remindPasswordLogoutText", @" Text to describe why the user should test his/her password before logging out");
