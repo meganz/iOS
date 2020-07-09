@@ -22,9 +22,6 @@ class MessageInputBar: UIView {
     @IBOutlet weak var collapsedTextViewCoverView: UIView!
     @IBOutlet weak var expandedTextViewCoverView: UIView!
     @IBOutlet weak var semiTransparentView: UIView!
-    @IBOutlet weak var rightButtonHolderView: UIView!
-    @IBOutlet weak var rightButtonHolderViewWidthConstraint: NSLayoutConstraint!
-    @IBOutlet weak var rightButtonHolderViewHeightConstraint: NSLayoutConstraint!
 
     @IBOutlet weak var messageTextViewCoverView: MessageInputTextBackgroundView!
     @IBOutlet weak var messageTextViewCoverViewBottomContraint: NSLayoutConstraint!
@@ -33,6 +30,10 @@ class MessageInputBar: UIView {
     @IBOutlet weak var backgroundViewTrailingTextViewConstraint: NSLayoutConstraint!
     @IBOutlet weak var backgroundViewTrailingButtonConstraint: NSLayoutConstraint!
     
+    @IBOutlet weak var rightButtonHolderView: UIView!
+    @IBOutlet weak var rightButtonHolderViewWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var rightButtonHolderViewHeightConstraint: NSLayoutConstraint!
+
     @IBOutlet weak var sendButton: UIButton!
     @IBOutlet weak var micButton: UIButton!
     @IBOutlet weak var expandCollapseButton: UIButton!
@@ -44,15 +45,15 @@ class MessageInputBar: UIView {
 
     weak var delegate: MessageInputBarDelegate?
     
+    var text: String? {
+        return messageTextView.text
+    }
+    
     var hideRightButtonHolderView: Bool = false {
         didSet {
             rightButtonHolderViewWidthConstraint.constant = hideRightButtonHolderView ? 0.0 : rightButtonHolderViewHeightConstraint.constant
             layoutIfNeeded()
         }
-    }
-    
-    var text: String? {
-        return messageTextView.text
     }
             
     // MARK:- Private properties
@@ -73,7 +74,7 @@ class MessageInputBar: UIView {
                 + messageTextViewBottomConstraintDefaultValue
                 + (messageTextView.isFirstResponder ? keyboardHeight : 0.0))
     }
-    
+
     private var keyboardHeight: CGFloat?
     private let messageTextViewBottomConstraintDefaultValue: CGFloat = 15.0
     private let messageTextViewTopConstraintValueWhenCollapsed: CGFloat = 32.0
@@ -86,6 +87,8 @@ class MessageInputBar: UIView {
         // The text view should be (statusBarHeight + 67.0) from the top of the screen
         return statusBarHeight + 67.0
     }
+    
+    private let animationDuration: TimeInterval = 0.4
     
     // MARK: - Overriden methods.
     
@@ -268,7 +271,7 @@ class MessageInputBar: UIView {
         messageTextViewBottomConstraint.constant += delta
         layoutIfNeeded()
         
-        UIView.animate(withDuration: 0.4, animations: {
+        UIView.animate(withDuration: animationDuration, animations: {
             self.messageTextViewBottomConstraint.constant = self.messageTextViewBottomConstraintDefaultValue
             self.messageTextViewTopConstraint.constant += delta
             self.messageTextViewCoverView.alpha = 1.0
@@ -307,7 +310,7 @@ class MessageInputBar: UIView {
         let bottomAnimatableConstraint = topConstraintValue
             - (messageTextViewTopConstraintValueWhenExpanded ?? 0.0)
 
-        UIView.animate(withDuration: 0.4, animations: {
+        UIView.animate(withDuration: animationDuration, animations: {
             self.semiTransparentView.alpha = 1.0
             self.messageTextViewBottomConstraint.constant += bottomAnimatableConstraint
             self.messageTextViewTopConstraint.constant = self.messageTextViewTopConstraintValueWhenExpanded ?? 0.0
@@ -339,17 +342,23 @@ class MessageInputBar: UIView {
                         
             self.sendButton.alpha = 0.0
             self.sendButton.isHidden = false
+            MEGALogDebug("[MessageInputBar] Keyboard will show notification triggered")
 
-            UIView.animate(withDuration: 0.4, animations: {
+            UIView.animate(withDuration: self.animationDuration, animations: {
                 self.backgroundViewTrailingTextViewConstraint.isActive = false
                 self.backgroundViewTrailingButtonConstraint.isActive = true
                 self.micButton.alpha = 0.0
                 self.sendButton.alpha = 1.0
                 self.layoutIfNeeded()
+                MEGALogDebug("[MessageInputBar] Keyboard will show notification animation started")
 
             }) { _ in
                 self.micButton.isHidden = true
                 self.micButton.alpha = 1.0
+                
+                self.sendButton.isHidden = false
+                self.sendButton.alpha = 1.0
+                MEGALogDebug("[MessageInputBar] Keyboard will show notification animation completed")
             }
         }
     }
@@ -368,6 +377,8 @@ class MessageInputBar: UIView {
                 return
             }
             
+            MEGALogDebug("[MessageInputBar] Keyboard did show notification triggered")
+
             let inputBarHeight: CGFloat = self.messageTextView.intrinsicContentSize.height
                 + self.messageTextViewBottomConstraint.constant
                 + self.messageTextViewTopConstraint.constant
@@ -393,17 +404,24 @@ class MessageInputBar: UIView {
             
             self.micButton.alpha = 0.0
             self.micButton.isHidden = false
+            
+            MEGALogDebug("[MessageInputBar] Keyboard will hide notification triggered")
 
             if self.messageTextView.text.count == 0 {
-                UIView.animate(withDuration: 0.4, animations: {
+                UIView.animate(withDuration: self.animationDuration, animations: {
                     self.backgroundViewTrailingButtonConstraint.isActive = false
                     self.backgroundViewTrailingTextViewConstraint.isActive = true
                     self.micButton.alpha = 1.0
                     self.sendButton.alpha = 0.0
                     self.layoutIfNeeded()
+                    MEGALogDebug("[MessageInputBar] Keyboard will hide notification animation started")
                 }) { _ in
                     self.sendButton.isHidden = true
                     self.sendButton.alpha = 1.0
+                    
+                    self.micButton.isHidden = false
+                    self.micButton.alpha = 1.0
+                    MEGALogDebug("[MessageInputBar] Keyboard will hide notification animation ended")
                 }
             }
         }

@@ -105,3 +105,4 @@
 #import "ChatAttachedContactsViewController.h"
 #import "MEGALoadingMessagesHeaderView.h"
 #import "MEGAChatMessage.h"
+#import "MEGATransfer+MNZCategory.h"

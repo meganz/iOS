@@ -109,9 +109,9 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     self.chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomByUser:self.userHandle];
     
     [self.backButton setImage:self.backButton.imageView.image.imageFlippedForRightToLeftLayoutDirection forState:UIControlStateNormal];
-    self.messageLabel.text = AMLocalizedString(@"Message", @"Label for any ‘Message’ button, link, text, title, etc. - (String as short as possible).").lowercaseString;
-    self.callLabel.text = AMLocalizedString(@"Call", @"Title of the button in the contact info screen to start an audio call").lowercaseString;
-    self.videoLabel.text = AMLocalizedString(@"Video", @"Title of the button in the contact info screen to start a video call").lowercaseString;
+    self.messageLabel.text = AMLocalizedString(@"Message", @"Label for any ‘Message’ button, link, text, title, etc. - (String as short as possible).");
+    self.callLabel.text = AMLocalizedString(@"Call", @"Title of the button in the contact info screen to start an audio call");
+    self.videoLabel.text = AMLocalizedString(@"Video", @"Title of the button in the contact info screen to start a video call");
         
     self.userNickname = self.user.mnz_nickname;
     

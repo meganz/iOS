@@ -7,13 +7,12 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
     
     // MARK: - Properties
 
-    var transfers: [ChatMessage] = []
-    let chatRoom: MEGAChatRoom
+    var chatRoom: MEGAChatRoom
     weak var chatViewController: ChatViewController?
     var chatMessage: [MessageType] = []
     var messages : [MessageType] {
         get {
-          return  chatMessage + transfers
+          return  chatMessage
         }
     }
     var isChatRoomOpen: Bool = false
@@ -64,7 +63,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
     func onChatRoomUpdate(_ api: MEGAChatSdk!, chat: MEGAChatRoom!) {
         MEGALogInfo("ChatRoomDelegate: onChatRoomUpdate \(chatRoom)")
         chatViewController?.chatRoom = chat
-        
+        chatRoom = chat
         switch chat.changes {
         case .userTyping:
             guard !(chatViewController?.isEditing ?? false)  else {
@@ -121,6 +120,10 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
                     historyMessages.insert(ChatMessage(message: chatMessage, chatRoom: chatRoom), at: 0)
                 }
             }
+            
+            if message.userHandle != api.myUserHandle {
+                api.setMessageSeenForChat(chatRoom.chatId, messageId: message.messageId)
+            }
         } else {
 
             if chatMessage.count == 0 {
@@ -146,12 +149,8 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
             chatMessage = historyMessages + chatMessage
             historyMessages.removeAll()
             
-            if (loadingState) {
-                chatViewController?.messagesCollectionView.reloadDataAndKeepOffset()
-            } else {
-                chatViewController?.messagesCollectionView.reloadDataAndKeepOffset()
-            }
-            
+            chatViewController?.messagesCollectionView.reloadDataAndKeepOffset()
+            chatViewController?.showOrHideJumpToBottom()
             loadingState = false
         }
     }
@@ -166,6 +165,8 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
         if UIApplication.shared.applicationState == .active
         && UIApplication.mnz_visibleViewController() == chatViewController {
             MEGASdkManager.sharedMEGAChatSdk()?.setMessageSeenForChat(chatRoom.chatId, messageId: message.messageId)
+        } else {
+            chatRoom = api.chatRoom(forChatId: chatRoom.chatId)
         }
 
         insertMessage(chatMessage)
@@ -206,22 +207,22 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
                     }, completion: nil)
                 } else {
                     if message.type == .attachment || message.type == .voiceClip {
-                        let filteredArray = transfers.filter { chatMessage in
-                            guard let nodeList = message.nodeList, let node = nodeList.node(at: 0) else { return false }
+                        let filteredArray = chatMessage.filter { chatMessage in
+                            guard let chatMessage = chatMessage as? ChatMessage, let nodeList = message.nodeList, let node = nodeList.node(at: 0) else { return false }
                             return node.handle == chatMessage.transfer?.nodeHandle
                         }
                         
-                        if filteredArray.count > 0 {
-                        let oldMessage = filteredArray.first!
-                            let index = transfers.firstIndex(of: oldMessage)!
+                        if filteredArray.count > 0, let oldMessage = filteredArray.first as? ChatMessage {
                             let receivedMessage = ChatMessage(message: message, chatRoom: chatRoom)
-                            transfers[index] = receivedMessage
-                            chatViewController?.messagesCollectionView.performBatchUpdates({
-                                chatViewController?.messagesCollectionView.reloadSections([chatMessage.count + index])
-                            }, completion: { [weak self] _ in
-                                self?.chatMessage.append(receivedMessage)
-                                self?.transfers = self?.transfers.filter { $0 != receivedMessage } ?? []
+                            chatMessage = chatMessage.map({ (message) -> MessageType in
+                                guard let message = message as? ChatMessage, message != oldMessage else {
+                                    return receivedMessage
+                                }
+                                return message
+                                
                             })
+                            chatViewController?.messagesCollectionView.reloadDataAndKeepOffset()
+                            chatViewController?.showOrHideJumpToBottom()
                             return
                         }
                     }
@@ -312,27 +313,46 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
         }
     }
     
+    func updateUnreadMessagesLabel(unreads: Int) {
+        let index = messages.firstIndex { object -> Bool in
+            guard object is ChatNotificationMessage else {
+                return false
+            }
+            
+            return true
+        }
+        if let index = index {
+            if unreads == 0 {
+                chatMessage.remove(at: index)
+                chatViewController?.messagesCollectionView.deleteSections([index])
+                return
+            }
+            chatMessage[index] = ChatNotificationMessage(type: .unreadMessage(unreads))
+            chatViewController?.messagesCollectionView.reloadSections([index])
+        }
+    }
     
     func insertMessage(_ message: MEGAChatMessage, scrollToBottom: Bool = false) {
         let lastSectionVisible = isLastSectionVisible()
-        
+        let unreads = MEGASdkManager.sharedMEGAChatSdk()?.myUserHandle == message.userHandle ? 0 : chatRoom.unreadCount
         var unreadNotificationMessageIndex: Int?
-        if !lastSectionVisible && !scrollToBottom {
-            let index = chatMessage.firstIndex { object -> Bool in
-                guard object is ChatNotificationMessage else {
-                    return false
-                }
-                
-                return true
+
+        let index = chatMessage.firstIndex { object -> Bool in
+            guard object is ChatNotificationMessage else {
+                return false
             }
-            
-            if let index = index,
-                let notificationMessage = chatMessage[index] as? ChatNotificationMessage,
-                case .unreadMessage(let count) = notificationMessage.type {
-                chatMessage[index] = ChatNotificationMessage(type: .unreadMessage(count + 1))
-                unreadNotificationMessageIndex = index
-            } else {
-                chatMessage.append(ChatNotificationMessage(type: .unreadMessage(1)))
+            return true
+        }
+        
+        if let index = index,
+            let notificationMessage = chatMessage[index] as? ChatNotificationMessage,
+            case .unreadMessage(let count) = notificationMessage.type {
+            chatMessage[index] = ChatNotificationMessage(type: .unreadMessage(count + 1))
+            unreadNotificationMessageIndex = index
+        } else if UIApplication.shared.applicationState != .active
+            || UIApplication.mnz_visibleViewController() != chatViewController {
+            if MEGASdkManager.sharedMEGAChatSdk()?.myUserHandle != message.userHandle {
+                chatMessage.append(ChatNotificationMessage(type: .unreadMessage(unreads)))
                 unreadNotificationMessageIndex = chatMessage.count - 1
             }
         }
@@ -360,7 +380,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
                 } else {
                     messagesCollectionView.insertSections([chatMessage.count - 1])
                     if chatMessage.count >= 3 {
-                        messagesCollectionView.reloadSections([chatMessage.count - 3, notificationMessageIndex])
+                        messagesCollectionView.reloadSections([chatMessage.count - 3, chatMessage.count - 2, notificationMessageIndex])
                     } else {
                         messagesCollectionView.reloadSections([notificationMessageIndex])
                     }
@@ -382,7 +402,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
     }
     
     func insertTransfer(_ transer: MEGATransfer) {
-        transfers.append(ChatMessage(transfer: transer, chatRoom: chatRoom))
+        chatMessage.append(ChatMessage(transfer: transer, chatRoom: chatRoom))
         guard let chatViewController = self.chatViewController else { return }
         if messages.count == 1 {
             chatViewController.messagesCollectionView.reloadData()
@@ -421,7 +441,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
     }
     
     private func reloadTransferData() {
-        guard let allTransfers: [MEGATransfer] =         MEGASdkManager.sharedMEGASdk()?.transfers.mnz_transfersArrayFromTranferList() else {
+        guard let allTransfers: [MEGATransfer] = MEGASdkManager.sharedMEGASdk()?.transfers.mnz_transfersArrayFromTranferList() else {
             return
         }
         let transfers = allTransfers.filter { (transfer) -> Bool in
@@ -445,7 +465,6 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
                             return false
                         }
                         if UInt64(chatID) == chatRoom.chatId {
-//                            insertTransfer(transfer)
                             return true
                         }
                         
@@ -455,13 +474,9 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
             return false
         }
         
-        self.transfers = transfers.map({ (transfer) -> ChatMessage in
+        self.chatMessage = transfers.map({ (transfer) -> ChatMessage in
             return ChatMessage(transfer: transfer, chatRoom: chatRoom)
         })
-//        guard transfers.count > 0 else {
-//            return
-//        }
-//        chatViewController.messagesCollectionView.reloadEmptyDataSet()
     }
     
     private func updateTypingIndicator() {
@@ -555,8 +570,9 @@ extension ChatRoomDelegate: MEGATransferDelegate {
             return
         }
         if appData.contains("\(chatRoom.chatId)") {
-            transfers = transfers.map({ (chatMessage) -> ChatMessage in
-                if chatMessage.transfer?.tag == transfer.tag {
+            chatMessage = chatMessage.map({ (chatMessage) -> MessageType in
+                
+                if  let chatMessage = chatMessage as? ChatMessage, chatMessage.transfer?.tag == transfer.tag {
                     return ChatMessage(transfer: transfer, chatRoom: chatRoom)
                 }
                 
@@ -573,8 +589,9 @@ extension ChatRoomDelegate: MEGATransferDelegate {
             return
         }
         if appData.contains("\(chatRoom.chatId)") {
-            transfers = transfers.map({ (chatMessage) -> ChatMessage in
-                if chatMessage.transfer?.tag == transfer.tag {
+            chatMessage = chatMessage.map({ (chatMessage) -> MessageType in
+                
+                if  let chatMessage = chatMessage as? ChatMessage, chatMessage.transfer?.tag == transfer.tag {
                     return ChatMessage(transfer: transfer, chatRoom: chatRoom)
                 }
                 

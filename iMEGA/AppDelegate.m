@@ -126,9 +126,7 @@
     MEGALogDebug(@"[App Lifecycle] Application will finish launching with options: %@", launchOptions);
     
     UIDevice.currentDevice.batteryMonitoringEnabled = YES;
-        
-    [CameraUploadManager.shared setupCameraUploadWhenApplicationLaunches];
-    
+
     return YES;
 }
 
@@ -145,11 +143,14 @@
     
     [MEGAReachabilityManager sharedManager];
     
+    [CameraUploadManager.shared setupCameraUploadWhenApplicationLaunches];
+    
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"pointToStaging"]) {
         [[MEGASdkManager sharedMEGASdk] changeApiUrl:@"https://staging.api.mega.co.nz/" disablepkp:NO];
         [[MEGASdkManager sharedMEGASdkFolder] changeApiUrl:@"https://staging.api.mega.co.nz/" disablepkp:NO];
     }
     
+    [ChatUploader.sharedInstance cleanupDatabase];
     [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
     [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
     [[MEGASdkManager sharedMEGASdkFolder] addMEGATransferDelegate:self];
@@ -1851,7 +1852,7 @@ void uncaughtExceptionHandler(NSException *exception) {
             }
         }
         
-        [transfer mnz_parseAppData];
+        [transfer mnz_parseSavePhotosAndSetCoordinatesAppData];
         
         if ([transfer.appData containsString:@">localIdentifier"]) {
             NSString *localIdentifier = [transfer.appData mnz_stringBetweenString:@">localIdentifier=" andString:@""];

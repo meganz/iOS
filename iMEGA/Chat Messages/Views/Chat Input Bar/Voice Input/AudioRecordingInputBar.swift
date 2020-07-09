@@ -145,6 +145,10 @@ class AudioRecordingInputBar: UIView {
         suggestionLabel.textColor = UIColor.mnz_secondaryGray(for: traitCollection)
         audioWavesBackgroundView.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
     }
+    
+    deinit {
+        cancelRecording()
+    }
 
 }
 
