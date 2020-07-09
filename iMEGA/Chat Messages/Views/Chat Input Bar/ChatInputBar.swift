@@ -51,7 +51,9 @@ class ChatInputBar: UIView {
     weak var delegate: ChatInputBarDelegate?
         
     var voiceRecordingViewEnabled: Bool = false {
-        didSet {            
+        didSet {
+            messageInputBar.hideRightButtonHolderView = voiceRecordingViewEnabled
+            
             if voiceRecordingViewEnabled {
                 if let messageInputBarBottomConstraint = constraints
                     .filter({ $0.firstAttribute == .bottom && $0.firstItem === self.messageInputBar })
