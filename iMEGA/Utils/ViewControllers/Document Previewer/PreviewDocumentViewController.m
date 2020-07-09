@@ -31,6 +31,7 @@
     MEGATransfer *previewDocumentTransfer;
 }
 
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *closeBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (weak, nonatomic) IBOutlet UIProgressView *progressView;
@@ -61,6 +62,8 @@
     
     [self configureNavigation];
     [self updateAppearance];
+    
+    self.closeBarButtonItem.title = AMLocalizedString(@"close", @"A button label.");
     
     self.moreBarButtonItem.accessibilityLabel = AMLocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
 }
