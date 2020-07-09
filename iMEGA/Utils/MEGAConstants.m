@@ -121,3 +121,7 @@ const NSUInteger MEGADropFirstCharactersFromSession = 44;
 #pragma mark - File size
 
 const long long MEGAMaxFileLinkAutoOpenSize = 10000000; //10Megabytes
+
+#pragma mark - Add Your Phone Number
+
+const NSUInteger MEGAOptOutOfAddYourPhoneNumberMinCount = 10;
