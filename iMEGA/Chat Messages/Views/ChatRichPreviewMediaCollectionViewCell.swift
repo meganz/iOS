@@ -119,6 +119,10 @@ class ChatRichPreviewMediaCollectionViewCell: TextMessageCell, MEGARequestDelega
 
 open class ChatRichPreviewMediaCollectionViewSizeCalculator: TextMessageSizeCalculator {
     
+    override open func messageContainerMaxWidth(for message: MessageType) -> CGFloat {
+        return min(UIDevice.current.mnz_maxSideForChatBubble(withMedia: true), super.messageContainerMaxWidth(for: message))
+    }
+
     open override func messageContainerSize(for message: MessageType) -> CGSize {
         guard let chatMessage = message as? ChatMessage else {
             return .zero
@@ -127,7 +131,7 @@ open class ChatRichPreviewMediaCollectionViewSizeCalculator: TextMessageSizeCalc
         let megaMessage = chatMessage.message
         let dummyMssage = ConcreteMessageType(sender: message.sender, messageId: message.messageId, sentDate: message.sentDate, kind: .text(megaMessage.content))
 
-        let maxWidth = super.messageContainerMaxWidth(for: dummyMssage)
+        let maxWidth = messageContainerMaxWidth(for: dummyMssage)
 
         let containerSize = super.messageContainerSize(for: dummyMssage)
         switch message.kind {
