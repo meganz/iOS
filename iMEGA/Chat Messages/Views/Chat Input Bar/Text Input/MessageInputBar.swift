@@ -30,6 +30,10 @@ class MessageInputBar: UIView {
     @IBOutlet weak var backgroundViewTrailingTextViewConstraint: NSLayoutConstraint!
     @IBOutlet weak var backgroundViewTrailingButtonConstraint: NSLayoutConstraint!
     
+    @IBOutlet weak var rightButtonHolderView: UIView!
+    @IBOutlet weak var rightButtonHolderViewWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var rightButtonHolderViewHeightConstraint: NSLayoutConstraint!
+
     @IBOutlet weak var sendButton: UIButton!
     @IBOutlet weak var micButton: UIButton!
     @IBOutlet weak var expandCollapseButton: UIButton!
@@ -43,6 +47,13 @@ class MessageInputBar: UIView {
     
     var text: String? {
         return messageTextView.text
+    }
+    
+    var hideRightButtonHolderView: Bool = false {
+        didSet {
+            rightButtonHolderViewWidthConstraint.constant = hideRightButtonHolderView ? 0.0 : rightButtonHolderViewHeightConstraint.constant
+            layoutIfNeeded()
+        }
     }
             
     // MARK:- Private properties
@@ -63,7 +74,7 @@ class MessageInputBar: UIView {
                 + messageTextViewBottomConstraintDefaultValue
                 + (messageTextView.isFirstResponder ? keyboardHeight : 0.0))
     }
-    
+
     private var keyboardHeight: CGFloat?
     private let messageTextViewBottomConstraintDefaultValue: CGFloat = 15.0
     private let messageTextViewTopConstraintValueWhenCollapsed: CGFloat = 32.0
