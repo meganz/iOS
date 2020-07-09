@@ -2,8 +2,11 @@ import UIKit
 
 class AddPhoneNumberViewController: UIViewController {
 
+    var shouldHideDontShowAgainButton = true
+    
     @IBOutlet private weak var addPhoneNumberButton: UIButton!
     @IBOutlet private weak var notNowButton: UIButton!
+    @IBOutlet private weak var dontShowAgainButton: UIButton!
     @IBOutlet private weak var addPhoneNumberTitle: UILabel!
     @IBOutlet private weak var descriptionLabel: UILabel!
 
@@ -12,6 +15,7 @@ class AddPhoneNumberViewController: UIViewController {
 
         addPhoneNumberButton.setTitle(AMLocalizedString("Add Phone Number"), for: .normal)
         notNowButton.setTitle(AMLocalizedString("notNow"), for: .normal)
+        dontShowAgainButton.setTitle(AMLocalizedString("dontShowAgain"), for: .normal)
         addPhoneNumberTitle.text = AMLocalizedString("Add Phone Number")
         if !MEGASdkManager.sharedMEGASdk().isAchievementsEnabled {
             descriptionLabel.text = AMLocalizedString("Add your phone number to MEGA. This makes it easier for your contacts to find you on MEGA.")
@@ -22,6 +26,8 @@ class AddPhoneNumberViewController: UIViewController {
                 self?.descriptionLabel.text = String(format: AMLocalizedString("Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA."), Helper.memoryStyleString(fromByteCount: byteCount))
             })
         }
+        
+        dontShowAgainButton.isHidden = shouldHideDontShowAgainButton
         
         updateAppearance()
     }
@@ -47,8 +53,9 @@ class AddPhoneNumberViewController: UIViewController {
         
         if #available(iOS 13, *) {
             if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-                AppearanceManager.forceNavigationBarUpdate(navigationController!.navigationBar, traitCollection: traitCollection)
-                
+                if navigationController != nil {
+                    AppearanceManager.forceNavigationBarUpdate(navigationController!.navigationBar, traitCollection: traitCollection)
+                }
                 updateAppearance()
             }
         }
@@ -61,6 +68,7 @@ class AddPhoneNumberViewController: UIViewController {
         
         addPhoneNumberButton.mnz_setupPrimary(traitCollection)
         notNowButton.mnz_setupCancel(traitCollection)
+        dontShowAgainButton.mnz_setupCancel(traitCollection)
     }
     
     // MARK: - UI Actions
@@ -73,6 +81,11 @@ class AddPhoneNumberViewController: UIViewController {
     }
 
     @IBAction func didTapNotNowButton() {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func didTapDontShowAgainButton() {
+        UserDefaults.standard.set(true, forKey: "dontShowAgainAddPhoneNumber")
         dismiss(animated: true, completion: nil)
     }
 }
