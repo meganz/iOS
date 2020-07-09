@@ -220,7 +220,7 @@ class NodeActionsTests: XCTestCase {
             .setIsMediaFile(true)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.import, .saveToPhotos]))
+        XCTAssertTrue(contains(nodeActionTypes: [.import, .saveToPhotos, .open]))
     }
     
     func testFolderLinkChildFile() {
@@ -229,7 +229,7 @@ class NodeActionsTests: XCTestCase {
             .setIsFile(true)
             .build()
         
-        XCTAssertTrue(contains(nodeActionType: .import))
+        XCTAssertTrue(contains(nodeActionTypes: [.import, .open]))
     }
     
     // MARK: - Chat tests
