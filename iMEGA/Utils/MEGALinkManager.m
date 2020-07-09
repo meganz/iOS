@@ -741,6 +741,7 @@ static NSString *nodeToPresentBase64Handle;
             }
         }
         MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:messagesVC];
+        navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
         [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
     }
 }
