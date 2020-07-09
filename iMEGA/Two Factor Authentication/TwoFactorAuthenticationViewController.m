@@ -79,6 +79,8 @@
     self.firstDigitContainerView.layer.borderColor = self.secondDigitContainerView.layer.borderColor = self.thirdDigitContainerView.layer.borderColor = self.fourthDigitContainerView.layer.borderColor = self.fifthDigitContainerView.layer.borderColor = self.sixthDigitContainerView.layer.borderColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection].CGColor;
     
     self.invalidCodeLabel.textColor = UIColor.mnz_redError;
+    
+    [self.lostYourAuthenticatorDeviceButton setTitleColor:UIColor.mnz_label forState:UIControlStateNormal];
 }
 
 - (void)previousTextViewShouldBecomeFirstResponder:(UITextView *)textView {
