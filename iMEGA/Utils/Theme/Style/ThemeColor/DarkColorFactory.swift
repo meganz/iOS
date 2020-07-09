@@ -50,4 +50,10 @@ struct DarkColorThemeFactory: ColorFactory {
         case .warning: return backgroundColor(.warning)
         }
     }
+
+    func shadowColor(_ style: MEGAColor.Shadow) -> Color {
+        switch style {
+        case .primary: return Color(red: 0, green: 0, blue: 0)
+        }
+    }
 }

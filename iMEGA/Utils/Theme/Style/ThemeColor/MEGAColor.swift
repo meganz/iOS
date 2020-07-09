@@ -27,6 +27,10 @@ enum MEGAColor {
         case highlighted
     }
 
+    enum Shadow: Hashable {
+        case primary
+    }
+
     enum Border: Hashable {
         case primary
         case warning

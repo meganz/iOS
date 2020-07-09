@@ -41,10 +41,18 @@ extension ButtonStatedStyle where T == TextStyle {
 extension ButtonStatedStyle where T == BackgroundStyle {
 
     @discardableResult
-    func applied(on button: UIButton) -> UIButton {
-        for buttonState in ButtonState.allCases {
-            if let backgroundColor = stated[buttonState]?.backgroundColor.uiColor {
-                button.setBackgroundColor(backgroundColor, for: buttonState.uiButtonState)
+    func applied<Button: UIButton>(on button: Button) -> Button {
+        if let megaButton = (button as? ButtonBackgroundStateAware) {
+            for buttonState in ButtonState.allCases {
+                if let backgroundColor = stated[buttonState]?.backgroundColor.uiColor {
+                    megaButton.setBackgroundColor(backgroundColor, for: buttonState.uiButtonState)
+                }
+            }
+        } else {
+            for buttonState in ButtonState.allCases {
+                if let backgroundColor = stated[buttonState]?.backgroundColor.uiColor {
+                    button.setBackgroundColorImage(backgroundColor, for: buttonState.uiButtonState)
+                }
             }
         }
         return button

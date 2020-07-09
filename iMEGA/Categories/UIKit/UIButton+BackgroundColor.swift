@@ -7,7 +7,7 @@ extension UIButton {
     /// - Parameters:
     ///   - color: The `UIColor` to fill to the button's background.
     ///   - state: `UIButton`'s state. See, `UIControl.State`.
-    func setBackgroundColor(_ color: UIColor, for state: UIControl.State) {
+    func setBackgroundColorImage(_ color: UIColor, for state: UIControl.State) {
         let smallestWidthForImageByPoint = 1
         let smallestHeightForImageByPoint = 1
         self.setBackgroundImage(color.image(withSize:CGSize(width: smallestWidthForImageByPoint,
