@@ -317,6 +317,7 @@
 		5D1B240D24AF669D00ACE1C5 /* LabelStyleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B240C24AF669D00ACE1C5 /* LabelStyleFactory.swift */; };
 		5D1B241024AF676C00ACE1C5 /* ThemeButtonStyleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B240F24AF676C00ACE1C5 /* ThemeButtonStyleFactory.swift */; };
 		5D1B241224AF680400ACE1C5 /* CustomViewStyleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B241124AF680400ACE1C5 /* CustomViewStyleFactory.swift */; };
+		5D283DF624B6AF05008D0F27 /* MEGAThemeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D283DF524B6AF05008D0F27 /* MEGAThemeButton.swift */; };
 		5D4D672624AABDDF0034A4CD /* UIView+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4D672524AABDDF0034A4CD /* UIView+Additions.swift */; };
 		5D4D672824AABE050034A4CD /* UINavigationViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4D672724AABE050034A4CD /* UINavigationViewController+Additions.swift */; };
 		5D6465FF2488AE6C006030A5 /* UIViewController+ScrollViewConentInsets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6465FE2488AE6C006030A5 /* UIViewController+ScrollViewConentInsets.swift */; };
@@ -338,6 +339,8 @@
 		5D8DC6B3248CB1340067A4F9 /* UIColor+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8DC6B2248CB1340067A4F9 /* UIColor+Image.swift */; };
 		5D8DC6B5248CB1D70067A4F9 /* UIButton+BackgroundColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8DC6B4248CB1D70067A4F9 /* UIButton+BackgroundColor.swift */; };
 		5D8DC6B8248CB30D0067A4F9 /* ButtonStatedStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8DC6B7248CB30D0067A4F9 /* ButtonStatedStyle.swift */; };
+		5DA9759724B6C2AC00FBD045 /* ShadowStyleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA9759624B6C2AC00FBD045 /* ShadowStyleFactory.swift */; };
+		5DA9759924B6CD6C00FBD045 /* UIControl.State+Hashable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA9759824B6CD6C00FBD045 /* UIControl.State+Hashable.swift */; };
 		5DAB28F224875269004B5D5A /* OverDiskQuotaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DAB28F024875269004B5D5A /* OverDiskQuotaViewController.swift */; };
 		5DAB28F324875269004B5D5A /* OverDiskQuotaViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5DAB28F124875269004B5D5A /* OverDiskQuotaViewController.xib */; };
 		5DB1F478248945F1001C1D5D /* UIView+Border.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB1F477248945F1001C1D5D /* UIView+Border.swift */; };
@@ -1712,6 +1715,7 @@
 		5D1B240C24AF669D00ACE1C5 /* LabelStyleFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelStyleFactory.swift; sourceTree = "<group>"; };
 		5D1B240F24AF676C00ACE1C5 /* ThemeButtonStyleFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeButtonStyleFactory.swift; sourceTree = "<group>"; };
 		5D1B241124AF680400ACE1C5 /* CustomViewStyleFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViewStyleFactory.swift; sourceTree = "<group>"; };
+		5D283DF524B6AF05008D0F27 /* MEGAThemeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAThemeButton.swift; sourceTree = "<group>"; };
 		5D4D672524AABDDF0034A4CD /* UIView+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Additions.swift"; sourceTree = "<group>"; };
 		5D4D672724AABE050034A4CD /* UINavigationViewController+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationViewController+Additions.swift"; sourceTree = "<group>"; };
 		5D6465FE2488AE6C006030A5 /* UIViewController+ScrollViewConentInsets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+ScrollViewConentInsets.swift"; sourceTree = "<group>"; };
@@ -1733,6 +1737,8 @@
 		5D8DC6B2248CB1340067A4F9 /* UIColor+Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Image.swift"; sourceTree = "<group>"; };
 		5D8DC6B4248CB1D70067A4F9 /* UIButton+BackgroundColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+BackgroundColor.swift"; sourceTree = "<group>"; };
 		5D8DC6B7248CB30D0067A4F9 /* ButtonStatedStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStatedStyle.swift; sourceTree = "<group>"; };
+		5DA9759624B6C2AC00FBD045 /* ShadowStyleFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowStyleFactory.swift; sourceTree = "<group>"; };
+		5DA9759824B6CD6C00FBD045 /* UIControl.State+Hashable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIControl.State+Hashable.swift"; sourceTree = "<group>"; };
 		5DAB28F024875269004B5D5A /* OverDiskQuotaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverDiskQuotaViewController.swift; sourceTree = "<group>"; };
 		5DAB28F124875269004B5D5A /* OverDiskQuotaViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OverDiskQuotaViewController.xib; sourceTree = "<group>"; };
 		5DB1F477248945F1001C1D5D /* UIView+Border.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Border.swift"; sourceTree = "<group>"; };
@@ -4129,6 +4135,7 @@
 				83113494223900CB00647AB4 /* GradientView.m */,
 				A81E86CE225B3CF900950678 /* CopyableLabel.h */,
 				A81E86CF225B3CF900950678 /* CopyableLabel.m */,
+				5D283DF524B6AF05008D0F27 /* MEGAThemeButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -4200,6 +4207,7 @@
 				5DB1F4792489461E001C1D5D /* UIColor+Generate.swift */,
 				5D8DC6B2248CB1340067A4F9 /* UIColor+Image.swift */,
 				5D8DC6B4248CB1D70067A4F9 /* UIButton+BackgroundColor.swift */,
+				5DA9759824B6CD6C00FBD045 /* UIControl.State+Hashable.swift */,
 			);
 			path = UIKit;
 			sourceTree = "<group>";
@@ -4247,6 +4255,7 @@
 			children = (
 				5D1B240024AF5F4400ACE1C5 /* ParagraphStyleFactory.swift */,
 				5D1B240624AF619100ACE1C5 /* CornerStyleFactory.swift */,
+				5DA9759624B6C2AC00FBD045 /* ShadowStyleFactory.swift */,
 			);
 			path = Layer1;
 			sourceTree = "<group>";
@@ -6756,6 +6765,7 @@
 				BFAB114423CEA5C300BCE72D /* PhotoCollectionBottomView.swift in Sources */,
 				A86B9F392316D6AB00F35E7A /* FLEXTableViewCell.m in Sources */,
 				5D66435F249C53A300CE9BD1 /* OverDiskQuotaInfomationProtocol.swift in Sources */,
+				5D283DF624B6AF05008D0F27 /* MEGAThemeButton.swift in Sources */,
 				E87C98361CC4CC1000E2B9E6 /* AdvancedTableViewController.m in Sources */,
 				A8C93C1222D718FD0030CE1B /* LogoutTableViewCell.swift in Sources */,
 				B6BB128621A4B73C00C16277 /* AttributeUploadManager.m in Sources */,
@@ -6840,12 +6850,14 @@
 				B6575FD3220101BB00B7AD82 /* MediaInfoLoader.m in Sources */,
 				A86B9F712316D6AB00F35E7A /* FLEXTableContentViewController.m in Sources */,
 				5B40AB321F7A512E0034C3B3 /* AchievementsDetailsViewController.m in Sources */,
+				5DA9759924B6CD6C00FBD045 /* UIControl.State+Hashable.swift in Sources */,
 				5D03C99B248893E600BE5EEB /* UINavigationBar+Customisation.swift in Sources */,
 				83C570E022E5BFCF00216896 /* PhoneNumber.swift in Sources */,
 				411E712F1D461E1D00DD7EF8 /* MEGACollectionViewFlowLayout.m in Sources */,
 				4131997B1BD7BD5D002CD6EA /* DTTimePeriodCollection.m in Sources */,
 				5B0670D321F5DB4500AD9F99 /* RecentsViewController.m in Sources */,
 				A86B9F2A2316D6AB00F35E7A /* FLEXArrayExplorerViewController.m in Sources */,
+				5DA9759724B6C2AC00FBD045 /* ShadowStyleFactory.swift in Sources */,
 				946BD1331FEBBE4E00B76785 /* MEGAToolbarSelectedAssets.m in Sources */,
 				A841E64120CE6681005E1D1B /* MEGACallManagementMediaItem.m in Sources */,
 				5BD12734248A700800CA95A8 /* ContactsTableViewHeader.swift in Sources */,

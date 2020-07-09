@@ -3,7 +3,9 @@ import Foundation
 extension InterfaceStyle {
 
     var themeButtonStyle: ThemeButtonStyleFactory {
-        return ThemeButtonStyleFactoryImpl(colorFactory: colorFactory, cornerStyleFactory: cornerStyleFactory)
+        return ThemeButtonStyleFactoryImpl(colorFactory: colorFactory,
+                                           cornerStyleFactory: cornerStyleFactory,
+                                           shadowStyleFactory: shadowStyleFactory)
     }
 }
 
@@ -25,20 +27,26 @@ private struct ThemeButtonStyleFactoryImpl: ThemeButtonStyleFactory {
 
     let cornerStyleFactory: CornerStyleFactory
 
+    let shadowStyleFactory: ShadowStyleFactory
+
     func styler(of buttonStyle: MEGAThemeButtonStyle) -> ButtonStyler {
-        let cornerStyleFactory = self.cornerStyleFactory
+        let cornerStyle = cornerStyleFactory.cornerStyle(of: .round)
+        let primaryShadowColor = colorFactory.shadowColor(.primary)
+        let themeButtonShadowStyle = shadowStyleFactory.shadowStyle(of: .themeButton(color: primaryShadowColor))
+
         switch buttonStyle {
         case .primary:
             return { button in
-                cornerStyleFactory.cornerStyle(of: .round)
-                    .applied(on: self.buttonBackgroundStyle(of: buttonStyle)
-                        .applied(on: self.buttonTextStyle(of: buttonStyle)
-                            .applied(on: button)))
+                themeButtonShadowStyle
+                    .applied(on: cornerStyle
+                            .applied(on: self.buttonTextStyle(of: buttonStyle)
+                                .applied(on: self.buttonBackgroundStyle(of: buttonStyle)
+                                    .applied(on: button))))
             }
         case .secondary:
             return { button in
-                cornerStyleFactory.cornerStyle(of: .round)
-                    .applied(on: self.borderStyle(of: buttonStyle)
+                themeButtonShadowStyle
+                    .applied(on: cornerStyle
                         .applied(on: self.buttonBackgroundStyle(of: buttonStyle)
                             .applied(on: self.buttonTextStyle(of: buttonStyle)
                                 .applied(on: button))))

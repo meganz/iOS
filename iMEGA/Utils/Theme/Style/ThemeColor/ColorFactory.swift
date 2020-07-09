@@ -18,6 +18,8 @@ protocol ColorFactory {
 
     func borderColor(_ style: MEGAColor.Border) -> Color
 
+    func shadowColor(_ style: MEGAColor.Shadow) -> Color
+
     func customViewBackgroundFactory(_ style: MEGAColor.CustomViewBackground) -> Color
 
     // MARK: - Theme Button Factory

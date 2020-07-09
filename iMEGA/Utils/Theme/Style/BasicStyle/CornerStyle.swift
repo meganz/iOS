@@ -26,7 +26,6 @@ extension CornerStyle {
 fileprivate func apply(style: CornerStyle) -> (UIView) -> UIView {
     return { view in
         view.layer.cornerRadius = style.radius
-        view.clipsToBounds = true
         return view
     }
 }

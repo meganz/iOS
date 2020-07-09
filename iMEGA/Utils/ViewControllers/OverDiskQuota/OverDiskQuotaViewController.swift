@@ -204,13 +204,15 @@ final class OverDiskQuotaViewController: UIViewController {
     }
 
     private func setupUpgradeButton(_ button: UIButton, with trait: UITraitCollection) {
-        button.mnz_setupPrimary(trait)
+        let style = trait.styler(of: .primary)
+        style(button)
         button.setTitle(AMLocalizedString("upgrade", "Upgrade"), for: .normal)
         button.addTarget(self, action: .didTapUpgradeButton, for: .touchUpInside)
     }
 
     private func setupDismissButton(_ button: UIButton, with trait: UITraitCollection) {
-        button.mnz_setupBasic(trait)
+        let style = trait.styler(of: .secondary)
+        style(button)
         button.setTitle(AMLocalizedString("dismiss", "Dismiss"), for: .normal)
         button.addTarget(self, action: .didTapDismissButton, for: .touchUpInside)
     }
