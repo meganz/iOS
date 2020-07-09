@@ -8,6 +8,7 @@
 #import "Helper.h"
 #import "CustomModalAlertViewController.h"
 #import "MEGASdkManager.h"
+#import "MEGA-Swift.h"
 #import "TransferSessionManager.h"
 @import CoreLocation;
 
@@ -88,6 +89,8 @@
             [CameraUploadManager configDefaultSettingsForCameraUploadV2];
         }
     }
+    
+    [self updateAppearance];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -107,7 +110,17 @@
     return UIInterfaceOrientationMaskAll;
 }
 
-#pragma mark - Properties
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateAppearance];
+        }
+    }
+}
+
+#pragma mark - Private
 
 - (CLLocationManager *)locationManager {
     if (_locationManager == nil) {
@@ -118,14 +131,12 @@
     return _locationManager;
 }
 
-#pragma mark - UI configuration
-
 - (void)configImageFormatTexts {
-    NSDictionary<NSAttributedStringKey, id> *formatAttributes = @{NSFontAttributeName : [UIFont systemFontOfSize:17.0], NSForegroundColorAttributeName : [UIColor mnz_black333333]};
+    NSDictionary<NSAttributedStringKey, id> *formatAttributes = @{NSFontAttributeName : [UIFont systemFontOfSize:17.0], NSForegroundColorAttributeName : UIColor.mnz_label};
     
     NSMutableAttributedString *JPGAttributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ ", JPGFormat] attributes:formatAttributes];
     
-    [JPGAttributedString appendAttributedString:[[NSAttributedString alloc] initWithString:AMLocalizedString(@"(Recommended)", nil) attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:17.0], NSForegroundColorAttributeName : [UIColor mnz_gray999999]}]];
+    [JPGAttributedString appendAttributedString:[NSAttributedString.alloc initWithString:AMLocalizedString(@"(Recommended)", nil) attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:17.0], NSForegroundColorAttributeName : [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection]}]];
     self.JPGLabel.attributedText = JPGAttributedString;
     
     self.HEICLabel.attributedText = [[NSAttributedString alloc] initWithString:HEICFormat attributes:formatAttributes];
@@ -141,6 +152,15 @@
     [self configOptionsUI];
     
     [self configTableSections];
+    [self.tableView reloadData];
+}
+
+- (void)updateAppearance {
+    self.uploadVideosInfoRightDetailLabel.textColor = UIColor.mnz_secondaryLabel;
+    
+    self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+    self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
+    
     [self.tableView reloadData];
 }
 
@@ -253,7 +273,7 @@
             [DevicePermissionsHelper photosPermissionWithCompletionHandler:^(BOOL granted) {
                 if (granted) {
                     if (MEGASdkManager.sharedMEGASdk.isBusinessAccount && !MEGASdkManager.sharedMEGASdk.isMasterBusinessAccount) {
-                        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"cameraUploadsLabel", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options") message:@"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account" preferredStyle:UIAlertControllerStyleAlert];
+                        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"cameraUploadsLabel", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options") message:AMLocalizedString(@"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account", @"Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data.") preferredStyle:UIAlertControllerStyleAlert];
                         [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
                         [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"enable", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                             [CameraUploadManager.shared enableCameraUpload];
@@ -325,7 +345,6 @@
 
 - (void)showBackgroundUploadBoardingScreen {
     CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
-    customModalAlertVC.modalPresentationStyle = UIModalPresentationOverFullScreen;
     customModalAlertVC.image = [UIImage imageNamed:@"backgroundUploadLocation"];
     customModalAlertVC.viewTitle = AMLocalizedString(@"Enable location services for background upload", nil);
     NSString *actionTitle;
@@ -363,7 +382,7 @@
     CameraUploadManager.includeGPSTags = sender.on;
 }
 
-#pragma mark - UITableview data source and delegate
+#pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return self.tableSections.count;
@@ -385,6 +404,12 @@
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
     NSString *title = self.sectionFooterTitles[section];
     return [title isEqualToString:@""] ? nil : title;
+}
+
+#pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    cell.backgroundColor = [UIColor mnz_secondaryBackgroundGrouped:self.traitCollection];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

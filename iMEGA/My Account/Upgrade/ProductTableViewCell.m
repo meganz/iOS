@@ -1,6 +1,14 @@
 #import "ProductTableViewCell.h"
 
+#import "MEGA-Swift.h"
+
 @implementation ProductTableViewCell
+
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    
+    [self setupCell];
+}
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
@@ -14,10 +22,22 @@
     [super setHighlighted:highlighted animated:animated];
     
     if (highlighted) {
-        self.upperLineView.backgroundColor = UIColor.mnz_grayCCCCCC;
         self.productNameView.backgroundColor = self.productPriceLabel.textColor;
-        self.underLineView.backgroundColor = UIColor.mnz_grayCCCCCC;
     }
+}
+
+- (void)prepareForReuse {
+    [super prepareForReuse];
+
+    [self setupCell];
+}
+
+#pragma mark - Private
+
+- (void)setupCell {
+    self.backgroundColor = [UIColor mnz_secondaryBackgroundGrouped:self.traitCollection];
+    
+    self.productNameLabel.textColor = UIColor.whiteColor;
 }
 
 @end

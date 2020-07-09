@@ -12,7 +12,6 @@
 
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
-#import "UIAlertAction+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 
@@ -30,6 +29,7 @@
 #import "MEGASdk+MNZCategory.h"
 #import "MEGAShareRequestDelegate.h"
 #import "MEGAStore.h"
+#import "MEGA-Swift.h"
 #import "NSMutableArray+MNZCategory.h"
 #import "NSURL+MNZCategory.h"
 #import "UITextField+MNZCategory.h"
@@ -39,13 +39,13 @@
 #import "CloudDriveCollectionViewController.h"
 #import "ContactsViewController.h"
 #import "CopyrightWarningViewController.h"
+#import "EmptyStateView.h"
 #import "CustomModalAlertViewController.h"
 #import "MEGAImagePickerController.h"
 #import "MEGANavigationController.h"
 #import "MEGAPhotoBrowserViewController.h"
 #import "NodeInfoViewController.h"
 #import "NodeTableViewCell.h"
-#import "LayoutView.h"
 #import "PhotosViewController.h"
 #import "PreviewDocumentViewController.h"
 #import "RecentsViewController.h"
@@ -53,7 +53,6 @@
 #import "SharedItemsViewController.h"
 #import "UpgradeTableViewController.h"
 #import "UIViewController+MNZCategory.h"
-#import "MEGA-Swift.h"
 
 @import Photos;
 
@@ -94,8 +93,8 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 @property (nonatomic, strong) CloudDriveCollectionViewController *cdCollectionView;
 @property (nonatomic, strong) RecentsViewController *recentsVC;
 
-@property (nonatomic, assign) LayoutMode layoutView;
-@property (nonatomic, assign) BOOL shouldDetermineLayout;
+@property (nonatomic, assign) ViewModePreference viewModePreference;
+@property (nonatomic, assign) BOOL shouldDetermineViewMode;
 @property (strong, nonatomic) NSOperationQueue *searchQueue;
 @property (strong, nonatomic) MEGACancelToken *cancelToken;
 
@@ -107,6 +106,8 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.view.backgroundColor = self.containerView.backgroundColor = UIColor.mnz_background;
     
     self.definesPresentationContext = YES;
     
@@ -127,7 +128,9 @@ static const NSTimeInterval kSearchTimeDelay = .5;
             break;
     }
     
-    [self determineLayoutView];
+    [self updateSelector];
+    
+    [self determineViewMode];
     
     if (self.shouldHideSelectorView || self.displayMode != DisplayModeCloudDrive || (([MEGASdkManager.sharedMEGASdk accessLevelForNode:self.parentNode] != MEGAShareTypeAccessOwner) && MEGAReachabilityManager.isReachable)) {
         self.selectorViewHeightLayoutConstraint.constant = 0;
@@ -178,6 +181,8 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     [super viewWillAppear:animated];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(reloadUI) name:MEGASortingPreference object:nil];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(determineViewMode) name:MEGAViewModePreference object:nil];
     
     [[MEGASdkManager sharedMEGASdk] addMEGADelegate:self];
     [[MEGAReachabilityManager sharedManager] retryPendingConnections];
@@ -223,10 +228,6 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     return UIInterfaceOrientationMaskAll;
 }
 
-- (UIStatusBarStyle)preferredStatusBarStyle {
-    return self.searchController.isActive ? UIStatusBarStyleDefault : UIStatusBarStyleLightContent;
-}
-
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
     
@@ -238,22 +239,49 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [AppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar traitCollection:self.traitCollection];
+            [AppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];
+            [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar traitCollection:self.traitCollection];
+            
+            [self updateSelector];
+            
+            [self reloadData];
+        }
+    }
+    
     [self configPreviewingRegistration];
 }
 
 #pragma mark - Layout
 
-- (void)determineLayoutView {
+- (void)determineViewMode {
+    ViewModePreference viewModePreference = [NSUserDefaults.standardUserDefaults integerForKey:MEGAViewModePreference];
+    switch (viewModePreference) {
+        case ViewModePreferencePerFolder:
+            //Check Core Data or determine according to the number of nodes with or without thumbnail
+            break;
+            
+        case ViewModePreferenceList:
+            [self initTable];
+            self.shouldDetermineViewMode = NO;
+            return;
+            
+        case ViewModePreferenceThumbnail:
+            [self initCollection];
+            self.shouldDetermineViewMode = NO;
+            return;
+    }
     
-    MOFolderLayout *folderLayout = [[MEGAStore shareInstance] fetchFolderLayoutWithHandle:self.parentNode.handle];
-    
-    if (folderLayout) {
-        switch (folderLayout.value.integerValue) {
-            case 0:
+    CloudAppearancePreference *cloudAppearancePreference = [MEGAStore.shareInstance fetchCloudAppearancePreferenceWithHandle:self.parentNode.handle];
+    if (cloudAppearancePreference) {
+        switch (cloudAppearancePreference.viewMode.integerValue) {
+            case ViewModePreferenceList:
                 [self initTable];
                 break;
                 
-            case 1:
+            case ViewModePreferenceThumbnail:
                 [self initCollection];
                 break;
                 
@@ -282,7 +310,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
         }
     }
     
-    self.shouldDetermineLayout = NO;
+    self.shouldDetermineViewMode = NO;
 }
 
 - (void)initTable {
@@ -294,7 +322,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
     self.searchController.hidesNavigationBarDuringPresentation = NO;
     self.searchController.delegate = self;
-    self.layoutView = LayoutModeList;
+    self.viewModePreference = ViewModePreferenceList;
     
     self.cdTableView = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveTableID"];
     [self addChildViewController:self.cdTableView];
@@ -318,7 +346,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     self.searchController = [Helper customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
     self.searchController.hidesNavigationBarDuringPresentation = NO;
     self.searchController.delegate = self;
-    self.layoutView = LayoutModeThumbnail;
+    self.viewModePreference = ViewModePreferenceThumbnail;
     
     self.cdCollectionView = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveCollectionID"];
     self.cdCollectionView.cloudDrive = self;
@@ -331,14 +359,15 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     self.cdCollectionView.collectionView.emptyDataSetSource = self;
 }
 
-- (void)changeLayoutMode {
-    if (self.layoutView == LayoutModeList) {
-        [self initCollection];
-    } else  {
-        [self initTable];
+- (void)changeViewModePreference {
+    self.viewModePreference = (self.viewModePreference == ViewModePreferenceList) ? ViewModePreferenceThumbnail : ViewModePreferenceList;
+    if ([NSUserDefaults.standardUserDefaults integerForKey:MEGAViewModePreference] == ViewModePreferencePerFolder) {
+        [MEGAStore.shareInstance insertOrUpdateCloudViewModeWithHandle:self.parentNode.handle viewMode:self.viewModePreference];
+    } else {
+        [NSUserDefaults.standardUserDefaults setInteger:self.viewModePreference forKey:MEGAViewModePreference];
     }
     
-    [[MEGAStore shareInstance] insertFolderLayoutWithHandle:self.parentNode.handle layout:self.layoutView];
+    [NSNotificationCenter.defaultCenter postNotificationName:MEGAViewModePreference object:self userInfo:@{MEGAViewModePreference : @(self.viewModePreference)}];
 }
 
 #pragma mark - UIViewControllerPreviewingDelegate
@@ -350,7 +379,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     }
     
     NSIndexPath *indexPath;
-    if (self.layoutView == LayoutModeList) {
+    if (self.viewModePreference == ViewModePreferenceList) {
         CGPoint cellPoint = [self.view convertPoint:location toView:self.cdTableView.tableView];
         indexPath = [self.cdTableView.tableView indexPathForRowAtPoint:cellPoint];
         if (!indexPath || ![self.cdTableView.tableView numberOfRowsInSection:indexPath.section]) {
@@ -365,7 +394,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     }
     
     MEGANode *node = self.searchController.isActive ? [self.searchNodesArray objectAtIndex:indexPath.row] : [self.nodes nodeAtIndex:indexPath.row];
-    previewingContext.sourceRect = (self.layoutView == LayoutModeList) ? [self.cdTableView.tableView convertRect:[self.cdTableView.tableView cellForRowAtIndexPath:indexPath].frame toView:self.view] : [self.cdCollectionView.collectionView convertRect:[self.cdCollectionView.collectionView cellForItemAtIndexPath:indexPath].frame toView:self.view];
+    previewingContext.sourceRect = (self.viewModePreference == ViewModePreferenceList) ? [self.cdTableView.tableView convertRect:[self.cdTableView.tableView cellForRowAtIndexPath:indexPath].frame toView:self.view] : [self.cdCollectionView.collectionView convertRect:[self.cdCollectionView.collectionView cellForItemAtIndexPath:indexPath].frame toView:self.view];
     
     switch (node.type) {
         case MEGANodeTypeFolder: {
@@ -452,11 +481,9 @@ static const NSTimeInterval kSearchTimeDelay = .5;
                                  if (accessType == MEGAShareTypeAccessOwner) {
                                      if (self.displayMode == DisplayModeCloudDrive) {
                                          if (navigationController.viewControllers.lastObject.class == CloudDriveViewController.class) {
-                                             MEGAMoveRequestDelegate *moveRequestDelegate = [[MEGAMoveRequestDelegate alloc] initToMoveToTheRubbishBinWithFiles:(self.parentNode.isFile ? 1 : 0) folders:(self.parentNode.isFolder ? 1 : 0) completion:^{
+                                             [parentNode mnz_moveToTheRubbishBinWithCompletion:^{
                                                  [self setEditMode:NO];
                                              }];
-                                             
-                                             [[MEGASdkManager sharedMEGASdk] moveNode:parentNode newParent:[[MEGASdkManager sharedMEGASdk] rubbishNode] delegate:moveRequestDelegate];
                                          } else if (navigationController.viewControllers.lastObject.class == SharedItemsViewController.class) {
                                              NSMutableArray *outSharesForNodeMutableArray = [[NSMutableArray alloc] init];
                                              MEGAShareList *shareList = [[MEGASdkManager sharedMEGASdk] outSharesForNode:self.parentNode];
@@ -475,18 +502,18 @@ static const NSTimeInterval kSearchTimeDelay = .5;
                                          }
                                      } else { //DisplayModeRubbishBin (Remove)
                                          MEGARemoveRequestDelegate *removeRequestDelegate = [[MEGARemoveRequestDelegate alloc] initWithMode:DisplayModeRubbishBin files:(self.parentNode.isFile ? 1 : 0) folders:(self.parentNode.isFolder ? 1 : 0) completion:^{
+                                             [MEGAStore.shareInstance deleteCloudAppearancePreferenceWithHandle:parentNode.handle];
+                                             
                                              [self setEditMode:NO];
                                          }];
                                          [[MEGASdkManager sharedMEGASdk] removeNode:parentNode delegate:removeRequestDelegate];
                                      }
                                  } if (accessType == MEGAShareTypeAccessFull) { //DisplayModeSharedItem (Move to the Rubbish Bin)
-                                     MEGAMoveRequestDelegate *moveRequestDelegate = [[MEGAMoveRequestDelegate alloc] initToMoveToTheRubbishBinWithFiles:(self.parentNode.isFile ? 1 : 0) folders:(self.parentNode.isFolder ? 1 : 0) completion:^{
+                                     [parentNode mnz_moveToTheRubbishBinWithCompletion:^{
                                          [self setEditMode:NO];
                                      }];
-                                     
-                                     [[MEGASdkManager sharedMEGASdk] moveNode:parentNode newParent:[[MEGASdkManager sharedMEGASdk] rubbishNode] delegate:moveRequestDelegate];
                                  }
-                             }];
+    }];
     
     MEGAShareType shareType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.parentNode];
     NSArray<id<UIPreviewActionItem>> *previewActions;
@@ -574,7 +601,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     
     NSIndexPath *indexPath;
     
-    if (self.layoutView == LayoutModeList) {
+    if (self.viewModePreference == ViewModePreferenceList) {
         indexPath = [self.cdTableView.tableView indexPathForRowAtPoint:touchPoint];
         if (!indexPath || ![self.cdTableView.tableView numberOfRowsInSection:indexPath.section]) {
             return;
@@ -613,13 +640,22 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 
 #pragma mark - DZNEmptyDataSetSource
 
-- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView {
+- (nullable UIView *)customViewForEmptyDataSet:(UIScrollView *)scrollView {
+    EmptyStateView *emptyStateView = [EmptyStateView.alloc initWithImage:[self imageForEmptyState] title:[self titleForEmptyState] description:[self descriptionForEmptyState] buttonTitle:[self buttonTitleForEmptyState]];
+    [emptyStateView.button addTarget:self action:@selector(buttonTouchUpInsideEmptyState) forControlEvents:UIControlEventTouchUpInside];
+    
+    return emptyStateView;
+}
+
+#pragma mark - Empty State
+
+- (NSString *)titleForEmptyState {
     NSString *text;
     if ([MEGAReachabilityManager isReachable]) {
         if (self.parentNode == nil) {
             return nil;
         }
-        
+
         if (self.searchController.isActive) {
             text = AMLocalizedString(@"noResults", nil);
         } else {
@@ -632,7 +668,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
                     }
                     break;
                 }
-                    
+
                 case DisplayModeRubbishBin:
                     if ([self.parentNode type] == MEGANodeTypeRubbish) {
                         text = AMLocalizedString(@"cloudDriveEmptyState_titleRubbishBin", @"Title shown when your Rubbish Bin is empty.");
@@ -640,7 +676,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
                         text = AMLocalizedString(@"emptyFolder", @"Title shown when a folder doesn't have any files");
                     }
                     break;
-                    
+
                 default:
                     break;
             }
@@ -648,28 +684,26 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     } else {
         text = AMLocalizedString(@"noInternetConnection",  @"No Internet Connection");
     }
-    
-    return [[NSAttributedString alloc] initWithString:text attributes:[Helper titleAttributesForEmptyState]];
+
+    return text;
 }
 
-- (nullable NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView {
+- (NSString *)descriptionForEmptyState {
     NSString *text = @"";
     if (!MEGAReachabilityManager.isReachable && !MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
         text = AMLocalizedString(@"Mobile Data is turned off", @"Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings.");
     }
-    
-    NSDictionary *attributes = @{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleFootnote], NSForegroundColorAttributeName:UIColor.mnz_gray777777};
-    
-    return [NSAttributedString.alloc initWithString:text attributes:attributes];
+
+    return text;
 }
 
-- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
+- (UIImage *)imageForEmptyState {
     UIImage *image = nil;
     if ([MEGAReachabilityManager isReachable]) {
         if (self.parentNode == nil) {
             return nil;
         }
-        
+
         if (self.searchController.isActive) {
             image = [UIImage imageNamed:@"searchEmptyState"];
         } else {
@@ -682,7 +716,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
                     }
                     break;
                 }
-                    
+
                 case DisplayModeRubbishBin: {
                     if ([self.parentNode type] == MEGANodeTypeRubbish) {
                         image = [UIImage imageNamed:@"rubbishEmptyState"];
@@ -691,7 +725,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
                     }
                     break;
                 }
-                    
+
                 default:
                     break;
             }
@@ -699,22 +733,22 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     } else {
         image = [UIImage imageNamed:@"noInternetEmptyState"];
     }
-    
+
     return image;
 }
 
-- (NSAttributedString *)buttonTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
+- (NSString *)buttonTitleForEmptyState {
     MEGAShareType parentShareType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.parentNode];
     if (parentShareType == MEGAShareTypeAccessRead) {
         return nil;
     }
-    
+
     NSString *text = @"";
     if ([MEGAReachabilityManager isReachable]) {
         if (self.parentNode == nil) {
             return nil;
         }
-        
+
         switch (self.displayMode) {
             case DisplayModeCloudDrive: {
                 if (!self.searchController.isActive) {
@@ -722,48 +756,21 @@ static const NSTimeInterval kSearchTimeDelay = .5;
                 }
                 break;
             }
-                
+
             default:
                 text = @"";
                 break;
         }
-        
     } else {
         if (!MEGAReachabilityManager.sharedManager.isMobileDataEnabled) {
             text = AMLocalizedString(@"Turn Mobile Data on", @"Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app.");
         }
     }
-    
-    return [[NSAttributedString alloc] initWithString:text attributes:[Helper buttonTextAttributesForEmptyState]];
+
+    return text;
 }
 
-- (UIImage *)buttonBackgroundImageForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
-    MEGAShareType parentShareType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.parentNode];
-    if (parentShareType == MEGAShareTypeAccessRead) {
-        return nil;
-    }
-    
-    UIEdgeInsets capInsets = [Helper capInsetsForEmptyStateButton];
-    UIEdgeInsets rectInsets = [Helper rectInsetsForEmptyStateButton];
-    
-    return [[[UIImage imageNamed:@"emptyStateButton"] resizableImageWithCapInsets:capInsets resizingMode:UIImageResizingModeStretch] imageWithAlignmentRectInsets:rectInsets];
-}
-
-- (UIColor *)backgroundColorForEmptyDataSet:(UIScrollView *)scrollView {
-    return [UIColor whiteColor];
-}
-
-- (CGFloat)verticalOffsetForEmptyDataSet:(UIScrollView *)scrollView {
-    return [Helper verticalOffsetForEmptyStateWithNavigationBarSize:self.navigationController.navigationBar.frame.size searchBarActive:self.searchController.isActive];
-}
-
-- (CGFloat)spaceHeightForEmptyDataSet:(UIScrollView *)scrollView {
-    return [Helper spaceHeightForEmptyState];
-}
-
-#pragma mark - DZNEmptyDataSetDelegate
-
-- (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
+- (void)buttonTouchUpInsideEmptyState {
     if (MEGAReachabilityManager.isReachable) {
         switch (self.displayMode) {
             case DisplayModeCloudDrive: {
@@ -804,31 +811,21 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 
 #pragma mark - Private
 
-
-- (MEGASortOrderType)sortOrdertype {
-    //Sort configuration by default is "default ascending"
-    if (![[NSUserDefaults standardUserDefaults] integerForKey:@"SortOrderType"]) {
-        [[NSUserDefaults standardUserDefaults] setInteger:MEGASortOrderTypeDefaultAsc forKey:@"SortOrderType"];
-    }
-    return [[NSUserDefaults standardUserDefaults] integerForKey:@"SortOrderType"];
-}
-
 - (void)reloadUI {
-    
     switch (self.displayMode) {
         case DisplayModeCloudDrive: {
             if (!self.parentNode) {
                 self.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
             }
             [self updateNavigationBarTitle];
-            self.nodes = [[MEGASdkManager sharedMEGASdk] childrenForParent:self.parentNode order:[self sortOrdertype]];
+            self.nodes = [MEGASdkManager.sharedMEGASdk childrenForParent:self.parentNode order:[Helper sortTypeFor:self.parentNode]];
             
             break;
         }
             
         case DisplayModeRubbishBin: {
             [self updateNavigationBarTitle];
-            self.nodes = [[MEGASdkManager sharedMEGASdk] childrenForParent:self.parentNode order:[self sortOrdertype]];
+            self.nodes = [MEGASdkManager.sharedMEGASdk childrenForParent:self.parentNode order:[Helper sortTypeFor:self.parentNode]];
             self.moreMinimizedBarButtonItem.enabled = self.nodes.size.integerValue > 0;
             
             break;
@@ -854,23 +851,18 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     
     self.nodesArray = tempArray;
     
-    if (self.shouldDetermineLayout) {
-        [self determineLayoutView];
+    if (self.shouldDetermineViewMode) {
+        [self determineViewMode];
     }
     
     [self reloadData];
 }
 
 - (void)loadPhotoAlbumBrowser {
-    AlbumsTableViewController *albumTableViewController = [AlbumsTableViewController.alloc
-                                                           initWithSelectionActionText:AMLocalizedString(@"Upload (%d)",
-                                                                                                         @"Used in Photos app browser view to send the photos from the view to the cloud.")
-                                                           selectionActionDisabledText:AMLocalizedString(@"upload", @"Used in Photos app browser view as a disabled action when there is no assets selected")
-                                                           completionBlock:^(NSArray<PHAsset *> * _Nonnull assets) {
+    AlbumsTableViewController *albumTableViewController = [AlbumsTableViewController.alloc initWithSelectionActionText:AMLocalizedString(@"Upload (%d)", @"Used in Photos app browser view to send the photos from the view to the cloud.") selectionActionDisabledText:AMLocalizedString(@"upload", @"Used in Photos app browser view as a disabled action when there is no assets selected") completionBlock:^(NSArray<PHAsset *> * _Nonnull assets) {
         if (assets.count > 0) {
             for (PHAsset *asset in assets) {
-                [MEGAStore.shareInstance insertUploadTransferWithLocalIdentifier:asset.localIdentifier
-                                                                  parentNodeHandle:self.parentNode.handle];
+                [MEGAStore.shareInstance insertUploadTransferWithLocalIdentifier:asset.localIdentifier parentNodeHandle:self.parentNode.handle];
             }
             
             [Helper startPendingUploadTransferIfNeeded];
@@ -1002,18 +994,18 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 }
 
 - (void)addSearchBar {
-    if (self.layoutView == LayoutModeList) {
+    if (self.viewModePreference == ViewModePreferenceList) {
         if (self.searchController && !self.cdTableView.tableView.tableHeaderView) {
             self.cdTableView.tableView.contentOffset = CGPointMake(0, CGRectGetHeight(self.searchController.searchBar.frame));
             self.cdTableView.tableView.tableHeaderView = ((self.displayMode == DisplayModeRecents) || !MEGAReachabilityManager.isReachable) ? nil : self.searchController.searchBar; //We have to check isReachable here to avoid re-adding the search bar when there is no internet connection and you change between 'Cloud Drive' and 'Recents' sections.
         }
     }
-    //In the case of LayoutModeThumbnail is not necessary to re-add the search bar.
+    //In the case of ViewModePreferenceThumbnail is not necessary to re-add the search bar.
 }
 
 - (void)hideSearchIfNotActive {
     if (!self.searchController.isActive) {
-        if (self.layoutView == LayoutModeList) {
+        if (self.viewModePreference == ViewModePreferenceList) {
             self.cdTableView.tableView.tableHeaderView = nil;
         } else {
             [self.cdCollectionView resetSearchBarPosition];
@@ -1046,31 +1038,31 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 }
 
 - (void)presentSortByActionSheet {
-    MEGASortOrderType sortType = [self sortOrdertype];
+    MEGASortOrderType sortType = [Helper sortTypeFor:self.parentNode];
     
     NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
     [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"nameAscending", nil) detail:sortType == MEGASortOrderTypeDefaultAsc ? @"✓" : @"" image:[UIImage imageNamed:@"ascending"] style:UIAlertActionStyleDefault actionHandler:^{
-        [NSUserDefaults.standardUserDefaults setInteger:MEGASortOrderTypeDefaultAsc forKey:@"SortOrderType"];
+        [Helper saveSortOrder:MEGASortOrderTypeDefaultAsc for:self.parentNode];
         [self reloadUI];
     }]];
     [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"nameDescending", nil) detail:sortType == MEGASortOrderTypeDefaultDesc ? @"✓" : @"" image:[UIImage imageNamed:@"descending"] style:UIAlertActionStyleDefault actionHandler:^{
-        [NSUserDefaults.standardUserDefaults setInteger:MEGASortOrderTypeDefaultDesc forKey:@"SortOrderType"];
+        [Helper saveSortOrder:MEGASortOrderTypeDefaultDesc for:self.parentNode];
         [self reloadUI];
     }]];
     [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"largest", nil) detail:sortType == MEGASortOrderTypeSizeDesc ? @"✓" : @"" image:[UIImage imageNamed:@"largest"] style:UIAlertActionStyleDefault actionHandler:^{
-        [NSUserDefaults.standardUserDefaults setInteger:MEGASortOrderTypeSizeDesc forKey:@"SortOrderType"];
+        [Helper saveSortOrder:MEGASortOrderTypeSizeDesc for:self.parentNode];
         [self reloadUI];
     }]];
     [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"smallest", nil) detail:sortType == MEGASortOrderTypeSizeAsc ? @"✓" : @"" image:[UIImage imageNamed:@"smallest"] style:UIAlertActionStyleDefault actionHandler:^{
-        [NSUserDefaults.standardUserDefaults setInteger:MEGASortOrderTypeSizeAsc forKey:@"SortOrderType"];
+        [Helper saveSortOrder:MEGASortOrderTypeSizeAsc for:self.parentNode];
         [self reloadUI];
     }]];
     [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"newest", nil) detail:sortType == MEGASortOrderTypeModificationDesc ? @"✓" : @"" image:[UIImage imageNamed:@"newest"] style:UIAlertActionStyleDefault actionHandler:^{
-        [NSUserDefaults.standardUserDefaults setInteger:MEGASortOrderTypeModificationDesc forKey:@"SortOrderType"];
+        [Helper saveSortOrder:MEGASortOrderTypeModificationDesc for:self.parentNode];
         [self reloadUI];
     }]];
     [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"oldest", nil) detail:sortType == MEGASortOrderTypeModificationAsc ? @"✓" : @"" image:[UIImage imageNamed:@"oldest"] style:UIAlertActionStyleDefault actionHandler:^{
-        [NSUserDefaults.standardUserDefaults setInteger:MEGASortOrderTypeModificationAsc forKey:@"SortOrderType"];
+        [Helper saveSortOrder:MEGASortOrderTypeModificationAsc for:self.parentNode];
         [self reloadUI];
     }]];
     
@@ -1083,7 +1075,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     if (newFolderAlertController) {
         UIAlertAction *rightButtonAction = newFolderAlertController.actions.lastObject;
         BOOL containsInvalidChars = textField.text.mnz_containsInvalidChars;
-        textField.textColor = containsInvalidChars ? UIColor.mnz_redMain : UIColor.darkTextColor;
+        textField.textColor = containsInvalidChars ? UIColor.mnz_redError : UIColor.mnz_label;
         rightButtonAction.enabled = (!textField.text.mnz_isEmpty && !containsInvalidChars);
     }
 }
@@ -1194,7 +1186,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 
 - (void)showUpgradeTVC {
     if ([MEGAPurchase sharedInstance].products.count > 0) {
-        UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"MyAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeID"];
+        UpgradeTableViewController *upgradeTVC = [[UIStoryboard storyboardWithName:@"UpgradeAccount" bundle:nil] instantiateViewControllerWithIdentifier:@"UpgradeTableViewControllerID"];
         MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:upgradeTVC];
         [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:@"lastEncourageUpgradeDate"];
         [self presentViewController:navigationController animated:YES completion:nil];
@@ -1266,7 +1258,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 - (void)reloadData {
     if (self.recentsButton.selected) {
         [self.recentsVC.tableView reloadData];
-    } else if (self.layoutView == LayoutModeList) {
+    } else if (self.viewModePreference == ViewModePreferenceList) {
         [self.cdTableView.tableView reloadData];
     } else {
         [self.cdCollectionView.collectionView reloadData];
@@ -1274,7 +1266,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 }
 
 - (void)setEditMode:(BOOL)editMode {
-    if (self.layoutView == LayoutModeList) {
+    if (self.viewModePreference == ViewModePreferenceList) {
         [self.cdTableView setTableViewEditing:editMode animated:YES];
     } else {
         [self.cdCollectionView setCollectionViewEditing:editMode animated:YES];
@@ -1282,7 +1274,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 }
 
 - (void)selectIndexPath:(NSIndexPath *)indexPath {
-    if (self.layoutView == LayoutModeList) {
+    if (self.viewModePreference == ViewModePreferenceList) {
         [self.cdTableView tableViewSelectIndexPath:indexPath];
         [self.cdTableView.tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
     } else {
@@ -1293,7 +1285,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 
 - (NSInteger)numberOfRows {
     NSInteger numberOfRows = 0;
-    if (self.layoutView == LayoutModeList) {
+    if (self.viewModePreference == ViewModePreferenceList) {
         numberOfRows = [self.cdTableView.tableView numberOfRowsInSection:0];
     } else {
         numberOfRows = [self.cdCollectionView.collectionView numberOfItemsInSection:0];
@@ -1347,6 +1339,20 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     }
     
     [self.navigationController pushViewController:cloudDriveVC animated:YES];
+}
+
+- (void)updateSelector {
+    self.selectorView.backgroundColor = [UIColor mnz_mainBarsForTraitCollection:self.traitCollection];
+    
+    self.cloudDriveButton.titleLabel.font = self.cloudDriveButton.selected ? [UIFont systemFontOfSize:15.0f weight:UIFontWeightMedium] : [UIFont systemFontOfSize:15.0f];
+    [self.cloudDriveButton setTitleColor:[UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)] forState:UIControlStateNormal];
+    [self.cloudDriveButton setTitleColor:[UIColor mnz_redForTraitCollection:(self.traitCollection)] forState:UIControlStateSelected];
+    self.cloudDriveLineView.backgroundColor = self.cloudDriveButton.selected ? [UIColor mnz_redForTraitCollection:self.traitCollection] : nil;
+    
+    self.recentsButton.titleLabel.font = self.recentsButton.selected ? [UIFont systemFontOfSize:15.0f weight:UIFontWeightMedium] : [UIFont systemFontOfSize:15.0f];
+    [self.recentsButton setTitleColor:[UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)] forState:UIControlStateNormal];
+    [self.recentsButton setTitleColor:[UIColor mnz_redForTraitCollection:(self.traitCollection)] forState:UIControlStateSelected];
+    self.recentsLineView.backgroundColor = self.recentsButton.selected ? [UIColor mnz_redForTraitCollection:self.traitCollection] : nil;
 }
 
 - (void)confirmDeleteActionFiles:(NSUInteger)numFilesAction andFolders:(NSUInteger)numFoldersAction {
@@ -1407,8 +1413,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     sender.selected = !sender.selected;
     self.cloudDriveButton.selected = !self.cloudDriveButton.selected;
     
-    self.recentsLineView.backgroundColor = UIColor.mnz_redMain;
-    self.cloudDriveLineView.backgroundColor = UIColor.mnz_grayCCCCCC;
+    [self updateSelector];
     
     if (self.cdTableView.tableView.isEditing || self.cdCollectionView.collectionView.allowsMultipleSelection) {
         [self setEditMode:NO];
@@ -1418,7 +1423,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
         self.searchController.active = NO;
     }
     
-    if (self.layoutView == LayoutModeList) {
+    if (self.viewModePreference == ViewModePreferenceList) {
         [self.cdTableView willMoveToParentViewController:nil];
         [self.cdTableView.view removeFromSuperview];
         [self.cdTableView removeFromParentViewController];
@@ -1451,15 +1456,14 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     self.recentsButton.selected = !self.recentsButton.selected;
     sender.selected = !sender.selected;
     
-    self.recentsLineView.backgroundColor = UIColor.mnz_grayCCCCCC;
-    self.cloudDriveLineView.backgroundColor = UIColor.mnz_redMain;
+    [self updateSelector];
     
     [self.recentsVC willMoveToParentViewController:nil];
     [self.recentsVC.view removeFromSuperview];
     [self.recentsVC removeFromParentViewController];
     self.recentsVC = nil;
     
-    [self determineLayoutView];
+    [self determineViewMode];
     
     [self setNavigationBarButtonItems];
 }
@@ -1543,15 +1547,17 @@ static const NSTimeInterval kSearchTimeDelay = .5;
         
         [weakSelf presentViewController:newFolderAlertController animated:YES completion:nil];
     }]];
-    NSString *title = self.layoutView == LayoutModeList ? AMLocalizedString(@"Thumbnail view", @"Text shown for switching from list view to thumbnail view.") : AMLocalizedString(@"List view", @"Text shown for switching from thumbnail view to list view.");
-    UIImage *image = self.layoutView == LayoutModeList ? [UIImage imageNamed:@"thumbnailsThin"] : [UIImage imageNamed:@"gridThin"];
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:title detail:nil image:image style:UIAlertActionStyleDefault actionHandler:^{
-        [weakSelf changeLayoutMode];
-    }]];
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"sortTitle", @"Section title of the 'Sort by'") detail:[NSString selectedSortTypeForKey:@"SortOrderType"] image:[UIImage imageNamed:@"sort"] style:UIAlertActionStyleDefault actionHandler:^{
+    if ([self numberOfRows]) {
+        NSString *title = (self.viewModePreference == ViewModePreferenceList) ? AMLocalizedString(@"Thumbnail view", @"Text shown for switching from list view to thumbnail view.") : AMLocalizedString(@"List view", @"Text shown for switching from thumbnail view to list view.");
+        UIImage *image = (self.viewModePreference == ViewModePreferenceList) ? [UIImage imageNamed:@"thumbnailsThin"] : [UIImage imageNamed:@"gridThin"];
+        [actions addObject:[ActionSheetAction.alloc initWithTitle:title detail:nil image:image style:UIAlertActionStyleDefault actionHandler:^{
+            [weakSelf changeViewModePreference];
+        }]];
+    }
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"sortTitle", @"Section title of the 'Sort by'") detail:[NSString localizedSortOrderType:[Helper sortTypeFor:self.parentNode]] image:[UIImage imageNamed:@"sort"] style:UIAlertActionStyleDefault actionHandler:^{
         [weakSelf presentSortByActionSheet];
     }]];
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"select", @"Button that allows you to select a given folder") detail:nil image:[UIImage imageNamed:@"selected"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"select", @"Button that allows you to select a given folder") detail:nil image:[UIImage imageNamed:@"select"] style:UIAlertActionStyleDefault actionHandler:^{
         BOOL enableEditing = weakSelf.cdTableView ? !weakSelf.cdTableView.tableView.isEditing : !weakSelf.cdCollectionView.collectionView.allowsMultipleSelection;
         [weakSelf setEditMode:enableEditing];
         
@@ -1573,18 +1579,18 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     
     NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
     if ([self numberOfRows]) {
-        NSString *title = self.layoutView == LayoutModeList ? AMLocalizedString(@"Thumbnail view", @"Text shown for switching from list view to thumbnail view.") : AMLocalizedString(@"List view", @"Text shown for switching from thumbnail view to list view.");
-        UIImage *image = self.layoutView == LayoutModeList ? [UIImage imageNamed:@"thumbnailsThin"] : [UIImage imageNamed:@"gridThin"];
+        NSString *title = (self.viewModePreference == ViewModePreferenceList) ? AMLocalizedString(@"Thumbnail view", @"Text shown for switching from list view to thumbnail view.") : AMLocalizedString(@"List view", @"Text shown for switching from thumbnail view to list view.");
+        UIImage *image = (self.viewModePreference == ViewModePreferenceList) ? [UIImage imageNamed:@"thumbnailsThin"] : [UIImage imageNamed:@"gridThin"];
         [actions addObject:[ActionSheetAction.alloc initWithTitle:title detail:nil image:image style:UIAlertActionStyleDefault actionHandler:^{
-            [weakSelf changeLayoutMode];
+            [weakSelf changeViewModePreference];
         }]];
     }
     
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"sortTitle", @"Section title of the 'Sort by'") detail:[NSString selectedSortTypeForKey:@"SortOrderType"] image:[UIImage imageNamed:@"sort"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"sortTitle", @"Section title of the 'Sort by'") detail:[NSString localizedSortOrderType:[Helper sortTypeFor:self.parentNode]] image:[UIImage imageNamed:@"sort"] style:UIAlertActionStyleDefault actionHandler:^{
         [weakSelf presentSortByActionSheet];
     }]];
     
-    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"select", @"Button that allows you to select a given folder") detail:nil image:[UIImage imageNamed:@"selected"] style:UIAlertActionStyleDefault actionHandler:^{
+    [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"select", @"Button that allows you to select a given folder") detail:nil image:[UIImage imageNamed:@"select"] style:UIAlertActionStyleDefault actionHandler:^{
         BOOL enableEditing = weakSelf.cdTableView ? !weakSelf.cdTableView.tableView.isEditing : !weakSelf.cdCollectionView.collectionView.allowsMultipleSelection;
         [weakSelf setEditMode:enableEditing];
     }]];
@@ -1777,7 +1783,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     self.searchNodesArray = nil;
     
     if (!MEGAReachabilityManager.isReachable) {
-        if (self.layoutView == LayoutModeList) {
+        if (self.viewModePreference == ViewModePreferenceList) {
             self.cdTableView.tableView.tableHeaderView = nil;
         } else {
             [self.cdCollectionView resetSearchBarPosition];
@@ -1786,13 +1792,13 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 }
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
-    if (self.layoutView == LayoutModeThumbnail) {
+    if (self.viewModePreference == ViewModePreferenceThumbnail) {
         self.cdCollectionView.collectionView.clipsToBounds = YES;
     }
 }
 
 - (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar {
-    if (self.layoutView == LayoutModeThumbnail) {
+    if (self.viewModePreference == ViewModePreferenceThumbnail) {
         self.cdCollectionView.collectionView.clipsToBounds = NO;
     }
 }
@@ -1875,7 +1881,8 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     if ([error type]) {
         if ([error type] == MEGAErrorTypeApiEAccess) {
             if (request.type == MEGARequestTypeUpload) {
-                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"permissionTitle", @"Error title shown when you are trying to do an action with a file or folder and you don't have the necessary permissions") message:AMLocalizedString(@"permissionMessage", @"Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions") preferredStyle:UIAlertControllerStyleActionSheet];
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"permissionTitle", @"Error title shown when you are trying to do an action with a file or folder and you don't have the necessary permissions") message:AMLocalizedString(@"permissionMessage", @"Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions") preferredStyle:UIAlertControllerStyleAlert];
+                [alertController addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", nil) style:UIAlertActionStyleCancel handler:nil]];
                 [self presentViewController:alertController animated:YES completion:nil];
             }
         }
@@ -1911,7 +1918,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     
     if (shouldProcessOnNodesUpdate) {
         if (self.nodes.size.unsignedIntegerValue == 0) {
-            self.shouldDetermineLayout = YES;
+            self.shouldDetermineViewMode = YES;
         }
         [self.nodesIndexPathMutableDictionary removeAllObjects];
         [self reloadUI];
@@ -1925,7 +1932,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
         return;
     }
     
-    if (transfer.type == MEGATransferTypeDownload && self.layoutView == LayoutModeList) {
+    if (transfer.type == MEGATransferTypeDownload && self.viewModePreference == ViewModePreferenceList) {
         NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
         [self.cdTableView reloadRowAtIndexPath:[self.nodesIndexPathMutableDictionary objectForKey:base64Handle]];
     }
@@ -1938,7 +1945,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
     
     NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
     
-    if (transfer.type == MEGATransferTypeDownload && [Helper.downloadingNodes objectForKey:base64Handle] && self.layoutView == LayoutModeList) {
+    if (transfer.type == MEGATransferTypeDownload && [Helper.downloadingNodes objectForKey:base64Handle] && self.viewModePreference == ViewModePreferenceList) {
         float percentage = ([[transfer transferredBytes] floatValue] / [[transfer totalBytes] floatValue] * 100);
         NSString *percentageCompleted = [NSString stringWithFormat:@"%.f%%", percentage];
         NSString *speed = [NSString stringWithFormat:@"%@/s", [Helper memoryStyleStringFromByteCount:transfer.speed.longLongValue]];
@@ -1969,7 +1976,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
         }
     }
     
-    if (transfer.type == MEGATransferTypeDownload && self.layoutView == LayoutModeList) {
+    if (transfer.type == MEGATransferTypeDownload && self.viewModePreference == ViewModePreferenceList) {
         NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
         [self.cdTableView reloadRowAtIndexPath:[self.nodesIndexPathMutableDictionary objectForKey:base64Handle]];
     }
@@ -1992,6 +1999,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
         [self presentViewController:({
             MEGANavigationController *nav = [MEGANavigationController.alloc initWithRootViewController:vc];
             [nav addLeftDismissButtonWithText:AMLocalizedString(@"cancel", nil)];
+            nav.modalPresentationStyle = UIModalPresentationFullScreen;
             nav;
         }) animated:YES completion:nil];
     }];
@@ -2067,7 +2075,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
         }
             
         case MegaNodeActionTypeMoveToRubbishBin:
-            [node mnz_moveToTheRubbishBinInViewController:self];
+            [node mnz_askToMoveToTheRubbishBinInViewController:self];
             break;
             
         case MegaNodeActionTypeRemove:

@@ -2,6 +2,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MEGAChatMessage.h"
+#import "MEGAIndexer.h"
 
 typedef NS_OPTIONS(NSUInteger, NodesAre) {
     NodesAreFiles    = 1 << 0,
@@ -52,6 +53,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Utils
 
++ (void)saveSortOrder:(MEGASortOrderType)selectedSortOrderType for:(_Nullable id)object;
++ (MEGASortOrderType)sortTypeFor:(_Nullable id)object;
++ (MEGASortOrderType)defaultSortType;
+
 + (NSString *)memoryStyleStringFromByteCount:(long long)byteCount;
 
 + (void)changeApiURL;
@@ -77,18 +82,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (UIActivityViewController *)activityViewControllerForChatMessages:(NSArray<MEGAChatMessage *> *)messages sender:(id)sender;
 + (UIActivityViewController *)activityViewControllerForNodes:(NSArray *)nodesArray sender:(id _Nullable)sender;
 
-#pragma mark - Utils for empty states
-
-+ (UIEdgeInsets)capInsetsForEmptyStateButton;
-+ (UIEdgeInsets)rectInsetsForEmptyStateButton;
-
-+ (CGFloat)verticalOffsetForEmptyStateWithNavigationBarSize:(CGSize)navigationBarSize searchBarActive:(BOOL)isSearchBarActive;
-+ (CGFloat)spaceHeightForEmptyState;
-+ (CGFloat)spaceHeightForEmptyStateWithDescription;
-
-+ (NSDictionary *)titleAttributesForEmptyState;
-+ (NSDictionary *)descriptionAttributesForEmptyState;
-+ (NSDictionary *)buttonTextAttributesForEmptyState;
++ (void)setIndexer:(MEGAIndexer* )megaIndexer;
 
 #pragma mark - Utils for UI
 

@@ -1,5 +1,8 @@
 
 #import "VideoUploadsQualityTableViewController.h"
+
+#import "MEGA-Swift.h"
+
 #import "SelectableTableViewCell.h"
 #import "CameraUploadManager+Settings.h"
 
@@ -27,6 +30,8 @@
     self.mediumLabel.text = AMLocalizedString(@"medium", nil);
     self.highLabel.text = AMLocalizedString(@"high", @"High");
     self.originalLabel.text = AMLocalizedString(@"original", @"Original");
+    
+    [self updateAppearance];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -37,7 +42,30 @@
     cell.redCheckmarkImageView.hidden = NO;
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateAppearance];
+        }
+    }
+}
+
+#pragma mark - Private
+
+- (void)updateAppearance {
+    self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+    self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
+    
+    [self.tableView reloadData];
+}
+
 #pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    cell.backgroundColor = [UIColor mnz_secondaryBackgroundGrouped:self.traitCollection];
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];

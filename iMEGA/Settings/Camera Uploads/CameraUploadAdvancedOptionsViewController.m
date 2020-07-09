@@ -1,7 +1,9 @@
 
 #import "CameraUploadAdvancedOptionsViewController.h"
+
 #import "CameraUploadManager+Settings.h"
 #import "CameraScanner.h"
+#import "MEGA-Swift.h"
 
 typedef NS_ENUM(NSUInteger, AdvancedOptionSection) {
     AdvancedOptionSectionLivePhoto,
@@ -32,6 +34,8 @@ typedef NS_ENUM(NSUInteger, AdvancedOptionSection) {
 
 @implementation CameraUploadAdvancedOptionsViewController
 
+#pragma mark - Lifecycle
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -47,6 +51,27 @@ typedef NS_ENUM(NSUInteger, AdvancedOptionSection) {
     self.uploadSharedAlbumsSwitch.on = CameraUploadManager.shouldUploadSharedAlbums;
     self.uploadSyncedAlbumsLabel.text = AMLocalizedString(@"Upload albums synced from iTunes", nil);
     self.uploadSyncedAlbumsSwitch.on = CameraUploadManager.shouldUploadSyncedAlbums;
+    
+    self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateAppearance];
+        }
+    }
+}
+
+#pragma mark - Private
+
+- (void)updateAppearance {
+    self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+    self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
+    
+    [self.tableView reloadData];
 }
 
 #pragma mark - UI Actions
@@ -120,6 +145,13 @@ typedef NS_ENUM(NSUInteger, AdvancedOptionSection) {
     }
     
     return title;
+}
+
+
+#pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    cell.backgroundColor = [UIColor mnz_secondaryBackgroundGrouped:self.traitCollection];
 }
 
 @end

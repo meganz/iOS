@@ -909,8 +909,6 @@
 "profile"="Profiel";
 /* Title of the Achievements section */
 "achievementsTitle"="Beloningen";
-/* Title of the Used storage section */
-"usedStorage"="Gebruikte opslag";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
 "inviteFriendsAndGetRewards"="Nodig vrienden uit en krijg bonussen";
 /* Indicating text for when "you invite your friends" */
@@ -918,7 +916,7 @@
 /* title of the introduction for the achievements screen */
 "inviteFriendsAndGetForEachReferral"="Krijg %1$s aan opslag en %2$s aan overdrachten voor elke verwijzing";
 /* Text shown to explain how and where you can invite friends */
-"inviteYourFriendsExplanation"="Selecteer contacten vanuit de contactlijst op uw telefoon of voer meerdere e-mailadressen in.";
+"Select from phone contacts or enter multiple email addresses"="Select from phone contacts or enter multiple email addresses";
 /*  */
 "insertYourFriendsEmails"="Plaats e-mail(s) van uw vriend:";
 /*  */
@@ -1009,12 +1007,6 @@
 "Renews on"="Vernieuwd op";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="Binnenkomende Mappen";
-/* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
-"of %@"="van %@";
-/* Sentence shown under the used space to complete the info with the user account maximum storage. "used of {maximun storage}" */
-"used of %@"="gebruikt van %@";
-/* Sentence shown under the available space to complete the info with the user account maximum storage. "available of {maximun storage}" */
-"available of %@"="beschikbaar van %@";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Upgrade account";
 /*  */
@@ -1023,8 +1015,8 @@
 "cloudDriveIsAlmostFull"="[S]Uw Cloud Schijf is bijna vol. [/S][A]Upgrade nu [/A] naar een PRO-account en krijg [S] tot %@TB (%@GB) [/S] cloud opslagruimte.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
 "cloudDriveIsFull"="[S]Uw Cloud Drive is vol. [/S][A]Upgrade nu [/A] naar een PRO-account en krijg [S] tot %@TB (%@GB) [/S] cloud opslagruimte.";
-/* Storage related with the MEGA PRO account level you can subscribe */
-"productSpace"="Opslag";
+/* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
+"Storage"="Opslag";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
 "limited"="Beperkt";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
@@ -1179,8 +1171,8 @@
 "contactCredentials"="Contact identiteit";
 /* "Verify user" dialog description */
 "thisIsBestDoneInRealLife"="Dit kan het beste gebeuren door elkaar in het echte leven, face to face te ontmoeten. Als u een andere al geverifieerde kanaal heeft, zoals geverifieerd OTR of PGP, dan kunt u deze ook gebruiken.";
-/* Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity */
-"yourCredentials"="Uw Identiteit";
+/* Title of the label in the my account section. It shows the credentials of the current user so it can be used to be verified by other contacts */
+"My credentials"="Mijn gegevens";
 /* Button to reset the password */
 "reset"="Reset";
 /* Button title */

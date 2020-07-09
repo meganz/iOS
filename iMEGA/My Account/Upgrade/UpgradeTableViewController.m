@@ -10,6 +10,7 @@
 
 #import "MEGAPurchase.h"
 #import "MEGASdkManager.h"
+#import "MEGA-Swift.h"
 #import "MEGAReachabilityManager.h"
 #import "ProductDetailViewController.h"
 #import "ProductTableViewCell.h"
@@ -22,17 +23,22 @@
 @property (weak, nonatomic) IBOutlet UIView *chooseFromOneOfThePlansPROHeaderView;
 @property (weak, nonatomic) IBOutlet UILabel *chooseFromOneOfThePlansLabel;
 @property (weak, nonatomic) IBOutlet UILabel *chooseFromOneOfThePlansProLabel;
+@property (weak, nonatomic) IBOutlet UIView *chooseFromOneOfThePlansBottomLineView;
+@property (weak, nonatomic) IBOutlet UIView *chooseFromOneOfThePlansPROBottomLineView;
 
-@property (weak, nonatomic) IBOutlet UIView *currentPlanView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *currentPlanViewHeightLayoutConstraint;
+@property (weak, nonatomic) IBOutlet UIView *currentPlanLabelView;
 @property (weak, nonatomic) IBOutlet UILabel *currentPlanLabel;
+@property (weak, nonatomic) IBOutlet UIView *currentPlanLabelLineView;
+
+@property (weak, nonatomic) IBOutlet UIView *currentPlanCellView;
 @property (weak, nonatomic) IBOutlet UIImageView *currentPlanImageView;
 @property (weak, nonatomic) IBOutlet UIView *currentPlanNameView;
 @property (weak, nonatomic) IBOutlet UILabel *currentPlanNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *currentPlanStorageLabel;
 @property (weak, nonatomic) IBOutlet UILabel *currentPlanBandwidthLabel;
-@property (weak, nonatomic) IBOutlet UIView *currentPlanLineView;
+@property (weak, nonatomic) IBOutlet UIView *currentPlanBottomLineCellView;
 
+@property (weak, nonatomic) IBOutlet UIView *footerTopLineView;
 @property (weak, nonatomic) IBOutlet UILabel *twoMonthsFreeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *autorenewableDescriptionLabel;
 
@@ -74,11 +80,6 @@
     self.chooseFromOneOfThePlansProLabel.text = AMLocalizedString(@"choosePlan", @"Header that help you with the upgrading process explaining that you have to choose one of the plans below to continue");
     
     self.currentPlanLabel.text = AMLocalizedString(@"currentPlan", @"Text shown on the upgrade account page above the current PRO plan subscription");
-
-    NSMutableAttributedString *asteriskMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:@"* " attributes: @{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:UIColor.mnz_redMain}];
-    NSAttributedString *twoMonthsFreeAttributedString = [[NSAttributedString alloc] initWithString:AMLocalizedString(@"twoMonthsFree", @"Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments") attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_black262626]}];
-    [asteriskMutableAttributedString appendAttributedString:twoMonthsFreeAttributedString];
-    self.twoMonthsFreeLabel.attributedText = asteriskMutableAttributedString;
     
     _autorenewableDescriptionLabel.text = AMLocalizedString(@"autorenewableDescription", @"Describe how works auto-renewable subscriptions on the Apple Store");
     
@@ -96,7 +97,7 @@
     
     [self initCurrentPlan];
     
-    [self setupToolbar];
+    [self updateAppearance];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -105,6 +106,14 @@
     self.navigationController.toolbarHidden = NO;
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    if ([MEGASdkManager.sharedMEGASdk mnz_isProAccount]) {
+        //This method is called here so the storage and transfer quota label of the current plan show the correct attributed string
+        [self setupCurrentPlanView];
+    }
+}
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
@@ -116,13 +125,69 @@
     return UIInterfaceOrientationMaskAll;
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self updateAppearance];
+            
+            [self.tableView reloadData];
+        }
+    }
+}
+
 #pragma mark - Private
+
+- (void)updateAppearance {
+    self.view.backgroundColor = self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
+    self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+    
+    self.chooseFromOneOfThePlansHeaderView.backgroundColor = self.chooseFromOneOfThePlansPROHeaderView.backgroundColor = [UIColor mnz_mainBarsForTraitCollection:self.traitCollection];
+    
+    [self setupCurrentPlanView];
+    
+    self.chooseFromOneOfThePlansLabel.textColor = self.chooseFromOneOfThePlansProLabel.textColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
+    
+    [self setupTableViewHeaderAndFooter];
+    
+    [self.requestAPlanButton mnz_setupPrimary:self.traitCollection];
+    
+    [self setupToolbar];
+}
+
+- (void)setupCurrentPlanView {
+    self.currentPlanLabel.textColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
+    self.currentPlanLabelLineView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+    
+    self.currentPlanNameLabel.textColor = UIColor.whiteColor;
+    NSNumber *userProLevelIndexNumber = [self.proLevelsIndexesMutableDictionary objectForKey:[NSNumber numberWithInteger:self.userProLevel]];
+    self.currentPlanStorageLabel.attributedText = [self storageAttributedStringForProLevelAtIndex:userProLevelIndexNumber.integerValue];
+    self.currentPlanBandwidthLabel.attributedText = [self bandwidthAttributedStringForProLevelAtIndex:userProLevelIndexNumber.integerValue];
+    self.currentPlanCellView.backgroundColor = [UIColor mnz_secondaryBackgroundGrouped:self.traitCollection];
+    self.currentPlanBottomLineCellView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+}
+
+- (void)setupTableViewHeaderAndFooter {
+    self.chooseFromOneOfThePlansBottomLineView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+    
+    self.chooseFromOneOfThePlansPROBottomLineView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+    
+    self.footerTopLineView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+    
+    self.twoMonthsFreeLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
+    NSMutableAttributedString *asteriskMutableAttributedString = [NSMutableAttributedString.alloc initWithString:@"* " attributes: @{NSFontAttributeName:[UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_redForTraitCollection:(self.traitCollection)]}];
+    NSAttributedString *twoMonthsFreeAttributedString = [NSAttributedString.alloc initWithString:AMLocalizedString(@"twoMonthsFree", @"Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments") attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection]}];
+    [asteriskMutableAttributedString appendAttributedString:twoMonthsFreeAttributedString];
+    self.twoMonthsFreeLabel.attributedText = asteriskMutableAttributedString;
+    self.autorenewableDescriptionLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
+}
 
 - (void)initCurrentPlan {
     self.userProLevel = [MEGASdkManager sharedMEGASdk].mnz_accountDetails.type;
     
     self.currentPlanImageView.image = [self imageForProLevel:self.userProLevel];
-    self.currentPlanNameView.backgroundColor = [self colorForProLevel:self.userProLevel];
+    self.currentPlanNameView.backgroundColor = [UIColor mnz_colorWithProLevel:self.userProLevel];
     self.currentPlanNameLabel.text = AMLocalizedString([MEGAAccountDetails stringForAccountType:self.userProLevel], nil);
     
     if ([[MEGASdkManager sharedMEGASdk] mnz_isProAccount]) {
@@ -137,7 +202,7 @@
                 [self.proLevelsMutableArray insertObject:[NSNumber numberWithInteger:MEGAAccountTypeFree] atIndex:0];
             }
             
-            self.currentPlanViewHeightLayoutConstraint.constant = 0;
+            self.currentPlanLabelView.hidden = self.currentPlanCellView.hidden = YES;
             break;
             
         case MEGAAccountTypeLite:
@@ -155,8 +220,7 @@
         case MEGAAccountTypeProIII: {
             self.proLevelsMutableArray = nil;
             
-            self.currentPlanLineView.hidden = NO;
-            
+            self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
             self.tableView.tableHeaderView = nil;
             self.tableView.tableFooterView = nil;
             
@@ -175,10 +239,6 @@
         default:
             break;
     }
-    
-    NSNumber *userProLevelIndexNumber = [self.proLevelsIndexesMutableDictionary objectForKey:[NSNumber numberWithInteger:self.userProLevel]];
-    self.currentPlanStorageLabel.attributedText = [self storageAttributedStringForProLevelAtIndex:userProLevelIndexNumber.integerValue];
-    self.currentPlanBandwidthLabel.attributedText = [self bandwidthAttributedStringForProLevelAtIndex:userProLevelIndexNumber.integerValue];
 }
 
 - (void)getIndexPositionsForProLevels {
@@ -241,75 +301,45 @@
     return proLevelImage;
 }
 
-- (UIColor *)colorForProLevel:(MEGAAccountType)proLevel {
-    UIColor *proLevelColor;
-    switch (proLevel) {
-        case MEGAAccountTypeFree:
-            proLevelColor = [UIColor mnz_green31B500];
-            break;
-            
-        case MEGAAccountTypeLite:
-            proLevelColor = [UIColor mnz_orangeFFA500];
-            break;
-            
-        case MEGAAccountTypeProI:
-            proLevelColor = UIColor.mnz_redProI;
-            break;
-            
-        case MEGAAccountTypeProII:
-            proLevelColor = UIColor.mnz_redProII;
-            break;
-            
-        case MEGAAccountTypeProIII:
-            proLevelColor = UIColor.mnz_redProIII;
-            break;
-            
-        default:
-            break;
-    }
-    
-    return proLevelColor;
-}
-
 - (NSAttributedString *)storageAttributedStringForProLevelAtIndex:(NSInteger)index {
-    NSMutableAttributedString *storageString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@", AMLocalizedString(@"productSpace", @"Storage related with the MEGA PRO account level you can subscribe")] attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_gray666666]}];
+    NSMutableAttributedString *storageString = [NSMutableAttributedString.alloc initWithString:[NSString stringWithFormat:@" %@", AMLocalizedString(@"Storage", @"Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible).")] attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
     
     SKProduct *product = [[MEGAPurchase sharedInstance].products objectAtIndex:index];
     NSString *storageFormattedString = [self storageAndUnitsByProduct:product];
-    NSMutableAttributedString *storageMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:storageFormattedString attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
+    NSMutableAttributedString *storageMutableAttributedString = [NSMutableAttributedString.alloc initWithString:storageFormattedString attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName:UIColor.mnz_label}];
     [storageMutableAttributedString appendAttributedString:storageString];
     
     return storageMutableAttributedString;
 }
 
 - (NSAttributedString *)bandwidthAttributedStringForProLevelAtIndex:(NSInteger)index {
-    NSMutableAttributedString *bandwidthString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@", AMLocalizedString(@"Transfer Quota", @"Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'.")] attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_gray666666]}];
+    NSMutableAttributedString *bandwidthString = [NSMutableAttributedString.alloc initWithString:[NSString stringWithFormat:@" %@", AMLocalizedString(@"Transfer Quota", @"Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'.")] attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
     
     SKProduct *product = [[MEGAPurchase sharedInstance].products objectAtIndex:index];
     NSString *bandwidthFormattedString = [self transferAndUnitsByProduct:product];
-    NSMutableAttributedString *bandwidthMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:bandwidthFormattedString attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
+    NSMutableAttributedString *bandwidthMutableAttributedString = [NSMutableAttributedString.alloc initWithString:bandwidthFormattedString attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName:UIColor.mnz_label}];
     [bandwidthMutableAttributedString appendAttributedString:bandwidthString];
     
     return bandwidthMutableAttributedString;
 }
 
 - (NSAttributedString *)freeStorageAttributedString {
-    NSMutableAttributedString *storageString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@", AMLocalizedString(@"productSpace", @"Storage related with the MEGA PRO account level you can subscribe")] attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_gray666666]}];
+    NSMutableAttributedString *storageString = [NSMutableAttributedString.alloc initWithString:[NSString stringWithFormat:@" %@", AMLocalizedString(@"Storage", @"Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible).")] attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
     
-    NSMutableAttributedString *storageMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:@"50 GB" attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
+    NSMutableAttributedString *storageMutableAttributedString = [NSMutableAttributedString.alloc initWithString:@"50 GB" attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName:UIColor.mnz_label}];
     [storageMutableAttributedString appendAttributedString:storageString];
     
-    NSAttributedString *superscriptOneAttributedString = [[NSAttributedString alloc] initWithString:@" ¹" attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:UIColor.mnz_redMain}];
+    NSAttributedString *superscriptOneAttributedString = [NSAttributedString.alloc initWithString:@" ¹" attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_redForTraitCollection:(self.traitCollection)]}];
     [storageMutableAttributedString appendAttributedString:superscriptOneAttributedString];
     
     return storageMutableAttributedString;
 }
 
 - (NSAttributedString *)freeTransferQuotaAttributedString {
-    NSMutableAttributedString *transferQuotaString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@", AMLocalizedString(@"Transfer Quota", @"Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'.")] attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_gray666666]}];
+    NSMutableAttributedString *transferQuotaString = [NSMutableAttributedString.alloc initWithString:[NSString stringWithFormat:@" %@", AMLocalizedString(@"Transfer Quota", @"Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'.")] attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
     
     NSString *limitedTransferQuotaString = [AMLocalizedString(@"limited", @" Label for any 'Limited' button, link, text, title, etc. - (String as short as possible).") uppercaseString];
-    NSMutableAttributedString *transferQuotaMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:limitedTransferQuotaString attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_black333333]}];
+    NSMutableAttributedString *transferQuotaMutableAttributedString = [NSMutableAttributedString.alloc initWithString:limitedTransferQuotaString attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName:UIColor.mnz_label}];
     [transferQuotaMutableAttributedString appendAttributedString:transferQuotaString];
     
     return transferQuotaMutableAttributedString;
@@ -319,12 +349,12 @@
     self.navigationController.toolbarHidden = NO;
     
     UIBarButtonItem *termsOfServiceBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"termsOfServicesLabel", @"Title of one of the Settings sections where you can see the MEGA's 'Terms of Service'") style:UIBarButtonItemStylePlain target:self action:@selector(showTermsOfService)];
-    [termsOfServiceBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:UIColor.mnz_redMain} forState:UIControlStateNormal];
+    [termsOfServiceBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)]} forState:UIControlStateNormal];
 
     UIBarButtonItem *flexibleBarButtomItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
     UIBarButtonItem *privacyPolicyBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:AMLocalizedString(@"privacyPolicyLabel", @"Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy'") style:UIBarButtonItemStylePlain target:self action:@selector(showPrivacyPolicy)];
-    [privacyPolicyBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:17.0f], NSForegroundColorAttributeName:UIColor.mnz_redMain} forState:UIControlStateNormal];
+    [privacyPolicyBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17.0f], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)]} forState:UIControlStateNormal];
     
     [self setToolbarItems:@[termsOfServiceBarButtonItem, flexibleBarButtomItem, privacyPolicyBarButtonItem]];
 }
@@ -394,9 +424,9 @@
     ProductTableViewCell *cell;
     if (self.isChoosingTheAccountType && indexPath.row == 0) {
         cell = [tableView dequeueReusableCellWithIdentifier:@"freeProductCell" forIndexPath:indexPath];
-        NSMutableAttributedString *superscriptOneAttributedString = [[NSMutableAttributedString alloc] initWithString:@"¹ " attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:UIColor.mnz_redMain}];
+        NSMutableAttributedString *superscriptOneAttributedString = [NSMutableAttributedString.alloc initWithString:@"¹ " attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_redForTraitCollection:(self.traitCollection)]}];
         
-        NSAttributedString *subjectToYourParticipationAttributedString = [[NSAttributedString alloc] initWithString:AMLocalizedString(@"subjectToYourParticipationInOurAchievementsProgram", @"") attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_black262626]}];
+        NSAttributedString *subjectToYourParticipationAttributedString = [NSAttributedString.alloc initWithString:AMLocalizedString(@"subjectToYourParticipationInOurAchievementsProgram", @"") attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
         [superscriptOneAttributedString appendAttributedString:subjectToYourParticipationAttributedString];
         
         cell.subjectToYourParticipationLabel.attributedText = superscriptOneAttributedString;
@@ -407,16 +437,8 @@
     NSNumber *proLevelNumber = [self.proLevelsMutableArray objectAtIndex:indexPath.row];
     cell.productImageView.image = [self imageForProLevel:proLevelNumber.integerValue];
     cell.productNameLabel.text = AMLocalizedString([MEGAAccountDetails stringForAccountType:proLevelNumber.integerValue], nil);
-    cell.productNameView.backgroundColor = [self colorForProLevel:proLevelNumber.integerValue];
-    cell.productPriceLabel.textColor = [self colorForProLevel:proLevelNumber.integerValue];
-    
-    if ((indexPath.row == 0) && ![[MEGASdkManager sharedMEGASdk] mnz_isProAccount]) {
-        cell.upperLineView.hidden = YES;
-    }
-    
-    if (indexPath.row == (self.proLevelsMutableArray.count - 1)) {
-        cell.underLineView.hidden = NO;
-    }
+    cell.productNameView.backgroundColor = [UIColor mnz_colorWithProLevel:proLevelNumber.integerValue];
+    cell.productPriceLabel.textColor = [UIColor mnz_colorForPriceLabelWithProLevel:proLevelNumber.integerValue traitCollection:self.traitCollection];
     
     NSNumber *proLevelIndexNumber = [self.proLevelsIndexesMutableDictionary objectForKey:proLevelNumber];
     cell.productStorageLabel.attributedText = (self.isChoosingTheAccountType && indexPath.row == 0) ? [self freeStorageAttributedString] : [self storageAttributedStringForProLevelAtIndex:proLevelIndexNumber.integerValue];
@@ -425,12 +447,10 @@
     SKProduct *product = [[MEGAPurchase sharedInstance].products objectAtIndex:proLevelIndexNumber.integerValue];
     
     NSString *productPriceString = [NSString stringWithFormat:AMLocalizedString(@"productPricePerMonth", @"Price asociated with the MEGA PRO account level you can subscribe"), [self.numberFormatter stringFromNumber:product.price]];
-    NSAttributedString *asteriskAttributedString = [[NSAttributedString alloc] initWithString:@" *" attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:UIColor.mnz_redMain}];
-    NSMutableAttributedString *productPriceMutableAttributedString = [[NSMutableAttributedString alloc] initWithString:productPriceString attributes:@{NSFontAttributeName:[UIFont mnz_SFUIRegularWithSize:12.0f], NSForegroundColorAttributeName:[self colorForProLevel:proLevelNumber.integerValue]}];
+    NSAttributedString *asteriskAttributedString = [NSAttributedString.alloc initWithString:@" *" attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName:[UIColor mnz_redForTraitCollection:(self.traitCollection)]}];
+    NSMutableAttributedString *productPriceMutableAttributedString = [NSMutableAttributedString.alloc initWithString:productPriceString attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:12.0f], NSForegroundColorAttributeName : [UIColor mnz_colorWithProLevel:proLevelNumber.integerValue]}];
     [productPriceMutableAttributedString appendAttributedString:asteriskAttributedString];
     cell.productPriceLabel.attributedText = productPriceMutableAttributedString;
-    
-    cell.disclosureIndicatorImageView.image = cell.disclosureIndicatorImageView.image.imageFlippedForRightToLeftLayoutDirection;
     
     return cell;
 }
@@ -438,7 +458,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     CGFloat heightForRow;
     if (self.isChoosingTheAccountType && indexPath.row == 0) {
-        heightForRow = 104.0f;
+        heightForRow = 118.0f;
     } else {
         heightForRow = 86.0f;
     }
@@ -454,7 +474,7 @@
         return;
     }
     
-    ProductDetailViewController *productDetailVC = [self.storyboard instantiateViewControllerWithIdentifier:@"productDetailID"];
+    ProductDetailViewController *productDetailVC = [self.storyboard instantiateViewControllerWithIdentifier:@"ProductDetailViewControllerID"];
     NSNumber *proPlanNumber = [self.proLevelsMutableArray objectAtIndex:indexPath.row];
     productDetailVC.chooseAccountType = self.isChoosingTheAccountType;
     productDetailVC.megaAccountType = proPlanNumber.integerValue;

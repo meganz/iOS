@@ -7,7 +7,6 @@
 #import "NSString+MNZCategory.h"
 
 #import "UIImage+GKContact.h"
-#import "UIColor+MNZCategory.h"
 
 @implementation UIImage (MNZCategory)
 
@@ -95,7 +94,7 @@
         } else {
             initialForAvatar = name.mnz_initialForAvatar;
         }
-        image = [UIImage imageForName:initialForAvatar size:size backgroundColor:[UIColor colorFromHexString:colorString] textColor:[UIColor whiteColor] font:[UIFont mnz_SFUIRegularWithSize:(size.width/2.0f)]];
+        image = [UIImage imageForName:initialForAvatar size:size backgroundColor:[UIColor mnz_fromHexString:colorString] textColor:UIColor.whiteColor font:[UIFont systemFontOfSize:(size.width/2.0f)]];
         
         [[MEGASdkManager sharedMEGASdk] getAvatarUserWithEmailOrHandle:base64Handle destinationFilePath:avatarFilePath delegate:delegate];
     }
@@ -115,7 +114,7 @@
 
 #pragma mark - QR generation
 
-+ (UIImage *)mnz_qrImageFromString:(NSString *)qrString withSize:(CGSize)size color:(UIColor *)color {
++ (UIImage *)mnz_qrImageFromString:(NSString *)qrString withSize:(CGSize)size color:(UIColor *)qrColor backgroundColor:(UIColor *)backgroundColor {
     NSData *qrData = [qrString dataUsingEncoding:NSISOLatin1StringEncoding];
     NSString *qrCorrectionLevel = @"H";
     
@@ -125,8 +124,8 @@
     
     CIFilter *colorFilter = [CIFilter filterWithName:@"CIFalseColor"];
     [colorFilter setValue:qrFilter.outputImage forKey:@"inputImage"];
-    [colorFilter setValue:[CIColor colorWithCGColor:color.CGColor] forKey:@"inputColor0"];
-    [colorFilter setValue:[CIColor colorWithRed:1.0f green:1.0f blue:1.0f] forKey:@"inputColor1"];
+    [colorFilter setValue:[CIColor colorWithCGColor:qrColor.CGColor] forKey:@"inputColor0"];
+    [colorFilter setValue:[CIColor colorWithCGColor:backgroundColor.CGColor] forKey:@"inputColor1"];
     
     CIImage *ciImage = colorFilter.outputImage;
     float scaleX = size.width / ciImage.extent.size.width;
@@ -237,6 +236,15 @@
     static UIImage *folderCameraUploadsImage = nil;
     if (folderCameraUploadsImage == nil) {
         folderCameraUploadsImage = [UIImage imageNamed:@"folder_image"];
+    }
+    
+    return folderCameraUploadsImage;
+}
+
++ (UIImage *)mnz_folderMyChatFilesImage {
+    static UIImage *folderCameraUploadsImage = nil;
+    if (folderCameraUploadsImage == nil) {
+        folderCameraUploadsImage = [UIImage imageNamed:@"folder_chat"];
     }
     
     return folderCameraUploadsImage;

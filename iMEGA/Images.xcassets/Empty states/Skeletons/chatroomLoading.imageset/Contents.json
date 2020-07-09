@@ -1,107 +1,176 @@
 {
   "images" : [
     {
-      "resizing" : {
-        "mode" : "3-part-horizontal",
-        "center" : {
-          "mode" : "tile",
-          "width" : 1
-        },
-        "cap-insets" : {
-          "right" : 202,
-          "left" : 107
-        }
-      },
-      "idiom" : "universal",
       "filename" : "chatroomLoadingIPX, portrait.png",
-      "scale" : "1x"
-    },
-    {
+      "idiom" : "universal",
       "resizing" : {
-        "mode" : "3-part-horizontal",
+        "cap-insets" : {
+          "left" : 107,
+          "right" : 202
+        },
         "center" : {
           "mode" : "tile",
           "width" : 1
         },
-        "cap-insets" : {
-          "right" : 397,
-          "left" : 216
-        }
+        "mode" : "3-part-horizontal"
       },
+      "scale" : "1x"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "chatroomLoadingIPX, portraitDark.png",
       "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
       "filename" : "chatroomLoadingIPX, portrait@2x.png",
-      "scale" : "2x"
-    },
-    {
+      "idiom" : "universal",
       "resizing" : {
-        "mode" : "3-part-horizontal",
+        "cap-insets" : {
+          "left" : 216,
+          "right" : 397
+        },
         "center" : {
           "mode" : "tile",
           "width" : 1
         },
-        "cap-insets" : {
-          "right" : 602,
-          "left" : 319
-        }
+        "mode" : "3-part-horizontal"
       },
+      "scale" : "2x"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "chatroomLoadingIPX, portraitDark@2x.png",
       "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
       "filename" : "chatroomLoadingIPX, portrait@3x.png",
-      "scale" : "3x"
-    },
-    {
+      "idiom" : "universal",
       "resizing" : {
-        "mode" : "3-part-horizontal",
+        "cap-insets" : {
+          "left" : 319,
+          "right" : 602
+        },
         "center" : {
           "mode" : "tile",
           "width" : 1
         },
-        "cap-insets" : {
-          "right" : 271,
-          "left" : 295
-        }
+        "mode" : "3-part-horizontal"
       },
+      "scale" : "3x"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "chatroomLoadingIPX, portraitDark@3x.png",
       "idiom" : "universal",
+      "scale" : "3x"
+    },
+    {
       "filename" : "chatroomLoadingiPadPro, landscape.png",
-      "width-class" : "regular",
-      "scale" : "1x"
-    },
-    {
+      "idiom" : "universal",
       "resizing" : {
-        "mode" : "3-part-horizontal",
+        "cap-insets" : {
+          "left" : 295,
+          "right" : 271
+        },
         "center" : {
           "mode" : "tile",
           "width" : 1
         },
-        "cap-insets" : {
-          "right" : 542,
-          "left" : 590
-        }
+        "mode" : "3-part-horizontal"
       },
+      "scale" : "1x",
+      "width-class" : "regular"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "chatroomLoadingiPadPro, landscape Dark.png",
       "idiom" : "universal",
+      "scale" : "1x",
+      "width-class" : "regular"
+    },
+    {
       "filename" : "chatroomLoadingiPadPro, landscape@2x.png",
-      "width-class" : "regular",
-      "scale" : "2x"
-    },
-    {
+      "idiom" : "universal",
       "resizing" : {
-        "mode" : "3-part-horizontal",
+        "cap-insets" : {
+          "left" : 590,
+          "right" : 542
+        },
         "center" : {
           "mode" : "tile",
           "width" : 1
         },
-        "cap-insets" : {
-          "right" : 542,
-          "left" : 590
-        }
+        "mode" : "3-part-horizontal"
       },
+      "scale" : "2x",
+      "width-class" : "regular"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "chatroomLoadingiPadPro, landscape Dark@2x.png",
       "idiom" : "universal",
+      "scale" : "2x",
+      "width-class" : "regular"
+    },
+    {
       "filename" : "chatroomLoadingiPadPro, landscape@2x-1.png",
-      "width-class" : "regular",
-      "scale" : "3x"
+      "idiom" : "universal",
+      "resizing" : {
+        "cap-insets" : {
+          "left" : 590,
+          "right" : 542
+        },
+        "center" : {
+          "mode" : "tile",
+          "width" : 1
+        },
+        "mode" : "3-part-horizontal"
+      },
+      "scale" : "3x",
+      "width-class" : "regular"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "chatroomLoadingiPadPro, landscape Dark@3x.png",
+      "idiom" : "universal",
+      "scale" : "3x",
+      "width-class" : "regular"
     }
   ],
   "info" : {
-    "version" : 1,
-    "author" : "xcode"
+    "author" : "xcode",
+    "version" : 1
   }
 }

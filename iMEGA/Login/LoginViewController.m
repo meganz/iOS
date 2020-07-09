@@ -7,6 +7,7 @@
 #import "MEGALoginRequestDelegate.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
+#import "MEGA-Swift.h"
 #import "NSURL+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 
@@ -32,6 +33,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
 
 @property (weak, nonatomic) IBOutlet UIButton *forgotPasswordButton;
+@property (weak, nonatomic) IBOutlet UIImageView *forgotPasswordImageView;
 
 @property (strong, nonatomic) UITapGestureRecognizer *tapGesture;
 
@@ -43,6 +45,8 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self updateAppearance];
     
     self.tapGesture = [UITapGestureRecognizer.alloc initWithTarget:self action:@selector(hideKeyboard)];
     self.tapGesture.cancelsTouchesInView = NO;
@@ -107,6 +111,19 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     }
     
     return UIInterfaceOrientationMaskAll;
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [AppearanceManager setupAppearance:self.traitCollection];
+            [AppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar traitCollection:self.traitCollection];
+            
+            [self updateAppearance];
+        }
+    }
 }
 
 #pragma mark - IBActions
@@ -245,6 +262,20 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 
 - (void)hideKeyboard {
     [self.view endEditing:YES];
+}
+
+- (void)updateAppearance {
+    self.view.backgroundColor = [UIColor mnz_backgroundGroupedElevated:self.traitCollection];
+    
+    self.emailInputView.backgroundColor = [UIColor mnz_secondaryBackgroundGroupedElevated:self.traitCollection];
+    [self.emailInputView updateAppearance];
+    self.passwordView.backgroundColor = [UIColor mnz_secondaryBackgroundGroupedElevated:self.traitCollection];
+    [self.passwordView updateAppearance];
+    
+    [self.forgotPasswordButton setTitleColor:[UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection] forState:UIControlStateNormal];
+    self.forgotPasswordImageView.tintColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
+    
+    [self.loginButton mnz_setupPrimary:self.traitCollection];
 }
 
 #pragma mark - UIGestureRecognizerDelegate

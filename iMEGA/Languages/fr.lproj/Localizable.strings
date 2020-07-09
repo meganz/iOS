@@ -229,7 +229,7 @@
 /* Success message shown when you remove a contact request */
 "requestDeleted"="La demande a été supprimée";
 /* Title shown when there's no pending contact requests */
-"noRequestPending"="Il n’y a aucune requête en attente";
+"noRequestPending"="Il n’y a aucune demande en attente";
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="Transferts en pause";
 /* Title shown when the there is not any transfer and they are not paused */
@@ -909,8 +909,6 @@
 "profile"="Profil";
 /* Title of the Achievements section */
 "achievementsTitle"="Objectifs";
-/* Title of the Used storage section */
-"usedStorage"="Espace de stockage utilisé";
 /* Subtitle show on My Account view under the 'Achievements' title to give more details of the section that will appear if tapped 2/2 */
 "inviteFriendsAndGetRewards"="Invitez des amis et obtenez des primes";
 /* Indicating text for when "you invite your friends" */
@@ -918,7 +916,7 @@
 /* title of the introduction for the achievements screen */
 "inviteFriendsAndGetForEachReferral"="Obtenez %1$s d’espace de stockage et %2$s de transferts pour chaque parrainage";
 /* Text shown to explain how and where you can invite friends */
-"inviteYourFriendsExplanation"="Choisissez des contacts de la liste de contacts de votre téléphone ou saisissez plusieurs adresses courriel.";
+"Select from phone contacts or enter multiple email addresses"="Select from phone contacts or enter multiple email addresses";
 /*  */
 "insertYourFriendsEmails"="Saisissez les adresses courriel de votre ami :";
 /*  */
@@ -1009,12 +1007,6 @@
 "Renews on"="Se renouvelle le";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
 "incomingShares"="Partages entrants";
-/* Sentence shown under the used space percentage to complete the info with the user account maximum storage. "of {maximun storage}" */
-"of %@"="sur %@";
-/* Sentence shown under the used space to complete the info with the user account maximum storage. "used of {maximun storage}" */
-"used of %@"="utilisés sur %@";
-/* Sentence shown under the available space to complete the info with the user account maximum storage. "available of {maximun storage}" */
-"available of %@"="disponibles sur %@";
 /* Button title which triggers the action to upgrade your MEGA account level */
 "upgradeAccount"="Surclasser le compte";
 /*  */
@@ -1023,8 +1015,8 @@
 "cloudDriveIsAlmostFull"="[S]Votre disque nuagique est presque plein.[/S] [A]Surclassez votre compte maintenant[/A] vers un compte PRO et obtenez [S]jusqu’à %@ To (%@ Go)[/S] d’espace de stockage nuagique.";
 /* A message informing the user that they've reached the full capacity of their accounts. Please leave [S], [/S] as it is which is used to bolden the text. */
 "cloudDriveIsFull"="[S]Votre disque nuagique est plein.[/S] [A]Surclassez votre compte maintenant[/A] vers un compte PRO et obtenez [S]jusqu’à %@ To (%@ Go)[/S] d’espace de stockage nuagique.";
-/* Storage related with the MEGA PRO account level you can subscribe */
-"productSpace"="Espace de stockage";
+/* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
+"Storage"="Espace de stockage";
 /* Label for any 'Limited' button, link, text, title, etc. - (String as short as possible). */
 "limited"="Limité";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
@@ -1162,7 +1154,7 @@
 /* Title to perform the action of sending a message to a contact. */
 "sendMessage"="Envoyer un message";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
-"verifyCredentials"=" Confirmer les coordonnées";
+"verifyCredentials"=" Confirmer le numéro d’identification";
 /* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
 "verify"="Confirmer";
 /* Button title */
@@ -1176,11 +1168,11 @@
 /* Title of the incoming shared folders of a user. */
 "sharedFolders"="Dossiers partagés";
 /* Label title above the fingerprint credentials of a user's contact. A credential in this case is a stored piece of information representing the identity of the contact */
-"contactCredentials"="Coordonnées du contact";
+"contactCredentials"="Numéro d’identification du contact";
 /* "Verify user" dialog description */
 "thisIsBestDoneInRealLife"="La meilleure façon de le faire est de se rencontrer physiquement. Si vous avez un autre moyen de communication vérifiée, tel qu'OTR ou PGP, vous pouvez aussi l'utiliser.";
-/* Label title above your fingerprint credentials.  A credential in this case is a stored piece of information representing your identity */
-"yourCredentials"="Vos coordonnées";
+/* Title of the label in the my account section. It shows the credentials of the current user so it can be used to be verified by other contacts */
+"My credentials"="Mon numéro d’identification";
 /* Button to reset the password */
 "reset"="Réinitialiser";
 /* Button title */
@@ -1555,7 +1547,7 @@
 /* Title to preview document */
 "previewContent"="Aperçu du contenu";
 /* Title of the notification for a missed call */
-"missedCall"="Appel manqué";
+"missedCall"="Un appel a été manqué";
 /* When an outgoing call of user A with user B had been rejected by user B */
 "callWasRejected"="L’appel a été refusé";
 /* When an active call of user A with user B had cancelled */
@@ -2207,7 +2199,7 @@
 /* Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible). */
 "Minimal"="Minimale";
 /* Section title inside of Settings - Appearance, where you can change the app's layout. */
-"Layout"="Agencement";
+"Layout"="Disposition";
 /* Section title inside of Settings - Appearance, where you can change the app's icon. */
 "App Icon"="Icône de l’appli";
 /* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
@@ -2221,7 +2213,7 @@
 /* Section title of the 'Sorting And View Mode' view inside of Settings - Appearence - Sorting And View Mode. */
 "View mode preference"="Préférence du mode d’affichage";
 /* Footer text explaining what means choosing a sorting preference 'Per Folder' or 'Same for All' in Settings - Appearance - Sorting And View Mode. */
-"Configure column sorting order on a per-folder basis, or use the same order for all folders."="Configurer l’ordre de tri des colonnes par dossier ou utiliser le même ordre pour tous les dossiers.";
+"Configure column sorting order on a per-folder basis, or use the same order for all folders."="Configurez l’ordre de tri des colonnes par dossier ou utiliser le même ordre pour tous les dossiers.";
 /* Footer text explaining what means choosing a view mode preference 'Per Folder', 'List view' or 'Thumbnail view' in Settings - Appearance - Sorting And View Mode. */
 "Select view mode (List or Thumbnail) on a per-folder basis, or use the same view mode for all folders."="Sélectionnez le mode d’affichage (en liste ou en imagettes) pour chaque dossier ou utilisez le même mode d’affichage pour tous les dossiers.";
 /* Warning message to alert user about logout in My Account section if has transfers in progress. */

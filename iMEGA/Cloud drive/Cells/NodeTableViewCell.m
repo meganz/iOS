@@ -86,12 +86,14 @@
         
     if (node.isTakenDown) {
         self.nameLabel.attributedText = [node mnz_attributedTakenDownNameWithHeight:self.nameLabel.font.capHeight];
-        self.nameLabel.textColor = UIColor.mnz_redMain;
+        self.nameLabel.textColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
     } else {
         self.nameLabel.text = node.name;
-        self.nameLabel.textColor = UIColor.mnz_black333333;
+        self.nameLabel.textColor = UIColor.mnz_label;
+        self.subtitleLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
     }
     
+    self.infoLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
     if (node.isFile) {
         MEGASdk *megaSDK = self.recentActionBucket ? MEGASdkManager.sharedMEGASdk : api;
         NSString *nodeDisplayDateTime;
@@ -121,6 +123,8 @@
     } else {
         self.delegate = delegate;
     }
+    
+    self.separatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
 }
 
 - (void)configureForRecentAction:(MEGARecentActionBucket *)recentActionBucket {
@@ -180,6 +184,8 @@
     self.uploadOrVersionImageView.image = recentActionBucket.isUpdate ? [UIImage imageNamed:@"versioned"] : [UIImage imageNamed:@"recentUpload"];
     
     self.timeLabel.text = recentActionBucket.timestamp.mnz_formattedHourAndMinutes;
+    
+    self.subtitleLabel.textColor = self.infoLabel.textColor = self.timeLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
 }
 
 #pragma mark - IBActions
