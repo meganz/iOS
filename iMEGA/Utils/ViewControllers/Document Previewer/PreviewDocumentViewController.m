@@ -31,6 +31,7 @@
     MEGATransfer *previewDocumentTransfer;
 }
 
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *closeBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (weak, nonatomic) IBOutlet UIProgressView *progressView;
@@ -61,6 +62,8 @@
     
     [self configureNavigation];
     [self updateAppearance];
+    
+    self.closeBarButtonItem.title = AMLocalizedString(@"close", @"A button label.");
     
     self.moreBarButtonItem.accessibilityLabel = AMLocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
 }
@@ -135,6 +138,8 @@
 - (void)configureNavigation {
     [self setTitle:self.node.name];
     
+    self.navigationItem.rightBarButtonItem = nil;
+
     if (self.node) {
         [self.imageView mnz_imageForNode:self.node];
     } else {
@@ -269,7 +274,7 @@
 }
 
 - (IBAction)actionsTapped:(UIBarButtonItem *)sender {
-    if (!self.isLink) {
+    if ([MEGASdkManager.sharedMEGASdk accessLevelForNode:self.node] != MEGAShareTypeAccessUnknown) {
         self.node = [MEGASdkManager.sharedMEGASdk nodeForHandle:self.node.handle];
     }
     
