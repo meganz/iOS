@@ -222,7 +222,7 @@ class ChatViewController: MessagesViewController {
         }
         audioController.stopAnyOngoingPlaying()
     }
-    
+
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         
@@ -441,7 +441,10 @@ class ChatViewController: MessagesViewController {
 
         switch message.kind {
         case .custom:
-            let megaMessage = (message as! ChatMessage).message
+            guard let chatMessage = message as? ChatMessage else {
+                return false
+            }
+            let megaMessage = chatMessage.message
             if megaMessage.isManagementMessage {
                 return false
             }
@@ -463,7 +466,7 @@ class ChatViewController: MessagesViewController {
     }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        hideJumpToBottom()
+        hideJumpToBottomIfRequired()
     }
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
@@ -724,7 +727,7 @@ class ChatViewController: MessagesViewController {
     private func configureMenus() {
         let forwardMenuItem = UIMenuItem(title:AMLocalizedString("forward","Item of a menu to forward a message chat to another chatroom"), action: #selector(MessageCollectionViewCell.forward(_:)))
         
-        let importMenuItem = UIMenuItem(title:AMLocalizedString("import","Caption of a button to edit the files that are selected"), action: #selector(MessageCollectionViewCell.importMessage(_:)))
+        let importMenuItem = UIMenuItem(title:AMLocalizedString("Import to Cloud Drive","Caption of a button to edit the files that are selected"), action: #selector(MessageCollectionViewCell.importMessage(_:)))
         
         let editMenuItem = UIMenuItem(title:AMLocalizedString("edit","Caption of a button to edit the files that are selected"), action: #selector(MessageCollectionViewCell.edit(_:)))
 
@@ -796,14 +799,20 @@ class ChatViewController: MessagesViewController {
     
     private func setLastMessageAsSeen() {
         if messages.count > 0 {
-            guard let lastMessage = messages.last as? ChatMessage,
-                let chatSDK = MEGASdkManager.sharedMEGAChatSdk(),
-                let lastSeenMessage = chatSDK.lastChatMessageSeen(forChat: chatRoom.chatId) else {
+            let chatMessages = messages.filter { (message) -> Bool in
+                guard let message = message as? ChatMessage, message.transfer == nil else {
+                    return false
+                }
+                return true
+            }
+            
+            guard let lastMessage = chatMessages.last as? ChatMessage, let chatSDK = MEGASdkManager.sharedMEGAChatSdk() else {
                 return
             }
             
+            let lastSeenMessage = chatSDK.lastChatMessageSeen(forChat: chatRoom.chatId)
             if lastMessage.message.userHandle != chatSDK.myUserHandle
-                && lastSeenMessage.messageId != lastMessage.message.messageId {
+                && (lastSeenMessage?.messageId != lastMessage.message.messageId) {
                 chatSDK.setMessageSeenForChat(chatRoom.chatId, messageId: lastMessage.message.messageId)
             }
         }
@@ -833,6 +842,16 @@ class ChatViewController: MessagesViewController {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(willResignActive(_:)),
                                                name: UIApplication.willResignActiveNotification,
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(willEnterForeground(_:)),
+                                               name: UIApplication.willEnterForegroundNotification,
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(didBecomeActive(_:)),
+                                               name: UIApplication.didBecomeActiveNotification,
                                                object: nil)
     }
     
@@ -881,6 +900,16 @@ class ChatViewController: MessagesViewController {
         keyboardVisible = false
     }
     
+    @objc func willEnterForeground(_ notification: Notification) {
+        
+    }
+    
+    @objc func didBecomeActive(_ notification: Notification) {
+        if UIApplication.mnz_visibleViewController() == self {
+            setLastMessageAsSeen()
+        }
+    }
+    
     @objc private func willResignActive(_ notification: Notification) {
         saveDraft()
     }
@@ -896,7 +925,7 @@ class ChatViewController: MessagesViewController {
             }
             
             self.messagesCollectionView.scrollToBottom(animated: true)
-            self.hideJumpToBottom()
+            self.hideJumpToBottomIfRequired()
         }
         
         view.addSubview(chatBottomInfoScreen)
@@ -910,11 +939,15 @@ class ChatViewController: MessagesViewController {
         ])
     }
     
-    private func showOrHideJumpToBottom() {
+    private func scrollToFirstUnread() {
+        
+    }
+    
+    func showOrHideJumpToBottom() {
         let verticalIncrementToShow = view.frame.size.height * 1.5
         let bottomContentOffsetValue = messagesCollectionView.contentSize.height - messagesCollectionView.contentOffset.y
         if bottomContentOffsetValue < verticalIncrementToShow {
-            hideJumpToBottom()
+            hideJumpToBottomIfRequired()
         } else {
             showJumpToBottom()
         }
@@ -947,8 +980,8 @@ class ChatViewController: MessagesViewController {
         }, completion: nil)
     }
     
-    private func hideJumpToBottom() {
-        guard let chatBottomInfoScreen = chatBottomInfoScreen else {
+    private func hideJumpToBottomIfRequired() {
+        guard let chatBottomInfoScreen = chatBottomInfoScreen, !chatBottomInfoScreen.isHidden else {
             return
         }
         

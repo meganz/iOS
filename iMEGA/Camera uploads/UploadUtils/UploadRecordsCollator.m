@@ -24,12 +24,16 @@
     }];
 }
 
-- (void)collateUploadingPhotoRecordsByUploadTasks:(NSArray<NSURLSessionTask *> *)tasks {
+- (void)collatePhotoUploadingRecordsByUploadTasks:(NSArray<NSURLSessionTask *> *)tasks {
     return [self collateUploadingRecordsByMediaTypes:@[@(PHAssetMediaTypeImage)] uploadTasks:tasks];
 }
 
-- (void)collateUploadingVideoRecordsByUploadTasks:(NSArray<NSURLSessionTask *> *)tasks {
+- (void)collateVideoUploadingRecordsByUploadTasks:(NSArray<NSURLSessionTask *> *)tasks {
     return [self collateUploadingRecordsByMediaTypes:@[@(PHAssetMediaTypeVideo)] uploadTasks:tasks];
+}
+
+- (void)collateAllUploadingRecordsByUploadTasks:(NSArray<NSURLSessionTask *> *)tasks {
+    return [self collateUploadingRecordsByMediaTypes:@[@(PHAssetMediaTypeImage), @(PHAssetMediaTypeVideo)] uploadTasks:tasks];
 }
 
 - (void)collateUploadingRecordsByMediaTypes:(NSArray<NSNumber *> *)mediaTypes uploadTasks:(NSArray<NSURLSessionTask *> *)tasks {

@@ -96,19 +96,13 @@ static const NSUInteger VideoUploadBatchCount = 1;
     
     [AttributeUploadManager.shared collateLocalAttributes];
     
-    if (CameraUploadManager.isCameraUploadEnabled) {
-        [TransferSessionManager.shared restorePhotoSessionsWithCompletion:^(NSArray<NSURLSessionUploadTask *> * _Nonnull uploadTasks) {
-            [self.uploadRecordsCollator collateUploadingPhotoRecordsByUploadTasks:uploadTasks];
-        }];
-        
-        if (CameraUploadManager.isVideoUploadEnabled) {
-            [TransferSessionManager.shared restoreVideoSessionsWithCompletion:^(NSArray<NSURLSessionUploadTask *> * _Nonnull uploadTasks) {
-                [self.uploadRecordsCollator collateUploadingVideoRecordsByUploadTasks:uploadTasks];
-            }];
-        }
-    }
-    
     [CameraUploadManager disableCameraUploadIfAccessProhibited];
+    
+    if (CameraUploadManager.isCameraUploadEnabled) {
+        [TransferSessionManager.shared restoreAllSessionsWithCompletion:^(NSArray<NSURLSessionUploadTask *> * _Nonnull uploadTasks) {
+            [self.uploadRecordsCollator collateAllUploadingRecordsByUploadTasks:uploadTasks];
+        }];
+    }
     
     dispatch_async(dispatch_get_global_queue(QOS_CLASS_UTILITY, 0), ^{
         [self.uploadRecordsCollator collateNonUploadingRecords];
@@ -588,12 +582,12 @@ static const NSUInteger VideoUploadBatchCount = 1;
     CameraUploadManager.cameraUploadEnabled = YES;
     [self initializeCameraUpload];
     [TransferSessionManager.shared restorePhotoSessionsWithCompletion:^(NSArray<NSURLSessionUploadTask *> * _Nonnull uploadTasks) {
-        [self.uploadRecordsCollator collateUploadingPhotoRecordsByUploadTasks:uploadTasks];
+        [self.uploadRecordsCollator collatePhotoUploadingRecordsByUploadTasks:uploadTasks];
     }];
     
     if (CameraUploadManager.isVideoUploadEnabled) {
         [TransferSessionManager.shared restoreVideoSessionsWithCompletion:^(NSArray<NSURLSessionUploadTask *> * _Nonnull uploadTasks) {
-            [self.uploadRecordsCollator collateUploadingVideoRecordsByUploadTasks:uploadTasks];
+            [self.uploadRecordsCollator collateVideoUploadingRecordsByUploadTasks:uploadTasks];
         }];
     }
     
@@ -611,7 +605,7 @@ static const NSUInteger VideoUploadBatchCount = 1;
 - (void)enableVideoUpload {
     CameraUploadManager.videoUploadEnabled = YES;
     [TransferSessionManager.shared restoreVideoSessionsWithCompletion:^(NSArray<NSURLSessionUploadTask *> * _Nonnull uploadTasks) {
-        [self.uploadRecordsCollator collateUploadingVideoRecordsByUploadTasks:uploadTasks];
+        [self.uploadRecordsCollator collateVideoUploadingRecordsByUploadTasks:uploadTasks];
     }];
     [self scanAndStartVideoUpload];
 }
