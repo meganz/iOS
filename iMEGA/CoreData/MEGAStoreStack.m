@@ -3,9 +3,7 @@
 
 @interface MEGAStoreStack ()
 
-@property (strong, nonatomic) NSPersistentStoreCoordinator *storeCoordinator;
 @property (strong, nonatomic) NSPersistentContainer *persistentContainer;
-
 @property (strong, nonatomic) NSString *modelName;
 @property (strong, nonatomic) NSURL *storeURL;
 

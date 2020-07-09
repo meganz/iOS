@@ -109,6 +109,7 @@ class AppearanceManager: NSObject {
     
     private class func setupNavigationBarAppearance(_ traitCollection: UITraitCollection) {
         UINavigationBar.appearance().tintColor = UIColor.mnz_primaryGray(for: traitCollection)
+        UINavigationBar.appearance().isTranslucent = false
         
         if #available(iOS 13.0, *) {
             let navigationBarAppearance = UINavigationBarAppearance()

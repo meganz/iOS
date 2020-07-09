@@ -238,21 +238,26 @@
     [self.navigationController pushViewController:sendToViewController animated:YES];
 }
 
-- (void)share {
+#pragma mark - IBActions
+
+- (IBAction)shareAction:(id)sender {
     if (self.isLink && self.fileLink) {
         UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[self.fileLink] applicationActivities:nil];
         activityVC.popoverPresentationController.barButtonItem = self.self.moreBarButtonItem;
         [self presentViewController:activityVC animated:YES completion:nil];
     } else {
-        UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:@[self.node] sender:self.moreBarButtonItem];
-        [self presentViewController:activityVC animated:YES completion:nil];
+        if (self.node) {
+            UIActivityViewController *activityVC = [Helper activityViewControllerForNodes:@[self.node] sender:self.moreBarButtonItem];
+            [self presentViewController:activityVC animated:YES completion:nil];
+        } else {
+            if (self.filesPathsArray.count > 0 && self.nodeFileIndex < self.filesPathsArray.count) {
+                NSString *filePath = self.filesPathsArray[self.nodeFileIndex];
+                UIActivityViewController *activityVC = [UIActivityViewController.alloc initWithActivityItems:@[filePath.lastPathComponent, [NSURL fileURLWithPath:filePath]] applicationActivities:nil];
+                activityVC.popoverPresentationController.barButtonItem = sender;
+                [self presentViewController:activityVC animated:YES completion:nil];
+            }
+        }
     }
-}
-
-#pragma mark - IBActions
-
-- (IBAction)shareAction:(id)sender {
-    [self share];
 }
 
 - (IBAction)doneTapped:(id)sender {
@@ -360,7 +365,7 @@
 - (void)nodeAction:(NodeActionViewController *)nodeAction didSelect:(MegaNodeActionType)action for:(MEGANode *)node from:(id)sender {
     switch (action) {
         case MegaNodeActionTypeShare:
-            [self share];
+            [self shareAction:nil];
             break;
             
         case MegaNodeActionTypeDownload:
