@@ -5,15 +5,9 @@
 #import "MEGA-Swift.h"
 #import "MEGAReachabilityManager.h"
 #import "Helper.h"
-
 #import "UIApplication+MNZCategory.h"
-
 #import "TestPasswordViewController.h"
-
 #import "MEGAGenericRequestDelegate.h"
-
-#import "MEGA-Swift.h"
-
 
 @interface PasswordReminderViewController ()
 
