@@ -135,6 +135,8 @@
 - (void)configureNavigation {
     [self setTitle:self.node.name];
     
+    self.navigationItem.rightBarButtonItem = nil;
+
     if (self.node) {
         [self.imageView mnz_imageForNode:self.node];
     } else {
@@ -269,10 +271,6 @@
 }
 
 - (IBAction)actionsTapped:(UIBarButtonItem *)sender {
-    if (!self.isLink) {
-        self.node = [MEGASdkManager.sharedMEGASdk nodeForHandle:self.node.handle];
-    }
-    
     NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:self.node delegate:self displayMode:self.isLink ? DisplayModeFileLink : DisplayModeCloudDrive isIncoming:NO sender:sender];
     [self presentViewController:nodeActions animated:YES completion:nil];
 }
