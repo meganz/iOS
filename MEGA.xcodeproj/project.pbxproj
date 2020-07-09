@@ -185,6 +185,7 @@
 		5B367578204FFC1B0087362D /* SendToChatActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B367574204FFBF60087362D /* SendToChatActivity.m */; };
 		5B3740C7241FAA8500BA75EA /* MEGAStore+OfflineAppearancePreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE689AE2419141D00462134 /* MEGAStore+OfflineAppearancePreference.swift */; };
 		5B3740C8241FAA8700BA75EA /* MEGAStore+OfflineAppearancePreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE689AE2419141D00462134 /* MEGAStore+OfflineAppearancePreference.swift */; };
+		5B38CDFF24B5F3A300BAA44F /* EmptyStateView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BE7BEE423745FC700BBD23F /* EmptyStateView.xib */; };
 		5B39DAA21EF916D900BC2319 /* ChatAttachedContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B39DAA11EF916D900BC2319 /* ChatAttachedContactsViewController.m */; };
 		5B3C3FF9241952D1003B1650 /* ViewModePreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3C3FF8241952D1003B1650 /* ViewModePreference.swift */; };
 		5B40AB321F7A512E0034C3B3 /* AchievementsDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B40AB301F7A512D0034C3B3 /* AchievementsDetailsViewController.m */; };
@@ -5988,6 +5989,7 @@
 				943229351EDD886B007DB542 /* Images.xcassets in Resources */,
 				9456054C1EDD7ADB0094EF0F /* LTHPasscodeViewController.bundle in Resources */,
 				9456053C1EDD53240094EF0F /* SVProgressHUD.bundle in Resources */,
+				5B38CDFF24B5F3A300BAA44F /* EmptyStateView.xib in Resources */,
 				943229511EDD9D02007DB542 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
