@@ -128,12 +128,8 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
             chatMessage = historyMessages + chatMessage
             historyMessages.removeAll()
             
-            if (loadingState) {
-                chatViewController?.messagesCollectionView.reloadDataAndKeepOffset()
-            } else {
-                chatViewController?.messagesCollectionView.reloadDataAndKeepOffset()
-            }
-            
+            chatViewController?.messagesCollectionView.reloadDataAndKeepOffset()
+            chatViewController?.showOrHideJumpToBottom()
             loadingState = false
         }
     }
@@ -205,6 +201,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
                                 
                             })
                             chatViewController?.messagesCollectionView.reloadDataAndKeepOffset()
+                            chatViewController?.showOrHideJumpToBottom()
                             return
                         }
                     }

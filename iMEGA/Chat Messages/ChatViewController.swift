@@ -461,7 +461,7 @@ class ChatViewController: MessagesViewController {
     }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        hideJumpToBottom()
+        hideJumpToBottomIfRequired()
     }
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
@@ -916,7 +916,7 @@ class ChatViewController: MessagesViewController {
             }
             
             self.messagesCollectionView.scrollToBottom(animated: true)
-            self.hideJumpToBottom()
+            self.hideJumpToBottomIfRequired()
         }
         
         view.addSubview(chatBottomInfoScreen)
@@ -934,11 +934,11 @@ class ChatViewController: MessagesViewController {
         
     }
     
-    private func showOrHideJumpToBottom() {
+    func showOrHideJumpToBottom() {
         let verticalIncrementToShow = view.frame.size.height * 1.5
         let bottomContentOffsetValue = messagesCollectionView.contentSize.height - messagesCollectionView.contentOffset.y
         if bottomContentOffsetValue < verticalIncrementToShow {
-            hideJumpToBottom()
+            hideJumpToBottomIfRequired()
         } else {
             showJumpToBottom()
         }
@@ -971,8 +971,8 @@ class ChatViewController: MessagesViewController {
         }, completion: nil)
     }
     
-    private func hideJumpToBottom() {
-        guard let chatBottomInfoScreen = chatBottomInfoScreen else {
+    private func hideJumpToBottomIfRequired() {
+        guard let chatBottomInfoScreen = chatBottomInfoScreen, !chatBottomInfoScreen.isHidden else {
             return
         }
         
