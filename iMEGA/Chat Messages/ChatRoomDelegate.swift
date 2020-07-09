@@ -99,6 +99,10 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
                     historyMessages.insert(ChatMessage(message: chatMessage, chatRoom: chatRoom), at: 0)
                 }
             }
+            
+            if message.userHandle != api.myUserHandle {
+                api.setMessageSeenForChat(chatRoom.chatId, messageId: message.messageId)
+            }
         } else {
 
             if chatMessage.count == 0 {
@@ -200,8 +204,6 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
                                 return message
                                 
                             })
-//                            { $0 as? ChatMessage != oldMessage }
-//                            chatMessage.append(receivedMessage)
                             chatViewController?.messagesCollectionView.reloadDataAndKeepOffset()
                             return
                         }
