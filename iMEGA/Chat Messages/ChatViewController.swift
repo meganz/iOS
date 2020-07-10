@@ -1067,6 +1067,7 @@ class ChatViewController: MessagesViewController {
             groupCallVC.videoCall = videoCall
             groupCallVC.chatRoom = chatRoom
             groupCallVC.modalTransitionStyle = .crossDissolve
+            groupCallVC.modalPresentationStyle = .fullScreen
             groupCallVC.megaCallManager = (UIApplication.shared.delegate as! AppDelegate).megaCallManager
             present(viewController: groupCallVC)
         } else {
@@ -1075,6 +1076,7 @@ class ChatViewController: MessagesViewController {
             callVC.videoCall = videoCall
             callVC.callType = active ? .active : .outgoing
             callVC.modalTransitionStyle = .crossDissolve
+            callVC.modalPresentationStyle = .fullScreen
             callVC.megaCallManager = (UIApplication.shared.delegate as! AppDelegate).megaCallManager
             present(viewController: callVC)
 
