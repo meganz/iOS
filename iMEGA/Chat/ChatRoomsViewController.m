@@ -131,9 +131,9 @@
     [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
     [[MEGASdkManager sharedMEGAChatSdk] addChatCallDelegate:self];
     
-    if (@available(iOS 13.0, *)) {
-        [self configPreviewingRegistration];
-    }
+//    if (@available(iOS 13.0, *)) {
+//        [self configPreviewingRegistration];
+//    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
