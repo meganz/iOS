@@ -404,7 +404,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
         return chatViewController?.messagesCollectionView.indexPathsForVisibleItems.contains(lastIndexPath) ?? false
     }
     
-    private func loadMessages(count: Int = 10) {
+    private func loadMessages(count: Int = 32) {
         switch MEGASdkManager.sharedMEGAChatSdk()!.loadMessages(forChat: chatRoom.chatId, count: count){
         case .error:
             MEGALogDebug("loadMessagesForChat: history has to be fetched from server, but we are not logged in yet")
