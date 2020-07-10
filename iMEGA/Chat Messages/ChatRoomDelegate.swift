@@ -192,7 +192,7 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
                         }
                         
                         if filteredArray.count > 0, let oldMessage = filteredArray.first as? ChatMessage {
-                            let receivedMessage = ChatMessage(message: message, chatRoom: chatRoom)
+                            var receivedMessage = ChatMessage(message: message, chatRoom: chatRoom)
                             chatMessage = chatMessage.map({ (message) -> MessageType in
                                 guard let message = message as? ChatMessage, message != oldMessage else {
                                     return receivedMessage
@@ -200,6 +200,15 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
                                 return message
                                 
                             })
+                            if let transfer = oldMessage.transfer, let node = MEGASdkManager.sharedMEGASdk()?.node(forHandle: transfer.nodeHandle) {
+                                let path = NSHomeDirectory().append(pathComponent: transfer.path)
+                                let originalImagePath = Helper.path(for: node, inSharedSandboxCacheDirectory: "originalV3")
+                                try? FileManager.default.copyItem(atPath: path, toPath: originalImagePath)
+
+                                                          
+                            }
+                            
+                            
                             chatViewController?.messagesCollectionView.reloadDataAndKeepOffset()
                             chatViewController?.showOrHideJumpToBottom()
                             return

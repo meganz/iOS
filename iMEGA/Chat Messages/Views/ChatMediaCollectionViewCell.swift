@@ -76,12 +76,12 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
 
         let megaMessage = chatMessage.message
 
-        if chatMessage.transfer != nil {
+        if let transfer = chatMessage.transfer {
             loadingIndicator.isHidden = false
             loadingIndicator.startAnimating()
             durationLabel.isHidden = true
             playIconView.isHidden = true
-            let path = NSHomeDirectory().append(pathComponent: chatMessage.transfer!.path)
+            let path = NSHomeDirectory().append(pathComponent: transfer.path)
 
             imageView.yy_imageURL = URL(fileURLWithPath: path)
             return
@@ -173,8 +173,12 @@ open class ChatMediaCollectionViewSizeCalculator: MessageSizeCalculator {
                 let megaMessage = chatMessage.message
                 let node = megaMessage.nodeList.node(at: 0)!
                 let previewFilePath = Helper.path(for: node, inSharedSandboxCacheDirectory: "previewsV3")
+                let originalImagePath = Helper.path(for: node, inSharedSandboxCacheDirectory: "originalV3")
 
                 if FileManager.default.fileExists(atPath: previewFilePath), let previewImage = UIImage(contentsOfFile: previewFilePath) {
+                    width = previewImage.size.width
+                    height = previewImage.size.height
+                } else if FileManager.default.fileExists(atPath: originalImagePath), let previewImage = UIImage(contentsOfFile: originalImagePath) {
                     width = previewImage.size.width
                     height = previewImage.size.height
                 }

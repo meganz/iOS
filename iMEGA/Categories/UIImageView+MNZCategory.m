@@ -64,8 +64,12 @@ static int _MEGAWebImageSetterKey;
 - (void)mnz_setPreviewByNode:(MEGANode *)node completion:(nullable MNZWebImageCompletionBlock)completion {
     if (node.hasPreview) {
         NSString *path = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"previewsV3"];
+        NSString *originalPath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"originalV3"];
+    
         if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
             self.yy_imageURL = [NSURL fileURLWithPath:path];
+        } else if ([[NSFileManager defaultManager] fileExistsAtPath:originalPath]) {
+            self.yy_imageURL = [NSURL fileURLWithPath:originalPath];
         } else {
             MEGAGetPreviewRequestDelegate *delegate = [[MEGAGetPreviewRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
                 if (completion) {
