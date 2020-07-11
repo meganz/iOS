@@ -16,7 +16,7 @@ class DateFormatter_ConvenientTests: XCTestCase {
 
         // When format with `medium` formatter
         let formattedDates = locales.map { (locale) -> String in
-            let formatter = DateFormatter.dateShortSystem(locale: locale)
+            let formatter = DateFormatter.dateShort(locale: locale)
             let result = formatter.localisedString(from: date)
             return result
         }
@@ -37,7 +37,7 @@ class DateFormatter_ConvenientTests: XCTestCase {
 
         // When format with `medium` formatter
         let formattedDates = locales.map { (locale) -> String in
-            let formatter = DateFormatter.dateShortSystem(calendar: calendar, locale: locale)
+            let formatter = DateFormatter.dateShort(calendar: calendar, locale: locale)
             let result = formatter.localisedString(from: date)
             return result
         }
@@ -59,7 +59,7 @@ class DateFormatter_ConvenientTests: XCTestCase {
         
         // When format with `medium` formatter
         let formattedDates = locales.map { (locale) -> String in
-            let formatter = DateFormatter.dateMediumSystem(locale: locale)
+            let formatter = DateFormatter.dateMedium(locale: locale)
             let result = formatter.localisedString(from: date)
             return result
         }
@@ -80,7 +80,7 @@ class DateFormatter_ConvenientTests: XCTestCase {
         
         // When format with `medium` formatter
         let formattedDates = locales.map { (locale) -> String in
-            let formatter = DateFormatter.dateMediumSystem(calendar: calendar, locale: locale)
+            let formatter = DateFormatter.dateMedium(calendar: calendar, locale: locale)
             let result = formatter.localisedString(from: date)
             return result
         }
@@ -102,7 +102,7 @@ class DateFormatter_ConvenientTests: XCTestCase {
 
         // When format with `medium` formatter
         let formattedDates = locales.map { (locale) -> String in
-            let formatter = DateFormatter.dateLongSystem(locale: locale)
+            let formatter = DateFormatter.dateLong(locale: locale)
             let result = formatter.localisedString(from: date)
             return result
         }
@@ -123,7 +123,7 @@ class DateFormatter_ConvenientTests: XCTestCase {
 
         // When format with `medium` formatter
         let formattedDates = locales.map { (locale) -> String in
-            let formatter = DateFormatter.dateLongSystem(calendar: calendar, locale: locale)
+            let formatter = DateFormatter.dateLong(calendar: calendar, locale: locale)
             let result = formatter.localisedString(from: date)
             return result
         }
@@ -145,7 +145,7 @@ class DateFormatter_ConvenientTests: XCTestCase {
 
         // When format with `medium` formatter
         let formattedDates = locales.map { (locale) -> String in
-            let formatter = DateFormatter.dateFullSystem(locale: locale)
+            let formatter = DateFormatter.dateFull(locale: locale)
             let result = formatter.localisedString(from: date)
             return result
         }
@@ -166,7 +166,7 @@ class DateFormatter_ConvenientTests: XCTestCase {
 
         // When format with `medium` formatter
         let formattedDates = locales.map { (locale) -> String in
-            let formatter = DateFormatter.dateFullSystem(calendar: calendar, locale: locale)
+            let formatter = DateFormatter.dateFull(calendar: calendar, locale: locale)
             let result = formatter.localisedString(from: date)
             return result
         }

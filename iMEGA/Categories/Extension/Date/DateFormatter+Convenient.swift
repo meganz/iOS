@@ -18,9 +18,9 @@ extension DateFormatter {
     // MARK: - Formatter Style
 
     /// `1/1/70`,       `1/1/70`,     `1970/1/1`
-    @objc static func dateShortSystem(calendar: Calendar? = nil,
-                                      timeZone: TimeZone? = nil,
-                                      locale: Locale? = nil) -> DateFormatting {
+    @objc static func dateShort(calendar: Calendar? = nil,
+                                timeZone: TimeZone? = nil,
+                                locale: Locale? = nil) -> DateFormatting {
         systemDateFormatter(dateStyle: .short,
                             timeStyle: .none,
                             isRelative: false,
@@ -30,7 +30,7 @@ extension DateFormatter {
     }
 
     /// `Jan 1, 1970`,  `1 ene 1970`,   `1970年1月1日`
-    @objc static func dateMediumSystem(calendar: Calendar? = nil,
+    @objc static func dateMedium(calendar: Calendar? = nil,
                                  timeZone: TimeZone? = nil,
                                  locale: Locale? = nil) -> DateFormatting {
         systemDateFormatter(dateStyle: .medium,
@@ -42,9 +42,9 @@ extension DateFormatter {
     }
 
     /// `January 1, 1970`, `1 de enero de 1970`, `1970年1月1日`
-    @objc static func dateLongSystem(calendar: Calendar? = nil,
-                                     timeZone: TimeZone? = nil,
-                                     locale: Locale? = nil) -> DateFormatting {
+    @objc static func dateLong(calendar: Calendar? = nil,
+                               timeZone: TimeZone? = nil,
+                               locale: Locale? = nil) -> DateFormatting {
         systemDateFormatter(dateStyle: .long,
                             timeStyle: .none,
                             isRelative: false,
@@ -54,9 +54,9 @@ extension DateFormatter {
     }
 
     /// `Thursday, January 1, 1970`, `jueves, 1 de enero de 1970`, `1970年1月1日 星期四`
-    @objc static func dateFullSystem(calendar: Calendar? = nil,
-                                     timeZone: TimeZone? = nil,
-                                     locale: Locale? = nil) -> DateFormatting {
+    @objc static func dateFull(calendar: Calendar? = nil,
+                               timeZone: TimeZone? = nil,
+                               locale: Locale? = nil) -> DateFormatting {
         systemDateFormatter(dateStyle: .full,
                             timeStyle: .none,
                             isRelative: false,
@@ -68,7 +68,7 @@ extension DateFormatter {
     // MARK: - Relative date formatter, e.g. date in the next day will be "Tomorrow" etc.
 
     /// `Yesterday`,  `Today`, `Tomorrow`    /   `hoy`, `mañana`, `pasado mañana`    /   `昨天`, `今天`,  `明天`,  `后天`
-    @objc static func relativeDateMedium(calendar: Calendar? = nil,
+    @objc static func dateRelativeMedium(calendar: Calendar? = nil,
                                          timeZone: TimeZone? = nil,
                                          locale: Locale? = nil) -> DateFormatting {
         systemDateFormatter(dateStyle: .medium, timeStyle: .none, isRelative: true, calendar: calendar, timeZone: timeZone, locale: locale)
