@@ -6,11 +6,7 @@ final class OverDiskQuotaViewController: UIViewController {
 
         // MARK: - Formatters
 
-        private lazy var dateFormatter: DateFormatter = {
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "MMMM d yyyy"
-            return dateFormatter
-        }()
+        private lazy var dateFormatter = DateFormatter.dateMediumSystem()
 
         private lazy var numberFormatter: NumberFormatter = {
             let numberFormatter = NumberFormatter()
@@ -257,7 +253,7 @@ final class OverDiskQuotaViewController: UIViewController {
 
 fileprivate extension OverDiskQuotaViewController.OverDiskQuotaInternal {
 
-    func formattedWarningDates(with formatter: DateFormatter) -> String {
+    func formattedWarningDates(with formatter: DateFormatting) -> String {
         warningDates.reduce("") { (result, date) in
             result + (formatter.string(from: date) + ", ")
         }
