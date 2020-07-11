@@ -6,7 +6,7 @@ final class OverDiskQuotaViewController: UIViewController {
 
         // MARK: - Formatters
 
-        private lazy var dateFormatter = DateFormatter.dateMediumSystem()
+        private lazy var dateFormatter = DateFormatter.dateMedium()
 
         private lazy var numberFormatter: NumberFormatter = {
             let numberFormatter = NumberFormatter()

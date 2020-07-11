@@ -339,15 +339,15 @@ enum SessionSectionRow: Int {
         let startingOfToday = Date().startOfDay(on: calendar)
         guard let daysOfDistance = startingOfToday?.dayDistance(toFutureDate: expiryDate,
                                                                 on: Calendar.current) else {
-                                                                    return DateFormatter.dateMediumSystem()
+                                                                    return DateFormatter.dateMedium()
         }
         let numberOfDaysAWeek = 7
         if daysOfDistance > numberOfDaysAWeek  {
-            return DateFormatter.dateMediumSystem()
+            return DateFormatter.dateMedium()
         }
 
         if expiryDate.isToday(on: calendar) || expiryDate.isTomorrow(on: calendar) {
-            return DateFormatter.relativeDateMedium()
+            return DateFormatter.dateRelativeMedium()
         }
 
         return DateFormatter.dateMediumWithWeekday()
