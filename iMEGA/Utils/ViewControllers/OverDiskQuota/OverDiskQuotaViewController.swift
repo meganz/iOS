@@ -255,7 +255,7 @@ fileprivate extension OverDiskQuotaViewController.OverDiskQuotaInternal {
 
     func formattedWarningDates(with formatter: DateFormatting) -> String {
         warningDates.reduce("") { (result, date) in
-            result + (formatter.string(from: date) + ", ")
+            result + (formatter.localisedString(from: date) + ", ")
         }
     }
 

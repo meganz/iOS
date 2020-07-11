@@ -7,8 +7,12 @@ import Foundation
 /// which end users to alter the formatter while using.
 protocol DateFormatting {
 
-    func string(from date: Date) -> String
+    func localisedString(from date: Date) -> String
 }
 
-// `DateFormatter` is already conforming to `DateFormatting` protocol
-extension DateFormatter: DateFormatting {}
+// Make `DateFormatter` conforming to `DateFormatting` protocol
+extension DateFormatter: DateFormatting {
+    func localisedString(from date: Date) -> String {
+        string(from: date)
+    }
+}

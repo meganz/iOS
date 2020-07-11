@@ -406,10 +406,10 @@ extension ProfileViewController: UITableViewDataSource {
             if accountDetails.type != .free {
                 if accountDetails.subscriptionRenewTime > 0 {
                     let renewDate = Date(timeIntervalSince1970: TimeInterval(accountDetails.subscriptionRenewTime))
-                    planFooterString = AMLocalizedString("Renews on", "Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible).") + " " + expiryDateFormatterOfProfessionalAccountExpiryDate(renewDate).string(from: renewDate)
+                    planFooterString = AMLocalizedString("Renews on", "Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible).") + " " + expiryDateFormatterOfProfessionalAccountExpiryDate(renewDate).localisedString(from: renewDate)
                 } else if accountDetails.proExpiration > 0 && accountDetails.type != .business {
                     let renewDate = Date(timeIntervalSince1970: TimeInterval(accountDetails.proExpiration))
-                    planFooterString = String(format: AMLocalizedString("expiresOn", "Text that shows the expiry date of the account PRO level"), expiryDateFormatterOfProfessionalAccountExpiryDate(renewDate).string(from: renewDate))
+                    planFooterString = String(format: AMLocalizedString("expiresOn", "Text that shows the expiry date of the account PRO level"), expiryDateFormatterOfProfessionalAccountExpiryDate(renewDate).localisedString(from: renewDate))
                 }
             }
             return planFooterString
