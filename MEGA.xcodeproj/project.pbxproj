@@ -320,6 +320,10 @@
 		5D283DF624B6AF05008D0F27 /* MEGAThemeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D283DF524B6AF05008D0F27 /* MEGAThemeButton.swift */; };
 		5D4D672624AABDDF0034A4CD /* UIView+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4D672524AABDDF0034A4CD /* UIView+Additions.swift */; };
 		5D4D672824AABE050034A4CD /* UINavigationViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4D672724AABE050034A4CD /* UINavigationViewController+Additions.swift */; };
+		5D5D5DEB24B7EEBC00AA0154 /* DateFormatterPoolTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5D5DEA24B7EEBC00AA0154 /* DateFormatterPoolTest.swift */; };
+		5D5D5DED24B7F2F500AA0154 /* DateTemplateStyleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5D5DEC24B7F2F500AA0154 /* DateTemplateStyleTests.swift */; };
+		5D60902D24B81F3700CBAADD /* DateFormatStyleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D60902C24B81F3700CBAADD /* DateFormatStyleTests.swift */; };
+		5D60902F24B8207B00CBAADD /* DateFormatter+ConvenientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D60902E24B8207B00CBAADD /* DateFormatter+ConvenientTests.swift */; };
 		5D6465FF2488AE6C006030A5 /* UIViewController+ScrollViewConentInsets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6465FE2488AE6C006030A5 /* UIViewController+ScrollViewConentInsets.swift */; };
 		5D646602248909F8006030A5 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D646601248909F7006030A5 /* Font.swift */; };
 		5D64660424890A34006030A5 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D64660324890A34006030A5 /* Color.swift */; };
@@ -349,16 +353,16 @@
 		5DBAC841248778DA0050996E /* OverDisckQuotaWarningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DBAC840248778DA0050996E /* OverDisckQuotaWarningView.swift */; };
 		5DBAC8442487B8A10050996E /* OverDisckQuotaWarningView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5DBAC8432487B8A10050996E /* OverDisckQuotaWarningView.xib */; };
 		5DC7232424A424BB00E31FB6 /* UnitDataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC7232324A424BB00E31FB6 /* UnitDataStorage.swift */; };
-		5DE448E6248D078800EE00CB /* AttributedTextStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE448E5248D078800EE00CB /* AttributedTextStyle.swift */; };
-		5DE448EB248D15F300EE00CB /* NibOwnerLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE448EA248D15F300EE00CB /* NibOwnerLoadable.swift */; };
-		5DEFE99424A1AE0E00DFF256 /* MarkedStringParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DEFE99324A1AE0E00DFF256 /* MarkedStringParser.swift */; };
-		5DF016812499BD60005A121D /* MEGAPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF016802499BD60005A121D /* MEGAPlan.swift */; };
-		5DF016832499BD7B005A121D /* MEGAPlanService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF016822499BD7B005A121D /* MEGAPlanService.swift */; };
 		5DD8C8EA24B5AF400033F479 /* DateFormatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD8C8E524B5AF400033F479 /* DateFormatting.swift */; };
 		5DD8C8EB24B5AF400033F479 /* Date+Comparion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD8C8E624B5AF400033F479 /* Date+Comparion.swift */; };
 		5DD8C8EC24B5AF400033F479 /* Date+Formatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD8C8E724B5AF400033F479 /* Date+Formatting.swift */; };
 		5DD8C8ED24B5AF400033F479 /* Date+Manipulation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD8C8E824B5AF400033F479 /* Date+Manipulation.swift */; };
 		5DD8C8EE24B5AF580033F479 /* DateFormatter+Convenient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD8C8E424B5AF400033F479 /* DateFormatter+Convenient.swift */; };
+		5DE448E6248D078800EE00CB /* AttributedTextStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE448E5248D078800EE00CB /* AttributedTextStyle.swift */; };
+		5DE448EB248D15F300EE00CB /* NibOwnerLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE448EA248D15F300EE00CB /* NibOwnerLoadable.swift */; };
+		5DEFE99424A1AE0E00DFF256 /* MarkedStringParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DEFE99324A1AE0E00DFF256 /* MarkedStringParser.swift */; };
+		5DF016812499BD60005A121D /* MEGAPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF016802499BD60005A121D /* MEGAPlan.swift */; };
+		5DF016832499BD7B005A121D /* MEGAPlanService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF016822499BD7B005A121D /* MEGAPlanService.swift */; };
 		7714901520F7592100769BD4 /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7714901420F7592000769BD4 /* Contacts.framework */; };
 		771A932723A24DB300CB0ED7 /* UIView+FLEX_Layout.m in Sources */ = {isa = PBXBuildFile; fileRef = 771A932523A24DB300CB0ED7 /* UIView+FLEX_Layout.m */; };
 		771A932823A24DB300CB0ED7 /* UIPasteboard+FLEX.m in Sources */ = {isa = PBXBuildFile; fileRef = 771A932623A24DB300CB0ED7 /* UIPasteboard+FLEX.m */; };
@@ -1724,6 +1728,10 @@
 		5D283DF524B6AF05008D0F27 /* MEGAThemeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAThemeButton.swift; sourceTree = "<group>"; };
 		5D4D672524AABDDF0034A4CD /* UIView+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Additions.swift"; sourceTree = "<group>"; };
 		5D4D672724AABE050034A4CD /* UINavigationViewController+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationViewController+Additions.swift"; sourceTree = "<group>"; };
+		5D5D5DEA24B7EEBC00AA0154 /* DateFormatterPoolTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatterPoolTest.swift; sourceTree = "<group>"; };
+		5D5D5DEC24B7F2F500AA0154 /* DateTemplateStyleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTemplateStyleTests.swift; sourceTree = "<group>"; };
+		5D60902C24B81F3700CBAADD /* DateFormatStyleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatStyleTests.swift; sourceTree = "<group>"; };
+		5D60902E24B8207B00CBAADD /* DateFormatter+ConvenientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+ConvenientTests.swift"; sourceTree = "<group>"; };
 		5D6465FE2488AE6C006030A5 /* UIViewController+ScrollViewConentInsets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+ScrollViewConentInsets.swift"; sourceTree = "<group>"; };
 		5D646601248909F7006030A5 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
 		5D64660324890A34006030A5 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
@@ -1753,16 +1761,16 @@
 		5DBAC840248778DA0050996E /* OverDisckQuotaWarningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverDisckQuotaWarningView.swift; sourceTree = "<group>"; };
 		5DBAC8432487B8A10050996E /* OverDisckQuotaWarningView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OverDisckQuotaWarningView.xib; sourceTree = "<group>"; };
 		5DC7232324A424BB00E31FB6 /* UnitDataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitDataStorage.swift; sourceTree = "<group>"; };
-		5DE448E5248D078800EE00CB /* AttributedTextStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedTextStyle.swift; sourceTree = "<group>"; };
-		5DE448EA248D15F300EE00CB /* NibOwnerLoadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NibOwnerLoadable.swift; sourceTree = "<group>"; };
-		5DEFE99324A1AE0E00DFF256 /* MarkedStringParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkedStringParser.swift; sourceTree = "<group>"; };
-		5DF016802499BD60005A121D /* MEGAPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAPlan.swift; sourceTree = "<group>"; };
-		5DF016822499BD7B005A121D /* MEGAPlanService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAPlanService.swift; sourceTree = "<group>"; };
 		5DD8C8E424B5AF400033F479 /* DateFormatter+Convenient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Convenient.swift"; sourceTree = "<group>"; };
 		5DD8C8E524B5AF400033F479 /* DateFormatting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateFormatting.swift; sourceTree = "<group>"; };
 		5DD8C8E624B5AF400033F479 /* Date+Comparion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Comparion.swift"; sourceTree = "<group>"; };
 		5DD8C8E724B5AF400033F479 /* Date+Formatting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Formatting.swift"; sourceTree = "<group>"; };
 		5DD8C8E824B5AF400033F479 /* Date+Manipulation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Manipulation.swift"; sourceTree = "<group>"; };
+		5DE448E5248D078800EE00CB /* AttributedTextStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedTextStyle.swift; sourceTree = "<group>"; };
+		5DE448EA248D15F300EE00CB /* NibOwnerLoadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NibOwnerLoadable.swift; sourceTree = "<group>"; };
+		5DEFE99324A1AE0E00DFF256 /* MarkedStringParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkedStringParser.swift; sourceTree = "<group>"; };
+		5DF016802499BD60005A121D /* MEGAPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAPlan.swift; sourceTree = "<group>"; };
+		5DF016822499BD7B005A121D /* MEGAPlanService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAPlanService.swift; sourceTree = "<group>"; };
 		7714901420F7592000769BD4 /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = System/Library/Frameworks/Contacts.framework; sourceTree = SDKROOT; };
 		771A1B5E21C9220C00A8555D /* OnboardingViewType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OnboardingViewType.h; sourceTree = "<group>"; };
 		771A1B5F21C9227A00A8555D /* OnboardingType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OnboardingType.h; sourceTree = "<group>"; };
@@ -4408,24 +4416,6 @@
 			path = OverDiskQuota;
 			sourceTree = "<group>";
 		};
-		5DE448E7248D159000EE00CB /* UIKit+Tools */ = {
-			isa = PBXGroup;
-			children = (
-				5DE448EA248D15F300EE00CB /* NibOwnerLoadable.swift */,
-			);
-			path = "UIKit+Tools";
-			sourceTree = "<group>";
-		};
-		5DF016842499BE0E005A121D /* ProductSubscriptionPlanService */ = {
-			isa = PBXGroup;
-			children = (
-				5D79B52124986A4F0070FECD /* PlanAdviser.swift */,
-				5DF016822499BD7B005A121D /* MEGAPlanService.swift */,
-				5DF016802499BD60005A121D /* MEGAPlan.swift */,
-			);
-			path = ProductSubscriptionPlanService;
-			sourceTree = "<group>";
-		};
 		5DD8C8E224B5AF400033F479 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
@@ -4444,6 +4434,35 @@
 				5DD8C8E824B5AF400033F479 /* Date+Manipulation.swift */,
 			);
 			path = Date;
+			sourceTree = "<group>";
+		};
+		5DE448E7248D159000EE00CB /* UIKit+Tools */ = {
+			isa = PBXGroup;
+			children = (
+				5DE448EA248D15F300EE00CB /* NibOwnerLoadable.swift */,
+			);
+			path = "UIKit+Tools";
+			sourceTree = "<group>";
+		};
+		5DF016842499BE0E005A121D /* ProductSubscriptionPlanService */ = {
+			isa = PBXGroup;
+			children = (
+				5D79B52124986A4F0070FECD /* PlanAdviser.swift */,
+				5DF016822499BD7B005A121D /* MEGAPlanService.swift */,
+				5DF016802499BD60005A121D /* MEGAPlan.swift */,
+			);
+			path = ProductSubscriptionPlanService;
+			sourceTree = "<group>";
+		};
+		5DF330E624B7EE5C0099D936 /* DateFormatting */ = {
+			isa = PBXGroup;
+			children = (
+				5D5D5DEA24B7EEBC00AA0154 /* DateFormatterPoolTest.swift */,
+				5D5D5DEC24B7F2F500AA0154 /* DateTemplateStyleTests.swift */,
+				5D60902C24B81F3700CBAADD /* DateFormatStyleTests.swift */,
+				5D60902E24B8207B00CBAADD /* DateFormatter+ConvenientTests.swift */,
+			);
+			path = DateFormatting;
 			sourceTree = "<group>";
 		};
 		7747B2D5208623550011814E /* Network */ = {
@@ -5596,6 +5615,7 @@
 		B6CED48C22B8AC70009C4861 /* MEGAUnitTests */ = {
 			isa = PBXGroup;
 			children = (
+				5DF330E624B7EE5C0099D936 /* DateFormatting */,
 				837B9C0824781B1600D409B4 /* NodeActions */,
 				B6CED48F22B8AC70009C4861 /* Info.plist */,
 				5B076EDA22C251BF00D773B9 /* CameraUpload */,
@@ -7325,7 +7345,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5D60902D24B81F3700CBAADD /* DateFormatStyleTests.swift in Sources */,
+				5D60902F24B8207B00CBAADD /* DateFormatter+ConvenientTests.swift in Sources */,
 				B6CED49622B8AFC3009C4861 /* CameraUploadConcurrentCountCalculatorTests.m in Sources */,
+				5D5D5DED24B7F2F500AA0154 /* DateTemplateStyleTests.swift in Sources */,
+				5D5D5DEB24B7EEBC00AA0154 /* DateFormatterPoolTest.swift in Sources */,
 				837B9C0B24781B1600D409B4 /* NodeActionsTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
