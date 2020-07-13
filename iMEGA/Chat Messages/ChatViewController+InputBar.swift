@@ -613,7 +613,9 @@ extension ChatViewController: AddToChatViewControllerDelegate {
         }
 
         contactsViewController.contactsMode = .chatCreateGroup
-        contactsViewController.createGroupChat = createGroupChat
+        contactsViewController.createGroupChat = { [weak self] in
+            self?.createGroupChat(selectedObjects: $0, groupName: $1, keyRotationEnabled: $2, getChatLink: $3)
+        }
         present(viewController: contactsNavigationController)
     }
     
