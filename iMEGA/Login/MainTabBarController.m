@@ -11,7 +11,7 @@
 #import "MainTabBarController+CameraUpload.h"
 #import "MEGA-Swift.h"
 
-#import "MEGA-Swift.h"
+#import "NSObject+Debounce.h"
 
 @interface MainTabBarController () <UITabBarControllerDelegate, MEGAGlobalDelegate>
 
@@ -252,7 +252,7 @@
 - (void)onChatListItemUpdate:(MEGAChatSdk *)api item:(MEGAChatListItem *)item {
     MEGALogInfo(@"onChatListItemUpdate %@", item);
     if (item.changes == MEGAChatListItemChangeTypeUnreadCount) {
-        [self setBadgeValueForChats];
+        [self debounce:@selector(setBadgeValueForChats) delay:0.1];
         if ([[self.selectedViewController visibleViewController] isKindOfClass:[ChatViewController class]]) {
             ChatViewController *chatViewController = (ChatViewController *)[self.selectedViewController visibleViewController];
             [chatViewController updateUnreadLabel];

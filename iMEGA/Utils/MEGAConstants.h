@@ -124,3 +124,7 @@ extern const NSUInteger MEGADropFirstCharactersFromSession;
 #pragma mark - File size
 
 extern const long long MEGAMaxFileLinkAutoOpenSize;
+
+#pragma mark - Add Your Phone Number
+
+extern const NSUInteger MEGAOptOutOfAddYourPhoneNumberMinCount;
