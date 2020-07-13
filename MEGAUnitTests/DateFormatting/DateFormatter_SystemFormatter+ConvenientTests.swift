@@ -1,7 +1,7 @@
 import XCTest
 @testable import MEGA
 
-class DateFormatter_ConvenientTests: XCTestCase {
+class DateFormatter_System_ConvenientTests: XCTestCase {
     
     // MARK: - Short Formatter
 

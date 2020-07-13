@@ -301,6 +301,7 @@
 		5BFA34711FAC5BFB005BFC4E /* MEGARemoveRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFA34691FAB4168005BFC4E /* MEGARemoveRequestDelegate.m */; };
 		5D01995724AD64C1006ED2A0 /* InterfaceStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D01995624AD64C1006ED2A0 /* InterfaceStyle.swift */; };
 		5D03C99B248893E600BE5EEB /* UINavigationBar+Customisation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D03C99A248893E600BE5EEB /* UINavigationBar+Customisation.swift */; };
+		5D0C56E324BC17A800EF40B4 /* DateFormatter_SystemRelativeFormatter+ConvientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0C56E224BC17A800EF40B4 /* DateFormatter_SystemRelativeFormatter+ConvientTests.swift */; };
 		5D18BDA2249718280045F9B3 /* MarkedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D18BDA1249718280045F9B3 /* MarkedString.swift */; };
 		5D1B23E724AEFBB100ACE1C5 /* MEGAShadowStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B23E624AEFBB100ACE1C5 /* MEGAShadowStyle.swift */; };
 		5D1B23EE24AF2FF900ACE1C5 /* ThemeButtonColorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1B23ED24AF2FF900ACE1C5 /* ThemeButtonColorFactory.swift */; };
@@ -324,7 +325,7 @@
 		5D4D672824AABE050034A4CD /* UINavigationViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4D672724AABE050034A4CD /* UINavigationViewController+Additions.swift */; };
 		5D5D5DED24B7F2F500AA0154 /* DateTemplateStyleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5D5DEC24B7F2F500AA0154 /* DateTemplateStyleTests.swift */; };
 		5D60902D24B81F3700CBAADD /* DateFormatStyleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D60902C24B81F3700CBAADD /* DateFormatStyleTests.swift */; };
-		5D60902F24B8207B00CBAADD /* DateFormatter+ConvenientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D60902E24B8207B00CBAADD /* DateFormatter+ConvenientTests.swift */; };
+		5D60902F24B8207B00CBAADD /* DateFormatter_SystemFormatter+ConvenientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D60902E24B8207B00CBAADD /* DateFormatter_SystemFormatter+ConvenientTests.swift */; };
 		5D6465FF2488AE6C006030A5 /* UIViewController+ScrollViewConentInsets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6465FE2488AE6C006030A5 /* UIViewController+ScrollViewConentInsets.swift */; };
 		5D646602248909F8006030A5 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D646601248909F7006030A5 /* Font.swift */; };
 		5D64660424890A34006030A5 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D64660324890A34006030A5 /* Color.swift */; };
@@ -1710,6 +1711,7 @@
 		5BFA346D1FAB6282005BFC4E /* MEGAMoveRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGAMoveRequestDelegate.m; path = API/Requests/MEGAMoveRequestDelegate.m; sourceTree = "<group>"; };
 		5D01995624AD64C1006ED2A0 /* InterfaceStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterfaceStyle.swift; sourceTree = "<group>"; };
 		5D03C99A248893E600BE5EEB /* UINavigationBar+Customisation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationBar+Customisation.swift"; sourceTree = "<group>"; };
+		5D0C56E224BC17A800EF40B4 /* DateFormatter_SystemRelativeFormatter+ConvientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter_SystemRelativeFormatter+ConvientTests.swift"; sourceTree = "<group>"; };
 		5D18BDA1249718280045F9B3 /* MarkedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkedString.swift; sourceTree = "<group>"; };
 		5D1B23E624AEFBB100ACE1C5 /* MEGAShadowStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAShadowStyle.swift; sourceTree = "<group>"; };
 		5D1B23ED24AF2FF900ACE1C5 /* ThemeButtonColorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeButtonColorFactory.swift; sourceTree = "<group>"; };
@@ -1733,7 +1735,7 @@
 		5D4D672724AABE050034A4CD /* UINavigationViewController+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationViewController+Additions.swift"; sourceTree = "<group>"; };
 		5D5D5DEC24B7F2F500AA0154 /* DateTemplateStyleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTemplateStyleTests.swift; sourceTree = "<group>"; };
 		5D60902C24B81F3700CBAADD /* DateFormatStyleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatStyleTests.swift; sourceTree = "<group>"; };
-		5D60902E24B8207B00CBAADD /* DateFormatter+ConvenientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+ConvenientTests.swift"; sourceTree = "<group>"; };
+		5D60902E24B8207B00CBAADD /* DateFormatter_SystemFormatter+ConvenientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter_SystemFormatter+ConvenientTests.swift"; sourceTree = "<group>"; };
 		5D6465FE2488AE6C006030A5 /* UIViewController+ScrollViewConentInsets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+ScrollViewConentInsets.swift"; sourceTree = "<group>"; };
 		5D646601248909F7006030A5 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
 		5D64660324890A34006030A5 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
@@ -3715,7 +3717,6 @@
 				8330A9F222F41F470059B39C /* Array+Additions.swift */,
 				83FA7B502386197B00887630 /* UserDefaults+Additions.swift */,
 				83D5DB2D23E9930200B09412 /* MEGAChatSDK+Additions.swift */,
-				BFCF843E246A69FE004FA3B1 /* UIView+Additions.swift */,
 				2FDE43B824B6C11D00280A75 /* NSObject+Debounce.h */,
 				2FDE43B724B6C11C00280A75 /* NSObject+Debounce.m */,
 			);
@@ -4464,7 +4465,8 @@
 			children = (
 				5D5D5DEC24B7F2F500AA0154 /* DateTemplateStyleTests.swift */,
 				5D60902C24B81F3700CBAADD /* DateFormatStyleTests.swift */,
-				5D60902E24B8207B00CBAADD /* DateFormatter+ConvenientTests.swift */,
+				5D60902E24B8207B00CBAADD /* DateFormatter_SystemFormatter+ConvenientTests.swift */,
+				5D0C56E224BC17A800EF40B4 /* DateFormatter_SystemRelativeFormatter+ConvientTests.swift */,
 			);
 			path = DateFormatting;
 			sourceTree = "<group>";
@@ -7352,9 +7354,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				5D60902D24B81F3700CBAADD /* DateFormatStyleTests.swift in Sources */,
-				5D60902F24B8207B00CBAADD /* DateFormatter+ConvenientTests.swift in Sources */,
+				5D60902F24B8207B00CBAADD /* DateFormatter_SystemFormatter+ConvenientTests.swift in Sources */,
 				B6CED49622B8AFC3009C4861 /* CameraUploadConcurrentCountCalculatorTests.m in Sources */,
 				5D5D5DED24B7F2F500AA0154 /* DateTemplateStyleTests.swift in Sources */,
+				5D0C56E324BC17A800EF40B4 /* DateFormatter_SystemRelativeFormatter+ConvientTests.swift in Sources */,
 				837B9C0B24781B1600D409B4 /* NodeActionsTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
