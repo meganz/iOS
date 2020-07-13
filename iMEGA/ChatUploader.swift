@@ -71,7 +71,13 @@
                     if let handle = transfer.nodeHandle,
                         let nodeHandle = UInt64(handle),
                         let chatRoomId = UInt64(chatRoomIdString) {
-                        MEGASdkManager.sharedMEGAChatSdk()?.attachNode(toChat: chatRoomId, node: nodeHandle)
+                        
+                        if let appData = transfer.appData, appData.contains("attachVoiceClipToChatID") {
+                            MEGASdkManager.sharedMEGAChatSdk()?.attachVoiceMessage(toChat: chatRoomId, node: nodeHandle)
+                        } else {
+                            MEGASdkManager.sharedMEGAChatSdk()?.attachNode(toChat: chatRoomId, node: nodeHandle)
+                        }
+                        
                         MEGALogInfo("[ChatUploader] attchment complete File path \(transfer.filepath)")
                         context.delete(transfer)
                     }
@@ -136,6 +142,7 @@ extension ChatUploader: MEGATransferDelegate {
                                            chatRoomId: chatRoomIdString,
                                            nodeHandle: String(transfer.nodeHandle),
                                            transferTag: String(transfer.tag),
+                                           appData: transfer.appData,
                                            context: context)
             self.updateDatabase(withChatRoomIdString: chatRoomIdString, context: context)
         }

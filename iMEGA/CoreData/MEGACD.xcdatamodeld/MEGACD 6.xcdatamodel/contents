@@ -9,6 +9,7 @@
         <attribute name="text" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="ChatUploadTransfer" representedClassName=".ChatUploadTransfer" syncable="YES">
+        <attribute name="appData" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="chatRoomId" attributeType="String" syncable="YES"/>
         <attribute name="filepath" attributeType="String" syncable="YES"/>
         <attribute name="index" attributeType="Integer 32" usesScalarValueType="YES" syncable="YES"/>
@@ -51,7 +52,7 @@
     <elements>
         <element name="AppearancePreference" positionX="-73.9296875" positionY="-438.17578125" width="128" height="73"/>
         <element name="ChatDraft" positionX="-75.09375" positionY="-551.75" width="128" height="73"/>
-        <element name="ChatUploadTransfer" positionX="45" positionY="-387" width="128" height="118"/>
+        <element name="ChatUploadTransfer" positionX="45" positionY="-387" width="128" height="133"/>
         <element name="CloudAppearancePreference" positionX="147.59375" positionY="-472.00390625" width="128" height="58"/>
         <element name="MediaDestination" positionX="-73.02734375" positionY="-332.9921875" width="128" height="90"/>
         <element name="MOMessage" positionX="-73.15625" positionY="-222.20703125" width="128" height="75"/>
