@@ -28,7 +28,7 @@ extension MEGAStore {
             transfer.nodeHandle = nodeHandle
             MEGAStore.shareInstance()?.save(context)
         } else {
-            MEGALogError("ChatUploadTransfer object does not exsists")
+            MEGALogError("ChatUploadTransfer object does not exists")
             return
         }
     }

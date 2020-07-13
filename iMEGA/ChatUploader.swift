@@ -72,7 +72,7 @@
                         let nodeHandle = UInt64(handle),
                         let chatRoomId = UInt64(chatRoomIdString) {
                         MEGASdkManager.sharedMEGAChatSdk()?.attachNode(toChat: chatRoomId, node: nodeHandle)
-                        MEGALogInfo("[ChatUploader] attchment complete File path \(transfer.filepath)")
+                        MEGALogInfo("[ChatUploader] attachment complete File path \(transfer.filepath)")
                         context.delete(transfer)
                     }
                 }
@@ -97,7 +97,7 @@ extension ChatUploader: MEGATransferDelegate {
             if let allTransfers = MEGAStore.shareInstance()?.fetchAllChatUploadTransfer(withChatRoomId: chatRoomIdString, context: context) {
                 if let transferTask = allTransfers.filter({ $0.filepath == transfer.path && ($0.transferTag == nil || $0.transferTag == String(transfer.tag))}).first {
                     transferTask.transferTag = String(transfer.tag)
-                    MEGALogInfo("[ChatUploader] updating exsisting row for \(transfer.path ?? "no path") with tag \(transfer.tag)")
+                    MEGALogInfo("[ChatUploader] updating existing row for \(transfer.path ?? "no path") with tag \(transfer.tag)")
                 } else {
                     store.insertChatUploadTransfer(withFilepath: transfer.path,
                                                    chatRoomId: chatRoomIdString,
@@ -124,7 +124,7 @@ extension ChatUploader: MEGATransferDelegate {
             MEGAStore.shareInstance()?.deleteChatUploadTransfer(withChatRoomId: chatRoomIdString,
                                                                 transferTag: String(transfer.tag),
                                                                 context: context)
-            MEGALogInfo("[ChatUploader]Transfer has started with exactly the same data (local path and target parent). File: %@", transfer.fileName);
+            MEGALogInfo("[ChatUploader] transfer has started with exactly the same data (local path and target parent). File: %@", transfer.fileName);
             return;
         }
         
