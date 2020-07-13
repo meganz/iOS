@@ -25,4 +25,5 @@
 
 #import "CustomModalAlertViewController.h"
 #import "Helper.h"
+#import "MegaNodeActionType.h"
 #import "SelectableTableViewCell.h"
