@@ -2037,7 +2037,7 @@
 /* */
 "Something went wrong"="Algo deu errado";
 /* Button title that goes to the section Usage where you can see how your MEGA space is used */
-"Usage"="Utilização";
+"Usage"="Uso";
 /* Title of the "Links" Shared Items. */
 "Links"="Links";
 /* Title for empty state view of "Links" in Shared Items. */
@@ -2067,7 +2067,7 @@
 /* Chat Notifications DND: Remaining time left if until today */
 "Notifications will be silenced until %@"="Notifications will be silenced until %@";
 /* Chat Notifications DND: This text will appear in the settings of every chat with the on/off switch */
-"Chat Notifications"="Notificações do chat";
+"Chat Notifications"="Notificações de chat";
 /* Chat settings: This text appears with the Do Not Disturb switch */
 "Do Not Disturb"="Não perturbe";
 /* Title shown when the user lost the connection in a call, and the app will try to reconnect the user again. */
