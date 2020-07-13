@@ -30,11 +30,20 @@ class ChatViewController: MessagesViewController {
 
     // topbanner
     var timer: Timer?
+    var initDuration: TimeInterval?
     var topBannerButtonTopConstraint: NSLayoutConstraint?
     lazy var topBannerButton: UIButton = {
         let button = UIButton()
+        view.addSubview(button)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .caption1)
+        topBannerButtonTopConstraint = button.autoPinEdge(toSuperviewMargin: .top, withInset: -44)
+        button.autoPinEdge(toSuperviewEdge: .leading)
+        button.autoPinEdge(toSuperviewEdge: .trailing)
+        button.autoSetDimension(.height, toSize: 44)
+        button.addTarget(self, action: #selector(joinActiveCall), for: .touchUpInside)
+        button.backgroundColor = UIColor.mnz_turquoise(for: self.traitCollection)
+        button.isHidden = true
         return button
     }()
     
@@ -132,7 +141,6 @@ class ChatViewController: MessagesViewController {
         
         messagesCollectionView.allowsMultipleSelection = true
         configureMenus()
-        configureTopBannerButton()
         configurePreviewerButton()
         addObservers()
         addChatBottomInfoScreenToView()
@@ -154,12 +162,13 @@ class ChatViewController: MessagesViewController {
 
         previewerView.isHidden = chatRoom.previewersCount == 0
         previewerView.previewersLabel.text = "\(chatRoom.previewersCount)"
+        checkIfChatHasActiveCall()
+
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
          
-        checkIfChatHasActiveCall()
 
         if (presentingViewController != nil) && parent != nil {
             navigationItem.leftBarButtonItem = UIBarButtonItem(title: AMLocalizedString("close"), style: .plain, target: self, action: #selector(dismissChatRoom))
@@ -735,17 +744,6 @@ class ChatViewController: MessagesViewController {
         let removeRichLinkMenuItem = UIMenuItem(title:AMLocalizedString("removePreview","Once a preview is generated for a message which contains URLs, the user can remove it. Same button is also shown during loading of the preview - and would cancel the loading (text of the button is the same in both cases)."), action: #selector(MessageCollectionViewCell.removeRichPreview(_:)))
 
         UIMenuController.shared.menuItems = [forwardMenuItem, importMenuItem, editMenuItem, downloadMenuItem, addContactMenuItem, removeRichLinkMenuItem]
-    }
-
-    private func configureTopBannerButton() {
-        view.addSubview(topBannerButton)
-        topBannerButtonTopConstraint = topBannerButton.autoPinEdge(toSuperviewMargin: .top, withInset: -44)
-        topBannerButton.autoPinEdge(toSuperviewEdge: .leading)
-        topBannerButton.autoPinEdge(toSuperviewEdge: .trailing)
-        topBannerButton.autoSetDimension(.height, toSize: 44)
-        topBannerButton.addTarget(self, action: #selector(joinActiveCall), for: .touchUpInside)
-        topBannerButton.backgroundColor = #colorLiteral(red: 0, green: 0.7490196078, blue: 0.631372549, alpha: 1)
-        topBannerButton.isHidden = true
     }
     
     private func configurePreviewerButton() {
