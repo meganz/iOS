@@ -217,7 +217,7 @@
 }
 
 + (BOOL)isVideoPermissionAuthorized {
-    return [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeAudio] == AVAuthorizationStatusAuthorized;
+    return [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo] == AVAuthorizationStatusAuthorized;
 }
 
 @end
