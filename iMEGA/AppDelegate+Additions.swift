@@ -25,6 +25,10 @@ extension AppDelegate {
 
         if MEGASdkManager.sharedMEGASdk().smsVerifiedPhoneNumber() != nil { return }
 
+        if UserDefaults.standard.bool(forKey: "dontShowAgainAddPhoneNumber") {
+            return
+        }
+        
         if let lastDateAddPhoneNumberShowed = UserDefaults.standard.value(forKey: "lastDateAddPhoneNumberShowed") {
             guard let days = Calendar.current.dateComponents([.day], from: lastDateAddPhoneNumberShowed as! Date, to: Date()).day else { return }
             if days < 7 { return }
@@ -32,7 +36,14 @@ extension AppDelegate {
 
         UserDefaults.standard.set(Date(), forKey: "lastDateAddPhoneNumberShowed")
 
-        let addPhoneNumberController = UIStoryboard(name: "SMSVerification", bundle: nil).instantiateViewController(withIdentifier: "AddPhoneNumberViewControllerID")
+        guard let addPhoneNumberController = UIStoryboard(name: "SMSVerification", bundle: nil).instantiateViewController(withIdentifier: "AddPhoneNumberViewControllerID") as? AddPhoneNumberViewController else {
+            fatalError("Could not instantiate AddPhoneNumberViewController")
+        }
+        let timesAddPhoneNumberShowed = UserDefaults.standard.integer(forKey: "timesAddPhoneNumberShowed")
+        if timesAddPhoneNumberShowed >= MEGAOptOutOfAddYourPhoneNumberMinCount {
+            addPhoneNumberController.shouldHideDontShowAgainButton = false
+        }
+        UserDefaults.standard.set(timesAddPhoneNumberShowed + 1, forKey: "timesAddPhoneNumberShowed")
         addPhoneNumberController.modalPresentationStyle = .fullScreen
         UIApplication.mnz_presentingViewController().present(addPhoneNumberController, animated: true, completion: nil)
     }

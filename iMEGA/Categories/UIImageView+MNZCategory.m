@@ -11,6 +11,7 @@
 #import <objc/runtime.h>
 
 static int _MEGAWebImageSetterKey;
+#import "MEGASdk+MNZCategory.h"
 
 @implementation UIImageView (MNZCategory)
 
@@ -107,14 +108,16 @@ static int _MEGAWebImageSetterKey;
         case MEGANodeTypeFolder: {
             if ([node.name isEqualToString:MEGACameraUploadsNodeName]) {
                 self.image = UIImage.mnz_folderCameraUploadsImage;
+            } else if ([node.name isEqualToString:AMLocalizedString(@"My chat files", @"Destination folder name of chat files")]) {
+                [MEGASdkManager.sharedMEGASdk getMyChatFilesFolderWithCompletion:^(MEGANode *myChatFilesNode) {
+                    if (node.handle == myChatFilesNode.handle) {
+                        self.image = UIImage.mnz_folderMyChatFilesImage;
+                    } else {
+                        [self mnz_commonFolderImageForNode:node];
+                    }
+                }];
             } else {
-                if (node.isInShare) {
-                    self.image = UIImage.mnz_incomingFolderImage;
-                } else if (node.isOutShare) {
-                    self.image = UIImage.mnz_outgoingFolderImage;
-                } else {
-                    self.image = UIImage.mnz_folderImage;
-                }
+                [self mnz_commonFolderImageForNode:node];
             }
             break;
         }
@@ -125,6 +128,16 @@ static int _MEGAWebImageSetterKey;
             
         default:
             self.image = UIImage.mnz_genericImage;
+    }
+}
+
+- (void)mnz_commonFolderImageForNode:(MEGANode *)node {
+    if (node.isInShare) {
+        self.image = UIImage.mnz_incomingFolderImage;
+    } else if (node.isOutShare) {
+        self.image = UIImage.mnz_outgoingFolderImage;
+    } else {
+        self.image = UIImage.mnz_folderImage;
     }
 }
 
