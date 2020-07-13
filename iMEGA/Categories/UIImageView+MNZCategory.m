@@ -77,7 +77,7 @@ static int _MEGAWebImageSetterKey;
                     completion(request);
                 }
             }];
-            [self mnz_imageForNode:node];
+            self.image = nil;
             [[MEGASdkManager sharedMEGASdk] getPreviewNode:node destinationFilePath:path delegate:delegate];
         }
     } else {
