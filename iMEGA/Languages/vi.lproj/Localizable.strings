@@ -93,7 +93,7 @@
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "accountNotConfirmed"="Xin kiểm tra hộp thư email và làm theo hướng dẫn, nhấp vào đường liên kết để xác nhận tài khoản.";
 /* Error message when trying to login and the account is blocked */
-"accountBlocked"="Tài khoản của bạn bị khóa. Vui lòng liên hệ support@mega.nz";
+"accountBlocked"="Tài khoản của quý khách bị khóa. Vui lòng liên hệ support@mega.nz";
 /* Message shown when the user writes an invalid format in the email field */
 "emailInvalidFormat"="Nhập một email hợp lệ";
 /* Add contacts and share dialog error message when user try to add wrong email address */
@@ -165,7 +165,7 @@
 /* */
 "fileLinkUnavailableText1"="Điều này có thể do:";
 /* ToS refers to Terms of Service and AUP refers to Acceptable Use Policy. */
-"fileLinkUnavailableText2"="Tệp tin đã bị xóa vì vi phạm Điều khoản DV/Chính sách Sử dụng.";
+"fileLinkUnavailableText2"="Tệp tin đã bị xóa vì vi phạm Điều Khoản DV hay Chính Sách SD.";
 /* */
 "fileLinkUnavailableText3"="URL không hợp lệ - đường dẫn không tồn tại";
 /* */
@@ -183,7 +183,7 @@
 /* */
 "folderLinkUnavailableText1"="Điều này có thể do:";
 /* */
-"folderLinkUnavailableText2"="Liên kết thư mục đã bị xóa bỏ bởi vì vi phạm quy định sử dụng DV và chính sách SD.";
+"folderLinkUnavailableText2"="Liên kết thư mục đã bị xóa bỏ bởi vì vi phạm Điều Khoản DV hay Chính Sách SD.";
 /* */
 "folderLinkUnavailableText3"="URL không hợp lệ - đường dẫn không tồn tại";
 /* */
@@ -203,7 +203,7 @@
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
 "offlineEmptyState_title"="Không có tệp tin nào được Lưu về Ngoại Tuyến";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
-"contactsEmptyState_title"="Không có liên lạc";
+"contactsEmptyState_title"="Không có người nào cả";
 /* Title shown when there's no incoming Shared Items */
 "noIncomingSharedItemsEmptyState_text"="Không có Thư Mục Chia Sẻ nào được gửi tới cho bạn";
 /* Title shown when there's no outgoing Shared Items */
@@ -399,17 +399,17 @@
 /* Success message shown when you have moved 1 file */
 "moveFileMessage"="1 tệp tin đã được chuyển";
 /* Success message shown when you have moved {1+} files */
-"moveFilesMessage"="Đã di chuyển xong %d tệp tin";
+"moveFilesMessage"="Di chuyển xong %d tệp tin";
 /* Success message shown when you have moved 1 folder */
 "moveFolderMessage"="1 thư mục đã được chuyển";
 /* Success message shown when you have moved {1+} folders */
-"moveFoldersMessage"="%d thư mục đã được chuyển";
+"moveFoldersMessage"="%d thư mục đã chuyển xong";
 /* Success message shown when you have moved 1 file and 1 folder */
 "moveFileFolderMessage"="1 tệp và 1 thư mục đã được chuyển";
 /* Success message shown when you have moved 1 file and {1+} folders */
-"moveFileFoldersMessage"="1 tệp tin và %d thư mục đã được chuyển";
+"moveFileFoldersMessage"="1 tệp tin và %d thư mục đã chuyển xong";
 /* Success message shown when you have moved {1+} files and 1 folder */
-"moveFilesFolderMessage"="%d tệp tin và 1 thư mục đã được chuyển";
+"moveFilesFolderMessage"="%d tệp tin và 1 thư mục đã chuyển xong";
 /* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders */
 "moveFilesFoldersMessage"="[A] tệp tin và [B] thư mục đã bị xóa";
 /* List option shown on the details of a file or folder */
@@ -417,17 +417,17 @@
 /* Success message shown when you have copied 1 file */
 "copyFileMessage"="1 tệp tin đã được sao chép";
 /* Success message shown when you have copied {1+} files */
-"copyFilesMessage"="%d tệp tin đã được sao chép";
+"copyFilesMessage"="%d tệp tin đã sao chép xong";
 /* Success message shown when you have copied 1 folder */
 "copyFolderMessage"="1 thư mục đã được sao chép";
 /* Success message shown when you have copied {1+} folders */
-"copyFoldersMessage"="%d thư mục đã được sao chép";
+"copyFoldersMessage"="%d thư mục đã sao chép xong";
 /* Success message shown when you have copied 1 file and 1 folder */
 "copyFileFolderMessage"="1 tệp và thư mục đã được sao chép";
 /* Success message shown when you have copied 1 file and {1+} folders */
-"copyFileFoldersMessage"="1 tệp tin và %d thư mục đã được sao chép";
+"copyFileFoldersMessage"="1 tệp tin và %d thư mục đã sao chép xong";
 /* Success message shown when you have copied {1+} files and 1 folder */
-"copyFilesFolderMessage"="%d tệp tin và 1 thư mục đã được sao chép";
+"copyFilesFolderMessage"="%d tệp tin và 1 thư mục đã sao chép xong";
 /* Success message shown when you have copied [A] = {1+} files and [B] = {1+} folders */
 "copyFilesFoldersMessage"="[A] tệp tin và [B] thư mục đã được sao chép";
 /* Title for the action that allows you to rename a file or folder  */
@@ -501,17 +501,17 @@
 /* String shown when multi selection is enabled and only one item has been selected. */
 "1 selected"="1 selected";
 /* String shown when multi selection is enabled and the user has more than one item selected. */
-"xSelected"="%d được chọn";
+"xSelected"="%d mục được chọn";
 /* Title of the Offline section */
 "offline"="Ngoại tuyến";
 /* Title of the Contacts section */
-"contactsTitle"="Danh Bạ";
+"contactsTitle"="Sổ Danh Bạ";
 /* Label for any ‘Requests’ button, link, text, title, etc. On iOS is used to go to the Contact request section from Contacts */
 "Requests"="Yêu cầu";
 /* Label for any ‘Groups’ button, link, text, title, etc. On iOS is used to go to the chats 'Groups' section from Contacts */
 "Groups"="Groups";
 /* Label for any ‘Recently Added’ button, link, text, title, etc. On iOS is used on a section that shows the 'Recently Added' contacts */
-"Recently Added"="Recently Added";
+"Recently Added"="Mới Thêm Gần Đây";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
 "oneFolderShared"="1 thư mục";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
@@ -551,7 +551,7 @@
 /* Item menu option to add a contact through your device app Contacts */
 "addFromContacts"="Lấy từ danh bạ trong iPhone";
 /* Alert title shown when you select to add a contact inserting his/her email */
-"addContact"="Thêm liên lạc";
+"addContact"="Thêm tên danh bạ";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
 "contactEmail"="Email của người muốn thêm";
 /* Button title to 'Add' the contact to your contacts list */
@@ -563,7 +563,7 @@
 /* Success message shown when some contacts have been invited */
 "theUsersHaveBeenInvited"="Tên của những người quý khách vừa mời sẽ xuất hiện trong danh bạ sau khi họ dùng lời mời của quý khách để tạo tài khoản.";
 /* Alert title shown when you want to remove one or more contacts */
-"removeUserTitle"="Xóa liên hệ";
+"removeUserTitle"="Xóa tên danh bạ";
 /* Alert confirmation message shown when you want to remove more than one contact from your contacts list */
 "removeMultipleUsersMessage"="Bạn có chắc muốn xóa %d tên khỏi danh bạ của bạn không?";
 /* Success message shown when the selected contact has been removed. 'Contact {Name of contact} removed' */
@@ -581,9 +581,9 @@
 /* Select all items/elements on the list */
 "selectAll"="Chọn hết";
 /*  */
-"oneContact"="1 liên lạc";
+"oneContact"="1 tên danh bạ";
 /* [X] will be replaced by a plural number, indicating the total number of contacts the user has */
-"XContactsSelected"="[X] liên hệ";
+"XContactsSelected"="[X] tên danh bạ";
 /* Button title which, if tapped, will trigger the action of sharing with the contact or contacts selected, the folder you want inside your Cloud Drive */
 "shareFolder"="Chia sẻ thư mục này";
 /* Button title which, if tapped, will trigger the action of sharing the folders selected */
@@ -595,7 +595,7 @@
 /* Permissions given to the user you share your folder with */
 "readOnly"="Chỉ được xem";
 /* Permissions given to the user you share your folder with */
-"readAndWrite"="Cho Xem và Sửa";
+"readAndWrite"="Xem và Sửa";
 /* Permissions given to the user you share your folder with */
 "fullAccess"="Toàn quyền truy cập";
 /* Title of the Settings section */
@@ -621,7 +621,7 @@
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="Chính Sách Quyền Riêng Tư";
 /* Title of one of the Settings sections where you can see the MEGA's 'Terms of Service' */
-"termsOfServicesLabel"="Điều Khoản Sử Dụng Dịch Vụ";
+"termsOfServicesLabel"="Điều Khoản Dịch Vụ";
 /* Title of one of the Settings sections where you can see the MEGA's 'Data Protection Regulation' */
 "dataProtectionRegulationLabel"="Quy Định Bảo Vệ Dữ Liệu";
 /* State shown to if something is enabled or disabled on Settings main tab. For example: "Passcode Off" */
@@ -757,7 +757,7 @@
 /* Message that is shown when the user click on 'Cancel your account' to confirm that he's aware that his data will be deleted. */
 "youWillLooseAllData"="Bạn sẽ mất tất cả dữ liệu liên quan đến tới tài khoản này. Bạn có chắc muốn tiếp tục không?";
 /* Account closure, warning message to remind user to contact MEGA support after he confirms that he wants to cancel account. */
-"ifYouCantAccessYourEmailAccount"="Nếu bạn không truy cập được email của mình, xin liên hệ support@mega.nz.";
+"ifYouCantAccessYourEmailAccount"="Nếu quý khách không truy cập được email của mình, xin liên hệ support@mega.nz.";
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="Yêu cầu hủy bỏ này đã hết hạn.";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
@@ -793,7 +793,7 @@
 /* Success message shown when 1 folder has been removed from MEGA */
 "folderRemovedToRubbishBinMessage"="1 thư mục vừa bị xóa khỏi MEGA";
 /* Success message shown when {1+} folders have been removed from MEGA */
-"foldersRemovedToRubbishBinMessage"="%d tệp tin vừa bị xóa khỏi MEGA";
+"foldersRemovedToRubbishBinMessage"="%d tệp tin đã bị xóa khỏi MEGA";
 /* Success message shown when 1 file and 1 folder have been removed from MEGA */
 "fileFolderRemovedToRubbishBinMessage"="Đã xóa 1 tệp tin và 1 thư mục khỏi MEGA";
 /* Success message shown when 1 file and {1+} folders have been removed from MEGA */
@@ -1064,7 +1064,7 @@
 /* Alert title shown when a purchase has stopped because some error between the process */
 "failedPurchase_title"="Việc mua hàng đã bị dừng";
 /* Alert message shown when a purchase has stopped because some error between the process */
-"failedPurchase_message"="Có thể do bạn đã hủy mua hàng hoặc Apple báo lỗi phiên giao dịch của bạn. XIn thử lại sau, hoặc liên hệ ios@mega.nz.";
+"failedPurchase_message"="Có thể quý khách đã hủy mua hàng hoặc Apple báo lỗi phiên giao dịch này. Xin thử lại sau, hoặc liên hệ ios@mega.nz.";
 /* Alert title shown when a restore hasn't been completed correctly */
 "incompleteRestore_title"="Lỗi khôi phục";
 /* Alert message shown when a restore hasn't been completed correctly */
@@ -1072,7 +1072,7 @@
 /* Alert title shown when the restoring process has stopped for some reason */
 "failedRestore_title"="Việc khôi phục đã dừng lại";
 /* Alert message shown when the restoring process has stopped for some reason */
-"failedRestore_message"="Có thể yêu cầu đã bị hủy hoặc không thể phục hồi lại được mặt hàng giao dịch trước đây . Xin thử lại sau, hoặc liên hệ ios@mega.nz để được trợ giúp.";
+"failedRestore_message"="Có thể yêu cầu đã bị hủy hoặc không thể phục hồi lại được mặt hàng giao dịch trước đây. Xin thử lại sau, hoặc liên hệ ios@mega.nz để được trợ giúp.";
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="Bật chế độ DEBUG";
 /* Alert message shown when the DEBUG mode is enabled */
@@ -1168,7 +1168,7 @@
 /* Title of the incoming shared folders of a user. */
 "sharedFolders"="Thư Mục Được Chia Sẻ";
 /* Label title above the fingerprint credentials of a user's contact. A credential in this case is a stored piece of information representing the identity of the contact */
-"contactCredentials"="Chứng Thực của Tên Liên Lạc";
+"contactCredentials"="Chứng Thực của Tên Danh Bạ";
 /* "Verify user" dialog description */
 "thisIsBestDoneInRealLife"="Đây là cách tốt nhất để tạo các buổi meeting người thật với nhau. Nếu bạn đã có phương thức xác minh khác như OTR hay PGP, bạn cũng có thể dùng được.";
 /* Title of the label in the my account section. It shows the credentials of the current user so it can be used to be verified by other contacts */
@@ -1234,7 +1234,7 @@
 /* referring to a contact in the contact list of the user */
 "contact"="Danh bạ";
 /* A button label. The button sends contact information to a user in the conversation. */
-"sendContact"="Gửi tên liên lạc";
+"sendContact"="Gửi tên danh bạ";
 /* */
 "done"="Hoàn thành";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
@@ -1276,9 +1276,9 @@
 /* Error message displayed when trying to invite a contact who is already added. */
 "alreadyAContact"="Tên %s đã có mặt trong danh bạ.";
 /* A summary message when a user sent a contact's details through the chat. Please keep %s as it will be replaced at runtime with the name of the contact that was sent. */
-"sentContact"="Gửi đến: %s";
+"sentContact"="Tên danh bạ được gửi: %s";
 /* A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent. */
-"sentXContacts"="Gửi đến %s tên liên lạc.";
+"sentXContacts"="Gửi đến %s tên danh bạ.";
 /* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %s as it will be replaced at runtime with the name of the attached file. */
 "attachedFile"="Gửi kèm: %s";
 /* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
@@ -1357,7 +1357,7 @@
 /* SDK error returned when an upload would produce recursivity */
 "Upload produces recursivity"="Upload produces recursivity";
 /* Error shown when download a file that has violated ToS/AUP. */
-"Not accessible due to ToS/AUP violation"="Không truy cập được do vi phạm Điều Khoản Sử Dụng và Dịch Vụ";
+"Not accessible due to ToS/AUP violation"="Không truy cập được do vi phạm ĐKDV/CSSD";
 /* Error shown when SSL check has failed */
 "SSL verification failed"="Xác thực SSL bị thất bại";
 /* Label shown when current account does not have enough quota to complete the operation */
@@ -1439,7 +1439,7 @@
 /* QR Code label, used in Settings as title. String as short as possible */
 "qrCode"="Mã QR";
 /* Label for the setting that allow users to automatically add contacts when they scan his/her QR code. String as short as possible. */
-"autoAccept"="Thêm Tự Động";
+"autoAccept"="Tự Động Thêm";
 /* Footer that explains the way Auto-Accept works for QR codes */
 "autoAcceptFooter"="Bất cứ ai có tài khoản MEGA quét mã ảnh QR này sẽ được tự động thêm vào danh sách tên liên lạc của bạn.";
 /* Action to reset the current valid QR code of the user */
@@ -1791,7 +1791,7 @@
 /* When a contact sent a contact/friend request */
 "Sent you a contact request"="Vừa gửi bạn lời mời thêm vào danh bạ";
 /* A notification that the other user cancelled their contact request so it is no longer valid. E.g. user@email.com cancelled their contact request. */
-"Cancelled their contact request"="Đã hủy yêu cầu danh bạ";
+"Cancelled their contact request"="Đã hủy lời mời thêm danh bạ";
 /* A reminder notification to remind the user to respond to the contact request. */
 "Reminder: You have a contact request"="Nhắc nhở: Bạn có một yêu cầu danh bạ";
 /* A notification telling the user that the other user deleted them as a contact. E.g. user@email.com deleted you as a contact. */
@@ -1801,7 +1801,7 @@
 /* A notification telling the user that one of their contact’s accounts has been deleted or deactivated. */
 "Account has been deleted/deactivated"="Tài khoản đã bị xóa/vô hiệu hóa";
 /* A notification telling the user that another user blocked them as a contact (they will no longer be able to contact them). E.g. name@email.com blocked you as a contact. */
-"Blocked you as a contact"="Đã chặn liên lạc từ phía bạn";
+"Blocked you as a contact"="Đã chặn liên lạc từ bạn";
 /* Response text after clicking Ignore on an incoming contact request notification. */
 "You ignored a contact request"="Đã bỏ qua yêu cầu danh bạ";
 /* Response text after clicking Accept on an incoming contact request notification. */
@@ -1881,7 +1881,7 @@
 /* Type of data displayed in a map view. A satellite image of the area with road and road name information layered on top. */
 "Hybrid"="Kết hợp";
 /* Label to give feedback to the user when he is going to share his location, indicating that it may not be the exact location. */
-"Accurate to %d meters"="Chính xác trong khoảng %d mét";
+"Accurate to %d meters"="Chính xác xấp xỉ %d mét";
 /* Alert title shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm. */
 "Send Location"="Gửi Vị Trí";
 /* Message shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm. */
@@ -1977,17 +1977,17 @@
 /* Detailed explanation about MEGA not using the contacts data without permision */
 "MEGA will not use this data for any other purpose and will never interact with your contacts without your consent."="MEGA will not use this data for any other purpose and will never interact with your contacts without your consent.";
 /* Title encouraging the user to check who of its contacts are using MEGA */
-"See who's already on MEGA"="See who is already on MEGA";
+"See who's already on MEGA"="Xem những ai đã có mặt trên MEGA";
 /* Title showing the user how many of his contacts are using MEGA */
-"[X] contacts found on MEGA"="[X] contacts found on MEGA";
+"[X] contacts found on MEGA"="Đã tìm thấy [X] tên danh bạ trên MEGA";
 /* Title showing the user that one of his contacts are using MEGA */
-"1 contact found on MEGA"="1 contact found on MEGA";
+"1 contact found on MEGA"="Đã tìm thấy 1 tên danh bạ trên MEGA";
 /* Text indicating the user to open the device settings for MEGA */
 "Open Settings"="Open Settings";
 /* Text encouraging the user to invite contacts to MEGA */
 "Invite contacts and start chatting securely with MEGA’s encrypted chat."="Mời thêm tên liên lạc và để bắt đầu trò chuyện thông qua MEGA và được bảo mật mạnh mẽ.";
 /* Text showing the user how many contacts would be invited */
-"Invite [X] contacts"="Invite [X] contacts";
+"Invite [X] contacts"="Mời [X] tên danh bạ";
 /* Text showing the user how to write more than one email in order to invite them to MEGA */
 "Tap space to enter multiple emails"="Tap space to enter multiple emails";
 /* Text used as a section title or similar */
@@ -1995,7 +1995,7 @@
 /* Text used as view title showing the user the phone contacts using MEGA */
 "On MEGA"="Trên mạng MEGA";
 /* Text used as a section title or similar showing the user the phone contacts using MEGA */
-"CONTACTS ON MEGA"="CONTACTS ON MEGA";
+"CONTACTS ON MEGA"="SỔ DANH BẠ TRÊN MEGA";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
 "Hi, Have encrypted conversations on Mega with me and get 50GB free storage."="Hi! Have secure conversations on MEGA with me and get up to 50GB free storage.";
 /* Destination folder name of chat files */
@@ -2079,7 +2079,7 @@
 /* Contact details screen: Set the alias(nickname) for a user */
 "Set Nickname"="Đặt Tên";
 /* Contact details screen: Edit the alias(nickname) for a user */
-"Edit Nickname"="Edit Nickname";
+"Edit Nickname"="Sửa biệt danh";
 /* Edit nickname screen: Remove nickname button title */
 "Remove Nickname"="Remove Nickname";
 /* Add nickname screen: This text appears above the alias(nickname) entry */
@@ -2097,9 +2097,9 @@
 /* Used in camera upload settings: This text will appear below the 'Include location tags' settings explaining the details of this settings */
 "If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them."="If enabled, you will upload information about where your pictures and videos were taken, so be careful when sharing them.";
 /* Used in Photos app browser view to send the photos from the view to the chat. */
-"Send (%d)"="Send (%d)";
+"Send (%d)"="Gửi (%d) mục";
 /* Used in Photos app browser view to upload the photos from the view to the cloud. */
-"Upload (%d)"="Upload (%d)";
+"Upload (%d)"="Tải lên (%d) mục";
 /* Used in Photos app browser album listing screen. */
 "Albums"="Albums";
 /* Used in Photos app browser carousel view to unselect a selected photo. */
@@ -2111,9 +2111,9 @@
 /* Error message shown when opening a link with an account that not corresponds to the link */
 "This link is not related to this account. Please log in with the correct account."="Đường liên kết này không thuộc sở hữu của tài khoản hiện tại. Xin đăng nhập vào tài khoản phù hợp.";
 /* Text emncouraging the user to add contacts in MEGA */
-"Invite contact now"="Invite contacts now";
+"Invite contact now"="Mời thêm tên danh bạ";
 /* Text showing the user one contact would be invited */
-"Invite 1 contact"="Invite 1 contact";
+"Invite 1 contact"="Mời 1 tên danh bạ";
 /* Error message if user click next button without enter a valid phone number */
 "Please enter a valid phone number"="Xin nhập một số điện thoại hợp lệ.";
 /* Error message that will show to user when user reached the sms verification daily limit */

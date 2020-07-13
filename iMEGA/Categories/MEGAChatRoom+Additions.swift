@@ -34,7 +34,7 @@ extension MEGAChatRoom {
         if isGroup && !hasCustomTitle && peerCount == 0  {
             return AMLocalizedString("Chat created on %s1", "Default title of an empty chat.").replacingOccurrences(of: "%s1", with: NSDate(timeIntervalSince1970: TimeInterval(creationTimeStamp)).mnz_formattedDefaultDateForMedia())
         } else {
-            return title
+            return title ?? ""
         }
     }
     
@@ -104,25 +104,22 @@ extension MEGAChatRoom {
                 return nickName
             }
         }
-
-        if let firstName = peerFirstname(byHandle: userHandle) {
-            if !firstName.mnz_isEmpty() {
+        
+        let firstName = peerFirstname(byHandle: userHandle)
+        if !firstName.mnz_isEmpty() {
                 return firstName
-            }
         }
-
-        if let lastName = peerLastname(byHandle: userHandle) {
-            if !lastName.mnz_isEmpty() {
-                return lastName
-            }
+        
+        let lastName = peerLastname(byHandle: userHandle)
+        if !lastName.mnz_isEmpty() {
+            return lastName
         }
-
-        if let email = peerEmail(byHandle: userHandle) {
-            if !email.mnz_isEmpty() {
-                return email
-            }
+        
+        let email = peerEmail(byHandle: userHandle)
+        if !email.mnz_isEmpty() {
+            return email
         }
-
+        
         return nil
     }
 }
