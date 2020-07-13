@@ -229,7 +229,7 @@
 /* Success message shown when you remove a contact request */
 "requestDeleted"="La demande a été supprimée";
 /* Title shown when there's no pending contact requests */
-"noRequestPending"="Il n’y a aucune requête en attente";
+"noRequestPending"="Il n’y a aucune demande en attente";
 /* Title shown when the transfers are paused */
 "transfersEmptyState_titlePaused"="Transferts en pause";
 /* Title shown when the there is not any transfer and they are not paused */
@@ -1154,7 +1154,7 @@
 /* Title to perform the action of sending a message to a contact. */
 "sendMessage"="Envoyer un message";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
-"verifyCredentials"=" Confirmer les coordonnées";
+"verifyCredentials"=" Confirmer le numéro d’identification";
 /* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
 "verify"="Confirmer";
 /* Button title */
@@ -1168,11 +1168,11 @@
 /* Title of the incoming shared folders of a user. */
 "sharedFolders"="Dossiers partagés";
 /* Label title above the fingerprint credentials of a user's contact. A credential in this case is a stored piece of information representing the identity of the contact */
-"contactCredentials"="Coordonnées du contact";
+"contactCredentials"="Numéro d’identification du contact";
 /* "Verify user" dialog description */
 "thisIsBestDoneInRealLife"="La meilleure façon de le faire est de se rencontrer physiquement. Si vous avez un autre moyen de communication vérifiée, tel qu'OTR ou PGP, vous pouvez aussi l'utiliser.";
 /* Title of the label in the my account section. It shows the credentials of the current user so it can be used to be verified by other contacts */
-"My credentials"="Mes authentifiants";
+"My credentials"="Mon numéro d’identification";
 /* Button to reset the password */
 "reset"="Réinitialiser";
 /* Button title */
@@ -1547,7 +1547,7 @@
 /* Title to preview document */
 "previewContent"="Aperçu du contenu";
 /* Title of the notification for a missed call */
-"missedCall"="Appel manqué";
+"missedCall"="Un appel a été manqué";
 /* When an outgoing call of user A with user B had been rejected by user B */
 "callWasRejected"="L’appel a été refusé";
 /* When an active call of user A with user B had cancelled */
@@ -2199,7 +2199,7 @@
 /* Label for any ‘Minimal’ button, link, text, title, etc. - (String as short as possible). */
 "Minimal"="Minimale";
 /* Section title inside of Settings - Appearance, where you can change the app's layout. */
-"Layout"="Agencement";
+"Layout"="Disposition";
 /* Section title inside of Settings - Appearance, where you can change the app's icon. */
 "App Icon"="Icône de l’appli";
 /* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
@@ -2213,7 +2213,7 @@
 /* Section title of the 'Sorting And View Mode' view inside of Settings - Appearence - Sorting And View Mode. */
 "View mode preference"="Préférence du mode d’affichage";
 /* Footer text explaining what means choosing a sorting preference 'Per Folder' or 'Same for All' in Settings - Appearance - Sorting And View Mode. */
-"Configure column sorting order on a per-folder basis, or use the same order for all folders."="Configurer l’ordre de tri des colonnes par dossier ou utiliser le même ordre pour tous les dossiers.";
+"Configure column sorting order on a per-folder basis, or use the same order for all folders."="Configurez l’ordre de tri des colonnes par dossier ou utiliser le même ordre pour tous les dossiers.";
 /* Footer text explaining what means choosing a view mode preference 'Per Folder', 'List view' or 'Thumbnail view' in Settings - Appearance - Sorting And View Mode. */
 "Select view mode (List or Thumbnail) on a per-folder basis, or use the same view mode for all folders."="Sélectionnez le mode d’affichage (en liste ou en imagettes) pour chaque dossier ou utilisez le même mode d’affichage pour tous les dossiers.";
 /* Warning message to alert user about logout in My Account section if has transfers in progress. */

@@ -35,10 +35,11 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 7 * 77;
 - (instancetype)init {
     self = [super init];
     if (self) {
-        _serialQueueForContext = dispatch_queue_create("nz.mega.cameraUpload.recordManager.context", DISPATCH_QUEUE_SERIAL);
         _serialQueueForFileCoordinator = dispatch_queue_create("nz.mega.cameraUpload.recordManager.coordinator", DISPATCH_QUEUE_SERIAL);
         
         _storeStack = [[MEGAStoreStack alloc] initWithModelName:@"CameraUpload" storeURL:[NSURL.mnz_cameraUploadURL URLByAppendingPathComponent:@"CameraUpload.sqlite"]];
+        _backgroundContext = [_storeStack newBackgroundContext];
+        _backgroundContext.undoManager = nil;
     }
     
     return self;
@@ -52,17 +53,6 @@ static const NSUInteger MaximumUploadRetryPerLoginCount = 7 * 77;
     });
     
     return _fileNameCoordinator;
-}
-
-- (NSManagedObjectContext *)backgroundContext {
-    dispatch_sync(self.serialQueueForContext, ^{
-        if (self->_backgroundContext == nil) {
-            self->_backgroundContext = [self.storeStack newBackgroundContext];
-            self->_backgroundContext.undoManager = nil;
-        }
-    });
-    
-    return _backgroundContext;
 }
 
 - (void)resetDataContext {

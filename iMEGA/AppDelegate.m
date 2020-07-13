@@ -126,9 +126,7 @@
     MEGALogDebug(@"[App Lifecycle] Application will finish launching with options: %@", launchOptions);
     
     UIDevice.currentDevice.batteryMonitoringEnabled = YES;
-        
-    [CameraUploadManager.shared setupCameraUploadWhenApplicationLaunches];
-    
+
     return YES;
 }
 
@@ -144,6 +142,8 @@
     [[AVAudioSession sharedInstance] setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil];
     
     [MEGAReachabilityManager sharedManager];
+    
+    [CameraUploadManager.shared setupCameraUploadWhenApplicationLaunches];
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"pointToStaging"]) {
         [[MEGASdkManager sharedMEGASdk] changeApiUrl:@"https://staging.api.mega.co.nz/" disablepkp:NO];
@@ -862,6 +862,7 @@
 
 - (void)copyDatabasesForExtensions {
     MEGALogDebug(@"Copy databases for extensions");
+    [MEGASdkManager.sharedMEGAChatSdk saveCurrentState];
     NSError *error;
     NSFileManager *fileManager = [NSFileManager defaultManager];
     
@@ -1777,8 +1778,9 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 - (void)onChatListItemUpdate:(MEGAChatSdk *)api item:(MEGAChatListItem *)item {
     if (item.changes == 0 && self.chatLastKnownInitState == MEGAChatStatusOnline) {
-        MEGALogDebug(@"New chat room, invalidate NSE cache");
+        MEGALogDebug(@"New chat room %@", [MEGASdk base64HandleForUserHandle:item.chatId]);
         [self copyDatabasesForExtensions];
+        MEGALogDebug(@"Invalidate NSE cache");
         NSUserDefaults *sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];
         [sharedUserDefaults setBool:YES forKey:MEGAInvalidateNSECache];
     }
