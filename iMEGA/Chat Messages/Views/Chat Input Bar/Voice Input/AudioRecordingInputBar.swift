@@ -147,9 +147,10 @@ class AudioRecordingInputBar: UIView {
     }
     
     deinit {
-        cancelRecording()
+        if audioRecorder.isRecording {
+            cancelRecording()
+        }
     }
-
 }
 
 
