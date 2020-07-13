@@ -4410,25 +4410,6 @@
 			path = CustomModalAlert;
 			sourceTree = "<group>";
 		};
-		6A14AF05052121F51C5E2D0C /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				7B7003F85C0C3865906FE6F5 /* Pods-MEGA.debug.xcconfig */,
-				B58F2A3A69144EE98A0839A4 /* Pods-MEGA.release.xcconfig */,
-				AA6562768CD84BE6E518F335 /* Pods-MEGANotifications.debug.xcconfig */,
-				239C47C9BFC2F8521BCD5328 /* Pods-MEGANotifications.release.xcconfig */,
-				C4197E7DA6D81B468880E932 /* Pods-MEGAPicker.debug.xcconfig */,
-				2804F63F499A3E85F96E624D /* Pods-MEGAPicker.release.xcconfig */,
-				CF43288E486C6583B96E2474 /* Pods-MEGAPickerFileProvider.debug.xcconfig */,
-				B2A8F96B5C39D74C5D338AA5 /* Pods-MEGAPickerFileProvider.release.xcconfig */,
-				C8621E0BA7DB84A28128B42C /* Pods-MEGAShare.debug.xcconfig */,
-				B0ACBEF94F7E5513239A405A /* Pods-MEGAShare.release.xcconfig */,
-				F6C7035EC8B472CB9FBE84D9 /* Pods-MEGAUnitTests.debug.xcconfig */,
-				A12A312A5777300707A950AD /* Pods-MEGAUnitTests.release.xcconfig */,
-			);
-			path = Pods;
-				sourceTree = "<group>";
-		};
 		5DD8C8E224B5AF400033F479 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
@@ -4447,6 +4428,25 @@
 				5DD8C8E824B5AF400033F479 /* Date+Manipulation.swift */,
 			);
 			path = Date;
+			sourceTree = "<group>";
+		};
+		6A14AF05052121F51C5E2D0C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				7B7003F85C0C3865906FE6F5 /* Pods-MEGA.debug.xcconfig */,
+				B58F2A3A69144EE98A0839A4 /* Pods-MEGA.release.xcconfig */,
+				AA6562768CD84BE6E518F335 /* Pods-MEGANotifications.debug.xcconfig */,
+				239C47C9BFC2F8521BCD5328 /* Pods-MEGANotifications.release.xcconfig */,
+				C4197E7DA6D81B468880E932 /* Pods-MEGAPicker.debug.xcconfig */,
+				2804F63F499A3E85F96E624D /* Pods-MEGAPicker.release.xcconfig */,
+				CF43288E486C6583B96E2474 /* Pods-MEGAPickerFileProvider.debug.xcconfig */,
+				B2A8F96B5C39D74C5D338AA5 /* Pods-MEGAPickerFileProvider.release.xcconfig */,
+				C8621E0BA7DB84A28128B42C /* Pods-MEGAShare.debug.xcconfig */,
+				B0ACBEF94F7E5513239A405A /* Pods-MEGAShare.release.xcconfig */,
+				F6C7035EC8B472CB9FBE84D9 /* Pods-MEGAUnitTests.debug.xcconfig */,
+				A12A312A5777300707A950AD /* Pods-MEGAUnitTests.release.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 		7747B2D5208623550011814E /* Network */ = {
@@ -7927,7 +7927,7 @@
 				CODE_SIGN_ENTITLEMENTS = MEGA.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				ENABLE_BITCODE = NO;
@@ -7988,7 +7988,7 @@
 				CODE_SIGN_ENTITLEMENTS = MEGA.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -8050,7 +8050,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -8108,7 +8108,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -8158,7 +8158,7 @@
 				CODE_SIGN_ENTITLEMENTS = iMEGA/Extensions/MEGAPickerFileProvider/MEGAPickerFileProvider.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				GCC_PREFIX_HEADER = "iMEGA/Extensions/MEGAPickerFileProvider/MEGAPickerFileProvider-PrefixHeader.pch";
@@ -8197,7 +8197,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				GCC_PREFIX_HEADER = "iMEGA/Extensions/MEGAPickerFileProvider/MEGAPickerFileProvider-PrefixHeader.pch";
@@ -8236,7 +8236,7 @@
 				CODE_SIGN_ENTITLEMENTS = iMEGA/Extensions/MEGAPicker/MEGAPicker.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -8291,7 +8291,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -8343,7 +8343,7 @@
 				CODE_SIGN_ENTITLEMENTS = iMEGA/Extensions/MEGAShare/MEGAShare.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -8398,7 +8398,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = T9RH74Y7L9;
 				FRAMEWORK_SEARCH_PATHS = (
