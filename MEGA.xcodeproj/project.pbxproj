@@ -26,6 +26,7 @@
 		2FCA4B7A2385FB260011B7DA /* ChatImageQualityTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCA4B792385FB260011B7DA /* ChatImageQualityTableViewController.swift */; };
 		2FCC5BC2238740ED00E1E5A0 /* ChatImageUploadQuality.h in Sources */ = {isa = PBXBuildFile; fileRef = 2FCC5BC1238740ED00E1E5A0 /* ChatImageUploadQuality.h */; };
 		2FCE04A9241B019800EE7842 /* ActionSheetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCE04A7241B019800EE7842 /* ActionSheetCell.swift */; };
+		2FDE43B924B6C11D00280A75 /* NSObject+Debounce.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FDE43B724B6C11C00280A75 /* NSObject+Debounce.m */; };
 		410AD3C11C883AA900BF939E /* MEGAAVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 410AD3C01C883AA900BF939E /* MEGAAVViewController.m */; };
 		411504941CEB183600BF38E3 /* SaveToCameraRollActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 411504931CEB183600BF38E3 /* SaveToCameraRollActivity.m */; };
 		4115D6441E718B1F004BB0FF /* UIImage+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 4115D6431E718B1F004BB0FF /* UIImage+MNZCategory.m */; };
@@ -184,6 +185,7 @@
 		5B367578204FFC1B0087362D /* SendToChatActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B367574204FFBF60087362D /* SendToChatActivity.m */; };
 		5B3740C7241FAA8500BA75EA /* MEGAStore+OfflineAppearancePreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE689AE2419141D00462134 /* MEGAStore+OfflineAppearancePreference.swift */; };
 		5B3740C8241FAA8700BA75EA /* MEGAStore+OfflineAppearancePreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE689AE2419141D00462134 /* MEGAStore+OfflineAppearancePreference.swift */; };
+		5B38CDFF24B5F3A300BAA44F /* EmptyStateView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BE7BEE423745FC700BBD23F /* EmptyStateView.xib */; };
 		5B39DAA21EF916D900BC2319 /* ChatAttachedContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B39DAA11EF916D900BC2319 /* ChatAttachedContactsViewController.m */; };
 		5B3C3FF9241952D1003B1650 /* ViewModePreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3C3FF8241952D1003B1650 /* ViewModePreference.swift */; };
 		5B40AB321F7A512E0034C3B3 /* AchievementsDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B40AB301F7A512D0034C3B3 /* AchievementsDetailsViewController.m */; };
@@ -1295,6 +1297,8 @@
 		2FCA4B792385FB260011B7DA /* ChatImageQualityTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatImageQualityTableViewController.swift; sourceTree = "<group>"; };
 		2FCC5BC1238740ED00E1E5A0 /* ChatImageUploadQuality.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChatImageUploadQuality.h; sourceTree = "<group>"; };
 		2FCE04A7241B019800EE7842 /* ActionSheetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSheetCell.swift; sourceTree = "<group>"; };
+		2FDE43B724B6C11C00280A75 /* NSObject+Debounce.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Debounce.m"; sourceTree = "<group>"; };
+		2FDE43B824B6C11D00280A75 /* NSObject+Debounce.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Debounce.h"; sourceTree = "<group>"; };
 		410333D71B9993A000380FF3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		410333E11B99948600380FF3 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		410333EB1B9994F400380FF3 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = nl; path = nl.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
@@ -3711,6 +3715,9 @@
 				8330A9F222F41F470059B39C /* Array+Additions.swift */,
 				83FA7B502386197B00887630 /* UserDefaults+Additions.swift */,
 				83D5DB2D23E9930200B09412 /* MEGAChatSDK+Additions.swift */,
+				BFCF843E246A69FE004FA3B1 /* UIView+Additions.swift */,
+				2FDE43B824B6C11D00280A75 /* NSObject+Debounce.h */,
+				2FDE43B724B6C11C00280A75 /* NSObject+Debounce.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -6340,6 +6347,7 @@
 				943229351EDD886B007DB542 /* Images.xcassets in Resources */,
 				9456054C1EDD7ADB0094EF0F /* LTHPasscodeViewController.bundle in Resources */,
 				9456053C1EDD53240094EF0F /* SVProgressHUD.bundle in Resources */,
+				5B38CDFF24B5F3A300BAA44F /* EmptyStateView.xib in Resources */,
 				943229511EDD9D02007DB542 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -7011,6 +7019,7 @@
 				5D7D6B9E2491F79E00ADBDEE /* OverDiskQuotaService.swift in Sources */,
 				5B39DAA21EF916D900BC2319 /* ChatAttachedContactsViewController.m in Sources */,
 				5BB50E091F20E840000CA24D /* MEGACreateFolderRequestDelegate.m in Sources */,
+				2FDE43B924B6C11D00280A75 /* NSObject+Debounce.m in Sources */,
 				A81AD7391F3099F800CA4059 /* MEGAProcessAsset.m in Sources */,
 				417279531DB663FA001AC818 /* JSQMessagesCollectionViewCellOutgoing.m in Sources */,
 				BF1574AE2373AB8C0095B283 /* MEGAChatRoom+Additions.swift in Sources */,
