@@ -245,6 +245,15 @@
     return folderCameraUploadsImage;
 }
 
++ (UIImage *)mnz_folderMyChatFilesImage {
+    static UIImage *folderCameraUploadsImage = nil;
+    if (folderCameraUploadsImage == nil) {
+        folderCameraUploadsImage = [UIImage imageNamed:@"folder_chat"];
+    }
+    
+    return folderCameraUploadsImage;
+}
+
 + (UIImage *)mnz_defaultPhotoImage {
     static UIImage *defaultPhotoImage = nil;
     if (defaultPhotoImage == nil) {
