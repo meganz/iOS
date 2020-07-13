@@ -155,13 +155,13 @@ class ChatViewController: MessagesViewController {
 
         previewerView.isHidden = chatRoom.previewersCount == 0
         previewerView.previewersLabel.text = "\(chatRoom.previewersCount)"
-        checkIfChatHasActiveCall()
 
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
          
+        checkIfChatHasActiveCall()
 
         if (presentingViewController != nil) && parent != nil {
             navigationItem.leftBarButtonItem = UIBarButtonItem(title: AMLocalizedString("close"), style: .plain, target: self, action: #selector(dismissChatRoom))
