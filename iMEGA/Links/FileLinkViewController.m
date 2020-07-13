@@ -73,6 +73,8 @@
     }
     
     self.moreBarButtonItem.accessibilityLabel = AMLocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
+    
+    [self updateAppearance];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
