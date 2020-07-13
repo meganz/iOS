@@ -22,28 +22,24 @@ enum DNDTurnOnOption: TimeInterval {
         }
     }
     
-    static func alertController(delegate: DNDTurnOnAlertControllerAction,
-                                identifier: Int64?) -> UIAlertController {
-        let alertMessage = AMLocalizedString("Mute chat Notifications for", "Chat Notifications DND: Title bar message for the dnd activate options")
-        let alertController = UIAlertController(title: nil,
-                                                message: alertMessage,
-                                                preferredStyle: .actionSheet)
+    static func actionSheetViewController(delegate: DNDTurnOnAlertControllerAction,
+                                          identifier: Int64?) -> ActionSheetViewController {
+        let headerTitle = AMLocalizedString("Mute chat Notifications for", "Chat Notifications DND: Title bar message for the dnd activate options")
         
-        let cancelString = AMLocalizedString("cancel")
-        alertController.addAction(UIAlertAction(title: cancelString,
-                                                style: .cancel,
-                                                handler: delegate.cancelAction))
+        var actions = [BaseAction]()
         
-        alertController.addAction(UIAlertAction(title: thirtyMinutes.localizedTitle, style: .default, handler: delegate.action(for: thirtyMinutes, identifier: identifier)))
+        actions.append(ActionSheetAction(title: thirtyMinutes.localizedTitle, detail: nil, image: nil, style: .default, actionHandler: delegate.action(for: thirtyMinutes, identifier: identifier)))
+
+        actions.append(ActionSheetAction(title: oneHour.localizedTitle, detail: nil, image: nil, style: .default, actionHandler: delegate.action(for: oneHour, identifier: identifier)))
         
-        alertController.addAction(UIAlertAction(title: oneHour.localizedTitle, style: .default, handler: delegate.action(for: oneHour, identifier: identifier)))
+        actions.append(ActionSheetAction(title: sixHours.localizedTitle, detail: nil, image: nil, style: .default, actionHandler: delegate.action(for: sixHours, identifier: identifier)))
         
-        alertController.addAction(UIAlertAction(title: sixHours.localizedTitle, style: .default, handler: delegate.action(for: sixHours, identifier: identifier)))
+        actions.append(ActionSheetAction(title: twentyFourHours.localizedTitle, detail: nil, image: nil, style: .default, actionHandler: delegate.action(for: twentyFourHours, identifier: identifier)))
         
-        alertController.addAction(UIAlertAction(title: twentyFourHours.localizedTitle, style: .default, handler: delegate.action(for: twentyFourHours, identifier: identifier)))
+        actions.append(ActionSheetAction(title: forever.localizedTitle, detail: nil, image: nil, style: .default, actionHandler: delegate.action(for: forever, identifier: identifier)))
         
-        alertController.addAction(UIAlertAction(title: forever.localizedTitle, style: .default, handler: delegate.action(for: forever, identifier: identifier)))
+        let actionSheetViewController = ActionSheetViewController(actions: actions, headerTitle: headerTitle, dismissCompletion: nil, sender: nil)
         
-        return alertController
+        return actionSheetViewController
     }
 } 

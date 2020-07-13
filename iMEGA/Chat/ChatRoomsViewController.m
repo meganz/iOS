@@ -28,7 +28,7 @@
 #import "GroupChatDetailsViewController.h"
 #import "MessagesViewController.h"
 
-@interface ChatRoomsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAChatDelegate, UIScrollViewDelegate, MEGAChatCallDelegate, UISearchControllerDelegate>
+@interface ChatRoomsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAChatDelegate, UIScrollViewDelegate, MEGAChatCallDelegate, UISearchControllerDelegate, PushNotificationControlProtocol>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addBarButtonItem;
@@ -61,6 +61,8 @@
 @property (nonatomic, getter=isReconnecting) BOOL reconnecting;
 
 @property (assign, nonatomic) NSInteger contactsOnMegaCount;
+
+@property (nonatomic) GlobalDNDNotificationControl *globalDNDNotificationControl;
 
 @end
 
@@ -183,6 +185,8 @@
     } else {
         [self hideTopBannerButton];
     }
+    
+    self.globalDNDNotificationControl = [GlobalDNDNotificationControl.alloc initWithDelegate:self];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -912,9 +916,24 @@
                                                                actionHandler:^{
         [self presentChangeOnlineStatusAlertController];
     }];
-    // TODO: Add DND settings when available
     
-    ActionSheetViewController *actionSheetVC = [ActionSheetViewController.alloc initWithActions:@[statusAction] headerTitle:nil dismissCompletion:nil sender:sender];
+    BOOL isGlobalDNDEnabled = self.globalDNDNotificationControl.isGlobalDNDEnabled;
+    NSString *dndString = isGlobalDNDEnabled ? AMLocalizedString(@"on", nil) : AMLocalizedString(@"off", nil);
+    
+    ActionSheetAction *dndAction = [ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"Do Not Disturb", @"Chat settings: This text appears with the Do Not Disturb switch")
+                                                                      detail:dndString
+                                                                       image:nil
+                                                                       style:UIAlertActionStyleDefault
+                                                               actionHandler:^{
+        if (isGlobalDNDEnabled) {
+            ChatSettingsTableViewController *chatSettingsVC = [[UIStoryboard storyboardWithName:@"ChatSettings" bundle:nil] instantiateViewControllerWithIdentifier:@"ChatSettingsTableViewControllerID"];
+            [self presentViewController:chatSettingsVC animated:YES completion:nil];
+        } else {
+            [self.globalDNDNotificationControl turnOnDND:sender];
+        }
+    }];
+    
+    ActionSheetViewController *actionSheetVC = [ActionSheetViewController.alloc initWithActions:@[statusAction, dndAction] headerTitle:nil dismissCompletion:nil sender:sender];
     
     [self presentViewController:actionSheetVC animated:YES completion:nil];
 }

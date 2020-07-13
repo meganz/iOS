@@ -27,7 +27,7 @@ import UIKit
     }
     
     @objc func turnOnDND(chatId: Int64, sender: UIView) {
-        let alertController = DNDTurnOnOption.alertController(delegate: self, identifier: chatId)
+        let alertController = DNDTurnOnOption.actionSheetViewController(delegate: self, identifier: chatId)
         show(alertController: alertController, sender: sender)
     }
     
@@ -75,14 +75,14 @@ extension ChatNotificationControl {
 
 extension ChatNotificationControl: DNDTurnOnAlertControllerAction {
   
-    var cancelAction: ((UIAlertAction) -> Void)? {
-        return { _ in
+    var cancelAction: (() -> Void) {
+        return {
             self.delegate?.tableView?.reloadData()
         }
     }
     
-    func action(for dndTurnOnOption: DNDTurnOnOption, identifier: Int64?) -> (((UIAlertAction) -> Void)?) {
-        return { _ in
+    func action(for dndTurnOnOption: DNDTurnOnOption, identifier: Int64?) -> ((() -> Void)) {
+        return {
             guard let chatId = identifier else { return }
             self.turnOnDND(chatId: chatId, option: dndTurnOnOption)
         }
