@@ -135,17 +135,6 @@ class ChatViewController: MessagesViewController {
         configureMenus()
         configureTopBannerButton()
         configurePreviewerButton()
-        self.view.addSubview(topBannerButton)
-        topBannerButton.setTitleColor(.white, for: .normal)
-        topBannerButton.titleLabel?.font = UIFont.preferredFont(forTextStyle: .caption1)
-        self.topBannerButtonTopConstraint = topBannerButton.autoPinEdge(toSuperviewMargin: .top, withInset: -44)
-        topBannerButton.autoPinEdge(toSuperviewEdge: .leading)
-        topBannerButton.autoPinEdge(toSuperviewEdge: .trailing)
-        topBannerButton.autoSetDimension(.height, toSize: 44)
-        
-        topBannerButton.addTarget(self, action: #selector(joinActiveCall), for: .touchUpInside)
-        topBannerButton.backgroundColor = UIColor.mnz_turquoise(for: self.traitCollection)
-        topBannerButton.isHidden = true
         addObservers()
         addChatBottomInfoScreenToView()
     }
