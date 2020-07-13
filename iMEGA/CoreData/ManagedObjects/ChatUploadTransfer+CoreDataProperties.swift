@@ -12,6 +12,7 @@ extension ChatUploadTransfer {
     @NSManaged public var index: Int32
     @NSManaged public var filepath: String
     @NSManaged public var transferTag: String?
+    @NSManaged public var appData: String?
     @NSManaged public var chatRoomId: String
     @NSManaged public var nodeHandle: String?
 
