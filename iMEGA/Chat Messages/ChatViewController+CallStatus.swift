@@ -32,6 +32,8 @@ extension ChatViewController {
     func showTopBannerButton() {
         if topBannerButton.isHidden {
             topBannerButton.isHidden = false
+            self.view.layoutIfNeeded()
+
             topBannerButtonTopConstraint?.constant = 0
             UIView.animate(withDuration: 0.5) {
                 self.view.layoutIfNeeded()
@@ -41,6 +43,8 @@ extension ChatViewController {
     
     func hideTopBannerButton() {
         if !topBannerButton.isHidden {
+            self.view.layoutIfNeeded()
+
             topBannerButtonTopConstraint?.constant = -44
             UIView.animate(withDuration: 0.5, animations: {
                 self.view.layoutIfNeeded()
@@ -53,7 +57,7 @@ extension ChatViewController {
     }
     
     func initTimerForCall(_ call: MEGAChatCall) {
-        initDuration = TimeInterval(call.duration  ?? 0)
+        initDuration = TimeInterval(call.duration)
         if !(timer?.isValid ?? false) {
             
             print(call.duration)

@@ -33,19 +33,11 @@ class ChatViewController: MessagesViewController {
     var initDuration: TimeInterval?
     var topBannerButtonTopConstraint: NSLayoutConstraint?
     lazy var topBannerButton: UIButton = {
-        let button = UIButton()
-        view.addSubview(button)
-        button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .caption1)
-        topBannerButtonTopConstraint = button.autoPinEdge(toSuperviewMargin: .top, withInset: -44)
-        button.autoPinEdge(toSuperviewEdge: .leading)
-        button.autoPinEdge(toSuperviewEdge: .trailing)
-        button.autoSetDimension(.height, toSize: 44)
-        button.addTarget(self, action: #selector(joinActiveCall), for: .touchUpInside)
-        button.backgroundColor = UIColor.mnz_turquoise(for: self.traitCollection)
-        button.isHidden = true
-        return button
-    }()
+          let button = UIButton()
+          button.setTitleColor(.white, for: .normal)
+          button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .caption1)
+          return button
+      }()
     
     lazy var previewerView: PreviewersView = {
         let view = PreviewersView.instanceFromNib
@@ -141,7 +133,19 @@ class ChatViewController: MessagesViewController {
         
         messagesCollectionView.allowsMultipleSelection = true
         configureMenus()
+        configureTopBannerButton()
         configurePreviewerButton()
+        self.view.addSubview(topBannerButton)
+        topBannerButton.setTitleColor(.white, for: .normal)
+        topBannerButton.titleLabel?.font = UIFont.preferredFont(forTextStyle: .caption1)
+        self.topBannerButtonTopConstraint = topBannerButton.autoPinEdge(toSuperviewMargin: .top, withInset: -44)
+        topBannerButton.autoPinEdge(toSuperviewEdge: .leading)
+        topBannerButton.autoPinEdge(toSuperviewEdge: .trailing)
+        topBannerButton.autoSetDimension(.height, toSize: 44)
+        
+        topBannerButton.addTarget(self, action: #selector(joinActiveCall), for: .touchUpInside)
+        topBannerButton.backgroundColor = UIColor.mnz_turquoise(for: self.traitCollection)
+        topBannerButton.isHidden = true
         addObservers()
         addChatBottomInfoScreenToView()
     }
@@ -745,6 +749,17 @@ class ChatViewController: MessagesViewController {
 
         UIMenuController.shared.menuItems = [forwardMenuItem, importMenuItem, editMenuItem, downloadMenuItem, addContactMenuItem, removeRichLinkMenuItem]
     }
+    
+    private func configureTopBannerButton() {
+          view.addSubview(topBannerButton)
+          topBannerButtonTopConstraint = topBannerButton.autoPinEdge(toSuperviewMargin: .top, withInset: -44)
+          topBannerButton.autoPinEdge(toSuperviewEdge: .leading)
+          topBannerButton.autoPinEdge(toSuperviewEdge: .trailing)
+          topBannerButton.autoSetDimension(.height, toSize: 44)
+          topBannerButton.addTarget(self, action: #selector(joinActiveCall), for: .touchUpInside)
+          topBannerButton.backgroundColor = UIColor.mnz_turquoise(for: self.traitCollection)
+          topBannerButton.isHidden = true
+      }
     
     private func configurePreviewerButton() {
         view.addSubview(previewerView)
