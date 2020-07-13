@@ -23,9 +23,10 @@ extension MEGAStore {
         MEGAStore.shareInstance()?.save(context)
     }
     
-    func updateChatUploadTransfer(filepath: String, chatRoomId: String, nodeHandle: String, transferTag: String, context: NSManagedObjectContext) {
+    func updateChatUploadTransfer(filepath: String, chatRoomId: String, nodeHandle: String, transferTag: String, appData: String, context: NSManagedObjectContext) {
         if let transfer = fetchChatUploadTransfer(filepath: filepath, chatRoomId: chatRoomId, transferTag: transferTag, context: context) {
             transfer.nodeHandle = nodeHandle
+            transfer.appData = appData
             MEGAStore.shareInstance()?.save(context)
         } else {
             MEGALogError("ChatUploadTransfer object does not exsists")
