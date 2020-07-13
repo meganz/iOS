@@ -63,7 +63,6 @@ extension ChatMessage: MessageType {
             return .custom(message)
         } else if case .normal = message.type {
             return .custom(message)
-            
         } else if case .voiceClip = message.type {
             return .custom(message)
         } else if message.isManagementMessage {
