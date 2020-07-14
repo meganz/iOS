@@ -37,7 +37,7 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
     GroupChatDetailsSectionParticipants,
 };
 
-@interface GroupChatDetailsViewController () <MEGAChatRequestDelegate, MEGAChatDelegate, MEGAGlobalDelegate, GroupChatDetailsViewTableViewCellDelegate, PushNotificationControlProtocol>
+@interface GroupChatDetailsViewController () <MEGAChatRequestDelegate, MEGAChatDelegate, MEGAGlobalDelegate, GroupChatDetailsViewTableViewCellDelegate, PushNotificationControlProtocol, UIScrollViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *groupInfoView;
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
@@ -67,7 +67,7 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
     self.chatNotificationControl = [ChatNotificationControl.alloc initWithDelegate:self];
     
     [self.tableView registerNib:[UINib nibWithNibName:@"GenericHeaderFooterView" bundle:nil] forHeaderFooterViewReuseIdentifier:@"GenericHeaderFooterViewID"];
-    
+
     [self updateAppearance];
 }
 
@@ -80,6 +80,11 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
     [self updateHeadingView];
     [self setParticipants];
     [self.tableView reloadData];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self loadVisibleParticipants];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -146,16 +151,11 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
     self.indexPathsMutableDictionary = [[NSMutableDictionary alloc] initWithCapacity:self.participantsMutableArray.count];
 }
 
-- (void)loadParticipantsFromIndex:(NSUInteger)index {
-    if (index >= self.participantsMutableArray.count) {
-        return;
-    }
-    
-    NSUInteger participantsToLoad = 20;
-    NSUInteger topIndex = MIN(index + participantsToLoad, self.participantsMutableArray.count);
+- (void)loadVisibleParticipants {
+    NSUInteger participantsToLoad = self.tableView.indexPathsForVisibleRows.count;
     NSMutableArray<NSNumber *> *usersHandles = [NSMutableArray.alloc initWithCapacity:participantsToLoad];
-    for (NSUInteger i = index; i < topIndex; i++) {
-        NSNumber *handle = [self.participantsMutableArray objectAtIndex:i];
+    for (NSIndexPath *indexPath in self.tableView.indexPathsForVisibleRows) {
+        NSNumber *handle = [self.participantsMutableArray objectAtIndex:indexPath.row];
         if (![MEGASdkManager.sharedMEGAChatSdk userFullnameFromCacheByUserHandle:handle.unsignedLongLongValue] && ![self.requestedParticipantsMutableSet containsObject:handle]) {
             [usersHandles addObject:handle];
             [self.requestedParticipantsMutableSet addObject:handle];
@@ -567,14 +567,8 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
                 peerEmail = [[MEGASdkManager sharedMEGAChatSdk] myEmail];
                 privilege = self.chatRoom.ownPrivilege;
             } else {
-                peerFullname = [MEGASdkManager.sharedMEGAChatSdk userFullnameFromCacheByUserHandle:handle];
+                peerFullname = [MEGASdkManager.sharedMEGAChatSdk userFullnameFromCacheByUserHandle:handle] ?: @"";
                 peerEmail = [MEGASdkManager.sharedMEGAChatSdk userEmailFromCacheByUserHandle:handle] ?: @"";
-                if (!peerFullname) {
-                    peerFullname = @"";
-                    if (![self.requestedParticipantsMutableSet containsObject:[self.participantsMutableArray objectAtIndex:index]]) {
-                        [self loadParticipantsFromIndex:index];
-                    }
-                }
                 privilege = [self.chatRoom peerPrivilegeAtIndex:index];
             }
             
@@ -968,6 +962,16 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
     }
     
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    [self loadVisibleParticipants];
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    [self loadVisibleParticipants];
 }
 
 #pragma mark - MEGAChatRequestDelegate
