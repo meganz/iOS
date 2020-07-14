@@ -25,7 +25,7 @@
 #import "UIViewController+MNZCategory.h"
 #import "NodeTableViewCell.h"
 
-@interface BrowserViewController () <UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, UISearchControllerDelegate>
+@interface BrowserViewController () <UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, UISearchControllerDelegate, UIAdaptivePresentationControllerDelegate>
 
 @property (nonatomic, getter=isParentBrowser) BOOL parentBrowser;
 
@@ -78,6 +78,8 @@
     if (@available(iOS 13.0, *)) {
         [self configPreviewingRegistration];
     }
+    
+    self.navigationController.presentationController.delegate = self;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -882,6 +884,20 @@
     if (viewControllerToCommit.class == BrowserViewController.class) {
         [self.navigationController pushViewController:viewControllerToCommit animated:YES];
     }
+}
+
+#pragma mark - UIAdaptivePresentationControllerDelegate
+
+- (BOOL)presentationControllerShouldDismiss:(UIPresentationController *)presentationController {
+    return NO;
+}
+
+- (void)presentationControllerDidAttemptToDismiss:(UIPresentationController *)presentationController {
+    UIAlertController *confirmDismissAlert = [Helper confirmDiscardChangesAlertWithConfirmAction:^{
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }];
+    confirmDismissAlert.popoverPresentationController.barButtonItem = self.cancelBarButtonItem;
+    [self presentViewController:confirmDismissAlert animated:YES completion:nil];
 }
 
 #pragma mark - DZNEmptyDataSetSource
