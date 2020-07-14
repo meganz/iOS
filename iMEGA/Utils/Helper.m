@@ -676,6 +676,15 @@ static MEGAIndexer *indexer;
     return removeContactAlertController;
 }
 
++ (UIAlertController *)confirmDiscardChangesAlertWithConfirmAction:(void (^)(void))confirmAction {
+    UIAlertController *confirmDismissAlert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    [confirmDismissAlert addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"Discard changes", @"Text used to notify the user that some action would discard a non ended action") style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+        confirmAction();
+    }]];
+    [confirmDismissAlert addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+    return confirmDismissAlert;
+}
+
 #pragma mark - Utils for nodes
 
 + (void)thumbnailForNode:(MEGANode *)node api:(MEGASdk *)api cell:(id)cell {

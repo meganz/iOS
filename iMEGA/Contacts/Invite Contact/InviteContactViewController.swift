@@ -43,6 +43,8 @@ class InviteContactViewController: UIViewController {
             addFromContactsLabel.textColor = UIColor.mnz_secondaryGray(for: self.traitCollection)
         }
         
+        navigationController?.presentationController?.delegate = self
+
         updateAppearance()
     }
 
@@ -150,5 +152,22 @@ extension InviteContactViewController: MFMessageComposeViewControllerDelegate {
         @unknown default:
             controller.dismiss(animated: true, completion: nil)
         }
+    }
+}
+
+// MARK: - UIAdaptivePresentationControllerDelegate
+
+extension InviteContactViewController: UIAdaptivePresentationControllerDelegate {
+    func presentationControllerShouldDismiss(_ presentationController: UIPresentationController) -> Bool {
+        return false
+    }
+    
+    func presentationControllerDidAttemptToDismiss(_ presentationController: UIPresentationController) {
+        let discardChangesActionSheet = Helper.confirmDiscardChangesAlert {
+            self.dismiss(animated: true, completion: nil)
+        }
+        discardChangesActionSheet.popoverPresentationController?.sourceView = navigationController?.view
+        discardChangesActionSheet.popoverPresentationController?.sourceRect = CGRect(x: 20, y: 20, width: 1, height: 1)
+        present(discardChangesActionSheet, animated: true, completion: nil)
     }
 }

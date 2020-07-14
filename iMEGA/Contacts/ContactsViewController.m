@@ -33,7 +33,7 @@
 #import "ShareFolderActivity.h"
 #import "ItemListViewController.h"
 
-@interface ContactsViewController () <CNContactPickerDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, ItemListViewControllerDelegate, UISearchControllerDelegate, UIGestureRecognizerDelegate, MEGAChatDelegate, ContactLinkQRViewControllerDelegate, MEGARequestDelegate>
+@interface ContactsViewController () <CNContactPickerDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIViewControllerPreviewingDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, ItemListViewControllerDelegate, UISearchControllerDelegate, UIGestureRecognizerDelegate, MEGAChatDelegate, ContactLinkQRViewControllerDelegate, MEGARequestDelegate, UIAdaptivePresentationControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -153,6 +153,8 @@
         self.enterGroupNameTextField.delegate = self.enterGroupNameTextFieldDelegate;
     }
     
+    self.navigationController.presentationController.delegate = self;
+
     [self updateAppearance];
 }
 
@@ -1986,6 +1988,30 @@
     }
     
     [self.tableView reloadData];
+}
+
+#pragma mark - UIAdaptivePresentationControllerDelegate
+
+- (BOOL)presentationControllerShouldDismiss:(UIPresentationController *)presentationController {
+    if (self.contactsMode == ContactsModeChatStartConversation || self.contactsMode == ContactsModeChatNamingGroup || self.contactsMode == ContactsModeChatCreateGroup || self.contactsMode == ContactsModeShareFoldersWith) {
+        return NO;
+    } else {
+        return YES;
+    }
+}
+
+- (void)presentationControllerDidAttemptToDismiss:(UIPresentationController *)presentationController {
+    if (self.contactsMode == ContactsModeChatNamingGroup || self.contactsMode == ContactsModeChatCreateGroup || self.contactsMode == ContactsModeShareFoldersWith) {
+        UIAlertController *confirmDismissAlert = [Helper confirmDiscardChangesAlertWithConfirmAction:^{
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }];
+        if (self.contactsMode == ContactsModeShareFoldersWith) {
+            confirmDismissAlert.popoverPresentationController.barButtonItem = self.navigationItem.leftBarButtonItem;
+        } else {
+            confirmDismissAlert.popoverPresentationController.barButtonItem = self.navigationItem.rightBarButtonItem;
+        }
+        [self presentViewController:confirmDismissAlert animated:YES completion:nil];
+    }
 }
 
 #pragma mark - MEGAGlobalDelegate

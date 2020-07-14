@@ -44,6 +44,7 @@ final class PhotoGridViewController: UIViewController {
         addToolbar()
         addRightCancelBarButtonItem()
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        navigationController?.presentationController?.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -162,5 +163,23 @@ extension PhotoGridViewController: PhotoCarouselViewControllerDelegate {
         
         completionBlock(selectedAssets)
         dismiss(animated: true, completion: nil)
+    }
+}
+
+// MARK: - UIAdaptivePresentationControllerDelegate
+
+extension PhotoGridViewController: UIAdaptivePresentationControllerDelegate {
+    func presentationControllerShouldDismiss(_ presentationController: UIPresentationController) -> Bool {
+        dataSource?.selectedAssets.count == 0
+    }
+    
+    func presentationControllerDidAttemptToDismiss(_ presentationController: UIPresentationController) {
+        if (dataSource?.selectedAssets.count ?? 0) > 0 {
+            let discardChangesActionSheet = Helper.confirmDiscardChangesAlert {
+                self.dismiss(animated: true, completion: nil)
+            }
+            discardChangesActionSheet.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+            present(discardChangesActionSheet, animated: true, completion: nil)
+        }
     }
 }

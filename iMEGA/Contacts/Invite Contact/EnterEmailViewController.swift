@@ -29,6 +29,8 @@ class EnterEmailViewController: UIViewController {
         disableInviteContactsButton()
         
         updateAppearance()
+        
+        navigationController?.presentationController?.delegate = self
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -262,6 +264,7 @@ extension EnterEmailViewController: VENTokenFieldDelegate {
 }
 
 // MARK: - CNContactPickerDelegate
+
 extension EnterEmailViewController: CNContactPickerDelegate {
     func contactPicker(_ picker: CNContactPickerViewController, didSelect contactProperty: CNContactProperty) {
         guard let email = contactProperty.contact.emailAddresses.first?.value as String? else { return }
@@ -282,6 +285,25 @@ extension EnterEmailViewController: CNContactPickerDelegate {
             disableInviteContactsButton()
         } else {
             enableInviteContactsButton()
+        }
+    }
+}
+
+// MARK: - UIAdaptivePresentationControllerDelegate
+
+extension EnterEmailViewController: UIAdaptivePresentationControllerDelegate {
+    func presentationControllerShouldDismiss(_ presentationController: UIPresentationController) -> Bool {
+        tokens.count == 0
+    }
+    
+    func presentationControllerDidAttemptToDismiss(_ presentationController: UIPresentationController) {
+        if tokens.count > 0 {
+            let discardChangesActionSheet = Helper.confirmDiscardChangesAlert {
+                self.dismiss(animated: true, completion: nil)
+            }
+            discardChangesActionSheet.popoverPresentationController?.sourceView = navigationController?.view
+            discardChangesActionSheet.popoverPresentationController?.sourceRect = CGRect(x: 20, y: 20, width: 1, height: 1)
+            present(discardChangesActionSheet, animated: true, completion: nil)
         }
     }
 }
