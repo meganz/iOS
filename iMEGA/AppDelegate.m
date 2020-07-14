@@ -150,7 +150,7 @@
         [[MEGASdkManager sharedMEGASdkFolder] changeApiUrl:@"https://staging.api.mega.co.nz/" disablepkp:NO];
     }
     
-    [ChatUploader.sharedInstance cleanupDatabase];
+    [ChatUploader.sharedInstance setup];
     [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
     [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
     [[MEGASdkManager sharedMEGASdkFolder] addMEGATransferDelegate:self];
