@@ -6,6 +6,7 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
 
     open var imageView: YYAnimatedImageView = {
         let imageView = YYAnimatedImageView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        imageView.backgroundColor = .clear
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
@@ -26,6 +27,7 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
     open var progressView: UIProgressView = {
         let progressView = UIProgressView(progressViewStyle: .default)
         progressView.tintColor = UIColor.mnz_turquoise(for: progressView.traitCollection)
+        progressView.trackTintColor = .clear
         return progressView
     }()
 
@@ -71,8 +73,8 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
 
     override open func setupSubviews() {
         super.setupSubviews()
-        messageContainerView.addSubview(imageView)
         messageContainerView.addSubview(loadingIndicator)
+        messageContainerView.addSubview(imageView)
         messageContainerView.addSubview(progressView)
         imageView.addSubview(playIconView)
         imageView.addSubview(durationLabel)
@@ -105,7 +107,15 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
         let node = megaMessage.nodeList.node(at: 0)!
         currentNode = node
         let name = node.name! as NSString
+                 let previewFilePath = Helper.path(for: node, inSharedSandboxCacheDirectory: "previewsV3")
+        let originalImagePath = Helper.path(for: node, inSharedSandboxCacheDirectory: "originalV3")
 
+        if FileManager.default.fileExists(atPath: previewFilePath) || FileManager.default.fileExists(atPath: originalImagePath) {
+            loadingIndicator.isHidden = true
+        } else {
+            loadingIndicator.isHidden = false
+            loadingIndicator.startAnimating()
+        }
         imageView.mnz_setPreview(by: node) { _ in
             let visibleIndexPaths = messagesCollectionView.indexPathsForVisibleItems
             guard visibleIndexPaths.contains(indexPath) else {
@@ -117,7 +127,6 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
 
         durationLabel.isHidden = true
         playIconView.isHidden = true
-        loadingIndicator.isHidden = true
         if name.pathExtension == "gif" {
             let originalImagePath = Helper.path(for: node, inSharedSandboxCacheDirectory: "originalV3")
             if FileManager.default.fileExists(atPath: originalImagePath) {
