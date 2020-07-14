@@ -155,6 +155,9 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
     NSUInteger participantsToLoad = self.tableView.indexPathsForVisibleRows.count;
     NSMutableArray<NSNumber *> *usersHandles = [NSMutableArray.alloc initWithCapacity:participantsToLoad];
     for (NSIndexPath *indexPath in self.tableView.indexPathsForVisibleRows) {
+        if (indexPath.row >= self.participantsMutableArray.count) {
+            continue;
+        }
         NSNumber *handle = [self.participantsMutableArray objectAtIndex:indexPath.row];
         if (![MEGASdkManager.sharedMEGAChatSdk userFullnameFromCacheByUserHandle:handle.unsignedLongLongValue] && ![self.requestedParticipantsMutableSet containsObject:handle]) {
             [usersHandles addObject:handle];
