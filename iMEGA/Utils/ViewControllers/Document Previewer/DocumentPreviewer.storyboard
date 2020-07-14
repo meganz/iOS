@@ -112,6 +112,7 @@
                     <connections>
                         <outlet property="activityIndicator" destination="PvF-fF-Mki" id="p1g-Gj-5GE"/>
                         <outlet property="collectionView" destination="xcl-UM-x0L" id="syf-l2-XOd"/>
+                        <outlet property="downloadBarButtonItem" destination="r08-LH-yXr" id="vnS-8m-Jzk"/>
                         <outlet property="imageView" destination="VJh-z4-8vz" id="LRL-gj-Q4P"/>
                         <outlet property="importBarButtonItem" destination="vTK-Lp-W8C" id="Cfb-Zr-1Ra"/>
                         <outlet property="moreBarButtonItem" destination="R1j-r6-Sll" id="Fif-Wa-O5U"/>
@@ -146,6 +147,11 @@
                 <barButtonItem title="Item" image="import" style="plain" id="vTK-Lp-W8C" userLabel="Import">
                     <connections>
                         <action selector="importAction:" destination="zUo-yM-mbH" id="pBE-HU-HM5"/>
+                    </connections>
+                </barButtonItem>
+                <barButtonItem image="offline" style="plain" id="r08-LH-yXr" userLabel="download">
+                    <connections>
+                        <action selector="downloadAction:" destination="zUo-yM-mbH" id="phJ-iB-YwS"/>
                     </connections>
                 </barButtonItem>
             </objects>
@@ -267,6 +273,7 @@
     <resources>
         <image name="import" width="28" height="28"/>
         <image name="moreSelected" width="28" height="28"/>
+        <image name="offline" width="28" height="28"/>
         <image name="openWith" width="28" height="28"/>
         <image name="search" width="28" height="28"/>
         <image name="thumbnailsView" width="28" height="28"/>
