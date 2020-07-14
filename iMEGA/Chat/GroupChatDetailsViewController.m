@@ -369,7 +369,7 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
             }]];
             
             if (peerEmail) {
-                MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:peerEmail];
+                MEGAUser *user = [MEGASdkManager.sharedMEGASdk contactForEmail:peerEmail];
                 if (!user || user.visibility != MEGAUserVisibilityVisible) {
                     [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email") detail:nil image:[UIImage imageNamed:@"add"] style:UIAlertActionStyleDefault actionHandler:^{
                         if ([MEGAReachabilityManager isReachableHUDIfNot]) {
@@ -385,7 +385,7 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
             }]];
         } else {
             if (peerEmail) {
-                MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:peerEmail];
+                MEGAUser *user = [MEGASdkManager.sharedMEGASdk contactForEmail:peerEmail];
                 if (!user || user.visibility != MEGAUserVisibilityVisible) {
                     [actions addObject:[ActionSheetAction.alloc initWithTitle:AMLocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email") detail:nil image:[UIImage imageNamed:@"add"] style:UIAlertActionStyleDefault actionHandler:^{
                         if ([MEGAReachabilityManager isReachableHUDIfNot]) {
