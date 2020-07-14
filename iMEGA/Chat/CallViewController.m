@@ -131,7 +131,6 @@
         }];
         [MEGASdkManager.sharedMEGAChatSdk loadUserAttributesForChatId:self.chatRoom.chatId usersHandles:@[@(peerHandle)] delegate:delegate];
     }
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
