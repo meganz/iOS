@@ -72,11 +72,13 @@ final class NodeActionBuilder {
         
         if displayMode == .folderLink {
             nodeActions.append(NodeAction.importAction())
+            nodeActions.append(NodeAction.downloadAction())
             nodeActions.append(NodeAction.sendToChatAction())
             nodeActions.append(NodeAction.selectAction())
             nodeActions.append(NodeAction.shareAction())
         } else if displayMode == .fileLink {
             nodeActions.append(NodeAction.importAction())
+            nodeActions.append(NodeAction.downloadAction())
             nodeActions.append(NodeAction.sendToChatAction())
             if isMediaFile {
                 nodeActions.append(NodeAction.saveToPhotosAction())
@@ -87,6 +89,7 @@ final class NodeActionBuilder {
             }
         } else if displayMode == .nodeInsideFolderLink {
             nodeActions.append(NodeAction.importAction())
+            nodeActions.append(NodeAction.downloadAction())
             if isMediaFile {
                 nodeActions.append(NodeAction.saveToPhotosAction())
             }
