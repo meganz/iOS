@@ -132,8 +132,8 @@ class AddToChatViewController: UIViewController {
     }
     
     private func dismiss(completionBlock: (() -> Void)? = nil){
-        dismiss(animated: true) {
-            self.dismissHandler?()
+        dismiss(animated: true) { [weak self] in 
+            self?.dismissHandler?()
             completionBlock?()
         }
     }

@@ -276,7 +276,7 @@ extension ChatViewController {
                                            appData: appData ?? "",
                                            chatRoomId: chatRoom.chatId,
                                            parentNode: parentNode,
-                                           isSourceTemporary: true,
+                                           isSourceTemporary: false,
                                            delegate: self.createUploadTransferDelegate())
     }
     
@@ -429,7 +429,7 @@ extension ChatViewController: ChatInputBarDelegate {
                                                            appData: appData,
                                                            chatRoomId: self.chatRoom.chatId,
                                                            parentNode: voiceMessagesNode,
-                                                           isSourceTemporary: true,
+                                                           isSourceTemporary: false,
                                                            delegate: self.createUploadTransferDelegate())
                     } else {
                         MEGALogDebug("Voice folder not created")
@@ -613,7 +613,9 @@ extension ChatViewController: AddToChatViewControllerDelegate {
         }
 
         contactsViewController.contactsMode = .chatCreateGroup
-        contactsViewController.createGroupChat = createGroupChat
+        contactsViewController.createGroupChat = { [weak self] in
+            self?.createGroupChat(selectedObjects: $0, groupName: $1, keyRotationEnabled: $2, getChatLink: $3)
+        }
         present(viewController: contactsNavigationController)
     }
     

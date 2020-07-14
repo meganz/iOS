@@ -151,12 +151,12 @@
     NSNumber *number;
     switch (currentPage) {
         case 0: {
-            number = [NSNumber numberWithFloat:(self.usedStorage.floatValue / self.maxStorage.floatValue)];
+            number = [NSNumber numberWithFloat:(self.usedStorage.floatValue / self.maxStorage.floatValue) * 100];
             break;
         }
             
         case 1: {
-            number = [NSNumber numberWithFloat:(self.transferOwnUsed.floatValue / self.transferMax.floatValue)];
+            number = [NSNumber numberWithFloat:(self.transferOwnUsed.floatValue / self.transferMax.floatValue) * 100];
             break;
         }
     }

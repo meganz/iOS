@@ -150,7 +150,7 @@
         [[MEGASdkManager sharedMEGASdkFolder] changeApiUrl:@"https://staging.api.mega.co.nz/" disablepkp:NO];
     }
     
-    [ChatUploader.sharedInstance cleanupDatabase];
+    [ChatUploader.sharedInstance setup];
     [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
     [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
     [[MEGASdkManager sharedMEGASdkFolder] addMEGATransferDelegate:self];
@@ -863,6 +863,7 @@
 
 - (void)copyDatabasesForExtensions {
     MEGALogDebug(@"Copy databases for extensions");
+    [MEGASdkManager.sharedMEGAChatSdk saveCurrentState];
     NSError *error;
     NSFileManager *fileManager = [NSFileManager defaultManager];
     
@@ -1778,8 +1779,9 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 - (void)onChatListItemUpdate:(MEGAChatSdk *)api item:(MEGAChatListItem *)item {
     if (item.changes == 0 && self.chatLastKnownInitState == MEGAChatStatusOnline) {
-        MEGALogDebug(@"New chat room, invalidate NSE cache");
+        MEGALogDebug(@"New chat room %@", [MEGASdk base64HandleForUserHandle:item.chatId]);
         [self copyDatabasesForExtensions];
+        MEGALogDebug(@"Invalidate NSE cache");
         NSUserDefaults *sharedUserDefaults = [NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier];
         [sharedUserDefaults setBool:YES forKey:MEGAInvalidateNSECache];
     }

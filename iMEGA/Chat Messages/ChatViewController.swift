@@ -31,13 +31,14 @@ class ChatViewController: MessagesViewController {
 
     // topbanner
     var timer: Timer?
+    var initDuration: TimeInterval?
     var topBannerButtonTopConstraint: NSLayoutConstraint?
     lazy var topBannerButton: UIButton = {
-        let button = UIButton()
-        button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .caption1)
-        return button
-    }()
+          let button = UIButton()
+          button.setTitleColor(.white, for: .normal)
+          button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .caption1)
+          return button
+      }()
     
     lazy var previewerView: PreviewersView = {
         let view = PreviewersView.instanceFromNib
@@ -151,14 +152,16 @@ class ChatViewController: MessagesViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         MEGASdkManager.sharedMEGAChatSdk()?.add(self as MEGAChatDelegate)
-        
+        MEGASdkManager.sharedMEGAChatSdk()?.add(self as MEGAChatCallDelegate)
+
         previewerView.isHidden = chatRoom.previewersCount == 0
         previewerView.previewersLabel.text = "\(chatRoom.previewersCount)"
+
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+         
         checkIfChatHasActiveCall()
 
         if (presentingViewController != nil) && parent != nil {
@@ -215,10 +218,10 @@ class ChatViewController: MessagesViewController {
         super.viewWillDisappear(animated)
         saveDraft()
         MEGASdkManager.sharedMEGAChatSdk()?.remove(self as MEGAChatDelegate)
+        MEGASdkManager.sharedMEGAChatSdk()?.remove(self as MEGAChatCallDelegate)
 
         if isMovingFromParent || presentingViewController != nil && navigationController?.viewControllers.count == 1 {
             closeChatRoom()
-            MEGASdkManager.sharedMEGAChatSdk()?.remove(self as MEGAChatCallDelegate)
         }
         audioController.stopAnyOngoingPlaying()
     }
@@ -463,6 +466,10 @@ class ChatViewController: MessagesViewController {
             }
             chatRoomDelegate.loadMoreMessages()
         }
+    }
+    
+    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        hideJumpToBottomIfRequired()
     }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
@@ -740,18 +747,17 @@ class ChatViewController: MessagesViewController {
         
         UIMenuController.shared.menuItems = [forwardMenuItem, importMenuItem, editMenuItem, downloadMenuItem, addContactMenuItem, removeRichLinkMenuItem]
     }
-
+    
     private func configureTopBannerButton() {
-        view.addSubview(topBannerButton)
-        topBannerButtonTopConstraint = topBannerButton.autoPinEdge(toSuperviewMargin: .top, withInset: -44)
-        topBannerButton.autoPinEdge(toSuperviewEdge: .leading)
-        topBannerButton.autoPinEdge(toSuperviewEdge: .trailing)
-        topBannerButton.autoSetDimension(.height, toSize: 44)
-        topBannerButton.addTarget(self, action: #selector(joinActiveCall), for: .touchUpInside)
-        topBannerButton.backgroundColor = #colorLiteral(red: 0, green: 0.7490196078, blue: 0.631372549, alpha: 1)
-        topBannerButton.isHidden = true
-        MEGASdkManager.sharedMEGAChatSdk()?.add(self as MEGAChatCallDelegate)
-    }
+          view.addSubview(topBannerButton)
+          topBannerButtonTopConstraint = topBannerButton.autoPinEdge(toSuperviewMargin: .top, withInset: -44)
+          topBannerButton.autoPinEdge(toSuperviewEdge: .leading)
+          topBannerButton.autoPinEdge(toSuperviewEdge: .trailing)
+          topBannerButton.autoSetDimension(.height, toSize: 44)
+          topBannerButton.addTarget(self, action: #selector(joinActiveCall), for: .touchUpInside)
+          topBannerButton.backgroundColor = UIColor.mnz_turquoise(for: self.traitCollection)
+          topBannerButton.isHidden = true
+      }
     
     private func configurePreviewerButton() {
         view.addSubview(previewerView)
@@ -762,7 +768,7 @@ class ChatViewController: MessagesViewController {
     }
     
     private func registerCustomCells() {
-        messagesCollectionView.register(ChatViewCallCollectionCell.nib,
+        messagesCollectionView.register(ChatViewCallCollectionCell.self,
                                          forCellWithReuseIdentifier: ChatViewCallCollectionCell.reuseIdentifier)
         messagesCollectionView.register(ChatViewAttachmentCell.self,
                                          forCellWithReuseIdentifier: ChatViewAttachmentCell.reuseIdentifier)
@@ -1054,7 +1060,10 @@ class ChatViewController: MessagesViewController {
         
         contactsVC.participantsMutableDictionary = NSMutableDictionary(dictionary: participantsMutableDictionary)
         contactsVC.userSelected = { users in
-            users?.forEach({ (user) in
+            users?.forEach({ [weak self] (user) in
+                guard let `self` = self else {
+                    return
+                }
                 MEGASdkManager.sharedMEGAChatSdk()?.invite(toChat: self.chatRoom.chatId, user: (user as! MEGAUser).handle, privilege: MEGAChatRoomPrivilege.standard.rawValue)
             })
         }
@@ -1076,6 +1085,7 @@ class ChatViewController: MessagesViewController {
             groupCallVC.videoCall = videoCall
             groupCallVC.chatRoom = chatRoom
             groupCallVC.modalTransitionStyle = .crossDissolve
+            groupCallVC.modalPresentationStyle = .fullScreen
             groupCallVC.megaCallManager = (UIApplication.shared.delegate as! AppDelegate).megaCallManager
             present(viewController: groupCallVC)
         } else {
@@ -1084,6 +1094,7 @@ class ChatViewController: MessagesViewController {
             callVC.videoCall = videoCall
             callVC.callType = active ? .active : .outgoing
             callVC.modalTransitionStyle = .crossDissolve
+            callVC.modalPresentationStyle = .fullScreen
             callVC.megaCallManager = (UIApplication.shared.delegate as! AppDelegate).megaCallManager
             present(viewController: callVC)
 
