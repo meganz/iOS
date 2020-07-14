@@ -90,7 +90,7 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
 
         let megaMessage = chatMessage.message
         currentTransfer = chatMessage.transfer
-
+        progressView.progress = 0
         if let transfer = chatMessage.transfer {
             loadingIndicator.isHidden = false
             loadingIndicator.startAnimating()
@@ -142,7 +142,7 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
     }
 
     func onTransferUpdate(_ api: MEGASdk, transfer: MEGATransfer) {
-        if currentTransfer?.nodeHandle == transfer.nodeHandle {
+        if currentTransfer?.tag == transfer.tag {
             progressView.setProgress(transfer.transferredBytes.floatValue / transfer.totalBytes.floatValue, animated: true)
         }
     }
