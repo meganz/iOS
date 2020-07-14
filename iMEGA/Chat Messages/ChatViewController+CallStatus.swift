@@ -32,6 +32,8 @@ extension ChatViewController {
     func showTopBannerButton() {
         if topBannerButton.isHidden {
             topBannerButton.isHidden = false
+            self.view.layoutIfNeeded()
+
             topBannerButtonTopConstraint?.constant = 0
             UIView.animate(withDuration: 0.5) {
                 self.view.layoutIfNeeded()
@@ -41,6 +43,8 @@ extension ChatViewController {
     
     func hideTopBannerButton() {
         if !topBannerButton.isHidden {
+            self.view.layoutIfNeeded()
+
             topBannerButtonTopConstraint?.constant = -44
             UIView.animate(withDuration: 0.5, animations: {
                 self.view.layoutIfNeeded()
@@ -53,15 +57,19 @@ extension ChatViewController {
     }
     
     func initTimerForCall(_ call: MEGAChatCall) {
+        initDuration = TimeInterval(call.duration)
         if !(timer?.isValid ?? false) {
             
             print(call.duration)
             let startTime = Date().timeIntervalSince1970
+            let time = Date().timeIntervalSince1970 - startTime + self.initDuration!
+            
+            self.setTopBannerButton(title: String(format: AMLocalizedString("Touch to return to call %@", "Message shown in a chat room for a group call in progress displaying the duration of the call"), NSString.mnz_string(fromTimeInterval: time)), color:  UIColor.mnz_turquoise(for: self.traitCollection))
             timer = Timer(timeInterval: 1, repeats: true, block: { (timer) in
                 if self.chatCall?.status == .reconnecting {
                     return;
                 }
-                let time = Date().timeIntervalSince1970 - (call.initialTimeStamp == 0 ? startTime : TimeInterval(call.initialTimeStamp))
+                let time = Date().timeIntervalSince1970 - startTime + self.initDuration!
 
                 self.setTopBannerButton(title: String(format: AMLocalizedString("Touch to return to call %@", "Message shown in a chat room for a group call in progress displaying the duration of the call"), NSString.mnz_string(fromTimeInterval: time)), color:  UIColor.mnz_turquoise(for: self.traitCollection))
             })

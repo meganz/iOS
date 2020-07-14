@@ -8,15 +8,15 @@ protocol VoiceClipInputBarDelegate: class {
 class VoiceClipInputBar: UIView {
     
     @IBOutlet weak var audioWavesholderView: UIView!
-
+    
     @IBOutlet weak var startRecordingView: UIView!
     @IBOutlet weak var trashView: UIView!
     @IBOutlet weak var sendView: UIView!
     @IBOutlet weak var sendImageView: UIImageView!
-
+    
     @IBOutlet weak var sendViewTrailingConstraint: NSLayoutConstraint!
     @IBOutlet weak var sendViewHorizontalConstraint: NSLayoutConstraint!
-
+    
     @IBOutlet weak var trashViewLeadingConstraint: NSLayoutConstraint!
     @IBOutlet weak var trashViewHorizontalConstraint: NSLayoutConstraint!
     
@@ -25,7 +25,7 @@ class VoiceClipInputBar: UIView {
     var audioWavesView: AudioWavesView!
     lazy var audioRecorder = AudioRecorder()
     weak var delegate: VoiceClipInputBarDelegate?
-
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         sendImageView.renderImage(withColor: .white)
@@ -42,10 +42,10 @@ class VoiceClipInputBar: UIView {
         
         if #available(iOS 13.0, *),
             traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-                updateAppearance()
+            updateAppearance()
         }
     }
-
+    
     @IBAction func recordButtonTapped(_ sender: UIButton) {
         recordingStartedAnimation()
     }
@@ -80,13 +80,13 @@ class VoiceClipInputBar: UIView {
             self.startRecordingView.alpha = 1.0
         })
     }
-
+    
     private func recordingCompletedAnimation() {
         recordTimeLabel.isHidden = true
         audioWavesView.reset()
         startRecordingView.alpha = 0.0
         startRecordingView.isHidden = false
-
+        
         UIView.animate(withDuration: 0.4, animations: {
             self.sendViewTrailingConstraint.isActive = false
             self.trashViewLeadingConstraint.isActive = false
@@ -142,8 +142,14 @@ class VoiceClipInputBar: UIView {
         UINotificationFeedbackGenerator().notificationOccurred(.error)
         return nil
     }
-
-     private func updateAppearance() {
+    
+    private func updateAppearance() {
         backgroundColor = UIColor.mnz_voiceRecordingViewBackground(traitCollection)
-     }
+    }
+    
+    deinit {
+        if audioRecorder.isRecording {
+            stopRecording(true)
+        }
+    }
 }

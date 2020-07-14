@@ -18,6 +18,12 @@ class ChatTextMessageViewCell: TextMessageCell {
 }
 
 class ChatTextMessageSizeCalculator: TextMessageSizeCalculator {
+    
+    open var calculateLabel: MessageLabel = {
+        let label = MessageLabel()
+        return label
+    }()
+    
     override public init(layout: MessagesCollectionViewFlowLayout? = nil) {
         super.init(layout: layout)
 
@@ -29,15 +35,24 @@ class ChatTextMessageSizeCalculator: TextMessageSizeCalculator {
         return min(UIDevice.current.mnz_maxSideForChatBubble(withMedia: true), super.messageContainerMaxWidth(for: message))
     }
 
-    override func messageContainerSize(for message: MessageType) -> CGSize {
+    open override func messageContainerSize(for message: MessageType) -> CGSize {
         guard let chatMessage = message as? ChatMessage, chatMessage.message.content != nil else {
             return .zero
         }
-
+        
         let megaMessage = chatMessage.message
-
-        let dummyMssage = ConcreteMessageType(sender: message.sender, messageId: message.messageId, sentDate: message.sentDate, kind: .attributedText(megaMessage.attributedText))
-        let size = super.messageContainerSize(for: dummyMssage)
-        return CGSize(width: size.width, height: size.height)
+        let maxWidth = messageContainerMaxWidth(for: message)
+        
+        var messageContainerSize: CGSize
+        let attributedText = megaMessage.attributedText
+        
+        calculateLabel.attributedText = attributedText
+        messageContainerSize = calculateLabel.sizeThatFits(CGSize(width: maxWidth, height: .greatestFiniteMagnitude))
+        
+        let messageInsets = outgoingMessageLabelInsets
+        messageContainerSize.width += (messageInsets.left + messageInsets.right)
+        messageContainerSize.height += (messageInsets.top + messageInsets.bottom)
+        
+        return messageContainerSize
     }
 }

@@ -5,6 +5,7 @@ class AudioRecorder: NSObject {
     enum RecordError: Error {
         case activeCall
         case recorderInstanceDoesNotExist
+        case notCurrentlyRecording
     }
     
     private var recorder: AVAudioRecorder?
@@ -32,6 +33,9 @@ class AudioRecorder: NSObject {
     }
     
     var updateHandler: ((String, Int) -> Void)?
+    var isRecording: Bool {
+        return recorder?.isRecording ?? false
+    }
     
     func start() throws -> Bool {
         guard !isCallActive else {
@@ -72,6 +76,10 @@ class AudioRecorder: NSObject {
         guard let recorder = recorder else {
             UINotificationFeedbackGenerator().notificationOccurred(.error)
             throw RecordError.recorderInstanceDoesNotExist
+        }
+        
+        guard recorder.isRecording else {
+            throw RecordError.notCurrentlyRecording
         }
         
         recorder.stop()

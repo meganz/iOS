@@ -8,13 +8,15 @@
     }
     
     private lazy var context: NSManagedObjectContext? = store?.childPrivateQueueContext
+    private var isDatabaseCleanupTaskCompleted: Bool?
     
-    private override init() {
-        super.init()
+    private override init() { super.init() }
+    
+    @objc func setup() {
+        isDatabaseCleanupTaskCompleted = false
         MEGASdkManager.sharedMEGASdk()?.add(self)
     }
     
-      
     @objc func upload(filepath: String,
                       appData: String,
                       chatRoomId: UInt64,
@@ -23,25 +25,37 @@
                       delegate: MEGAStartUploadTransferDelegate) {
         
         MEGALogInfo("[ChatUploader] uploading File path \(filepath)")
-        
-        if let store = MEGAStore.shareInstance(),
-            let context = store.storeStack?.viewContext {
-            // insert into database only if the duplicate path does not exsist - "allowDuplicateFilePath" parameter
-            store.insertChatUploadTransfer(withFilepath: filepath,
-                                           chatRoomId: String(chatRoomId),
-                                           transferTag: nil,
-                                           allowDuplicateFilePath: false,
-                                           context: context)
+        cleanupDatabaseIfRequired()
+        if let store = store,
+            let context = context {
+            context.perform {
+                MEGALogInfo("[ChatUploader] inseted new entry File path \(filepath)")
+                // insert into database only if the duplicate path does not exsist - "allowDuplicateFilePath" parameter
+                store.insertChatUploadTransfer(withFilepath: filepath,
+                                               chatRoomId: String(chatRoomId),
+                                               transferTag: nil,
+                                               allowDuplicateFilePath: false,
+                                               context: context)
+                
+                MEGALogInfo("[ChatUploader] SDK upload started for File path \(filepath)")
+                MEGASdkManager.sharedMEGASdk()?.startUploadForChat(withLocalPath: filepath,
+                                                                   parent: parentNode,
+                                                                   appData: appData,
+                                                                   isSourceTemporary: isSourceTemporary,
+                                                                   delegate: delegate)
+            }
         }
-        
-        MEGASdkManager.sharedMEGASdk()?.startUploadForChat(withLocalPath: filepath,
-                                                           parent: parentNode,
-                                                           appData: appData,
-                                                           isSourceTemporary: isSourceTemporary,
-                                                           delegate: delegate)
     }
     
-    @objc func cleanupDatabase() {
+    private func cleanupDatabaseIfRequired() {
+        if let isDatabaseCleanupTaskCompleted = isDatabaseCleanupTaskCompleted,
+            !isDatabaseCleanupTaskCompleted {
+            self.isDatabaseCleanupTaskCompleted = true
+            cleanupDatabase()
+        }
+    }
+    
+    private func cleanupDatabase() {
         guard let sdk = MEGASdkManager.sharedMEGASdk(),
             let store = store,
             let context = context else  {
@@ -50,11 +64,25 @@
         
         context.perform {
             let transferList = sdk.transfers
+            MEGALogDebug("[ChatUploader] transfer list count : \(transferList.size.intValue)")
             let sdkTransfers = (0..<transferList.size.intValue).compactMap { transferList.transfer(at: $0) }
             store.fetchAllChatUploadTransfer(context: context)?.forEach { transfer in
-                let foundTransfer = sdkTransfers.filter({ String($0.tag) == transfer.transferTag })
-                if foundTransfer.count == 0 {
-                    context.delete(transfer)
+                if transfer.nodeHandle == nil {
+                    MEGALogDebug("[ChatUploader] transfer task not completed \(transfer.index) : \(transfer.filepath)")
+                    
+                    let foundTransfers = sdkTransfers.filter({
+                        return $0.path == transfer.filepath
+                    })
+                    
+                    if !foundTransfers.isEmpty {
+                        transfer.transferTag = nil
+                        MEGALogDebug("[ChatUploader] transfer tag set to nil at \(transfer.index) : \(transfer.filepath)")
+                    } else {
+                        context.delete(transfer)
+                        MEGALogDebug("[ChatUploader] Deleted the transfer task \(transfer.index) : \(transfer.filepath)")
+                    }
+                } else {
+                    MEGALogDebug("[ChatUploader] transfer task is already completed \(transfer.index) : \(transfer.filepath)")
                 }
             }
             
@@ -71,8 +99,14 @@
                     if let handle = transfer.nodeHandle,
                         let nodeHandle = UInt64(handle),
                         let chatRoomId = UInt64(chatRoomIdString) {
-                        MEGASdkManager.sharedMEGAChatSdk()?.attachNode(toChat: chatRoomId, node: nodeHandle)
-                        MEGALogInfo("[ChatUploader] attchment complete File path \(transfer.filepath)")
+                        
+                        if let appData = transfer.appData, appData.contains("attachVoiceClipToChatID") {
+                            MEGASdkManager.sharedMEGAChatSdk()?.attachVoiceMessage(toChat: chatRoomId, node: nodeHandle)
+                        } else {
+                            MEGASdkManager.sharedMEGAChatSdk()?.attachNode(toChat: chatRoomId, node: nodeHandle)
+                        }
+                        
+                        MEGALogInfo("[ChatUploader] attachment complete File path \(transfer.filepath)")
                         context.delete(transfer)
                     }
                 }
@@ -93,11 +127,13 @@ extension ChatUploader: MEGATransferDelegate {
                 return
         }
         
+        cleanupDatabaseIfRequired()
+        
         context.perform {
             if let allTransfers = MEGAStore.shareInstance()?.fetchAllChatUploadTransfer(withChatRoomId: chatRoomIdString, context: context) {
                 if let transferTask = allTransfers.filter({ $0.filepath == transfer.path && ($0.transferTag == nil || $0.transferTag == String(transfer.tag))}).first {
                     transferTask.transferTag = String(transfer.tag)
-                    MEGALogInfo("[ChatUploader] updating exsisting row for \(transfer.path ?? "no path") with tag \(transfer.tag)")
+                    MEGALogInfo("[ChatUploader] updating existing row for \(transfer.path ?? "no path") with tag \(transfer.tag)")
                 } else {
                     store.insertChatUploadTransfer(withFilepath: transfer.path,
                                                    chatRoomId: chatRoomIdString,
@@ -124,7 +160,7 @@ extension ChatUploader: MEGATransferDelegate {
             MEGAStore.shareInstance()?.deleteChatUploadTransfer(withChatRoomId: chatRoomIdString,
                                                                 transferTag: String(transfer.tag),
                                                                 context: context)
-            MEGALogInfo("[ChatUploader]Transfer has started with exactly the same data (local path and target parent). File: %@", transfer.fileName);
+            MEGALogInfo("[ChatUploader] transfer has started with exactly the same data (local path and target parent). File: %@", transfer.fileName);
             return;
         }
         
@@ -136,9 +172,11 @@ extension ChatUploader: MEGATransferDelegate {
                                            chatRoomId: chatRoomIdString,
                                            nodeHandle: String(transfer.nodeHandle),
                                            transferTag: String(transfer.tag),
+                                           appData: transfer.appData,
                                            context: context)
             self.updateDatabase(withChatRoomIdString: chatRoomIdString, context: context)
         }
     }
     
 }
+

@@ -55,7 +55,6 @@ extension ChatMessage: MessageType {
             return .custom(message)
         } else if case .normal = message.type {
             return .custom(message)
-            
         } else if case .voiceClip = message.type {
             return .custom(message)
         } else if message.isManagementMessage {
@@ -84,7 +83,7 @@ extension ChatMessage: SenderType {
     }
 
     var displayName: String {
-        return chatRoom.userDisplayName(forUserHandle: message.userHandle) ?? chatRoom.peerEmail(byHandle: message.userHandle)
+        return chatRoom.userDisplayName(forUserHandle: message.userHandle) ?? chatRoom.peerEmail(byHandle: message.userHandle) ?? ""
     }
 }
 
