@@ -2,6 +2,8 @@ import MessageKit
 
 class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
     var currentNode: MEGANode?
+    var currentTransfer: MEGATransfer?
+
     open var imageView: YYAnimatedImageView = {
         let imageView = YYAnimatedImageView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
         imageView.contentMode = .scaleAspectFit
@@ -19,6 +21,12 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
         loadingIndicator.startAnimating()
         loadingIndicator.isHidden = true
         return loadingIndicator
+    }()
+    
+    open var progressView: UIProgressView = {
+        let progressView = UIProgressView(progressViewStyle: .default)
+        progressView.tintColor = UIColor.mnz_turquoise(for: progressView.traitCollection)
+        return progressView
     }()
 
     open var durationLabel: UILabel = {
@@ -56,12 +64,16 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
 
         loadingIndicator.autoCenterInSuperview()
         loadingIndicator.autoSetDimensions(to: CGSize(width: 20, height: 20))
+        
+        progressView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
+        progressView.autoSetDimension(.height, toSize: 4)
     }
 
     override open func setupSubviews() {
         super.setupSubviews()
         messageContainerView.addSubview(imageView)
         messageContainerView.addSubview(loadingIndicator)
+        messageContainerView.addSubview(progressView)
         imageView.addSubview(playIconView)
         imageView.addSubview(durationLabel)
         setupConstraints()
@@ -75,17 +87,20 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
         }
 
         let megaMessage = chatMessage.message
+        currentTransfer = chatMessage.transfer
 
         if let transfer = chatMessage.transfer {
             loadingIndicator.isHidden = false
             loadingIndicator.startAnimating()
+            progressView.isHidden = false
             durationLabel.isHidden = true
             playIconView.isHidden = true
             let path = NSHomeDirectory().append(pathComponent: transfer.path)
-
             imageView.yy_imageURL = URL(fileURLWithPath: path)
             return
         }
+
+        progressView.isHidden = true
 
         let node = megaMessage.nodeList.node(at: 0)!
         currentNode = node
@@ -117,6 +132,12 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
         }
     }
 
+    func onTransferUpdate(_ api: MEGASdk, transfer: MEGATransfer) {
+        if currentTransfer?.nodeHandle == transfer.nodeHandle {
+            progressView.setProgress(transfer.transferredBytes.floatValue / transfer.totalBytes.floatValue, animated: true)
+        }
+    }
+    
     func onTransferFinish(_: MEGASdk, transfer: MEGATransfer, error _: MEGAError) {
         if currentNode?.handle == transfer.nodeHandle {
             if transfer.path != nil, FileManager.default.fileExists(atPath: transfer.path) {
