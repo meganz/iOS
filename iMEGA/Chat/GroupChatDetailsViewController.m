@@ -581,9 +581,9 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
             } else {
                 cell = [self.tableView dequeueReusableCellWithIdentifier:@"GroupChatDetailsParticipantTypeID" forIndexPath:indexPath];
                 cell.nameLabel.text = peerFullname;
+                [cell.leftImageView mnz_setImageForUserHandle:handle];
             }
             
-            [cell.leftImageView mnz_setImageForUserHandle:handle];
             cell.onlineStatusView.backgroundColor = [UIColor mnz_colorForChatStatus:[MEGASdkManager.sharedMEGAChatSdk userOnlineStatus:handle]];
             
             cell.emailLabel.text = peerEmail;
@@ -974,7 +974,9 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-    [self loadVisibleParticipants];
+    if (!decelerate) {
+        [self loadVisibleParticipants];
+    }
 }
 
 #pragma mark - MEGAChatRequestDelegate
