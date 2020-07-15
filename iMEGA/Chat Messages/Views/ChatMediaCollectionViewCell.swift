@@ -1,11 +1,27 @@
 import MessageKit
 
+extension CGFloat {
+    func precised(_ value: Int = 1) -> CGFloat {
+        let offset = pow(10, CGFloat(value))
+        return (self * offset).rounded() / offset
+    }
+
+    static func equal(_ lhs: CGFloat, _ rhs: CGFloat, precise value: Int? = nil) -> Bool {
+        guard let value = value else {
+            return lhs == rhs
+        }
+
+        return lhs.precised(value) == rhs.precised(value)
+    }
+}
+
 class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
     var currentNode: MEGANode?
     var currentTransfer: MEGATransfer?
 
     open var imageView: YYAnimatedImageView = {
         let imageView = YYAnimatedImageView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        imageView.backgroundColor = .clear
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
@@ -26,6 +42,7 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
     open var progressView: UIProgressView = {
         let progressView = UIProgressView(progressViewStyle: .default)
         progressView.tintColor = UIColor.mnz_turquoise(for: progressView.traitCollection)
+        progressView.trackTintColor = .clear
         return progressView
     }()
 
@@ -71,8 +88,8 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
 
     override open func setupSubviews() {
         super.setupSubviews()
-        messageContainerView.addSubview(imageView)
         messageContainerView.addSubview(loadingIndicator)
+        messageContainerView.addSubview(imageView)
         messageContainerView.addSubview(progressView)
         imageView.addSubview(playIconView)
         imageView.addSubview(durationLabel)
@@ -88,7 +105,7 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
 
         let megaMessage = chatMessage.message
         currentTransfer = chatMessage.transfer
-
+        progressView.progress = 0
         if let transfer = chatMessage.transfer {
             loadingIndicator.isHidden = false
             loadingIndicator.startAnimating()
@@ -105,10 +122,22 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
         let node = megaMessage.nodeList.node(at: 0)!
         currentNode = node
         let name = node.name! as NSString
-
+                 let previewFilePath = Helper.path(for: node, inSharedSandboxCacheDirectory: "previewsV3")
+        let originalImagePath = Helper.path(for: node, inSharedSandboxCacheDirectory: "originalV3")
+        
+        if FileManager.default.fileExists(atPath: previewFilePath) || FileManager.default.fileExists(atPath: originalImagePath) {
+            loadingIndicator.isHidden = true
+            if let previewImage = UIImage(contentsOfFile: previewFilePath) ?? UIImage(contentsOfFile: originalImagePath),
+                (previewImage.size.width / previewImage.size.height).precised(2) != (messageContainerView.frame.width / messageContainerView.frame.height).precised(2),
+                messagesCollectionView.numberOfSections > indexPath.section {
+                messagesCollectionView.reloadItems(at: [indexPath])
+            }
+        } else {
+            loadingIndicator.isHidden = false
+            loadingIndicator.startAnimating()
+        }
         imageView.mnz_setPreview(by: node) { _ in
-            let visibleIndexPaths = messagesCollectionView.indexPathsForVisibleItems
-            guard visibleIndexPaths.contains(indexPath) else {
+            guard messagesCollectionView.numberOfSections > indexPath.section else {
                 return
             }
 
@@ -117,7 +146,6 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
 
         durationLabel.isHidden = true
         playIconView.isHidden = true
-        loadingIndicator.isHidden = true
         if name.pathExtension == "gif" {
             let originalImagePath = Helper.path(for: node, inSharedSandboxCacheDirectory: "originalV3")
             if FileManager.default.fileExists(atPath: originalImagePath) {
@@ -133,7 +161,7 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
     }
 
     func onTransferUpdate(_ api: MEGASdk, transfer: MEGATransfer) {
-        if currentTransfer?.nodeHandle == transfer.nodeHandle {
+        if currentTransfer?.tag == transfer.tag {
             progressView.setProgress(transfer.transferredBytes.floatValue / transfer.totalBytes.floatValue, animated: true)
         }
     }

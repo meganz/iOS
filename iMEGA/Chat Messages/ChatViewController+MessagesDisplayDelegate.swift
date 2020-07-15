@@ -10,8 +10,12 @@ extension ChatViewController: MessagesDisplayDelegate {
             return isFromCurrentSender(message: message) ? UIColor.mnz_chatOutgoingBubble(UIScreen.main.traitCollection) : UIColor.mnz_chatIncomingBubble(UIScreen.main.traitCollection)
         }
         
-        if chatMessage.message.isManagementMessage || chatMessage.transfer?.transferChatMessageType() == .attachment {
+        if chatMessage.message.isManagementMessage {
             return .clear
+        }
+        
+        if chatMessage.transfer?.transferChatMessageType() == .attachment {
+            return UIColor.mnz_chatIncomingBubble(UIScreen.main.traitCollection)
         }
         
         switch chatMessage.message.type {
