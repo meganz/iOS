@@ -63,6 +63,8 @@
 		2FA6DAA7243ED07F007A8E81 /* MEGAGetPreviewRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8EC55B31F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.m */; };
 		2FB0420E242C4FAE007B9C88 /* NodeActionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB0420D242C4FAE007B9C88 /* NodeActionViewController.swift */; };
 		2FBC74C8245BE74900BE513F /* ChatViewController+EmptyDataSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBC74C7245BE74900BE513F /* ChatViewController+EmptyDataSet.swift */; };
+		2FBF393324BEA6EE00ED0931 /* ChatViewController+EmojiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBF393224BEA6EE00ED0931 /* ChatViewController+EmojiView.swift */; };
+		2FBF393524BEACA600ED0931 /* ReactionPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBF393424BEACA600ED0931 /* ReactionPickerViewController.swift */; };
 		2FC4A9D524ADA40900149F06 /* ReactionContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC4A9D424ADA40900149F06 /* ReactionContainerView.swift */; };
 		2FC5A62D24A449AF00AE6185 /* MessageReactionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC5A62B24A449AF00AE6185 /* MessageReactionReusableView.swift */; };
 		2FC5A62E24A449AF00AE6185 /* MessageReactionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2FC5A62C24A449AF00AE6185 /* MessageReactionReusableView.xib */; };
@@ -1137,7 +1139,7 @@
 		BF33EF8424457A0700CD35AC /* ChatInputBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF33EF8324457A0700CD35AC /* ChatInputBar.swift */; };
 		BF33EF8C2447E6DD00CD35AC /* EnlargementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF33EF8B2447E6DC00CD35AC /* EnlargementView.swift */; };
 		BF33EF902447E70200CD35AC /* CondensationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF33EF8F2447E70200CD35AC /* CondensationView.swift */; };
-		BF5C36762491C90A004DDA2F /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		BF5C36762491C90A004DDA2F /* (null) in Sources */ = {isa = PBXBuildFile; };
 		BF5C36792491C917004DDA2F /* MEGAUser+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB463F624342F7F00FB90B9 /* MEGAUser+Additions.swift */; };
 		BF69E5172374F3720031913D /* AppDelegate+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF69E5162374F3720031913D /* AppDelegate+Additions.swift */; };
 		BF6DF366245797CC00D612D0 /* AddToChatViewAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6DF365245797CC00D612D0 /* AddToChatViewAnimator.swift */; };
@@ -1421,6 +1423,8 @@
 		2FA6DA61243E919D007A8E81 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		2FB0420D242C4FAE007B9C88 /* NodeActionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeActionViewController.swift; sourceTree = "<group>"; };
 		2FBC74C7245BE74900BE513F /* ChatViewController+EmptyDataSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatViewController+EmptyDataSet.swift"; sourceTree = "<group>"; };
+		2FBF393224BEA6EE00ED0931 /* ChatViewController+EmojiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatViewController+EmojiView.swift"; sourceTree = "<group>"; };
+		2FBF393424BEACA600ED0931 /* ReactionPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionPickerViewController.swift; sourceTree = "<group>"; };
 		2FC4A9D424ADA40900149F06 /* ReactionContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionContainerView.swift; sourceTree = "<group>"; };
 		2FC5A62B24A449AF00AE6185 /* MessageReactionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageReactionReusableView.swift; sourceTree = "<group>"; };
 		2FC5A62C24A449AF00AE6185 /* MessageReactionReusableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageReactionReusableView.xib; sourceTree = "<group>"; };
@@ -5731,6 +5735,7 @@
 				BFE6DBFB242DBA4A00E2E5B4 /* ChatViewController.swift */,
 				2F7309922463B1F000EF36F4 /* ChatViewController+CallStatus.swift */,
 				BFCEA855246E074B00FA2451 /* ChatViewController+ChatDelegate.swift */,
+				2FBF393224BEA6EE00ED0931 /* ChatViewController+EmojiView.swift */,
 				2F18DEEE24592F0E00E7EE27 /* ChatViewController+Menus.swift */,
 				2FBC74C7245BE74900BE513F /* ChatViewController+EmptyDataSet.swift */,
 				2F3B13D32471F5E60026DE64 /* ChatViewController+Toolbar.swift */,
@@ -5750,6 +5755,7 @@
 				BFC933E624A45D0000BC2A75 /* ChatMessageOptionsTableViewController.swift */,
 				BFC933E424A45CD600BC2A75 /* ReactedUsersListPageViewController.swift */,
 				BFC933D824A44C6300BC2A75 /* ReactedEmojisUsersListViewController.swift */,
+				2FBF393424BEACA600ED0931 /* ReactionPickerViewController.swift */,
 			);
 			path = "Chat Messages";
 			sourceTree = "<group>";
@@ -7057,6 +7063,7 @@
 				BF69E5172374F3720031913D /* AppDelegate+Additions.swift in Sources */,
 				E8B519261AC9CD8000BB7324 /* TransfersViewController.m in Sources */,
 				8315F20C22C2202400EA40CC /* ContactsOnMegaManager.swift in Sources */,
+				2FBF393324BEA6EE00ED0931 /* ChatViewController+EmojiView.swift in Sources */,
 				5B20B00A20E61DDF00511C0F /* MEGALinkManager.m in Sources */,
 				BFC933DA24A44C6300BC2A75 /* ReactedEmojisUsersListViewController.swift in Sources */,
 				5B64D4EE2111D5DE004CD155 /* EnabledTwoFactorAuthenticationViewController.m in Sources */,
@@ -7300,6 +7307,7 @@
 				41BADDAD1A8E1659008408B3 /* NSString+MNZCategory.m in Sources */,
 				83337CAB21009494000F40A7 /* ItemListModel.m in Sources */,
 				7720C5B5206A931E00F995D1 /* MEGATransfer+MNZCategory.m in Sources */,
+				2FBF393524BEACA600ED0931 /* ReactionPickerViewController.swift in Sources */,
 				B6CCC36621E6F67B00B68E2C /* VideoUploadsTableViewController.m in Sources */,
 				4152273B1A692EEF00EC7BB6 /* SVProgressHUD.m in Sources */,
 				2FB0420E242C4FAE007B9C88 /* NodeActionViewController.swift in Sources */,
@@ -7733,8 +7741,8 @@
 				943F8B271EF283BD00AFD89F /* LaunchViewController.m in Sources */,
 				A85740C92032F6E80033034C /* MOChatDraft+CoreDataProperties.m in Sources */,
 				5BFA346F1FAC5850005BFC4E /* MEGAMoveRequestDelegate.m in Sources */,
-				BF5C36762491C90A004DDA2F /* BuildFile in Sources */,
-				BF5C36762491C90A004DDA2F /* BuildFile in Sources */,
+				BF5C36762491C90A004DDA2F /* (null) in Sources */,
+				BF5C36762491C90A004DDA2F /* (null) in Sources */,
 				941135541F01001A00D33428 /* MEGAActivityItemProvider.m in Sources */,
 				941135661F01541100D33428 /* NSFileManager+MNZCategory.m in Sources */,
 				941135521F00FFE400D33428 /* MEGAReachabilityManager.m in Sources */,
