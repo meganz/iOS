@@ -21,7 +21,6 @@ class ReactionPickerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(emojiInputView)
-        // Do any additional setup after loading the view.
     }
 
     
@@ -52,8 +51,9 @@ extension ReactionPickerViewController: EmojiViewDelegate {
       // MARK: - EmojiViewDelegate
       
       func emojiViewDidSelectEmoji(_ emoji: String, emojiView: EmojiView) {
-        
-        print(emoji)
+        let megaMessage = message?.message
+        MEGASdkManager.sharedMEGAChatSdk()?.addReaction(forChat: message?.chatRoom.chatId ?? 0, messageId: megaMessage?.messageId ?? 0, reaction: emoji)
+        dismiss(animated: true, completion: nil)
       }
       
       func emojiViewDidPressChangeKeyboardButton(_ emojiView: EmojiView) {
@@ -61,8 +61,10 @@ extension ReactionPickerViewController: EmojiViewDelegate {
       }
       
       func emojiViewDidPressDeleteBackwardButton(_ emojiView: EmojiView) {
+        dismiss(animated: true, completion: nil)
       }
       
       func emojiViewDidPressDismissKeyboardButton(_ emojiView: EmojiView) {
+        dismiss(animated: true, completion: nil)
       }
 }
