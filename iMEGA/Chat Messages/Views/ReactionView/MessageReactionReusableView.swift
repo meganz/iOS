@@ -2,6 +2,7 @@ import MessageKit
 
 protocol MessageReactionReusableViewDelegate: class {
     func emojiLongPressed(_ emoji: String, chatMessage: ChatMessage, sender: UIView)
+    func addMorePressed(chatMessage: ChatMessage)
 }
 
 class MessageReactionReusableView: MessageReusableView {
@@ -49,5 +50,12 @@ extension MessageReactionReusableView: ReactionEmojiViewDelegate {
         }
         
         delegate.emojiLongPressed(emoji, chatMessage: chatMessage, sender: sender)
+    }
+    
+    func addMorePressed() {
+        guard let delegate = delegate, let chatMessage = chatMessage else {
+            return
+        }
+        delegate.addMorePressed(chatMessage: chatMessage)
     }
 }

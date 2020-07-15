@@ -77,6 +77,12 @@ extension ChatViewController: MessagesDataSource {
 }
 
 extension ChatViewController: MessageReactionReusableViewDelegate {
+    func addMorePressed(chatMessage: ChatMessage) {
+        let vc = ReactionPickerViewController()
+        vc.message = chatMessage
+        presentPanModal(vc)
+    }
+    
 
     func emojiLongPressed(_ emoji: String, chatMessage: ChatMessage, sender: UIView) {
         guard let emojisStringList = MEGASdkManager
