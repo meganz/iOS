@@ -57,6 +57,10 @@ class AddToChatViewAnimator: NSObject, UIViewControllerAnimatedTransitioning {
                             : .init(translationX: 0, y: contentSnapShot.bounds.height)
                         addToChatViewController.backgroundView.alpha = (self.type == .present) ? 1.0 : 0.0
         }) { _ in
+            if self.type == .present {
+                addToChatViewController.presentationAnimationComplete()
+            }
+            
             addToChatViewController.backgroundView.alpha = 1.0
             addToChatViewController.contentView.isHidden = false
             contentSnapShot.removeFromSuperview()

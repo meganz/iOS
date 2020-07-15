@@ -62,16 +62,13 @@ class AddToChatImageCell: UICollectionViewCell {
                 bottomLeftLabel.text = formatter.string(from: asset.duration)
             }
             
-            let requestOptions = PHImageRequestOptions()
-            requestOptions.isSynchronous = true
-            
-            imageRequestID = PHImageManager.default().requestImage(for: asset,
-                                                                   targetSize: bounds.size,
-                                                                   contentMode: .aspectFill,
-                                                                   options: requestOptions,
-                                                                   resultHandler: { [weak self] (image, _) in
-                                                                    self?.imageView.image = image
-                                                                    self?.imageRequestID = nil
+            imageRequestID = PHCachingImageManager.default().requestImage(for: asset,
+                                                                          targetSize: bounds.size,
+                                                                          contentMode: .aspectFill,
+                                                                          options: PHImageRequestOptions(),
+                                                                          resultHandler: { [weak self] (image, _) in
+                                                                            self?.imageView.image = image
+                                                                            self?.imageRequestID = nil
             })
         }
     }
@@ -84,7 +81,7 @@ class AddToChatImageCell: UICollectionViewCell {
         bottomLeftView.isHidden = true
         
         if let imageRequestID = imageRequestID {
-            PHImageManager.default().cancelImageRequest(imageRequestID)
+            PHCachingImageManager.default().cancelImageRequest(imageRequestID)
         }
     }
     

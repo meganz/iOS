@@ -10,6 +10,7 @@ class AddToChatMediaCollectionSource: NSObject {
     private let maxNumberOfAssetsFetched = 16
     private var lastSelectedIndexPath:IndexPath?
     private weak var delegate: AddToChatMediaCollectionSourceDelegate?
+    private var fetchResult: PHFetchResult<PHAsset>?
     
     private let minimumLineSpacing: CGFloat = 2.0
     private let cellDefaultWidth: CGFloat = 100.0
@@ -17,19 +18,36 @@ class AddToChatMediaCollectionSource: NSObject {
     private var hasAuthorizedAccessToPhotoAlbum: Bool {
         return PHPhotoLibrary.authorizationStatus() == .authorized
     }
-
-    private lazy var fetchResult: PHFetchResult<PHAsset> = {
+    
+    private var fetchOptions: PHFetchOptions {
         let fetchOptions = PHFetchOptions()
         fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
         fetchOptions.fetchLimit = maxNumberOfAssetsFetched
-        return PHAsset.fetchAssets(with: fetchOptions)
-    }()
+        return fetchOptions
+    }
+    
+    var showLiveFeedIfRequired = false {
+        didSet {
+            if showLiveFeedIfRequired,
+                let cameraCell = collectionView.cellForItem(at: IndexPath(item: 0, section: 0)) as? AddToChatCameraCollectionCell,
+                DevicePermissionsHelper.isVideoPermissionAuthorized(),
+                !cameraCell.isCurrentShowingLiveFeed {
+                do {
+                    try cameraCell.showLiveFeed()
+                } catch {
+                    MEGALogDebug("camera live feed error \(error.localizedDescription)")
+                }
+            }
+        }
+    }
     
     init(collectionView: UICollectionView, delegate: AddToChatMediaCollectionSourceDelegate) {
         self.collectionView = collectionView
         self.delegate = delegate
         
         super.init()
+        
+        updateFetchResult()
         
         collectionView.register(AddToChatCameraCollectionCell.nib,
                                    forCellWithReuseIdentifier: AddToChatCameraCollectionCell.reuseIdentifier)
@@ -40,11 +58,22 @@ class AddToChatMediaCollectionSource: NSObject {
         collectionView.dataSource = self
         collectionView.delegate = self
     }
+    
+    private func updateFetchResult() {
+        if hasAuthorizedAccessToPhotoAlbum {
+            self.fetchResult = PHAsset.fetchAssets(with: self.fetchOptions)
+        }
+    }
 }
 
 extension AddToChatMediaCollectionSource: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if hasAuthorizedAccessToPhotoAlbum {
+            updateFetchResult()
+            guard let fetchResult = fetchResult else {
+                return 2
+            }
+            
             let assetCounts = (fetchResult.count > maxNumberOfAssetsFetched) ? maxNumberOfAssetsFetched : fetchResult.count
             return 1 + assetCounts
         }
@@ -69,11 +98,14 @@ extension AddToChatMediaCollectionSource: UICollectionViewDataSource {
             if hasAuthorizedAccessToPhotoAlbum {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AddToChatImageCell.reuseIdentifier,
                                                               for: indexPath) as! AddToChatImageCell
-                cell.asset = fetchResult.object(at: indexPath.item-1)
-                cell.cellType = (
-                    fetchResult.count >= maxNumberOfAssetsFetched
-                        && (indexPath.item == collectionView.numberOfItems(inSection: 0) - 1)
+                
+                if let fetchResult = fetchResult {
+                    cell.asset = fetchResult.object(at: indexPath.item-1)
+                    cell.cellType = (
+                        fetchResult.count >= maxNumberOfAssetsFetched
+                            && (indexPath.item == collectionView.numberOfItems(inSection: 0) - 1)
                         ) ? .more : .media
+                }
                 
                 return cell
             } else {
@@ -90,12 +122,19 @@ extension AddToChatMediaCollectionSource: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView,
                         willDisplay cell: UICollectionViewCell,
                         forItemAt indexPath: IndexPath) {
-        if let cameraCell = cell as? AddToChatCameraCollectionCell, !cameraCell.isCurrentShowingLiveFeed {
-            do {
-                try cameraCell.showLiveFeed()
-            } catch {
-                MEGALogDebug("camera live feed error \(error.localizedDescription)")
+        if let cameraCell = cell as? AddToChatCameraCollectionCell,
+            !cameraCell.isCurrentShowingLiveFeed{
+            
+            if showLiveFeedIfRequired {
+                do {
+                    try cameraCell.showLiveFeed()
+                } catch {
+                    MEGALogDebug("camera live feed error \(error.localizedDescription)")
+                }
+            } else {
+                cameraCell.prepareToShowLivefeed()
             }
+            
         } else if let imageCell = cell as? AddToChatImageCell, imageCell.cellType == .media {
             imageCell.foregroundView.isHidden = !(lastSelectedIndexPath == indexPath)
         }
