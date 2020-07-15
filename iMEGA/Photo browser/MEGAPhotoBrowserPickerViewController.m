@@ -14,6 +14,7 @@
 @property (weak, nonatomic) IBOutlet UIView *statusBarBackground;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *closeBarButtonItem;
 @property (weak, nonatomic) IBOutlet UINavigationItem *navigationItem;
 
 @property (nonatomic) CGSize cellSize;
@@ -29,6 +30,8 @@
     self.cellInset = 1.0f;
     self.cellSize = [self.collectionView mnz_calculateCellSizeForInset:self.cellInset];
     [self.collectionView.collectionViewLayout invalidateLayout];
+    
+    self.closeBarButtonItem.title = AMLocalizedString(@"close", @"A button label.");
     
     NSString *folderName = [self.api nodeForHandle:self.mediaNodes.firstObject.parentHandle].name;
     NSString *numberOfFiles;

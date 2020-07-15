@@ -219,7 +219,7 @@ class NodeActionsTests: XCTestCase {
             .setIsFile(true)
             .setIsMediaFile(true)
             .build()
-        
+
         XCTAssertTrue(contains(nodeActionTypes: [.import, .download, .saveToPhotos, .open]))
     }
     
@@ -240,7 +240,7 @@ class NodeActionsTests: XCTestCase {
             .setIsFile(true)
             .setIsMediaFile(true)
             .build()
-        
+
         XCTAssertTrue(contains(nodeActionTypes: [.forward, .saveToPhotos, .download, .import]))
     }
     
