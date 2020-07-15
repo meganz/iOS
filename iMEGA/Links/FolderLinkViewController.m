@@ -1026,10 +1026,6 @@
             [self downloadAction:nil];
             break;
             
-        case MegaNodeActionTypeOpen:
-            [self openNode:node];
-            break;
-            
         case MegaNodeActionTypeImport:
             if (node.handle != self.parentNode.handle) {
                 self.selectedNodesArray = [NSMutableArray arrayWithObject:node];

@@ -332,10 +332,6 @@
     [self shareFileLink];
 }
 
-- (IBAction)openAction:(UIBarButtonItem *)sender {
-    [self open];
-}
-
 - (IBAction)sendToContactAction:(UIBarButtonItem *)sender {
     [self sendFileLinkToChat];
 }
