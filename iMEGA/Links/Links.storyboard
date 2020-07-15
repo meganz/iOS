@@ -514,7 +514,6 @@
                 <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" id="6vY-o5-7Ao">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <viewLayoutGuide key="safeArea" id="aI3-gc-4ar"/>
                     <items>
                         <barButtonItem tag="1" title="Import" image="sendMessage" style="plain" id="mCa-gQ-sq9">
@@ -529,7 +528,6 @@
                             </connections>
                         </barButtonItem>
                     </items>
-                    <color key="tintColor" red="0.95294117647058818" green="0.047058823529411764" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </toolbar>
             </objects>

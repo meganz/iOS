@@ -128,7 +128,7 @@ extension NodeAction {
     }
     
     class func thumbnailPdfAction() -> NodeAction {
-        return NodeAction(title: AMLocalizedString("Thumbnail view", "Text shown for switching from list view to thumbnail view."), detail: nil, image: UIImage(named: "thumbnailsView"), type: .thumbnailView)
+        return NodeAction(title: AMLocalizedString("Thumbnail view", "Text shown for switching from list view to thumbnail view."), detail: nil, image: UIImage(named: "thumbnailsThin"), type: .thumbnailView)
     }
     
     class func forwardAction() -> NodeAction {
