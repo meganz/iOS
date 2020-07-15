@@ -44,12 +44,13 @@ final class PhotoGridViewController: UIViewController {
         addToolbar()
         addRightCancelBarButtonItem()
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        navigationController?.presentationController?.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updateBottomView()
+        
+        navigationController?.presentationController?.delegate = self
     }
     
     override func viewWillDisappear(_ animated: Bool) {

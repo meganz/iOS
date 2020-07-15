@@ -25,7 +25,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
     ConfirmPasswordTextFieldTag
 };
 
-@interface ChangePasswordViewController () <UITextFieldDelegate, UIGestureRecognizerDelegate, MEGARequestDelegate, MEGAGlobalDelegate>
+@interface ChangePasswordViewController () <UITextFieldDelegate, UIGestureRecognizerDelegate, MEGARequestDelegate, MEGAGlobalDelegate, UIAdaptivePresentationControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
@@ -143,6 +143,8 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    self.navigationController.presentationController.delegate = self;
     
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     [[MEGAReachabilityManager sharedManager] retryPendingConnections];
@@ -556,6 +558,29 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
         return NO;
     }
     return YES;
+}
+
+#pragma mark - UIAdaptivePresentationControllerDelegate
+
+- (BOOL)presentationControllerShouldDismiss:(UIPresentationController *)presentationController {
+    switch (self.changeType) {
+        case ChangeTypePassword:
+            return self.theNewPasswordView.passwordTextField.text.length == 0;
+            
+        case ChangeTypeEmail:
+            return self.theNewEmailInputView.inputTextField.text.length == 0;
+
+        default:
+            return YES;
+    }
+}
+
+- (void)presentationControllerDidAttemptToDismiss:(UIPresentationController *)presentationController {
+    UIAlertController *confirmDismissAlert = [Helper confirmDiscardChangesAlertWithConfirmAction:^{
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }];
+    confirmDismissAlert.popoverPresentationController.barButtonItem = self.navigationItem.leftBarButtonItem;
+    [self presentViewController:confirmDismissAlert animated:YES completion:nil];
 }
 
 #pragma mark - MEGAGlobalDelegate

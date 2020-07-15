@@ -43,11 +43,15 @@ class InviteContactViewController: UIViewController {
             addFromContactsLabel.textColor = UIColor.mnz_secondaryGray(for: self.traitCollection)
         }
         
-        navigationController?.presentationController?.delegate = self
-
         updateAppearance()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.presentationController?.delegate = self
+    }
+    
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .portrait
     }
