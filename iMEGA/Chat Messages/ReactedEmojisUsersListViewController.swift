@@ -177,12 +177,7 @@ extension ReactedEmojisUsersListViewController: PanModalPresentable {
     }
 
      var longFormHeight: PanModalHeight {
-        guard let scrollView = panScrollable
-            else { return .maxHeight }
-
-        // called once during presentation and stored
-        scrollView.layoutIfNeeded()
-        return .contentHeight(scrollView.contentSize.height + 98)
+        return .contentHeight(300)
     }
     
     var anchorModalToLongForm: Bool {

@@ -32,6 +32,7 @@ class ReactedUsersListPageViewController: UIPageViewController {
         delegate = self
         
         let reactedUsersTableViewController = pages[selectedPage]
+        currentIndex = selectedPage
         reactedUsersTableViewController.chatMessageOptionDataSource = self
         setViewControllers([reactedUsersTableViewController],
                            direction: .forward,
