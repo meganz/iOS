@@ -73,6 +73,8 @@
     }
     
     self.moreBarButtonItem.accessibilityLabel = AMLocalizedString(@"more", @"Top menu option which opens more menu options in a context menu.");
+    
+    [self updateAppearance];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -308,6 +310,10 @@
     [self.navigationController pushViewController:sendToViewController animated:YES];
 }
 
+- (void)download {
+    [self.node mnz_fileLinkDownloadFromViewController:self isFolderLink:NO];
+}
+
 #pragma mark - IBActions
 
 - (IBAction)cancelTouchUpInside:(UIBarButtonItem *)sender {
@@ -343,6 +349,10 @@
 
 - (void)nodeAction:(NodeActionViewController *)nodeAction didSelect:(MegaNodeActionType)action for:(MEGANode *)node from:(id)sender {
     switch (action) {
+        case MegaNodeActionTypeDownload:
+            [self download];
+            break;
+            
         case MegaNodeActionTypeImport:
             [self import];
             break;

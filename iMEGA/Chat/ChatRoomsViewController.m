@@ -924,14 +924,14 @@
     
     switch (section) {
         case 0:
-            if (self.isArchivedChatsRowVisible) {
+            if (self.isArchivedChatsRowVisible > 0 && !self.searchController.isActive) {
                 return 1;
             } else {
                 return 0;
             }
         
         case 1:
-            if ([self isUserContactsSectionVisible]) {
+            if ([self numberOfChatRooms] > 0 && !self.searchController.isActive) {
                 return 1;
             } else {
                 return 0;
@@ -1041,7 +1041,7 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     
-    if (self.chatRoomsType == ChatRoomsTypeDefault) {
+    if (self.chatRoomsType == ChatRoomsTypeDefault && !self.searchController.isActive) {
         if (scrollView.contentOffset.y > 0 && self.isArchivedChatsRowVisible) {
             self.isScrollAtTop = NO;
             self.isArchivedChatsRowVisible = NO;

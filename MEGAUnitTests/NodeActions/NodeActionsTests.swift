@@ -192,7 +192,7 @@ class NodeActionsTests: XCTestCase {
             .setIsMediaFile(true)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.import, .sendToChat, .saveToPhotos, .share]))
+        XCTAssertTrue(contains(nodeActionTypes: [.import, .download, .sendToChat, .saveToPhotos, .share]))
     }
     
     func testFileLink() {
@@ -201,7 +201,7 @@ class NodeActionsTests: XCTestCase {
             .setIsFile(true)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.import, .sendToChat, .share]))
+        XCTAssertTrue(contains(nodeActionTypes: [.import, .download, .sendToChat, .share]))
     }
     
     func testFolderLink() {
@@ -210,7 +210,7 @@ class NodeActionsTests: XCTestCase {
             .setIsFile(false)
             .build()
         
-        XCTAssertTrue(contains(nodeActionTypes: [.import, .sendToChat, .select, .share]))
+        XCTAssertTrue(contains(nodeActionTypes: [.import, .download, .sendToChat, .select, .share]))
     }
     
     func testFolderLinkChildMediaFile() {
@@ -219,8 +219,8 @@ class NodeActionsTests: XCTestCase {
             .setIsFile(true)
             .setIsMediaFile(true)
             .build()
-        
-        XCTAssertTrue(contains(nodeActionTypes: [.import, .saveToPhotos]))
+
+        XCTAssertTrue(contains(nodeActionTypes: [.import, .download, .saveToPhotos, .open]))
     }
     
     func testFolderLinkChildFile() {
@@ -229,7 +229,7 @@ class NodeActionsTests: XCTestCase {
             .setIsFile(true)
             .build()
         
-        XCTAssertTrue(contains(nodeActionType: .import))
+        XCTAssertTrue(contains(nodeActionTypes: [.import, .download, .open]))
     }
     
     // MARK: - Chat tests
@@ -240,7 +240,7 @@ class NodeActionsTests: XCTestCase {
             .setIsFile(true)
             .setIsMediaFile(true)
             .build()
-        
+
         XCTAssertTrue(contains(nodeActionTypes: [.forward, .saveToPhotos, .download, .import]))
     }
     

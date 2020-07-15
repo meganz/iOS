@@ -2209,7 +2209,7 @@
 /* Same for all configuration. For example the options for 'Sorting Preference' in the app are: 'Per Folder' and 'Same for all Folders'. */
 "Same for All"="Stessa per tutte";
 /* Section title of the 'Sorting And View Mode' view inside of Settings - Appearence - Sorting And View Mode. */
-"Sorting preference"="Ordina preferenze";
+"Sorting preference"="Preferenze di elencazione";
 /* Section title of the 'Sorting And View Mode' view inside of Settings - Appearence - Sorting And View Mode. */
 "View mode preference"="Preferenze modalità di visualizzazione";
 /* Footer text explaining what means choosing a sorting preference 'Per Folder' or 'Same for All' in Settings - Appearance - Sorting And View Mode. */
