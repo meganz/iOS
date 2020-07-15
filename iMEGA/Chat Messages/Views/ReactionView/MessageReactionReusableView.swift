@@ -1,4 +1,3 @@
-import AlignedCollectionViewFlowLayout
 import MessageKit
 
 protocol MessageReactionReusableViewDelegate: class {

@@ -13,7 +13,6 @@ target 'MEGA' do
   pod 'FlexLayout'
   pod 'PinLayout'
 
-  pod 'AlignedCollectionViewFlowLayout', :git => 'https://github.com/mischa-hildebrand/AlignedCollectionViewFlowLayout.git'
   # Pods for MEGA
 
   target 'MEGAUnitTests' do
