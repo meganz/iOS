@@ -21,6 +21,14 @@ class AddToChatCameraCollectionCell: UICollectionViewCell {
         updateAppearance()
     }
     
+    func prepareToShowLivefeed() {
+        guard DevicePermissionsHelper.isVideoPermissionAuthorized() else {
+            return
+        }
+        
+        liveFeedView.isHidden = false
+    }
+    
     func showLiveFeed() throws {
         if DevicePermissionsHelper.shouldAskForVideoPermissions() {
             updateCameraIconImageView()
@@ -31,10 +39,12 @@ class AddToChatCameraCollectionCell: UICollectionViewCell {
         captureSession.sessionPreset = .photo
         
         liveFeedView.isHidden = false
+        animateFading()
         previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
         previewLayer.videoGravity = .resizeAspectFill
         liveFeedView.layer.addSublayer(previewLayer)
-       
+        previewLayer.frame = liveFeedView.layer.bounds
+
         let deviceDiscoverySession = AVCaptureDevice.default(.builtInWideAngleCamera,
                                                              for: AVMediaType.video,
                                                              position: .back)
@@ -51,7 +61,6 @@ class AddToChatCameraCollectionCell: UICollectionViewCell {
         }
         
         captureSession.startRunning()
-        liveFeedView.isHidden = false
         isCurrentShowingLiveFeed = true
         updateCameraIconImageView()
     }
@@ -80,6 +89,24 @@ class AddToChatCameraCollectionCell: UICollectionViewCell {
         }
     }
     
+    private func animateFading() {
+        guard let mainView = liveFeedView.superview else {
+            return
+        }
+        
+        let lifeFeedFadingView = UIView()
+        lifeFeedFadingView.backgroundColor = .black
+        mainView.insertSubview(lifeFeedFadingView, aboveSubview: liveFeedView)
+        lifeFeedFadingView.autoPinEdgesToSuperviewEdges()
+        
+        UIView.animate(withDuration: 0.2, animations: {
+            lifeFeedFadingView.alpha = 0.0
+        }) { _ in
+            lifeFeedFadingView.removeFromSuperview()
+        }
+
+    }
+    
     private func addCornerRadius() {
         layer.cornerRadius = 4.0
         
@@ -102,7 +129,6 @@ class AddToChatCameraCollectionCell: UICollectionViewCell {
     
     private func updateAppearance() {
         backgroundColor = .mnz_inputbarButtonBackground(traitCollection)
-        liveFeedView.backgroundColor = .mnz_inputbarButtonBackground(traitCollection)
         updateCameraIconImageView()
     }
 }
