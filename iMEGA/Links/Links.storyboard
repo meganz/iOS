@@ -285,6 +285,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="closeBarButtonItem" destination="D67-ek-Mq7" id="NiK-Vg-RJp"/>
+                        <outlet property="downloadBarButtonItem" destination="GoK-MS-FZ3" id="Izd-FE-HkI"/>
                         <outlet property="importBarButtonItem" destination="UE7-2a-Z7U" id="Gdc-hQ-k02"/>
                         <outlet property="moreBarButtonItem" destination="wnU-Yc-6PL" id="Zj5-hn-uzQ"/>
                         <outlet property="selectAllBarButtonItem" destination="zfR-jK-5T1" id="E25-XE-D5X"/>
@@ -320,6 +321,12 @@
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="SvX-Wp-F0v"/>
+                        <barButtonItem tag="1" image="offline" style="plain" id="GoK-MS-FZ3">
+                            <connections>
+                                <action selector="downloadAction:" destination="9ZV-tM-uu1" id="bRB-8z-HqY"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="HiR-aM-9uh"/>
                         <barButtonItem tag="2" image="share" style="plain" id="3v0-rP-iq6">
                             <connections>
                                 <action selector="shareAction:" destination="9ZV-tM-uu1" id="2Y6-km-Zvi"/>
@@ -552,6 +559,7 @@
         <image name="import" width="28" height="28"/>
         <image name="more" width="28" height="28.5"/>
         <image name="moreSelected" width="28" height="28"/>
+        <image name="offline" width="28" height="28"/>
         <image name="selectAll" width="22" height="22"/>
         <image name="sendMessage" width="28" height="28"/>
         <image name="share" width="28" height="28"/>
