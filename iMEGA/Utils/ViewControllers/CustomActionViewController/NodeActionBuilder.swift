@@ -93,6 +93,7 @@ final class NodeActionBuilder {
             if isMediaFile {
                 nodeActions.append(NodeAction.saveToPhotosAction())
             }
+            nodeActions.append(NodeAction.openAction())
         } else if displayMode == .chatSharedFiles {
             nodeActions.append(NodeAction.forwardAction())
             if isMediaFile {
