@@ -81,22 +81,8 @@ extension ChatViewController: MessageReactionReusableViewDelegate {
         let vc = ReactionPickerViewController()
         
         vc.message = chatMessage
-        if UIDevice.current.iPadDevice {
-          
-            vc.modalPresentationStyle = .popover;
-            
-            if let popover = vc.popoverPresentationController {
-                popover.delegate = vc
-                popover.sourceView = sender
-                popover.sourceRect = sender.bounds
-                
-                present(vc, animated: true, completion: nil)
-            }
-        } else {
-            presentPanModal(vc)
-        }
+        presentPanModal(vc, sourceView:sender , sourceRect: sender.bounds)
     }
-    
 
     func emojiLongPressed(_ emoji: String, chatMessage: ChatMessage, sender: UIView) {
         guard let emojisStringList = MEGASdkManager
