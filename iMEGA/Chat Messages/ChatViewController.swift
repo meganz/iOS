@@ -1,6 +1,5 @@
 import UIKit
 import MessageKit
-import EmojiPicker
 
 class ChatViewController: MessagesViewController {
 
@@ -401,11 +400,7 @@ class ChatViewController: MessagesViewController {
         }
         
         if action == NSSelectorFromString("forward:") {
-//            forwardMessage(chatMessage)
-            let emojiPickerVC = EmojiPicker.viewController
-//            emojiPickerVC.sourceView = collectionView.cellForItem(at: indexPath)
-            present(emojiPickerVC, animated: true, completion: nil)
-            
+            forwardMessage(chatMessage)
             return
         }
         

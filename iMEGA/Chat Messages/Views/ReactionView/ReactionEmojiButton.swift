@@ -47,9 +47,9 @@ class ReactionEmojiButton: UIButton {
         
         if emojiSelected {
             backgroundColor = #colorLiteral(red: 0, green: 0.5803921569, blue: 0.462745098, alpha: 0.1)
-            layer.borderColor = UIColor(hexString: "009476")?.cgColor
+            layer.borderColor = UIColor.mnz_(fromHexString: "009476").cgColor
         } else {
-            backgroundColor = UIColor(hexString: "f9f9f9")
+            backgroundColor = UIColor.mnz_(fromHexString: "f9f9f9")
             layer.borderColor = UIColor(red: 3/255, green: 3/255, blue: 3/255, alpha: 0.1).cgColor
         }
         

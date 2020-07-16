@@ -18,7 +18,7 @@ class ReactionContainerView: UIView {
         addMoreView.layer.borderColor = UIColor(red: 3/255, green: 3/255, blue: 3/255, alpha: 0.1).cgColor
         addMoreView.layer.borderWidth = 1
         addMoreView.layer.cornerRadius = 12
-        addMoreView.backgroundColor = UIColor(hexString: "f9f9f9")
+        addMoreView.backgroundColor = UIColor.mnz_(fromHexString: "f9f9f9")
 
         return addMoreView
     }()
