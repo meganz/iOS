@@ -16,10 +16,7 @@ extension String {
     /// styles as values.
     /// - Parameter attributedTextStyleFactory: Factory that could produce text styler with given text style
     /// - Returns: A `AttributedString` that has relavent text and styles composed together.
-    func attributedString(with styleMarks: StyleMarks,
-                          attributedTextStyleFactory: AttributedTextStyleFactory) -> NSAttributedString {
-        MarkedStringParser.parseAttributedString(from: self,
-                                                 withStyleMarks: styleMarks,
-                                                 attributedTextStyleFactory: attributedTextStyleFactory)
+    func attributedString(with styleMarks: StyleMarks, attributedTextStyleFactory: AttributedTextStyleFactory) -> NSAttributedString {
+        MarkedStringParser.parseAttributedString(from: self, withStyleMarks: styleMarks, attributedTextStyleFactory: attributedTextStyleFactory)
     }
 }

@@ -2,14 +2,10 @@ import Foundation
 
 enum MarkedStringParser {
 
-    static func parseAttributedString(from text: String,
-                                      withStyleMarks styleMarks: [String: AttributedTextStyle],
-                                      attributedTextStyleFactory: AttributedTextStyleFactory)
-        -> NSAttributedString {
+    static func parseAttributedString(from text: String, withStyleMarks styleMarks: [String: AttributedTextStyle], attributedTextStyleFactory: AttributedTextStyleFactory) -> NSAttributedString {
         let scanner = textParsingScanner(with: text)
         let markedStringChain = scanMarkedText(scanner: scanner, tags: [])
-        return markedStringChain.attributedString(withStyleMarks: styleMarks,
-                                                  attributedTextStyleFactory: attributedTextStyleFactory)
+        return markedStringChain.attributedString(withStyleMarks: styleMarks, attributedTextStyleFactory: attributedTextStyleFactory)
     }
 
     // MARK: - Privates
@@ -30,9 +26,7 @@ enum MarkedStringParser {
 
         guard var tag = scanner.scanTo(">") else {
             if text.isEmpty { return .end } //
-            return MarkedString.text(tag: tags,
-                                     text: text,
-                                     child: scanMarkedText(scanner: scanner, tags: tags))
+            return MarkedString.text(tag: tags, text: text, child: scanMarkedText(scanner: scanner, tags: tags))
         }
 
         if tag.hasPrefix("<") {
@@ -41,14 +35,10 @@ enum MarkedStringParser {
 
         if tag.hasPrefix("/") {
             if text.isEmpty { return scanMarkedText(scanner: scanner, tags: tags.dropLast()) }
-            return MarkedString.text(tag: tags,
-                                     text: text,
-                                     child: scanMarkedText(scanner: scanner, tags: tags.dropLast()))
+            return MarkedString.text(tag: tags, text: text, child: scanMarkedText(scanner: scanner, tags: tags.dropLast()))
         } else {
             if text.isEmpty { return scanMarkedText(scanner: scanner, tags: tags + [tag]) }
-            return MarkedString.text(tag: tags,
-                                     text: text,
-                                     child: scanMarkedText(scanner: scanner, tags: tags + [tag]))
+            return MarkedString.text(tag: tags, text: text, child: scanMarkedText(scanner: scanner, tags: tags + [tag]))
         }
     }
 }

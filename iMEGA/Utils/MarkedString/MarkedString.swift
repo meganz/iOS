@@ -58,14 +58,11 @@ extension MarkedString {
     /// - Parameter styleMarks: It's, under the hood, a `Dictionary` with `Marker/Tag` as the key, and `AttributedTextStyle` as values.
     /// - Parameter attributedTextStyleFactory: Factory that could produce text styler with given text style
     /// - Returns: An attributed string with current instances's configurations - text, tags/styles, a
-    func attributedString(
-        withStyleMarks styleMarks: [String: AttributedTextStyle],
-        attributedTextStyleFactory: AttributedTextStyleFactory) -> NSAttributedString {
+    func attributedString(withStyleMarks styleMarks: [String: AttributedTextStyle], attributedTextStyleFactory: AttributedTextStyleFactory) -> NSAttributedString {
         switch self {
         case let .text(tag: tags, text: text, child: child):
             guard !text.isEmpty else {
-                return child.attributedString(withStyleMarks: styleMarks,
-                                              attributedTextStyleFactory: attributedTextStyleFactory)
+                return child.attributedString(withStyleMarks: styleMarks, attributedTextStyleFactory: attributedTextStyleFactory)
             }
 
             let styles = tags.compactMap { styleMarks[$0] }
@@ -73,8 +70,7 @@ extension MarkedString {
             let textAttributes = styler(TextAttributes())
 
             let nodeAttributedString = NSMutableAttributedString(string: text, attributes: textAttributes)
-            nodeAttributedString.append(child.attributedString(withStyleMarks: styleMarks,
-                                                               attributedTextStyleFactory: attributedTextStyleFactory))
+            nodeAttributedString.append(child.attributedString(withStyleMarks: styleMarks, attributedTextStyleFactory: attributedTextStyleFactory))
             return nodeAttributedString
         case .end:
             return NSAttributedString()
