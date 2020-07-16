@@ -51,28 +51,28 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
 
         let emojis = ["😀", "☹️", "🤣", "👍", "👎"]
         emojis.forEach { (emoji) in
-            let emojiView = UIButton(frame: CGRect(x: 0, y: 0, width: 44, height: 44))
+            let emojiView = UIButton()
             let attributedEmoji = NSAttributedString(string: emoji, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 30)])
             emojiView.setAttributedTitle(attributedEmoji, for: .normal)
             emojiView.layer.cornerRadius = 22
             emojiView.backgroundColor = UIColor.mnz_whiteF2F2F2()
-            emojiHeader.addArrangedSubview(emojiView)
             emojiView.autoSetDimensions(to: CGSize(width: 44, height: 44))
             emojiView.addTarget(self, action: #selector(emojiPress(_:)), for: .touchUpInside)
 
+            emojiHeader.addArrangedSubview(emojiView)
+
         }
         
-        let addMoreView = UIButton(frame: CGRect(x: 0, y: 0, width: 44, height: 44))
+        let addMoreView = UIButton()
         addMoreView.setImage(UIImage(named: "addReactionSmall"), for: .normal)
-        
         addMoreView.layer.cornerRadius = 22
         addMoreView.backgroundColor = UIColor.mnz_whiteF2F2F2()
-        
-        emojiHeader.addArrangedSubview(addMoreView)
-        addMoreView.autoSetDimensions(to: CGSize(width: 44, height: 44))
         addMoreView.imageView?.contentMode = .scaleAspectFit
         addMoreView.imageEdgeInsets = UIEdgeInsets(top: 6, left: 6, bottom: 6, right: 6)
+        addMoreView.autoSetDimensions(to: CGSize(width: 44, height: 44))
         addMoreView.addTarget(self, action: #selector(addMorePress(_:)), for: .touchUpInside)
+
+        emojiHeader.addArrangedSubview(addMoreView)
 
         headerView?.frame = CGRect(x: 0, y: 0, width: 320, height: 60)
         headerView?.addSubview(emojiHeader)
@@ -92,11 +92,10 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
         let vc = ReactionPickerViewController()
         vc.message = chatMessage
         
-        if let sourceView = self.sender as? UIView {
-            
-          presentPanModal(vc, sourceView:sourceView , sourceRect: sourceView.bounds)
+        if let sourceView = self.sender as? UIView, let presentingViewController = presentingViewController {
+            dismiss(animated: true, completion: nil)
+            presentingViewController.presentPanModal(vc, sourceView:sourceView , sourceRect: sourceView.bounds)
         }
-        
         
     }
 }
