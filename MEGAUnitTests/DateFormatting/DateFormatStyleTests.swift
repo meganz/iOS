@@ -29,10 +29,11 @@ class DateFormatStyleTests: XCTestCase {
         XCTAssertEqual(dateFormatter.timeStyle, .full)
     }
 
-    func testDateStyleFactoryCreatesCustomFormatter_WithSpecifiedCalendar_Locale_TimeZone() {
+    func testDateStyleFactoryCreatesCustomFormatter_WithSpecifiedCalendar_Locale_TimeZone() throws {
         // Given calendar timezone locale
         let calendar = Calendar(identifier: .gregorian)
-        let timeZone = TimeZone(identifier: "America/New_York")!
+        
+        let timeZone = try XCTUnwrap(TimeZone(identifier: "America/New_York"))
         let locale = Locale(identifier: "en")
 
         // When get dateFormatter

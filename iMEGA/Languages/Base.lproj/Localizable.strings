@@ -2237,8 +2237,7 @@
 /* Over Disk Quota title message that tell customer your data at risk. */
 "Your Data is at Risk!"="Your Data is at Risk!";
 /* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and
- subject to deletion deadline and warning dates.
- */
+ subject to deletion deadline and warning dates.*/
 "<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to %@.</paragraph>"="<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to %@.</paragraph>";
 /* Over Disk Quota: A suggestion that asks user to upgrade to specified MEGA subscription plan.*/
 "upgrade to <b>%@</b>"="upgrade to <b>%@</b>";
