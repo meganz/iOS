@@ -435,23 +435,39 @@ class ChatViewController: MessagesViewController {
     override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
         guard let messagesDataSource = messagesCollectionView.messagesDataSource else { return false }
         
-        let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
-
-        switch message.kind {
+        guard let chatMessage = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView) as? ChatMessage,         let cell = messagesCollectionView.cellForItem(at: indexPath) else {
+            return false
+        }
+        
+        var shouldShowMenu = false
+      
+        switch chatMessage.kind {
         case .custom:
-            guard let chatMessage = message as? ChatMessage else {
-                return false
-            }
+            shouldShowMenu = false
+            
             let megaMessage = chatMessage.message
             if megaMessage.isManagementMessage {
-                return false
+                shouldShowMenu = false
             }
             selectedIndexPathForMenu = indexPath
-            return true
+            shouldShowMenu = true
         default:
             selectedIndexPathForMenu = indexPath
-            return true
+            shouldShowMenu = true
         }
+        
+        if shouldShowMenu {
+            let action = ActionSheetAction(title: "123", detail: nil, image: nil, style: .default, actionHandler: {
+                
+                self.addMorePressed(chatMessage: chatMessage, sender: cell)
+                
+            })
+            
+            let menu = ChatMessageActionMenuViewController(actions: [action], headerTitle: nil, dismissCompletion: nil, sender: nil)
+            present(viewController: menu)
+        }
+        
+        return false
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
