@@ -4,7 +4,7 @@ import PinLayout
 
 protocol ReactionEmojiViewDelegate: class {
     func emojiLongPressed(_ emoji: String, sender: UIView)
-    func addMorePressed()
+    func addMorePressed(sender: UIView)
 }
 
 class ReactionContainerView: UIView {
@@ -95,7 +95,7 @@ class ReactionContainerView: UIView {
     }
     
     @objc func addMorePress(_ sender: UIButton) {
-        delegate?.addMorePressed()
+        delegate?.addMorePressed(sender: sender)
 
     }
     

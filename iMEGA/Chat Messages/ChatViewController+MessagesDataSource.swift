@@ -77,10 +77,24 @@ extension ChatViewController: MessagesDataSource {
 }
 
 extension ChatViewController: MessageReactionReusableViewDelegate {
-    func addMorePressed(chatMessage: ChatMessage) {
+    func addMorePressed(chatMessage: ChatMessage, sender: UIView) {
         let vc = ReactionPickerViewController()
+        
         vc.message = chatMessage
-        presentPanModal(vc)
+        if UIDevice.current.iPadDevice {
+          
+            vc.modalPresentationStyle = .popover;
+            
+            if let popover = vc.popoverPresentationController {
+                popover.delegate = vc
+                popover.sourceView = sender
+                popover.sourceRect = sender.bounds
+                
+                present(vc, animated: true, completion: nil)
+            }
+        } else {
+            presentPanModal(vc)
+        }
     }
     
 
