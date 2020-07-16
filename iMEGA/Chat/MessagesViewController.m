@@ -2058,7 +2058,6 @@ static NSMutableSet<NSString *> *tapForInfoSet;
             
         case MEGAChatAccessoryButtonUpload: {
             __weak __typeof__(self) weakSelf = self;
-            self.inputToolbar.hidden = UIDevice.currentDevice.iPad ? NO : YES;
             
             NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
             
@@ -2086,14 +2085,12 @@ static NSMutableSet<NSString *> *tapForInfoSet;
                     if (error.type) {
                         UIAlertController *sendLocationAlert = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"Send Location", @"Alert title shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm") message:AMLocalizedString(@"This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform.", @"Message shown when the user opens a shared Geolocation for the first time from any client, we will show a confirmation dialog warning the user that he is now leaving the E2EE paradigm") preferredStyle:UIAlertControllerStyleAlert];
                         [sendLocationAlert addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"cancel", @"") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                            weakSelf.inputToolbar.hidden = weakSelf.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo;
                         }]];
                         [sendLocationAlert addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"continue", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                             MEGAGenericRequestDelegate *enableGeolocationDelegate = [[MEGAGenericRequestDelegate alloc] initWithCompletion:^(MEGARequest *request, MEGAError *error) {
                                 if (error.type) {
                                     UIAlertController *enableGeolocationAlert = [UIAlertController alertControllerWithTitle:AMLocalizedString(@"error", @"") message:[NSString stringWithFormat:@"Enable geolocation failed. Error: %@", AMLocalizedString(error.name, nil)] preferredStyle:UIAlertControllerStyleAlert];
                                     [enableGeolocationAlert addAction:[UIAlertAction actionWithTitle:AMLocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                                        weakSelf.inputToolbar.hidden = weakSelf.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo;
                                     }]];
                                     [weakSelf presentViewController:enableGeolocationAlert animated:YES completion:nil];
                                 } else {
@@ -2111,9 +2108,7 @@ static NSMutableSet<NSString *> *tapForInfoSet;
                 [MEGASdkManager.sharedMEGASdk isGeolocationEnabledWithDelegate:isGeolocationEnabledDelegate];
             }]];
             
-            ActionSheetViewController *uploadOptionsActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:AMLocalizedString(@"send", @"Label for any 'Send' button, link, text, title, etc. - (String as short as possible).") dismissCompletion:^{
-                weakSelf.inputToolbar.hidden = weakSelf.chatRoom.ownPrivilege <= MEGAChatRoomPrivilegeRo;
-            } sender:nil];
+            ActionSheetViewController *uploadOptionsActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:AMLocalizedString(@"send", @"Label for any 'Send' button, link, text, title, etc. - (String as short as possible).") dismissCompletion:nil sender:nil];
             [self presentViewController:uploadOptionsActionSheet animated:YES completion:nil];
             break;
         }
