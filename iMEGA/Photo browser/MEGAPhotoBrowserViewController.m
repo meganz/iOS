@@ -1054,12 +1054,6 @@ static const CGFloat GapBetweenPages = 10.0;
             [node mnz_fileLinkImportFromViewController:self isFolderLink:NO];
             break;
             
-        case MegaNodeActionTypeOpen:
-            if (node.name.mnz_isVideoPathExtension) {
-                [self playVideo:nil];
-            }
-            break;
-            
         case MegaNodeActionTypeRemove:
             [node mnz_removeInViewController:self];
             break;

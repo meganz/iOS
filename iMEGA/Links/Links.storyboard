@@ -452,9 +452,6 @@
                                                             </userDefinedRuntimeAttribute>
                                                             <userDefinedRuntimeAttribute type="boolean" keyPath="titleLabel.adjustsFontSizeToFitWidth" value="YES"/>
                                                         </userDefinedRuntimeAttributes>
-                                                        <connections>
-                                                            <action selector="openAction:" destination="2U9-0D-RuC" eventType="touchUpInside" id="nwM-tZ-gbO"/>
-                                                        </connections>
                                                     </button>
                                                 </subviews>
                                             </stackView>
