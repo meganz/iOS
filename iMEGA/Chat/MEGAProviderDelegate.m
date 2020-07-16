@@ -16,6 +16,7 @@
 #import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
 
+#import "MEGAGenericRequestDelegate.h"
 #import "MEGANavigationController.h"
 
 @interface MEGAProviderDelegate () <MEGAChatCallDelegate, MEGAChatDelegate>
@@ -485,7 +486,15 @@
             
         case MEGAChatCallStatusRingIn: {
             if (![self.missedCallsDictionary objectForKey:@(call.chatId)]) {
-                self.missedCallsDictionary[@(call.chatId)] = call;
+                MEGAGenericRequestDelegate *delegate = [MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
+                    if (error.type == MEGAErrorTypeApiOk) {
+                        MEGAPushNotificationSettings *pushNotificationSettings = request.megaPushNotificationSettings;
+                        if (![pushNotificationSettings isChatDndEnabledForChatId:call.chatId] && !pushNotificationSettings.globalChatsDndEnabled) {
+                            self.missedCallsDictionary[@(call.chatId)] = call;
+                        }
+                    }
+                }];
+                [MEGASdkManager.sharedMEGASdk getPushNotificationSettingsWithDelegate:delegate];
                 NSUUID *uuid = [self.megaCallManager uuidForChatId:call.chatId callId:call.callId];
                 if (uuid) {
                     [self updateCall:call];
