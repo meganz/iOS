@@ -997,7 +997,7 @@ void uncaughtExceptionHandler(NSException *exception) {
         return;
     }
 
-    OverDiskQuotaViewController *overDiskQuotaViewController = [OverDiskQuotaViewController new];
+    OverDiskQuotaViewController *overDiskQuotaViewController = OverDiskQuotaViewController.new;
     [overDiskQuotaViewController setupWith:overDiskQuotaInformation];
 
     __weak typeof(self) weakSelf = self;
@@ -1008,11 +1008,9 @@ void uncaughtExceptionHandler(NSException *exception) {
         }];
     };
 
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:overDiskQuotaViewController];
+    UINavigationController *navigationController = [UINavigationController.alloc initWithRootViewController:overDiskQuotaViewController];
     navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
-    [UIApplication.mnz_presentingViewController presentViewController:navigationController
-                                                             animated:YES
-                                                           completion:^{
+    [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:^{
         weakSelf.overDiskQuotaPresented = YES;
     }];
 }
@@ -1424,9 +1422,7 @@ void uncaughtExceptionHandler(NSException *exception) {
             } else if (event.number == StorageStatePaywall) {
                 __weak typeof(self) weakSelf = self;
                 NSNumber *cloudStroageUsed = MEGASdkManager.sharedMEGASdk.mnz_accountDetails.storageUsed;
-                OverDiskQuotaCommand *presentOverDiskQuotaScreenCommand =
-                    [[OverDiskQuotaCommand alloc] initWithStorageUsed:cloudStroageUsed
-                                                     completionAction:^(id<OverDiskQuotaInfomationProtocol> _Nullable infor) {
+                OverDiskQuotaCommand *presentOverDiskQuotaScreenCommand = [OverDiskQuotaCommand.alloc initWithStorageUsed:cloudStroageUsed completionAction:^(id<OverDiskQuotaInfomationProtocol> _Nullable infor) {
                         if (infor != nil) {
                             [weakSelf presentOverDiskQuotaViewControllerIfNeededWithInformation:infor];
                         }
@@ -1581,8 +1577,7 @@ void uncaughtExceptionHandler(NSException *exception) {
                 __weak typeof(self) weakSelf = self;
                 NSNumber *cloudStroageUsed = MEGASdkManager.sharedMEGASdk.mnz_accountDetails.storageUsed;
                 OverDiskQuotaCommand *presentOverDiskQuotaScreenCommand =
-                    [[OverDiskQuotaCommand alloc] initWithStorageUsed: cloudStroageUsed
-                                                     completionAction:^(id<OverDiskQuotaInfomationProtocol> _Nullable infor) {
+                    [[OverDiskQuotaCommand alloc] initWithStorageUsed:cloudStroageUsed completionAction:^(id<OverDiskQuotaInfomationProtocol> _Nullable infor) {
                         if (infor != nil) {
                             [weakSelf presentOverDiskQuotaViewControllerIfNeededWithInformation:infor];
                         }
