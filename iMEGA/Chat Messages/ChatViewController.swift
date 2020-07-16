@@ -435,7 +435,7 @@ class ChatViewController: MessagesViewController {
     override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
         guard let messagesDataSource = messagesCollectionView.messagesDataSource else { return false }
         
-        guard let chatMessage = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView) as? ChatMessage,         let cell = messagesCollectionView.cellForItem(at: indexPath) else {
+        guard let chatMessage = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView) as? ChatMessage,         let cell = messagesCollectionView.cellForItem(at: indexPath) as? MessageContentCell else {
             return false
         }
         
@@ -457,7 +457,7 @@ class ChatViewController: MessagesViewController {
         }
         
         if shouldShowMenu {
-            let menu = ChatMessageActionMenuViewController(chatMessage: chatMessage, sender: cell)
+            let menu = ChatMessageActionMenuViewController(chatMessage: chatMessage, sender: cell.messageContainerView)
             present(viewController: menu)
         }
         

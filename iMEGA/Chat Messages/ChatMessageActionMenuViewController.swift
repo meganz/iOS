@@ -89,6 +89,13 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
     }
     
     @objc func addMorePress(_ sender: UIButton) {
+        let vc = ReactionPickerViewController()
+        vc.message = chatMessage
+        
+        if let sourceView = self.sender as? UIView {
+            
+          presentPanModal(vc, sourceView:sourceView , sourceRect: sourceView.bounds)
+        }
         
         
     }
