@@ -457,13 +457,7 @@ class ChatViewController: MessagesViewController {
         }
         
         if shouldShowMenu {
-            let action = ActionSheetAction(title: "123", detail: nil, image: nil, style: .default, actionHandler: {
-                
-                self.addMorePressed(chatMessage: chatMessage, sender: cell)
-                
-            })
-            
-            let menu = ChatMessageActionMenuViewController(actions: [action], headerTitle: nil, dismissCompletion: nil, sender: nil)
+            let menu = ChatMessageActionMenuViewController(chatMessage: chatMessage, sender: cell)
             present(viewController: menu)
         }
         
