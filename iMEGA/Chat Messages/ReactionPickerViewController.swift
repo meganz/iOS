@@ -7,22 +7,26 @@ class ReactionPickerViewController: UIViewController {
     var message: ChatMessage?
 
     private var emojiInputView: EmojiView {
-        
         let keyboardSettings = KeyboardSettings(bottomType: .categories)
         keyboardSettings.countOfRecentsEmojis = 20
         keyboardSettings.updateRecentEmojiImmediately = true
         let emojiView = EmojiView(keyboardSettings: keyboardSettings)
         emojiView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 300)
         emojiView.delegate = self
+        view.addSubview(emojiView)
         return emojiView
         
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(emojiInputView)
+        emojiInputView.autoPinEdgesToSuperviewEdges()
+        if #available(iOS 13.0, *) {
+            view.backgroundColor = .systemBackground
+        } else {
+            view.backgroundColor = .white
+        }
     }
-
     
 }
 
@@ -67,4 +71,10 @@ extension ReactionPickerViewController: EmojiViewDelegate {
       func emojiViewDidPressDismissKeyboardButton(_ emojiView: EmojiView) {
         dismiss(animated: true, completion: nil)
       }
+}
+
+extension ReactionPickerViewController: UIPopoverPresentationControllerDelegate {
+    func prepareForPopoverPresentation(_ popoverPresentationController: UIPopoverPresentationController) {
+        preferredContentSize = CGSize(width: 400, height: 300)
+    }
 }
