@@ -8,7 +8,6 @@ target 'MEGA' do
   pod 'MessageKit'
   pod 'YYWebImage'
   pod 'PanModal'
-  pod 'EmojiPicker', '1.1'
   pod 'ISEmojiView'
   pod 'FlexLayout'
   pod 'PinLayout'
