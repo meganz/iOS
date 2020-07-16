@@ -40,18 +40,6 @@ extension ChatViewController {
         }
         return joinInputBar
     }
-    
-    private var emojiInputView: EmojiView {
-        
-        let keyboardSettings = KeyboardSettings(bottomType: .categories)
-        keyboardSettings.countOfRecentsEmojis = 20
-        keyboardSettings.updateRecentEmojiImmediately = true
-        let emojiView = EmojiView(keyboardSettings: keyboardSettings)
-        emojiView.frame = CGRect(x: 0, y: 0, width: 320, height: 300)
-        emojiView.delegate = self
-        return emojiView
-        
-    }
 
     // MARK: - Interface methods.
     
