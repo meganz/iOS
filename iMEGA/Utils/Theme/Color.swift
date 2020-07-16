@@ -37,7 +37,7 @@ extension Color {
         /// RGB(255, 255, 255, 1), White
         static let lightPrimaryGreen = Color(red: 53, green: 211, blue: 196)
 
-        /// RGB(0, 168, 0, 134, 1), Green
+        /// RGB(0, 168, 134, 1), Green
         static let greenPrimary = Color(red: 0, green: 168, blue: 134, alpha: 255)
 
         /// RGB(200, 241, 236, 1), Light Green
@@ -59,10 +59,10 @@ extension Color {
 
         // MARK: - Button
 
-        /// RGB(0, 168, 0, 134, 1), Green
+        /// RGB(0, 168, 134, 1), Green
         static let enabledPrimary = Color(red: 0, green: 168, blue: 134, alpha: 255)
 
-        /// RGB(0, 168, 0, 134, 0.8), Green with 0.8 alpha
+        /// RGB(0, 168, 134, 0.8), Green with 0.8 alpha
         static let highlightedPrimary = Color(red: 0, green: 168, blue: 134, alpha: 204)
 
         /// RGB(153, 153, 153, 1), Gray
