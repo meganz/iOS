@@ -20,7 +20,9 @@ class ReactionPickerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        emojiInputView.autoPinEdgesToSuperviewEdges()
+        emojiInputView.autoPinEdgesToSuperviewSafeArea()
+        preferredContentSize = CGSize(width: 400, height: 300)
+
         if #available(iOS 13.0, *) {
             view.backgroundColor = .systemBackground
         } else {
@@ -73,8 +75,8 @@ extension ReactionPickerViewController: EmojiViewDelegate {
       }
 }
 
-extension ReactionPickerViewController: UIPopoverPresentationControllerDelegate {
-    func prepareForPopoverPresentation(_ popoverPresentationController: UIPopoverPresentationController) {
-        preferredContentSize = CGSize(width: 400, height: 300)
-    }
-}
+//extension ReactionPickerViewController: UIPopoverPresentationControllerDelegate {
+//    func prepareForPopoverPresentation(_ popoverPresentationController: UIPopoverPresentationController) {
+//        preferredContentSize = CGSize(width: 400, height: 300)
+//    }
+//}
