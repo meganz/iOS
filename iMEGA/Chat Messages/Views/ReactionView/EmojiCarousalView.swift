@@ -33,7 +33,7 @@ class EmojiCarousalView: UIView {
         }
     }
     
-    func updateDescription(text: String) {
+    func updateDescription(text: String?) {
         descriptionLabel.text = text
     }
     
