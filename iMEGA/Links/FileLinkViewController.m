@@ -328,6 +328,10 @@
     [self import];
 }
 
+- (IBAction)openAction:(UIButton *)sender {
+    [self open];
+}
+
 - (IBAction)shareAction:(UIBarButtonItem *)sender {
     [self shareFileLink];
 }
