@@ -37,10 +37,9 @@ class EmojiCarousalView: UIView {
         descriptionLabel.text = text
     }
     
-    func selectEmojiAtIndex(_ index: Int) {
-        collectionView.layoutIfNeeded()
+    func selectEmojiAtIndex(_ index: Int, animated: Bool = true) {
         collectionView.selectItem(at: IndexPath(item: index, section: 0),
-                                  animated: true,
+                                  animated: animated,
                                   scrollPosition: .centeredHorizontally)
     }
     
