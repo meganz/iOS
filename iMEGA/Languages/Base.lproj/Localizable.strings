@@ -1495,7 +1495,7 @@
 /* Text that describes why the user should test his/her password before logging out */
 "remindPasswordLogoutText"="Before logging out we recommend you export your Recovery Key to a safe place. Note that you’re not able to reset your password if you forget it.";
 /* Text next to a toggle that if enabled won't appear again */
-"dontShowAgain"="Don’t show me again";
+"dontShowAgain"="Do not show again";
 /* Label for test password button and titles */
 "testPassword"="Test Password";
 /* Label for recovery key button */
