@@ -1,7 +1,9 @@
 import UIKit
 
 class ChatMessageActionMenuViewController: ActionSheetViewController {
-
+    weak var chatViewController: ChatViewController?
+    private let separatorLineView = UIView.newAutoLayout()
+    
     var chatMessage: ChatMessage? {
         didSet {
             configureActions()
@@ -9,15 +11,80 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
     }
     
     var sender: Any?
+    lazy var forwardAction = ActionSheetAction(title: AMLocalizedString("forward"), detail: nil, image: UIImage(named: "forwardToolbar"), style: .default) {
+        guard let chatMessage = self.chatMessage else {
+            return
+        }
+        self.chatViewController?.forwardMessage(chatMessage)
+    }
+    
+     lazy var editAction = ActionSheetAction(title: AMLocalizedString("edit"), detail: nil, image: UIImage(named: "rename"), style: .default) {
+        guard let chatMessage = self.chatMessage else {
+            return
+        }
+        self.chatViewController?.editMessage(chatMessage)
+    }
+    
+     lazy var copyAction = ActionSheetAction(title: AMLocalizedString("copy"), detail: nil, image: UIImage(named: "copy"), style: .default) {
+        guard let chatMessage = self.chatMessage else {
+            return
+        }
+        self.chatViewController?.copyMessage(chatMessage)
+    }
+    
+//     lazy var  selectAction = ActionSheetAction(title: AMLocalizedString("select"), detail: nil, image: UIImage(named: "select"), style: .default) {
+//        guard let chatMessage = self.chatMessage else {
+//                return
+//            }
+    //            self.chatViewController?.copyMessage(chatMessage)
+    //    }
+    
+    lazy var deleteAction = ActionSheetAction(title: AMLocalizedString("delete"), detail: nil, image: UIImage(named: "delete"), style: .destructive) {
+        guard let chatMessage = self.chatMessage else {
+            return
+        }
+        self.chatViewController?.deleteMessage(chatMessage)
+    }
+    
+    lazy var saveForOfflineAction = ActionSheetAction(title: AMLocalizedString("saveForOffline"), detail: nil, image: UIImage(named: "offline"), style: .default) {
+        guard let chatMessage = self.chatMessage else {
+            return
+        }
+        self.chatViewController?.downloadMessage(chatMessage)
+    }
+    
+    lazy var importAction = ActionSheetAction(title: AMLocalizedString("Import to Cloud Drive"), detail: nil, image: UIImage(named: "import"), style: .default) {
+        guard let chatMessage = self.chatMessage else {
+            return
+        }
+        self.chatViewController?.importMessage(chatMessage)
+    }
+    
+    lazy var addContactAction = ActionSheetAction(title: AMLocalizedString("addContact"), detail: nil, image: UIImage(named: "addContact"), style: .default) {
+        guard let chatMessage = self.chatMessage else {
+            return
+        }
+        self.chatViewController?.addContactMessage(chatMessage)
+    }
+    
+    lazy var removeRichLinkAction = ActionSheetAction(title: AMLocalizedString("removePreview"), detail: nil, image: UIImage(named: "removeLink"), style: .default) {
+        guard let chatMessage = self.chatMessage else {
+            return
+        }
+        self.chatViewController?.removeRichPreview(chatMessage)
+    }
+    
     
     // MARK: - ChatMessageActionMenuViewController initializers
     
-    convenience init(chatMessage: ChatMessage?, sender: Any?) {
+    convenience init(chatMessage: ChatMessage?, sender: Any?, chatViewController: ChatViewController) {
         self.init(nibName: nil, bundle: nil)
         
         self.chatMessage = chatMessage
         self.sender = sender
-        
+        self.chatViewController = chatViewController
+        configureActions()
+
         configurePresentationStyle(from: sender as Any)
     }
     
@@ -26,20 +93,55 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
     }
     
     required init?(coder aDecoder: NSCoder) {
+        
         super.init(coder: aDecoder)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureActions()
         configureHeaderView()
     }
- 
-    override func loadView() {
-        super.loadView()
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        if #available(iOS 13.0, *) {
+            if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+                updateAppearance()
+            }
+        }
+    }
+    
+    override func updateAppearance() {
+        super.updateAppearance()
+        
+        separatorLineView.backgroundColor = UIColor.mnz_separator(for: traitCollection)
     }
     
     func configureActions() {
+        guard let chatMessage = chatMessage else {
+            return
+        }
+        
+        switch chatMessage.message.type  {
+        case .invalid, .revokeAttachment:
+            actions = []
+        case .normal:
+            //All messages
+            actions = [forwardAction, copyAction]
+            //Your messages
+            if isFromCurrentSender(message: chatMessage) {
+                actions.append(contentsOf: [editAction, deleteAction])
+            }
+            
+        case .containsMeta:
+            //All messages
+            actions = [forwardAction, copyAction]
+
+            break
+        default:
+            break
+        }
         
     }
     
@@ -60,7 +162,6 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
             emojiView.addTarget(self, action: #selector(emojiPress(_:)), for: .touchUpInside)
 
             emojiHeader.addArrangedSubview(emojiView)
-
         }
         
         let addMoreView = UIButton()
@@ -77,6 +178,12 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
         headerView?.frame = CGRect(x: 0, y: 0, width: 320, height: 60)
         headerView?.addSubview(emojiHeader)
         emojiHeader.autoPinEdgesToSuperviewMargins()
+        
+        headerView?.addSubview(separatorLineView)
+        separatorLineView.autoPinEdge(toSuperviewEdge: .leading)
+        separatorLineView.autoPinEdge(toSuperviewEdge: .trailing)
+        separatorLineView.autoPinEdge(toSuperviewEdge: .bottom)
+        separatorLineView.autoSetDimension(.height, toSize: 1/UIScreen.main.scale)
         
     }
     
@@ -98,4 +205,12 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
         }
         
     }
+    
+    
+    // MARK: - Internal methods used by the extension of this class
+
+    func isFromCurrentSender(message: ChatMessage) -> Bool {
+        return UInt64(message.sender.senderId) == MEGASdkManager.sharedMEGAChatSdk()?.myUserHandle
+    }
+
 }

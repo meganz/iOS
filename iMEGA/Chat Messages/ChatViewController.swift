@@ -457,7 +457,7 @@ class ChatViewController: MessagesViewController {
         }
         
         if shouldShowMenu {
-            let menu = ChatMessageActionMenuViewController(chatMessage: chatMessage, sender: cell.messageContainerView)
+            let menu = ChatMessageActionMenuViewController(chatMessage: chatMessage, sender: cell.messageContainerView, chatViewController: self)
             present(viewController: menu)
         }
         
