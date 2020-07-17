@@ -49,17 +49,15 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate {
             return messageId == message.message.messageId
         }
         
-        UIView.setAnimationsEnabled(false)
-        let lastSectionVisible = isLastSectionVisible()
-        
-        chatViewController?.messagesCollectionView.performBatchUpdates({
-            chatViewController?.messagesCollectionView.reloadSections([index ?? 0])
-        },  completion: { _ in
-            UIView.setAnimationsEnabled(true)
-            if lastSectionVisible {
-                self.chatViewController?.messagesCollectionView.scrollToBottom(animated: true)
-            }
-        })
+        UIView.performWithoutAnimation {
+            chatViewController?.messagesCollectionView.performBatchUpdates({
+                chatViewController?.messagesCollectionView.reloadSections([index ?? 0])
+            },  completion: { _ in
+                if index == self.messages.count - 1 {
+                    self.chatViewController?.messagesCollectionView.scrollToBottom(animated: true)
+                }
+            })
+        }
         
     }
     
