@@ -293,17 +293,6 @@ extension EnterEmailViewController: CNContactPickerDelegate {
 
 extension EnterEmailViewController: UIAdaptivePresentationControllerDelegate {
     func presentationControllerShouldDismiss(_ presentationController: UIPresentationController) -> Bool {
-        tokens.count == 0
-    }
-    
-    func presentationControllerDidAttemptToDismiss(_ presentationController: UIPresentationController) {
-        if tokens.count > 0 {
-            let discardChangesActionSheet = Helper.confirmDiscardChangesAlert {
-                self.dismiss(animated: true, completion: nil)
-            }
-            discardChangesActionSheet.popoverPresentationController?.sourceView = navigationController?.view
-            discardChangesActionSheet.popoverPresentationController?.sourceRect = CGRect(x: 20, y: 20, width: 1, height: 1)
-            present(discardChangesActionSheet, animated: true, completion: nil)
-        }
+        false
     }
 }
