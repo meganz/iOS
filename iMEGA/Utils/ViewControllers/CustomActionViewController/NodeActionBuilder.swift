@@ -84,14 +84,20 @@ final class NodeActionBuilder {
                 nodeActions.append(NodeAction.saveToPhotosAction())
             }
             nodeActions.append(NodeAction.shareAction())
-            if isPdf {
-                nodeActions.append(NodeAction.thumbnailPdfAction())
-            }
         } else if displayMode == .nodeInsideFolderLink {
             nodeActions.append(NodeAction.importAction())
             nodeActions.append(NodeAction.downloadAction())
             if isMediaFile {
                 nodeActions.append(NodeAction.saveToPhotosAction())
+            }
+        } else if displayMode == .previewLink {
+            nodeActions.append(NodeAction.importAction())
+            nodeActions.append(NodeAction.downloadAction())
+            nodeActions.append(NodeAction.sendToChatAction())
+            nodeActions.append(NodeAction.shareAction())
+            if isPdf {
+                nodeActions.append(NodeAction.searchAction())
+                nodeActions.append(NodeAction.thumbnailPdfAction())
             }
         } else if displayMode == .chatSharedFiles {
             nodeActions.append(NodeAction.forwardAction())
