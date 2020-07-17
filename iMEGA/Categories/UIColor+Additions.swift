@@ -242,6 +242,27 @@ extension UIColor {
         }
     }
     
+    @objc class func mnz_Elevated(_ traitCollection: UITraitCollection) -> UIColor {
+        if #available(iOS 13.0, *) {
+            switch traitCollection.userInterfaceStyle {
+            case .unspecified, .light:
+                if traitCollection.accessibilityContrast == .high {
+                    return UIColor.mnz_grayE6E6E6()
+                } else {
+                    return UIColor.mnz_grayF7F7F7()
+                }
+                
+            case .dark:
+                return UIColor.mnz_black2C2C2E()
+                
+            @unknown default:
+                return UIColor.mnz_grayF7F7F7()
+            }
+        } else {
+            return UIColor.mnz_grayF7F7F7()
+        }
+    }
+    
     // MARK: - Chat Reactions
     
     class func mnz_emojiLabelSelectedState(_ traitCollection: UITraitCollection) -> UIColor {

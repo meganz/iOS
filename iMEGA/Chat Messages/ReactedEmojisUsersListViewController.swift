@@ -62,7 +62,6 @@ class ReactedEmojisUsersListViewController: UIViewController  {
         }
         
         addHeaderView(emojiList: emojiList)
-        headerView.selectEmojiAtIndex(emojiList.firstIndex(of: selectedEmoji) ?? 0)
         let userHandleList = userhandleList(forEmoji: selectedEmoji, chatId: chatId, messageId: messageId)
         updateEmojiHeaderViewDescription()
         let foundIndex = emojiList.firstIndex(of: selectedEmoji) ?? 0
@@ -70,13 +69,16 @@ class ReactedEmojisUsersListViewController: UIViewController  {
                                                selectedPage: foundIndex,
                                                initialUserHandleList: userHandleList)
         add(viewController: reactedUsersListPageViewController)
-
+    }
+    
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        headerView.selectEmojiAtIndex(emojiList.firstIndex(of: selectedEmoji) ?? 0, animated: false)
     }
     
     private func updateEmojiHeaderViewDescription() {
-        if let selectedEmojiName = localSavedEmojis?.filter({ $0.representation == selectedEmoji }).first?.displayString {
-            headerView.updateDescription(text: selectedEmojiName)
-        }
+        headerView.updateDescription(text: localSavedEmojis?.filter({ $0.representation == selectedEmoji }).first?.displayString)
     }
     
     private func addHeaderView(emojiList: [String]) {

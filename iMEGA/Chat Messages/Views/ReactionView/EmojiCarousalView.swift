@@ -33,20 +33,19 @@ class EmojiCarousalView: UIView {
         }
     }
     
-    func updateDescription(text: String) {
+    func updateDescription(text: String?) {
         descriptionLabel.text = text
     }
     
-    func selectEmojiAtIndex(_ index: Int) {
-        collectionView.layoutIfNeeded()
+    func selectEmojiAtIndex(_ index: Int, animated: Bool = true) {
         collectionView.selectItem(at: IndexPath(item: index, section: 0),
-                                  animated: true,
+                                  animated: animated,
                                   scrollPosition: .centeredHorizontally)
     }
     
     private func updateAppearance() {
         descriptionLabel.textColor = UIColor.emojiDescriptionTextColor(traitCollection)
-        descriptionLabelBackgroundView.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
+        descriptionLabelBackgroundView.backgroundColor = UIColor.mnz_Elevated(traitCollection)
         handlebarView.backgroundColor = UIColor.mnz_handlebar(for: traitCollection)
         backgroundColor = UIColor.mnz_backgroundElevated(traitCollection)
     }
