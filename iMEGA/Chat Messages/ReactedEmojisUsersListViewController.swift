@@ -65,9 +65,7 @@ class ReactedEmojisUsersListViewController: UIViewController  {
         headerView.selectEmojiAtIndex(emojiList.firstIndex(of: selectedEmoji) ?? 0)
         let userHandleList = userhandleList(forEmoji: selectedEmoji, chatId: chatId, messageId: messageId)
         updateEmojiHeaderViewDescription()
-        guard let foundIndex = emojiList.firstIndex(of: selectedEmoji) else {
-            fatalError("Selected emoji is not present in the emoji list")
-        }
+        let foundIndex = emojiList.firstIndex(of: selectedEmoji) ?? 0
         reactedUsersListPageViewController.set(numberOfPages: emojiList.count,
                                                selectedPage: foundIndex,
                                                initialUserHandleList: userHandleList)
